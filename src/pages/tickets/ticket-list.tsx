@@ -11,7 +11,7 @@ const Tickets = () => {
             <Text text={"All tickets"} type={"heading"} />
             <div>
                 {
-                    items.map(item => <TicketDetails key={item.id} />)
+                    items.map(item => <TicketDetails key={item.id} id={item.id} />)
                 }
             </div>
         </div>

@@ -6,11 +6,10 @@ import { isNavigationExpandedSelector } from '../store/layout.selectors';
 interface NavigationItemProps {
     title: string,
     link: string,
-    icon: React.ReactNode,
-    id: string
+    icon: React.ReactNode
 }
 
-const NavigationItem = ({ title, link, icon, id }: NavigationItemProps) => {
+const NavigationItem = ({ title, link, icon }: NavigationItemProps) => {
     const { t } = useTranslation();
     const isNavigationExpanded = useSelector((state: RootState) => isNavigationExpandedSelector(state));
 
