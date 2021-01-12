@@ -1,5 +1,3 @@
-import React from 'react';
-import './styles.css';
 import Text from '../text/text';
 
 interface Props {
@@ -10,12 +8,12 @@ interface Props {
 }
 const FieldDisplay = ({ label, value, labelType, valueType }: Props) => {
     return (
-        <div className={`field-display row`}>
-            <div className={"col-3"}>
+        <div className="flex flex-col px-2">
+            <div>
                 <Text text={label} type={labelType} />
             </div>
-            <div className={"col-9"}>
-                <Text text={value} type={valueType}/>
+            <div >
+                <Text text={value} type={valueType} />
             </div>
         </div>
     );

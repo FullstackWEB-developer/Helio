@@ -1,7 +1,14 @@
 {
-  "title": "Bienvenida a nuestra clinica",
-  "description": {
-    "part1": "Un texto de ejemplo.",
-    "part2": "Cambie el idioma entre inglés y Español usando los botones."
+  "navigation": {
+    "dashboard": "Tablero",
+    "my_tickets": "Mis Entradas",
+    "all_tickets": "Todas las Entradas",
+    "contacts": "Contactos",
+    "email": "Email",
+    "sms": "Sms"
+  },
+  "footer": {
+    "hotspots": "Hotspots",
+    "status": "Status"
   }
 }

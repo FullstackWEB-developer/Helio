@@ -1,7 +1,14 @@
 {
-  "title": "Welcome to our clinic",
-  "description": {
-    "part1": "An example text",
-    "part2": "Change the language between English and Spanish using the buttons."
+  "navigation": {
+    "dashboard": "Dashboard",
+    "my_tickets": "My Tickets",
+    "all_tickets": "All Tickets",
+    "contacts": "Contacts",
+    "email": "Email",
+    "sms": "Sms"
+  },
+  "footer": {
+    "hotspots": "Hotspots",
+    "status": "Status"
   }
 }

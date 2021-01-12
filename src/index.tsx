@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import App from './app/app';
 import store from './app/store';
 import reportWebVitals from './reportWebVitals';
+import './index.scss';
 import '../src/i18n';
 
 const rootElement = document.getElementById('root');

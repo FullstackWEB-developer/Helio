@@ -1,10 +1,12 @@
-import { configureStore } from '@reduxjs/toolkit'
-import ticketReducer from '../pages/tickets/store/tickets.slice'
-import {useDispatch} from "react-redux";
+import { configureStore } from '@reduxjs/toolkit';
+import ticketReducer from '../pages/tickets/store/tickets.slice';
+import layoutReducer from '../shared/layout/store/layout.slice';
+import { useDispatch } from "react-redux";
 
 const store = configureStore({
     reducer: {
-        ticketState: ticketReducer
+        ticketState: ticketReducer,
+        layoutState: layoutReducer
     }
 });
 

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <g id="Icon_Warning_24px" data-name="Icon/Warning/24px" transform="translate(-614 -315)">
+    <rect id="Bound" width="24" height="24" transform="translate(614 315)" fill="#fff"/>
+    <path id="warning-24px" d="M1,19.273H21L11,2Zm10.909-2.727H10.091V14.727h1.818Zm0-3.636H10.091V9.273h1.818Z" transform="translate(615 316)" fill="#fdc06a"/>
+  </g>
+</svg>
