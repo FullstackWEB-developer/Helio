@@ -1,8 +1,10 @@
-import AWS, {CloudWatchLogs, CognitoIdentityCredentials} from 'aws-sdk';
+
+import {CloudWatchLogs, CognitoIdentityCredentials} from 'aws-sdk';
 import {LogStream, PutLogEventsRequest} from "aws-sdk/clients/cloudwatchlogs";
 
 const logConfig = {
-    identityPoolId: process.env.REACT_APP_IDENTITY_POOL_ID || '',
+    region: process.env.REACT_APP_AWS_REGION,
+    identityPoolId: process.env.REACT_APP_IDENTITY_POOL_ID as string,
     logGroup: process.env.REACT_APP_DEFAULT_LOG_GROUP || '',
     logStream: process.env.REACT_APP_DEFAULT_LOG_STREAM || '',
 }
@@ -25,8 +27,8 @@ class Logger {
     private logStream?: LogStream;
 
     constructor(streamName?: string) {
-        const credentials = new CognitoIdentityCredentials({ IdentityPoolId: logConfig.identityPoolId });
-        this.log = new CloudWatchLogs({credentials});
+        const credentials = new CognitoIdentityCredentials({ IdentityPoolId: logConfig.identityPoolId }, {region: logConfig.region});
+        this.log = new CloudWatchLogs({credentials, region: logConfig.region});
 
         this.logGroup = logConfig.logGroup
         this.streamName = streamName || logConfig.logStream;
