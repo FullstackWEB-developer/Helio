@@ -10,5 +10,12 @@
   "footer": {
     "hotspots": "Hotspots",
     "status": "Status"
+  },
+  "tickets": {
+    "title": "Tickets",
+    "subject": "Subject",
+    "status": "Status",
+    "action": "Action",
+    "set": "Set"
   }
 }

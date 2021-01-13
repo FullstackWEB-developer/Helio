@@ -6,24 +6,27 @@ const ticketsSlice = createSlice({
     name: 'tickets',
     initialState,
     reducers: {
-        add(state, {payload}: PayloadAction<Ticket>) {
-            state.tickets.push(payload);
+        add(state, {payload}: PayloadAction<Ticket[]>) {
+            state.tickets = payload;
         },
-        changeState(state, {payload}: PayloadAction<Ticket>) {
+        changeStatus(state, {payload}: PayloadAction<Ticket>) {
             const ticket = state.tickets.find(ticket => ticket.id === payload.id);
             if(ticket) ticket.status = payload.status;
         },
         changeTicket(state, {payload}: PayloadAction<Ticket>) {
-            const { id, comment, status } = payload;
+            const { id, subject, status } = payload;
             let ticket = state.tickets.find(ticket => ticket.id === id)
             if(ticket){
-                ticket.comment = comment
+                ticket.subject = subject
                 ticket.status = status
             }
+        },
+        setFailure: (state, {payload}: PayloadAction<string>) => {
+            state.errors = payload;
         }
     }
 });
 
-export const { add, changeState, changeTicket } = ticketsSlice.actions
+export const { add, changeStatus, changeTicket, setFailure } = ticketsSlice.actions
 
 export default ticketsSlice.reducer

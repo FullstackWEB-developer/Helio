@@ -17,6 +17,7 @@
     "@types/react-router": "^5.1.9",
     "@types/react-router-dom": "^5.1.7",
     "autoprefixer": "^9.8.6",
+    "axios": "^0.21.1",
     "i18next": "^19.8.4",
     "i18next-browser-languagedetector": "^6.0.1",
     "i18next-http-backend": "^1.0.21",
