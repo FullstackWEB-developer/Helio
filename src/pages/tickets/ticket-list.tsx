@@ -6,6 +6,7 @@ import { selectTickets } from "./store/tickets.selectors";
 import { useEffect } from "react";
 import { getList } from "./services/tickets.api";
 import { useTranslation } from 'react-i18next';
+import withErrorLogging from "../../shared/HOC/with-error-logging";
 
 const Tickets = () => {
     const { t } = useTranslation();
@@ -38,3 +39,4 @@ const Tickets = () => {
 }
 
 export default Tickets;
+export const TicketsWithErrors = withErrorLogging(Tickets);

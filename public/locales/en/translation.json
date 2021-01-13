@@ -17,5 +17,8 @@
     "status": "Status",
     "action": "Action",
     "set": "Set"
+  },
+  "error": {
+    "error_fallback": "Something went wrong"
   }
 }
