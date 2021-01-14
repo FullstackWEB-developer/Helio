@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 const Footer = () => {
     const { t } = useTranslation();
     return (
-        <footer className="h-14 border-t flex-initial w-full">
+        <footer className="h-14 border-t flex-initial w-full bg-primary text-primary">
             <div className="flex flex-row justify-between w-full h-full">
                 <div className="md:pl-96 flex flex-row items-center">
                     <div className="pr-5 hidden md:block">

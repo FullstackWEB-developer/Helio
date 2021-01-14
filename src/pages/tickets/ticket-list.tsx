@@ -18,8 +18,8 @@ const Tickets = () => {
     }, [dispatch]);
 
     return (
-        <div>
-            <Text text={t('tickets.title')} type={"heading"} cssClass={"p-2"}/>
+        <div className="text-secondary">
+            <Text text={t('tickets.title')} type={"heading"} className={"p-2"}/>
 
             <div className="grid grid-flow-row auto-rows-max md:auto-rows-min">
                 <div className="grid grid-flow-col auto-cols-max font-bold">

@@ -1,3 +1,4 @@
+import React from 'react';
 import { ReactComponent as HelioLogo } from '../icons/helio-logo.svg';
 import { ReactComponent as MenuIcon } from '../icons/Icon-Menu-24px.svg';
 import { ReactComponent as LetterAvatar } from '../icons/Avatar-40px-Letters.svg';
@@ -9,7 +10,7 @@ import { toggleNavigation } from './store/layout.slice';
 const Header = () => {
     const dispatch = useDispatch();
     return (
-        <header className="items-center border-b flex px-7 justify-between flex-row">
+        <header className="items-center border-b flex px-7 justify-between flex-row bg-primary text-primary">
             <div className="flex items-center justify-between h-18 w-full md:w-auto">
                 <div className="md:pr-14">
                     <MenuIcon className="cursor-pointer" onClick={() => dispatch(toggleNavigation())}></MenuIcon>

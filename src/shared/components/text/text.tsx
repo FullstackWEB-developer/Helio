@@ -1,11 +1,11 @@
 interface Props {
     text: string,
     type?: string,
-    cssClass?: string
+    className?: string
 }
-const Text = ({ text, type, cssClass }: Props) => {
+const Text = ({ text, type, className }: Props) => {
     return (
-        <label className={cssClass}>
+        <label className={className}>
             {text}
         </label>
     );

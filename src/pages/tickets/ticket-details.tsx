@@ -1,6 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { selectTicketById } from './store/tickets.selectors'
-import FieldDisplay from "../../shared/components/field-display/field-display";
 import { RootState } from "../../app/store";
 import { setStatus } from "./services/tickets.api";
 import { useTranslation } from 'react-i18next';

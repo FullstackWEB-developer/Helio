@@ -11,7 +11,7 @@ const Layout = (props: LayoutProps) => {
     return (
         <Fragment>
             <Header></Header>
-            <div className="flex flex-row h-full">
+            <div className="flex flex-row h-full bg-primary text-primary">
                 <div className="w-full md:w-auto">
                     <Navigation></Navigation>
                 </div>
