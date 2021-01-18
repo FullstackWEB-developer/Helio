@@ -10,7 +10,7 @@ module.exports = {
     babel: {
         ignore: ['craco.config.js'],
         plugins: [
-            process.env.NODE_ENV === "production" ? ["babel-plugin-jsx-remove-data-test-id", {
+            process.env.REACT_APP_REMOVE_TEST_ID === "true" ? ["babel-plugin-jsx-remove-data-test-id", {
                 "attributes": ["data-test-id"]
             }] : [() => { return [] }]
         ]
