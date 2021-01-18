@@ -6,8 +6,10 @@ import store from './app/store';
 import reportWebVitals from './reportWebVitals';
 import './index.scss';
 import '../src/i18n';
+import Logger from "./shared/services/logger";
 
 const rootElement = document.getElementById('root');
+Logger.getInstance();
 
 ReactDOM.render(
     <Provider store={store}>

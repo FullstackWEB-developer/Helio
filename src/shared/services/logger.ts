@@ -21,6 +21,7 @@ interface Log {
 }
 
 class Logger {
+    private static instance: Logger;
     private log: CloudWatchLogs;
     private readonly streamName: string;
     private readonly logGroup: string;
@@ -49,6 +50,14 @@ class Logger {
                     });
                 }
             })
+    }
+
+    public static getInstance = ():Logger => {
+        if(!Logger.instance) {
+            Logger.instance = new Logger();
+        }
+
+        return Logger.instance;
     }
 
     private getStream = (streamName: string) => {

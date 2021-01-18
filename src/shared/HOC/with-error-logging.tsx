@@ -1,10 +1,10 @@
 import React from "react";
 import {ErrorBoundary} from "react-error-boundary";
 import ErrorFallback from "../components/error-fallback/error-fallback";
-import Logger from '../services/logger';
+import Logger from "../services/logger";
+const logger = Logger.getInstance();
 
 const withErrorLogging = <P extends object>(Component: React.ComponentType<P>) => {
-    const logger = new Logger();
     const errorHandler = (error: Error, info: {componentStack: string}) => {
         logger.error(error.message, info)
     }
