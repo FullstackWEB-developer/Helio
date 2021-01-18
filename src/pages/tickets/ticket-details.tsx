@@ -14,8 +14,8 @@ const TicketItem = ({ id }: TicketItemProps) => {
     const item = useSelector((state: RootState) => selectTicketById(state, id))
     return (
         <div className="grid grid-flow-col auto-cols-max">
-            <div className="p-2 w-8">{item.ticketNumber? item.ticketNumber.toString() : ''}</div>
-            <div className="p-2 w-60">{item.subject}</div>
+            <div data-test-id={"ticket-number-" + item.ticketNumber} className="p-2 w-8">{item.ticketNumber ? item.ticketNumber.toString() : ''}</div>
+            <div data-test-id={"ticket-subject-" + item.ticketNumber} className="p-2 w-60">{item.subject}</div>
             <div className="p-2 w-16 text-center">{item.status ? item.status.toString() : '0'}</div>
             <div className="p-2 w-16 text-center">
                 <button onClick={() => dispatch(setStatus(item.id, 3))}>{t('tickets.set')}</button>

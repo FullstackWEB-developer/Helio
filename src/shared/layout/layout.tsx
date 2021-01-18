@@ -1,13 +1,19 @@
 import Header from './header';
 import Navigation from './navigation';
 import Footer from './footer';
-import { Fragment } from 'react';
-
+import React, { Fragment } from 'react';
+import { useSelector } from 'react-redux';
+import { authenticationSelector } from '../store/app-user/appuser.selectors';
+import { Redirect } from 'react-router';
 interface LayoutProps {
     children: React.ReactNode
 }
-
 const Layout = (props: LayoutProps) => {
+    const isLoggedIn = useSelector(authenticationSelector).isLoggedIn;
+    if (!isLoggedIn) {
+        return <Redirect to="/login" />
+    }
+
     return (
         <Fragment>
             <Header></Header>

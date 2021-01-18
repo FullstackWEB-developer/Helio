@@ -17,7 +17,7 @@ const Navigation = () => {
     var menuItems = [
         {
             title: t('navigation.dashboard'),
-            link: "/",
+            link: "/dashboard",
             id: "navigation-dashboard",
             icon: <DashboardIcon></DashboardIcon>
         }, {
@@ -49,8 +49,9 @@ const Navigation = () => {
     ];
 
     var items = menuItems.map((item, index) => {
-        return <div key={index} className={isActive(item.link) ? "border-l-4 border-gray-800 bg-gray-100" : ""}>
-            <NavigationItem key={index} icon={item.icon} link={item.link} title={item.title}></NavigationItem>
+        var isSelected = isActive(item.link);
+        return <div key={index} className={isSelected ? "border-l-4 border-gray-800 bg-gray-100" : ""}>
+            <NavigationItem isSelected={isSelected} key={index} icon={item.icon} link={item.link} title={item.title}></NavigationItem>
         </div>
     });
 

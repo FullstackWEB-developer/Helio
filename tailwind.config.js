@@ -2,7 +2,17 @@ module.exports = {
   purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
   darkMode: 'class', // or 'media' or 'class'
   theme: {
+    fontFamily: {
+      sans: ['Roboto'],
+      serif: ["Roboto"],
+      mono: ["Roboto"],
+      display: ["Roboto"],
+      body: ["Roboto"]
+    },
     extend: {
+      fontSize: {
+        base: "0.875rem"
+      },
       spacing: {
         '18': '4.5rem'
       },
@@ -20,10 +30,7 @@ module.exports = {
         default: "var(--color-bg-default)",
         inverse: "var(--color-bg-inverse)"
       },
-    },
-    // backgroundColor: (theme) => ({
-    //   ...theme('colors'),
-    // }),
+    }
   },
   variants: {
     extend: {},

@@ -6,10 +6,13 @@ const layoutSlice = createSlice({
     reducers: {
         toggleNavigation(state) {
             state.isNavigationExpanded = !state.isNavigationExpanded
+        },
+        toggleUserProfileMenu(state) {
+            state.isProfileMenuExpanded = !state.isProfileMenuExpanded
         }
     }
 });
 
-export const { toggleNavigation } = layoutSlice.actions
+export const { toggleNavigation, toggleUserProfileMenu } = layoutSlice.actions
 
 export default layoutSlice.reducer

@@ -1,4 +1,10 @@
 {
+  "login": {
+    "loginButton": "Login"
+  },
+  "user_profile": {
+    "logoutButton": "Logout"
+  },
   "navigation": {
     "dashboard": "Dashboard",
     "my_tickets": "My Tickets",
