@@ -26,5 +26,37 @@
   },
   "error": {
     "error_fallback": "Something went wrong"
+  },
+  "search": {
+    "search_type": {
+      "patient_id": "Patient ID (XXXXX)",
+      "patient_name": "Patient Name (Last First)",
+      "dob": "Date of birth (02/02/2020)",
+      "ssn": "SSN (XXX)",
+      "phone": "Phone number (XXX)"
+    },
+    "search_results": {
+      "heading_list": "List of patients: ",
+      "heading_empty": "No patients match your search criteria",
+      "heading_error": "Apologies, an error occurred. Please try your query again.",
+      "patient_name": "Patient",
+      "date_of_birth": "Date of birth",
+      "action": "Action",
+      "select": "Select"
+    },
+    "yearsOld": "yo",
+    "placeholder": "Search by patient ID, DOB, ...",
+    "search_title": "Search patients by",
+    "recent_patients": "Recent Patients"
+  },
+  "patient": {
+    "header": {
+      "id": "ID",
+      "age": "Age",
+      "sex": "Sex",
+      "dob": "DOB",
+      "ssn": "SSN"
+    },
+    "not_found": "Patient with that ID is not found"
   }
 }

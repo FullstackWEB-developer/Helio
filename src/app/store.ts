@@ -2,6 +2,8 @@ import { AnyAction, combineReducers, configureStore, Reducer } from '@reduxjs/to
 import ticketReducer from '../pages/tickets/store/tickets.slice';
 import appUserReducer from '../shared/store/app-user/appuser.slice';
 import layoutReducer from '../shared/layout/store/layout.slice';
+import searchReducer from '../shared/components/search-bar/store/search-bar.slice';
+import patientsReducer from '../pages/patients/store/patients.slice';
 import { useDispatch } from "react-redux";
 import storage from 'redux-persist/lib/storage'
 import { persistReducer } from 'redux-persist'
@@ -10,11 +12,13 @@ const persistenceStoreName = 'helio-ui-store';
 const reducers = combineReducers({
     ticketState: ticketReducer,
     layoutState: layoutReducer,
-    appUserState: appUserReducer
+    appUserState: appUserReducer,
+    searchState: searchReducer,
+    patientsState: patientsReducer
 })
 
 const rootReducer: Reducer = (state: RootState, action: AnyAction) => {
-    if (action.type === "user/loginInitiated") {
+    if (action.type === "appuser/logOut") {
         state = {} as RootState;
     }
     return reducers(state, action);

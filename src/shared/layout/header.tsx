@@ -4,6 +4,7 @@ import { ReactComponent as MenuIcon } from '../icons/Icon-Menu-24px.svg';
 import { LettersAvatar } from '../icons/LettersAvatar';
 import { ReactComponent as AthenaIcon } from '../icons/Icon-Athena-24px.svg';
 import { ReactComponent as MSIcon } from '../icons/Icon-Office365-24px.svg';
+import SearchBar from "../components/search-bar/search-bar";
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleNavigation, toggleUserProfileMenu } from './store/layout.slice';
 import { authenticationSelector } from '../store/app-user/appuser.selectors';
@@ -29,6 +30,9 @@ const Header = () => {
                     <LettersAvatar initials={getInitialsFromAuth(auth)}></LettersAvatar>
                     {isProfileMenuOpen && <ProfileDropdown></ProfileDropdown>}
                 </div>
+            </div>
+            <div>
+                <SearchBar />
             </div>
             <div className="flex flex-row items-center">
                 <div className="hidden md:block">

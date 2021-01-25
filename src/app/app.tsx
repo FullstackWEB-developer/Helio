@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React, {Suspense} from 'react';
 import { Switch, Route, BrowserRouter } from 'react-router-dom'
 import { lazily } from "react-lazily";
 import FallbackLoader from '../shared/components/skeleton-loader/skeleton-loader';
@@ -6,6 +6,8 @@ import Layout from '../shared/layout/layout';
 import Login from '../pages/login/login';
 import GuardedRoute from './guarded-route';
 import { Dashboard } from '../pages/dashboard/dashboard';
+import SearchResults from "../shared/components/search-bar/components/search-results";
+import PatientChart from "../pages/patients/patient-chart";
 const { TicketsWithErrors } = lazily(() => import('../pages/tickets/ticket-list'))
 
 function App() {
@@ -20,6 +22,10 @@ function App() {
                     <Suspense fallback={<FallbackLoader />}>
                         <GuardedRoute exact path="/tickets" component={TicketsWithErrors}></GuardedRoute>
                     </Suspense>
+                    <Switch>
+                        <GuardedRoute exact path="/patients/results" component={SearchResults}></GuardedRoute>
+                        <GuardedRoute exact path="/patients/:patientId" component={PatientChart}></GuardedRoute>
+                    </Switch>
                 </Layout>
             </Switch>
         </BrowserRouter>
