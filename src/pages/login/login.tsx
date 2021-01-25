@@ -3,19 +3,20 @@ import Button from '../../shared/components/button/button';
 import { ReactComponent as HelioLogo } from '../../shared/icons/helio-logo.svg';
 import { msalInstance } from "./auth-config";
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { AuthenticationInfo } from '../../shared/store/app-user/app-user.models';
 import { setAuthentication } from '../../shared/store/app-user/appuser.slice';
-import { useHistory } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import { AuthenticationResult } from '@azure/msal-browser';
 import { Dispatch } from '@reduxjs/toolkit';
 import { History } from 'history';
 import Logger from '../../shared/services/logger';
+import { authenticationSelector } from '../../shared/store/app-user/appuser.selectors';
 const Login = () => {
     const { t } = useTranslation();
     const dispatch = useDispatch();
     const history = useHistory();
-
+    const isLoggedIn = useSelector(authenticationSelector).isLoggedIn;
     useEffect(() => {
         msalInstance.handleRedirectPromise()
             .then((info) => {
@@ -25,6 +26,9 @@ const Login = () => {
             });
     }, [dispatch, history]);
 
+    if (isLoggedIn) {
+        return <Redirect to='/' />
+    }
 
     return (
         <div className="h-full flex justify-center items-center">
