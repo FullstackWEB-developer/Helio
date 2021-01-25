@@ -1,7 +1,7 @@
 import {Notes} from "./notes";
 
 export interface Ticket {
-    id: number;
+    id: string;
     ticketNumber?: number;
     subject?: string;
     detail?: string;

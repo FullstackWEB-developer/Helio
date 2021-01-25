@@ -66,7 +66,7 @@ const SearchBar = () => {
                     </p>
                     {
                         searchTypeFiltered.map((typeItem: SearchType) =>
-                            <SearchTypeItem searchType={typeItem} onClick={() => search(typeItem.type)}/>)
+                            <SearchTypeItem key={typeItem.type} searchType={typeItem} onClick={() => search(typeItem.type)}/>)
                     }
                 </div>
                 <div className={"pb-2"} hidden={recentPatients.length === 0}>
@@ -75,7 +75,7 @@ const SearchBar = () => {
                     </p>
                     {
                         recentPatients.map((rPatient: RecentPatient) =>
-                            <RecentPatientDetails patient={rPatient} onClick={() => selectRecent(rPatient)}/>)
+                            <RecentPatientDetails key={rPatient.patientId} patient={rPatient} onClick={() => selectRecent(rPatient)}/>)
                     }
                 </div>
             </div>

@@ -1,4 +1,10 @@
-export const Dashboard = () => {
+import React, { Fragment } from 'react';
+import PatientChart from "../patients/patient-chart";
 
-    return (<div className="p-16">This is dashboard</div>);
+export const Dashboard = () => {
+    return (
+        <Fragment>
+            <PatientChart></PatientChart>
+        </Fragment>
+    );
 }

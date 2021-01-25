@@ -24,7 +24,7 @@ const searchBarSlice = createSlice({
             state.selectedType = action.payload;
         },
         addRecentPatient(state, {payload}: PayloadAction<RecentPatient>) {
-            if(state.recentPatients.findIndex(patient => patient.patientId == payload.patientId) < 0)
+            if(state.recentPatients.findIndex(patient => patient.patientId === payload.patientId) < 0)
                 state.recentPatients.push(payload);
         },
         setSearching(state, action) {

@@ -18,6 +18,9 @@
     "action": "Action",
     "set": "Set"
   },
+  "patient": {
+    "title": "Patient"
+  },
   "error": {
     "error_fallback": "Algo salió mal"
   }

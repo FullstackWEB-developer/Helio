@@ -5,9 +5,14 @@ import React, { Fragment } from 'react';
 import { useSelector } from 'react-redux';
 import { authenticationSelector } from '../store/app-user/appuser.selectors';
 import { Redirect } from 'react-router';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { DndContainer } from './dragndrop/dnd-container'
+
 interface LayoutProps {
     children: React.ReactNode
 }
+
 const Layout = (props: LayoutProps) => {
     const isLoggedIn = useSelector(authenticationSelector).isLoggedIn;
     if (!isLoggedIn) {
@@ -21,11 +26,11 @@ const Layout = (props: LayoutProps) => {
                 <div className="w-full md:w-auto">
                     <Navigation></Navigation>
                 </div>
-                <main className="flex flex-col">
-                    <div className="flex flex-auto">
-                        {props.children}
-                    </div>
-                </main>
+                <DndProvider backend={HTML5Backend}>
+                    <main className="flex flex-col h-full w-full">
+                        <DndContainer propsChildren={props.children} className="flex flex-auto" />
+                    </main>
+                </DndProvider>
             </div>
             <Footer></Footer>
         </Fragment>

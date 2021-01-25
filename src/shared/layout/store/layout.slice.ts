@@ -9,10 +9,13 @@ const layoutSlice = createSlice({
         },
         toggleUserProfileMenu(state) {
             state.isProfileMenuExpanded = !state.isProfileMenuExpanded
+        },
+        toggleCcp(state) {
+            state.isCcpVisible = !state.isCcpVisible
         }
     }
 });
 
-export const { toggleNavigation, toggleUserProfileMenu } = layoutSlice.actions
+export const { toggleNavigation, toggleUserProfileMenu, toggleCcp } = layoutSlice.actions
 
 export default layoutSlice.reducer

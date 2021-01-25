@@ -16,6 +16,9 @@ module.exports = {
       spacing: {
         '18': '4.5rem'
       },
+      height: {
+        '120': '36rem'
+      },
       textColor: {
         primary: "var(--color-text-primary)",
         secondary: "var(--color-text-secondary)",

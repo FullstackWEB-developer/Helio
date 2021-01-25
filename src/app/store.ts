@@ -2,6 +2,7 @@ import { AnyAction, combineReducers, configureStore, Reducer } from '@reduxjs/to
 import ticketReducer from '../pages/tickets/store/tickets.slice';
 import appUserReducer from '../shared/store/app-user/appuser.slice';
 import layoutReducer from '../shared/layout/store/layout.slice';
+import ccpReducer from '../pages/ccp/store/ccp.slice';
 import searchReducer from '../shared/components/search-bar/store/search-bar.slice';
 import patientsReducer from '../pages/patients/store/patients.slice';
 import { useDispatch } from "react-redux";
@@ -14,7 +15,8 @@ const reducers = combineReducers({
     layoutState: layoutReducer,
     appUserState: appUserReducer,
     searchState: searchReducer,
-    patientsState: patientsReducer
+    patientsState: patientsReducer,
+    ccpState: ccpReducer
 })
 
 const rootReducer: Reducer = (state: RootState, action: AnyAction) => {

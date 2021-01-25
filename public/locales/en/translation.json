@@ -24,6 +24,12 @@
     "action": "Action",
     "set": "Set"
   },
+  "patient": {
+    "title": "Patient"
+  },
+  "ccp": {
+    "title": "Call Control Panel"
+  },
   "error": {
     "error_fallback": "Something went wrong"
   },
