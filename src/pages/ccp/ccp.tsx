@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import { ReactComponent as Bot } from '../../shared/icons/Icon-Bot-24px.svg';
 import { ReactComponent as Note } from '../../shared/icons/Icon-Note-24px.svg';
 import { ReactComponent as Tickets } from '../../shared/icons/Icon-Tickets-24px.svg';
@@ -40,6 +40,8 @@ const Ccp: React.FC<BoxProps> = ({
     const dispatch = useDispatch();
     const history = useHistory();
     const username = useSelector(authenticationSelector).username;
+    const [isHover, setHover] = useState(false);
+    const [isBottomBarVisible, setIsBottomBarVisible] = useState(false);
 
     const isCcpVisibleRef = useRef();
     isCcpVisibleRef.current = useSelector(isCcpVisibleSelector);
@@ -87,6 +89,8 @@ const Ccp: React.FC<BoxProps> = ({
 
                 const numberOfVoices = ag.getContacts(connect.ContactType.VOICE).length;
                 dispatch(setVoiceCounter(numberOfVoices));
+
+                setIsBottomBarVisible(numberOfChats > 0 || numberOfVoices > 0);
             });
         });
 
@@ -100,10 +104,17 @@ const Ccp: React.FC<BoxProps> = ({
     });
 
     return (
-        <div ref={drag} className={"ccp-main shadow-md " + (isCcpVisibleRef.current ? 'block' : 'hidden')} style={{ left, top}}>
-            <div className="border pl-1.5">{t('ccp.title')}</div>
+        <div className={"ccp-main shadow-md " + (isCcpVisibleRef.current ? 'block' : 'hidden')}
+             style={{ left, top}}
+             onMouseEnter={() => setHover(true)}
+             onMouseLeave={() => setHover(false)}
+        >
+            <div ref={drag}
+                 className={"ccp-title border pl-1.5 bg-white " + (isHover ? 'block' : 'hidden')}>
+            {t('ccp.title')}
+            </div>
             <div data-test-id="ccp-container" id="ccp-container" className="w-96, h-120 overflow-hidden"></div>
-            <div className="flex justify-between w-full px-10 py-2 border-t ccp-bottom-bar">
+            <div className={"flex justify-between w-full px-10 py-2 border-t ccp-bottom-bar " + (isBottomBarVisible ? 'block' : 'hidden')}>
                 <Bot/>
                 <Note/>
                 <Tickets/>
