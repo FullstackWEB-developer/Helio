@@ -1,5 +1,4 @@
 import {SearchType} from "../models/search-type";
-import {searchTypes} from '../constants/search-type-const';
 import {RecentPatient} from "../models/recent-patient";
 
 export interface SearchBarState {
@@ -12,7 +11,7 @@ export interface SearchBarState {
 }
 
 const initialState: SearchBarState = {
-    searchTypeFiltered: searchTypes,
+    searchTypeFiltered: [],
     recentPatients: [],
     searchTerm: '',
     selectedType: 1,

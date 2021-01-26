@@ -1,32 +1,26 @@
 import {Patient} from "../../../../pages/patients/models/patient";
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import {selectPatientList} from "../../../../pages/patients/store/patients.selectors";
 import ThreeDots from '../../skeleton-loader/skeleton-loader';
 import {selectIsSearching, selectIsSearchError} from "../store/search-bar.selectors";
-import {addRecentPatient} from '../store/search-bar.slice';
 import {useTranslation} from "react-i18next";
-import {RecentPatient} from "../models/recent-patient";
 import {useHistory} from "react-router-dom";
 import patientUtils from "../../../../pages/patients/utils/utils";
+import {useEffect} from "react";
 
 const SearchResults = () => {
     const { t } = useTranslation();
-    const dispatch = useDispatch();
     const history = useHistory();
     const patients: Patient[] | undefined = useSelector(selectPatientList);
     const isSearching: boolean = useSelector(selectIsSearching);
     const isError: boolean = useSelector(selectIsSearchError);
     const select = (patient: Patient) => {
-        const recentPatient: RecentPatient = {
-            patientId: patient.patientId,
-            firstName: patient.firstName,
-            lastName: patient.lastName,
-            age: patientUtils.getAge(patient.dateOfBirth),
-            dob: patientUtils.formatDob(patient.dateOfBirth)
-        }
-        dispatch(addRecentPatient(recentPatient))
         history.push('/patients/' + patient.patientId);
     }
+    useEffect(() => {
+        if(patients?.length === 1)
+            select(patients[0]);
+    }, [patients])
     const heading = (patients !== undefined && patients.length > 0)
         ? t('search.search_results.heading_list')
         : t('search.search_results.heading_empty');

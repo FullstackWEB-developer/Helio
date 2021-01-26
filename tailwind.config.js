@@ -33,6 +33,9 @@ module.exports = {
         default: "var(--color-bg-default)",
         inverse: "var(--color-bg-inverse)"
       },
+      colors: {
+        "blue-500": "#006eff"
+      }
     }
   },
   variants: {

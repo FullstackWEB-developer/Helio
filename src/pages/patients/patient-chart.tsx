@@ -6,6 +6,9 @@ import {useDispatch, useSelector} from "react-redux";
 import ThreeDots from "../../shared/components/skeleton-loader/skeleton-loader";
 import {selectPatientLoading, selectPatient, selectIsPatientError} from "./store/patients.selectors";
 import {useTranslation} from "react-i18next";
+import {RecentPatient} from "../../shared/components/search-bar/models/recent-patient";
+import patientUtils from "./utils/utils";
+import {addRecentPatient} from "../../shared/components/search-bar/store/search-bar.slice";
 
 interface PatientParams {
     patientId: string
@@ -22,6 +25,19 @@ const PatientChart = () => {
     useEffect(() => {
         dispatch(getPatientById(patientId));
     }, [dispatch, patientId]);
+
+    useEffect(() => {
+        if(patient) {
+            const recentPatient: RecentPatient = {
+                patientId: patient.patientId,
+                firstName: patient.firstName,
+                lastName: patient.lastName,
+                age: patientUtils.getAge(patient.dateOfBirth),
+                dob: patientUtils.formatDob(patient.dateOfBirth)
+            }
+            dispatch(addRecentPatient(recentPatient))
+        }
+    }, [dispatch, patient]);
 
     return (
         <div>

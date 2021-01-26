@@ -3,15 +3,15 @@ import {searchType} from "./search-type";
 
 export const searchTypes: SearchType[] = [
     {
-        label: 'search.search_type.patient_id',
-        regex: "^\\d+$",
-        type: searchType.patientId,
-        priority: 1,
-    },
-    {
         label: 'search.search_type.patient_name',
         regex: "^[a-z, A-Z, \\s]+$",
         type: searchType.patientName,
+        priority: 1,
+    },
+    {
+        label: 'search.search_type.patient_id',
+        regex: "^\\d+$",
+        type: searchType.patientId,
         priority: 2,
     },
     {
@@ -28,8 +28,8 @@ export const searchTypes: SearchType[] = [
     },
     {
         label: 'search.search_type.phone',
-        regex: "^\\d+$",
+        regex: "(^\\d+$|^(\\d)(?:\\d|$)(?:\\d|$)(?:\\-|$)(?:\\d|$)(?:\\d|$)(?:\\d|$)(?:\\-|$)(?:\\d|$)(?:\\d|$)(?:\\d|$)(?:\\d|$)$)",
         type: searchType.phone,
-        priority: 4,
+        priority: 5,
     }
 ]
