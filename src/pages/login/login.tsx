@@ -16,7 +16,7 @@ const Login = () => {
     const { t } = useTranslation();
     const dispatch = useDispatch();
     const history = useHistory();
-    const isLoggedIn = useSelector(authenticationSelector).isLoggedIn;
+    const auth = useSelector(authenticationSelector);
     useEffect(() => {
         msalInstance.handleRedirectPromise()
             .then((info) => {
@@ -26,7 +26,7 @@ const Login = () => {
             });
     }, [dispatch, history]);
 
-    if (isLoggedIn) {
+    if (auth.isLoggedIn && (Date.parse(auth.expiresOn) > new Date().valueOf())) {
         return <Redirect to='/' />
     }
 
