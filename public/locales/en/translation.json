@@ -24,9 +24,6 @@
     "action": "Action",
     "set": "Set"
   },
-  "patient": {
-    "title": "Patient"
-  },
   "ccp": {
     "title": "Call Control Panel"
   },

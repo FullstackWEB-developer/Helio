@@ -10,7 +10,6 @@ import { useHistory } from 'react-router-dom';
 import 'amazon-connect-streams';
 import withErrorLogging from '../../shared/HOC/with-error-logging';
 import { isCcpVisibleSelector } from '../../shared/layout/store/layout.selectors';
-import { setPatientId } from '../patients/store/patient.slice';
 import { setAssignee } from '../tickets/services/tickets.api';
 import { setChatCounter, setVoiceCounter } from './store/ccp.slice';
 import { authenticationSelector } from '../../shared/store/app-user/appuser.selectors';
@@ -69,7 +68,6 @@ const Ccp: React.FC<BoxProps> = ({
                 if(attributeMap.PatientId){
                     let patientId = attributeMap.PatientId.value;
                     if(patientId){
-                        dispatch(setPatientId(patientId));
                         history.push('/patients/' + patientId);
                     }
                 }
@@ -94,8 +92,9 @@ const Ccp: React.FC<BoxProps> = ({
             });
         });
 
-    }, []);
+    }, [dispatch, history, username]);
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [{ isDragging }, drag] = useDrag({
         item: { id, left, top, type: DndItemTypes.BOX },
         collect: (monitor) => ({
@@ -110,7 +109,7 @@ const Ccp: React.FC<BoxProps> = ({
              onMouseLeave={() => setHover(false)}
         >
             <div ref={drag}
-                 className={"ccp-title border pl-1.5 bg-white " + (isHover ? 'block' : 'hidden')}>
+                 className={"ccp-title border pl-1.5 bg-white " + (isHover ? 'visible' : 'invisible')}>
             {t('ccp.title')}
             </div>
             <div data-test-id="ccp-container" id="ccp-container" className="w-96, h-120 overflow-hidden"></div>
