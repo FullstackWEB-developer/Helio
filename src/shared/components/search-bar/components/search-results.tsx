@@ -6,7 +6,7 @@ import {selectIsSearching, selectIsSearchError} from "../store/search-bar.select
 import {useTranslation} from "react-i18next";
 import {useHistory} from "react-router-dom";
 import patientUtils from "../../../../pages/patients/utils/utils";
-import {useEffect} from "react";
+import {useCallback, useEffect} from "react";
 
 const SearchResults = () => {
     const { t } = useTranslation();
@@ -14,13 +14,16 @@ const SearchResults = () => {
     const patients: Patient[] | undefined = useSelector(selectPatientList);
     const isSearching: boolean = useSelector(selectIsSearching);
     const isError: boolean = useSelector(selectIsSearchError);
-    const select = (patient: Patient) => {
+
+    const select = useCallback((patient: Patient) => {
         history.push('/patients/' + patient.patientId);
-    }
+    }, [history])
+
     useEffect(() => {
         if(patients?.length === 1)
             select(patients[0]);
-    }, [patients])
+    }, [select, patients])
+
     const heading = (patients !== undefined && patients.length > 0)
         ? t('search.search_results.heading_list')
         : t('search.search_results.heading_empty');
@@ -43,7 +46,7 @@ const SearchResults = () => {
                     <div>
                         {
                             patients?.map(patient =>
-                                <div className="grid grid-flow-col auto-cols-max">
+                                <div className="grid grid-flow-col auto-cols-max" key={patient.patientId}>
                                     <div className="p-2 w-60">{patient.firstName + " " + patient.lastName}</div>
                                     <div className="p-2 w-32">{patientUtils.formatDob(patient.dateOfBirth)}</div>
                                     <div className="p-2 w-16 text-center">
