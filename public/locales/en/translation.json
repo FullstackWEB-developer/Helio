@@ -33,7 +33,7 @@
   "search": {
     "search_type": {
       "patient_id": "Patient ID (XXXXX)",
-      "patient_name": "Patient Name (Last First)",
+      "patient_name": "Patient Name (Last, First)",
       "dob": "Date of birth (02/02/2020)",
       "ssn": "SSN (XXXX)",
       "phone": "Phone number (310-000-0000)"
