@@ -1,8 +1,9 @@
 import {Patient} from "../models/patient";
+import {ExtendedPatient} from "../models/extended-patient";
 
 export interface PatientsState {
     patientList?: Patient[];
-    patient?: Patient;
+    patient?: ExtendedPatient;
     isLoading: boolean;
     isError: boolean;
 }

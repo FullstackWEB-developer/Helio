@@ -1,12 +1,12 @@
 import {useTranslation} from "react-i18next";
 import {selectPatient} from "../store/patients.selectors";
 import {useSelector} from "react-redux";
-import {Patient} from "../models/patient";
 import utils from "../utils/utils";
+import {ExtendedPatient} from "../models/extended-patient";
 
 const PatientHeader = () => {
     const { t } = useTranslation();
-    const patient: Patient = useSelector(selectPatient);
+    const patient: ExtendedPatient = useSelector(selectPatient);
     const SmallLabel = (text: string, value: string) => {
         return(
             <div>
@@ -29,7 +29,7 @@ const PatientHeader = () => {
                         SmallLabel(t("patient.header.age"), utils.getAge(patient.dateOfBirth).toString())
                     }
                     {
-                        SmallLabel(t("patient.header.sex"), "X")
+                        SmallLabel(t("patient.header.sex"), patient.sex)
                     }
                     {
                         SmallLabel(t("patient.header.dob"), utils.formatDob(patient.dateOfBirth))
