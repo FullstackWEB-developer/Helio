@@ -22,6 +22,7 @@ import {useTranslation} from "react-i18next";
 const ccpConfig = {
     region: process.env.REACT_APP_AWS_REGION,
     ccpUrl: process.env.REACT_APP_CCP_ACCESS_URL || '',
+    ccpLoginUrl: process.env.REACT_APP_CCP_LOGIN_URL || ''
 }
 
 export interface BoxProps {
@@ -46,14 +47,24 @@ const Ccp: React.FC<BoxProps> = ({
     isCcpVisibleRef.current = useSelector(isCcpVisibleSelector);
 
     useEffect(() => {
-        let ccpContainer = document.getElementById("ccp-container");
+        let ccpContainer = document.getElementById("ccp-container");       
         connect.core.initCCP(ccpContainer as HTMLDivElement, {
             ccpUrl: ccpConfig.ccpUrl,
-            loginPopup: true,
+            loginPopup: true, // optional, defaults to `true`
+            loginPopupAutoClose: true, // optional, defaults to `true`
+            loginOptions: {
+                // optional, if provided opens login in new window
+                autoClose: true, // optional, defaults to `false`
+                height: 600, // optional, defaults to 578
+                width: 400, // optional, defaults to 433
+                top: 0, // optional, defaults to 0
+                left: 0, // optional, defaults to 0
+            },
+            loginUrl: ccpConfig.ccpLoginUrl,               
             region: ccpConfig.region,
             softphone: {
-                allowFramedSoftphone: true
-            }
+                allowFramedSoftphone: true,
+            },
         });
 
         connect.contact((contact) => {
