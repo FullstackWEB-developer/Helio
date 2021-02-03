@@ -98,7 +98,7 @@ export const verifyPatient = (dateOfBirth: string, phoneNumber: string, zipCode:
 }
 
 export const getAppointments = (patientId: string) => {
-    const url = patientsUrl + '/' + patientId + '/appointments?includePast=true';
+    const url = patientsUrl + '/' + patientId + '/appointments';
 
     return async (dispatch: Dispatch) => {
         dispatch(setError(false));
