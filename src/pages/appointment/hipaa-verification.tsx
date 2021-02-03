@@ -7,7 +7,11 @@ import { verifyPatient } from '../../shared/services/search.service';
 import Input from "../../shared/components/input/input";
 
 enum RequestTypes {
-    Appointment = 2
+    GetAppointmentDetail = 1,
+    RescheduleAppointment,
+    GetLabResults,
+    RequestRefill,
+    RequestMedicalRecords
 }
 
 const HipaaVerification = () => {
@@ -33,7 +37,7 @@ const HipaaVerification = () => {
     const handleSubmit = (event: { preventDefault: () => void; }) => {
         event.preventDefault();
         dispatch(verifyPatient(formData.dob, formData.phone, formData.zip));
-        if (redirectLink !== undefined && redirectLink.requestType === RequestTypes.Appointment) {
+        if (redirectLink !== undefined && redirectLink.requestType === RequestTypes.GetAppointmentDetail) {
             history.push('/appointment-detail/' + redirectLink.patientId);
         }
     }
