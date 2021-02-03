@@ -61,5 +61,30 @@
       "ssn": "SSN"
     },
     "not_found": "Patient with that ID is not found"
+  },
+  "appointment": {
+    "error": "Apologies, an error occurred. Please try your query again.",
+    "link_not_active": "We apologize, but this link is not active. Please contact the call center.",
+    "patient_not_verified": "Sorry, but patient is not verified. Please contact the call center.",
+    "hipaa_verification": "HIPAA Verification",
+    "ask_additional_information": "Could you please provide additional information?",
+    "dob": "Date of birth",
+    "phone": "Phone",
+    "zip": "ZIP",
+    "verify": "Verify",
+    "data_verified_successfully": "Provided data verified successfully.",
+    "detail_info": "Appointment Detail Information",
+    "detail_info_description": "Date, time, location and other information.",
+    "type": "Appointment Type:",
+    "date": "Date:",
+    "time": "Time:",
+    "provider": "Provider:",
+    "location": "Location:",
+    "address": "Address:",
+    "reminders_instructions": "Reminders Instructions:",
+    "parking_instructions": "Parking Instructions:",
+    "reSchedule": "ReSchedule",
+    "cancel": "Cancel",
+    "no_appointments": "There are no appointments."
   }
 }

@@ -4,7 +4,7 @@ import { DndItemTypes } from './dnd-item-types'
 import update from 'immutability-helper'
 import { DragItem } from './dnd-interfaces'
 import { CcpWithErrors } from '../../../pages/ccp/ccp';
-import { getWindowCenter } from "../../services/utils";
+import utils from "../../utils/utils";
 
 export interface ContainerProps {
     className: string,
@@ -16,7 +16,7 @@ export interface ContainerState {
 }
 
 export const DndContainer: React.FC<ContainerProps> = ({ className, propsChildren}) => {
-    const { x, y } = getWindowCenter();
+    const { x, y } = utils.getWindowCenter();
 
     const [boxes, setBoxes] = useState<{
         [key: string]: {

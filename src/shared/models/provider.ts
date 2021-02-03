@@ -1,0 +1,20 @@
+export interface Provider {
+    firstName: string,
+    specialty: string,
+    homeDepartment?: string,
+    specialtyId: number,
+    schedulingName: string,
+    providerTypeId: string,
+    billable: boolean,
+    displayName: string,
+    ansiNameCode: string,
+    lastName: string,
+    id: number,
+    providerUserName: string,
+    ansiSpecialtyCode: string,
+    hideInPortal: boolean,
+    sex: string,
+    entityType: number,
+    providerType: string,
+    createEncounterOnCheckin: boolean
+}

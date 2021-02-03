@@ -10,7 +10,7 @@ import { useHistory } from 'react-router-dom';
 import 'amazon-connect-streams';
 import withErrorLogging from '../../shared/HOC/with-error-logging';
 import { isCcpVisibleSelector } from '../../shared/layout/store/layout.selectors';
-import { setAssignee } from '../tickets/services/tickets.api';
+import { setAssignee } from '../tickets/services/tickets.service';
 import { setChatCounter, setVoiceCounter } from './store/ccp.slice';
 import { authenticationSelector } from '../../shared/store/app-user/appuser.selectors';
 import { useDrag } from 'react-dnd';

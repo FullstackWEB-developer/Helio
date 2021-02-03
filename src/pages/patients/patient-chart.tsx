@@ -1,7 +1,7 @@
 import PatientHeader from "./components/patient-header";
 import {useParams} from "react-router";
 import {useEffect} from "react";
-import {getPatientById} from "../../shared/components/search-bar/services/search.api";
+import {getPatientById} from "../../shared/services/search.service";
 import {useDispatch, useSelector} from "react-redux";
 import ThreeDots from "../../shared/components/skeleton-loader/skeleton-loader";
 import {selectPatientLoading, selectPatient, selectIsPatientError} from "./store/patients.selectors";

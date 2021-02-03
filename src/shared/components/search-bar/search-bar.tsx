@@ -9,7 +9,7 @@ import {
     selectTerm
 } from "./store/search-bar.selectors";
 import { changeValue, changeFilteredTypes, clearRecentPatients, changeTypeDown, changeTypeUp } from './store/search-bar.slice';
-import { searchPatients } from './services/search.api';
+import { searchPatients } from '../../services/search.service';
 import {useDispatch, useSelector} from "react-redux";
 import {useTranslation} from "react-i18next";
 import {useHistory} from "react-router-dom";

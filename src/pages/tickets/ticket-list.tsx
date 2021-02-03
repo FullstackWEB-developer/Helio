@@ -3,7 +3,7 @@ import Text from "../../shared/components/text/text";
 import TicketDetails from './ticket-details';
 import { selectTickets } from "./store/tickets.selectors";
 import { useEffect } from "react";
-import { getList } from "./services/tickets.api";
+import { getList } from "./services/tickets.service";
 import { useTranslation } from 'react-i18next';
 import withErrorLogging from "../../shared/HOC/with-error-logging";
 import { Ticket } from './models/ticket';

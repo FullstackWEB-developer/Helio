@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { selectTicketById } from './store/tickets.selectors'
 import { RootState } from "../../app/store";
-import { setStatus } from "./services/tickets.api";
+import { setStatus } from "./services/tickets.service";
 import { useTranslation } from 'react-i18next';
 
 interface TicketItemProps {

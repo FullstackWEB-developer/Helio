@@ -1,26 +1,27 @@
-import React, {ChangeEvent} from "react";
+import React, { ChangeEvent } from "react";
 
 interface SelectProps {
-    name: string,
+    name?: string,
     value?: string,
     placeholder?: string,
-    options: string[],
+    options: Option[],
     className?: string,
     onChange?: (e: ChangeEvent<HTMLSelectElement>) => void
 }
 
-const Select = ({name, value, placeholder, options, className, onChange}: SelectProps) => {
-    return(
+export interface Option {
+    value: string,
+    label: string
+}
+
+const Select = ({ options, ...props }: SelectProps) => {
+    return (
         <select
-            name={name}
-            value={value}
-            placeholder={placeholder}
-            className={className}
-            onChange={onChange}
+            {...props}
         >
             {
-                options.map((option: string, index) => (
-                    <option value={option} key={index}>{option}</option>
+                options.map((option: Option, index) => (
+                    <option value={option.value} key={index}>{option.label}</option>
                 ))
             }
         </select>
