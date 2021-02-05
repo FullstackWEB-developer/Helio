@@ -62,16 +62,20 @@
     },
     "not_found": "Patient with that ID is not found"
   },
-  "appointment": {
-    "error": "Apologies, an error occurred. Please try your query again.",
+  "redirect_link": {
     "link_not_active": "We apologize, but this link is not active. Please contact the call center.",
-    "patient_not_verified": "Sorry, but patient is not verified. Please contact the call center.",
-    "hipaa_verification": "HIPAA Verification",
+    "is_error": "Apologies, an error occurred. Please try your query again."
+  },
+  "hipaa_validation_form": {
     "ask_additional_information": "Could you please provide additional information?",
     "dob": "Date of birth",
     "phone": "Phone",
     "zip": "ZIP",
     "verify": "Verify",
+    "hipaa_verification": "HIPAA Verification"
+  },
+  "appointment": {
+    "error": "Apologies, an error occurred. Please try your query again.",
     "data_verified_successfully": "Provided data verified successfully.",
     "detail_info": "Appointment Detail Information",
     "detail_info_description": "Date, time, location and other information.",

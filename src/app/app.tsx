@@ -1,15 +1,15 @@
-import React, {Suspense} from 'react';
+import React, { Suspense } from 'react';
 import { Switch, Route, BrowserRouter } from 'react-router-dom'
 import { lazily } from "react-lazily";
 import FallbackLoader from '../shared/components/skeleton-loader/skeleton-loader';
 import Layout from '../shared/layout/layout';
 import Login from '../pages/login/login';
-import VerifyRedirectLink from '../pages/appointment/verify-redirect-link'
 import GuardedRoute from './guarded-route';
 import { Dashboard } from '../pages/dashboard/dashboard';
 import SearchResults from "../shared/components/search-bar/components/search-results";
 import PatientChart from "../pages/patients/patient-chart";
-import AppointmentDetail from "../pages/appointment/appointment-detail";
+import VerifyRedirectLink from '../pages/external-access/hipaa-verification/verify-redirect-link';
+import AppointmentDetail from '../pages/external-access/appointment/appointment-detail';
 const { TicketsWithErrors } = lazily(() => import('../pages/tickets/ticket-list'))
 
 function App() {

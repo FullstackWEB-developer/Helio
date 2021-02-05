@@ -5,7 +5,7 @@ import layoutReducer from '../shared/layout/store/layout.slice';
 import ccpReducer from '../pages/ccp/store/ccp.slice';
 import searchReducer from '../shared/components/search-bar/store/search-bar.slice';
 import patientsReducer from '../pages/patients/store/patients.slice';
-import redirectLinkReducer from '../pages/appointment/store/redirect-link-slice.slice';
+import redirectLinkReducer from '../pages/external-access/store/redirect-link-slice.slice';
 import lookupsReducer from '../shared/store/lookups/lookups.slice';
 import { useDispatch } from "react-redux";
 import storage from 'redux-persist/lib/storage'

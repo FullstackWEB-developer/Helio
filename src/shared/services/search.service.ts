@@ -1,7 +1,7 @@
 import Api from './api';
-import {Dispatch} from "@reduxjs/toolkit";
+import { Dispatch } from "@reduxjs/toolkit";
 import Logger from "./logger";
-import {setError, setSearching} from '../components/search-bar/store/search-bar.slice';
+import { setError, setSearching } from '../components/search-bar/store/search-bar.slice';
 import {
     clearAppointments,
     clearPatient,

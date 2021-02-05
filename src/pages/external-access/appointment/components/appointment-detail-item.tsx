@@ -1,11 +1,10 @@
-import React from "react";
 import { AppointmentDetailDisplayItem } from '../models/appointment-detail-display-item';
 
 interface AppointmentDetailProps {
     item: AppointmentDetailDisplayItem
 }
 
-const AppointmentDetailItem = ({item}: AppointmentDetailProps) => {
+const AppointmentDetailItem = ({ item }: AppointmentDetailProps) => {
     return (
         <div>
             <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">

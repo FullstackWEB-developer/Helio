@@ -1,6 +1,6 @@
-import {Patient} from "../models/patient";
-import {Appointment} from "../../appointment/models/appointment";
-import {ExtendedPatient} from "../models/extended-patient";
+import { Patient } from "../models/patient";
+import { ExtendedPatient } from "../models/extended-patient";
+import { Appointment } from '../../external-access/appointment/models/appointment';
 
 export interface PatientsState {
     appointmentList?: Appointment[];

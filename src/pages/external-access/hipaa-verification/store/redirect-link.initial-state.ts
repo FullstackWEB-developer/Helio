@@ -1,9 +1,7 @@
-import {Appointment} from "../models/appointment";
-import {RedirectLink} from "../models/redirect-link";
-import {Patient} from "../../patients/models/patient";
+import { RedirectLink } from "../models/redirect-link";
+import { Patient } from "../../../patients/models/patient";
 
 export interface RedirectLinkState {
-    appointment?: Appointment;
     patient?: Patient;
     redirectLink?: RedirectLink;
     isLoading: boolean;
@@ -11,7 +9,6 @@ export interface RedirectLinkState {
 }
 
 const initialState: RedirectLinkState = {
-    appointment: undefined,
     patient: undefined,
     redirectLink: undefined,
     isError: false,

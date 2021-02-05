@@ -1,29 +1,21 @@
+import React, { Fragment, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-    selectAppointmentList,
-    selectIsPatientError,
-    selectIsPatientVerified,
-    selectPatientLoading
-} from '../patients/store/patients.selectors';
-import {
-    selectDepartmentList,
-    selectProviderList
-} from '../../shared/store/lookups/lookups.selectors';
-import React, {Fragment, useEffect, useState} from 'react';
-import {getAppointments} from '../../shared/services/search.service';
 import { useParams } from 'react-router';
-import Select from '../../shared/components/select/select'
+import Select from '../../../shared/components/select/select';
+import ThreeDots from '../../../shared/components/skeleton-loader/skeleton-loader';
+import { Department } from '../../../shared/models/department';
+import { Provider } from '../../../shared/models/provider';
+import { getDepartments, getProviders } from '../../../shared/services/lookups.service';
+import { getAppointments } from '../../../shared/services/search.service';
+import { selectDepartmentList, selectProviderList } from '../../../shared/store/lookups/lookups.selectors';
+import utils from '../../../shared/utils/utils';
+import { selectAppointmentList, selectIsPatientError, selectIsPatientVerified, selectPatientLoading } from '../../patients/store/patients.selectors';
+import { clearAppointments } from '../../patients/store/patients.slice';
+import { clearRedirectLink } from '../hipaa-verification/store/redirect-link-slice.slice';
+import AppointmentDetailItem from './components/appointment-detail-item';
 import { Appointment } from './models/appointment';
 import { AppointmentDetailDisplayItem } from './models/appointment-detail-display-item';
-import ThreeDots from '../../shared/components/skeleton-loader/skeleton-loader';
-import {useTranslation} from 'react-i18next';
-import {clearAppointments} from '../patients/store/patients.slice';
-import { clearRedirectLink } from './store/redirect-link-slice.slice';
-import AppointmentDetailItem from './components/appointment-detail-item';
-import utils from '../../shared/utils/utils';
-import { Department } from '../../shared/models/department';
-import { Provider } from '../../shared/models/provider';
-import { getDepartments, getProviders } from '../../shared/services/lookups.service';
 
 interface PatientParams {
     patientId: string
@@ -56,7 +48,7 @@ const AppointmentDetail = () => {
             return providers ? providers.find((p: Provider) => p.id.toString() === providerId) : {};
         }
 
-        if(selectedAppointment){
+        if (selectedAppointment) {
             const selectedDepartment = getDepartmentById(selectedAppointment.departmentId);
             const selectedProvider = getProviderById(selectedAppointment.providerId);
 
@@ -172,11 +164,11 @@ const AppointmentDetail = () => {
 
                                 <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                                     <button data-test-id="appointment-reschedule" type="button"
-                                            className="btn-primary">
+                                        className="btn-primary">
                                         {t('appointment.reSchedule')}
                                     </button>
                                     <button data-test-id="appointment-cancel" type="button"
-                                            className="btn-secondary">
+                                        className="btn-secondary">
                                         {t('appointment.cancel')}
                                     </button>
                                 </div>
