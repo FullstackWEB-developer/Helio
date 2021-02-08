@@ -24,7 +24,7 @@ const reducers = combineReducers({
 })
 
 const rootReducer: Reducer = (state: RootState, action: AnyAction) => {
-    if (action.type === "appuser/logOut") {
+    if (action.type === "layout/resetState") {
         state = {} as RootState;
     }
     return reducers(state, action);

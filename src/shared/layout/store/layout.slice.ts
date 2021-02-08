@@ -12,10 +12,15 @@ const layoutSlice = createSlice({
         },
         toggleCcp(state) {
             state.isCcpVisible = !state.isCcpVisible
+        },
+        resetState(state) {
+            state.isCcpVisible = false;
+            state.isNavigationExpanded = false;
+            state.isProfileMenuExpanded = false;
         }
     }
 });
 
-export const { toggleNavigation, toggleUserProfileMenu, toggleCcp } = layoutSlice.actions
+export const { toggleNavigation, toggleUserProfileMenu, toggleCcp, resetState } = layoutSlice.actions
 
 export default layoutSlice.reducer

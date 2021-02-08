@@ -12,12 +12,14 @@ import { Dispatch } from '@reduxjs/toolkit';
 import { History } from 'history';
 import Logger from '../../shared/services/logger';
 import { authenticationSelector } from '../../shared/store/app-user/appuser.selectors';
+import { resetState } from '../../shared/layout/store/layout.slice';
 const Login = () => {
     const { t } = useTranslation();
     const dispatch = useDispatch();
     const history = useHistory();
     const auth = useSelector(authenticationSelector);
     useEffect(() => {
+        dispatch(resetState());
         msalInstance.handleRedirectPromise()
             .then((info) => {
                 SetAuthenticationInfo(info, dispatch, history);
@@ -33,8 +35,8 @@ const Login = () => {
     return (
         <div className="h-full flex justify-center items-center">
             <div className="p-32 w-full flex flex-col items-center space-y-8 border shadow-lg">
-                <HelioLogo></HelioLogo>
-                <Button data-test-id="login_button" onClick={() => msalInstance.loginRedirect()} label={t("login.loginButton")}></Button>
+                <HelioLogo/>
+                <Button data-test-id="login_button" onClick={() => msalInstance.loginRedirect()} label={t("login.loginButton")}/>
             </div>
         </div>
     );
