@@ -5,6 +5,15 @@ import { useTranslation } from 'react-i18next';
 import { selectRedirectLink } from './store/redirect-link.selectors';
 import { verifyPatient } from '../../../shared/services/search.service';
 import Input from "../../../shared/components/input/input";
+import {setError} from "../../../shared/components/search-bar/store/search-bar.slice";
+import {
+    setPatientIsVerified,
+    setVerifiedPatient
+} from "../../patients/store/patients.slice";
+import Logger from "../../../shared/services/logger";
+import {VerifiedPatient} from "../../patients/models/verified-patient";
+import {selectIsPatientVerified} from "../../patients/store/patients.selectors";
+import ThreeDots from "../../../shared/components/skeleton-loader/skeleton-loader";
 
 enum RequestTypes {
     GetAppointmentDetail = 1,
@@ -18,8 +27,11 @@ const HipaaVerification = () => {
     const { t } = useTranslation();
     const dispatch = useDispatch();
     const history = useHistory();
-
-    const redirectLink = useSelector(selectRedirectLink);
+    const logger = Logger.getInstance();
+    const redirectLink = useSelector(selectRedirectLink)
+    const isVerified = useSelector(selectIsPatientVerified);
+    const [isVerificationCompleted, setVerificationCompleted] = useState(false);
+    const [isVerifyingPatient, setIsVerifyingPatient] = useState(false);
     const [formData, setFormData] = useState({
         dob: '',
         phone: '',
@@ -34,9 +46,33 @@ const HipaaVerification = () => {
         }));
     }
 
-    const handleSubmit = (event: { preventDefault: () => void; }) => {
+    const handleSubmit = async (event: { preventDefault: () => void; }) => {
         event.preventDefault();
-        dispatch(verifyPatient(formData.dob, formData.phone, formData.zip));
+        dispatch(setError(false));
+        setIsVerifyingPatient(true);
+        try {
+            const verifiedPatient = await verifyPatient(formData.dob, formData.phone, formData.zip);
+            dispatch(setVerifiedPatient(verifiedPatient as VerifiedPatient));
+            forwardToRelatedPage();
+        } catch(error) {
+            switch (error.response?.status) {
+                case 404:
+                    dispatch(setPatientIsVerified(false));
+                    break;
+                default:
+                    logger.error("Failed verifying for patient", error);
+                    dispatch(setError(true));
+                    dispatch(setPatientIsVerified(false));
+                    break;
+            }
+        } finally {
+            setVerificationCompleted(true);
+            setIsVerifyingPatient(false);
+        }
+
+    }
+
+    const forwardToRelatedPage =() => {
         if (redirectLink !== undefined) {
             switch (redirectLink.requestType) {
                 case RequestTypes.GetAppointmentDetail:
@@ -47,6 +83,13 @@ const HipaaVerification = () => {
                     break;
             }
         }
+    }
+
+    if (isVerifyingPatient) {
+        return <ThreeDots/>
+    }
+    if (isVerificationCompleted && !isVerified) {
+        return <div>{t('hipaa_validation_form.hipaa_verification_failed')}</div>
     }
 
     return (

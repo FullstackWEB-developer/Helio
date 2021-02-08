@@ -11,7 +11,6 @@ export interface PatientsState {
     isError: boolean;
     isVerified?: boolean;
     verifiedPatient?: VerifiedPatient;
-    isVerifyingPatient: boolean;
 }
 
 const initialState: PatientsState = {
@@ -21,7 +20,6 @@ const initialState: PatientsState = {
     verifiedPatient: undefined,
     isLoading: false,
     isError: false,
-    isVerified: false,
-    isVerifyingPatient: false
+    isVerified: false
 }
 export default initialState;

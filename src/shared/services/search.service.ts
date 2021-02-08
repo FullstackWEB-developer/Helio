@@ -10,10 +10,7 @@ import {
     setAppointments,
     setError as setPatientError,
     setLoading,
-    setPatientIsVerified,
-    setVerifiedPatient,
-    setPatients,
-    setIsVerifyingPatient
+    setPatients
 } from '../../pages/patients/store/patients.slice';
 
 const logger = Logger.getInstance();
@@ -74,33 +71,10 @@ export const searchPatients = (type: number, term: string) => {
     }
 }
 
-export const verifyPatient = (dateOfBirth: string, phoneNumber: string, zipCode: string) => {
+export const verifyPatient = async (dateOfBirth: string, phoneNumber: string, zipCode: string) => {
     const url = patientsUrl + '/verify?dateOfBirth=' + dateOfBirth + '&phoneNumber=' + phoneNumber + '&zipCode=' + zipCode;
-    return async (dispatch: Dispatch) => {
-        dispatch(setError(false));
-        dispatch(setIsVerifyingPatient(true));
-        dispatch(setLoading(true));
-        await Api.get(url)
-            .then((response) => {
-                dispatch(setVerifiedPatient(response.data));
-            })
-            .catch(error => {
-                switch (error.response?.status) {
-                    case 404:
-                        dispatch(setPatientIsVerified(false));
-                        dispatch(setLoading(false));
-                        break;
-                    default:
-                        logger.error("Failed verifying for patient", error);
-                        dispatch(setError(true));
-                        dispatch(setPatientIsVerified(false));
-                        break;
-                }
-            })
-            .finally(() => {
-                dispatch(setIsVerifyingPatient(false));
-            })
-    }
+    const response = await Api.get(url);
+    return response.data;
 }
 
 export const getAppointments = (patientId: string) => {

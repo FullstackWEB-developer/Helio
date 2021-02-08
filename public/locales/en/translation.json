@@ -75,14 +75,14 @@
     "phone": "Phone",
     "zip": "ZIP",
     "verify": "Verify",
-    "hipaa_verification": "HIPAA Verification"
+    "hipaa_verification": "HIPAA Verification",
+    "hipaa_verification_failed" : "Verification failed, cannot continue"
   },
   "request-refill": {
     "notes": "Notes",
     "medication_to_refill": "Medication to refill",
     "provider": "Provider",
     "location": "Location",
-    "hipaa_verification_failed": "Verification failed, cannot continue",
     "no_medication_found": "There is no medication to renew",
     "error": "There is an error, please try again later",
     "completed": "Refill request completed",
