@@ -13,20 +13,14 @@ const lookupsSlice = createSlice({
         setError(state, {payload}: PayloadAction<boolean>){
             state.isError = payload;
         },
-        setProviders(state, {payload}: PayloadAction<Provider[]>) {
+        setProviders(state, {payload}: PayloadAction<Provider[] | undefined>) {
             state.providerList = payload;
             state.isLoading = false;
         },
-        clearProviders(state) {
-            state.providerList = undefined;
-        },
-        setDepartments(state, {payload}: PayloadAction<Department[]>) {
+        setDepartments(state, {payload}: PayloadAction<Department[] | undefined>) {
             state.departmentList = payload;
             state.isLoading = false;
-        },
-        clearDepartments(state) {
-            state.departmentList = undefined;
-        },
+        }
     }
 });
 
@@ -34,9 +28,7 @@ export const {
     setLoading,
     setError,
     setProviders,
-    clearProviders,
-    setDepartments,
-    clearDepartments
+    setDepartments
 } = lookupsSlice.actions
 
 export default lookupsSlice.reducer

@@ -1,7 +1,7 @@
-import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import initialState from './search-bar.initial-state';
-import {searchTypes} from '../constants/search-type-const';
-import {RecentPatient} from "../models/recent-patient";
+import { searchTypes } from '../constants/search-type-const';
+import { RecentPatient } from "../models/recent-patient";
 
 const searchBarSlice = createSlice({
     name: 'search',
@@ -10,18 +10,18 @@ const searchBarSlice = createSlice({
         changeValue(state, action) {
             state.searchTerm = action.payload;
         },
-        changeFilteredTypes(state, action){
+        changeFilteredTypes(state, action) {
             state.searchTypeFiltered = action.payload !== ''
                 ? searchTypes.filter(type => new RegExp(type.regex).test(action.payload))
                 : [];
 
             state.selectedType = state.searchTypeFiltered.length > 0
                 ? state.searchTypeFiltered
-                    .reduce((acc, current) => {return acc.priority < current.priority ? acc : current})
+                    .reduce((acc, current) => { return acc.priority < current.priority ? acc : current })
                     .type
                 : 1
         },
-        setType(state, action){
+        setType(state, action) {
             state.selectedType = action.payload;
         },
         changeTypeUp(state) {
@@ -38,10 +38,10 @@ const searchBarSlice = createSlice({
                 : state.searchTypeFiltered[0];
             state.selectedType = newType.type;
         },
-        addRecentPatient(state, {payload}: PayloadAction<RecentPatient>) {
+        addRecentPatient(state, { payload }: PayloadAction<RecentPatient>) {
             const findPatientIndex = state.recentPatients.findIndex(patient => patient.patientId === payload.patientId);
 
-            if(findPatientIndex >= 0)
+            if (findPatientIndex >= 0)
                 state.recentPatients.splice(findPatientIndex, 1);
 
             state.recentPatients.splice(0, 0, payload);

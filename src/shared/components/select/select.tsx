@@ -1,12 +1,12 @@
-import React, { ChangeEvent } from "react";
+import React from "react";
+import Label from "../label/label";
 
-interface SelectProps {
-    name?: string,
+interface SelectProps extends React.HTMLAttributes<HTMLSelectElement> {
+
+    label?: string,
     value?: string,
-    placeholder?: string,
     options: Option[],
-    className?: string,
-    onChange?: (e: ChangeEvent<HTMLSelectElement>) => void
+    error?: string,
 }
 
 export interface Option {
@@ -14,18 +14,22 @@ export interface Option {
     label: string
 }
 
-const Select = ({ options, ...props }: SelectProps) => {
+const Select = React.forwardRef<HTMLSelectElement, SelectProps>(({ options, label, className, ...props }, ref) => {
     return (
-        <select
-            {...props}
-        >
-            {
-                options.map((option: Option, index) => (
-                    <option value={option.value} key={index}>{option.label}</option>
-                ))
-            }
-        </select>
+        <div>
+            {label && <Label text={label} className="block text-sm font-medium text-gray-700" />}
+            <select ref={ref} className={"p-2 border " + className}
+                {...props}
+            >
+                {
+                    options?.map((option: Option, index) => (
+                        <option value={option.value} key={index}>{option.label}</option>
+                    ))
+                }
+            </select>
+            {props.error && <div className="text-red-500">{props.error}</div>}
+        </div>
     )
-}
+})
 
 export default Select;

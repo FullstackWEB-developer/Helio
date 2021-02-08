@@ -1,6 +1,7 @@
 import { Patient } from "../models/patient";
 import { ExtendedPatient } from "../models/extended-patient";
 import { Appointment } from '../../external-access/appointment/models/appointment';
+import {VerifiedPatient} from "../models/verified-patient";
 
 export interface PatientsState {
     appointmentList?: Appointment[];
@@ -9,14 +10,18 @@ export interface PatientsState {
     isLoading: boolean;
     isError: boolean;
     isVerified?: boolean;
+    verifiedPatient?: VerifiedPatient;
+    isVerifyingPatient: boolean;
 }
 
 const initialState: PatientsState = {
     appointmentList: undefined,
     patientList: undefined,
     patient: undefined,
+    verifiedPatient: undefined,
     isLoading: false,
     isError: false,
-    isVerified: false
+    isVerified: false,
+    isVerifyingPatient: false
 }
 export default initialState;

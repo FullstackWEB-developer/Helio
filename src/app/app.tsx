@@ -10,29 +10,27 @@ import SearchResults from "../shared/components/search-bar/components/search-res
 import PatientChart from "../pages/patients/patient-chart";
 import VerifyRedirectLink from '../pages/external-access/hipaa-verification/verify-redirect-link';
 import AppointmentDetail from '../pages/external-access/appointment/appointment-detail';
+import RequestRefill from '../pages/external-access/request-refill/request-refill';
 const { TicketsWithErrors } = lazily(() => import('../pages/tickets/ticket-list'))
 
 function App() {
     return (
         <BrowserRouter>
             <Switch>
-                <Route path="/o/:linkId">
-                    <VerifyRedirectLink></VerifyRedirectLink>
-                </Route>
-                <Route path="/appointment-detail/:patientId">
-                    <AppointmentDetail></AppointmentDetail>
-                </Route>
+                <Route path="/o/:linkId" component={VerifyRedirectLink} />
+                <Route path="/appointment-detail/:patientId" component={AppointmentDetail} />
+                <Route path="/request-refill/:patientId" component={RequestRefill} />
                 <Route path="/login">
-                    <Login></Login>
+                    <Login />
                 </Route>
                 <Layout>
-                    <GuardedRoute exact path="/dashboard" component={Dashboard}></GuardedRoute>
+                    <GuardedRoute exact path="/dashboard" component={Dashboard}/>
                     <Suspense fallback={<FallbackLoader />}>
-                        <GuardedRoute exact path="/tickets" component={TicketsWithErrors}></GuardedRoute>
+                        <GuardedRoute exact path="/tickets" component={TicketsWithErrors}/>
                     </Suspense>
                     <Switch>
-                        <GuardedRoute exact path="/patients/results" component={SearchResults}></GuardedRoute>
-                        <GuardedRoute exact path="/patients/:patientId" component={PatientChart}></GuardedRoute>
+                        <GuardedRoute exact path="/patients/results" component={SearchResults}/>
+                        <GuardedRoute exact path="/patients/:patientId" component={PatientChart}/>
                     </Switch>
                 </Layout>
             </Switch>

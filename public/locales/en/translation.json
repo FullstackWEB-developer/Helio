@@ -1,4 +1,7 @@
 {
+  "common": {
+    "ok": "Ok"
+  },
   "login": {
     "loginButton": "Login"
   },
@@ -73,6 +76,17 @@
     "zip": "ZIP",
     "verify": "Verify",
     "hipaa_verification": "HIPAA Verification"
+  },
+  "request-refill": {
+    "notes": "Notes",
+    "medication_to_refill": "Medication to refill",
+    "provider": "Provider",
+    "location": "Location",
+    "hipaa_verification_failed": "Verification failed, cannot continue",
+    "no_medication_found": "There is no medication to renew",
+    "error": "There is an error, please try again later",
+    "completed": "Refill request completed",
+    "provider_department_load_failed" : "Providers or departments could not be loaded. Please try again later."
   },
   "appointment": {
     "error": "Apologies, an error occurred. Please try your query again.",

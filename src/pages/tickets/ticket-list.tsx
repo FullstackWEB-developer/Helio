@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import Text from "../../shared/components/text/text";
+import Label from "../../shared/components/label/label";
 import TicketDetails from './ticket-details';
 import { selectTickets } from "./store/tickets.selectors";
 import { useEffect } from "react";
@@ -19,7 +19,7 @@ const Tickets = () => {
 
     return (
         <div className="text-secondary">
-            <Text text={t('tickets.title')} type={"heading"} className={"p-2"} />
+            <Label text={t('tickets.title')} className={"p-2"} />
 
             <div className="grid grid-flow-row auto-rows-max md:auto-rows-min">
                 <div className="grid grid-flow-col auto-cols-max font-bold">

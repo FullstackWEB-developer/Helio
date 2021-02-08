@@ -39,7 +39,7 @@ const AppointmentDetail = () => {
 
     const getAppointmentDetailDisplayItems = (appointmentId: string) => {
         let resultItems: AppointmentDetailDisplayItem[] = [];
-        const selectedAppointment = appointments ? appointments.find((a: Appointment) => a.appointmentId === appointmentId) : {};
+        const selectedAppointment = appointments ? appointments.find((a: Appointment) => a.appointmentId === appointmentId) : {} as any;
 
         const getDepartmentById = (departmentId: string) => {
             return departments ? departments.find((d: Department) => d.id.toString() === departmentId) : {};

@@ -1,9 +1,8 @@
-interface Props {
+interface LabelProps {
     text: string,
-    type?: string,
     className?: string
 }
-const Text = ({ text, type, className }: Props) => {
+const Label = ({ text, className }: LabelProps) => {
     return (
         <label className={className}>
             {text}
@@ -11,4 +10,4 @@ const Text = ({ text, type, className }: Props) => {
     );
 }
 
-export default Text;
+export default Label;

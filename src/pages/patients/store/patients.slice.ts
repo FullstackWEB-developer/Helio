@@ -1,3 +1,4 @@
+import { VerifiedPatient } from './../models/verified-patient';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import initialState from './patients.initial-state';
 import { Patient } from "../models/patient";
@@ -26,12 +27,19 @@ const patientsSlice = createSlice({
         clearPatient(state) {
             state.patient = undefined;
         },
+        setVerifiedPatient(state, { payload }: PayloadAction<VerifiedPatient>) {
+            state.verifiedPatient = payload;
+            state.isVerified = true;
+        },
         setPatientIsVerified(state, { payload }: PayloadAction<boolean>) {
             state.isVerified = payload;
         },
         setAppointments(state, { payload }: PayloadAction<Appointment[]>) {
             state.appointmentList = payload;
             state.isLoading = false;
+        },
+        setIsVerifyingPatient(state, { payload }: PayloadAction<boolean>) {
+            state.isVerifyingPatient = payload;
         },
         clearAppointments(state) {
             state.appointmentList = undefined;
@@ -47,8 +55,10 @@ export const {
     selectPatient,
     clearPatient,
     setPatientIsVerified,
+    setVerifiedPatient,
     setAppointments,
-    clearAppointments
+    clearAppointments,
+    setIsVerifyingPatient
 } = patientsSlice.actions
 
 export default patientsSlice.reducer

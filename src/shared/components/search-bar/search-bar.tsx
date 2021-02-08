@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {SearchType} from "./models/search-type";
 import { ReactComponent as SearchIcon } from '../../icons/Icon-Search-16px.svg';
-import Text from "../text/text";
+import Label from "../label/label";
 import {
     selectRecentPatients,
     selectSearchTypeFiltered,
@@ -87,7 +87,7 @@ const SearchBar = () => {
             <div hidden={hideDropdown} className={"absolute flex-col divide-y shadow-md w-80 bg-white z-50"}>
                 <div className={"pb-2"} hidden={searchTypeFiltered.length === 0}>
                     <p className={"px-4 pt-4 pb-2"}>
-                        <Text text={t("search.search_title")} className={"font-bold"}/>
+                        <Label text={t("search.search_title")} className={"font-bold"}/>
                     </p>
                     {
                         searchTypeFiltered.map((typeItem: SearchType) =>
@@ -96,7 +96,7 @@ const SearchBar = () => {
                 </div>
                 <div className={"pb-2"} hidden={recentPatients.length === 0}>
                     <div className={"px-4 pt-4 pb-2 flex"}>
-                        <Text text={t("search.recent_patients")} className={"font-bold flex-1"}/>
+                        <Label text={t("search.recent_patients")} className={"font-bold flex-1"}/>
                         <label className={"text-blue-500"} onClick={() => clearRecent()}>Clear</label>
                     </div>
                     {

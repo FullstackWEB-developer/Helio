@@ -1,8 +1,6 @@
 import {Dispatch} from "@reduxjs/toolkit";
 import {setError} from "../components/search-bar/store/search-bar.slice";
 import {
-    clearDepartments,
-    clearProviders,
     setDepartments,
     setLoading,
     setProviders
@@ -26,12 +24,12 @@ export const getProviders = () => {
             .catch(error => {
                 switch (error.response?.status) {
                     case 404:
-                        dispatch(setProviders([]));
+                        dispatch(setProviders(undefined));
                         break;
                     default:
                         logger.error('Failed getting Providers', error);
                         dispatch(setError(true));
-                        dispatch(clearProviders());
+                        dispatch(setProviders(undefined));
                         dispatch(setLoading(false));
                         break;
                 }
@@ -51,12 +49,12 @@ export const getDepartments = () => {
             .catch(error => {
                 switch (error.response?.status) {
                     case 404:
-                        dispatch(setDepartments([]));
+                        dispatch(setDepartments(undefined));
                         break;
                     default:
                         logger.error('Failed getting Departments', error);
                         dispatch(setError(true));
-                        dispatch(clearDepartments());
+                        dispatch(setDepartments(undefined));
                         dispatch(setLoading(false));
                         break;
                 }

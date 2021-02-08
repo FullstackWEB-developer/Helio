@@ -11,7 +11,9 @@ import {
     setError as setPatientError,
     setLoading,
     setPatientIsVerified,
-    setPatients
+    setVerifiedPatient,
+    setPatients,
+    setIsVerifyingPatient
 } from '../../pages/patients/store/patients.slice';
 
 const logger = Logger.getInstance();
@@ -76,10 +78,11 @@ export const verifyPatient = (dateOfBirth: string, phoneNumber: string, zipCode:
     const url = patientsUrl + '/verify?dateOfBirth=' + dateOfBirth + '&phoneNumber=' + phoneNumber + '&zipCode=' + zipCode;
     return async (dispatch: Dispatch) => {
         dispatch(setError(false));
+        dispatch(setIsVerifyingPatient(true));
         dispatch(setLoading(true));
         await Api.get(url)
-            .then(() => {
-                dispatch(setPatientIsVerified(true))
+            .then((response) => {
+                dispatch(setVerifiedPatient(response.data));
             })
             .catch(error => {
                 switch (error.response?.status) {
@@ -93,7 +96,10 @@ export const verifyPatient = (dateOfBirth: string, phoneNumber: string, zipCode:
                         dispatch(setPatientIsVerified(false));
                         break;
                 }
-            });
+            })
+            .finally(() => {
+                dispatch(setIsVerifyingPatient(false));
+            })
     }
 }
 

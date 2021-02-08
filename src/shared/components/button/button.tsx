@@ -1,6 +1,8 @@
-interface ButtonProps extends React.HTMLAttributes<HTMLElement> {
+import React from "react";
+
+interface ButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
     label: string,
-    type?: 'button' | 'submit' | 'reset' | undefined,
+    type?: 'button' | 'submit' | 'reset'
 }
 const Button = ({ label, type, ...props }: ButtonProps) => {
     type = type || 'button';

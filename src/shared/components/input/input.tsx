@@ -1,24 +1,26 @@
 import React, { ChangeEvent, Fragment } from "react";
 
-interface InputProps extends React.HTMLAttributes<HTMLElement> {
+interface InputProps extends React.HTMLAttributes<HTMLInputElement> {
     id?: string,
     name?: string,
     value?: string,
     label?: string,
-    type?: 'text' | 'number'| 'checkbox' | 'date' | 'time' | 'week' | 'month' | 'email' | 'url' | 'color' | undefined,
+    error?: string,
+    type?: 'text' | 'number' | 'checkbox' | 'date' | 'time' | 'week' | 'month' | 'email' | 'url' | 'color' | undefined,
     htmlFor?: string,
     onChange?: (e: ChangeEvent<HTMLInputElement>) => void
 }
-const Input = ({ label, htmlFor, ...props }: InputProps) => {
+const Input = React.forwardRef<HTMLInputElement, InputProps>(({ label, htmlFor, ...props }: InputProps, ref) => {
     return (
         <Fragment>
             <label htmlFor={htmlFor} className="block text-sm font-medium text-gray-700">
                 {label}
             </label>
-            <input {...props}
-               className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+            <input ref={ref} {...props}
+                className={"border mt-1 rounded-md p-4 " + props.className} />
+            {props.error && <div className="text-red-500">{props.error}</div>}
         </Fragment>
     );
-}
+})
 
 export default Input;
