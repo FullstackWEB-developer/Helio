@@ -52,8 +52,12 @@ const HipaaVerification = () => {
         setIsVerifyingPatient(true);
         try {
             const verifiedPatient = await verifyPatient(formData.dob, formData.phone, formData.zip);
-            dispatch(setVerifiedPatient(verifiedPatient as VerifiedPatient));
-            forwardToRelatedPage();
+            if (verifiedPatient.patientId.toString() === redirectLink.patientId) {
+                dispatch(setVerifiedPatient(verifiedPatient as VerifiedPatient));
+                forwardToRelatedPage();
+            } else {
+                dispatch(setPatientIsVerified(false));
+            }
         } catch(error) {
             switch (error.response?.status) {
                 case 404:
