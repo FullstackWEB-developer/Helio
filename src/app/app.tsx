@@ -12,6 +12,7 @@ import VerifyRedirectLink from '../pages/external-access/hipaa-verification/veri
 import AppointmentDetail from '../pages/external-access/appointment/appointment-detail';
 import RequestRefill from '../pages/external-access/request-refill/request-refill';
 import RequestMedicalRecords from "../pages/external-access/request-medical-records/request-medical-records";
+import LabResults from '../pages/external-access/lab-results/lab-results';
 const { TicketsWithErrors } = lazily(() => import('../pages/tickets/ticket-list'))
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
                 <Route path="/appointment-detail/:patientId" component={AppointmentDetail} />
                 <Route path="/request-refill" component={RequestRefill} />
                 <Route path="/request-medical-records" component={RequestMedicalRecords} />
+                <Route path="/lab-results" component={LabResults} />
                 <Route path="/login">
                     <Login />
                 </Route>

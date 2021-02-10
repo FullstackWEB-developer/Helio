@@ -1,6 +1,8 @@
 {
   "common": {
-    "ok": "Ok"
+    "ok": "Ok",
+    "download_pdf": "Download PDF",
+    "print": "Print"
   },
   "login": {
     "loginButton": "Login"
@@ -107,5 +109,16 @@
     "reSchedule": "ReSchedule",
     "cancel": "Cancel",
     "no_appointments": "There are no appointments."
+  },
+  "lab-results": {
+    "label": "Lab results",
+    "detail_display_item_status": "Status",
+    "detail_display_item_date": "Date",
+    "detail_display_item_note": "Note",
+    "no_lab_results_found": "There are no lab results",
+    "error": "There is an error, please try again later",
+    "completed": "Refill request completed",
+    "detail_info" : "Lab Result Detailed Information",
+    "detail_info_description" : "Status, date, time and note."
   }
 }

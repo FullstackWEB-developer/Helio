@@ -88,6 +88,9 @@ const HipaaVerification = () => {
                 case RequestTypes.RequestMedicalRecords:
                     history.push('/request-medical-records');
                     break;
+                case RequestTypes.GetLabResults:
+                    history.push('/lab-results/');
+                    break;
             }
         }
     }

@@ -97,7 +97,7 @@ const AppointmentDetail = () => {
         })) : [];
 
         if (selectedOption === null && options && options.length > 0) {
-            setSelectedOption(options[1]);
+            setSelectedOption(options[0]);
         }
         if (selectedOption && selectedOption.value && items.length === 0) {
             setItems(getAppointmentDetailDisplayItems(selectedOption.value));
