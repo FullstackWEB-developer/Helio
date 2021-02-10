@@ -11,7 +11,7 @@ import { getAppointments } from '../../../shared/services/search.service';
 import { selectDepartmentList, selectProviderList } from '../../../shared/store/lookups/lookups.selectors';
 import utils from '../../../shared/utils/utils';
 import { selectAppointmentList, selectIsPatientError, selectIsPatientVerified, selectPatientLoading } from '../../patients/store/patients.selectors';
-import { clearAppointments } from '../../patients/store/patients.slice';
+import {clearAppointments, clearVerifiedPatient} from '../../patients/store/patients.slice';
 import { clearRedirectLink } from '../hipaa-verification/store/redirect-link-slice.slice';
 import AppointmentDetailItem from './components/appointment-detail-item';
 import { Appointment } from './models/appointment';
@@ -112,6 +112,11 @@ const AppointmentDetail = () => {
         dispatch(getAppointments(patientId));
         dispatch(getProviders());
         dispatch(getDepartments());
+        return () => {
+            dispatch(clearVerifiedPatient());
+            dispatch(clearAppointments());
+            dispatch(clearRedirectLink());
+        }
     }, [dispatch, patientId]);
 
     const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {

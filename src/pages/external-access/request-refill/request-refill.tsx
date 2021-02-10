@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { getPatientsMedications, requestRefill } from "./services/request-refill.service";
 import {
@@ -21,15 +20,11 @@ import { Provider } from "../../../shared/models/provider";
 import { Department } from "../../../shared/models/department";
 import { selectVerifiedPatent } from '../../patients/store/patients.selectors';
 import { resetRequestRefillState } from './store/request-refill.slice';
-
-interface RequestRefillParams {
-    patientId: string
-}
+import {clearVerifiedPatient} from "../../patients/store/patients.slice";
 
 const RequestRefill = () => {
 
     const { t } = useTranslation();
-    const { patientId } = useParams<RequestRefillParams>();
     const dispatch = useDispatch();
     const medications = useSelector(selectMedications);
     const departments = useSelector(selectDepartmentList);
@@ -43,21 +38,22 @@ const RequestRefill = () => {
         const providerId: string = data.providerId.value;
         const departmentId: string = data.departmentId.value;
         const note: string = `Medication : ${data.medication.label}, Patient Note : ${data.note}`;
-        dispatch(requestRefill(patientId, departmentId, providerId, note));
+        dispatch(requestRefill(verifiedPatient.patientId.toString(), departmentId, providerId, note));
     }
 
     const { handleSubmit, control, errors } = useForm();
 
     useEffect(() => {
         if (verifiedPatient) {
-            dispatch(getPatientsMedications(patientId, verifiedPatient?.departmentId));
+            dispatch(getPatientsMedications(verifiedPatient.patientId.toString(), verifiedPatient?.departmentId));
             dispatch(getDepartments());
             dispatch(getProviders());
         }
         return () => {
             dispatch(resetRequestRefillState());
+            dispatch(clearVerifiedPatient());
         }
-    }, [dispatch, patientId, verifiedPatient]);
+    }, [dispatch, verifiedPatient]);
 
     const medicationOptions: Option[] = medications?.map(item => {
         return {

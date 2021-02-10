@@ -79,7 +79,10 @@ const HipaaVerification = () => {
                     history.push('/appointment-detail/' + redirectLink.patientId);
                     break;
                 case RequestTypes.RequestRefill:
-                    history.push('/request-refill/' + redirectLink.patientId);
+                    history.push('/request-refill');
+                    break;
+                case RequestTypes.RequestMedicalRecords:
+                    history.push('/request-medical-records');
                     break;
             }
         }

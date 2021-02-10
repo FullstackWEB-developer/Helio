@@ -31,6 +31,10 @@ const patientsSlice = createSlice({
             state.verifiedPatient = payload;
             state.isVerified = true;
         },
+        clearVerifiedPatient(state) {
+            state.verifiedPatient = undefined;
+            state.isVerified = false;
+        },
         setPatientIsVerified(state, { payload }: PayloadAction<boolean>) {
             state.isVerified = payload;
         },
@@ -55,6 +59,7 @@ export const {
     setVerifiedPatient,
     setAppointments,
     clearAppointments,
+    clearVerifiedPatient
 } = patientsSlice.actions
 
 export default patientsSlice.reducer
