@@ -1,7 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router';
 import Select from '../../../shared/components/select/select';
 import ThreeDots from '../../../shared/components/skeleton-loader/skeleton-loader';
 import { Department } from '../../../shared/models/department';
@@ -11,25 +10,22 @@ import { getAppointments } from '../../../shared/services/search.service';
 import { selectDepartmentList, selectProviderList } from '../../../shared/store/lookups/lookups.selectors';
 import utils from '../../../shared/utils/utils';
 import { selectAppointmentList, selectIsPatientError, selectIsPatientVerified, selectPatientLoading } from '../../patients/store/patients.selectors';
-import {clearAppointments, clearVerifiedPatient} from '../../patients/store/patients.slice';
+import { clearAppointments, clearVerifiedPatient } from '../../patients/store/patients.slice';
 import { clearRedirectLink } from '../hipaa-verification/store/redirect-link-slice.slice';
 import AppointmentDetailItem from './components/appointment-detail-item';
 import { Appointment } from './models/appointment';
 import { AppointmentDetailDisplayItem } from './models/appointment-detail-display-item';
-
-interface PatientParams {
-    patientId: string
-}
+import { selectVerifiedPatent } from '../../patients/store/patients.selectors';
 
 const AppointmentDetail = () => {
     const { t } = useTranslation();
-    const { patientId } = useParams<PatientParams>();
     const dispatch = useDispatch();
 
     const isError = useSelector(selectIsPatientError);
     const isLoading = useSelector(selectPatientLoading)
     const isVerified = useSelector(selectIsPatientVerified);
     const appointments = useSelector(selectAppointmentList);
+    const verifiedPatient = useSelector(selectVerifiedPatent);
     const departments = useSelector(selectDepartmentList);
     const providers = useSelector(selectProviderList);
 
@@ -107,17 +103,17 @@ const AppointmentDetail = () => {
     manageOptions();
 
     useEffect(() => {
-        dispatch(clearRedirectLink());
-        dispatch(clearAppointments());
-        dispatch(getAppointments(patientId));
-        dispatch(getProviders());
-        dispatch(getDepartments());
+        if (verifiedPatient) {
+            dispatch(getAppointments(verifiedPatient.patientId.toString()));
+            dispatch(getProviders());
+            dispatch(getDepartments());
+        }
         return () => {
             dispatch(clearVerifiedPatient());
             dispatch(clearAppointments());
             dispatch(clearRedirectLink());
         }
-    }, [dispatch, patientId]);
+    }, [dispatch, verifiedPatient]);
 
     const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         event.stopPropagation();

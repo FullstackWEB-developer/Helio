@@ -13,7 +13,7 @@ import ThreeDots from '../../../shared/components/skeleton-loader/skeleton-loade
 import { selectVerifiedPatent } from '../../patients/store/patients.selectors';
 import { resetLabResultsState } from './store/lab-results.slice';
 import LabResultDetailItem from './components/lab-result-detail-item';
-import {clearVerifiedPatient} from '../../patients/store/patients.slice';
+import { clearVerifiedPatient } from '../../patients/store/patients.slice';
 import withErrorLogging from '../../../shared/HOC/with-error-logging';
 
 interface LabResultOption extends Option{

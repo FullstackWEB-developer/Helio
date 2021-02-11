@@ -80,7 +80,7 @@ const HipaaVerification = () => {
         if (redirectLink !== undefined) {
             switch (redirectLink.requestType) {
                 case RequestTypes.GetAppointmentDetail:
-                    history.push('/appointment-detail/' + redirectLink.patientId);
+                    history.push('/appointment-detail');
                     break;
                 case RequestTypes.RequestRefill:
                     history.push('/request-refill');
@@ -89,7 +89,7 @@ const HipaaVerification = () => {
                     history.push('/request-medical-records');
                     break;
                 case RequestTypes.GetLabResults:
-                    history.push('/lab-results/');
+                    history.push('/lab-results');
                     break;
             }
         }

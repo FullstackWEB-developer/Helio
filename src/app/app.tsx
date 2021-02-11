@@ -20,7 +20,7 @@ function App() {
         <BrowserRouter>
             <Switch>
                 <Route path="/o/:linkId" component={VerifyRedirectLink} />
-                <Route path="/appointment-detail/:patientId" component={AppointmentDetail} />
+                <Route path="/appointment-detail" component={AppointmentDetail} />
                 <Route path="/request-refill" component={RequestRefill} />
                 <Route path="/request-medical-records" component={RequestMedicalRecords} />
                 <Route path="/lab-results" component={LabResults} />
