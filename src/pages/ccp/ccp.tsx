@@ -47,7 +47,7 @@ const Ccp: React.FC<BoxProps> = ({
     isCcpVisibleRef.current = useSelector(isCcpVisibleSelector);
 
     useEffect(() => {
-        let ccpContainer = document.getElementById("ccp-container");       
+        let ccpContainer = document.getElementById("ccp-container");
         connect.core.initCCP(ccpContainer as HTMLDivElement, {
             ccpUrl: ccpConfig.ccpUrl,
             loginPopup: true, // optional, defaults to `true`
@@ -136,4 +136,4 @@ const Ccp: React.FC<BoxProps> = ({
     );
 }
 
-export const CcpWithErrors = withErrorLogging(Ccp);
+export default withErrorLogging(Ccp);

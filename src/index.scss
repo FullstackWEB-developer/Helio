@@ -3,17 +3,17 @@
 
 @font-face {
     font-family: 'Roboto';
-    src: local('Roboto'), url(./themes/fonts/roboto/Roboto-Regular.ttf) format('truetype');
+    src: local('Roboto'), url(./themes/fonts/roboto/Roboto-Regular-webfont.woff) format('woff');
 }
 
 @font-face {
     font-family: 'RobotoMedium';
-    src: local('Roboto-Medium'), url(./themes/fonts/roboto/Roboto-Medium.ttf) format('truetype');
+    src: local('Roboto-Medium'), url(./themes/fonts/roboto/Roboto-Medium-webfont.woff) format('woff');
 }
 
 @font-face {
     font-family: 'RobotoBold';
-    src: local('Roboto-Bold'), url(./themes/fonts/roboto/Roboto-Bold.ttf) format('truetype');
+    src: local('Roboto-Bold'), url(./themes/fonts/roboto/Roboto-Bold-webfont.woff) format('woff');
 }
 
 @tailwind utilities;
