@@ -2,7 +2,9 @@
   "common": {
     "ok": "Ok",
     "download_pdf": "Download PDF",
-    "print": "Print"
+    "print": "Print",
+    "error": "There is an error, please try again later",
+    "required": "This field is required!"
   },
   "login": {
     "loginButton": "Login"
@@ -109,6 +111,16 @@
     "reSchedule": "ReSchedule",
     "cancel": "Cancel",
     "no_appointments": "There are no appointments."
+  },
+  "reschedule_appointment" : {
+    "select_appointment_to_reschedule" : "Appointment to reschedule",
+    "start_date": "Start date",
+    "end_date": "End date",
+    "find_open_slots": "Find open slots",
+    "new_appointment" : "Please select new appointment date",
+    "reschedule" : "Reschedule now!",
+    "no_slots_found" : "No open slot found for this range, please select any other date range.",
+    "appointment_rescheduled": "Appointment is rescheduled"
   },
   "lab-results": {
     "label": "Lab results",

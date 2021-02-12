@@ -38,10 +38,10 @@ const AppointmentDetail = () => {
         const selectedAppointment = appointments ? appointments.find((a: Appointment) => a.appointmentId === appointmentId) : {} as any;
 
         const getDepartmentById = (departmentId: string) => {
-            return departments ? departments.find((d: Department) => d.id.toString() === departmentId) : {};
+            return departments ? departments.find((d: Department) => d.id.toString() === departmentId) : null;
         }
         const getProviderById = (providerId: string) => {
-            return providers ? providers.find((p: Provider) => p.id.toString() === providerId) : {};
+            return providers ? providers.find((p: Provider) => p.id.toString() === providerId) : null;
         }
 
         if (selectedAppointment) {
@@ -71,7 +71,7 @@ const AppointmentDetail = () => {
                 },
                 {
                     title: t('appointment.address'),
-                    description: selectedDepartment.address
+                    description: selectedDepartment ? selectedDepartment.address : ''
                 },
                 {
                     title: t('appointment.reminders_instructions'),

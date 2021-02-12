@@ -85,6 +85,9 @@ const HipaaVerification = () => {
                 case RequestTypes.RequestRefill:
                     history.push('/request-refill');
                     break;
+                case RequestTypes.RescheduleAppointment:
+                    history.push('/reschedule-appointment');
+                    break;
                 case RequestTypes.RequestMedicalRecords:
                     history.push('/request-medical-records');
                     break;

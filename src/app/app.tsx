@@ -1,40 +1,39 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import { Switch, Route, BrowserRouter } from 'react-router-dom'
-import { lazily } from "react-lazily";
-import FallbackLoader from '../shared/components/skeleton-loader/skeleton-loader';
 import Layout from '../shared/layout/layout';
 import Login from '../pages/login/login';
 import GuardedRoute from './guarded-route';
 import { Dashboard } from '../pages/dashboard/dashboard';
-import SearchResults from "../shared/components/search-bar/components/search-results";
-import PatientChart from "../pages/patients/patient-chart";
-import VerifyRedirectLink from '../pages/external-access/hipaa-verification/verify-redirect-link';
-import AppointmentDetail from '../pages/external-access/appointment/appointment-detail';
-import RequestRefill from '../pages/external-access/request-refill/request-refill';
-import RequestMedicalRecords from "../pages/external-access/request-medical-records/request-medical-records";
-import LabResults from '../pages/external-access/lab-results/lab-results';
-const { TicketsWithErrors } = lazily(() => import('../pages/tickets/ticket-list'))
+import {withSuspense} from "../shared/HOC/with-suspense";
+const SearchResults = React.lazy(() => import('../shared/components/search-bar/components/search-results'));
+const PatientChart = React.lazy(() => import('../pages/patients/patient-chart'));
+const VerifyRedirectLink = React.lazy(() => import('../pages/external-access/hipaa-verification/verify-redirect-link'));
+const AppointmentDetail = React.lazy(() => import('../pages/external-access/appointment/appointment-detail'));
+const RequestRefill = React.lazy(() => import('../pages/external-access/request-refill/request-refill'));
+const RequestMedicalRecords = React.lazy(() => import('../pages/external-access/request-medical-records/request-medical-records'));
+const LabResults = React.lazy(() => import('../pages/external-access/lab-results/lab-results'));
+const TicketsWithErrors = React.lazy(() => import('../pages/tickets/ticket-list'));
+const RescheduleAppointment = React.lazy(() => import('../pages/external-access/reschedule-appointment/reschedule-appointment'));
 
 function App() {
     return (
         <BrowserRouter>
             <Switch>
-                <Route path="/o/:linkId" component={VerifyRedirectLink} />
-                <Route path="/appointment-detail" component={AppointmentDetail} />
-                <Route path="/request-refill" component={RequestRefill} />
-                <Route path="/request-medical-records" component={RequestMedicalRecords} />
-                <Route path="/lab-results" component={LabResults} />
+                <Route path="/o/:linkId" component={withSuspense(VerifyRedirectLink)} />
+                <Route path="/appointment-detail" component={withSuspense(AppointmentDetail)} />
+                <Route path="/request-refill" component={withSuspense(RequestRefill)} />
+                <Route path="/request-medical-records" component={withSuspense(RequestMedicalRecords)} />
+                <Route path="/lab-results" component={withSuspense(LabResults)} />
+                    <Route path="/reschedule-appointment" component={withSuspense(RescheduleAppointment)} />
                 <Route path="/login">
                     <Login />
                 </Route>
                 <Layout>
                     <GuardedRoute exact path="/dashboard" component={Dashboard}/>
-                    <Suspense fallback={<FallbackLoader />}>
-                        <GuardedRoute exact path="/tickets" component={TicketsWithErrors}/>
-                    </Suspense>
+                        <GuardedRoute exact path="/tickets" component={withSuspense(TicketsWithErrors)}/>
                     <Switch>
-                        <GuardedRoute exact path="/patients/results" component={SearchResults}/>
-                        <GuardedRoute exact path="/patients/:patientId" component={PatientChart}/>
+                        <GuardedRoute exact path="/patients/results" component={withSuspense(SearchResults)}/>
+                        <GuardedRoute exact path="/patients/:patientId" component={withSuspense(PatientChart)}/>
                     </Switch>
                 </Layout>
             </Switch>
