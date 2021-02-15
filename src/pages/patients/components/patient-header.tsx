@@ -3,6 +3,8 @@ import {selectPatient} from "../store/patients.selectors";
 import {useSelector} from "react-redux";
 import utils from "../utils/utils";
 import {ExtendedPatient} from "../models/extended-patient";
+import ActivityPanel from './activity-panel';
+import React from 'react';
 
 const PatientHeader = () => {
     const { t } = useTranslation();
@@ -17,7 +19,7 @@ const PatientHeader = () => {
     }
     return (
         <div className={"flex flex-row p-8"}>
-            <div className={"h-24 w-24 bg-gray-200"}></div>
+            <div className={"h-24 w-24 bg-gray-200"}/>
             <div className={"w-96 pl-8 pt-4"}>
                 <div>
                     <span className={"text-xl font-bold"}>{`${patient.firstName} ${patient.lastName}`}</span>
@@ -39,6 +41,7 @@ const PatientHeader = () => {
                     }
                 </div>
             </div>
+            <ActivityPanel/>
         </div>
     );
 }

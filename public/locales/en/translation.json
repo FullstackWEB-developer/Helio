@@ -4,7 +4,10 @@
     "download_pdf": "Download PDF",
     "print": "Print",
     "error": "There is an error, please try again later",
-    "required": "This field is required!"
+    "required": "This field is required!",
+    "clear": "Clear",
+    "show_more": "Show more",
+    "show_less": "Show less"
   },
   "login": {
     "loginButton": "Login"
@@ -67,7 +70,11 @@
       "dob": "DOB",
       "ssn": "SSN"
     },
-    "not_found": "Patient with that ID is not found"
+    "not_found": "Patient with that ID is not found",
+    "activity_panel_header" : "Activity",
+    "notes_tab_label": "Notes",
+    "tickets_tab_label": "Tickets",
+    "activity" : "Activity"
   },
   "redirect_link": {
     "link_not_active": "We apologize, but this link is not active. Please contact the call center.",

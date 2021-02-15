@@ -48,9 +48,9 @@ const Navigation = () => {
         }
     ];
 
-    var items = menuItems.map((item, index) => {
-        var isSelected = isActive(item.link);
-        return <div key={index} className={isSelected ? "border-l-4 border-gray-800 bg-gray-100" : ""}>
+    const items = menuItems.map((item, index) => {
+        const isSelected = isActive(item.link);
+        return <div key={index} className={isSelected ? "border-l-4 border-primary bg-gray-100" : ""}>
             <NavigationItem isSelected={isSelected} key={index} icon={item.icon} link={item.link} title={item.title}></NavigationItem>
         </div>
     });

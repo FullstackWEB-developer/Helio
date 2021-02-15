@@ -97,7 +97,7 @@ const SearchBar = () => {
                 <div className={"pb-2"} hidden={recentPatients.length === 0}>
                     <div className={"px-4 pt-4 pb-2 flex"}>
                         <Label text={t("search.recent_patients")} className={"font-bold flex-1"}/>
-                        <label className={"text-blue-500"} onClick={() => clearRecent()}>Clear</label>
+                        <label className={"text-primary-600 cursor-pointer"} onClick={() => clearRecent()}>{t('common.clear')}</label>
                     </div>
                     {
                         recentPatients.map((rPatient: RecentPatient) =>

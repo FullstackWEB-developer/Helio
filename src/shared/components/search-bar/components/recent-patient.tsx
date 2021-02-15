@@ -8,7 +8,7 @@ interface RecentPatientProps {
 const RecentPatientDetails = ({patient, onClick}: RecentPatientProps) => {
     const { t } = useTranslation();
     return(
-        <div className={"px-4 py-2 hover:bg-blue-500 hover:text-white cursor-pointer"} key={patient.patientId}>
+        <div className={"px-4 py-2 hover:bg-primary-400 hover:text-white cursor-pointer"} key={patient.patientId}>
                                 <span onClick={() => onClick(patient)}>
                                     <p>{`${patient.lastName}, ${patient.firstName}`}</p>
                                     <p>{`${patient.age} ${t("search.yearsOld")} X | ${patient.dob} | #${patient.patientId}`}</p>
