@@ -10,7 +10,7 @@ import {selectPatient} from '../store/patients.selectors';
 const ActivityPanel: React.FC<{}> = () => {
     const {t} = useTranslation();
     const patient = useSelector(selectPatient);
-    return <div className='w-2/5 px-4'>
+    return <div className='px-4'>
             <div className='font-bold text-2xl pb-3'>{t('patient.activity')}</div>
             <Tabs>
                 <Tab title={t('patient.notes_tab_label')}>

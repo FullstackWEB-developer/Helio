@@ -1,4 +1,8 @@
 {
+  "common": {
+    "yes": "Si",
+    "no": "No"
+  },
   "navigation": {
     "dashboard": "Tablero",
     "my_tickets": "Mis Entradas",

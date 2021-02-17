@@ -52,7 +52,7 @@ export const DndContainer: React.FC<ContainerProps> = ({ propsChildren}) => {
 
     return (
         <div ref={drop} className="h-full w-full">
-            <div className="flex flex-auto">
+            <div className="flex flex-auto h-full">
                 {propsChildren}
             </div>
             {Object.keys(boxes).map((key) => {

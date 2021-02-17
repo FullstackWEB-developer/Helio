@@ -4,6 +4,9 @@ import { Appointment } from '../../external-access/appointment/models/appointmen
 import { ExtendedPatient } from '../models/extended-patient';
 import { Patient } from '../models/patient';
 import { VerifiedPatient } from '../models/verified-patient';
+import {Insurance} from "../models/insurance";
+import {PatientChartSummary} from "../models/patient-chart-summary";
+import {ClinicalDetails} from "../models/clinical-details";
 export const patientState = (state: RootState) => state.patientsState
 
 export const selectAppointmentList = createSelector(
@@ -37,4 +40,55 @@ export const selectIsVerifyingPatient = createSelector(
 export const selectVerifiedPatent = createSelector(
     patientState,
     state => state.verifiedPatient as VerifiedPatient
+)
+
+export const selectPatientChartSummary = createSelector(
+    patientState,
+    state => state.patientChartSummary as PatientChartSummary
+)
+
+export const selectPatientInsurance = createSelector(
+    patientState,
+    state => state.patientChartInsurance as Insurance[]
+)
+
+export const selectPrimaryInsurance = createSelector(
+    patientState,
+    state => {
+        if(state.patientChartInsurance && state.patientChartInsurance.length > 0) {
+            return state.patientChartInsurance[0] as Insurance
+        } else return undefined;
+    }
+)
+
+export const selectPatientClinical = createSelector(
+    patientState,
+    state => state.patientChartClinical as ClinicalDetails
+)
+
+export const selectSummaryLoading = createSelector(
+    patientState,
+    state => state.isSummaryLoading as boolean
+)
+
+export const selectClinicalLoading = createSelector(
+    patientState,
+    state => state.isClinicalLoading as boolean
+)
+
+export const selectInsuranceLoading = createSelector(
+    patientState,
+    state => state.isInsuranceLoading as boolean
+)
+export const selectIsSummaryError = createSelector(
+    patientState,
+    state => state.isSummaryError as boolean
+)
+export const selectIsClinicalError = createSelector(
+    patientState,
+    state => state.isClinicalError as boolean
+)
+export const selectIsInsuranceError = createSelector(
+    patientState,
+    state => state.isInsuranceError as boolean
 )

@@ -4,6 +4,9 @@ import initialState from './patients.initial-state';
 import { Patient } from "../models/patient";
 import { ExtendedPatient } from "../models/extended-patient";
 import { Appointment } from '../../external-access/appointment/models/appointment';
+import {PatientChartSummary} from "../models/patient-chart-summary";
+import {ClinicalDetails} from "../models/clinical-details";
+import {Insurance} from "../models/insurance";
 
 const patientsSlice = createSlice({
     name: 'patients',
@@ -44,7 +47,46 @@ const patientsSlice = createSlice({
         },
         clearAppointments(state) {
             state.appointmentList = undefined;
-        }
+        },
+        setPatientChartSummary(state, {payload}: PayloadAction<PatientChartSummary>) {
+            state.patientChartSummary = payload;
+            state.isSummaryLoading = false;
+        },
+        clearPatientSummary(state) {
+            state.patientChartSummary = undefined;
+        },
+        setSummaryLoading(state, { payload }: PayloadAction<boolean>) {
+            state.isSummaryLoading = payload;
+        },
+        setPatientChartClinical(state, {payload}: PayloadAction<ClinicalDetails>) {
+            state.patientChartClinical = payload;
+            state.isClinicalLoading = false;
+        },
+        clearPatientClinical(state) {
+            state.patientChartClinical = undefined;
+        },
+        setClinicalLoading(state, { payload }: PayloadAction<boolean>) {
+            state.isClinicalLoading = payload;
+        },
+        setPatientChartInsurance(state, {payload}: PayloadAction<Insurance[]>) {
+            state.patientChartInsurance = payload;
+            state.isInsuranceLoading = false;
+        },
+        clearPatientInsurance(state) {
+            state.patientChartInsurance = undefined;
+        },
+        setInsuranceLoading(state, { payload }: PayloadAction<boolean>) {
+            state.isInsuranceLoading = payload;
+        },
+        setSummaryError(state, { payload }: PayloadAction<boolean>) {
+            state.isSummaryError = payload;
+        },
+        setClinicalError(state, { payload }: PayloadAction<boolean>) {
+            state.isClinicalError = payload;
+        },
+        setInsuranceError(state, { payload }: PayloadAction<boolean>) {
+            state.isInsuranceError = payload;
+        },
     }
 });
 
@@ -59,7 +101,19 @@ export const {
     setVerifiedPatient,
     setAppointments,
     clearAppointments,
-    clearVerifiedPatient
+    clearVerifiedPatient,
+    setPatientChartSummary,
+    setPatientChartClinical,
+    setPatientChartInsurance,
+    setSummaryLoading,
+    setClinicalLoading,
+    setInsuranceLoading,
+    clearPatientClinical,
+    clearPatientInsurance,
+    clearPatientSummary,
+    setSummaryError,
+    setClinicalError,
+    setInsuranceError
 } = patientsSlice.actions
 
 export default patientsSlice.reducer

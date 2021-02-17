@@ -3,6 +3,7 @@ export interface Insurance {
     eligibilityLastChecked: string,
     eligibilityReason: string,
     eligibilityStatus: string,
+    eligibilityMessage: string,
     id: string,
     insuranceId: string,
     insuranceIdNumber: string,
@@ -25,8 +26,10 @@ export interface Insurance {
     insuredLastName: string,
     insuredSex: string,
     insuredentityTypeId: string,
+    insuredPcp: string,
     ircName: string,
     ireligibilityLastCheckedCname: string,
+    policyNumber: string,
     relationshipToInsured: string,
     relationshipToInsuredId: string
 }

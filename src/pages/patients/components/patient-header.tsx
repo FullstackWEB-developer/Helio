@@ -3,7 +3,6 @@ import {selectPatient} from "../store/patients.selectors";
 import {useSelector} from "react-redux";
 import utils from "../utils/utils";
 import {ExtendedPatient} from "../models/extended-patient";
-import ActivityPanel from './activity-panel';
 import React from 'react';
 
 const PatientHeader = () => {
@@ -21,12 +20,12 @@ const PatientHeader = () => {
         <div className={"flex flex-row p-8"}>
             <div className={"h-24 w-24 bg-gray-200"}/>
             <div className={"w-96 pl-8 pt-4"}>
-                <div>
-                    <span className={"text-xl font-bold"}>{`${patient.firstName} ${patient.lastName}`}</span>
-                    <span className={"text-xl pl-8"}>{t("patient.header.id")}</span>
-                    <span className={"text-xl font-bold pl-4"}>{patient.patientId}</span>
+                <div className={"text-2xl"}>
+                    <span className={"font-bold"}>{`${patient.firstName} ${patient.lastName}`}</span>
+                    <span className={"pl-8"}>{t("patient.header.id")}</span>
+                    <span className={"font-bold pl-4"}>{patient.patientId}</span>
                 </div>
-                <div className={"pt-4 flex flex-row space-x-10"}>
+                <div className={"pt-4 flex flex-row space-x-10 text-xl"}>
                     {
                         SmallLabel(t("patient.header.age"), utils.getAge(patient.dateOfBirth).toString())
                     }
@@ -41,7 +40,6 @@ const PatientHeader = () => {
                     }
                 </div>
             </div>
-            <ActivityPanel/>
         </div>
     );
 }

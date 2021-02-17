@@ -22,7 +22,7 @@ export const searchTypes: SearchType[] = [
     },
     {
         label: 'search.search_type.ssn',
-        regex: "^\\d+$",
+        regex: "(^\\d{9}$|^(\\d)(?:\\d|$)(?:\\d|$)(?:\\-|$)(?:\\d|$)(?:\\d|$)(?:\\-|$)(?:\\d|$)(?:\\d|$)(?:\\d|$)(?:\\d|$)$)",
         type: searchType.ssn,
         priority: 4,
     },
