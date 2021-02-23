@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 
 const getAge = (dob: string) => {
     const date = new Date(dob);
@@ -7,7 +8,7 @@ const getAge = (dob: string) => {
 
 const formatDob = (dob: string) => {
     const date = new Date(dob);
-    return date.toLocaleDateString("en-US");
+    return dayjs(date).format("MM/DD/YYYY");
 }
 
 const utils = {

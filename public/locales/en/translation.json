@@ -70,7 +70,8 @@
       "age": "Age",
       "sex": "Sex",
       "dob": "DOB",
-      "ssn": "SSN"
+      "ssn": "SSN",
+      "view_in_athena": "View in Athena"
     },
     "tabs": {
       "patient_chart": "Patient Chart",
@@ -99,6 +100,8 @@
       "primary_insurance_information": "Primary Insurance Information",
       "appointments": "Appointments",
       "last_appointment": "LAST APPOINTMENT",
+      "no_upcoming_appointment": "There is no upcoming appointments",
+      "no_last_appointment": "There is no last appointments",
       "upcoming_appointment": "UPCOMING APPOINTMENT",
       "upcoming_appointments": "UPCOMING APPOINTMENTS",
       "recent_patient_cases": "Recent Patient Cases",
@@ -123,7 +126,8 @@
       "phone": "Phone",
       "no_insurance": "No insurance",
       "unknown": "Unknown",
-      "error": "Error fetching insurance data, please try again"
+      "error": "Error fetching insurance data, please try again",
+      "copay": "Copay"
     },
     "clinical": {
       "recent_patient_cases": "Recent Patient Cases",

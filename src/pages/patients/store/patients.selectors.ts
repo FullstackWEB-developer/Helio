@@ -7,6 +7,7 @@ import { VerifiedPatient } from '../models/verified-patient';
 import {Insurance} from "../models/insurance";
 import {PatientChartSummary} from "../models/patient-chart-summary";
 import {ClinicalDetails} from "../models/clinical-details";
+import {ChartInsurance} from "../models/chart-insurance";
 export const patientState = (state: RootState) => state.patientsState
 
 export const selectAppointmentList = createSelector(
@@ -60,6 +61,12 @@ export const selectPrimaryInsurance = createSelector(
         } else return undefined;
     }
 )
+
+export const selectPrimaryInsuranceSummary = createSelector(
+    patientState,
+    state => state.patientChartSummary.primaryInsurance as ChartInsurance
+)
+
 
 export const selectPatientClinical = createSelector(
     patientState,

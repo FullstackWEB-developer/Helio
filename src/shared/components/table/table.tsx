@@ -32,7 +32,8 @@ const Table = ({headings, rows, dividerLine}: TableProps) => {
         <div className={`grid gap-1 pt-3`}>
             {
                 rows.map((row, index) => {
-                    return <div key={index} className={`grid grid-cols-${colSize} ${dividerLine ? 'border-b  py-1' : ' py-0.5'}`}>
+                    const isEmptyRow = row.label === "" && row.values.every(v => v === "");
+                    return !isEmptyRow && <div key={index} className={`grid grid-cols-${colSize} ${dividerLine ? 'border-b  py-1' : ' py-0.5'}`}>
                         <div>
                             {row.label}
                         </div>

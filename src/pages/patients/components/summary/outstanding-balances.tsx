@@ -8,7 +8,7 @@ const OutstandingBalances = () => {
     const patientChartSummary = useSelector(selectPatientChartSummary);
 
     const toDollars = (value: number) => {
-        return "$" + value;
+        return "$" + value.toFixed(2);
     };
 
     const outstandingBalanceRows: Row[] = [

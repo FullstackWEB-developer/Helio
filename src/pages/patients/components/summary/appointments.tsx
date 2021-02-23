@@ -11,7 +11,7 @@ const Appointments = () => {
 
     const recentPatientsCases: Row[] = [];
 
-    patientChartSummary.patientCases.forEach(patientCase => {
+    patientChartSummary.patientCases.slice(0, 5).forEach(patientCase => {
             recentPatientsCases.push(
                 {label: utils.formatDate(patientCase.createdDate), values:[patientCase.subject]}
             )
@@ -24,9 +24,9 @@ const Appointments = () => {
                 <div className="font-bold text-lg border-b pb-1">{t('patient.summary.appointments')}</div>
                 <div>
                     <div className="text-gray-400 pt-6 pb-3">{t('patient.summary.last_appointment')}</div>
-                    { patientChartSummary.lastAppointment && <AppointmentDisplay appointment={patientChartSummary.lastAppointment}/>}
+                    { patientChartSummary.lastAppointment ? <AppointmentDisplay appointment={patientChartSummary.lastAppointment}/> : <div>{t('patient.summary.no_last_appointment')}</div>}
                     <div className="text-gray-400 pt-6 pb-3">{t('patient.summary.upcoming_appointment')}</div>
-                    { patientChartSummary.upcomingAppointment && <AppointmentDisplay appointment={patientChartSummary.upcomingAppointment} />}
+                    { patientChartSummary.upcomingAppointment ? <AppointmentDisplay appointment={patientChartSummary.upcomingAppointment}/> : <div>{t('patient.summary.no_upcoming_appointment')}</div>}
                 </div>
             </div>
             <div>
