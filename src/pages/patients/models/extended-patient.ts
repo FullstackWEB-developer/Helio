@@ -7,6 +7,7 @@ import {Note} from './note';
 export interface ExtendedPatient {
     allPatientStatuses: [],
     balances: Balance[],
+    patientInCollectionsBalance: number,
     city: string,
     consentToText: boolean,
     contactPreferenceAnnouncementEmail: boolean,

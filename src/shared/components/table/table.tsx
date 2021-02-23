@@ -12,7 +12,6 @@ export interface Row {
 }
 
 const Table = ({headings, rows, dividerLine}: TableProps) => {
-    let count = rows.length;
     let colSize = rows[0]?.values.length === 1 ? 3 : 7;
     let spanSize = rows[0]?.values.length === 1 ? 2 : 3;
 
@@ -22,8 +21,8 @@ const Table = ({headings, rows, dividerLine}: TableProps) => {
     return <div>
         <div className={`grid grid-cols-${headingColSize} text-gray-400 py-2`}>
             <div className="text-gray-400">{headings[0]}</div>
-            {headings.slice(1).map(heading => {
-                return <div className={`grid col-span-${headingSpanSize} pl-4`}>
+            {headings.slice(1).map((heading, index) => {
+                return <div key={index} className={`grid col-span-${headingSpanSize} pl-4`}>
                     {heading}
                 </div>
             })
@@ -38,7 +37,7 @@ const Table = ({headings, rows, dividerLine}: TableProps) => {
                             {row.label}
                         </div>
                         {row.values.map((value, index) => {
-                            return <div className={`col-span-${spanSize} ${index === 0 ? " font-bold" : null} pl-4`}>
+                            return <div key={index} className={`col-span-${spanSize} ${index === 0 ? " font-bold" : null} pl-4`}>
                                 {value}
                             </div>
                         })}

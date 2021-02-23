@@ -37,7 +37,20 @@
     "set": "Set"
   },
   "ccp": {
-    "title": "Call Control Panel"
+    "title": "Call Control Panel",
+    "suggested_steps": "Suggested steps",
+    "suggestions": {
+      "create_patient_record": "Create Patient Record",
+      "schedule_appointment": "Schedule Appointment",
+      "discuss_lab_results": "Discuss Lab Results",
+      "send_lab_results": "Send Lab Results"
+    },
+    "bot_context": {
+      "header": "Bot Context",
+      "queue": "Queue",
+      "reason": "Reason",
+      "patient_in_collections": "Patient is in collections."
+    }
   },
   "error": {
     "error_fallback": "Something went wrong"

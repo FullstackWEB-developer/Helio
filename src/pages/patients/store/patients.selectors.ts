@@ -99,3 +99,7 @@ export const selectIsInsuranceError = createSelector(
     patientState,
     state => state.isInsuranceError as boolean
 )
+export const selectPatientInCollectionsBalance = createSelector(
+    patientState,
+    state => state.patient.patientInCollectionsBalance as number
+)

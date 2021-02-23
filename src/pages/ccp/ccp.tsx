@@ -11,13 +11,15 @@ import 'amazon-connect-streams';
 import withErrorLogging from '../../shared/HOC/with-error-logging';
 import { isCcpVisibleSelector } from '../../shared/layout/store/layout.selectors';
 import { setAssignee } from '../tickets/services/tickets.service';
-import { setChatCounter, setVoiceCounter } from './store/ccp.slice';
+import { setChatCounter, setVoiceCounter, setContextPanel, setBotContext } from './store/ccp.slice';
 import { authenticationSelector } from '../../shared/store/app-user/appuser.selectors';
 import { useDrag } from 'react-dnd';
 import { DndItemTypes } from '../../shared/layout/dragndrop/dnd-item-types';
 import './ccp.scss';
 import { toggleCcp } from "../../shared/layout/store/layout.slice";
 import {useTranslation} from "react-i18next";
+import CcpContext from "./components/ccp-context";
+import contextPanels from "./models/constants";
 
 const ccpConfig = {
     region: process.env.REACT_APP_AWS_REGION,
@@ -76,6 +78,10 @@ const Ccp: React.FC<BoxProps> = ({
 
             contact.onConnected(() => {
                 let attributeMap = contact.getAttributes();
+                let queue = contact.getQueue();
+                const queueName = queue.name;
+                const reason = attributeMap.CallerMainIntent.value;
+
                 if(attributeMap.PatientId){
                     let patientId = attributeMap.PatientId.value;
                     if(patientId){
@@ -89,7 +95,14 @@ const Ccp: React.FC<BoxProps> = ({
                         dispatch(setAssignee(ticketId, username));
                     }
                 }
+
+                dispatch(setContextPanel(contextPanels.bot));
+                dispatch(setBotContext({queue: queueName, reason}));
             });
+
+            contact.onDestroy(() => {
+                dispatch(setContextPanel(''));
+            })
         });
         connect.agent((agent) => {
             agent.onRefresh(ag => {
@@ -123,14 +136,19 @@ const Ccp: React.FC<BoxProps> = ({
                  className={"ccp-title border pl-1.5 bg-white " + (isHover ? 'visible' : 'invisible')}>
             {t('ccp.title')}
             </div>
-            <div data-test-id="ccp-container" id="ccp-container" className="w-96, h-120 overflow-hidden"></div>
-            <div className={"flex justify-between w-full px-10 py-2 border-t ccp-bottom-bar " + (isBottomBarVisible ? 'block' : 'hidden')}>
-                <Bot/>
-                <Note/>
-                <Tickets/>
-                <Sms/>
-                <Email/>
-                <Scripts/>
+            <div className={"flex h-120"}>
+                <div className={"flex flex-col h-120"}>
+                    <div data-test-id="ccp-container" id="ccp-container" className="h-120 overflow-hidden"></div>
+                    <div className={"flex justify-between w-full px-10 py-2 border-t ccp-bottom-bar " + (isBottomBarVisible ? 'block' : 'hidden')}>
+                        <Bot onClick={() => dispatch(setContextPanel(contextPanels.bot))}/>
+                        <Note onClick={() => dispatch(setContextPanel(contextPanels.note))}/>
+                        <Tickets onClick={() => dispatch(setContextPanel(contextPanels.tickets))}/>
+                        <Sms onClick={() => dispatch(setContextPanel(contextPanels.sms))}/>
+                        <Email onClick={() => dispatch(setContextPanel(contextPanels.email))}/>
+                        <Scripts onClick={() => dispatch(setContextPanel(contextPanels.scripts))}/>
+                    </div>
+                </div>
+                <CcpContext />
             </div>
         </div>
     );

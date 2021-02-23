@@ -8,3 +8,13 @@
 .ccp-bottom-bar {
   background-color: var(--off-white);
 }
+.ccp-context {
+  width: 40rem;
+  .ccp-header {
+    background-color: #4a4a4a;
+    height: 2.74rem;
+  }
+  .ccp-footer {
+    height: 2.76rem;
+  }
+}
