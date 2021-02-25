@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
 import { selectRedirectLink } from './store/redirect-link.selectors';
-import { verifyPatient } from '../../../shared/services/search.service';
+import {verifyPatient} from '../../../shared/services/search.service';
 import Input from "../../../shared/components/input/input";
 import {setError} from "../../../shared/components/search-bar/store/search-bar.slice";
 import {
+    clearAppointments, clearVerifiedPatient,
     setPatientIsVerified,
     setVerifiedPatient
 } from "../../patients/store/patients.slice";
@@ -14,6 +15,8 @@ import Logger from "../../../shared/services/logger";
 import {VerifiedPatient} from "../../patients/models/verified-patient";
 import {selectIsPatientVerified} from "../../patients/store/patients.selectors";
 import ThreeDots from "../../../shared/components/skeleton-loader/skeleton-loader";
+import {clearRescheduleAppointmentState} from '../reschedule-appointment/store/reschedule-appointment.slice';
+import { clearRequestRefillState } from '../request-refill/store/request-refill.slice';
 
 enum RequestTypes {
     GetAppointmentDetail = 1,
@@ -45,6 +48,14 @@ const HipaaVerification = () => {
             [name]: value
         }));
     }
+
+    useEffect(() => {
+        dispatch(clearAppointments());
+        dispatch(clearRescheduleAppointmentState());
+        dispatch(clearRequestRefillState());
+        dispatch(clearVerifiedPatient());
+    }, [dispatch]);
+
 
     const handleSubmit = async (event: { preventDefault: () => void; }) => {
         event.preventDefault();

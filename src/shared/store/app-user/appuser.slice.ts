@@ -13,10 +13,13 @@ const appUserSlice = createSlice({
         },
         loginInitiated(state) {
             state.auth = initialState.auth;
+        },
+        setLoginLoading(state, {payload} : PayloadAction<boolean>) {
+            state.isLoading = payload;
         }
     }
 });
 
-export const { setAuthentication, logOut, loginInitiated } = appUserSlice.actions
+export const { setAuthentication, logOut, loginInitiated, setLoginLoading } = appUserSlice.actions
 
 export default appUserSlice.reducer

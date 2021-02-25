@@ -19,7 +19,7 @@ import { getDepartments, getProviders } from "../../../shared/services/lookups.s
 import { Provider } from "../../../shared/models/provider";
 import { Department } from "../../../shared/models/department";
 import { selectVerifiedPatent } from '../../patients/store/patients.selectors';
-import { resetRequestRefillState } from './store/request-refill.slice';
+import { clearRequestRefillState } from './store/request-refill.slice';
 import {clearVerifiedPatient} from "../../patients/store/patients.slice";
 
 const RequestRefill = () => {
@@ -50,7 +50,7 @@ const RequestRefill = () => {
             dispatch(getProviders());
         }
         return () => {
-            dispatch(resetRequestRefillState());
+            dispatch(clearRequestRefillState());
             dispatch(clearVerifiedPatient());
         }
     }, [dispatch, verifiedPatient]);

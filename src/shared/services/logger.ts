@@ -1,6 +1,8 @@
 
 import {CloudWatchLogs, CognitoIdentityCredentials} from 'aws-sdk';
 import {LogStream, PutLogEventsRequest} from "aws-sdk/clients/cloudwatchlogs";
+import dayjs from 'dayjs';
+import store from '../../app/store';
 
 const logConfig = {
     region: process.env.REACT_APP_AWS_REGION,
@@ -17,7 +19,8 @@ enum LogLevel {
 interface Log {
     message: string,
     level: LogLevel,
-    data?: object
+    data?: object,
+    userName?: string;
 }
 
 class Logger {
@@ -26,26 +29,32 @@ class Logger {
     private readonly streamName: string;
     private readonly logGroup: string;
     private logStream?: LogStream;
+    private readonly LogStreamNameDateFormat = 'YYYY-MM-DDTHH-mm-ss';
+    private nextUploadSequenceToken? :string;
 
     constructor(streamName?: string) {
         const credentials = new CognitoIdentityCredentials({ IdentityPoolId: logConfig.identityPoolId }, {region: logConfig.region});
         this.log = new CloudWatchLogs({credentials, region: logConfig.region});
 
         this.logGroup = logConfig.logGroup
-        this.streamName = streamName || logConfig.logStream;
+        this.streamName = `${(streamName || logConfig.logStream)}-${dayjs().format(this.LogStreamNameDateFormat)}`;
 
         this.getStream(this.streamName)
             .then(stream => {
                 if(stream) {
                     this.logStream = stream;
+                    this.nextUploadSequenceToken = stream?.uploadSequenceToken;
                 } else {
                     this.log.createLogStream({
                         logGroupName: this.logGroup,
                         logStreamName: this.streamName
-                    }, (err, data) => {
+                    }, (err) => {
                         if(!err) {
                             this.getStream(this.streamName)
-                                .then(stream => this.logStream = stream);
+                                .then(response => {
+                                    this.logStream = response;
+                                    this.nextUploadSequenceToken = response?.uploadSequenceToken;
+                                });
                         }
                     });
                 }
@@ -75,7 +84,13 @@ class Logger {
         })
     }
 
+    getUserName = () => {
+        const userName =  store.getState()?.appUserState?.auth?.username;
+        return userName ?? 'no-user';
+    }
+
     private putEvent = (payload: Log) => {
+        payload.userName = this.getUserName();
         const params: PutLogEventsRequest = {
             logEvents: [
                 {
@@ -85,11 +100,13 @@ class Logger {
             ],
             logGroupName: this.logGroup,
             logStreamName: this.streamName,
-            sequenceToken: this.logStream?.uploadSequenceToken
+            sequenceToken: this.nextUploadSequenceToken
         };
-        this.log.putLogEvents(params, function(err, data) {
+        this.log.putLogEvents(params, (err, data)  => {
             if (err) console.log(err, err.stack);
-            else     console.log(data);
+            else {
+                this.nextUploadSequenceToken = data.nextSequenceToken
+            }
         });
     }
 

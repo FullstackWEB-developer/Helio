@@ -15,7 +15,7 @@ const requestRefillSlice = createSlice({
             state.isMedicationsLoading = false;
             state.error = payload;
         },
-        resetRequestRefillState(state) {
+        clearRequestRefillState(state) {
             state.isRequestRefillRequestCompleted = false;
             state.isMedicationsLoading = false;
             state.error = "";
@@ -46,7 +46,7 @@ export const {
     setMedications,
     startRequestRefillRequest,
     endRequestRefillRequest,
-    resetRequestRefillState
+    clearRequestRefillState
 } = requestRefillSlice.actions;
 
 export default requestRefillSlice.reducer;
