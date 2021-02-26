@@ -1,7 +1,17 @@
+import { Dispatch } from '@reduxjs/toolkit';
+import Logger from '../../../shared/services/logger';
+import {
+    add,
+    changeStatus,
+    changeAssignee,
+    setFailure,
+    startRequestAddNote,
+    endRequestAddNote
+} from '../store/tickets.slice';
 import Api from '../../../shared/services/api';
-import {Dispatch} from "@reduxjs/toolkit";
-import {add, changeStatus, changeAssignee, setFailure} from "../store/tickets.slice";
+import { TicketNote } from '../models/ticket-note';
 
+const logger = Logger.getInstance();
 const ticketsUrl = '/tickets';
 
 export function getList() {
@@ -52,5 +62,21 @@ export const setAssignee = (id: string, assignee: string) => {
             .catch(err => {
                 dispatch(setFailure(err.message));
             });
+    }
+}
+
+export const addNote = (id: string, note: TicketNote) => {
+    let url = ticketsUrl + '/' + id + '/notes';
+
+    return async (dispatch: Dispatch) => {
+        dispatch(startRequestAddNote());
+        await Api.post(url, note)
+            .then(() => {
+                dispatch(endRequestAddNote(''));
+            })
+            .catch(error => {
+                logger.error('Failed to add Note', error);
+                dispatch(endRequestAddNote('ccp.note_context.error'));
+            })
     }
 }

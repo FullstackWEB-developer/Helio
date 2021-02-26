@@ -1,13 +1,15 @@
-import {Ticket} from "../models/ticket";
+import { Ticket } from '../models/ticket';
 
 export interface TicketState {
+    isRequestAddNoteLoading: boolean;
     tickets: Ticket[];
     errors: string;
 }
 
 const initialState: TicketState = {
+    isRequestAddNoteLoading: false,
     tickets: [],
-    errors: ""
+    errors: ''
 }
 
 export default initialState;

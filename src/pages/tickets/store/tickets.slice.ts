@@ -1,6 +1,6 @@
-import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import initialState from "./tickets.initial-state";
-import {Ticket} from "../models/ticket";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import initialState from './tickets.initial-state';
+import { Ticket } from '../models/ticket';
 
 const ticketsSlice = createSlice({
     name: 'tickets',
@@ -27,10 +27,26 @@ const ticketsSlice = createSlice({
         },
         setFailure: (state, {payload}: PayloadAction<string>) => {
             state.errors = payload;
+        },
+        startRequestAddNote(state) {
+            state.isRequestAddNoteLoading = true;
+            state.errors = '';
+        },
+        endRequestAddNote(state, { payload }: PayloadAction<string>) {
+            state.isRequestAddNoteLoading = false;
+            state.errors = payload;
         }
     }
 });
 
-export const { add, changeStatus, changeTicket, changeAssignee, setFailure } = ticketsSlice.actions
+export const {
+    add,
+    changeStatus,
+    changeTicket,
+    changeAssignee,
+    setFailure,
+    startRequestAddNote,
+    endRequestAddNote
+} = ticketsSlice.actions
 
 export default ticketsSlice.reducer

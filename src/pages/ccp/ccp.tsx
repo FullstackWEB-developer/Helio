@@ -11,7 +11,7 @@ import 'amazon-connect-streams';
 import withErrorLogging from '../../shared/HOC/with-error-logging';
 import { isCcpVisibleSelector } from '../../shared/layout/store/layout.selectors';
 import { setAssignee } from '../tickets/services/tickets.service';
-import { setChatCounter, setVoiceCounter, setContextPanel, setBotContext } from './store/ccp.slice';
+import { setChatCounter, setVoiceCounter, setContextPanel, setBotContext, setNoteContext } from './store/ccp.slice';
 import { authenticationSelector } from '../../shared/store/app-user/appuser.selectors';
 import { useDrag } from 'react-dnd';
 import { DndItemTypes } from '../../shared/layout/dragndrop/dnd-item-types';
@@ -44,6 +44,7 @@ const Ccp: React.FC<BoxProps> = ({
     const username = useSelector(authenticationSelector).username;
     const [isHover, setHover] = useState(false);
     const [isBottomBarVisible, setIsBottomBarVisible] = useState(false);
+    const [ticketId, setTicketId] = useState('');
 
     const isCcpVisibleRef = useRef();
     isCcpVisibleRef.current = useSelector(isCcpVisibleSelector);
@@ -90,10 +91,16 @@ const Ccp: React.FC<BoxProps> = ({
                 }
 
                 if(attributeMap.TicketId){
-                    let ticketId = attributeMap.TicketId.value;
-                    if(ticketId){
-                        dispatch(setAssignee(ticketId, username));
+                    let tId;
+                    if(attributeMap.TicketId.value){
+                        tId = attributeMap.TicketId.value;
+                        dispatch(setAssignee(tId, username));
+                    } else {
+                        tId = contact.getContactId();
                     }
+
+                    setTicketId(tId);
+                    dispatch(setNoteContext({ticketId: tId, username: username}));
                 }
 
                 dispatch(setContextPanel(contextPanels.bot));
@@ -138,10 +145,12 @@ const Ccp: React.FC<BoxProps> = ({
             </div>
             <div className={"flex h-120"}>
                 <div className={"flex flex-col h-120"}>
-                    <div data-test-id="ccp-container" id="ccp-container" className="h-120 overflow-hidden"></div>
+                    <div data-test-id="ccp-container" id="ccp-container" className="h-120 overflow-hidden"> </div>
                     <div className={"flex justify-between w-full px-10 py-2 border-t ccp-bottom-bar " + (isBottomBarVisible ? 'block' : 'hidden')}>
                         <Bot onClick={() => dispatch(setContextPanel(contextPanels.bot))}/>
-                        <Note onClick={() => dispatch(setContextPanel(contextPanels.note))}/>
+                        {
+                            ticketId ? <Note onClick={() => dispatch(setContextPanel(contextPanels.note))}/> : <Note/>
+                        }
                         <Tickets onClick={() => dispatch(setContextPanel(contextPanels.tickets))}/>
                         <Sms onClick={() => dispatch(setContextPanel(contextPanels.sms))}/>
                         <Email onClick={() => dispatch(setContextPanel(contextPanels.email))}/>

@@ -1,11 +1,13 @@
-import React from "react";
-import BotContext from "./bot-context";
-import {useSelector} from "react-redux";
-import {selectContextPanel} from "../store/ccp.selectors";
-import contextPanels from "../models/constants";
-import {useTranslation} from "react-i18next";
-import {Suggestions} from "../models/suggestions";
-import withErrorLogging from "../../../shared/HOC/with-error-logging";
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import withErrorLogging from '../../../shared/HOC/with-error-logging';
+import BotContext from './bot-context';
+import NoteContext from './note-context';
+import contextPanels from '../models/constants';
+import { Suggestions } from '../models/suggestions';
+import { selectContextPanel } from '../store/ccp.selectors';
+
 
 const CcpContext = () => {
     const context = useSelector(selectContextPanel);
@@ -15,7 +17,7 @@ const CcpContext = () => {
             case contextPanels.bot:
                 return <BotContext/>
             case contextPanels.note:
-                return <BotContext/>
+                return <NoteContext/>
             case contextPanels.tickets:
                 return <BotContext/>
             case contextPanels.sms:

@@ -9,7 +9,8 @@
     "required": "This field is required!",
     "clear": "Clear",
     "show_more": "Show more",
-    "show_less": "Show less"
+    "show_less": "Show less",
+    "save": "Save"
   },
   "login": {
     "loginButton": "Login"
@@ -50,6 +51,13 @@
       "queue": "Queue",
       "reason": "Reason",
       "patient_in_collections": "Patient is in collections."
+    },
+    "note_context": {
+      "header": "Add Note",
+      "error": "Failed to add Note",
+      "no_ticket_id": "There are no ticketId",
+      "copy_note": "Copy Note",
+      "enter_your_note": "Enter your note"
     }
   },
   "error": {

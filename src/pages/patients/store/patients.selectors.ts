@@ -101,5 +101,5 @@ export const selectIsInsuranceError = createSelector(
 )
 export const selectPatientInCollectionsBalance = createSelector(
     patientState,
-    state => state.patient.patientInCollectionsBalance as number
+    state => state.patient?.patientInCollectionsBalance as number
 )

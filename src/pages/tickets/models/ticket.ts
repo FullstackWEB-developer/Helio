@@ -1,4 +1,4 @@
-import {Notes} from "./notes";
+import {TicketNote} from "./ticket-note";
 
 export interface Ticket {
     id: string;
@@ -13,6 +13,6 @@ export interface Ticket {
     priority?: number
     channel?: number;
     tags?: [];
-    notes?: Notes[];
+    notes?: TicketNote[];
     relations?: [];
 }

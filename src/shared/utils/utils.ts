@@ -10,6 +10,7 @@ const getWindowDimensions = () => {
         height
     };
 }
+
 const dateToString =(date: Date, format: string) =>  {
     const z = {
         M: date.getMonth() + 1,
@@ -28,12 +29,10 @@ const dateToString =(date: Date, format: string) =>  {
     });
 }
 
-
 const formatDate = (datetime: string) => {
     const date = new Date(datetime);
     return date.toLocaleDateString("en-US");
 }
-
 
 const addDays = (date: Date, days: number) => {
     return new Date(date.getFullYear(), date.getMonth(), date.getDate()+days);
@@ -42,7 +41,5 @@ const addDays = (date: Date, days: number) => {
 const utils = {
     getWindowCenter, getWindowDimensions, formatDate, dateToString, addDays
 }
-
-
 
 export default utils;
