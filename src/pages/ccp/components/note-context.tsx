@@ -32,6 +32,7 @@ const NoteContext = () => {
             note.dateTime = new Date();
             note.username = username;
             setNotes([...notes, note]);
+            setNoteText('');
         }
     }
 

@@ -17,7 +17,7 @@ const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(({ label, 
             <label htmlFor={htmlFor} className="block text-sm font-medium text-gray-700">
                 {label}
             </label>
-            <textarea ref={ref} {...props}
+            <textarea ref={ref} {...props} value={value}
                 className={"border mt-1 p-4 " + props.className} />
             {props.error && <div className="text-red-500">{props.error}</div>}
         </Fragment>
