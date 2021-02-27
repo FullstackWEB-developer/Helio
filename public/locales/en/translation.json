@@ -226,5 +226,25 @@
     "completed": "Refill request completed",
     "detail_info" : "Lab Result Detailed Information",
     "detail_info_description" : "Status, date, time and note."
+  },
+  "ticket_new": {
+    "ticket_type": "Ticket Type",
+    "reason": "Reason",
+    "contact": "Contact",
+    "subject": "Title/Subject",
+    "status": "Status",
+    "priority": "Priority",
+    "due_date": "Due Date",
+    "due_time": "Time",
+    "channel": "Source",
+    "department": "Department",
+    "location": "Office/Location",
+    "assignee": "Assign To",
+    "patient_chart_number": "Patient Chart Number",
+    "patient_case_number": "Patient Case Number",
+    "tags": "Tags",
+    "add_tag": "+Add Tag",
+    "add_note": "Add Note",
+    "create": "Create Ticket"
   }
 }

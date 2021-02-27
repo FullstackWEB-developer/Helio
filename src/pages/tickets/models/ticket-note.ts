@@ -1,7 +1,7 @@
 export interface TicketNote {
     id?: number;
     noteText: string;
-    isVisibleToPatient: boolean;
+    isVisibleToPatient?: boolean;
     dateTime?: Date;
     username?: string;
 }

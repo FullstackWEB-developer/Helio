@@ -1,5 +1,5 @@
 import { AnyAction, combineReducers, configureStore, Reducer } from '@reduxjs/toolkit';
-import ticketReducer from '../pages/tickets/store/tickets.slice';
+import ticketReducer  from '../pages/tickets/store/tickets.slice';
 import appUserReducer from '../shared/store/app-user/appuser.slice';
 import layoutReducer from '../shared/layout/store/layout.slice';
 import ccpReducer from '../pages/ccp/store/ccp.slice';
@@ -7,6 +7,7 @@ import searchReducer from '../shared/components/search-bar/store/search-bar.slic
 import patientsReducer from '../pages/patients/store/patients.slice';
 import externalAccessState from '../pages/external-access/store/store';
 import lookupsReducer from '../shared/store/lookups/lookups.slice';
+import contactsReducer from '../shared/store/contacts/contacts.slice';
 import { useDispatch } from "react-redux";
 import storage from 'redux-persist/lib/storage'
 import { persistReducer } from 'redux-persist'
@@ -20,7 +21,8 @@ const reducers = combineReducers({
     patientsState: patientsReducer,
     ccpState: ccpReducer,
     externalAccessState: externalAccessState,
-    lookupsState: lookupsReducer
+    lookupsState: lookupsReducer,
+    contactState: contactsReducer
 })
 
 const rootReducer: Reducer = (state: RootState, action: AnyAction) => {

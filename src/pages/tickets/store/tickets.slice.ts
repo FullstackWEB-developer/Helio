@@ -1,10 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import initialState from './tickets.initial-state';
 import { Ticket } from '../models/ticket';
+import initialTicketState from './tickets.initial-state';
+import {TicketOptionsBase} from '../models/ticket-options-base.model';
+import {LookupValue} from '../models/lookup-value';
 
 const ticketsSlice = createSlice({
     name: 'tickets',
-    initialState,
+    initialState: initialTicketState,
     reducers: {
         add(state, {payload}: PayloadAction<Ticket[]>) {
             state.tickets = payload;
@@ -26,15 +28,57 @@ const ticketsSlice = createSlice({
             }
         },
         setFailure: (state, {payload}: PayloadAction<string>) => {
-            state.errors = payload;
+            state.error = payload;
         },
         startRequestAddNote(state) {
             state.isRequestAddNoteLoading = true;
-            state.errors = '';
+            state.error = '';
         },
         endRequestAddNote(state, { payload }: PayloadAction<string>) {
             state.isRequestAddNoteLoading = false;
-            state.errors = payload;
+            state.error = payload;
+        },
+        setTicketEnum(state, { payload }: PayloadAction<any>) {
+            state.error = '';
+            state.isTicketEnumValuesLoading = false;
+            const enumValue: TicketOptionsBase = {
+                key: payload.key,
+                value: payload.result
+            }
+            if(!state.enumValues) {
+                state.enumValues = [];
+            }
+            state.enumValues.push(enumValue);
+        },
+        startGetTicketEnumRequest(state) {
+            state.error = '';
+            state.isTicketEnumValuesLoading = true;
+            state.enumValues = []
+        },
+        endGetTicketEnumRequest(state, { payload }: PayloadAction<string>) {
+            state.error = payload;
+            state.isTicketEnumValuesLoading = false;
+        },
+        setLookupValues(state, { payload }: PayloadAction<any>) {
+            state.error = '';
+            state.isLookupValuesLoading = false;
+            const lookupValue: LookupValue = {
+                key: payload.key,
+                value: payload.result
+            }
+            if (!state.lookupValues) {
+                state.lookupValues = [];
+            }
+            state.lookupValues.push(lookupValue);
+        },
+        startGeLookupValuesRequest(state) {
+            state.error = '';
+            state.isLookupValuesLoading = true;
+            state.lookupValues = []
+        },
+        endGetLookupValuesRequest(state, { payload }: PayloadAction<string>) {
+            state.error = payload;
+            state.isLookupValuesLoading = false;
         }
     }
 });
@@ -46,7 +90,13 @@ export const {
     changeAssignee,
     setFailure,
     startRequestAddNote,
-    endRequestAddNote
+    endRequestAddNote,
+    setTicketEnum,
+    startGetTicketEnumRequest,
+    endGetTicketEnumRequest,
+    setLookupValues,
+    startGeLookupValuesRequest,
+    endGetLookupValuesRequest
 } = ticketsSlice.actions
 
 export default ticketsSlice.reducer

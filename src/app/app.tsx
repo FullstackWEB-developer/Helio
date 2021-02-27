@@ -13,6 +13,7 @@ const RequestRefill = React.lazy(() => import('../pages/external-access/request-
 const RequestMedicalRecords = React.lazy(() => import('../pages/external-access/request-medical-records/request-medical-records'));
 const LabResults = React.lazy(() => import('../pages/external-access/lab-results/lab-results'));
 const TicketsWithErrors = React.lazy(() => import('../pages/tickets/ticket-list'));
+const TicketNewWithErrors = React.lazy(() => import('../pages/tickets/ticket-new'));
 const RescheduleAppointment = React.lazy(() => import('../pages/external-access/reschedule-appointment/reschedule-appointment'));
 
 function App() {
@@ -24,13 +25,14 @@ function App() {
                 <Route path="/request-refill" component={withSuspense(RequestRefill)} />
                 <Route path="/request-medical-records" component={withSuspense(RequestMedicalRecords)} />
                 <Route path="/lab-results" component={withSuspense(LabResults)} />
-                    <Route path="/reschedule-appointment" component={withSuspense(RescheduleAppointment)} />
+                <Route path="/reschedule-appointment" component={withSuspense(RescheduleAppointment)} />
                 <Route path="/login">
                     <Login />
                 </Route>
                 <Layout>
                     <GuardedRoute exact path="/dashboard" component={Dashboard}/>
                         <GuardedRoute exact path="/tickets" component={withSuspense(TicketsWithErrors)}/>
+                    <GuardedRoute exact path="/tickets/new" component={withSuspense(TicketNewWithErrors)}/>
                     <Switch>
                         <GuardedRoute exact path="/patients/results" component={withSuspense(SearchResults)}/>
                         <GuardedRoute exact path="/patients/:patientId" component={withSuspense(PatientChart)}/>

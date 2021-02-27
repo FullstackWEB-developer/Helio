@@ -1,7 +1,7 @@
-import {TicketNote} from "./ticket-note";
+import { TicketNote } from './ticket-note';
 
 export interface Ticket {
-    id: string;
+    id?: string;
     ticketNumber?: number;
     subject?: string;
     detail?: string;
@@ -15,4 +15,11 @@ export interface Ticket {
     tags?: [];
     notes?: TicketNote[];
     relations?: [];
+    reason?: string;
+    dueDate?: Date;
+    department?: string;
+    location?: string;
+    patientChartNumber?: number;
+    patientCaseNumber?: number;
+    type?: string;
 }

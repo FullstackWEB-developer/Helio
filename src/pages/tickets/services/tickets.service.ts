@@ -1,15 +1,24 @@
 import { Dispatch } from '@reduxjs/toolkit';
+import Api from '../../../shared/services/api';
 import Logger from '../../../shared/services/logger';
+import { LookupValue } from '../models/lookup-value';
+import { TicketNote } from '../models/ticket-note';
+import store from '../../../app/store';
 import {
     add,
     changeStatus,
     changeAssignee,
     setFailure,
     startRequestAddNote,
-    endRequestAddNote
+    endRequestAddNote,
+    setTicketEnum,
+    startGetTicketEnumRequest,
+    endGetTicketEnumRequest,
+    setLookupValues,
+    startGeLookupValuesRequest,
+    endGetLookupValuesRequest
 } from '../store/tickets.slice';
-import Api from '../../../shared/services/api';
-import { TicketNote } from '../models/ticket-note';
+import {Ticket} from '../models/ticket';
 
 const logger = Logger.getInstance();
 const ticketsUrl = '/tickets';
@@ -78,5 +87,56 @@ export const addNote = (id: string, note: TicketNote) => {
                 logger.error('Failed to add Note', error);
                 dispatch(endRequestAddNote('ccp.note_context.error'));
             })
+    }
+}
+
+export const getEnumByType = (enumType: string) => {
+    const getEnumUrl = `${ticketsUrl}/lookup/${enumType}`;
+
+    return async (dispatch: Dispatch) => {
+        dispatch(startGetTicketEnumRequest());
+        await Api.get(getEnumUrl)
+            .then(response => {
+                dispatch(setTicketEnum({key: enumType, result: response.data}));
+                dispatch(endGetTicketEnumRequest(''));
+            })
+            .catch(error => {
+                logger.error(`Failed getting ${enumType}`, error);
+                dispatch(endGetTicketEnumRequest('ticket-new.error'));
+            });
+    }
+}
+
+export const getLookupValues = (key: string) => {
+    const getLookupValuesUrl = `/lookups/values/${key}`;
+    const stateLookupValues = store.getState().ticketState.lookupValues;
+    const lookupValue = stateLookupValues ?
+        store.getState().ticketState.lookupValues.find((a: LookupValue) => a.key === key) : undefined;
+        return async (dispatch: Dispatch) => {
+            if (!lookupValue) {
+                dispatch(startGeLookupValuesRequest());
+                await Api.get(getLookupValuesUrl)
+                    .then(response => {
+                        dispatch(setLookupValues({key: key, result: response.data}));
+                        dispatch(endGetLookupValuesRequest(''));
+                    })
+                    .catch(error => {
+                        logger.error(`Failed getting Lookup values`, error);
+                        dispatch(endGetLookupValuesRequest('ticket-new.error'));
+                    });
+            }
+        }
+}
+
+export const createTicket = (data: Ticket) => {
+    const createTicketUrl = ticketsUrl;
+    return async () => {
+        await Api.post(createTicketUrl, data)
+            .then(() => {
+                return;
+            })
+            .catch(error => {
+                logger.error(`Failed creating new ticket`, error);
+            });
     }
 }

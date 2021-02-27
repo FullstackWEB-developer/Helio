@@ -30,7 +30,7 @@ const Tickets = () => {
                 </div>
                 <div>
                     {
-                        items.map(item => <TicketDetails key={item.id} id={item.id} />)
+                        items.map(item => <TicketDetails key={item.id} id={item.id ? item.id : ''} />)
                     }
                 </div>
             </div>
