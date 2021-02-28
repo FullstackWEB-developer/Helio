@@ -1,4 +1,4 @@
-import { Dispatch } from "@reduxjs/toolkit";
+import { Dispatch } from '@reduxjs/toolkit';
 import {
     setContacts,
     startGetContactsRequest,

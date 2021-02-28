@@ -1,4 +1,4 @@
-import React, { useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPatientsLabResults } from './services/lab-results.service';
@@ -16,7 +16,7 @@ import LabResultDetailItem from './components/lab-result-detail-item';
 import { clearVerifiedPatient } from '../../patients/store/patients.slice';
 import withErrorLogging from '../../../shared/HOC/with-error-logging';
 
-interface LabResultOption extends Option{
+interface LabResultOption extends Option {
     datetime: string,
     note: string
 }
@@ -62,7 +62,7 @@ const LabResults = () => {
     }
 
     if (isLabResultsLoading) {
-        return <ThreeDots data-test-id="lab-results-loading" />;
+        return <ThreeDots data-test-id='lab-results-loading' />;
     }
 
     if (!verifiedPatient) {
@@ -70,7 +70,7 @@ const LabResults = () => {
     }
 
     if (labResultsOptions && labResultsOptions.length < 1) {
-        return <div data-test-id="lab-results-not-found">{t('lab-results.no_lab_results_found')}</div>
+        return <div data-test-id='lab-results-not-found'>{t('lab-results.no_lab_results_found')}</div>
     }
 
     const manageOptions = () => {
@@ -82,19 +82,19 @@ const LabResults = () => {
     manageOptions();
 
     if (labResultsError) {
-        return <div data-test-id="lab-results-error">{t('lab-results.error')}</div>
+        return <div data-test-id='lab-results-error'>{t('lab-results.error')}</div>
     }
 
-    return <div className={"w-96 py-4 mx-auto flex flex-col"} >
+    return <div className={'w-96 py-4 mx-auto flex flex-col'} >
         <form hidden={labResultsOptions && labResultsOptions.length === 1}>
             <Controller
-                name="lab-result-select"
+                name='lab-result-select'
                 control={control}
                 defaultValue={labResultsOptions ? labResultsOptions[0] : ''}
                 render={() => (
                     <Select
-                        data-test-id="lab-results-select"
-                        className={"w-full"}
+                        data-test-id='lab-results-select'
+                        className={'w-full'}
                         label={t('lab-results.label')}
                         options={labResultsOptions}
                         value={selectedOption ? selectedOption.value : ''}
@@ -103,29 +103,29 @@ const LabResults = () => {
                 )}
             />
         </form>
-        <div className="bg-white shadow overflow-hidden sm:rounded-lg">
-            <div className="px-4 py-5 sm:px-6">
-                <h3 className="text-lg leading-6 font-medium text-gray-900">
+        <div className='bg-white shadow overflow-hidden sm:rounded-lg'>
+            <div className='px-4 py-5 sm:px-6'>
+                <h3 className='text-lg leading-6 font-medium text-gray-900'>
                     {t('lab-results.detail_info')}
                 </h3>
-                <p className="mt-1 max-w-2xl text-sm text-gray-500">
+                <p className='mt-1 max-w-2xl text-sm text-gray-500'>
                     {t('lab-results.detail_info_description')}
                 </p>
             </div>
-            <div className="border-t border-gray-200">
-                <dl data-test-id="lab-results-detail-list">
+            <div className='border-t border-gray-200'>
+                <dl data-test-id='lab-results-detail-list'>
                     {
                         selectedOption ? <LabResultDetailItem item={selectedOption} /> : ''
                     }
                 </dl>
 
-                <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                    <button data-test-id="lab-results-download-pdf-button" type="button"
-                            className="btn-primary">
+                <div className='bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse'>
+                    <button data-test-id='lab-results-download-pdf-button' type='button'
+                        className='btn-primary'>
                         {t('common.download_pdf')}
                     </button>
-                    <button data-test-id="lab-results-print-button" type="button"
-                            className="btn-secondary">
+                    <button data-test-id='lab-results-print-button' type='button'
+                        className='btn-secondary'>
                         {t('common.print')}
                     </button>
                 </div>

@@ -14,7 +14,7 @@ const appUserSlice = createSlice({
         loginInitiated(state) {
             state.auth = initialState.auth;
         },
-        setLoginLoading(state, {payload} : PayloadAction<boolean>) {
+        setLoginLoading(state, { payload }: PayloadAction<boolean>) {
             state.isLoading = payload;
         }
     }

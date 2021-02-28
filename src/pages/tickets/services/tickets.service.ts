@@ -1,5 +1,6 @@
 import { Dispatch } from '@reduxjs/toolkit';
 import Api from '../../../shared/services/api';
+import { Assignee, Paging } from '../store/tickets.initial-state';
 import Logger from '../../../shared/services/logger';
 import { LookupValue } from '../models/lookup-value';
 import { TicketNote } from '../models/ticket-note';
@@ -9,6 +10,9 @@ import {
     changeStatus,
     changeAssignee,
     setFailure,
+    addPaging,
+    setAssignees,
+    setTicketsLoading,
     startRequestAddNote,
     endRequestAddNote,
     setTicketEnum,
@@ -18,18 +22,28 @@ import {
     startGeLookupValuesRequest,
     endGetLookupValuesRequest
 } from '../store/tickets.slice';
-import {Ticket} from '../models/ticket';
+import { Ticket } from '../models/ticket';
 
 const logger = Logger.getInstance();
-const ticketsUrl = '/tickets';
+let ticketsUrl = '/tickets';
+const usersUrl = '/users';
 
-export function getList() {
+export function getList(ticketsPaging?: Paging, searchTerm?: string) {
     return async (dispatch: Dispatch) => {
+        dispatch(setTicketsLoading(true));
         try {
+            if (ticketsPaging?.pageSize) {
+                ticketsUrl = `${ticketsUrl}?pageSize=${ticketsPaging.pageSize}&page=${ticketsPaging.page}`
+            }
+            if (searchTerm) {
+                ticketsUrl = `${ticketsUrl}&searchTerm=${searchTerm}`;
+            }
             const response = await Api.get(ticketsUrl);
-            const data = response.data.results;
-
-            dispatch(add(data));
+            const data = response.data;
+            dispatch(add(data.results));
+            const paging: Paging = { pageSize: data.pageSize, totalPages: data.totalPages, page: data.page, totalCount: data.totalCount };
+            dispatch(addPaging(paging));
+            dispatch(setTicketsLoading(false));
         } catch (error) {
             dispatch(setFailure(error.message));
         }
@@ -37,26 +51,26 @@ export function getList() {
 }
 
 export const setStatus = (id: string, status: number) => {
-    let url = ticketsUrl + '/' + id + '/status';
+    const url = `${ticketsUrl}/${id}/status`;
     return async (dispatch: Dispatch) => {
         await Api.put(url, {
             id: id,
             status: status
         })
-        .then(() => {
-            dispatch(changeStatus({
-                id: id,
-                status: status
-            }));
-        })
-        .catch(err => {
-            dispatch(setFailure(err.message));
-        });
+            .then(() => {
+                dispatch(changeStatus({
+                    id: id,
+                    status: status
+                }));
+            })
+            .catch(err => {
+                dispatch(setFailure(err.message));
+            });
     }
 }
 
 export const setAssignee = (id: string, assignee: string) => {
-    let url = ticketsUrl + '/' + id + '/assignee';
+    const url = `${ticketsUrl}/${id}/assignee`;
     return async (dispatch: Dispatch) => {
         await Api.put(url, {
             id: id,
@@ -74,9 +88,20 @@ export const setAssignee = (id: string, assignee: string) => {
     }
 }
 
+export const getAssigneeList = () => {
+    const url = usersUrl + '/list';
+    return async (dispatch: Dispatch) => {
+        try {
+            const response = await Api.get(url);
+            const assigneeList = response.data as Assignee[];
+            dispatch(setAssignees(assigneeList));
+        } catch (error) {
+            dispatch(setFailure(error.message));
+        }
+    }
+};
 export const addNote = (id: string, note: TicketNote) => {
-    let url = ticketsUrl + '/' + id + '/notes';
-
+    const url = `${ticketsUrl}/${id}/notes`;
     return async (dispatch: Dispatch) => {
         dispatch(startRequestAddNote());
         await Api.post(url, note)
@@ -97,7 +122,7 @@ export const getEnumByType = (enumType: string) => {
         dispatch(startGetTicketEnumRequest());
         await Api.get(getEnumUrl)
             .then(response => {
-                dispatch(setTicketEnum({key: enumType, result: response.data}));
+                dispatch(setTicketEnum({ key: enumType, result: response.data }));
                 dispatch(endGetTicketEnumRequest(''));
             })
             .catch(error => {
@@ -112,29 +137,27 @@ export const getLookupValues = (key: string) => {
     const stateLookupValues = store.getState().ticketState.lookupValues;
     const lookupValue = stateLookupValues ?
         store.getState().ticketState.lookupValues.find((a: LookupValue) => a.key === key) : undefined;
-        return async (dispatch: Dispatch) => {
-            if (!lookupValue) {
-                dispatch(startGeLookupValuesRequest());
-                await Api.get(getLookupValuesUrl)
-                    .then(response => {
-                        dispatch(setLookupValues({key: key, result: response.data}));
-                        dispatch(endGetLookupValuesRequest(''));
-                    })
-                    .catch(error => {
-                        logger.error(`Failed getting Lookup values`, error);
-                        dispatch(endGetLookupValuesRequest('ticket-new.error'));
-                    });
-            }
+    return async (dispatch: Dispatch) => {
+        if (!lookupValue) {
+            dispatch(startGeLookupValuesRequest());
+            await Api.get(getLookupValuesUrl)
+                .then(response => {
+                    dispatch(setLookupValues({ key: key, result: response.data }));
+                    dispatch(endGetLookupValuesRequest(''));
+                })
+                .catch(error => {
+                    logger.error(`Failed getting Lookup values`, error);
+                    dispatch(endGetLookupValuesRequest('ticket-new.error'));
+                });
         }
+    }
 }
 
 export const createTicket = (data: Ticket) => {
     const createTicketUrl = ticketsUrl;
     return async () => {
         await Api.post(createTicketUrl, data)
-            .then(() => {
-                return;
-            })
+            .then()
             .catch(error => {
                 logger.error(`Failed creating new ticket`, error);
             });

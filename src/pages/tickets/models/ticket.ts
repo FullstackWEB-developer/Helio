@@ -5,6 +5,8 @@ export interface Ticket {
     ticketNumber?: number;
     subject?: string;
     detail?: string;
+    reason?: string;
+    createdOn?: string;
     contactId?: string;
     patientId?: string;
     assignee?: string;
@@ -15,7 +17,6 @@ export interface Ticket {
     tags?: [];
     notes?: TicketNote[];
     relations?: [];
-    reason?: string;
     dueDate?: Date;
     department?: string;
     location?: string;

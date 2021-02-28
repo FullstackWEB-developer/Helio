@@ -35,7 +35,40 @@
     "subject": "Subject",
     "status": "Status",
     "action": "Action",
-    "set": "Set"
+    "set": "Set",
+    "all_tickets": "All Tickets",
+    "search": "Search tickets",
+    "search_assignees": "Search",
+    "created": "Created",
+    "type": "Type",
+    "reason": "Reason",
+    "assigned_to": "Assigned To",
+    "priority": {
+      "low": "Low",
+      "medium": "Medium",
+      "high": "High",
+      "critical": "Critical"
+    },
+    "statuses": {
+      "new": "New",
+      "overdue": "Overdue",
+      "unassigned": "Unassigned",
+      "in_progress": "In Progress",
+      "solved": "Solved",
+      "closed": "Closed"
+    },
+    "types": {
+      "default": "Default",
+      "callback": "Callback",
+      "business_office": "Business Office",
+      "established_patient": "Established patient",
+      "facility": "Facility",
+      "new_patient": "New Patient",
+      "lab": "Lab",
+      "pharmacy": "Pharmacy"
+    },
+    "assign": "Assign",
+    "pagination": "{{numOfItemsFrom}} - {{numOfItemsTo}} of {{totalCount}}"
   },
   "ccp": {
     "title": "Call Control Panel",
@@ -140,7 +173,7 @@
       "eligibility_info": "ELIGIBILITY INFO",
       "status": "Status",
       "status_reason": "Status Reason",
-      "pcp":  "PCP",
+      "pcp": "PCP",
       "inquiry_date": "Inquiry Date",
       "message": "Message",
       "plan_description": "Plain Description",
@@ -148,7 +181,8 @@
       "no_insurance": "No insurance",
       "unknown": "Unknown",
       "error": "Error fetching insurance data, please try again",
-      "copay": "Copay"
+      "copay": "Copay",
+      "eligible": "Eligible"
     },
     "clinical": {
       "recent_patient_cases": "Recent Patient Cases",
@@ -158,10 +192,10 @@
       "error": "Error fetching clinical data, please try again"
     },
     "not_found": "Patient with that ID is not found",
-    "activity_panel_header" : "Activity",
+    "activity_panel_header": "Activity",
     "notes_tab_label": "Notes",
     "tickets_tab_label": "Tickets",
-    "activity" : "Activity"
+    "activity": "Activity"
   },
   "redirect_link": {
     "link_not_active": "We apologize, but this link is not active. Please contact the call center.",
@@ -174,7 +208,7 @@
     "zip": "ZIP",
     "verify": "Verify",
     "hipaa_verification": "HIPAA Verification",
-    "hipaa_verification_failed" : "Verification failed, cannot continue"
+    "hipaa_verification_failed": "Verification failed, cannot continue"
   },
   "request-refill": {
     "notes": "Notes",
@@ -184,10 +218,10 @@
     "no_medication_found": "There is no medication to renew",
     "error": "There is an error, please try again later",
     "completed": "Refill request completed",
-    "provider_department_load_failed" : "Providers or departments could not be loaded. Please try again later."
+    "provider_department_load_failed": "Providers or departments could not be loaded. Please try again later."
   },
-  "request-medical-records" : {
-    "download" : "Download"
+  "request-medical-records": {
+    "download": "Download"
   },
   "appointment": {
     "error": "Apologies, an error occurred. Please try your query again.",
@@ -206,14 +240,14 @@
     "cancel": "Cancel",
     "no_appointments": "There are no appointments."
   },
-  "reschedule_appointment" : {
-    "select_appointment_to_reschedule" : "Appointment to reschedule",
+  "reschedule_appointment": {
+    "select_appointment_to_reschedule": "Appointment to reschedule",
     "start_date": "Start date",
     "end_date": "End date",
     "find_open_slots": "Find open slots",
-    "new_appointment" : "Please select new appointment date",
-    "reschedule" : "Reschedule now!",
-    "no_slots_found" : "No open slot found for this range, please select any other date range.",
+    "new_appointment": "Please select new appointment date",
+    "reschedule": "Reschedule now!",
+    "no_slots_found": "No open slot found for this range, please select any other date range.",
     "appointment_rescheduled": "Appointment is rescheduled"
   },
   "lab-results": {
@@ -224,8 +258,8 @@
     "no_lab_results_found": "There are no lab results",
     "error": "There is an error, please try again later",
     "completed": "Refill request completed",
-    "detail_info" : "Lab Result Detailed Information",
-    "detail_info_description" : "Status, date, time and note."
+    "detail_info": "Lab Result Detailed Information",
+    "detail_info_description": "Status, date, time and note."
   },
   "ticket_new": {
     "ticket_type": "Ticket Type",

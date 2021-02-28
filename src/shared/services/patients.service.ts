@@ -1,5 +1,5 @@
 import Api from './api';
-import { Dispatch } from "@reduxjs/toolkit";
+import { Dispatch } from '@reduxjs/toolkit';
 import {
     setPatientChartSummary,
     setPatientChartClinical,
@@ -8,13 +8,13 @@ import {
     setClinicalLoading,
     setInsuranceLoading, clearPatientClinical, clearPatientInsurance, clearPatientSummary, setSummaryError, setClinicalError, setInsuranceError
 } from '../../pages/patients/store/patients.slice';
-import Logger from "./logger";
+import Logger from './logger';
 
 const logger = Logger.getInstance();
 const patientsUrl = '/patients';
 
 export const getPatientSummary = (patientId: string) => {
-    const url = patientsUrl + '/' + patientId + '/summary';
+    const url = `${patientsUrl}/${patientId}/summary`;
     return async (dispatch: Dispatch) => {
         dispatch(setSummaryError(false));
         dispatch(setSummaryLoading(true));
@@ -23,7 +23,7 @@ export const getPatientSummary = (patientId: string) => {
                 dispatch(setPatientChartSummary(response.data));
             })
             .catch(error => {
-                logger.error("Failed getting patient summary", error);
+                logger.error('Failed getting patient summary', error);
                 dispatch(setSummaryError(true));
                 dispatch(clearPatientSummary());
             })
@@ -32,7 +32,7 @@ export const getPatientSummary = (patientId: string) => {
 }
 
 export const getPatientClinicalDetails = (patientId: string) => {
-    const url = patientsUrl + '/' + patientId + '/clinical';
+    const url = `${patientsUrl}/${patientId}/clinical`;
     return async (dispatch: Dispatch) => {
         dispatch(setClinicalError(false));
         dispatch(setClinicalLoading(true));
@@ -41,7 +41,7 @@ export const getPatientClinicalDetails = (patientId: string) => {
                 dispatch(setPatientChartClinical(response.data));
             })
             .catch(error => {
-                logger.error("Failed getting patient clinical", error);
+                logger.error('Failed getting patient clinical', error);
                 dispatch(setClinicalError(true));
                 dispatch(clearPatientClinical());
             })
@@ -50,7 +50,7 @@ export const getPatientClinicalDetails = (patientId: string) => {
 }
 
 export const getPatientInsurance = (patientId: string) => {
-    const url = patientsUrl + '/' + patientId + '/insurance';
+    const url = `${patientsUrl}/${patientId}/insurance`;
     return async (dispatch: Dispatch) => {
         dispatch(setInsuranceError(false));
         dispatch(setInsuranceLoading(true));
@@ -59,7 +59,7 @@ export const getPatientInsurance = (patientId: string) => {
                 dispatch(setPatientChartInsurance(response.data));
             })
             .catch(error => {
-                logger.error("Failed getting patient insurance", error);
+                logger.error('Failed getting patient insurance', error);
                 dispatch(setInsuranceError(true));
                 dispatch(clearPatientInsurance());
             })

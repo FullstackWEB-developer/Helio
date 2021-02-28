@@ -1,5 +1,6 @@
 import { Ticket } from '../models/ticket';
 import { RootState } from '../../../app/store';
+import { Assignee, Paging } from './tickets.initial-state';
 import { createSelector } from '@reduxjs/toolkit';
 import { TicketLookupValue } from '../models/ticket-lookup-values.model';
 import { TicketOptionsBase } from '../models/ticket-options-base.model';
@@ -7,11 +8,17 @@ import { LookupValue } from '../models/lookup-value';
 
 export const ticketState = (state: RootState) => state.ticketState;
 
-export const selectTickets = (state: RootState) => state.ticketState.tickets;
+export const selectTickets = (state: RootState) => state.ticketState.tickets as Ticket[];
+
+export const selectTicketsPaging = (state: RootState) => state.ticketState.paging as Paging;
 
 export const selectTicketById = (state: RootState, id: string): Ticket => {
     return selectTickets(state).find((x: Ticket) => x.id === id) as Ticket;
-}
+};
+
+export const selectAssignees = (state: RootState) => state.ticketState.assignees as Assignee[];
+
+export const selectTicketsLoading = (state: RootState) => state.ticketState.ticketsLoading as boolean;
 
 export const selectEnumValues = (state: RootState, key: string): TicketOptionsBase[] => {
     if (!state.ticketState.enumValues) {

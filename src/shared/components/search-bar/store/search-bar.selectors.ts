@@ -1,4 +1,4 @@
-import { RootState } from "../../../../app/store";
+import { RootState } from '../../../../app/store';
 
 export const selectRecentPatients = (state: RootState) => state.searchState.recentPatients;
 export const selectSearchTypeFiltered = (state: RootState) => state.searchState.searchTypeFiltered;

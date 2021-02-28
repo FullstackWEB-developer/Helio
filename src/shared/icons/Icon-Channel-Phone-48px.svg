@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+  <g id="Icon_Channel_Phone_48px" data-name="Icon/Channel/Phone/48px" transform="translate(-489 -514)">
+    <rect id="Bound" width="48" height="48" transform="translate(489 514)" fill="none"/>
+    <g id="Ellipse" transform="translate(493 518)" fill="#fff" stroke="#ccc" stroke-width="1">
+      <circle cx="20" cy="20" r="20" stroke="none"/>
+      <circle cx="20" cy="20" r="19.5" fill="none"/>
+    </g>
+    <path id="Phone" d="M17.978.886,14.187.011a.881.881,0,0,0-1,.507L11.434,4.6a.873.873,0,0,0,.252,1.021l2.209,1.808a13.512,13.512,0,0,1-6.46,6.46L5.626,11.682a.874.874,0,0,0-1.021-.252L.522,13.18a.885.885,0,0,0-.51,1.006l.875,3.792a.875.875,0,0,0,.853.678A16.914,16.914,0,0,0,18.656,1.74.874.874,0,0,0,17.978.886Z" transform="translate(503.677 528.677)" fill="#ccc"/>
+  </g>
+</svg>

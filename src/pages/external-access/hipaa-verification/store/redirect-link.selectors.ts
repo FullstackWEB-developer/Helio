@@ -1,5 +1,5 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { RootState } from "../../../../app/store";
+import { RootState } from '../../../../app/store';
 import { RedirectLink } from '../models/redirect-link';
 export const selectRedirectLinkState = (state: RootState) => state.externalAccessState.redirectLinkState;
 

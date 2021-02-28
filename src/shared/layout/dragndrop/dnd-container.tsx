@@ -1,12 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, Suspense } from 'react'
 import { useDrop, XYCoord } from 'react-dnd'
 import { DndItemTypes } from './dnd-item-types'
 import update from 'immutability-helper'
 import { DragItem } from './dnd-interfaces'
-import utils from "../../utils/utils";
-import { Suspense } from 'react'
-import ThreeDots from "../../components/skeleton-loader/skeleton-loader";
-const Ccp = React.lazy( () =>import('../../../pages/ccp/ccp'));
+import utils from '../../utils/utils';
+import ThreeDots from '../../components/skeleton-loader/skeleton-loader';
+const Ccp = React.lazy(() => import('../../../pages/ccp/ccp'));
 
 export interface ContainerProps {
     className: string,
@@ -17,7 +16,7 @@ export interface ContainerState {
     boxes: { [key: string]: { top: number; left: number; } }
 }
 
-export const DndContainer: React.FC<ContainerProps> = ({ propsChildren}) => {
+export const DndContainer: React.FC<ContainerProps> = ({ propsChildren }) => {
     const { x, y } = utils.getWindowCenter();
 
     const [boxes, setBoxes] = useState<{
@@ -51,8 +50,8 @@ export const DndContainer: React.FC<ContainerProps> = ({ propsChildren}) => {
     }
 
     return (
-        <div ref={drop} className="h-full w-full">
-            <div className="flex flex-auto h-full">
+        <div ref={drop} className='h-full w-full'>
+            <div className='flex flex-auto h-full'>
                 {propsChildren}
             </div>
             {Object.keys(boxes).map((key) => {
@@ -60,12 +59,12 @@ export const DndContainer: React.FC<ContainerProps> = ({ propsChildren}) => {
                 return (
                     <Suspense
                         key={key}
-                        fallback={<ThreeDots/>}>
-                    <Ccp
+                        fallback={<ThreeDots />}>
+                        <Ccp
                             id={key}
                             left={left}
                             top={top}
-                    />
+                        />
                     </Suspense>
                 )
             })}

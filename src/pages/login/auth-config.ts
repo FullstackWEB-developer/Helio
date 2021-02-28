@@ -1,9 +1,9 @@
-import * as msal from "@azure/msal-browser";
+import * as msal from '@azure/msal-browser';
 
 const msalConfig = {
     auth: {
         clientId: process.env.REACT_APP_MSAL_CLIENTID as string,
-        authority: 'https://login.microsoftonline.com/' + process.env.REACT_APP_MSAL_TENANTID as string,
+        authority: 'https://login.microsoftonline.com/' + process.env.REACT_APP_MSAL_TENANTID,
         validateAuthority: true
     },
 

@@ -1,8 +1,8 @@
-import {Balance} from "./balance";
-import {CustomField} from "./custom-field";
-import {Insurance} from "./insurance";
-import {PortalStatus} from "./portal-status";
-import {Note} from './note';
+import { Balance } from './balance';
+import { CustomField } from './custom-field';
+import { Insurance } from './insurance';
+import { PortalStatus } from './portal-status';
+import { Note } from './note';
 
 export interface ExtendedPatient {
     allPatientStatuses: [],
@@ -37,8 +37,8 @@ export interface ExtendedPatient {
     firstName: string,
     guarantorCountryIsoCode3166: string,
     guarantorDateOfBirth: string,
-    guarantorFirstName:  string,
-    guarantorLastName:  string,
+    guarantorFirstName: string,
+    guarantorLastName: string,
     guarantorRelationShipToPatient: number,
     hasMobile: boolean,
     insurances: Insurance[],
@@ -47,13 +47,13 @@ export interface ExtendedPatient {
     isPortalAccessGiven: boolean,
     isPortalTermsOnFile: boolean,
     isPrivacyInformationVerified: boolean,
-    languageIso6392Code:  string,
-    lastAppointmentDate:  string,
-    lastName:  string,
+    languageIso6392Code: string,
+    lastAppointmentDate: string,
+    lastName: string,
     localPatientId: number,
-    maritalStatus:  string,
-    maritalStatusName:  string,
-    mobilePhone:  string,
+    maritalStatus: string,
+    maritalStatusName: string,
+    mobilePhone: string,
     patientId: number,
     patientPhoto: boolean,
     portalStatus: PortalStatus,
@@ -61,13 +61,13 @@ export interface ExtendedPatient {
     primaryProviderId: number,
     providerGroupId: number,
     race: string[]
-    raceName:  string,
-    registrationDate:  string,
-    sex:  string,
-    ssn:  string,
-    state:  string,
+    raceName: string,
+    registrationDate: string,
+    sex: string,
+    ssn: string,
+    state: string,
     status: number,
-    translatedMobilePhoneIndex:  string,
-    zip:  string,
+    translatedMobilePhoneIndex: string,
+    zip: string,
     notes: Note[]
 }

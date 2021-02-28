@@ -1,10 +1,10 @@
-import { Patient } from "../models/patient";
-import { ExtendedPatient } from "../models/extended-patient";
+import { Patient } from '../models/patient';
+import { ExtendedPatient } from '../models/extended-patient';
 import { Appointment } from '../../external-access/appointment/models/appointment';
-import {VerifiedPatient} from "../models/verified-patient";
-import {PatientChartSummary} from "../models/patient-chart-summary";
-import {ClinicalDetails} from "../models/clinical-details";
-import {Insurance} from "../models/insurance";
+import { VerifiedPatient } from '../models/verified-patient';
+import { PatientChartSummary } from '../models/patient-chart-summary';
+import { ClinicalDetails } from '../models/clinical-details';
+import { Insurance } from '../models/insurance';
 
 export interface PatientsState {
     appointmentList?: Appointment[];

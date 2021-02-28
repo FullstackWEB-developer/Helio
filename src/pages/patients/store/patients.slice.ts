@@ -1,12 +1,12 @@
 import { VerifiedPatient } from '../models/verified-patient';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import initialState from './patients.initial-state';
-import { Patient } from "../models/patient";
-import { ExtendedPatient } from "../models/extended-patient";
+import { Patient } from '../models/patient';
+import { ExtendedPatient } from '../models/extended-patient';
 import { Appointment } from '../../external-access/appointment/models/appointment';
-import {PatientChartSummary} from "../models/patient-chart-summary";
-import {ClinicalDetails} from "../models/clinical-details";
-import {Insurance} from "../models/insurance";
+import { PatientChartSummary } from '../models/patient-chart-summary';
+import { ClinicalDetails } from '../models/clinical-details';
+import { Insurance } from '../models/insurance';
 
 const patientsSlice = createSlice({
     name: 'patients',
@@ -48,7 +48,7 @@ const patientsSlice = createSlice({
         clearAppointments(state) {
             state.appointmentList = undefined;
         },
-        setPatientChartSummary(state, {payload}: PayloadAction<PatientChartSummary>) {
+        setPatientChartSummary(state, { payload }: PayloadAction<PatientChartSummary>) {
             state.patientChartSummary = payload;
             state.isSummaryLoading = false;
         },
@@ -58,7 +58,7 @@ const patientsSlice = createSlice({
         setSummaryLoading(state, { payload }: PayloadAction<boolean>) {
             state.isSummaryLoading = payload;
         },
-        setPatientChartClinical(state, {payload}: PayloadAction<ClinicalDetails>) {
+        setPatientChartClinical(state, { payload }: PayloadAction<ClinicalDetails>) {
             state.patientChartClinical = payload;
             state.isClinicalLoading = false;
         },
@@ -68,7 +68,7 @@ const patientsSlice = createSlice({
         setClinicalLoading(state, { payload }: PayloadAction<boolean>) {
             state.isClinicalLoading = payload;
         },
-        setPatientChartInsurance(state, {payload}: PayloadAction<Insurance[]>) {
+        setPatientChartInsurance(state, { payload }: PayloadAction<Insurance[]>) {
             state.patientChartInsurance = payload;
             state.isInsuranceLoading = false;
         },

@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import initialState from './search-bar.initial-state';
 import { searchTypes } from '../constants/search-type-const';
-import { RecentPatient } from "../models/recent-patient";
+import { RecentPatient } from '../models/recent-patient';
 
 const searchBarSlice = createSlice({
     name: 'search',
@@ -41,8 +41,9 @@ const searchBarSlice = createSlice({
         addRecentPatient(state, { payload }: PayloadAction<RecentPatient>) {
             const findPatientIndex = state.recentPatients.findIndex(patient => patient.patientId === payload.patientId);
 
-            if (findPatientIndex >= 0)
+            if (findPatientIndex >= 0) {
                 state.recentPatients.splice(findPatientIndex, 1);
+            }
 
             state.recentPatients.splice(0, 0, payload);
             state.recentPatients = state.recentPatients.slice(0, 5);

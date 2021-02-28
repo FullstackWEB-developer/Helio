@@ -8,7 +8,7 @@ export interface LabResultsState {
 }
 
 const initialLabResultState: LabResultsState = {
-    error: "",
+    error: '',
     isLabResultsError: false,
     isLabResultsLoading: false,
     labResultList: undefined

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <g id="Icon_Filter_24px" data-name="Icon/Filter/24px" transform="translate(-816 -176)">
+    <rect id="Rectangle_704" data-name="Rectangle 704" width="24" height="24" transform="translate(816 176)" fill="none"/>
+    <path id="filter" d="M17.156,0H.845a.844.844,0,0,0-.6,1.44l6.5,6.5v7.244a.844.844,0,0,0,.36.691l2.813,1.968a.844.844,0,0,0,1.328-.691V7.943l6.5-6.5A.844.844,0,0,0,17.156,0Z" transform="translate(819 179)" fill="rgba(0,0,0,0.6)"/>
+  </g>
+</svg>

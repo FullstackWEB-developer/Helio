@@ -19,11 +19,11 @@ export const getPatientsMedications = (patientId: string, departmentId: number) 
         await Api.get(getMedicationsUrl)
             .then(response => {
                 dispatch(setMedications(response.data.medications));
-                dispatch(endGetMedicationRequest(""));
+                dispatch(endGetMedicationRequest(''));
             })
             .catch(error => {
                 logger.error('Failed getting RedirectLink', error);
-                dispatch(endGetMedicationRequest("request-refill.error"));
+                dispatch(endGetMedicationRequest('request-refill.error'));
             })
     }
 }
@@ -35,11 +35,11 @@ export const requestRefill = (patientId: string, departmentId: string, providerI
         dispatch(startRequestRefillRequest());
         await Api.get(requestRefillUrl)
             .then(() => {
-                dispatch(endRequestRefillRequest(""));
+                dispatch(endRequestRefillRequest(''));
             })
             .catch(error => {
                 logger.error('Failed getting RedirectLink', error);
-                dispatch(endRequestRefillRequest("request-refill.error"));
+                dispatch(endRequestRefillRequest('request-refill.error'));
             })
     }
 }

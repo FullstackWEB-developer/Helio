@@ -1,5 +1,5 @@
-import {SearchType} from "../models/search-type";
-import {RecentPatient} from "../models/recent-patient";
+import { SearchType } from '../models/search-type';
+import { RecentPatient } from '../models/recent-patient';
 
 export interface SearchBarState {
     searchTypeFiltered: SearchType[];

@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react'
+import React, { useCallback } from 'react'
 import withErrorLogging from '../../HOC/with-error-logging';
 
 type TabTitleProps = {
@@ -15,7 +15,7 @@ const TabTitle: React.FC<TabTitleProps> = ({ title, setSelectedTab, isSelected, 
     }, [setSelectedTab, index])
 
     return (
-        <div onClick={onClick} className={"px-7 pt-2.5 pb-3 cursor-pointer" + (isSelected ? ' border-b-2 border-primary ' : '')}>{title}</div>
+        <div onClick={onClick} className={'px-7 pt-2.5 pb-3 cursor-pointer' + (isSelected ? ' border-b-2 border-primary ' : '')}>{title}</div>
     )
 }
 

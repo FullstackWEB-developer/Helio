@@ -1,6 +1,6 @@
-import { RootState } from "../../../../app/store";
+import { RootState } from '../../../../app/store';
 import { createSelector } from '@reduxjs/toolkit';
-import {AppointmentSlot} from "../models/appointment-slot.model";
+import { AppointmentSlot } from '../models/appointment-slot.model';
 export const rescheduleAppointmentState = (state: RootState) => state.externalAccessState.rescheduleAppointmentState;
 
 export const selectOpenSlots = createSelector(
@@ -13,17 +13,17 @@ export const selectIsOpenSlotsLoading = createSelector(
     state => state.isOpenSlotsLoading as boolean
 )
 
-export const selectIsAppointmentRescheduling= createSelector(
+export const selectIsAppointmentRescheduling = createSelector(
     rescheduleAppointmentState,
     state => state.isAppointmentRescheduling as boolean
 )
 
-export const selectRescheduledAppointment= createSelector(
+export const selectRescheduledAppointment = createSelector(
     rescheduleAppointmentState,
     state => state.rescheduledAppointment as AppointmentSlot
 )
 
-export const selectAppointmentSchedulingError= createSelector(
+export const selectAppointmentSchedulingError = createSelector(
     rescheduleAppointmentState,
     state => state.error as string
 )

@@ -1,4 +1,4 @@
-import {AppointmentSlot} from "../models/appointment-slot.model";
+import { AppointmentSlot } from '../models/appointment-slot.model';
 
 export interface RescheduleAppointmentState {
     isOpenSlotsLoading: boolean;
@@ -11,9 +11,9 @@ export interface RescheduleAppointmentState {
 const initialescheduleAppointmentState: RescheduleAppointmentState = {
     isOpenSlotsLoading: false,
     openSlots: undefined,
-    error: "",
+    error: '',
     rescheduledAppointment: null,
-    isAppointmentRescheduling : false
+    isAppointmentRescheduling: false
 }
 
 export default initialescheduleAppointmentState;

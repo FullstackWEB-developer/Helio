@@ -1,14 +1,14 @@
 import { AnyAction, combineReducers, configureStore, Reducer } from '@reduxjs/toolkit';
-import ticketReducer  from '../pages/tickets/store/tickets.slice';
+import ticketReducer from '../pages/tickets/store/tickets.slice';
 import appUserReducer from '../shared/store/app-user/appuser.slice';
 import layoutReducer from '../shared/layout/store/layout.slice';
 import ccpReducer from '../pages/ccp/store/ccp.slice';
 import searchReducer from '../shared/components/search-bar/store/search-bar.slice';
 import patientsReducer from '../pages/patients/store/patients.slice';
-import externalAccessState from '../pages/external-access/store/store';
+import externalAccessState from '../pages/external-access/store/external-access-state';
 import lookupsReducer from '../shared/store/lookups/lookups.slice';
 import contactsReducer from '../shared/store/contacts/contacts.slice';
-import { useDispatch } from "react-redux";
+import { useDispatch } from 'react-redux';
 import storage from 'redux-persist/lib/storage'
 import { persistReducer } from 'redux-persist'
 import thunk from 'redux-thunk'
@@ -26,7 +26,7 @@ const reducers = combineReducers({
 })
 
 const rootReducer: Reducer = (state: RootState, action: AnyAction) => {
-    if (action.type === "layout/resetState") {
+    if (action.type === 'layout/resetState') {
         state = {} as RootState;
     }
     return reducers(state, action);

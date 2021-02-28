@@ -1,5 +1,5 @@
 import React from 'react'
-import withErrorLogging from "../../HOC/with-error-logging";
+import withErrorLogging from '../../HOC/with-error-logging';
 
 type TabProps = {
     title: string,

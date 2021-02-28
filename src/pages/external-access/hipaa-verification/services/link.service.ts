@@ -6,7 +6,7 @@ const logger = Logger.getInstance();
 const redirectUrl = '/notifications';
 
 export const getRedirectLink = (linkId: string) => {
-    const url = redirectUrl + '/' + linkId;
+    const url = `${redirectUrl}/${linkId}`;
 
     return async (dispatch: Dispatch) => {
         dispatch(setError(false));
@@ -16,15 +16,12 @@ export const getRedirectLink = (linkId: string) => {
                 dispatch(setRedirectLink(response.data))
             })
             .catch(error => {
-                switch (error.response?.status) {
-                    case 404:
-                        dispatch(clearRedirectLink());
-                        break;
-                    default:
-                        logger.error('Failed getting RedirectLink', error);
-                        dispatch(setError(true));
-                        dispatch(clearRedirectLink());
-                        break;
+                if (error.response?.status === 404) {
+                    dispatch(clearRedirectLink());
+                } else {
+                    logger.error('Failed getting RedirectLink', error);
+                    dispatch(setError(true));
+                    dispatch(clearRedirectLink());
                 }
             })
             .finally(() => {

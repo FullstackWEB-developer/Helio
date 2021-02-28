@@ -1,5 +1,5 @@
-import React from "react";
-import Label from "../label/label";
+import React from 'react';
+import Label from '../label/label';
 
 interface SelectProps extends React.HTMLAttributes<HTMLSelectElement> {
 
@@ -17,8 +17,8 @@ export interface Option {
 const Select = React.forwardRef<HTMLSelectElement, SelectProps>(({ options, label, className, ...props }, ref) => {
     return (
         <div>
-            {label && <Label text={label} className="block text-sm font-medium text-gray-700" />}
-            <select ref={ref} className={"p-2 border " + className}
+            {label && <Label text={label} className='block text-sm font-medium text-gray-700' />}
+            <select ref={ref} className={'p-2 border ' + className}
                 {...props}
             >
                 {
@@ -27,7 +27,7 @@ const Select = React.forwardRef<HTMLSelectElement, SelectProps>(({ options, labe
                     ))
                 }
             </select>
-            {props.error && <div className="text-red-500">{props.error}</div>}
+            {props.error && <div className='text-red-500'>{props.error}</div>}
         </div>
     )
 })

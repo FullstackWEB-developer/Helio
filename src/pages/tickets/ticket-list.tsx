@@ -1,42 +1,38 @@
 import { useDispatch, useSelector } from 'react-redux';
-import Label from "../../shared/components/label/label";
-import TicketDetails from './ticket-details';
-import { selectTickets } from "./store/tickets.selectors";
-import { useEffect } from "react";
-import { getList } from "./services/tickets.service";
-import { useTranslation } from 'react-i18next';
-import withErrorLogging from "../../shared/HOC/with-error-logging";
+import { selectTickets, selectTicketsLoading, selectTicketsPaging } from './store/tickets.selectors';
+import React, { useEffect } from 'react';
+import { getAssigneeList, getList } from './services/tickets.service';
+import withErrorLogging from '../../shared/HOC/with-error-logging';
 import { Ticket } from './models/ticket';
+import { Paging } from './store/tickets.initial-state';
+import TicketsHeader from './tickets-header';
+import TicketsSearch from './tickets-search';
+import TicketListItem from './ticket-list-item';
+import ThreeDots from '../../shared/components/skeleton-loader/skeleton-loader';
 
-const Tickets = () => {
-    const { t } = useTranslation();
+const TicketList = () => {
     const dispatch = useDispatch();
+    const paging: Paging = useSelector(selectTicketsPaging);
     const items: Ticket[] = useSelector(selectTickets);
+    const ticketsLoading = useSelector(selectTicketsLoading);
 
     useEffect(() => {
-        dispatch(getList())
+        dispatch(getList(paging));
+        dispatch(getAssigneeList());
     }, [dispatch]);
 
     return (
-        <div className="text-secondary">
-            <Label text={t('tickets.title')} className={"p-2"} />
-
-            <div className="grid grid-flow-row auto-rows-max md:auto-rows-min">
-                <div className="grid grid-flow-col auto-cols-max font-bold">
-                    <div className="p-2 w-8">#</div>
-                    <div className="p-2 w-60">{t('tickets.subject')}</div>
-                    <div className="p-2 w-16">{t('tickets.status')}</div>
-                    <div className="p-2 w-16">{t('tickets.action')}</div>
-                </div>
-                <div>
-                    {
-                        items.map(item => <TicketDetails key={item.id} id={item.id ? item.id : ''} />)
-                    }
-                </div>
-            </div>
+        <div className='flex flex-col h-full w-full'>
+            <TicketsHeader />
+            <TicketsSearch />
+            {
+                ticketsLoading ? <ThreeDots />
+                    : items.map(item => {
+                        return <TicketListItem key={item.id} item={item} />
+                    })
+            }
         </div>
     );
-}
+};
 
-export default Tickets;
-export const TicketsWithErrors = withErrorLogging(Tickets);
+export default withErrorLogging(TicketList);

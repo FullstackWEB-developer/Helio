@@ -1,13 +1,13 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { RootState } from "../../../app/store";
+import { RootState } from '../../../app/store';
 import { Appointment } from '../../external-access/appointment/models/appointment';
 import { ExtendedPatient } from '../models/extended-patient';
 import { Patient } from '../models/patient';
 import { VerifiedPatient } from '../models/verified-patient';
-import {Insurance} from "../models/insurance";
-import {PatientChartSummary} from "../models/patient-chart-summary";
-import {ClinicalDetails} from "../models/clinical-details";
-import {ChartInsurance} from "../models/chart-insurance";
+import { Insurance } from '../models/insurance';
+import { PatientChartSummary } from '../models/patient-chart-summary';
+import { ClinicalDetails } from '../models/clinical-details';
+import { ChartInsurance } from '../models/chart-insurance';
 export const patientState = (state: RootState) => state.patientsState
 
 export const selectAppointmentList = createSelector(
@@ -56,9 +56,11 @@ export const selectPatientInsurance = createSelector(
 export const selectPrimaryInsurance = createSelector(
     patientState,
     state => {
-        if(state.patientChartInsurance && state.patientChartInsurance.length > 0) {
+        if (state.patientChartInsurance && state.patientChartInsurance.length > 0) {
             return state.patientChartInsurance[0] as Insurance
-        } else return undefined;
+        } else {
+            return undefined;
+        }
     }
 )
 

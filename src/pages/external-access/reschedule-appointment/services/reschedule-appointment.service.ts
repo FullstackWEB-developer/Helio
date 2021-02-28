@@ -1,12 +1,17 @@
-import {Dispatch} from "@reduxjs/toolkit";
-import Api from "../../../../shared/services/api";
-import {endOpenSlotsRequest, endRescheduleAppointment, setOpenSlots, setRescheduledAppointment, startOpenSlotsRequest, startRescheduleAppointment } from "../store/reschedule-appointment.slice";
-import Logger from "../../../../shared/services/logger";
-import utils from "../../../../shared/utils/utils";
+import { Dispatch } from '@reduxjs/toolkit';
+import Api from '../../../../shared/services/api';
+import { endOpenSlotsRequest, endRescheduleAppointment, setOpenSlots, setRescheduledAppointment, startOpenSlotsRequest, startRescheduleAppointment } from '../store/reschedule-appointment.slice';
+import Logger from '../../../../shared/services/logger';
+import dayjs from 'dayjs';
 const logger = Logger.getInstance();
 
 export const getOpenSlots = (providerId: string, departmentId: string, appointmentTypeId: string, startDate: Date, endDate: Date) => {
-    let getOpenSlotsUrl = `/appointments/open-slots?ignoreschedulablepermission=true&departmentId=${departmentId}&providerId=${providerId}&appointmentTypeId=${appointmentTypeId}&startDate=${utils.dateToString(startDate, 'yyyy-MM-dd')}&endDate=${utils.dateToString(endDate, 'yyyy-MM-dd')}`;
+    let getOpenSlotsUrl = `/appointments/open-slots?ignoreschedulablepermission=true`;
+    getOpenSlotsUrl = getOpenSlotsUrl + `&departmentId=${departmentId}`;
+    getOpenSlotsUrl = getOpenSlotsUrl + `&providerId=${providerId}`;
+    getOpenSlotsUrl = getOpenSlotsUrl + `&appointmentTypeId=${appointmentTypeId}`;
+    getOpenSlotsUrl = getOpenSlotsUrl + `&startDate=${dayjs(startDate).format('yyyy-MM-dd')}`;
+    getOpenSlotsUrl = getOpenSlotsUrl + `&endDate=${dayjs(endDate).format('yyyy-MM-dd')}`;
     return async (dispatch: Dispatch) => {
         dispatch(startOpenSlotsRequest());
         await Api.get(getOpenSlotsUrl)
@@ -21,7 +26,7 @@ export const getOpenSlots = (providerId: string, departmentId: string, appointme
 }
 
 export const rescheduleAppointment = (appointmentId: string, newAppointmentId: number, patientId: number) => {
-    let getOpenSlotsUrl = `/appointments/${appointmentId}/reschedule`;
+    const getOpenSlotsUrl = `/appointments/${appointmentId}/reschedule`;
     return async (dispatch: Dispatch) => {
         dispatch(startRescheduleAppointment());
         await Api.put(getOpenSlotsUrl, {

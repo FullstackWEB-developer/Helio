@@ -9,13 +9,18 @@ import { getDepartments, getProviders } from '../../../shared/services/lookups.s
 import { getAppointments } from '../../../shared/services/search.service';
 import { selectDepartmentList, selectProviderList } from '../../../shared/store/lookups/lookups.selectors';
 import utils from '../../../shared/utils/utils';
-import { selectAppointmentList, selectIsPatientError, selectIsPatientVerified, selectPatientLoading } from '../../patients/store/patients.selectors';
+import {
+    selectAppointmentList,
+    selectIsPatientError,
+    selectIsPatientVerified,
+    selectPatientLoading,
+    selectVerifiedPatent
+} from '../../patients/store/patients.selectors';
 import { clearAppointments, clearVerifiedPatient } from '../../patients/store/patients.slice';
 import { clearRedirectLink } from '../hipaa-verification/store/redirect-link-slice.slice';
 import AppointmentDetailItem from './components/appointment-detail-item';
 import { Appointment } from './models/appointment';
 import { AppointmentDetailDisplayItem } from './models/appointment-detail-display-item';
-import { selectVerifiedPatent } from '../../patients/store/patients.selectors';
 
 const AppointmentDetail = () => {
     const { t } = useTranslation();
@@ -132,12 +137,12 @@ const AppointmentDetail = () => {
             <div hidden={!isLoading}>
                 <ThreeDots />
             </div>
-            <div hidden={isLoading} className="container mx-auto my-10">
-                <div hidden={!isVerified} className={"text-xl"}>{t('appointment.data_verified_successfully')}</div>
-                <div hidden={!isError} className={"p-4 text-red-500"}>{t('appointment.error')}</div>
+            <div hidden={isLoading} className='container mx-auto my-10'>
+                <div hidden={!isVerified} className={'text-xl'}>{t('appointment.data_verified_successfully')}</div>
+                <div hidden={!isError} className={'p-4 text-red-500'}>{t('appointment.error')}</div>
                 <div hidden={isError || !isVerified || options.length <= 1}>
                     <Select
-                        data-test-id="appointment-select"
+                        data-test-id='appointment-select'
                         value={selectedOption ? selectedOption.value : ''}
                         onChange={handleChange}
                         options={options}
@@ -145,17 +150,17 @@ const AppointmentDetail = () => {
                 </div>
                 {
                     !isError && isVerified && items.length > 0 && selectedOption
-                        ? <div className="bg-white shadow overflow-hidden sm:rounded-lg">
-                            <div className="px-4 py-5 sm:px-6">
-                                <h3 className="text-lg leading-6 font-medium text-gray-900">
+                        ? <div className='bg-white shadow overflow-hidden sm:rounded-lg'>
+                            <div className='px-4 py-5 sm:px-6'>
+                                <h3 className='text-lg leading-6 font-medium text-gray-900'>
                                     {t('appointment.detail_info')}
                                 </h3>
-                                <p className="mt-1 max-w-2xl text-sm text-gray-500">
+                                <p className='mt-1 max-w-2xl text-sm text-gray-500'>
                                     {t('appointment.detail_info_description')}
                                 </p>
                             </div>
-                            <div className="border-t border-gray-200">
-                                <dl data-test-id="appointment-detail-list">
+                            <div className='border-t border-gray-200'>
+                                <dl data-test-id='appointment-detail-list'>
                                     {
                                         items.map((item: AppointmentDetailDisplayItem, index: number) => (
                                             <AppointmentDetailItem item={item} key={index} />
@@ -163,20 +168,20 @@ const AppointmentDetail = () => {
                                     }
                                 </dl>
 
-                                <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                                    <button data-test-id="appointment-reschedule" type="button"
-                                        className="btn-primary">
+                                <div className='bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse'>
+                                    <button data-test-id='appointment-reschedule' type='button'
+                                        className='btn-primary'>
                                         {t('appointment.reSchedule')}
                                     </button>
-                                    <button data-test-id="appointment-cancel" type="button"
-                                        className="btn-secondary">
+                                    <button data-test-id='appointment-cancel' type='button'
+                                        className='btn-secondary'>
                                         {t('appointment.cancel')}
                                     </button>
                                 </div>
                             </div>
                         </div>
                         : <div hidden={isError || isLoading} >
-                            <span className={"text-xl"}>{t('appointment.no_appointments')}</span>
+                            <span className={'text-xl'}>{t('appointment.no_appointments')}</span>
                         </div>
 
                 }

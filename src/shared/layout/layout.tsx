@@ -16,19 +16,19 @@ interface LayoutProps {
 const Layout = (props: LayoutProps) => {
     const isLoggedIn = useSelector(authenticationSelector).isLoggedIn;
     if (!isLoggedIn) {
-        return <Redirect to="/login" />
+        return <Redirect to='/login' />
     }
 
     return (
         <Fragment>
             <Header></Header>
-            <div className="flex flex-row h-full bg-primary text-primary overflow-auto">
-                <div className="w-full md:w-auto">
+            <div className='flex flex-row h-full bg-primary text-primary overflow-auto'>
+                <div className='w-full md:w-auto'>
                     <Navigation></Navigation>
                 </div>
                 <DndProvider backend={HTML5Backend}>
-                    <main className="flex flex-col h-full w-full">
-                        <DndContainer propsChildren={props.children} className="flex flex-auto" />
+                    <main className='flex flex-col h-full w-full'>
+                        <DndContainer propsChildren={props.children} className='flex flex-auto' />
                     </main>
                 </DndProvider>
             </div>

@@ -15,33 +15,33 @@ const Footer = () => {
     const numberOfAgentVoices = useSelector(selectVoiceCounter);
 
     return (
-        <footer className="h-14 border-t flex-initial w-full bg-primary text-primary">
-            <div className="flex flex-row justify-between w-full h-full">
-                <div className="md:pl-96 flex flex-row items-center">
-                    <div className="pr-5 hidden md:block">
-                        <CCPIcon data-test-id="toggle-ccp" onClick={() => dispatch(toggleCcp())}></CCPIcon>
+        <footer className='h-14 border-t flex-initial w-full bg-primary text-primary'>
+            <div className='flex flex-row justify-between w-full h-full'>
+                <div className='md:pl-96 flex flex-row items-center'>
+                    <div className='pr-5 hidden md:block'>
+                        <CCPIcon data-test-id='toggle-ccp' onClick={() => dispatch(toggleCcp())}></CCPIcon>
                     </div>
-                    <div className="pr-1 hidden md:block">
+                    <div className='pr-1 hidden md:block'>
                         <PhoneIcon></PhoneIcon>
                     </div>
-                    <div data-test-id="number-of-agent-voices" className="pr-5 text-gray-600 font-bold hidden md:block">{numberOfAgentVoices}</div>
-                    <div className="pr-1 hidden md:block">
+                    <div data-test-id='number-of-agent-voices' className='pr-5 text-gray-600 font-bold hidden md:block'>{numberOfAgentVoices}</div>
+                    <div className='pr-1 hidden md:block'>
                         <ChatIcon></ChatIcon>
                     </div>
-                    <div data-test-id="number-of-agent-chats" className="text-gray-600 font-bold hidden md:block">{numberOfAgentChats}</div>
+                    <div data-test-id='number-of-agent-chats' className='text-gray-600 font-bold hidden md:block'>{numberOfAgentChats}</div>
                 </div>
-                <div className="items-center flex flex-row pr-7 md:pr-36">
-                    <div className="pr-4 hidden md:block">
+                <div className='items-center flex flex-row pr-7 md:pr-36'>
+                    <div className='pr-4 hidden md:block'>
                         <PlaceholderIcon></PlaceholderIcon>
                     </div>
-                    <div className="pr-10 hidden md:block">
+                    <div className='pr-10 hidden md:block'>
                         {t('footer.hotspots')}
                     </div>
-                    <div className="pr-1">
+                    <div className='pr-1'>
                         {t('footer.status')}
                     </div>
                     <div>
-                        <ArrowDownIcon className="cursor-pointer"></ArrowDownIcon>
+                        <ArrowDownIcon className='cursor-pointer'></ArrowDownIcon>
                     </div>
                 </div>
             </div>

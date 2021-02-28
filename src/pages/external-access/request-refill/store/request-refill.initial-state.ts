@@ -1,4 +1,4 @@
-import { Medication } from "../models/medication.model";
+import { Medication } from '../models/medication.model';
 
 export interface RequestRefillState {
     isMedicationsLoading: boolean;
@@ -12,7 +12,7 @@ const initialRequestRefillState: RequestRefillState = {
     isMedicationsLoading: false,
     medications: [],
     isRequestRefillLoading: false,
-    error: "",
+    error: '',
     isRequestRefillRequestCompleted: false,
 }
 

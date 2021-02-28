@@ -1,26 +1,27 @@
-import { useEffect } from "react";
-import { useTranslation } from "react-i18next";
-import { useDispatch, useSelector } from "react-redux";
-import { getPatientsMedications, requestRefill } from "./services/request-refill.service";
+import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
+import { getPatientsMedications, requestRefill } from './services/request-refill.service';
 import {
     selectIsMedicationsLoading,
     selectIsRequestRefillLoading,
     selectMedications,
     SelectIsRequestRefillRequestCompleted,
     SelectRequestRefillError
-} from "./store/request-refill.selectors";
-import Select, { Option } from "../../../shared/components/select/select";
-import Input from "../../../shared/components/input/input";
-import Button from "../../../shared/components/button/button";
-import { useForm, Controller } from "react-hook-form";
-import ThreeDots from "../../../shared/components/skeleton-loader/skeleton-loader";
-import { selectDepartmentList, selectProviderList } from "../../../shared/store/lookups/lookups.selectors";
-import { getDepartments, getProviders } from "../../../shared/services/lookups.service";
-import { Provider } from "../../../shared/models/provider";
-import { Department } from "../../../shared/models/department";
+} from './store/request-refill.selectors';
+import Select, { Option } from '../../../shared/components/select/select';
+import Input from '../../../shared/components/input/input';
+import Button from '../../../shared/components/button/button';
+import { useForm, Controller } from 'react-hook-form';
+import ThreeDots from '../../../shared/components/skeleton-loader/skeleton-loader';
+import { selectDepartmentList, selectProviderList } from '../../../shared/store/lookups/lookups.selectors';
+import { getDepartments, getProviders } from '../../../shared/services/lookups.service';
+import { Provider } from '../../../shared/models/provider';
+import { Department } from '../../../shared/models/department';
 import { selectVerifiedPatent } from '../../patients/store/patients.selectors';
 import { clearRequestRefillState } from './store/request-refill.slice';
-import {clearVerifiedPatient} from "../../patients/store/patients.slice";
+import { clearVerifiedPatient } from '../../patients/store/patients.slice';
+import withErrorLogging from '../../../shared/HOC/with-error-logging';
 
 const RequestRefill = () => {
 
@@ -37,7 +38,7 @@ const RequestRefill = () => {
     const onSubmit = async (data: any) => {
         const providerId: string = data.providerId.value;
         const departmentId: string = data.departmentId.value;
-        const note: string = `Medication : ${data.medication.label}, Patient Note : ${data.note}`;
+        const note = `Medication : ${data.medication.label}, Patient Note : ${data.note}`;
         dispatch(requestRefill(verifiedPatient.patientId.toString(), departmentId, providerId, note));
     }
 
@@ -78,76 +79,76 @@ const RequestRefill = () => {
 
 
     if (isMedicationsLoading || isRequestRefillLoading) {
-        return <ThreeDots data-test-id="request-refill-loading" />;
+        return <ThreeDots data-test-id='request-refill-loading' />;
     }
     if (!verifiedPatient) {
         return <div>{t('hipaa_validation_form.hipaa_verification_failed')}</div>;
     }
 
     if (medicationOptions && medicationOptions.length < 1) {
-        return <div data-test-id="request-refill-no-medication-found">{t('request-refill.no_medication_found')}</div>
+        return <div data-test-id='request-refill-no-medication-found'>{t('request-refill.no_medication_found')}</div>
     }
-    if (providers === undefined ||  departments === undefined) {
-        return <div data-test-id="request-refill-provider-or-departments-failed">{t('request-refill.provider_department_load_failed')}</div>
+    if (providers === undefined || departments === undefined) {
+        return <div data-test-id='request-refill-provider-or-departments-failed'>{t('request-refill.provider_department_load_failed')}</div>
     }
 
     if (isRequestRefillRequestCompleted) {
-        return <div data-test-id="request-refill-completed">{t('request-refill.completed')}</div>
+        return <div data-test-id='request-refill-completed'>{t('request-refill.completed')}</div>
     }
     if (requestRefillError) {
-        return <div data-test-id="request-refill-error">{t('request-refill.error')}</div>
+        return <div data-test-id='request-refill-error'>{t('request-refill.error')}</div>
     }
-    return <div className={"w-96 py-4 mx-auto flex flex-col"}>
+    return <div className={'w-96 py-4 mx-auto flex flex-col'}>
         <form onSubmit={handleSubmit(onSubmit)}>
             <Controller
-                name="medication"
+                name='medication'
                 control={control}
                 defaultValue={medicationOptions ? medicationOptions[0] : ''}
                 rules={{ required: true }}
                 as={Select}
                 options={medicationOptions}
-                className={"w-full"}
-                data-test-id="request-refill-medication"
+                className={'w-full'}
+                data-test-id='request-refill-medication'
                 label={t('request-refill.medication_to_refill')}
             />
             <Controller
-                name="providerId"
+                name='providerId'
                 control={control}
                 rules={{ required: true }}
                 as={Select}
                 defaultValue={providerOptions[0]}
                 options={providerOptions}
-                className={"w-full"}
-                data-test-id="request-refill-provider"
+                className={'w-full'}
+                data-test-id='request-refill-provider'
                 label={t('request-refill.provider')}
             />
             <Controller
-                name="departmentId"
+                name='departmentId'
                 control={control}
                 rules={{ required: true }}
                 defaultValue={departmentOptions[0]}
                 as={Select}
                 options={departmentOptions}
-                className={"w-full"}
-                data-test-id="request-refill-department"
+                className={'w-full'}
+                data-test-id='request-refill-department'
                 label={t('request-refill.location')}
             />
             <Controller
-                name="note"
+                name='note'
                 control={control}
-                defaultValue={""}
-                rules={{ required: "Required" }}
+                defaultValue={''}
+                rules={{ required: 'Required' }}
                 as={Input}
                 error={errors.note?.message}
-                className={"pb-4"}
+                className={'pb-4'}
                 label={t('request-refill.notes')}
-                data-test-id="request-refill-notes"
+                data-test-id='request-refill-notes'
             />
-            <div className={"flex justify-center pt-2"}>
-                <Button data-test-id="request-refill-ok-button" type={'submit'} label={t('common.ok')} />
+            <div className={'flex justify-center pt-2'}>
+                <Button data-test-id='request-refill-ok-button' type={'submit'} label={t('common.ok')} />
             </div>
         </form>
     </div>
 }
 
-export default RequestRefill;
+export default withErrorLogging(RequestRefill);

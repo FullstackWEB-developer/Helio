@@ -1,5 +1,5 @@
-import {Department} from "../../models/department";
-import {Provider} from "../../models/provider";
+import { Department } from '../../models/department';
+import { Provider } from '../../models/provider';
 
 export interface LookupsState {
     departmentList?: Department[];

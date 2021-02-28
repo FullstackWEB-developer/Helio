@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import initialRequestRefillState from "./request-refill.initial-state";
-import { Medication } from "../models/medication.model";
+import initialRequestRefillState from './request-refill.initial-state';
+import { Medication } from '../models/medication.model';
 
 const requestRefillSlice = createSlice({
     name: 'requestRefillSlice',
@@ -9,7 +9,7 @@ const requestRefillSlice = createSlice({
         startGetMedicationRequest(state) {
             state.medications = []
             state.isMedicationsLoading = true;
-            state.error = "";
+            state.error = '';
         },
         endGetMedicationRequest(state, { payload }: PayloadAction<string>) {
             state.isMedicationsLoading = false;
@@ -18,7 +18,7 @@ const requestRefillSlice = createSlice({
         clearRequestRefillState(state) {
             state.isRequestRefillRequestCompleted = false;
             state.isMedicationsLoading = false;
-            state.error = "";
+            state.error = '';
             state.medications = [];
             state.isRequestRefillLoading = false;
         },
@@ -26,11 +26,11 @@ const requestRefillSlice = createSlice({
         setMedications(state, { payload }: PayloadAction<Medication[]>) {
             state.medications = payload?.filter(a => a.refillsAllowed > 0);
             state.isMedicationsLoading = false;
-            state.error = "";
+            state.error = '';
         },
         startRequestRefillRequest(state) {
             state.isRequestRefillLoading = true;
-            state.error = "";
+            state.error = '';
         },
         endRequestRefillRequest(state, { payload }: PayloadAction<string>) {
             state.isRequestRefillLoading = false;

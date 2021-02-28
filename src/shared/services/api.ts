@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 
 import store from '../../app/store';
 const Api = axios.create({

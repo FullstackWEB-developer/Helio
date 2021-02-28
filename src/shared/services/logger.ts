@@ -1,6 +1,6 @@
 
-import {CloudWatchLogs, CognitoIdentityCredentials} from 'aws-sdk';
-import {LogStream, PutLogEventsRequest} from "aws-sdk/clients/cloudwatchlogs";
+import { CloudWatchLogs, CognitoIdentityCredentials } from 'aws-sdk';
+import { LogStream, PutLogEventsRequest } from 'aws-sdk/clients/cloudwatchlogs';
 import dayjs from 'dayjs';
 import store from '../../app/store';
 
@@ -25,23 +25,23 @@ interface Log {
 
 class Logger {
     private static instance: Logger;
-    private log: CloudWatchLogs;
+    private readonly log: CloudWatchLogs;
     private readonly streamName: string;
     private readonly logGroup: string;
     private logStream?: LogStream;
     private readonly LogStreamNameDateFormat = 'YYYY-MM-DDTHH-mm-ss';
-    private nextUploadSequenceToken? :string;
+    private nextUploadSequenceToken?: string;
 
     constructor(streamName?: string) {
-        const credentials = new CognitoIdentityCredentials({ IdentityPoolId: logConfig.identityPoolId }, {region: logConfig.region});
-        this.log = new CloudWatchLogs({credentials, region: logConfig.region});
+        const credentials = new CognitoIdentityCredentials({ IdentityPoolId: logConfig.identityPoolId }, { region: logConfig.region });
+        this.log = new CloudWatchLogs({ credentials, region: logConfig.region });
 
         this.logGroup = logConfig.logGroup
         this.streamName = `${(streamName || logConfig.logStream)}-${dayjs().format(this.LogStreamNameDateFormat)}`;
 
         this.getStream(this.streamName)
             .then(stream => {
-                if(stream) {
+                if (stream) {
                     this.logStream = stream;
                     this.nextUploadSequenceToken = stream?.uploadSequenceToken;
                 } else {
@@ -49,7 +49,7 @@ class Logger {
                         logGroupName: this.logGroup,
                         logStreamName: this.streamName
                     }, (err) => {
-                        if(!err) {
+                        if (!err) {
                             this.getStream(this.streamName)
                                 .then(response => {
                                     this.logStream = response;
@@ -61,35 +61,35 @@ class Logger {
             })
     }
 
-    public static getInstance = ():Logger => {
-        if(!Logger.instance) {
+    public static getInstance = (): Logger => {
+        if (!Logger.instance) {
             Logger.instance = new Logger();
         }
 
         return Logger.instance;
     }
 
-    private getStream = (streamName: string) => {
-        return new Promise<LogStream|undefined>((resolve, reject) => {
+    private readonly getStream = (streamName: string) => {
+        return new Promise<LogStream | undefined>((resolve, reject) => {
             this.log.describeLogStreams(
-                {logGroupName: this.logGroup, logStreamNamePrefix: streamName},
+                { logGroupName: this.logGroup, logStreamNamePrefix: streamName },
                 (err, data) => {
-                if(err) {
-                    console.log(err);
-                    reject();
-                }
-                const logStream = data.logStreams?.find((stream) => stream.logStreamName === streamName);
-                resolve(logStream);
-            })
+                    if (err) {
+                        console.log(err);
+                        reject();
+                    }
+                    const logStream = data.logStreams?.find((stream) => stream.logStreamName === streamName);
+                    resolve(logStream);
+                })
         })
     }
 
     getUserName = () => {
-        const userName =  store.getState()?.appUserState?.auth?.username;
+        const userName = store.getState()?.appUserState?.auth?.username;
         return userName ?? 'no-user';
     }
 
-    private putEvent = (payload: Log) => {
+    private readonly putEvent = (payload: Log) => {
         payload.userName = this.getUserName();
         const params: PutLogEventsRequest = {
             logEvents: [
@@ -102,9 +102,10 @@ class Logger {
             logStreamName: this.streamName,
             sequenceToken: this.nextUploadSequenceToken
         };
-        this.log.putLogEvents(params, (err, data)  => {
-            if (err) console.log(err, err.stack);
-            else {
+        this.log.putLogEvents(params, (err, data) => {
+            if (err) {
+                console.log(err, err.stack);
+            } else {
                 this.nextUploadSequenceToken = data.nextSequenceToken
             }
         });
@@ -123,17 +124,17 @@ class Logger {
     error = (message: string, data?: object) => {
         const log: Log = {
             message: message,
-            level: LogLevel.Info,
+            level: LogLevel.Error,
             data: data
         }
 
         this.putEvent(log);
     }
 
-    message = (message: string, data?: object) => {
+    warn = (message: string, data?: object) => {
         const log: Log = {
             message: message,
-            level: LogLevel.Info,
+            level: LogLevel.Warning,
             data: data
         }
 

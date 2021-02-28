@@ -1,7 +1,7 @@
-import {ChartInsurance} from "./chart-insurance";
-import {PatientOutstandingBalance} from "./patient-outstanding-balance";
-import {Appointment} from "../../external-access/appointment/models/appointment";
-import {PatientCase} from "./patient-case";
+import { ChartInsurance } from './chart-insurance';
+import { PatientOutstandingBalance } from './patient-outstanding-balance';
+import { Appointment } from '../../external-access/appointment/models/appointment';
+import { PatientCase } from './patient-case';
 
 export interface PatientChartSummary {
     emailAddress: string,

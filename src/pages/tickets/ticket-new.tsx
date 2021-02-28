@@ -8,8 +8,6 @@ import ThreeDots from '../../shared/components/skeleton-loader/skeleton-loader';
 import Select, { Option } from '../../shared/components/select/select';
 import Input from '../../shared/components/input/input';
 import Button from '../../shared/components/button/button';
-import utils from '../../shared/utils/utils';
-
 import { Contact } from '../../shared/models/contact.model';
 import { Department } from '../../shared/models/department';
 import { Ticket } from './models/ticket';
@@ -26,12 +24,13 @@ import { selectDepartmentList, selectIsDepartmentListLoading } from '../../share
 import { createTicket, getEnumByType, getLookupValues } from './services/tickets.service';
 import { getContacts } from '../../shared/services/contacts.service';
 import { getDepartments } from '../../shared/services/lookups.service';
+import dayjs from 'dayjs';
 
 const TicketNew = () => {
     const { handleSubmit, control, errors, setValue } = useForm();
     const { t } = useTranslation();
     const dispatch = useDispatch();
-
+    const requiredText = t('common.required');
     const TicketTypeDefault = '1';
     const departments = useSelector(selectDepartmentList);
     const contacts = useSelector(selectContacts);
@@ -43,7 +42,7 @@ const TicketNew = () => {
     const ticketLookupValuesDepartment = useSelector((state) => selectLookupValues(state, 'Department'));
     const ticketLookupValuesReason = useSelector((state) => selectLookupValues(state, 'TicketReason'));
     const ticketLookupValuesSubject = useSelector((state) => selectLookupValues(state, 'TicketSubject'));
-    const ticketLookupValuesTags =  useSelector((state) => selectLookupValues(state, 'TicketTags'));
+    const ticketLookupValuesTags = useSelector((state) => selectLookupValues(state, 'TicketTags'));
 
     const error = useSelector(selectTicketOptionsError);
 
@@ -58,14 +57,14 @@ const TicketNew = () => {
             return;
         }
 
-        let notes = [] as TicketNote[];
+        const notes = [] as TicketNote[];
         if (formData.note) {
             notes.push({
                 noteText: formData.note
             });
         }
 
-        let ticketData: Ticket = {
+        const ticketData: Ticket = {
             type: selectedTicketTypeOption ? selectedTicketTypeOption.value : TicketTypeDefault,
             reason: formData.reason,
             contactId: formData.contactId,
@@ -129,21 +128,27 @@ const TicketNew = () => {
     }) : [];
 
     const getTicketLookupValuesOptions = (data: any[] | undefined) => {
-        return data !== undefined ? data?.map((item: any) => {
-            return {
-                value: item.value,
-                label: item.label
-            };
-        }) : [];
+        if (data) {
+            return convertToOptions(data)
+        }
+        return [];
     }
 
     const getTicketLookupValuesOptionsByTicketType = (data: any[] | undefined) => {
-        return data && selectedTicketTypeOption ? data?.filter(v => v.parentValue === selectedTicketTypeOption.value.toString()).map((item: any) => {
+        if (data && selectedTicketTypeOption) {
+            const filtered = data.filter(v => v.parentValue === selectedTicketTypeOption.value.toString());
+            return convertToOptions(filtered);
+        }
+        return [];
+    }
+
+    const convertToOptions = (data: any[]) => {
+        return data.map((item: any) => {
             return {
                 value: item.value,
                 label: item.label
             };
-        }) : [];
+        })
     }
 
     const [selectedTicketTypeOption, setSelectedTicketTypeOption] =
@@ -164,7 +169,7 @@ const TicketNew = () => {
         subjectOptions = getTicketLookupValuesOptionsByTicketType(ticketLookupValuesSubject);
         reasonOptions = getTicketLookupValuesOptionsByTicketType(ticketLookupValuesReason);
 
-        if(reasonOptions && reasonOptions.length > 0){
+        if (reasonOptions && reasonOptions.length > 0) {
             setTimeout(() => {
                 setValue('reason', reasonOptions[0].value);
             }, 1000);
@@ -172,7 +177,7 @@ const TicketNew = () => {
     }
 
     if (isContactsLoading || isDepartmentListLoading || isLookupValuesLoading || isTicketEnumValuesLoading) {
-        return <ThreeDots data-test-id="ticket-new-loading" />;
+        return <ThreeDots data-test-id='ticket-new-loading' />;
     }
 
     if (contacts === undefined
@@ -186,11 +191,11 @@ const TicketNew = () => {
         || ticketLookupValuesSubject === undefined
         || ticketLookupValuesTags === undefined
     ) {
-        return <div data-test-id="ticket-new-load-failed">{t('ticket_new.load_failed')}</div>
+        return <div data-test-id='ticket-new-load-failed'>{t('ticket_new.load_failed')}</div>
     }
 
     if (error) {
-        return <div data-test-id="ticket-new-error">{t('ticket_new.error')}</div>
+        return <div data-test-id='ticket-new-error'>{t('ticket_new.error')}</div>
     }
 
     const manageTicketTypeOptions = () => {
@@ -201,17 +206,18 @@ const TicketNew = () => {
 
     manageTicketTypeOptions();
 
-    return <div className={"w-96 py-4 mx-auto flex flex-col"}>
+
+    return <div className={'w-96 py-4 mx-auto flex flex-col'}>
         <form onSubmit={handleSubmit(onSubmit)}>
             <Controller
-                name="ticketType"
+                name='ticketType'
                 control={control}
                 defaultValue={ticketTypeOptions ? ticketTypeOptions[0] : ''}
-                rules={{required: t('common.required') as string}}
+                rules={{ required: requiredText }}
                 render={() => (
                     <Select
-                        data-test-id={"ticket-new-ticket-type"}
-                        className={"w-full"}
+                        data-test-id={'ticket-new-ticket-type'}
+                        className={'w-full'}
                         label={t('ticket_new.ticket_type')}
                         options={ticketTypeOptions}
                         value={selectedTicketTypeOption ? selectedTicketTypeOption.value : ''}
@@ -220,163 +226,163 @@ const TicketNew = () => {
                 )}
             />
             <Controller
-                name="reason"
+                name='reason'
                 control={control}
                 defaultValue={reasonOptions ? reasonOptions[0] : ''}
                 as={Select}
                 options={reasonOptions}
-                className={"w-full"}
-                data-test-id={"ticket-new-reason"}
+                className={'w-full'}
+                data-test-id={'ticket-new-reason'}
                 label={t('ticket_new.reason')}
             />
             <Controller
-                name="contactId"
+                name='contactId'
                 control={control}
                 defaultValue={contactOptions ? contactOptions[0] : ''}
-                rules={{required: t('common.required') as string}}
+                rules={{ required: requiredText }}
                 as={Select}
                 options={contactOptions}
-                className={"w-full"}
-                data-test-id="ticket_new.contact"
+                className={'w-full'}
+                data-test-id='ticket_new.contact'
                 label={t('ticket_new.contact')}
             />
             <Controller
-                name="subject"
+                name='subject'
                 control={control}
                 defaultValue={subjectOptions ? subjectOptions[0] : ''}
                 as={Select}
                 options={subjectOptions}
-                className={"w-full"}
-                data-test-id={"ticket-new-subject"}
+                className={'w-full'}
+                data-test-id={'ticket-new-subject'}
                 label={t('ticket_new.subject')}
             />
             <Controller
-                name="status"
+                name='status'
                 control={control}
                 defaultValue={statusOptions ? statusOptions[0] : ''}
-                rules={{required: t('common.required') as string}}
+                rules={{ required: requiredText }}
                 as={Select}
                 options={statusOptions}
-                className={"w-full"}
-                data-test-id={"ticket-new-status"}
+                className={'w-full'}
+                data-test-id={'ticket-new-status'}
                 label={t('ticket_new.status')}
             />
             <Controller
-                name="priority"
+                name='priority'
                 control={control}
                 defaultValue={priorityOptions ? priorityOptions[0] : ''}
-                rules={{required: t('common.required') as string}}
+                rules={{ required: requiredText }}
                 as={Select}
                 options={priorityOptions}
-                className={"w-full"}
-                data-test-id={"ticket-new-priority"}
+                className={'w-full'}
+                data-test-id={'ticket-new-priority'}
                 label={t('ticket_new.priority')}
             />
             <Controller
-                type="date"
-                name="dueDate"
+                type='date'
+                name='dueDate'
                 control={control}
-                rules={{required: t('common.required') as string}}
+                rules={{ required: requiredText }}
                 as={Input}
-                className={"w-full"}
-                defaultValue={utils.dateToString(new Date(),'yyyy-MM-dd')}
+                className={'w-full'}
+                defaultValue={dayjs().format('yyyy-MM-dd')}
                 error={errors.dueDate?.message}
-                data-test-id={"ticket-new-due-date"}
+                data-test-id={'ticket-new-due-date'}
                 label={t('ticket_new.due_date')}
             />
             <Controller
-                name="dueTime"
+                name='dueTime'
                 control={control}
                 as={Input}
-                className={"w-full"}
+                className={'w-full'}
                 defaultValue={'08:00'}
-                data-test-id={"ticket-new-due-time"}
+                data-test-id={'ticket-new-due-time'}
                 label={t('ticket_new.due_time')}
             />
             <Controller
-                name="channel"
+                name='channel'
                 control={control}
                 defaultValue={channelOptions ? channelOptions[0] : ''}
                 as={Select}
                 options={channelOptions}
-                className={"w-full"}
-                data-test-id={"ticket-new-channel"}
+                className={'w-full'}
+                data-test-id={'ticket-new-channel'}
                 label={t('ticket_new.channel')}
             />
             <Controller
-                name="department"
+                name='department'
                 control={control}
                 defaultValue={departmentOptions ? departmentOptions[0] : ''}
                 as={Select}
                 options={departmentOptions}
-                className={"w-full"}
-                data-test-id="ticket-new-department"
+                className={'w-full'}
+                data-test-id='ticket-new-department'
                 label={t('ticket_new.department')}
             />
             <Controller
-                name="location"
+                name='location'
                 control={control}
                 defaultValue={locationOptions ? locationOptions[0] : ''}
-                rules={{required: t('common.required') as string}}
+                rules={{ required: requiredText }}
                 as={Select}
                 options={locationOptions}
-                className={"w-full"}
-                data-test-id={"ticket-new-location"}
+                className={'w-full'}
+                data-test-id={'ticket-new-location'}
                 label={t('ticket_new.location')}
             />
             <Controller
-                name="assignee"
+                name='assignee'
                 control={control}
-                defaultValue={""}
-                rules={{required: t('common.required') as string}}
+                defaultValue={''}
+                rules={{ required: requiredText }}
                 as={Input}
-                className={"w-full"}
-                data-test-id={"ticket-new-assignee"}
+                className={'w-full'}
+                data-test-id={'ticket-new-assignee'}
                 label={t('ticket_new.assignee')}
             />
             <Controller
-                name="patientChartNumber"
+                name='patientChartNumber'
                 control={control}
-                defaultValue={""}
+                defaultValue={''}
                 as={Input}
-                className={"w-full"}
-                data-test-id={"ticket-new-patient-chart-number"}
+                className={'w-full'}
+                data-test-id={'ticket-new-patient-chart-number'}
                 label={t('ticket_new.patient_chart_number')}
             />
             <Controller
-                name="patientCaseNumber"
+                name='patientCaseNumber'
                 control={control}
-                defaultValue={""}
+                defaultValue={''}
                 as={Input}
-                className={"w-full"}
-                data-test-id={"ticket-new-patient-case-number"}
+                className={'w-full'}
+                data-test-id={'ticket-new-patient-case-number'}
                 label={t('ticket_new.patient_case_number')}
             />
             <Controller
-                name="tags"
+                name='tags'
                 control={control}
                 defaultValue={''}
                 as={Select}
                 options={tagsOptions}
-                className={"w-full"}
-                data-test-id="ticket-new-tags"
+                className={'w-full'}
+                data-test-id='ticket-new-tags'
                 label={t('ticket_new.tags')}
             />
             <Controller
-                name="note"
+                name='note'
                 control={control}
-                defaultValue={""}
+                defaultValue={''}
                 as={Input}
-                data-test-id={"ticket-new-add-note"}
+                data-test-id={'ticket-new-add-note'}
                 label={t('ticket_new.add_note')}
             />
-            <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                <Button data-test-id="ticket-new-create-button" type={'submit'}
-                        className="btn-primary"
-                        label={t('ticket_new.create')} />
-                <Button data-test-id="ticket-new-cancel-button" type={'button'}
-                        className="btn-secondary"
-                        label={t('common.cancel')} />
+            <div className='bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse'>
+                <Button data-test-id='ticket-new-create-button' type={'submit'}
+                    className='btn-primary'
+                    label={t('ticket_new.create')} />
+                <Button data-test-id='ticket-new-cancel-button' type={'button'}
+                    className='btn-secondary'
+                    label={t('common.cancel')} />
             </div>
         </form>
     </div>
