@@ -100,7 +100,8 @@ export const getAssigneeList = () => {
             dispatch(setFailure(error.message));
         }
     }
-};
+}
+
 export const addNote = (id: string, note: TicketNote) => {
     const url = `${ticketsBaseUrl}/${id}/notes`;
     return async (dispatch: Dispatch) => {
@@ -155,9 +156,8 @@ export const getLookupValues = (key: string) => {
 }
 
 export const createTicket = (data: Ticket) => {
-    const createTicketUrl = ticketsUrl;
     return async () => {
-        await Api.post(createTicketUrl, data)
+        await Api.post(ticketsBaseUrl, data)
             .then()
             .catch(error => {
                 logger.error(`Failed creating new ticket`, error);

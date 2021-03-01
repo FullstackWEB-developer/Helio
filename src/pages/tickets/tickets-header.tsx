@@ -15,8 +15,8 @@ const TicketsHeader = () => {
     const dispatch = useDispatch();
     const [currentPage, setCurrentPage] = useState(paging.page.toString());
 
-    const numOfItemsTo = paging.pageSize * paging.page > paging.totalCount ? paging.totalCount : paging.pageSize * paging.page;
-    const numOfItemsFrom = numOfItemsTo > (paging.pageSize - 1) ? (paging.pageSize - 1) : 0;
+    const numOfItemsTo = ((paging.pageSize * paging.page) > paging.totalCount) ? paging.totalCount : (paging.pageSize * paging.page);
+    const numOfItemsFrom = numOfItemsTo > (paging.pageSize * (paging.page - 1)) ? (paging.pageSize * (paging.page - 1)) : 0;
 
     useEffect(() => {
         setCurrentPage(paging.page.toString());
