@@ -25,15 +25,16 @@ import {
 import { Ticket } from '../models/ticket';
 
 const logger = Logger.getInstance();
-let ticketsUrl = '/tickets';
+const ticketsBaseUrl = '/tickets';
 const usersUrl = '/users';
 
 export function getList(ticketsPaging?: Paging, searchTerm?: string) {
     return async (dispatch: Dispatch) => {
         dispatch(setTicketsLoading(true));
+        let ticketsUrl = '';
         try {
             if (ticketsPaging?.pageSize) {
-                ticketsUrl = `${ticketsUrl}?pageSize=${ticketsPaging.pageSize}&page=${ticketsPaging.page}`
+                ticketsUrl = `${ticketsBaseUrl}?pageSize=${ticketsPaging.pageSize}&page=${ticketsPaging.page}`
             }
             if (searchTerm) {
                 ticketsUrl = `${ticketsUrl}&searchTerm=${searchTerm}`;
@@ -51,7 +52,7 @@ export function getList(ticketsPaging?: Paging, searchTerm?: string) {
 }
 
 export const setStatus = (id: string, status: number) => {
-    const url = `${ticketsUrl}/${id}/status`;
+    const url = `${ticketsBaseUrl}/${id}/status`;
     return async (dispatch: Dispatch) => {
         await Api.put(url, {
             id: id,
@@ -70,7 +71,7 @@ export const setStatus = (id: string, status: number) => {
 }
 
 export const setAssignee = (id: string, assignee: string) => {
-    const url = `${ticketsUrl}/${id}/assignee`;
+    const url = `${ticketsBaseUrl}/${id}/assignee`;
     return async (dispatch: Dispatch) => {
         await Api.put(url, {
             id: id,
@@ -101,7 +102,7 @@ export const getAssigneeList = () => {
     }
 };
 export const addNote = (id: string, note: TicketNote) => {
-    const url = `${ticketsUrl}/${id}/notes`;
+    const url = `${ticketsBaseUrl}/${id}/notes`;
     return async (dispatch: Dispatch) => {
         dispatch(startRequestAddNote());
         await Api.post(url, note)
@@ -116,7 +117,7 @@ export const addNote = (id: string, note: TicketNote) => {
 }
 
 export const getEnumByType = (enumType: string) => {
-    const getEnumUrl = `${ticketsUrl}/lookup/${enumType}`;
+    const getEnumUrl = `${ticketsBaseUrl}/lookup/${enumType}`;
 
     return async (dispatch: Dispatch) => {
         dispatch(startGetTicketEnumRequest());
