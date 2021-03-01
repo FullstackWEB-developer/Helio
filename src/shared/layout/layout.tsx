@@ -8,7 +8,6 @@ import { Redirect } from 'react-router';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { DndContainer } from './dragndrop/dnd-container'
-
 interface LayoutProps {
     children: React.ReactNode
 }
@@ -21,10 +20,10 @@ const Layout = (props: LayoutProps) => {
 
     return (
         <Fragment>
-            <Header></Header>
+            <Header />
             <div className='flex flex-row h-full bg-primary text-primary overflow-auto'>
                 <div className='w-full md:w-auto'>
-                    <Navigation></Navigation>
+                    <Navigation />
                 </div>
                 <DndProvider backend={HTML5Backend}>
                     <main className='flex flex-col h-full w-full'>
@@ -32,7 +31,7 @@ const Layout = (props: LayoutProps) => {
                     </main>
                 </DndProvider>
             </div>
-            <Footer></Footer>
+            <Footer />
         </Fragment>
     );
 }

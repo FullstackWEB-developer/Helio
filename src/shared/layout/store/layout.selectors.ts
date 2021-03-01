@@ -1,5 +1,23 @@
 import { RootState } from '../../../app/store';
+import { createSelector } from '@reduxjs/toolkit';
+export const layoutState = (state: RootState) => state.layoutState
 
-export const isNavigationExpandedSelector = (state: RootState) => state.layoutState.isNavigationExpanded;
-export const isProfileMenuExpandedSelector = (state: RootState) => state.layoutState.isProfileMenuExpanded;
-export const isCcpVisibleSelector = (state: RootState) => state.layoutState.isCcpVisible;
+export const isNavigationExpandedSelector = createSelector(
+    layoutState,
+    state => state.isNavigationExpanded
+)
+
+export const isProfileMenuExpandedSelector = createSelector(
+    layoutState,
+    state => state.isProfileMenuExpanded
+)
+
+export const isCcpVisibleSelector = createSelector(
+    layoutState,
+    state => state.isCcpVisibleSelector
+)
+
+export const selectIsHotspotsVisible = createSelector(
+    layoutState,
+    state => state.isHotspotsVisible
+)

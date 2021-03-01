@@ -238,7 +238,14 @@
     "parking_instructions": "Parking Instructions:",
     "reSchedule": "ReSchedule",
     "cancel": "Cancel",
-    "no_appointments": "There are no appointments."
+    "no_appointments": "There are no appointments.",
+    "hot_spots": {
+      "title": "Hot Spots",
+      "provider": "Provider",
+      "open_slots": "Open Slots",
+      "location": "Location",
+      "error": "Error loading hotspots"
+    }
   },
   "reschedule_appointment": {
     "select_appointment_to_reschedule": "Appointment to reschedule",

@@ -5,6 +5,7 @@ import update from 'immutability-helper'
 import { DragItem } from './dnd-interfaces'
 import utils from '../../utils/utils';
 import ThreeDots from '../../components/skeleton-loader/skeleton-loader';
+import HotSpots from '../../../pages/appointments/components/hot-spots';
 const Ccp = React.lazy(() => import('../../../pages/ccp/ccp'));
 
 export interface ContainerProps {
@@ -51,6 +52,7 @@ export const DndContainer: React.FC<ContainerProps> = ({ propsChildren }) => {
 
     return (
         <div ref={drop} className='h-full w-full'>
+            <HotSpots />
             <div className='flex flex-auto h-full'>
                 {propsChildren}
             </div>
