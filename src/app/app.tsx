@@ -31,7 +31,7 @@ function App() {
                 </Route>
                 <Layout>
                     <GuardedRoute exact path='/dashboard' component={Dashboard} />
-                    <GuardedRoute exact path='/tickets' component={withSuspense(TicketList)} />
+                    <GuardedRoute exact path='/my_tickets' component={withSuspense(TicketList)} />
                     <GuardedRoute exact path='/tickets/new' component={withSuspense(TicketNew)} />
                     <Switch>
                         <GuardedRoute exact path='/patients/results' component={withSuspense(SearchResults)} />
