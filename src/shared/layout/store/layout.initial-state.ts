@@ -10,6 +10,6 @@ const initialState: LayoutState = {
     isNavigationExpanded: false,
     isProfileMenuExpanded: false,
     isCcpVisible: true,
-    isHotspotsVisible: true
+    isHotspotsVisible: false
 }
 export default initialState;
