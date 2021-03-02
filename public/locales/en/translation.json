@@ -10,7 +10,8 @@
     "clear": "Clear",
     "show_more": "Show more",
     "show_less": "Show less",
-    "save": "Save"
+    "save": "Save",
+    "cancel": "Cancel"
   },
   "login": {
     "loginButton": "Login"

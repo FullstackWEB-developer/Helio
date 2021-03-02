@@ -14,7 +14,7 @@ export interface Ticket {
     status?: number;
     priority?: number
     channel?: number;
-    tags?: [];
+    tags?: string[];
     notes?: TicketNote[];
     relations?: [];
     dueDate?: Date;

@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, {ChangeEvent, useEffect, useState} from 'react';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc'
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm, Controller } from 'react-hook-form';
@@ -16,22 +18,25 @@ import {
     selectIsTicketEnumValuesLoading,
     selectEnumValues,
     selectTicketOptionsError,
-    selectIsTicketLookupValuesLoading, selectLookupValues
+    selectIsTicketLookupValuesLoading, selectLookupValues, selectAssignees
 } from './store/tickets.selectors';
 import { selectContacts, selectIsContactOptionsLoading } from '../../shared/store/contacts/contacts.selectors';
 import { selectDepartmentList, selectIsDepartmentListLoading } from '../../shared/store/lookups/lookups.selectors';
 
-import { createTicket, getEnumByType, getLookupValues } from './services/tickets.service';
+import { createTicket, getAssigneeList, getEnumByType, getLookupValues } from './services/tickets.service';
 import { getContacts } from '../../shared/services/contacts.service';
 import { getDepartments } from '../../shared/services/lookups.service';
-import dayjs from 'dayjs';
+import { Assignee } from './store/tickets.initial-state';
+import TextArea from '../../shared/components/textarea/textarea';
 
 const TicketNew = () => {
+    dayjs.extend(utc);
     const { handleSubmit, control, errors, setValue } = useForm();
     const { t } = useTranslation();
     const dispatch = useDispatch();
     const requiredText = t('common.required');
     const TicketTypeDefault = '1';
+    const assignees = useSelector(selectAssignees);
     const departments = useSelector(selectDepartmentList);
     const contacts = useSelector(selectContacts);
     const ticketChannels = useSelector((state => selectEnumValues(state, 'TicketChannel')));
@@ -51,16 +56,35 @@ const TicketNew = () => {
     const isLookupValuesLoading = useSelector(selectIsTicketLookupValuesLoading);
     const isTicketEnumValuesLoading = useSelector(selectIsTicketEnumValuesLoading);
 
+    const [isTicketTypeSelected, setIsTicketTypeSelected] = useState(false);
+    const [tags, setTags] = useState<string[]>([]);
+    const [noteText, setNoteText] = useState('');
 
     const onSubmit = async (formData: any) => {
         if (!formData) {
             return;
         }
 
+        const subjectOption = subjectOptions.find(o => o.value === formData.subject);
+        const subjectValue = subjectOptions && subjectOptions.length > 1 && subjectOption ? subjectOption.label : formData.subject;
+
+        let dueDateTime;
+        if (formData.dueDate && formData.dueTime) {
+            const hours = parseInt(formData.dueTime.split(':')[0]);
+            const minutes = parseInt(formData.dueTime.split(':')[1]);
+            dueDateTime = dayjs.utc(formData.dueDate).hour(hours).minute(minutes);
+        } else if (formData.dueDate) {
+            dueDateTime = dayjs.utc(formData.dueDate);
+        } else {
+            const hours = parseInt(formData.dueTime.split(':')[0]);
+            const minutes = parseInt(formData.dueTime.split(':')[1]);
+            dueDateTime = dayjs.utc().hour(hours).minute(minutes);
+        }
+
         const notes = [] as TicketNote[];
-        if (formData.note) {
+        if (noteText) {
             notes.push({
-                noteText: formData.note
+                noteText: noteText
             });
         }
 
@@ -69,17 +93,17 @@ const TicketNew = () => {
             reason: formData.reason,
             contactId: formData.contactId,
             connectContactId: '00000000-0000-0000-0000-000000000000',
-            subject: formData.subject,
+            subject: subjectValue,
             status: formData.status,
             priority: formData.priority,
-            dueDate: formData.dueDate ? new Date(formData.dueDate) : undefined,
+            dueDate: dueDateTime ? dueDateTime.toDate() : undefined,
             channel: formData.channel,
             department: formData.department,
             location: formData.location,
             assignee: formData.assignee,
             patientChartNumber: formData.patientChartNumber,
             patientCaseNumber: formData.patientCaseNumber,
-            tags: [],
+            tags: tags,
             notes: notes
         };
 
@@ -87,6 +111,7 @@ const TicketNew = () => {
     }
 
     useEffect(() => {
+        dispatch(getAssigneeList());
         dispatch(getContacts());
         dispatch(getDepartments());
         dispatch(getEnumByType('TicketChannel'));
@@ -108,10 +133,32 @@ const TicketNew = () => {
         }) : [];
     }
 
-    const channelOptions: Option[] = getOptions(ticketChannels);
-    const priorityOptions: Option[] = getOptions(ticketPriorities);
-    const statusOptions: Option[] = getOptions(ticketStatuses);
-    const ticketTypeOptions: Option[] = getOptions(ticketTypes);
+    const addFirstOption = (data: any[], firstItemLabel: string, isAsterisk?: boolean) => {
+        data.unshift({
+            value: 0,
+            label: firstItemLabel,
+            hidden: true,
+            isAsterisk: isAsterisk
+        });
+    }
+
+    let sourceOptions: Option[] = getOptions(ticketChannels);
+    let priorityOptions: Option[] = getOptions(ticketPriorities);
+    let statusOptions: Option[] = getOptions(ticketStatuses);
+    let ticketTypeOptions: Option[] = getOptions(ticketTypes);
+
+    addFirstOption(sourceOptions, 'Source');
+    addFirstOption(priorityOptions, 'Priority', true);
+    addFirstOption(statusOptions, 'Status', true);
+    addFirstOption(ticketTypeOptions, 'Ticket Type');
+
+    const assigneeOptions: Option[] = assignees ? assignees.map((item: Assignee) => {
+        return {
+            value: item.id,
+            label: item.id
+        };
+    }) : [];
+    addFirstOption(assigneeOptions, 'Assign To', true);
 
     const contactOptions: Option[] = contacts ? contacts.map((item: Contact) => {
         return {
@@ -119,6 +166,7 @@ const TicketNew = () => {
             label: item.name
         };
     }) : [];
+    addFirstOption(contactOptions, 'Contact', true);
 
     const locationOptions: Option[] = departments ? departments.map((item: Department) => {
         return {
@@ -126,6 +174,7 @@ const TicketNew = () => {
             label: item.address
         };
     }) : [];
+    addFirstOption(locationOptions, 'Office/Location');
 
     const getTicketLookupValuesOptions = (data: any[] | undefined) => {
         if (data) {
@@ -134,9 +183,17 @@ const TicketNew = () => {
         return [];
     }
 
+    const [selectedTicketTypeOption, setSelectedTicketTypeOption] =
+        useState(ticketTypeOptions && ticketTypeOptions.length > 0 ? ticketTypeOptions[0] : null);
+
     const getTicketLookupValuesOptionsByTicketType = (data: any[] | undefined) => {
         if (data && selectedTicketTypeOption) {
             const filtered = data.filter(v => v.parentValue === selectedTicketTypeOption.value.toString());
+            if (filtered.length <= 1 ) {
+                setTimeout(() => {
+                    setValue('subject', '');
+                }, 0);
+            }
             return convertToOptions(filtered);
         }
         return [];
@@ -151,13 +208,15 @@ const TicketNew = () => {
         })
     }
 
-    const [selectedTicketTypeOption, setSelectedTicketTypeOption] =
-        useState(ticketTypeOptions && ticketTypeOptions.length > 0 ? ticketTypeOptions[0] : null);
-
     let subjectOptions: Option[] = getTicketLookupValuesOptionsByTicketType(ticketLookupValuesSubject);
+    addFirstOption(subjectOptions, 'Title/Subject', true);
+
     let reasonOptions: Option[] = getTicketLookupValuesOptionsByTicketType(ticketLookupValuesReason);
+    addFirstOption(reasonOptions, 'Reason');
 
     const departmentOptions: Option[] = getTicketLookupValuesOptions(ticketLookupValuesDepartment);
+    addFirstOption(departmentOptions, 'Department');
+
     const tagsOptions: Option[] = getTicketLookupValuesOptions(ticketLookupValuesTags);
 
     const handleChangeTicketType = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -166,14 +225,14 @@ const TicketNew = () => {
             ticketTypeOptions ? ticketTypeOptions.find((o: Option) => o.value.toString() === event.target.value) : {} as any;
 
         setSelectedTicketTypeOption(selectedTicketType);
-        subjectOptions = getTicketLookupValuesOptionsByTicketType(ticketLookupValuesSubject);
-        reasonOptions = getTicketLookupValuesOptionsByTicketType(ticketLookupValuesReason);
+        setIsTicketTypeSelected(true);
+    }
 
-        if (reasonOptions && reasonOptions.length > 0) {
-            setTimeout(() => {
-                setValue('reason', reasonOptions[0].value);
-            }, 1000);
-        }
+    const handleChangeTags = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        event.stopPropagation();
+        const selectedTag =
+            tagsOptions ? tagsOptions.find((o: Option) => o.value.toString() === event.target.value) : {} as any;
+        setTags([...tags, selectedTag.label]);
     }
 
     if (isContactsLoading || isDepartmentListLoading || isLookupValuesLoading || isTicketEnumValuesLoading) {
@@ -198,183 +257,286 @@ const TicketNew = () => {
         return <div data-test-id='ticket-new-error'>{t('ticket_new.error')}</div>
     }
 
-    const manageTicketTypeOptions = () => {
-        if (selectedTicketTypeOption === null && ticketTypeOptions && ticketTypeOptions.length > 0) {
-            setSelectedTicketTypeOption(ticketTypeOptions[0]);
-        }
-    }
-
-    manageTicketTypeOptions();
-
-
     return <div className={'w-96 py-4 mx-auto flex flex-col'}>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit)} className='divide-y'>
             <Controller
                 name='ticketType'
                 control={control}
-                defaultValue={ticketTypeOptions ? ticketTypeOptions[0] : ''}
+                defaultValue=''
                 rules={{ required: requiredText }}
-                render={() => (
+                render={(props) => (
                     <Select
+                        {...props}
                         data-test-id={'ticket-new-ticket-type'}
-                        className={'w-full'}
+                        className={'w-full border-none h-14'}
                         label={t('ticket_new.ticket_type')}
                         options={ticketTypeOptions}
-                        value={selectedTicketTypeOption ? selectedTicketTypeOption.value : ''}
-                        onChange={handleChangeTicketType}
+                        value={props.value}
+                        onChange={(e: ChangeEvent<HTMLSelectElement>) => {
+                            props.onChange(e)
+                            handleChangeTicketType(e);
+                        }}
+                        error={errors.ticketType?.message}
+                    />
+                )}
+            />
+            { isTicketTypeSelected &&
+                <Controller
+                    name='reason'
+                    control={control}
+                    defaultValue=''
+                    render={(props) => (
+                        <Select
+                            {...props}
+                            data-test-id={'ticket-new-reason'}
+                            className={'w-full border-none h-14'}
+                            placeholder={t('ticket_new.reason')}
+                            options={reasonOptions}
+                            value={props.value}
+                        />
+                    )}
+                />
+            }
+
+            <Controller
+                name='contactId'
+                control={control}
+                defaultValue=''
+                rules={{ required: requiredText }}
+                render={(props) => (
+                    <Select
+                        {...props}
+                        data-test-id='ticket_new.contact'
+                        className={'w-full border-none h-14'}
+                        placeholder={t('ticket_new.contact')}
+                        options={contactOptions}
+                        value={props.value}
+                        error={errors.contactId?.message}
+                    />
+                )}
+            />
+            <div>
+                {
+                    subjectOptions && subjectOptions.length > 1
+                        ?
+                        <Controller
+                            name='subject'
+                            control={control}
+                            defaultValue=''
+                            render={(props) => (
+                                <Select
+                                    {...props}
+                                    data-test-id={'ticket-new-subject-select'}
+                                    className={'w-full border-none h-14'}
+                                    options={subjectOptions}
+                                    value={props.value}
+                                />
+                            )}
+                        />
+                        :
+                        <Controller
+                            name='subject'
+                            control={control}
+                            defaultValue=''
+                            placeholder={t('ticket_new.subject')}
+                            rules={{required: requiredText}}
+                            as={Input}
+                            className={'w-full border-none h-14'}
+                            data-test-id={'ticket-new-assignee'}
+                            error={errors.subject?.message}
+                        />
+                }
+            </div>
+            <Controller
+                name='status'
+                control={control}
+                defaultValue=''
+                rules={{ required: requiredText }}
+                render={(props) => (
+                    <Select
+                        {...props}
+                        data-test-id={'ticket-new-status'}
+                        className={'w-full border-none h-14'}
+                        placeholder={t('ticket_new.status')}
+                        options={statusOptions}
+                        value={props.value}
+                        error={errors.status?.message}
                     />
                 )}
             />
             <Controller
-                name='reason'
-                control={control}
-                defaultValue={reasonOptions ? reasonOptions[0] : ''}
-                as={Select}
-                options={reasonOptions}
-                className={'w-full'}
-                data-test-id={'ticket-new-reason'}
-                label={t('ticket_new.reason')}
-            />
-            <Controller
-                name='contactId'
-                control={control}
-                defaultValue={contactOptions ? contactOptions[0] : ''}
-                rules={{ required: requiredText }}
-                as={Select}
-                options={contactOptions}
-                className={'w-full'}
-                data-test-id='ticket_new.contact'
-                label={t('ticket_new.contact')}
-            />
-            <Controller
-                name='subject'
-                control={control}
-                defaultValue={subjectOptions ? subjectOptions[0] : ''}
-                as={Select}
-                options={subjectOptions}
-                className={'w-full'}
-                data-test-id={'ticket-new-subject'}
-                label={t('ticket_new.subject')}
-            />
-            <Controller
-                name='status'
-                control={control}
-                defaultValue={statusOptions ? statusOptions[0] : ''}
-                rules={{ required: requiredText }}
-                as={Select}
-                options={statusOptions}
-                className={'w-full'}
-                data-test-id={'ticket-new-status'}
-                label={t('ticket_new.status')}
-            />
-            <Controller
                 name='priority'
                 control={control}
-                defaultValue={priorityOptions ? priorityOptions[0] : ''}
+                defaultValue=''
                 rules={{ required: requiredText }}
-                as={Select}
-                options={priorityOptions}
-                className={'w-full'}
-                data-test-id={'ticket-new-priority'}
-                label={t('ticket_new.priority')}
+                render={(props) => (
+                    <Select
+                        {...props}
+                        data-test-id={'ticket-new-priority'}
+                        className={'w-full border-none h-14'}
+                        placeholder={t('ticket_new.priority')}
+                        options={priorityOptions}
+                        value={props.value}
+                        error={errors.priority?.message}
+                    />
+                )}
             />
             <Controller
                 type='date'
                 name='dueDate'
                 control={control}
-                rules={{ required: requiredText }}
                 as={Input}
-                className={'w-full'}
-                defaultValue={dayjs().format('yyyy-MM-dd')}
+                className={'w-full border-none h-14'}
+                defaultValue=''
                 error={errors.dueDate?.message}
                 data-test-id={'ticket-new-due-date'}
-                label={t('ticket_new.due_date')}
+                placeholder={t('ticket_new.due_date')}
             />
             <Controller
+                type='time'
                 name='dueTime'
                 control={control}
                 as={Input}
-                className={'w-full'}
-                defaultValue={'08:00'}
+                className={'w-full border-none h-14'}
+                defaultValue=''
                 data-test-id={'ticket-new-due-time'}
-                label={t('ticket_new.due_time')}
+                placeholder={t('ticket_new.due_time')}
             />
             <Controller
                 name='channel'
                 control={control}
-                defaultValue={channelOptions ? channelOptions[0] : ''}
-                as={Select}
-                options={channelOptions}
-                className={'w-full'}
-                data-test-id={'ticket-new-channel'}
-                label={t('ticket_new.channel')}
+                defaultValue=''
+                render={(props) => (
+                    <Select
+                        {...props}
+                        data-test-id={'ticket-new-channel'}
+                        className={'w-full border-none h-14'}
+                        placeholder={t('ticket_new.channel')}
+                        options={sourceOptions}
+                        value={props.value}
+                    />
+                )}
             />
             <Controller
                 name='department'
                 control={control}
-                defaultValue={departmentOptions ? departmentOptions[0] : ''}
-                as={Select}
-                options={departmentOptions}
-                className={'w-full'}
-                data-test-id='ticket-new-department'
-                label={t('ticket_new.department')}
+                defaultValue=''
+                render={(props) => (
+                    <Select
+                        {...props}
+                        data-test-id='ticket-new-department'
+                        className={'w-full border-none h-14'}
+                        placeholder={t('ticket_new.department')}
+                        options={departmentOptions}
+                        value={props.value}
+                    />
+                )}
             />
             <Controller
                 name='location'
                 control={control}
                 defaultValue={locationOptions ? locationOptions[0] : ''}
                 rules={{ required: requiredText }}
-                as={Select}
-                options={locationOptions}
-                className={'w-full'}
-                data-test-id={'ticket-new-location'}
-                label={t('ticket_new.location')}
+                render={(props) => (
+                    <Select
+                        {...props}
+                        data-test-id={'ticket-new-location'}
+                        className={'w-full border-none h-14'}
+                        placeholder={t('ticket_new.location')}
+                        options={locationOptions}
+                        value={props.value}
+                        error={errors.location?.message}
+                    />
+                )}
             />
             <Controller
                 name='assignee'
                 control={control}
-                defaultValue={''}
+                defaultValue=''
                 rules={{ required: requiredText }}
-                as={Input}
-                className={'w-full'}
-                data-test-id={'ticket-new-assignee'}
-                label={t('ticket_new.assignee')}
+                render={(props) => (
+                    <Select
+                        {...props}
+                        data-test-id={'ticket-new-assignee'}
+                        className={'w-full border-none h-14'}
+                        placeholder={t('ticket_new.assignee')}
+                        options={assigneeOptions}
+                        value={props.value}
+                        error={errors.assignee?.message}
+                    />
+                )}
             />
-            <Controller
-                name='patientChartNumber'
-                control={control}
-                defaultValue={''}
-                as={Input}
-                className={'w-full'}
-                data-test-id={'ticket-new-patient-chart-number'}
-                label={t('ticket_new.patient_chart_number')}
-            />
-            <Controller
-                name='patientCaseNumber'
-                control={control}
-                defaultValue={''}
-                as={Input}
-                className={'w-full'}
-                data-test-id={'ticket-new-patient-case-number'}
-                label={t('ticket_new.patient_case_number')}
-            />
+            {
+                isTicketTypeSelected &&
+                <Controller
+                    name='patientChartNumber'
+                    control={control}
+                    defaultValue=''
+                    placeholder={t('ticket_new.patient_chart_number')}
+                    as={Input}
+                    className={'w-full border-none h-14'}
+                    data-test-id={'ticket-new-patient-chart-number'}
+                />
+            }
+            {
+                isTicketTypeSelected &&
+                <Controller
+                    name='patientCaseNumber'
+                    control={control}
+                    defaultValue=''
+                    placeholder={t('ticket_new.patient_case_number')}
+                    as={Input}
+                    className={'w-full border-none h-14'}
+                    data-test-id={'ticket-new-patient-case-number'}
+                />
+            }
             <Controller
                 name='tags'
                 control={control}
-                defaultValue={''}
-                as={Select}
-                options={tagsOptions}
-                className={'w-full'}
-                data-test-id='ticket-new-tags'
-                label={t('ticket_new.tags')}
+                defaultValue=''
+                render={() => (
+                    <TextArea
+                        className={'w-full pb-4 h-20'}
+                        data-test-id='ticket-new-tags'
+                        placeholder={t('ticket_new.add_tag')}
+                        value={tags.join('; ')}
+                        rows={2}
+                        onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setNoteText(e.target.value)}
+                    />
+                )}
+            />
+            <Controller
+                name='tags-select'
+                control={control}
+                defaultValue=''
+                render={(props) => (
+                    <Select
+                        {...props}
+                        data-test-id='ticket-new-tags-select'
+                        className={'w-full border-none h-14'}
+                        options={tagsOptions}
+                        value={props.value}
+                        onChange={(e: ChangeEvent<HTMLSelectElement>) => {
+                            props.onChange(e)
+                            handleChangeTags(e);
+                        }}
+                    />
+                )}
             />
             <Controller
                 name='note'
                 control={control}
-                defaultValue={''}
-                as={Input}
-                data-test-id={'ticket-new-add-note'}
-                label={t('ticket_new.add_note')}
+                defaultValue=''
+                render={() => (
+                    <TextArea
+                        className={'w-full pb-4 h-20'}
+                        data-test-id={'ticket-new-add-note'}
+                        placeholder={t('ticket_new.add_note')}
+                        value={noteText}
+                        rows={2}
+                        onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setNoteText(e.target.value)}
+                    />
+                )}
             />
             <div className='bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse'>
                 <Button data-test-id='ticket-new-create-button' type={'submit'}
