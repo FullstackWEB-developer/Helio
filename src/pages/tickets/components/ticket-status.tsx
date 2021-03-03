@@ -46,7 +46,7 @@ const TicketStatus = ({ ticketId, status }: TicketStatusProps) => {
         setSearchStatusToggle(false);
     });
 
-    const statuses = [t('tickets.statuses.new'), t('tickets.statuses.overdue'), t('tickets.statuses.unassigned'), t('tickets.statuses.in_progress'), t('tickets.statuses.solved'), t('tickets.statuses.closed')];
+    const statuses = [t('tickets.statuses.open'), t('tickets.statuses.on_hold'), t('tickets.statuses.in_progress'), t('tickets.statuses.solved'), t('tickets.statuses.closed')];
 
     return <div className='col-span-2 pt-6 flex flex-row relative'>
         <div className='pt-1.5'>{renderStatus(status)}</div>

@@ -1,9 +1,9 @@
-import { Assignee, Paging } from './tickets.initial-state';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Ticket } from '../models/ticket';
 import initialTicketState from './tickets.initial-state';
-import { TicketOptionsBase } from '../models/ticket-options-base.model';
 import { LookupValue } from '../models/lookup-value';
+import {DefaultPagination, Paging} from '../../../shared/models/paging.model';
+import {TicketEnum} from '../models/ticket-enum.model';
 
 const ticketsSlice = createSlice({
     name: 'tickets',
@@ -35,9 +35,7 @@ const ticketsSlice = createSlice({
                 ticket.status = status
             }
         },
-        setAssignees(state, { payload }: PayloadAction<Assignee[]>) {
-            state.assignees = payload;
-        },
+
         setFailure: (state, { payload }: PayloadAction<string>) => {
             state.errors = payload;
             state.ticketsLoading = false;
@@ -57,7 +55,7 @@ const ticketsSlice = createSlice({
         setTicketEnum(state, { payload }: PayloadAction<any>) {
             state.error = '';
             state.isTicketEnumValuesLoading = false;
-            const enumValue: TicketOptionsBase = {
+            const enumValue: TicketEnum = {
                 key: payload.key,
                 value: payload.result
             }
@@ -95,6 +93,14 @@ const ticketsSlice = createSlice({
         endGetLookupValuesRequest(state, { payload }: PayloadAction<string>) {
             state.error = payload;
             state.isLookupValuesLoading = false;
+        },
+        toggleTicketListFilter(state) {
+            state.isFilterOpen = !state.isFilterOpen;
+        },
+        clearTicketListFilter(state) {
+            state.ticketFilter = {
+                ...DefaultPagination
+            }
         }
     }
 });
@@ -108,14 +114,15 @@ export const {
     setFailure,
     startRequestAddNote,
     endRequestAddNote,
-    setAssignees,
     setTicketEnum,
     startGetTicketEnumRequest,
     endGetTicketEnumRequest,
     setLookupValues,
     setTicketsLoading,
     startGeLookupValuesRequest,
-    endGetLookupValuesRequest
+    endGetLookupValuesRequest,
+    toggleTicketListFilter,
+    clearTicketListFilter
 } = ticketsSlice.actions
 
 export default ticketsSlice.reducer

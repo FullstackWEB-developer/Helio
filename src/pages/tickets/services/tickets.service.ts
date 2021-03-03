@@ -1,6 +1,5 @@
 import { Dispatch } from '@reduxjs/toolkit';
 import Api from '../../../shared/services/api';
-import { Assignee, Paging } from '../store/tickets.initial-state';
 import Logger from '../../../shared/services/logger';
 import { LookupValue } from '../models/lookup-value';
 import { TicketNote } from '../models/ticket-note';
@@ -11,7 +10,6 @@ import {
     changeAssignee,
     setFailure,
     addPaging,
-    setAssignees,
     setTicketsLoading,
     startRequestAddNote,
     endRequestAddNote,
@@ -23,22 +21,19 @@ import {
     endGetLookupValuesRequest
 } from '../store/tickets.slice';
 import { Ticket } from '../models/ticket';
+import {Paging} from '../../../shared/models/paging.model';
+import {TicketQuery} from '../models/ticket-query';
 
 const logger = Logger.getInstance();
 const ticketsBaseUrl = '/tickets';
-const usersUrl = '/users';
 
-export function getList(ticketsPaging?: Paging, searchTerm?: string) {
+export function getList(query: TicketQuery) {
     return async (dispatch: Dispatch) => {
         dispatch(setTicketsLoading(true));
+        const queryParams = serialize(query);
         let ticketsUrl = '';
         try {
-            if (ticketsPaging?.pageSize) {
-                ticketsUrl = `${ticketsBaseUrl}?pageSize=${ticketsPaging.pageSize}&page=${ticketsPaging.page}`
-            }
-            if (searchTerm) {
-                ticketsUrl = `${ticketsUrl}&searchTerm=${searchTerm}`;
-            }
+            ticketsUrl = `${ticketsBaseUrl}?${queryParams}`;
             const response = await Api.get(ticketsUrl);
             const data = response.data;
             dispatch(add(data.results));
@@ -49,6 +44,27 @@ export function getList(ticketsPaging?: Paging, searchTerm?: string) {
             dispatch(setFailure(error.message));
         }
     }
+}
+
+const serialize = (obj : any) =>  {
+    const str = [];
+    for (const p in obj) {
+        if (obj.hasOwnProperty(p)) {
+            if (Array.isArray(obj[p])) {
+                obj[p].forEach((a: any) => {
+                    str.push(`${encodeURIComponent(p)}=${encodeURIComponent(a)}`);
+                })
+            } else {
+                if (obj[p] instanceof Date) {
+                    str.push(`${encodeURIComponent(p)}=${encodeURIComponent(obj[p].toISOString())}`);
+                } else {
+                    str.push(`${encodeURIComponent(p)}=${encodeURIComponent(obj[p])}`);
+                }
+
+            }
+        }
+    }
+    return str.join("&");
 }
 
 export const setStatus = (id: string, status: number) => {
@@ -86,19 +102,6 @@ export const setAssignee = (id: string, assignee: string) => {
             .catch(err => {
                 dispatch(setFailure(err.message));
             });
-    }
-}
-
-export const getAssigneeList = () => {
-    const url = usersUrl + '/list';
-    return async (dispatch: Dispatch) => {
-        try {
-            const response = await Api.get(url);
-            const assigneeList = response.data as Assignee[];
-            dispatch(setAssignees(assigneeList));
-        } catch (error) {
-            dispatch(setFailure(error.message));
-        }
     }
 }
 

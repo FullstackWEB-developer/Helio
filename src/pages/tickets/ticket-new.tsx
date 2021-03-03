@@ -18,16 +18,20 @@ import {
     selectIsTicketEnumValuesLoading,
     selectEnumValues,
     selectTicketOptionsError,
-    selectIsTicketLookupValuesLoading, selectLookupValues, selectAssignees
+    selectIsTicketLookupValuesLoading, selectLookupValues
 } from './store/tickets.selectors';
 import { selectContacts, selectIsContactOptionsLoading } from '../../shared/store/contacts/contacts.selectors';
-import { selectDepartmentList, selectIsDepartmentListLoading } from '../../shared/store/lookups/lookups.selectors';
+import {
+    selectDepartmentList,
+    selectIsDepartmentListLoading,
+    selectUserList
+} from '../../shared/store/lookups/lookups.selectors';
 
-import { createTicket, getAssigneeList, getEnumByType, getLookupValues } from './services/tickets.service';
+import { createTicket, getEnumByType, getLookupValues } from './services/tickets.service';
 import { getContacts } from '../../shared/services/contacts.service';
-import { getDepartments } from '../../shared/services/lookups.service';
-import { Assignee } from './store/tickets.initial-state';
+import {getDepartments, getUserList} from '../../shared/services/lookups.service';
 import TextArea from '../../shared/components/textarea/textarea';
+import {User} from '../../shared/models/user';
 
 const TicketNew = () => {
     dayjs.extend(utc);
@@ -36,7 +40,7 @@ const TicketNew = () => {
     const dispatch = useDispatch();
     const requiredText = t('common.required');
     const TicketTypeDefault = '1';
-    const assignees = useSelector(selectAssignees);
+    const users = useSelector(selectUserList);
     const departments = useSelector(selectDepartmentList);
     const contacts = useSelector(selectContacts);
     const ticketChannels = useSelector((state => selectEnumValues(state, 'TicketChannel')));
@@ -111,7 +115,7 @@ const TicketNew = () => {
     }
 
     useEffect(() => {
-        dispatch(getAssigneeList());
+        dispatch(getUserList());
         dispatch(getContacts());
         dispatch(getDepartments());
         dispatch(getEnumByType('TicketChannel'));
@@ -152,7 +156,7 @@ const TicketNew = () => {
     addFirstOption(statusOptions, 'Status', true);
     addFirstOption(ticketTypeOptions, 'Ticket Type');
 
-    const assigneeOptions: Option[] = assignees ? assignees.map((item: Assignee) => {
+    const assigneeOptions: Option[] = users ? users.map((item: User) => {
         return {
             value: item.id,
             label: item.id

@@ -3,11 +3,14 @@ import { setError } from '../components/search-bar/store/search-bar.slice';
 import {
     setDepartments,
     setLoading,
-    setProviders
+    setProviders,
+    setUserList
 } from '../store/lookups/lookups.slice';
 import Api from './api';
 import Logger from './logger';
 import store from '../../app/store';
+import {setFailure} from '../../pages/tickets/store/tickets.slice';
+import {User} from '../models/user';
 
 const logger = Logger.getInstance();
 
@@ -59,6 +62,22 @@ export const getDepartments = () => {
                         dispatch(setLoading(false));
                     }
                 })
+        }
+    }
+}
+
+export const getUserList = () => {
+    const url = '/users/list';
+    const userList = store.getState().lookupsState.userList;
+    return async (dispatch: Dispatch) => {
+        if (!userList || userList.length === 0) {
+            try {
+                const response = await Api.get(url);
+                const list = response.data as User[];
+                dispatch(setUserList(list));
+            } catch (error) {
+                dispatch(setFailure(error.message));
+            }
         }
     }
 }

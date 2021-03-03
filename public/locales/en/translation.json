@@ -11,7 +11,8 @@
     "show_more": "Show more",
     "show_less": "Show less",
     "save": "Save",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "any": "Any"
   },
   "login": {
     "loginButton": "Login"
@@ -51,9 +52,8 @@
       "critical": "Critical"
     },
     "statuses": {
-      "new": "New",
-      "overdue": "Overdue",
-      "unassigned": "Unassigned",
+      "open": "Open",
+      "on_hold": "On hold",
       "in_progress": "In Progress",
       "solved": "Solved",
       "closed": "Closed"
@@ -67,6 +67,25 @@
       "new_patient": "New Patient",
       "lab": "Lab",
       "pharmacy": "Pharmacy"
+    },
+    "filter" : {
+      "filter_tickets": "Filter Tickets",
+      "clear_all" : "Clear All",
+      "statuses" : "Statuses",
+      "time_period": "Time period",
+      "priority" : "Priority",
+      "channel": "Channel",
+      "ticket_type": "Ticket Type",
+      "department" : "Department",
+      "office_location": "Office/Location",
+      "assigned_to": "Assigned to",
+      "tags" : "Tags",
+      "time_periods": {
+        "today": "Today",
+        "last_7_days": "Last 7 Days",
+        "last_30_days": "Last 30 Days",
+        "date_range": "Date Range"
+      }
     },
     "assign": "Assign",
     "pagination": "{{numOfItemsFrom}} - {{numOfItemsTo}} of {{totalCount}}"

@@ -2,12 +2,12 @@ import { ReactComponent as ArrowDownIcon } from '../../shared/icons/Icon-Arrow-d
 import { ReactComponent as ArrowLeftIcon } from '../../shared/icons/Icon-Arrows-Left-24px.svg';
 import { ReactComponent as ArrowRightIcon } from '../../shared/icons/Icon-Arrows-Right-24px.svg';
 import React, { useEffect, useState } from 'react';
-import { Paging } from './store/tickets.initial-state';
 import { getList } from './services/tickets.service';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectTicketsPaging } from './store/tickets.selectors';
 import { useTranslation } from 'react-i18next';
 import { keyboardKeys } from '../../shared/components/search-bar/constants/keyboard-keys';
+import {Paging} from '../../shared/models/paging.model';
 
 const TicketsHeader = () => {
     const { t } = useTranslation();
@@ -71,7 +71,7 @@ const TicketsHeader = () => {
                 </div>
                 <ArrowLeftIcon className='cursor-pointer mt-1' onClick={() => previousPage()} />
                 <input type='text' className='border rounded-md w-11 text-center ml-6 mr-6' value={currentPage}
-                    onChange={(e) => changePage(e)} onKeyDown={(e) => handleKey(e)}></input>
+                    onChange={(e) => changePage(e)} onKeyDown={(e) => handleKey(e)}/>
                 <ArrowRightIcon className='cursor-pointer mt-1' onClick={() => nextPage()} />
             </div>
         </div>

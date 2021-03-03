@@ -115,6 +115,7 @@ module.exports = {
           900: 'var(--color-secondary-900)',
         },
         helio_white: 'var(--color-white)',
+        helio_dark_gray: 'var(--dark-gray)',
         helio_gray50: 'var(--color-gray50)',
         helio_red: 'var(--color---color-red)',
         helio_yellow: 'var(--color-yellow)',

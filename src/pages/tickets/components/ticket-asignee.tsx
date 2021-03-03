@@ -4,11 +4,11 @@ import { ReactComponent as SearchIcon } from '../../../shared/icons/Icon-Search-
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectAssignees } from '../store/tickets.selectors';
 import customHooks from '../../../shared/hooks/customHooks';
-import { Assignee } from '../store/tickets.initial-state';
 import { setAssignee } from '../services/tickets.service';
 import withErrorLogging from '../../../shared/HOC/with-error-logging';
+import {selectUserList} from '../../../shared/store/lookups/lookups.selectors';
+import {User} from '../../../shared/models/user';
 
 interface TicketAssigneeProps {
     ticketId: string,
@@ -17,7 +17,7 @@ interface TicketAssigneeProps {
 const TicketAssignee = ({ ticketId, assignee }: TicketAssigneeProps) => {
     const { t } = useTranslation();
     const dispatch = useDispatch();
-    const assignees = useSelector(selectAssignees);
+    const assignees = useSelector(selectUserList);
     const [searchAssigneeToggle, setSearchAssigneeToggle] = useState(false);
     const [searchAssigneeTerm, setSearchAssigneeTerm] = useState('');
     const [filteredAssignees, setFilteredAssignees] = useState(assignees);
@@ -36,7 +36,7 @@ const TicketAssignee = ({ ticketId, assignee }: TicketAssigneeProps) => {
         setSearchAssigneeTerm(e.target.value);
     };
 
-    const updateAssignee = (id: string, assig: Assignee) => {
+    const updateAssignee = (id: string, assig: User) => {
         dispatch(setAssignee(id, assig.id));
         setSearchAssigneeToggle(false);
     };
@@ -75,7 +75,7 @@ const TicketAssignee = ({ ticketId, assignee }: TicketAssigneeProps) => {
                     </span>
                     <input className='pl-4 focus:outline-none' type='text' value={searchAssigneeTerm}
                         onChange={(e) => search(e)}
-                        placeholder={t('tickets.search_assignees')}></input>
+                        placeholder={t('tickets.search_assignees')}/>
                 </div>
                 {filteredAssignees.map((item, index) => {
                     return <div key={index} className={'cursor-pointer p-3 hover:bg-blue-500 hover:text-white'}

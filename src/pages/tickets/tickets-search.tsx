@@ -5,8 +5,11 @@ import { useTranslation } from 'react-i18next';
 import { keyboardKeys } from '../../shared/components/search-bar/constants/keyboard-keys';
 import { useDispatch, useSelector } from 'react-redux';
 import { getList } from './services/tickets.service';
-import { Paging } from './store/tickets.initial-state';
 import { selectTicketsPaging } from './store/tickets.selectors';
+import { ReactComponent as FilterIcon } from '../../shared/icons/Icon-Filter-24px.svg';
+import { toggleTicketListFilter } from './store/tickets.slice';
+import {Paging} from '../../shared/models/paging.model';
+import {TicketQuery} from './models/ticket-query';
 
 const TicketsSearch = () => {
     const { t } = useTranslation();
@@ -17,12 +20,17 @@ const TicketsSearch = () => {
 
     const searchList = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === keyboardKeys.enter) {
-            dispatch(getList(paging, searchTerm));
+            const query : TicketQuery = {
+                ...paging,
+                searchTerm: searchTerm
+            }
+            dispatch(getList(query));
         }
     };
 
     return <div className='flex flex-row border-b'>
-        <div className='pr-8 pl-8 pt-2 border-r'>
+        <div className='pr-6 flex pl-5 pt-2 border-r flex-row'>
+            <FilterIcon onClick={() => dispatch(toggleTicketListFilter())} className='cursor-pointer mr-4 rounded-md h-10 w-12 p-1' />
             <EditIcon className='cursor-pointer bg-gray-800 rounded-md h-10 w-12 p-1' />
         </div>
         <div className='relative px-8 py-4 ml-4 w-full'>

@@ -1,18 +1,9 @@
 import { Ticket } from '../models/ticket';
 import { TicketOptionsBase } from '../models/ticket-options-base.model';
 import { LookupValue } from '../models/lookup-value';
-
-export interface Paging {
-    page: number,
-    pageSize: number,
-    totalPages: number,
-    totalCount: number,
-}
-
-export interface Assignee {
-    id: string
-}
-
+import {TicketQuery} from '../models/ticket-query';
+import {DefaultPagination, Paging} from '../../../shared/models/paging.model';
+import {TicketEnum} from '../models/ticket-enum.model';
 export interface TicketState {
     error?: string;
     isLookupValuesLoading: boolean;
@@ -20,15 +11,16 @@ export interface TicketState {
     isRequestAddNoteLoading: boolean;
     tickets: Ticket[];
     paging: Paging,
-    assignees: Assignee[],
     errors: string;
     ticketsLoading: boolean
     ticketChannels?: TicketOptionsBase[];
     ticketStatuses?: TicketOptionsBase[];
     ticketPriorities?: TicketOptionsBase[];
     ticketTypes?: TicketOptionsBase[];
-    enumValues: TicketOptionsBase[];
+    enumValues: TicketEnum[];
     lookupValues: LookupValue[];
+    isFilterOpen: boolean;
+    ticketFilter: TicketQuery;
 }
 
 const initialTicketState: TicketState = {
@@ -43,7 +35,6 @@ const initialTicketState: TicketState = {
         totalPages: 0,
         totalCount: 0,
     },
-    assignees: [],
     errors: '',
     ticketsLoading: false,
     ticketChannels: [],
@@ -51,7 +42,11 @@ const initialTicketState: TicketState = {
     ticketPriorities: [],
     ticketTypes: [],
     enumValues: [],
-    lookupValues: []
+    lookupValues: [],
+    isFilterOpen: false,
+    ticketFilter: {
+        ...DefaultPagination
+    }
 }
 
 export default initialTicketState;
