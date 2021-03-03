@@ -14,7 +14,7 @@ export const isProfileMenuExpandedSelector = createSelector(
 
 export const isCcpVisibleSelector = createSelector(
     layoutState,
-    state => state.isCcpVisibleSelector
+    state => state.isCcpVisible
 )
 
 export const selectIsHotspotsVisible = createSelector(
