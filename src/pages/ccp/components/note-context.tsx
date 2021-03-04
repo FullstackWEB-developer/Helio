@@ -5,7 +5,8 @@ import { useForm, Controller } from 'react-hook-form';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc'
 import withErrorLogging from '../../../shared/HOC/with-error-logging';
-import { selectNoteContext } from '../store/ccp.selectors';
+import { selectNoteContext, selectNotes } from '../store/ccp.selectors';
+import { setNotes } from '../store/ccp.slice';
 import Button from '../../../shared/components/button/button';
 import TextArea from '../../../shared/components/textarea/textarea';
 import { addNote } from '../../tickets/services/tickets.service';
@@ -18,9 +19,9 @@ const NoteContext = () => {
     const dispatch = useDispatch();
     const ticketId = useSelector(selectNoteContext).ticketId;
     const username = useSelector(selectNoteContext).username;
+    const notes: TicketNote[] = useSelector(selectNotes) || [];
 
     const [noteText, setNoteText] = useState('')
-    const [notes, setNotes] = useState<TicketNote[]>([]);
 
     const onSubmit = async () => {
         const note: TicketNote = {
@@ -31,7 +32,8 @@ const NoteContext = () => {
             dispatch(addNote(ticketId, note));
             note.dateTime = new Date();
             note.username = username;
-            setNotes([...notes, note]);
+            dispatch(setNotes([...notes, note]));
+
             setNoteText('');
         }
     }

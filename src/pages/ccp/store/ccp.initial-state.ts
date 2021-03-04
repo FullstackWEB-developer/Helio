@@ -1,5 +1,6 @@
 import { BotContext } from '../models/bot-context';
 import { CcpNote } from '../models/ccp-note.model';
+import { TicketNote } from '../../tickets/models/ticket-note';
 
 export interface CcpState {
     chatCounter: number;
@@ -7,6 +8,7 @@ export interface CcpState {
     contextPanel: string;
     botContext?: BotContext;
     noteContext?: CcpNote;
+    notes?: TicketNote[];
 }
 
 const initialState: CcpState = {
@@ -15,6 +17,7 @@ const initialState: CcpState = {
     contextPanel: '',
     botContext: undefined,
     noteContext: undefined,
+    notes: undefined
 }
 
 export default initialState;
