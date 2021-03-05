@@ -16,7 +16,7 @@ const Footer = () => {
 
     return (
         <footer className='h-14 border-t flex-initial w-full bg-primary text-primary'>
-            <div className='flex flex-row justify-between w-full h-full'>
+            <div className='flex flex-row justify-between w-full h-12'>
                 <div className='md:pl-96 flex flex-row items-center'>
                     <div className='pr-5 hidden md:block'>
                         <CCPIcon data-test-id='toggle-ccp' onClick={() => dispatch(toggleCcp())} />

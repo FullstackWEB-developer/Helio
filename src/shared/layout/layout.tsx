@@ -20,9 +20,11 @@ const Layout = (props: LayoutProps) => {
 
     return (
         <Fragment>
+            <div className='border-b'>
             <Header />
+            </div>
             <div className='flex flex-row h-full bg-primary text-primary overflow-auto'>
-                <div className='w-full md:w-auto'>
+                <div>
                     <Navigation />
                 </div>
                 <DndProvider backend={HTML5Backend}>

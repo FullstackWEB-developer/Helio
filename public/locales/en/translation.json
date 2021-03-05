@@ -134,8 +134,8 @@
       "select": "Select"
     },
     "yearsOld": "yo",
-    "placeholder": "Search by patient ID, DOB...",
-    "search_title": "Search patients by",
+    "placeholder": "Search",
+    "search_title": "Search for",
     "recent_patients": "Recent Patients"
   },
   "patient": {

@@ -1,0 +1,214 @@
+.default {
+    --color-primary-default: #00CC88;
+    --color-primary-900:#00AD58;
+    --color-primary-800:#00B96B;
+    --color-primary-700:#00C075;
+    --color-primary-600:#00C780;
+    --color-primary-500:#00CC88;
+    --color-primary-400:#0BD994;
+    --color-primary-300:#17E69D;
+    --color-primary-200:#61F2B8;
+    --color-primary-100:#E0F5EB;
+    --color-primary-50:#F5FCF8;
+
+
+    --color-secondary-default: #212121;
+    --color-secondary-900:#212121;
+    --color-secondary-800:#424242;
+    --color-secondary-700:#616161;
+    --color-secondary-600:#7F7F7F;
+    --color-secondary-500:#9E9E9E;
+    --color-secondary-400:#BDBDBD;
+    --color-secondary-300:#E0E0E0;
+    --color-secondary-200:#EEEEEE;
+    --color-secondary-100:#F5F5F5;
+    --color-secondary-50:#FAFAFA;
+
+    --color-white:#FFFFFF;
+    --color-gray50:#FAFAFA;
+    --color-red:#F86854;
+    --color-yellow:#FDC06A;
+    --color-gray:#BDBDBD;
+
+    --color-bg-primary: #fff;
+    --color-text-primary: --color-secondary-900;
+    --light-text-high-emphasis: rgba(0, 0, 0, 0.87);
+    --light-text-medium-emphasis: rgba(0, 0, 0, 0.5);
+    --light-text-disabled: rgba(0, 0, 0, 0.38);
+    --light-divider-7:rgba(0, 0, 0, 0.07);
+    --font-light: 'PoppinsLight';
+    --font-regular: 'PoppinsRegular';
+    --font-medium: 'PoppinsMedium';
+
+
+    --h1-font-family: var(--font-light);
+    --h1-font-size:4rem;
+    --h1-font-weight:300;
+    --h1-font-stretch: normal;
+    --h1-font-style:normal;
+    --h1-line-height:4.5rem;
+    --h1-letter-spacing: normal;
+    --h1-color: var(--light-text-high-emphasis);
+
+    --h2-font-family: var(--font-light);
+    --h2-font-size:3rem;
+    --h2-font-weight:300;
+    --h2-font-stretch: normal;
+    --h2-font-style:normal;
+    --h2-line-height:4rem;
+    --h2-letter-spacing: normal;
+    --h2-color: var(--light-text-high-emphasis);
+
+    --h3-font-family: var(--font-medium);
+    --h3-font-size:2.5rem;
+    --h3-font-weight:500;
+    --h3-font-stretch: normal;
+    --h3-font-style:normal;
+    --h3-line-height:3rem;
+    --h3-letter-spacing: normal;
+    --h3-color: var(--light-text-high-emphasis);
+
+    --h4-font-family: var(--font-light);
+    --h4-font-size:2.125rem;
+    --h4-font-weight:300;
+    --h4-font-stretch: normal;
+    --h4-font-style:normal;
+    --h4-line-height:2.5rem;
+    --h4-letter-spacing: normal;
+    --h4-color: var(--light-text-high-emphasis);
+
+    --h5-font-family: var(--font-medium);
+    --h5-font-size:1.5rem;
+    --h5-font-weight:500;
+    --h5-font-stretch: normal;
+    --h5-font-style:normal;
+    --h5-line-height:2rem;
+    --h5-letter-spacing: normal;
+    --h5-color: var(--light-text-high-emphasis);
+
+    --h6-font-family: var(--font-medium);
+    --h6-font-size:1.25rem;
+    --h6-font-weight:500;
+    --h6-font-stretch: normal;
+    --h6-font-style:normal;
+    --h6-line-height:1.5rem;
+    --h6-letter-spacing: normal;
+    --h6-color: var(--light-text-high-emphasis);
+
+    --h7-font-family: var(--font-medium);
+    --h7-font-size:1.125rem;
+    --h7-font-weight:500;
+    --h7-font-stretch: normal;
+    --h7-font-style:normal;
+    --h7-line-height:1.5rem;
+    --h7-letter-spacing: normal;
+    --h7-color: var(--light-text-high-emphasis);
+
+    --h8-font-family: var(--font-medium);
+    --h8-font-size:0.875rem;
+    --h8-font-weight:500;
+    --h8-font-stretch: normal;
+    --h8-font-style:normal;
+    --h8-line-height:1.5rem;
+    --h8-letter-spacing: 0.42px;
+    --h8-color: var(--color-primary-600);
+
+    --subtitle-font-family: var(--font-medium);
+    --subtitle-font-size:1rem;
+    --subtitle-font-weight:500;
+    --subtitle-font-stretch: normal;
+    --subtitle-font-style:normal;
+    --subtitle-line-height:1.5rem;
+    --subtitle-letter-spacing: normal;
+    --subtitle-color: var(--light-text-high-emphasis);
+
+    --subtitle2-font-family: var(--font-medium);
+    --subtitle2-font-size:0.875rem;
+    --subtitle2-font-weight:500;
+    --subtitle2-font-stretch: normal;
+    --subtitle2-font-style:normal;
+    --subtitle2-line-height:1.5rem;
+    --subtitle2-letter-spacing: normal;
+    --subtitle2-color: var(--light-text-high-emphasis);
+
+    --subtitle3-font-family: var(--font-medium);
+    --subtitle3-font-size:0.8125rem;
+    --subtitle3-font-weight:500;
+    --subtitle3-font-stretch: normal;
+    --subtitle3-font-style:normal;
+    --subtitle3-line-height:1rem;
+    --subtitle3-letter-spacing: normal;
+    --subtitle3-color: var(--light-text-high-emphasis);
+
+    --subtitle3-small-font-family: var(--font-medium);
+    --subtitle3-small-font-size:0.75rem;
+    --subtitle3-small-font-weight:500;
+    --subtitle3-small-font-stretch: normal;
+    --subtitle3-small-font-style:normal;
+    --subtitle3-small-line-height:1rem;
+    --subtitle3-small-letter-spacing: normal;
+    --subtitle3-small-color: var(--light-text-medium-emphasis);
+
+    --body1-font-family: var(--font-regular);
+    --body1-font-size:1rem;
+    --body1-font-weight:500;
+    --body1-font-stretch: normal;
+    --body1-font-style:normal;
+    --body1-line-height:1.5rem;
+    --body1-letter-spacing: normal;
+    --body1-color: var(--light-text-high-emphasis);
+
+    --body1-medium-font-family: var(--font-regular);
+    --body1-medium-font-size:1rem;
+    --body1-medium-font-weight:500;
+    --body1-medium-font-stretch: normal;
+    --body1-medium-font-style:normal;
+    --body1-medium-line-height:1.5rem;
+    --body1-medium-letter-spacing: normal;
+    --body1-medium-color: var(--light-text-medium-emphasis);
+
+    --body2-font-family: var(--font-regular);
+    --body2-font-size:0.875rem;
+    --body2-font-weight:500;
+    --body2-font-stretch: normal;
+    --body2-font-style:normal;
+    --body2-line-height:1.5rem;
+    --body2-letter-spacing: normal;
+    --body2-color: var(--light-text-high-emphasis);
+
+    --body2-medium-font-family: var(--font-regular);
+    --body2-medium-font-size:0.875rem;
+    --body2-medium-font-weight:500;
+    --body2-medium-font-stretch: normal;
+    --body2-medium-font-style:normal;
+    --body2-medium-line-height:1.5rem;
+    --body2-medium-letter-spacing: normal;
+    --body2-medium-color: var(--light-text-medium-emphasis);
+
+    --body3-font-family: var(--font-regular);
+    --body3-font-size:0.75rem;
+    --body3-font-weight:500;
+    --body3-font-stretch: normal;
+    --body3-font-style:normal;
+    --body3-line-height:1rem;
+    --body3-letter-spacing: normal;
+    --body3-color: var(--light-text-high-emphasis);
+
+    --body3-small-font-family: var(--font-regular);
+    --body3-small-font-size:0.75rem;
+    --body3-small-font-weight:500;
+    --body3-small-font-stretch: normal;
+    --body3-small-font-style:normal;
+    --body3-small-line-height:1rem;
+    --body3-small-letter-spacing: normal;
+    --body3-small-color: var(--light-text-medium-emphasis);
+
+    --caption-caps-font-family: var(--font-medium);
+    --caption-caps-font-size:0.75rem;
+    --caption-caps-font-weight:500;
+    --caption-caps-font-stretch: normal;
+    --caption-caps-font-style:normal;
+    --caption-caps-line-height:1rem;
+    --caption-caps-letter-spacing: normal;
+    --caption-caps-color: var(--light-text-medium-emphasis);
+}

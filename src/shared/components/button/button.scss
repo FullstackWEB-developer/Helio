@@ -1,0 +1,25 @@
+.big {
+  min-width: 6.5rem;
+  min-height: 2.5rem;
+  border-radius: 1.25rem;
+}
+
+.small {
+  min-width: 6rem;
+  min-height: 2rem;
+  border-radius: 1rem;
+}
+
+button:hover {
+  background-color: var(--color-primary-500);
+}
+
+button:focus {
+  background-color: var(--color-primary-700);
+}
+
+button:disabled,
+button[disabled] {
+  background-color: var(--light-divider-7);
+  color: var(--light-text-disabled);
+}

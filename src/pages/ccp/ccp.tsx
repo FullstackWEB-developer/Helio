@@ -143,9 +143,9 @@ const Ccp: React.FC<BoxProps> = ({
                 className={'ccp-title border pl-1.5 bg-white ' + (isHover ? 'visible' : 'invisible')}>
                 {t('ccp.title')}
             </div>
-            <div className={'flex h-120'}>
-                <div className={'flex flex-col h-120'}>
-                    <div data-test-id='ccp-container' id='ccp-container' className='h-120 overflow-hidden'> </div>
+            <div className={'flex h-full'}>
+                <div className={'flex flex-col h-full'}>
+                    <div data-test-id='ccp-container' id='ccp-container' className='h-full overflow-hidden'> </div>
                     <div className={'flex justify-between w-full px-10 py-2 border-t ccp-bottom-bar ' + (isBottomBarVisible ? 'block' : 'hidden')}>
                         <Bot onClick={() => dispatch(setContextPanel(contextPanels.bot))} />
                         {

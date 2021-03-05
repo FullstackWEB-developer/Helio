@@ -74,9 +74,9 @@ const SearchBar = () => {
     }
 
     return (
-        <div className={'relative'}>
-            <div className={'border rounded-r px-4 py-2 w-80'}>
-                <input type='text' className={'focus:outline-none w-full'} placeholder={t('search.placeholder')}
+        <div className='relative'>
+            <div className='border-r border-l rounded-r px-4 h-16 w-80'>
+                <input type='text' className='focus:outline-none h-full w-full' placeholder={t('search.placeholder')}
                     onFocus={() => setDropdown(false)} onBlur={() => onblur()} onClick={() => setDropdown(false)}
                     onChange={(e) => textChange(e)} onKeyDown={(e) => handleKey(e)}
                     value={searchTerm} />
@@ -84,20 +84,20 @@ const SearchBar = () => {
                     <SearchIcon onClick={() => search()} />
                 </span>
             </div>
-            <div hidden={hideDropdown} className={'absolute flex-col divide-y shadow-md w-80 bg-white z-50'}>
-                <div className={'pb-2'} hidden={searchTypeFiltered.length === 0}>
-                    <p className={'px-4 pt-4 pb-2'}>
-                        <Label text={t('search.search_title')} className={'font-bold'} />
+            <div hidden={hideDropdown} className='absolute flex-col divide-y border-t shadow-md w-80 bg-white z-50'>
+                <div className='pb-2' hidden={searchTypeFiltered.length === 0}>
+                    <p className='px-4 flex items-center h-10'>
+                        <Label text={t('search.search_title')} className='font-bold' />
                     </p>
                     {
                         searchTypeFiltered.map((typeItem: SearchType) =>
                             <SearchTypeItem selected={typeItem.type === selectedType} key={typeItem.type} searchType={typeItem} onClick={() => search(typeItem.type)} />)
                     }
                 </div>
-                <div className={'pb-2'} hidden={recentPatients.length === 0}>
-                    <div className={'px-4 pt-4 pb-2 flex'}>
-                        <Label text={t('search.recent_patients')} className={'font-bold flex-1'} />
-                        <label className={'text-primary-600 cursor-pointer'} onClick={() => clearRecent()}>{t('common.clear')}</label>
+                <div className='pb-2' hidden={recentPatients.length === 0}>
+                    <div className='px-4 pb-2 flex'>
+                        <Label text={t('search.recent_patients')} className='font-bold flex-1' />
+                        <label className='text-primary-600 cursor-pointer' onClick={() => clearRecent()}>{t('common.clear')}</label>
                     </div>
                     {
                         recentPatients.map((rPatient: RecentPatient) =>

@@ -1,6 +1,5 @@
 import { useTranslation } from 'react-i18next';
 import Button from '../../shared/components/button/button';
-import { ReactComponent as HelioLogo } from '../../shared/icons/helio-logo.svg';
 import { msalInstance } from './auth-config';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -14,6 +13,7 @@ import Logger from '../../shared/services/logger';
 import { authenticationSelector, selectIsLoginLoading } from '../../shared/store/app-user/appuser.selectors';
 import { resetState } from '../../shared/layout/store/layout.slice';
 import ThreeDots from '../../shared/components/skeleton-loader/skeleton-loader';
+import HelioLogo from '../../shared/icons/helio-logo';
 
 const Login = () => {
     const { t } = useTranslation();
@@ -50,8 +50,8 @@ const Login = () => {
 
     return (
         <div className='h-full flex justify-center items-center'>
-            <div className='p-32 w-full flex flex-col items-center space-y-8 border shadow-lg'>
-                <HelioLogo />
+            <div className='p-24 w-full flex  flex-col items-center space-y-8 border shadow-lg'>
+                <HelioLogo className='fill-current text-primary-600' />
                 <Button data-test-id='login_button' onClick={() => initiateLogin()} label={t('login.loginButton')} />
             </div>
         </div>
