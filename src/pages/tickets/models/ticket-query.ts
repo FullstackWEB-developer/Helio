@@ -5,6 +5,7 @@ export interface TicketQuery extends Paging {
     ticketNumber?: number;
     statuses?: number[];
     fromDate?: Date;
+    toDate?: Date;
     priority?: number;
     channels?: number[];
     ticketTypes?: number[];

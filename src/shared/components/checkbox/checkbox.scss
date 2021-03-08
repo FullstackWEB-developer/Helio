@@ -1,9 +1,38 @@
-.outer {
-  width: 1rem;
-  height: 1rem;
+.checkbox-button {
+  cursor: pointer;
 }
 
-.inner {
+input[type=checkbox] {
+  box-sizing: border-box;
+  padding: 0;
+}
+.checkbox {
+  opacity: 0;
+  position: absolute;
+}
+.checkbox-control {
+  position: relative;
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  margin-right: 1rem;
+  vertical-align: middle;
+  background-color: inherit;
+  color: var(--color-secondary-900);
+  border: 1px solid var(--color-secondary-900);
+}
+
+.checkbox:checked+.checkbox-control:after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0.2rem;
+  left: 0.2rem;
   width: 0.5rem;
   height: 0.5rem;
+  background-color: var(--color-secondary-900);
+}
+
+.checkbox:checked+.checkbox-control {
+  border-color: var(--color-secondary-900);
 }

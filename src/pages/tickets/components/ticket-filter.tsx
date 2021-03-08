@@ -1,6 +1,6 @@
 import withErrorLogging from '../../../shared/HOC/with-error-logging';
 import Collapsible from '../../../shared/components/collapsible/collapsible';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {getContacts} from '../../../shared/services/contacts.service';
 import {getDepartments, getUserList} from '../../../shared/services/lookups.service';
 import {getEnumByType, getList, getLookupValues} from '../services/tickets.service';
@@ -11,7 +11,6 @@ import {selectEnumValues, selectLookupValues, selectTicketsPaging} from '../stor
 import Radio, {RadioItem} from '../../../shared/components/radio/radio';
 import {TicketOptionsBase} from '../models/ticket-options-base.model';
 import {Controller, useForm} from 'react-hook-form';
-import Button from '../../../shared/components/button/button';
 import Select, {Option} from '../../../shared/components/select/select';
 import {selectDepartmentList, selectUserList} from '../../../shared/store/lookups/lookups.selectors';
 import {User} from '../../../shared/models/user';
@@ -19,12 +18,14 @@ import {TicketQuery} from '../models/ticket-query';
 import dayjs from 'dayjs';
 import {TicketEnumValue} from '../models/ticket-enum-value.model';
 import utc from 'dayjs/plugin/utc';
-
+import Button from '../../../shared/components/button/button';
+import Input from '../../../shared/components/input/input';
 const TicketFilter = () => {
     dayjs.extend(utc);
     const dispatch = useDispatch();
     const {t} = useTranslation();
     const anyKey = '0';
+    const timePeriod_DateRange = '4';
     const paging = useSelector(selectTicketsPaging);
     const departments = useSelector((state) => selectLookupValues(state, 'Department'));
     const userList = useSelector(selectUserList);
@@ -33,6 +34,10 @@ const TicketFilter = () => {
     const ticketStatuses = useSelector((state => selectEnumValues(state, 'TicketStatus')));
     const ticketTypes = useSelector((state => selectEnumValues(state, 'TicketType')));
     const offices = useSelector(selectDepartmentList);
+    const { control, handleSubmit, watch } = useForm({});
+
+    const watchTimePeriod = watch('timePeriod');
+
     useEffect(() => {
         dispatch(getContacts());
         dispatch(getDepartments());
@@ -44,9 +49,7 @@ const TicketFilter = () => {
         dispatch(getLookupValues('Department'));
     }, [dispatch]);
 
-    const { handleSubmit, control, reset } = useForm();
-
-
+    const [formVisible, setformVisible] = useState(true);
     const getSelectedFromCheckbox =(items: CheckboxCheckEvent[]):  string[] => {
         if (items) {
             const isAny = items.find(a => a && parseInt(a.value) === parseInt(anyKey) && a.checked);
@@ -57,7 +60,7 @@ const TicketFilter = () => {
         return [];
     }
 
-    const onSubmit = (values :any) => {
+    const fetchTickets = (values: any) => {
         const query : TicketQuery = {
             ...paging
         };
@@ -65,25 +68,41 @@ const TicketFilter = () => {
         query.channels = getSelectedFromCheckbox(values.channels).map((a: string) => parseInt(a));
         query.ticketTypes = getSelectedFromCheckbox(values.ticketTypes).map((a: string) => parseInt(a));
         query.locations = getSelectedFromCheckbox(values.offices);
+        if (values.priority) {
         query.priority = values.priority;
+        }
         if (values.department) {
             query.departments = [];
-            query.departments.push(values.department);
+            if (values.department !== anyKey) {
+                query.departments.push(values.department);
+            }
         }
         if (values.timePeriod) {
-            let date = dayjs().utc();
-            switch (values.timePeriod) {
-                case '1':
-                    date = date.startOf('day');
-                    break;
-                case '2':
-                    date = date.subtract(7, 'day')
-                    break;
-                case '3':
-                    date = date.subtract(30, 'day').startOf('day')
-                    break;
+            if (values.timePeriod === timePeriod_DateRange) {
+                if (values.fromDate) {
+                    query.fromDate = dayjs(values.fromDate).utc(true).toDate();
+                }
+
+                if (values.toDate) {
+                    query.toDate = dayjs(values.toDate).utc(true).toDate();
+                }
+            } else {
+                values.fromDate = undefined;
+                values.toDate = undefined;
+                let date = dayjs().utc();
+                switch (values.timePeriod) {
+                    case '1':
+                        date = date.startOf('day');
+                        break;
+                    case '2':
+                        date = date.subtract(7, 'day')
+                        break;
+                    case '3':
+                        date = date.subtract(30, 'day').startOf('day')
+                        break;
+                }
+                query.fromDate = date.toDate();
             }
-            query.fromDate = date.toDate();
         }
         if (values.assignedTo) {
             query.assignedTo = [];
@@ -176,13 +195,14 @@ const TicketFilter = () => {
                             key = {item.key}
                             render={(props) => (
                                 <Checkbox
-                                    {...props}
+                                    name={`${name}[${item.key}]`}
+                                    ref={props.ref}
                                     truncate={true}
                                     label={item.value}
                                     data-test-id={`${name}-checkbox-' + ${item.key}`}
                                     value={item.key}
                                     onChange={(e: CheckboxCheckEvent) => {
-                                        props.onChange(e)
+                                        props.onChange(e);
                                     }}
                                 />
                             )}
@@ -200,12 +220,13 @@ const TicketFilter = () => {
             name={name}
             render={(props) => (
                 <Radio
-                    {...props}
-                    truncate
+                    name={name}
+                    truncate={true}
+                    ref={props.ref}
                     data-test-id={`${name}-radio`}
                     items={convertOptionsToRadio(items)}
                     onChange={(e: string) => {
-                        props.onChange(e)
+                        props.onChange(e);
                     }}
                 />
             )}
@@ -220,14 +241,49 @@ const TicketFilter = () => {
         };
     }) : [];
 
+    const resetForm = () => {
+        setformVisible(false);
+        setTimeout(() => {
+            setformVisible(true);
+        }, 0);
+    }
+
+    const dateFilters = () => {
+        if (watchTimePeriod === timePeriod_DateRange) {
+            return (<div>
+                <Controller
+                    control={control}
+                    defaultValue=''
+                    data-test-id='ticket-filter-from-date'
+                    name='fromDate'
+                    type='date'
+                    as={Input}
+                    label={t('tickets.filter.from_date')}
+                />
+                <Controller
+                    control={control}
+                    defaultValue=''
+                    name='toDate'
+                    data-test-id='ticket-filter-to-date'
+                    type='date'
+                    as={Input}
+                    label={t('tickets.filter.to_date')}
+                />
+            </div>);
+        } else {
+            return <span/>;
+        }
+    }
+
     return <div className='bg-secondary-100 pb-20 min-h-full px-6'>
                 <div className='flex flex-row justify-between pt-7'>
-                    <div className='font-medium-16 pb-8'>{t('tickets.filter.filter_tickets')}</div>
-                    <div className='cursor-pointer' onClick={() => reset()}>{t('tickets.filter.clear_all')}</div>
+                    <div className='subtitle pb-8 h7'>{t('tickets.filter.filter_tickets')}</div>
+                    <div className='cursor-pointer' onClick={() => resetForm()}>{t('tickets.filter.clear_all')}</div>
                 </div>
-                    <form onSubmit={handleSubmit(onSubmit)}>
+            {formVisible && <form onSubmit={handleSubmit(fetchTickets)}>
                         {GetCollapsibleCheckboxControl(t('tickets.filter.statuses'), 'statuses', addAnyOption(convertEnumToOptions(ticketStatuses)))}
                         {GetRadioCollapsibleControl(t('tickets.filter.time_period'), 'timePeriod', timePeriodList)}
+                        { dateFilters() }
                         {GetRadioCollapsibleControl(t('tickets.filter.priority'), 'priority', addAnyOption(convertEnumToOptions([...ticketPriorities].reverse())))}
                         {GetCollapsibleCheckboxControl(t('tickets.filter.channel'), 'channels', addAnyOption(convertEnumToOptions(ticketChannels)))}
                         {GetCollapsibleCheckboxControl(t('tickets.filter.ticket_type'), 'ticketTypes', addAnyOption(convertEnumToOptions(ticketTypes)))}
@@ -254,8 +310,10 @@ const TicketFilter = () => {
                         <Collapsible title={t('tickets.filter.tags')}>
                             <div/>
                         </Collapsible>
-                        <Button data-test-id='filter-tickets-button' type={'submit'} label={t('common.ok')} />
-                    </form>
+                        <div className='flex w-full justify-center'>
+                            <Button small label={t('tickets.filter.fetch')} type='submit'/>
+                        </div>
+                    </form>}
             </div>;}
 
 export default withErrorLogging(TicketFilter);

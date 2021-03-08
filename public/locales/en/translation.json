@@ -80,6 +80,9 @@
       "office_location": "Office/Location",
       "assigned_to": "Assigned to",
       "tags" : "Tags",
+      "fetch": "Apply filter",
+      "from_date": "From",
+      "to_date": "To",
       "time_periods": {
         "today": "Today",
         "last_7_days": "Last 7 Days",

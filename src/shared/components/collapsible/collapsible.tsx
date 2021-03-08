@@ -11,17 +11,16 @@ interface AccordionProps {
 const Collapsible = ({title, children} : AccordionProps) => {
 
     const [isOpen, setIsOpen] = useState(false);
+
+    const toggle = () => {
+        setIsOpen(!isOpen);
+    }
+
     return <div>
         <div className='h-12 flex flex-row justify-between items-center'>
-            <div className='font-medium'>{title}</div>
-            <div>
-                {isOpen ? <span className='cursor-pointer' onClick={ () => setIsOpen(false)}>
-                    <ArrowUpIcon/>
-                </span> :
-                    <span className='cursor-pointer' onClick={ () => setIsOpen(true)}>
-                    <ArrowDownIcon/>
-                </span>
-                }
+            <div onClick={ () => toggle()} className='subtitle cursor-pointer'>{title}</div>
+            <div className='cursor-pointer' onClick={ () => toggle()}>
+                {isOpen ? <ArrowUpIcon/> : <ArrowDownIcon/>}
             </div>
         </div>
         {isOpen && <div>{children}</div>}
