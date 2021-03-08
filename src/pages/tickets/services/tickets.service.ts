@@ -158,12 +158,10 @@ export const getLookupValues = (key: string) => {
     }
 }
 
-export const createTicket = (data: Ticket) => {
-    return async () => {
-        await Api.post(ticketsBaseUrl, data)
-            .then()
-            .catch(error => {
-                logger.error(`Failed creating new ticket`, error);
-            });
-    }
+export const createTicket = async (data: Ticket) => {
+    await Api.post(ticketsBaseUrl, data)
+        .then()
+        .catch(error => {
+            logger.error(`Failed creating new ticket`, error);
+        });
 }

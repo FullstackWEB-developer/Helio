@@ -307,8 +307,10 @@
     "patient_chart_number": "Patient Chart Number",
     "patient_case_number": "Patient Case Number",
     "tags": "Tags",
-    "add_tag": "+Add Tag",
     "add_note": "Add Note",
     "create": "Create Ticket"
+  },
+  "tag_input": {
+    "add_tag": "+Add Tag"
   }
 }

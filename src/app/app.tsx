@@ -32,7 +32,7 @@ function App() {
                 <Layout>
                     <GuardedRoute exact path='/dashboard' component={Dashboard} />
                     <GuardedRoute exact path='/my_tickets' component={withSuspense(TicketList)} />
-                    <GuardedRoute exact path='/tickets/new' component={withSuspense(TicketNew)} />
+                    <GuardedRoute exact path='/my_tickets/new' component={withSuspense(TicketNew)} />
                     <Switch>
                         <GuardedRoute exact path='/patients/results' component={withSuspense(SearchResults)} />
                         <GuardedRoute exact path='/patients/:patientId' component={withSuspense(PatientChart)} />

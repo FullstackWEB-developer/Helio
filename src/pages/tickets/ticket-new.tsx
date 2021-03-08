@@ -7,9 +7,10 @@ import { useForm, Controller } from 'react-hook-form';
 import withErrorLogging from '../../shared/HOC/with-error-logging';
 
 import ThreeDots from '../../shared/components/skeleton-loader/skeleton-loader';
-import Select, { Option } from '../../shared/components/select/select';
-import Input from '../../shared/components/input/input';
 import Button from '../../shared/components/button/button';
+import Input from '../../shared/components/input/input';
+import Select, { Option } from '../../shared/components/select/select';
+import TagInput from '../../shared/components/tag-input/tag-input';
 import { Contact } from '../../shared/models/contact.model';
 import { Department } from '../../shared/models/department';
 import { Ticket } from './models/ticket';
@@ -18,7 +19,8 @@ import {
     selectIsTicketEnumValuesLoading,
     selectEnumValues,
     selectTicketOptionsError,
-    selectIsTicketLookupValuesLoading, selectLookupValues
+    selectIsTicketLookupValuesLoading,
+    selectLookupValues
 } from './store/tickets.selectors';
 import { selectContacts, selectIsContactOptionsLoading } from '../../shared/store/contacts/contacts.selectors';
 import {
@@ -27,16 +29,18 @@ import {
     selectUserList
 } from '../../shared/store/lookups/lookups.selectors';
 
-import { createTicket, getEnumByType, getLookupValues } from './services/tickets.service';
+import {createTicket, getEnumByType, getLookupValues} from './services/tickets.service';
 import { getContacts } from '../../shared/services/contacts.service';
 import {getDepartments, getUserList} from '../../shared/services/lookups.service';
 import TextArea from '../../shared/components/textarea/textarea';
-import {User} from '../../shared/models/user';
+import { User } from '../../shared/models/user';
+import { useHistory } from 'react-router-dom';
 
 const TicketNew = () => {
     dayjs.extend(utc);
-    const { handleSubmit, control, errors, setValue } = useForm();
+    const { handleSubmit, control, errors } = useForm();
     const { t } = useTranslation();
+    const history = useHistory();
     const dispatch = useDispatch();
     const requiredText = t('common.required');
     const TicketTypeDefault = '1';
@@ -70,7 +74,7 @@ const TicketNew = () => {
         }
 
         const subjectOption = subjectOptions.find(o => o.value === formData.subject);
-        const subjectValue = subjectOptions && subjectOptions.length > 1 && subjectOption ? subjectOption.label : formData.subject;
+        const subjectValue = subjectOptions && subjectOptions.length > 1 && subjectOption ? subjectOption.label : formData.subjectInput;
 
         let dueDateTime;
         if (formData.dueDate && formData.dueTime) {
@@ -111,7 +115,8 @@ const TicketNew = () => {
             notes: notes
         };
 
-        dispatch(createTicket(ticketData));
+        await createTicket(ticketData);
+        history.push('/my_tickets');
     }
 
     useEffect(() => {
@@ -193,11 +198,6 @@ const TicketNew = () => {
     const getTicketLookupValuesOptionsByTicketType = (data: any[] | undefined) => {
         if (data && selectedTicketTypeOption) {
             const filtered = data.filter(v => v.parentValue === selectedTicketTypeOption.value.toString());
-            if (filtered.length <= 1 ) {
-                setTimeout(() => {
-                    setValue('subject', '');
-                }, 0);
-            }
             return convertToOptions(filtered);
         }
         return [];
@@ -221,7 +221,7 @@ const TicketNew = () => {
     const departmentOptions: Option[] = getTicketLookupValuesOptions(ticketLookupValuesDepartment);
     addFirstOption(departmentOptions, 'Department');
 
-    const tagsOptions: Option[] = getTicketLookupValuesOptions(ticketLookupValuesTags);
+    const tagOptions: Option[] = getTicketLookupValuesOptions(ticketLookupValuesTags);
 
     const handleChangeTicketType = (event: React.ChangeEvent<HTMLSelectElement>) => {
         event.stopPropagation();
@@ -232,12 +232,9 @@ const TicketNew = () => {
         setIsTicketTypeSelected(true);
     }
 
-    const handleChangeTags = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        event.stopPropagation();
-        const selectedTag =
-            tagsOptions ? tagsOptions.find((o: Option) => o.value.toString() === event.target.value) : {} as any;
-        setTags([...tags, selectedTag.label]);
-    }
+    const setSelectedTags = (tags: string[]) => {
+        setTags(tags);
+    };
 
     if (isContactsLoading || isDepartmentListLoading || isLookupValuesLoading || isTicketEnumValuesLoading) {
         return <ThreeDots data-test-id='ticket-new-loading' />;
@@ -262,268 +259,264 @@ const TicketNew = () => {
     }
 
     return <div className={'w-96 py-4 mx-auto flex flex-col'}>
-        <form onSubmit={handleSubmit(onSubmit)} className='divide-y'>
-            <Controller
-                name='ticketType'
-                control={control}
-                defaultValue=''
-                rules={{ required: requiredText }}
-                render={(props) => (
-                    <Select
-                        {...props}
-                        data-test-id={'ticket-new-ticket-type'}
-                        className={'w-full border-none h-14'}
-                        label={t('ticket_new.ticket_type')}
-                        options={ticketTypeOptions}
-                        value={props.value}
-                        onChange={(e: ChangeEvent<HTMLSelectElement>) => {
-                            props.onChange(e)
-                            handleChangeTicketType(e);
-                        }}
-                        error={errors.ticketType?.message}
-                    />
-                )}
-            />
-            { isTicketTypeSelected &&
+        <form onSubmit={handleSubmit(onSubmit)}>
+            <div className='divide-y'>
                 <Controller
-                    name='reason'
+                    name='ticketType'
+                    control={control}
+                    defaultValue=''
+                    rules={{ required: requiredText }}
+                    render={(props) => (
+                        <Select
+                            {...props}
+                            data-test-id={'ticket-new-ticket-type'}
+                            className={'w-full border-none h-14'}
+                            label={t('ticket_new.ticket_type')}
+                            options={ticketTypeOptions}
+                            value={props.value}
+                            onChange={(e: ChangeEvent<HTMLSelectElement>) => {
+                                props.onChange(e)
+                                handleChangeTicketType(e);
+                            }}
+                            error={errors.ticketType?.message}
+                        />
+                    )}
+                />
+                { (isTicketTypeSelected && reasonOptions.length > 1) &&
+                    <Controller
+                        name='reason'
+                        control={control}
+                        defaultValue=''
+                        render={(props) => (
+                            <Select
+                                {...props}
+                                data-test-id={'ticket-new-reason'}
+                                className={'w-full border-none h-14'}
+                                placeholder={t('ticket_new.reason')}
+                                options={reasonOptions}
+                                value={props.value}
+                            />
+                        )}
+                    />
+                }
+
+                <Controller
+                    name='contactId'
+                    control={control}
+                    defaultValue=''
+                    rules={{ required: requiredText }}
+                    render={(props) => (
+                        <Select
+                            {...props}
+                            data-test-id='ticket_new.contact'
+                            className={'w-full border-none h-14'}
+                            placeholder={t('ticket_new.contact')}
+                            options={contactOptions}
+                            value={props.value}
+                            error={errors.contactId?.message}
+                        />
+                    )}
+                />
+                <div>
+                    {
+                        subjectOptions && subjectOptions.length > 1
+                            ?
+                            <Controller
+                                name='subject'
+                                control={control}
+                                defaultValue=''
+                                render={(props) => (
+                                    <Select
+                                        {...props}
+                                        data-test-id={'ticket-new-subject-select'}
+                                        className={'w-full border-none h-14'}
+                                        options={subjectOptions}
+                                        value={props.value}
+                                    />
+                                )}
+                            />
+                            :
+                            <Controller
+                                name='subjectInput'
+                                control={control}
+                                defaultValue=''
+                                placeholder={t('ticket_new.subject')}
+                                rules={{required: requiredText}}
+                                as={Input}
+                                className={'w-full border-none h-14'}
+                                data-test-id={'ticket-new-assignee'}
+                                error={errors.subjectInput?.message}
+                            />
+                    }
+                </div>
+                <Controller
+                    name='status'
+                    control={control}
+                    defaultValue=''
+                    rules={{ required: requiredText }}
+                    render={(props) => (
+                        <Select
+                            {...props}
+                            data-test-id={'ticket-new-status'}
+                            className={'w-full border-none h-14'}
+                            placeholder={t('ticket_new.status')}
+                            options={statusOptions}
+                            value={props.value}
+                            error={errors.status?.message}
+                        />
+                    )}
+                />
+                <Controller
+                    name='priority'
+                    control={control}
+                    defaultValue=''
+                    rules={{ required: requiredText }}
+                    render={(props) => (
+                        <Select
+                            {...props}
+                            data-test-id={'ticket-new-priority'}
+                            className={'w-full border-none h-14'}
+                            placeholder={t('ticket_new.priority')}
+                            options={priorityOptions}
+                            value={props.value}
+                            error={errors.priority?.message}
+                        />
+                    )}
+                />
+                <Controller
+                    name='dueDate'
+                    control={control}
+                    defaultValue=''
+                    render={(props) => (
+                        <Input
+                            {...props}
+                            type='date'
+                            data-test-id={'ticket-new-due-date'}
+                            className={'w-full border-none h-14'}
+                            placeholder={t('ticket_new.due_date')}
+                            value={props.value}
+                            error={errors.dueDate?.message}
+                        />
+                    )}
+                />
+                <Controller
+                    type='text'
+                    name='dueTime'
+                    control={control}
+                    defaultValue=''
+                    render={(props) => (
+                        <Input
+                            {...props}
+                            type='time'
+                            data-test-id={'ticket-new-due-time'}
+                            className={'w-full border-none h-14'}
+                            placeholder={t('ticket_new.due_time')}
+                            value={props.value}
+                            error={errors.dueTime?.message}
+                        />
+                    )}
+                />
+                <Controller
+                    name='channel'
                     control={control}
                     defaultValue=''
                     render={(props) => (
                         <Select
                             {...props}
-                            data-test-id={'ticket-new-reason'}
+                            data-test-id={'ticket-new-channel'}
                             className={'w-full border-none h-14'}
-                            placeholder={t('ticket_new.reason')}
-                            options={reasonOptions}
+                            placeholder={t('ticket_new.channel')}
+                            options={sourceOptions}
                             value={props.value}
                         />
                     )}
                 />
-            }
-
-            <Controller
-                name='contactId'
-                control={control}
-                defaultValue=''
-                rules={{ required: requiredText }}
-                render={(props) => (
-                    <Select
-                        {...props}
-                        data-test-id='ticket_new.contact'
-                        className={'w-full border-none h-14'}
-                        placeholder={t('ticket_new.contact')}
-                        options={contactOptions}
-                        value={props.value}
-                        error={errors.contactId?.message}
-                    />
-                )}
-            />
-            <div>
-                {
-                    subjectOptions && subjectOptions.length > 1
-                        ?
-                        <Controller
-                            name='subject'
-                            control={control}
-                            defaultValue=''
-                            render={(props) => (
-                                <Select
-                                    {...props}
-                                    data-test-id={'ticket-new-subject-select'}
-                                    className={'w-full border-none h-14'}
-                                    options={subjectOptions}
-                                    value={props.value}
-                                />
-                            )}
-                        />
-                        :
-                        <Controller
-                            name='subject'
-                            control={control}
-                            defaultValue=''
-                            placeholder={t('ticket_new.subject')}
-                            rules={{required: requiredText}}
-                            as={Input}
+                <Controller
+                    name='department'
+                    control={control}
+                    defaultValue=''
+                    render={(props) => (
+                        <Select
+                            {...props}
+                            data-test-id='ticket-new-department'
                             className={'w-full border-none h-14'}
-                            data-test-id={'ticket-new-assignee'}
-                            error={errors.subject?.message}
+                            placeholder={t('ticket_new.department')}
+                            options={departmentOptions}
+                            value={props.value}
                         />
+                    )}
+                />
+                <Controller
+                    name='location'
+                    control={control}
+                    defaultValue={locationOptions ? locationOptions[0] : ''}
+                    rules={{ required: requiredText }}
+                    render={(props) => (
+                        <Select
+                            {...props}
+                            data-test-id={'ticket-new-location'}
+                            className={'w-full border-none h-14'}
+                            placeholder={t('ticket_new.location')}
+                            options={locationOptions}
+                            value={props.value}
+                            error={errors.location?.message}
+                        />
+                    )}
+                />
+                <Controller
+                    name='assignee'
+                    control={control}
+                    defaultValue=''
+                    rules={{ required: requiredText }}
+                    render={(props) => (
+                        <Select
+                            {...props}
+                            data-test-id={'ticket-new-assignee'}
+                            className={'w-full border-none h-14'}
+                            placeholder={t('ticket_new.assignee')}
+                            options={assigneeOptions}
+                            value={props.value}
+                            error={errors.assignee?.message}
+                        />
+                    )}
+                />
+                {
+                    isTicketTypeSelected &&
+                    <Controller
+                        name='patientChartNumber'
+                        control={control}
+                        defaultValue=''
+                        placeholder={t('ticket_new.patient_chart_number')}
+                        as={Input}
+                        className={'w-full border-none h-14'}
+                        data-test-id={'ticket-new-patient-chart-number'}
+                    />
+                }
+                {
+                    isTicketTypeSelected &&
+                    <Controller
+                        name='patientCaseNumber'
+                        control={control}
+                        defaultValue=''
+                        placeholder={t('ticket_new.patient_case_number')}
+                        as={Input}
+                        className={'w-full border-none h-14'}
+                        data-test-id={'ticket-new-patient-case-number'}
+                    />
                 }
             </div>
             <Controller
-                name='status'
-                control={control}
-                defaultValue=''
-                rules={{ required: requiredText }}
-                render={(props) => (
-                    <Select
-                        {...props}
-                        data-test-id={'ticket-new-status'}
-                        className={'w-full border-none h-14'}
-                        placeholder={t('ticket_new.status')}
-                        options={statusOptions}
-                        value={props.value}
-                        error={errors.status?.message}
-                    />
-                )}
-            />
-            <Controller
-                name='priority'
-                control={control}
-                defaultValue=''
-                rules={{ required: requiredText }}
-                render={(props) => (
-                    <Select
-                        {...props}
-                        data-test-id={'ticket-new-priority'}
-                        className={'w-full border-none h-14'}
-                        placeholder={t('ticket_new.priority')}
-                        options={priorityOptions}
-                        value={props.value}
-                        error={errors.priority?.message}
-                    />
-                )}
-            />
-            <Controller
-                type='date'
-                name='dueDate'
-                control={control}
-                as={Input}
-                className={'w-full border-none h-14'}
-                defaultValue=''
-                error={errors.dueDate?.message}
-                data-test-id={'ticket-new-due-date'}
-                placeholder={t('ticket_new.due_date')}
-            />
-            <Controller
-                type='time'
-                name='dueTime'
-                control={control}
-                as={Input}
-                className={'w-full border-none h-14'}
-                defaultValue=''
-                data-test-id={'ticket-new-due-time'}
-                placeholder={t('ticket_new.due_time')}
-            />
-            <Controller
-                name='channel'
+                name='tagsInput'
                 control={control}
                 defaultValue=''
                 render={(props) => (
-                    <Select
+                    <TagInput
                         {...props}
-                        data-test-id={'ticket-new-channel'}
+                        tagOptions={tagOptions}
+                        label={t('ticket_new.tags')}
+                        data-test-id='ticket-new-tag-input'
                         className={'w-full border-none h-14'}
-                        placeholder={t('ticket_new.channel')}
-                        options={sourceOptions}
-                        value={props.value}
-                    />
-                )}
-            />
-            <Controller
-                name='department'
-                control={control}
-                defaultValue=''
-                render={(props) => (
-                    <Select
-                        {...props}
-                        data-test-id='ticket-new-department'
-                        className={'w-full border-none h-14'}
-                        placeholder={t('ticket_new.department')}
-                        options={departmentOptions}
-                        value={props.value}
-                    />
-                )}
-            />
-            <Controller
-                name='location'
-                control={control}
-                defaultValue={locationOptions ? locationOptions[0] : ''}
-                rules={{ required: requiredText }}
-                render={(props) => (
-                    <Select
-                        {...props}
-                        data-test-id={'ticket-new-location'}
-                        className={'w-full border-none h-14'}
-                        placeholder={t('ticket_new.location')}
-                        options={locationOptions}
-                        value={props.value}
-                        error={errors.location?.message}
-                    />
-                )}
-            />
-            <Controller
-                name='assignee'
-                control={control}
-                defaultValue=''
-                rules={{ required: requiredText }}
-                render={(props) => (
-                    <Select
-                        {...props}
-                        data-test-id={'ticket-new-assignee'}
-                        className={'w-full border-none h-14'}
-                        placeholder={t('ticket_new.assignee')}
-                        options={assigneeOptions}
-                        value={props.value}
-                        error={errors.assignee?.message}
-                    />
-                )}
-            />
-            {
-                isTicketTypeSelected &&
-                <Controller
-                    name='patientChartNumber'
-                    control={control}
-                    defaultValue=''
-                    placeholder={t('ticket_new.patient_chart_number')}
-                    as={Input}
-                    className={'w-full border-none h-14'}
-                    data-test-id={'ticket-new-patient-chart-number'}
-                />
-            }
-            {
-                isTicketTypeSelected &&
-                <Controller
-                    name='patientCaseNumber'
-                    control={control}
-                    defaultValue=''
-                    placeholder={t('ticket_new.patient_case_number')}
-                    as={Input}
-                    className={'w-full border-none h-14'}
-                    data-test-id={'ticket-new-patient-case-number'}
-                />
-            }
-            <Controller
-                name='tags'
-                control={control}
-                defaultValue=''
-                render={() => (
-                    <TextArea
-                        className={'w-full pb-4 h-20'}
-                        data-test-id='ticket-new-tags'
-                        placeholder={t('ticket_new.add_tag')}
-                        value={tags.join('; ')}
-                        rows={2}
-                        onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setNoteText(e.target.value)}
-                    />
-                )}
-            />
-            <Controller
-                name='tags-select'
-                control={control}
-                defaultValue=''
-                render={(props) => (
-                    <Select
-                        {...props}
-                        data-test-id='ticket-new-tags-select'
-                        className={'w-full border-none h-14'}
-                        options={tagsOptions}
-                        value={props.value}
-                        onChange={(e: ChangeEvent<HTMLSelectElement>) => {
-                            props.onChange(e)
-                            handleChangeTags(e);
-                        }}
+                        setSelectedTags={setSelectedTags}
                     />
                 )}
             />
@@ -548,7 +541,9 @@ const TicketNew = () => {
                     label={t('ticket_new.create')} />
                 <Button data-test-id='ticket-new-cancel-button' type={'button'}
                     className='btn-secondary'
-                    label={t('common.cancel')} />
+                    label={t('common.cancel')}
+                    onClick={() => history.push('/my_tickets')}
+                />
             </div>
         </form>
     </div>

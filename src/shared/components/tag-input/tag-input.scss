@@ -1,0 +1,68 @@
+$TagInputHeight: 2.366rem;
+$TagInputFontSize: 0.996rem;
+$TagInputBorderRadius: 0.188rem;
+$TagInputMarginPadding: 0.187rem;
+
+.tag-input {
+  box-sizing: border-box;
+  position: relative;
+  width: 100%;
+  height: auto;
+  min-height: $TagInputHeight;
+  padding: $TagInputMarginPadding $TagInputMarginPadding * 2;
+  overflow-y: auto;
+
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+
+  font-size: 1rem;
+  background: white;
+  color: var(--color-secondary-800);
+  border: 1px solid var(--color-secondary-300);
+  border-radius: $TagInputBorderRadius;
+
+  * { box-sizing: border-box; }
+  > * { margin: $TagInputMarginPadding; }
+
+  &__tag {
+    position: relative;
+    display: flex;
+    align-items: center;
+    font-size: $TagInputFontSize - 0.15;
+    line-height: 1;
+    background: var(--color-secondary-300);
+    border-radius: $TagInputBorderRadius;
+  }
+  &__tag-content {
+    outline: 0;
+    border: none;
+    white-space: nowrap;
+    padding: 0 $TagInputMarginPadding * 2.5;
+  }
+  &__tag-remove {
+    position: relative;
+    height: $TagInputFontSize * 2;
+    width: $TagInputFontSize * 2;
+    font-size: $TagInputFontSize - 0.15;
+    cursor: pointer;
+    background: var(--color-secondary-400);
+    border-top-right-radius: $TagInputBorderRadius;
+    border-bottom-right-radius: $TagInputBorderRadius;
+    &:before, &:after {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      content: ' ';
+      height: $TagInputFontSize - 0.1;
+      width: 0.149rem;
+      background-color: var(--color-secondary-800);
+    }
+    &:before {
+      transform: translateX(-50%) translateY(-50%) rotate(45deg);
+    }
+    &:after {
+      transform: translateX(-50%) translateY(-50%) rotate(-45deg);
+    }
+  }
+}
