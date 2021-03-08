@@ -53,12 +53,7 @@ const NoteContext = () => {
                 }
             </div>
             <div className='flex justify-end w-full mt-5'>
-                <button
-                    className='pr-10 text-gray-900'
-                    onClick={() => { return navigator.clipboard.writeText(noteText) }}
-                >
-                    {t('ccp.note_context.copy_note')}
-                </button>
+                <Button label={t('ccp.note_context.copy_note')} onClick={() => { return navigator.clipboard.writeText(noteText) }} />
                 <span className='text-gray-400'>
                     {dayjs.utc().format('M/DD/YYYY h:mm A')}
                 </span>

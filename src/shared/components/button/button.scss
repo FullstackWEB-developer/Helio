@@ -2,20 +2,14 @@
   min-width: 6.5rem;
   min-height: 2.5rem;
   border-radius: 1.25rem;
+  padding: 0.625rem 1.5rem;
 }
 
 .small {
   min-width: 6rem;
   min-height: 2rem;
   border-radius: 1rem;
-}
-
-button:hover {
-  background-color: var(--color-primary-500);
-}
-
-button:focus {
-  background-color: var(--color-primary-700);
+  padding: 0.475rem 1.3rem;
 }
 
 button:disabled,

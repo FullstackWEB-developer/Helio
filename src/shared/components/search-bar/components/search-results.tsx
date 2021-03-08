@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import patientUtils from '../../../../pages/patients/utils/utils';
 import { useCallback, useEffect } from 'react';
+import Button from '../../button/button';
 
 const SearchResults = () => {
     const { t } = useTranslation();
@@ -35,10 +36,10 @@ const SearchResults = () => {
                 <ThreeDots />
             </div>
             <div hidden={isError || isSearching} className={'p-4'}>
-                <span className={'text-xl font-bold'}>{heading}</span>
+                <h5>{heading}</h5>
                 <div className='grid grid-flow-row auto-rows-max md:auto-rows-min'>
                     <div hidden={patients === undefined || patients.length === 0}>
-                        <div className='grid grid-flow-col auto-cols-max font-bold pt-8'>
+                        <div className='grid grid-flow-col auto-cols-max subtitle pt-8'>
                             <div className='p-2 w-60'>{t('search.search_results.patient_name')}</div>
                             <div className='p-2 w-32'>{t('search.search_results.date_of_birth')}</div>
                             <div className='p-2 w-16'>{t('search.search_results.action')}</div>
@@ -51,7 +52,7 @@ const SearchResults = () => {
                                     <div className='p-2 w-60'>{`${patient.firstName} ${patient.lastName}`}</div>
                                     <div className='p-2 w-32'>{patientUtils.formatDob(patient.dateOfBirth)}</div>
                                     <div className='p-2 w-16 text-center'>
-                                        <button onClick={() => select(patient)}>{t('search.search_results.select')}</button>
+                                        <Button small label={t('search.search_results.select')} onClick={() => select(patient)}/>
                                     </div>
                                 </div>
                             )

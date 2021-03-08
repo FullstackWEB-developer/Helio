@@ -17,6 +17,7 @@ import { selectIsPatientVerified } from '../../patients/store/patients.selectors
 import ThreeDots from '../../../shared/components/skeleton-loader/skeleton-loader';
 import { clearRescheduleAppointmentState } from '../reschedule-appointment/store/reschedule-appointment.slice';
 import { clearRequestRefillState } from '../request-refill/store/request-refill.slice';
+import Button from '../../../shared/components/button/button';
 
 enum RequestTypes {
     GetAppointmentDetail = 1,
@@ -160,11 +161,7 @@ const HipaaVerification = () => {
 
                                 </div>
                                 <div className='px-4 py-3 bg-gray-50 text-right sm:px-6'>
-                                    <button data-test-id='hipaa-validation-form-verify-btn' type='submit'
-                                        disabled={!formData.dob || !formData.phone || !formData.zip}
-                                        className='btn-primary'>
-                                        {t('hipaa_validation_form.verify')}
-                                    </button>
+                                    <Button type='submit' data-test-id='hipaa-validation-form-verify-btn' label={t('hipaa_validation_form.verify')} disabled={!formData.dob || !formData.phone || !formData.zip} />
                                 </div>
                             </div>
                         </form>

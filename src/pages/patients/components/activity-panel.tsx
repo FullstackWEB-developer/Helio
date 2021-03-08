@@ -11,7 +11,7 @@ const ActivityPanel = () => {
     const { t } = useTranslation();
     const patient = useSelector(selectPatient);
     return <div className='px-4'>
-        <div className='font-bold text-2xl pb-3'>{t('patient.activity')}</div>
+        <h5 className=' pb-3'>{t('patient.activity')}</h5>
         <Tabs>
             <Tab title={t('patient.notes_tab_label')}>
                 <div className='h-120 overflow-y-auto' data-test-id='patient-activity-panel'>

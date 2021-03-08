@@ -146,15 +146,15 @@ const Ccp: React.FC<BoxProps> = ({
             <div className={'flex h-full'}>
                 <div className={'flex flex-col h-full'}>
                     <div data-test-id='ccp-container' id='ccp-container' className='h-full overflow-hidden'> </div>
-                    <div className={'flex justify-between w-full px-10 py-2 border-t ccp-bottom-bar ' + (isBottomBarVisible ? 'block' : 'hidden')}>
-                        <Bot onClick={() => dispatch(setContextPanel(contextPanels.bot))} />
+                    <div className={'flex justify-between w-full px-10 py-2 shadow-md  border-t ccp-bottom-bar ' + (isBottomBarVisible ? 'block' : 'hidden')}>
+                        <Bot className='cursor-pointer' onClick={() => dispatch(setContextPanel(contextPanels.bot))} />
                         {
-                            ticketId ? <Note onClick={() => dispatch(setContextPanel(contextPanels.note))} /> : <Note />
+                            ticketId ? <Note className='cursor-pointer' onClick={() => dispatch(setContextPanel(contextPanels.note))} /> : <Note />
                         }
-                        <Tickets onClick={() => dispatch(setContextPanel(contextPanels.tickets))} />
-                        <Sms onClick={() => dispatch(setContextPanel(contextPanels.sms))} />
-                        <Email onClick={() => dispatch(setContextPanel(contextPanels.email))} />
-                        <Scripts onClick={() => dispatch(setContextPanel(contextPanels.scripts))} />
+                        <Tickets className='cursor-pointer' onClick={() => dispatch(setContextPanel(contextPanels.tickets))} />
+                        <Sms className='cursor-pointer' onClick={() => dispatch(setContextPanel(contextPanels.sms))} />
+                        <Email className='cursor-pointer' onClick={() => dispatch(setContextPanel(contextPanels.email))} />
+                        <Scripts className='cursor-pointer' onClick={() => dispatch(setContextPanel(contextPanels.scripts))} />
                     </div>
                 </div>
                 <CcpContext />

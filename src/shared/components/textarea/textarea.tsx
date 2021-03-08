@@ -14,7 +14,7 @@ interface TextAreaProps extends React.HTMLAttributes<HTMLTextAreaElement> {
 const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(({ label, value, htmlFor, ...props }: TextAreaProps, ref) => {
     return (
         <Fragment>
-            <label htmlFor={htmlFor} className='block text-sm font-medium text-gray-700'>
+            <label htmlFor={htmlFor} className='block subtitle'>
                 {label}
             </label>
             <textarea ref={ref} {...props} value={value}

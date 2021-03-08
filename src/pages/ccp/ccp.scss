@@ -7,12 +7,12 @@
   cursor: move;
 }
 .ccp-bottom-bar {
-  background-color: var(--off-white);
+  background-color: var(--color-white);
 }
 .ccp-context {
   width: 40rem;
   .ccp-header {
-    background-color: #4a4a4a;
+    background-color: var(--color-secondary-800);
     height: 2.74rem;
   }
   .ccp-footer {

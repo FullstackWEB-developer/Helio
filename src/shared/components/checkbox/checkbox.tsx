@@ -15,8 +15,8 @@ interface CheckboxProps {
 }
 
 const Checkbox  = React.forwardRef<HTMLInputElement, CheckboxProps>(({name, label, value, defaultChecked = false, truncate = false, onChange, ...props} : CheckboxProps, ref) =>{
-    return  <div className='flex flex-row items-center h-9'>
-        <label className="checkbox-button">
+    return  <div className='h-9'>
+        <label className="checkbox-button flex flex-row items-center">
             <input
                 {...props}
                 className='checkbox'
@@ -28,7 +28,7 @@ const Checkbox  = React.forwardRef<HTMLInputElement, CheckboxProps>(({name, labe
                 onChange={e => onChange({value, checked: e.target.checked})}
             />
             <span className="checkbox-control"/>
-            <span  className={'w-60 ' + (truncate ? 'truncate' : '')}>{label}</span>
+            <span  className={'w-60 ' + (truncate ? ' truncate ' : '')}>{label}</span>
         </label>
     </div>
 })

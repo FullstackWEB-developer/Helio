@@ -15,6 +15,7 @@ import { resetLabResultsState } from './store/lab-results.slice';
 import LabResultDetailItem from './components/lab-result-detail-item';
 import { clearVerifiedPatient } from '../../patients/store/patients.slice';
 import withErrorLogging from '../../../shared/HOC/with-error-logging';
+import Button from '../../../shared/components/button/button';
 
 interface LabResultOption extends Option {
     datetime: string,
@@ -120,14 +121,8 @@ const LabResults = () => {
                 </dl>
 
                 <div className='bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse'>
-                    <button data-test-id='lab-results-download-pdf-button' type='button'
-                        className='btn-primary'>
-                        {t('common.download_pdf')}
-                    </button>
-                    <button data-test-id='lab-results-print-button' type='button'
-                        className='btn-secondary'>
-                        {t('common.print')}
-                    </button>
+                    <Button label={t('common.download_pdf')} data-test-id='lab-results-download-pdf-button'/>
+                    <Button small label={t('common.print')} data-test-id='lab-results-print-button'/>
                 </div>
             </div>
         </div>

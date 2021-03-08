@@ -94,7 +94,7 @@ const SearchBar = () => {
                             <SearchTypeItem selected={typeItem.type === selectedType} key={typeItem.type} searchType={typeItem} onClick={() => search(typeItem.type)} />)
                     }
                 </div>
-                <div className='pb-2' hidden={recentPatients.length === 0}>
+                <div className='pb-4 pt-4' hidden={recentPatients.length === 0}>
                     <div className='px-4 pb-2 flex'>
                         <Label text={t('search.recent_patients')} className='font-bold flex-1' />
                         <label className='text-primary-600 cursor-pointer' onClick={() => clearRecent()}>{t('common.clear')}</label>

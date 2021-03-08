@@ -6,9 +6,8 @@ interface ButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
     small?: boolean,
     disabled?: boolean
 }
-const Button = ({ label, type, small=false, disabled=false, ...props }: ButtonProps) => {
-    type = type || 'button';
-    return (<button disabled={disabled} className={'active:bg-primary-700 text-white bg-primary-400 ' + (small ? 'small' : 'big')} type={type} {...props}>{label}</button>
+const Button = ({ label, type = 'button', small=false, disabled=false, ...props }: ButtonProps) => {
+    return (<button disabled={disabled} className={'bg-primary-500 hover:bg-primary-700 focus:bg-primary-900 active:bg-primary-900 ' + (small ? 'small subtitle3-white' : 'big subtitle2-white')} type={type} {...props}>{label}</button>
     );
 }
 

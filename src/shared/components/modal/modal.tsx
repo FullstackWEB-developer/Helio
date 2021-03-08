@@ -17,7 +17,7 @@ const Modal = ({ isOpen, children, title, isClosable, onClose }: ModalProps) => 
         <>
             <div className='modal bg-white z-50 top-60 shadow-xl absolute border px-6'>
                 <div className='pb-3 h-18 flex justify-between'>
-                    <div className='font-bold self-end text-2xl text-gray-700'>{title}</div>
+                    <h5 className='pt-4'>{title}</h5>
                     {isClosable && <div className='pt-4 cursor-pointer' onClick={onClose}><CloseIcon/></div>}
                 </div>
                 {children}

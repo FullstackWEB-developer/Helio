@@ -108,6 +108,17 @@ h6 {
   color: var(--subtitle2-color);
 }
 
+.subtitle2-white {
+  font-family: var(--subtitle2-font-family);
+  font-size: var(--subtitle2-font-size);
+  font-weight: var(--subtitle2-font-weight);
+  font-stretch: var(--subtitle2-font-stretch);
+  font-style: var(--subtitle2-font-style);
+  line-height: var(--subtitle2-line-height);
+  letter-spacing: var(--subtitle2-letter-spacing);
+  color: var(--color-white);
+}
+
 .subtitle3 {
   font-family: var(--subtitle3-font-family);
   font-size: var(--subtitle3-font-size);
@@ -117,6 +128,17 @@ h6 {
   line-height: var(--subtitle3-line-height);
   letter-spacing: var(--subtitle3-letter-spacing);
   color: var(--subtitle3-color);
+}
+
+.subtitle3-white {
+  font-family: var(--subtitle3-font-family);
+  font-size: var(--subtitle3-font-size);
+  font-weight: var(--subtitle3-font-weight);
+  font-stretch: var(--subtitle3-font-stretch);
+  font-style: var(--subtitle3-font-style);
+  line-height: var(--subtitle3-line-height);
+  letter-spacing: var(--subtitle3-letter-spacing);
+  color: var(--color-white);
 }
 
 .subtitle3-small {

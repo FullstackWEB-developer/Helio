@@ -19,7 +19,7 @@ export interface Option {
 const Select = React.forwardRef<HTMLSelectElement, SelectProps>(({ options, label, className, ...props }, ref) => {
     return (
         <div>
-            {label && <Label text={label} className='block text-sm font-medium text-gray-700' />}
+            {label && <Label text={label} className='block subtitle' />}
             <select ref={ref} className={'p-2 border ' + className}
                 {...props}
             >

@@ -1,6 +1,7 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
+import Button from '../../../shared/components/button/button';
 import Select from '../../../shared/components/select/select';
 import ThreeDots from '../../../shared/components/skeleton-loader/skeleton-loader';
 import { Department } from '../../../shared/models/department';
@@ -169,19 +170,13 @@ const AppointmentDetail = () => {
                                 </dl>
 
                                 <div className='bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse'>
-                                    <button data-test-id='appointment-reschedule' type='button'
-                                        className='btn-primary'>
-                                        {t('appointment.reSchedule')}
-                                    </button>
-                                    <button data-test-id='appointment-cancel' type='button'
-                                        className='btn-secondary'>
-                                        {t('appointment.cancel')}
-                                    </button>
+                                    <Button label={t('appointment.reSchedule')} data-test-id='appointment-reschedule'/>
+                                    <Button small label={t('appointment.cancel')} data-test-id='appointment-cancel' />
                                 </div>
                             </div>
                         </div>
                         : <div hidden={isError || isLoading} >
-                            <span className={'text-xl'}>{t('appointment.no_appointments')}</span>
+                            <span className={'subtitle'}>{t('appointment.no_appointments')}</span>
                         </div>
 
                 }

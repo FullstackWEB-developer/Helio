@@ -15,7 +15,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({ label, htmlFor, 
 
     return (
         <Fragment>
-            <label htmlFor={htmlFor} className='block text-sm font-medium text-gray-700'>
+            <label htmlFor={htmlFor} className='block'>
                 {label}
             </label>
             <input ref={ref} {...props}
