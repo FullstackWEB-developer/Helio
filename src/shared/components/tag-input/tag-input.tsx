@@ -3,6 +3,8 @@ import { useTranslation } from 'react-i18next';
 import Label from '../label/label';
 import Tag from './components/tag'
 import './tag-input.scss';
+import List from '../list/list';
+import {Option} from '../option/option';
 
 interface TagInputProps extends React.HTMLAttributes<HTMLSelectElement> {
     label?: string,
@@ -10,24 +12,15 @@ interface TagInputProps extends React.HTMLAttributes<HTMLSelectElement> {
     setSelectedTags: (tags: string[]) => void;
 }
 
-export interface Option {
-    value: string,
-    label: string
-}
-
 const TagInput = React.forwardRef<HTMLSelectElement, TagInputProps>(({ label, tagOptions, ...props }: TagInputProps, ref) => {
     const { t } = useTranslation();
     const [isTagsVisible, setIsTagsVisible] = useState(false);
     const [tags, setTags] = useState<string[]>([]);
 
-    const handleChangeTags = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        event.stopPropagation();
-        const selectedTag =
-            tagOptions ? tagOptions.find((o: Option) => o.value.toString() === event.target.value) : {} as any;
-
-        if (!tags.includes(selectedTag.label)){
-            setTags([...tags, selectedTag.label]);
-            props.setSelectedTags([...tags, selectedTag.label]);
+    const handleChangeTags = (option: Option) => {
+        if (!tags.includes(option.label)){
+            setTags([...tags, option.label]);
+            props.setSelectedTags([...tags, option.label]);
         }
     }
 
@@ -37,6 +30,11 @@ const TagInput = React.forwardRef<HTMLSelectElement, TagInputProps>(({ label, ta
         setTags(tagsNew);
         props.setSelectedTags(tagsNew);
     }
+    let filteredOptions = [...tagOptions];
+
+    tags.forEach(tag => {
+        filteredOptions = filteredOptions.filter(a => a.label !== tag);
+    });
 
     return (
         <Fragment>
@@ -58,19 +56,12 @@ const TagInput = React.forwardRef<HTMLSelectElement, TagInputProps>(({ label, ta
                             remove={removeTag}
                         />
                     ))}
-                    <select
-                        ref={ref}
-                        className={'p-2 border '}
-                        onChange={(event) => {
-                            handleChangeTags(event);
+                    <List
+                        options={filteredOptions}
+                        onSelect={(option: Option) => {
+                            handleChangeTags(option);
                         }}
-                    >
-                        {
-                            tagOptions?.map((option: Option, index) => (
-                                <option value={option.value} key={index}>{option.label}</option>
-                            ))
-                        }
-                    </select>
+                    />
                 </div>
             }
         </Fragment>

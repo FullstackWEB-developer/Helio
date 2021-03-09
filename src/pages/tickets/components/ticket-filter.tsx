@@ -20,6 +20,7 @@ import {TicketEnumValue} from '../models/ticket-enum-value.model';
 import utc from 'dayjs/plugin/utc';
 import Button from '../../../shared/components/button/button';
 import Input from '../../../shared/components/input/input';
+import TagInput from '../../../shared/components/tag-input/tag-input';
 const TicketFilter = () => {
     dayjs.extend(utc);
     const dispatch = useDispatch();
@@ -28,13 +29,14 @@ const TicketFilter = () => {
     const timePeriod_DateRange = '4';
     const paging = useSelector(selectTicketsPaging);
     const departments = useSelector((state) => selectLookupValues(state, 'Department'));
+    const tags = useSelector((state) => selectLookupValues(state, 'TicketTags'));
     const userList = useSelector(selectUserList);
     const ticketChannels = useSelector((state => selectEnumValues(state, 'TicketChannel')));
     const ticketPriorities = useSelector((state => selectEnumValues(state, 'TicketPriority')));
     const ticketStatuses = useSelector((state => selectEnumValues(state, 'TicketStatus')));
     const ticketTypes = useSelector((state => selectEnumValues(state, 'TicketType')));
     const offices = useSelector(selectDepartmentList);
-    const { control, handleSubmit, watch } = useForm({});
+    const { control, handleSubmit, watch, setValue } = useForm({});
 
     const watchTimePeriod = watch('timePeriod');
 
@@ -47,6 +49,7 @@ const TicketFilter = () => {
         dispatch(getEnumByType('TicketStatus'));
         dispatch(getEnumByType('TicketType'));
         dispatch(getLookupValues('Department'));
+        dispatch(getLookupValues('TicketTags'));
     }, [dispatch]);
 
     const [formVisible, setformVisible] = useState(true);
@@ -69,7 +72,10 @@ const TicketFilter = () => {
         query.ticketTypes = getSelectedFromCheckbox(values.ticketTypes).map((a: string) => parseInt(a));
         query.locations = getSelectedFromCheckbox(values.offices);
         if (values.priority) {
-        query.priority = values.priority;
+            query.priority = values.priority;
+        }
+        if (values.tags) {
+            query.tags = values.tags;
         }
         if (values.department) {
             query.departments = [];
@@ -275,6 +281,10 @@ const TicketFilter = () => {
         }
     }
 
+    const setSelectedTags = (tags: string[]) => {
+        setValue('tags', tags);
+    }
+
     return <div className='bg-secondary-100 pb-20 min-h-full px-6'>
                 <div className='flex flex-row justify-between pt-7'>
                     <div className='subtitle pb-8 h7'>{t('tickets.filter.filter_tickets')}</div>
@@ -307,10 +317,24 @@ const TicketFilter = () => {
                                 />
                             </div>
                         </Collapsible>
-                        <Collapsible title={t('tickets.filter.tags')}>
-                            <div/>
-                        </Collapsible>
-                        <div className='flex w-full justify-center'>
+                                <Collapsible title={t('tickets.filter.tags')}>
+                                    <Controller
+                                        name='tags'
+                                        control={control}
+                                        defaultValue=''
+                                        render={(props) => (
+                                            <TagInput
+                                                {...props}
+                                                tagOptions={tags}
+                                                label={t('ticket_new.tags')}
+                                                data-test-id='ticket-new-tag-input'
+                                                className={'w-full border-none h-14'}
+                                                setSelectedTags={setSelectedTags}
+                                            />
+                                        )}
+                                    />
+                            </Collapsible>
+                        <div className='flex w-full justify-center pt-4'>
                             <Button small label={t('tickets.filter.fetch')} type='submit'/>
                         </div>
                     </form>}
