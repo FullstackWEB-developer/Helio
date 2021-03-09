@@ -25,7 +25,9 @@ const List = ({ options, title,isSearchable=true, onSelect } : ListProps) => {
     }
 
     const filteredOptionsContent = getFilteredOptions().map(option => {
-        return <div className='cursor-pointer h-6 bg-white body3 flex items-center px-4 truncate w-full hover:bg-primary-500 hover:text-white' onClick={() => optionSelected(option)}>
+        return <div className='cursor-pointer h-6 bg-white body3 flex items-center px-4 truncate w-full hover:bg-primary-500 hover:text-white'
+                    onClick={() => optionSelected(option)}
+                    key={option.value}>
             {option.label}
         </div>
     })

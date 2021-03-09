@@ -156,7 +156,7 @@ const TicketNew = () => {
     let statusOptions: Option[] = getOptions(ticketStatuses);
     let ticketTypeOptions: Option[] = getOptions(ticketTypes);
 
-    addFirstOption(sourceOptions, 'Source');
+    addFirstOption(sourceOptions, 'Source', true);
     addFirstOption(priorityOptions, 'Priority', true);
     addFirstOption(statusOptions, 'Status', true);
     addFirstOption(ticketTypeOptions, 'Ticket Type');
@@ -167,7 +167,7 @@ const TicketNew = () => {
             label: item.id
         };
     }) : [];
-    addFirstOption(assigneeOptions, 'Assign To', true);
+    addFirstOption(assigneeOptions, t('ticket_new.assignee'), true);
 
     const contactOptions: Option[] = contacts ? contacts.map((item: Contact) => {
         return {
@@ -175,7 +175,7 @@ const TicketNew = () => {
             label: item.name
         };
     }) : [];
-    addFirstOption(contactOptions, 'Contact', true);
+    addFirstOption(contactOptions, t('ticket_new.contact'), true);
 
     const locationOptions: Option[] = departments ? departments.map((item: Department) => {
         return {
@@ -183,7 +183,7 @@ const TicketNew = () => {
             label: item.address
         };
     }) : [];
-    addFirstOption(locationOptions, 'Office/Location');
+    addFirstOption(locationOptions, t('ticket_new.location'));
 
     const getTicketLookupValuesOptions = (data: any[] | undefined) => {
         if (data) {
@@ -213,13 +213,13 @@ const TicketNew = () => {
     }
 
     let subjectOptions: Option[] = getTicketLookupValuesOptionsByTicketType(ticketLookupValuesSubject);
-    addFirstOption(subjectOptions, 'Title/Subject', true);
+    addFirstOption(subjectOptions, t('ticket_new.subject'), true);
 
     let reasonOptions: Option[] = getTicketLookupValuesOptionsByTicketType(ticketLookupValuesReason);
-    addFirstOption(reasonOptions, 'Reason');
+    addFirstOption(reasonOptions, t('ticket_new.reason'));
 
     const departmentOptions: Option[] = getTicketLookupValuesOptions(ticketLookupValuesDepartment);
-    addFirstOption(departmentOptions, 'Department');
+    addFirstOption(departmentOptions, t('ticket_new.department'));
 
     const tagOptions: Option[] = getTicketLookupValuesOptions(ticketLookupValuesTags);
 
@@ -325,6 +325,7 @@ const TicketNew = () => {
                                 name='subject'
                                 control={control}
                                 defaultValue=''
+                                rules={{ required: requiredText }}
                                 render={(props) => (
                                     <Select
                                         {...props}
@@ -332,6 +333,7 @@ const TicketNew = () => {
                                         className={'w-full border-none h-14'}
                                         options={subjectOptions}
                                         value={props.value}
+                                        error={errors.subject?.message}
                                     />
                                 )}
                             />
@@ -340,7 +342,7 @@ const TicketNew = () => {
                                 name='subjectInput'
                                 control={control}
                                 defaultValue=''
-                                placeholder={t('ticket_new.subject')}
+                                placeholder={'*' + t('ticket_new.subject')}
                                 rules={{required: requiredText}}
                                 as={Input}
                                 className={'w-full border-none h-14'}
@@ -420,6 +422,7 @@ const TicketNew = () => {
                     name='channel'
                     control={control}
                     defaultValue=''
+                    rules={{ required: requiredText }}
                     render={(props) => (
                         <Select
                             {...props}
@@ -428,6 +431,7 @@ const TicketNew = () => {
                             placeholder={t('ticket_new.channel')}
                             options={sourceOptions}
                             value={props.value}
+                            error={errors.channel?.message}
                         />
                     )}
                 />
@@ -449,8 +453,7 @@ const TicketNew = () => {
                 <Controller
                     name='location'
                     control={control}
-                    defaultValue={locationOptions ? locationOptions[0] : ''}
-                    rules={{ required: requiredText }}
+                    defaultValue=''
                     render={(props) => (
                         <Select
                             {...props}
@@ -459,7 +462,6 @@ const TicketNew = () => {
                             placeholder={t('ticket_new.location')}
                             options={locationOptions}
                             value={props.value}
-                            error={errors.location?.message}
                         />
                     )}
                 />
