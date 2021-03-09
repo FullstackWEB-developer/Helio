@@ -1,19 +1,77 @@
-.big {
+@import '../../../themes/base/typography';
+
+button.big-button:hover:enabled, button.medium-button:hover:enabled, button.small-button:hover:enabled {
+    background-color: var(--color-primary-700);
+  }
+
+button.big-button:enabled, button.medium-button:enabled, button.small-button:enabled {
+  background-color: var(--color-primary-500);
+}
+
+button.big-button:focus:enabled, button.medium-button:focus:enabled, button.small-button:focus:enabled {
+  background-color: var(--color-primary-900);
+}
+
+button.secondary-button:hover:enabled {
+  background-color: rgba(var(--color-primary-500-rgb), 0.04);
+}
+
+button.secondary-button:focus:enabled {
+  background-color: rgba(var(--color-primary-500-rgb), 0.07);
+  border: var(--color-primary-500) 1px solid;
+}
+
+button:active {
+  background-color: var(--color-primary-900);
+}
+
+button.big-button {
+  min-width: 7.5rem;
+  min-height: 3rem;
+  border-radius: 1.5rem;
+  padding: 0.875rem 2rem;
+  @extend .subtitle2-white;
+}
+
+button.medium-button {
   min-width: 6.5rem;
   min-height: 2.5rem;
   border-radius: 1.25rem;
   padding: 0.625rem 1.5rem;
+  @extend .subtitle2-white;
 }
 
-.small {
+
+button.small-button {
   min-width: 6rem;
   min-height: 2rem;
   border-radius: 1rem;
   padding: 0.475rem 1.3rem;
+  @extend .subtitle3-white;
 }
 
-button:disabled,
-button[disabled] {
+button.secondary-button {
+  min-width: 6rem;
+  min-height: 2rem;
+  border-radius: 1rem;
+  padding: 0.375rem 1.25rem;
+  border: var(--light-divider-12) 1px solid;
+  @extend .subtitle3-white;
+  color: var(--color-primary-800);
+  background-color: var(--color-white);
+}
+
+button.big-button:disabled, button.medium-button:disabled, button.small-button:disabled ,
+button.big-button[disabled], button.medium-button[disabled], button.small-button[disabled] {
   background-color: var(--light-divider-7);
+  color: var(--light-text-disabled);
+  cursor: default;
+}
+
+button.secondary-button:disabled,
+button.secondary-button[disabled] {
+  background-color: var(--color-white);
+  cursor: default;
+  @extend .subtitle3-white;
   color: var(--light-text-disabled);
 }

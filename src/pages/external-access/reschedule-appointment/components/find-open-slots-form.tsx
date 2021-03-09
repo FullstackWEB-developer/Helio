@@ -57,7 +57,6 @@ const FindOpenSlotsForm = ({ selectedAppointmentId }: FindOpenSlotsFormProps) =>
             <Button
                 data-test-id='reschedule-appointment-find-slots-button'
                 type={'submit'}
-                className={'btn-secondary'}
                 label={t('reschedule_appointment.find_open_slots')} />
         </div>
     </form>

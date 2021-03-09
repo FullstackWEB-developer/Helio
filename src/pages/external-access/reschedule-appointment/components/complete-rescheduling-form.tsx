@@ -64,7 +64,7 @@ const CompleteReschedulingForm = ({ selectedAppointmentId }: CompleteReschedulin
                 name={'newAppointmentId'}
             />
             <div className={'flex justify-center pt-2'}>
-                <Button data-test-id='reschedule-appointment-reschedule-button' className={'btn-secondary'} type={'submit'} label={t('reschedule_appointment.reschedule')} />
+                <Button data-test-id='reschedule-appointment-reschedule-button' type={'submit'} label={t('reschedule_appointment.reschedule')} />
             </div>
         </form>
     </div>);

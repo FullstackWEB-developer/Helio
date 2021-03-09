@@ -24,6 +24,9 @@
     --color-secondary-100:#F5F5F5;
     --color-secondary-50:#FAFAFA;
 
+    //RGB Color
+    --color-primary-500-rgb:0, 204, 136;
+
     --color-white:#FFFFFF;
     --color-gray50:#FAFAFA;
     --color-red:#F86854;
@@ -35,11 +38,11 @@
     --light-text-high-emphasis: rgba(0, 0, 0, 0.87);
     --light-text-medium-emphasis: rgba(0, 0, 0, 0.5);
     --light-text-disabled: rgba(0, 0, 0, 0.38);
+    --light-divider-12:rgba(0, 0, 0, 0.12);
     --light-divider-7:rgba(0, 0, 0, 0.07);
     --font-light: 'PoppinsLight';
     --font-regular: 'PoppinsRegular';
     --font-medium: 'PoppinsMedium';
-
 
     --h1-font-family: var(--font-light);
     --h1-font-size:4rem;

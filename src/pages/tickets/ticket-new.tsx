@@ -537,15 +537,18 @@ const TicketNew = () => {
                     />
                 )}
             />
-            <div className='bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse'>
-                <Button data-test-id='ticket-new-create-button' type={'submit'}
-                    className='btn-primary'
-                    label={t('ticket_new.create')} />
-                <Button data-test-id='ticket-new-cancel-button' type={'button'}
-                    className='btn-secondary'
-                    label={t('common.cancel')}
-                    onClick={() => history.push('/my_tickets')}
-                />
+            <div className='flex flex-row space-x-4 justify-end bg-secondary-50'>
+                <div className='flex items-center'>
+                    <Button data-test-id='ticket-new-cancel-button' type={'button'}
+                        buttonType='secondary'
+                        label={t('common.cancel')}
+                        onClick={() => history.push('/my_tickets')}
+                    />
+                </div>
+                <div>
+                    <Button data-test-id='ticket-new-create-button' type={'submit'}
+                            label={t('ticket_new.create')} />
+                </div>
             </div>
         </form>
     </div>

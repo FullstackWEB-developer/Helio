@@ -335,7 +335,7 @@ const TicketFilter = () => {
                                     />
                             </Collapsible>
                         <div className='flex w-full justify-center pt-4'>
-                            <Button small label={t('tickets.filter.fetch')} type='submit'/>
+                            <Button label={t('tickets.filter.fetch')} type='submit'/>
                         </div>
                     </form>}
             </div>;}

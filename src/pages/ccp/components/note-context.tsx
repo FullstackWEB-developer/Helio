@@ -81,7 +81,7 @@ const NoteContext = () => {
                         data-test-id='note-context-save-button'
                         type={'submit'}
                         label={t('common.save')}
-                        className='btn-secondary w-28'
+                        className='w-28'
                     />
                 </div>
             </form>
