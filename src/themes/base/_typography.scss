@@ -196,6 +196,17 @@ body {
   color: var(--body2-medium-color);
 }
 
+.body2-white {
+  font-family: var(--body2-white-font-family);
+  font-size: var(--body2-white-font-size);
+  font-weight: var(--body2-white-font-weight);
+  font-stretch: var(--body2-white-font-stretch);
+  font-style: var(--body2-white-font-style);
+  line-height: var(--body2-white-line-height);
+  letter-spacing: var(--body2-white-letter-spacing);
+  color: var(--body2-white-color);
+}
+
 .body3 {
   font-family: var(--body3-font-family);
   font-size: var(--body3-font-size);

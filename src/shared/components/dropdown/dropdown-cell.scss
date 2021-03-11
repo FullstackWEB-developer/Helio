@@ -1,0 +1,26 @@
+.dropdown-cell {
+  min-height: 2.5rem;
+  min-width: 12rem;
+}
+
+.dropdown-cell.is-selected {
+  background-color: var(--color-primary-500);
+  color: var(--color-white);
+}
+
+.dropdown-cell:hover {
+  background-color: var(--dropdown-item-hover);
+}
+
+.dropdown-cell:active {
+  background-color: var(--dropdown-item-pressed);
+}
+
+.dropdown-cell.is-selected:hover {
+  background-color: var(--color-primary-700);
+  color: var(--color-white);
+}
+.dropdown-cell-icon {
+  min-width: 1rem;
+  min-height: 1rem;
+}

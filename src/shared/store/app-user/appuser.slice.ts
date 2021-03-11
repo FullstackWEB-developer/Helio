@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import initialState from './appuser.initial-state';
-import { AuthenticationInfo } from './app-user.models';
+import {AuthenticationInfo, UserStatus} from './app-user.models';
 const appUserSlice = createSlice({
     name: 'appuser',
     initialState,
@@ -16,10 +16,13 @@ const appUserSlice = createSlice({
         },
         setLoginLoading(state, { payload }: PayloadAction<boolean>) {
             state.isLoading = payload;
+        },
+        updateUserStatus(state, { payload }: PayloadAction<UserStatus>) {
+            state.status = payload;
         }
     }
 });
 
-export const { setAuthentication, logOut, loginInitiated, setLoginLoading } = appUserSlice.actions
+export const { setAuthentication, logOut, loginInitiated, setLoginLoading, updateUserStatus } = appUserSlice.actions
 
 export default appUserSlice.reducer

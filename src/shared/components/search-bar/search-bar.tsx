@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { SearchType } from './models/search-type';
 import { ReactComponent as SearchIcon } from '../../icons/Icon-Search-16px.svg';
-import Label from '../label/label';
 import {
     selectRecentPatients,
     selectSearchTypeFiltered,
@@ -15,11 +14,13 @@ import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { RecentPatient } from './models/recent-patient';
 import RecentPatientDetails from './components/recent-patient-details';
-import SearchTypeItem from './components/search-type-item';
 import { searchType } from './constants/search-type';
 import { keyboardKeys } from './constants/keyboard-keys';
 import { clearPatients } from '../../../pages/patients/store/patients.slice';
-
+import Dropdown from '../dropdown/dropdown';
+import {CategoryItemModel, DropdownItemModel, DropdownModel} from '../dropdown/dropdown.models';
+import {ReactComponent as PlaceholderIcon} from '../../icons/Icon-Placeholder-16px.svg';
+import './search-bar.scss';
 const SearchBar = () => {
     const { t } = useTranslation();
     const dispatch = useDispatch();
@@ -73,9 +74,101 @@ const SearchBar = () => {
         dispatch(clearRecentPatients());
     }
 
+    const searchTypes = searchTypeFiltered.map((typeItem: SearchType) => {
+        return {
+            onClick: (key) => search(parseInt(key)),
+            key: typeItem.type.toString(),
+            text: t(typeItem.label)
+        } as DropdownItemModel;
+    });
+
+    const getCategorizedItems = () : CategoryItemModel[] => {
+        const items: CategoryItemModel[] = [];
+        if (searchTypes.length > 0) {
+            items.push({
+                itemsCssClass: 'w-72',
+                category: {
+                    text: t('search.categories.patients'),
+                    icon: <PlaceholderIcon/>,
+                    key: '1'
+                },
+                items: searchTypes
+            });
+        }
+        items.push( {
+            itemsCssClass: 'w-72',
+            category: {
+                text: t('search.categories.contacts'),
+                icon: <PlaceholderIcon/>,
+                key: '2'
+            },
+            items: [
+                {
+                    text: t('search.search_type.contact_name'),
+                    key: 'item-2-1'
+                }
+            ]
+        });
+        items.push({
+            itemsCssClass: 'w-72',
+            category: {
+                text: t('search.categories.tickets'),
+                icon: <PlaceholderIcon/>,
+                key: '3'
+            },
+            items: [
+                {
+                    text:  t('search.search_type.ticket_id'),
+                    key: 'item-3-1'
+                },
+                {
+                    text:  t('search.search_type.patient_or_contact_name'),
+                    key: 'item-3-2'
+                }
+            ]
+        });
+        return items;
+    };
+
+    const getItems = () : DropdownItemModel[] => {
+        const items : DropdownItemModel[] = [];
+
+        if (recentPatients.length > 0) {
+            items.push({
+                text: 'search.recent_searches',
+                link: {
+                    onClick :() => clearRecent(),
+                    title: 'common.clear'
+                },
+                hasDivider: true,
+                isTitle: true,
+                key: '2'
+            });
+
+            recentPatients.forEach((patient: RecentPatient) => {
+                const item = {
+                    key: patient.patientId.toString(),
+                    content: <RecentPatientDetails patient={patient}/>,
+                    onClick: (_) => selectRecent(patient)
+                } as DropdownItemModel;
+
+                items.push(item);
+            });
+        }
+
+        return items;
+    }
+
+    const searchDropdownModel : DropdownModel = {
+        title : t('search.search_title'),
+        selectedKey : selectedType.toString(),
+        categorizedItems : getCategorizedItems(),
+        items: getItems()
+    }
+
     return (
         <div className='relative'>
-            <div className='border-r border-l rounded-r px-4 h-16 w-80'>
+            <div className='border-r border-l px-4 h-16 global-search-input'>
                 <input type='text' className='focus:outline-none h-full w-full' placeholder={t('search.placeholder')}
                     onFocus={() => setDropdown(false)} onBlur={() => onblur()} onClick={() => setDropdown(false)}
                     onChange={(e) => textChange(e)} onKeyDown={(e) => handleKey(e)}
@@ -84,27 +177,9 @@ const SearchBar = () => {
                     <SearchIcon onClick={() => search()} />
                 </span>
             </div>
-            <div hidden={hideDropdown} className='absolute flex-col divide-y border-t shadow-md w-80 bg-white z-50'>
-                <div className='pb-2' hidden={searchTypeFiltered.length === 0}>
-                    <p className='px-4 flex items-center h-10'>
-                        <Label text={t('search.search_title')} className='font-bold' />
-                    </p>
-                    {
-                        searchTypeFiltered.map((typeItem: SearchType) =>
-                            <SearchTypeItem selected={typeItem.type === selectedType} key={typeItem.type} searchType={typeItem} onClick={() => search(typeItem.type)} />)
-                    }
-                </div>
-                <div className='pb-4 pt-4' hidden={recentPatients.length === 0}>
-                    <div className='px-4 pb-2 flex'>
-                        <Label text={t('search.recent_patients')} className='font-bold flex-1' />
-                        <label className='text-primary-600 cursor-pointer' onClick={() => clearRecent()}>{t('common.clear')}</label>
-                    </div>
-                    {
-                        recentPatients.map((rPatient: RecentPatient) =>
-                            <RecentPatientDetails key={rPatient.patientId} patient={rPatient} onClick={() => selectRecent(rPatient)} />)
-                    }
-                </div>
-            </div>
+            {!hideDropdown && <div className='absolute'>
+                <Dropdown model={searchDropdownModel} />
+            </div>}
         </div>
     );
 }

@@ -188,6 +188,15 @@
     --body2-medium-letter-spacing: normal;
     --body2-medium-color: var(--light-text-medium-emphasis);
 
+    --body2-white-font-family: var(--font-regular);
+    --body2-white-font-size:0.875rem;
+    --body2-white-font-weight:500;
+    --body2-white-font-stretch: normal;
+    --body2-white-font-style:normal;
+    --body2-white-line-height:1.5rem;
+    --body2-white-letter-spacing: normal;
+    --body2-white-color: var(--color-white);
+
     --body3-font-family: var(--font-regular);
     --body3-font-size:0.75rem;
     --body3-font-weight:500;
@@ -214,4 +223,9 @@
     --caption-caps-line-height:1rem;
     --caption-caps-letter-spacing: normal;
     --caption-caps-color: var(--light-text-medium-emphasis);
+
+    //Component variables
+    --dropdown-box-shadow : 0 1px 0.125rem 1px rgba(0, 0, 0, 0.15);
+    --dropdown-item-hover:rgba(0, 0, 0, 0.04);
+    --dropdown-item-pressed:rgba(0, 0, 0, 0.1);
 }

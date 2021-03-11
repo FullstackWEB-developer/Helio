@@ -18,7 +18,13 @@
     "loginButton": "Login"
   },
   "user_profile": {
-    "logoutButton": "Logout"
+    "statuses": {
+     "after_work": "Afterwork"
+    },
+    "my_profile": "My Profile",
+    "my_status": "My Status",
+    "my_stats": "My Stats",
+    "sign_out": "Sign Out"
   },
   "navigation": {
     "dashboard": "Dashboard",
@@ -125,7 +131,15 @@
       "patient_name": "Patient Name (Last, First)",
       "dob": "Date of birth (02/02/2020)",
       "ssn": "SSN (XXXX)",
-      "phone": "Phone number (310-000-0000)"
+      "phone": "Phone number (310-000-0000)",
+      "contact_name": "Contact Name",
+      "ticket_id": "Ticket ID",
+      "patient_or_contact_name" : "Patient or Contact Name"
+    },
+    "categories" : {
+      "patients" : "Patients",
+      "contacts" : "Contacts",
+      "tickets" : "Tickets"
     },
     "search_results": {
       "heading_list": "List of patients: ",
@@ -138,8 +152,8 @@
     },
     "yearsOld": "yo",
     "placeholder": "Search",
-    "search_title": "Search for",
-    "recent_patients": "Recent Patients"
+    "search_title": "Search For",
+    "recent_searches": "Recent Searches"
   },
   "patient": {
     "header": {

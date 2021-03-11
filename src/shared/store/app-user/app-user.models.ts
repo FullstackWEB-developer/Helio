@@ -5,3 +5,7 @@ export interface AuthenticationInfo {
     expiresOn?: Date,
     isLoggedIn: boolean
 }
+
+export enum UserStatus {
+    Afterwork='after_work'
+}
