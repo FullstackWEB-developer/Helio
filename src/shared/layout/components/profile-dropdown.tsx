@@ -1,9 +1,9 @@
-import React  from 'react';
-import { useTranslation } from 'react-i18next';
+import React from 'react';
+import {useTranslation} from 'react-i18next';
 import {useDispatch, useSelector} from 'react-redux';
 import {logOut, updateUserStatus} from '../../store/app-user/appuser.slice';
-import { msalInstance } from '../../../pages/login/auth-config';
-import { ReactComponent as PlaceholderIcon } from '../../icons/Icon-Placeholder-24px.svg';
+import {msalInstance} from '../../../pages/login/auth-config';
+import {ReactComponent as PlaceholderIcon} from '../../icons/Icon-Placeholder-24px.svg';
 import {UserStatus} from '../../store/app-user/app-user.models';
 import {StatusIndicatorYellow} from '../../icons/StatusIndicatorYellow';
 import {StatusIndicatorGray} from '../../icons/StatusIndicatorGray';
@@ -11,6 +11,7 @@ import {DropdownItemModel, DropdownModel} from '../../components/dropdown/dropdo
 import {selectUserStatus} from '../../store/app-user/appuser.selectors';
 import Logger from '../../services/logger';
 import Dropdown from '../../components/dropdown/dropdown';
+
 const ProfileDropdown = () => {
     const { t } = useTranslation();
     const dispatch = useDispatch();
@@ -37,12 +38,10 @@ const ProfileDropdown = () => {
     }
 
     const GetIconByStatus =(status : UserStatus) => {
-        switch (status) {
-            case UserStatus.Afterwork:
-                return <StatusIndicatorYellow/>;
-            default:
-                return <StatusIndicatorGray/>;
+        if (status === UserStatus.Afterwork) {
+            return <StatusIndicatorYellow/>;
         }
+        return <StatusIndicatorGray/>;
     }
 
     const items : DropdownItemModel[] = [];

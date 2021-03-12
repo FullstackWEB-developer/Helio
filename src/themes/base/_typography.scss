@@ -84,6 +84,7 @@ h6 {
   line-height: var(--h8-line-height);
   letter-spacing: var(--h8-letter-spacing);
   color: var(--h8-color);
+  text-transform: uppercase;
 }
 
 .subtitle {
@@ -238,4 +239,5 @@ body {
   line-height: var(--caption-caps-line-height);
   letter-spacing: var(--caption-caps-letter-spacing);
   color: var(--caption-caps-color);
+  text-transform: uppercase;
 }

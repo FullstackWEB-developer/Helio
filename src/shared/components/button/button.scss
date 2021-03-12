@@ -1,8 +1,42 @@
 @import '../../../themes/base/typography';
 
+.button-common {
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.button-common:after {
+  display: none;
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  width: 6.25rem;
+  height: 6.25rem;
+  margin-top: -3.125rem;
+  margin-left: -3.125rem;
+  top: 50%;
+  left: 50%;
+  animation: ripple 2s;
+  opacity: 0;
+}
+
+.button-common:focus:not(:active)::after {
+  display: block;
+}
+
 button.big-button:hover:enabled, button.medium-button:hover:enabled, button.small-button:hover:enabled {
-    background-color: var(--color-primary-700);
-  }
+  background-color: var(--color-primary-700);
+}
+
+button.big-button:after, button.medium-button:after, button.small-button:after {
+  background-color: var(--light-divider-12);
+}
+
+button.secondary-button:after {
+  background-color: rgba(var(--color-primary-500-rgb), 0.07);
+}
 
 button.big-button:enabled, button.medium-button:enabled, button.small-button:enabled {
   background-color: var(--color-primary-500);
@@ -10,6 +44,7 @@ button.big-button:enabled, button.medium-button:enabled, button.small-button:ena
 
 button.big-button:focus:enabled, button.medium-button:focus:enabled, button.small-button:focus:enabled {
   background-color: var(--color-primary-900);
+  outline:none;
 }
 
 button.secondary-button:hover:enabled {
@@ -19,42 +54,47 @@ button.secondary-button:hover:enabled {
 button.secondary-button:focus:enabled {
   background-color: rgba(var(--color-primary-500-rgb), 0.07);
   border: var(--color-primary-500) 1px solid;
+  outline:none;
 }
 
 button:active {
-  background-color: var(--color-primary-900);
+  background-color: var(--color-primary-500);
 }
 
 button.big-button {
+  @extend .button-common;
   min-width: 7.5rem;
   min-height: 3rem;
   border-radius: 1.5rem;
-  padding: 0.875rem 2rem;
+  padding: 0 2rem;
   @extend .subtitle2-white;
 }
 
 button.medium-button {
+  @extend .button-common;
   min-width: 6.5rem;
   min-height: 2.5rem;
   border-radius: 1.25rem;
-  padding: 0.625rem 1.5rem;
+  padding: 0 1.5rem;
   @extend .subtitle2-white;
 }
 
 
 button.small-button {
+  @extend .button-common;
   min-width: 6rem;
   min-height: 2rem;
   border-radius: 1rem;
-  padding: 0.475rem 1.3rem;
+  padding: 0 1.3rem;
   @extend .subtitle3-white;
 }
 
 button.secondary-button {
+  @extend .button-common;
   min-width: 6rem;
   min-height: 2rem;
   border-radius: 1rem;
-  padding: 0.375rem 1.25rem;
+  padding: 0 1.25rem;
   border: var(--light-divider-12) 1px solid;
   @extend .subtitle3-white;
   color: var(--color-primary-800);
@@ -74,4 +114,15 @@ button.secondary-button[disabled] {
   cursor: default;
   @extend .subtitle3-white;
   color: var(--light-text-disabled);
+}
+
+@keyframes ripple {
+  from {
+    opacity: 1;
+    transform: scale(0);
+  }
+  to {
+    opacity: 0;
+    transform: scale(5);
+  }
 }
