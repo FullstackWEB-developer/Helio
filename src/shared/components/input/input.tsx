@@ -1,4 +1,5 @@
 import React, {ChangeEvent, Fragment, useState} from 'react';
+import {useTranslation} from 'react-i18next';
 
 interface InputProps extends React.HTMLAttributes<HTMLInputElement> {
     id?: string,
@@ -11,12 +12,13 @@ interface InputProps extends React.HTMLAttributes<HTMLInputElement> {
     onChange?: (e: ChangeEvent<HTMLInputElement>) => void
 }
 const Input = React.forwardRef<HTMLInputElement, InputProps>(({ label, htmlFor, ...props }: InputProps, ref) => {
+    const { t } = useTranslation();
     const [isFocusedDueDateTime, setIsFocusedDateTime] = useState(false);
 
     return (
         <Fragment>
             <label htmlFor={htmlFor} className='block'>
-                {label}
+                {t(label || '')}
             </label>
             <input ref={ref} {...props}
                    type={isFocusedDueDateTime ? props.type : 'text'}

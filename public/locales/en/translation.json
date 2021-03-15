@@ -326,5 +326,50 @@
   },
   "tag_input": {
     "add_tag": "+Add Tag"
+  },
+  "ticket_detail": {
+    "ticket_info": "Ticket Info",
+    "header": {
+      "id": "ID",
+      "requested_by": "Requested by",
+      "due_in": "Due In",
+      "last_message": "Last message",
+      "archive": "Archive",
+      "solved": "Solved",
+      "close": "Close"
+    },
+    "info_panel": {
+      "ticket_info": "Ticket Info",
+      "status": "Status",
+      "priority": "Priority",
+      "ticket_type": "Ticket Type",
+      "reason": "Reason",
+      "department": "Department",
+      "location": "Office/Location",
+      "tags": "Tags",
+      "update_ticket": "Update Ticket",
+      "assigned_to": "Assigned To",
+      "patient_info": "Patient Info",
+      "contact_name": "Contact Name",
+      "patient_id": "Patient ID",
+      "patient_case_number": "Patient Case",
+      "appointments": "Appointments",
+      "last_appointment": "Last Appointment",
+      "upcoming_appointments": "Upcoming Appointments",
+      "attachments": "Attachments",
+      "chat_transcript": "Chat Transcript",
+      "link": "Link",
+      "event_log": "Event Log",
+      "due": "Due",
+      "created_on": "Created on",
+      "assigned_on": "Assigned on",
+      "updated_on": "Updated on",
+      "closed_on": "Closed on"
+    },
+    "note": {
+      "add_note": "Add Note",
+      "type_message": "Type a message",
+      "send": "Send"
+    }
   }
 }

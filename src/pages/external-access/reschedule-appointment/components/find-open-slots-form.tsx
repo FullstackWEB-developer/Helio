@@ -39,7 +39,7 @@ const FindOpenSlotsForm = ({ selectedAppointmentId }: FindOpenSlotsFormProps) =>
             className={'w-full'}
             defaultValue={dayjs().format('yyyy-MM-dd')}
             error={errors.startDate?.message}
-            label={t('reschedule_appointment.start_date')}
+            label={'reschedule_appointment.start_date'}
         />
         <Controller data-test-id='reschedule_appointment_end_date'
             type='date'
@@ -51,13 +51,13 @@ const FindOpenSlotsForm = ({ selectedAppointmentId }: FindOpenSlotsFormProps) =>
             defaultValue={dayjs().add(7, 'day').format('yyyy-MM-dd')}
             as={Input}
             error={errors.endDate?.message}
-            label={t('reschedule_appointment.end_date')}
+            label={'reschedule_appointment.end_date'}
         />
         <div className={'flex justify-center pt-2'}>
             <Button
                 data-test-id='reschedule-appointment-find-slots-button'
                 type={'submit'}
-                label={t('reschedule_appointment.find_open_slots')} />
+                label={'reschedule_appointment.find_open_slots'} />
         </div>
     </form>
 }

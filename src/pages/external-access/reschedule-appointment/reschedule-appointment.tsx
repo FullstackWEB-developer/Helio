@@ -116,7 +116,7 @@ const RescheduleAppointment = () => {
                 value={selectedAppointmentId ? selectedAppointmentId : ''}
                 onChange={(e: React.FormEvent) => updateSelectedAppointment(e)}
                 data-test-id='reschedule-existing-appointment-select'
-                label={t('reschedule_appointment.select_appointment_to_reschedule')}
+                label={'reschedule_appointment.select_appointment_to_reschedule'}
             />
             <div hidden={!selectedAppointmentId}>
                 <FindOpenSlotsForm selectedAppointmentId={selectedAppointmentId as string} />

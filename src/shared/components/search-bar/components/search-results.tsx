@@ -52,7 +52,7 @@ const SearchResults = () => {
                                     <div className='p-2 w-60'>{`${patient.firstName} ${patient.lastName}`}</div>
                                     <div className='p-2 w-32'>{patientUtils.formatDob(patient.dateOfBirth)}</div>
                                     <div className='p-2 w-16 text-center'>
-                                        <Button buttonType='small' label={t('search.search_results.select')} onClick={() => select(patient)}/>
+                                        <Button buttonType='small' label={'search.search_results.select'} onClick={() => select(patient)}/>
                                     </div>
                                 </div>
                             )

@@ -165,3 +165,26 @@ export const createTicket = async (data: Ticket) => {
             logger.error(`Failed creating new ticket`, error);
         });
 }
+
+export const updateTicket = async (id: string, data: Ticket) => {
+    const url = `${ticketsBaseUrl}/${id}`;
+    let patchData = [];
+    for (let [key, value] of Object.entries(data)) {
+        if(value) {
+            patchData.push({
+                op: 'replace',
+                path: '/' + key,
+                value: value
+            });
+        }
+    }
+    await Api({
+        method: 'patch',
+        url: url,
+        data: patchData
+    })
+    .then()
+    .catch(error => {
+        logger.error(`Failed updating the ticket ${id}`, error);
+    });
+}

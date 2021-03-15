@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import { Ticket } from './models/ticket';
 import { ReactComponent as PhoneIcon } from '../../shared/icons/Icon-Channel-Phone-48px.svg';
 import { ReactComponent as ChatIcon } from '../../shared/icons/Icon-Channel-Chat-48px.svg';
@@ -14,6 +15,7 @@ interface TicketListItemProps {
 
 const TicketListItem = ({ item }: TicketListItemProps) => {
     const { t } = useTranslation();
+    const history = useHistory();
 
     const priorities = [t('tickets.priority.low'), t('tickets.priority.medium'), t('tickets.priority.high'), t('tickets.priority.critical')];
     const types = [t('tickets.types.default'), t('tickets.types.callback'), t('tickets.types.business_office'), t('tickets.types.established_patient'),
@@ -36,7 +38,7 @@ const TicketListItem = ({ item }: TicketListItemProps) => {
     if (item.type) {
         itemType = parseInt(item.type);
     }
-    return <div className='grid grid-cols-12 border-b p-2 relative'>
+    return <div className='grid grid-cols-12 border-b p-2 relative cursor-pointer' onClick={() => history.push('my_tickets/' + ticketId)}>
         <div className='col-span-5 flex flex-row'>
             <div className='pl-3 pr-3 pt-1'>
                 {renderChannel(item.channel)}

@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import { useTranslation } from 'react-i18next';
 import Label from '../label/label';
 import Tag from './components/tag'
@@ -9,13 +9,21 @@ import {Option} from '../option/option';
 interface TagInputProps extends React.HTMLAttributes<HTMLSelectElement> {
     label?: string,
     tagOptions: Option[],
+    initialTags?: string[],
     setSelectedTags: (tags: string[]) => void;
 }
 
-const TagInput = React.forwardRef<HTMLSelectElement, TagInputProps>(({ label, tagOptions, ...props }: TagInputProps, ref) => {
+const TagInput = React.forwardRef<HTMLSelectElement, TagInputProps>(({ label, tagOptions, initialTags, ...props }: TagInputProps, ref) => {
     const { t } = useTranslation();
     const [isTagsVisible, setIsTagsVisible] = useState(false);
     const [tags, setTags] = useState<string[]>([]);
+    
+    useEffect(()=> {
+        setTags(initialTags || []);
+        if (initialTags && initialTags.length > 0) {
+            setIsTagsVisible(true);
+        }
+    }, [initialTags])
 
     const handleChangeTags = (option: Option) => {
         if (!tags.includes(option.label)){
@@ -38,7 +46,7 @@ const TagInput = React.forwardRef<HTMLSelectElement, TagInputProps>(({ label, ta
 
     return (
         <Fragment>
-            {label && <Label text={label} className='body-medium' />}
+            {label && <Label text={t(label)} className='body-medium' />}
             {
                 !isTagsVisible &&
                 <span className='pl-4 h8 cursor-pointer' onClick={() => setIsTagsVisible(true)}>

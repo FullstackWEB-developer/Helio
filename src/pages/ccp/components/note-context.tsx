@@ -30,8 +30,8 @@ const NoteContext = () => {
         };
         if (ticketId) {
             dispatch(addNote(ticketId, note));
-            note.dateTime = new Date();
-            note.username = username;
+            note.createdOn = dayjs().utc().toDate();
+            note.createdBy = username;
             dispatch(setNotes([...notes, note]));
 
             setNoteText('');
@@ -53,7 +53,7 @@ const NoteContext = () => {
                 }
             </div>
             <div className='flex justify-end w-full mt-5'>
-                <Button label={t('ccp.note_context.copy_note')} onClick={() => { return navigator.clipboard.writeText(noteText) }} />
+                <Button label={'ccp.note_context.copy_note'} onClick={() => { return navigator.clipboard.writeText(noteText) }} />
                 <span className='text-gray-400'>
                     {dayjs.utc().format('M/DD/YYYY h:mm A')}
                 </span>
@@ -66,7 +66,7 @@ const NoteContext = () => {
                     render={() => (
                         <TextArea
                             error={errors.note?.message}
-                            className={'w-full pb-4 h-20'}
+                            className='w-full pb-4 h-20'
                             data-test-id='note-context-notes'
                             placeholder={t('ccp.note_context.enter_your_note')}
                             value={noteText}
@@ -76,11 +76,11 @@ const NoteContext = () => {
                         />
                     )}
                 />
-                <div className={'flex pt-4'}>
+                <div className='flex pt-4'>
                     <Button
                         data-test-id='note-context-save-button'
                         type={'submit'}
-                        label={t('common.save')}
+                        label={'common.save'}
                         className='w-28'
                     />
                 </div>

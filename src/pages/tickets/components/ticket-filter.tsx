@@ -264,7 +264,7 @@ const TicketFilter = () => {
                     name='fromDate'
                     type='date'
                     as={Input}
-                    label={t('tickets.filter.from_date')}
+                    label={'tickets.filter.from_date'}
                 />
                 <Controller
                     control={control}
@@ -273,7 +273,7 @@ const TicketFilter = () => {
                     data-test-id='ticket-filter-to-date'
                     type='date'
                     as={Input}
-                    label={t('tickets.filter.to_date')}
+                    label={'tickets.filter.to_date'}
                 />
             </div>);
         } else {
@@ -291,15 +291,15 @@ const TicketFilter = () => {
                     <div className='cursor-pointer' onClick={() => resetForm()}>{t('tickets.filter.clear_all')}</div>
                 </div>
             {formVisible && <form onSubmit={handleSubmit(fetchTickets)}>
-                        {GetCollapsibleCheckboxControl(t('tickets.filter.statuses'), 'statuses', addAnyOption(convertEnumToOptions(ticketStatuses)))}
-                        {GetRadioCollapsibleControl(t('tickets.filter.time_period'), 'timePeriod', timePeriodList)}
+                        {GetCollapsibleCheckboxControl('tickets.filter.statuses', 'statuses', addAnyOption(convertEnumToOptions(ticketStatuses)))}
+                        {GetRadioCollapsibleControl('tickets.filter.time_period', 'timePeriod', timePeriodList)}
                         { dateFilters() }
-                        {GetRadioCollapsibleControl(t('tickets.filter.priority'), 'priority', addAnyOption(convertEnumToOptions([...ticketPriorities].reverse())))}
-                        {GetCollapsibleCheckboxControl(t('tickets.filter.channel'), 'channels', addAnyOption(convertEnumToOptions(ticketChannels)))}
-                        {GetCollapsibleCheckboxControl(t('tickets.filter.ticket_type'), 'ticketTypes', addAnyOption(convertEnumToOptions(ticketTypes)))}
-                        {GetRadioCollapsibleControl(t('tickets.filter.department'), 'department', addAnyOption(convertDepartmentsToOptions()))}
-                        {GetCollapsibleCheckboxControl(t('tickets.filter.office_location'), 'offices', addAnyOption(convertOfficesToOptions()))}
-                        <Collapsible title={t('tickets.filter.assigned_to')}>
+                        {GetRadioCollapsibleControl('tickets.filter.priority', 'priority', addAnyOption(convertEnumToOptions([...ticketPriorities].reverse())))}
+                        {GetCollapsibleCheckboxControl('tickets.filter.channel', 'channels', addAnyOption(convertEnumToOptions(ticketChannels)))}
+                        {GetCollapsibleCheckboxControl('tickets.filter.ticket_type', 'ticketTypes', addAnyOption(convertEnumToOptions(ticketTypes)))}
+                        {GetRadioCollapsibleControl('tickets.filter.department', 'department', addAnyOption(convertDepartmentsToOptions()))}
+                        {GetCollapsibleCheckboxControl('tickets.filter.office_location', 'offices', addAnyOption(convertOfficesToOptions()))}
+                        <Collapsible title={'tickets.filter.assigned_to'}>
                             <div>
                                 <Controller
                                     name='assignedTo'
@@ -317,7 +317,7 @@ const TicketFilter = () => {
                                 />
                             </div>
                         </Collapsible>
-                                <Collapsible title={t('tickets.filter.tags')}>
+                                <Collapsible title={'tickets.filter.tags'}>
                                     <Controller
                                         name='tags'
                                         control={control}
@@ -326,7 +326,7 @@ const TicketFilter = () => {
                                             <TagInput
                                                 {...props}
                                                 tagOptions={tags}
-                                                label={t('ticket_new.tags')}
+                                                label={'ticket_new.tags'}
                                                 data-test-id='ticket-new-tag-input'
                                                 className={'w-full border-none h-14'}
                                                 setSelectedTags={setSelectedTags}
@@ -335,7 +335,7 @@ const TicketFilter = () => {
                                     />
                             </Collapsible>
                         <div className='flex w-full justify-center pt-4'>
-                            <Button label={t('tickets.filter.fetch')} type='submit'/>
+                            <Button label={'tickets.filter.fetch'} type='submit'/>
                         </div>
                     </form>}
             </div>;}

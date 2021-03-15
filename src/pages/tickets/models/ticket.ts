@@ -1,3 +1,4 @@
+import { TicketFeed } from './ticket-feed';
 import { TicketNote } from './ticket-note';
 
 export interface Ticket {
@@ -6,7 +7,10 @@ export interface Ticket {
     subject?: string;
     detail?: string;
     reason?: string;
+    assignedOn?: string;
+    closedOn?: string;
     createdOn?: string;
+    modifiedOn?: string;
     contactId?: string;
     patientId?: string;
     assignee?: string;
@@ -23,4 +27,5 @@ export interface Ticket {
     patientChartNumber?: number;
     patientCaseNumber?: number;
     type?: string;
+    feeds?: TicketFeed[];
 }

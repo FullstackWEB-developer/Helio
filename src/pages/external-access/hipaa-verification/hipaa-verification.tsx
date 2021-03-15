@@ -136,7 +136,7 @@ const HipaaVerification = () => {
                                     <div className='grid grid-cols-6 gap-6'>
                                         <div className='col-span-6 sm:col-span-3'>
                                             <Input data-test-id='hipaa-validation-form-dob' type='date' name='dob' id='dob' htmlFor='dob'
-                                                label={t('hipaa_validation_form.dob')}
+                                                label={'hipaa_validation_form.dob'}
                                                 value={formData.dob}
                                                 onChange={handleChange}
                                             />
@@ -144,7 +144,7 @@ const HipaaVerification = () => {
 
                                         <div className='col-span-6 sm:col-span-4'>
                                             <Input data-test-id='hipaa-validation-form-phone' type='text' name='phone' id='phone' htmlFor='phone'
-                                                label={t('hipaa_validation_form.phone')}
+                                                label={'hipaa_validation_form.phone'}
                                                 value={formData.phone}
                                                 onChange={handleChange}
                                             />
@@ -152,7 +152,7 @@ const HipaaVerification = () => {
 
                                         <div className='col-span-6'>
                                             <Input data-test-id='hipaa-validation-form-zip' type='text' name='zip' id='zip' htmlFor='zip'
-                                                label={t('hipaa_validation_form.zip')}
+                                                label={'hipaa_validation_form.zip'}
                                                 value={formData.zip}
                                                 onChange={handleChange}
                                             />
@@ -161,7 +161,7 @@ const HipaaVerification = () => {
 
                                 </div>
                                 <div className='px-4 py-3 bg-gray-50 text-right sm:px-6'>
-                                    <Button type='submit' data-test-id='hipaa-validation-form-verify-btn' label={t('hipaa_validation_form.verify')} disabled={!formData.dob || !formData.phone || !formData.zip} />
+                                    <Button type='submit' data-test-id='hipaa-validation-form-verify-btn' label={'hipaa_validation_form.verify'} disabled={!formData.dob || !formData.phone || !formData.zip} />
                                 </div>
                             </div>
                         </form>

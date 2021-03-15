@@ -1,4 +1,3 @@
-import { useTranslation } from 'react-i18next';
 import Button from '../../shared/components/button/button';
 import { msalInstance } from './auth-config';
 import { useEffect } from 'react';
@@ -16,7 +15,6 @@ import ThreeDots from '../../shared/components/skeleton-loader/skeleton-loader';
 import HelioLogo from '../../shared/icons/helio-logo';
 
 const Login = () => {
-    const { t } = useTranslation();
     const dispatch = useDispatch();
     const history = useHistory();
     const auth = useSelector(authenticationSelector);
@@ -52,7 +50,7 @@ const Login = () => {
         <div className='h-full flex justify-center items-center'>
             <div className='p-24 w-full flex  flex-col items-center space-y-8 border shadow-lg'>
                 <HelioLogo className='fill-current text-primary-600' />
-                <Button data-test-id='login_button' onClick={() => initiateLogin()} label={t('login.loginButton')} />
+                <Button data-test-id='login_button' onClick={() => initiateLogin()} label={'login.loginButton'} />
             </div>
         </div>
     );

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import './button.scss';
 interface ButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
     label: string,
@@ -7,7 +8,8 @@ interface ButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
     buttonType?: 'small' | 'medium' | 'big' | 'secondary'
 }
 const Button = ({ label, type = 'button', disabled=false, buttonType = 'medium', ...props }: ButtonProps) => {
-    return (<button disabled={disabled} className={`${buttonType}-button`} type={type} {...props}>{label}</button>
+    const { t } = useTranslation();
+    return (<button disabled={disabled} className={`${buttonType}-button`} type={type} {...props}>{t(label)}</button>
     );
 }
 

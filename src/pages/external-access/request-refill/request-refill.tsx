@@ -109,7 +109,7 @@ const RequestRefill = () => {
                 options={medicationOptions}
                 className={'w-full'}
                 data-test-id='request-refill-medication'
-                label={t('request-refill.medication_to_refill')}
+                label={'request-refill.medication_to_refill'}
             />
             <Controller
                 name='providerId'
@@ -120,7 +120,7 @@ const RequestRefill = () => {
                 options={providerOptions}
                 className={'w-full'}
                 data-test-id='request-refill-provider'
-                label={t('request-refill.provider')}
+                label={'request-refill.provider'}
             />
             <Controller
                 name='departmentId'
@@ -131,7 +131,7 @@ const RequestRefill = () => {
                 options={departmentOptions}
                 className={'w-full'}
                 data-test-id='request-refill-department'
-                label={t('request-refill.location')}
+                label={'request-refill.location'}
             />
             <Controller
                 name='note'
@@ -141,11 +141,11 @@ const RequestRefill = () => {
                 as={Input}
                 error={errors.note?.message}
                 className={'pb-4'}
-                label={t('request-refill.notes')}
+                label={'request-refill.notes'}
                 data-test-id='request-refill-notes'
             />
             <div className={'flex justify-center pt-2'}>
-                <Button data-test-id='request-refill-ok-button' type={'submit'} label={t('common.ok')} />
+                <Button data-test-id='request-refill-ok-button' type={'submit'} label={'common.ok'} />
             </div>
         </form>
     </div>

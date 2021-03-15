@@ -96,7 +96,7 @@ const LabResults = () => {
                     <Select
                         data-test-id='lab-results-select'
                         className={'w-full'}
-                        label={t('lab-results.label')}
+                        label={'lab-results.label'}
                         options={labResultsOptions}
                         value={selectedOption ? selectedOption.value : ''}
                         onChange={handleChange}
@@ -121,8 +121,8 @@ const LabResults = () => {
                 </dl>
 
                 <div className='bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse'>
-                    <Button buttonType='secondary' label={t('common.download_pdf')} data-test-id='lab-results-download-pdf-button'/>
-                    <Button label={t('common.print')} data-test-id='lab-results-print-button'/>
+                    <Button buttonType='secondary' label={'common.download_pdf'} data-test-id='lab-results-download-pdf-button'/>
+                    <Button label={'common.print'} data-test-id='lab-results-print-button'/>
                 </div>
             </div>
         </div>

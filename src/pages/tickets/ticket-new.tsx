@@ -212,10 +212,10 @@ const TicketNew = () => {
         })
     }
 
-    let subjectOptions: Option[] = getTicketLookupValuesOptionsByTicketType(ticketLookupValuesSubject);
+    const subjectOptions: Option[] = getTicketLookupValuesOptionsByTicketType(ticketLookupValuesSubject);
     addFirstOption(subjectOptions, t('ticket_new.subject'), true);
 
-    let reasonOptions: Option[] = getTicketLookupValuesOptionsByTicketType(ticketLookupValuesReason);
+    const reasonOptions: Option[] = getTicketLookupValuesOptionsByTicketType(ticketLookupValuesReason);
     addFirstOption(reasonOptions, t('ticket_new.reason'));
 
     const departmentOptions: Option[] = getTicketLookupValuesOptions(ticketLookupValuesDepartment);
@@ -255,7 +255,7 @@ const TicketNew = () => {
     }
 
     if (error) {
-        return <div data-test-id='ticket-new-error'>{t('ticket_new.error')}</div>
+        return <div data-test-id='ticket-new-error'>{t('common.error')}</div>
     }
 
     return <div className={'w-96 py-4 mx-auto flex flex-col'}>
@@ -271,7 +271,7 @@ const TicketNew = () => {
                             {...props}
                             data-test-id={'ticket-new-ticket-type'}
                             className={'w-full border-none h-14'}
-                            label={t('ticket_new.ticket_type')}
+                            label={'ticket_new.ticket_type'}
                             options={ticketTypeOptions}
                             value={props.value}
                             onChange={(e: ChangeEvent<HTMLSelectElement>) => {
@@ -515,7 +515,7 @@ const TicketNew = () => {
                     <TagInput
                         {...props}
                         tagOptions={tagOptions}
-                        label={t('ticket_new.tags')}
+                        label={'ticket_new.tags'}
                         data-test-id='ticket-new-tag-input'
                         className={'w-full border-none h-14'}
                         setSelectedTags={setSelectedTags}
@@ -541,13 +541,13 @@ const TicketNew = () => {
                 <div className='flex items-center'>
                     <Button data-test-id='ticket-new-cancel-button' type={'button'}
                         buttonType='secondary'
-                        label={t('common.cancel')}
+                        label={'common.cancel'}
                         onClick={() => history.push('/my_tickets')}
                     />
                 </div>
                 <div>
                     <Button data-test-id='ticket-new-create-button' type={'submit'}
-                            label={t('ticket_new.create')} />
+                            label={'ticket_new.create'} />
                 </div>
             </div>
         </form>

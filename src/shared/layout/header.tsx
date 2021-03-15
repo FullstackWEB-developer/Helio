@@ -6,16 +6,18 @@ import { ReactComponent as MSIcon } from '../icons/Icon-Office365-24px.svg';
 import SearchBar from '../components/search-bar/search-bar';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleNavigation, toggleUserProfileMenu } from './store/layout.slice';
-import {authenticationSelector} from '../store/app-user/appuser.selectors';
-import {AuthenticationInfo} from '../store/app-user/app-user.models';
+import { authenticationSelector } from '../store/app-user/appuser.selectors';
 import { isProfileMenuExpandedSelector } from './store/layout.selectors';
 import HelioLogo from '../icons/helio-logo';
 import customHooks from '../hooks/customHooks';
 import ProfileDropdown from './components/profile-dropdown';
+import utils from '../utils/utils';
 
 const Header = () => {
     const dispatch = useDispatch();
     const auth = useSelector(authenticationSelector);
+    const username = auth.name as string;
+    const userInitials = auth.isLoggedIn ? utils.getInitialsFromFullName(username) : '';
     const isProfileMenuOpen = useSelector(isProfileMenuExpandedSelector);
     const dropdownRef = useRef<HTMLDivElement>(null);
     const displayProfileMenu = () => {
@@ -37,7 +39,7 @@ const Header = () => {
                     <HelioLogo className='fill-current text-primary-600' />
                 </div>
                 <div className='block md:hidden cursor-pointer'>
-                    <span onClick={() => displayProfileMenu()}><LettersAvatar initials={getInitialsFromAuth(auth)}/></span>
+                    <span onClick={() => displayProfileMenu()}><LettersAvatar initials={userInitials}/></span>
                     {isProfileMenuOpen && <ProfileDropdown/>}
                 </div>
             </div>
@@ -54,7 +56,7 @@ const Header = () => {
                 <div>
                     <div className='hidden h-full md:block relative'>
                         <div data-test-id='letter-avatar' className='cursor-pointer' onClick={() => displayProfileMenu()}>
-                            <LettersAvatar initials={getInitialsFromAuth(auth)}/>
+                            <LettersAvatar initials={userInitials}/>
                         </div>
                         <div>
                             {isProfileMenuOpen && <div ref={dropdownRef} className='absolute right-0.5 top-11'><ProfileDropdown/></div>}
@@ -64,20 +66,6 @@ const Header = () => {
             </div>
         </header>
     );
-}
-
-const getInitialsFromAuth = (auth: AuthenticationInfo): string => {
-    if (auth.isLoggedIn) {
-        const fullName = auth.name as string;
-        const names = fullName.split(' ');
-        let initials = names[0].substring(0, 1).toUpperCase();
-
-        if (names.length > 1) {
-            initials += names[names.length - 1].substring(0, 1).toUpperCase();
-        }
-        return initials;
-    }
-    return '';
 }
 
 export default Header;

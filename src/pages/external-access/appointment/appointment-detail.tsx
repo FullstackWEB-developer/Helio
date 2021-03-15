@@ -170,8 +170,8 @@ const AppointmentDetail = () => {
                                 </dl>
 
                                 <div className='bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse'>
-                                    <Button label={t('appointment.reSchedule')} data-test-id='appointment-reschedule'/>
-                                    <Button buttonType='secondary' label={t('appointment.cancel')} data-test-id='appointment-cancel' />
+                                    <Button label={'appointment.reSchedule'} data-test-id='appointment-reschedule'/>
+                                    <Button buttonType='secondary' label={'appointment.cancel'} data-test-id='appointment-cancel' />
                                 </div>
                             </div>
                         </div>
