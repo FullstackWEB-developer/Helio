@@ -8,9 +8,10 @@ import customHooks from '../../../shared/hooks/customHooks';
 
 interface TicketStatusProps {
     ticketId: string,
-    status?: number
+    status?: number,
+    isArrow?: boolean
 }
-const TicketStatus = ({ ticketId, status }: TicketStatusProps) => {
+const TicketStatus = ({ ticketId, status, isArrow = true }: TicketStatusProps) => {
     const { t } = useTranslation();
     const dispatch = useDispatch();
     const [searchStatusToggle, setSearchStatusToggle] = useState(false);
@@ -51,9 +52,11 @@ const TicketStatus = ({ ticketId, status }: TicketStatusProps) => {
     return <div className='col-span-2 pt-6 flex flex-row relative'>
         <div className='pt-1.5'>{renderStatus(status)}</div>
         <div className='pl-3'>{status ? statuses[status - 1] : null}</div>
-        <div className='pt-0.5 pl-4 cursor-pointer' onClick={() => openStatus()}>
-            <ArrowDownIcon />
-        </div>
+        {
+            isArrow && <div className='pt-0.5 pl-4 cursor-pointer' onClick={() => openStatus()}>
+                <ArrowDownIcon />
+            </div>
+        }
         <div ref={statusSearchRef}
             className={`absolute top-16 w-60 z-10 ${searchStatusToggle ? '' : ' hidden'}`}>
             <div className='shadow-md w-60 bg-white'>

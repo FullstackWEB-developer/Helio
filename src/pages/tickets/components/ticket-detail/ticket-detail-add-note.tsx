@@ -22,7 +22,6 @@ const TicketDetailAddNote = ({ ticket }: TicketDetailAddNoteProps) => {
     const { handleSubmit, control, errors } = useForm();
 
     const [noteText, setNoteText] = useState('')
-    const [notes, setNotes] = useState<TicketNote[]>([]);
 
     const onSubmit = async () => {
         const note: TicketNote = {
@@ -31,7 +30,6 @@ const TicketDetailAddNote = ({ ticket }: TicketDetailAddNoteProps) => {
         };
         if (ticket.id) {
             dispatch(addNote(ticket.id, note));
-            setNotes([...notes, note]);
             setNoteText('');
         }
     }

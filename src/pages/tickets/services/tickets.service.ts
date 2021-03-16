@@ -13,16 +13,19 @@ import {
     setTicketsLoading,
     startRequestAddNote,
     endRequestAddNote,
+    startRequestAddFeed,
+    endRequestAddFeed,
     setTicketEnum,
     startGetTicketEnumRequest,
     endGetTicketEnumRequest,
     setLookupValues,
     startGeLookupValuesRequest,
-    endGetLookupValuesRequest
+    endGetLookupValuesRequest, setTicket
 } from '../store/tickets.slice';
 import { Ticket } from '../models/ticket';
-import {Paging} from '../../../shared/models/paging.model';
-import {TicketQuery} from '../models/ticket-query';
+import { Paging } from '../../../shared/models/paging.model';
+import { TicketQuery } from '../models/ticket-query';
+import { TicketFeed } from '../models/ticket-feed';
 
 const logger = Logger.getInstance();
 const ticketsBaseUrl = '/tickets';
@@ -110,12 +113,29 @@ export const addNote = (id: string, note: TicketNote) => {
     return async (dispatch: Dispatch) => {
         dispatch(startRequestAddNote());
         await Api.post(url, note)
-            .then(() => {
+            .then((response) => {
                 dispatch(endRequestAddNote(''));
+                dispatch(setTicket(response.data));
             })
             .catch(error => {
                 logger.error('Failed to add Note', error);
                 dispatch(endRequestAddNote('ccp.note_context.error'));
+            })
+    }
+}
+
+export const addFeed = (id: string, feed: TicketFeed) => {
+    const url = `${ticketsBaseUrl}/${id}/feed`;
+    return async (dispatch: Dispatch) => {
+        dispatch(startRequestAddFeed());
+        await Api.post(url, feed)
+            .then((response) => {
+                dispatch(endRequestAddFeed(''));
+                dispatch(setTicket(response.data));
+            })
+            .catch(error => {
+                logger.error('Failed to add Feed', error);
+                dispatch(endRequestAddNote('ticket_detail.feed.error'));
             })
     }
 }

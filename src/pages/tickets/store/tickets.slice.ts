@@ -52,7 +52,6 @@ const ticketsSlice = createSlice({
         setTicketsLoading(state, { payload }: PayloadAction<boolean>) {
             state.ticketsLoading = payload;
         },
-
         startRequestAddNote(state) {
             state.isRequestAddNoteLoading = true;
             state.error = '';
@@ -60,6 +59,17 @@ const ticketsSlice = createSlice({
         endRequestAddNote(state, { payload }: PayloadAction<string>) {
             state.isRequestAddNoteLoading = false;
             state.error = payload;
+        },
+        startRequestAddFeed(state) {
+            state.isRequestAddFeedLoading = true;
+            state.error = '';
+        },
+        endRequestAddFeed(state, { payload }: PayloadAction<string>) {
+            state.isRequestAddFeedLoading = false;
+            state.error = payload;
+        },
+        setFeedLastMessageOn(state, { payload }: PayloadAction<Date>) {
+            state.feedLastMessageOn = payload;
         },
         setTicketEnum(state, { payload }: PayloadAction<any>) {
             state.error = '';
@@ -124,6 +134,9 @@ export const {
     setFailure,
     startRequestAddNote,
     endRequestAddNote,
+    startRequestAddFeed,
+    endRequestAddFeed,
+    setFeedLastMessageOn,
     setTicketEnum,
     startGetTicketEnumRequest,
     endGetTicketEnumRequest,

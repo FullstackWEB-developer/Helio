@@ -7,6 +7,7 @@ import withErrorLogging from '../../../../shared/HOC/with-error-logging';
 import { ReactComponent as ArrowBackIcon } from '../../../../shared/icons/Icon-Arrow-Back-24px.svg';
 import { ReactComponent as ChannelEmailIcon } from '../../../../shared/icons/Icon-Channel-Email-48px.svg';
 import { ReactComponent as RatingIcon } from '../../../../shared/icons/Icon-rating-very-satisfied-24px.svg';
+import { FeedTypes, TicketFeed } from '../../models/ticket-feed';
 import { Ticket } from '../../models/ticket';
 import { Patient } from '../../../patients/models/patient';
 import TicketStatus from '../ticket-status';
@@ -15,9 +16,10 @@ import { ReactComponent as SmsIcon } from '../../../../shared/icons/Icon-Sms-Whi
 import { ReactComponent as EmailIcon } from '../../../../shared/icons/Icon-Email-White-24px.svg';
 import Button from '../../../../shared/components/button/button';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectEnumValues } from '../../store/tickets.selectors';
-import { getEnumByType, setStatus } from '../../services/tickets.service';
+import { selectEnumValues, selectFeedLastMessageOn } from '../../store/tickets.selectors';
+import { addFeed, getEnumByType, setStatus } from '../../services/tickets.service';
 import { setTicket } from '../../store/tickets.slice';
+import { showCcp } from '../../../../shared/layout/store/layout.slice';
 
 interface TicketDetailHeaderProps {
     ticket: Ticket,
@@ -40,16 +42,31 @@ const TicketDetailHeader = ({ ticket, patient }: TicketDetailHeaderProps) => {
         )
     }
 
-    const ticketStatuses = useSelector((state => selectEnumValues(state, 'TicketStatus')))
+    const feedLastMessageOn = useSelector(selectFeedLastMessageOn);
+    const ticketStatuses = useSelector((state => selectEnumValues(state, 'TicketStatus')));
+
     useEffect(() => {
         dispatch(getEnumByType('TicketStatus'));
     }, [dispatch]);
+
+    const outboundCall = () => {
+        dispatch(showCcp());
+        if (patient?.mobilePhone) {
+            return navigator.clipboard.writeText(patient?.mobilePhone);
+        }
+    }
 
     const updateStatus = async (statusValue: string) => {
         const statusKey = ticketStatuses ? ticketStatuses.find((s) => s.value === statusValue)?.key : null;
         if (ticket && ticket.id && statusKey) {
             dispatch(setStatus(ticket.id, statusKey));
             dispatch(setTicket({status: statusKey}));
+
+            const feedData: TicketFeed = {
+                feedType: FeedTypes.StatusChange,
+                description: `${t('ticket_detail.feed.description_prefix')} ${statusValue}`
+            };
+            dispatch(addFeed(ticket.id, feedData));
         }
     }
 
@@ -66,7 +83,7 @@ const TicketDetailHeader = ({ ticket, patient }: TicketDetailHeaderProps) => {
                     <div className={'flex flex-row text-xl'}>
                         <div className='flex space-x-10'>
                             {
-                                <TicketStatus ticketId={ticket.id || ''} status={ticket.status} />
+                                <TicketStatus ticketId={ticket.id || ''} status={ticket.status} isArrow={false} />
                             }
                             {
                                 SmallLabel('ticket_detail.header.requested_by', patient ? `${patient.firstName} ${patient.lastName}` : ticket.patientId)
@@ -75,7 +92,7 @@ const TicketDetailHeader = ({ ticket, patient }: TicketDetailHeaderProps) => {
                                 SmallLabel('ticket_detail.header.due_in', ticket.dueDate ? dayjs().to(dayjs(ticket.dueDate)) : '')
                             }
                             {
-                                SmallLabel('ticket_detail.header.last_message', ticket.createdOn ? dayjs().to(dayjs(ticket.createdOn)) : '') // TODO: use date from feed
+                                SmallLabel('ticket_detail.header.last_message', feedLastMessageOn ? dayjs().to(dayjs(feedLastMessageOn)) : '')
                             }
                             {
                                 <RatingIcon className={'h-12 w-12'}/>
@@ -88,7 +105,7 @@ const TicketDetailHeader = ({ ticket, patient }: TicketDetailHeaderProps) => {
                 <div className='flex flex-row w-full pt-2 pb-2 border-t border-b'>
                     <div className='flex justify-items-start w-1/2'>
                         <div className='pl-20'>
-                            <PhoneIcon className='cursor-pointer bg-gray-800 rounded-md h-10 w-16 p-1' />
+                            <PhoneIcon className='cursor-pointer bg-gray-800 rounded-md h-10 w-16 p-1' onClick={() => outboundCall()}/>
                         </div>
                         <div className='pl-5'>
                             <SmsIcon className='cursor-pointer bg-gray-800 rounded-md h-10 w-16 p-1' />

@@ -370,6 +370,11 @@
       "add_note": "Add Note",
       "type_message": "Type a message",
       "send": "Send"
+    },
+    "feed": {
+      "not_found": "There are no feed items.",
+      "error": "Failed to add Feed.",
+      "description_prefix": "Ticket status was changed to"
     }
   }
 }

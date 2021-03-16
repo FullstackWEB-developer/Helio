@@ -1,7 +1,7 @@
-import React, {ChangeEvent, useEffect, useState} from 'react';
+import React, {ChangeEvent, useEffect, useMemo, useState} from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import {getEnumByType, getLookupValues, updateTicket} from '../../services/tickets.service';
+import { addFeed, getEnumByType, getLookupValues, updateTicket } from '../../services/tickets.service';
 import { Ticket } from '../../models/ticket';
 import { Controller, useForm } from 'react-hook-form';
 import Select, { Option } from '../../../../shared/components/select/select';
@@ -19,10 +19,12 @@ import { getDepartments } from '../../../../shared/services/lookups.service';
 import { Department } from '../../../../shared/models/department';
 import ThreeDots from '../../../../shared/components/skeleton-loader/skeleton-loader';
 import withErrorLogging from '../../../../shared/HOC/with-error-logging';
+import { FeedTypes, TicketFeed } from '../../models/ticket-feed';
 
 interface TicketInfoProps {
     ticket: Ticket
 }
+
 const TicketDetailTicketInfo = ({ ticket }: TicketInfoProps ) => {
     const { handleSubmit, control, errors, formState } = useForm();
     const [formVisible, setFormVisible] = useState(true);
@@ -58,6 +60,13 @@ const TicketDetailTicketInfo = ({ ticket }: TicketInfoProps ) => {
             await updateTicket(ticket.id, ticketData).then(() => {
                 ticketData.id = ticket.id;
                 dispatch(setTicket(ticketData));
+                if(ticketData.id && ticketData.status){
+                    const feedData: TicketFeed = {
+                        feedType: FeedTypes.StatusChange,
+                        description: `${t('ticket_detail.feed.description_prefix')} ${selectedStatus?.label}`
+                    };
+                    dispatch(addFeed(ticketData.id, feedData));
+                }
                 setIsTicketInfoButtonsVisible(false);
             });
         }
@@ -69,6 +78,7 @@ const TicketDetailTicketInfo = ({ ticket }: TicketInfoProps ) => {
 
     useEffect(() => {
         dispatch(getDepartments());
+        dispatch(getEnumByType('FeedType'));
         dispatch(getEnumByType('TicketPriority'));
         dispatch(getEnumByType('TicketStatus'));
         dispatch(getEnumByType('TicketType'));
@@ -89,24 +99,44 @@ const TicketDetailTicketInfo = ({ ticket }: TicketInfoProps ) => {
     const priorityOptions: Option[] = getOptions(ticketPriorities);
     const statusOptions: Option[] = getOptions(ticketStatuses);
     const ticketTypeOptions: Option[] = getOptions(ticketTypes);
-    const locationOptions: Option[] = departments ? departments.map((item: Department) => {
-        return {
-            value: item.id.toString(),
-            label: item.address
-        };
-    }) : [];
+
+    const locationOptions: Option[] = useMemo(() => {
+        return departments ? departments.map((item: Department) => {
+            return {
+                value: item.id.toString(),
+                label: item.address
+            };
+        }) : []
+    }, [departments]);
 
     const [selectedStatus, setSelectedStatus] = useState(
         statusOptions ? statusOptions.find((o: Option) => parseInt(o.value) === ticket?.status) : null
     );
 
     const [selectedPriority, setSelectedPriority] = useState(
-        priorityOptions ? priorityOptions.find((o: Option) => parseInt(o.value) === ticket?.priority) : null
+        priorityOptions && !selectedStatus ? priorityOptions.find((o: Option) => parseInt(o.value) === ticket?.priority) : null
     );
 
     const [selectedLocation, setSelectedLocation] = useState(
         locationOptions ? locationOptions.find((o: Option) => o.value === ticket?.location) : null
     );
+
+    useEffect(() => {
+        if (statusOptions?.length > 0 && !selectedStatus) {
+            setSelectedStatus(statusOptions.find((o: Option) => parseInt(o.value) === ticket?.status));
+        }
+        if (priorityOptions?.length > 0 && !selectedPriority) {
+            setSelectedPriority(priorityOptions.find((o: Option) => parseInt(o.value) === ticket?.priority));
+        }
+
+        if (locationOptions?.length > 0 && !selectedLocation) {
+            setSelectedLocation(locationOptions.find((o: Option) => o.value === ticket?.location));
+        }
+    }, [
+        statusOptions, selectedStatus, ticket?.status,
+        priorityOptions, selectedPriority, ticket?.priority,
+        locationOptions, selectedLocation, ticket?.location,
+    ]);
 
     const getTicketLookupValuesOptions = (data: any[] | undefined) => {
         if (data) {
@@ -148,6 +178,23 @@ const TicketDetailTicketInfo = ({ ticket }: TicketInfoProps ) => {
     );
 
     const [tags, setTags] = useState<string[]>(ticket?.tags || []);
+
+    useEffect(() => {
+        if (ticketTypeOptions?.length > 0 && !selectedTicketTypeOption) {
+            setSelectedTicketTypeOption(ticketTypeOptions.find((o: Option) => o.value === ticket?.type));
+        }
+
+        if (reasonOptions?.length > 0 && !selectedReason) {
+            setSelectedReason(reasonOptions.find((o: Option) => o.value === ticket?.reason));
+        }
+
+        if (departmentOptions?.length > 0 && !selectedDepartment) {
+            setSelectedDepartment(departmentOptions.find((o: Option) => o.value === ticket?.department));
+        }
+    }, [
+        ticketTypeOptions, selectedTicketTypeOption, ticket?.type,
+        reasonOptions, selectedReason, ticket?.reason,
+        departmentOptions, selectedDepartment, ticket?.department]);
 
     const handleChangeStatus = (event: React.ChangeEvent<HTMLSelectElement>) => {
         event.stopPropagation();

@@ -12,6 +12,7 @@ export const ticketState = (state: RootState) => state.ticketState;
 export const selectTickets = (state: RootState) => state.ticketState.tickets as Ticket[];
 
 export const selectTicketsPaging = (state: RootState) => state.ticketState.paging as Paging;
+export const selectFeedLastMessageOn = (state: RootState) => state.ticketState.feedLastMessageOn;
 
 export const selectTicketById = (state: RootState, id: string): Ticket => {
     return selectTickets(state).find((x: Ticket) => x.id === id) as Ticket;
@@ -53,4 +54,14 @@ export const selectTicketOptionsError = createSelector(
 export const selectIsTicketFilterOpen = createSelector(
     ticketState,
     items => items.isFilterOpen
+)
+
+export const selectIsRequestAddNoteLoading = createSelector(
+    ticketState,
+    items => items.isRequestAddNoteLoading as boolean
+)
+
+export const selectIsRequestAddFeedLoading = createSelector(
+    ticketState,
+    items => items.isRequestAddFeedLoading as boolean
 )

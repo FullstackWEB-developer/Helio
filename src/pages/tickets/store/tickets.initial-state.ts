@@ -9,6 +9,7 @@ export interface TicketState {
     isLookupValuesLoading: boolean;
     isTicketEnumValuesLoading: boolean;
     isRequestAddNoteLoading: boolean;
+    isRequestAddFeedLoading: boolean;
     tickets: Ticket[];
     paging: Paging,
     errors: string;
@@ -21,6 +22,7 @@ export interface TicketState {
     lookupValues: LookupValue[];
     isFilterOpen: boolean;
     ticketFilter: TicketQuery;
+    feedLastMessageOn?: Date;
 }
 
 const initialTicketState: TicketState = {
@@ -28,6 +30,7 @@ const initialTicketState: TicketState = {
     isLookupValuesLoading: false,
     isTicketEnumValuesLoading: false,
     isRequestAddNoteLoading: false,
+    isRequestAddFeedLoading: false,
     tickets: [],
     paging: {
         page: 1,
@@ -46,7 +49,8 @@ const initialTicketState: TicketState = {
     isFilterOpen: false,
     ticketFilter: {
         ...DefaultPagination
-    }
+    },
+    feedLastMessageOn: undefined
 }
 
 export default initialTicketState;
