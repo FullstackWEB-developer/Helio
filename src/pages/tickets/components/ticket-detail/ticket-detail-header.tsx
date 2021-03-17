@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import withErrorLogging from '../../../../shared/HOC/with-error-logging';
 import { ReactComponent as ArrowBackIcon } from '../../../../shared/icons/Icon-Arrow-Back-24px.svg';
-import { ReactComponent as ChannelEmailIcon } from '../../../../shared/icons/Icon-Channel-Email-48px.svg';
 import { ReactComponent as RatingIcon } from '../../../../shared/icons/Icon-rating-very-satisfied-24px.svg';
 import { FeedTypes, TicketFeed } from '../../models/ticket-feed';
 import { Ticket } from '../../models/ticket';
@@ -20,6 +19,7 @@ import { selectEnumValues, selectFeedLastMessageOn } from '../../store/tickets.s
 import { addFeed, getEnumByType, setStatus } from '../../services/tickets.service';
 import { setTicket } from '../../store/tickets.slice';
 import { showCcp } from '../../../../shared/layout/store/layout.slice';
+import TicketChannelIcon from '../ticket-channel-icon';
 
 interface TicketDetailHeaderProps {
     ticket: Ticket,
@@ -74,7 +74,9 @@ const TicketDetailHeader = ({ ticket, patient }: TicketDetailHeaderProps) => {
         <div>
             <div className={'flex flex-row p-8'}>
                 <div className={'pl-4 pt-4 cursor-pointer align-middle'} onClick={() => history.push('/my_tickets')}><ArrowBackIcon/></div>
-                <ChannelEmailIcon className={'mt-1 ml-2 h-12 w-12'}/>
+                <div className={'mt-1 ml-2 h-12 w-12'}>
+                    <TicketChannelIcon ticket={ticket} />
+                </div>
 
                 <div className={'pl-8 pt-4'}>
                     <div className={'flex flex-row text-2xl'}>
