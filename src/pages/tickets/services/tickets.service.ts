@@ -208,3 +208,14 @@ export const updateTicket = async (id: string, data: Ticket) => {
         logger.error(`Failed updating the ticket ${id}`, error);
     });
 }
+
+export const getRecordedConversation = async (id: string) => {
+    const url = `${ticketsBaseUrl}/${id}/download`;
+    try {
+        const response = await Api.get(url)
+        return response.data;
+    } catch (error) {
+        logger.error(`Failed to get the recorded conversation `, error);
+        return null;
+    }
+}

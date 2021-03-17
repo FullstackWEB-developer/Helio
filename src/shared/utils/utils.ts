@@ -32,8 +32,24 @@ const getInitialsFromFullName = (username: string): string => {
     return initials;
 }
 
+const getDateTime = (dueDate?: Date, dueTime?: string) => {
+    let dateTime;
+    if (dueDate && dueTime) {
+        const hours = parseInt(dueTime.split(':')[0]);
+        const minutes = parseInt(dueTime.split(':')[1]);
+        dateTime = dayjs.utc(dueDate).hour(hours).minute(minutes);
+    } else if (dueDate) {
+        dateTime = dayjs.utc(dueDate);
+    } else if (dueTime) {
+        const hours = parseInt(dueTime.split(':')[0]);
+        const minutes = parseInt(dueTime.split(':')[1]);
+        dateTime = dayjs.utc().hour(hours).minute(minutes);
+    }
+    return dateTime;
+}
+
 const utils = {
-    getWindowCenter, getWindowDimensions, formatDate, formatDate12HoursTime, getInitialsFromFullName
+    getWindowCenter, getWindowDimensions, formatDate, formatDate12HoursTime, getInitialsFromFullName, getDateTime
 }
 
 export default utils;

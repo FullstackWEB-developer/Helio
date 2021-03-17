@@ -35,6 +35,7 @@ import {getDepartments, getUserList} from '../../shared/services/lookups.service
 import TextArea from '../../shared/components/textarea/textarea';
 import { User } from '../../shared/models/user';
 import { useHistory } from 'react-router-dom';
+import utils from '../../shared/utils/utils';
 
 const TicketNew = () => {
     dayjs.extend(utc);
@@ -76,18 +77,7 @@ const TicketNew = () => {
         const subjectOption = subjectOptions.find(o => o.value === formData.subject);
         const subjectValue = subjectOptions && subjectOptions.length > 1 && subjectOption ? subjectOption.label : formData.subjectInput;
 
-        let dueDateTime;
-        if (formData.dueDate && formData.dueTime) {
-            const hours = parseInt(formData.dueTime.split(':')[0]);
-            const minutes = parseInt(formData.dueTime.split(':')[1]);
-            dueDateTime = dayjs.utc(formData.dueDate).hour(hours).minute(minutes);
-        } else if (formData.dueDate) {
-            dueDateTime = dayjs.utc(formData.dueDate);
-        } else {
-            const hours = parseInt(formData.dueTime.split(':')[0]);
-            const minutes = parseInt(formData.dueTime.split(':')[1]);
-            dueDateTime = dayjs.utc().hour(hours).minute(minutes);
-        }
+        const dueDateTime = utils.getDateTime(formData.dueDate, formData.dueTime);
 
         const notes = [] as TicketNote[];
         if (noteText) {

@@ -28,4 +28,5 @@ export interface Ticket {
     patientCaseNumber?: number;
     type?: string;
     feeds?: TicketFeed[];
+    recordedConversationLink?: string;
 }

@@ -12,7 +12,8 @@
     "show_less": "Show less",
     "save": "Save",
     "cancel": "Cancel",
-    "any": "Any"
+    "any": "Any",
+    "not_available": "N/A"
   },
   "login": {
     "loginButton": "Login"
@@ -356,15 +357,22 @@
       "appointments": "Appointments",
       "last_appointment": "Last Appointment",
       "upcoming_appointments": "Upcoming Appointments",
-      "attachments": "Attachments",
-      "chat_transcript": "Chat Transcript",
-      "link": "Link",
       "event_log": "Event Log",
       "due": "Due",
+      "due_date": "Date",
+      "due_time": "Time",
       "created_on": "Created on",
       "assigned_on": "Assigned on",
       "updated_on": "Updated on",
-      "closed_on": "Closed on"
+      "closed_on": "Closed on",
+      "attachments": "Attachments",
+      "recorded_conversation": {
+        "title_chat": "Chat Transcript",
+        "title_voice": "Voice Recording",
+        "download": "Download",
+        "file_name_chat": "chat-transcript",
+        "file_name_voice": "voice-recording"
+      }
     },
     "note": {
       "add_note": "Add Note",

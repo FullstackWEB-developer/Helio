@@ -18,12 +18,12 @@ const TagInput = React.forwardRef<HTMLSelectElement, TagInputProps>(({ label, ta
     const [isTagsVisible, setIsTagsVisible] = useState(false);
     const [tags, setTags] = useState<string[]>([]);
     
-    useEffect(()=> {
+    useEffect(() => {
         setTags(initialTags || []);
         if (initialTags && initialTags.length > 0) {
             setIsTagsVisible(true);
         }
-    }, [initialTags])
+    }, [initialTags]);
 
     const handleChangeTags = (option: Option) => {
         if (!tags.includes(option.label)){
