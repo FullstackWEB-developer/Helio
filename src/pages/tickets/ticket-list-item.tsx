@@ -38,8 +38,8 @@ const TicketListItem = ({ item }: TicketListItemProps) => {
     if (item.type) {
         itemType = parseInt(item.type);
     }
-    return <div className='grid grid-cols-12 border-b p-2 relative cursor-pointer' onClick={() => history.push('my_tickets/' + ticketId)}>
-        <div className='col-span-5 flex flex-row'>
+    return <div className='grid grid-cols-12 border-b p-2 relative cursor-pointer hover:bg-gray-100'>
+        <div className='col-span-3 flex flex-auto' onClick={() => history.push('my_tickets/' + ticketId)}>
             <div className='pl-3 pr-3 pt-1'>
                 {renderChannel(item.channel)}
             </div>
@@ -51,16 +51,18 @@ const TicketListItem = ({ item }: TicketListItemProps) => {
             </div>
         </div>
         <TicketStatus ticketId={ticketId} status={item.status} />
-        <div className='col-span-1 pt-6'>
-            {item.priority ? priorities[item.priority - 1] : null}
-        </div>
-        <div className='col-span-1 pt-3'>
-            <div className='text-gray-400 text-sm'>{t('tickets.type')}</div>
-            <div className='pt-1'>{itemType !== 0 ? types[itemType] : null}</div>
-        </div>
-        <div className='col-span-1 pt-3'>
-            <div className='text-gray-400 text-sm'>{t('tickets.reason')}</div>
-            <div className='pt-1'>{item.reason}</div>
+        <div className='col-span-3 flex flex-row' onClick={() => history.push('my_tickets/' + ticketId)}>
+            <div className='pt-6 flex-1'>
+                {item.priority ? priorities[item.priority - 1] : null}
+            </div>
+            <div className='pt-3 flex-1'>
+                <div className='text-gray-400 text-sm'>{t('tickets.type')}</div>
+                <div className='pt-1'>{itemType !== 0 ? types[itemType] : null}</div>
+            </div>
+            <div className='pt-3 flex-1'>
+                <div className='text-gray-400 text-sm'>{t('tickets.reason')}</div>
+                <div className='pt-1'>{item.reason}</div>
+            </div>
         </div>
         <TicketAssignee ticketId={ticketId} assignee={item.assignee} />
     </div>
