@@ -1,3 +1,6 @@
 export interface User {
-    id: string
+    id: string,
+    firstName: string,
+    lastName: string,
+    latestConnectStatus: string
 }

@@ -1,67 +1,100 @@
-import React from 'react';
-import { useHistory } from 'react-router-dom';
-import { Ticket } from './models/ticket';
-import { ReactComponent as PhoneIcon } from '../../shared/icons/Icon-Channel-Phone-48px.svg';
-import { ReactComponent as ChatIcon } from '../../shared/icons/Icon-Channel-Chat-48px.svg';
-import { ReactComponent as WebIcon } from '../../shared/icons/Icon-Channel-Web-48px.svg';
+import React, {useEffect, useState} from 'react';
+import dayjs from 'dayjs';
 import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { Ticket } from './models/ticket';
 import utils from '../../shared/utils/utils';
 import TicketStatus from './components/ticket-status';
 import TicketAssignee from './components/ticket-asignee';
+import relativeTime from 'dayjs/plugin/relativeTime';
+import TicketChannelIcon from './components/ticket-channel-icon';
+import { selectEnumValues, selectLookupValues } from './store/tickets.selectors';
+import { TicketEnumValue } from './models/ticket-enum-value.model';
+import { TicketOptionsBase } from './models/ticket-options-base.model';
+import {TicketLookupValue} from './models/ticket-lookup-values.model';
 
 interface TicketListItemProps {
     item: Ticket
 }
 
 const TicketListItem = ({ item }: TicketListItemProps) => {
+    dayjs.extend(relativeTime);
     const { t } = useTranslation();
     const history = useHistory();
 
-    const priorities = [t('tickets.priority.low'), t('tickets.priority.medium'), t('tickets.priority.high'), t('tickets.priority.critical')];
-    const types = [t('tickets.types.default'), t('tickets.types.callback'), t('tickets.types.business_office'), t('tickets.types.established_patient'),
-    t('tickets.types.facility'), t('tickets.types.new_patient'), t('tickets.types.lab'), t('tickets.types.pharmacy')];
-
-    const renderChannel = (channel: number | undefined) => {
-        switch (channel) {
-            case 1:
-                return <ChatIcon />;
-            case 2:
-                return <PhoneIcon />;
-            case 3:
-                return <WebIcon />;
-            default:
-                return <ChatIcon />;
-        }
-    };
+    const ticketPriorities = useSelector((state => selectEnumValues(state, 'TicketPriority')));
+    const ticketTypes = useSelector((state => selectEnumValues(state, 'TicketType')));
+    const ticketReasons = useSelector((state) => selectLookupValues(state, 'TicketReason'));
     const ticketId = item.id as string;
-    let itemType = 0;
-    if (item.type) {
-        itemType = parseInt(item.type);
+
+    const convertEnumToOptions = (items: TicketEnumValue[]) : TicketOptionsBase[] =>{
+        if (items && items.length > 0) {
+            return items.map(item => {
+                return {
+                    key: item.key.toString(),
+                    value: item.value
+                }
+            })
+        }
+        return [];
     }
+
+    const priorityOptions = convertEnumToOptions(ticketPriorities);
+    const ticketTypeOptions = convertEnumToOptions(ticketTypes);
+    const [selectedPriority, setSelectedPriority] = useState(
+        priorityOptions ? priorityOptions.find((o: TicketOptionsBase) => parseInt(o.key) === item?.priority) : null
+    );
+    const [selectedTicketType, setSelectedTicketType] =
+        useState(ticketTypeOptions ? ticketTypeOptions.find((o: TicketOptionsBase) => o.key === item?.type?.toString()) : null);
+
+    const [selectedReason, setSelectedReason] =
+        useState(ticketReasons ? ticketReasons.find((a: TicketLookupValue) => a.value === item?.reason) : null);
+
+    useEffect(() => {
+        if (priorityOptions?.length > 0 && !selectedPriority) {
+            setSelectedPriority(priorityOptions.find((o: TicketOptionsBase) => parseInt(o.key) === item?.priority));
+        }
+
+        if (ticketTypeOptions?.length > 0 && !selectedTicketType) {
+            setSelectedTicketType(ticketTypeOptions.find((o: TicketOptionsBase) => o.key === item?.type?.toString()));
+        }
+
+        if (ticketReasons?.length > 0 && !selectedReason) {
+            setSelectedReason(ticketReasons.find((a: TicketLookupValue) => a.value === item?.reason));
+        }
+    }, [
+        priorityOptions, selectedPriority, item?.priority,
+        ticketTypeOptions, selectedTicketType, item?.type,
+        ticketReasons, selectedReason, item?.reason
+    ]);
+
     return <div className='grid grid-cols-12 border-b p-2 relative cursor-pointer hover:bg-gray-100'>
         <div className='col-span-3 flex flex-auto' onClick={() => history.push('my_tickets/' + ticketId)}>
             <div className='pl-3 pr-3 pt-1'>
-                {renderChannel(item.channel)}
+                <TicketChannelIcon ticket={item} />
             </div>
             <div className={'py-2'}>
                 <div>{item.ticketNumber} <span className='pl-4'>{item.subject}</span></div>
                 <div className='text-gray-400 text-sm pt-2'>
-                    <span className={'pr-1'}>{t('tickets.created')}</span> {item.createdOn ? utils.formatDate12HoursTime(item.createdOn) : null}
+                    <span className={'pr-1'}>{t('tickets.created')}</span>
+                    {item.createdOn ? utils.formatDate12HoursTime(item.createdOn) : ''}
+                    <span className='ml-4'>{item.dueDate ? dayjs().to(dayjs(item.dueDate)) : ''}</span>
                 </div>
             </div>
         </div>
         <TicketStatus ticketId={ticketId} status={item.status} />
         <div className='col-span-3 flex flex-row' onClick={() => history.push('my_tickets/' + ticketId)}>
             <div className='pt-6 flex-1'>
-                {item.priority ? priorities[item.priority - 1] : null}
+                {item.priority ? selectedPriority?.value : null}
             </div>
             <div className='pt-3 flex-1'>
                 <div className='text-gray-400 text-sm'>{t('tickets.type')}</div>
-                <div className='pt-1'>{itemType !== 0 ? types[itemType] : null}</div>
+                <div className='pt-1'>{item.type ? selectedTicketType?.value : null}</div>
             </div>
             <div className='pt-3 flex-1'>
                 <div className='text-gray-400 text-sm'>{t('tickets.reason')}</div>
-                <div className='pt-1'>{item.reason}</div>
+                <div className='pt-1'>{item.reason ? selectedReason?.label : null}</div>
             </div>
         </div>
         <TicketAssignee ticketId={ticketId} assignee={item.assignee} />

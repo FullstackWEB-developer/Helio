@@ -4,19 +4,25 @@ import { ReactComponent as ArrowRightIcon } from '../../shared/icons/Icon-Arrows
 import React, { useEffect, useState } from 'react';
 import { getList } from './services/tickets.service';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectTicketsPaging } from './store/tickets.selectors';
+import { selectSearchTerm, selectTicketFilter, selectTicketsPaging } from './store/tickets.selectors';
 import { useTranslation } from 'react-i18next';
 import { keyboardKeys } from '../../shared/components/search-bar/constants/keyboard-keys';
-import {Paging} from '../../shared/models/paging.model';
+import { Paging } from '../../shared/models/paging.model';
+import { TicketQuery } from './models/ticket-query';
 
 const TicketsHeader = () => {
     const { t } = useTranslation();
     const paging: Paging = useSelector(selectTicketsPaging);
+    const ticketFilter: TicketQuery = useSelector(selectTicketFilter);
+    const searchTerm: string = useSelector(selectSearchTerm);
     const dispatch = useDispatch();
     const [currentPage, setCurrentPage] = useState(paging.page.toString());
 
     const numOfItemsTo = ((paging.pageSize * paging.page) > paging.totalCount) ? paging.totalCount : (paging.pageSize * paging.page);
-    const numOfItemsFrom = numOfItemsTo > (paging.pageSize * (paging.page - 1)) ? (paging.pageSize * (paging.page - 1)) : 0;
+    let numOfItemsFrom = numOfItemsTo > (paging.pageSize * (paging.page - 1)) ? (paging.pageSize * (paging.page - 1)) : 1;
+    if (numOfItemsFrom < 1 ) {
+        numOfItemsFrom = 1;
+    }
 
     useEffect(() => {
         setCurrentPage(paging.page.toString());
@@ -28,33 +34,50 @@ const TicketsHeader = () => {
                 ...paging,
                 page: paging.page + 1
             };
-
-            dispatch(getList(nextPaging))
+            fetchTickets(nextPaging);
         }
     };
 
     const previousPage = () => {
-        if (paging.page > 0) {
+        if (paging.page > 1) {
             const previousPaging: Paging = {
                 ...paging,
                 page: paging.page - 1
             };
-            dispatch(getList(previousPaging))
+            fetchTickets(previousPaging);
         }
     };
 
     const handleKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === keyboardKeys.enter) {
+            if (!currentPage) {
+                return;
+            }
             const newPaging: Paging = {
                 ...paging,
-                page: parseInt(currentPage, 10)
+                page: parseInt(currentPage)
             };
-            dispatch(getList(newPaging));
+            fetchTickets(newPaging);
         }
     };
 
+    const fetchTickets = (newPaging: Paging) => {
+        const query : TicketQuery = {
+            ...ticketFilter,
+            ...newPaging
+        }
+        if (searchTerm) {
+            query.searchTerm = searchTerm;
+        }
+        dispatch(getList(query));
+    }
+
     const changePage = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setCurrentPage(e.target.value);
+        const page = e.target.value;
+        if (parseInt(page) < 1 || parseInt(page) > paging.totalPages) {
+            return;
+        }
+        setCurrentPage(page);
     };
 
     return <div className='grid grid-cols-4 border-b p-6'>

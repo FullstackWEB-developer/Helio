@@ -2,8 +2,9 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Ticket } from '../models/ticket';
 import initialTicketState from './tickets.initial-state';
 import { LookupValue } from '../models/lookup-value';
-import {DefaultPagination, Paging} from '../../../shared/models/paging.model';
-import {TicketEnum} from '../models/ticket-enum.model';
+import { Paging } from '../../../shared/models/paging.model';
+import { TicketEnum } from '../models/ticket-enum.model';
+import { TicketQuery } from '../models/ticket-query';
 
 const ticketsSlice = createSlice({
     name: 'tickets',
@@ -116,10 +117,11 @@ const ticketsSlice = createSlice({
         toggleTicketListFilter(state) {
             state.isFilterOpen = !state.isFilterOpen;
         },
-        clearTicketListFilter(state) {
-            state.ticketFilter = {
-                ...DefaultPagination
-            }
+        setSearchTerm(state, { payload }: PayloadAction<string>) {
+            state.searchTerm = payload;
+        },
+        setTicketFilter(state, { payload }: PayloadAction<TicketQuery>) {
+            state.ticketFilter = payload;
         }
     }
 });
@@ -145,7 +147,8 @@ export const {
     startGeLookupValuesRequest,
     endGetLookupValuesRequest,
     toggleTicketListFilter,
-    clearTicketListFilter
+    setSearchTerm,
+    setTicketFilter
 } = ticketsSlice.actions
 
 export default ticketsSlice.reducer

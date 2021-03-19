@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom';
 import { keyboardKeys } from '../../shared/components/search-bar/constants/keyboard-keys';
 import { useDispatch, useSelector } from 'react-redux';
 import { getList } from './services/tickets.service';
-import { selectTicketsPaging } from './store/tickets.selectors';
+import { selectTicketFilter, selectTicketsPaging } from './store/tickets.selectors';
 import { ReactComponent as FilterIcon } from '../../shared/icons/Icon-Filter-24px.svg';
 import { toggleTicketListFilter } from './store/tickets.slice';
 import {Paging} from '../../shared/models/paging.model';
@@ -16,6 +16,7 @@ const TicketsSearch = () => {
     const { t } = useTranslation();
     const dispatch = useDispatch();
     const history = useHistory();
+    const ticketFilter: TicketQuery = useSelector(selectTicketFilter);
     const paging: Paging = useSelector(selectTicketsPaging);
 
     const [searchTerm, setSearchTerm] = useState('');
@@ -23,10 +24,11 @@ const TicketsSearch = () => {
     const searchList = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === keyboardKeys.enter) {
             const query : TicketQuery = {
+                ...ticketFilter,
                 ...paging,
                 searchTerm: searchTerm
             }
-            dispatch(getList(query));
+            dispatch(getList(query, true));
         }
     };
 

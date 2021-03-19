@@ -3,15 +3,17 @@ import { RootState } from '../../../app/store';
 import { createSelector } from '@reduxjs/toolkit';
 import { TicketLookupValue } from '../models/ticket-lookup-values.model';
 import { LookupValue } from '../models/lookup-value';
-import {Paging} from '../../../shared/models/paging.model';
-import {TicketEnum} from '../models/ticket-enum.model';
-import {TicketEnumValue} from '../models/ticket-enum-value.model';
+import { Paging } from '../../../shared/models/paging.model';
+import { TicketEnum } from '../models/ticket-enum.model';
+import { TicketEnumValue } from '../models/ticket-enum-value.model';
 
 export const ticketState = (state: RootState) => state.ticketState;
 
 export const selectTickets = (state: RootState) => state.ticketState.tickets as Ticket[];
 
 export const selectTicketsPaging = (state: RootState) => state.ticketState.paging as Paging;
+export const selectTicketFilter = (state: RootState) => state.ticketState.ticketFilter;
+export const selectSearchTerm = (state: RootState) => state.ticketState.searchTerm;
 export const selectFeedLastMessageOn = (state: RootState) => state.ticketState.feedLastMessageOn;
 
 export const selectTicketById = (state: RootState, id: string): Ticket => {

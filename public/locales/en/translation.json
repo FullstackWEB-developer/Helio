@@ -97,7 +97,7 @@
         "date_range": "Date Range"
       }
     },
-    "assign": "Assign",
+    "unassigned": "Unassigned",
     "pagination": "{{numOfItemsFrom}} - {{numOfItemsTo}} of {{totalCount}}"
   },
   "ccp": {

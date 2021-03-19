@@ -17,16 +17,24 @@ interface TicketAssigneeProps {
 const TicketAssignee = ({ ticketId, assignee }: TicketAssigneeProps) => {
     const { t } = useTranslation();
     const dispatch = useDispatch();
-    const assignees = useSelector(selectUserList);
+    const users = useSelector(selectUserList) as User[];
     const [searchAssigneeToggle, setSearchAssigneeToggle] = useState(false);
     const [searchAssigneeTerm, setSearchAssigneeTerm] = useState('');
-    const [filteredAssignees, setFilteredAssignees] = useState(assignees);
+    const [filteredAssignees, setFilteredAssignees] = useState(users);
     const assigneeDisplayRef = useRef<HTMLDivElement>(null);
     const assigneeSearchRef = useRef<HTMLDivElement>(null);
+    const [selectedUser, setSelectedUser] = useState({} as User);
 
     useEffect(() => {
-        setFilteredAssignees(assignees.filter(item => item.id.includes(searchAssigneeTerm)).slice(0, 9));
-    }, [searchAssigneeTerm, assignees]);
+        setFilteredAssignees(users.filter(item => item.id.includes(searchAssigneeTerm)).slice(0, 9));
+    }, [searchAssigneeTerm, users]);
+
+    useEffect(() => {
+        const user = users.find(user => user.id === assignee);
+        if (user) {
+            setSelectedUser(user);
+        }
+    }, [users, assignee]);
 
     customHooks.useOutsideClick([assigneeDisplayRef, assigneeSearchRef], () => {
         setSearchAssigneeToggle(false);
@@ -42,27 +50,27 @@ const TicketAssignee = ({ ticketId, assignee }: TicketAssigneeProps) => {
     };
 
     const openSearchAssignee = () => {
-        setTimeout(() => setSearchAssigneeToggle(!searchAssigneeToggle), 100)
+        setTimeout(() => setSearchAssigneeToggle(!searchAssigneeToggle), 100);
     }
 
     return <div className={'col-span-2 cursor-pointer pt-3'}>
         <div ref={assigneeDisplayRef}
             onClick={() => openSearchAssignee()}>
-            {assignee === null ?
-                <div className='flex flex-row'>
-                    <div className='pt-3'>{t('tickets.assign')}</div>
-                    <div className='pt-4 pl-4 '>
-                        <ArrowDownIcon /></div>
-                </div>
-                :
+            {selectedUser?.id ?
                 <div className='grid grid-cols-5'>
                     <div className='col-span-1'>
                         <AvatarIcon />
                     </div>
                     <div className='col-span-3 pl-2'>
                         <div className='text-gray-400 text-sm'>{t('tickets.assigned_to')}</div>
-                        <div>{assignee}</div>
+                        <div>{selectedUser.firstName} {selectedUser.lastName}</div>
                     </div>
+                </div>
+                :
+                <div className='flex flex-row'>
+                    <div className='pt-3'>{t('tickets.unassigned')}</div>
+                    <div className='pt-4 pl-4 '>
+                        <ArrowDownIcon /></div>
                 </div>
             }
         </div>
@@ -80,7 +88,7 @@ const TicketAssignee = ({ ticketId, assignee }: TicketAssigneeProps) => {
                 {filteredAssignees.map((item, index) => {
                     return <div key={index} className={'cursor-pointer p-3 hover:bg-blue-500 hover:text-white'}
                         onClick={() => updateAssignee(ticketId, item)}>
-                        {item.id}
+                        {item.firstName} {item.lastName}
                     </div>
                 })}
             </div>

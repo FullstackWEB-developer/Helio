@@ -7,7 +7,7 @@ import {getEnumByType, getList, getLookupValues} from '../services/tickets.servi
 import {useDispatch, useSelector} from 'react-redux';
 import {useTranslation} from 'react-i18next';
 import Checkbox, {CheckboxCheckEvent} from '../../../shared/components/checkbox/checkbox';
-import {selectEnumValues, selectLookupValues, selectTicketsPaging} from '../store/tickets.selectors';
+import {selectEnumValues, selectLookupValues, selectSearchTerm, selectTicketsPaging} from '../store/tickets.selectors';
 import Radio, {RadioItem} from '../../../shared/components/radio/radio';
 import {TicketOptionsBase} from '../models/ticket-options-base.model';
 import {Controller, useForm} from 'react-hook-form';
@@ -36,6 +36,7 @@ const TicketFilter = () => {
     const ticketStatuses = useSelector((state => selectEnumValues(state, 'TicketStatus')));
     const ticketTypes = useSelector((state => selectEnumValues(state, 'TicketType')));
     const offices = useSelector(selectDepartmentList);
+    const searchTerm: string = useSelector(selectSearchTerm);
     const { control, handleSubmit, watch, setValue } = useForm({});
 
     const watchTimePeriod = watch('timePeriod');
@@ -114,7 +115,10 @@ const TicketFilter = () => {
             query.assignedTo = [];
             query.assignedTo.push(values.assignedTo);
         }
-        dispatch(getList(query));
+        if (searchTerm) {
+            query.searchTerm = searchTerm;
+        }
+        dispatch(getList(query, true));
     }
 
     const convertOfficesToOptions = () : TicketOptionsBase[] =>{

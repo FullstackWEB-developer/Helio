@@ -12,6 +12,7 @@ export interface TicketState {
     isRequestAddFeedLoading: boolean;
     tickets: Ticket[];
     paging: Paging,
+    searchTerm: string,
     errors: string;
     ticketsLoading: boolean
     ticketChannels?: TicketOptionsBase[];
@@ -38,6 +39,7 @@ const initialTicketState: TicketState = {
         totalPages: 0,
         totalCount: 0,
     },
+    searchTerm: '',
     errors: '',
     ticketsLoading: false,
     ticketChannels: [],

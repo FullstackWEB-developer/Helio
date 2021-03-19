@@ -10,6 +10,8 @@ import {
     changeAssignee,
     setFailure,
     addPaging,
+    setSearchTerm,
+    setTicketFilter,
     setTicketsLoading,
     startRequestAddNote,
     endRequestAddNote,
@@ -30,18 +32,38 @@ import { TicketFeed } from '../models/ticket-feed';
 const logger = Logger.getInstance();
 const ticketsBaseUrl = '/tickets';
 
-export function getList(query: TicketQuery) {
+export function getList(ticketQuery: TicketQuery, resetPagination?: boolean) {
     return async (dispatch: Dispatch) => {
         dispatch(setTicketsLoading(true));
-        const queryParams = serialize(query);
+
+        let query: any = ticketQuery;
+        let queryParams = serialize(query);
+        if (resetPagination) {
+            const {totalCount, totalPages, page, ...newQuery} = query;
+            queryParams = serialize(newQuery);
+        }
+
         let ticketsUrl = '';
         try {
             ticketsUrl = `${ticketsBaseUrl}?${queryParams}`;
             const response = await Api.get(ticketsUrl);
             const data = response.data;
             dispatch(add(data.results));
-            const paging: Paging = { pageSize: data.pageSize, totalPages: data.totalPages, page: data.page, totalCount: data.totalCount };
+            const paging: Paging = {
+                pageSize: data.pageSize,
+                totalPages: data.totalPages,
+                page: data.page > data.totalPages ? data.totalPages : data.page,
+                totalCount: data.totalCount
+            };
             dispatch(addPaging(paging));
+            dispatch(setSearchTerm(query.searchTerm ? query.searchTerm : ''));
+
+            const saveQuery : TicketQuery = {
+                ...paging,
+                ...query
+            };
+            dispatch(setTicketFilter(saveQuery));
+
             dispatch(setTicketsLoading(false));
         } catch (error) {
             dispatch(setFailure(error.message));

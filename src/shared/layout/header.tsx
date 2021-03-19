@@ -59,7 +59,7 @@ const Header = () => {
                             <LettersAvatar initials={userInitials}/>
                         </div>
                         <div>
-                            {isProfileMenuOpen && <div ref={dropdownRef} className='absolute right-0.5 top-11'><ProfileDropdown/></div>}
+                            {isProfileMenuOpen && <div ref={dropdownRef} className='absolute right-0.5 top-11 z-10'><ProfileDropdown/></div>}
                         </div>
                     </div>
                 </div>
