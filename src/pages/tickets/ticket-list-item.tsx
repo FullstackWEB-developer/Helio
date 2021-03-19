@@ -79,7 +79,7 @@ const TicketListItem = ({ item }: TicketListItemProps) => {
                 <div className='text-gray-400 text-sm pt-2'>
                     <span className={'pr-1'}>{t('tickets.created')}</span>
                     {item.createdOn ? utils.formatDate12HoursTime(item.createdOn) : ''}
-                    <span className='ml-4'>{item.dueDate ? dayjs().to(dayjs(item.dueDate)) : ''}</span>
+                    <span className='ml-4'>{item.dueDate ? `${t('tickets.due')} ${dayjs().to(dayjs(item.dueDate))}` : ''}</span>
                 </div>
             </div>
         </div>

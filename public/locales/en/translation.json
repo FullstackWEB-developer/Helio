@@ -98,6 +98,7 @@
       }
     },
     "unassigned": "Unassigned",
+    "due": "Due",
     "pagination": "{{numOfItemsFrom}} - {{numOfItemsTo}} of {{totalCount}}"
   },
   "ccp": {
