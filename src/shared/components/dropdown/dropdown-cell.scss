@@ -1,6 +1,8 @@
 .dropdown-cell {
   min-height: 2.5rem;
   min-width: 12rem;
+  background-position: center;
+  transition: background 0.8s;
 }
 
 .dropdown-cell.is-selected {
@@ -9,11 +11,13 @@
 }
 
 .dropdown-cell:hover {
-  background-color: var(--dropdown-item-hover);
+  background: var(--dropdown-item-hover) radial-gradient(circle, var(--dropdown-item-pressed)1%, var(--dropdown-item-hover)1%) center/15000%;
 }
 
 .dropdown-cell:active {
   background-color: var(--dropdown-item-pressed);
+  background-size: 100%;
+  transition: background 0s;
 }
 
 .dropdown-cell.is-selected:hover {

@@ -7,7 +7,13 @@ import {
     selectSelectedType,
     selectTerm
 } from './store/search-bar.selectors';
-import { changeValue, changeFilteredTypes, clearRecentPatients, changeTypeDown, changeTypeUp } from './store/search-bar.slice';
+import {
+    changeValue,
+    changeFilteredTypes,
+    clearRecentPatients,
+    changeTypeDown,
+    changeTypeUp,
+    setType } from './store/search-bar.slice';
 import { searchPatients } from '../../services/search.service';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -53,6 +59,7 @@ const SearchBar = () => {
     }
     const search = (type?: number) => {
         const chosenType = type || selectedType;
+        dispatch(setType(chosenType));
         dispatch(clearPatients());
         if (searchTerm !== '') {
             if (chosenType === searchType.patientId) {
@@ -167,7 +174,7 @@ const SearchBar = () => {
     }
 
     return (
-        <div className='relative'>
+        <div className='relative z-10'>
             <div className='border-r border-l px-4 h-16 global-search-input'>
                 <input type='text' className='focus:outline-none h-full w-full' placeholder={t('search.placeholder')}
                     onFocus={() => setDropdown(false)} onBlur={() => onblur()} onClick={() => setDropdown(false)}

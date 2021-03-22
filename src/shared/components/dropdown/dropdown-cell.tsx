@@ -44,9 +44,14 @@ const DropdownCell = ({item, isSelected, onClick}: DropdownCellProps) => {
 
     const bgCssClass = isSelected ? ' is-selected ' : ' cursor-pointer '
 
+    const cellClicked = () => {
+        if (onClick) {
+            onClick(item.key);
+        }
+    }
     return <>
-            <div onClick={() => (!isSelected && onClick) ? onClick(item.key) : undefined}
-                 className={`w-full ${ content ? '' : 'px-4'} dropdown-cell justify-between flex items-center ${calculateCss()} ${className} ${bgCssClass}`}>
+            <div onClick={() => cellClicked()}
+                className={`w-full ${ content ? '' : 'px-4'} dropdown-cell justify-between flex items-center ${calculateCss()} ${className} ${bgCssClass}`}>
                 <div data-test-id='dropdown-cell-icon-content' className={'flex flex-row w-full items-center'}>
                     {getIcon(icon)}
                     {getText(t, text, content)}

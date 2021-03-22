@@ -1,9 +1,8 @@
-import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {useDispatch, useSelector} from 'react-redux';
 import {logOut, updateUserStatus} from '../../store/app-user/appuser.slice';
 import {msalInstance} from '../../../pages/login/auth-config';
-import {ReactComponent as PlaceholderIcon} from '../../icons/Icon-Placeholder-24px.svg';
+import {ReactComponent as PlaceholderIcon} from '../../icons/Icon-Placeholder-16px.svg';
 import {UserStatus} from '../../store/app-user/app-user.models';
 import {StatusIndicatorYellow} from '../../icons/StatusIndicatorYellow';
 import {StatusIndicatorGray} from '../../icons/StatusIndicatorGray';
@@ -38,10 +37,12 @@ const ProfileDropdown = () => {
     }
 
     const GetIconByStatus =(status : UserStatus) => {
+        let icon = <StatusIndicatorGray />;
         if (status === UserStatus.Afterwork) {
-            return <StatusIndicatorYellow/>;
+            icon = <StatusIndicatorYellow/>;
         }
-        return <StatusIndicatorGray/>;
+
+        return <span className="w-4 h-4 flex items-center justify-around">{icon}</span>;
     }
 
     const items : DropdownItemModel[] = [];
@@ -59,14 +60,12 @@ const ProfileDropdown = () => {
 
     items.push({
         text: t('user_profile.my_profile'),
-        onClick: () => alert('My Profile Clicked'),
         key: 'my_profile',
         hasDivider: true,
         icon: <PlaceholderIcon/>
     });
     items.push({
         text: t('user_profile.my_stats'),
-        onClick: () => alert('My Stats Clicked'),
         key: 'my_stats',
         icon: <PlaceholderIcon/>
     });
@@ -77,8 +76,8 @@ const ProfileDropdown = () => {
         icon: <PlaceholderIcon/>
     });
 
-    const dropdownModel : DropdownModel = {
-        header: <div className='px-4 h-12 w-48 pt-2 items-center flex flex-row'>
+    const dropdownModel: DropdownModel = {
+        header: <div className='profile-dropdown-header px-4 h-12 pt-2 items-center flex flex-row'>
             <div className='subtitle2 whitespace-pre'>{`${t('user_profile.my_status')}: `}</div>
             <div className='body2'>{t(`user_profile.statuses.${currentUserStatus}`)}</div>
         </div>,
