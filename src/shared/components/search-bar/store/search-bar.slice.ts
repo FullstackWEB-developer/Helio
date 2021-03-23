@@ -7,9 +7,6 @@ const searchBarSlice = createSlice({
     name: 'search',
     initialState,
     reducers: {
-        changeValue(state, action) {
-            state.searchTerm = action.payload;
-        },
         changeFilteredTypes(state, action) {
             state.searchTypeFiltered = action.payload !== ''
                 ? searchTypes.filter(type => new RegExp(type.regex).test(action.payload))
@@ -60,6 +57,6 @@ const searchBarSlice = createSlice({
     }
 });
 
-export const { changeValue, changeFilteredTypes, setType, changeTypeDown, changeTypeUp, addRecentPatient, clearRecentPatients, setSearching, setError } = searchBarSlice.actions
+export const {changeFilteredTypes, setType, changeTypeDown, changeTypeUp, addRecentPatient, clearRecentPatients, setSearching, setError } = searchBarSlice.actions
 
 export default searchBarSlice.reducer

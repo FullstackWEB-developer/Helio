@@ -4,7 +4,6 @@ import { RecentPatient } from '../models/recent-patient';
 export interface SearchBarState {
     searchTypeFiltered: SearchType[];
     recentPatients: RecentPatient[];
-    searchTerm: string;
     selectedType: number,
     isError: boolean,
     isSearching: boolean
@@ -13,7 +12,6 @@ export interface SearchBarState {
 const initialState: SearchBarState = {
     searchTypeFiltered: [],
     recentPatients: [],
-    searchTerm: '',
     selectedType: 1,
     isError: false,
     isSearching: false

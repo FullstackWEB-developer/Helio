@@ -1,14 +1,12 @@
-import React, { useState } from 'react';
+import React, {useRef, useState} from 'react';
 import { SearchType } from './models/search-type';
 import { ReactComponent as SearchIcon } from '../../icons/Icon-Search-16px.svg';
 import {
     selectRecentPatients,
     selectSearchTypeFiltered,
     selectSelectedType,
-    selectTerm
 } from './store/search-bar.selectors';
 import {
-    changeValue,
     changeFilteredTypes,
     clearRecentPatients,
     changeTypeDown,
@@ -27,20 +25,22 @@ import Dropdown from '../dropdown/dropdown';
 import {CategoryItemModel, DropdownItemModel, DropdownModel} from '../dropdown/dropdown.models';
 import {ReactComponent as PlaceholderIcon} from '../../icons/Icon-Placeholder-16px.svg';
 import './search-bar.scss';
+import customHooks from '../../hooks/customHooks';
 const SearchBar = () => {
     const { t } = useTranslation();
     const dispatch = useDispatch();
     const history = useHistory();
     const [dropdownDisplayed, displayDropdown] = useState(false);
+    const [text, setText] = useState<string>('');
     const recentPatients = useSelector(selectRecentPatients);
     const selectedType = useSelector(selectSelectedType);
     const searchTypeFiltered = useSelector(selectSearchTypeFiltered);
-    const searchTerm = useSelector(selectTerm);
+    const dropdownRef = useRef<HTMLDivElement>(null);
 
     const textChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const text = e.target.value;
         displayDropdown(true);
-        dispatch(changeValue(text));
+        setText(text);
         dispatch(changeFilteredTypes(text))
     }
     const handleKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -62,12 +62,12 @@ const SearchBar = () => {
         dispatch(setType(chosenType));
         dispatch(clearPatients());
         displayDropdown(false);
-        if (searchTerm !== '') {
+        if (text !== '') {
             if (chosenType === searchType.patientId) {
-                history.push('/patients/' + searchTerm);
+                history.push('/patients/' + text);
             }
             else {
-                dispatch(searchPatients(chosenType, searchTerm));
+                dispatch(searchPatients(chosenType, text));
                 history.push('/patients/results');
             }
         }
@@ -174,13 +174,17 @@ const SearchBar = () => {
         items: getItems()
     }
 
+    customHooks.useOutsideClick([dropdownRef], () => {
+        displayDropdown(false);
+    });
+
     return (
-        <div className='relative z-10'>
+        <div className='relative z-10'  ref={dropdownRef}>
             <div className='border-r border-l px-4 h-16 global-search-input'>
                 <input type='text' className='focus:outline-none h-full w-full ' placeholder={t('search.placeholder')}
                     onFocus={() => displayDropdown(true)} onClick={() => displayDropdown(true)}
                     onChange={(e) => textChange(e)} onKeyDown={(e) => handleKey(e)}
-                    value={searchTerm} />
+                    value={text} />
                 <span className={'absolute inset-y-0 right-0 flex items-center pr-4 cursor-pointer'}>
                     <SearchIcon onClick={() => search()} />
                 </span>
