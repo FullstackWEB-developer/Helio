@@ -56,7 +56,7 @@ const DropdownCell = ({item, isSelected, onClick}: DropdownCellProps) => {
                     {getIcon(icon)}
                     {getText(t, text, content)}
                 </div>
-                <DropdownLink onClick={() => link?.onClick()} title={link?.title} />
+                {link && link.onClick && <DropdownLink onClick={() => link.onClick()} title={link.title} /> }
             </div>
     </>
 }

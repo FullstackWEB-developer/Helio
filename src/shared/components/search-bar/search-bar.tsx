@@ -31,7 +31,7 @@ const SearchBar = () => {
     const { t } = useTranslation();
     const dispatch = useDispatch();
     const history = useHistory();
-    const [hideDropdown, setDropdown] = useState(true);
+    const [dropdownDisplayed, displayDropdown] = useState(false);
     const recentPatients = useSelector(selectRecentPatients);
     const selectedType = useSelector(selectSelectedType);
     const searchTypeFiltered = useSelector(selectSearchTypeFiltered);
@@ -39,7 +39,7 @@ const SearchBar = () => {
 
     const textChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const text = e.target.value;
-        setDropdown(false);
+        displayDropdown(true);
         dispatch(changeValue(text));
         dispatch(changeFilteredTypes(text))
     }
@@ -47,7 +47,7 @@ const SearchBar = () => {
         switch (e.key) {
             case keyboardKeys.enter:
                 search();
-                setDropdown(true);
+                displayDropdown(false);
                 break;
             case keyboardKeys.arrowUp:
                 dispatch(changeTypeUp());
@@ -61,6 +61,7 @@ const SearchBar = () => {
         const chosenType = type || selectedType;
         dispatch(setType(chosenType));
         dispatch(clearPatients());
+        displayDropdown(false);
         if (searchTerm !== '') {
             if (chosenType === searchType.patientId) {
                 history.push('/patients/' + searchTerm);
@@ -71,13 +72,13 @@ const SearchBar = () => {
             }
         }
     }
-    const onblur = () => {
-        setTimeout(() => setDropdown(true), 100)
-    }
+
     const selectRecent = (recentPatient: RecentPatient) => {
+        displayDropdown(false);
         history.push('/patients/' + recentPatient.patientId);
     }
     const clearRecent = () => {
+        displayDropdown(false);
         dispatch(clearRecentPatients());
     }
 
@@ -176,15 +177,15 @@ const SearchBar = () => {
     return (
         <div className='relative z-10'>
             <div className='border-r border-l px-4 h-16 global-search-input'>
-                <input type='text' className='focus:outline-none h-full w-full' placeholder={t('search.placeholder')}
-                    onFocus={() => setDropdown(false)} onBlur={() => onblur()} onClick={() => setDropdown(false)}
+                <input type='text' className='focus:outline-none h-full w-full ' placeholder={t('search.placeholder')}
+                    onFocus={() => displayDropdown(true)} onClick={() => displayDropdown(true)}
                     onChange={(e) => textChange(e)} onKeyDown={(e) => handleKey(e)}
                     value={searchTerm} />
                 <span className={'absolute inset-y-0 right-0 flex items-center pr-4 cursor-pointer'}>
                     <SearchIcon onClick={() => search()} />
                 </span>
             </div>
-            {!hideDropdown && <div className='absolute'>
+            {dropdownDisplayed && <div className='absolute'>
                 <Dropdown model={searchDropdownModel} />
             </div>}
         </div>
