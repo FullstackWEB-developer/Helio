@@ -7,5 +7,14 @@ export interface AuthenticationInfo {
 }
 
 export enum UserStatus {
-    Afterwork='after_work'
+    AfterWork='after_work',
+    Available='available',
+    Break='break',
+    Busy='busy',
+    Meeting='meeting',
+    Offline='offline',
+    OnCall='on_call',
+    Personal='personal',
+    Routable ='routable',
+    Training='training'
 }

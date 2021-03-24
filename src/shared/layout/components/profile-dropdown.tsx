@@ -29,7 +29,7 @@ const ProfileDropdown = () => {
 
     const statusList = [{
             label: t('user_profile.statuses.after_work'),
-            value: UserStatus.Afterwork
+            value: UserStatus.AfterWork
         }];
 
     const updateStatus = (status: UserStatus) => {
@@ -38,7 +38,7 @@ const ProfileDropdown = () => {
 
     const GetIconByStatus =(status : UserStatus) => {
         let icon = <StatusIndicatorGray />;
-        if (status === UserStatus.Afterwork) {
+        if (status === UserStatus.AfterWork) {
             icon = <StatusIndicatorYellow/>;
         }
 

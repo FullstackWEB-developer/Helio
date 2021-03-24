@@ -11,6 +11,6 @@ const initialState: AppUserState = {
         isLoggedIn: false
     },
     isLoading: false,
-    status: UserStatus.Afterwork
+    status: UserStatus.AfterWork
 }
 export default initialState;

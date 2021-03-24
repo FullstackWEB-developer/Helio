@@ -1,6 +1,6 @@
 import React, {useRef} from 'react';
 import { ReactComponent as MenuIcon } from '../icons/Icon-Menu-24px.svg';
-import { LettersAvatar } from '../icons/LettersAvatar';
+import Avatar from '../../shared/components/avatar/avatar';
 import { ReactComponent as AthenaIcon } from '../icons/Icon-Athena-24px.svg';
 import { ReactComponent as MSIcon } from '../icons/Icon-Office365-24px.svg';
 import SearchBar from '../components/search-bar/search-bar';
@@ -12,6 +12,7 @@ import HelioLogo from '../icons/helio-logo';
 import customHooks from '../hooks/customHooks';
 import ProfileDropdown from './components/profile-dropdown';
 import utils from '../utils/utils';
+import {UserStatus} from '../store/app-user/app-user.models';
 
 const Header = () => {
     const dispatch = useDispatch();
@@ -39,7 +40,12 @@ const Header = () => {
                     <HelioLogo className='fill-current text-primary-600' />
                 </div>
                 <div className='block md:hidden cursor-pointer'>
-                    <span onClick={() => displayProfileMenu()}><LettersAvatar initials={userInitials}/></span>
+                    <span onClick={() => displayProfileMenu()}>
+                        <Avatar model={{
+                            initials: userInitials,
+                            status: UserStatus.Offline
+                        }}/>
+                    </span>
                     {isProfileMenuOpen && <ProfileDropdown/>}
                 </div>
             </div>
@@ -56,7 +62,10 @@ const Header = () => {
                 <div>
                     <div className='hidden h-full md:block relative'>
                         <div data-test-id='letter-avatar' className='cursor-pointer' onClick={() => displayProfileMenu()}>
-                            <LettersAvatar initials={userInitials}/>
+                            <Avatar model={{
+                                initials: userInitials,
+                                status: UserStatus.Offline
+                            }}/>
                         </div>
                         <div>
                             {isProfileMenuOpen && <div ref={dropdownRef} className='absolute right-0.5 top-11 z-10'><ProfileDropdown/></div>}

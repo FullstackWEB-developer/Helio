@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react'
 import withErrorLogging from '../../HOC/with-error-logging';
+import './tab-title.scss';
 
 type TabTitleProps = {
     title: string;
@@ -12,10 +13,14 @@ const TabTitle: React.FC<TabTitleProps> = ({ title, setSelectedTab, isSelected, 
 
     const onClick = useCallback(() => {
         setSelectedTab(index)
-    }, [setSelectedTab, index])
+    }, [setSelectedTab, index]);
+
+    const sharedClass = 'tab-title px-7 pt-2.5 pb-3 cursor-pointer';
 
     return (
-        <div onClick={onClick} className={'px-7 pt-2.5 pb-3 cursor-pointer' + (isSelected ? ' border-b-2 border-primary ' : '')}>{title}</div>
+        <div onClick={onClick} className={sharedClass + (isSelected ? ' border-b-2 border-primary subtitle2' : ' body2')}>
+            {title}
+        </div>
     )
 }
 

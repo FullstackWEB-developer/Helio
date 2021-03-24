@@ -1,5 +1,4 @@
 import { ReactComponent as ArrowDownIcon } from '../../../shared/icons/Icon-Arrow-down-16px.svg';
-import { ReactComponent as AvatarIcon } from '../../../shared/icons/Avatar-40px-Image.svg';
 import { ReactComponent as SearchIcon } from '../../../shared/icons/Icon-Search-16px.svg';
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -9,6 +8,8 @@ import { setAssignee } from '../services/tickets.service';
 import withErrorLogging from '../../../shared/HOC/with-error-logging';
 import {selectUserList} from '../../../shared/store/lookups/lookups.selectors';
 import {User} from '../../../shared/models/user';
+import Avatar from '../../../shared/components/avatar/avatar';
+import utils from '../../../shared/utils/utils';
 
 interface TicketAssigneeProps {
     ticketId: string,
@@ -59,7 +60,11 @@ const TicketAssignee = ({ ticketId, assignee }: TicketAssigneeProps) => {
             {selectedUser?.id ?
                 <div className='grid grid-cols-5'>
                     <div className='col-span-1'>
-                        <AvatarIcon />
+                        <Avatar
+                            model={{
+                                initials: utils.getInitialsFromFullName(`${selectedUser.firstName} ${selectedUser.lastName}` || '')
+                            }}
+                        />
                     </div>
                     <div className='col-span-3 pl-2'>
                         <div className='text-gray-400 text-sm'>{t('tickets.assigned_to')}</div>

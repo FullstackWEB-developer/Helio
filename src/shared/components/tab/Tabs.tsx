@@ -13,7 +13,7 @@ const Tabs: React.FC<TabsProps> = ({ children, title }) => {
     return (
         <div>
             <div className={'flex flex-row border-b'}>
-                {title && <h5 className={'p-1 pr-32'}>{title}</h5>}
+                {title && <div className={'pt-2.5 pb-1 pr-32 pl-1 h7'}>{title}</div>}
                 {children.map((item, index) => (
                     <TabTitle
                         key={index}

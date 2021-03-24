@@ -1,5 +1,5 @@
 import { FeedDetailDisplayItem } from '../../models/feed-detail-display-item';
-import { LettersAvatar } from '../../../../shared/icons/LettersAvatar';
+import Avatar from '../../../../shared/components/avatar/avatar';
 import React from 'react';
 import dayjs from 'dayjs';
 import withErrorLogging from '../../../../shared/HOC/with-error-logging';
@@ -15,9 +15,10 @@ const FeedDetailItem = ({ item }: FeedDetailItemProps) => {
     return (
         <div className={'flex flex-row p-8'}>
             <div className='w-8 h-8'>
-                <LettersAvatar
-                    initials={utils.getInitialsFromFullName(item.createdBy || '')}
-                    isStatusVisible={false}
+                <Avatar
+                    model={{
+                        initials: utils.getInitialsFromFullName(item.createdBy || '')
+                    }}
                 />
             </div>
             <div className={'pl-8'}>
