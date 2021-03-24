@@ -42,7 +42,7 @@ const List = ({ options, title,isSearchable=true, onSelect } : ListProps) => {
         }
     }
     return (
-        <div className='w-62 flex flex-col bg-white'>
+        <div className='w-full flex flex-col bg-white'>
             {title &&
             <div className='subtitle h-10 pl-4 border-b flex items-center'>
                 {t(title)}
@@ -50,7 +50,7 @@ const List = ({ options, title,isSearchable=true, onSelect } : ListProps) => {
             }
             {isSearchable &&
             <div>
-                <div className='inline-flex flex-1 relative border-b h-10'>
+                <div className='inline-flex flex-1 relative border-b h-10 w-full'>
                     <span className='pl-4 items-center flex'>
                         <SearchIcon/>
                     </span>

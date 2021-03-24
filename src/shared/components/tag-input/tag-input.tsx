@@ -10,20 +10,28 @@ interface TagInputProps extends React.HTMLAttributes<HTMLSelectElement> {
     label?: string,
     tagOptions: Option[],
     initialTags?: string[],
-    setSelectedTags: (tags: string[]) => void;
+    initialIsListVisible?: boolean,
+    setSelectedTags: (tags: string[]) => void
 }
 
-const TagInput = React.forwardRef<HTMLSelectElement, TagInputProps>(({ label, tagOptions, initialTags, ...props }: TagInputProps, ref) => {
+const TagInput = React.forwardRef<HTMLSelectElement, TagInputProps>(({ label, tagOptions, initialTags, initialIsListVisible = false, ...props }: TagInputProps, ref) => {
     const { t } = useTranslation();
     const [isTagsVisible, setIsTagsVisible] = useState(false);
+    const [isTagsListVisible, setIsTagsListVisible] = useState(initialIsListVisible);
     const [tags, setTags] = useState<string[]>([]);
     
     useEffect(() => {
         setTags(initialTags || []);
-        if (initialTags && initialTags.length > 0) {
+
+        if ((initialTags && initialTags.length > 0) || initialIsListVisible) {
             setIsTagsVisible(true);
         }
-    }, [initialTags]);
+    }, [initialIsListVisible, initialTags]);
+
+    const handleAddTagClick = () => {
+        setIsTagsVisible(true);
+        setIsTagsListVisible(true);
+    }
 
     const handleChangeTags = (option: Option) => {
         if (!tags.includes(option.label)){
@@ -48,8 +56,8 @@ const TagInput = React.forwardRef<HTMLSelectElement, TagInputProps>(({ label, ta
         <Fragment>
             {label && <Label text={t(label)} className='body-medium' />}
             {
-                !isTagsVisible &&
-                <span className='pl-4 h8 cursor-pointer' onClick={() => setIsTagsVisible(true)}>
+                !isTagsListVisible &&
+                <span className='pl-4 h8 cursor-pointer' onClick={() => handleAddTagClick()}>
                     {t('tag_input.add_tag')}
                 </span>
             }
@@ -64,12 +72,12 @@ const TagInput = React.forwardRef<HTMLSelectElement, TagInputProps>(({ label, ta
                             remove={removeTag}
                         />
                     ))}
-                    <List
+                    {isTagsListVisible && <List
                         options={filteredOptions}
                         onSelect={(option: Option) => {
                             handleChangeTags(option);
                         }}
-                    />
+                    />}
                 </div>
             }
         </Fragment>
@@ -77,5 +85,3 @@ const TagInput = React.forwardRef<HTMLSelectElement, TagInputProps>(({ label, ta
 })
 
 export default TagInput;
-
-

@@ -45,10 +45,10 @@ const TicketDetail = () => {
 
     return (
         <div className='flex w-full'>
-            <div className='w-3/4 static'>
+            <div className='w-3/4 relative'>
                 <TicketDetailHeader ticket={ticket} patient={patient}/>
                 <TicketDetailFeed ticket={ticket}/>
-                <div className="absolute inset-x-0 bottom-12 w-3/4 pl-20 mb-1">
+                <div className='absolute bottom-0 w-full'>
                     <TicketDetailAddNote ticket={ticket}/>
                 </div>
             </div>

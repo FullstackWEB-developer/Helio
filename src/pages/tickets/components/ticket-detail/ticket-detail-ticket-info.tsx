@@ -60,6 +60,9 @@ const TicketDetailTicketInfo = ({ ticket }: TicketInfoProps ) => {
             await updateTicket(ticket.id, ticketData).then(() => {
                 ticketData.id = ticket.id;
                 dispatch(setTicket(ticketData));
+                if (ticketData?.tags){
+                    setInitialTags(ticketData.tags);
+                }
                 if(ticketData.id && ticketData.status){
                     const feedData: TicketFeed = {
                         feedType: FeedTypes.StatusChange,
@@ -67,7 +70,7 @@ const TicketDetailTicketInfo = ({ ticket }: TicketInfoProps ) => {
                     };
                     dispatch(addFeed(ticketData.id, feedData));
                 }
-                setIsTicketInfoButtonsVisible(false);
+                resetForm();
             });
         }
     }
@@ -178,6 +181,7 @@ const TicketDetailTicketInfo = ({ ticket }: TicketInfoProps ) => {
     );
 
     const [tags, setTags] = useState<string[]>(ticket?.tags || []);
+    const [initialTags, setInitialTags] = useState<string[]>(ticket?.tags || []);
 
     useEffect(() => {
         if (ticketTypeOptions?.length > 0 && !selectedTicketTypeOption) {
@@ -438,7 +442,7 @@ const TicketDetailTicketInfo = ({ ticket }: TicketInfoProps ) => {
                             {...props}
                             tagOptions={tagOptions}
                             label={'ticket_detail.info_panel.tags'}
-                            initialTags={tags}
+                            initialTags={initialTags}
                             data-test-id='ticket-detail-tag-input'
                             className={'w-full border-none h-14'}
                             setSelectedTags={setSelectedTags}

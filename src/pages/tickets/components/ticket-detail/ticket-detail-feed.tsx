@@ -76,7 +76,7 @@ const TicketDetailFeed = ({ticket}: TicketDetailFeedProps) => {
     }
 
     if (feedItems?.length < 1) {
-        return <div data-test-id='ticket-detail-feed-not-found'>{t('ticket_detail.feed.not_found')}</div>
+        return <div className='p-4 h7' data-test-id='ticket-detail-feed-not-found'>{t('ticket_detail.feed.not_found')}</div>
     }
 
     return <Fragment>

@@ -330,10 +330,10 @@ const TicketFilter = () => {
                                             <TagInput
                                                 {...props}
                                                 tagOptions={tags}
-                                                label={'ticket_new.tags'}
                                                 data-test-id='ticket-new-tag-input'
                                                 className={'w-full border-none h-14'}
                                                 setSelectedTags={setSelectedTags}
+                                                initialIsListVisible={true}
                                             />
                                         )}
                                     />

@@ -35,36 +35,34 @@ const TicketDetailAddNote = ({ ticket }: TicketDetailAddNoteProps) => {
     }
 
     return (
-        <div>
-            <div className={'p-10 bg-gray-100'}>
-                <form onSubmit={handleSubmit(onSubmit)} className='flex flex-row items-center'>
-                    <Controller
-                        name='note'
-                        control={control}
-                        defaultValue={''}
-                        render={() => (
-                            <TextArea
-                                error={errors.note?.message}
-                                className='w-full pb-4 h-20'
-                                data-test-id='ticket-detail-note-text'
-                                placeholder={t('ticket_detail.note.type_message')}
-                                value={noteText}
-                                required={true}
-                                rows={2}
-                                onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setNoteText(e.target.value)}
-                            />
-                        )}
-                    />
-                    <div className='flex ml-4'>
-                        <Button
-                            data-test-id='ticket-detail-note-send-button'
-                            type={'submit'}
-                            label={'ticket_detail.note.send'}
-                            buttonType='medium'
+        <div className={'p-10 bg-gray-100'}>
+            <form onSubmit={handleSubmit(onSubmit)} className='flex flex-row items-center'>
+                <Controller
+                    name='note'
+                    control={control}
+                    defaultValue={''}
+                    render={() => (
+                        <TextArea
+                            error={errors.note?.message}
+                            className='w-full pb-4 h-20'
+                            data-test-id='ticket-detail-note-text'
+                            placeholder={t('ticket_detail.note.type_message')}
+                            value={noteText}
+                            required={true}
+                            rows={2}
+                            onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setNoteText(e.target.value)}
                         />
-                    </div>
-                </form>
-            </div>
+                    )}
+                />
+                <div className='flex ml-4'>
+                    <Button
+                        data-test-id='ticket-detail-note-send-button'
+                        type={'submit'}
+                        label={'ticket_detail.note.send'}
+                        buttonType='medium'
+                    />
+                </div>
+            </form>
         </div>
     );
 }
