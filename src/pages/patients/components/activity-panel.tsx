@@ -4,6 +4,7 @@ import Tab from '../../../shared/components/tab/Tab';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import PatientNotes from './patient-notes';
+import PatientTickets from './patient-tickets';
 import { useSelector } from 'react-redux';
 import { selectPatient } from '../store/patients.selectors';
 
@@ -18,7 +19,9 @@ const ActivityPanel = () => {
                     <PatientNotes notes={patient?.notes} />
                 </div>
             </Tab>
-            <Tab title={t('patient.tickets_tab_label')}>Tickets will be here</Tab>
+            <Tab title={t('patient.tickets_tab_label')}>
+                <PatientTickets patientId={patient?.patientId}></PatientTickets>
+            </Tab>
         </Tabs>
     </div>
 }

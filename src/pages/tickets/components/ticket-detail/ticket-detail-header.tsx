@@ -16,7 +16,7 @@ import { ReactComponent as EmailIcon } from '../../../../shared/icons/Icon-Email
 import Button from '../../../../shared/components/button/button';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectEnumValues, selectFeedLastMessageOn } from '../../store/tickets.selectors';
-import { addFeed, getEnumByType, setStatus } from '../../services/tickets.service';
+import { addFeed, getEnumByType, setDelete, setStatus } from '../../services/tickets.service';
 import { setTicket } from '../../store/tickets.slice';
 import { showCcp } from '../../../../shared/layout/store/layout.slice';
 import TicketChannelIcon from '../ticket-channel-icon';
@@ -53,6 +53,12 @@ const TicketDetailHeader = ({ ticket, patient }: TicketDetailHeaderProps) => {
         dispatch(showCcp());
         if (patient?.mobilePhone) {
             return navigator.clipboard.writeText(patient?.mobilePhone);
+        }
+    }
+
+    const handleMarkAsDelete = () => {
+        if (ticket && ticket.id) {
+            dispatch(setDelete(ticket.id));
         }
     }
 
@@ -116,12 +122,14 @@ const TicketDetailHeader = ({ ticket, patient }: TicketDetailHeaderProps) => {
                             <EmailIcon className='cursor-pointer bg-gray-800 rounded-md h-10 w-16 p-1' />
                         </div>
                     </div>
+                    {!ticket.isDeleted && (
                     <div className='flex justify-end w-1/2'>
                         <div className='pr-3'>
-                            <Button data-test-id='ticket-detail-header-archive-button'
-                                    buttonType='secondary'
-                                    label={'ticket_detail.header.archive'} />
-                        </div>
+                            <Button data-test-id='ticket-detail-header-delete-button'
+                                buttonType='secondary'
+                                onClick={() => handleMarkAsDelete()}
+                                label={'ticket_detail.header.delete'} />
+                        </div>    
                         <div className='pr-3'>
                             <Button data-test-id='ticket-detail-header-solved-button'
                                     buttonType='small'
@@ -135,6 +143,7 @@ const TicketDetailHeader = ({ ticket, patient }: TicketDetailHeaderProps) => {
                                     label={'ticket_detail.header.close'} />
                         </div>
                     </div>
+                    )}
                 </div>
             </div>
         </div>

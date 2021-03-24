@@ -1,11 +1,11 @@
-import { Ticket } from '../models/ticket';
-import { RootState } from '../../../app/store';
-import { createSelector } from '@reduxjs/toolkit';
-import { TicketLookupValue } from '../models/ticket-lookup-values.model';
-import { LookupValue } from '../models/lookup-value';
-import { Paging } from '../../../shared/models/paging.model';
-import { TicketEnum } from '../models/ticket-enum.model';
-import { TicketEnumValue } from '../models/ticket-enum-value.model';
+import {Ticket} from '../models/ticket';
+import {RootState} from '../../../app/store';
+import {createSelector} from '@reduxjs/toolkit';
+import {TicketLookupValue} from '../models/ticket-lookup-values.model';
+import {LookupValue} from '../models/lookup-value';
+import {Paging} from '../../../shared/models/paging.model';
+import {TicketEnum} from '../models/ticket-enum.model';
+import {TicketEnumValue} from '../models/ticket-enum-value.model';
 
 export const ticketState = (state: RootState) => state.ticketState;
 

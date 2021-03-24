@@ -49,6 +49,7 @@
     "search": "Search tickets",
     "search_assignees": "Search",
     "created": "Created",
+    "closed": "Closed",
     "type": "Type",
     "reason": "Reason",
     "assigned_to": "Assigned To",
@@ -99,6 +100,7 @@
     },
     "unassigned": "Unassigned",
     "due": "Due",
+    "overdue": "Overdue",
     "pagination": "{{numOfItemsFrom}} - {{numOfItemsTo}} of {{totalCount}}"
   },
   "ccp": {
@@ -336,7 +338,7 @@
       "requested_by": "Requested by",
       "due_in": "Due In",
       "last_message": "Last message",
-      "archive": "Archive",
+      "delete": "Delete",
       "solved": "Solved",
       "close": "Close"
     },

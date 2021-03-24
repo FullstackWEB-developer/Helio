@@ -29,4 +29,5 @@ export interface Ticket {
     type?: string;
     feeds?: TicketFeed[];
     recordedConversationLink?: string;
+    isDeleted?: boolean;
 }

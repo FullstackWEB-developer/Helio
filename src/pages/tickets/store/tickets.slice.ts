@@ -122,7 +122,13 @@ const ticketsSlice = createSlice({
         },
         setTicketFilter(state, { payload }: PayloadAction<TicketQuery>) {
             state.ticketFilter = payload;
-        }
+        },
+        setTicketDelete(state, { payload }: PayloadAction<Ticket>) {
+            const ticket = state.tickets.find(t => t.id === payload.id);
+            if (ticket) {
+                ticket.isDeleted = !payload.isDeleted;
+            }
+        },
     }
 });
 
@@ -148,7 +154,8 @@ export const {
     endGetLookupValuesRequest,
     toggleTicketListFilter,
     setSearchTerm,
-    setTicketFilter
+    setTicketFilter,
+    setTicketDelete
 } = ticketsSlice.actions
 
 export default ticketsSlice.reducer

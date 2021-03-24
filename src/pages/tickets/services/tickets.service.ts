@@ -1,33 +1,36 @@
-import { Dispatch } from '@reduxjs/toolkit';
+import {PatientTicketsRequest} from '../models/patient-tickets-request';
+import {Dispatch} from '@reduxjs/toolkit';
 import Api from '../../../shared/services/api';
 import Logger from '../../../shared/services/logger';
-import { LookupValue } from '../models/lookup-value';
-import { TicketNote } from '../models/ticket-note';
+import {LookupValue} from '../models/lookup-value';
+import {TicketNote} from '../models/ticket-note';
 import store from '../../../app/store';
 import {
     add,
-    changeStatus,
-    changeAssignee,
-    setFailure,
     addPaging,
+    changeAssignee,
+    changeStatus,
+    endGetLookupValuesRequest,
+    endGetTicketEnumRequest,
+    endRequestAddFeed,
+    endRequestAddNote,
+    setFailure,
+    setLookupValues,
     setSearchTerm,
+    setTicket,
+    setTicketDelete,
+    setTicketEnum,
     setTicketFilter,
     setTicketsLoading,
-    startRequestAddNote,
-    endRequestAddNote,
-    startRequestAddFeed,
-    endRequestAddFeed,
-    setTicketEnum,
-    startGetTicketEnumRequest,
-    endGetTicketEnumRequest,
-    setLookupValues,
     startGeLookupValuesRequest,
-    endGetLookupValuesRequest, setTicket
+    startGetTicketEnumRequest,
+    startRequestAddFeed,
+    startRequestAddNote
 } from '../store/tickets.slice';
-import { Ticket } from '../models/ticket';
-import { Paging } from '../../../shared/models/paging.model';
-import { TicketQuery } from '../models/ticket-query';
-import { TicketFeed } from '../models/ticket-feed';
+import {Ticket} from '../models/ticket';
+import {Paging} from '../../../shared/models/paging.model';
+import {TicketQuery} from '../models/ticket-query';
+import {TicketFeed} from '../models/ticket-feed';
 
 const logger = Logger.getInstance();
 const ticketsBaseUrl = '/tickets';
@@ -39,7 +42,7 @@ export function getList(ticketQuery: TicketQuery, resetPagination?: boolean) {
         let query: any = ticketQuery;
         let queryParams = serialize(query);
         if (resetPagination) {
-            const {totalCount, totalPages, page, ...newQuery} = query;
+            const { totalCount, totalPages, page, ...newQuery } = query;
             queryParams = serialize(newQuery);
         }
 
@@ -58,7 +61,7 @@ export function getList(ticketQuery: TicketQuery, resetPagination?: boolean) {
             dispatch(addPaging(paging));
             dispatch(setSearchTerm(query.searchTerm ? query.searchTerm : ''));
 
-            const saveQuery : TicketQuery = {
+            const saveQuery: TicketQuery = {
                 ...paging,
                 ...query
             };
@@ -71,7 +74,7 @@ export function getList(ticketQuery: TicketQuery, resetPagination?: boolean) {
     }
 }
 
-const serialize = (obj : any) =>  {
+const serialize = (obj: any) => {
     const str = [];
     for (const p in obj) {
         if (obj.hasOwnProperty(p)) {
@@ -212,7 +215,7 @@ export const updateTicket = async (id: string, data: Ticket) => {
     const url = `${ticketsBaseUrl}/${id}`;
     let patchData = [];
     for (let [key, value] of Object.entries(data)) {
-        if(value) {
+        if (value) {
             patchData.push({
                 op: 'replace',
                 path: '/' + key,
@@ -225,10 +228,10 @@ export const updateTicket = async (id: string, data: Ticket) => {
         url: url,
         data: patchData
     })
-    .then()
-    .catch(error => {
-        logger.error(`Failed updating the ticket ${id}`, error);
-    });
+        .then()
+        .catch(error => {
+            logger.error(`Failed updating the ticket ${id}`, error);
+        });
 }
 
 export const getRecordedConversation = async (id: string) => {
@@ -239,5 +242,36 @@ export const getRecordedConversation = async (id: string) => {
     } catch (error) {
         logger.error(`Failed to get the recorded conversation `, error);
         return null;
+    }
+}
+
+export const getPatientTickets = async (queryRequest: PatientTicketsRequest, resetPagination?: boolean) => {
+    let query: any = queryRequest;
+    let queryParams = serialize(query);
+
+    if (resetPagination) {
+        const { totalCount, totalPages, page, ...newQuery } = query;
+        queryParams = serialize(newQuery);
+    }
+    let ticketsUrl = `${ticketsBaseUrl}/GetPatientTickets?${queryParams}`;
+    const response = await Api.get(ticketsUrl);
+    return response.data.results;
+}
+
+export const setDelete = (id: string, undoDelete?: boolean) => {
+    const url = `${ticketsBaseUrl}/${id}/delete`;
+    return async (dispatch: Dispatch) => {
+        await Api.put(url, {
+            undoDelete: undoDelete
+        })
+            .then(() => {
+                dispatch(setTicketDelete({
+                    id: id,
+                    isDeleted: !!undoDelete
+                }));
+            })
+            .catch(err => {
+                dispatch(setFailure(err.message));
+            });
     }
 }

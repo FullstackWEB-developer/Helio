@@ -1,10 +1,10 @@
 import { ReactComponent as ArrowDownIcon } from '../../../shared/icons/Icon-Arrow-down-16px.svg';
-import React, { useRef, useState } from 'react';
-import CircleIcon from '../../../shared/icons/circle-icon';
+import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { setStatus } from '../services/tickets.service';
 import customHooks from '../../../shared/hooks/customHooks';
+import TicketStatusDisplay from './ticket-status-display';
 
 interface TicketStatusProps {
     ticketId: string,
@@ -18,24 +18,6 @@ const TicketStatus = ({ ticketId, status, isArrow = true }: TicketStatusProps) =
 
     const statusSearchRef = useRef<HTMLDivElement>(null);
 
-    const renderStatus = (status: number | undefined) => {
-        switch (status) {
-            case 1:
-                return <CircleIcon color={'text-yellow-300'} />;
-            case 2:
-                return <CircleIcon color={'text-red-400'} />;
-            case 3:
-                return <CircleIcon color={'text-gray-300'} />;
-            case 4:
-                return <CircleIcon color={'text-green-300'} />;
-            case 5:
-                return <CircleIcon color={'text-green-300'} />;
-            case 6:
-                return <CircleIcon color={'text-gray-300'} />;
-            default:
-                return null;
-        }
-    }
     const updateStatus = (id: string, status: number) => {
         dispatch(setStatus(id, status));
         setSearchStatusToggle(false);
@@ -50,8 +32,7 @@ const TicketStatus = ({ ticketId, status, isArrow = true }: TicketStatusProps) =
     const statuses = [t('tickets.statuses.open'), t('tickets.statuses.on_hold'), t('tickets.statuses.in_progress'), t('tickets.statuses.solved'), t('tickets.statuses.closed')];
 
     return <div className='col-span-2 pt-6 flex flex-row relative'>
-        <div className='pt-1.5'>{renderStatus(status)}</div>
-        <div className='pl-3'>{status ? statuses[status - 1] : null}</div>
+        <TicketStatusDisplay status={status} iconClass='pt-1.5' labelClass='pl-3'></TicketStatusDisplay>
         {
             isArrow && <div className='pt-0.5 pl-4 cursor-pointer' onClick={() => openStatus()}>
                 <ArrowDownIcon />

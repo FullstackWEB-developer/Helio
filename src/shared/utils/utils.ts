@@ -19,7 +19,7 @@ const formatDate = (datetime: string) => {
 }
 
 const formatDate12HoursTime = (date: string) => {
-    return dayjs(date).format('M/D/YY h:mm A')
+    return dayjs(date).format('MMM D, YYYY h:mm A')
 }
 
 const getInitialsFromFullName = (username: string): string => {
