@@ -1,11 +1,11 @@
-import { useSelector } from 'react-redux';
-import { selectPatient, selectPatientChartSummary } from '../../store/patients.selectors';
-import { useTranslation } from 'react-i18next';
-import Table from '../../../../shared/components/table/table';
+import {useSelector} from 'react-redux';
+import {selectPatient, selectPatientChartSummary} from '../../store/patients.selectors';
+import {useTranslation} from 'react-i18next';
+import OldTable from '@components/old-table/old-table';
 import withErrorLogging from '../../../../shared/HOC/with-error-logging';
 
 const ContactInformation = () => {
-    const { t } = useTranslation();
+    const {t} = useTranslation();
 
     const booleanToText = (booleanValue: boolean): string => {
         return booleanValue ? 'common.yes' : 'common.no';
@@ -43,8 +43,8 @@ const ContactInformation = () => {
                 <div className={'font-bold text-lg'}>{t('patient.summary.contact_information')} </div>
             </div>
             <div className='grid grid-cols-2 gap-12'>
-                <Table headings={[]} rows={contactRows} />
-                <Table headings={[]} rows={contactSecondRows} />
+                <OldTable headings={[]} rows={contactRows}/>
+                <OldTable headings={[]} rows={contactSecondRows}/>
             </div>
         </div>
     );

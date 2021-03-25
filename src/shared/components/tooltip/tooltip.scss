@@ -1,0 +1,28 @@
+.tooltip-container {
+  box-shadow: var(--tooltip-box-shadow);
+  background-color: var(--color-white);
+
+  .arrow {
+    position: absolute;
+    width: 0.5rem;
+    height: 0.5rem;
+
+    &:after {
+      content: " ";
+      position: absolute;
+      top: -0.3125rem;
+      left: 0;
+      transform: rotate(45deg);
+      width: 0.5rem;
+      height: 0.5rem;
+      background-color: var(--color-white);
+      box-shadow: var(--tooltip-arrow-shadow);
+    }
+  }
+
+  &[data-popper-placement^="top"] > .arrow {
+    :after {
+      box-shadow: var(--tooltip-box-shadow);
+    }
+  }
+}

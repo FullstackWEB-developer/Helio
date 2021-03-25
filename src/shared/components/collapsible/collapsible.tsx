@@ -22,9 +22,9 @@ const Collapsible = ({title, children, isOpen = false} : AccordionProps) => {
     }
 
     return <div>
-        <div className='h-12 flex flex-row justify-between items-center'>
-            <div onClick={ () => toggle()} className='subtitle cursor-pointer'>{t(title || '')}</div>
-            <div className='cursor-pointer' onClick={ () => toggle()}>
+        <div className='h-12 cursor-pointer flex flex-row justify-between items-center' onClick={ () => toggle()}>
+            <div className='subtitle'>{t(title || '')}</div>
+            <div>
                 {open ? <ArrowUpIcon/> : <ArrowDownIcon/>}
             </div>
         </div>

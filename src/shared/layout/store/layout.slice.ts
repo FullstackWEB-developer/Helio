@@ -1,5 +1,6 @@
-import { createSlice } from '@reduxjs/toolkit';
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import initialState from './layout.initial-state';
+
 const layoutSlice = createSlice({
     name: 'layout',
     initialState,
@@ -7,8 +8,8 @@ const layoutSlice = createSlice({
         toggleNavigation(state) {
             state.isNavigationExpanded = !state.isNavigationExpanded
         },
-        toggleUserProfileMenu(state) {
-            state.isProfileMenuExpanded = !state.isProfileMenuExpanded
+        toggleUserProfileMenu(state, {payload}: PayloadAction<boolean>) {
+            state.isProfileMenuExpanded = payload
         },
         toggleCcp(state) {
             state.isCcpVisible = !state.isCcpVisible

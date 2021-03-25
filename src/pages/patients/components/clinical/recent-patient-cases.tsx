@@ -1,18 +1,18 @@
-import { useTranslation } from 'react-i18next';
-import Table, { Row } from '../../../../shared/components/table/table';
+import {useTranslation} from 'react-i18next';
+import OldTable, {Row} from '@components/old-table/old-table';
 import utils from '../../../../shared/utils/utils';
-import { useSelector } from 'react-redux';
-import { selectPatientClinical } from '../../store/patients.selectors';
+import {useSelector} from 'react-redux';
+import {selectPatientClinical} from '../../store/patients.selectors';
 import withErrorLogging from '../../../../shared/HOC/with-error-logging';
 
 const RecentPatientCases = () => {
-    const { t } = useTranslation();
+    const {t} = useTranslation();
     const patientClinical = useSelector(selectPatientClinical);
 
     const recentPatientsCases: Row[] = [];
 
     patientClinical.patientCases.forEach(patientCase => {
-        recentPatientsCases.push(
+            recentPatientsCases.push(
             { label: utils.formatDate(patientCase.createdDate), values: [patientCase.subject, patientCase.patientCaseType] }
         )
     }
@@ -24,8 +24,9 @@ const RecentPatientCases = () => {
                 <div className={'font-bold text-lg'}>{t('patient.clinical.recent_patient_cases')} </div>
             </div>
             <div className='pt-3'>
-                <Table headings={[t('patient.clinical.date'), t('patient.clinical.case_description'), t('patient.clinical.originated_by')]}
-                    rows={recentPatientsCases} dividerLine={true} />
+                <OldTable
+                    headings={[t('patient.clinical.date'), t('patient.clinical.case_description'), t('patient.clinical.originated_by')]}
+                    rows={recentPatientsCases} dividerLine={true}/>
             </div>
         </div>
     );

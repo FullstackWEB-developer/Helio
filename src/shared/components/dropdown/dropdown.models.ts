@@ -1,4 +1,5 @@
 import {ReactNode} from 'react';
+import {Option} from '@components/option/option';
 
 export interface CategoryItemModel {
     category: DropdownCategoryModel;
@@ -9,18 +10,17 @@ export interface CategoryItemModel {
 export interface DropdownModel {
     title?: string;
     header?: ReactNode;
+    asSelect?: boolean;
     items?: DropdownItemModel[];
     categorizedItems?: CategoryItemModel[];
-    onClick?: (id: string) => void;
-    selectedKey?: string;
+    onClick?: (id: string, item: DropdownItemModel) => void;
+    defaultValue?: string;
 }
 
-export interface DropdownItemModel {
-    text?: string;
+export interface DropdownItemModel extends Option {
     content?: ReactNode;
     icon?: ReactNode;
     hasDivider?: boolean;
-    key: string;
     isTitle?: boolean;
     onClick?: (id: string) => void;
     link?: DropdownLinkModel;

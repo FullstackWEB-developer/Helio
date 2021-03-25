@@ -1,6 +1,6 @@
-import { useTranslation } from 'react-i18next';
-import Table from '../../../../shared/components/table/table';
-import { useSelector } from 'react-redux';
+import {useTranslation} from 'react-i18next';
+import OldTable from '@components/old-table/old-table';
+import {useSelector} from 'react-redux';
 import {
     selectInsuranceLoading,
     selectIsInsuranceError,
@@ -60,8 +60,8 @@ const PatientInsurance = () => {
                 className='font-bold'>{primaryInsurance?.insurancePlanName}</span> {primaryInsuranceHeader}
             </div>
             <div className='grid grid-cols-2 pt-4'>
-                <Table headings={[t('patient.insurance.policy_info')]} rows={policyInfoRows} />
-                <Table headings={[t('patient.insurance.eligibility_info')]} rows={eligibilityInfoRows} />
+                <OldTable headings={[t('patient.insurance.policy_info')]} rows={policyInfoRows}/>
+                <OldTable headings={[t('patient.insurance.eligibility_info')]} rows={eligibilityInfoRows}/>
             </div>
         </div>
     }

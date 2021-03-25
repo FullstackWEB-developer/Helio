@@ -1,18 +1,19 @@
 import React, {useRef} from 'react';
-import { ReactComponent as MenuIcon } from '../icons/Icon-Menu-24px.svg';
+import {ReactComponent as MenuIcon} from '../icons/Icon-Menu-24px.svg';
 import Avatar from '../../shared/components/avatar/avatar';
-import { ReactComponent as AthenaIcon } from '../icons/Icon-Athena-24px.svg';
-import { ReactComponent as MSIcon } from '../icons/Icon-Office365-24px.svg';
+import {ReactComponent as AthenaIcon} from '../icons/Icon-Athena-24px.svg';
+import {ReactComponent as MSIcon} from '../icons/Icon-Office365-24px.svg';
 import SearchBar from '../components/search-bar/search-bar';
-import { useDispatch, useSelector } from 'react-redux';
-import { toggleNavigation, toggleUserProfileMenu } from './store/layout.slice';
-import { authenticationSelector } from '../store/app-user/appuser.selectors';
-import { isProfileMenuExpandedSelector } from './store/layout.selectors';
+import {useDispatch, useSelector} from 'react-redux';
+import {toggleNavigation, toggleUserProfileMenu} from './store/layout.slice';
+import {authenticationSelector} from '../store/app-user/appuser.selectors';
+import {isProfileMenuExpandedSelector} from './store/layout.selectors';
 import HelioLogo from '../icons/helio-logo';
-import customHooks from '../hooks/customHooks';
 import ProfileDropdown from './components/profile-dropdown';
 import utils from '../utils/utils';
 import {UserStatus} from '../store/app-user/app-user.models';
+import Tooltip from '@components/tooltip/tooltip';
+import customHooks from '../hooks/customHooks';
 
 const Header = () => {
     const dispatch = useDispatch();
@@ -20,15 +21,15 @@ const Header = () => {
     const username = auth.name as string;
     const userInitials = auth.isLoggedIn ? utils.getInitialsFromFullName(username) : '';
     const isProfileMenuOpen = useSelector(isProfileMenuExpandedSelector);
+    const avatarRef = useRef(null);
     const dropdownRef = useRef<HTMLDivElement>(null);
     const displayProfileMenu = () => {
-        setTimeout(() => dispatch(toggleUserProfileMenu()), 100);
+        setTimeout(() => dispatch(toggleUserProfileMenu(true)), 100);
     }
 
     customHooks.useOutsideClick([dropdownRef], () => {
-        dispatch(toggleUserProfileMenu());
+        dispatch(toggleUserProfileMenu(false));
     });
-
 
     return (
         <header className='items-center flex px-7 justify-between flex-row bg-primary text-primary'>
@@ -37,7 +38,7 @@ const Header = () => {
                     <MenuIcon className='cursor-pointer' onClick={() => dispatch(toggleNavigation())}/>
                 </div>
                 <div>
-                    <HelioLogo className='fill-current text-primary-600' />
+                    <HelioLogo className='fill-current text-primary-600'/>
                 </div>
                 <div className='block md:hidden cursor-pointer'>
                     <span onClick={() => displayProfileMenu()}>
@@ -60,15 +61,17 @@ const Header = () => {
                     <AthenaIcon className='cursor-pointer'/>
                 </div>
                 <div>
-                    <div className='hidden h-full md:block relative'>
-                        <div data-test-id='letter-avatar' className='cursor-pointer' onClick={() => displayProfileMenu()}>
+                    <div ref={dropdownRef} className='hidden h-full md:block relative'>
+                        <div ref={avatarRef} data-test-id='letter-avatar' className='cursor-pointer'
+                             onClick={() => displayProfileMenu()}>
                             <Avatar model={{
                                 initials: userInitials,
                                 status: UserStatus.Offline
                             }}/>
                         </div>
                         <div>
-                            {isProfileMenuOpen && <div ref={dropdownRef} className='absolute right-0.5 top-11 z-10'><ProfileDropdown/></div>}
+                            <Tooltip isVisible={isProfileMenuOpen}
+                                     targetRef={avatarRef}><ProfileDropdown/></Tooltip>
                         </div>
                     </div>
                 </div>

@@ -1,13 +1,13 @@
-import { useSelector } from 'react-redux';
-import { selectPatientChartSummary } from '../../store/patients.selectors';
-import { useTranslation } from 'react-i18next';
-import Table, { Row } from '../../../../shared/components/table/table';
+import {useSelector} from 'react-redux';
+import {selectPatientChartSummary} from '../../store/patients.selectors';
+import {useTranslation} from 'react-i18next';
+import OldTable, {Row} from '@components/old-table/old-table';
 import utils from '../../../../shared/utils/utils';
 import AppointmentDisplay from '../appointment-display';
 import withErrorLogging from '../../../../shared/HOC/with-error-logging';
 
 const Appointments = () => {
-    const { t } = useTranslation();
+    const {t} = useTranslation();
     const patientChartSummary = useSelector(selectPatientChartSummary);
 
     const recentPatientsCases: Row[] = [];
@@ -49,8 +49,8 @@ const Appointments = () => {
             <div>
                 <div className='font-bold text-lg border-b pb-1'>{t('patient.summary.recent_patient_cases')}</div>
                 <div className='pt-3'>
-                    <Table headings={[t('patient.summary.date'), t('patient.summary.case_description')]}
-                        rows={recentPatientsCases} dividerLine={true} />
+                    <OldTable headings={[t('patient.summary.date'), t('patient.summary.case_description')]}
+                              rows={recentPatientsCases} dividerLine={true}/>
                 </div>
             </div>
         </div>

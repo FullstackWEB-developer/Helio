@@ -1,10 +1,10 @@
-import { useSelector } from 'react-redux';
-import { selectPatientChartSummary } from '../../store/patients.selectors';
-import { useTranslation } from 'react-i18next';
-import Table, { Row } from '../../../../shared/components/table/table';
+import {useSelector} from 'react-redux';
+import {selectPatientChartSummary} from '../../store/patients.selectors';
+import {useTranslation} from 'react-i18next';
+import OldTable, {Row} from '@components/old-table/old-table';
 
 const OutstandingBalances = () => {
-    const { t } = useTranslation();
+    const {t} = useTranslation();
     const patientChartSummary = useSelector(selectPatientChartSummary);
 
     const toDollars = (value: number) => {
@@ -29,10 +29,10 @@ const OutstandingBalances = () => {
                 <div className={'font-bold text-lg'}>{t('patient.summary.outstanding_balances')} </div>
             </div>
             <div className='grid grid-cols-2 gap-12 pt-3'>
-                <Table headings={[t('patient.summary.total_balances')]} rows={totalBalanceRows}
-                    dividerLine={true} />
-                <Table headings={[t('patient.summary.patient_outstanding_balance')]} rows={outstandingBalanceRows}
-                    dividerLine={true} />
+                <OldTable headings={[t('patient.summary.total_balances')]} rows={totalBalanceRows}
+                          dividerLine={true}/>
+                <OldTable headings={[t('patient.summary.patient_outstanding_balance')]} rows={outstandingBalanceRows}
+                          dividerLine={true}/>
             </div>
         </div>
     );

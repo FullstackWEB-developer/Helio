@@ -15,19 +15,19 @@ const getIcon = (icon?: ReactNode) => {
 export interface DropdownCellProps {
     item: DropdownItemModel;
     isSelected?: boolean;
-    onClick?: (key: string) => void;
+    onClick?: (key: string, item: DropdownItemModel) => void;
 }
 
 
 const DropdownCell = ({item, isSelected, onClick}: DropdownCellProps) => {
-    const {text = '', content, hasDivider = false, className = '', link, icon} = item;
+    const {label = '', content, hasDivider = false, className = '', link, icon} = item;
     const {t} = useTranslation();
 
-    const getText = (text: string, content?: ReactNode) => {
-        if (content) {
-            return <span data-test-id='dropdown-cell-content'>{content}</span>;
+    const getText = (text: string, textContent?: ReactNode) => {
+        if (textContent) {
+            return <span data-test-id='dropdown-cell-content'>{textContent}</span>;
         } else {
-            return <div className='flex items-center' data-test-id='dropdown-cell-text'>{t(text)}</div>;
+            return <div className='flex items-center' data-test-id={`dropdown-cell-text-${text}`}>{t(text)}</div>;
         }
     }
 
@@ -48,7 +48,7 @@ const DropdownCell = ({item, isSelected, onClick}: DropdownCellProps) => {
 
     const cellClicked = () => {
         if (onClick) {
-            onClick(item.key);
+            onClick(item.value, item);
         }
     }
     return <>
@@ -56,7 +56,7 @@ const DropdownCell = ({item, isSelected, onClick}: DropdownCellProps) => {
                 className={`w-full ${ content ? '' : 'px-4'} dropdown-cell justify-between flex items-center ${calculateCss()} ${className} ${bgCssClass}`}>
                 <div data-test-id='dropdown-cell-icon-content' className={'flex flex-row w-full items-center'}>
                     {getIcon(icon)}
-                    {getText(text, content)}
+                    {getText(label, content)}
                 </div>
                 {link && link.onClick && <DropdownLink onClick={() => link.onClick()} title={link.title} /> }
             </div>

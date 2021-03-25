@@ -1,18 +1,18 @@
 import {useTranslation} from 'react-i18next';
 import {useDispatch, useSelector} from 'react-redux';
 import {logOut, updateUserStatus} from '../../store/app-user/appuser.slice';
-import {msalInstance} from '../../../pages/login/auth-config';
+import {msalInstance} from '@pages/login/auth-config';
 import {ReactComponent as PlaceholderIcon} from '../../icons/Icon-Placeholder-16px.svg';
 import {UserStatus} from '../../store/app-user/app-user.models';
-import {StatusIndicatorYellow} from '../../icons/StatusIndicatorYellow';
-import {StatusIndicatorGray} from '../../icons/StatusIndicatorGray';
-import {DropdownItemModel, DropdownModel} from '../../components/dropdown/dropdown.models';
+import {StatusIndicatorYellow} from '@icons/StatusIndicatorYellow';
+import {StatusIndicatorGray} from '@icons/StatusIndicatorGray';
+import {DropdownItemModel, DropdownModel} from '@components/dropdown/dropdown.models';
 import {selectUserStatus} from '../../store/app-user/appuser.selectors';
 import Logger from '../../services/logger';
 import Dropdown from '../../components/dropdown/dropdown';
 
 const ProfileDropdown = () => {
-    const { t } = useTranslation();
+    const {t} = useTranslation();
     const dispatch = useDispatch();
     const currentUserStatus = useSelector(selectUserStatus);
     const logger = Logger.getInstance();
@@ -49,9 +49,9 @@ const ProfileDropdown = () => {
     statusList.forEach((status) => {
         if (status.value !== currentUserStatus) {
             items.push({
-                text: status.label,
+                label: status.label,
                 onClick: () => updateStatus(status.value),
-                key: status.value,
+                value: status.value,
                 hasDivider: items.length === 0,
                 icon: GetIconByStatus(status.value)
             });
@@ -59,20 +59,20 @@ const ProfileDropdown = () => {
     });
 
     items.push({
-        text: t('user_profile.my_profile'),
-        key: 'my_profile',
+        label: t('user_profile.my_profile'),
+        value: 'my_profile',
         hasDivider: true,
         icon: <PlaceholderIcon/>
     });
     items.push({
-        text: t('user_profile.my_stats'),
-        key: 'my_stats',
+        label: t('user_profile.my_stats'),
+        value: 'my_stats',
         icon: <PlaceholderIcon/>
     });
     items.push({
-        text: t('user_profile.sign_out'),
+        label: t('user_profile.sign_out'),
         onClick: () => signOut(),
-        key: 'sign_out',
+        value: 'sign_out',
         icon: <PlaceholderIcon/>
     });
 

@@ -1,33 +1,31 @@
 import React, {useRef, useState} from 'react';
-import { SearchType } from './models/search-type';
-import { ReactComponent as SearchIcon } from '../../icons/Icon-Search-16px.svg';
-import {
-    selectRecentPatients,
-    selectSearchTypeFiltered,
-    selectSelectedType,
-} from './store/search-bar.selectors';
+import {SearchType} from './models/search-type';
+import {ReactComponent as SearchIcon} from '@icons/Icon-Search-16px.svg';
+import {selectRecentPatients, selectSearchTypeFiltered, selectSelectedType,} from './store/search-bar.selectors';
 import {
     changeFilteredTypes,
-    clearRecentPatients,
     changeTypeDown,
     changeTypeUp,
-    setType } from './store/search-bar.slice';
-import { searchPatients } from '../../services/search.service';
-import { useDispatch, useSelector } from 'react-redux';
-import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
-import { RecentPatient } from './models/recent-patient';
+    clearRecentPatients,
+    setType
+} from './store/search-bar.slice';
+import {searchPatients} from '../../services/search.service';
+import {useDispatch, useSelector} from 'react-redux';
+import {useTranslation} from 'react-i18next';
+import {useHistory} from 'react-router-dom';
+import {RecentPatient} from './models/recent-patient';
 import RecentPatientDetails from './components/recent-patient-details';
-import { searchType } from './constants/search-type';
-import { keyboardKeys } from './constants/keyboard-keys';
-import { clearPatients } from '../../../pages/patients/store/patients.slice';
+import {searchType} from './constants/search-type';
+import {keyboardKeys} from './constants/keyboard-keys';
+import {clearPatients} from '@pages/patients/store/patients.slice';
 import Dropdown from '../dropdown/dropdown';
 import {CategoryItemModel, DropdownItemModel, DropdownModel} from '../dropdown/dropdown.models';
 import {ReactComponent as PlaceholderIcon} from '../../icons/Icon-Placeholder-16px.svg';
 import './search-bar.scss';
 import customHooks from '../../hooks/customHooks';
+
 const SearchBar = () => {
-    const { t } = useTranslation();
+    const {t} = useTranslation();
     const dispatch = useDispatch();
     const history = useHistory();
     const [dropdownDisplayed, displayDropdown] = useState(false);
@@ -85,8 +83,8 @@ const SearchBar = () => {
     const searchTypes = searchTypeFiltered.map((typeItem: SearchType) => {
         return {
             onClick: (key) => search(parseInt(key)),
-            key: typeItem.type.toString(),
-            text: t(typeItem.label)
+            value: typeItem.type.toString(),
+            label: t(typeItem.label)
         } as DropdownItemModel;
     });
 
@@ -112,8 +110,8 @@ const SearchBar = () => {
             },
             items: [
                 {
-                    text: t('search.search_type.contact_name'),
-                    key: 'item-2-1'
+                    label: t('search.search_type.contact_name'),
+                    value: 'item-2-1'
                 }
             ]
         });
@@ -126,12 +124,12 @@ const SearchBar = () => {
             },
             items: [
                 {
-                    text:  t('search.search_type.ticket_id'),
-                    key: 'item-3-1'
+                    label: t('search.search_type.ticket_id'),
+                    value: 'item-3-1'
                 },
                 {
-                    text:  t('search.search_type.patient_or_contact_name'),
-                    key: 'item-3-2'
+                    label: t('search.search_type.patient_or_contact_name'),
+                    value: 'item-3-2'
                 }
             ]
         });
@@ -143,19 +141,19 @@ const SearchBar = () => {
 
         if (recentPatients.length > 0) {
             items.push({
-                text: 'search.recent_searches',
+                label: 'search.recent_searches',
                 link: {
-                    onClick :() => clearRecent(),
+                    onClick: () => clearRecent(),
                     title: 'common.clear'
                 },
                 hasDivider: true,
                 isTitle: true,
-                key: '2'
+                value: '2'
             });
 
             recentPatients.forEach((patient: RecentPatient) => {
                 const item = {
-                    key: patient.patientId.toString(),
+                    value: patient.patientId.toString(),
                     content: <RecentPatientDetails patient={patient}/>,
                     onClick: (_) => selectRecent(patient)
                 } as DropdownItemModel;
@@ -168,9 +166,9 @@ const SearchBar = () => {
     }
 
     const searchDropdownModel : DropdownModel = {
-        title : t('search.search_title'),
-        selectedKey : selectedType.toString(),
-        categorizedItems : getCategorizedItems(),
+        title: t('search.search_title'),
+        defaultValue: selectedType.toString(),
+        categorizedItems: getCategorizedItems(),
         items: getItems()
     }
 
