@@ -1,4 +1,5 @@
 import * as msal from '@azure/msal-browser';
+import { PopupRequest } from '@azure/msal-browser';
 
 const msalConfig = {
     auth: {
@@ -7,6 +8,12 @@ const msalConfig = {
         validateAuthority: true
     },
 
+};
+
+export const loginRequest: PopupRequest = {
+    scopes: [
+        'User.Read',
+    ]
 };
 
 export const msalInstance = new msal.PublicClientApplication(msalConfig);
