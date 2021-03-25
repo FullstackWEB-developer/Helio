@@ -138,14 +138,14 @@ const Ccp: React.FC<BoxProps> = ({
             style={{ left, top }}
             onMouseEnter={() => setHover(true)}
             onMouseLeave={() => setHover(false)}
+            ref={drag}
         >
-            <div ref={drag}
-                className={'ccp-title border pl-1.5 bg-white ' + (isHover ? 'visible' : 'invisible')}>
+            <div className={'ccp-title border pl-1.5 bg-white ' + (isHover ? 'visible' : 'invisible')}>
                 {t('ccp.title')}
             </div>
             <div className={'flex h-full'}>
                 <div className={'flex flex-col h-full'}>
-                    <div data-test-id='ccp-container' id='ccp-container' className='h-full overflow-hidden'> </div>
+                    <div data-test-id='ccp-container' id='ccp-container' className='h-full overflow-hidden ccp-drag-background'> </div>
                     <div className={'flex justify-between w-full px-10 py-2 shadow-md  border-t ccp-bottom-bar ' + (isBottomBarVisible ? 'block' : 'hidden')}>
                         <Bot className='cursor-pointer' onClick={() => dispatch(setContextPanel(contextPanels.bot))} />
                         {
