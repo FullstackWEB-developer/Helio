@@ -47,7 +47,7 @@ const PatientTickets: React.FC<PatientTicketProps> = ({patientId}) => {
                 : (
                     <Fragment>
                         <div className={'py-3 cursor-pointer align-middle border-b'}
-                            onClick={() => history.push('/my_tickets/new')}><AddIcon /></div>
+                            onClick={() => history.push('/my_tickets/new?patientId='+ patientId)}><AddIcon /></div>
                         {
                             error && <div className={'pt-4 text-red-500'}>{t('common.error')}</div>
                         }

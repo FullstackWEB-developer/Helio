@@ -109,6 +109,9 @@ const TicketNew = () => {
         history.push('/my_tickets');
     }
 
+    const queryparams = new URLSearchParams(window.location.search);
+    const queryPatientId = queryparams.get('patientId');
+
     useEffect(() => {
         dispatch(getUserList());
         dispatch(getContacts());
@@ -477,7 +480,7 @@ const TicketNew = () => {
                     <Controller
                         name='patientChartNumber'
                         control={control}
-                        defaultValue=''
+                        defaultValue={queryPatientId}
                         placeholder={t('ticket_new.patient_chart_number')}
                         as={Input}
                         className={'w-full border-none h-14'}

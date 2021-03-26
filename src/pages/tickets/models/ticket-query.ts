@@ -1,4 +1,4 @@
-import {Paging} from '../../../shared/models/paging.model';
+import { Paging } from '../../../shared/models/paging.model';
 
 export interface TicketQuery extends Paging {
     searchTerm?: string;
@@ -13,4 +13,5 @@ export interface TicketQuery extends Paging {
     locations?: string[];
     assignedTo?: string[];
     tags?: string[];
+    includeDeletedItems?: boolean;
 }
