@@ -29,6 +29,9 @@ const DailyHotspots = ({dailyhotspot}: DailyHotspotsProps) => {
 
     const hotspotTableModel: TableModel = {
         hasRowsBottomBorder: true,
+        title: {
+            title: dayjs(dailyhotspot.date).format('dddd, MMM DD, YYYY'),
+        },
         rows: getEnrichedData(dailyhotspot.details),
         columns: [
             {
@@ -46,16 +49,14 @@ const DailyHotspots = ({dailyhotspot}: DailyHotspotsProps) => {
             {
                 title: 'appointment.hot_spots.location',
                 field: 'department',
-                alignment: 'end',
-                widthClass: 'w-56'
+                widthClass: 'w-56',
+                rowClassname: 'pl-9',
+                headerClassName: 'pl-9'
             }
         ]
     }
     return (<>
-        <div data-test-id='hot-spot-date' className='border-b py-5 subtitle'>
-            {dayjs(dailyhotspot.date).format('dddd, MMM DD, YYYY')}
-        </div>
-        <div>
+        <div className='pb-9' data-test-id='hot-spot-table'>
             <Table model={hotspotTableModel}/>
         </div>
     </>);

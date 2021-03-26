@@ -2,19 +2,21 @@ import {TableModel} from './table.models';
 import TableHeader from './table-header';
 import TableRow from './table-row';
 import React from 'react';
+import TableTitle from './table-title';
 
 export interface Table2Props {
     model: TableModel
 }
 
 const Table = ({model}: Table2Props) => {
-    const {columns, rows, hideHeader = false, hasRowsBottomBorder, isCompact = false} = model;
+    const {columns, rows, hideHeader = false, hasRowsBottomBorder, title, isCompact = false} = model;
     const rowContent = React.Children.toArray(rows.map(row => {
         return <div className={hasRowsBottomBorder ? 'border-b' : ''}>
             <TableRow isCompact={isCompact} columns={columns} data={row}/>
         </div>
     }));
     return <div className='flex flex-col'>
+        {title && <TableTitle model={title} isCompact={isCompact}/>}
         {!hideHeader && <TableHeader headers={columns}/>}
         {rowContent}
     </div>;

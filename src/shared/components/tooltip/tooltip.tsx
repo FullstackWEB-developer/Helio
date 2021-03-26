@@ -40,7 +40,7 @@ const Tooltip = ({targetRef, isVisible, children, placement = 'bottom'}: Tooltip
     }
 
     return (
-        <div className='tooltip-container' data-test-id='tooltip-container'
+        <div className='tooltip-container z-10' data-test-id='tooltip-container'
              ref={popperRef}
              style={styles.popper}
              {...attributes.popper}

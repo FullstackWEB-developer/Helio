@@ -6,6 +6,7 @@ export interface TableModel {
     hideHeader?: boolean;
     hasRowsBottomBorder?: boolean;
     isCompact?: boolean;
+    title?: TableTitleModel;
 }
 
 export interface TableColumnModel {
@@ -15,4 +16,9 @@ export interface TableColumnModel {
     widthClass: string;
     field: string;
     alignment?: 'start' | 'end' | 'center'
+}
+
+export interface TableTitleModel {
+    title: string;
+    style?: 'default' | 'primary'
 }
