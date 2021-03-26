@@ -52,7 +52,7 @@ const TicketDetail = () => {
                     <TicketDetailAddNote ticket={ticket}/>
                 </div>
             </div>
-            <div className='w-1/4 border-l pt-12 px-2'>
+            <div className='w-1/4 border-l pt-12 px-2 overflow-y-auto'>
                 <TicketInfoPanel ticket={ticket}/>
             </div>
         </div>

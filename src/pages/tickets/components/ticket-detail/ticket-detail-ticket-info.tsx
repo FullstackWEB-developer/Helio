@@ -141,6 +141,12 @@ const TicketDetailTicketInfo = ({ ticket }: TicketInfoProps ) => {
         locationOptions, selectedLocation, ticket?.location,
     ]);
 
+    useEffect(() => {
+        if(ticket?.status) {
+            setSelectedStatus(statusOptions.find((o: Option) => parseInt(o.value) === ticket?.status));
+        }
+    }, [ticket?.status])
+
     const getTicketLookupValuesOptions = (data: any[] | undefined) => {
         if (data) {
             return convertToOptions(data)
@@ -200,72 +206,14 @@ const TicketDetailTicketInfo = ({ ticket }: TicketInfoProps ) => {
         reasonOptions, selectedReason, ticket?.reason,
         departmentOptions, selectedDepartment, ticket?.department]);
 
-    const handleChangeStatus = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const handleChangeItem = (event: React.ChangeEvent<HTMLSelectElement>, itemType: Option[], dirtyField: string, setter: Function) => {
         event.stopPropagation();
         const selectedOption =
-            statusOptions ? statusOptions.find((o: Option) => o.value.toString() === event.target.value) : {} as any;
+            itemType ? itemType.find((o: Option) => o.value.toString() === event.target.value) : {} as any;
 
         if (selectedOption) {
-            setSelectedStatus(selectedOption);
-            formState.dirtyFields.status = true
-            setIsTicketInfoButtonsVisible(true);
-        }
-    }
-
-    const handleChangePriority = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        event.stopPropagation();
-        const selectedOption =
-            priorityOptions ? priorityOptions.find((o: Option) => o.value.toString() === event.target.value) : {} as any;
-
-        if (selectedOption) {
-            setSelectedPriority(selectedOption);
-            formState.dirtyFields.priority = true
-            setIsTicketInfoButtonsVisible(true);
-        }
-    }
-
-    const handleChangeTicketType = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        event.stopPropagation();
-        const selectedTicketType =
-            ticketTypeOptions ? ticketTypeOptions.find((o: Option) => o.value.toString() === event.target.value) : {} as any;
-
-        setSelectedTicketTypeOption(selectedTicketType);
-        formState.dirtyFields.ticketType = true
-        setIsTicketInfoButtonsVisible(true);
-    }
-
-    const handleChangeReason = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        event.stopPropagation();
-        const selectedOption =
-            reasonOptions ? reasonOptions.find((o: Option) => o.value.toString() === event.target.value) : {} as any;
-
-        if (selectedOption) {
-            setSelectedReason(selectedOption);
-            formState.dirtyFields.reason = true
-            setIsTicketInfoButtonsVisible(true);
-        }
-    }
-
-    const handleChangeDepartment = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        event.stopPropagation();
-        const selectedOption =
-            departmentOptions ? departmentOptions.find((o: Option) => o.value.toString() === event.target.value) : {} as any;
-
-        if (selectedOption) {
-            setSelectedDepartment(selectedOption);
-            formState.dirtyFields.department = true
-            setIsTicketInfoButtonsVisible(true);
-        }
-    }
-
-    const handleChangeLocation = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        event.stopPropagation();
-        const selectedOption =
-            locationOptions ? locationOptions.find((o: Option) => o.value.toString() === event.target.value) : {} as any;
-
-        if (selectedOption) {
-            setSelectedLocation(selectedOption);
-            formState.dirtyFields.location = true
+            setter(selectedOption);
+            formState.dirtyFields[dirtyField] = true
             setIsTicketInfoButtonsVisible(true);
         }
     }
@@ -322,7 +270,7 @@ const TicketDetailTicketInfo = ({ ticket }: TicketInfoProps ) => {
                                 value={selectedStatus?.value}
                                 onChange={(e: ChangeEvent<HTMLSelectElement>) => {
                                     props.onChange(e)
-                                    handleChangeStatus(e);
+                                    handleChangeItem(e, statusOptions, "status", setSelectedStatus);
                                 }}
                                 error={errors.status?.message}
                             />
@@ -343,7 +291,7 @@ const TicketDetailTicketInfo = ({ ticket }: TicketInfoProps ) => {
                                 value={selectedPriority?.value}
                                 onChange={(e: ChangeEvent<HTMLSelectElement>) => {
                                     props.onChange(e)
-                                    handleChangePriority(e);
+                                    handleChangeItem(e, priorityOptions, "priority", setSelectedPriority);
                                 }}
                                 error={errors.priority?.message}
                             />
@@ -363,7 +311,7 @@ const TicketDetailTicketInfo = ({ ticket }: TicketInfoProps ) => {
                                 value={selectedTicketTypeOption?.value}
                                 onChange={(e: ChangeEvent<HTMLSelectElement>) => {
                                     props.onChange(e)
-                                    handleChangeTicketType(e);
+                                    handleChangeItem(e, ticketTypeOptions, "ticketType", setSelectedTicketTypeOption);
                                 }}
                                 error={errors.ticketType?.message}
                             />
@@ -385,7 +333,7 @@ const TicketDetailTicketInfo = ({ ticket }: TicketInfoProps ) => {
                                 value={selectedReason?.value}
                                 onChange={(e: ChangeEvent<HTMLSelectElement>) => {
                                     props.onChange(e)
-                                    handleChangeReason(e);
+                                    handleChangeItem(e, reasonOptions, "reason", setSelectedReason);
                                 }}
                             />
                         )}
@@ -406,7 +354,7 @@ const TicketDetailTicketInfo = ({ ticket }: TicketInfoProps ) => {
                                 value={selectedDepartment?.value}
                                 onChange={(e: ChangeEvent<HTMLSelectElement>) => {
                                     props.onChange(e)
-                                    handleChangeDepartment(e);
+                                    handleChangeItem(e, departmentOptions, "department", setSelectedDepartment);
                                 }}
                             />
                         )}
@@ -426,7 +374,7 @@ const TicketDetailTicketInfo = ({ ticket }: TicketInfoProps ) => {
                                 value={selectedLocation?.value}
                                 onChange={(e: ChangeEvent<HTMLSelectElement>) => {
                                     props.onChange(e)
-                                    handleChangeLocation(e);
+                                    handleChangeItem(e, locationOptions, "location", setSelectedLocation);
                                 }}
                                 error={errors.location?.message}
                             />

@@ -167,28 +167,28 @@ export const addFeed = (id: string, feed: TicketFeed) => {
 
 export const getEnumByType = (enumType: string) => {
     const getEnumUrl = `${ticketsBaseUrl}/lookup/${enumType}`;
-
+    const stateEnumValues = store.getState().ticketState.enumValues?.find((a: LookupValue) => a.key === enumType) || undefined;
     return async (dispatch: Dispatch) => {
-        dispatch(startGetTicketEnumRequest());
-        await Api.get(getEnumUrl)
-            .then(response => {
-                dispatch(setTicketEnum({ key: enumType, result: response.data }));
-                dispatch(endGetTicketEnumRequest(''));
-            })
-            .catch(error => {
-                logger.error(`Failed getting ${enumType}`, error);
-                dispatch(endGetTicketEnumRequest('ticket-new.error'));
-            });
+        if(!stateEnumValues) {
+            dispatch(startGetTicketEnumRequest());
+            await Api.get(getEnumUrl)
+                .then(response => {
+                    dispatch(setTicketEnum({ key: enumType, result: response.data }));
+                    dispatch(endGetTicketEnumRequest(''));
+                })
+                .catch(error => {
+                    logger.error(`Failed getting ${enumType}`, error);
+                    dispatch(endGetTicketEnumRequest('ticket-new.error'));
+                });
+        }
     }
 }
 
 export const getLookupValues = (key: string) => {
     const getLookupValuesUrl = `/lookups/values/${key}`;
-    const stateLookupValues = store.getState().ticketState.lookupValues;
-    const lookupValue = stateLookupValues ?
-        store.getState().ticketState.lookupValues.find((a: LookupValue) => a.key === key) : undefined;
+    const stateLookupValues = store.getState().ticketState.lookupValues?.find((a: LookupValue) => a.key === key) || undefined;
     return async (dispatch: Dispatch) => {
-        if (!lookupValue) {
+        if (!stateLookupValues) {
             dispatch(startGeLookupValuesRequest());
             await Api.get(getLookupValuesUrl)
                 .then(response => {

@@ -79,11 +79,11 @@ const TicketDetailFeed = ({ticket}: TicketDetailFeedProps) => {
         return <div className='p-4 h7' data-test-id='ticket-detail-feed-not-found'>{t('ticket_detail.feed.not_found')}</div>
     }
 
-    return <Fragment>
+    return <div className={'overflow-y-auto h-96'}>
             {
                 sortByDate(feedItems).map((feedItem: FeedDetailDisplayItem, index) => <FeedDetailItem key={index} item={feedItem} />)
             }
-        </Fragment>
+        </div>
 };
 
 export default withErrorLogging(TicketDetailFeed);
