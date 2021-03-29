@@ -1,6 +1,5 @@
 import { AvatarModel } from './avatar.models';
-import { UserStatus } from '../../store/app-user/app-user.models';
-import './avatar.scss';
+import StatusDot from '@components/status-dot/status-dot';
 
 export interface AvatarProps {
     model: AvatarModel
@@ -8,18 +7,6 @@ export interface AvatarProps {
 
 const Avatar = ({model}: AvatarProps) => {
     const { initials, status } = model;
-    let className;
-    if (status) {
-        if (status === UserStatus.AfterWork) {
-            className = 'fill-yellow';
-        } else if (status === UserStatus.Available || status === UserStatus.Routable) {
-            className = 'fill-green';
-        } else if (status === UserStatus.Busy || status === UserStatus.OnCall) {
-            className = 'fill-red';
-        } else {
-            className = 'fill-gray';
-        }
-    }
 
     return (
         <svg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'>
@@ -30,11 +17,7 @@ const Avatar = ({model}: AvatarProps) => {
                 </text>
                 <rect width='14' height='14' transform='translate(1740 42)' fill='none'/>
                 {status ?
-                    <g data-name='Status indicator' transform='translate(1740 42)' stroke='#fff'
-                       strokeWidth='2' className={className}>
-                        <circle cx='7' cy='7' r='7' stroke='none'/>
-                        <circle cx='7' cy='7' r='6' fill='none'/>
-                    </g>
+                    <StatusDot  model={{status: status}}/>
                     : <></>}
             </g>
         </svg>
