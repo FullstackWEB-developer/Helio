@@ -7,7 +7,9 @@ const msalConfig = {
         authority: 'https://login.microsoftonline.com/' + process.env.REACT_APP_MSAL_TENANTID,
         validateAuthority: true
     },
-
+    cache: {
+        cacheLocation: 'localStorage'
+    }
 };
 
 export const loginRequest: PopupRequest = {

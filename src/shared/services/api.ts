@@ -1,9 +1,9 @@
 import axios from 'axios';
 import { InteractionRequiredAuthError } from '@azure/msal-common';
-import { Dispatch } from '@reduxjs/toolkit';
 import { logOut } from '../store/app-user/appuser.slice';
-import { loginRequest, msalInstance } from '../../pages/login/auth-config';
+import { loginRequest, msalInstance } from '@pages/login/auth-config';
 import Logger from './logger';
+import store from '../../app/store';
 
 const logger = Logger.getInstance();
 
@@ -23,8 +23,14 @@ Api.interceptors.request.use(async (config) => {
 );
 
 export const refreshAccessToken = async () => {
+    const isLoggedIn = store.getState().appUserState.auth.isLoggedIn;
+    if (!isLoggedIn) {
+        return null;
+    }
+
     const accounts = msalInstance.getAllAccounts();
     const account = accounts[0] || undefined;
+
     if (account) {
         return  await msalInstance.acquireTokenSilent({
             ...loginRequest,
@@ -55,16 +61,14 @@ Api.interceptors.response.use(
 )
 
 const signOut = () => {
-    return (dispatch: Dispatch) => {
-        dispatch(logOut());
-        msalInstance.logout()
-            .then(() => {
-                logger.info('Logged out successfully!');
-            })
-            .catch((reason: any) => {
-                logger.error('Error logging out ' + JSON.stringify(reason));
-            });
-    }
+    store.dispatch(logOut());
+    msalInstance.logout()
+        .then(() => {
+            logger.info('Logged out successfully!');
+        })
+        .catch((reason: any) => {
+            logger.error('Error logging out ' + JSON.stringify(reason));
+        });
 }
 
 export default Api;

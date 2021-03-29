@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@azure/msal-browser": "^2.9.0",
-    "@azure/msal-react": "^1.0.0-alpha.2",
+    "@azure/msal-browser": "^2.13.0",
+    "@azure/msal-react": "^1.0.0-beta.1",
     "@craco/craco": "^6.1.1",
     "@popperjs/core": "^2.9.1",
     "@reduxjs/toolkit": "^1.5.0",
