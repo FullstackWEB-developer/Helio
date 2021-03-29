@@ -14,6 +14,7 @@ import {
 } from '../../store/tickets.selectors';
 import { TicketFeed } from '../../models/ticket-feed';
 import ThreeDots from '../../../../shared/components/skeleton-loader/skeleton-loader';
+import './ticket-detail-feed.scss';
 
 interface TicketDetailFeedProps {
     ticket: Ticket
@@ -79,7 +80,7 @@ const TicketDetailFeed = ({ticket}: TicketDetailFeedProps) => {
         return <div className='p-4 h7' data-test-id='ticket-detail-feed-not-found'>{t('ticket_detail.feed.not_found')}</div>
     }
 
-    return <div className={'overflow-y-auto h-96'}>
+    return <div className={'overflow-y-auto h-full-minus-31'}>
             {
                 sortByDate(feedItems).map((feedItem: FeedDetailDisplayItem, index) => <FeedDetailItem key={index} item={feedItem} />)
             }
