@@ -1,13 +1,12 @@
-import { StatusDotModel } from '@components/status-dot/status-dot.model';
 import { UserStatus } from '../../store/app-user/app-user.models';
 import './status-dot.scss';
 
 export interface StatusDotProps {
-    model: StatusDotModel
+    status: string,
+    isBorderAround?: boolean
 }
 
-const StatusDot = ({model}: StatusDotProps) => {
-    const { status } = model;
+const StatusDot = ({status, isBorderAround = false}: StatusDotProps) => {
     let className;
     if (status) {
         if (status === UserStatus.AfterWork) {
@@ -21,12 +20,18 @@ const StatusDot = ({model}: StatusDotProps) => {
         }
     }
 
-    return (
-        <g data-name='Status indicator' transform='translate(1740 42)' stroke='#fff'
-           strokeWidth='2' className={className}>
-            <circle cx='7' cy='7' r='7' stroke='none'/>
-            <circle cx='7' cy='7' r='6' fill='none'/>
-        </g>
+    return (isBorderAround ?
+        <svg width="10" height="10" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g data-name='Status indicator with border' stroke='#fff' strokeWidth='2' className={className}>
+                <circle cx="8" cy="8" r="8" stroke='none'/>
+                <circle cx="8" cy="8" r="7" fill='none'/>
+            </g>
+        </svg> :
+        <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g data-name='Status indicator' className={className}>
+                <circle cx="5" cy="5" r="4" stroke='none'/>
+            </g>
+        </svg>
     );
 }
 
