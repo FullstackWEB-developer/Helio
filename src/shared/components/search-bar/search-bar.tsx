@@ -177,18 +177,26 @@ const SearchBar = () => {
     });
 
     return (
-        <div className='relative z-10'  ref={dropdownRef}>
-            <div className='border-r border-l px-4 h-16 global-search-input'>
-                <input type='text' className='focus:outline-none h-full w-full ' placeholder={t('search.placeholder')}
-                    onFocus={() => displayDropdown(true)} onClick={() => displayDropdown(true)}
-                    onChange={(e) => textChange(e)} onKeyDown={(e) => handleKey(e)}
-                    value={text} />
-                <span className={'absolute inset-y-0 right-0 flex items-center pr-4 cursor-pointer'}>
-                    <SearchIcon onClick={() => search()} />
-                </span>
+        <div className='relative z-10' ref={dropdownRef}>
+            <div className='border-r border-l h-16 global-search-input'>
+
+                <div className='flex flex-row h-full'>
+                    <div className='pl-6 flex items-center'>
+                        <SearchIcon onClick={() => search()}/>
+                    </div>
+                    <div className='w-full body2-medium'>
+                        <input type='text' className='focus:outline-none h-full w-full px-4'
+                               placeholder={t('search.placeholder')}
+                               onFocus={() => displayDropdown(true)} onClick={() => displayDropdown(true)}
+                               onChange={(e) => textChange(e)} onKeyDown={(e) => handleKey(e)}
+                               value={text}/>
+                    </div>
+                </div>
+
+
             </div>
             {dropdownDisplayed && <div className='absolute'>
-                <Dropdown model={searchDropdownModel} />
+                <Dropdown model={searchDropdownModel}/>
             </div>}
         </div>
     );

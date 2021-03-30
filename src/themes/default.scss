@@ -196,32 +196,41 @@
   --body2-white-letter-spacing: normal;
   --body2-white-color: var(--color-white);
 
-    --body3-font-family: var(--font-regular);
-    --body3-font-size: 0.75rem;
-    --body3-font-weight: 500;
-    --body3-font-stretch: normal;
-    --body3-font-style: normal;
-    --body3-line-height: 1rem;
-    --body3-letter-spacing: normal;
-    --body3-color: var(--light-text-high-emphasis);
+  --body3-font-family: var(--font-regular);
+  --body3-font-size: 0.75rem;
+  --body3-font-weight: 500;
+  --body3-font-stretch: normal;
+  --body3-font-style: normal;
+  --body3-line-height: 1rem;
+  --body3-letter-spacing: normal;
+  --body3-color: var(--light-text-high-emphasis);
 
-    --body3-small-font-family: var(--font-regular);
-    --body3-small-font-size: 0.75rem;
-    --body3-small-font-weight: 500;
-    --body3-small-font-stretch: normal;
-    --body3-small-font-style: normal;
-    --body3-small-line-height: 1rem;
-    --body3-small-letter-spacing: normal;
-    --body3-small-color: var(--light-text-medium-emphasis);
+  --body3-small-font-family: var(--font-regular);
+  --body3-small-font-size: 0.75rem;
+  --body3-small-font-weight: 500;
+  --body3-small-font-stretch: normal;
+  --body3-small-font-style: normal;
+  --body3-small-line-height: 1rem;
+  --body3-small-letter-spacing: normal;
+  --body3-small-color: var(--light-text-medium-emphasis);
 
-    --caption-caps-font-family: var(--font-medium);
-    --caption-caps-font-size: 0.75rem;
-    --caption-caps-font-weight: 500;
-    --caption-caps-font-stretch: normal;
-    --caption-caps-font-style: normal;
-    --caption-caps-line-height: 1.5rem;
+  --caption-caps-font-family: var(--font-medium);
+  --caption-caps-font-size: 0.75rem;
+  --caption-caps-font-weight: 500;
+  --caption-caps-font-stretch: normal;
+  --caption-caps-font-style: normal;
+  --caption-caps-line-height: 1.5rem;
   --caption-caps-letter-spacing: normal;
   --caption-caps-color: var(--light-text-medium-emphasis);
+
+  --light-badge-font-family: var(--font-light);
+  --light-badge-font-size: 0.625rem;
+  --light-badge-font-weight: 600;
+  --light-badge-font-stretch: normal;
+  --light-badge-font-style: normal;
+  --light-badge-line-height: 1.6;
+  --light-badge-letter-spacing: normal;
+  --light-badge-color: var(--color-white);
 
   //Component variables
   --dropdown-box-shadow: 0 1px 0.125rem 1px rgba(0, 0, 0, 0.15);
@@ -237,6 +246,11 @@
 
   --modal-shadow: 0 .25rem .875rem .25rem rgba(0, 0, 0, 0.3);
 
+  --navigation-inactive-item-icon: rgba(54, 54, 54, 0.6);
+  --navigation-active-item-icon: rgba(0, 0, 0, 0.5);
+
+  --profile-dropdown-shadow: 0 0.25rem 0.125rem 0 rgba(0, 0, 0, 0.15);
+
 
   ::-webkit-scrollbar {
     width: 0.3125rem;
@@ -246,16 +260,24 @@
     border-radius: 0.3125rem;
   }
 
-    ::-webkit-scrollbar-thumb {
-        background: var(--color-secondary-300);
-        border-radius: 0.625rem;
-    }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-secondary-300);
+    border-radius: 0.625rem;
+  }
 
-    ::-webkit-scrollbar-thumb:hover {
-        background: var(--color-secondary-400);
-    }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-secondary-400);
+  }
 }
 
 .text-danger {
   color: var(--color-red);
+}
+
+.text-disabled {
+  color: var(--light-text-disabled);
+}
+
+textarea:focus, input:focus, select:focus {
+  outline: none;
 }

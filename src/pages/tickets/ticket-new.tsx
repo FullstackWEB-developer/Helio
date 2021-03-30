@@ -1,28 +1,28 @@
 import React, {ChangeEvent, useEffect, useState} from 'react';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc'
-import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
-import { useForm, Controller } from 'react-hook-form';
+import {useTranslation} from 'react-i18next';
+import {useDispatch, useSelector} from 'react-redux';
+import {Controller, useForm} from 'react-hook-form';
 import withErrorLogging from '../../shared/HOC/with-error-logging';
 
 import ThreeDots from '../../shared/components/skeleton-loader/skeleton-loader';
 import Button from '../../shared/components/button/button';
 import Input from '../../shared/components/input/input';
-import Select, { Option } from '../../shared/components/select/select';
+import Select, {Option} from '../../shared/components/select/select';
 import TagInput from '../../shared/components/tag-input/tag-input';
-import { Contact } from '../../shared/models/contact.model';
-import { Department } from '../../shared/models/department';
-import { Ticket } from './models/ticket';
-import { TicketNote } from './models/ticket-note';
+import {Contact} from '../../shared/models/contact.model';
+import {Department} from '../../shared/models/department';
+import {Ticket} from './models/ticket';
+import {TicketNote} from './models/ticket-note';
 import {
-    selectIsTicketEnumValuesLoading,
     selectEnumValues,
-    selectTicketOptionsError,
+    selectIsTicketEnumValuesLoading,
     selectIsTicketLookupValuesLoading,
-    selectLookupValues
+    selectLookupValues,
+    selectTicketOptionsError
 } from './store/tickets.selectors';
-import { selectContacts, selectIsContactOptionsLoading } from '../../shared/store/contacts/contacts.selectors';
+import {selectContacts, selectIsContactOptionsLoading} from '../../shared/store/contacts/contacts.selectors';
 import {
     selectDepartmentList,
     selectIsDepartmentListLoading,
@@ -30,17 +30,18 @@ import {
 } from '../../shared/store/lookups/lookups.selectors';
 
 import {createTicket, getEnumByType, getLookupValues} from './services/tickets.service';
-import { getContacts } from '../../shared/services/contacts.service';
+import {getContacts} from '../../shared/services/contacts.service';
 import {getDepartments, getUserList} from '../../shared/services/lookups.service';
 import TextArea from '../../shared/components/textarea/textarea';
-import { User } from '../../shared/models/user';
-import { useHistory } from 'react-router-dom';
+import {User} from '../../shared/models/user';
+import {useHistory} from 'react-router-dom';
 import utils from '../../shared/utils/utils';
+import {TicketsPath} from '../../app/paths';
 
 const TicketNew = () => {
     dayjs.extend(utc);
-    const { handleSubmit, control, errors } = useForm();
-    const { t } = useTranslation();
+    const {handleSubmit, control, errors} = useForm();
+    const {t} = useTranslation();
     const history = useHistory();
     const dispatch = useDispatch();
     const requiredText = t('common.required');
@@ -106,7 +107,7 @@ const TicketNew = () => {
         };
 
         await createTicket(ticketData);
-        history.push('/my_tickets');
+        history.push(TicketsPath);
     }
 
     const queryparams = new URLSearchParams(window.location.search);
@@ -533,9 +534,9 @@ const TicketNew = () => {
             <div className='flex flex-row space-x-4 justify-end bg-secondary-50'>
                 <div className='flex items-center'>
                     <Button data-test-id='ticket-new-cancel-button' type={'button'}
-                        buttonType='secondary'
-                        label={'common.cancel'}
-                        onClick={() => history.push('/my_tickets')}
+                            buttonType='secondary'
+                            label={'common.cancel'}
+                            onClick={() => history.push(TicketsPath)}
                     />
                 </div>
                 <div>

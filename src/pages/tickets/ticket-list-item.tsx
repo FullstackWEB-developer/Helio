@@ -1,26 +1,27 @@
 import React, {useEffect, useState} from 'react';
 import dayjs from 'dayjs';
-import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { Ticket } from './models/ticket';
+import {useTranslation} from 'react-i18next';
+import {useHistory} from 'react-router-dom';
+import {useSelector} from 'react-redux';
+import {Ticket} from './models/ticket';
 import utils from '../../shared/utils/utils';
 import TicketStatus from './components/ticket-status';
 import TicketAssignee from './components/ticket-asignee';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import TicketChannelIcon from './components/ticket-channel-icon';
-import { selectEnumValues, selectLookupValues } from './store/tickets.selectors';
-import { TicketEnumValue } from './models/ticket-enum-value.model';
-import { TicketOptionsBase } from './models/ticket-options-base.model';
+import {selectEnumValues, selectLookupValues} from './store/tickets.selectors';
+import {TicketEnumValue} from './models/ticket-enum-value.model';
+import {TicketOptionsBase} from './models/ticket-options-base.model';
 import {TicketLookupValue} from './models/ticket-lookup-values.model';
+import {TicketsPath} from '../../app/paths';
 
 interface TicketListItemProps {
     item: Ticket
 }
 
-const TicketListItem = ({ item }: TicketListItemProps) => {
+const TicketListItem = ({item}: TicketListItemProps) => {
     dayjs.extend(relativeTime);
-    const { t } = useTranslation();
+    const {t} = useTranslation();
     const history = useHistory();
 
     const ticketPriorities = useSelector((state => selectEnumValues(state, 'TicketPriority')));
@@ -70,21 +71,22 @@ const TicketListItem = ({ item }: TicketListItemProps) => {
     ]);
 
     return <div className='grid grid-cols-12 border-b p-2 relative cursor-pointer hover:bg-gray-100'>
-        <div className='col-span-3 flex flex-auto' onClick={() => history.push('my_tickets/' + ticketId)}>
+        <div className='col-span-3 flex flex-auto' onClick={() => history.push(`${TicketsPath}/${ticketId}`)}>
             <div className='pl-3 pr-3 pt-1'>
-                <TicketChannelIcon ticket={item} />
+                <TicketChannelIcon ticket={item}/>
             </div>
             <div className={'py-2'}>
                 <div>{item.ticketNumber} <span className='pl-4'>{item.subject}</span></div>
                 <div className='text-gray-400 text-sm pt-2'>
                     <span className={'pr-1'}>{t('tickets.created')}</span>
                     {item.createdOn ? utils.formatDate12HoursTime(item.createdOn) : ''}
-                    <span className='ml-4'>{item.dueDate ? `${t('tickets.due')} ${dayjs().to(dayjs(item.dueDate))}` : ''}</span>
+                    <span
+                        className='ml-4'>{item.dueDate ? `${t('tickets.due')} ${dayjs().to(dayjs(item.dueDate))}` : ''}</span>
                 </div>
             </div>
         </div>
-        <TicketStatus ticketId={ticketId} status={item.status} />
-        <div className='col-span-3 flex flex-row' onClick={() => history.push('my_tickets/' + ticketId)}>
+        <TicketStatus ticketId={ticketId} status={item.status}/>
+        <div className='col-span-3 flex flex-row' onClick={() => history.push(`${TicketsPath}/${ticketId}`)}>
             <div className='pt-6 flex-1'>
                 {item.priority ? selectedPriority?.value : null}
             </div>

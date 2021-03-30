@@ -1,36 +1,39 @@
 import React, {useEffect} from 'react';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime'
-import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import {useTranslation} from 'react-i18next';
+import {useHistory} from 'react-router-dom';
 import withErrorLogging from '../../../../shared/HOC/with-error-logging';
-import { ReactComponent as ArrowBackIcon } from '../../../../shared/icons/Icon-Arrow-Back-24px.svg';
-import { ReactComponent as RatingIcon } from '../../../../shared/icons/Icon-rating-very-satisfied-24px.svg';
-import { FeedTypes, TicketFeed } from '../../models/ticket-feed';
-import { Ticket } from '../../models/ticket';
-import { Patient } from '../../../patients/models/patient';
+import {ReactComponent as ArrowBackIcon} from '../../../../shared/icons/Icon-Arrow-Back-24px.svg';
+import {ReactComponent as RatingIcon} from '../../../../shared/icons/Icon-rating-very-satisfied-24px.svg';
+import {FeedTypes, TicketFeed} from '../../models/ticket-feed';
+import {Ticket} from '../../models/ticket';
+import {Patient} from '@pages/patients/models/patient';
 import TicketStatus from '../ticket-status';
-import { ReactComponent as PhoneIcon } from '../../../../shared/icons/Icon-Phone-White-24px.svg';
-import { ReactComponent as SmsIcon } from '../../../../shared/icons/Icon-Sms-White-24px.svg';
-import { ReactComponent as EmailIcon } from '../../../../shared/icons/Icon-Email-White-24px.svg';
+import {ReactComponent as PhoneIcon} from '../../../../shared/icons/Icon-Phone-White-24px.svg';
+import {ReactComponent as SmsIcon} from '../../../../shared/icons/Icon-Sms-White-24px.svg';
+import {ReactComponent as EmailIcon} from '../../../../shared/icons/Icon-Email-White-24px.svg';
 import Button from '../../../../shared/components/button/button';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectEnumValues, selectFeedLastMessageOn } from '../../store/tickets.selectors';
-import { addFeed, getEnumByType, setDelete, setStatus } from '../../services/tickets.service';
-import { setTicket } from '../../store/tickets.slice';
-import { showCcp } from '../../../../shared/layout/store/layout.slice';
+import {useDispatch, useSelector} from 'react-redux';
+import {selectEnumValues, selectFeedLastMessageOn} from '../../store/tickets.selectors';
+import {addFeed, getEnumByType, setDelete, setStatus} from '../../services/tickets.service';
+import {setTicket} from '../../store/tickets.slice';
+import {showCcp} from '../../../../shared/layout/store/layout.slice';
 import TicketChannelIcon from '../ticket-channel-icon';
+import {TicketsPath} from '../../../../app/paths';
+import Logger from '../../../../shared/services/logger';
 
 interface TicketDetailHeaderProps {
     ticket: Ticket,
     patient: Patient
 }
 
-const TicketDetailHeader = ({ ticket, patient }: TicketDetailHeaderProps) => {
+const TicketDetailHeader = ({ticket, patient}: TicketDetailHeaderProps) => {
     dayjs.extend(relativeTime)
     const { t } = useTranslation();
     const dispatch = useDispatch();
     const history = useHistory();
+    const logger = Logger.getInstance();
     const SmallLabel = (text: string, value: string | undefined) => {
         return (
             <div className='pt-6'>
@@ -51,8 +54,13 @@ const TicketDetailHeader = ({ ticket, patient }: TicketDetailHeaderProps) => {
 
     const outboundCall = () => {
         dispatch(showCcp());
-        if (patient?.mobilePhone) {
-            return navigator.clipboard.writeText(patient?.mobilePhone);
+        if (patient?.mobilePhone && window.CCP.agent) {
+            const endpoint = connect.Endpoint.byPhoneNumber(patient.mobilePhone);
+            window.CCP.agent.connect(endpoint, {
+                failure: (e: any) => {
+                    logger.error('Cannot make a call to patient: ' + patient.mobilePhone, e);
+                }
+            })
         }
     }
 
@@ -79,9 +87,10 @@ const TicketDetailHeader = ({ ticket, patient }: TicketDetailHeaderProps) => {
     return ticket ? (
         <div>
             <div className={'flex flex-row p-8'}>
-                <div className={'pl-4 pt-4 cursor-pointer align-middle'} onClick={() => history.push('/my_tickets')}><ArrowBackIcon/></div>
+                <div className={'pl-4 pt-4 cursor-pointer align-middle'} onClick={() => history.push(TicketsPath)}>
+                    <ArrowBackIcon/></div>
                 <div className={'mt-1 ml-2 h-12 w-12'}>
-                    <TicketChannelIcon ticket={ticket} />
+                    <TicketChannelIcon ticket={ticket}/>
                 </div>
 
                 <div className={'pl-8 pt-4'}>

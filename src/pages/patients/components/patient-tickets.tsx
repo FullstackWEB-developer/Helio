@@ -15,6 +15,7 @@ import {useQuery} from 'react-query';
 import {TicketBase} from '../../tickets/models/ticket-base';
 import PatientTicketLabel from './patient-ticket-label';
 import TicketStatusDisplay from '../../tickets/components/ticket-status-display';
+import {TicketsPath} from '../../../app/paths';
 
 interface PatientTicketProps {
     patientId: number;
@@ -47,7 +48,7 @@ const PatientTickets: React.FC<PatientTicketProps> = ({patientId}) => {
                 : (
                     <Fragment>
                         <div className={'py-3 cursor-pointer align-middle border-b'}
-                            onClick={() => history.push('/my_tickets/new?patientId='+ patientId)}><AddIcon /></div>
+                             onClick={() => history.push(`${TicketsPath}/new?patientId=${patientId}`)}><AddIcon/></div>
                         {
                             error && <div className={'pt-4 text-red-500'}>{t('common.error')}</div>
                         }
@@ -62,7 +63,7 @@ const PatientTickets: React.FC<PatientTicketProps> = ({patientId}) => {
                                             <span className='flex-auto subtitle2'>{item.subject}</span>
                                             {item.status && (
                                                 <div className='flex w-36 subtitle3'>
-                                                    <TicketStatusDisplay status={item.status} iconClass='w-5 mt-0.5'></TicketStatusDisplay>
+                                                    <TicketStatusDisplay status={item.status} iconClass='w-5 mt-0.5'/>
                                                 </div>    
                                             )}
                                         </div>

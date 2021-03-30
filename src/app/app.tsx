@@ -3,10 +3,11 @@ import {BrowserRouter, Route, Switch} from 'react-router-dom'
 import Layout from '../shared/layout/layout';
 import Login from '../pages/login/login';
 import GuardedRoute from './guarded-route';
-import {Dashboard} from '../pages/dashboard/dashboard';
+import {Dashboard} from '@pages/dashboard/dashboard';
 import {withSuspense} from '../shared/HOC/with-suspense';
 import TicketList from '../pages/tickets/ticket-list';
 import {QueryClient, QueryClientProvider} from "react-query";
+import {TicketsPath} from './paths';
 
 const SearchResults = React.lazy(() => import('../shared/components/search-bar/components/search-results'));
 const PatientChart = React.lazy(() => import('../pages/patients/patient-chart'));
@@ -35,11 +36,11 @@ function App() {
                         <Login/>
                     </Route>
                     <Layout>
-                        <GuardedRoute exact path='/dashboard' component={Dashboard} />
-                        <GuardedRoute exact path='/my_tickets' component={withSuspense(TicketList)}/>
-                        <GuardedRoute exact path='/my_tickets/new' component={withSuspense(TicketNew)}/>
+                        <GuardedRoute exact path='/dashboard' component={Dashboard}/>
+                        <GuardedRoute exact path={TicketsPath} component={withSuspense(TicketList)}/>
+                        <GuardedRoute exact path={`${TicketsPath}/new`} component={withSuspense(TicketNew)}/>
                         <GuardedRoute exact
-                                      path='/my_tickets/:ticketId([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})'
+                                      path={`${TicketsPath}/:ticketId([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})`}
                                       component={withSuspense(TicketDetail)}/>
                         <Switch>
                             <GuardedRoute exact path='/patients/results' component={withSuspense(SearchResults)}/>

@@ -29,11 +29,13 @@
   },
   "navigation": {
     "dashboard": "Dashboard",
-    "my_tickets": "My Tickets",
+    "tickets": "Tickets",
     "all_tickets": "All Tickets",
     "contacts": "Contacts",
     "email": "Email",
-    "sms": "Sms"
+    "sms": "Sms",
+    "calls": "Calls",
+    "chat": "Chat"
   },
   "footer": {
     "hotspots": "Hotspots",
@@ -155,7 +157,7 @@
       "select": "Select"
     },
     "yearsOld": "yo",
-    "placeholder": "Search",
+    "placeholder": " Search",
     "search_title": "Search For",
     "recent_searches": "Recent Searches"
   },

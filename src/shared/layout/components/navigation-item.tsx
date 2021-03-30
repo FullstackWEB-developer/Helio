@@ -1,9 +1,13 @@
-import { Link } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
-import { isNavigationExpandedSelector } from '../store/layout.selectors';
-import { bool } from 'aws-sdk/clients/redshiftdata';
+import {Link} from 'react-router-dom';
+import {useTranslation} from 'react-i18next';
+import {useSelector} from 'react-redux';
+import {isNavigationExpandedSelector} from '../store/layout.selectors';
+import {bool} from 'aws-sdk/clients/redshiftdata';
 import withErrorLogging from '../../HOC/with-error-logging';
+import React, {useState} from 'react';
+import './navigation-item.scss';
+import {BadgeNumber} from '@icons/BadgeNumber';
+
 interface NavigationItemProps {
     title: string,
     link: string,
@@ -11,25 +15,30 @@ interface NavigationItemProps {
     isSelected: bool
 }
 
-const NavigationItem = ({ title, link, icon, isSelected }: NavigationItemProps) => {
-    const { t } = useTranslation();
+const NavigationItem = ({title, link, icon, isSelected}: NavigationItemProps) => {
+    const {t} = useTranslation();
     const isNavigationExpanded = useSelector(isNavigationExpandedSelector);
+    const [displayBadge, setDisplayBadge] = useState<boolean>(false);
 
-    let content = (<div className='border-b items-center flex h-14 w-62'>
-        <div className='pl-8.5'>
-            {icon}
-        </div>
-        <Link to={link} className={'hover:text-gray-400 pl-4.5 ' + (isSelected ? 'subtitle2' : 'body2-medium')}>{t(title)}</Link>
+    return (<div className='flex flex-row'>
+        {<div className={'w-1.5 ' + (isSelected ? 'bg-green-400' : '')}/>}
+        <Link to={link} className={'hover:text-gray-800 ' + (isSelected ? 'subtitle2' : 'body2-medium')}>
+            <div
+                className={'items-center flex h-14  navigation-item-active ' + (isNavigationExpanded ? 'w-62' : 'w-20')}>
+                <div>{icon}</div>
+                {isNavigationExpanded &&
+                <div className='pl-4 w-full flex flex-row items-center justify-between'>
+                    <div className=''>
+                        {t(title)}
+                    </div>
+                    <div className='w-16 justify-end'>
+                        {displayBadge && <BadgeNumber type='yellow'/>}
+                    </div>
+                </div>
+                }
+            </div>
+        </Link>
     </div>);
-
-    if (!isNavigationExpanded) {
-        content = (<div className='border-b h-14 w-20  hidden md:block cursor-pointer'>
-            <Link to={link} className='text-gray-500 hover:text-gray-400 h-full flex items-center justify-center'>
-                {icon}</Link>
-        </div>);
-    }
-
-    return (content);
 }
 
 export default withErrorLogging(NavigationItem);

@@ -5,7 +5,7 @@
   },
   "navigation": {
     "dashboard": "Tablero",
-    "my_tickets": "Mis Entradas",
+    "tickets": "Entradas",
     "all_tickets": "Todas las Entradas",
     "contacts": "Contactos",
     "email": "Email",
