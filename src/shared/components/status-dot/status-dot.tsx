@@ -2,12 +2,13 @@ import { UserStatus } from '../../store/app-user/app-user.models';
 import './status-dot.scss';
 
 export interface StatusDotProps {
-    status: string,
+    status: UserStatus,
     isBorderAround?: boolean
 }
 
 const StatusDot = ({status, isBorderAround = false}: StatusDotProps) => {
     let className;
+
     if (status) {
         if (status === UserStatus.AfterWork) {
             className = 'fill-yellow';
