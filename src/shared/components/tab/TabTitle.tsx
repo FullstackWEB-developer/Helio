@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, {useCallback} from 'react'
 import withErrorLogging from '../../HOC/with-error-logging';
 import './tab-title.scss';
 
@@ -15,7 +15,7 @@ const TabTitle: React.FC<TabTitleProps> = ({ title, setSelectedTab, isSelected, 
         setSelectedTab(index)
     }, [setSelectedTab, index]);
 
-    const sharedClass = 'tab-title px-7 pt-2.5 pb-3 cursor-pointer';
+    const sharedClass = 'tab-title px-7 pt-2 pb-2 cursor-pointer';
 
     return (
         <div onClick={onClick} className={sharedClass + (isSelected ? ' border-b-2 border-primary subtitle2' : ' body2')}>

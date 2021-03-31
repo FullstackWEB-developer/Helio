@@ -1,12 +1,15 @@
 import {ReactComponent as ArrowDownIcon} from '../icons/Icon-Arrow-down-16px.svg';
+import {ReactComponent as ArrowUpIcon} from '../icons/Icon-Arrow-up-16px.svg';
 import {useTranslation} from 'react-i18next';
 import {ReactComponent as CalendarIcon} from '../icons/Icon-Calendar-24px.svg';
 import './footer.scss';
-import {useDispatch} from 'react-redux';
-import {toggleHotspots} from './store/layout.slice';
+import {useDispatch, useSelector} from 'react-redux';
+import {toggleHotspots, toggleStatusBar} from './store/layout.slice';
+import { selectIsStatusBarVisible } from './store/layout.selectors';
 
 const Footer = () => {
     const {t} = useTranslation();
+    const isStatusBarVisible = useSelector(selectIsStatusBarVisible);
     const dispatch = useDispatch();
     return (
         <footer className='footer h-12 border-t w-full bg-primary flex flex-row items-center body2-medium'>
@@ -20,11 +23,13 @@ const Footer = () => {
                             {t('footer.hotspots')}
                         </div>
                     </div>
-                    <div className='pr-1'>
+                    <div className="flex flex-row items-center" onClick={() => dispatch(toggleStatusBar())}>
+                    <div className='pr-1 hidden md:block cursor-pointer'>
                         {t('footer.status')}
                     </div>
-                    <div className='flex items-center'>
-                        <ArrowDownIcon className='cursor-pointer'/>
+                    <div>                        
+                        {isStatusBarVisible ? <ArrowUpIcon className='cursor-pointer'/> : <ArrowDownIcon className='cursor-pointer'/>}
+                    </div>
                     </div>
                 </div>
             </div>

@@ -20,6 +20,9 @@ const layoutSlice = createSlice({
         toggleHotspots(state) {
             state.isHotspotsVisible = !state.isHotspotsVisible
         },
+        toggleStatusBar(state){
+            state.isStatusBarVisible = !state.isStatusBarVisible;
+        },
         resetState(state) {
             state.isCcpVisible = false;
             state.isNavigationExpanded = false;
@@ -28,6 +31,6 @@ const layoutSlice = createSlice({
     }
 });
 
-export const { toggleNavigation, toggleUserProfileMenu, toggleCcp, showCcp, resetState, toggleHotspots } = layoutSlice.actions
+export const { toggleNavigation, toggleUserProfileMenu, toggleCcp, showCcp, resetState, toggleHotspots, toggleStatusBar } = layoutSlice.actions
 
 export default layoutSlice.reducer

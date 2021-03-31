@@ -36,9 +36,9 @@ const DropdownSelect = ({items, defaultValue, onClick}: DropdownSelectProps) => 
         return <DropdownCell isSelected={item.value === selected?.value} onClick={() => itemSelected(item)} item={item}
                              key={item.value}/>
     });
-    return <div ref={dropdownRef} className='flex flex-col relative'>
+    return <div ref={dropdownRef} className={'flex flex-col relative' + (isOpen ? ' z-50' : '')}>
         <div
-            className='w-full dropdown-select h-10 border pl-4 pr-2 flex flex-row items-center absolute justify-between cursor-pointer'
+            className='w-full dropdown-select h-10 border-r border-b pl-4 pr-2 flex flex-row items-center absolute justify-between cursor-pointer'
             onClick={() => setOpen(!isOpen)}>
             <div className='w-full' data-test-id='dropdown-select-label'>
                 {selected ? t(selected.label) : ''}
@@ -47,7 +47,7 @@ const DropdownSelect = ({items, defaultValue, onClick}: DropdownSelectProps) => 
                 {isOpen ? <ArrowUp/> : <ArrowDown/>}
             </div>
         </div>
-        {isOpen && <div className='dropdown-select-options border absolute'>
+        {isOpen && <div className='dropdown-select-options border-b border-t absolute w-full'>
             {options}
         </div>}
     </div>

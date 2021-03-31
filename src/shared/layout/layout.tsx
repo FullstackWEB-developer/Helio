@@ -8,6 +8,8 @@ import {Redirect} from 'react-router';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 import {DndContainer} from './dragndrop/dnd-container'
+import StatusBar from './statusbar';
+import './layout.scss';
 
 interface LayoutProps {
     children: React.ReactNode
@@ -22,26 +24,33 @@ const Layout = (props: LayoutProps) => {
     return (
         <Fragment>
             <div>
-            <DndProvider backend={HTML5Backend}>
-            <div className='flex flex-row h-screen'>
-                <div className='h-full'>
-                    <Navigation />
-                </div>
-                <div className='flex flex-col w-screen'>
-                    <div>
-                        <Header/>
+                <DndProvider backend={HTML5Backend}>
+                    <div className='flex flex-row h-screen'>
+                        <div className='h-full'>
+                            <Navigation/>
+                        </div>
+                        <div className='flex flex-col w-screen'>
+                            <div>
+                                <Header/>
+                            </div>
+                            <div className='flex flex-col w-full'>
+                                <div className='flex flex-row layout-content w-full'>
+                                    <div className='flex-auto overflow-y-auto'>
+                                        <main className='flex flex-col h-full w-full'>
+                                            <DndContainer propsChildren={props.children} className='flex flex-auto'/>
+                                        </main>
+                                    </div>
+                                    <div className='flex justify-end'>
+                                        <StatusBar/>
+                                    </div>
+                                </div>
+                                <div>
+                                    <Footer/>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div className='flex-auto overflow-y-auto'>
-                        <main className='flex flex-col h-full w-full'>
-                            <DndContainer propsChildren={props.children} className='flex flex-auto'/>
-                        </main>
-                    </div>
-                    <div>
-                        <Footer/>
-                    </div>
-                </div>
-            </div>
-            </DndProvider>
+                </DndProvider>
             </div>
         </Fragment>
     );

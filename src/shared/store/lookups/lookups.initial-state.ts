@@ -1,5 +1,6 @@
-import { Department } from '../../models/department';
-import { Provider } from '../../models/provider';
+import {KeyValuePair} from '../../models/key-value-pair'
+import {Department} from '../../models/department';
+import {Provider} from '../../models/provider';
 import {User} from '../../models/user';
 
 export interface LookupsState {
@@ -7,7 +8,8 @@ export interface LookupsState {
     providerList?: Provider[];
     userList?: User[];
     isLoading: boolean;
-    isError: boolean;
+    isError: boolean;    
+    metricOptions?: KeyValuePair[];
 }
 
 const initialState: LookupsState = {
@@ -15,6 +17,7 @@ const initialState: LookupsState = {
     providerList: undefined,
     isLoading: false,
     isError: false,
-    userList: []
+    userList: [],   
+    metricOptions: []
 }
 export default initialState;

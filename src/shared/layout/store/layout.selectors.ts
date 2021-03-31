@@ -21,3 +21,8 @@ export const selectIsHotspotsVisible = createSelector(
     layoutState,
     state => state.isHotspotsVisible
 )
+
+export const selectIsStatusBarVisible = createSelector(
+    layoutState,
+    state => state.isStatusBarVisible
+)

@@ -55,7 +55,7 @@ export const DndContainer: React.FC<ContainerProps> = ({ propsChildren }) => {
             <HotSpots />
             <div className='flex flex-auto h-full'>
                 {propsChildren}
-            </div>
+            </div>            
             {Object.keys(boxes).map((key) => {
                 const { left, top } = boxes[key]
                 return (

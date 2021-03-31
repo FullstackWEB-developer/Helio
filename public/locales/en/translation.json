@@ -20,7 +20,7 @@
   },
   "user_profile": {
     "statuses": {
-     "after_work": "After work"
+      "after_work": "After work"
     },
     "my_profile": "My Profile",
     "my_status": "My Status",
@@ -78,18 +78,18 @@
       "lab": "Lab",
       "pharmacy": "Pharmacy"
     },
-    "filter" : {
+    "filter": {
       "filter_tickets": "Filter Tickets",
-      "clear_all" : "Clear All",
-      "statuses" : "Statuses",
+      "clear_all": "Clear All",
+      "statuses": "Statuses",
       "time_period": "Time period",
-      "priority" : "Priority",
+      "priority": "Priority",
       "channel": "Channel",
       "ticket_type": "Ticket Type",
-      "department" : "Department",
+      "department": "Department",
       "office_location": "Office/Location",
       "assigned_to": "Assigned to",
-      "tags" : "Tags",
+      "tags": "Tags",
       "fetch": "Apply filter",
       "from_date": "From",
       "to_date": "To",
@@ -140,12 +140,12 @@
       "phone": "Phone number (310-000-0000)",
       "contact_name": "Contact Name",
       "ticket_id": "Ticket ID",
-      "patient_or_contact_name" : "Patient or Contact Name"
+      "patient_or_contact_name": "Patient or Contact Name"
     },
-    "categories" : {
-      "patients" : "Patients",
-      "contacts" : "Contacts",
-      "tickets" : "Tickets"
+    "categories": {
+      "patients": "Patients",
+      "contacts": "Contacts",
+      "tickets": "Tickets"
     },
     "search_results": {
       "heading_list": "List of patients: ",
@@ -388,6 +388,20 @@
       "not_found": "There are no feed items.",
       "error": "Failed to add Feed.",
       "description_prefix": "Ticket status was changed to"
+    }
+  },
+  "statuses": {
+    "queuestatus": {
+      "queueus_status": "Queueus Status",
+      "queue": "Queue",
+      "all_queues": "All Queues",
+      "my_queues": "My Qeueues",
+      "loading_error": "Error Loading Queue Metrics"
+    },
+    "extensions": {
+      "extensions_label": "Extensions",
+      "all_departments": "All Departments",
+      "loading_error": "Error Loading extensions"
     }
   }
 }
