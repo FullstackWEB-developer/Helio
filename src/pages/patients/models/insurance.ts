@@ -31,5 +31,6 @@ export interface Insurance {
     ireligibilityLastCheckedCname: string,
     policyNumber: string,
     relationshipToInsured: string,
-    relationshipToInsuredId: string
+    relationshipToInsuredId: string,
+    insurancePlanDisplayName: string
 }

@@ -1,6 +1,5 @@
 import Modal from '../../../shared/components/modal/modal';
-import {useDispatch, useSelector} from 'react-redux';
-import {selectIsHotspotsVisible} from '../../../shared/layout/store/layout.selectors';
+import {useDispatch} from 'react-redux';
 import {useEffect} from 'react';
 import {getDepartments, getProviders} from '../../../shared/services/lookups.service';
 import {getHotSpots} from '../services/appointments.service';
@@ -13,8 +12,6 @@ import ThreeDots from '@components/skeleton-loader/skeleton-loader';
 import {useQuery} from 'react-query';
 
 const HotSpots = () => {
-
-    const displayHotspots = useSelector(selectIsHotspotsVisible);
     const dispatch = useDispatch();
     const {t} = useTranslation();
 
@@ -25,11 +22,9 @@ const HotSpots = () => {
         }
     );
     useEffect(() => {
-        if (displayHotspots) {
-            dispatch(getDepartments());
-            dispatch(getProviders());
-        }
-    }, [dispatch, displayHotspots]);
+        dispatch(getDepartments());
+        dispatch(getProviders());
+    }, [dispatch]);
 
 
     const hotSpotsView = data ? data.map((hotspot: HotSpotInfo) => {
@@ -48,7 +43,8 @@ const HotSpots = () => {
 
     return (
         <div className='flex items-center justify-center justify-self-center' data-test-id='hot-spot-modal-parent'>
-            <Modal isOpen={displayHotspots} title={t('appointment.hot_spots.title')} onClose={() => dispatch(toggleHotspots())} isClosable={true}>
+            <Modal isOpen={true} title={t('appointment.hot_spots.title')} onClose={() => dispatch(toggleHotspots())}
+                   isClosable={true}>
                 <div className='w-full h-96  overflow-y-auto mb-10'>
                     <div data-test-id='hot-spot-modal-content'>{getContent()}</div>
                 </div>

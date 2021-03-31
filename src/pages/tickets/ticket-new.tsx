@@ -100,7 +100,7 @@ const TicketNew = () => {
             department: formData.department,
             location: formData.location,
             assignee: formData.assignee,
-            patientChartNumber: formData.patientChartNumber,
+            patientId: formData.patientId,
             patientCaseNumber: formData.patientCaseNumber,
             tags: tags,
             notes: notes
@@ -479,13 +479,13 @@ const TicketNew = () => {
                 {
                     isTicketTypeSelected &&
                     <Controller
-                        name='patientChartNumber'
+                        name='patientId'
                         control={control}
                         defaultValue={queryPatientId}
-                        placeholder={t('ticket_new.patient_chart_number')}
+                        placeholder={t('ticket_new.patient_id')}
                         as={Input}
                         className={'w-full border-none h-14'}
-                        data-test-id={'ticket-new-patient-chart-number'}
+                        data-test-id={'ticket-new-patient-id'}
                     />
                 }
                 {

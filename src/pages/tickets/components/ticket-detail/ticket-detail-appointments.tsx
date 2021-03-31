@@ -1,26 +1,26 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useTranslation } from 'react-i18next';
+import React, {useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {useTranslation} from 'react-i18next';
 import withErrorLogging from '../../../../shared/HOC/with-error-logging';
-import { Ticket } from '../../models/ticket';
-import { getPatientById } from '../../../../shared/services/search.service';
-import { selectPatientClinical } from '../../../patients/store/patients.selectors';
-import { getPatientClinicalDetails } from '../../../../shared/services/patients.service';
-import { getDepartments, getProviders } from '../../../../shared/services/lookups.service';
+import {Ticket} from '../../models/ticket';
+import {getPatientById} from '../../../../shared/services/search.service';
+import {selectPatientClinical} from '@pages/patients/store/patients.selectors';
+import {getDepartments, getProviders} from '../../../../shared/services/lookups.service';
 import AppointmentDisplay from '../../../patients/components/appointment-display';
+import {getPatientClinicalDetails} from '@pages/patients/services/patients.service';
 
 interface TicketDetailAppointmentsProps {
     ticket: Ticket
 }
 
-const TicketDetailAppointments = ({ ticket }: TicketDetailAppointmentsProps ) => {
-    const { t } = useTranslation();
+const TicketDetailAppointments = ({ticket}: TicketDetailAppointmentsProps) => {
+    const {t} = useTranslation();
     const dispatch = useDispatch();
 
     const patientClinical = useSelector(selectPatientClinical);
 
     useEffect(() => {
-        if (ticket && ticket.patientId){
+        if (ticket && ticket.patientId) {
             dispatch(getPatientById(ticket.patientId));
             dispatch(getPatientClinicalDetails(ticket.patientId));
             dispatch(getProviders());

@@ -1,14 +1,22 @@
-import React, { ReactElement, useState } from 'react'
+import React, {ReactElement, useState} from 'react'
 import withErrorLogging from '../../HOC/with-error-logging';
 import TabTitle from './TabTitle';
 
 type TabsProps = {
     children: ReactElement[],
-    title?: string
+    title?: string,
+    onSelect?: (selectedTabIndex: number) => void;
 }
 
-const Tabs: React.FC<TabsProps> = ({ children, title }) => {
+const Tabs: React.FC<TabsProps> = ({onSelect, children, title}) => {
     const [selectedTab, setSelectedTab] = useState(0)
+
+    const tabSelected = (index: number) => {
+        setSelectedTab(index);
+        if (onSelect) {
+            onSelect(index);
+        }
+    }
 
     return (
         <div>
@@ -20,7 +28,7 @@ const Tabs: React.FC<TabsProps> = ({ children, title }) => {
                         title={item.props.title}
                         index={index}
                         isSelected={selectedTab === index}
-                        setSelectedTab={setSelectedTab}
+                        setSelectedTab={tabSelected}
                     />
                 ))}
             </div>

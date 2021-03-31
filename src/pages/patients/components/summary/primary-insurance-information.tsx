@@ -1,11 +1,9 @@
-import { useSelector } from 'react-redux';
-import {
-    selectPrimaryInsuranceSummary
-} from '../../store/patients.selectors';
-import { useTranslation } from 'react-i18next';
+import {useSelector} from 'react-redux';
+import {selectPrimaryInsuranceSummary} from '../../store/patients.selectors';
+import {useTranslation} from 'react-i18next';
 
 const PrimaryInsuranceInformation = () => {
-    const { t } = useTranslation();
+    const {t} = useTranslation();
 
     const primaryInsurance = useSelector(selectPrimaryInsuranceSummary);
     const copay = primaryInsurance?.copays?.length > 0 ? `${t('patient.insurance.copay')}: ${primaryInsurance.copays[0].copayType}  ${primaryInsurance.copays[0].copayAmount}` : '';
@@ -21,8 +19,9 @@ const PrimaryInsuranceInformation = () => {
             primaryInsurance !== undefined ?
                 <div className='pt-4'><span
                     className='font-bold'>{primaryInsurance?.InsurancePlanDisplayName}</span> {primaryInsuranceHeader}
-                    <span className='font-bold'> {t('patient.insurance.status')}:
-                        <span className={primaryInsurance?.eligibilityStatus === t('patient.insurance.eligible') ? 'text-primary-400' : 'text-red-500'}>
+                    <span className='font-bold'> {t('patient.insurance.status')}
+                        <span
+                            className={primaryInsurance?.eligibilityStatus === t('patient.insurance.eligible') ? 'text-primary-400' : 'text-red-500'}>
                             {primaryInsurance?.eligibilityStatus}
                         </span>
                     </span>

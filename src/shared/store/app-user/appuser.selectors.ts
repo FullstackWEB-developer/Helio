@@ -1,4 +1,4 @@
-import { RootState } from '../../../app/store';
+import {RootState} from '../../../app/store';
 import {createSelector} from '@reduxjs/toolkit';
 import {UserStatus} from './app-user.models';
 
@@ -7,6 +7,11 @@ export const appUserState = (state: RootState) => state.appUserState
 export const authenticationSelector = createSelector(
     appUserState,
     state => state.auth
+)
+
+export const userFullNameSelector = createSelector(
+    appUserState,
+    state => state.auth.name
 )
 
 export const selectIsLoginLoading = createSelector(

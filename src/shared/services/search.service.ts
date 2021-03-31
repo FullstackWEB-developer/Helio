@@ -1,15 +1,15 @@
 import Api from './api';
-import { Dispatch } from '@reduxjs/toolkit';
+import {Dispatch} from '@reduxjs/toolkit';
 import Logger from './logger';
-import { setError, setSearching } from '../components/search-bar/store/search-bar.slice';
+import {setError, setSearching} from '@components/search-bar/store/search-bar.slice';
 import {
     clearAppointments,
     clearPatient,
     clearPatients,
-    selectPatient,
     setAppointments,
     setError as setPatientError,
     setLoading,
+    setPatient,
     setPatients
 } from '../../pages/patients/store/patients.slice';
 
@@ -23,7 +23,7 @@ export const getPatientById = (patientId: string) => {
         dispatch(setLoading(true));
         await Api.get(url)
             .then(response => {
-                dispatch(selectPatient(response.data))
+                dispatch(setPatient(response.data))
             })
             .catch(error => {
                 if (error.response?.status === 404) {

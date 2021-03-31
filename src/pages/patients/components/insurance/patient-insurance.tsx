@@ -45,12 +45,18 @@ const PatientInsurance = () => {
 
     const eligibilityInfoRows = primaryInsurance !== undefined
         ? [
-            { label: t('patient.insurance.status'), values: [primaryInsurance.eligibilityStatus] },
-            { label: t('patient.insurance.status_reason'), values: [primaryInsurance.eligibilityReason] },
-            { label: t('patient.insurance.pcp'), values: [primaryInsurance.insuredPcp || t('patient.insurance.unknown')] },
-            { label: t('patient.insurance.inquiry_date'), values: [primaryInsurance.eligibilityLastChecked] },
-            { label: t('patient.insurance.message'), values: [primaryInsurance.eligibilityMessage] },
-            { label: t('patient.insurance.plan_description'), values: [primaryInsurance.insurancePlanName || t('patient.insurance.unknown')] }
+            {label: t('patient.insurance.status'), values: [primaryInsurance.eligibilityStatus]},
+            {label: t('patient.insurance.status_reason'), values: [primaryInsurance.eligibilityReason]},
+            {
+                label: t('patient.insurance.pcp'),
+                values: [primaryInsurance.insuredPcp || t('patient.insurance.unknown')]
+            },
+            {label: t('patient.insurance.inquiry_date'), values: [primaryInsurance.eligibilityLastChecked]},
+            {label: t('patient.insurance.message'), values: [primaryInsurance.eligibilityMessage]},
+            {
+                label: t('patient.insurance.plan_name'),
+                values: [primaryInsurance.insurancePlanDisplayName || t('patient.insurance.unknown')]
+            }
         ]
         : [];
 

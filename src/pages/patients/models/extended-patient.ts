@@ -1,8 +1,8 @@
-import { Balance } from './balance';
-import { CustomField } from './custom-field';
-import { Insurance } from './insurance';
-import { PortalStatus } from './portal-status';
-import { Note } from './note';
+import {Balance} from './balance';
+import {CustomField} from './custom-field';
+import {Insurance} from './insurance';
+import {PortalStatus} from './portal-status';
+import {Note} from './note';
 
 export interface ExtendedPatient {
     allPatientStatuses: [],

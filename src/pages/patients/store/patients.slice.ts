@@ -1,27 +1,27 @@
-import { VerifiedPatient } from '../models/verified-patient';
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import {VerifiedPatient} from '../models/verified-patient';
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import initialState from './patients.initial-state';
-import { Patient } from '../models/patient';
-import { ExtendedPatient } from '../models/extended-patient';
-import { Appointment } from '../../external-access/appointment/models/appointment';
-import { PatientChartSummary } from '../models/patient-chart-summary';
-import { ClinicalDetails } from '../models/clinical-details';
-import { Insurance } from '../models/insurance';
+import {Patient} from '../models/patient';
+import {ExtendedPatient} from '../models/extended-patient';
+import {Appointment} from '../../external-access/appointment/models/appointment';
+import {PatientChartSummary} from '../models/patient-chart-summary';
+import {ClinicalDetails} from '../models/clinical-details';
+import {Insurance} from '../models/insurance';
 
 const patientsSlice = createSlice({
     name: 'patients',
     initialState,
     reducers: {
-        setLoading(state, { payload }: PayloadAction<boolean>) {
+        setLoading(state, {payload}: PayloadAction<boolean>) {
             state.isLoading = payload;
         },
-        setError(state, { payload }: PayloadAction<boolean>) {
+        setError(state, {payload}: PayloadAction<boolean>) {
             state.isError = payload;
         },
         setPatients(state, { payload }: PayloadAction<Patient[]>) {
             state.patientList = payload;
         },
-        selectPatient(state, { payload }: PayloadAction<ExtendedPatient>) {
+        setPatient(state, {payload}: PayloadAction<ExtendedPatient>) {
             state.patient = payload;
         },
         clearPatients(state) {
@@ -95,7 +95,7 @@ export const {
     setError,
     setPatients,
     clearPatients,
-    selectPatient,
+    setPatient,
     clearPatient,
     setPatientIsVerified,
     setVerifiedPatient,

@@ -1,24 +1,32 @@
-import React, { ChangeEvent, Fragment } from 'react';
+import React, {ChangeEvent, Fragment} from 'react';
 
 interface TextAreaProps extends React.HTMLAttributes<HTMLTextAreaElement> {
-    id?: string,
-    name?: string,
-    value?: string,
-    label?: string,
-    required?: boolean,
-    rows?: number,
-    error?: string,
-    htmlFor?: string,
+    id?: string;
+    name?: string;
+    value?: string;
+    label?: string;
+    required?: boolean;
+    rows?: number;
+    error?: string;
+    htmlFor?: string;
+    hasBorder?: boolean;
     onChange?: (e: ChangeEvent<HTMLTextAreaElement>) => void
 }
-const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(({ label, value, htmlFor, ...props }: TextAreaProps, ref) => {
+
+const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(({
+                                                                           label,
+                                                                           value,
+                                                                           htmlFor,
+                                                                           hasBorder = true,
+                                                                           ...props
+                                                                       }: TextAreaProps, ref) => {
     return (
         <Fragment>
             <label htmlFor={htmlFor} className='block subtitle'>
                 {label}
             </label>
             <textarea ref={ref} {...props} value={value}
-                className={'border mt-1 p-4 ' + props.className} />
+                      className={'mt-1 p-4 ' + (hasBorder ? ' border ' : '') + props.className}/>
             {props.error && <div className='text-red-500'>{props.error}</div>}
         </Fragment>
     );
