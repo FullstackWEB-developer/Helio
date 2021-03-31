@@ -1,9 +1,9 @@
-import {PatientTicketsRequest} from '../models/patient-tickets-request';
-import {Dispatch} from '@reduxjs/toolkit';
+import { PatientTicketsRequest } from '../models/patient-tickets-request';
+import { Dispatch } from '@reduxjs/toolkit';
 import Api from '../../../shared/services/api';
 import Logger from '../../../shared/services/logger';
-import {LookupValue} from '../models/lookup-value';
-import {TicketNote} from '../models/ticket-note';
+import { LookupValue } from '../models/lookup-value';
+import { TicketNote } from '../models/ticket-note';
 import store from '../../../app/store';
 import {
     add,
@@ -27,10 +27,10 @@ import {
     startRequestAddFeed,
     startRequestAddNote
 } from '../store/tickets.slice';
-import {Ticket} from '../models/ticket';
-import {Paging} from '../../../shared/models/paging.model';
-import {TicketQuery} from '../models/ticket-query';
-import {TicketFeed} from '../models/ticket-feed';
+import { Ticket } from '../models/ticket';
+import { Paging } from '../../../shared/models/paging.model';
+import { TicketQuery } from '../models/ticket-query';
+import { TicketFeed } from '../models/ticket-feed';
 
 const logger = Logger.getInstance();
 const ticketsBaseUrl = '/tickets';
@@ -169,7 +169,7 @@ export const getEnumByType = (enumType: string) => {
     const getEnumUrl = `${ticketsBaseUrl}/lookup/${enumType}`;
     const stateEnumValues = store.getState().ticketState.enumValues?.find((a: LookupValue) => a.key === enumType) || undefined;
     return async (dispatch: Dispatch) => {
-        if(!stateEnumValues) {
+        if (!stateEnumValues) {
             dispatch(startGetTicketEnumRequest());
             await Api.get(getEnumUrl)
                 .then(response => {
@@ -274,4 +274,10 @@ export const setDelete = (id: string, undoDelete?: boolean) => {
                 dispatch(setFailure(err.message));
             });
     }
+}
+
+export const getTicketByNumber = async (ticketNumber: number) => {
+    const url = `${ticketsBaseUrl}/${ticketNumber}`;
+    const response = await Api.get(url);
+    return response.data;
 }

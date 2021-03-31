@@ -71,7 +71,7 @@ const TicketListItem = ({item}: TicketListItemProps) => {
     ]);
 
     return <div className='grid grid-cols-12 border-b p-2 relative cursor-pointer hover:bg-gray-100'>
-        <div className='col-span-3 flex flex-auto' onClick={() => history.push(`${TicketsPath}/${ticketId}`)}>
+        <div className='col-span-3 flex flex-auto' onClick={() => history.push(`${TicketsPath}/${item.ticketNumber}`)}>
             <div className='pl-3 pr-3 pt-1'>
                 <TicketChannelIcon ticket={item}/>
             </div>
@@ -86,7 +86,7 @@ const TicketListItem = ({item}: TicketListItemProps) => {
             </div>
         </div>
         <TicketStatus ticketId={ticketId} status={item.status}/>
-        <div className='col-span-3 flex flex-row' onClick={() => history.push(`${TicketsPath}/${ticketId}`)}>
+        <div className='col-span-3 flex flex-row' onClick={() => history.push(`${TicketsPath}/${item.ticketNumber}`)}>
             <div className='pt-6 flex-1'>
                 {item.priority ? selectedPriority?.value : null}
             </div>

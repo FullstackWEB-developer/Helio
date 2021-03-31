@@ -56,7 +56,7 @@ const PatientTickets: React.FC<PatientTicketProps> = ({patientId}) => {
                             items && items?.map(item => {
                                 return (
                                     <div className={'py-4 border-b cursor-pointer'}
-                                         onClick={() => history.push('/my_tickets/' + item.id)} key={item.id}>
+                                         onClick={() => history.push(`${TicketsPath}/${item.ticketNumber}`)} key={item.id}>
                                         <div className='flex flex-row body2'>
                                             <TicketChannelTypeIcon channel={item.channel} />
                                             <span className="mx-2">{item.ticketNumber}</span>
