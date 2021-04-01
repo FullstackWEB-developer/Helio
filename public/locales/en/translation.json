@@ -13,7 +13,8 @@
     "save": "Save",
     "cancel": "Cancel",
     "any": "Any",
-    "not_available": "N/A"
+    "not_available": "N/A",
+    "all": "All"
   },
   "login": {
     "loginButton": "Login"

@@ -1,22 +1,22 @@
 import withErrorLogging from '../../../shared/HOC/with-error-logging';
 import Collapsible from '../../../shared/components/collapsible/collapsible';
-import React, {useEffect, useState} from 'react';
-import {getContacts} from '../../../shared/services/contacts.service';
-import {getDepartments, getUserList} from '../../../shared/services/lookups.service';
-import {getEnumByType, getList, getLookupValues} from '../services/tickets.service';
-import {useDispatch, useSelector} from 'react-redux';
-import {useTranslation} from 'react-i18next';
-import Checkbox, {CheckboxCheckEvent} from '../../../shared/components/checkbox/checkbox';
-import {selectEnumValues, selectLookupValues, selectSearchTerm, selectTicketsPaging} from '../store/tickets.selectors';
-import Radio, {RadioItem} from '../../../shared/components/radio/radio';
-import {TicketOptionsBase} from '../models/ticket-options-base.model';
-import {Controller, useForm} from 'react-hook-form';
-import Select, {Option} from '../../../shared/components/select/select';
-import {selectDepartmentList, selectUserList} from '../../../shared/store/lookups/lookups.selectors';
-import {User} from '../../../shared/models/user';
-import {TicketQuery} from '../models/ticket-query';
+import React, { useEffect, useState } from 'react';
+import { getContacts } from '../../../shared/services/contacts.service';
+import { getDepartments, getUserList } from '../../../shared/services/lookups.service';
+import { getEnumByType, getList, getLookupValues } from '../services/tickets.service';
+import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import Checkbox, { CheckboxCheckEvent } from '../../../shared/components/checkbox/checkbox';
+import { selectEnumValues, selectLookupValues, selectSearchTerm, selectTicketsPaging } from '../store/tickets.selectors';
+import Radio, { RadioItem } from '../../../shared/components/radio/radio';
+import { TicketOptionsBase } from '../models/ticket-options-base.model';
+import { Controller, useForm } from 'react-hook-form';
+import Select, { Option } from '../../../shared/components/select/select';
+import { selectDepartmentList, selectUserList } from '../../../shared/store/lookups/lookups.selectors';
+import { User } from '../../../shared/models/user';
+import { TicketQuery } from '../models/ticket-query';
 import dayjs from 'dayjs';
-import {TicketEnumValue} from '../models/ticket-enum-value.model';
+import { TicketEnumValue } from '../models/ticket-enum-value.model';
 import utc from 'dayjs/plugin/utc';
 import Button from '../../../shared/components/button/button';
 import Input from '../../../shared/components/input/input';
@@ -24,7 +24,7 @@ import TagInput from '../../../shared/components/tag-input/tag-input';
 const TicketFilter = () => {
     dayjs.extend(utc);
     const dispatch = useDispatch();
-    const {t} = useTranslation();
+    const { t } = useTranslation();
     const anyKey = '0';
     const timePeriod_DateRange = '4';
     const paging = useSelector(selectTicketsPaging);
@@ -54,7 +54,7 @@ const TicketFilter = () => {
     }, [dispatch]);
 
     const [formVisible, setformVisible] = useState(true);
-    const getSelectedFromCheckbox =(items: CheckboxCheckEvent[]):  string[] => {
+    const getSelectedFromCheckbox = (items: CheckboxCheckEvent[]): string[] => {
         if (items) {
             const isAny = items.find(a => a && parseInt(a.value) === parseInt(anyKey) && a.checked);
             if (!isAny) {
@@ -65,7 +65,7 @@ const TicketFilter = () => {
     }
 
     const fetchTickets = (values: any) => {
-        const query : TicketQuery = {
+        const query: TicketQuery = {
             ...paging
         };
         query.statuses = getSelectedFromCheckbox(values.statuses).map((a: string) => parseInt(a));
@@ -121,7 +121,7 @@ const TicketFilter = () => {
         dispatch(getList(query, true));
     }
 
-    const convertOfficesToOptions = () : TicketOptionsBase[] =>{
+    const convertOfficesToOptions = (): TicketOptionsBase[] => {
         if (offices && offices.length > 0) {
             return offices.map(office => {
                 return {
@@ -134,7 +134,7 @@ const TicketFilter = () => {
         return [];
     }
 
-    const convertDepartmentsToOptions = () : TicketOptionsBase[] =>{
+    const convertDepartmentsToOptions = (): TicketOptionsBase[] => {
         if (departments && departments.length > 0) {
             return departments.map(dept => {
                 return {
@@ -147,7 +147,7 @@ const TicketFilter = () => {
         return [];
     }
 
-    const convertEnumToOptions = (items: TicketEnumValue[]) : TicketOptionsBase[] =>{
+    const convertEnumToOptions = (items: TicketEnumValue[]): TicketOptionsBase[] => {
         if (items && items.length > 0) {
             return items.map(item => {
                 return {
@@ -159,7 +159,7 @@ const TicketFilter = () => {
         return [];
     }
 
-    const convertOptionsToRadio = (items: TicketOptionsBase[]) : RadioItem[] => {
+    const convertOptionsToRadio = (items: TicketOptionsBase[]): RadioItem[] => {
         return items.map(item => {
             return {
                 value: item.key,
@@ -168,7 +168,7 @@ const TicketFilter = () => {
         })
     }
 
-    const timePeriodList : TicketOptionsBase[] = [
+    const timePeriodList: TicketOptionsBase[] = [
         {
             key: '1',
             value: t('tickets.filter.time_periods.today')
@@ -187,69 +187,80 @@ const TicketFilter = () => {
         }
     ]
 
-    const addAnyOption =(list: any[]) : TicketOptionsBase[] => {
+    const addAnyOption = (list: any[]): TicketOptionsBase[] => {
         return [{
             key: anyKey,
-            value:t('common.any')
+            value: t('common.any')
         }, ...list];
     }
 
-    const GetCollapsibleCheckboxControl = (title:string, name:string, items : TicketOptionsBase[]) => {
-        return  <Collapsible title={title}>
-                    {
-                        items.map((item) => {
-                            return <Controller
-                            control={control}
-                            name={`${name}[${item.key}]`}
-                            defaultValue=''
-                            key = {item.key}
-                            render={(props) => (
-                                <Checkbox
-                                    name={`${name}[${item.key}]`}
-                                    ref={props.ref}
-                                    truncate={true}
-                                    label={item.value}
-                                    data-test-id={`${name}-checkbox-' + ${item.key}`}
-                                    value={item.key}
-                                    onChange={(e: CheckboxCheckEvent) => {
-                                        props.onChange(e);
-                                    }}
-                                />
-                            )}
-                        />
-                        })
-                    }
+    const GetCollapsibleCheckboxControl = (title: string, name: string, items: TicketOptionsBase[]) => {
+        return <Collapsible title={title}>
+            {
+                items.map((item) => {
+                    return <Controller
+                        control={control}
+                        name={`${name}[${item.key}]`}
+                        defaultValue=''
+                        key={item.key}
+                        render={(props) => (
+                            <Checkbox
+                                name={`${name}[${item.key}]`}
+                                ref={props.ref}
+                                truncate={true}
+                                label={item.value}
+                                data-test-id={`${name}-checkbox-' + ${item.key}`}
+                                value={item.key}
+                                onChange={(e: CheckboxCheckEvent) => {
+                                    props.onChange(e);
+                                }}
+                            />
+                        )}
+                    />
+                })
+            }
         </Collapsible>
     }
 
-    const GetRadioCollapsibleControl = (title: string, name: string, items : TicketOptionsBase[]) => {
+    const GetRadioCollapsibleControl = (title: string, name: string, items: TicketOptionsBase[]) => {
         return <Collapsible title={title}>
             <Controller
-            control={control}
-            defaultValue=''
-            name={name}
-            render={(props) => (
-                <Radio
-                    name={name}
-                    truncate={true}
-                    ref={props.ref}
-                    data-test-id={`${name}-radio`}
-                    items={convertOptionsToRadio(items)}
-                    onChange={(e: string) => {
-                        props.onChange(e);
-                    }}
-                />
-            )}
-        />
+                control={control}
+                defaultValue=''
+                name={name}
+                render={(props) => (
+                    <Radio
+                        name={name}
+                        truncate={true}
+                        ref={props.ref}
+                        data-test-id={`${name}-radio`}
+                        items={convertOptionsToRadio(items)}
+                        onChange={(e: string) => {
+                            props.onChange(e);
+                        }}
+                    />
+                )}
+            />
         </Collapsible>
     }
 
-    const userOptions: Option[] = userList ? userList.map((item: User) => {
-        return {
-            value: item.id,
-            label: item.id
-        };
-    }) : [];
+    const createAssignedToOptions = () => {
+        const options: Option[] = userList.map((item: User) => {
+            return {
+                value: item.id,
+                label: item.id
+            };
+        });
+
+        options.unshift({
+            label: t('common.all'),
+            value: ''
+        });
+
+        return options;
+    }
+
+    const userOptions: Option[] = userList ? createAssignedToOptions() : [];
 
     const resetForm = () => {
         setformVisible(false);
@@ -281,7 +292,7 @@ const TicketFilter = () => {
                 />
             </div>);
         } else {
-            return <span/>;
+            return <span />;
         }
     }
 
@@ -290,58 +301,59 @@ const TicketFilter = () => {
     }
 
     return <div className='bg-secondary-100 pb-20 min-h-full px-6'>
-                <div className='flex flex-row justify-between pt-7'>
-                    <div className='subtitle pb-8 h7'>{t('tickets.filter.filter_tickets')}</div>
-                    <div className='cursor-pointer' onClick={() => resetForm()}>{t('tickets.filter.clear_all')}</div>
+        <div className='flex flex-row justify-between pt-7'>
+            <div className='subtitle pb-8 h7'>{t('tickets.filter.filter_tickets')}</div>
+            <div className='cursor-pointer' onClick={() => resetForm()}>{t('tickets.filter.clear_all')}</div>
+        </div>
+        {formVisible && <form onSubmit={handleSubmit(fetchTickets)}>
+            {GetCollapsibleCheckboxControl('tickets.filter.statuses', 'statuses', addAnyOption(convertEnumToOptions(ticketStatuses)))}
+            {GetRadioCollapsibleControl('tickets.filter.time_period', 'timePeriod', timePeriodList)}
+            {dateFilters()}
+            {GetRadioCollapsibleControl('tickets.filter.priority', 'priority', addAnyOption(convertEnumToOptions([...ticketPriorities].reverse())))}
+            {GetCollapsibleCheckboxControl('tickets.filter.channel', 'channels', addAnyOption(convertEnumToOptions(ticketChannels)))}
+            {GetCollapsibleCheckboxControl('tickets.filter.ticket_type', 'ticketTypes', addAnyOption(convertEnumToOptions(ticketTypes)))}
+            {GetRadioCollapsibleControl('tickets.filter.department', 'department', addAnyOption(convertDepartmentsToOptions()))}
+            {GetCollapsibleCheckboxControl('tickets.filter.office_location', 'offices', addAnyOption(convertOfficesToOptions()))}
+            <Collapsible title={'tickets.filter.assigned_to'}>
+                <div>
+                    <Controller
+                        name='assignedTo'
+                        control={control}
+                        defaultValue=''
+                        render={(props) => (
+                            <Select
+                                {...props}
+                                data-test-id={'assigned-to-user-list'}
+                                className={'w-full border-none h-14'}
+                                options={userOptions}
+                                value={props.value}
+                            />
+                        )}
+                    />
                 </div>
-            {formVisible && <form onSubmit={handleSubmit(fetchTickets)}>
-                        {GetCollapsibleCheckboxControl('tickets.filter.statuses', 'statuses', addAnyOption(convertEnumToOptions(ticketStatuses)))}
-                        {GetRadioCollapsibleControl('tickets.filter.time_period', 'timePeriod', timePeriodList)}
-                        { dateFilters() }
-                        {GetRadioCollapsibleControl('tickets.filter.priority', 'priority', addAnyOption(convertEnumToOptions([...ticketPriorities].reverse())))}
-                        {GetCollapsibleCheckboxControl('tickets.filter.channel', 'channels', addAnyOption(convertEnumToOptions(ticketChannels)))}
-                        {GetCollapsibleCheckboxControl('tickets.filter.ticket_type', 'ticketTypes', addAnyOption(convertEnumToOptions(ticketTypes)))}
-                        {GetRadioCollapsibleControl('tickets.filter.department', 'department', addAnyOption(convertDepartmentsToOptions()))}
-                        {GetCollapsibleCheckboxControl('tickets.filter.office_location', 'offices', addAnyOption(convertOfficesToOptions()))}
-                        <Collapsible title={'tickets.filter.assigned_to'}>
-                            <div>
-                                <Controller
-                                    name='assignedTo'
-                                    control={control}
-                                    defaultValue=''
-                                    render={(props) => (
-                                        <Select
-                                            {...props}
-                                            data-test-id={'assigned-to-user-list'}
-                                            className={'w-full border-none h-14'}
-                                            options={userOptions}
-                                            value={props.value}
-                                        />
-                                    )}
-                                />
-                            </div>
-                        </Collapsible>
-                                <Collapsible title={'tickets.filter.tags'}>
-                                    <Controller
-                                        name='tags'
-                                        control={control}
-                                        defaultValue=''
-                                        render={(props) => (
-                                            <TagInput
-                                                {...props}
-                                                tagOptions={tags}
-                                                data-test-id='ticket-new-tag-input'
-                                                className={'w-full border-none h-14'}
-                                                setSelectedTags={setSelectedTags}
-                                                initialIsListVisible={true}
-                                            />
-                                        )}
-                                    />
-                            </Collapsible>
-                        <div className='flex w-full justify-center pt-4'>
-                            <Button label={'tickets.filter.fetch'} type='submit'/>
-                        </div>
-                    </form>}
-            </div>;}
+            </Collapsible>
+            <Collapsible title={'tickets.filter.tags'}>
+                <Controller
+                    name='tags'
+                    control={control}
+                    defaultValue=''
+                    render={(props) => (
+                        <TagInput
+                            {...props}
+                            tagOptions={tags}
+                            data-test-id='ticket-new-tag-input'
+                            className={'w-full border-none h-14'}
+                            setSelectedTags={setSelectedTags}
+                            initialIsListVisible={true}
+                        />
+                    )}
+                />
+            </Collapsible>
+            <div className='flex w-full justify-center pt-4'>
+                <Button label={'tickets.filter.fetch'} type='submit' />
+            </div>
+        </form>}
+    </div>;
+}
 
 export default withErrorLogging(TicketFilter);
