@@ -82,7 +82,7 @@ const Extensions = () => {
 
   return (
     <div className='flex flex-col'>
-      <div className='px-4 py-2 border-b'>
+      <div className='px-4 py-3 border-b flex items-center'>
         <h2 className='subtitle'>
           {translate('statuses.extensions.extensions_label')}
         </h2>
