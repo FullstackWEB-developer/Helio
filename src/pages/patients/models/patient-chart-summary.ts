@@ -2,7 +2,7 @@ import { ChartInsurance } from './chart-insurance';
 import { PatientOutstandingBalance } from './patient-outstanding-balance';
 import { Appointment } from '../../external-access/appointment/models/appointment';
 import { PatientCase } from './patient-case';
-
+import { ChartAlert} from './chart-alert';
 export interface PatientChartSummary {
     emailAddress: string,
     homePhone: string,
@@ -18,5 +18,6 @@ export interface PatientChartSummary {
     outstandingBalance: PatientOutstandingBalance,
     lastAppointment: Appointment,
     upcomingAppointment: Appointment,
-    patientCases: PatientCase[]
+    patientCases: PatientCase[],
+    chartAlert?: ChartAlert
 }

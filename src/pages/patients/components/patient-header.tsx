@@ -1,9 +1,12 @@
 import { useTranslation } from 'react-i18next';
-import { selectPatient } from '../store/patients.selectors';
+import { selectPatient, selectPatientChartSummary } from '../store/patients.selectors';
 import { useSelector } from 'react-redux';
 import utils from '../utils/utils';
 import { ExtendedPatient } from '../models/extended-patient';
-import React from 'react';
+import React, { useRef, useState } from 'react';
+import Tooltip from '@components/tooltip/tooltip';
+import { PatientChartSummary } from '../models/patient-chart-summary';
+import PatientChartAlert from './patient-chart-alert';
 import { ReactComponent as InfoIcon } from '@icons/Icon-Info-24px.svg';
 import Button from '@components/button/button';
 
@@ -12,6 +15,8 @@ const athenaPatientUrl = process.env.REACT_APP_ATHENAHEALTH_CLIENT_SUMMARY;
 const PatientHeader = () => {
     const { t } = useTranslation();
     const patient: ExtendedPatient = useSelector(selectPatient);
+    const patientChartSummary: PatientChartSummary = useSelector(selectPatientChartSummary);
+
     const SmallLabel = (text: string, value: string) => {
         return (
             <div>
@@ -20,6 +25,9 @@ const PatientHeader = () => {
             </div>
         )
     }
+
+    const chartAlertIcon = useRef(null);
+    const [chartAlertHovered, setChartAlertHovered] = useState(false);
 
     const viewInAthena = () => {
             const url = `${athenaPatientUrl}${patient.patientId}`;
@@ -34,7 +42,20 @@ const PatientHeader = () => {
                     <span className={'font-bold'}>{`${patient.firstName} ${patient.lastName}`}</span>
                     <span className={'pl-8'}>{t('patient.header.id')}</span>
                     <span className={'font-bold pl-4'}>{patient.patientId}</span>
-                    <span className={'pl-4 pt-1'}><InfoIcon /></span>
+                    {
+                        patientChartSummary?.chartAlert &&
+                        <>
+                            <span className={'pl-4 pt-1'}>
+                                <InfoIcon ref={chartAlertIcon}
+                                    onMouseOver={() => setChartAlertHovered(true)}
+                                    onMouseOut={() => setChartAlertHovered(false)}>
+                                </InfoIcon>
+                            </span>
+                            <Tooltip targetRef={chartAlertIcon} isVisible={chartAlertHovered} placement='bottom-start'>
+                                <PatientChartAlert chartAlert={patientChartSummary.chartAlert} />
+                            </Tooltip>
+                        </>
+                    }
                 </div>
                 <div className={'pt-4 flex flex-row text-xl'}>
                     <div className='flex space-x-10'>
