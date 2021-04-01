@@ -1,9 +1,9 @@
-import { PatientTicketsRequest } from '../models/patient-tickets-request';
-import { Dispatch } from '@reduxjs/toolkit';
+import {PatientTicketsRequest} from '../models/patient-tickets-request';
+import {Dispatch} from '@reduxjs/toolkit';
 import Api from '../../../shared/services/api';
 import Logger from '../../../shared/services/logger';
-import { LookupValue } from '../models/lookup-value';
-import { TicketNote } from '../models/ticket-note';
+import {LookupValue} from '../models/lookup-value';
+import {TicketNote} from '../models/ticket-note';
 import store from '../../../app/store';
 import {
     add,
@@ -18,7 +18,6 @@ import {
     setLookupValues,
     setSearchTerm,
     setTicket,
-    setTicketDelete,
     setTicketEnum,
     setTicketFilter,
     setTicketsLoading,
@@ -27,10 +26,10 @@ import {
     startRequestAddFeed,
     startRequestAddNote
 } from '../store/tickets.slice';
-import { Ticket } from '../models/ticket';
-import { Paging } from '../../../shared/models/paging.model';
-import { TicketQuery } from '../models/ticket-query';
-import { TicketFeed } from '../models/ticket-feed';
+import {Ticket} from '../models/ticket';
+import {Paging} from '../../../shared/models/paging.model';
+import {TicketQuery} from '../models/ticket-query';
+import {TicketFeed} from '../models/ticket-feed';
 
 const logger = Logger.getInstance();
 const ticketsBaseUrl = '/tickets';
@@ -250,7 +249,7 @@ export const getPatientTickets = async (queryRequest: PatientTicketsRequest, res
     let queryParams = serialize(query);
 
     if (resetPagination) {
-        const { totalCount, totalPages, page, ...newQuery } = query;
+        const {totalCount, totalPages, page, ...newQuery} = query;
         queryParams = serialize(newQuery);
     }
     let ticketsUrl = `${ticketsBaseUrl}/GetPatientTickets?${queryParams}`;
@@ -258,22 +257,16 @@ export const getPatientTickets = async (queryRequest: PatientTicketsRequest, res
     return response.data.results;
 }
 
-export const setDelete = (id: string, undoDelete?: boolean) => {
+export interface setDeleteProps {
+    id: string,
+    undoDelete?: boolean;
+}
+
+export const setDelete = async ({id, undoDelete = false}: setDeleteProps) => {
     const url = `${ticketsBaseUrl}/${id}/delete`;
-    return async (dispatch: Dispatch) => {
-        await Api.put(url, {
-            undoDelete: undoDelete
-        })
-            .then(() => {
-                dispatch(setTicketDelete({
-                    id: id,
-                    isDeleted: !!undoDelete
-                }));
-            })
-            .catch(err => {
-                dispatch(setFailure(err.message));
-            });
-    }
+    await Api.put(url, {
+        undoDelete: undoDelete
+    })
 }
 
 export const getTicketByNumber = async (ticketNumber: number) => {

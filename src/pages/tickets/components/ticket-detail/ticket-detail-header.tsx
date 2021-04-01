@@ -17,11 +17,12 @@ import Button from '../../../../shared/components/button/button';
 import {useDispatch, useSelector} from 'react-redux';
 import {selectEnumValues, selectFeedLastMessageOn} from '../../store/tickets.selectors';
 import {addFeed, getEnumByType, setDelete, setStatus} from '../../services/tickets.service';
-import {setTicket} from '../../store/tickets.slice';
+import {setTicket, setTicketDelete} from '../../store/tickets.slice';
 import {showCcp} from '../../../../shared/layout/store/layout.slice';
 import TicketChannelIcon from '../ticket-channel-icon';
 import {TicketsPath} from '../../../../app/paths';
 import Logger from '../../../../shared/services/logger';
+import {useMutation} from 'react-query';
 
 interface TicketDetailHeaderProps {
     ticket: Ticket,
@@ -45,6 +46,17 @@ const TicketDetailHeader = ({ticket, patient}: TicketDetailHeaderProps) => {
         )
     }
 
+    const deleteTicketMutation = useMutation(setDelete, {
+        onSuccess: (data, variables) => {
+            dispatch(setTicketDelete({
+                id: variables.id,
+                isDeleted: !!variables.undoDelete
+            }));
+            history.push(TicketsPath);
+
+        }
+    });
+
     const feedLastMessageOn = useSelector(selectFeedLastMessageOn);
     const ticketStatuses = useSelector((state => selectEnumValues(state, 'TicketStatus')));
 
@@ -66,7 +78,7 @@ const TicketDetailHeader = ({ticket, patient}: TicketDetailHeaderProps) => {
 
     const handleMarkAsDelete = () => {
         if (ticket && ticket.id) {
-            dispatch(setDelete(ticket.id));
+            deleteTicketMutation.mutate({id: ticket.id});
         }
     }
 
@@ -87,7 +99,7 @@ const TicketDetailHeader = ({ticket, patient}: TicketDetailHeaderProps) => {
     return ticket ? (
         <div>
             <div className={'flex flex-row p-8'}>
-                <div className={'pl-4 pt-4 cursor-pointer align-middle'} onClick={() => history.push(TicketsPath)}>
+                <div className={'pl-4 pt-4 cursor-pointer align-middle'} onClick={() => history.goBack()}>
                     <ArrowBackIcon/></div>
                 <div className={'mt-1 ml-2 h-12 w-12'}>
                     <TicketChannelIcon ticket={ticket}/>
