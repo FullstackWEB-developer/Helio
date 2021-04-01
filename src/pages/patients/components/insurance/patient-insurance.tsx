@@ -1,5 +1,5 @@
 import {useTranslation} from 'react-i18next';
-import OldTable from '@components/old-table/old-table';
+import PatientChartList from '@pages/patients/components/patient-chart-list';
 import {useSelector} from 'react-redux';
 import {
     selectInsuranceLoading,
@@ -45,7 +45,7 @@ const PatientInsurance = () => {
 
     const eligibilityInfoRows = primaryInsurance !== undefined
         ? [
-            {label: t('patient.insurance.status'), values: [primaryInsurance.eligibilityStatus]},
+            {label: t('patient.insurance.status'), values: [primaryInsurance.eligibilityStatus], isStatus: true},
             {label: t('patient.insurance.status_reason'), values: [primaryInsurance.eligibilityReason]},
             {
                 label: t('patient.insurance.pcp'),
@@ -62,12 +62,14 @@ const PatientInsurance = () => {
 
     const displayInsurance = () => {
         return <div>
-            <div className='pt-4'><span
-                className='font-bold'>{primaryInsurance?.insurancePlanName}</span> {primaryInsuranceHeader}
+            <div className='pt-4'>
+                <span>
+                    {primaryInsurance?.insurancePlanName} {primaryInsuranceHeader}
+                </span>
             </div>
             <div className='grid grid-cols-2 pt-4'>
-                <OldTable headings={[t('patient.insurance.policy_info')]} rows={policyInfoRows}/>
-                <OldTable headings={[t('patient.insurance.eligibility_info')]} rows={eligibilityInfoRows}/>
+                <PatientChartList headings={[t('patient.insurance.policy_info')]} rows={policyInfoRows}/>
+                <PatientChartList headings={[t('patient.insurance.eligibility_info')]} rows={eligibilityInfoRows}/>
             </div>
         </div>
     }
@@ -75,15 +77,15 @@ const PatientInsurance = () => {
     return (!isLoading && !isError ?
         <div>
             <div className='grid grid-cols-1 border-b pb-1 pt-8'>
-                <div className={'font-bold text-lg'}>{t('patient.summary.primary_insurance_information')}</div>
+                <div>{t('patient.summary.primary_insurance_information')}</div>
             </div>
             {
                 primaryInsurance !== undefined
                     ? displayInsurance()
                     : <div>{t('patient.insurance.no_insurance')}</div>
             }
-            <div hidden={!isError} className={'p-4 text-red-500'}>{t('patient.insurance.error')}</div>
-        </div> : !isError ? <ThreeDots /> : <div className={'p-4 text-red-500'}>{t('patient.summary.error')}</div>
+            <div hidden={!isError} className={'p-4 text-danger'}>{t('patient.insurance.error')}</div>
+        </div> : !isError ? <ThreeDots /> : <div className={'p-4 text-danger'}>{t('patient.summary.error')}</div>
     );
 };
 

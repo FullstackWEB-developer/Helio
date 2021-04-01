@@ -186,6 +186,7 @@
       "portal_access": "Portal Access",
       "contact_preference": "Contact Preference",
       "outstanding_balances": "Outstanding Balances",
+      "in_collections": "In Collections",
       "total_balances": "TOTAL BALANCES",
       "total": "Total",
       "insurance": "Insurance",
@@ -212,7 +213,7 @@
       "patients_relation": "Patient's Relation",
       "dob": "DOB",
       "group": "Group #",
-      "id_cert": "ID/CERT#",
+      "id_cert": "ID/Cert#",
       "eligibility_info": "ELIGIBILITY INFO",
       "status": "Status: ",
       "status_reason": "Status Reason",
@@ -224,7 +225,7 @@
       "no_insurance": "No insurance",
       "unknown": "Unknown",
       "error": "Error fetching insurance data, please try again",
-      "copay": "Copay",
+      "copay": "Copay: ",
       "eligible": "Eligible"
     },
     "clinical": {

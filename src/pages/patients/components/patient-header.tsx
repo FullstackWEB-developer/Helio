@@ -4,7 +4,10 @@ import { useSelector } from 'react-redux';
 import utils from '../utils/utils';
 import { ExtendedPatient } from '../models/extended-patient';
 import React from 'react';
-import { ReactComponent as InfoIcon } from '../../../shared/icons/Icon-Info-24px.svg';
+import { ReactComponent as InfoIcon } from '@icons/Icon-Info-24px.svg';
+import Button from '@components/button/button';
+
+const athenaPatientUrl = process.env.REACT_APP_ATHENAHEALTH_CLIENT_SUMMARY;
 
 const PatientHeader = () => {
     const { t } = useTranslation();
@@ -17,6 +20,12 @@ const PatientHeader = () => {
             </div>
         )
     }
+
+    const viewInAthena = () => {
+            const url = `${athenaPatientUrl}${patient.patientId}`;
+            window.open(url, '_blank');
+    }
+
     return (
         <div className={'flex flex-row p-8'}>
             <div className={'h-24 w-24 bg-gray-200'} />
@@ -25,7 +34,7 @@ const PatientHeader = () => {
                     <span className={'font-bold'}>{`${patient.firstName} ${patient.lastName}`}</span>
                     <span className={'pl-8'}>{t('patient.header.id')}</span>
                     <span className={'font-bold pl-4'}>{patient.patientId}</span>
-                    <span className={'pl-4 pt-1'}><InfoIcon></InfoIcon></span>
+                    <span className={'pl-4 pt-1'}><InfoIcon /></span>
                 </div>
                 <div className={'pt-4 flex flex-row text-xl'}>
                     <div className='flex space-x-10'>
@@ -44,8 +53,11 @@ const PatientHeader = () => {
                     </div>
                 </div>
             </div>
-            <div className='h-11 border rounded-md ml-32 mt-8 pt-2 pb-2 pl-8 pr-8'>
-                {t('patient.header.view_in_athena')}
+            <div className='h-11 ml-52 mt-8'>
+                <Button data-test-id='patient-header-view-in-athena-button'
+                        buttonType='medium'
+                        onClick={() => viewInAthena()}
+                        label={'patient.header.view_in_athena'} />
             </div>
         </div>
     );

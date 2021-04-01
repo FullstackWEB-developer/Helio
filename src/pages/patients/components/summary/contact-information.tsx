@@ -1,8 +1,9 @@
 import {useSelector} from 'react-redux';
 import {selectPatient, selectPatientChartSummary} from '../../store/patients.selectors';
 import {useTranslation} from 'react-i18next';
-import OldTable from '@components/old-table/old-table';
+import PatientChartList from '@pages/patients/components/patient-chart-list';
 import withErrorLogging from '../../../../shared/HOC/with-error-logging';
+import { ReactComponent as EditIcon } from '../../../../shared/icons/Icon-Edit-24px.svg';
 
 const ContactInformation = () => {
     const {t} = useTranslation();
@@ -33,18 +34,19 @@ const ContactInformation = () => {
     const contactSecondRows = [
         { label: t('patient.summary.home_phone'), values: [formatPhone(patientChartSummary.homePhone)] },
         { label: t('patient.summary.mobile_phone'), values: [formatPhone(patient.mobilePhone)] },
-        { label: t('patient.summary.consent_to_text'), values: [t(booleanToText(patientChartSummary.consentToText))] },
-        { label: t('patient.summary.contact_preference'), values: [patientChartSummary.contactPreference] }
+        { label: t('patient.summary.contact_preference'), values: [patientChartSummary.contactPreference] },
+        { label: t('patient.summary.consent_to_text'), values: [t(booleanToText(patientChartSummary.consentToText))] }
     ];
 
     return (
         <div>
-            <div className='border-b pb-1 pt-8'>
-                <div className={'font-bold text-lg'}>{t('patient.summary.contact_information')} </div>
+            <div className='border-b pb-1 pt-8 flex justify-between'>
+                <div className={'body1'}>{t('patient.summary.contact_information')} </div>
+                <EditIcon className='mr-4'/>
             </div>
             <div className='grid grid-cols-2 gap-12'>
-                <OldTable headings={[]} rows={contactRows}/>
-                <OldTable headings={[]} rows={contactSecondRows}/>
+                <PatientChartList headings={[]} rows={contactRows}/>
+                <PatientChartList headings={[]} rows={contactSecondRows}/>
             </div>
         </div>
     );

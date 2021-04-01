@@ -1,6 +1,5 @@
 import ContactInformation from './contact-information';
 import OutstandingBalances from './outstanding-balances';
-import PrimaryInsuranceInformation from './primary-insurance-information';
 import Appointments from './appointments';
 import { useSelector } from 'react-redux';
 import { selectIsSummaryError, selectSummaryLoading } from '../../store/patients.selectors';
@@ -16,9 +15,8 @@ const PatientSummary = () => {
             <>
                 <ContactInformation />
                 <OutstandingBalances />
-                <PrimaryInsuranceInformation />
                 <Appointments />
-            </> : !isError ? <ThreeDots /> : <div className={'p-4 text-red-500'}>{t('patient.summary.error')}</div>
+            </> : !isError ? <ThreeDots /> : <div className={'p-4 text-danger'}>{t('patient.summary.error')}</div>
     );
 };
 

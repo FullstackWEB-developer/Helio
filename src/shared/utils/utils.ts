@@ -22,6 +22,10 @@ const formatDate12HoursTime = (date: string) => {
     return dayjs(date).format('MMM D, YYYY h:mm A')
 }
 
+const formatDateShortMonth = (date: string) => {
+    return dayjs(date).format('MMM D, YYYY');
+}
+
 const getInitialsFromFullName = (username: string): string => {
     const names = username.split(' ');
     let initials = names[0].substring(0, 1).toUpperCase();
@@ -49,7 +53,7 @@ const getDateTime = (dueDate?: Date, dueTime?: string) => {
 }
 
 const utils = {
-    getWindowCenter, getWindowDimensions, formatDate, formatDate12HoursTime, getInitialsFromFullName, getDateTime
+    getWindowCenter, getWindowDimensions, formatDate, formatDate12HoursTime, formatDateShortMonth, getInitialsFromFullName, getDateTime
 }
 
 export default utils;

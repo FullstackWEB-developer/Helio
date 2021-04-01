@@ -10,12 +10,12 @@ const Appointments = () => {
     return (
         <div>
             <div className='grid grid-cols-1 border-b pb-1 pt-8'>
-                <div className={'font-bold text-lg'}>{t('patient.summary.appointments')} </div>
+                <div>{t('patient.summary.appointments')} </div>
             </div>
             <div>
-                <div className='text-gray-400 pt-6 pb-3'>{t('patient.summary.last_appointment')}</div>
-                {patientClinical.lastAppointment && <AppointmentDisplay appointment={patientClinical.lastAppointment} />}
-                <div className='text-gray-400 pt-6 pb-3'>{t('patient.summary.upcoming_appointments')}</div>
+                <div className='h8 pt-6 pb-3'>{t('patient.summary.last_appointment')}</div>
+                {patientClinical.lastAppointment && <AppointmentDisplay appointment={patientClinical.lastAppointment} isLast={true}/>}
+                <div className='h8 pt-6 pb-3'>{t('patient.summary.upcoming_appointments')}</div>
                 {
                     patientClinical.upcomingAppointments.length > 0 ?
                         patientClinical.upcomingAppointments.map(ua => <AppointmentDisplay appointment={ua} border={true} />

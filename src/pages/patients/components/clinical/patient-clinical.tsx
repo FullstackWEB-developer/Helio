@@ -13,7 +13,7 @@ const PatientClinical = () => {
         <>
             <Appointments />
             <RecentPatientCases />
-        </> : !isError ? <ThreeDots /> : <div className={'p-4 text-red-500'}>{t('patient.clinical.error')}</div>
+        </> : !isError ? <ThreeDots /> : <div className={'p-4 text-danger'}>{t('patient.clinical.error')}</div>
     );
 };
 
