@@ -17,7 +17,7 @@ const Table = ({model}: Table2Props) => {
     }));
     return <div className='flex flex-col'>
         {title && <TableTitle model={title} isCompact={isCompact}/>}
-        {!hideHeader && <TableHeader headers={columns}/>}
+        {!hideHeader && <TableHeader className={model.headerClassName} headers={columns}/>}
         {rowContent}
     </div>;
 }

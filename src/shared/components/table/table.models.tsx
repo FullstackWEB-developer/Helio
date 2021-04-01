@@ -7,6 +7,7 @@ export interface TableModel {
     hasRowsBottomBorder?: boolean;
     isCompact?: boolean;
     title?: TableTitleModel;
+    headerClassName?: string
 }
 
 export interface TableColumnModel {

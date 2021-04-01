@@ -4,10 +4,11 @@ import './table-header.scss';
 import React from 'react';
 
 export interface TableHeaderProps {
-    headers? : TableColumnModel[]
+    headers?: TableColumnModel[],
+    className?: string
 }
 
-const TableHeader = ({headers} : TableHeaderProps) => {
+const TableHeader = ({headers, className}: TableHeaderProps) => {
     const {t} = useTranslation();
 
     if (!headers) {
@@ -24,7 +25,8 @@ const TableHeader = ({headers} : TableHeaderProps) => {
         return null;
     });
 
-    return <div className='flex flex-row caption-caps table-header px-4'>
+    return <div
+        className={`flex flex-row caption-caps table-header px-4 h-8 items-center ${className ? className : ''}`}>
         {content}
     </div>;
 }

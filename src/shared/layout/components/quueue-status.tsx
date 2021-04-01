@@ -1,25 +1,22 @@
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-  getMetricOptions,
-  getQueueStatus,
-} from '../../services/lookups.service';
-import { selectMetricOptions } from '../../store/lookups/lookups.selectors';
-import { QueueuMetric } from '../../models/queue-metric.model';
+import {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {getMetricOptions, getQueueStatus,} from '../../services/lookups.service';
+import {selectMetricOptions} from '../../store/lookups/lookups.selectors';
+import {QueueuMetric} from '../../models/queue-metric.model';
 import Dropdown from '../../components/dropdown/dropdown';
-import { DropdownModel } from '@components/dropdown/dropdown.models';
-import { TableModel } from '@components/table/table.models';
+import {DropdownModel} from '@components/dropdown/dropdown.models';
+import {TableModel} from '@components/table/table.models';
 import Table from '@components/table/table';
-import { ReactComponent as PhoneIcon } from '../../../shared/icons/Icon-Phone-24px.svg';
-import { ReactComponent as ChatIcon } from '../../../shared/icons/Icon-Chat-24px.svg';
-import { KeyValuePair } from 'src/shared/models/key-value-pair';
-import { useTranslation } from 'react-i18next';
+import {ReactComponent as PhoneIcon} from '../../../shared/icons/Icon-Phone-24px.svg';
+import {ReactComponent as ChatIcon} from '../../../shared/icons/Icon-Chat-24px.svg';
+import {KeyValuePair} from 'src/shared/models/key-value-pair';
+import {useTranslation} from 'react-i18next';
 import QueueStatusTabs from './queue-status-tabs';
-import { useQuery } from 'react-query';
+import {useQuery} from 'react-query';
 import ThreeDots from '@components/skeleton-loader/skeleton-loader';
 
 const QueueStatus = () => {
-  const { t: translate } = useTranslation();
+  const {t: translate} = useTranslation();
   const metricOptions = useSelector(selectMetricOptions);
   const [isDefaultSet, setDefault] = useState(false);
   const [activeMetric, setMetric] = useState<QueueuMetric[]>([]);
@@ -87,6 +84,8 @@ const QueueStatus = () => {
   const getTableModel = (): TableModel => {
     const model: TableModel = {
       hasRowsBottomBorder: true,
+      headerClassName: 'mb-2',
+      isCompact: true,
       columns: [
         {
           field: 'queueName',
@@ -96,7 +95,7 @@ const QueueStatus = () => {
         {
           field: 'voiceCount',
           widthClass: 'w-24',
-          title: <PhoneIcon />,
+          title: <PhoneIcon/>,
           alignment: 'center',
         },
         {
