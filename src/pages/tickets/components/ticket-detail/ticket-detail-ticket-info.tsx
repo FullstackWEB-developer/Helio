@@ -1,36 +1,39 @@
 import React, {ChangeEvent, useEffect, useMemo, useState} from 'react';
-import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
-import { addFeed, getEnumByType, getLookupValues, updateTicket } from '../../services/tickets.service';
-import { Ticket } from '../../models/ticket';
-import { Controller, useForm } from 'react-hook-form';
-import Select, { Option } from '../../../../shared/components/select/select';
+import {useTranslation} from 'react-i18next';
+import {useDispatch, useSelector} from 'react-redux';
+import {addFeed, getEnumByType, getLookupValues, updateTicket} from '../../services/tickets.service';
+import {Ticket} from '../../models/ticket';
+import {Controller, useForm} from 'react-hook-form';
+import Select, {Option} from '../../../../shared/components/select/select';
 import TagInput from '../../../../shared/components/tag-input/tag-input';
 import Button from '../../../../shared/components/button/button';
-import { selectDepartmentList, selectIsDepartmentListLoading } from '../../../../shared/store/lookups/lookups.selectors';
+import {selectDepartmentList, selectIsDepartmentListLoading} from '../../../../shared/store/lookups/lookups.selectors';
 import {
     selectEnumValues,
     selectIsTicketEnumValuesLoading,
     selectIsTicketLookupValuesLoading,
-    selectLookupValues, selectTicketOptionsError
+    selectLookupValues,
+    selectTicketOptionsError
 } from '../../store/tickets.selectors';
-import { setTicket } from '../../store/tickets.slice';
-import { getDepartments } from '../../../../shared/services/lookups.service';
-import { Department } from '../../../../shared/models/department';
+import {setTicket} from '../../store/tickets.slice';
+import {getDepartments} from '../../../../shared/services/lookups.service';
+import {Department} from '../../../../shared/models/department';
 import ThreeDots from '../../../../shared/components/skeleton-loader/skeleton-loader';
 import withErrorLogging from '../../../../shared/HOC/with-error-logging';
-import { FeedTypes, TicketFeed } from '../../models/ticket-feed';
+import {FeedTypes, TicketFeed} from '../../models/ticket-feed';
+import {useMutation} from 'react-query';
+import Logger from '../../../../shared/services/logger';
 
 interface TicketInfoProps {
     ticket: Ticket
 }
 
-const TicketDetailTicketInfo = ({ ticket }: TicketInfoProps ) => {
-    const { handleSubmit, control, errors, formState } = useForm();
+const TicketDetailTicketInfo = ({ticket}: TicketInfoProps) => {
+    const {handleSubmit, control, errors, formState} = useForm();
     const [formVisible, setFormVisible] = useState(true);
     const [isTicketInfoButtonsVisible, setIsTicketInfoButtonsVisible] = useState(false);
 
-    const { t } = useTranslation();
+    const {t} = useTranslation();
     const dispatch = useDispatch();
     const departments = useSelector(selectDepartmentList);
     const ticketPriorities = useSelector((state => selectEnumValues(state, 'TicketPriority')));
@@ -45,6 +48,28 @@ const TicketDetailTicketInfo = ({ ticket }: TicketInfoProps ) => {
     const isDepartmentListLoading = useSelector(selectIsDepartmentListLoading);
     const isLookupValuesLoading = useSelector(selectIsTicketLookupValuesLoading);
     const isTicketEnumValuesLoading = useSelector(selectIsTicketEnumValuesLoading);
+    const logger = Logger.getInstance();
+
+    const ticketUpdateMutation = useMutation(updateTicket, {
+        onSuccess: (data, variables) => {
+            const ticketData = variables.ticketData;
+            if (ticketData.tags) {
+                setInitialTags(ticketData.tags);
+            }
+            dispatch(setTicket(data));
+            if (ticketData.id && ticketData.status) {
+                const feedData: TicketFeed = {
+                    feedType: FeedTypes.StatusChange,
+                    description: `${t('ticket_detail.feed.description_prefix')} ${selectedStatus?.label}`
+                };
+                dispatch(addFeed(ticketData.id, feedData));
+            }
+            resetForm();
+        },
+        onError: (error) => {
+            logger.error('Error updating ticket', error);
+        }
+    });
 
     const onSubmit = async () => {
         const ticketData: Ticket = {
@@ -57,21 +82,7 @@ const TicketDetailTicketInfo = ({ ticket }: TicketInfoProps ) => {
             tags: isDirty('tagsInput') ? tags : undefined
         };
         if (ticket?.id) {
-            await updateTicket(ticket.id, ticketData).then(() => {
-                ticketData.id = ticket.id;
-                dispatch(setTicket(ticketData));
-                if (ticketData?.tags){
-                    setInitialTags(ticketData.tags);
-                }
-                if(ticketData.id && ticketData.status){
-                    const feedData: TicketFeed = {
-                        feedType: FeedTypes.StatusChange,
-                        description: `${t('ticket_detail.feed.description_prefix')} ${selectedStatus?.label}`
-                    };
-                    dispatch(addFeed(ticketData.id, feedData));
-                }
-                resetForm();
-            });
+            ticketUpdateMutation.mutate({id: ticket.id, ticketData: ticketData});
         }
     }
 
@@ -142,7 +153,7 @@ const TicketDetailTicketInfo = ({ ticket }: TicketInfoProps ) => {
     ]);
 
     useEffect(() => {
-        if(ticket?.status) {
+        if (ticket?.status) {
             setSelectedStatus(statusOptions.find((o: Option) => parseInt(o.value) === ticket?.status));
         }
     }, [ticket?.status])

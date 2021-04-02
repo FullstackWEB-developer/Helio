@@ -54,7 +54,7 @@ export function getList(ticketQuery: TicketQuery, resetPagination?: boolean) {
             const paging: Paging = {
                 pageSize: data.pageSize,
                 totalPages: data.totalPages,
-                page: data.page > data.totalPages ? data.totalPages : data.page,
+                page: (data.page > data.totalPages && data.totalPages > 0) ? data.totalPages : data.page,
                 totalCount: data.totalCount
             };
             dispatch(addPaging(paging));
@@ -210,10 +210,15 @@ export const createTicket = async (data: Ticket) => {
         });
 }
 
-export const updateTicket = async (id: string, data: Ticket) => {
+export interface updateTicketProps {
+    id: string;
+    ticketData: Ticket;
+}
+
+export const updateTicket = async ({id, ticketData}: updateTicketProps) => {
     const url = `${ticketsBaseUrl}/${id}`;
     let patchData = [];
-    for (let [key, value] of Object.entries(data)) {
+    for (let [key, value] of Object.entries(ticketData)) {
         if (value) {
             patchData.push({
                 op: 'replace',
@@ -222,15 +227,12 @@ export const updateTicket = async (id: string, data: Ticket) => {
             });
         }
     }
-    await Api({
+    const result = await Api({
         method: 'patch',
         url: url,
         data: patchData
-    })
-        .then()
-        .catch(error => {
-            logger.error(`Failed updating the ticket ${id}`, error);
-        });
+    });
+    return result.data as Ticket;
 }
 
 export const getRecordedConversation = async (id: string) => {

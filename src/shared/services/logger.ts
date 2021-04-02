@@ -1,6 +1,5 @@
-
-import { CloudWatchLogs, CognitoIdentityCredentials } from 'aws-sdk';
-import { LogStream, PutLogEventsRequest } from 'aws-sdk/clients/cloudwatchlogs';
+import {CloudWatchLogs, CognitoIdentityCredentials} from 'aws-sdk';
+import {LogStream, PutLogEventsRequest} from 'aws-sdk/clients/cloudwatchlogs';
 import dayjs from 'dayjs';
 import store from '../../app/store';
 
@@ -121,11 +120,11 @@ class Logger {
         this.putEvent(log);
     }
 
-    error = (message: string, data?: object) => {
+    error = (message: string, data?: object | unknown) => {
         const log: Log = {
             message: message,
             level: LogLevel.Error,
-            data: data
+            data: data as any
         }
 
         this.putEvent(log);

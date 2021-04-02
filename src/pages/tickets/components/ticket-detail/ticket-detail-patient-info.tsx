@@ -1,45 +1,55 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
-import { Controller, useForm } from 'react-hook-form';
+import React, {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {useTranslation} from 'react-i18next';
+import {useHistory} from 'react-router-dom';
+import {Controller, useForm} from 'react-hook-form';
 import withErrorLogging from '../../../../shared/HOC/with-error-logging';
-import { Ticket } from '../../models/ticket';
+import {Ticket} from '../../models/ticket';
 import Input from '../../../../shared/components/input/input';
 import {getPatientById} from '../../../../shared/services/search.service';
-import {
-    selectIsPatientError,
-    selectPatient,
-    selectPatientLoading
-} from '../../../patients/store/patients.selectors';
+import {selectIsPatientError, selectPatient, selectPatientLoading} from '@pages/patients/store/patients.selectors';
 import ThreeDots from '../../../../shared/components/skeleton-loader/skeleton-loader';
-import { ReactComponent as PatientChartIcon } from '../../../../shared/icons/Icon-PatientChart-24px.svg';
+import {ReactComponent as PatientChartIcon} from '../../../../shared/icons/Icon-PatientChart-24px.svg';
 import Button from '../../../../shared/components/button/button';
-import { updateTicket } from '../../services/tickets.service';
+import {updateTicket} from '../../services/tickets.service';
+import {useMutation} from 'react-query';
+import {setTicket} from '@pages/tickets/store/tickets.slice';
+import Logger from '../../../../shared/services/logger';
 
 interface TicketDetailPatientInfoProps {
     ticket: Ticket
 }
 
-const TicketDetailPatientInfo = ({ ticket }: TicketDetailPatientInfoProps ) => {
-    const { t } = useTranslation();
+const TicketDetailPatientInfo = ({ticket}: TicketDetailPatientInfoProps) => {
+    const {t} = useTranslation();
     const history = useHistory();
-    const { handleSubmit, control, errors } = useForm();
+    const {handleSubmit, control, errors} = useForm();
     const dispatch = useDispatch();
 
     const [formVisible, setFormVisible] = useState(true);
     const [isCaseNumberButtonsVisible, setIsCaseNumberButtonsVisible] = useState(false);
     const [patientCaseNumber, setPatientCaseNumber] = useState(ticket ? ticket.patientCaseNumber?.toString() : '');
+    const logger = Logger.getInstance();
 
     const loading = useSelector(selectPatientLoading);
     const error = useSelector(selectIsPatientError);
     const patient = useSelector(selectPatient);
 
     useEffect(() => {
-        if (ticket && ticket.patientId){
+        if (ticket && ticket.patientId) {
             dispatch(getPatientById(ticket.patientId));
         }
     }, [dispatch, ticket]);
+
+    const updateTicketMutation = useMutation(updateTicket, {
+        onSuccess: (data) => {
+            setIsCaseNumberButtonsVisible(false);
+            dispatch(setTicket(data));
+        },
+        onError: (error) => {
+            logger.error('Error updating ticket', error);
+        }
+    });
 
     const handleCaseNumberChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setIsCaseNumberButtonsVisible(true);
@@ -56,9 +66,7 @@ const TicketDetailPatientInfo = ({ ticket }: TicketDetailPatientInfoProps ) => {
         };
 
         if (ticket && ticket.id) {
-            await updateTicket(ticket.id, ticketData).then(() => {
-                setIsCaseNumberButtonsVisible(false);
-            });
+            updateTicketMutation.mutate({id: ticket.id, ticketData});
         }
     }
 
