@@ -1,12 +1,13 @@
 import {useSelector} from 'react-redux';
-import {selectPrimaryInsuranceSummary} from '../../store/patients.selectors';
+import {selectPatientInsurance, selectPrimaryInsuranceSummary} from '../../store/patients.selectors';
 import {useTranslation} from 'react-i18next';
 
 const PrimaryInsuranceInformation = () => {
     const {t} = useTranslation();
 
     const primaryInsurance = useSelector(selectPrimaryInsuranceSummary);
-    const copay = primaryInsurance?.copays?.length > 0 ? `${t('patient.insurance.copay')}: ${primaryInsurance.copays[0].copayType}  ${primaryInsurance.copays[0].copayAmount}` : '';
+    const patientInsurance = useSelector(selectPatientInsurance);
+    const copay = patientInsurance?.length > 0 ? `${patientInsurance[0].copayAmount}` : '';
 
     const primaryInsuranceHeader = `[${primaryInsurance?.insurancePackageId}] ${primaryInsurance?.insurancePackageAddress1}, ${primaryInsurance?.insurancePackageCity}`
         + ` ${primaryInsurance?.insurancePackageState}, ${primaryInsurance?.insurancePackageZip}`;

@@ -33,4 +33,5 @@ export interface Insurance {
     relationshipToInsured: string,
     relationshipToInsuredId: string,
     insurancePlanDisplayName: string
+    copayAmount: number
 }

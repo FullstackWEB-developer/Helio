@@ -4,7 +4,7 @@ import {useSelector} from 'react-redux';
 import {
     selectInsuranceLoading,
     selectIsInsuranceError,
-    selectPatient,
+    selectPatient, selectPatientInsurance,
     selectPrimaryInsurance
 } from '../../store/patients.selectors';
 import utils from '../../../../shared/utils/utils';
@@ -16,10 +16,12 @@ const PatientInsurance = () => {
     const primaryInsurance = useSelector(selectPrimaryInsurance);
     const isLoading = useSelector(selectInsuranceLoading);
     const isError = useSelector(selectIsInsuranceError);
+    const patientInsurance = useSelector(selectPatientInsurance);
+    const copay = patientInsurance?.length > 0 ? `${t('patient.insurance.copay')} ${patientInsurance[0].copayAmount}` : '';
 
     const primaryInsuranceHeader = primaryInsurance !== undefined
         ? `[${primaryInsurance.insurancePackageId}] ${primaryInsurance.insurancePackageAddress1}, ${primaryInsurance.insurancePackageCity}`
-        + ` ${primaryInsurance.insurancePackageState}, ${primaryInsurance.insurancePackageZip} ${t('patient.insurance.phone')}: ${primaryInsurance.insurancePhone}`
+        + ` ${primaryInsurance.insurancePackageState}, ${primaryInsurance.insurancePackageZip} ${t('patient.insurance.phone')}: ${primaryInsurance.insurancePhone} ${copay}`
         : '';
 
     const getPolicyHolder = () => {
