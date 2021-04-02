@@ -73,7 +73,7 @@ const Navigation = () => {
 
     return (
         <nav className='h-full flex flex-col'>
-            <div className='h-16 pl-7 flex items-center'>
+            <div className='h-16 pl-7 flex items-center border-r'>
                 <MenuIcon className='cursor-pointer' onClick={() => dispatch(toggleNavigation())}/>
             </div>
             <div className='border-t'>
