@@ -246,7 +246,8 @@
         "enter_your_note": "Enter your note",
         "cannot_send_empty": "Cannot send empty note",
         "note_add_error": "Error adding note",
-        "add-note": "Add note"
+        "add-note": "Add note",
+        "sending": "Sending..."
       }
     }
   },

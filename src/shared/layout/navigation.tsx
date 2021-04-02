@@ -65,19 +65,21 @@ const Navigation = () => {
     const items = menuItems.map((item, index) => {
         const isSelected = isActive(item.link);
         const icon = React.cloneElement(item.icon, {pathClass: (isSelected ? 'navigation-active-icon-color' : 'navigation-inactive-icon-color')})
-        return <div key={index} className={isSelected ? ' bg-secondary-50 ' : ''}>
+        return <div key={index}
+                    className={`hover:bg-secondary-50 hover:border-0 ${isSelected ? ' bg-secondary-50 ' : 'border-r'}`}>
             <NavigationItem isSelected={isSelected} key={index} icon={icon} link={item.link} title={item.title}/>
         </div>
     });
 
     return (
-        <nav className='h-full border-r'>
+        <nav className='h-full flex flex-col'>
             <div className='h-16 pl-7 flex items-center'>
                 <MenuIcon className='cursor-pointer' onClick={() => dispatch(toggleNavigation())}/>
             </div>
             <div className='border-t'>
                 {items}
             </div>
+            <div className='border-r flex-grow'/>
         </nav>
     );
 }

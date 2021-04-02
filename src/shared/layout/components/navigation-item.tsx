@@ -22,7 +22,7 @@ const NavigationItem = ({title, link, icon, isSelected}: NavigationItemProps) =>
 
     return (<div className='flex flex-row'>
         {<div className={'w-1.5 ' + (isSelected ? 'bg-green-400' : '')}/>}
-        <Link to={link} className={'hover:text-gray-800 ' + (isSelected ? 'subtitle2' : 'body2-medium')}>
+        <Link to={link} className={(isSelected ? 'subtitle2' : 'body2-medium')}>
             <div
                 className={'items-center flex h-14  navigation-item-active ' + (isNavigationExpanded ? 'w-62' : 'w-20')}>
                 <div>{icon}</div>

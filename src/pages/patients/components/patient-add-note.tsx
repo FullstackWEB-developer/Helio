@@ -1,4 +1,3 @@
-import ThreeDots from '@components/skeleton-loader/skeleton-loader';
 import TextArea from '@components/textarea/textarea';
 import React, {useState} from 'react';
 import {Note} from '@pages/patients/models/note';
@@ -10,6 +9,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {userFullNameSelector} from '../../../shared/store/app-user/appuser.selectors';
 import {selectPatient} from '@pages/patients/store/patients.selectors';
 import {useTranslation} from 'react-i18next';
+import {ReactComponent as SendIcon} from '@icons/Icon-Send-24px.svg';
 
 const PatientAddNote = () => {
 
@@ -29,35 +29,43 @@ const PatientAddNote = () => {
         }
     });
 
-    const sendNote = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    const sendNote = () => {
         if (mutation.isError) {
             mutation.reset();
         }
-        if (e.key === 'Enter' && e.ctrlKey) {
-            if (noteText && noteText.trim().length > 0) {
-                const note: Note = {
-                    date: dayjs().toDate(),
-                    userDisplayName: userFullName,
-                    text: noteText
-                }
-                mutation.mutate({patientId: patient.patientId, note});
+        if (noteText && noteText.trim().length > 0) {
+            const note: Note = {
+                date: dayjs().toDate(),
+                userDisplayName: userFullName,
+                text: noteText
             }
+            mutation.mutate({patientId: patient.patientId, note});
         }
+    }
+
+    const showSendButton = (): boolean => {
+        return noteText != null && noteText.trim().length > 0;
     }
 
     return <>
         {mutation.isError && <div>{t('patient.activity.notes.note_add_error')}</div>}
-        {mutation.isLoading ? <ThreeDots/> :
+        <div className='flex flex-row border-t w-full'>
             <TextArea
                 required={true}
+                resizable={false}
                 onChange={(e) => setNoteText(e.target.value)}
                 hasBorder={false}
                 value={noteText}
-                onKeyDown={(e) => sendNote(e)}
-                className='border-t w-full'
+                className='w-5/6'
                 placeholder={t('patient.activity.notes.enter_your_note')}
             />
-        }
+
+            {showSendButton() && <div className='flex items-center justify-center w-1/6'>
+                {mutation.isLoading ? t('patient.activity.notes.sending') :
+                    <SendIcon className='cursor-pointer' onClick={() => sendNote()}/>}
+
+            </div>}
+        </div>
     </>
 }
 export default PatientAddNote;

@@ -88,7 +88,9 @@ module.exports = {
     }
   },
   variants: {
-    extend: {},
+    extend: {
+      borderWidth: ['hover'],
+    },
     backgroundColor: ['active', 'hover'],
   },
   plugins: [],
