@@ -12,6 +12,7 @@ export interface TicketState {
     isRequestAddNoteLoading: boolean;
     isRequestAddFeedLoading: boolean;
     tickets: Ticket[];
+    selectedTicket: Ticket | null;
     paging: Paging,
     searchTerm: string,
     errors: string;
@@ -54,6 +55,7 @@ const initialTicketState: TicketState = {
         ...DefaultPagination
     },
     feedLastMessageOn: undefined,
+    selectedTicket: null
 }
 
 export default initialTicketState;

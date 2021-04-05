@@ -16,9 +16,7 @@ export const selectTicketFilter = (state: RootState) => state.ticketState.ticket
 export const selectSearchTerm = (state: RootState) => state.ticketState.searchTerm;
 export const selectFeedLastMessageOn = (state: RootState) => state.ticketState.feedLastMessageOn;
 
-export const selectTicketById = (state: RootState, id: string): Ticket => {
-    return selectTickets(state).find((x: Ticket) => x.id === id) as Ticket;
-};
+export const selectSelectedTicket = (state: RootState): Ticket => state.ticketState.selectedTicket;
 
 export const selectTicketsLoading = (state: RootState) => state.ticketState.ticketsLoading as boolean;
 

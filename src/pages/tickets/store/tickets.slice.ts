@@ -37,14 +37,7 @@ const ticketsSlice = createSlice({
             }
         },
         setTicket(state, { payload }: PayloadAction<Ticket>) {
-            const ticket: any = state.tickets.find(t => t.id === payload.id) || {};
-            if (ticket) {
-                for (let [key, value] of Object.entries(payload)) {
-                    if (value) {
-                        ticket[key] = value;
-                    }
-                }
-            }
+            state.selectedTicket = payload;
         },
         setFailure: (state, { payload }: PayloadAction<string>) => {
             state.errors = payload;

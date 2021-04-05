@@ -1,4 +1,4 @@
-import React, {Fragment, useCallback, useEffect, useMemo, useRef} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import withErrorLogging from '../../../../shared/HOC/with-error-logging';
 import { useTranslation } from 'react-i18next';

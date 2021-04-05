@@ -15,6 +15,8 @@ import { getPatientById } from '../../shared/services/search.service';
 import { Ticket } from './models/ticket';
 import { useQuery } from 'react-query';
 import { getTicketByNumber } from './services/tickets.service';
+import { setTicket } from './store/tickets.slice';
+import {selectSelectedTicket} from '@pages/tickets/store/tickets.selectors';
 
 interface TicketParams {
     ticketNumber: string
@@ -25,13 +27,16 @@ const TicketDetail = () => {
     const dispatch = useDispatch();
     const { t } = useTranslation();
     const { ticketNumber } = useParams<TicketParams>();
-
+    const ticket = useSelector(selectSelectedTicket);
     const patient = useSelector(selectPatient);
 
-    const { isLoading, error, data: ticket, isFetching } = useQuery<Ticket, Error>(["tickets", ticketNumber], () =>
+    const { isLoading, error, isFetching } = useQuery<Ticket, Error>(["tickets", ticketNumber], () =>
         getTicketByNumber(Number(ticketNumber)),
         {
-            refetchOnMount: 'always'
+            refetchOnMount: 'always',
+            onSuccess: data => {
+                dispatch(setTicket(data))
+            }
         }
     );
 
