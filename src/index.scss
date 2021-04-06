@@ -7,7 +7,7 @@
     font-style: normal;
     font-weight: 300;
     src: local(''),
-    url('./themes/fonts/poppins/poppins-v15-latin-300.woff2') format('woff2')
+    url('./themes/fonts/poppins/poppins-v15-latin-300.woff') format('woff')
 }
 /* poppins-regular - latin regular */
 @font-face {
@@ -15,7 +15,7 @@
     font-style: normal;
     font-weight: 400;
     src: local(''),
-    url('./themes/fonts/poppins/poppins-v15-latin-regular.woff2') format('woff2')
+    url('./themes/fonts/poppins/poppins-v15-latin-regular.woff') format('woff')
 }
 /* poppins-500 - latin medium */
 @font-face {
@@ -23,7 +23,7 @@
     font-style: normal;
     font-weight: 500;
     src: local(''),
-    url('./themes/fonts/poppins/poppins-v15-latin-500.woff2') format('woff2')
+    url('./themes/fonts/poppins/poppins-v15-latin-500.woff') format('woff')
 }
 /* poppins-600 - latin semi bold */
 @font-face {
@@ -31,7 +31,7 @@
     font-style: normal;
     font-weight: 600;
     src: local(''),
-    url('./themes/fonts/poppins/poppins-v15-latin-600.woff2') format('woff2')
+    url('./themes/fonts/poppins/poppins-v15-latin-600.woff') format('woff')
 }
 
 @tailwind utilities;
