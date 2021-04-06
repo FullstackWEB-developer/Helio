@@ -14,8 +14,8 @@ import TicketsSearch from './tickets-search';
 import TicketListItem from './ticket-list-item';
 import ThreeDots from '../../shared/components/skeleton-loader/skeleton-loader';
 import TicketFilter from './components/ticket-filter';
-import { getUserList } from '../../shared/services/lookups.service';
-import { Paging } from '../../shared/models/paging.model';
+import { getUserList } from '@shared/services/lookups.service';
+import { Paging } from '@shared/models/paging.model';
 
 const TicketList = () => {
     const dispatch = useDispatch();
@@ -33,10 +33,8 @@ const TicketList = () => {
 
     return (
         <>
-            {isFilterOpen  &&
-            <div className='w-96'><TicketFilter/></div>
-            }
-            <div className={'flex flex-col h-full w-full'}>
+            <div className={`${isFilterOpen ? 'w-96 transition-width transition-slowest ease' : 'hidden'}`}><TicketFilter/></div>
+            <div className={'flex  flex-col h-full w-full'}>
                 <TicketsHeader />
                 <TicketsSearch />
                 {

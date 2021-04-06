@@ -4,7 +4,9 @@
     "paths": {
       "@icons/*": ["src/shared/icons/*"],
       "@components/*": ["src/shared/components/*"],
-      "@pages/*": ["src/pages/*"]
+      "@constants/*": ["src/shared/constants/*"],
+      "@pages/*": ["src/pages/*"],
+      "@shared/*": ["src/shared/*"]
     }
   }
 }

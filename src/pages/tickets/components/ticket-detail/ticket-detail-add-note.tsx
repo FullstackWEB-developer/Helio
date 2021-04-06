@@ -48,6 +48,7 @@ const TicketDetailAddNote = ({ ticket }: TicketDetailAddNoteProps) => {
                             data-test-id='ticket-detail-note-text'
                             placeholder={t('ticket_detail.note.type_message')}
                             value={noteText}
+                            required={false}
                             rows={2}
                             onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setNoteText(e.target.value)}
                         />

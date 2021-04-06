@@ -14,7 +14,8 @@
     "cancel": "Cancel",
     "any": "Any",
     "not_available": "N/A",
-    "all": "All"
+    "all": "All",
+    "please_select": " Please Select"
   },
   "login": {
     "loginButton": "Login"
@@ -204,9 +205,21 @@
       "upcoming_appointment": "UPCOMING APPOINTMENT",
       "upcoming_appointments": "UPCOMING APPOINTMENTS",
       "recent_patient_cases": "Recent Patient Cases",
+      "apt_number": "Apt. #",
+      "city": "City",
+      "zip_code": "Zip Code",
+      "state": "State",
       "date": "DATE",
       "case_description": "CASE DESCRIPTION",
-      "error": "Error fetching summary data, please try again"
+      "error": "Error fetching summary data, please try again",
+      "update_error" : "Patient contact information could not be updated. Please try again later."
+    },
+    "contact_preference": {
+      "mobilephone": "Mobile Phone",
+      "homephone": "Home Phone",
+      "workphone": "Work Phone",
+      "mail": "Mail",
+      "portal": "Portal"
     },
     "insurance": {
       "policy_info": "POLICY INFO",
@@ -416,6 +429,12 @@
       "extensions_label": "Extensions",
       "all_departments": "All Departments",
       "loading_error": "Error Loading extensions"
+    }
+  },
+  "components": {
+    "input": {
+      "invalid_email": "Email is not valid",
+      "invalid_phone": "Phone numbers must follow the North American Numbering Plan."
     }
   }
 }

@@ -4,17 +4,18 @@ import utc from 'dayjs/plugin/utc'
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 import { useTranslation } from 'react-i18next';
-import withErrorLogging from '../../shared/HOC/with-error-logging';
-import ThreeDots from '../../shared/components/skeleton-loader/skeleton-loader';
+import withErrorLogging from '@shared/HOC/with-error-logging';
+import ThreeDots from '@shared/components/skeleton-loader/skeleton-loader';
 import TicketDetailHeader from './components/ticket-detail/ticket-detail-header';
 import TicketInfoPanel from './components/ticket-detail/ticket-detail-info-panel';
 import TicketDetailFeed from './components/ticket-detail/ticket-detail-feed';
 import TicketDetailAddNote from './components/ticket-detail/ticket-detail-add-note';
 import { selectPatient } from '../patients/store/patients.selectors';
-import { getPatientById } from '../../shared/services/search.service';
+import { getPatientById } from '@shared/services/search.service';
 import { Ticket } from './models/ticket';
 import { useQuery } from 'react-query';
 import { getTicketByNumber } from './services/tickets.service';
+import {QueryTickets} from '@constants/react-query-constants';
 import { setTicket } from './store/tickets.slice';
 import {selectSelectedTicket} from '@pages/tickets/store/tickets.selectors';
 
@@ -30,7 +31,7 @@ const TicketDetail = () => {
     const ticket = useSelector(selectSelectedTicket);
     const patient = useSelector(selectPatient);
 
-    const { isLoading, error, isFetching } = useQuery<Ticket, Error>(["tickets", ticketNumber], () =>
+    const { isLoading, error, isFetching } = useQuery<Ticket, Error>([QueryTickets, ticketNumber], () =>
         getTicketByNumber(Number(ticketNumber)),
         {
             refetchOnMount: 'always',

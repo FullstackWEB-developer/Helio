@@ -13,6 +13,7 @@ import { UserStatus } from 'src/shared/store/app-user/app-user.models';
 import { selectDepartmentList } from 'src/shared/store/lookups/lookups.selectors';
 import { QuickConnectExtension } from 'src/shared/models/quick-connect-extension';
 import Dropdown from '../../components/dropdown/dropdown';
+import {QueryQuickConnects} from '@constants/react-query-constants';
 
 const Extensions = () => {
   const { t: translate } = useTranslation();
@@ -22,7 +23,7 @@ const Extensions = () => {
   const { isLoading, error, data: quickConnectExtensions } = useQuery<
     QuickConnectExtension[],
     Error
-  >('quickConnects', () => getQuickConnects());
+  >(QueryQuickConnects, () => getQuickConnects());
 
   useEffect(() => {
     dispatch(getDepartments());
@@ -53,8 +54,7 @@ const Extensions = () => {
   };
 
   const resolveUserStatus = (key: string): UserStatus | undefined => {
-    let value = UserStatus[key as keyof typeof UserStatus];
-    return value;
+    return UserStatus[key as keyof typeof UserStatus];
   };
 
   const getOptions = (): ListOption[] => {

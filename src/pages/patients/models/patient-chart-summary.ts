@@ -7,6 +7,7 @@ export interface PatientChartSummary {
     emailAddress: string,
     homePhone: string,
     address: string,
+    address2: string,
     city: string,
     zip: string,
     state: string,
@@ -19,5 +20,6 @@ export interface PatientChartSummary {
     lastAppointment: Appointment,
     upcomingAppointment: Appointment,
     patientCases: PatientCase[],
-    chartAlert?: ChartAlert
+    chartAlert?: ChartAlert,
+    mobilePhone: string
 }

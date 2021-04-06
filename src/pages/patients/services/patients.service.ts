@@ -16,6 +16,7 @@ import {
      setSummaryError,
      setSummaryLoading
 } from '@pages/patients/store/patients.slice';
+import {PatientUpdateModel} from '@pages/patients/models/patient-update-model';
 
 export interface AddNoteProps {
      patientId: number;
@@ -28,6 +29,28 @@ export const addNote = async ({patientId, note}: AddNoteProps) => {
           date: note.date,
           userDisplayName: note.userDisplayName,
           text: note.text
+     });
+     return result.data;
+}
+
+export interface UpdatePatientContactInformationProps {
+     patientId: number;
+     data: PatientUpdateModel;
+}
+
+export const updatePatientContactInformation = async ({patientId, data}: UpdatePatientContactInformationProps) => {
+     const result = await Api.put(`${patientsUrl}/${patientId}`, {
+          mobilePhone: data.mobilePhone,
+          address: data.address,
+          address2: data.address2,
+          homePhone: data.homePhone,
+          city: data.city,
+          contactPreference: data.contactPreference,
+          state: data.state,
+          zip: data.zip,
+          consentToText: data.consentToText === 'true',
+          portalAccessGiven: data.portalAccessGiven === 'true',
+          email: data.email
      });
      return result.data;
 }

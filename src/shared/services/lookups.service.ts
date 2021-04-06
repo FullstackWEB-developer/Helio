@@ -53,21 +53,26 @@ export const getDepartments = () => {
       dispatch(setError(false));
       dispatch(setLoading(true));
       await Api.get(url)
-        .then((response) => {
-          dispatch(setDepartments(response.data));
-        })
-        .catch((error) => {
-          if (error.response?.status === 404) {
-            dispatch(setDepartments(undefined));
-          } else {
-            logger.error('Failed getting Departments', error);
-            dispatch(setError(true));
-            dispatch(setDepartments(undefined));
-            dispatch(setLoading(false));
-          }
-        });
+          .then((response) => {
+            dispatch(setDepartments(response.data));
+          })
+          .catch((error) => {
+            if (error.response?.status === 404) {
+              dispatch(setDepartments(undefined));
+            } else {
+              logger.error('Failed getting Departments', error);
+              dispatch(setError(true));
+              dispatch(setDepartments(undefined));
+              dispatch(setLoading(false));
+            }
+          });
     }
   };
+};
+
+export const getStates = async () => {
+  const result = await Api.get(`${lookupsUrl}/states`);
+  return result.data;
 };
 
 export const getUserList = () => {

@@ -17,6 +17,7 @@ import { useTranslation } from 'react-i18next';
 import QueueStatusTabs from './queue-status-tabs';
 import { useQuery } from 'react-query';
 import ThreeDots from '@components/skeleton-loader/skeleton-loader';
+import {QueryQueueMetrics} from '@constants/react-query-constants';
 
 const QueueStatus = () => {
   const { t: translate } = useTranslation();
@@ -29,7 +30,7 @@ const QueueStatus = () => {
   const { isLoading, error, data: quickConnectExtensions } = useQuery<
     QueueuMetric[],
     Error
-  >('qeueueMetrics', () => getQueueStatus());
+  >(QueryQueueMetrics, () => getQueueStatus());
 
   useEffect(() => {
     dispatch(getMetricOptions());
@@ -97,7 +98,7 @@ const QueueStatus = () => {
   };
 
   const getTableModel = (): TableModel => {
-    const model: TableModel = {
+    return {
       hasRowsBottomBorder: true,
       headerClassName: 'mb-2',
       isCompact: true,
@@ -122,8 +123,6 @@ const QueueStatus = () => {
       ],
       rows: activeMetric,
     };
-
-    return model;
   };
 
   if (error) {

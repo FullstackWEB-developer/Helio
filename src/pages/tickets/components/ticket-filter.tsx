@@ -1,26 +1,27 @@
-import withErrorLogging from '../../../shared/HOC/with-error-logging';
-import Collapsible from '../../../shared/components/collapsible/collapsible';
+import withErrorLogging from '@shared/HOC/with-error-logging';
+import Collapsible from '@components/collapsible/collapsible';
 import React, { useEffect, useState } from 'react';
-import { getContacts } from '../../../shared/services/contacts.service';
-import { getDepartments, getUserList } from '../../../shared/services/lookups.service';
+import { getContacts } from '@shared/services/contacts.service';
+import { getDepartments, getUserList } from '@shared/services/lookups.service';
 import { getEnumByType, getList, getLookupValues } from '../services/tickets.service';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import Checkbox, { CheckboxCheckEvent } from '../../../shared/components/checkbox/checkbox';
+import Checkbox, { CheckboxCheckEvent } from '@components/checkbox/checkbox';
 import { selectEnumValues, selectLookupValues, selectSearchTerm, selectTicketsPaging } from '../store/tickets.selectors';
-import Radio, { RadioItem } from '../../../shared/components/radio/radio';
+import Radio  from '@components/radio/radio';
 import { TicketOptionsBase } from '../models/ticket-options-base.model';
 import { Controller, useForm } from 'react-hook-form';
-import Select, { Option } from '../../../shared/components/select/select';
-import { selectDepartmentList, selectUserList } from '../../../shared/store/lookups/lookups.selectors';
-import { User } from '../../../shared/models/user';
+import Select, { Option } from '@components/select/select';
+import { selectDepartmentList, selectUserList } from '@shared/store/lookups/lookups.selectors';
+import { User } from '@shared/models/user';
 import { TicketQuery } from '../models/ticket-query';
 import dayjs from 'dayjs';
 import { TicketEnumValue } from '../models/ticket-enum-value.model';
 import utc from 'dayjs/plugin/utc';
-import Button from '../../../shared/components/button/button';
-import Input from '../../../shared/components/input/input';
-import TagInput from '../../../shared/components/tag-input/tag-input';
+import Button from '@components/button/button';
+import Input from '@components/input/input';
+import TagInput from '@components/tag-input/tag-input';
+import './ticket-filter.scss';
 const TicketFilter = () => {
     dayjs.extend(utc);
     const dispatch = useDispatch();
@@ -159,12 +160,12 @@ const TicketFilter = () => {
         return [];
     }
 
-    const convertOptionsToRadio = (items: TicketOptionsBase[]): RadioItem[] => {
+    const convertOptionsToRadio = (items: TicketOptionsBase[]): Option[] => {
         return items.map(item => {
             return {
                 value: item.key,
                 label: item.value
-            } as RadioItem
+            } as Option
         })
     }
 
@@ -228,12 +229,12 @@ const TicketFilter = () => {
                 control={control}
                 defaultValue=''
                 name={name}
-                render={(props) => (
-                    <Radio
+                render={(props) => (<Radio
                         name={name}
                         truncate={true}
                         ref={props.ref}
                         data-test-id={`${name}-radio`}
+                        labelClassName='ticket-filter-radio'
                         items={convertOptionsToRadio(items)}
                         onChange={(e: string) => {
                             props.onChange(e);

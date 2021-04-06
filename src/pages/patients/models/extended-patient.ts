@@ -11,6 +11,7 @@ export interface ExtendedPatient {
     city: string,
     consentToText: boolean,
     contactPreferenceAnnouncementEmail: boolean,
+    contactPreference: string,
     contactPreferenceAnnouncementPhone: boolean,
     contactPreferenceAnnouncementSms: boolean,
     contactPreferenceAppointmentEmail: boolean,
@@ -69,5 +70,8 @@ export interface ExtendedPatient {
     status: number,
     translatedMobilePhoneIndex: string,
     zip: string,
-    notes: Note[]
+    notes: Note[],
+    address: string,
+    address2: string,
+    homePhone: string
 }

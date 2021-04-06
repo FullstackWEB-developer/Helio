@@ -1,24 +1,25 @@
-import Modal from '../../../shared/components/modal/modal';
+import Modal from '@shared/components/modal/modal';
 import {useDispatch} from 'react-redux';
 import {useEffect} from 'react';
-import {getDepartments, getProviders} from '../../../shared/services/lookups.service';
+import {getDepartments, getProviders} from '@shared/services/lookups.service';
 import {getHotSpots} from '../services/appointments.service';
-import {toggleHotspots} from '../../../shared/layout/store/layout.slice';
-import withErrorLogging from '../../../shared/HOC/with-error-logging';
+import {toggleHotspots} from '@shared/layout/store/layout.slice';
+import withErrorLogging from '@shared/HOC/with-error-logging';
 import {HotSpotInfo} from '../models/hotspot.model';
 import DailyHotspots from './daily-hot-spots';
 import {useTranslation} from 'react-i18next';
 import ThreeDots from '@components/skeleton-loader/skeleton-loader';
 import {useQuery} from 'react-query';
+import {OneMinute, QueryHotSpots} from '@constants/react-query-constants';
 
 const HotSpots = () => {
     const dispatch = useDispatch();
     const {t} = useTranslation();
 
-    const {isLoading, error, data} = useQuery<HotSpotInfo[], Error>("hotspots", () =>
+    const {isLoading, error, data} = useQuery<HotSpotInfo[], Error>(QueryHotSpots, () =>
             getHotSpots(),
         {
-            staleTime: 60000
+            staleTime: OneMinute
         }
     );
     useEffect(() => {

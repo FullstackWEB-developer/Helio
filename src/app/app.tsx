@@ -20,7 +20,7 @@ const TicketNew = React.lazy(() => import('../pages/tickets/ticket-new'));
 const TicketDetail = React.lazy(() => import('../pages/tickets/ticket-detail'));
 const RescheduleAppointment = React.lazy(() => import('../pages/external-access/reschedule-appointment/reschedule-appointment'));
 
-function App() {    
+function App() {
     const queryClient = new QueryClient({
         defaultOptions: {
             queries: {

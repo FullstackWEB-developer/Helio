@@ -1,33 +1,44 @@
 import React from 'react';
 import './radio.scss';
-export interface RadioItem {
-    label: string;
-    value: string;
-}
+import {Option} from '@components/option/option';
 
 export interface RadioProps {
     name: string;
-    items: RadioItem[];
-    defaultValue? : string;
+    items: Option[];
+    defaultValue?: string;
     truncate?: boolean;
-    value?: string
+    value?: string;
     onChange: (value: string) => void;
+    className?: string;
+    labelClassName?: string;
+    radioClassname?: string;
 }
 
-const Radio = React.forwardRef<HTMLInputElement, RadioProps>(({name, items,onChange, defaultValue, truncate = false, ...props} : RadioProps, ref)=>{
-    return <div>
+const Radio = React.forwardRef<HTMLInputElement, RadioProps>(({
+                                                                  name,
+                                                                  className,
+                                                                  items,
+                                                                  onChange,
+                                                                  defaultValue,
+                                                                  radioClassname,
+                                                                  labelClassName,
+                                                                  truncate = false,
+                                                                  ...props
+                                                              }: RadioProps, ref) => {
+    return <div className={className ? className : ''}>
         {
             items.map(item => {
-                return  <div key={`${name}_${item.value}`} className='h-9'><input
-                            {...props}
-                            type='radio'
-                            value={item.value}
-                            defaultChecked={defaultValue === item.value}
-                            ref={ref}
-                            id={`${name}_${item.value}`}
-                            name={name}
-                            onChange={_ => onChange(item.value)}/>
-                            <label htmlFor={`${name}_${item.value}`} className={'w-60 ' + (truncate ? ' truncate ' : '')}>{item.label}</label>
+                return <div key={`${name}_${item.value}`} className={`h-9 ${radioClassname ? radioClassname : ''}`}><input
+                    {...props}
+                    type='radio'
+                    value={item.value}
+                    defaultChecked={defaultValue === item.value}
+                    ref={ref}
+                    id={`${name}_${item.value}`}
+                    name={name}
+                    onChange={_ => onChange(item.value)}/>
+                    <label htmlFor={`${name}_${item.value}`}
+                           className={`${truncate ? ' truncate' : ''} ${labelClassName ? labelClassName : ''}`}>{item.label}</label>
                 </div>
             })
         }
