@@ -299,6 +299,9 @@
       "open_slots": "Open Slots",
       "location": "Location",
       "error": "Error loading hotspots"
+    },
+    "notes": {
+      "error": "Error loading notes"
     }
   },
   "reschedule_appointment": {

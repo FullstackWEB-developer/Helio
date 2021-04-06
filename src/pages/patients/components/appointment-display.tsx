@@ -6,13 +6,14 @@ import { RootState } from '../../../app/store';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 dayjs.extend(customParseFormat);
-interface AppointmentProps {
+interface AppointmentDisplayProps {
     appointment: Appointment,
     border?: boolean,
-    isLast?: boolean
+    isLast?: boolean,
+    isDetailed?: boolean
 }
 
-const AppointmentDisplay = ({ appointment, border, isLast }: AppointmentProps) => {
+const AppointmentDisplay = ({ appointment, border, isLast, isDetailed }: AppointmentDisplayProps) => {
     const department = useSelector((state: RootState) => selectDepartmentById(state, appointment.departmentId));
     const provider = useSelector((state: RootState) => selectProviderById(state, appointment.providerId));
     const dateStr = () => {
@@ -26,17 +27,26 @@ const AppointmentDisplay = ({ appointment, border, isLast }: AppointmentProps) =
         )
     }
 
+    const getAppointment = () => {
+        return <div className={`pt-3 ${border ? 'border-b' : ''}`}>
+            <div className='body2-medium'>
+                {dateStr()}
+                <span className='subtitle2'>{` ${appointment.patientAppointmentTypeName}`}</span>
+            </div>
+            <div className={`subtitle2 pb-3 ${border ? 'border-b' : ''}`}>
+                {provider?.displayName}, {department?.patientDepartmentName}
+                {(appointment.notes && appointment.notes.length > 0) && appointment.notes.map((note) => {
+                    return <div className='subtitle2' key={note.noteId}>{note.noteText}</div>
+                })}
+            </div>
+        </div>
+    }
+
     return <Fragment>
-        { isLast ?
-            <div className='pt-3'>
-                    <div className='body2-medium'>
-                        {dateStr()}
-                        <span className='subtitle2'>{` ${appointment.patientAppointmentTypeName}`}</span>
-                    </div>
-                    <div className={`subtitle2 pb-3 ${border ? 'border-b' : ''}`}>
-                        {provider?.displayName}, {department?.patientDepartmentName}
-                    </div>
-            </div> :
+        { isLast ? getAppointment() :
+            isDetailed ? <Fragment>
+                {getAppointment()}
+            </Fragment> :
             <div className={`grid grid-cols-2 gap-4 pt-3 ${border ? 'border-b' : ''}`}>
                 <div>
                     <div className='body2-medium'>{dateStr()}</div>

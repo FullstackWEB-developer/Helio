@@ -1,3 +1,5 @@
+import { AppointmentNote } from '@pages/appointments/models/note.model';
+
 export interface Appointment {
     appointmentId: string,
     appointmentStatus: string,
@@ -9,5 +11,6 @@ export interface Appointment {
     duration: number
     patientAppointmentTypeName: string,
     providerId: string,
-    startTime: string
+    startTime: string,
+    notes?: AppointmentNote[]
 }
