@@ -214,7 +214,8 @@
       "copay": "Copay: ",
       "status": "Status: ",
       "error": "Error fetching summary data, please try again",
-      "update_error" : "Patient contact information could not be updated. Please try again later."
+      "update_error" : "Patient contact information could not be updated. Please try again later.",
+      "profile_pic_alt_text": "Picture of patient"
     },
     "contact_preference": {
       "mobilephone": "Mobile Phone",

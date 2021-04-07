@@ -1,7 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { selectPatient, selectPatientChartSummary } from '../store/patients.selectors';
 import { useSelector } from 'react-redux';
-import utils from '../utils/utils';
 import { ExtendedPatient } from '../models/extended-patient';
 import React, { useRef, useState } from 'react';
 import Tooltip from '@components/tooltip/tooltip';
@@ -9,7 +8,10 @@ import { PatientChartSummary } from '../models/patient-chart-summary';
 import PatientChartAlert from './patient-chart-alert';
 import { ReactComponent as InfoIcon } from '@icons/Icon-Info-24px.svg';
 import Button from '@components/button/button';
-
+import Avatar from '@components/avatar/avatar';
+import {AvatarModel} from '@components/avatar/avatar.models';
+import patientUtils from '../utils/utils';
+import utils from "@shared/utils/utils";
 const athenaPatientUrl = process.env.REACT_APP_ATHENAHEALTH_CLIENT_SUMMARY;
 
 const PatientHeader = () => {
@@ -34,9 +36,23 @@ const PatientHeader = () => {
             window.open(url, '_blank');
     }
 
+    const GetImage = () => {
+        if (patientChartSummary?.patientPicture &&  patientChartSummary.patientPicture.length> 0) {
+            return <img alt={t('patient.summary.profile_pic_alt_text')} className='w-24 h-24 rounded-full' src={`data:image/jpeg;base64,${patientChartSummary.patientPicture}`} />
+        }
+        const initials = utils.getInitialsFromFullName(`${patient.firstName} ${patient.lastName}`);
+        const model : AvatarModel = {
+            initials,
+            className:'w-24 h-24'
+        }
+        return <Avatar model={model}/>
+    }
+
     return (
         <div className={'flex flex-row p-8 bg-gray-50'}>
-            <div className={'h-24 w-24 bg-gray-200'} />
+            <div className={'h-24 w-24'}>
+                {GetImage()}
+            </div>
             <div className={'pl-8 pt-4'}>
                 <div className={'flex flex-row'}>
                     <h5 className={'h5'}>{`${patient.firstName} ${patient.lastName}`}</h5>
@@ -60,13 +76,13 @@ const PatientHeader = () => {
                 <div className={'pt-4 flex flex-row'}>
                     <div className='flex flex-row'>
                         {
-                            SmallLabel(t('patient.header.age'), utils.getAge(patient.dateOfBirth).toString())
+                            SmallLabel(t('patient.header.age'), patientUtils.getAge(patient.dateOfBirth).toString())
                         }
                         {
                             SmallLabel(t('patient.header.sex'), patient.sex, 'pl-6')
                         }
                         {
-                            SmallLabel(t('patient.header.dob'), utils.formatDob(patient.dateOfBirth), 'pl-6')
+                            SmallLabel(t('patient.header.dob'), patientUtils.formatDob(patient.dateOfBirth), 'pl-6')
                         }
                         {
                             SmallLabel(t('patient.header.ssn'), patient.ssn?.replace(/.{1,5}/, (m) => '*'.repeat(m.length)), 'pl-6')

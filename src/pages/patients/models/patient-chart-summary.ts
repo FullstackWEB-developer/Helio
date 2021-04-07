@@ -22,4 +22,5 @@ export interface PatientChartSummary {
     patientCases: PatientCase[],
     chartAlert?: ChartAlert,
     mobilePhone: string
+    patientPicture?: string;
 }
