@@ -108,7 +108,7 @@
     "pagination": "{{numOfItemsFrom}} - {{numOfItemsTo}} of {{totalCount}}"
   },
   "ccp": {
-    "title": "Call Control Panel",
+    "title": "Contact Control Panel",
     "suggested_steps": "Suggested steps",
     "suggestions": {
       "create_patient_record": "Create Patient Record",

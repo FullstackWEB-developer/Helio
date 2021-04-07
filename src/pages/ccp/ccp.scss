@@ -5,6 +5,7 @@
 }
 .ccp-title {
   cursor: move;
+  background-color: var(--ccp-header-color);
 }
 .ccp-bottom-bar {
   background-color: var(--color-white);
@@ -19,6 +20,7 @@
     height: 2.76rem;
   }
 }
+
 .ccp-drag-background {
-  background-color: var(--ccp-drag-shadow-color); 
+  background-color: var(--ccp-drag-shadow-color);
 }

@@ -1,4 +1,4 @@
-import React, {Suspense, useState} from 'react'
+import React, {ReactNode, Suspense, useState} from 'react'
 import {useDrop, XYCoord} from 'react-dnd'
 import {DndItemTypes} from './dnd-item-types'
 import update from 'immutability-helper'
@@ -12,15 +12,15 @@ import {selectIsHotspotsVisible} from '../store/layout.selectors';
 const Ccp = React.lazy(() => import('../../../pages/ccp/ccp'));
 
 export interface ContainerProps {
-    className: string,
-    propsChildren: React.ReactNode
+    className: string
+    children: ReactNode;
 }
 
 export interface ContainerState {
     boxes: { [key: string]: { top: number; left: number; } }
 }
 
-export const DndContainer: React.FC<ContainerProps> = ({ propsChildren }) => {
+export const DndContainer: React.FC<ContainerProps> = ({children} : ContainerProps) => {
     const {x, y} = utils.getWindowCenter();
     const displayHotspots = useSelector(selectIsHotspotsVisible);
 
@@ -57,9 +57,7 @@ export const DndContainer: React.FC<ContainerProps> = ({ propsChildren }) => {
     return (
         <div ref={drop} className='h-full w-full'>
             {displayHotspots && <HotSpots/>}
-            <div className='flex flex-auto h-full'>
-                {propsChildren}
-            </div>
+            {children}
             {Object.keys(boxes).map((key) => {
                 const { left, top } = boxes[key]
                 return (

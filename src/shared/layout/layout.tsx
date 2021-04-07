@@ -25,31 +25,35 @@ const Layout = (props: LayoutProps) => {
         <Fragment>
             <div>
                 <DndProvider backend={HTML5Backend}>
-                    <div className='flex flex-row h-screen'>
-                        <div className='h-full'>
-                            <Navigation/>
-                        </div>
-                        <div className='flex flex-col w-screen'>
-                            <div>
-                                <Header/>
+                    <DndContainer className='flex flex-auto'>
+                        <div className='flex flex-row h-screen'>
+                            <div className='h-full'>
+                                <Navigation/>
                             </div>
-                            <div className='flex flex-col w-full'>
-                                <div className='flex flex-row layout-content w-full'>
-                                    <div className='flex-auto overflow-y-auto'>
-                                        <main className='flex flex-col h-full w-full'>
-                                            <DndContainer propsChildren={props.children} className='flex flex-auto'/>
-                                        </main>
-                                    </div>
-                                    <div className='flex justify-end'>
-                                        <StatusBar/>
-                                    </div>
-                                </div>
+                            <div className='flex flex-col w-screen'>
                                 <div>
-                                    <Footer/>
+                                    <Header/>
+                                </div>
+                                <div className='flex flex-col w-full'>
+                                    <div className='flex flex-row layout-content w-full'>
+                                        <div className='flex-auto overflow-y-auto'>
+                                            <main className='flex flex-col h-full w-full'>
+                                                <div className='flex flex-auto h-full'>
+                                                    {props.children}
+                                                </div>
+                                            </main>
+                                        </div>
+                                        <div className='flex justify-end'>
+                                            <StatusBar/>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <Footer/>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </DndContainer>
                 </DndProvider>
             </div>
         </Fragment>
