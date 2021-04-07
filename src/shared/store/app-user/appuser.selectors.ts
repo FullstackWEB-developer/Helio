@@ -23,3 +23,8 @@ export const selectUserStatus = createSelector(
     appUserState,
     state => state.status as UserStatus
 )
+
+export const selectAccessToken = createSelector(
+    appUserState,
+    state => state.auth.accessToken
+)

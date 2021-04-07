@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { DropdownModel } from '@components/dropdown/dropdown.models';
 import {
@@ -13,6 +13,7 @@ import { UserStatus } from 'src/shared/store/app-user/app-user.models';
 import { selectDepartmentList } from 'src/shared/store/lookups/lookups.selectors';
 import { QuickConnectExtension } from 'src/shared/models/quick-connect-extension';
 import Dropdown from '../../components/dropdown/dropdown';
+import RealTimeUserStatusUpdate from '../../websockets/real-time-user-status-update';
 import {QueryQuickConnects} from '@constants/react-query-constants';
 
 const Extensions = () => {
@@ -81,17 +82,20 @@ const Extensions = () => {
   }
 
   return (
-    <div className='flex flex-col'>
-      <div className='px-4 py-3 border-b flex items-center'>
-        <h2 className='subtitle'>
-          {translate('statuses.extensions.extensions_label')}
-        </h2>
+    <>
+      <RealTimeUserStatusUpdate />
+      <div className='flex flex-col'>
+        <div className='px-4 py-3 border-b flex items-center'>
+          <h2 className='subtitle'>
+            {translate('statuses.extensions.extensions_label')}
+          </h2>
+        </div>
+        <Dropdown model={getDropDownOptions()} />
+        <div className='pt-10'>
+          <List options={getOptions()} isSearchable={true} />
+        </div>
       </div>
-      <Dropdown model={getDropDownOptions()} />
-      <div className='pt-10'>
-        <List options={getOptions()} isSearchable={true} />
-      </div>
-    </div>
+    </>
   );
 };
 
