@@ -211,6 +211,8 @@
       "state": "State",
       "date": "DATE",
       "case_description": "CASE DESCRIPTION",
+      "copay": "Copay: ",
+      "status": "Status: ",
       "error": "Error fetching summary data, please try again",
       "update_error" : "Patient contact information could not be updated. Please try again later."
     },
@@ -229,7 +231,7 @@
       "group": "Group #",
       "id_cert": "ID/Cert#",
       "eligibility_info": "ELIGIBILITY INFO",
-      "status": "Status: ",
+      "status": "Status ",
       "status_reason": "Status Reason",
       "pcp": "PCP",
       "inquiry_date": "Inquiry Date",
@@ -239,7 +241,7 @@
       "no_insurance": "No insurance",
       "unknown": "Unknown",
       "error": "Error fetching insurance data, please try again",
-      "copay": "Copay: ",
+      "copay": "Copay:",
       "eligible": "Eligible"
     },
     "clinical": {

@@ -11,7 +11,6 @@ const ContactInformation = () => {
     const {t} = useTranslation();
     const [editMode, setEditMode] = useState<boolean>(false);
 
-
     const booleanToText = (booleanValue: boolean): string => {
         return booleanValue ? 'common.yes' : 'common.no';
     };
@@ -26,8 +25,6 @@ const ContactInformation = () => {
     };
     const patient = useSelector(selectPatient);
 
-
-
     const contactRows = [
         { label: t('patient.summary.address'), values: [patient.address] },
         { label: '', values: [patient?.city === null ? '' : (`${patient?.city}, ${patient.state} ${patient.zip}`)] },
@@ -38,7 +35,10 @@ const ContactInformation = () => {
     const contactSecondRows = [
         { label: t('patient.summary.home_phone'), values: [formatPhone(patient.homePhone)] },
         { label: t('patient.summary.mobile_phone'), values: [formatPhone(patient.mobilePhone)] },
-        { label: t('patient.summary.contact_preference'), values: [t(`patient.contact_preference.${patient.contactPreference.toLowerCase()}`)] },
+        {
+            label: t('patient.summary.contact_preference'),
+            values: [patient.contactPreference ? t(`patient.contact_preference.${patient.contactPreference.toLowerCase()}`) : t('common.not_available')]
+        },
         { label: t('patient.summary.consent_to_text'), values: [t(booleanToText(patient.consentToText))] }
     ];
 

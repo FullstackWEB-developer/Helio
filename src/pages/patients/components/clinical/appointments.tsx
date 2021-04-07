@@ -51,13 +51,13 @@ const Appointments = () => {
 
     return (
         <div>
-            <div className='grid grid-cols-1 border-b pb-1 pt-8'>
+            <div className='grid grid-cols-1 border-b pb-2 pt-8'>
                 <div>{t('patient.summary.appointments')} </div>
             </div>
             <div>
-                <div className='h8 pt-6 pb-3'>{t('patient.summary.last_appointment')}</div>
+                <div className='h8 pt-6 pb-2'>{t('patient.summary.last_appointment')}</div>
                 {patientClinical.lastAppointment && <AppointmentDisplay appointment={patientClinical.lastAppointment} isLast={true}/>}
-                <div className='h8 pt-6 pb-3'>{t('patient.summary.upcoming_appointments')}</div>
+                <div className='h8 pt-5 pb-2'>{t('patient.summary.upcoming_appointments')}</div>
                     {displayUpcomingAppointment()}
             </div>
         </div>

@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { useSelector } from 'react-redux';
 import { Appointment } from '../../external-access/appointment/models/appointment';
-import { selectDepartmentById, selectProviderById } from '../../../shared/store/lookups/lookups.selectors';
+import { selectDepartmentById, selectProviderById } from '@shared/store/lookups/lookups.selectors';
 import { RootState } from '../../../app/store';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
@@ -28,12 +28,12 @@ const AppointmentDisplay = ({ appointment, border, isLast, isDetailed }: Appoint
     }
 
     const getAppointment = () => {
-        return <div className={`pt-3 ${border ? 'border-b' : ''}`}>
+        return <div className={`pt-3 ${getBorder()}`}>
             <div className='body2-medium'>
                 {dateStr()}
                 <span className='subtitle2'>{` ${appointment.patientAppointmentTypeName}`}</span>
             </div>
-            <div className={`subtitle2 pb-3 ${border ? 'border-b' : ''}`}>
+            <div className='subtitle2'>
                 {provider?.displayName}, {department?.patientDepartmentName}
                 {(appointment.notes && appointment.notes.length > 0) && appointment.notes.map((note) => {
                     return <div className='subtitle2' key={note.noteId}>{note.noteText}</div>
@@ -42,19 +42,23 @@ const AppointmentDisplay = ({ appointment, border, isLast, isDetailed }: Appoint
         </div>
     }
 
+    const getBorder = () => {
+        return border ? 'border-b' : '';
+    }
+
     return <Fragment>
         { isLast ? getAppointment() :
             isDetailed ? <Fragment>
                 {getAppointment()}
             </Fragment> :
-            <div className={`grid grid-cols-2 gap-4 pt-3 ${border ? 'border-b' : ''}`}>
+            <div className={`grid grid-cols-2 gap-4 pt-2 ${getBorder()}`}>
                 <div>
                     <div className='body2-medium'>{dateStr()}</div>
-                    <div className={'subtitle2 pb-3'}>{provider?.displayName}</div>
+                    <div className={'subtitle2'}>{provider?.displayName}</div>
                 </div>
                 <div>
                     <div className='subtitle2'>{appointment.patientAppointmentTypeName}</div>
-                    <div className={'subtitle2 pb-3'}>{department?.patientDepartmentName}</div>
+                    <div className={'subtitle2'}>{department?.patientDepartmentName}</div>
                 </div>
             </div>
         }

@@ -13,10 +13,11 @@ const OutstandingBalances = () => {
     };
 
     const getComment = () => {
-        const collectionsBalance = toDollars(patientChartSummary.outstandingBalance.collectionsBalance);
+        const patientCollectionsBalance = patientChartSummary.outstandingBalance.collectionsBalance
+        const collectionsBalance = toDollars(patientCollectionsBalance);
         if (collectionsBalance) {
             return <span className='body2 '>
-                <span className='text-danger'>{collectionsBalance}</span>
+                <span className={patientCollectionsBalance > 0 ? 'subtitle in-collections-value' : ''}>{collectionsBalance}</span>
                 <span className='body3'>{` (${t('patient.summary.in_collections')})`}</span>
             </span>
         } else {
@@ -34,9 +35,9 @@ const OutstandingBalances = () => {
     ];
 
     return (
-        <div className='grid grid-cols-2 gap-12 pt-8'>
+        <div className='grid grid-cols-2 gap-12 pt-3.5'>
             <div>
-                <div className='border-b pb-1 pt-8'>
+                <div className='border-b pb-2 pt-3.5'>
                     <div className='body1'>{t('patient.summary.outstanding_balances')} </div>
                 </div>
                 <div className='pt-3'>

@@ -17,11 +17,11 @@ const PatientInsurance = () => {
     const isLoading = useSelector(selectInsuranceLoading);
     const isError = useSelector(selectIsInsuranceError);
     const patientInsurance = useSelector(selectPatientInsurance);
-    const copay = patientInsurance?.length > 0 ? `${t('patient.insurance.copay')} ${patientInsurance[0].copayAmount}` : '';
+    const copay = patientInsurance?.length > 0 ? `  $${patientInsurance[0].copayAmount}` : '';
 
     const primaryInsuranceHeader = primaryInsurance !== undefined
         ? `[${primaryInsurance.insurancePackageId}] ${primaryInsurance.insurancePackageAddress1}, ${primaryInsurance.insurancePackageCity}`
-        + ` ${primaryInsurance.insurancePackageState}, ${primaryInsurance.insurancePackageZip} ${t('patient.insurance.phone')}: ${primaryInsurance.insurancePhone} ${copay}`
+        + ` ${primaryInsurance.insurancePackageState}, ${primaryInsurance.insurancePackageZip} ${t('patient.insurance.phone')}: ${primaryInsurance.insurancePhone}`
         : '';
 
     const getPolicyHolder = () => {
@@ -67,6 +67,8 @@ const PatientInsurance = () => {
             <div className='pt-4'>
                 <span>
                     {primaryInsurance?.insurancePlanName} {primaryInsuranceHeader}
+                    <span className='ml-3'>{t('patient.insurance.copay')}</span>
+                    <span className='subtitle2'>{copay}</span>
                 </span>
             </div>
             <div className='grid grid-cols-2 pt-4'>

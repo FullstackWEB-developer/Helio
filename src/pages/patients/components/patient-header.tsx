@@ -17,11 +17,11 @@ const PatientHeader = () => {
     const patient: ExtendedPatient = useSelector(selectPatient);
     const patientChartSummary: PatientChartSummary = useSelector(selectPatientChartSummary);
 
-    const SmallLabel = (text: string, value: string) => {
+    const SmallLabel = (text: string, value: string, className?: string) => {
         return (
-            <div>
-                <span className={'text-gray-400'}>{text}</span>
-                <span className={'pl-2'}>{value}</span>
+            <div className={className}>
+                <span className={'body-medium'}>{text}</span>
+                <span className={'pl-1.5'}>{value}</span>
             </div>
         )
     }
@@ -35,13 +35,13 @@ const PatientHeader = () => {
     }
 
     return (
-        <div className={'flex flex-row p-8'}>
+        <div className={'flex flex-row p-8 bg-gray-50'}>
             <div className={'h-24 w-24 bg-gray-200'} />
             <div className={'pl-8 pt-4'}>
-                <div className={'flex flex-row text-2xl'}>
-                    <span className={'font-bold'}>{`${patient.firstName} ${patient.lastName}`}</span>
-                    <span className={'pl-8'}>{t('patient.header.id')}</span>
-                    <span className={'font-bold pl-4'}>{patient.patientId}</span>
+                <div className={'flex flex-row'}>
+                    <h5 className={'h5'}>{`${patient.firstName} ${patient.lastName}`}</h5>
+                    <h5 className={'pl-6 gray-id'}>{t('patient.header.id')}</h5>
+                    <h5 className={'pl-1'}>{patient.patientId}</h5>
                     {
                         patientChartSummary?.chartAlert &&
                         <>
@@ -57,19 +57,19 @@ const PatientHeader = () => {
                         </>
                     }
                 </div>
-                <div className={'pt-4 flex flex-row text-xl'}>
-                    <div className='flex space-x-10'>
+                <div className={'pt-4 flex flex-row'}>
+                    <div className='flex flex-row'>
                         {
                             SmallLabel(t('patient.header.age'), utils.getAge(patient.dateOfBirth).toString())
                         }
                         {
-                            SmallLabel(t('patient.header.sex'), patient.sex)
+                            SmallLabel(t('patient.header.sex'), patient.sex, 'pl-6')
                         }
                         {
-                            SmallLabel(t('patient.header.dob'), utils.formatDob(patient.dateOfBirth))
+                            SmallLabel(t('patient.header.dob'), utils.formatDob(patient.dateOfBirth), 'pl-6')
                         }
                         {
-                            SmallLabel(t('patient.header.ssn'), patient.ssn?.replace(/.{1,5}/, (m) => '*'.repeat(m.length)))
+                            SmallLabel(t('patient.header.ssn'), patient.ssn?.replace(/.{1,5}/, (m) => '*'.repeat(m.length)), 'pl-6')
                         }
                     </div>
                 </div>

@@ -1,3 +1,16 @@
 .activity-panel {
   min-width: 30rem;
 }
+
+.bg-gray-50 {
+  background-color: var(--color-gray50);
+}
+
+.gray-id {
+  color: var(--light-text-medium-emphasis);
+}
+
+.in-collections-value {
+  color: var(--color-red);
+  font-size: var(--h8-font);
+}

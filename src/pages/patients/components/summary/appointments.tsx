@@ -29,7 +29,7 @@ const Appointments = () => {
 
     const displayUpcomingAppointment = () => {
         if (patientChartSummary.upcomingAppointment) {
-            return <AppointmentDisplay appointment={patientChartSummary.upcomingAppointment} border={true}/>;
+            return <AppointmentDisplay appointment={patientChartSummary.upcomingAppointment}/>;
         } else {
             return <div>{t('patient.summary.no_upcoming_appointment')}</div>;
         }
@@ -38,18 +38,18 @@ const Appointments = () => {
     return (
         <div className='grid grid-cols-2 gap-12 pt-8'>
             <div>
-                <div className='body1 border-b pb-1'>{t('patient.summary.appointments')}</div>
+                <div className='body1 border-b pb-2'>{t('patient.summary.appointments')}</div>
                 <div>
-                    <div className='h8 pt-6 pb-3'>{t('patient.summary.last_appointment')}</div>
+                    <div className='h8 pt-6 pb-2'>{t('patient.summary.last_appointment')}</div>
                     {displayLastAppointment()}
-                    <div className='h8 pt-6 pb-3'>{t('patient.summary.upcoming_appointment')}</div>
+                    <div className='h8 pt-5 pb-2'>{t('patient.summary.upcoming_appointment')}</div>
                     {displayUpcomingAppointment()}
                 </div>
             </div>
             <div>
-                <div className='body1 border-b pb-1'>{t('patient.summary.recent_patient_cases')}</div>
+                <div className='body1 border-b pb-2'>{t('patient.summary.recent_patient_cases')}</div>
                 <div className='pt-3'>
-                    <PatientChartList rows={recentPatientsCases} dividerLine={true}/>
+                    <PatientChartList rows={recentPatientsCases} dividerLine={true} isLongValue={true}/>
                 </div>
             </div>
         </div>

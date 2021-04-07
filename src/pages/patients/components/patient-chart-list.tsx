@@ -5,7 +5,8 @@ import {useTranslation} from 'react-i18next';
 interface PatientChartListProps {
     headings?: string[],
     rows: Row[],
-    dividerLine?: boolean
+    dividerLine?: boolean,
+    isLongValue?: boolean
 }
 
 export interface Row {
@@ -15,13 +16,34 @@ export interface Row {
     isStatus?: boolean
 }
 
-const PatientChartList = ({headings, rows, dividerLine}: PatientChartListProps) => {
+const PatientChartList = ({headings, rows, dividerLine, isLongValue}: PatientChartListProps) => {
     const { t } = useTranslation();
-    const colSize = rows[0]?.values.length === 1 ? 3 : 7;
-    const spanSize = rows[0]?.values.length === 1 ? 1 : 3;
 
-    const headingColSize = headings && headings.length === 1 ? 1 : (headings && headings.length === 2 ? 3 : 7);
-    const headingSpanSize = headings && headings.length === 1 ? 1 : (headings && headings.length === 2 ? 2 : 3);
+    let colSize = 7;
+    let spanSize = 3;
+
+    if (isLongValue) {
+        colSize = 5;
+        spanSize = 4;
+    } else if (rows[0]?.values.length === 1) {
+        colSize = 3;
+        spanSize = 1;
+    }
+
+    let headingColSize = 7;
+    let headingSpanSize = 3;
+
+    if (headings?.length === 1) {
+        headingColSize = 1;
+        headingSpanSize = 1;
+    } else if (headings?.length === 2) {
+        headingColSize = 3;
+        headingSpanSize = 2;
+    }
+
+    const getEligibleTextClassName = (row: Row) => {
+        return `${row.values[0] === t('patient.insurance.eligible') ? 'text-success' : 'text-danger'} pl-4`;
+    }
 
     return <div>
         {headings && <div className={`grid grid-cols-${headingColSize} py-2`}>
@@ -33,18 +55,18 @@ const PatientChartList = ({headings, rows, dividerLine}: PatientChartListProps) 
             })
             }
         </div>}
-        <div className={`grid gap-1 pt-3`}>
+        <div className={`grid gap-0.5 pt-2`}>
             {
                 rows.map((row, index) => {
                     const isEmptyRow = row.label === '' && row.values.every(v => v === '');
                     return !isEmptyRow && <div key={index}
-                                               className={`grid grid-cols-${colSize} ${dividerLine ? 'border-b py-1' : ' py-0.5'}`}>
+                                               className={`grid grid-cols-${colSize} ${dividerLine ? 'border-b py-1' : ''}`}>
                         <div className='body2-medium'>
                             {row.label}
                         </div>
                         {row.isStatus ? <span className='body2'>
                             <span
-                                className={`${row.values[0] === t('patient.insurance.eligible') ? 'text-success' : 'text-danger'} pl-4`}>
+                                className={getEligibleTextClassName(row)}>
                                 {row.values[0]}
                             </span>
 
@@ -52,7 +74,7 @@ const PatientChartList = ({headings, rows, dividerLine}: PatientChartListProps) 
                             row.values.map((value, i) => {
                                 return <div key={i}
                                             className={`col-span-${spanSize} body2 pl-4`}>
-                                    {value}
+                                    {value || t('common.not_available')}
                                 </div>
                             })}
                         {row.comment}
