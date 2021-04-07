@@ -252,7 +252,7 @@ const PatientContactInfoUpdate = ({onUpdateComplete} : PatientInformationUpdateP
                                             truncate={true}
                                             ref={props.ref}
                                             data-test-id='consent-to-text'
-                                            defaultValue={patientChartSummary.consentToText.toString()}
+                                            defaultValue={patient.consentToText.toString()}
                                             className='flex flex-row space-x-8'
                                             items={YesNoOptions}
                                             onChange={(e: string) => {
@@ -292,7 +292,7 @@ const PatientContactInfoUpdate = ({onUpdateComplete} : PatientInformationUpdateP
                                             <Radio
                                                 name={props.name}
                                                 truncate={true}
-                                                defaultValue={patientChartSummary.isPortalAccessGiven.toString()}
+                                                defaultValue={patient.isPortalAccessGiven.toString()}
                                                 ref={props.ref}
                                                 data-test-id='portal-access-given'
                                                 className='flex flex-row space-x-8'
