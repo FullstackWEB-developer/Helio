@@ -7,6 +7,7 @@ import {
     selectPatient, selectPatientInsurance,
     selectPrimaryInsurance
 } from '../../store/patients.selectors';
+import patientUtils from '@pages/patients/utils/utils';
 import utils from '../../../../shared/utils/utils';
 import ThreeDots from '../../../../shared/components/skeleton-loader/skeleton-loader';
 
@@ -19,10 +20,7 @@ const PatientInsurance = () => {
     const patientInsurance = useSelector(selectPatientInsurance);
     const copay = patientInsurance?.length > 0 ? `  $${patientInsurance[0].copayAmount}` : '';
 
-    const primaryInsuranceHeader = primaryInsurance !== undefined
-        ? `[${primaryInsurance.insurancePackageId}] ${primaryInsurance.insurancePackageAddress1}, ${primaryInsurance.insurancePackageCity}`
-        + ` ${primaryInsurance.insurancePackageState}, ${primaryInsurance.insurancePackageZip} ${t('patient.insurance.phone')}: ${primaryInsurance.insurancePhone}`
-        : '';
+    const primaryInsuranceHeader = primaryInsurance ? `${patientUtils.getPrimaryInsuranceHeader(primaryInsurance, t('common.not_available'))} ` : '';
 
     const getPolicyHolder = () => {
         if (primaryInsurance !== undefined) {
@@ -66,7 +64,10 @@ const PatientInsurance = () => {
         return <div>
             <div className='pt-4'>
                 <span>
-                    {primaryInsurance?.insurancePlanName} {primaryInsuranceHeader}
+                    {primaryInsurance?.insurancePlanName || ''} {primaryInsuranceHeader}
+                    {
+                        primaryInsurance?.insurancePhone && <span>{`${t('patient.insurance.phone')}: ${primaryInsurance.insurancePhone}`}</span>
+                    }
                     <span className='ml-3'>{t('patient.insurance.copay')}</span>
                     <span className='subtitle2'>{copay}</span>
                 </span>

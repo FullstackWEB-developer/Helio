@@ -41,11 +41,19 @@ const Appointments = () => {
         return upcomingAppointmentsView();
     }
 
+    const displayLastAppointment = () => {
+        if (patientClinical.lastAppointment) {
+            return <AppointmentDisplay appointment={patientClinical.lastAppointment} isLast={true}/>
+        } else {
+            return <div>{t('patient.clinical.no_last_appointment')}</div>;
+        }
+    }
+
     const displayUpcomingAppointment = () => {
         if (patientClinical.upcomingAppointments.length > 0) {
             return getContent();
         } else {
-            return <div>{t('patient.summary.no_upcoming_appointment')}</div>;
+            return <div>{t('patient.clinical.no_upcoming_appointments')}</div>;
         }
     }
 
@@ -56,9 +64,9 @@ const Appointments = () => {
             </div>
             <div>
                 <div className='h8 pt-6 pb-2'>{t('patient.summary.last_appointment')}</div>
-                {patientClinical.lastAppointment && <AppointmentDisplay appointment={patientClinical.lastAppointment} isLast={true}/>}
+                {displayLastAppointment()}
                 <div className='h8 pt-5 pb-2'>{t('patient.summary.upcoming_appointments')}</div>
-                    {displayUpcomingAppointment()}
+                {displayUpcomingAppointment()}
             </div>
         </div>
     );

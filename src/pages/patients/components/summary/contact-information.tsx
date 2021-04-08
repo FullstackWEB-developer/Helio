@@ -27,7 +27,7 @@ const ContactInformation = () => {
 
     const contactRows = [
         { label: t('patient.summary.address'), values: [patient.address] },
-        { label: '', values: [patient?.city === null ? '' : (`${patient?.city}, ${patient.state} ${patient.zip}`)] },
+        { label: '', values: [`${patient?.city || ''}${patient?.state ? ', ': ''} ${patient.state || ''} ${patient.zip || ''}`] },
         { label: t('patient.summary.email'), values: [patient.emailAddress] },
         { label: t('patient.summary.portal_access'), values: [t(booleanToText(patient.isPortalAccessGiven))] }
     ];

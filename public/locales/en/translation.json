@@ -200,8 +200,8 @@
       "primary_insurance_information": "Primary Insurance Information",
       "appointments": "Appointments",
       "last_appointment": "LAST APPOINTMENT",
-      "no_upcoming_appointment": "There is no upcoming appointments",
-      "no_last_appointment": "There is no last appointments",
+      "no_upcoming_appointment": "There is no upcoming appointment",
+      "no_last_appointment": "There is no last appointment",
       "upcoming_appointment": "UPCOMING APPOINTMENT",
       "upcoming_appointments": "UPCOMING APPOINTMENTS",
       "recent_patient_cases": "Recent Patient Cases",
@@ -250,7 +250,9 @@
       "date": "DATE",
       "case_description": "CASE DESCRIPTION",
       "originated_by": "ORIGINATED BY",
-      "error": "Error fetching clinical data, please try again"
+      "error": "Error fetching clinical data, please try again",
+      "no_upcoming_appointments": "There is no upcoming appointments",
+      "no_last_appointment": "There is no last appointment"
     },
     "not_found": "Patient with this ID is not found",
     "activity_panel_header": "Activity",
