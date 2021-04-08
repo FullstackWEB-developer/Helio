@@ -78,7 +78,7 @@ const Extensions = () => {
     return <div>{translate('statuses.extensions.loading_error')}</div>;
   }
   if (isLoading) {
-    return <ThreeDots />;
+    return <ThreeDots className='w-48'/>;
   }
 
   return (

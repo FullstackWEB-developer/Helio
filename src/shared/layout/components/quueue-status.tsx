@@ -129,7 +129,7 @@ const QueueStatus = () => {
     return <div>{translate('statuses.queuestatus.loading_error')}</div>;
   }
   if (isLoading) {
-    return <ThreeDots />;
+    return <ThreeDots className='w-48'/>;
   }
 
   return (
