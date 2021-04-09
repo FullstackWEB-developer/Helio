@@ -22,11 +22,12 @@
   },
   "user_profile": {
     "statuses": {
-      "after_work": "After work"
+      "afterwork": "After work",
+      "offline": "Offline"
     },
     "my_profile": "My Profile",
     "my_status": "My Status",
-    "my_stats": "My Stats",
+    "my_states": "My States",
     "sign_out": "Sign Out"
   },
   "navigation": {

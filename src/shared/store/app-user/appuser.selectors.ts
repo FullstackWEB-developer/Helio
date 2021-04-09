@@ -1,6 +1,7 @@
 import {RootState} from '../../../app/store';
 import {createSelector} from '@reduxjs/toolkit';
 import {UserStatus} from './app-user.models';
+import {AgentState} from '@shared/models/agent-state';
 
 export const appUserState = (state: RootState) => state.appUserState
 
@@ -27,4 +28,9 @@ export const selectUserStatus = createSelector(
 export const selectAccessToken = createSelector(
     appUserState,
     state => state.auth.accessToken
+)
+
+export const selectAgentStates = createSelector(
+    appUserState,
+    state => state.agentStates as AgentState[]
 )

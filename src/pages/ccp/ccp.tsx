@@ -21,6 +21,10 @@ import {useTranslation} from 'react-i18next';
 import CcpContext from './components/ccp-context';
 import contextPanels from './models/context-panels';
 import {ccpImage} from './ccpImage';
+import {setAgentStates, updateUserStatus} from '@shared/store/app-user/appuser.slice';
+import {UserStatus} from '@shared/store/app-user/app-user.models';
+import Logger from '@shared/services/logger';
+import {AgentState} from '@shared/models/agent-state';
 
 const ccpConfig = {
     region: process.env.REACT_APP_AWS_REGION,
@@ -51,6 +55,7 @@ const Ccp: React.FC<BoxProps> = ({
     const {t} = useTranslation();
     const dispatch = useDispatch();
     const history = useHistory();
+    const logger = Logger.getInstance();
     const username = useSelector(authenticationSelector).username;
     const [isHover, setHover] = useState(false);
     const [isBottomBarVisible, setIsBottomBarVisible] = useState(false);
@@ -79,6 +84,15 @@ const Ccp: React.FC<BoxProps> = ({
                 allowFramedSoftphone: true,
             },
         });
+        let agentStates: AgentState[];
+        const beforeUnload = (agentStates: AgentState[]) => {
+            const state = agentStates.find((agentState) => agentState.name === UserStatus.Offline);
+            window.CCP.agent.setState(state, {
+                failure: (e: any) => {
+                    logger.error('Cannot set state for agent ', e);
+                }
+            });
+        };
 
         connect.contact((contact) => {
             contact.onConnecting(() => {
@@ -123,6 +137,20 @@ const Ccp: React.FC<BoxProps> = ({
         });
         connect.agent((agent) => {
             window.CCP.agent = agent;
+
+            const agentStates = agent.getAgentStates() as AgentState[];
+            if ( agentStates?.length > 0 ) {
+                dispatch(setAgentStates(agentStates));
+            }
+
+            agent.onStateChange(agentStateChange => {
+                dispatch(updateUserStatus(agentStateChange.newState));
+            });
+
+            agent.onAfterCallWork(() => {
+                dispatch(updateUserStatus(UserStatus.AfterWork));
+            });
+
             agent.onRefresh(ag => {
                 const numberOfChats = ag.getContacts(connect.ContactType.CHAT).length;
                 dispatch(setChatCounter(numberOfChats));
@@ -132,9 +160,15 @@ const Ccp: React.FC<BoxProps> = ({
 
                 setIsBottomBarVisible(numberOfChats > 0 || numberOfVoices > 0);
             });
+
+            window.addEventListener('beforeunload', () => beforeUnload(agentStates));
         });
 
-    }, [dispatch, history, username]);
+        return () => {
+            window.removeEventListener('beforeunload', () => beforeUnload(agentStates));
+        }
+
+    }, [dispatch, history, logger, username]);
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [{opacity}, drag, preview] = useDrag({

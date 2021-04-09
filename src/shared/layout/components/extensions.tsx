@@ -13,7 +13,6 @@ import { UserStatus } from 'src/shared/store/app-user/app-user.models';
 import { selectDepartmentList } from 'src/shared/store/lookups/lookups.selectors';
 import { QuickConnectExtension } from 'src/shared/models/quick-connect-extension';
 import Dropdown from '../../components/dropdown/dropdown';
-import RealTimeUserStatusUpdate from '../../websockets/real-time-user-status-update';
 import {QueryQuickConnects} from '@constants/react-query-constants';
 
 const Extensions = () => {
@@ -83,7 +82,6 @@ const Extensions = () => {
 
   return (
     <>
-      <RealTimeUserStatusUpdate />
       <div className='flex flex-col'>
         <div className='px-4 py-3 border-b flex items-center'>
           <h2 className='subtitle'>

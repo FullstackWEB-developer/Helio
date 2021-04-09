@@ -4,10 +4,11 @@ import Layout from '../shared/layout/layout';
 import Login from '../pages/login/login';
 import GuardedRoute from './guarded-route';
 import { Dashboard } from '@pages/dashboard/dashboard';
-import { withSuspense } from '../shared/HOC/with-suspense';
+import { withSuspense } from '@shared/HOC/with-suspense';
 import TicketList from '../pages/tickets/ticket-list';
 import { QueryClient, QueryClientProvider } from "react-query";
 import { TicketsPath } from './paths';
+import RealTimeUserStatusUpdate from '@shared/websockets/real-time-user-status-update';
 
 const SearchResults = React.lazy(() => import('../shared/components/search-bar/components/search-results'));
 const PatientChart = React.lazy(() => import('../pages/patients/patient-chart'));
@@ -42,6 +43,7 @@ function App() {
                         <Login />
                     </Route>
                     <Layout>
+                        <RealTimeUserStatusUpdate />
                         <GuardedRoute exact path='/dashboard' component={Dashboard} />
                         <GuardedRoute exact path={TicketsPath} component={withSuspense(TicketList)} />
                         <GuardedRoute exact path={`${TicketsPath}/new`} component={withSuspense(TicketNew)} />

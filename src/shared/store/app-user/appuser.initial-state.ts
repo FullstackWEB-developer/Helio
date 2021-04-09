@@ -1,9 +1,11 @@
 import {AuthenticationInfo, UserStatus} from './app-user.models';
+import {AgentState} from '@shared/models/agent-state';
 
 export interface AppUserState {
     auth: AuthenticationInfo;
     isLoading: boolean;
-    status: UserStatus
+    status: UserStatus | string;
+    agentStates: AgentState[];
 }
 
 const initialState: AppUserState = {
@@ -11,6 +13,7 @@ const initialState: AppUserState = {
         isLoggedIn: false
     },
     isLoading: false,
-    status: UserStatus.AfterWork
+    status: UserStatus.Offline,
+    agentStates: []
 }
 export default initialState;

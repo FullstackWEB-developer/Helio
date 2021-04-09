@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { HubConnection, HubConnectionBuilder, LogLevel } from '@microsoft/signalr';
-import { useSelector } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import { useQueryClient } from 'react-query';
-import { selectAccessToken } from '../store/app-user/appuser.selectors';
+import {authenticationSelector, selectAccessToken} from '../store/app-user/appuser.selectors';
 import { UserStatusUpdate } from '../models/user-status-update.model';
 import { QuickConnectExtension } from '../models/quick-connect-extension';
 import RealTimeConnectionLogger from './real-time-connection-logger';
 import { QueryQuickConnects } from '@constants/react-query-constants';
+import {updateUserStatus} from '@shared/store/app-user/appuser.slice';
 
 const RealTimeUserStatusUpdate = () => {
-
+    const dispatch = useDispatch();
     const [connection, setConnection] = useState<HubConnection | null>(null);
     const accessToken = useSelector(selectAccessToken);
+    const username = useSelector(authenticationSelector).username;
     const queryClient = useQueryClient();
 
     const realtimeConnectionLogger = new RealTimeConnectionLogger();
@@ -59,6 +61,9 @@ const RealTimeUserStatusUpdate = () => {
     }
 
     const propagateStatusChangeValue = (statusChange: UserStatusUpdate) => {
+        if (statusChange.userId === username) {
+            dispatch(updateUserStatus(statusChange.status));
+        }
 
         const quickConnects: QuickConnectExtension[] = queryClient.getQueryData(QueryQuickConnects) ?? [];
         const index = quickConnects.findIndex(qc => qc.id === statusChange.userId);

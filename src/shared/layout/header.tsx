@@ -5,7 +5,7 @@ import {ReactComponent as MSIcon} from '@icons/Icon-Office365-24px.svg';
 import SearchBar from '../components/search-bar/search-bar';
 import {useDispatch, useSelector} from 'react-redux';
 import {toggleCcp, toggleUserProfileMenu} from './store/layout.slice';
-import {authenticationSelector} from '../store/app-user/appuser.selectors';
+import {authenticationSelector, selectUserStatus} from '../store/app-user/appuser.selectors';
 import {isProfileMenuExpandedSelector} from './store/layout.selectors';
 import HelioLogo from '@icons/helio-logo';
 import ProfileDropdown from './components/profile-dropdown';
@@ -13,7 +13,6 @@ import utils from '../utils/utils';
 import {ReactComponent as CCPIcon} from '@icons/Icon-CCP-48px.svg';
 import {ReactComponent as PhoneIcon} from '@icons/Icon-Phone-24px.svg';
 import {ReactComponent as ChatIcon} from '@icons/Icon-Chat-24px.svg';
-import {UserStatus} from '../store/app-user/app-user.models';
 import customHooks from '../hooks/customHooks';
 import {selectChatCounter, selectVoiceCounter} from '@pages/ccp/store/ccp.selectors';
 import './header.scss';
@@ -28,6 +27,7 @@ const Header = () => {
     const dropdownRef = useRef<HTMLDivElement>(null);
     const numberOfAgentChats = useSelector(selectChatCounter);
     const numberOfAgentVoices = useSelector(selectVoiceCounter);
+    const currentUserStatus = useSelector(selectUserStatus);
 
     const displayProfileMenu = () => {
         setTimeout(() => dispatch(toggleUserProfileMenu(true)), 100);
@@ -84,7 +84,7 @@ const Header = () => {
                                      onClick={() => displayProfileMenu()}>
                                     <Avatar model={{
                                         initials: userInitials,
-                                        status: UserStatus.Offline
+                                        status: currentUserStatus
                                     }}/>
                                 </div>
                                 <div>
