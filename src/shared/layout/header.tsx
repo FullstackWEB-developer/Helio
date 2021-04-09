@@ -16,9 +16,11 @@ import {ReactComponent as ChatIcon} from '@icons/Icon-Chat-24px.svg';
 import customHooks from '../hooks/customHooks';
 import {selectChatCounter, selectVoiceCounter} from '@pages/ccp/store/ccp.selectors';
 import './header.scss';
+import {useHistory} from 'react-router-dom';
 
 const Header = () => {
     const dispatch = useDispatch();
+    const history = useHistory();
     const auth = useSelector(authenticationSelector);
     const username = auth.name as string;
     const userInitials = auth.isLoggedIn ? utils.getInitialsFromFullName(username) : '';
@@ -42,7 +44,9 @@ const Header = () => {
                 <div className='flex flex-row'>
                     <div className='flex items-center h-16 w-full md:w-auto'>
                         <div className='pl-7 md:pl-0 pr-36'>
-                            <HelioLogo className='fill-current text-primary-600'/>
+                            <div className='cursor-pointer'  onClick={() => history.push('/')}>
+                                <HelioLogo className='fill-current text-primary-600'/>
+                            </div>
                         </div>
                     </div>
                     <div className='pl-2'>

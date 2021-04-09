@@ -3,12 +3,8 @@ import {IconProps} from '@icons/icon.models';
 export const IconTicket = ({pathClass}: IconProps) => {
     return (
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-            <g id="Icon_Ticket" data-name="Icon/Ticket" transform="translate(6 1)">
-                <rect id="Bound" width="24" height="24" transform="translate(-6 -1)" fill="none" opacity="0.7"/>
-                <path id="Tag"
-                      d="M0,9.848V1.875A1.875,1.875,0,0,1,1.875,0H9.848a1.875,1.875,0,0,1,1.326.549l8.277,8.277a1.875,1.875,0,0,1,0,2.652l-7.973,7.973a1.875,1.875,0,0,1-2.652,0L.549,11.174A1.875,1.875,0,0,1,0,9.848ZM4.375,2.5A1.875,1.875,0,1,0,6.25,4.375,1.875,1.875,0,0,0,4.375,2.5Z"
-                      transform="translate(-4 1)" className={pathClass}/>
-            </g>
+            <rect width="24" height="24" fill="none" opacity="0.7"/>
+            <path d="M15.561,7.061,8.939.439A1.5,1.5,0,0,0,7.879,0H1.5A1.5,1.5,0,0,0,0,1.5V7.879A1.5,1.5,0,0,0,.439,8.939l6.621,6.621a1.5,1.5,0,0,0,2.121,0l6.379-6.379a1.5,1.5,0,0,0,0-2.121ZM3.5,5A1.5,1.5,0,1,1,5,3.5,1.5,1.5,0,0,1,3.5,5ZM19.561,9.182l-6.379,6.379a1.5,1.5,0,0,1-2.121,0l-.011-.011,5.439-5.439a2.813,2.813,0,0,0,0-3.978L10.356,0h1.523a1.5,1.5,0,0,1,1.061.439l6.621,6.621a1.5,1.5,0,0,1,0,2.121Z" transform="translate(2 4)" className={pathClass}/>
         </svg>
     );
 }
