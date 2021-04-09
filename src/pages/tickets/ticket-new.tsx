@@ -11,8 +11,8 @@ import Button from '../../shared/components/button/button';
 import Input from '../../shared/components/input/input';
 import Select, {Option} from '../../shared/components/select/select';
 import TagInput from '../../shared/components/tag-input/tag-input';
-import {Contact} from '../../shared/models/contact.model';
-import {Department} from '../../shared/models/department';
+import {Contact} from '@shared/models/contact.model';
+import {Department} from '@shared/models/department';
 import {Ticket} from './models/ticket';
 import {TicketNote} from './models/ticket-note';
 import {
@@ -22,18 +22,18 @@ import {
     selectLookupValues,
     selectTicketOptionsError
 } from './store/tickets.selectors';
-import {selectContacts, selectIsContactOptionsLoading} from '../../shared/store/contacts/contacts.selectors';
+import {selectContacts, selectIsContactOptionsLoading} from '@shared/store/contacts/contacts.selectors';
 import {
     selectDepartmentList,
     selectIsDepartmentListLoading,
     selectUserList
-} from '../../shared/store/lookups/lookups.selectors';
+} from '@shared/store/lookups/lookups.selectors';
 
 import {createTicket, getEnumByType, getLookupValues} from './services/tickets.service';
-import {getContacts} from '../../shared/services/contacts.service';
-import {getDepartments, getUserList} from '../../shared/services/lookups.service';
+import {getContacts} from '@shared/services/contacts.service';
+import {getDepartments, getUserList} from '@shared/services/lookups.service';
 import TextArea from '../../shared/components/textarea/textarea';
-import {User} from '../../shared/models/user';
+import {User} from '@shared/models/user';
 import {useHistory} from 'react-router-dom';
 import utils from '../../shared/utils/utils';
 import {TicketsPath} from '../../app/paths';
@@ -100,6 +100,7 @@ const TicketNew = () => {
             department: formData.department,
             location: formData.location,
             assignee: formData.assignee,
+            assignedOn: formData.assignee !== '' ? new Date() : undefined,
             patientId: formData.patientId,
             patientCaseNumber: formData.patientCaseNumber,
             tags: tags,

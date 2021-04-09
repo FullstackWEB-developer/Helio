@@ -79,9 +79,9 @@ const TicketListItem = ({item}: TicketListItemProps) => {
                 <div>{item.ticketNumber} <span className='pl-4'>{item.subject}</span></div>
                 <div className='text-gray-400 text-sm pt-2'>
                     <span className={'pr-1'}>{t('tickets.created')}</span>
-                    {item.createdOn ? utils.formatDate12HoursTime(item.createdOn) : ''}
+                    {utils.formatUtcDate(item.createdOn, 'MMM D, YYYY h:mm A')}
                     <span
-                        className='ml-4'>{item.dueDate ? `${t('tickets.due')} ${dayjs().to(dayjs(item.dueDate))}` : ''}</span>
+                        className='ml-4'>{item.dueDate ? `${t('tickets.due')} ${dayjs().to(dayjs.utc(item.dueDate).local())}` : ''}</span>
                 </div>
             </div>
         </div>

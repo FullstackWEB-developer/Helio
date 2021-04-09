@@ -10,18 +10,18 @@ import {FeedTypes, TicketFeed} from '../../models/ticket-feed';
 import {Ticket} from '../../models/ticket';
 import {Patient} from '@pages/patients/models/patient';
 import TicketStatus from '../ticket-status';
-import {ReactComponent as PhoneIcon} from '../../../../shared/icons/Icon-Phone-White-24px.svg';
-import {ReactComponent as SmsIcon} from '../../../../shared/icons/Icon-Sms-White-24px.svg';
-import {ReactComponent as EmailIcon} from '../../../../shared/icons/Icon-Email-White-24px.svg';
-import Button from '../../../../shared/components/button/button';
+import {ReactComponent as PhoneIcon} from '@icons/Icon-Phone-White-24px.svg';
+import {ReactComponent as SmsIcon} from '@icons/Icon-Sms-White-24px.svg';
+import {ReactComponent as EmailIcon} from '@icons/Icon-Email-White-24px.svg';
+import Button from '@components/button/button';
 import {useDispatch, useSelector} from 'react-redux';
 import {selectEnumValues, selectFeedLastMessageOn} from '../../store/tickets.selectors';
 import {addFeed, getEnumByType, setDelete, setStatus} from '../../services/tickets.service';
 import {setTicket, setTicketDelete} from '../../store/tickets.slice';
-import {showCcp} from '../../../../shared/layout/store/layout.slice';
+import {showCcp} from '@shared/layout/store/layout.slice';
 import TicketChannelIcon from '../ticket-channel-icon';
 import {TicketsPath} from '../../../../app/paths';
-import Logger from '../../../../shared/services/logger';
+import Logger from '@shared/services/logger';
 import {useMutation} from 'react-query';
 
 interface TicketDetailHeaderProps {
@@ -118,10 +118,10 @@ const TicketDetailHeader = ({ticket, patient}: TicketDetailHeaderProps) => {
                                 SmallLabel('ticket_detail.header.requested_by', patient ? `${patient.firstName} ${patient.lastName}` : ticket.patientId)
                             }
                             {
-                                SmallLabel('ticket_detail.header.due_in', ticket.dueDate ? dayjs().to(dayjs(ticket.dueDate)) : '')
+                                SmallLabel('ticket_detail.header.due_in', ticket.dueDate ? dayjs().to(dayjs.utc(ticket.dueDate).local()) : '')
                             }
                             {
-                                SmallLabel('ticket_detail.header.last_message', feedLastMessageOn ? dayjs().to(dayjs(feedLastMessageOn)) : '')
+                                SmallLabel('ticket_detail.header.last_message', feedLastMessageOn ? dayjs().to(dayjs.utc(feedLastMessageOn).local()) : '')
                             }
                             {
                                 <RatingIcon className={'h-12 w-12'}/>

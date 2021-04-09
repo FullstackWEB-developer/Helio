@@ -2,15 +2,16 @@ import React, {useState} from 'react';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime'
 import {useTranslation} from 'react-i18next';
-import withErrorLogging from '../../../../shared/HOC/with-error-logging';
-import {ReactComponent as CalendarIcon} from '../../../../shared/icons/Icon-Calendar-24px.svg';
+import withErrorLogging from '@shared/HOC/with-error-logging';
+import {ReactComponent as CalendarIcon} from '@icons/Icon-Calendar-24px.svg';
 import {Ticket} from '../../models/ticket';
 import {updateTicket} from '../../services/tickets.service';
-import DateTime from '../../../../shared/components/datetime/datetime';
+import DateTime from '@components/datetime/datetime';
 import {useMutation} from 'react-query';
 import {setTicket} from '@pages/tickets/store/tickets.slice';
 import {useDispatch} from 'react-redux';
-import Logger from '../../../../shared/services/logger';
+import Logger from '@shared/services/logger';
+import utils from '@shared/utils/utils';
 
 interface TicketDetailEventLogProps {
     ticket: Ticket
@@ -62,7 +63,7 @@ const TicketDetailEventLog = ({ticket}: TicketDetailEventLogProps) => {
                         {
                             dueDate ?
                                 (
-                                    `${dayjs().to(dayjs(dueDate))} ${dayjs(dueDate).format('D/M/YY h:mm A')}`
+                                    `${dayjs().to(dayjs(dueDate))} ${utils.formatUtcDate(dueDate, 'D/M/YY h:mm A')}`
                                 )
                             : t('common.not_available')
                         }
@@ -86,25 +87,25 @@ const TicketDetailEventLog = ({ticket}: TicketDetailEventLogProps) => {
                     {t('ticket_detail.info_panel.created_on')}
                 </dt>
                 <dd className='body2 mt-6'>
-                    {dayjs(ticket?.createdOn).format(formatTemplate)}
+                    {utils.formatUtcDate(ticket?.createdOn, formatTemplate)}
                 </dd>
                 <dt className='subtitle2'>
                     {t('ticket_detail.info_panel.assigned_on')}
                 </dt>
                 <dd className='body2'>
-                    {ticket?.assignedOn ? dayjs(ticket?.assignedOn).format(formatTemplate) : ''}
+                    {utils.formatUtcDate(ticket?.assignedOn, formatTemplate)}
                 </dd>
                 <dt className='subtitle2'>
                     {t('ticket_detail.info_panel.updated_on')}
                 </dt>
                 <dd className='body2'>
-                    {ticket?.modifiedOn ? dayjs(ticket?.modifiedOn).format(formatTemplate) : ''}
+                    {utils.formatUtcDate(ticket?.modifiedOn, formatTemplate)}
                 </dd>
                 <dt className='subtitle2'>
                     {t('ticket_detail.info_panel.closed_on')}
                 </dt>
                 <dd className='body2'>
-                    {ticket?.closedOn ? dayjs(ticket?.closedOn).format(formatTemplate) : ''}
+                    {utils.formatUtcDate(ticket?.closedOn, formatTemplate)}
                 </dd>
             </div>
         </dl>

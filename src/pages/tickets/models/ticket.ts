@@ -7,10 +7,10 @@ export interface Ticket {
     subject?: string;
     detail?: string;
     reason?: string;
-    assignedOn?: string;
-    closedOn?: string;
-    createdOn?: string;
-    modifiedOn?: string;
+    assignedOn?: Date;
+    closedOn?: Date;
+    createdOn?: Date;
+    modifiedOn?: Date;
     contactId?: string;
     patientId?: string;
     assignee?: string;
