@@ -441,5 +441,10 @@
       "invalid_email": "Email is not valid",
       "invalid_phone": "Phone numbers must follow the North American Numbering Plan."
     }
+  },
+  "chat_transcripts": {
+    "end_chat": "End of the chat.",
+    "joined_chat": " joined the chat.",
+    "left_chat": " left the chat."
   }
 }

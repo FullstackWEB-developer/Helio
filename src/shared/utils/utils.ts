@@ -59,7 +59,6 @@ const getDateTime = (dueDate?: Date, dueTime?: string) => {
     }
     return dateTime;
 }
-
 const utils = {
     getWindowCenter, formatUtcDate, getWindowDimensions, formatDate, formatDate12HoursTime, formatDateShortMonth, getInitialsFromFullName, getDateTime
 }
