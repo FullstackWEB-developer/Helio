@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, {useEffect} from 'react';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc'
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,14 +10,14 @@ import TicketDetailHeader from './components/ticket-detail/ticket-detail-header'
 import TicketInfoPanel from './components/ticket-detail/ticket-detail-info-panel';
 import TicketDetailFeed from './components/ticket-detail/ticket-detail-feed';
 import TicketDetailAddNote from './components/ticket-detail/ticket-detail-add-note';
-import { selectPatient } from '../patients/store/patients.selectors';
-import { getPatientById } from '@shared/services/search.service';
 import { Ticket } from './models/ticket';
 import { useQuery } from 'react-query';
 import { getTicketByNumber } from './services/tickets.service';
-import {QueryTickets} from '@constants/react-query-constants';
+import {QueryGetPatientById, QueryTickets} from '@constants/react-query-constants';
 import { setTicket } from './store/tickets.slice';
 import {selectSelectedTicket} from '@pages/tickets/store/tickets.selectors';
+import {getPatientByIdWithQuery} from '@pages/patients/services/patients.service';
+import {Patient} from '@pages/patients/models/patient';
 
 interface TicketParams {
     ticketNumber: string
@@ -29,7 +29,6 @@ const TicketDetail = () => {
     const { t } = useTranslation();
     const { ticketNumber } = useParams<TicketParams>();
     const ticket = useSelector(selectSelectedTicket);
-    const patient = useSelector(selectPatient);
 
     const { isLoading, error, isFetching } = useQuery<Ticket, Error>([QueryTickets, ticketNumber], () =>
         getTicketByNumber(Number(ticketNumber)),
@@ -41,11 +40,18 @@ const TicketDetail = () => {
         }
     );
 
+    const { refetch, data: patient} = useQuery<Patient, Error>([QueryGetPatientById, ticket.patientId], () =>
+        getPatientByIdWithQuery(ticket.patientId as string),
+        {
+            enabled: false
+        }
+    );
+    
     useEffect(() => {
         if (ticket?.patientId) {
-            dispatch(getPatientById(ticket.patientId));
+            refetch();
         }
-    }, [dispatch, ticket]);
+    }, [refetch, ticket?.patientId]);
 
     if (isLoading || isFetching) {
         return <ThreeDots />;
@@ -69,7 +75,7 @@ const TicketDetail = () => {
                 </div>
             </div>
             <div className='w-1/4 border-l pt-12 px-2 overflow-y-auto'>
-                <TicketInfoPanel ticket={ticket} />
+                <TicketInfoPanel ticket={ticket} patient={patient}/>
             </div>
         </div>
     );

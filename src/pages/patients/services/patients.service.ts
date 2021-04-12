@@ -3,13 +3,14 @@ import {Note} from '@pages/patients/models/note';
 import Logger from '../../../shared/services/logger';
 import {Dispatch} from '@reduxjs/toolkit';
 import {
+     clearPatient,
      clearPatientClinical,
      clearPatientInsurance,
      clearPatientSummary,
      setClinicalError,
-     setClinicalLoading,
+     setClinicalLoading, setError as setPatientError,
      setInsuranceError,
-     setInsuranceLoading,
+     setInsuranceLoading, setLoading, setPatient,
      setPatientChartClinical,
      setPatientChartInsurance,
      setPatientChartSummary,
@@ -109,5 +110,35 @@ export const getPatientInsurance = (patientId: string) => {
                    dispatch(clearPatientInsurance());
               })
               .finally(() => setInsuranceLoading(false));
+     }
+}
+
+export const getPatientByIdWithQuery = async (patientId: string) => {
+     const url = `${patientsUrl}/${patientId}`;
+     const response = await Api.get(url);
+     return response.data;
+}
+
+export const getPatientById = (patientId: string) => {
+     const url = `${patientsUrl}/${patientId}`;
+     return async (dispatch: Dispatch) => {
+          dispatch(setPatientError(false));
+          dispatch(setLoading(true));
+          await Api.get(url)
+              .then(response => {
+                   dispatch(setPatient(response.data))
+              })
+              .catch(error => {
+                   if (error.response?.status === 404) {
+                        dispatch(clearPatient());
+                   } else {
+                        logger.error('Failed searching for patients', error);
+                        dispatch(setPatientError(true));
+                        dispatch(clearPatient());
+                   }
+              })
+              .finally(() => {
+                   dispatch(setLoading(false));
+              })
      }
 }

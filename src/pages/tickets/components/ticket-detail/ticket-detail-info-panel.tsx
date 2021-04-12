@@ -8,12 +8,14 @@ import TicketDetailPatientInfo from './ticket-detail-patient-info';
 import TicketDetailAppointments from './ticket-detail-appointments';
 import TicketDetailAttachments from './ticket-detail-attachments';
 import TicketDetailEventLog from './ticket-detail-event-log';
+import {Patient} from '@pages/patients/models/patient';
 
 interface TicketDetailInfoPanelProps {
-    ticket: Ticket
+    ticket: Ticket,
+    patient?: Patient
 }
 
-const TicketDetailInfoPanel = ({ ticket }: TicketDetailInfoPanelProps) => {
+const TicketDetailInfoPanel = ({ ticket, patient }: TicketDetailInfoPanelProps) => {
     return <div className='px-4'>
         <Collapsible title={'ticket_detail.info_panel.ticket_info'} isOpen={true}>
             <TicketInfo ticket={ticket} />
@@ -22,7 +24,7 @@ const TicketDetailInfoPanel = ({ ticket }: TicketDetailInfoPanelProps) => {
             <TicketDetailAssignee ticket={ticket} />
         </Collapsible>
         <Collapsible title={'ticket_detail.info_panel.patient_info'} isOpen={true}>
-            <TicketDetailPatientInfo ticket={ticket} />
+            <TicketDetailPatientInfo ticket={ticket} patient={patient}/>
         </Collapsible>
         <Collapsible title={'ticket_detail.info_panel.appointments'} isOpen={true}>
             <TicketDetailAppointments ticket={ticket} />

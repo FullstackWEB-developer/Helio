@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {useTranslation} from 'react-i18next';
 import {useHistory} from 'react-router-dom';
@@ -6,8 +6,7 @@ import {Controller, useForm} from 'react-hook-form';
 import withErrorLogging from '../../../../shared/HOC/with-error-logging';
 import {Ticket} from '../../models/ticket';
 import Input from '../../../../shared/components/input/input';
-import {getPatientById} from '../../../../shared/services/search.service';
-import {selectIsPatientError, selectPatient, selectPatientLoading} from '@pages/patients/store/patients.selectors';
+import {selectIsPatientError, selectPatientLoading} from '@pages/patients/store/patients.selectors';
 import ThreeDots from '../../../../shared/components/skeleton-loader/skeleton-loader';
 import {ReactComponent as PatientChartIcon} from '../../../../shared/icons/Icon-PatientChart-24px.svg';
 import Button from '../../../../shared/components/button/button';
@@ -15,12 +14,14 @@ import {updateTicket} from '../../services/tickets.service';
 import {useMutation} from 'react-query';
 import {setTicket} from '@pages/tickets/store/tickets.slice';
 import Logger from '../../../../shared/services/logger';
+import {Patient} from '@pages/patients/models/patient';
 
 interface TicketDetailPatientInfoProps {
-    ticket: Ticket
+    ticket: Ticket,
+    patient?: Patient
 }
 
-const TicketDetailPatientInfo = ({ticket}: TicketDetailPatientInfoProps) => {
+const TicketDetailPatientInfo = ({ticket, patient}: TicketDetailPatientInfoProps) => {
     const {t} = useTranslation();
     const history = useHistory();
     const {handleSubmit, control, errors} = useForm();
@@ -33,13 +34,6 @@ const TicketDetailPatientInfo = ({ticket}: TicketDetailPatientInfoProps) => {
 
     const loading = useSelector(selectPatientLoading);
     const error = useSelector(selectIsPatientError);
-    const patient = useSelector(selectPatient);
-
-    useEffect(() => {
-        if (ticket && ticket.patientId) {
-            dispatch(getPatientById(ticket.patientId));
-        }
-    }, [dispatch, ticket]);
 
     const updateTicketMutation = useMutation(updateTicket, {
         onSuccess: (data) => {

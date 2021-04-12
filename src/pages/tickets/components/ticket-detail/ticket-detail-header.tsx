@@ -24,9 +24,9 @@ import {TicketsPath} from '../../../../app/paths';
 import Logger from '@shared/services/logger';
 import {useMutation} from 'react-query';
 
-interface TicketDetailHeaderProps {
+export interface TicketDetailHeaderProps {
     ticket: Ticket,
-    patient: Patient
+    patient?: Patient
 }
 
 const TicketDetailHeader = ({ticket, patient}: TicketDetailHeaderProps) => {
@@ -115,7 +115,7 @@ const TicketDetailHeader = ({ticket, patient}: TicketDetailHeaderProps) => {
                                 <TicketStatus ticketId={ticket.id || ''} status={ticket.status} isArrow={false} />
                             }
                             {
-                                SmallLabel('ticket_detail.header.requested_by', patient ? `${patient.firstName} ${patient.lastName}` : ticket.patientId)
+                                SmallLabel('ticket_detail.header.requested_by', patient ? `${patient.firstName} ${patient.lastName}` : t('common.not_available'))
                             }
                             {
                                 SmallLabel('ticket_detail.header.due_in', ticket.dueDate ? dayjs().to(dayjs.utc(ticket.dueDate).local()) : '')

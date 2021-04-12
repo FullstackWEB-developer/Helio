@@ -1,7 +1,6 @@
 import PatientHeader from './components/patient-header';
 import {useParams} from 'react-router';
 import React, {useEffect} from 'react';
-import {getPatientById} from '../../shared/services/search.service';
 import {useDispatch, useSelector} from 'react-redux';
 import ThreeDots from '@components/skeleton-loader/skeleton-loader';
 import {selectIsPatientError, selectPatient, selectPatientLoading} from './store/patients.selectors';
@@ -10,10 +9,15 @@ import {RecentPatient} from '@components/search-bar/models/recent-patient';
 import patientUtils from './utils/utils';
 import {addRecentPatient} from '@components/search-bar/store/search-bar.slice';
 import PatientTabs from './components/patient-tabs';
-import {getDepartments, getProviders} from '../../shared/services/lookups.service';
+import {getDepartments, getProviders} from '@shared/services/lookups.service';
 import ActivityPanel from './components/activity-panel';
 import './patient-chart.scss';
-import {getPatientClinicalDetails, getPatientInsurance, getPatientSummary} from './services/patients.service';
+import {
+    getPatientById,
+    getPatientClinicalDetails,
+    getPatientInsurance,
+    getPatientSummary
+} from './services/patients.service';
 
 interface PatientParams {
     patientId: string
