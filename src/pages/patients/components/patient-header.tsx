@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { selectPatient, selectPatientChartSummary } from '../store/patients.selectors';
+import { selectPatient } from '../store/patients.selectors';
 import { useSelector } from 'react-redux';
 import { ExtendedPatient } from '../models/extended-patient';
 import React, { useRef, useState } from 'react';
@@ -14,10 +14,12 @@ import patientUtils from '../utils/utils';
 import utils from "@shared/utils/utils";
 const athenaPatientUrl = process.env.REACT_APP_ATHENAHEALTH_CLIENT_SUMMARY;
 
-const PatientHeader = () => {
+export interface PatientHeaderProps {
+    patientChartSummary: PatientChartSummary;
+}
+const PatientHeader = ({patientChartSummary} : PatientHeaderProps) => {
     const { t } = useTranslation();
     const patient: ExtendedPatient = useSelector(selectPatient);
-    const patientChartSummary: PatientChartSummary = useSelector(selectPatientChartSummary);
 
     const SmallLabel = (text: string, value: string, className?: string) => {
         return (

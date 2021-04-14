@@ -5,20 +5,26 @@ import Tabs from '../../../shared/components/tab/Tabs';
 import PatientSummary from './summary/patient-summary';
 import PatientClinical from './clinical/patient-clinical';
 import PatientInsurance from './insurance/patient-insurance';
+import {PatientChartSummary} from '@pages/patients/models/patient-chart-summary';
 
-const PatientTabs = () => {
+export interface PatientTabsProps {
+    patientId: number;
+    patientChartSummary: PatientChartSummary;
+}
+
+const PatientTabs = ({patientId, patientChartSummary} : PatientTabsProps) => {
     const { t } = useTranslation();
     return (
         <div className={'p-8'}>
             <Tabs title={t('patient.tabs.patient_chart')}>
                 <Tab title={t('patient.tabs.summary')}>
-                    <PatientSummary />
+                    <PatientSummary patientChartSummary={patientChartSummary} />
                 </Tab>
                 <Tab title={t('patient.tabs.clinical')}>
-                    <PatientClinical />
+                    <PatientClinical patientId={patientId} />
                 </Tab>
                 <Tab title={t('patient.tabs.insurance')}>
-                    <PatientInsurance />
+                    <PatientInsurance patientId={patientId} />
                 </Tab>
             </Tabs>
         </div>

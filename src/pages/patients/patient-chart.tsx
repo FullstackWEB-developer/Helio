@@ -13,11 +13,11 @@ import {getDepartments, getProviders} from '@shared/services/lookups.service';
 import ActivityPanel from './components/activity-panel';
 import './patient-chart.scss';
 import {
-    getPatientById,
-    getPatientClinicalDetails,
-    getPatientInsurance,
-    getPatientSummary
+    getPatientById, getPatientSummary
 } from './services/patients.service';
+import {useQuery} from 'react-query';
+import {PatientChartSummary} from '@pages/patients/models/patient-chart-summary';
+import {GetPatientSummary, OneMinute} from '@constants/react-query-constants';
 
 interface PatientParams {
     patientId: string
@@ -33,11 +33,6 @@ const PatientChart = () => {
 
     useEffect(() => {
         dispatch(getPatientById(patientId));
-        dispatch(getPatientSummary(patientId));
-        dispatch(getPatientClinicalDetails(patientId));
-        dispatch(getPatientInsurance(patientId));
-        dispatch(getProviders());
-        dispatch(getDepartments());
     }, [dispatch, patientId]);
 
     useEffect(() => {
@@ -49,9 +44,34 @@ const PatientChart = () => {
                 age: patientUtils.getAge(patient.dateOfBirth),
                 dob: patientUtils.formatDob(patient.dateOfBirth)
             }
-            dispatch(addRecentPatient(recentPatient))
+            dispatch(addRecentPatient(recentPatient));
+            dispatch(getProviders());
+            dispatch(getDepartments());
         }
     }, [dispatch, patient]);
+
+
+    const {isLoading: isSummaryLoading, data: patientChartSummary} = useQuery<PatientChartSummary, Error>([GetPatientSummary, patientId], () =>
+            getPatientSummary(Number(patientId)),
+        {
+            staleTime: OneMinute
+        }
+    );
+
+
+
+    if (loading || isSummaryLoading) {
+        return <ThreeDots/>
+    }
+    if (error) {
+        return <div hidden={!error} className={'p-4 text-red-500'}>{t('search.search_results.heading_error')}</div>
+    }
+
+    if (patient === undefined) {
+        return <div className={'p-4'}>
+            <span className={'text-xl font-bold'}>{t('patient.not_found')}</span>
+        </div>;
+    }
 
     return (
         <div className='flex w-full'>
@@ -59,17 +79,13 @@ const PatientChart = () => {
                 <div hidden={!loading}>
                     <ThreeDots/>
                 </div>
-                {
-                    !loading && !error && patient !== undefined
-                        ? <>
-                            <PatientHeader/>
-                            <PatientTabs/>
-                        </>
-                        : <div hidden={loading || error} className={'p-4'}>
-                            <span className={'text-xl font-bold'}>{t('patient.not_found')}</span>
-                        </div>
+                {patientChartSummary &&
+                    <>
+                    <PatientHeader patientChartSummary={patientChartSummary}/>
+                     <PatientTabs patientChartSummary={patientChartSummary} patientId={patient.patientId}/>
+                    </>
                 }
-                <div hidden={!error} className={'p-4 text-red-500'}>{t('search.search_results.heading_error')}</div>
+
             </div>
             <div className='activity-panel border-l pt-12 w-1/3'>
                 <ActivityPanel/>

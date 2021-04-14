@@ -1,12 +1,13 @@
-import {useSelector} from 'react-redux';
-import {selectPatientChartSummary} from '../../store/patients.selectors';
 import {useTranslation} from 'react-i18next';
 import PatientChartList, {Row} from '@pages/patients/components/patient-chart-list';
 import PrimaryInsuranceInformation from '@pages/patients/components/summary/primary-insurance-information';
+import {PatientChartSummary} from '@pages/patients/models/patient-chart-summary';
 
-const OutstandingBalances = () => {
+export interface OutstandingBalancesProps {
+    patientChartSummary: PatientChartSummary;
+}
+const OutstandingBalances = ({patientChartSummary}: OutstandingBalancesProps) => {
     const {t} = useTranslation();
-    const patientChartSummary = useSelector(selectPatientChartSummary);
 
     const toDollars = (value: number) => {
         return '$' + value.toFixed(2);
@@ -45,7 +46,7 @@ const OutstandingBalances = () => {
                 </div>
             </div>
             <div>
-                <PrimaryInsuranceInformation />
+                <PrimaryInsuranceInformation patientChartSummary={patientChartSummary} />
             </div>
         </div>
     );

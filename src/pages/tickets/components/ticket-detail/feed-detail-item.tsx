@@ -11,7 +11,7 @@ interface FeedDetailItemProps {
 
 const FeedDetailItem = ({ item }: FeedDetailItemProps) => {
     const formatTemplate = 'ddd, MMM DD, YYYY h:mm a';
-    const itemDateTime = item.dateTime ? `${dayjs().to(dayjs(item.dateTime).local())} (${utils.formatUtcDate(item.dateTime, formatTemplate)})` : '';
+    const itemDateTime = item.dateTime ? `${dayjs().to(dayjs.utc(item.dateTime).local())} (${utils.formatUtcDate(item.dateTime, formatTemplate)})` : '';
     return (
         <div className={'flex flex-row p-8'}>
             <div className='w-8 h-8'>

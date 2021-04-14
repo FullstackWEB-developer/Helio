@@ -1,5 +1,5 @@
 import {useDispatch, useSelector} from 'react-redux';
-import {selectPatient, selectPatientChartSummary} from '../../store/patients.selectors';
+import {selectPatient} from '../../store/patients.selectors';
 import {useTranslation} from 'react-i18next';
 import withErrorLogging from '@shared/HOC/with-error-logging';
 import {Controller, useForm} from 'react-hook-form';
@@ -18,19 +18,20 @@ import {updatePatientContactInformation} from '@pages/patients/services/patients
 import ThreeDots from '@components/skeleton-loader/skeleton-loader';
 import { setPatient } from '@pages/patients/store/patients.slice';
 import ControlledInput from '@components/controllers/ControllerInput';
+import {PatientChartSummary} from '@pages/patients/models/patient-chart-summary';
 
 export interface PatientInformationUpdateProps
 {
     onUpdateComplete: () => void;
+    patientChartSummary: PatientChartSummary
 }
 
 
-const PatientContactInfoUpdate = ({onUpdateComplete} : PatientInformationUpdateProps) => {
+const PatientContactInfoUpdate = ({onUpdateComplete, patientChartSummary} : PatientInformationUpdateProps) => {
     const {t} = useTranslation();
     const dispatch = useDispatch();
     const patient = useSelector(selectPatient);
     const states = useSelector(selectStates);
-    const patientChartSummary = useSelector(selectPatientChartSummary);
     const requiredText = t('common.required');
 
     useQuery(QueryStates, () => getStates(),

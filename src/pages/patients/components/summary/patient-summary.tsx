@@ -1,22 +1,17 @@
 import ContactInformation from './contact-information';
 import OutstandingBalances from './outstanding-balances';
 import Appointments from './appointments';
-import { useSelector } from 'react-redux';
-import { selectIsSummaryError, selectSummaryLoading } from '../../store/patients.selectors';
-import ThreeDots from '../../../../shared/components/skeleton-loader/skeleton-loader';
-import { useTranslation } from 'react-i18next';
+import {PatientChartSummary} from '@pages/patients/models/patient-chart-summary';
+export interface PatientSummaryProps {
+    patientChartSummary: PatientChartSummary;
+}
 
-const PatientSummary = () => {
-    const { t } = useTranslation();
-    const isLoading = useSelector(selectSummaryLoading);
-    const isError = useSelector(selectIsSummaryError);
-    return (
-        !isLoading && !isError ?
-            <>
-                <ContactInformation />
-                <OutstandingBalances />
-                <Appointments />
-            </> : !isError ? <ThreeDots /> : <div className={'p-4 text-danger'}>{t('patient.summary.error')}</div>
+const PatientSummary = ({patientChartSummary} : PatientSummaryProps) => {
+    return (<>
+                <ContactInformation patientChartSummary={patientChartSummary} />
+                <OutstandingBalances  patientChartSummary={patientChartSummary} />
+                <Appointments patientChartSummary={patientChartSummary} />
+            </>
     );
 };
 

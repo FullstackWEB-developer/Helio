@@ -1,18 +1,18 @@
-import {useSelector} from 'react-redux';
-import {selectPatientInsurance, selectPrimaryInsuranceSummary} from '../../store/patients.selectors';
 import {useTranslation} from 'react-i18next';
 import patientUtils from '@pages/patients/utils/utils';
+import {PatientChartSummary} from '@pages/patients/models/patient-chart-summary';
 
-const PrimaryInsuranceInformation = () => {
+export interface PrimaryInsuranceInformationProps {
+    patientChartSummary: PatientChartSummary;
+}
+const PrimaryInsuranceInformation = ({patientChartSummary} : PrimaryInsuranceInformationProps) => {
     const {t} = useTranslation();
-    const primaryInsurance = useSelector(selectPrimaryInsuranceSummary);
-    const patientInsurance = useSelector(selectPatientInsurance);
-    const copay = patientInsurance?.length > 0 ? `$${patientInsurance[0].copayAmount}` : '';
 
+    const primaryInsurance = patientChartSummary.primaryInsurance;
     const primaryInsuranceHeader = primaryInsurance ? `${patientUtils.getPrimaryInsuranceHeader(primaryInsurance, t('common.not_available'))} ` : '';
 
     const getEligibleTextColor = () => {
-        return primaryInsurance.eligibilityStatus === t('patient.insurance.eligible') ? 'text-primary-400' : 'text-red-500';
+        return primaryInsurance?.eligibilityStatus === t('patient.insurance.eligible') ? 'text-primary-400' : 'text-red-500';
     }
 
     return (<div>
@@ -21,11 +21,11 @@ const PrimaryInsuranceInformation = () => {
         </div>
         {
             primaryInsurance ? <div className='pt-3.5'>
-                    <div className='body1'>{primaryInsurance.InsurancePlanDisplayName}</div>
+                    <div className='body1'>{primaryInsurance.insurancePlanDisplayName}</div>
                     {primaryInsuranceHeader}
                     <div className='subtitle2'> {t('patient.summary.copay')}
                         <span>
-                            {copay}
+                            {primaryInsurance.copays && primaryInsurance.copays.length > 0 && primaryInsurance.copays[0]?.copayAmount}
                         </span>
                     </div>
                     <div className='subtitle2'> {t('patient.summary.status')}

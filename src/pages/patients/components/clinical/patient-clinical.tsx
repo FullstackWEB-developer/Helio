@@ -1,19 +1,38 @@
 import Appointments from './appointments';
 import RecentPatientCases from './recent-patient-cases';
-import { useSelector } from 'react-redux';
-import { selectClinicalLoading, selectIsClinicalError } from '../../store/patients.selectors';
 import { useTranslation } from 'react-i18next';
 import ThreeDots from '../../../../shared/components/skeleton-loader/skeleton-loader';
+import {
+    getPatientClinicalDetails,
+} from '@pages/patients/services/patients.service';
+import {useQuery} from 'react-query';
+import {GetPatientClinical, OneMinute} from '@constants/react-query-constants';
+import {ClinicalDetails} from '@pages/patients/models/clinical-details';
 
-const PatientClinical = () => {
+export interface PatientClinicalProps {
+    patientId: number;
+}
+
+const PatientClinical = ({patientId} : PatientClinicalProps) => {
     const { t } = useTranslation();
-    const isLoading = useSelector(selectClinicalLoading);
-    const isError = useSelector(selectIsClinicalError);
-    return (!isLoading && !isError ?
-        <>
-            <Appointments />
-            <RecentPatientCases />
-        </> : !isError ? <ThreeDots /> : <div className={'p-4 text-danger'}>{t('patient.clinical.error')}</div>
+
+    const {isLoading, isError, data} = useQuery<ClinicalDetails, Error>([GetPatientClinical, patientId], () =>
+            getPatientClinicalDetails(patientId),
+        {
+            staleTime: OneMinute
+        }
+    );
+
+    if (isLoading || !data) {
+        return <ThreeDots />;
+    }
+    if (isError) {
+        return <div className={'p-4 text-danger'}>{t('patient.clinical.error')}</div>;
+    }
+    return (<>
+            <Appointments clinical={data} />
+            <RecentPatientCases clinical={data} />
+        </>
     );
 };
 

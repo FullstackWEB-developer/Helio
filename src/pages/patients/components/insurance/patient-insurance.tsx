@@ -1,24 +1,35 @@
 import {useTranslation} from 'react-i18next';
 import PatientChartList from '@pages/patients/components/patient-chart-list';
-import {useSelector} from 'react-redux';
+import { useSelector} from 'react-redux';
 import {
-    selectInsuranceLoading,
-    selectIsInsuranceError,
-    selectPatient, selectPatientInsurance,
-    selectPrimaryInsurance
+    selectPatient,
 } from '../../store/patients.selectors';
 import patientUtils from '@pages/patients/utils/utils';
 import utils from '../../../../shared/utils/utils';
 import ThreeDots from '../../../../shared/components/skeleton-loader/skeleton-loader';
+import {getPatientInsurance} from '@pages/patients/services/patients.service';
+import {useQuery} from 'react-query';
+import {GetPatientInsurance, OneMinute} from '@constants/react-query-constants';
+import {Insurance} from '@pages/patients/models/insurance';
 
-const PatientInsurance = () => {
+export interface PatientInsuranceProps {
+    patientId : number;
+}
+
+const PatientInsurance = ({patientId}: PatientInsuranceProps) => {
     const { t } = useTranslation();
     const patient = useSelector(selectPatient);
-    const primaryInsurance = useSelector(selectPrimaryInsurance);
-    const isLoading = useSelector(selectInsuranceLoading);
-    const isError = useSelector(selectIsInsuranceError);
-    const patientInsurance = useSelector(selectPatientInsurance);
-    const copay = patientInsurance?.length > 0 ? `  $${patientInsurance[0].copayAmount}` : '';
+
+    const {isLoading, isError, data: patientInsurance} = useQuery<Insurance[], Error>([GetPatientInsurance, patientId], () =>
+            getPatientInsurance(patientId),
+        {
+            staleTime: OneMinute
+        }
+    );
+
+    const primaryInsurance = (!patientInsurance || patientInsurance.length === 0) ? undefined : patientInsurance[0];
+
+    const copay = patientInsurance && patientInsurance?.length > 0 ? `  $${patientInsurance[0].copayAmount}` : '';
 
     const primaryInsuranceHeader = primaryInsurance ? `${patientUtils.getPrimaryInsuranceHeader(primaryInsurance, t('common.not_available'))} ` : '';
 

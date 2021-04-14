@@ -1,26 +1,28 @@
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
-import { selectPatientClinical } from '../../store/patients.selectors';
 import AppointmentDisplay from '../appointment-display';
 import { useQuery } from 'react-query';
 import { getAppointmentNotes } from '@pages/appointments/services/appointments.service';
 import { AppointmentNote, AppointmentNoteInfo } from '@pages/appointments/models/note.model';
 import ThreeDots from '@components/skeleton-loader/skeleton-loader';
 import { Appointment } from '@pages/external-access/appointment/models/appointment';
+import {ClinicalDetails} from '@pages/patients/models/clinical-details';
 
-const Appointments = () => {
+export interface AppointmentsProps {
+    clinical: ClinicalDetails
+}
+const Appointments = ({clinical} : AppointmentsProps) => {
     const { t } = useTranslation();
-    let patientClinical = useSelector(selectPatientClinical);
 
     const {isLoading, error, data} = useQuery<AppointmentNoteInfo[], Error>("appointmentNotes", () =>
-            getAppointmentNotes(patientClinical.upcomingAppointments),
+            getAppointmentNotes(clinical.upcomingAppointments),
         {
-            staleTime: 60000
+            staleTime: 60000,
+            enabled: !!clinical
         }
     );
 
     let upcomingAppointmentsView = () => {
-        let upcomingAppointments = patientClinical.upcomingAppointments.map(upcomingAppointment => {
+        let upcomingAppointments = clinical.upcomingAppointments.map((upcomingAppointment: Appointment) => {
            return {
                ...upcomingAppointment,
                notes: data ? data.find(appointmentNote => appointmentNote.appointmentId.toString() === upcomingAppointment.appointmentId)?.notes : [] as AppointmentNote[]
@@ -42,19 +44,23 @@ const Appointments = () => {
     }
 
     const displayLastAppointment = () => {
-        if (patientClinical.lastAppointment) {
-            return <AppointmentDisplay appointment={patientClinical.lastAppointment} isLast={true}/>
+        if (clinical.lastAppointment) {
+            return <AppointmentDisplay appointment={clinical.lastAppointment} isLast={true}/>
         } else {
             return <div>{t('patient.clinical.no_last_appointment')}</div>;
         }
     }
 
     const displayUpcomingAppointment = () => {
-        if (patientClinical.upcomingAppointments.length > 0) {
+        if (clinical.upcomingAppointments.length > 0) {
             return getContent();
         } else {
             return <div>{t('patient.clinical.no_upcoming_appointments')}</div>;
         }
+    }
+
+    if (!clinical) {
+        return <ThreeDots/>;
     }
 
     return (

@@ -1,15 +1,15 @@
-import {useSelector} from 'react-redux';
-import {selectPatientChartSummary} from '../../store/patients.selectors';
 import {useTranslation} from 'react-i18next';
 import PatientChartList, {Row} from '@pages/patients/components/patient-chart-list';
 import utils from '../../../../shared/utils/utils';
 import AppointmentDisplay from '../appointment-display';
 import withErrorLogging from '../../../../shared/HOC/with-error-logging';
+import {PatientChartSummary} from '@pages/patients/models/patient-chart-summary';
 
-const Appointments = () => {
+export interface AppointmentsProps {
+    patientChartSummary: PatientChartSummary;
+}
+const Appointments = ({patientChartSummary} : AppointmentsProps) => {
     const {t} = useTranslation();
-    const patientChartSummary = useSelector(selectPatientChartSummary);
-
     const recentPatientsCases: Row[] = [];
 
     patientChartSummary.patientCases.slice(0, 5).forEach(patientCase => {

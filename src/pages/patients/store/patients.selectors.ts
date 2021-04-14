@@ -5,9 +5,7 @@ import { ExtendedPatient } from '../models/extended-patient';
 import { Patient } from '../models/patient';
 import { VerifiedPatient } from '../models/verified-patient';
 import { Insurance } from '../models/insurance';
-import { PatientChartSummary } from '../models/patient-chart-summary';
 import { ClinicalDetails } from '../models/clinical-details';
-import { ChartInsurance } from '../models/chart-insurance';
 export const patientState = (state: RootState) => state.patientsState
 
 export const selectAppointmentList = createSelector(
@@ -43,11 +41,6 @@ export const selectVerifiedPatent = createSelector(
     state => state.verifiedPatient as VerifiedPatient
 )
 
-export const selectPatientChartSummary = createSelector(
-    patientState,
-    state => state.patientChartSummary as PatientChartSummary
-)
-
 export const selectPatientInsurance = createSelector(
     patientState,
     state => state.patientChartInsurance as Insurance[]
@@ -64,20 +57,9 @@ export const selectPrimaryInsurance = createSelector(
     }
 )
 
-export const selectPrimaryInsuranceSummary = createSelector(
-    patientState,
-    state => state.patientChartSummary.primaryInsurance as ChartInsurance
-)
-
-
 export const selectPatientClinical = createSelector(
     patientState,
     state => state.patientChartClinical as ClinicalDetails
-)
-
-export const selectSummaryLoading = createSelector(
-    patientState,
-    state => state.isSummaryLoading as boolean
 )
 
 export const selectClinicalLoading = createSelector(
@@ -88,10 +70,6 @@ export const selectClinicalLoading = createSelector(
 export const selectInsuranceLoading = createSelector(
     patientState,
     state => state.isInsuranceLoading as boolean
-)
-export const selectIsSummaryError = createSelector(
-    patientState,
-    state => state.isSummaryError as boolean
 )
 export const selectIsClinicalError = createSelector(
     patientState,

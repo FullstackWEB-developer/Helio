@@ -41,7 +41,7 @@ const TicketDetail = () => {
     );
 
     const { refetch, data: patient} = useQuery<Patient, Error>([QueryGetPatientById, ticket?.patientId], () =>
-        getPatientByIdWithQuery(ticket.patientId as string),
+        getPatientByIdWithQuery(ticket.patientId as number),
         {
             enabled: false
         }

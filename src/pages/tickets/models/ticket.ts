@@ -12,7 +12,7 @@ export interface Ticket {
     createdOn?: Date;
     modifiedOn?: Date;
     contactId?: string;
-    patientId?: string;
+    patientId?: number;
     assignee?: string;
     connectContactId?: string;
     status?: number;
