@@ -10,13 +10,12 @@ import {isProfileMenuExpandedSelector} from './store/layout.selectors';
 import HelioLogo from '@icons/helio-logo';
 import ProfileDropdown from './components/profile-dropdown';
 import utils from '../utils/utils';
-import {ReactComponent as CCPIcon} from '@icons/Icon-CCP-48px.svg';
-import {ReactComponent as PhoneIcon} from '@icons/Icon-Phone-24px.svg';
-import {ReactComponent as ChatIcon} from '@icons/Icon-Chat-24px.svg';
 import customHooks from '../hooks/customHooks';
 import {selectChatCounter, selectVoiceCounter} from '@pages/ccp/store/ccp.selectors';
 import './header.scss';
 import {useHistory} from 'react-router-dom';
+import SvgIcon from '@components/svg-icon/svg-icon';
+import {Icon} from '@components/svg-icon/icon';
 
 const Header = () => {
     const dispatch = useDispatch();
@@ -55,10 +54,10 @@ const Header = () => {
                 </div>
                 <div className='flex flex-row items-center'>
                     <div className='cursor-pointer pr-4'>
-                        <CCPIcon data-test-id='toggle-ccp' onClick={() => dispatch(toggleCcp())}/>
+                        <SvgIcon type={Icon.Ccp} data-test-id='toggle-ccp' className='x-large' onClick={() => dispatch(toggleCcp())}/>
                     </div>
                     <div className='pr-1'>
-                        <PhoneIcon/>
+                        <SvgIcon type={Icon.Phone}/>
                     </div>
                     <div>
                         <div data-test-id='number-of-agent-voices'
@@ -67,7 +66,7 @@ const Header = () => {
                         </div>
                     </div>
                     <div className='pr-1.5'>
-                        <ChatIcon/>
+                        <SvgIcon type={Icon.Chat}/>
                     </div>
                     <div>
                         <div data-test-id='number-of-agent-chats'
