@@ -4,7 +4,7 @@ import utils from '@shared/utils/utils';
 import {useQuery} from 'react-query';
 import {AxiosError} from 'axios';
 import {
-    GetAppointmentType,
+    GetAppointmentType
 } from '@constants/react-query-constants';
 import {getDepartments, getProviders} from '@shared/services/lookups.service';
 import Button from '@components/button/button';
@@ -12,11 +12,11 @@ import {AppointmentType} from '@pages/external-access/appointment/models/appoint
 import {getAppointmentTypeById} from '@pages/appointments/services/appointments.service';
 import ThreeDots from '@components/skeleton-loader/skeleton-loader';
 import {useHistory} from 'react-router-dom';
-import {selectSelectedAppointment} from '@pages/external-access/appointment/store/appointments.selectors';
 import {useDispatch, useSelector} from 'react-redux';
+import {selectSelectedAppointment} from '@pages/external-access/appointment/store/appointments.selectors';
 import {selectDepartmentList, selectProviderList} from '@shared/store/lookups/lookups.selectors';
 
-const AppointmentDetail = () => {
+const CancelAppointment = () => {
     const {t} = useTranslation();
     const history = useHistory();
     const dispatch = useDispatch();
@@ -29,12 +29,8 @@ const AppointmentDetail = () => {
     }, [dispatch]);
 
 
-
-    const {isLoading: isAppointmentTypesLoading, data: appointmentType} = useQuery<AppointmentType, AxiosError>([GetAppointmentType, appointment.appointmentTypeId], () =>
+    const {isLoading: isAppointmentTypesLoading, data: appointmentType} = useQuery<AppointmentType, AxiosError>(GetAppointmentType, () =>
         getAppointmentTypeById(appointment.appointmentTypeId),
-        {
-            enabled: !!appointment
-        }
     );
 
     const provider = providers?.find(a => a.id === appointment.providerId);
@@ -47,23 +43,14 @@ const AppointmentDetail = () => {
         return ''
     }
 
-    const displayCancel = () => {
-        if (!appointmentType) {
-            return true;
-        }
-        return appointmentType.cancelable && appointmentType.cancelationFee && appointmentType.cancelationTimeFrame;
-    }
-
     const redirectToReschedule = () => {
         history.push(`/o/reschedule-appointment`);
-    }
-    const redirectToCancel = () => {
-        history.push(`/o/cancel-appointment`);
     }
 
     if (isAppointmentTypesLoading) {
         return <ThreeDots/>
     }
+
 
     return  <div className='2xl:px-48'>
         <div className='2xl:whitespace-pre 2xl:h-12 2xl:my-3 flex w-full items-center'>
@@ -97,9 +84,8 @@ const AppointmentDetail = () => {
             {`${display(department?.address2)} ${display(department?.city)} ${display(department?.state)}, ${display(department?.zip)}`}
         </div>
         <div className='pt-12 flex flex-col xl:flex-row xl:space-x-6 space-x-0 space-y-6 xl:space-y-0'>
-            <Button buttonType='medium' label='external_access.appointments.online_checkin' />
             {(appointmentType ? appointmentType?.reschedulable : true) && <Button onClick={() => redirectToReschedule()} buttonType='secondary' label='external_access.appointments.reschedule' />}
-            {displayCancel() && <Button onClick={() => redirectToCancel()} buttonType='secondary' label='common.cancel' />}
+            <Button buttonType='secondary' label='common.cancel' />
         </div>
         { appointmentType?.instructions && <>
             <div className='pt-10 xl:pt-20'>
@@ -132,4 +118,4 @@ const AppointmentDetail = () => {
     </div>
 
 }
-export default AppointmentDetail;
+export default CancelAppointment;

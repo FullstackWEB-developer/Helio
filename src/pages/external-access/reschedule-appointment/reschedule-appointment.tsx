@@ -1,18 +1,17 @@
-import withErrorLogging from '../../../shared/HOC/with-error-logging';
+import withErrorLogging from '@shared/HOC/with-error-logging';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import React, { useEffect, useState } from 'react';
-import { getDepartments, getProviders } from '../../../shared/services/lookups.service';
+import { getDepartments, getProviders } from '@shared/services/lookups.service';
 import {
     clearAppointments,
     clearVerifiedPatient
 } from '../../patients/store/patients.slice';
-import { getAppointments } from '../../../shared/services/search.service';
 import { selectAppointmentList, selectVerifiedPatent } from '../../patients/store/patients.selectors';
-import ThreeDots from '../../../shared/components/skeleton-loader/skeleton-loader';
-import Select, { Option } from '../../../shared/components/select/select';
-import { selectProviderList } from '../../../shared/store/lookups/lookups.selectors';
-import { Appointment } from '../appointment/models/appointment';
+import ThreeDots from '@components/skeleton-loader/skeleton-loader';
+import Select, { Option } from '@components/select/select';
+import { selectProviderList } from '@shared/store/lookups/lookups.selectors';
+import { Appointment } from '../appointment/models/appointment.model';
 import {
     selectAppointmentSchedulingError,
     selectIsAppointmentRescheduling,
@@ -23,6 +22,7 @@ import FindOpenSlotsForm from './components/find-open-slots-form';
 import CompleteReschedulingForm from './components/complete-rescheduling-form';
 import { clearRescheduleAppointmentState, selectedAppointmentUpdated } from './store/reschedule-appointment.slice';
 import dayjs from 'dayjs';
+import {getAppointments} from '@pages/patients/services/patients.service';
 
 const RescheduleAppointment = () => {
     const { t } = useTranslation();
@@ -39,7 +39,7 @@ const RescheduleAppointment = () => {
     useEffect(() => {
         if (verifiedPatient) {
             if (verifiedPatient) {
-                dispatch(getAppointments(verifiedPatient.patientId.toString()));
+                dispatch(getAppointments(verifiedPatient.patientId));
                 dispatch(getDepartments());
                 dispatch(getProviders());
             }
@@ -58,8 +58,8 @@ const RescheduleAppointment = () => {
                 const date = new Date(appointment.date);
                 const dateStr = ` ${dayjs(date).format('MM/dd/yyyy')} at ${appointment.startTime}`;
                 let label = `Your ${appointment.appointmentType} appointment on ${dateStr}`;
-                if (appointment.providerId !== '' && providers && providers.length > 0) {
-                    const provider = providers.filter(a => a.id.toString() === appointment.providerId);
+                if (appointment.providerId > 0 && providers && providers.length > 0) {
+                    const provider = providers.filter(a => a.id === appointment.providerId);
                     if (provider?.length > 0) {
                         label += ` with ${provider[0].displayName}`;
                     }

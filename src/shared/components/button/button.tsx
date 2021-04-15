@@ -9,7 +9,7 @@ interface ButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
 }
 const Button = ({ label, type = 'button', disabled=false, buttonType = 'medium', ...props }: ButtonProps) => {
     const { t } = useTranslation();
-    return (<button disabled={disabled} className={`${buttonType}-button`} type={type} {...props}>{t(label)}</button>
+    return (<button disabled={disabled} {...props} className={`${buttonType}-button`} type={type}>{t(label)}</button>
     );
 }
 

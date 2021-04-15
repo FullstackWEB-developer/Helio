@@ -1,6 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { RootState } from '../../../app/store';
-import { Appointment } from '../../external-access/appointment/models/appointment';
+import { Appointment } from '../../external-access/appointment/models/appointment.model';
 import { ExtendedPatient } from '../models/extended-patient';
 import { Patient } from '../models/patient';
 import { VerifiedPatient } from '../models/verified-patient';
@@ -28,17 +28,11 @@ export const selectIsPatientError = createSelector(
     patientState,
     state => state.isError as boolean
 )
-export const selectIsPatientVerified = createSelector(
-    patientState,
-    state => state.isVerified as boolean
-)
-export const selectIsVerifyingPatient = createSelector(
-    patientState,
-    state => state.isVerifyingPatient as boolean
-)
 export const selectVerifiedPatent = createSelector(
     patientState,
-    state => state.verifiedPatient as VerifiedPatient
+    state => {
+        return  state.verifiedPatient as VerifiedPatient;
+    }
 )
 
 export const selectPatientInsurance = createSelector(
@@ -67,18 +61,6 @@ export const selectClinicalLoading = createSelector(
     state => state.isClinicalLoading as boolean
 )
 
-export const selectInsuranceLoading = createSelector(
-    patientState,
-    state => state.isInsuranceLoading as boolean
-)
-export const selectIsClinicalError = createSelector(
-    patientState,
-    state => state.isClinicalError as boolean
-)
-export const selectIsInsuranceError = createSelector(
-    patientState,
-    state => state.isInsuranceError as boolean
-)
 export const selectPatientInCollectionsBalance = createSelector(
     patientState,
     state => state.patient?.patientInCollectionsBalance as number

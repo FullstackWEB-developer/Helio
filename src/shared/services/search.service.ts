@@ -3,10 +3,7 @@ import {Dispatch} from '@reduxjs/toolkit';
 import Logger from './logger';
 import {setError, setSearching} from '@components/search-bar/store/search-bar.slice';
 import {
-    clearAppointments,
     clearPatients,
-    setAppointments,
-    setLoading,
     setPatients
 } from '@pages/patients/store/patients.slice';
 
@@ -37,33 +34,16 @@ export const searchPatients = (type: number, term: string) => {
     }
 }
 
-export const verifyPatient = async (dateOfBirth: string, phoneNumber: string, zipCode: string) => {
-    const url = `${patientsUrl}/verify?dateOfBirth=${dateOfBirth}&phoneNumber=${phoneNumber}&zipCode=${zipCode}`;
-    const response = await Api.get(url);
-    return response.data;
+
+export interface VerifyPatientProps{
+    dob:string,
+    phone: string,
+    zip: string
 }
 
-export const getAppointments = (patientId: string) => {
-    const url = `${patientsUrl}/${patientId}/appointments`;
-
-    return async (dispatch: Dispatch) => {
-        dispatch(setError(false));
-        dispatch(setLoading(true));
-        await Api.get(url)
-            .then(response => {
-                dispatch(setAppointments(response.data));
-            })
-            .catch(error => {
-                if (error.response?.status === 404) {
-                    dispatch(setAppointments([]));
-                    dispatch(setLoading(false));
-                } else {
-                    logger.error('Failed getting Appointments', error);
-                    dispatch(setError(true));
-                    dispatch(clearAppointments());
-                    dispatch(setLoading(false));
-                }
-            });
-    }
+export const verifyPatient = async ({ phone, dob, zip} : VerifyPatientProps) => {
+    const url = `${patientsUrl}/verify?dateOfBirth=${dob}&phoneNumber=${phone}&zipCode=${zip}`;
+    const response = await Api.get(url);
+    return response.data;
 }
 

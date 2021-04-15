@@ -1,4 +1,4 @@
-import { Appointment } from '../../external-access/appointment/models/appointment';
+import { Appointment } from '../../external-access/appointment/models/appointment.model';
 import { PatientCase } from './patient-case';
 
 export interface ClinicalDetails {

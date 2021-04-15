@@ -7,8 +7,9 @@ interface InputProps extends React.HTMLAttributes<HTMLInputElement> {
     value?: string,
     label?: string,
     error?: string,
-    type?: 'text' | 'number' | 'checkbox' | 'date' | 'time' | 'email' | 'tel',
+    type?: 'text' | 'number' | 'checkbox' | 'date' | 'time' | 'email' | 'tel' | 'zip',
     htmlFor?: string,
+    max?: string
     onChange?: (e: ChangeEvent<HTMLInputElement>) => void
 }
 const Input = React.forwardRef<HTMLInputElement, InputProps>(({ label, type, htmlFor, ...props }: InputProps, ref) => {

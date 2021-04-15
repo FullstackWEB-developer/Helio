@@ -1,3 +1,5 @@
+import {ExternalAccessRequestTypes} from '@pages/external-access/models/external-updates-request-types.enum';
+
 export interface RedirectLink {
     attributes: object,
     fullUrl: string,
@@ -5,6 +7,6 @@ export interface RedirectLink {
     linkId: string
     patientId: string
     requestChannel: number
-    requestType: number
+    requestType: ExternalAccessRequestTypes
     ticketId: string
 }

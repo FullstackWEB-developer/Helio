@@ -4,7 +4,7 @@ import { useQuery } from 'react-query';
 import { getAppointmentNotes } from '@pages/appointments/services/appointments.service';
 import { AppointmentNote, AppointmentNoteInfo } from '@pages/appointments/models/note.model';
 import ThreeDots from '@components/skeleton-loader/skeleton-loader';
-import { Appointment } from '@pages/external-access/appointment/models/appointment';
+import { Appointment } from '@pages/external-access/appointment/models/appointment.model';
 import {ClinicalDetails} from '@pages/patients/models/clinical-details';
 
 export interface AppointmentsProps {

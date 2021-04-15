@@ -9,13 +9,13 @@ export const selectDepartmentList = (state: RootState) => state.lookupsState.dep
 export const selectProviderList = (state: RootState) => state.lookupsState.providerList as Provider[];
 export const selectUserList = (state: RootState) => state.lookupsState.userList as User[];
 export const selectStates = (state: RootState) => state.lookupsState.states as Option[];
-export const selectDepartmentById = (state: RootState, departmentId: string) => {
+export const selectDepartmentById = (state: RootState, departmentId: number) => {
     const departments = selectDepartmentList(state);
-    return departments?.find((d: Department) => d.id.toString() === departmentId);
+    return departments?.find((d: Department) => d.id === departmentId);
 }
-export const selectProviderById = (state: RootState, providerId: string) => {
+export const selectProviderById = (state: RootState, providerId: number) => {
     const providers = selectProviderList(state);
-    return providers?.find((d: Provider) => d.id.toString() === providerId);
+    return providers?.find((d: Provider) => d.id === providerId);
 }
 export const selectIsDepartmentListLoading = (state: RootState) => state.lookupsState.isLoading as boolean;
 export const selectMetricOptions = (state: RootState) => state.lookupsState.metricOptions as KeyValuePair[];

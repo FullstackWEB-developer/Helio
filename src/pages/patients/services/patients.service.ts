@@ -97,3 +97,10 @@ export const getPatientById = (patientId: string) => {
               })
      }
 }
+
+export const getAppointments = async (patientId: number) => {
+     const url = `${patientsUrl}/${patientId}/appointments`;
+     const result = await Api.get(url);
+     return result.data;
+}
+

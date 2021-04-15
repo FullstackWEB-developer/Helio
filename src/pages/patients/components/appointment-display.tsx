@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { useSelector } from 'react-redux';
-import { Appointment } from '../../external-access/appointment/models/appointment';
+import { Appointment } from '../../external-access/appointment/models/appointment.model';
 import { selectDepartmentById, selectProviderById } from '@shared/store/lookups/lookups.selectors';
 import { RootState } from '../../../app/store';
 import dayjs from 'dayjs';

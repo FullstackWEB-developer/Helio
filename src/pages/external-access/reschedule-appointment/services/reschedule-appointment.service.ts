@@ -5,7 +5,7 @@ import Logger from '../../../../shared/services/logger';
 import dayjs from 'dayjs';
 const logger = Logger.getInstance();
 
-export const getOpenSlots = (providerId: string, departmentId: string, appointmentTypeId: string, startDate: Date, endDate: Date) => {
+export const getOpenSlots = (providerId: number, departmentId: number, appointmentTypeId: number, startDate: Date, endDate: Date) => {
     let getOpenSlotsUrl = `/appointments/open-slots?ignoreschedulablepermission=true`;
     getOpenSlotsUrl = getOpenSlotsUrl + `&departmentId=${departmentId}`;
     getOpenSlotsUrl = getOpenSlotsUrl + `&providerId=${providerId}`;

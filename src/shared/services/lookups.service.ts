@@ -28,19 +28,19 @@ export const getProviders = () => {
       dispatch(setError(false));
       dispatch(setLoading(true));
       await Api.get(url)
-        .then((response) => {
-          dispatch(setProviders(response.data));
-        })
-        .catch((error) => {
-          if (error.response?.status === 404) {
-            dispatch(setProviders(undefined));
-          } else {
-            logger.error('Failed getting Providers', error);
-            dispatch(setError(true));
-            dispatch(setProviders(undefined));
-            dispatch(setLoading(false));
-          }
-        });
+          .then((response) => {
+            dispatch(setProviders(response.data));
+          })
+          .catch((error) => {
+            if (error.response?.status === 404) {
+              dispatch(setProviders(undefined));
+            } else {
+              logger.error('Failed getting Providers', error);
+              dispatch(setError(true));
+              dispatch(setProviders(undefined));
+              dispatch(setLoading(false));
+            }
+          });
     }
   };
 };

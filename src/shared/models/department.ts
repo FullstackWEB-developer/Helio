@@ -10,6 +10,7 @@ export interface Department {
     latitude: number,
     fax: string,
     doesNotObservedSt: boolean,
+    parkingInformation?: string;
     id: number,
     address: string,
     placeOfServiceTypeId: number,

@@ -10,7 +10,7 @@ i18n
     .init({
         fallbackLng: 'en',
         react: {
-          useSuspense: false
+            useSuspense: false
         },
         debug: false,
         detection: {

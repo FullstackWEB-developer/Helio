@@ -15,7 +15,8 @@
     "any": "Any",
     "not_available": "N/A",
     "all": "All",
-    "please_select": " Please Select"
+    "please_select": " Please Select",
+    "continue": "Continue"
   },
   "login": {
     "loginButton": "Login"
@@ -274,15 +275,6 @@
     "link_not_active": "We apologize, but this link is not active. Please contact the call center.",
     "is_error": "Apologies, an error occurred. Please try your query again."
   },
-  "hipaa_validation_form": {
-    "ask_additional_information": "Could you please provide additional information?",
-    "dob": "Date of birth",
-    "phone": "Phone",
-    "zip": "ZIP",
-    "verify": "Verify",
-    "hipaa_verification": "HIPAA Verification",
-    "hipaa_verification_failed": "Verification failed, cannot continue"
-  },
   "request-refill": {
     "notes": "Notes",
     "medication_to_refill": "Medication to refill",
@@ -440,12 +432,42 @@
   "components": {
     "input": {
       "invalid_email": "Email is not valid",
-      "invalid_phone": "Phone numbers must follow the North American Numbering Plan."
+      "invalid_phone": "Phone numbers must follow the North American Numbering Plan.",
+      "invalid_date": "Date is not valid",
+      "invalid_zip": "Zip code is not valid"
     }
   },
   "chat_transcripts": {
     "end_chat": "End of the chat.",
     "joined_chat": " joined the chat.",
     "left_chat": " left the chat."
+  },
+  "external_access" : {
+    "copyright": "COMPLETE WOMEN CARE - COPYRIGHT © {{year}} - ALL RIGHTS RESERVED",
+    "cwc_logo": "CWC Logo",
+    "title_1" : "Manage your appointments online. \nIt’s fast and easy.",
+    "hipaa": {
+      "verify_title": "Please verify your identity to proceed.",
+      "dob": "Date of birth  (MM/DD/YYYY)",
+      "mobile_phone_number": "Mobile Phone Number",
+      "zip_code": "Zip Code",
+      "verification_failed" : "We could not validate your information!"
+    },
+    "appointments" : {
+      "list_title": "You have {{number}} upcoming appointments.",
+      "select_appointment": "Please select appointment to view details.",
+      "appointment_details": "Appointment Details",
+      "see_appointment_details": "Please see your appointment details below.",
+      "appointment_date": "{{date}} at {{time}}",
+      "withDoctor" : "with {{name}}",
+      "online_checkin" : "Online Check In",
+      "reschedule" : "Reschedule",
+      "instructions": "Instructions",
+      "parking_information": "Parking Information",
+      "directions": "Directions",
+      "get_directions" : "<0>Get directions</0> to your appointment location.",
+      "no_appointments_found" : "There are no upcoming appointments.",
+      "cancel_confirmation" : "Are you sure you want to cancel appointment?"
+    }
   }
 }

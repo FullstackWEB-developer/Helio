@@ -9,14 +9,16 @@ import TicketList from '../pages/tickets/ticket-list';
 import { QueryClient, QueryClientProvider } from "react-query";
 import { TicketsPath } from './paths';
 import RealTimeUserStatusUpdate from '@shared/websockets/real-time-user-status-update';
-
+import ExternalAccessLayout from '@pages/external-access/layout/external-access-layout';
 const SearchResults = React.lazy(() => import('../shared/components/search-bar/components/search-results'));
 const PatientChart = React.lazy(() => import('../pages/patients/patient-chart'));
 const VerifyRedirectLink = React.lazy(() => import('../pages/external-access/hipaa-verification/verify-redirect-link'));
-const AppointmentDetail = React.lazy(() => import('../pages/external-access/appointment/appointment-detail'));
+const AppointmentList = React.lazy(() => import('@pages/external-access/appointment/appointment-list'));
+const AppointmentDetail = React.lazy(() => import('@pages/external-access/appointment/appointment-detail'));
 const RequestRefill = React.lazy(() => import('../pages/external-access/request-refill/request-refill'));
 const RequestMedicalRecords = React.lazy(() => import('../pages/external-access/request-medical-records/request-medical-records'));
 const LabResults = React.lazy(() => import('../pages/external-access/lab-results/lab-results'));
+const CancelAppointment = React.lazy(() => import('../pages/external-access/appointment/cancel-appointment'));
 const TicketNew = React.lazy(() => import('../pages/tickets/ticket-new'));
 const TicketDetail = React.lazy(() => import('../pages/tickets/ticket-detail'));
 const RescheduleAppointment = React.lazy(() => import('../pages/external-access/reschedule-appointment/reschedule-appointment'));
@@ -25,20 +27,30 @@ function App() {
     const queryClient = new QueryClient({
         defaultOptions: {
             queries: {
-                refetchOnWindowFocus: false
+                refetchOnWindowFocus: false,
+                retry: false
             }
         }
     });
+
     return (
         <QueryClientProvider client={queryClient}>
             <BrowserRouter>
                 <Switch>
-                    <Route path='/o/:linkId' component={withSuspense(VerifyRedirectLink)} />
-                    <Route path='/appointment-detail' component={withSuspense(AppointmentDetail)} />
-                    <Route path='/request-refill' component={withSuspense(RequestRefill)} />
-                    <Route path='/request-medical-records' component={withSuspense(RequestMedicalRecords)} />
-                    <Route path='/lab-results' component={withSuspense(LabResults)} />
-                    <Route path='/reschedule-appointment' component={withSuspense(RescheduleAppointment)} />
+                    <Route path='/o/'>
+                        <ExternalAccessLayout>
+                            <Switch>
+                                <Route path='/o/appointment-list' component={withSuspense(AppointmentList)} />
+                                <Route path='/o/appointment-detail' component={withSuspense(AppointmentDetail)} />
+                                <Route path='/o/request-refill' component={withSuspense(RequestRefill)} />
+                                <Route path='/o/request-medical-records' component={withSuspense(RequestMedicalRecords)} />
+                                <Route path='/o/lab-results' component={withSuspense(LabResults)} />
+                                <Route path='/o/cancel-appointment' component={withSuspense(CancelAppointment)} />
+                                <Route path='/o/reschedule-appointment' component={withSuspense(RescheduleAppointment)} />
+                                <Route path='/o/:linkId' component={withSuspense(VerifyRedirectLink)} />
+                            </Switch>
+                        </ExternalAccessLayout>
+                    </Route>
                     <Route path='/login'>
                         <Login />
                     </Route>
