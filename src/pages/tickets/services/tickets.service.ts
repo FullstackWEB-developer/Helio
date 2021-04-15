@@ -27,7 +27,7 @@ import {
     startRequestAddNote
 } from '../store/tickets.slice';
 import {Ticket} from '../models/ticket';
-import {Paging} from '../../../shared/models/paging.model';
+import {Paging} from '@shared/models/paging.model';
 import {TicketQuery} from '../models/ticket-query';
 import {TicketFeed} from '../models/ticket-feed';
 

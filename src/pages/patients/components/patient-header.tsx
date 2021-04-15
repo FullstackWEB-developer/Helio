@@ -87,7 +87,7 @@ const PatientHeader = ({patientChartSummary} : PatientHeaderProps) => {
                             SmallLabel(t('patient.header.dob'), patientUtils.formatDob(patient.dateOfBirth), 'pl-6')
                         }
                         {
-                            SmallLabel(t('patient.header.ssn'), patient.ssn?.replace(/.{1,5}/, (m) => '*'.repeat(m.length)), 'pl-6')
+                            SmallLabel(t('patient.header.ssn'), patient.ssn ? patient.ssn.replace(/.{1,5}/, (m) => '*'.repeat(m.length)) : t('common.not_available'), 'pl-6')
                         }
                     </div>
                 </div>

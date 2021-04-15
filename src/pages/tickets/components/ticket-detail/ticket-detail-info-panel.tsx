@@ -23,12 +23,12 @@ const TicketDetailInfoPanel = ({ ticket, patient }: TicketDetailInfoPanelProps) 
         <Collapsible title={'ticket_detail.info_panel.assigned_to'} isOpen={true}>
             <TicketDetailAssignee ticket={ticket} />
         </Collapsible>
-        <Collapsible title={'ticket_detail.info_panel.patient_info'} isOpen={true}>
+        {ticket.patientId && <Collapsible title={'ticket_detail.info_panel.patient_info'} isOpen={true}>
             <TicketDetailPatientInfo ticket={ticket} patient={patient}/>
-        </Collapsible>
-        <Collapsible title={'ticket_detail.info_panel.appointments'} isOpen={true}>
+        </Collapsible>}
+        {ticket.patientId && <Collapsible title={'ticket_detail.info_panel.appointments'} isOpen={true}>
             <TicketDetailAppointments ticket={ticket} />
-        </Collapsible>
+        </Collapsible>}
         <Collapsible title={'ticket_detail.info_panel.attachments'} isOpen={true}>
             <TicketDetailAttachments ticket={ticket} />
         </Collapsible>

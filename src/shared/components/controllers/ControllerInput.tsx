@@ -13,6 +13,7 @@ export interface ControllerInputProps {
     control: Control;
     required?: boolean;
     name: string;
+    mask?: string;
     className?: string;
     label?: string;
     dataTestId:string;
@@ -20,12 +21,13 @@ export interface ControllerInputProps {
     type?: 'text' | 'tel' | 'email' | 'date' | 'zip';
 }
 
-const ControlledInput = ({control, required = false, type='text', name, label='', className='', dataTestId, max, ...props} : ControllerInputProps) =>  {
+const ControlledInput = ({control, required = false, type='text', name, mask='', label='', className='', dataTestId, max, ...props} : ControllerInputProps) =>  {
 
     const {t} = useTranslation();
     const requiredText = t('common.required');
     let pattern = undefined;
     if (type === 'tel') {
+        mask='(999) 999-9999'
         pattern = {
             value: InputTypes.Phone,
             message: t('components.input.invalid_phone')
@@ -53,6 +55,7 @@ const ControlledInput = ({control, required = false, type='text', name, label=''
         render={(props) => (
             <Input
                 label={label}
+                mask={mask}
                 {...props}
                 max={max}
                 className={className}

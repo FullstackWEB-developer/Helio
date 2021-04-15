@@ -69,7 +69,7 @@ const TicketNew = () => {
     const [isTicketTypeSelected, setIsTicketTypeSelected] = useState(false);
     const [tags, setTags] = useState<string[]>([]);
     const [noteText, setNoteText] = useState('');
-
+    const [isCreating, setCreating] = useState(false);
     const onSubmit = async (formData: any) => {
         if (!formData) {
             return;
@@ -106,8 +106,9 @@ const TicketNew = () => {
             tags: tags,
             notes: notes
         };
-
+        setCreating(true);
         await createTicket(ticketData);
+        setCreating(false);
         history.push(TicketsPath);
     }
 
@@ -541,7 +542,7 @@ const TicketNew = () => {
                     />
                 </div>
                 <div>
-                    <Button data-test-id='ticket-new-create-button' type={'submit'}
+                    <Button disabled={isCreating} data-test-id='ticket-new-create-button' type={'submit'}
                             label={'ticket_new.create'} />
                 </div>
             </div>

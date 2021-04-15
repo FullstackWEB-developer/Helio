@@ -32,6 +32,7 @@ const ContactInformation = ({patientChartSummary} : ContactInformationProps) => 
 
     const contactRows = [
         { label: t('patient.summary.address'), values: [patient.address] },
+        { label: '', values: [patient.address2] },
         { label: '', values: [`${patient?.city || ''}${patient?.state ? ', ': ''} ${patient.state || ''} ${patient.zip || ''}`] },
         { label: t('patient.summary.email'), values: [patient.emailAddress] },
         { label: t('patient.summary.portal_access'), values: [t(booleanToText(patient.isPortalAccessGiven))] }
@@ -53,7 +54,9 @@ const ContactInformation = ({patientChartSummary} : ContactInformationProps) => 
                 <div className={'body1'}>{t('patient.summary.contact_information')} </div>
                 <EditIcon className='cursor-pointer mr-4' onClick={() => setEditMode(!editMode)}/>
             </div>
-            {editMode ? <ContactInformationUpdate patientChartSummary={patientChartSummary} onUpdateComplete={() => setEditMode(false)}/> : <div className='border-t grid grid-cols-2 gap-12'>
+            {editMode ? <ContactInformationUpdate
+                patientChartSummary={patientChartSummary}
+                onUpdateComplete={() => setEditMode(false)}/> : <div className='border-t grid grid-cols-2 gap-12'>
                 <PatientChartList headings={[]} rows={contactRows}/>
                 <PatientChartList headings={[]} rows={contactSecondRows}/>
             </div>

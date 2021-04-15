@@ -48,7 +48,7 @@ const PatientInsurance = ({patientId}: PatientInsuranceProps) => {
         ? [
             { label: t('patient.insurance.policy_holder'), values: [getPolicyHolder()] },
             { label: t('patient.insurance.patients_relation'), values: [primaryInsurance.relationshipToInsured] },
-            { label: t('patient.insurance.dob'), values: [utils.formatDate(patient?.dateOfBirth)] },
+            { label: t('patient.insurance.dob'), values: [utils.formatDate(patient?.dateOfBirth.toString())] },
             { label: t('patient.insurance.group'), values: [primaryInsurance.policyNumber] },
             { label: t('patient.insurance.id_cert'), values: [primaryInsurance.insuranceIdNumber] }
         ]

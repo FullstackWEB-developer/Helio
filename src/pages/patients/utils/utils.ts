@@ -3,9 +3,8 @@ import {Insurance} from '@pages/patients/models/insurance';
 import {ChartInsurance} from '@pages/patients/models/chart-insurance';
 
 const getAge = (dob: string) => {
-    const date = new Date(dob);
-    const now = new Date();
-    return now.getFullYear() - date.getFullYear();
+    const timeDiff = Math.abs(Date.now() - new Date(dob).getTime());
+    return Math.floor((timeDiff / (1000 * 3600 * 24))/365);
 }
 
 const formatDob = (dob: string) => {

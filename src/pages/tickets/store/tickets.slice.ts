@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Ticket } from '../models/ticket';
 import initialTicketState from './tickets.initial-state';
 import { LookupValue } from '../models/lookup-value';
-import { Paging } from '../../../shared/models/paging.model';
+import { Paging } from '@shared/models/paging.model';
 import { TicketEnum } from '../models/ticket-enum.model';
 import { TicketQuery } from '../models/ticket-query';
 
@@ -80,7 +80,6 @@ const ticketsSlice = createSlice({
         startGetTicketEnumRequest(state) {
             state.error = '';
             state.isTicketEnumValuesLoading = true;
-            state.enumValues = []
         },
         endGetTicketEnumRequest(state, { payload }: PayloadAction<string>) {
             state.error = payload;
@@ -101,7 +100,6 @@ const ticketsSlice = createSlice({
         startGeLookupValuesRequest(state) {
             state.error = '';
             state.isLookupValuesLoading = true;
-            state.lookupValues = []
         },
         endGetLookupValuesRequest(state, { payload }: PayloadAction<string>) {
             state.error = payload;
