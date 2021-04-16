@@ -10,6 +10,9 @@
 .ccp-bottom-bar {
   background-color: var(--color-white);
 }
+.ccp-bottom-bar-icon {
+  fill: var(--ccp-bottom-bar-icon);
+}
 .ccp-context {
   width: 40rem;
   .ccp-header {

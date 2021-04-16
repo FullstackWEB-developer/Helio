@@ -6,12 +6,13 @@ import React, { useRef, useState } from 'react';
 import Tooltip from '@components/tooltip/tooltip';
 import { PatientChartSummary } from '../models/patient-chart-summary';
 import PatientChartAlert from './patient-chart-alert';
-import { ReactComponent as InfoIcon } from '@icons/Icon-Info-24px.svg';
 import Button from '@components/button/button';
 import Avatar from '@components/avatar/avatar';
 import {AvatarModel} from '@components/avatar/avatar.models';
 import patientUtils from '../utils/utils';
 import utils from "@shared/utils/utils";
+import {Icon} from '@components/svg-icon/icon';
+import SvgIcon from '@components/svg-icon/svg-icon';
 const athenaPatientUrl = process.env.REACT_APP_ATHENAHEALTH_CLIENT_SUMMARY;
 
 export interface PatientHeaderProps {
@@ -64,10 +65,11 @@ const PatientHeader = ({patientChartSummary} : PatientHeaderProps) => {
                         patientChartSummary?.chartAlert &&
                         <>
                             <span className={'pl-4 pt-1'}>
-                                <InfoIcon ref={chartAlertIcon}
-                                    onMouseOver={() => setChartAlertHovered(true)}
-                                    onMouseOut={() => setChartAlertHovered(false)}>
-                                </InfoIcon>
+                                <div ref={chartAlertIcon}
+                                     onMouseOver={() => setChartAlertHovered(true)}
+                                     onMouseOut={() => setChartAlertHovered(false)}>
+                                    <SvgIcon type={Icon.Info} className='medium' fillClass='active-item-icon'/>
+                                </div>
                             </span>
                             <Tooltip targetRef={chartAlertIcon} isVisible={chartAlertHovered} placement='bottom-start'>
                                 <PatientChartAlert chartAlert={patientChartSummary.chartAlert} />

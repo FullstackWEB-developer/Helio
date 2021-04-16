@@ -1,5 +1,5 @@
 import {useSelector} from "react-redux";
-import {selectIsStatusBarVisible} from "../../shared/layout/store/layout.selectors";
+import {selectIsStatusBarVisible} from "@shared/layout/store/layout.selectors";
 import withErrorLogging from "../../shared/HOC/with-error-logging";
 import QueueStatus from './components/quueue-status';
 import Extensions from './components/extensions';

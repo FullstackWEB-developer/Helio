@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ReactComponent as SearchIcon } from '../../icons/Icon-Search-16px.svg';
 import './list.scss';
 import { Option } from '../option/option';
 import { UserStatus } from 'src/shared/store/app-user/app-user.models';
 import StatusDot from '@components/status-dot/status-dot';
+import SvgIcon from '@components/svg-icon/svg-icon';
+import {Icon} from '@components/svg-icon/icon';
 
 interface ListProps {
   options: ListOption[];
@@ -70,7 +71,7 @@ const List = ({ options, title, isSearchable = true, onSelect }: ListProps) => {
         <div>
           <div className='inline-flex flex-1 border-b h-10 w-full'>
             <span className='pl-4 items-center flex'>
-              <SearchIcon />
+              <SvgIcon type={Icon.Search} className='small cursor-pointer' fillClass='list-active-icon'/>
             </span>
             <input
               onKeyDown={handleKeyDown}

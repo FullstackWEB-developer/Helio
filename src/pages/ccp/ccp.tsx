@@ -1,10 +1,4 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {ReactComponent as Bot} from '@icons/Icon-Bot-24px.svg';
-import {ReactComponent as Note} from '@icons/Icon-Note-24px.svg';
-import {ReactComponent as Tickets} from '@icons/Icon-Tickets-24px.svg';
-import {ReactComponent as Sms} from '@icons/Icon-SMS-24px.svg';
-import {ReactComponent as Email} from '@icons/Icon-Email-24px.svg';
-import {ReactComponent as Scripts} from '@icons/Icon-Scripts-24px.svg';
 import {useDispatch, useSelector} from 'react-redux';
 import {useHistory} from 'react-router-dom';
 import 'amazon-connect-streams';
@@ -25,6 +19,8 @@ import {setAgentStates, updateUserStatus} from '@shared/store/app-user/appuser.s
 import {UserStatus} from '@shared/store/app-user/app-user.models';
 import Logger from '@shared/services/logger';
 import {AgentState} from '@shared/models/agent-state';
+import {Icon} from '@components/svg-icon/icon';
+import SvgIcon from '@components/svg-icon/svg-icon';
 
 const ccpConfig = {
     region: process.env.REACT_APP_AWS_REGION,
@@ -195,14 +191,33 @@ const Ccp: React.FC<BoxProps> = ({
                     <div className={'flex flex-col h-full'}>
                         <div data-test-id='ccp-container' id='ccp-container' className='h-full overflow-hidden ccp-drag-background'> </div>
                         <div className={'flex justify-between w-full px-10 py-2 shadow-md  border-t ccp-bottom-bar ' + (isBottomBarVisible ? 'block' : 'hidden')}>
-                            <Bot className='cursor-pointer' onClick={() => dispatch(setContextPanel(contextPanels.bot))} />
+                            <SvgIcon type={Icon.Bot}
+                                     className='medium cursor-pointer'
+                                     onClick={() => dispatch(setContextPanel(contextPanels.bot))}
+                                     fillClass='ccp-bottom-bar-icon'/>
                             {
-                                ticketId ? <Note className='cursor-pointer' onClick={() => dispatch(setContextPanel(contextPanels.note))} /> : <Note />
+                                ticketId ? <SvgIcon type={Icon.Note}
+                                                className='medium cursor-pointer'
+                                                fillClass='ccp-bottom-bar-icon'
+                                                onClick={() => dispatch(setContextPanel(contextPanels.note))} />
+                                    : <SvgIcon type={Icon.Note} className='medium cursor-pointer' fillClass='ccp-bottom-bar-icon'/>
                             }
-                            <Tickets className='cursor-pointer' onClick={() => dispatch(setContextPanel(contextPanels.tickets))} />
-                            <Sms className='cursor-pointer' onClick={() => dispatch(setContextPanel(contextPanels.sms))} />
-                            <Email className='cursor-pointer' onClick={() => dispatch(setContextPanel(contextPanels.email))} />
-                            <Scripts className='cursor-pointer' onClick={() => dispatch(setContextPanel(contextPanels.scripts))} />
+                            <SvgIcon type={Icon.Tickets}
+                                     className='medium cursor-pointer'
+                                     fillClass='ccp-bottom-bar-icon'
+                                     onClick={() => dispatch(setContextPanel(contextPanels.tickets))} />
+                            <SvgIcon type={Icon.Sms}
+                                     className='medium cursor-pointer'
+                                     fillClass='ccp-bottom-bar-icon'
+                                     onClick={() => dispatch(setContextPanel(contextPanels.sms))} />
+                            <SvgIcon type={Icon.Email}
+                                     className='medium cursor-pointer'
+                                     fillClass='ccp-bottom-bar-icon'
+                                     onClick={() => dispatch(setContextPanel(contextPanels.email))} />
+                            <SvgIcon type={Icon.Scripts}
+                                     className='medium cursor-pointer'
+                                     fillClass='ccp-bottom-bar-icon'
+                                     onClick={() => dispatch(setContextPanel(contextPanels.scripts))} />
                         </div>
                     </div>
                     <CcpContext />

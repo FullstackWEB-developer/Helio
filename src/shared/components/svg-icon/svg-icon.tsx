@@ -6,16 +6,26 @@ export interface SvgIconProps {
     type: Icon,
     className?: string,
     fillClass?: string,
+    strokeClass?: string,
+    opacity?: string,
     onClick?: (e: any) => void
 }
 
-const SvgIcon = ({type, className = 'medium', fillClass = 'fill-default', onClick}: SvgIconProps) => {
+const SvgIcon = ({type, className = 'medium', fillClass = 'fill-default', strokeClass = 'stroke-default', opacity, onClick}: SvgIconProps) => {
     const mainClass = `${className} ${fillClass ? '' : 'fill-default'}`;
 
     const getIconAdd = () => {
         return <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className={mainClass}>
             <rect fill='none'/>
             <path d="M19,13H13v6H11V13H5V11h6V5h2v6h6Z" className={fillClass}/>
+        </svg>
+    }
+
+    const getIconAddBlack = () => {
+        return <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className={mainClass}>
+            <rect width="24" height="24" fill='none'/>
+            <path d="M12,24A12,12,0,0,1,3.514,3.515,12,12,0,0,1,20.486,20.485,11.922,11.922,0,0,1,12,24ZM5.336,10.667a1.333,1.333,0,1,0,0,2.667h5.33V19a1.333,1.333,0,1,0,2.667,0V13.334h5.331a1.333,1.333,0,1,0,0-2.667H13.333v-5a1.333,1.333,0,1,0-2.667,0v5Z"
+                  className={fillClass}/>
         </svg>
     }
 
@@ -63,7 +73,7 @@ const SvgIcon = ({type, className = 'medium', fillClass = 'fill-default', onClic
         </svg>
     }
 
-    const getIconArrows = () => {
+    const getIconArrowBack = () => {
         return <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className={mainClass}>
             <rect width="24" height="24" fill="none"/>
             <path
@@ -112,7 +122,7 @@ const SvgIcon = ({type, className = 'medium', fillClass = 'fill-default', onClic
                 </pattern>
             </defs>
             <rect width="24" height="24" fill="none"/>
-            <rect width="24" height="23" fill="url(#a)"/>
+            <rect width="24" height="23" opacity={opacity} fill="url(#a)"/>
         </svg>
     }
 
@@ -152,7 +162,7 @@ const SvgIcon = ({type, className = 'medium', fillClass = 'fill-default', onClic
     const getIconChannelChat = () => {
         return <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" className={mainClass}>
             <rect width="48" height="48" fill="none"/>
-            <g transform="translate(4 4)" fill="none" stroke="rgba(0,0,0,0.87)" strokeWidth="1">
+            <g transform="translate(4 4)" fill="none" className={strokeClass}>
                 <circle cx="20" cy="20" r="20" stroke="none"/>
                 <circle cx="20" cy="20" r="19.5" fill="none"/>
             </g>
@@ -168,7 +178,7 @@ const SvgIcon = ({type, className = 'medium', fillClass = 'fill-default', onClic
     const getIconChannelEmail = () => {
         return <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" className={mainClass}>
             <rect width="48" height="48" fill="none"/>
-            <g transform="translate(4 4)" fill="none" stroke="rgba(0,0,0,0.87)" strokeWidth="1">
+            <g transform="translate(4 4)" fill="none" className={strokeClass}>
                 <circle cx="20" cy="20" r="20" stroke="none"/>
                 <circle cx="20" cy="20" r="19.5" fill="none"/>
             </g>
@@ -183,7 +193,7 @@ const SvgIcon = ({type, className = 'medium', fillClass = 'fill-default', onClic
     const getIconChannelPhone = () => {
         return <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" className={mainClass}>
             <rect width="48" height="48" fill="none"/>
-            <g transform="translate(4 4)" fill="none" stroke="rgba(0,0,0,0.87)" strokeWidth="1">
+            <g transform="translate(4 4)" fill="none" className={strokeClass}>
                 <circle cx="20" cy="20" r="20" stroke="none"/>
                 <circle cx="20" cy="20" r="19.5" fill="none"/>
             </g>
@@ -196,7 +206,7 @@ const SvgIcon = ({type, className = 'medium', fillClass = 'fill-default', onClic
     const getIconChannelSms = () => {
         return <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" className={mainClass}>
             <rect width="48" height="48" fill="none"/>
-            <g transform="translate(4 4)" fill="none" stroke="rgba(0,0,0,0.87)" strokeWidth="1">
+            <g transform="translate(4 4)" fill="none" className={strokeClass}>
                 <circle cx="20" cy="20" r="20" stroke="none"/>
                 <circle cx="20" cy="20" r="19.5" fill="none"/>
             </g>
@@ -212,7 +222,7 @@ const SvgIcon = ({type, className = 'medium', fillClass = 'fill-default', onClic
     const getIconChannelWeb = () => {
         return <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" className={mainClass}>
             <rect width="48" height="48" fill="none"/>
-            <g transform="translate(4 4)" fill="none" stroke="rgba(0,0,0,0.87)" strokeWidth="1">
+            <g transform="translate(4 4)" fill="none" className={strokeClass}>
                 <circle cx="20" cy="20" r="20" stroke="none"/>
                 <circle cx="20" cy="20" r="19.5" fill="none"/>
             </g>
@@ -273,11 +283,11 @@ const SvgIcon = ({type, className = 'medium', fillClass = 'fill-default', onClic
     }
 
     const getIconContacts = () => {
-        return <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" className={mainClass}>
-            <rect width="16" height="16" fill="none"/>
+        return <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className={mainClass}>
+            <rect width="24" height="24" fill="none"/>
             <path
-                d="M13.625,5A.376.376,0,0,0,14,4.625V3.375A.376.376,0,0,0,13.625,3H13V1.5A1.5,1.5,0,0,0,11.5,0H1.5A1.5,1.5,0,0,0,0,1.5v13A1.5,1.5,0,0,0,1.5,16h10A1.5,1.5,0,0,0,13,14.5V13h.625A.376.376,0,0,0,14,12.625v-1.25A.376.376,0,0,0,13.625,11H13V9h.625A.376.376,0,0,0,14,8.625V7.375A.376.376,0,0,0,13.625,7H13V5ZM11.5,14.5H1.5V1.5h10ZM6.5,8a2,2,0,1,0-2-2A2,2,0,0,0,6.5,8ZM3.7,12H9.3a.655.655,0,0,0,.7-.6v-.6A1.968,1.968,0,0,0,7.9,9a7.545,7.545,0,0,1-1.4.25A7.435,7.435,0,0,1,5.1,9,1.968,1.968,0,0,0,3,10.8v.6A.655.655,0,0,0,3.7,12Z"
-                transform="translate(1)" className={fillClass}/>
+                d="M17.028,6.249A.47.47,0,0,0,17.5,5.78V4.218a.47.47,0,0,0-.469-.469h-.781V1.875A1.875,1.875,0,0,0,14.372,0H1.875A1.875,1.875,0,0,0,0,1.875V18.121A1.875,1.875,0,0,0,1.875,20h12.5a1.875,1.875,0,0,0,1.875-1.875V16.247h.781a.47.47,0,0,0,.469-.469V14.216a.47.47,0,0,0-.469-.469h-.781v-2.5h.781a.47.47,0,0,0,.469-.469V9.217a.47.47,0,0,0-.469-.469h-.781v-2.5ZM14.372,18.121H1.875V1.875h12.5ZM8.123,10a2.5,2.5,0,1,0-2.5-2.5A2.5,2.5,0,0,0,8.123,10Zm-3.5,5h7a.819.819,0,0,0,.875-.75V13.5a2.459,2.459,0,0,0-2.624-2.25,9.429,9.429,0,0,1-1.75.312,9.292,9.292,0,0,1-1.75-.312A2.459,2.459,0,0,0,3.749,13.5v.75A.819.819,0,0,0,4.624,15Z"
+                transform="translate(3 2)" className={fillClass}/>
         </svg>
     }
 
@@ -413,8 +423,16 @@ const SvgIcon = ({type, className = 'medium', fillClass = 'fill-default', onClic
         return <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="24" height="24"
                     viewBox="0 0 24 24" className={mainClass}>
             <rect width="24" height="24" fill="none"/>
-            <image id="MSLogo" width="22" height="22" transform="translate(1 1)"
+            <image id="MSLogo" width="22" height="22" transform="translate(1 1)" opacity={opacity}
                    xlinkHref="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAQAAABIkb+zAAAACXBIWXMAAAsTAAALEwEAmpwYAAAF+2lUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMxNDUgNzkuMTYzNDk5LCAyMDE4LzA4LzEzLTE2OjQwOjIyICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIgeG1sbnM6cGhvdG9zaG9wPSJodHRwOi8vbnMuYWRvYmUuY29tL3Bob3Rvc2hvcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ0MgMjAxOSAoTWFjaW50b3NoKSIgeG1wOkNyZWF0ZURhdGU9IjIwMjAtMTItMDlUMDg6NDk6MTQtMDg6MDAiIHhtcDpNb2RpZnlEYXRlPSIyMDIwLTEyLTA5VDA4OjU4OjIzLTA4OjAwIiB4bXA6TWV0YWRhdGFEYXRlPSIyMDIwLTEyLTA5VDA4OjU4OjIzLTA4OjAwIiBkYzpmb3JtYXQ9ImltYWdlL3BuZyIgcGhvdG9zaG9wOkNvbG9yTW9kZT0iMSIgcGhvdG9zaG9wOklDQ1Byb2ZpbGU9IkRvdCBHYWluIDIwJSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozYmNmN2VjOC01ZDU5LTQzYTctYmZjNy1hYzlhNzZjMjJiYzQiIHhtcE1NOkRvY3VtZW50SUQ9ImFkb2JlOmRvY2lkOnBob3Rvc2hvcDowN2FmZmYxYy0xOTRlLTY4NDMtYWQ4My1jMDhiNjBmMzYzNzciIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDowM2QwOTBlOC0wODk4LTQzNTAtOWFlMi0wMTQzYjQ4Njc1MjgiPiA8eG1wTU06SGlzdG9yeT4gPHJkZjpTZXE+IDxyZGY6bGkgc3RFdnQ6YWN0aW9uPSJjcmVhdGVkIiBzdEV2dDppbnN0YW5jZUlEPSJ4bXAuaWlkOjAzZDA5MGU4LTA4OTgtNDM1MC05YWUyLTAxNDNiNDg2NzUyOCIgc3RFdnQ6d2hlbj0iMjAyMC0xMi0wOVQwODo0OToxNC0wODowMCIgc3RFdnQ6c29mdHdhcmVBZ2VudD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTkgKE1hY2ludG9zaCkiLz4gPHJkZjpsaSBzdEV2dDphY3Rpb249InNhdmVkIiBzdEV2dDppbnN0YW5jZUlEPSJ4bXAuaWlkOjNiY2Y3ZWM4LTVkNTktNDNhNy1iZmM3LWFjOWE3NmMyMmJjNCIgc3RFdnQ6d2hlbj0iMjAyMC0xMi0wOVQwODo1ODoyMy0wODowMCIgc3RFdnQ6c29mdHdhcmVBZ2VudD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTkgKE1hY2ludG9zaCkiIHN0RXZ0OmNoYW5nZWQ9Ii8iLz4gPC9yZGY6U2VxPiA8L3htcE1NOkhpc3Rvcnk+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+wp5iowAADC9JREFUeNrdm2lsHOUZx3/vzO76jB17nQQQhyBUJpRQAiQ9qFpQqNoK1IiKS2oRiEqImkJTKtRCW6DlaFU+9UPpl0pIDZSEEI6UJoASEshBgIISJ4QATYKDkzgmjuP1eu95n37Ya2Z2Zj279obQkdY7np3def7P83/OdyYkfLG3EP+vAC5AcxozSCIIGgEMsgiaEBE0mmzhuCDkEASFYAIZkgj6G3Kp7iUU/2/n9vveuDg9wDiKVjQxQmgUHYyRIYwmxwyyTGCi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"/>
+        </svg>
+    }
+
+    const getIconPatientChart = () => {
+        return <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className={mainClass}>
+            <rect width="24" height="24" fill="none"/>
+            <path id="Path_2039" data-name="Path 2039" d="M13.17,4,18,8.83V20H6V4h7.17M14,2H6A2.006,2.006,0,0,0,4,4V20a2.006,2.006,0,0,0,2,2H18a2.006,2.006,0,0,0,2-2V8L14,2ZM12,14a2,2,0,1,0-2-2A2.006,2.006,0,0,0,12,14Zm4,3.43a2.011,2.011,0,0,0-1.22-1.85,6.952,6.952,0,0,0-5.56,0A2.011,2.011,0,0,0,8,17.43V18h8Z"
+                  className={fillClass}/>
         </svg>
     }
 
@@ -434,12 +452,18 @@ const SvgIcon = ({type, className = 'medium', fillClass = 'fill-default', onClic
         </svg>
     }
 
-    const getIconPhone = () => {
+    const getIconPlaceholder = () => {
         return <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" className={mainClass}>
-            <rect width="16" height="16" fill="none"/>
+            <rect width="16" height="16" fill="#eaeaea" className={fillClass}/>
+        </svg>
+    }
+
+    const getIconPhone = () => {
+        return <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className={mainClass}>
+            <rect width="24" height="24" fill="none"/>
             <path
-                d="M13.481.662,10.637.006a.66.66,0,0,0-.752.38L8.573,3.448a.655.655,0,0,0,.189.766L10.419,5.57a10.134,10.134,0,0,1-4.845,4.845L4.217,8.758a.656.656,0,0,0-.766-.189L.389,9.882a.664.664,0,0,0-.383.755l.656,2.844a.656.656,0,0,0,.64.509A12.686,12.686,0,0,0,13.99,1.3.655.655,0,0,0,13.481.662Z"
-                transform="translate(1.011 1.011)" className={fillClass}/>
+                d="M17.336.854,13.68.011A.849.849,0,0,0,12.713.5L11.025,4.437a.842.842,0,0,0,.243.984L13.4,7.165a13.029,13.029,0,0,1-6.23,6.23l-1.744-2.13a.843.843,0,0,0-.984-.243L.5,12.709a.854.854,0,0,0-.492.97l.844,3.656a.843.843,0,0,0,.823.654A16.31,16.31,0,0,0,17.99,1.677.843.843,0,0,0,17.336.854Z"
+                transform="translate(3.011 3.011)" className={fillClass}/>
         </svg>
     }
 
@@ -556,11 +580,11 @@ const SvgIcon = ({type, className = 'medium', fillClass = 'fill-default', onClic
     }
 
     const getIconTickets = () => {
-        return <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" className={mainClass}>
-            <rect width="16" height="16" fill="none"/>
+        return <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className={mainClass}>
+            <rect width="24" height="24" fill="none"/>
             <path
-                d="M12.449,5.649l-5.3-5.3A1.2,1.2,0,0,0,6.3,0H1.2A1.2,1.2,0,0,0,0,1.2V6.3a1.2,1.2,0,0,0,.351.849l5.3,5.3a1.2,1.2,0,0,0,1.7,0l5.1-5.1a1.2,1.2,0,0,0,0-1.7ZM2.8,4A1.2,1.2,0,1,1,4,2.8,1.2,1.2,0,0,1,2.8,4ZM15.649,7.346l-5.1,5.1a1.2,1.2,0,0,1-1.7,0L8.84,12.44l4.351-4.351a2.25,2.25,0,0,0,0-3.182L8.285,0H9.5a1.2,1.2,0,0,1,.849.351l5.3,5.3a1.2,1.2,0,0,1,0,1.7Z"
-                transform="translate(0 2)" className={fillClass}/>
+                d="M15.561,7.061,8.939.439A1.5,1.5,0,0,0,7.879,0H1.5A1.5,1.5,0,0,0,0,1.5V7.879A1.5,1.5,0,0,0,.439,8.939l6.621,6.621a1.5,1.5,0,0,0,2.121,0l6.379-6.379a1.5,1.5,0,0,0,0-2.121ZM3.5,5A1.5,1.5,0,1,1,5,3.5,1.5,1.5,0,0,1,3.5,5ZM19.561,9.182l-6.379,6.379a1.5,1.5,0,0,1-2.121,0l-.011-.011,5.439-5.439a2.813,2.813,0,0,0,0-3.978L10.356,0h1.523a1.5,1.5,0,0,1,1.061.439l6.621,6.621a1.5,1.5,0,0,1,0,2.121Z"
+                transform="translate(2 4)" className={fillClass}/>
         </svg>
     }
 
@@ -630,13 +654,14 @@ const SvgIcon = ({type, className = 'medium', fillClass = 'fill-default', onClic
 
     const icons = {
         [Icon.Add]: getIconAdd,
+        [Icon.AddBlack]: getIconAddBlack,
         [Icon.AddContact]: getIconAddContact,
         [Icon.Alert]: getIconAlert,
         [Icon.ArrowDown]: getIconArrowDown,
         [Icon.ArrowDownward]: getIconArrowDownward,
         [Icon.ArrowLeft]: getIconArrowLeft,
         [Icon.ArrowRight]: getIconArrowRight,
-        [Icon.Arrows]: getIconArrows,
+        [Icon.ArrowBack]: getIconArrowBack,
         [Icon.ArrowTrendDown]: getIconArrowTrendDown,
         [Icon.ArrowTrendUp]: getIconArrowTrendUp,
         [Icon.ArrowUp]: getIconArrowUp,
@@ -669,7 +694,9 @@ const SvgIcon = ({type, className = 'medium', fillClass = 'fill-default', onClic
         [Icon.MyStats]: getIconMyStats,
         [Icon.Note]: getIconNote,
         [Icon.Office365]: getIconOffice365,
+        [Icon.PatientChart]: getIconPatientChart,
         [Icon.Patients]: getIconPatients,
+        [Icon.Placeholder]: getIconPlaceholder,
         [Icon.Phone]: getIconPhone,
         [Icon.RatingDissatisfied]: getIconRatingDissatisfied,
         [Icon.RatingSatisfied]: getIconRatingSatisfied,

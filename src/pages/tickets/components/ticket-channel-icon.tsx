@@ -2,10 +2,9 @@ import React from 'react';
 import withErrorLogging from '../../../shared/HOC/with-error-logging';
 import { Ticket } from '../models/ticket';
 import { ChannelTypes } from '../models/ticket-channel';
-import { ReactComponent as ChatIcon } from '../../../shared/icons/Icon-Channel-Chat-48px.svg';
-import { ReactComponent as PhoneIcon } from '../../../shared/icons/Icon-Channel-Phone-48px.svg';
-import { ReactComponent as WebIcon } from '../../../shared/icons/Icon-Channel-Web-48px.svg';
-import { ReactComponent as SmsIcon } from '../../../shared/icons/Icon-Channel-SMS-48px.svg';
+import '../tickets.scss';
+import SvgIcon from '@components/svg-icon/svg-icon';
+import {Icon} from '@components/svg-icon/icon';
 
 interface TicketChannelIconProps {
     ticket: Ticket
@@ -14,15 +13,15 @@ interface TicketChannelIconProps {
 const TicketChannelIcon = ({ ticket }: TicketChannelIconProps) => {
     switch (ticket.channel) {
         case ChannelTypes.Chat:
-            return <ChatIcon />;
+            return <SvgIcon type={Icon.ChannelChat} className='x-large' fillClass='channel-icon-fill' strokeClass='channel-icon-stroke'/>;
         case ChannelTypes.PhoneCall:
-            return <PhoneIcon />;
+            return <SvgIcon type={Icon.ChannelPhone} className='x-large' fillClass='channel-icon-fill' strokeClass='channel-icon-stroke'/>;
         case ChannelTypes.WebSite:
-            return <WebIcon />;
+            return <SvgIcon type={Icon.ChannelWeb} className='x-large' fillClass='channel-icon-fill' strokeClass='channel-icon-stroke'/>;
         case ChannelTypes.UserCreated:
-            return <SmsIcon />;
+            return <SvgIcon type={Icon.ChannelSms} className='x-large' fillClass='channel-icon-fill' strokeClass='channel-icon-stroke'/>;
         default:
-            return <ChatIcon />;
+            return <SvgIcon type={Icon.ChannelChat} className='x-large' fillClass='channel-icon-fill' strokeClass='channel-icon-stroke'/>;
     }
 }
 

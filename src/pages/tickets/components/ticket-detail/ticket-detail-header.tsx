@@ -4,15 +4,10 @@ import relativeTime from 'dayjs/plugin/relativeTime'
 import {useTranslation} from 'react-i18next';
 import {useHistory} from 'react-router-dom';
 import withErrorLogging from '../../../../shared/HOC/with-error-logging';
-import {ReactComponent as ArrowBackIcon} from '../../../../shared/icons/Icon-Arrow-Back-24px.svg';
-import {ReactComponent as RatingIcon} from '../../../../shared/icons/Icon-rating-very-satisfied-24px.svg';
 import {FeedTypes, TicketFeed} from '../../models/ticket-feed';
 import {Ticket} from '../../models/ticket';
 import {Patient} from '@pages/patients/models/patient';
 import TicketStatus from '../ticket-status';
-import {ReactComponent as PhoneIcon} from '@icons/Icon-Phone-White-24px.svg';
-import {ReactComponent as SmsIcon} from '@icons/Icon-Sms-White-24px.svg';
-import {ReactComponent as EmailIcon} from '@icons/Icon-Email-White-24px.svg';
 import Button from '@components/button/button';
 import {useDispatch, useSelector} from 'react-redux';
 import {selectEnumValues, selectFeedLastMessageOn} from '../../store/tickets.selectors';
@@ -23,6 +18,9 @@ import TicketChannelIcon from '../ticket-channel-icon';
 import {TicketsPath} from '../../../../app/paths';
 import Logger from '@shared/services/logger';
 import {useMutation} from 'react-query';
+import '../../tickets.scss';
+import {Icon} from '@components/svg-icon/icon';
+import SvgIcon from '@components/svg-icon/svg-icon';
 
 export interface TicketDetailHeaderProps {
     ticket: Ticket,
@@ -100,7 +98,8 @@ const TicketDetailHeader = ({ticket, patient}: TicketDetailHeaderProps) => {
         <div>
             <div className={'flex flex-row p-8'}>
                 <div className={'pl-4 pt-4 cursor-pointer align-middle'} onClick={() => history.goBack()}>
-                    <ArrowBackIcon/></div>
+                    <SvgIcon type={Icon.ArrowBack} className='cursor-pointer'/>
+                </div>
                 <div className={'mt-1 ml-2 h-12 w-12'}>
                     <TicketChannelIcon ticket={ticket}/>
                 </div>
@@ -124,7 +123,7 @@ const TicketDetailHeader = ({ticket, patient}: TicketDetailHeaderProps) => {
                                 SmallLabel('ticket_detail.header.last_message', feedLastMessageOn ? dayjs().to(dayjs.utc(feedLastMessageOn).local()) : '')
                             }
                             {
-                                <RatingIcon className={'h-12 w-12'}/>
+                                <SvgIcon type={Icon.RatingSatisfied} className='large'/>
                             }
                         </div>
                     </div>
@@ -134,13 +133,20 @@ const TicketDetailHeader = ({ticket, patient}: TicketDetailHeaderProps) => {
                 <div className='flex flex-row w-full pt-2 pb-2 border-t border-b'>
                     <div className='flex justify-items-start w-1/2'>
                         <div className='pl-20'>
-                            <PhoneIcon className='cursor-pointer bg-gray-800 rounded-md h-10 w-16 p-1' onClick={() => outboundCall()}/>
+                            <SvgIcon type={Icon.Phone}
+                                     className='large cursor-pointer bg-gray-800 rounded-md h-10 w-16 p-1.5'
+                                     fillClass='icon-white'
+                                     onClick={() => outboundCall()}/>
                         </div>
                         <div className='pl-5'>
-                            <SmsIcon className='cursor-pointer bg-gray-800 rounded-md h-10 w-16 p-1' />
+                            <SvgIcon type={Icon.Sms}
+                                     className='large cursor-pointer bg-gray-800 rounded-md h-10 w-16 p-1.5'
+                                     fillClass='icon-white'/>
                         </div>
                         <div className='pl-5'>
-                            <EmailIcon className='cursor-pointer bg-gray-800 rounded-md h-10 w-16 p-1' />
+                            <SvgIcon type={Icon.Email}
+                                     className='large cursor-pointer bg-gray-800 rounded-md h-10 w-16 p-1'
+                                     fillClass='icon-white'/>
                         </div>
                     </div>
                     {!ticket.isDeleted && (

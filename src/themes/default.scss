@@ -255,8 +255,26 @@
 
   --modal-shadow: 0 .25rem .875rem .25rem rgba(0, 0, 0, 0.3);
 
+  --icon-stroke-high-emphasis: rgba(0, 0, 0, 0.87);
+
+  --header-inactive-item-icon: rgba(54, 54, 54, 0.38);
+  --header-active-item-icon: rgba(0, 0, 0, 0.5);
+
   --navigation-inactive-item-icon: rgba(54, 54, 54, 0.6);
   --navigation-active-item-icon: rgba(0, 0, 0, 0.5);
+
+  --status-bar-inactive-item-icon: rgba(0, 0, 0, 0.3);
+
+  --list-inactive-icon: rgba(0, 0, 0, 0.87);
+  --list-active-icon: rgba(0, 0, 0, 0.5);
+
+  --arrow-active-icon: rgba(0, 0, 0, 0.5);
+
+  --edit-icon: rgba(0, 0, 0, 0.6);
+  --filter-icon: rgba(0, 0, 0, 0.6);
+  --search-icon: rgba(0, 0, 0, 0.5);
+  --channel-icon: rgba(0, 0, 0, 0.2);
+  --ccp-bottom-bar-icon: rgba(0, 0, 0, 0.5);
 
   --profile-dropdown-shadow: 0 0.25rem 0.125rem 0 rgba(0, 0, 0, 0.15);
   --ccp-header-color: #4a4a4a;

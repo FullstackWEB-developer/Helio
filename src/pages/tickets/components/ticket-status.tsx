@@ -1,10 +1,11 @@
-import { ReactComponent as ArrowDownIcon } from '../../../shared/icons/Icon-Arrow-down-16px.svg';
-import { useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { setStatus } from '../services/tickets.service';
 import customHooks from '../../../shared/hooks/customHooks';
 import TicketStatusDisplay from './ticket-status-display';
+import {Icon} from '@components/svg-icon/icon';
+import SvgIcon from '@components/svg-icon/svg-icon';
 
 interface TicketStatusProps {
     ticketId: string,
@@ -34,8 +35,8 @@ const TicketStatus = ({ ticketId, status, isArrow = true }: TicketStatusProps) =
     return <div className='col-span-2 pt-6 flex flex-row relative'>
         <TicketStatusDisplay status={status} iconClass='pt-1.5' labelClass='pl-3'></TicketStatusDisplay>
         {
-            isArrow && <div className='pt-0.5 pl-4 cursor-pointer' onClick={() => openStatus()}>
-                <ArrowDownIcon />
+            isArrow && <div className='pl-3 cursor-pointer' onClick={() => openStatus()}>
+                <SvgIcon type={Icon.ArrowDown} className='cursor-pointer' fillClass='active-item-icon'/>
             </div>
         }
         <div ref={statusSearchRef}

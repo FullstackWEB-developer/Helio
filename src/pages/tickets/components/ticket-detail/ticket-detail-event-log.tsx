@@ -3,7 +3,6 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime'
 import {useTranslation} from 'react-i18next';
 import withErrorLogging from '@shared/HOC/with-error-logging';
-import {ReactComponent as CalendarIcon} from '@icons/Icon-Calendar-24px.svg';
 import {Ticket} from '../../models/ticket';
 import {updateTicket} from '../../services/tickets.service';
 import DateTime from '@components/datetime/datetime';
@@ -12,6 +11,8 @@ import {setTicket} from '@pages/tickets/store/tickets.slice';
 import {useDispatch} from 'react-redux';
 import Logger from '@shared/services/logger';
 import utils from '@shared/utils/utils';
+import SvgIcon from '@components/svg-icon/svg-icon';
+import {Icon} from '@components/svg-icon/icon';
 
 interface TicketDetailEventLogProps {
     ticket: Ticket
@@ -69,7 +70,9 @@ const TicketDetailEventLog = ({ticket}: TicketDetailEventLogProps) => {
                         }
                     </span>
                     <div className = 'pt-0.5 pl-4 cursor-pointer' onClick={() => openCalendar()}>
-                        <CalendarIcon className='h-8 w-8 pl-2 cursor-pointer' />
+                        <SvgIcon type={Icon.Calendar}
+                             className='medium h-8 w-8 pl-2 cursor-pointer'
+                             fillClass='active-item-icon'/>
                     </div>
                 </dd>
             </div>

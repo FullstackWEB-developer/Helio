@@ -1,14 +1,13 @@
-import { ReactComponent as ArrowDownIcon } from '../../shared/icons/Icon-Arrow-down-16px.svg';
-import { ReactComponent as ArrowLeftIcon } from '../../shared/icons/Icon-Arrows-Left-24px.svg';
-import { ReactComponent as ArrowRightIcon } from '../../shared/icons/Icon-Arrows-Right-24px.svg';
 import React, { useEffect, useState } from 'react';
 import { getList } from './services/tickets.service';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectSearchTerm, selectTicketFilter, selectTicketsPaging } from './store/tickets.selectors';
 import { useTranslation } from 'react-i18next';
-import { keyboardKeys } from '../../shared/components/search-bar/constants/keyboard-keys';
-import { Paging } from '../../shared/models/paging.model';
+import { keyboardKeys } from '@components/search-bar/constants/keyboard-keys';
+import { Paging } from '@shared/models/paging.model';
 import { TicketQuery } from './models/ticket-query';
+import {Icon} from '@components/svg-icon/icon';
+import SvgIcon from '@components/svg-icon/svg-icon';
 
 const TicketsHeader = () => {
     const { t } = useTranslation();
@@ -84,7 +83,9 @@ const TicketsHeader = () => {
         <div className='grid justify-items-start'>
             <div className='text-3xl font-bold relative'>
                 {t('tickets.all_tickets')} - {paging.totalCount}
-                <span className='absolute pt-2 pl-5'> <ArrowDownIcon className='cursor-pointer' /></span>
+                <span className='absolute pt-2 pl-4'>
+                    <SvgIcon type={Icon.ArrowDown} className='cursor-pointer' fillClass='active-item-icon'/>
+                </span>
             </div>
         </div>
         <div className='grid col-start-4 col-end-4 justify-items-end'>
@@ -92,10 +93,10 @@ const TicketsHeader = () => {
                 <div className='text-gray-400 pr-8 pt-2 text-sm'>
                     <span>{t('tickets.pagination', { numOfItemsFrom: numOfItemsFrom, numOfItemsTo: numOfItemsTo, totalCount: paging.totalCount })}</span>
                 </div>
-                <ArrowLeftIcon className='cursor-pointer mt-1' onClick={() => previousPage()} />
+                <SvgIcon type={Icon.ArrowLeft} className='cursor-pointer mt-1' fillClass='active-item-icon' onClick={() => previousPage()}/>
                 <input type='text' className='border rounded-md w-11 text-center ml-6 mr-6' value={currentPage}
                     onChange={(e) => changePage(e)} onKeyDown={(e) => handleKey(e)}/>
-                <ArrowRightIcon className='cursor-pointer mt-1' onClick={() => nextPage()} />
+                <SvgIcon type={Icon.ArrowRight} className='cursor-pointer mt-1' fillClass='active-item-icon' onClick={() => nextPage()}/>
             </div>
         </div>
     </div>

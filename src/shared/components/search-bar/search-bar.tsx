@@ -1,6 +1,5 @@
 import React, {useRef, useState} from 'react';
 import {SearchType} from './models/search-type';
-import {ReactComponent as SearchIcon} from '@icons/Icon-Search-16px.svg';
 import {selectRecentPatients, selectSearchTypeFiltered, selectSelectedType,} from './store/search-bar.selectors';
 import {
     changeFilteredTypes,
@@ -20,9 +19,10 @@ import {keyboardKeys} from './constants/keyboard-keys';
 import {clearPatients} from '@pages/patients/store/patients.slice';
 import Dropdown from '../dropdown/dropdown';
 import {CategoryItemModel, DropdownItemModel, DropdownModel} from '../dropdown/dropdown.models';
-import {ReactComponent as PlaceholderIcon} from '../../icons/Icon-Placeholder-16px.svg';
 import './search-bar.scss';
 import customHooks from '../../hooks/customHooks';
+import SvgIcon from '@components/svg-icon/svg-icon';
+import {Icon} from '@components/svg-icon/icon';
 
 const SearchBar = () => {
     const {t} = useTranslation();
@@ -95,7 +95,7 @@ const SearchBar = () => {
                 itemsCssClass: 'w-72',
                 category: {
                     text: t('search.categories.patients'),
-                    icon: <PlaceholderIcon/>,
+                    icon: <SvgIcon type={Icon.Placeholder} className='small' fillClass=''/>,
                     key: '1'
                 },
                 items: searchTypes
@@ -105,7 +105,7 @@ const SearchBar = () => {
             itemsCssClass: 'w-72',
             category: {
                 text: t('search.categories.contacts'),
-                icon: <PlaceholderIcon/>,
+                icon: <SvgIcon type={Icon.Placeholder} className='small' fillClass=''/>,
                 key: '2'
             },
             items: [
@@ -119,7 +119,7 @@ const SearchBar = () => {
             itemsCssClass: 'w-72',
             category: {
                 text: t('search.categories.tickets'),
-                icon: <PlaceholderIcon/>,
+                icon: <SvgIcon type={Icon.Placeholder} className='small' fillClass=''/>,
                 key: '3'
             },
             items: [
@@ -182,7 +182,7 @@ const SearchBar = () => {
 
                 <div className='flex flex-row h-full'>
                     <div className='pl-6 flex items-center'>
-                        <SearchIcon onClick={() => search()}/>
+                        <SvgIcon type={Icon.Search} className='small cursor-pointer' fillClass='search-icon' onClick={() => search()}/>
                     </div>
                     <div className='w-full body2-medium'>
                         <input type='text' className='focus:outline-none h-full w-full px-4'

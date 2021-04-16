@@ -1,9 +1,8 @@
 import withErrorLogging from '../../../shared/HOC/with-error-logging';
 import { ChannelTypes } from '../models/ticket-channel';
-import { ReactComponent as ChatIcon } from '../../../shared/icons/Icon-Chat-24px.svg';
-import { ReactComponent as PhoneIcon } from '../../../shared/icons/Icon-Phone-24px.svg';
-import { ReactComponent as WebIcon } from '../../../shared/icons/Icon-Web-24px.svg';
-import { ReactComponent as SmsIcon } from '../../../shared/icons/Icon-SMS-24px.svg';
+import {Icon} from '@components/svg-icon/icon';
+import SvgIcon from '@components/svg-icon/svg-icon';
+import React from 'react';
 
 interface ChannelTypesProps {
     channel: ChannelTypes
@@ -12,13 +11,13 @@ interface ChannelTypesProps {
 const TicketChannelTypeIcon = ({ channel }: ChannelTypesProps) => {
     switch (channel) {
         case ChannelTypes.Chat:
-            return <ChatIcon />;
+            return <SvgIcon type={Icon.Chat}/>;
         case ChannelTypes.PhoneCall:
-            return <PhoneIcon />;
+            return <SvgIcon type={Icon.Phone}/>;
         case ChannelTypes.WebSite:
-            return <WebIcon />;
+            return <SvgIcon type={Icon.Web}/>;
         case ChannelTypes.UserCreated:
-            return <SmsIcon />;
+            return <SvgIcon type={Icon.Sms}/>;
         default:
             return channel;
     }

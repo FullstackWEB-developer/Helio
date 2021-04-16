@@ -1,15 +1,15 @@
-import { ReactComponent as ArrowDownIcon } from '../../../shared/icons/Icon-Arrow-down-16px.svg';
-import { ReactComponent as SearchIcon } from '../../../shared/icons/Icon-Search-16px.svg';
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import customHooks from '../../../shared/hooks/customHooks';
 import { setAssignee } from '../services/tickets.service';
 import withErrorLogging from '../../../shared/HOC/with-error-logging';
-import {selectUserList} from '../../../shared/store/lookups/lookups.selectors';
-import {User} from '../../../shared/models/user';
+import {selectUserList} from '@shared/store/lookups/lookups.selectors';
+import {User} from '@shared/models/user';
 import Avatar from '../../../shared/components/avatar/avatar';
 import utils from '../../../shared/utils/utils';
+import {Icon} from '@components/svg-icon/icon';
+import SvgIcon from '@components/svg-icon/svg-icon';
 
 interface TicketAssigneeProps {
     ticketId: string,
@@ -74,8 +74,9 @@ const TicketAssignee = ({ ticketId, assignee }: TicketAssigneeProps) => {
                 :
                 <div className='flex flex-row'>
                     <div className='pt-3'>{t('tickets.unassigned')}</div>
-                    <div className='pt-4 pl-4 '>
-                        <ArrowDownIcon /></div>
+                    <div className='pt-3 pl-3'>
+                        <SvgIcon type={Icon.ArrowDown} className='cursor-pointer' fillClass='active-item-icon'/>
+                    </div>
                 </div>
             }
         </div>
@@ -84,7 +85,7 @@ const TicketAssignee = ({ ticketId, assignee }: TicketAssigneeProps) => {
             <div className='shadow-md w-96 bg-white pt-2'>
                 <div className='flex flex-row border-b border-t p-2 pl-3'>
                     <span className={'pt-1'}>
-                        <SearchIcon />
+                        <SvgIcon type={Icon.Search} className='small cursor-pointer' fillClass='search-icon'/>
                     </span>
                     <input className='pl-4 focus:outline-none' type='text' value={searchAssigneeTerm}
                         onChange={(e) => search(e)}

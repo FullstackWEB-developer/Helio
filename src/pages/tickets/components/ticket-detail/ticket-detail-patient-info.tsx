@@ -8,13 +8,14 @@ import {Ticket} from '../../models/ticket';
 import Input from '../../../../shared/components/input/input';
 import {selectIsPatientError, selectPatientLoading} from '@pages/patients/store/patients.selectors';
 import ThreeDots from '../../../../shared/components/skeleton-loader/skeleton-loader';
-import {ReactComponent as PatientChartIcon} from '../../../../shared/icons/Icon-PatientChart-24px.svg';
 import Button from '../../../../shared/components/button/button';
 import {updateTicket} from '../../services/tickets.service';
 import {useMutation} from 'react-query';
 import {setTicket} from '@pages/tickets/store/tickets.slice';
 import Logger from '../../../../shared/services/logger';
 import {Patient} from '@pages/patients/models/patient';
+import {Icon} from '@components/svg-icon/icon';
+import SvgIcon from '@components/svg-icon/svg-icon';
 
 interface TicketDetailPatientInfoProps {
     ticket: Ticket,
@@ -94,7 +95,10 @@ const TicketDetailPatientInfo = ({ticket, patient}: TicketDetailPatientInfoProps
                             </dt>
                             <dd className='body2 flex flex-row'>
                                 <span className='py-1'>{ticket?.patientId}</span>
-                                <PatientChartIcon className='h-8 w-8 pl-2 cursor-pointer' onClick={() => history.push('/patients/' + ticket.patientId)}/>
+                                <SvgIcon type={Icon.PatientChart}
+                                     className='medium h-8 w-8 pl-2 cursor-pointer'
+                                     fillClass='active-item-icon'
+                                     onClick={() => history.push('/patients/' + ticket.patientId)}/>
                             </dd>
                         </div>
                     </dl>

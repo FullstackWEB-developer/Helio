@@ -1,12 +1,11 @@
-import {ReactComponent as ArrowDownIcon} from '../icons/Icon-Arrow-down-16px.svg';
-import {ReactComponent as ArrowUpIcon} from '../icons/Icon-Arrow-up-16px.svg';
 import {useTranslation} from 'react-i18next';
-import {ReactComponent as CalendarIcon} from '../icons/Icon-Calendar-24px.svg';
 import './footer.scss';
 import {useDispatch, useSelector} from 'react-redux';
 import {toggleHotspots, toggleStatusBar} from './store/layout.slice';
 import {selectIsStatusBarVisible} from './store/layout.selectors';
-import {useState} from 'react';
+import React, {useState} from 'react';
+import SvgIcon from '@components/svg-icon/svg-icon';
+import {Icon} from '@components/svg-icon/icon';
 
 const Footer = () => {
     const {t} = useTranslation();
@@ -23,7 +22,7 @@ const Footer = () => {
                         onMouseLeave={() => setHoveredItem('')}
                         onClick={() => dispatch(toggleHotspots())}>
                         <div className='items-center pr-2'>
-                            <CalendarIcon className='cursor-pointer'/>
+                            <SvgIcon type={Icon.Calendar} className='cursor-pointer' fillClass='active-item-icon'/>
                         </div>
                         <div data-test-id='hotspots-toggle'
                              className={`pr-10 hidden md:block cursor-pointer ${hoveredItem === 'hotspots' ? 'body2-medium' : 'body2'}`}>
@@ -40,8 +39,8 @@ const Footer = () => {
                             {t('footer.status')}
                         </div>
                         <div>
-                            {isStatusBarVisible ? <ArrowUpIcon className='cursor-pointer'/> :
-                                <ArrowDownIcon className='cursor-pointer'/>}
+                            {isStatusBarVisible ? <SvgIcon type={Icon.ArrowUp} className='cursor-pointer' fillClass='active-item-icon'/> :
+                                <SvgIcon type={Icon.ArrowDown} className='cursor-pointer' fillClass='active-item-icon'/>}
                         </div>
                     </div>
                 </div>
@@ -49,4 +48,5 @@ const Footer = () => {
         </footer>
     );
 }
+
 export default Footer;

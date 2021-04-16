@@ -6,10 +6,11 @@ import {useMutation} from 'react-query';
 import {addNote} from '@pages/patients/services/patients.service';
 import {setPatient} from '@pages/patients/store/patients.slice';
 import {useDispatch, useSelector} from 'react-redux';
-import {userFullNameSelector} from '../../../shared/store/app-user/appuser.selectors';
+import {userFullNameSelector} from '@shared/store/app-user/appuser.selectors';
 import {selectPatient} from '@pages/patients/store/patients.selectors';
 import {useTranslation} from 'react-i18next';
-import {ReactComponent as SendIcon} from '@icons/Icon-Send-24px.svg';
+import {Icon} from '@components/svg-icon/icon';
+import SvgIcon from '@components/svg-icon/svg-icon';
 
 const PatientAddNote = () => {
 
@@ -62,7 +63,7 @@ const PatientAddNote = () => {
 
             {showSendButton() && <div className='flex items-center justify-center w-1/6'>
                 {mutation.isLoading ? t('patient.activity.notes.sending') :
-                    <SendIcon className='cursor-pointer' onClick={() => sendNote()}/>}
+                    <SvgIcon type={Icon.Send} className='medium cursor-pointer' onClick={() => sendNote()}/>}
 
             </div>}
         </div>

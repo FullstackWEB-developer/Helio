@@ -1,9 +1,11 @@
 import { useSelector } from 'react-redux';
 import { selectPatientInCollectionsBalance } from '../../patients/store/patients.selectors';
-import { ReactComponent as Warning } from '../../../shared/icons/Icon-Warning-24px.svg';
 import { useTranslation } from 'react-i18next';
 import { selectBotContext } from '../store/ccp.selectors';
 import withErrorLogging from '../../../shared/HOC/with-error-logging';
+import {Icon} from '@components/svg-icon/icon';
+import SvgIcon from '@components/svg-icon/svg-icon';
+import React from 'react';
 
 const BotContext = () => {
     const { t } = useTranslation();
@@ -23,7 +25,8 @@ const BotContext = () => {
             </div>
             {
                 patientInCollectionsBalance > 0 && <div className={'pt-4 flex content-center'}>
-                    <Warning /><span className='pt-1 pl-3'>{t('ccp.bot_context.patient_in_collections')}</span>
+                    <SvgIcon type={Icon.Warning} className='medium' fillClass='warning-icon'/>
+                    <span className='pt-1 pl-3'>{t('ccp.bot_context.patient_in_collections')}</span>
                 </div>
             }
         </div>

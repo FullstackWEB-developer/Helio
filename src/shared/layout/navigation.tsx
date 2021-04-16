@@ -1,19 +1,13 @@
 import NavigationItem from './components/navigation-item';
 import {useTranslation} from 'react-i18next';
 import {useLocation} from 'react-router-dom';
-import {ReactComponent as MenuIcon} from '@icons/Icon-Menu-24px.svg';
 import {toggleNavigation} from './store/layout.slice';
 import React from 'react';
 import {useDispatch} from 'react-redux';
 import {TicketsPath} from '../../app/paths';
-import {IconPhone} from '@icons/IconPhone';
 import './navigation.scss';
-import {IconDashboard} from '@icons/IconDashboard';
-import {IconTicket} from '@icons/IconTicket';
-import {IconContacts} from '@icons/IconContacts';
-import {IconEmail} from '@icons/IconEmail';
-import {IconSms} from '@icons/IconSms';
-import {IconChat} from '@icons/IconChat';
+import SvgIcon from '@components/svg-icon/svg-icon';
+import {Icon} from '@components/svg-icon/icon';
 
 const Navigation = () => {
     const {t} = useTranslation();
@@ -28,37 +22,37 @@ const Navigation = () => {
             title: t('navigation.dashboard'),
             link: '/dashboard',
             id: 'navigation-dashboard',
-            icon: <IconDashboard/>
+            icon: <SvgIcon type={Icon.Dashboard} fillClass='active-item-icon'/>
         }, {
             title: t('navigation.tickets'),
             link: TicketsPath,
             id: 'navigation-tickets',
-            icon: <IconTicket/>
+            icon: <SvgIcon type={Icon.Tickets} fillClass='active-item-icon'/>
         }, {
             title: t('navigation.contacts'),
             link: '/contacts',
             id: 'navigation-contacts',
-            icon: <IconContacts/>
+            icon: <SvgIcon type={Icon.Contacts} fillClass='active-item-icon'/>
         }, {
             title: t('navigation.calls'),
             link: '/calls',
             id: 'navigation-calls',
-            icon: <IconPhone rectClass='navigation-icon-rect'/>
+            icon: <SvgIcon type={Icon.Phone} fillClass='active-item-icon'/>
         }, {
             title: t('navigation.chat'),
             link: '/chat',
             id: 'navigation-chat',
-            icon: <IconChat rectClass='navigation-icon-rect'/>
+            icon: <SvgIcon type={Icon.Chat} fillClass='active-item-icon'/>
         }, {
             title: t('navigation.sms'),
             link: '/sms',
             id: 'navigation-sms',
-            icon: <IconSms/>
+            icon: <SvgIcon type={Icon.Sms} fillClass='active-item-icon'/>
         }, {
             title: t('navigation.email'),
             link: '/email',
             id: 'navigation-email',
-            icon: <IconEmail/>
+            icon: <SvgIcon type={Icon.Email} fillClass='active-item-icon'/>
         }
     ];
 
@@ -74,7 +68,7 @@ const Navigation = () => {
     return (
         <nav className='h-full flex flex-col'>
             <div className='h-16 pl-7 flex items-center border-r'>
-                <MenuIcon className='cursor-pointer' onClick={() => dispatch(toggleNavigation())}/>
+                <SvgIcon type={Icon.Menu} className='cursor-pointer' fillClass='active-item-icon' onClick={() => dispatch(toggleNavigation())}/>
             </div>
             <div className='border-t'>
                 {items}

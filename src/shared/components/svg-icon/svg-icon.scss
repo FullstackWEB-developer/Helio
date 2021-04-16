@@ -13,6 +13,11 @@
   height: 2rem;
 }
 
+.large-40 {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
 .x-large {
   width: 3rem;
   height: 3rem;
@@ -20,4 +25,49 @@
 
 .fill-default {
   fill: var(--light-text-high-emphasis);
+}
+
+.stroke-default {
+  stroke: var(--icon-stroke-high-emphasis);
+  stroke-width: 1;
+}
+
+.header-inactive-item-icon {
+  fill: var(--header-inactive-item-icon);
+}
+
+.header-active-item-icon {
+  fill: var(--header-active-item-icon);
+}
+
+.navigation-inactive-item-icon {
+  fill: var(--navigation-inactive-item-icon);
+}
+
+.active-item-icon {
+  fill: var(--navigation-active-item-icon);
+}
+
+.status-bar-inactive-item-icon {
+  fill: var(--status-bar-inactive-item-icon);
+}
+
+.edit-icon {
+  fill: var(--edit-icon);
+}
+
+.search-icon {
+  fill: var(--search-icon);
+}
+
+.channel-icon-fill {
+  fill: var(--channel-icon);
+}
+
+.channel-icon-stroke {
+  stroke: var(--channel-icon);
+}
+
+.warning-icon {
+  fill: var(--color-yellow);
 }

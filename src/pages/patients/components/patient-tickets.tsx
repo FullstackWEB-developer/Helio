@@ -5,7 +5,6 @@ import {PatientTicketsRequest} from '../../tickets/models/patient-tickets-reques
 import {DefaultPagination} from '@shared/models/paging.model';
 import {getPatientTickets} from '../../tickets/services/tickets.service';
 import ThreeDots from '@shared/components/skeleton-loader/skeleton-loader';
-import {ReactComponent as AddIcon} from '@shared/icons/Icon-Add-Black-24px.svg';
 import {useHistory} from 'react-router-dom';
 import TicketChannelTypeIcon from '../../tickets/components/ticket-channel-type-icon';
 import utils from '@shared/utils/utils';
@@ -17,6 +16,8 @@ import PatientTicketLabel from './patient-ticket-label';
 import TicketStatusDisplay from '../../tickets/components/ticket-status-display';
 import {TicketsPath} from '../../../app/paths';
 import {OneMinute, QueryPatientTickets} from '@constants/react-query-constants';
+import SvgIcon from '@components/svg-icon/svg-icon';
+import {Icon} from '@components/svg-icon/icon';
 
 interface PatientTicketProps {
     patientId: number;
@@ -49,7 +50,11 @@ const PatientTickets: React.FC<PatientTicketProps> = ({patientId}) => {
                 : (
                     <Fragment>
                         <div className={'py-3 cursor-pointer align-middle border-b'}
-                             onClick={() => history.push(`${TicketsPath}/new?patientId=${patientId}`)}><AddIcon/></div>
+                             onClick={() => history.push(`${TicketsPath}/new?patientId=${patientId}`)}>
+                            <SvgIcon type={Icon.AddBlack}
+                                 className='medium h-8 w-8 pl-2 cursor-pointer'
+                                 fillClass='active-item-icon'/>
+                        </div>
                         {
                             error && <div className={'pt-4 text-red-500'}>{t('common.error')}</div>
                         }

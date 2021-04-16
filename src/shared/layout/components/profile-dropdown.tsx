@@ -2,7 +2,6 @@ import {useTranslation} from 'react-i18next';
 import {useDispatch, useSelector} from 'react-redux';
 import {logOut, updateUserStatus} from '../../store/app-user/appuser.slice';
 import {msalInstance} from '@pages/login/auth-config';
-import {ReactComponent as PlaceholderIcon} from '../../icons/Icon-Placeholder-16px.svg';
 import {UserStatus} from '../../store/app-user/app-user.models';
 import {DropdownItemModel, DropdownModel} from '@components/dropdown/dropdown.models';
 import {selectAgentStates, selectUserStatus} from '../../store/app-user/appuser.selectors';
@@ -10,6 +9,9 @@ import Logger from '../../services/logger';
 import Dropdown from '../../components/dropdown/dropdown';
 import StatusDot from '@components/status-dot/status-dot';
 import {AgentState} from '@shared/models/agent-state';
+import {Icon} from '@components/svg-icon/icon';
+import SvgIcon from '@components/svg-icon/svg-icon';
+import React from 'react';
 
 interface UserStatuses {
     label: string;
@@ -85,18 +87,18 @@ const ProfileDropdown = () => {
         label: t('user_profile.my_profile'),
         value: 'my_profile',
         hasDivider: true,
-        icon: <PlaceholderIcon/>
+        icon: <SvgIcon type={Icon.Placeholder} className='small' fillClass=''/>
     });
     items.push({
         label: t('user_profile.my_states'),
         value: 'my_states',
-        icon: <PlaceholderIcon/>
+        icon: <SvgIcon type={Icon.Placeholder} className='small' fillClass=''/>
     });
     items.push({
         label: t('user_profile.sign_out'),
         onClick: () => signOut(),
         value: 'sign_out',
-        icon: <PlaceholderIcon/>
+        icon: <SvgIcon type={Icon.Placeholder} className='small' fillClass=''/>
     });
 
     const dropdownModel: DropdownModel = {

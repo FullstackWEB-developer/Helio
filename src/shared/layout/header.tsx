@@ -1,7 +1,5 @@
 import React, {useRef} from 'react';
 import Avatar from '@components/avatar/avatar';
-import {ReactComponent as AthenaIcon} from '@icons/Icon-Athena-24px.svg';
-import {ReactComponent as MSIcon} from '@icons/Icon-Office365-24px.svg';
 import SearchBar from '../components/search-bar/search-bar';
 import {useDispatch, useSelector} from 'react-redux';
 import {toggleCcp, toggleUserProfileMenu} from './store/layout.slice';
@@ -43,7 +41,7 @@ const Header = () => {
                 <div className='flex flex-row'>
                     <div className='flex items-center h-16 w-full md:w-auto'>
                         <div className='pl-7 md:pl-0 pr-36'>
-                            <div className='cursor-pointer'  onClick={() => history.push('/')}>
+                            <div className='cursor-pointer' onClick={() => history.push('/')}>
                                 <HelioLogo className='fill-current text-primary-600'/>
                             </div>
                         </div>
@@ -54,10 +52,10 @@ const Header = () => {
                 </div>
                 <div className='flex flex-row items-center'>
                     <div className='cursor-pointer pr-4'>
-                        <SvgIcon type={Icon.Ccp} data-test-id='toggle-ccp' className='x-large' onClick={() => dispatch(toggleCcp())}/>
+                        <SvgIcon type={Icon.Ccp} data-test-id='toggle-ccp' className='large-40' fillClass='header-active-item-icon' onClick={() => dispatch(toggleCcp())}/>
                     </div>
                     <div className='pr-1'>
-                        <SvgIcon type={Icon.Phone}/>
+                        <SvgIcon type={Icon.Phone} className='small' fillClass='header-inactive-item-icon'/>
                     </div>
                     <div>
                         <div data-test-id='number-of-agent-voices'
@@ -66,7 +64,7 @@ const Header = () => {
                         </div>
                     </div>
                     <div className='pr-1.5'>
-                        <SvgIcon type={Icon.Chat}/>
+                        <SvgIcon type={Icon.Chat} className='medium' fillClass='header-inactive-item-icon'/>
                     </div>
                     <div>
                         <div data-test-id='number-of-agent-chats'
@@ -76,10 +74,10 @@ const Header = () => {
                     </div>
                     <div className='flex flex-row items-center'>
                         <div className='hidden md:block pr-6'>
-                            <MSIcon className='cursor-pointer'/>
+                            <SvgIcon type={Icon.Office365} className='cursor-pointer' opacity='0.596'/>
                         </div>
                         <div data-test-id='athena-icon' className='pr-10 hidden md:block'>
-                            <AthenaIcon className='cursor-pointer'/>
+                            <SvgIcon type={Icon.Athena} className='cursor-pointer' opacity='0.55'/>
                         </div>
                         <div>
                             <div ref={dropdownRef} className='hidden h-full md:block relative'>

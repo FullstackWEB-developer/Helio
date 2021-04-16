@@ -1,11 +1,11 @@
-import {ReactComponent as ArrowDown} from '@icons/Icon-Arrow-down-16px.svg';
-import {ReactComponent as ArrowUp} from '@icons/Icon-Arrow-up-16px.svg';
 import './dropdown-select.scss';
 import {useTranslation} from 'react-i18next';
 import {DropdownItemModel} from '@components/dropdown/dropdown.models';
-import {useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
 import DropdownCell from '@components/dropdown/dropdown-cell';
 import customHooks from '../../hooks/customHooks';
+import {Icon} from '@components/svg-icon/icon';
+import SvgIcon from '@components/svg-icon/svg-icon';
 
 export interface DropdownSelectProps {
     items: DropdownItemModel[];
@@ -44,7 +44,8 @@ const DropdownSelect = ({items, defaultValue, onClick}: DropdownSelectProps) => 
                 {selected ? t(selected.label) : ''}
             </div>
             <div data-test-id='dropdown-select-arrow'>
-                {isOpen ? <ArrowUp/> : <ArrowDown/>}
+                {isOpen ? <SvgIcon type={Icon.ArrowUp} className='cursor-pointer' fillClass='arrow-item-icon'/>
+                    : <SvgIcon type={Icon.ArrowDown} className='cursor-pointer' fillClass='arrow-item-icon'/>}
             </div>
         </div>
         {isOpen && <div className='dropdown-select-options border-b border-t absolute w-full'>
