@@ -1,5 +1,6 @@
 import { Controller, useForm } from 'react-hook-form';
-import Select, { Option } from '../../../../shared/components/select/select';
+import Select from '../../../../shared/components/select/select';
+import { Option } from '@components/option/option';
 import Button from '../../../../shared/components/button/button';
 import React from 'react';
 import withErrorLogging from '../../../../shared/HOC/with-error-logging';
@@ -57,7 +58,6 @@ const CompleteReschedulingForm = ({ selectedAppointmentId }: CompleteReschedulin
                 as={Select}
                 rules={{ required: t('common.required') as string }}
                 control={control}
-                className={'w-full'}
                 error={errors.newAppointmentId?.message}
                 data-test-id='reschedule-new-appointment-select'
                 label={'reschedule_appointment.new_appointment'}

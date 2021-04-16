@@ -11,7 +11,8 @@ import { selectEnumValues, selectLookupValues, selectSearchTerm, selectTicketsPa
 import Radio  from '@components/radio/radio';
 import { TicketOptionsBase } from '../models/ticket-options-base.model';
 import { Controller, useForm } from 'react-hook-form';
-import Select, { Option } from '@components/select/select';
+import Select from '@components/select/select';
+import { Option } from '@components/option/option';
 import { selectDepartmentList, selectUserList } from '@shared/store/lookups/lookups.selectors';
 import { User } from '@shared/models/user';
 import { TicketQuery } from '../models/ticket-query';
@@ -19,7 +20,7 @@ import dayjs from 'dayjs';
 import { TicketEnumValue } from '../models/ticket-enum-value.model';
 import utc from 'dayjs/plugin/utc';
 import Button from '@components/button/button';
-import Input from '@components/input/input';
+import DateTimeInput from '@components/date-time-input/date-time-input';
 import TagInput from '@components/tag-input/tag-input';
 import './ticket-filter.scss';
 const TicketFilter = () => {
@@ -279,7 +280,7 @@ const TicketFilter = () => {
                     data-test-id='ticket-filter-from-date'
                     name='fromDate'
                     type='date'
-                    as={Input}
+                    as={DateTimeInput}
                     label={'tickets.filter.from_date'}
                 />
                 <Controller
@@ -288,7 +289,7 @@ const TicketFilter = () => {
                     name='toDate'
                     data-test-id='ticket-filter-to-date'
                     type='date'
-                    as={Input}
+                    as={DateTimeInput}
                     label={'tickets.filter.to_date'}
                 />
             </div>);
@@ -324,10 +325,14 @@ const TicketFilter = () => {
                         render={(props) => (
                             <Select
                                 {...props}
-                                data-test-id={'assigned-to-user-list'}
-                                className={'w-full border-none h-14'}
+                                data-test-id={'assigned-to-user-list'}                                
                                 options={userOptions}
                                 value={props.value}
+                                onChange={(option?: Option)=>{
+                                    if(option){
+                                        props.onChange(option?.value);
+                                    }
+                                }}
                             />
                         )}
                     />

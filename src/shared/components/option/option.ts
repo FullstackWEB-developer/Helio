@@ -1,4 +1,5 @@
 export interface Option {
     value: string,
-    label: string
+    label: string,
+    disabled?: boolean
 }

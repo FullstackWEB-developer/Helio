@@ -4,7 +4,7 @@ import {useTranslation} from 'react-i18next';
 import withErrorLogging from '@shared/HOC/with-error-logging';
 import {Controller, useForm} from 'react-hook-form';
 import React from 'react';
-import Select, {Option as SelectOption} from '@components/select/select';
+import Select from '@components/select/select';
 import {Option} from '@components/option/option';
 import Radio from '@components/radio/radio';
 import Button from '@components/button/button';
@@ -18,16 +18,13 @@ import {updatePatientContactInformation} from '@pages/patients/services/patients
 import ThreeDots from '@components/skeleton-loader/skeleton-loader';
 import { setPatient } from '@pages/patients/store/patients.slice';
 import ControlledInput from '@components/controllers/ControllerInput';
-import {PatientChartSummary} from '@pages/patients/models/patient-chart-summary';
 
 export interface PatientInformationUpdateProps
 {
     onUpdateComplete: () => void;
-    patientChartSummary: PatientChartSummary
 }
 
-
-const PatientContactInfoUpdate = ({onUpdateComplete, patientChartSummary} : PatientInformationUpdateProps) => {
+const PatientContactInfoUpdate = ({onUpdateComplete} : PatientInformationUpdateProps) => {
     const {t} = useTranslation();
     const dispatch = useDispatch();
     const patient = useSelector(selectPatient);
@@ -81,15 +78,7 @@ const PatientContactInfoUpdate = ({onUpdateComplete, patientChartSummary} : Pati
     }
 
     const getStatesOptions = () : Option[] => {
-        if (states && states.length > 0) {
-            return [{
-                label:t('common.please_select'),
-                value: ''
-            }, ...states];
-        } else {
-
-            return [];
-        }
+        return states && states.length > 0 ? [...states] : [];
     }
 
     const YesNoOptions: Option[] =
@@ -101,7 +90,7 @@ const PatientContactInfoUpdate = ({onUpdateComplete, patientChartSummary} : Pati
             label: t('common.no')
         }];
 
-    const contactPreferenceOptions : SelectOption[] = [
+    const contactPreferenceOptions : Option[] = [
         {
             value:'MOBILEPHONE',
             label: 'patient.contact_preference.mobilephone',
@@ -124,7 +113,6 @@ const PatientContactInfoUpdate = ({onUpdateComplete, patientChartSummary} : Pati
     if (updatePatientContactInfoMutation.isLoading) {
         return <ThreeDots/>;
     }
-
     return (
         <div>
             {updatePatientContactInfoMutation.isError && <div className='text-danger'>
@@ -149,7 +137,7 @@ const PatientContactInfoUpdate = ({onUpdateComplete, patientChartSummary} : Pati
                             required={watchContactPreference === 'HOMEPHONE'}
                             type='tel'
                             label='patient.summary.home_phone'
-                            className='w-full'
+                            className='w-full'                            
                         />
                     </div>
                 </div>
@@ -192,14 +180,21 @@ const PatientContactInfoUpdate = ({onUpdateComplete, patientChartSummary} : Pati
                             name='contactPreference'
                             control={control}
                             rules={{required: requiredText}}
+                            defaultValue={contactPreferenceOptions.find(o => o.value === patient.contactPreference)}
                             render={(props) => (
                                 <Select
                                     options={contactPreferenceOptions}
                                     label='patient.summary.contact_preference'
-                                    {...props}
-                                    className='w-full'
+                                    {...props}                                    
                                     data-test-id={'patient-update-contact_preference'}
                                     error={errors.contactPreference?.message}
+                                    required={true}
+                                    value={props.value}
+                                    onChange={(option?: Option)=>{
+                                        if(option){
+                                            props.onChange(option.value);
+                                        }                                    
+                                    }}
                                 />
                             )}
                         />
@@ -213,16 +208,21 @@ const PatientContactInfoUpdate = ({onUpdateComplete, patientChartSummary} : Pati
                                 <Controller
                                     name='state'
                                     control={control}
-                                    defaultValue={patientChartSummary.state}
+                                    defaultValue={getStatesOptions()?.find(o => o.value === patient.state)}
                                     render={(props) => (
                                             <Select
                                                 order={true}
                                                 label='patient.summary.state'
                                                 {...props}
-                                                options={getStatesOptions()}
-                                                className='w-full'
+                                                value={props.value}
+                                                options={getStatesOptions()}                                                
                                                 data-test-id={'patient-update-state'}
                                                 error={errors.state?.message}
+                                                onChange={(option?: Option)=>{
+                                                    if(option){
+                                                        props.onChange(option.value);
+                                                    }                                    
+                                                }}
                                             />
                                     )}
                                 />

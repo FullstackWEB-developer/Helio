@@ -1,13 +1,14 @@
-import React, {ChangeEvent, useEffect, useMemo, useState} from 'react';
-import {useTranslation} from 'react-i18next';
-import {useDispatch, useSelector} from 'react-redux';
-import {addFeed, getEnumByType, getLookupValues, updateTicket} from '../../services/tickets.service';
-import {Ticket} from '../../models/ticket';
-import {Controller, useForm} from 'react-hook-form';
-import Select, {Option} from '../../../../shared/components/select/select';
-import TagInput from '../../../../shared/components/tag-input/tag-input';
-import Button from '../../../../shared/components/button/button';
-import {selectDepartmentList, selectIsDepartmentListLoading} from '../../../../shared/store/lookups/lookups.selectors';
+import React, { useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
+import { addFeed, getEnumByType, getLookupValues, updateTicket } from '../../services/tickets.service';
+import { Ticket } from '../../models/ticket';
+import { Controller, useForm } from 'react-hook-form';
+import Select from '@components/select/select';
+import { Option } from '@components/option/option';
+import TagInput from '@components/tag-input/tag-input';
+import Button from '@components/button/button';
+import { selectDepartmentList, selectIsDepartmentListLoading } from '@shared/store/lookups/lookups.selectors';
 import {
     selectEnumValues,
     selectIsTicketEnumValuesLoading,
@@ -15,25 +16,25 @@ import {
     selectLookupValues,
     selectTicketOptionsError
 } from '../../store/tickets.selectors';
-import {setTicket} from '../../store/tickets.slice';
-import {getDepartments} from '../../../../shared/services/lookups.service';
-import {Department} from '../../../../shared/models/department';
-import ThreeDots from '../../../../shared/components/skeleton-loader/skeleton-loader';
-import withErrorLogging from '../../../../shared/HOC/with-error-logging';
-import {FeedTypes, TicketFeed} from '../../models/ticket-feed';
-import {useMutation} from 'react-query';
-import Logger from '../../../../shared/services/logger';
+import { setTicket } from '../../store/tickets.slice';
+import { getDepartments } from '@shared/services/lookups.service';
+import { Department } from '@shared/models/department';
+import ThreeDots from '@components/skeleton-loader/skeleton-loader';
+import withErrorLogging from '@shared/HOC/with-error-logging';
+import { FeedTypes, TicketFeed } from '../../models/ticket-feed';
+import { useMutation } from 'react-query';
+import Logger from '@shared/services/logger';
 
 interface TicketInfoProps {
     ticket: Ticket
 }
 
-const TicketDetailTicketInfo = ({ticket}: TicketInfoProps) => {
-    const {handleSubmit, control, errors, formState} = useForm();
+const TicketDetailTicketInfo = ({ ticket }: TicketInfoProps) => {
+    const { handleSubmit, control, errors, formState } = useForm();
     const [formVisible, setFormVisible] = useState(true);
     const [isTicketInfoButtonsVisible, setIsTicketInfoButtonsVisible] = useState(false);
 
-    const {t} = useTranslation();
+    const { t } = useTranslation();
     const dispatch = useDispatch();
     const departments = useSelector(selectDepartmentList);
     const ticketPriorities = useSelector((state => selectEnumValues(state, 'TicketPriority')));
@@ -82,7 +83,7 @@ const TicketDetailTicketInfo = ({ticket}: TicketInfoProps) => {
             tags: isDirty('tagsInput') ? tags : undefined
         };
         if (ticket?.id) {
-            ticketUpdateMutation.mutate({id: ticket.id, ticketData: ticketData});
+            ticketUpdateMutation.mutate({ id: ticket.id, ticketData: ticketData });
         }
     }
 
@@ -124,15 +125,15 @@ const TicketDetailTicketInfo = ({ticket}: TicketInfoProps) => {
     }, [departments]);
 
     const [selectedStatus, setSelectedStatus] = useState(
-        statusOptions ? statusOptions.find((o: Option) => parseInt(o.value) === ticket?.status) : null
+        statusOptions ? statusOptions.find((o: Option) => parseInt(o.value) === ticket?.status) : undefined
     );
 
     const [selectedPriority, setSelectedPriority] = useState(
-        priorityOptions && !selectedStatus ? priorityOptions.find((o: Option) => parseInt(o.value) === ticket?.priority) : null
+        priorityOptions && !selectedStatus ? priorityOptions.find((o: Option) => parseInt(o.value) === ticket?.priority) : undefined
     );
 
     const [selectedLocation, setSelectedLocation] = useState(
-        locationOptions ? locationOptions.find((o: Option) => o.value === ticket?.location) : null
+        locationOptions ? locationOptions.find((o: Option) => o.value === ticket?.location) : undefined
     );
 
     useEffect(() => {
@@ -156,7 +157,7 @@ const TicketDetailTicketInfo = ({ticket}: TicketInfoProps) => {
         if (ticket?.status) {
             setSelectedStatus(statusOptions.find((o: Option) => parseInt(o.value) === ticket?.status));
         }
-    }, [ticket?.status])
+    }, [statusOptions, ticket?.status])
 
     const getTicketLookupValuesOptions = (data: any[] | undefined) => {
         if (data) {
@@ -166,7 +167,7 @@ const TicketDetailTicketInfo = ({ticket}: TicketInfoProps) => {
     }
 
     const [selectedTicketTypeOption, setSelectedTicketTypeOption] =
-        useState(ticketTypeOptions ? ticketTypeOptions.find((o: Option) => o.value === ticket?.type) : null);
+        useState(ticketTypeOptions ? ticketTypeOptions.find((o: Option) => o.value === ticket?.type) : undefined);
 
     const getTicketLookupValuesOptionsByTicketType = (data: any[] | undefined) => {
         if (data && selectedTicketTypeOption) {
@@ -190,11 +191,11 @@ const TicketDetailTicketInfo = ({ticket}: TicketInfoProps) => {
     const tagOptions: Option[] = getTicketLookupValuesOptions(ticketLookupValuesTags);
 
     const [selectedReason, setSelectedReason] = useState(
-        reasonOptions ? reasonOptions.find((o: Option) => o.value === ticket?.reason) : null
+        reasonOptions ? reasonOptions.find((o: Option) => o.value === ticket?.reason) : undefined
     );
 
     const [selectedDepartment, setSelectedDepartment] = useState(
-        departmentOptions ? departmentOptions.find((o: Option) => o.value === ticket?.department) : null
+        departmentOptions ? departmentOptions.find((o: Option) => o.value === ticket?.department) : undefined
     );
 
     const [tags, setTags] = useState<string[]>(ticket?.tags || []);
@@ -217,10 +218,10 @@ const TicketDetailTicketInfo = ({ticket}: TicketInfoProps) => {
         reasonOptions, selectedReason, ticket?.reason,
         departmentOptions, selectedDepartment, ticket?.department]);
 
-    const handleChangeItem = (event: React.ChangeEvent<HTMLSelectElement>, itemType: Option[], dirtyField: string, setter: Function) => {
-        event.stopPropagation();
+    const handleChangeItem = (option: Option, itemType: Option[], dirtyField: string, setter: Function) => {
+
         const selectedOption =
-            itemType ? itemType.find((o: Option) => o.value.toString() === event.target.value) : {} as any;
+            itemType ? itemType.find((o: Option) => o.value === option?.value) : {} as any;
 
         if (selectedOption) {
             setter(selectedOption);
@@ -265,7 +266,7 @@ const TicketDetailTicketInfo = ({ticket}: TicketInfoProps) => {
     return <div className={'py-4 mx-auto flex flex-col'}>
         {formVisible &&
             <form onSubmit={handleSubmit(onSubmit)}>
-                <div className='divide-y'>
+                <div>
                     <Controller
                         name='status'
                         control={control}
@@ -274,14 +275,14 @@ const TicketDetailTicketInfo = ({ticket}: TicketInfoProps) => {
                             <Select
                                 {...props}
                                 data-test-id={'ticket-detail-status'}
-                                className={'w-full border-none h-14'}
                                 label={'ticket_detail.info_panel.status'}
-                                placeholder={t('ticket_detail.info_panel.status')}
                                 options={statusOptions}
-                                value={selectedStatus?.value}
-                                onChange={(e: ChangeEvent<HTMLSelectElement>) => {
-                                    props.onChange(e)
-                                    handleChangeItem(e, statusOptions, "status", setSelectedStatus);
+                                value={selectedStatus}
+                                onChange={(option?: Option) => {                                    
+                                    if (option) {
+                                        props.onChange(option.value);
+                                        handleChangeItem(option, statusOptions, "status", setSelectedStatus);
+                                    }
                                 }}
                                 error={errors.status?.message}
                             />
@@ -295,14 +296,14 @@ const TicketDetailTicketInfo = ({ticket}: TicketInfoProps) => {
                             <Select
                                 {...props}
                                 data-test-id={'ticket-detail-priority'}
-                                className={'w-full border-none h-14'}
                                 label={'ticket_detail.info_panel.priority'}
-                                placeholder={t('ticket_detail.info_panel.priority')}
                                 options={priorityOptions}
-                                value={selectedPriority?.value}
-                                onChange={(e: ChangeEvent<HTMLSelectElement>) => {
-                                    props.onChange(e)
-                                    handleChangeItem(e, priorityOptions, "priority", setSelectedPriority);
+                                value={selectedPriority}
+                                onChange={(option?: Option) => {                                    
+                                    if (option) {
+                                        props.onChange(option.value);
+                                        handleChangeItem(option, priorityOptions, "priority", setSelectedPriority);
+                                    }
                                 }}
                                 error={errors.priority?.message}
                             />
@@ -316,39 +317,40 @@ const TicketDetailTicketInfo = ({ticket}: TicketInfoProps) => {
                             <Select
                                 {...props}
                                 data-test-id={'ticket-detail-ticket-type'}
-                                className={'w-full border-none h-14'}
                                 label={'ticket_detail.info_panel.ticket_type'}
                                 options={ticketTypeOptions}
-                                value={selectedTicketTypeOption?.value}
-                                onChange={(e: ChangeEvent<HTMLSelectElement>) => {
-                                    props.onChange(e)
-                                    handleChangeItem(e, ticketTypeOptions, "ticketType", setSelectedTicketTypeOption);
+                                value={selectedTicketTypeOption}
+                                onChange={(option?: Option) => {                                    
+                                    if (option) {
+                                        props.onChange(option.value);
+                                        handleChangeItem(option, ticketTypeOptions, "ticketType", setSelectedTicketTypeOption);
+                                    }
                                 }}
                                 error={errors.ticketType?.message}
                             />
                         )}
                     />
                     {(selectedTicketTypeOption && reasonOptions.length > 0) &&
-                    <Controller
-                        name='reason'
-                        control={control}
-                        defaultValue=''
-                        render={(props) => (
-                            <Select
-                                {...props}
-                                data-test-id={'ticket-detail-reason'}
-                                className={'w-full border-none h-14'}
-                                label={'ticket_detail.info_panel.reason'}
-                                placeholder={t('ticket_detail.info_panel.reason')}
-                                options={reasonOptions}
-                                value={selectedReason?.value}
-                                onChange={(e: ChangeEvent<HTMLSelectElement>) => {
-                                    props.onChange(e)
-                                    handleChangeItem(e, reasonOptions, "reason", setSelectedReason);
-                                }}
-                            />
-                        )}
-                    />
+                        <Controller
+                            name='reason'
+                            control={control}
+                            defaultValue=''
+                            render={(props) => (
+                                <Select
+                                    {...props}
+                                    data-test-id={'ticket-detail-reason'}
+                                    label={'ticket_detail.info_panel.reason'}
+                                    options={reasonOptions}
+                                    value={selectedReason}
+                                    onChange={(option?: Option) => {                                        
+                                        if (option) {
+                                            props.onChange(option?.value);
+                                            handleChangeItem(option, reasonOptions, "reason", setSelectedReason);
+                                        }
+                                    }}
+                                />
+                            )}
+                        />
                     }
                     <Controller
                         name='department'
@@ -357,15 +359,15 @@ const TicketDetailTicketInfo = ({ticket}: TicketInfoProps) => {
                         render={(props) => (
                             <Select
                                 {...props}
-                                data-test-id='ticket-detail-department'
-                                className={'w-full border-none h-14'}
-                                label={'ticket_detail.info_panel.department'}
-                                placeholder={t('ticket_detail.info_panel.department')}
+                                data-test-id='ticket-detail-department'                                
+                                label={'ticket_detail.info_panel.department'}                                
                                 options={departmentOptions}
-                                value={selectedDepartment?.value}
-                                onChange={(e: ChangeEvent<HTMLSelectElement>) => {
-                                    props.onChange(e)
-                                    handleChangeItem(e, departmentOptions, "department", setSelectedDepartment);
+                                value={selectedDepartment}
+                                onChange={(option?: Option) => {                                    
+                                    if (option) {
+                                        props.onChange(option?.value);
+                                        handleChangeItem(option, departmentOptions, "department", setSelectedDepartment);
+                                    }
                                 }}
                             />
                         )}
@@ -377,15 +379,16 @@ const TicketDetailTicketInfo = ({ticket}: TicketInfoProps) => {
                         render={(props) => (
                             <Select
                                 {...props}
-                                data-test-id={'ticket-detail-location'}
-                                className={'w-full border-none h-14'}
+                                data-test-id={'ticket-detail-location'}                                
                                 label={'ticket_detail.info_panel.location'}
-                                placeholder={t('ticket_detail.info_panel.location')}
+                                
                                 options={locationOptions}
-                                value={selectedLocation?.value}
-                                onChange={(e: ChangeEvent<HTMLSelectElement>) => {
-                                    props.onChange(e)
-                                    handleChangeItem(e, locationOptions, "location", setSelectedLocation);
+                                value={selectedLocation}
+                                onChange={(option?: Option) => {                                    
+                                    if(option){
+                                        props.onChange(option.value);
+                                        handleChangeItem(option, locationOptions, "location", setSelectedLocation);
+                                    }                                    
                                 }}
                                 error={errors.location?.message}
                             />
@@ -412,15 +415,15 @@ const TicketDetailTicketInfo = ({ticket}: TicketInfoProps) => {
                     <div className='flex flex-row space-x-4 justify-end bg-secondary-50 mt-2'>
                         <div className='flex items-center'>
                             <Button data-test-id='ticket-detail-info-panel-cancel-ticket-button' type={'button'}
-                                    buttonType='secondary'
-                                    label={'common.cancel'}
-                                    onClick={() => resetForm()}
+                                buttonType='secondary'
+                                label={'common.cancel'}
+                                onClick={() => resetForm()}
                             />
                         </div>
                         <div>
                             <Button data-test-id='ticket-detail-info-panel-update-ticket-button' type={'submit'}
-                                    buttonType='small'
-                                    label={'ticket_detail.info_panel.update_ticket'}/>
+                                buttonType='small'
+                                label={'ticket_detail.info_panel.update_ticket'} />
                         </div>
                     </div>
                 }

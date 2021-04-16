@@ -279,6 +279,8 @@
   --profile-dropdown-shadow: 0 0.25rem 0.125rem 0 rgba(0, 0, 0, 0.15);
   --ccp-header-color: #4a4a4a;
 
+  --input-focus-background-color: #F4FCF8;
+  --select-box-shadow: 0 0.25rem 0.125rem 0 rgba(0, 0, 0, 0.15);
   --external-access-background: rgba(0, 0, 0, 0.04);
   --appointment-list-item-background: rgba(0, 0, 0, 0.04);
 
@@ -301,15 +303,15 @@
 }
 
 .text-success {
-  color: var(--color-primary-900);
+  color: var(--color-primary-900) !important;
 }
 
 .text-danger {
-  color: var(--color-red);
+  color: var(--color-red) !important;
 }
 
 .text-disabled {
-  color: var(--light-text-disabled);
+  color: var(--light-text-disabled) !important;
 }
 
 textarea:focus, input:focus, select:focus {

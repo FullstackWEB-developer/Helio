@@ -9,7 +9,8 @@ import {
 } from '../../patients/store/patients.slice';
 import { selectAppointmentList, selectVerifiedPatent } from '../../patients/store/patients.selectors';
 import ThreeDots from '@components/skeleton-loader/skeleton-loader';
-import Select, { Option } from '@components/select/select';
+import Select from '@components/select/select';
+import { Option } from '@components/option/option';
 import { selectProviderList } from '@shared/store/lookups/lookups.selectors';
 import { Appointment } from '../appointment/models/appointment.model';
 import {
@@ -22,7 +23,7 @@ import FindOpenSlotsForm from './components/find-open-slots-form';
 import CompleteReschedulingForm from './components/complete-rescheduling-form';
 import { clearRescheduleAppointmentState, selectedAppointmentUpdated } from './store/reschedule-appointment.slice';
 import dayjs from 'dayjs';
-import {getAppointments} from '@pages/patients/services/patients.service';
+import { getAppointments } from '@pages/patients/services/patients.service';
 
 const RescheduleAppointment = () => {
     const { t } = useTranslation();
@@ -32,7 +33,7 @@ const RescheduleAppointment = () => {
     const isRescheduling = useSelector(selectIsAppointmentRescheduling);
     const error = useSelector(selectAppointmentSchedulingError);
     const rescheduledAppointment = useSelector(selectRescheduledAppointment);
-    const [selectedAppointmentId, setSelectedAppointmentId] = useState<string | null>(null);
+    const [selectedAppointment, setSelectedAppointment] = useState<Option>();
     const providers = useSelector(selectProviderList);
     const appointments = useSelector(selectAppointmentList);
 
@@ -52,9 +53,9 @@ const RescheduleAppointment = () => {
     }, [dispatch, verifiedPatient]);
 
 
-    const getAppointmentOptions = (appts: Appointment[]) => {
-        if (appts && appts.length > 0) {
-            const options = appts.map(appointment => {
+    const getAppointmentOptions = (appointments: Appointment[]) => {
+        if (appointments && appointments.length > 0) {
+            const options = appointments.map(appointment => {
                 const date = new Date(appointment.date);
                 const dateStr = ` ${dayjs(date).format('MM/dd/yyyy')} at ${appointment.startTime}`;
                 let label = `Your ${appointment.appointmentType} appointment on ${dateStr}`;
@@ -63,7 +64,6 @@ const RescheduleAppointment = () => {
                     if (provider?.length > 0) {
                         label += ` with ${provider[0].displayName}`;
                     }
-
                 }
                 return {
                     value: appointment.appointmentId,
@@ -81,14 +81,14 @@ const RescheduleAppointment = () => {
         }
     }
 
-    const updateSelectedAppointment = (event: React.FormEvent) => {
-        const target = event.target as HTMLSelectElement;
-        setSelectedAppointmentId(target.value);
-        dispatch(selectedAppointmentUpdated());
+    const updateSelectedAppointment = (option?: Option) => {
+        if(option){
+            setSelectedAppointment(option);
+            dispatch(selectedAppointmentUpdated());
+        }               
     }
 
     const currentAppointmentsOptions: Option[] = getAppointmentOptions(appointments);
-
     if (!verifiedPatient) {
         return <div>{t('hipaa_validation_form.hipaa_verification_failed')}</div>
     }
@@ -104,6 +104,7 @@ const RescheduleAppointment = () => {
     if (error) {
         return (<div>{t(error)}</div>);
     }
+
     if (appointments.length === 0) {
         return (<div>{t('appointment.no_appointments')}</div>);
     }
@@ -111,21 +112,19 @@ const RescheduleAppointment = () => {
     return (
         <div className={'w-96 py-4 mx-auto flex flex-col'}>
             <Select
-                options={currentAppointmentsOptions}
-                className={'w-full'}
-                value={selectedAppointmentId ? selectedAppointmentId : ''}
-                onChange={(e: React.FormEvent) => updateSelectedAppointment(e)}
+                options={currentAppointmentsOptions}                
+                value={selectedAppointment}
+                onChange={(option?: Option, searchQuery?: string) => updateSelectedAppointment(option)}
                 data-test-id='reschedule-existing-appointment-select'
                 label={'reschedule_appointment.select_appointment_to_reschedule'}
             />
-            <div hidden={!selectedAppointmentId}>
-                <FindOpenSlotsForm selectedAppointmentId={selectedAppointmentId as string} />
+            <div hidden={!selectedAppointment}>
+                <FindOpenSlotsForm selectedAppointmentId={selectedAppointment?.value as string} />
             </div>
 
-            <div hidden={!selectedAppointmentId}>
-                <CompleteReschedulingForm selectedAppointmentId={selectedAppointmentId as string} />
+            <div hidden={!selectedAppointment}>
+                <CompleteReschedulingForm selectedAppointmentId={selectedAppointment?.value as string} />
             </div>
         </div>)
 }
-
 export default withErrorLogging(RescheduleAppointment);

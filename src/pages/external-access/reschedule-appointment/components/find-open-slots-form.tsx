@@ -1,6 +1,6 @@
 import withErrorLogging from '../../../../shared/HOC/with-error-logging';
 import { Controller, useForm } from 'react-hook-form';
-import Input from '../../../../shared/components/input/input';
+import DateTimeInput from '../../../../shared/components/date-time-input/date-time-input';
 import Button from '../../../../shared/components/button/button';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -35,7 +35,7 @@ const FindOpenSlotsForm = ({ selectedAppointmentId }: FindOpenSlotsFormProps) =>
             name='startDate'
             id='startDate'
             rules={{ required: t('common.required') as string }}
-            as={Input}
+            as={DateTimeInput}
             className={'w-full'}
             defaultValue={dayjs().format('yyyy-MM-dd')}
             error={errors.startDate?.message}
@@ -49,7 +49,7 @@ const FindOpenSlotsForm = ({ selectedAppointmentId }: FindOpenSlotsFormProps) =>
             id='endDate'
             className={'w-full'}
             defaultValue={dayjs().add(7, 'day').format('yyyy-MM-dd')}
-            as={Input}
+            as={DateTimeInput}
             error={errors.endDate?.message}
             label={'reschedule_appointment.end_date'}
         />

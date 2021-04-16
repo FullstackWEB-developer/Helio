@@ -19,7 +19,7 @@ export interface ControllerInputProps {
     label?: string;
     dataTestId:string;
     max?: string;
-    type?: 'text' | 'tel' | 'email' | 'date' | 'zip';
+    type?: 'text' | 'tel' | 'email' | 'zip';
 }
 
 const ControlledInput = ({control, required = false, type='text', name, mask='', label='', className='', dataTestId, max, ...props} : ControllerInputProps) =>  {
@@ -59,12 +59,10 @@ const ControlledInput = ({control, required = false, type='text', name, mask='',
             required : required ? requiredText : '',
             pattern: pattern
         }}
-        render={(props) => (
-            <Input
+        render={(props) => (<Input
                 label={label}
                 mask={mask}
                 {...props}
-                max={max}
                 onChange={(e) => {
                     if (type === 'tel') {
                         const value = cleanMask(e.target.value);

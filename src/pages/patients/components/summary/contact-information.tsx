@@ -58,7 +58,6 @@ const ContactInformation = ({patientChartSummary} : ContactInformationProps) => 
                          fillClass='edit-icon'/>
             </div>
             {editMode ? <ContactInformationUpdate
-                patientChartSummary={patientChartSummary}
                 onUpdateComplete={() => setEditMode(false)}/> : <div className='border-t grid grid-cols-2 gap-12'>
                 <PatientChartList headings={[]} rows={contactRows}/>
                 <PatientChartList headings={[]} rows={contactSecondRows}/>

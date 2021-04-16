@@ -3,6 +3,7 @@ import {RedirectLink} from '@pages/external-access/hipaa-verification/models/red
 import {useForm} from 'react-hook-form';
 import React, {useEffect, useState} from 'react';
 import ControlledInput from '@components/controllers/ControllerInput';
+import ControlledDateInput from '@components/controllers/ControlledDateInput';
 import Button from '@components/button/button';
 import {verifyPatient, VerifyPatientProps} from '@shared/services/search.service';
 import {useQuery} from 'react-query';
@@ -111,7 +112,7 @@ const HipaaVerification = ({request} : HipaaVerificationProps) => {
                 <form onSubmit={handleSubmit(onSubmit)} onChange={() => setErrors('')}>
                     <div>
                         <div className='pb-6'>
-                            <ControlledInput
+                            <ControlledDateInput
                                 type='date'
                                 className='w-full md:w-auto'
                                 required={true}

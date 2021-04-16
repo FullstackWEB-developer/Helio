@@ -1,20 +1,21 @@
-import React, {ChangeEvent, useEffect, useState} from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc'
-import {useTranslation} from 'react-i18next';
-import {useDispatch, useSelector} from 'react-redux';
-import {Controller, useForm} from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
+import {Controller, ControllerRenderProps, useForm} from 'react-hook-form';
 import withErrorLogging from '../../shared/HOC/with-error-logging';
 
 import ThreeDots from '../../shared/components/skeleton-loader/skeleton-loader';
 import Button from '../../shared/components/button/button';
 import Input from '../../shared/components/input/input';
-import Select, {Option} from '../../shared/components/select/select';
+import Select from '../../shared/components/select/select';
+import { Option } from '@components/option/option';
 import TagInput from '../../shared/components/tag-input/tag-input';
-import {Contact} from '@shared/models/contact.model';
-import {Department} from '@shared/models/department';
-import {Ticket} from './models/ticket';
-import {TicketNote} from './models/ticket-note';
+import { Contact } from '@shared/models/contact.model';
+import { Department } from '@shared/models/department';
+import { Ticket } from './models/ticket';
+import { TicketNote } from './models/ticket-note';
 import {
     selectEnumValues,
     selectIsTicketEnumValuesLoading,
@@ -22,26 +23,27 @@ import {
     selectLookupValues,
     selectTicketOptionsError
 } from './store/tickets.selectors';
-import {selectContacts, selectIsContactOptionsLoading} from '@shared/store/contacts/contacts.selectors';
+import { selectContacts, selectIsContactOptionsLoading } from '@shared/store/contacts/contacts.selectors';
 import {
     selectDepartmentList,
     selectIsDepartmentListLoading,
     selectUserList
 } from '@shared/store/lookups/lookups.selectors';
 
-import {createTicket, getEnumByType, getLookupValues} from './services/tickets.service';
-import {getContacts} from '@shared/services/contacts.service';
-import {getDepartments, getUserList} from '@shared/services/lookups.service';
+import { createTicket, getEnumByType, getLookupValues } from './services/tickets.service';
+import { getContacts } from '@shared/services/contacts.service';
+import { getDepartments, getUserList } from '@shared/services/lookups.service';
 import TextArea from '../../shared/components/textarea/textarea';
-import {User} from '@shared/models/user';
-import {useHistory} from 'react-router-dom';
+import { User } from '@shared/models/user';
+import { useHistory } from 'react-router-dom';
 import utils from '../../shared/utils/utils';
-import {TicketsPath} from '../../app/paths';
+import { TicketsPath } from '../../app/paths';
+import DateTimeInput from "@components/date-time-input/date-time-input";
 
 const TicketNew = () => {
     dayjs.extend(utc);
-    const {handleSubmit, control, errors} = useForm();
-    const {t} = useTranslation();
+    const { handleSubmit, control, errors } = useForm();
+    const { t } = useTranslation();
     const history = useHistory();
     const dispatch = useDispatch();
     const requiredText = t('common.required');
@@ -106,6 +108,7 @@ const TicketNew = () => {
             tags: tags,
             notes: notes
         };
+
         setCreating(true);
         await createTicket(ticketData);
         setCreating(false);
@@ -138,32 +141,16 @@ const TicketNew = () => {
         }) : [];
     }
 
-    const addFirstOption = (data: any[], firstItemLabel: string, isAsterisk?: boolean) => {
-        data.unshift({
-            value: 0,
-            label: firstItemLabel,
-            hidden: true,
-            isAsterisk: isAsterisk
-        });
-    }
-
     let sourceOptions: Option[] = getOptions(ticketChannels);
     let priorityOptions: Option[] = getOptions(ticketPriorities);
     let statusOptions: Option[] = getOptions(ticketStatuses);
     let ticketTypeOptions: Option[] = getOptions(ticketTypes);
-
-    addFirstOption(sourceOptions, 'Source', true);
-    addFirstOption(priorityOptions, 'Priority', true);
-    addFirstOption(statusOptions, 'Status', true);
-    addFirstOption(ticketTypeOptions, 'Ticket Type');
-
     const assigneeOptions: Option[] = users ? users.map((item: User) => {
         return {
             value: item.id,
             label: item.id
         };
     }) : [];
-    addFirstOption(assigneeOptions, t('ticket_new.assignee'), true);
 
     const contactOptions: Option[] = contacts ? contacts.map((item: Contact) => {
         return {
@@ -171,7 +158,6 @@ const TicketNew = () => {
             label: item.name
         };
     }) : [];
-    addFirstOption(contactOptions, t('ticket_new.contact'), true);
 
     const locationOptions: Option[] = departments ? departments.map((item: Department) => {
         return {
@@ -179,7 +165,6 @@ const TicketNew = () => {
             label: item.address
         };
     }) : [];
-    addFirstOption(locationOptions, t('ticket_new.location'));
 
     const getTicketLookupValuesOptions = (data: any[] | undefined) => {
         if (data) {
@@ -189,7 +174,7 @@ const TicketNew = () => {
     }
 
     const [selectedTicketTypeOption, setSelectedTicketTypeOption] =
-        useState(ticketTypeOptions && ticketTypeOptions.length > 0 ? ticketTypeOptions[0] : null);
+        useState<Option>();
 
     const getTicketLookupValuesOptionsByTicketType = (data: any[] | undefined) => {
         if (data && selectedTicketTypeOption) {
@@ -209,20 +194,13 @@ const TicketNew = () => {
     }
 
     const subjectOptions: Option[] = getTicketLookupValuesOptionsByTicketType(ticketLookupValuesSubject);
-    addFirstOption(subjectOptions, t('ticket_new.subject'), true);
-
     const reasonOptions: Option[] = getTicketLookupValuesOptionsByTicketType(ticketLookupValuesReason);
-    addFirstOption(reasonOptions, t('ticket_new.reason'));
-
     const departmentOptions: Option[] = getTicketLookupValuesOptions(ticketLookupValuesDepartment);
-    addFirstOption(departmentOptions, t('ticket_new.department'));
-
     const tagOptions: Option[] = getTicketLookupValuesOptions(ticketLookupValuesTags);
 
-    const handleChangeTicketType = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        event.stopPropagation();
+    const handleChangeTicketType = (option?: Option) => {
         const selectedTicketType =
-            ticketTypeOptions ? ticketTypeOptions.find((o: Option) => o.value.toString() === event.target.value) : {} as any;
+            ticketTypeOptions ? ticketTypeOptions.find((o: Option) => o.value === option?.value) : {} as any;
 
         setSelectedTicketTypeOption(selectedTicketType);
         setIsTicketTypeSelected(true);
@@ -254,9 +232,17 @@ const TicketNew = () => {
         return <div data-test-id='ticket-new-error'>{t('common.error')}</div>
     }
 
+    function onSelectChange<TFieldValues>(props: ControllerRenderProps<TFieldValues>) {
+        return (option?: Option) => {
+            if (option) {
+                props.onChange(option.value);
+            }
+        };
+    }
+
     return <div className={'w-96 py-4 mx-auto flex flex-col'}>
         <form onSubmit={handleSubmit(onSubmit)}>
-            <div className='divide-y'>
+            <div>
                 <Controller
                     name='ticketType'
                     control={control}
@@ -266,19 +252,21 @@ const TicketNew = () => {
                         <Select
                             {...props}
                             data-test-id={'ticket-new-ticket-type'}
-                            className={'w-full border-none h-14'}
                             label={'ticket_new.ticket_type'}
                             options={ticketTypeOptions}
                             value={props.value}
-                            onChange={(e: ChangeEvent<HTMLSelectElement>) => {
-                                props.onChange(e)
-                                handleChangeTicketType(e);
+                            onChange={(option?: Option) => {
+                                if (option) {
+                                    props.onChange(option?.value);
+                                    handleChangeTicketType(option);
+                                }
                             }}
                             error={errors.ticketType?.message}
+                            required={true}
                         />
                     )}
                 />
-                { (isTicketTypeSelected && reasonOptions.length > 1) &&
+                {(isTicketTypeSelected && reasonOptions.length > 0) &&
                     <Controller
                         name='reason'
                         control={control}
@@ -286,11 +274,11 @@ const TicketNew = () => {
                         render={(props) => (
                             <Select
                                 {...props}
+                                label={'ticket_new.reason'}
                                 data-test-id={'ticket-new-reason'}
-                                className={'w-full border-none h-14'}
-                                placeholder={t('ticket_new.reason')}
                                 options={reasonOptions}
                                 value={props.value}
+                                onChange={onSelectChange(props)}
                             />
                         )}
                     />
@@ -305,11 +293,12 @@ const TicketNew = () => {
                         <Select
                             {...props}
                             data-test-id='ticket_new.contact'
-                            className={'w-full border-none h-14'}
-                            placeholder={t('ticket_new.contact')}
+                            label={'ticket_new.contact'}
                             options={contactOptions}
                             value={props.value}
                             error={errors.contactId?.message}
+                            required={true}
+                            onChange={onSelectChange(props)}
                         />
                     )}
                 />
@@ -326,10 +315,12 @@ const TicketNew = () => {
                                     <Select
                                         {...props}
                                         data-test-id={'ticket-new-subject-select'}
-                                        className={'w-full border-none h-14'}
+                                        label={'ticket_new.subject'}
                                         options={subjectOptions}
                                         value={props.value}
                                         error={errors.subject?.message}
+                                        required={true}
+                                        onChange={onSelectChange(props)}
                                     />
                                 )}
                             />
@@ -339,7 +330,7 @@ const TicketNew = () => {
                                 control={control}
                                 defaultValue=''
                                 placeholder={'*' + t('ticket_new.subject')}
-                                rules={{required: requiredText}}
+                                rules={{ required: requiredText }}
                                 as={Input}
                                 className={'w-full border-none h-14'}
                                 data-test-id={'ticket-new-assignee'}
@@ -356,11 +347,12 @@ const TicketNew = () => {
                         <Select
                             {...props}
                             data-test-id={'ticket-new-status'}
-                            className={'w-full border-none h-14'}
-                            placeholder={t('ticket_new.status')}
+                            label={'ticket_new.status'}
                             options={statusOptions}
                             value={props.value}
                             error={errors.status?.message}
+                            required={true}
+                            onChange={onSelectChange(props)}
                         />
                     )}
                 />
@@ -373,11 +365,12 @@ const TicketNew = () => {
                         <Select
                             {...props}
                             data-test-id={'ticket-new-priority'}
-                            className={'w-full border-none h-14'}
-                            placeholder={t('ticket_new.priority')}
+                            label={'ticket_new.priority'}
                             options={priorityOptions}
                             value={props.value}
                             error={errors.priority?.message}
+                            required={true}
+                            onChange={onSelectChange(props)}
                         />
                     )}
                 />
@@ -386,7 +379,7 @@ const TicketNew = () => {
                     control={control}
                     defaultValue=''
                     render={(props) => (
-                        <Input
+                        <DateTimeInput
                             {...props}
                             type='date'
                             data-test-id={'ticket-new-due-date'}
@@ -403,7 +396,7 @@ const TicketNew = () => {
                     control={control}
                     defaultValue=''
                     render={(props) => (
-                        <Input
+                        <DateTimeInput
                             {...props}
                             type='time'
                             data-test-id={'ticket-new-due-time'}
@@ -423,11 +416,12 @@ const TicketNew = () => {
                         <Select
                             {...props}
                             data-test-id={'ticket-new-channel'}
-                            className={'w-full border-none h-14'}
-                            placeholder={t('ticket_new.channel')}
                             options={sourceOptions}
+                            label={'ticket_new.channel'}
                             value={props.value}
                             error={errors.channel?.message}
+                            required={true}
+                            onChange={onSelectChange(props)}
                         />
                     )}
                 />
@@ -439,10 +433,10 @@ const TicketNew = () => {
                         <Select
                             {...props}
                             data-test-id='ticket-new-department'
-                            className={'w-full border-none h-14'}
-                            placeholder={t('ticket_new.department')}
+                            label={'ticket_new.department'}
                             options={departmentOptions}
                             value={props.value}
+                            onChange={onSelectChange(props)}
                         />
                     )}
                 />
@@ -454,10 +448,10 @@ const TicketNew = () => {
                         <Select
                             {...props}
                             data-test-id={'ticket-new-location'}
-                            className={'w-full border-none h-14'}
-                            placeholder={t('ticket_new.location')}
+                            label={'ticket_new.location'}
                             options={locationOptions}
                             value={props.value}
+                            onChange={onSelectChange(props)}
                         />
                     )}
                 />
@@ -470,11 +464,12 @@ const TicketNew = () => {
                         <Select
                             {...props}
                             data-test-id={'ticket-new-assignee'}
-                            className={'w-full border-none h-14'}
-                            placeholder={t('ticket_new.assignee')}
                             options={assigneeOptions}
+                            label={'ticket_new.assignee'}
                             value={props.value}
                             error={errors.assignee?.message}
+                            required={true}
+                            onChange={onSelectChange(props)}
                         />
                     )}
                 />
@@ -536,14 +531,14 @@ const TicketNew = () => {
             <div className='flex flex-row space-x-4 justify-end bg-secondary-50'>
                 <div className='flex items-center'>
                     <Button data-test-id='ticket-new-cancel-button' type={'button'}
-                            buttonType='secondary'
-                            label={'common.cancel'}
-                            onClick={() => history.push(TicketsPath)}
+                        buttonType='secondary'
+                        label={'common.cancel'}
+                        onClick={() => history.push(TicketsPath)}
                     />
                 </div>
                 <div>
                     <Button disabled={isCreating} data-test-id='ticket-new-create-button' type={'submit'}
-                            label={'ticket_new.create'} />
+                        label={'ticket_new.create'} />
                 </div>
             </div>
         </form>

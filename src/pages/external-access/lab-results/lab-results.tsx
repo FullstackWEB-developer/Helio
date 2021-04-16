@@ -7,7 +7,8 @@ import {
     selectLabResults,
     selectLabResultsError
 } from './store/lab-results.selectors';
-import Select, { Option } from '../../../shared/components/select/select';
+import Select from '../../../shared/components/select/select';
+import { Option } from '@components/option/option';
 import { useForm, Controller } from 'react-hook-form';
 import ThreeDots from '../../../shared/components/skeleton-loader/skeleton-loader';
 import { selectVerifiedPatent } from '../../patients/store/patients.selectors';
@@ -54,12 +55,12 @@ const LabResults = () => {
     const [selectedOption, setSelectedOption] =
         useState(labResultsOptions && labResultsOptions.length > 0 ? labResultsOptions[0] : null);
 
-    const handleChange = (event: any) => {
-        event.stopPropagation();
-        const selectedLabResult =
-            labResultsOptions ? labResultsOptions.find((o: LabResultOption) => o.value === event.target.value) : {} as any;
-
-        setSelectedOption(selectedLabResult);
+    const handleChange = (option?: Option) => {
+        if (option) {
+            const selectedLabResult =
+                labResultsOptions ? labResultsOptions.find((o: LabResultOption) => o.value === option.value) : {} as any;
+            setSelectedOption(selectedLabResult);
+        }
     }
 
     if (isLabResultsLoading) {
@@ -95,10 +96,9 @@ const LabResults = () => {
                 render={() => (
                     <Select
                         data-test-id='lab-results-select'
-                        className={'w-full'}
                         label={'lab-results.label'}
                         options={labResultsOptions}
-                        value={selectedOption ? selectedOption.value : ''}
+                        value={selectedOption as Option}
                         onChange={handleChange}
                     />
                 )}
@@ -121,8 +121,8 @@ const LabResults = () => {
                 </dl>
 
                 <div className='bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse'>
-                    <Button buttonType='secondary' label={'common.download_pdf'} data-test-id='lab-results-download-pdf-button'/>
-                    <Button label={'common.print'} data-test-id='lab-results-print-button'/>
+                    <Button buttonType='secondary' label={'common.download_pdf'} data-test-id='lab-results-download-pdf-button' />
+                    <Button label={'common.print'} data-test-id='lab-results-print-button' />
                 </div>
             </div>
         </div>

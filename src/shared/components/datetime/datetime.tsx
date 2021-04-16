@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Controller, useForm } from 'react-hook-form';
-import Input from '../input/input';
+import DateTimeInput from '../date-time-input/date-time-input';
 import Button from '../button/button';
 import utils from '../../utils/utils';
 
@@ -47,7 +47,7 @@ const DateTime = React.forwardRef<HTMLElement, DateTimeProps>(({ isVisible, plac
                     control={control}
                     defaultValue=''
                     render={(props) => (
-                        <Input
+                        <DateTimeInput
                             {...props}
                             type='date'
                             data-test-id={'datetime-date'}
@@ -63,7 +63,7 @@ const DateTime = React.forwardRef<HTMLElement, DateTimeProps>(({ isVisible, plac
                     control={control}
                     defaultValue=''
                     render={(props) => (
-                        <Input
+                        <DateTimeInput
                             {...props}
                             type='time'
                             data-test-id={'datetime-time'}

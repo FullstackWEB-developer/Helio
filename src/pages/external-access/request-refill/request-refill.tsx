@@ -9,7 +9,8 @@ import {
     SelectIsRequestRefillRequestCompleted,
     SelectRequestRefillError
 } from './store/request-refill.selectors';
-import Select, { Option } from '../../../shared/components/select/select';
+import Select from '../../../shared/components/select/select';
+import { Option } from '@components/option/option';
 import Input from '../../../shared/components/input/input';
 import Button from '../../../shared/components/button/button';
 import { useForm, Controller } from 'react-hook-form';
@@ -107,7 +108,6 @@ const RequestRefill = () => {
                 rules={{ required: true }}
                 as={Select}
                 options={medicationOptions}
-                className={'w-full'}
                 data-test-id='request-refill-medication'
                 label={'request-refill.medication_to_refill'}
             />
@@ -118,7 +118,6 @@ const RequestRefill = () => {
                 as={Select}
                 defaultValue={providerOptions[0]}
                 options={providerOptions}
-                className={'w-full'}
                 data-test-id='request-refill-provider'
                 label={'request-refill.provider'}
             />
@@ -129,7 +128,6 @@ const RequestRefill = () => {
                 defaultValue={departmentOptions[0]}
                 as={Select}
                 options={departmentOptions}
-                className={'w-full'}
                 data-test-id='request-refill-department'
                 label={'request-refill.location'}
             />
