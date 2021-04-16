@@ -99,7 +99,7 @@ const HipaaVerification = ({request} : HipaaVerificationProps) => {
     }
 
     return <>
-            <div>
+            <div className='md:px-48'>
                 <div className='md:whitespace-pre md:h-24 my-3 md:pb-10 w-full items-center'>
                     <h4>
                         {t(`external_access.title_${request.requestType}`)}

@@ -2,6 +2,7 @@ import {Controller} from 'react-hook-form';
 import {Control} from 'react-hook-form/dist/types/form';
 import Input from '@components/input/input';
 import {useTranslation} from 'react-i18next';
+import React from 'react';
 
 export class InputTypes {
     static Phone =  new RegExp('1?\\W*([2-9][0-8][0-9])\\W*([2-9][0-9]{2})\\W*([0-9]{4})(\\se?x?t?(\\d*))?');
@@ -44,6 +45,12 @@ const ControlledInput = ({control, required = false, type='text', name, mask='',
         }
     }
 
+    const cleanMask = (value?: string) => {
+        if (value) {
+            return value.replace('(','').replace(' ','').replace(')','').replace('-','');
+        }
+    }
+
     return ( <Controller
         name={name}
         control={control}
@@ -58,6 +65,14 @@ const ControlledInput = ({control, required = false, type='text', name, mask='',
                 mask={mask}
                 {...props}
                 max={max}
+                onChange={(e) => {
+                    if (type === 'tel') {
+                        const value = cleanMask(e.target.value);
+                        props.onChange(value);
+                    } else {
+                        props.onChange(e);
+                    }
+                }}
                 className={className}
                 data-test-id={dataTestId}
                 error={control.formState.errors[name]?.message}
