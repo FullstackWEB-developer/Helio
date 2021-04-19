@@ -14,6 +14,7 @@ import {TicketEnumValue} from './models/ticket-enum-value.model';
 import {TicketOptionsBase} from './models/ticket-options-base.model';
 import {TicketLookupValue} from './models/ticket-lookup-values.model';
 import {TicketsPath} from '../../app/paths';
+import { DropdownAlignmentHorizontalPosition } from '@components/dropdown/dropdown.models';
 
 interface TicketListItemProps {
     item: Ticket
@@ -99,7 +100,7 @@ const TicketListItem = ({item}: TicketListItemProps) => {
                 <div className='pt-1'>{item.reason ? selectedReason?.label : null}</div>
             </div>
         </div>
-        <TicketAssignee ticketId={ticketId} assignee={item.assignee} />
+        <TicketAssignee ticketId={ticketId} assignee={item.assignee} dropdownHorizontalPostion={DropdownAlignmentHorizontalPosition.Right}/>
     </div>
 };
 

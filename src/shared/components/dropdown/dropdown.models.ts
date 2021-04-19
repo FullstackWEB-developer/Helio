@@ -47,3 +47,8 @@ export interface DropdownLinkModel {
     onClick: () => void;
     title?: string;
 }
+
+export enum DropdownAlignmentHorizontalPosition {
+    Left,
+    Right
+}
