@@ -4,6 +4,8 @@ import { useTranslation } from 'react-i18next';
 import './input.scss';
 // @ts-ignore
 import InputMask from 'react-input-mask';
+import SvgIcon from '@components/svg-icon/svg-icon';
+import { Icon } from '@components/svg-icon/icon';
 
 interface InputProps extends React.HTMLAttributes<HTMLInputElement> {
     id?: string,
@@ -16,7 +18,8 @@ interface InputProps extends React.HTMLAttributes<HTMLInputElement> {
     htmlFor?: string,
     assistiveText?: string,
     disabled?: boolean,
-    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void,
+    shouldDisplayAutocomplete?: boolean
 }
 const Input = React.forwardRef<HTMLInputElement, InputProps>(({ label, type, htmlFor, placeholder, mask, ...props }: InputProps, ref) => {
     const { t } = useTranslation();
@@ -60,7 +63,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({ label, type, htm
 
     return (
         <div className="input-group flex flex-col relative h-20">
-            <InputMask ref={innerRef} {...props}
+            <InputMask inputRef={innerRef} {...props}
                 mask={mask}
                 type={type}
                 onFocus={(e: React.FocusEvent<HTMLInputElement>) => { setIsFocused(true) }}
@@ -69,7 +72,8 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({ label, type, htm
                 className={`pl-4 pt-6 body2 h-14 ${props.error ? 'input-error' : ''} ` + props.className}
                 placeholder=''
                 value={value}
-                disabled={props.disabled} />
+                disabled={props.disabled}
+                autoComplete={props.shouldDisplayAutocomplete ? 'on' : 'off'} />
             <label htmlFor={htmlFor}
                    className={`absolute ${isFocused || value ? 'subtitle3-small label-small' : `body2${props.disabled ? '-medium' : ''}`} ${props.error ? 'text-danger' : ''}`}>
                 {t(label || placeholder || '')}
@@ -79,7 +83,8 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({ label, type, htm
             <span
                 onMouseDown={(e) => preventMousedownTriggerBlur(e)}
                 onClick={(e) => { clearValue() }}
-                className="clear-input-icon">&#10006;
+                className="clear-input-icon">
+                    <SvgIcon type={Icon.Clear} fillClass="clear-input-icon-fill"/>
             </span>}
             {props.assistiveText && !props.error && <div className={`h-6 pl-4 subtitle3-small pt-1 truncate ${isFocused ? 'assistive-text-focus' : ''}`}>{props.assistiveText}</div>}
             {props.error && <div className={'h6 pl-4 subtitle3-small pt-1 text-danger truncate'}>{props.error}</div>}

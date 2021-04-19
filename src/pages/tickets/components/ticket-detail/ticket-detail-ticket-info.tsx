@@ -129,7 +129,7 @@ const TicketDetailTicketInfo = ({ ticket }: TicketInfoProps) => {
     );
 
     const [selectedPriority, setSelectedPriority] = useState(
-        priorityOptions && !selectedStatus ? priorityOptions.find((o: Option) => parseInt(o.value) === ticket?.priority) : undefined
+        priorityOptions ? priorityOptions.find((o: Option) => parseInt(o.value) === ticket?.priority) : undefined
     );
 
     const [selectedLocation, setSelectedLocation] = useState(
@@ -154,7 +154,7 @@ const TicketDetailTicketInfo = ({ ticket }: TicketInfoProps) => {
     ]);
 
     useEffect(() => {
-        if (ticket?.status) {
+        if (ticket?.status && ticket.status.toString() !== selectedStatus?.value?.toString()) {
             setSelectedStatus(statusOptions.find((o: Option) => parseInt(o.value) === ticket?.status));
         }
     }, [statusOptions, ticket?.status])
@@ -278,7 +278,7 @@ const TicketDetailTicketInfo = ({ ticket }: TicketInfoProps) => {
                                 label={'ticket_detail.info_panel.status'}
                                 options={statusOptions}
                                 value={selectedStatus}
-                                onChange={(option?: Option) => {                                    
+                                onChange={(option?: Option) => {
                                     if (option) {
                                         props.onChange(option.value);
                                         handleChangeItem(option, statusOptions, "status", setSelectedStatus);
@@ -299,7 +299,7 @@ const TicketDetailTicketInfo = ({ ticket }: TicketInfoProps) => {
                                 label={'ticket_detail.info_panel.priority'}
                                 options={priorityOptions}
                                 value={selectedPriority}
-                                onChange={(option?: Option) => {                                    
+                                onChange={(option?: Option) => {
                                     if (option) {
                                         props.onChange(option.value);
                                         handleChangeItem(option, priorityOptions, "priority", setSelectedPriority);
@@ -320,7 +320,7 @@ const TicketDetailTicketInfo = ({ ticket }: TicketInfoProps) => {
                                 label={'ticket_detail.info_panel.ticket_type'}
                                 options={ticketTypeOptions}
                                 value={selectedTicketTypeOption}
-                                onChange={(option?: Option) => {                                    
+                                onChange={(option?: Option) => {
                                     if (option) {
                                         props.onChange(option.value);
                                         handleChangeItem(option, ticketTypeOptions, "ticketType", setSelectedTicketTypeOption);
@@ -342,7 +342,7 @@ const TicketDetailTicketInfo = ({ ticket }: TicketInfoProps) => {
                                     label={'ticket_detail.info_panel.reason'}
                                     options={reasonOptions}
                                     value={selectedReason}
-                                    onChange={(option?: Option) => {                                        
+                                    onChange={(option?: Option) => {
                                         if (option) {
                                             props.onChange(option?.value);
                                             handleChangeItem(option, reasonOptions, "reason", setSelectedReason);
@@ -359,11 +359,11 @@ const TicketDetailTicketInfo = ({ ticket }: TicketInfoProps) => {
                         render={(props) => (
                             <Select
                                 {...props}
-                                data-test-id='ticket-detail-department'                                
-                                label={'ticket_detail.info_panel.department'}                                
+                                data-test-id='ticket-detail-department'
+                                label={'ticket_detail.info_panel.department'}
                                 options={departmentOptions}
                                 value={selectedDepartment}
-                                onChange={(option?: Option) => {                                    
+                                onChange={(option?: Option) => {
                                     if (option) {
                                         props.onChange(option?.value);
                                         handleChangeItem(option, departmentOptions, "department", setSelectedDepartment);
@@ -379,16 +379,16 @@ const TicketDetailTicketInfo = ({ ticket }: TicketInfoProps) => {
                         render={(props) => (
                             <Select
                                 {...props}
-                                data-test-id={'ticket-detail-location'}                                
+                                data-test-id={'ticket-detail-location'}
                                 label={'ticket_detail.info_panel.location'}
-                                
+
                                 options={locationOptions}
                                 value={selectedLocation}
-                                onChange={(option?: Option) => {                                    
-                                    if(option){
+                                onChange={(option?: Option) => {
+                                    if (option) {
                                         props.onChange(option.value);
                                         handleChangeItem(option, locationOptions, "location", setSelectedLocation);
-                                    }                                    
+                                    }
                                 }}
                                 error={errors.location?.message}
                             />

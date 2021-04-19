@@ -38,7 +38,7 @@ const Radio = React.forwardRef<HTMLInputElement, RadioProps>(({
                     name={name}
                     onChange={_ => onChange(item.value)}/>
                     <label htmlFor={`${name}_${item.value}`}
-                           className={`${truncate ? ' truncate' : ''} ${labelClassName ? labelClassName : ''}`}>{item.label}</label>
+                           className={`body2 ${truncate ? ' truncate' : ''} ${labelClassName ? labelClassName : ''}`}>{item.label}</label>
                 </div>
             })
         }

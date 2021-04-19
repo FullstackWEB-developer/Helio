@@ -14,7 +14,7 @@
     background: var(--dropdown-item-hover) radial-gradient(circle, var(--dropdown-item-pressed)1%, var(--dropdown-item-hover)1%) center/15000%;
   }
   
-  .select-cell:active {
+  .select-cell:active, .active {
     background-color: var(--dropdown-item-pressed);
     background-size: 100%;
     transition: background 0s;

@@ -2,10 +2,11 @@ import React, { useRef, useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import './select.scss';
 import customHooks from '@shared/hooks/customHooks';
-import { ReactComponent as ArrowUpIcon } from '@icons/Icon-Arrow-up-16px.svg';
-import { ReactComponent as ArrowDownIcon } from '@icons/Icon-Arrow-down-16px.svg';
 import SelectCell from './select-cell';
 import { Option } from '@components/option/option';
+import { keyboardKeys } from '@components/search-bar/constants/keyboard-keys';
+import SvgIcon from '@components/svg-icon/svg-icon';
+import { Icon } from '@components/svg-icon/icon';
 interface SelectProps {
     label?: string;
     value?: Option;
@@ -19,10 +20,11 @@ interface SelectProps {
     onChange?: (option?: Option, searchQuery?: string) => void
 }
 const Select = React.forwardRef<HTMLDivElement, SelectProps>(({ options, order, label, ...props }: SelectProps, ref) => {
-    const { t } : {t : any}= useTranslation();
+    const { t }: { t: any } = useTranslation();
     const [open, setOpen] = useState(false);
     const [selectedOption, setSelectedOption] = useState<Option | null>(null);
     const [searchQuery, setSearchQuery] = useState<string | null>(null);
+    const [cursor, setCursor] = useState<number>(-1);
     let managedOptions = options && options.length > 0 ? [...options] : [];
     if (order) {
         managedOptions = managedOptions.sort((a, b) => a.label.localeCompare(b.label))
@@ -34,7 +36,8 @@ const Select = React.forwardRef<HTMLDivElement, SelectProps>(({ options, order, 
     });
     const searchOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearchQuery(e.target.value);
-        if(props.onChange && props.searchQuery){
+        setCursor(0);
+        if (props.onChange) {
             props.onChange(undefined, e.target.value);
         }
     }
@@ -48,27 +51,60 @@ const Select = React.forwardRef<HTMLDivElement, SelectProps>(({ options, order, 
         setSelectedOption(option);
         setSearchQuery(null);
         inputRef?.current?.blur();
-        if(props.onChange){            
+        if (props.onChange) {
             props.onChange(option);
         }
     }
-    useEffect(() => {        
-        if(props.value){
+    useEffect(() => {
+        if (props.value) {
             setSelectedOption(props.value);
         }
+        if (props.searchQuery) {
+            setSearchQuery(props.searchQuery);
+        }
     }, []);
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (!open) return;
+        switch (e.key) {
+            case keyboardKeys.arrowUp: {
+                e.preventDefault();
+                if (cursor > 0) {
+                    setCursor(cursor - 1);
+                }
+                break;
+            }
+            case keyboardKeys.arrowDown: {
+                e.preventDefault();
+                if (cursor < renderOptions().length - 1) {
+                    setCursor(cursor + 1);
+                }
+                break;
+            }
+            case keyboardKeys.enter: {
+                e.preventDefault();
+                const currentlyAvailableOptions = renderOptions();
+                if (cursor >= 0 && cursor <= currentlyAvailableOptions.length - 1) {
+                    selectValueChange(currentlyAvailableOptions[cursor]);
+                }
+                break;
+            }
+        }
+    }
+    const handleArrowClick = () => {
+        open ? inputRef.current?.blur() : inputRef.current?.focus();
+    }
 
-    return (       
+    return (
         <div ref={innerRef}
-            onClick={() => { setOpen(!open) }}
             className={`select-wrapper relative w-full flex flex-col h-20 ${props.disabled ? 'select-wrapper-disabled' : ''}`}>
             <div className={`select relative flex flex-col ${open ? 'open' : ''}`}>
                 <input
                     ref={inputRef}
                     type='text'
                     onChange={(e) => searchOnChange(e)}
-                    onFocus={(e) => e.target.select()}
-                    onBlur={(e) => { e.target.value = ''; setSearchQuery(null); }}
+                    onFocus={(e) => { setOpen(true); e.target.select() }}
+                    onBlur={(e) => { setOpen(false); e.target.value = ''; setSearchQuery(null); setCursor(-1) }}
+                    onKeyDown={(e) => { handleKeyDown(e) }}
                     className={`pl-4 pt-6 pr-8 body2 h-14 relative truncate select-trigger ${props.error ? 'input-error' : ''} `}
                     value={searchQuery ?? t(selectedOption?.label)}
                     disabled={props.disabled}
@@ -77,20 +113,22 @@ const Select = React.forwardRef<HTMLDivElement, SelectProps>(({ options, order, 
                     label &&
                     <label
                         className={`select-label absolute ${selectedOption || open || searchQuery ? 'subtitle3-small label-small' : `body2${props.disabled ? '-medium' : ''}`} ${props.error ? 'text-danger' : ''}`}>
-                        {`${props.required? '*':''}${t(label)}`}
+                        {`${props.required ? '*' : ''}${t(label)}`}
                     </label>
                 }
-                <div className="absolute pt-5 right-4">
+                <div className="absolute pt-4 right-4 cursor-pointer" onClick={handleArrowClick} onMouseDown={(e) => { e.preventDefault() }}>
                     {
-                        open ? <ArrowUpIcon onClick={() => setOpen(false)} /> :
-                            <ArrowDownIcon onClick={() => setOpen(true)} />
+                        <SvgIcon type={open ? Icon.ArrowUp : Icon.ArrowDown} fillClass={'select-arrow-fill'} />
                     }
                 </div>
                 <div className="options absolute block py-2">
                     {
                         renderOptions().map((option: Option, index) =>
                             <SelectCell item={option} key={`${index}-${option.value}`} isSelected={option.value === selectedOption?.value}
-                                onClick={() => selectValueChange(option)} disabled={option.disabled} />)
+                                onClick={() => selectValueChange(option)} disabled={option.disabled}
+                                className={`${cursor === index ? 'active' : ''}`}
+                                changeCursorValueOnHover={() => setCursor(index)}
+                            />)
                     }
                 </div>
             </div>

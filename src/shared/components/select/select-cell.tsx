@@ -6,10 +6,12 @@ export interface SelectCellProps {
     item: Option,
     isSelected?: boolean,
     onClick: (item: Option) => void,
-    disabled?: boolean
+    disabled?: boolean,
+    className?: string,
+    changeCursorValueOnHover?: () => void
 }
 
-const SelectCell = ({ item, isSelected, onClick, disabled }: SelectCellProps) => {
+const SelectCell = ({ item, isSelected, onClick, disabled, ...props }: SelectCellProps) => {
 
     const { t } = useTranslation();
 
@@ -31,11 +33,17 @@ const SelectCell = ({ item, isSelected, onClick, disabled }: SelectCellProps) =>
         }
     }
 
+    const handleMouseOver = () => {
+        if (props.changeCursorValueOnHover) {
+            props.changeCursorValueOnHover();
+        }
+    }
+
     if (disabled) return null;
 
     return (
-        <div onClick={() => cellClicked()} onMouseDown={(e) => { e.preventDefault() }}
-            className={`w-full select-cell justify-between flex items-center ${calculateCss()} ${bgCssClass}`}>
+        <div onClick={() => cellClicked()} onMouseDown={(e) => { e.preventDefault() }} onMouseOver={(e) => handleMouseOver()}
+            className={`w-full select-cell justify-between flex items-center ${calculateCss()} ${bgCssClass} ${props.className}`}>
             <div data-test-id='select-cell-icon-content' className={'flex flex-row w-full items-center'}>
                 <div className='flex items-center pl-4' data-test-id={`select-cell-text-${item.label}`}>{t(item.label)}</div>
             </div>

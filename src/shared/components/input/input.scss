@@ -46,17 +46,13 @@
         border-bottom-color: var(--light-text-disabled);
     }
 
-    .clear-input-icon {
-        color: var(--color-white);
-        width: 1.25rem;
-        height: 1.25rem;
-        border-radius: 50%;
-        line-height: 1.25rem;
+    .clear-input-icon {    
         position: absolute;
         top: 1.125rem;
-        right: 1.125rem;
-        background-color: var(--light-text-medium-emphasis);
-        text-align: center;
+        right: 1.125rem;        
+    }
+    .clear-input-icon-fill {
+        fill: var(--light-text-medium-emphasis);
     }
     .clear-input-icon:hover{
         cursor: pointer;

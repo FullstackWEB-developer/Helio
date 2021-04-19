@@ -1,6 +1,6 @@
-import React, {useRef, useState} from 'react';
-import {SearchType} from './models/search-type';
-import {selectRecentPatients, selectSearchTypeFiltered, selectSelectedType,} from './store/search-bar.selectors';
+import React, { useRef, useState } from 'react';
+import { SearchType } from './models/search-type';
+import { selectRecentPatients, selectSearchTypeFiltered, selectSelectedType, } from './store/search-bar.selectors';
 import {
     changeFilteredTypes,
     changeTypeDown,
@@ -8,24 +8,25 @@ import {
     clearRecentPatients,
     setType
 } from './store/search-bar.slice';
-import {searchPatients} from '../../services/search.service';
-import {useDispatch, useSelector} from 'react-redux';
-import {useTranslation} from 'react-i18next';
-import {useHistory} from 'react-router-dom';
-import {RecentPatient} from './models/recent-patient';
+import { searchPatients } from '../../services/search.service';
+import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router-dom';
+import { RecentPatient } from './models/recent-patient';
 import RecentPatientDetails from './components/recent-patient-details';
-import {searchType} from './constants/search-type';
-import {keyboardKeys} from './constants/keyboard-keys';
-import {clearPatients} from '@pages/patients/store/patients.slice';
+import { searchType } from './constants/search-type';
+import { keyboardKeys } from './constants/keyboard-keys';
+import { clearPatients } from '@pages/patients/store/patients.slice';
 import Dropdown from '../dropdown/dropdown';
-import {CategoryItemModel, DropdownItemModel, DropdownModel} from '../dropdown/dropdown.models';
+import { CategoryItemModel, DropdownItemModel, DropdownModel } from '../dropdown/dropdown.models';
 import './search-bar.scss';
 import customHooks from '../../hooks/customHooks';
 import SvgIcon from '@components/svg-icon/svg-icon';
-import {Icon} from '@components/svg-icon/icon';
+import { Icon } from '@components/svg-icon/icon';
+import SearchInputField from '@components/search-input-field/search-input-field';
 
 const SearchBar = () => {
-    const {t} = useTranslation();
+    const { t } = useTranslation();
     const dispatch = useDispatch();
     const history = useHistory();
     const [dropdownDisplayed, displayDropdown] = useState(false);
@@ -35,11 +36,10 @@ const SearchBar = () => {
     const searchTypeFiltered = useSelector(selectSearchTypeFiltered);
     const dropdownRef = useRef<HTMLDivElement>(null);
 
-    const textChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const text = e.target.value;
+    const textChange = (value: string) => {
         displayDropdown(true);
-        setText(text);
-        dispatch(changeFilteredTypes(text))
+        setText(value);
+        dispatch(changeFilteredTypes(value));
     }
     const handleKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
         switch (e.key) {
@@ -88,24 +88,24 @@ const SearchBar = () => {
         } as DropdownItemModel;
     });
 
-    const getCategorizedItems = () : CategoryItemModel[] => {
+    const getCategorizedItems = (): CategoryItemModel[] => {
         const items: CategoryItemModel[] = [];
         if (searchTypes.length > 0) {
             items.push({
                 itemsCssClass: 'w-72',
                 category: {
                     text: t('search.categories.patients'),
-                    icon: <SvgIcon type={Icon.Placeholder} className='small' fillClass=''/>,
+                    icon: <SvgIcon type={Icon.Placeholder} className='small' fillClass='' />,
                     key: '1'
                 },
                 items: searchTypes
             });
         }
-        items.push( {
+        items.push({
             itemsCssClass: 'w-72',
             category: {
                 text: t('search.categories.contacts'),
-                icon: <SvgIcon type={Icon.Placeholder} className='small' fillClass=''/>,
+                icon: <SvgIcon type={Icon.Placeholder} className='small' fillClass='' />,
                 key: '2'
             },
             items: [
@@ -119,7 +119,7 @@ const SearchBar = () => {
             itemsCssClass: 'w-72',
             category: {
                 text: t('search.categories.tickets'),
-                icon: <SvgIcon type={Icon.Placeholder} className='small' fillClass=''/>,
+                icon: <SvgIcon type={Icon.Placeholder} className='small' fillClass='' />,
                 key: '3'
             },
             items: [
@@ -136,8 +136,8 @@ const SearchBar = () => {
         return items;
     };
 
-    const getItems = () : DropdownItemModel[] => {
-        const items : DropdownItemModel[] = [];
+    const getItems = (): DropdownItemModel[] => {
+        const items: DropdownItemModel[] = [];
 
         if (recentPatients.length > 0) {
             items.push({
@@ -154,7 +154,7 @@ const SearchBar = () => {
             recentPatients.forEach((patient: RecentPatient) => {
                 const item = {
                     value: patient.patientId.toString(),
-                    content: <RecentPatientDetails patient={patient}/>,
+                    content: <RecentPatientDetails patient={patient} />,
                     onClick: (_) => selectRecent(patient)
                 } as DropdownItemModel;
 
@@ -165,7 +165,7 @@ const SearchBar = () => {
         return items;
     }
 
-    const searchDropdownModel : DropdownModel = {
+    const searchDropdownModel: DropdownModel = {
         title: t('search.search_title'),
         defaultValue: selectedType.toString(),
         categorizedItems: getCategorizedItems(),
@@ -179,24 +179,21 @@ const SearchBar = () => {
     return (
         <div className='relative z-10' ref={dropdownRef}>
             <div className='border-r border-l h-16 global-search-input'>
-
-                <div className='flex flex-row h-full'>
-                    <div className='pl-6 flex items-center'>
-                        <SvgIcon type={Icon.Search} className='small cursor-pointer' fillClass='search-icon' onClick={() => search()}/>
-                    </div>
-                    <div className='w-full body2-medium'>
-                        <input type='text' className='focus:outline-none h-full w-full px-4'
-                               placeholder={t('search.placeholder')}
-                               onFocus={() => displayDropdown(true)} onClick={() => displayDropdown(true)}
-                               onChange={(e) => textChange(e)} onKeyDown={(e) => handleKey(e)}
-                               value={text}/>
-                    </div>
+                <div className='flex flex-row h-full'> 
+                    <SearchInputField
+                        wrapperClassNames={'h-16'}
+                        inputClassNames={'border-none'}
+                        iconOnClick={() => { search() }}
+                        value={text}
+                        onFocus={() => displayDropdown(true)}
+                        inputOnClick={() => displayDropdown(true)}
+                        onChange={textChange}
+                        onKeyDown={(e) => handleKey(e)}
+                    />
                 </div>
-
-
             </div>
             {dropdownDisplayed && <div className='absolute'>
-                <Dropdown model={searchDropdownModel}/>
+                <Dropdown model={searchDropdownModel} />
             </div>}
         </div>
     );
