@@ -459,15 +459,15 @@
       "appointment_details": "Appointment Details",
       "see_appointment_details": "Please see your appointment details below.",
       "appointment_date": "{{date}} at {{time}}",
-      "withDoctor" : "with {{name}}",
-      "online_checkin" : "Online Check In",
-      "reschedule" : "Reschedule",
+      "withDoctor": "With {{name}}",
+      "online_checkin": "Online Check In",
+      "reschedule": "Reschedule",
       "instructions": "Instructions",
       "parking_information": "Parking Information",
       "directions": "Directions",
-      "get_directions" : "<0>Get directions</0> to your appointment location.",
-      "no_appointments_found" : "There are no upcoming appointments.",
-      "cancel_confirmation" : "Are you sure you want to cancel appointment?"
+      "get_directions": "<0>Get directions</0> to your appointment location.",
+      "no_appointments_found": "There are no upcoming appointments.",
+      "cancel_confirmation": "Are you sure you want to cancel appointment?"
     }
   }
 }
