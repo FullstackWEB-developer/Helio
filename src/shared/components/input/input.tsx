@@ -47,14 +47,11 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({ label, type, htm
         }
     }
 
-    const clearValue = () => {
-        if (innerRef?.current) {
-            setValue('');
-            innerRef.current.focus();
-            Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value')
-                ?.set?.call(innerRef.current, '');
-            innerRef.current.dispatchEvent(new Event('change', { bubbles: true }));
-        }
+    const clearValue = (e:  React.MouseEvent<HTMLSpanElement, MouseEvent>) => {       
+        setValue('');
+        let event = Object.create(e);
+        event.target.value = '';
+        onChange(event as React.ChangeEvent<HTMLInputElement>);
     }
 
     const preventMousedownTriggerBlur = (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
@@ -82,7 +79,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({ label, type, htm
             value &&
             <span
                 onMouseDown={(e) => preventMousedownTriggerBlur(e)}
-                onClick={(e) => { clearValue() }}
+                onClick={(e) => { clearValue(e) }}
                 className="clear-input-icon">
                     <SvgIcon type={Icon.Clear} fillClass="clear-input-icon-fill"/>
             </span>}
