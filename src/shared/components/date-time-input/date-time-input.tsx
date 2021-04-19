@@ -1,4 +1,3 @@
-
 import React, {ChangeEvent, Fragment, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 
@@ -28,12 +27,14 @@ const DateTimeInput = React.forwardRef<HTMLInputElement, DateTimeInputProps>(({ 
                 {t(label || '')}
             </label>
             <input ref={ref} {...props}
-                   type={isFocusedDueDateTime ? type : 'text'}
-                   onFocus={() => {setIsFocusedDateTime(true)}}
+                   type={(isFocusedDueDateTime || props.value) ? type : 'text'}
+                   onFocus={() => {
+                       setIsFocusedDateTime(true)
+                   }}
                    onBlur={(e) => onBlur(e)}
                    max={props.max}
-                className={'border mt-1 rounded-md p-4 ' + props.className} />
-            {props.error && <div className='text-red-500'>{props.error}</div>}
+                   className={'border mt-1 rounded-md p-4 ' + props.className} />
+            {props.error && <div className='text-danger'>{props.error}</div>}
         </Fragment>
     );
 })

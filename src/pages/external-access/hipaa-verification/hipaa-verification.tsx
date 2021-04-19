@@ -15,11 +15,13 @@ import {clearVerifiedPatient, setVerifiedPatient} from '@pages/patients/store/pa
 import {useHistory} from 'react-router-dom';
 import {useDispatch} from 'react-redux';
 import {ExternalAccessRequestTypes} from '../models/external-updates-request-types.enum';
+import './hipaa-verification.scss';
+
 export interface HipaaVerificationProps {
     request: RedirectLink
 }
 
-const HipaaVerification = ({request} : HipaaVerificationProps) => {
+const HipaaVerification = ({request}: HipaaVerificationProps) => {
     const {t} = useTranslation();
     const history = useHistory();
     const dispatch = useDispatch();
@@ -110,7 +112,7 @@ const HipaaVerification = ({request} : HipaaVerificationProps) => {
                     {t('external_access.hipaa.verify_title')}
                 </div>
                 <form onSubmit={handleSubmit(onSubmit)} onChange={() => setErrors('')}>
-                    <div>
+                    <div className='hipaa-verification-form'>
                         <div className='pb-6'>
                             <ControlledDateInput
                                 type='date'
