@@ -1,26 +1,27 @@
-import React, {useEffect, useRef, useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
-import {useHistory} from 'react-router-dom';
+import React, { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import 'amazon-connect-streams';
 import withErrorLogging from '@shared/HOC/with-error-logging';
-import {isCcpVisibleSelector} from '@shared/layout/store/layout.selectors';
-import {setAssignee} from '../tickets/services/tickets.service';
-import {setBotContext, setChatCounter, setContextPanel, setNoteContext, setVoiceCounter} from './store/ccp.slice';
-import {authenticationSelector} from '@shared/store/app-user/appuser.selectors';
-import {DragPreviewImage, useDrag} from 'react-dnd';
-import {DndItemTypes} from '@shared/layout/dragndrop/dnd-item-types';
+import { isCcpVisibleSelector } from '@shared/layout/store/layout.selectors';
+import { setAssignee } from '../tickets/services/tickets.service';
+import { setBotContext, setChatCounter, setContextPanel, setNoteContext, setVoiceCounter } from './store/ccp.slice';
+import { authenticationSelector } from '@shared/store/app-user/appuser.selectors';
+import { DragPreviewImage, useDrag } from 'react-dnd';
+import { DndItemTypes } from '@shared/layout/dragndrop/dnd-item-types';
 import './ccp.scss';
-import {toggleCcp} from '@shared/layout/store/layout.slice';
-import {useTranslation} from 'react-i18next';
+import { toggleCcp } from '@shared/layout/store/layout.slice';
+import { useTranslation } from 'react-i18next';
 import CcpContext from './components/ccp-context';
 import contextPanels from './models/context-panels';
-import {ccpImage} from './ccpImage';
-import {setAgentStates, updateUserStatus} from '@shared/store/app-user/appuser.slice';
-import {UserStatus} from '@shared/store/app-user/app-user.models';
+import { ccpImage } from './ccpImage';
+import { setAgentStates, updateUserStatus } from '@shared/store/app-user/appuser.slice';
+import { UserStatus } from '@shared/store/app-user/app-user.models';
 import Logger from '@shared/services/logger';
-import {AgentState} from '@shared/models/agent-state';
-import {Icon} from '@components/svg-icon/icon';
+import { AgentState } from '@shared/models/agent-state';
+import { Icon } from '@components/svg-icon/icon';
 import SvgIcon from '@components/svg-icon/svg-icon';
+import { selectContextPanel } from './store/ccp.selectors';
 
 const ccpConfig = {
     region: process.env.REACT_APP_AWS_REGION,
@@ -44,11 +45,11 @@ window.CCP = window.CCP || {};
 
 
 const Ccp: React.FC<BoxProps> = ({
-                                     id,
-                                     left,
-                                     top
-                                 }) => {
-    const {t} = useTranslation();
+    id,
+    left,
+    top
+}) => {
+    const { t } = useTranslation();
     const dispatch = useDispatch();
     const history = useHistory();
     const logger = Logger.getInstance();
@@ -56,6 +57,7 @@ const Ccp: React.FC<BoxProps> = ({
     const [isHover, setHover] = useState(false);
     const [isBottomBarVisible, setIsBottomBarVisible] = useState(false);
     const [ticketId, setTicketId] = useState('');
+    const currentContext = useSelector(selectContextPanel);
 
     const isCcpVisibleRef = useRef();
     isCcpVisibleRef.current = useSelector(isCcpVisibleSelector);
@@ -135,7 +137,7 @@ const Ccp: React.FC<BoxProps> = ({
             window.CCP.agent = agent;
 
             const agentStates = agent.getAgentStates() as AgentState[];
-            if ( agentStates?.length > 0 ) {
+            if (agentStates?.length > 0) {
                 dispatch(setAgentStates(agentStates));
             }
 
@@ -167,57 +169,83 @@ const Ccp: React.FC<BoxProps> = ({
     }, [dispatch, history, logger, username]);
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [{opacity}, drag, preview] = useDrag({
-        item: {id, left, top, type: DndItemTypes.BOX},
+    const [{ opacity }, drag, preview] = useDrag({
+        item: { id, left, top, type: DndItemTypes.BOX },
         collect: (monitor) => ({
             opacity: monitor.isDragging() ? 0.3 : 1
         })
     });
 
+    const applyProperIconClass = (type: string, mode: 'fillColor' | 'background' = 'fillColor') => {
+        if (mode === 'fillColor') {
+            return `ccp-bottom-bar-icon${currentContext === type ? '-active' : ''}`;
+        }
+        else if (mode = 'background') {
+            return `ccp-botom-icon-background${currentContext === type ? '-active' : ''}`;
+        }
+    }
+
     return (
         <>
-            <DragPreviewImage src={ccpImage} connect={preview}/>
+            <DragPreviewImage src={ccpImage} connect={preview} />
             <div className={'ccp-main z-50 ' + (isCcpVisibleRef.current ? 'block' : 'hidden')}
-                 style={{left, top, opacity: opacity}}
-                 onMouseEnter={() => setHover(true)}
-                 onMouseLeave={() => setHover(false)}
-                 ref={drag}
+                style={{ left, top, opacity: opacity }}
+                onMouseEnter={() => setHover(true)}
+                onMouseLeave={() => setHover(false)}
+                ref={drag}
             >
                 <div className={'ccp-title h-8 flex items-center flex-row justify-between pl-4 body2-white ' + (isHover ? 'visible' : 'invisible')}>
                     <div>{t('ccp.title')}</div>
                     <div className='w-8 flex justify-center items-center h-full cursor-pointer' onClick={() => dispatch(toggleCcp())}>-</div>
                 </div>
                 <div className={'flex h-full shadow-md'}>
-                    <div className={'flex flex-col h-full'}>
-                        <div data-test-id='ccp-container' id='ccp-container' className='h-full overflow-hidden ccp-drag-background'> </div>
-                        <div className={'flex justify-between w-full px-10 py-2 shadow-md  border-t ccp-bottom-bar ' + (isBottomBarVisible ? 'block' : 'hidden')}>
-                            <SvgIcon type={Icon.Bot}
-                                     className='medium cursor-pointer'
-                                     onClick={() => dispatch(setContextPanel(contextPanels.bot))}
-                                     fillClass='ccp-bottom-bar-icon'/>
+                    <div className={'flex flex-col h-full min-ccp-width'}>
+                        <div data-test-id='ccp-container' id='ccp-container' className={`h-full overflow-hidden ccp-drag-background${currentContext ? ' border-r' : ''}`}> </div>
+                        <div className={`flex justify-between items-center w-full px-6 h-10 shadow-md border-t footer-ff ccp-bottom-bar ${isBottomBarVisible ? 'block' : 'hidden'} ${currentContext ? 'border-r' : ''}`}>
+                            <span className={`h-full flex items-center justify-center w-12 ${applyProperIconClass(contextPanels.bot, 'background')}`}>
+                                <SvgIcon type={Icon.Bot}
+                                    className='medium cursor-pointer'
+                                    onClick={() => dispatch(setContextPanel(contextPanels.bot))}
+                                    fillClass={applyProperIconClass(contextPanels.bot)} />
+                            </span>
                             {
-                                ticketId ? <SvgIcon type={Icon.Note}
-                                                className='medium cursor-pointer'
-                                                fillClass='ccp-bottom-bar-icon'
-                                                onClick={() => dispatch(setContextPanel(contextPanels.note))} />
-                                    : <SvgIcon type={Icon.Note} className='medium cursor-pointer' fillClass='ccp-bottom-bar-icon'/>
+                                ticketId ?
+                                    <span className={`h-full flex items-center justify-center w-12 ${applyProperIconClass(contextPanels.note, 'background')}`}>
+                                        <SvgIcon type={Icon.Note}
+                                            className='medium cursor-pointer'
+                                            fillClass={applyProperIconClass(contextPanels.note)}
+                                            onClick={() => dispatch(setContextPanel(contextPanels.note))} />
+                                    </span>
+                                    : <span className={`h-full flex items-center justify-center w-12 ${applyProperIconClass(contextPanels.note, 'background')}`}>
+                                        <SvgIcon type={Icon.Note} className='medium'
+                                            fillClass={applyProperIconClass(contextPanels.note)} />
+                                    </span>
                             }
-                            <SvgIcon type={Icon.Tickets}
-                                     className='medium cursor-pointer'
-                                     fillClass='ccp-bottom-bar-icon'
-                                     onClick={() => dispatch(setContextPanel(contextPanels.tickets))} />
-                            <SvgIcon type={Icon.Sms}
-                                     className='medium cursor-pointer'
-                                     fillClass='ccp-bottom-bar-icon'
-                                     onClick={() => dispatch(setContextPanel(contextPanels.sms))} />
-                            <SvgIcon type={Icon.Email}
-                                     className='medium cursor-pointer'
-                                     fillClass='ccp-bottom-bar-icon'
-                                     onClick={() => dispatch(setContextPanel(contextPanels.email))} />
-                            <SvgIcon type={Icon.Scripts}
-                                     className='medium cursor-pointer'
-                                     fillClass='ccp-bottom-bar-icon'
-                                     onClick={() => dispatch(setContextPanel(contextPanels.scripts))} />
+                            <span className={`h-full flex items-center justify-center w-12 ${applyProperIconClass(contextPanels.tickets, 'background')}`}>
+                                <SvgIcon type={Icon.Tickets}
+                                    className='medium cursor-pointer'
+                                    fillClass={applyProperIconClass(contextPanels.tickets)}
+                                    onClick={() => dispatch(setContextPanel(contextPanels.tickets))} />
+                            </span>
+                            <span className={`h-full flex items-center justify-center w-12 ${applyProperIconClass(contextPanels.sms, 'background')}`}>
+                                <SvgIcon type={Icon.Sms}
+                                    className='medium cursor-pointer'
+                                    fillClass={applyProperIconClass(contextPanels.sms)}
+                                    onClick={() => dispatch(setContextPanel(contextPanels.sms))} />
+                            </span>
+                            <span className={`h-full flex items-center justify-center w-12 ${applyProperIconClass(contextPanels.email, 'background')}`}>
+                                <SvgIcon type={Icon.Email}
+                                    className='medium cursor-pointer'
+                                    fillClass={applyProperIconClass(contextPanels.email)}
+                                    onClick={() => dispatch(setContextPanel(contextPanels.email))} />
+                            </span>
+                            <span className={`h-full flex items-center justify-center w-12 ${applyProperIconClass(contextPanels.scripts, 'background')}`}>
+                                <SvgIcon type={Icon.Scripts}
+                                    className='medium cursor-pointer'
+                                    fillClass={applyProperIconClass(contextPanels.scripts)}
+                                    onClick={() => dispatch(setContextPanel(contextPanels.scripts))} />
+                            </span>
+
                         </div>
                     </div>
                     <CcpContext />

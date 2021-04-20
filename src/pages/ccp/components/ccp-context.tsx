@@ -44,19 +44,19 @@ const CcpContext = () => {
         const suggestion = suggestions[context as keyof Suggestions]
         return <>
             {
-                suggestion.map((s, index) => <span key={index} className={'pl-8'}>{s}</span>)
+                suggestion.map((s, index) => <span key={index} className={'body2 pl-6'}>{s}</span>)
             }
         </>
     }
     return (context ?
-        <div className={'ccp-context flex flex-col h-120'}>
-            <div className={'ccp-header h-11'} />
+        <div className={'ccp-context flex flex-col'}>
+            <div className={'ccp-header'} />
             <div className={'flex-grow bg-white'}>
                 {renderContext()}
             </div>
-            <div className={'ccp-footer border-t bg-white flex'}>
-                <div className={'px-8 pt-2 font-bold'}>{t('ccp.suggested_steps')}</div>
-                <div className={'pt-3 text-sm'}>
+            <div className={'ccp-footer h-10 flex py-2 shadow-md border-t'}>
+                <div className={'pl-6 subtitle'}>{t('ccp.suggested_steps')}</div>
+                <div>
                     {renderFooter()}
                 </div>
             </div>

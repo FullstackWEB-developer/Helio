@@ -519,7 +519,8 @@ const TicketNew = () => {
                 defaultValue=''
                 render={() => (
                     <TextArea
-                        className={'w-full pb-4 h-20'}
+                        className={'w-full pb-4 h-20'}                        
+                        overwriteDefaultContainerClasses={true}
                         data-test-id={'ticket-new-add-note'}
                         placeholder={t('ticket_new.add_note')}
                         value={noteText}

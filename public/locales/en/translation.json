@@ -17,7 +17,8 @@
     "all": "All",
     "please_select": " Please Select",
     "continue": "Continue",
-    "search": "Search"
+    "search": "Search",
+    "processing": "Processing"
   },
   "login": {
     "loginButton": "Login"
@@ -130,7 +131,7 @@
       "error": "Failed to add Note",
       "no_ticket_id": "There are no ticketId",
       "copy_note": "Copy Note",
-      "enter_your_note": "Enter your note"
+      "enter_your_note": "Enter note"
     }
   },
   "error": {

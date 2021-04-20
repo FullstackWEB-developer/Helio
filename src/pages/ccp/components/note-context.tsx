@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useForm, Controller } from 'react-hook-form';
@@ -7,11 +7,12 @@ import utc from 'dayjs/plugin/utc'
 import withErrorLogging from '../../../shared/HOC/with-error-logging';
 import { selectNoteContext, selectNotes } from '../store/ccp.selectors';
 import { setNotes } from '../store/ccp.slice';
-import Button from '../../../shared/components/button/button';
 import TextArea from '../../../shared/components/textarea/textarea';
 import { addNote } from '../../tickets/services/tickets.service';
 import { TicketNote } from '../../tickets/models/ticket-note';
 import NoteDetailItem from './note-detail-item';
+import './note-context.scss';
+import { Icon } from '@components/svg-icon/icon';
 
 const NoteContext = () => {
     dayjs.extend(utc);
@@ -20,8 +21,8 @@ const NoteContext = () => {
     const ticketId = useSelector(selectNoteContext).ticketId;
     const username = useSelector(selectNoteContext).username;
     const notes: TicketNote[] = useSelector(selectNotes) || [];
-
-    const [noteText, setNoteText] = useState('')
+    const [noteText, setNoteText] = useState('');
+    const notesBottom = useRef<HTMLDivElement>(null);
 
     const onSubmit = async () => {
         const note: TicketNote = {
@@ -33,8 +34,8 @@ const NoteContext = () => {
             note.createdOn = dayjs().utc().toDate();
             note.createdBy = username;
             dispatch(setNotes([...notes, note]));
-
             setNoteText('');
+            notesBottom.current?.scrollIntoView({ behavior: 'smooth' });
         }
     }
 
@@ -45,46 +46,44 @@ const NoteContext = () => {
     }
 
     return (
-        <div className={'pt-6 pl-8 pr-8 text-sm'}>
-            <div className={'text-lg font-bold pb-4'}>{t('ccp.note_context.header')}</div>
-            <div className='grid grid-flow-row auto-rows-max md:auto-rows-min max-h-56 overflow-y-auto overflow-x-hidden'>
-                {
-                    notes.map((item, key) => <NoteDetailItem key={key} item={item} />)
-                }
-            </div>
-            <div className='flex justify-end w-full mt-5'>
-                <Button label={'ccp.note_context.copy_note'} onClick={() => { return navigator.clipboard.writeText(noteText) }} />
-                <span className='text-gray-400'>
-                    {dayjs.utc().format('M/DD/YYYY h:mm A')}
-                </span>
-            </div>
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <Controller
-                    name='note'
-                    control={control}
-                    defaultValue={''}
-                    render={() => (
-                        <TextArea
-                            error={errors.note?.message}
-                            className='w-full pb-4 h-20'
-                            data-test-id='note-context-notes'
-                            placeholder={t('ccp.note_context.enter_your_note')}
-                            value={noteText}
-                            required={true}
-                            rows={2}
-                            onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setNoteText(e.target.value)}
-                        />
-                    )}
-                />
-                <div className='flex pt-4'>
-                    <Button
-                        data-test-id='note-context-save-button'
-                        type={'submit'}
-                        label={'common.save'}
-                        className='w-28'
-                    />
+        <div className="flex flex-col">
+            <div className={'pt-3.5 pl-6 pr-3 overflow-hidden flex flex-col'}>
+                <div className={'h7 h-9'}>{t('ccp.note_context.header')}</div>
+                <div className='grid grid-flow-row auto-rows-max md:auto-rows-min overflow-y-auto overflow-x-hidden notes-container pr-3'>
+                    {
+                        notes.map((item, key) => <NoteDetailItem key={key} item={item} displayBottomBorder={key < notes.length - 1} />)
+                    }
+                    <div ref={notesBottom}></div>
                 </div>
-            </form>
+            </div>
+            <div className="overflow-hidden border-t">
+                <form onSubmit={handleSubmit(onSubmit)} className="w-full add-note-section">
+                    <Controller
+                        name='note'
+                        control={control}
+                        defaultValue={''}
+                        render={() => (
+                            <TextArea
+                                error={errors.note?.message}
+                                className='h-full pl-6 pt-2 pb-0 pr-0 body2 w-full'
+                                data-test-id='note-context-notes'
+                                placeholder={t('ccp.note_context.enter_your_note')}
+                                value={noteText}
+                                required={true}
+                                rows={2}
+                                resizable={false}
+                                hasBorder={false}
+                                onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setNoteText(e.target.value)}
+                                hasIcon={true}
+                                iconClassNames='medium cursor-pointer'
+                                icon={Icon.Send}
+                                iconFill='notes-send'
+                                iconOnClick={() => { handleSubmit(onSubmit)() }}
+                            />
+                        )}
+                    />
+                </form>
+            </div>
         </div>
     )
 }
