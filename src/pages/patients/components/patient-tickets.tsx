@@ -52,7 +52,7 @@ const PatientTickets: React.FC<PatientTicketProps> = ({patientId}) => {
                         <div className={'py-3 cursor-pointer align-middle border-b'}
                              onClick={() => history.push(`${TicketsPath}/new?patientId=${patientId}`)}>
                             <SvgIcon type={Icon.AddBlack}
-                                 className='medium h-8 w-8 pl-2 cursor-pointer'
+                                 className='icon-medium h-8 w-8 pl-2 cursor-pointer'
                                  fillClass='active-item-icon'/>
                         </div>
                         {

@@ -71,7 +71,7 @@ const List = ({ options, title, isSearchable = true, onSelect }: ListProps) => {
         <div>
           <div className='inline-flex flex-1 border-b h-10 w-full'>
             <span className='pl-4 items-center flex'>
-              <SvgIcon type={Icon.Search} className='small cursor-pointer' fillClass='list-active-icon'/>
+              <SvgIcon type={Icon.Search} className='icon-small cursor-pointer' fillClass='list-active-icon'/>
             </span>
             <input
               onKeyDown={handleKeyDown}

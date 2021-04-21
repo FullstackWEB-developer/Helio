@@ -123,7 +123,7 @@ const TicketDetailHeader = ({ticket, patient}: TicketDetailHeaderProps) => {
                                 SmallLabel('ticket_detail.header.last_message', feedLastMessageOn ? dayjs().to(dayjs.utc(feedLastMessageOn).local()) : '')
                             }
                             {
-                                <SvgIcon type={Icon.RatingSatisfied} className='large'/>
+                                <SvgIcon type={Icon.RatingSatisfied} className='icon-medium'/>
                             }
                         </div>
                     </div>
@@ -133,19 +133,23 @@ const TicketDetailHeader = ({ticket, patient}: TicketDetailHeaderProps) => {
                 <div className='flex flex-row w-full pt-2 pb-2 border-t border-b'>
                     <div className='flex justify-items-start w-1/2'>
                         <div className='pl-20'>
-                            <SvgIcon type={Icon.Phone}
-                                     className='large cursor-pointer bg-gray-800 rounded-md h-10 w-16 p-1.5'
-                                     fillClass='icon-white'
-                                     onClick={() => outboundCall()}/>
+                            <div className='cursor-pointer bg-gray-800 rounded-md h-8 w-14 flex content-center justify-center pt-1'>
+                                <SvgIcon type={Icon.Phone}
+                                         className='icon-medium'
+                                         fillClass='icon-white'
+                                         onClick={() => outboundCall()}/>
+                            </div>
                         </div>
                         <div className='pl-5'>
-                            <SvgIcon type={Icon.Sms}
-                                     className='large cursor-pointer bg-gray-800 rounded-md h-10 w-16 p-1.5'
-                                     fillClass='icon-white'/>
+                            <div className='cursor-pointer bg-gray-800 rounded-md h-8 w-14 flex content-center justify-center pt-1'>
+                                <SvgIcon type={Icon.Sms}
+                                         className='icon-medium'
+                                         fillClass='icon-white'/>
+                            </div>
                         </div>
                         <div className='pl-5'>
                             <SvgIcon type={Icon.Email}
-                                     className='large cursor-pointer bg-gray-800 rounded-md h-10 w-16 p-1'
+                                     className='icon-large cursor-pointer bg-gray-800 rounded-md h-8 w-14 p-1'
                                      fillClass='icon-white'/>
                         </div>
                     </div>

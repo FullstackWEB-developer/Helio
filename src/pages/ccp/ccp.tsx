@@ -204,7 +204,7 @@ const Ccp: React.FC<BoxProps> = ({
                         <div className={`flex justify-between items-center w-full px-6 h-10 shadow-md border-t footer-ff ccp-bottom-bar ${isBottomBarVisible ? 'block' : 'hidden'} ${currentContext ? 'border-r' : ''}`}>
                             <span className={`h-full flex items-center justify-center w-12 ${applyProperIconClass(contextPanels.bot, 'background')}`}>
                                 <SvgIcon type={Icon.Bot}
-                                    className='medium cursor-pointer'
+                                    className='icon-medium cursor-pointer'
                                     onClick={() => dispatch(setContextPanel(contextPanels.bot))}
                                     fillClass={applyProperIconClass(contextPanels.bot)} />
                             </span>
@@ -212,36 +212,36 @@ const Ccp: React.FC<BoxProps> = ({
                                 ticketId ?
                                     <span className={`h-full flex items-center justify-center w-12 ${applyProperIconClass(contextPanels.note, 'background')}`}>
                                         <SvgIcon type={Icon.Note}
-                                            className='medium cursor-pointer'
+                                            className='icon-medium cursor-pointer'
                                             fillClass={applyProperIconClass(contextPanels.note)}
                                             onClick={() => dispatch(setContextPanel(contextPanels.note))} />
                                     </span>
                                     : <span className={`h-full flex items-center justify-center w-12 ${applyProperIconClass(contextPanels.note, 'background')}`}>
-                                        <SvgIcon type={Icon.Note} className='medium'
+                                        <SvgIcon type={Icon.Note} className='icon-medium'
                                             fillClass={applyProperIconClass(contextPanels.note)} />
                                     </span>
                             }
                             <span className={`h-full flex items-center justify-center w-12 ${applyProperIconClass(contextPanels.tickets, 'background')}`}>
                                 <SvgIcon type={Icon.Tickets}
-                                    className='medium cursor-pointer'
+                                    className='icon-medium cursor-pointer'
                                     fillClass={applyProperIconClass(contextPanels.tickets)}
                                     onClick={() => dispatch(setContextPanel(contextPanels.tickets))} />
                             </span>
                             <span className={`h-full flex items-center justify-center w-12 ${applyProperIconClass(contextPanels.sms, 'background')}`}>
                                 <SvgIcon type={Icon.Sms}
-                                    className='medium cursor-pointer'
+                                    className='icon-medium cursor-pointer'
                                     fillClass={applyProperIconClass(contextPanels.sms)}
                                     onClick={() => dispatch(setContextPanel(contextPanels.sms))} />
                             </span>
                             <span className={`h-full flex items-center justify-center w-12 ${applyProperIconClass(contextPanels.email, 'background')}`}>
                                 <SvgIcon type={Icon.Email}
-                                    className='medium cursor-pointer'
+                                    className='icon-medium cursor-pointer'
                                     fillClass={applyProperIconClass(contextPanels.email)}
                                     onClick={() => dispatch(setContextPanel(contextPanels.email))} />
                             </span>
                             <span className={`h-full flex items-center justify-center w-12 ${applyProperIconClass(contextPanels.scripts, 'background')}`}>
                                 <SvgIcon type={Icon.Scripts}
-                                    className='medium cursor-pointer'
+                                    className='icon-medium cursor-pointer'
                                     fillClass={applyProperIconClass(contextPanels.scripts)}
                                     onClick={() => dispatch(setContextPanel(contextPanels.scripts))} />
                             </span>

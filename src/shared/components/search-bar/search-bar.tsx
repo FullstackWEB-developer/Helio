@@ -95,7 +95,7 @@ const SearchBar = () => {
                 itemsCssClass: 'w-72',
                 category: {
                     text: t('search.categories.patients'),
-                    icon: <SvgIcon type={Icon.Placeholder} className='small' fillClass='' />,
+                    icon: <SvgIcon type={Icon.Placeholder} className='icon-small' fillClass='' />,
                     key: '1'
                 },
                 items: searchTypes
@@ -105,7 +105,7 @@ const SearchBar = () => {
             itemsCssClass: 'w-72',
             category: {
                 text: t('search.categories.contacts'),
-                icon: <SvgIcon type={Icon.Placeholder} className='small' fillClass='' />,
+                icon: <SvgIcon type={Icon.Placeholder} className='icon-small' fillClass='' />,
                 key: '2'
             },
             items: [
@@ -119,7 +119,7 @@ const SearchBar = () => {
             itemsCssClass: 'w-72',
             category: {
                 text: t('search.categories.tickets'),
-                icon: <SvgIcon type={Icon.Placeholder} className='small' fillClass='' />,
+                icon: <SvgIcon type={Icon.Placeholder} className='icon-small' fillClass='' />,
                 key: '3'
             },
             items: [

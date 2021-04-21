@@ -109,7 +109,7 @@ const TicketAssignee = ({ ticketId, assignee, dropdownHorizontalPostion }: Ticke
             <div className='shadow-md bg-white pt-2'>
                 <div className='flex flex-row border-b border-t p-2 pl-3'>
                     <span className={'pt-1'}>
-                        <SvgIcon type={Icon.Search} className='small cursor-pointer' fillClass='search-icon' />
+                        <SvgIcon type={Icon.Search} className='icon-small cursor-pointer' fillClass='search-icon' />
                     </span>
                     <input className='pl-4 focus:outline-none' type='text' value={searchAssigneeTerm}
                         onChange={(e) => search(e)}

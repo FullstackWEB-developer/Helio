@@ -96,7 +96,7 @@ const TicketDetailPatientInfo = ({ticket, patient}: TicketDetailPatientInfoProps
                             <dd className='body2 flex flex-row'>
                                 <span className='py-1'>{ticket?.patientId}</span>
                                 <SvgIcon type={Icon.PatientChart}
-                                     className='medium h-8 w-8 pl-2 cursor-pointer'
+                                     className='icon-medium h-8 w-8 pl-2 cursor-pointer'
                                      fillClass='active-item-icon'
                                      onClick={() => history.push('/patients/' + ticket.patientId)}/>
                             </dd>

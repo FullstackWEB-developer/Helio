@@ -13,15 +13,15 @@ interface TicketChannelIconProps {
 const TicketChannelIcon = ({ ticket }: TicketChannelIconProps) => {
     switch (ticket.channel) {
         case ChannelTypes.Chat:
-            return <SvgIcon type={Icon.ChannelChat} className='x-large' fillClass='channel-icon-fill' strokeClass='channel-icon-stroke'/>;
+            return <SvgIcon type={Icon.ChannelChat} className='icon-x-large' fillClass='channel-icon-fill' strokeClass='channel-icon-stroke'/>;
         case ChannelTypes.PhoneCall:
-            return <SvgIcon type={Icon.ChannelPhone} className='x-large' fillClass='channel-icon-fill' strokeClass='channel-icon-stroke'/>;
+            return <SvgIcon type={Icon.ChannelPhone} className='icon-x-large' fillClass='channel-icon-fill' strokeClass='channel-icon-stroke'/>;
         case ChannelTypes.WebSite:
-            return <SvgIcon type={Icon.ChannelWeb} className='x-large' fillClass='channel-icon-fill' strokeClass='channel-icon-stroke'/>;
+            return <SvgIcon type={Icon.ChannelWeb} className='icon-x-large' fillClass='channel-icon-fill' strokeClass='channel-icon-stroke'/>;
         case ChannelTypes.UserCreated:
-            return <SvgIcon type={Icon.ChannelSms} className='x-large' fillClass='channel-icon-fill' strokeClass='channel-icon-stroke'/>;
+            return <SvgIcon type={Icon.ChannelSms} className='icon-x-large' fillClass='channel-icon-fill' strokeClass='channel-icon-stroke'/>;
         default:
-            return <SvgIcon type={Icon.ChannelChat} className='x-large' fillClass='channel-icon-fill' strokeClass='channel-icon-stroke'/>;
+            return <SvgIcon type={Icon.ChannelChat} className='icon-x-large' fillClass='channel-icon-fill' strokeClass='channel-icon-stroke'/>;
     }
 }
 

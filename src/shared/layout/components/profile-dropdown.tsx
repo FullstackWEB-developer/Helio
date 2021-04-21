@@ -87,18 +87,18 @@ const ProfileDropdown = () => {
         label: t('user_profile.my_profile'),
         value: 'my_profile',
         hasDivider: true,
-        icon: <SvgIcon type={Icon.Placeholder} className='small' fillClass=''/>
+        icon: <SvgIcon type={Icon.Placeholder} className='icon-small' fillClass=''/>
     });
     items.push({
         label: t('user_profile.my_states'),
         value: 'my_states',
-        icon: <SvgIcon type={Icon.Placeholder} className='small' fillClass=''/>
+        icon: <SvgIcon type={Icon.Placeholder} className='icon-small' fillClass=''/>
     });
     items.push({
         label: t('user_profile.sign_out'),
         onClick: () => signOut(),
         value: 'sign_out',
-        icon: <SvgIcon type={Icon.Placeholder} className='small' fillClass=''/>
+        icon: <SvgIcon type={Icon.Placeholder} className='icon-small' fillClass=''/>
     });
 
     const dropdownModel: DropdownModel = {

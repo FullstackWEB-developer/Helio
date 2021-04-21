@@ -11,7 +11,7 @@ export interface SvgIconProps {
     onClick?: (e: any) => void
 }
 
-const SvgIcon = ({type, className = 'medium', fillClass = 'fill-default', strokeClass = 'stroke-default', opacity, onClick}: SvgIconProps) => {
+const SvgIcon = ({type, className = 'icon-medium', fillClass = 'fill-default', strokeClass = 'stroke-default', opacity, onClick}: SvgIconProps) => {
     const mainClass = `${className} ${fillClass ? '' : 'fill-default'}`;
 
     const getIconAdd = () => {
@@ -265,11 +265,11 @@ const SvgIcon = ({type, className = 'medium', fillClass = 'fill-default', stroke
     }
 
     const getIconClose = () => {
-        return <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" className={mainClass}>
-            <rect width="16" height="16" fill="none"/>
+        return <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className={mainClass}>
+            <rect width="24" height="24" fill="none"/>
             <path
-                d="M12,1.057,10.943,0,6,4.925,1.057,0,0,1.057,4.925,6,0,10.943,1.057,12,6,7.075,10.943,12,12,10.943,7.075,6Z"
-                transform="translate(2 2)" className={fillClass}/>
+                d="M16,1.409,14.591,0,8,6.566,1.409,0,0,1.409,6.566,8,0,14.591,1.409,16,8,9.434,14.591,16,16,14.591,9.434,8Z" transform="translate(4 4)"
+                className={fillClass}/>
         </svg>
     }
 

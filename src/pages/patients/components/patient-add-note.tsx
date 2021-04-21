@@ -63,7 +63,7 @@ const PatientAddNote = () => {
 
             {showSendButton() && <div className='flex items-center justify-center w-1/6'>
                 {mutation.isLoading ? t('patient.activity.notes.sending') :
-                    <SvgIcon type={Icon.Send} className='medium cursor-pointer' onClick={() => sendNote()}/>}
+                    <SvgIcon type={Icon.Send} className='icon-medium cursor-pointer' onClick={() => sendNote()}/>}
 
             </div>}
         </div>

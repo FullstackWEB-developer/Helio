@@ -24,9 +24,9 @@ const BotContext = () => {
                 <div className='col-span-7 subtitle2'>{botContext?.reason}</div>
             </div>
             {
-                patientInCollectionsBalance > 0 && 
+                patientInCollectionsBalance > 0 &&
                 <div className={'pt-4 flex items-center'}>
-                    <SvgIcon type={Icon.Warning} className='medium' fillClass='warning-icon' />
+                    <SvgIcon type={Icon.Warning} className='icon-medium' fillClass='warning-icon' />
                     <span className='pl-2.5 body2'>{t('ccp.bot_context.patient_in_collections')}</span>
                 </div>
             }

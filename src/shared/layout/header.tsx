@@ -52,10 +52,10 @@ const Header = () => {
                 </div>
                 <div className='flex flex-row items-center'>
                     <div className='cursor-pointer pr-4'>
-                        <SvgIcon type={Icon.Ccp} data-test-id='toggle-ccp' className='large-40' fillClass='header-active-item-icon' onClick={() => dispatch(toggleCcp())}/>
+                        <SvgIcon type={Icon.Ccp} data-test-id='toggle-ccp' className='icon-large-40' fillClass='header-active-item-icon' onClick={() => dispatch(toggleCcp())}/>
                     </div>
                     <div className='pr-1'>
-                        <SvgIcon type={Icon.Phone} className='small' fillClass='header-inactive-item-icon'/>
+                        <SvgIcon type={Icon.Phone} className='icon-small' fillClass='header-inactive-item-icon'/>
                     </div>
                     <div>
                         <div data-test-id='number-of-agent-voices'
@@ -64,7 +64,7 @@ const Header = () => {
                         </div>
                     </div>
                     <div className='pr-1.5'>
-                        <SvgIcon type={Icon.Chat} className='medium' fillClass='header-inactive-item-icon'/>
+                        <SvgIcon type={Icon.Chat} className='icon-medium' fillClass='header-inactive-item-icon'/>
                     </div>
                     <div>
                         <div data-test-id='number-of-agent-chats'

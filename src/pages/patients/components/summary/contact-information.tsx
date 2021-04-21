@@ -54,7 +54,7 @@ const ContactInformation = ({patientChartSummary} : ContactInformationProps) => 
             <div className='pb-1 pt-8 flex justify-between'>
                 <div className={'body1'}>{t('patient.summary.contact_information')} </div>
                 <SvgIcon type={Icon.Edit} onClick={() => setEditMode(!editMode)}
-                         className='medium cursor-pointer mr-4'
+                         className='icon-medium cursor-pointer mr-4'
                          fillClass='edit-icon'/>
             </div>
             {editMode ? <ContactInformationUpdate

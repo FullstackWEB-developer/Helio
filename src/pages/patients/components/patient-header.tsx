@@ -68,7 +68,7 @@ const PatientHeader = ({patientChartSummary} : PatientHeaderProps) => {
                                 <div ref={chartAlertIcon}
                                      onMouseOver={() => setChartAlertHovered(true)}
                                      onMouseOut={() => setChartAlertHovered(false)}>
-                                    <SvgIcon type={Icon.Info} className='medium' fillClass='active-item-icon'/>
+                                    <SvgIcon type={Icon.Info} className='icon-medium' fillClass='active-item-icon'/>
                                 </div>
                             </span>
                             <Tooltip targetRef={chartAlertIcon} isVisible={chartAlertHovered} placement='bottom-start'>

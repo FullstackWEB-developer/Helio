@@ -71,7 +71,7 @@ const TicketDetailEventLog = ({ticket}: TicketDetailEventLogProps) => {
                     </span>
                     <div className = 'pt-0.5 pl-4 cursor-pointer' onClick={() => openCalendar()}>
                         <SvgIcon type={Icon.Calendar}
-                             className='medium h-8 w-8 pl-2 cursor-pointer'
+                             className='icon-medium h-8 w-8 pl-2 cursor-pointer'
                              fillClass='active-item-icon'/>
                     </div>
                 </dd>
