@@ -1,20 +1,21 @@
-import React, {useState} from 'react';
-import {useTranslation} from 'react-i18next';
-import {useHistory} from 'react-router-dom';
-import {keyboardKeys} from '@components/search-bar/constants/keyboard-keys';
-import {useDispatch, useSelector} from 'react-redux';
-import {getList} from './services/tickets.service';
-import {selectTicketFilter, selectTicketsPaging} from './store/tickets.selectors';
-import {toggleTicketListFilter} from './store/tickets.slice';
-import {Paging} from '@shared/models/paging.model';
-import {TicketQuery} from './models/ticket-query';
-import {TicketsPath} from '../../app/paths';
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router-dom';
+import { keyboardKeys } from '@components/search-bar/constants/keyboard-keys';
+import { useDispatch, useSelector } from 'react-redux';
+import { getList } from './services/tickets.service';
+import { selectTicketFilter, selectTicketsPaging } from './store/tickets.selectors';
+import { toggleTicketListFilter } from './store/tickets.slice';
+import { Paging } from '@shared/models/paging.model';
+import { TicketQuery } from './models/ticket-query';
+import { TicketsPath } from '../../app/paths';
 import './tickets.scss';
 import SvgIcon from '@components/svg-icon/svg-icon';
-import {Icon} from '@components/svg-icon/icon';
+import { Icon } from '@components/svg-icon/icon';
+import SearchInputField from '@components/search-input-field/search-input-field';
 
 const TicketsSearch = () => {
-    const {t} = useTranslation();
+    const { t } = useTranslation();
     const dispatch = useDispatch();
     const history = useHistory();
     const ticketFilter: TicketQuery = useSelector(selectTicketFilter);
@@ -24,7 +25,7 @@ const TicketsSearch = () => {
 
     const searchList = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === keyboardKeys.enter) {
-            const query : TicketQuery = {
+            const query: TicketQuery = {
                 ...ticketFilter,
                 ...paging,
                 searchTerm: searchTerm
@@ -33,7 +34,7 @@ const TicketsSearch = () => {
         }
     };
 
-    return <div className='flex flex-row border-b'>
+    return <div className='flex flex-row border-b h-14'>
         <div className='pr-6 flex pl-5 pt-2 border-r flex-row'>
             <SvgIcon type={Icon.Filter} onClick={() => dispatch(toggleTicketListFilter())}
                      className='icon-large cursor-pointer rounded-md h-8 w-10 p-1'
@@ -43,17 +44,14 @@ const TicketsSearch = () => {
                          className='icon-medium-18'
                          fillClass='icon-white'/>
             </span>
-        </div>
-        <div className='relative px-8 py-4 ml-4 w-full'>
-            <span className='absolute inset-y-0 left-0 flex items-center pr-4 cursor-pointer'>
-                <SvgIcon type={Icon.Search} className='icon-small cursor-pointer' fillClass='search-icon'/>
-            </span>
-            <input type='text pl-4' className='focus:outline-none w-full' placeholder={t('tickets.search')}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                onKeyDown={(e) => searchList(e)}
-                value={searchTerm} />
-
-        </div>
+        </div>        
+        <SearchInputField
+            wrapperClassNames='relative w-full h-full'
+            inputClassNames='border-b-0'
+            onChange={(value: string) => { setSearchTerm(value) }}
+            value={searchTerm}
+            onKeyDown={(e)=>{ searchList(e)}}
+        />
     </div>
 };
 

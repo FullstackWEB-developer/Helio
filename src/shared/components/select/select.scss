@@ -8,7 +8,10 @@
 }
 
 .select-trigger {    
-    border-bottom: 0.063rem solid var(--light-divider-12);    
+    border-bottom: 1px solid var(--light-divider-12);
+    &-pt{
+        padding-top: 1.125rem;
+    }        
 }
 
 .select-trigger:focus {
@@ -20,22 +23,23 @@
     pointer-events: none;
     top: 1rem;
     left: 1rem;
-    transition:0.07s ease all; 
-    -moz-transition:0.07s ease all; 
-    -webkit-transition:0.07s ease all;
+    transition:0.05s ease all; 
+    -moz-transition:0.05s ease all; 
+    -webkit-transition:0.05s ease all;
+    max-width: 80%;
 }
 
-.label-small {
-    color: var(--color-primary-800) !important;
-    top: 0.375rem !important;
+.select-trigger:focus ~ label,
+.select-trigger.activated ~ label {
+    top: 0rem;
 }
 
-.select-trigger.input-error, input:focus.input-error {
-    border-bottom-color: var(--color-red);
-    background-color: var(--color-white);
+.select-trigger:focus ~ label > span.select-label-span {
+    color: var(--color-primary-800);
 }
-.select-trigger:focus.input-error ~ label {
-    color: var(--color-red) !important;
+
+.select-trigger.activated:not(:focus):not(.error) ~ label > span.select-label-span {
+    color: var(--light-text-medium-emphasis);;
 }
 
 .select-trigger:disabled{
@@ -43,12 +47,31 @@
     border-bottom-color: var(--light-divider-7);
 }
 
-.select-trigger:hover:not(:focus):not(:disabled):not(.input-error){
+.select-trigger:disabled ~ label > span.select-label-span {
+    color: var(--light-text-medium-emphasis);
+}
+
+.select-trigger:hover:not(:focus):not(:disabled):not(.error){
     border-bottom-color: var(--light-text-disabled);
 }
 
-.assistive-text-focus {
-    color: var(--color-primary-800) !important;
+.assistive-text-color {
+    &-inactive{
+        color: var(--light-text-medium-emphasis);
+    }
+    &-focused {
+        color: var(--color-primary-800);
+    }    
+}
+
+.select-trigger.error, .select-trigger:focus.error {
+    border-bottom-color: var(--color-red);
+    background-color: var(--color-white);
+}
+
+.select-trigger:focus.error ~ label > span.select-label-span,
+.select-trigger.error ~ label > span.select-label-span {
+    color: var(--color-red);
 }
 
 .options {    
@@ -63,7 +86,7 @@
     box-shadow: var(--select-box-shadow);
     min-width: 12rem;
     border-radius: 0.188rem;
-    overflow-y: scroll;
+    overflow-y: auto;
     max-height: 29rem;
 }
 

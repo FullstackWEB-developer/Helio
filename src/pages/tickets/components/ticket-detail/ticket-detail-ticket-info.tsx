@@ -155,7 +155,7 @@ const TicketDetailTicketInfo = ({ ticket }: TicketInfoProps) => {
 
     useEffect(() => {
         if (ticket?.status && ticket.status.toString() !== selectedStatus?.value?.toString()) {
-            setSelectedStatus(statusOptions.find((o: Option) => parseInt(o.value) === ticket?.status));
+            setSelectedStatus(selectedStatus);
         }
     }, [statusOptions, ticket?.status])
 

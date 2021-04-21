@@ -329,8 +329,9 @@ const TicketNew = () => {
                                 name='subjectInput'
                                 control={control}
                                 defaultValue=''
-                                placeholder={'*' + t('ticket_new.subject')}
+                                placeholder={t('ticket_new.subject')}
                                 rules={{ required: requiredText }}
+                                required={true}
                                 as={Input}
                                 className={'w-full border-none h-14'}
                                 data-test-id={'ticket-new-assignee'}

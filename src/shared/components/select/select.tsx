@@ -1,12 +1,12 @@
-import React, { useRef, useState, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
+import React, {useRef, useState, useEffect} from 'react';
+import {useTranslation} from 'react-i18next';
 import './select.scss';
 import customHooks from '@shared/hooks/customHooks';
 import SelectCell from './select-cell';
-import { Option } from '@components/option/option';
-import { keyboardKeys } from '@components/search-bar/constants/keyboard-keys';
+import {Option} from '@components/option/option';
+import {keyboardKeys} from '@components/search-bar/constants/keyboard-keys';
 import SvgIcon from '@components/svg-icon/svg-icon';
-import { Icon } from '@components/svg-icon/icon';
+import {Icon} from '@components/svg-icon/icon';
 interface SelectProps {
     label?: string;
     value?: Option;
@@ -19,8 +19,8 @@ interface SelectProps {
     required?: boolean,
     onChange?: (option?: Option, searchQuery?: string) => void
 }
-const Select = React.forwardRef<HTMLDivElement, SelectProps>(({ options, order, label, ...props }: SelectProps, ref) => {
-    const { t }: { t: any } = useTranslation();
+const Select = React.forwardRef<HTMLDivElement, SelectProps>(({options, order, label, ...props}: SelectProps, ref) => {
+    const {t}: {t: any} = useTranslation();
     const [open, setOpen] = useState(false);
     const [selectedOption, setSelectedOption] = useState<Option | null>(null);
     const [searchQuery, setSearchQuery] = useState<string | null>(null);
@@ -94,6 +94,14 @@ const Select = React.forwardRef<HTMLDivElement, SelectProps>(({ options, order, 
         open ? inputRef.current?.blur() : inputRef.current?.focus();
     }
 
+    const determineLabelTypography = () => {
+        return `body${(open || searchQuery || selectedOption) ? '3' : '2'}`;
+    }
+
+    const determineAssistiveTextColor = () => {
+        return `assistive-text-color-${open ? 'focused' : 'inactive'}`;
+    }
+
     return (
         <div ref={innerRef}
             className={`select-wrapper relative w-full flex flex-col h-20 ${props.disabled ? 'select-wrapper-disabled' : ''}`}>
@@ -102,21 +110,21 @@ const Select = React.forwardRef<HTMLDivElement, SelectProps>(({ options, order, 
                     ref={inputRef}
                     type='text'
                     onChange={(e) => searchOnChange(e)}
-                    onFocus={(e) => { setOpen(true); e.target.select() }}
-                    onBlur={(e) => { setOpen(false); e.target.value = ''; setSearchQuery(null); setCursor(-1) }}
-                    onKeyDown={(e) => { handleKeyDown(e) }}
-                    className={`pl-4 pt-6 pr-8 body2 h-14 relative truncate select-trigger ${props.error ? 'input-error' : ''} `}
+                    onFocus={(e) => {setOpen(true); e.target.select()}}
+                    onBlur={(e) => {setOpen(false); e.target.value = ''; setSearchQuery(null); setCursor(-1)}}
+                    onKeyDown={(e) => {handleKeyDown(e)}}
+                    className={`pl-4 pr-8 body2 ${!label ? 'pt-2.5' : 'select-trigger-pt'} h-1${!label ? '0' : '4'} relative truncate select-trigger ${selectedOption || searchQuery ? 'activated' : ''} ${props.error ? 'error' : ''} `}
                     value={searchQuery ?? t(selectedOption?.label)}
                     disabled={props.disabled}
                 />
                 {
                     label &&
-                    <label
-                        className={`select-label absolute ${selectedOption || open || searchQuery ? 'subtitle3-small label-small' : `body2${props.disabled ? '-medium' : ''}`} ${props.error ? 'text-danger' : ''}`}>
-                        {`${props.required ? '*' : ''}${t(label)}`}
+                    <label className={`select-label absolute truncate`}>
+                        {props.required && !props.disabled && <span className={'text-danger'}>*</span>}
+                        <span className={`select-label-span ${determineLabelTypography()}`}>{t(label)}</span>
                     </label>
                 }
-                <div className="absolute pt-4 right-4 cursor-pointer" onClick={handleArrowClick} onMouseDown={(e) => { e.preventDefault() }}>
+                <div className={`absolute pt-${!label ? '3' : '4'} right-4 cursor-pointer`} onClick={handleArrowClick} onMouseDown={(e) => {e.preventDefault()}}>
                     {
                         <SvgIcon type={open ? Icon.ArrowUp : Icon.ArrowDown} fillClass={'select-arrow-fill'} />
                     }
@@ -134,11 +142,11 @@ const Select = React.forwardRef<HTMLDivElement, SelectProps>(({ options, order, 
             </div>
             {
                 props.assistiveText && !props.error &&
-                <div className={`h-6 max-h-6 pl-4 ${open ? 'assistive-text-focus' : ''} subtitle3-small pt-1 truncate`}>
-                    {props.assistiveText}
+                <div className={`h-6 max-h-6 pl-4 ${open ? 'assistive-text-focus' : ''} body3 pt-1 truncate`}>
+                    <span className={determineAssistiveTextColor()}>{props.assistiveText}</span>
                 </div>
             }
-            {props.error && <div className={'h6 pl-4 subtitle3-small pt-1 text-danger truncate'}>{props.error}</div>}
+            {props.error && <div className={'h6 pl-4 body3 pt-1 text-danger truncate'}>{props.error}</div>}
         </div>
     );
 });

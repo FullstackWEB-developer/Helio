@@ -1,6 +1,7 @@
 .input-group {
     input {
         border-bottom: 1px solid var(--light-divider-12);
+        padding-top: 1.125rem;
     }
     
     label {
@@ -10,6 +11,7 @@
         transition:0.07s ease all; 
         -moz-transition:0.07s ease all; 
         -webkit-transition:0.07s ease all;
+        max-width: 95%;
     }
     
     input:focus {
@@ -56,5 +58,10 @@
     }
     .clear-input-icon:hover{
         cursor: pointer;
+    }
+
+    .required:before{
+        content: '*';
+        color: var(--color-red);
     }
 }

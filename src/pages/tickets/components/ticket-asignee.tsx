@@ -89,10 +89,10 @@ const TicketAssignee = ({ ticketId, assignee, dropdownHorizontalPostion }: Ticke
                             }}
                         />
                     </div>
-                    <div className='col-span-3 pl-2'>
+                    <div className='col-span-3 pl-2' ref={chevronPosition}>
                         <div className='text-gray-400 text-sm'>{t('tickets.assigned_to')}</div>
                         <div>{selectedUser.firstName} {selectedUser.lastName}</div>
-                    </div>
+                    </div>                    
                 </div>
                 :
                 <div className='flex flex-row'>

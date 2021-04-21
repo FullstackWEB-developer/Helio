@@ -7,3 +7,6 @@
 .clear-input-icon-fill {
     fill: var(--light-text-medium-emphasis);
 }
+.search-input-field:focus::placeholder{
+    color: transparent;
+}
