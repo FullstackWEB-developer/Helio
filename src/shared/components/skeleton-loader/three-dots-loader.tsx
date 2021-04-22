@@ -23,11 +23,11 @@ const ThreeDotsSmallLoader: React.FunctionComponent<ThreeDotsSmallLoaderProps> =
     height,
     width,
     className,
-    backgroundColor,
-    cx,
-    cxSpace,
-    cy,
-    r,
+    backgroundColor = 'transparent',
+    cx = CX_INITIAL,
+    cxSpace = CX_SPACE,
+    cy = 86,
+    r = 8,
     ...props}) => (
     <ContentLoader
         className={className}
@@ -42,11 +42,4 @@ const ThreeDotsSmallLoader: React.FunctionComponent<ThreeDotsSmallLoaderProps> =
     </ContentLoader>
 );
 
-ThreeDotsSmallLoader.defaultProps = {
-    backgroundColor: 'transparent',
-    cx: CX_INITIAL,
-    cxSpace: CX_SPACE,
-    cy: 86,
-    r: 8
-}
 export default ThreeDotsSmallLoader;

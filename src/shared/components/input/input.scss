@@ -6,13 +6,20 @@
     }
     &.input-error {
       border-bottom-color: var(--color-red);
-      background-color: var(--color-white);
+      > input:focus,
+      .input-addon {
+        background-color: var(--color-white);
+      }
+
       &:focus {
         @extend .input-error;
       }
       > label {
         color: var(--color-red);
       }
+    }
+    &:hover:not(:focus):not(:disabled):not(.input-error) {
+      border-bottom-color: var(--light-text-disabled);
     }
     .input-addon {
       background-color: var(--input-focus-background-color);
@@ -49,9 +56,6 @@
       }
     }
 
-    &:hover:not(:focus):not(:disabled):not(.input-error) {
-      border-bottom-color: var(--light-text-disabled);
-    }
     /* Chrome, Safari, Edge, Opera */
     &::-webkit-outer-spin-button,
     &::-webkit-inner-spin-button {
