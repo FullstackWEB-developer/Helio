@@ -200,8 +200,8 @@ const Ccp: React.FC<BoxProps> = ({
                 </div>
                 <div className={'flex h-full shadow-md'}>
                     <div className={'flex flex-col h-full min-ccp-width'}>
-                        <div data-test-id='ccp-container' id='ccp-container' className={`h-full overflow-hidden ccp-drag-background${currentContext ? ' border-r' : ''}`}> </div>
-                        <div className={`flex justify-between items-center w-full px-6 h-10 shadow-md border-t footer-ff ccp-bottom-bar ${isBottomBarVisible ? 'block' : 'hidden'} ${currentContext ? 'border-r' : ''}`}>
+                        <div data-test-id='ccp-container' id='ccp-container' className={`h-full overflow-hidden ccp-drag-background`}> </div>
+                        <div className={`flex justify-center items-center w-full p-0 h-10 box-content shadow-md border-t footer-ff ccp-bottom-bar ${isBottomBarVisible ? 'block' : 'hidden'}`}>
                             <span className={`h-full flex items-center justify-center w-12 ${applyProperIconClass(contextPanels.bot, 'background')}`}>
                                 <SvgIcon type={Icon.Bot}
                                     className='icon-medium cursor-pointer'

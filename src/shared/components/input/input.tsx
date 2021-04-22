@@ -76,7 +76,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({label, type, html
                     disabled={props.disabled || isLoading}
                     autoComplete={props.shouldDisplayAutocomplete ? 'on' : 'off'} />
                 <label htmlFor={htmlFor}
-                    className={`absolute truncate ${props.required ? 'required' : ''} ${isFocused || value ? 'subtitle3-small label-small' : `body2${props.disabled ? '-medium' : ''}`} ${props.error ? 'text-danger' : ''}`}>
+                    className={`absolute truncate ${props.required ? 'required' : ''} ${isFocused || value ? 'body3 label-small' : `body2${props.disabled ? '-medium' : ''}`} ${props.error ? 'text-danger' : ''}`}>
                     {t(label || placeholder || '')}
                 </label>
                 {isFocused &&
@@ -95,8 +95,8 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({label, type, html
                 }
             </div>
 
-            {!!assistiveText && !props.error && !isLoading && <div className={`h-6 pl-4 subtitle3-small pt-1 truncate ${isFocused ? 'assistive-text-focus' : ''}`}>{assistiveText}</div>}
-            {props.error && <div className={'h6 pl-4 subtitle3-small pt-1 text-danger truncate'}>{props.error}</div>}
+            {!!assistiveText && !props.error && !isLoading && <div className={`h-6 pl-4 body3 pt-1 truncate ${isFocused ? 'assistive-text-focus' : ''}`}>{assistiveText}</div>}
+            {props.error && <div className={'h6 pl-4 body3 pt-1 text-danger truncate'}>{props.error}</div>}
         </div>
     );
 })

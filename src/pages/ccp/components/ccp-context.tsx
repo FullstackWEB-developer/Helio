@@ -51,11 +51,11 @@ const CcpContext = () => {
     return (context ?
         <div className={'ccp-context flex flex-col'}>
             <div className={'ccp-header'} />
-            <div className={'flex-grow bg-white'}>
+            <div className={'ccp-main-content flex-grow bg-white border-l'}>
                 {renderContext()}
             </div>
-            <div className={'ccp-footer h-10 flex py-2 shadow-md border-t'}>
-                <div className={'pl-6 subtitle'}>{t('ccp.suggested_steps')}</div>
+            <div className={'ccp-footer h-10 flex shadow-md border-t border-l box-content p-0 items-center'}>
+                <div className={'pl-6 subtitle2'}>{t('ccp.suggested_steps')}</div>
                 <div>
                     {renderFooter()}
                 </div>

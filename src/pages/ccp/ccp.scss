@@ -34,9 +34,12 @@
     background-color: var(--ccp-header-color);
     height: 2.375rem;
   }
+  .ccp-main-content{
+    border-color: var(--light-divider-7);
+  }
   .ccp-footer {
     background-color: var(--color-gray50);
-    border-top-color: var(--light-divider-7);
+    border-color: var(--light-divider-7);
   }
 }
 
