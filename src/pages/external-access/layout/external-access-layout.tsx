@@ -17,7 +17,7 @@ const ExternalAccessLayout = ({children} : ExternalAccessLayoutProps) => {
                     {t('external_access.cwc_logo')}
                 </div>
             </div>
-            <div className='flex-grow px-8 md:px-40 pt-6 md:pt-14'>{children}</div>
+            <div className='flex-grow overflow-y-auto px-8 md:px-40 pt-6 md:pt-14'>{children}</div>
             <div className='h-16 md:px-40 external-access-layout-footer body3-medium'>
                 <div className='h-full px-16 flex items-center text-center'>
                     {t('external_access.copyright', {'year': year})}

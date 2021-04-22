@@ -473,7 +473,22 @@
       "directions": "Directions",
       "get_directions": "<0>Get directions</0> to your appointment location.",
       "no_appointments_found": "There are no upcoming appointments.",
-      "cancel_confirmation": "Are you sure you want to cancel appointment?"
+      "cancel_confirmation": "Are you sure you want to cancel appointment?",
+      "appointment_cancelation": "Appointment Cancelation",
+      "please_confirm": "Please confirm that you would like to cancel your appointment.",
+      "you_can_reschedule": "You can reschedule your appointment online. It’s fast and easy.",
+      "appointment_slots": "These are some options for next available appointment slots with ",
+      "view_more_slots": "View more available slots",
+      "want_to_cancel": "Still want to cancel?",
+      "to_cancel": "To cancel your appointment please select reason for cancelation below.",
+      "cancel_appointment": "Cancel Appointment",
+      "cancel_appointment_error": "There is an error when cancel appointment ",
+      "select_reason": "Select Reason for Cancelation",
+      "appointment_canceled": "Thank you. Your Appointment has been canceled.",
+      "to_schedule": "To schedule appointment online please click <0>here</0> or <1>Chat</1> with us or call us <2>callUsPhone</2>.",
+      "we_will_be_happy": "We will be happy to assist you.",
+      "can_not_be_canceled": "This appointment type can not be canceled. To change appointment date click on the Reschedule button above, <0>Chat</0> with us or call us <1>callUsPhone</1>. We will be happy to assist you.",
+      "will_be_charged": "This appointment is within <0>cancelationTimeFrame</0> hours from the appointment time. You will be charged a cancelation fee of $<1>cancelationFee</1>. We will bill you or charge your credit card on file."
     }
   }
 }

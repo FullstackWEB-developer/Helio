@@ -15,11 +15,14 @@ import {useHistory} from 'react-router-dom';
 import {selectSelectedAppointment} from '@pages/external-access/appointment/store/appointments.selectors';
 import {useDispatch, useSelector} from 'react-redux';
 import {selectDepartmentList, selectProviderList} from '@shared/store/lookups/lookups.selectors';
+import './appointment.scss';
 
 const AppointmentDetail = () => {
     const {t} = useTranslation();
     const history = useHistory();
     const dispatch = useDispatch();
+    const callUsPhone = process.env.REACT_APP_CALL_US_PHONE;
+    const chatLink = process.env.REACT_APP_CHAT_LINK;
     const appointment = useSelector(selectSelectedAppointment);
     const departments = useSelector(selectDepartmentList);
     const providers = useSelector(selectProviderList);
@@ -47,18 +50,11 @@ const AppointmentDetail = () => {
         return ''
     }
 
-    const displayCancel = () => {
-        if (!appointmentType) {
-            return true;
-        }
-        return appointmentType.cancelable && appointmentType.cancelationFee && appointmentType.cancelationTimeFrame;
-    }
-
     const redirectToReschedule = () => {
         history.push(`/o/reschedule-appointment`);
     }
     const redirectToCancel = () => {
-        history.push(`/o/cancel-appointment`);
+        history.push(`/o/appointment-cancelation`);
     }
 
     if (isAppointmentTypesLoading) {
@@ -99,8 +95,17 @@ const AppointmentDetail = () => {
         <div className='pt-12 flex flex-col xl:flex-row xl:space-x-6 space-x-0 space-y-6 xl:space-y-0'>
             <Button buttonType='medium' label='external_access.appointments.online_checkin' />
             {(appointmentType ? appointmentType?.reschedulable : true) && <Button onClick={() => redirectToReschedule()} buttonType='secondary' label='external_access.appointments.reschedule' />}
-            {displayCancel() && <Button onClick={() => redirectToCancel()} buttonType='secondary' label='common.cancel' />}
+            <Button disabled={!appointmentType?.cancelable} onClick={() => redirectToCancel()} buttonType='secondary' label='common.cancel' />
         </div>
+        { !appointmentType?.cancelable && <div className='pt-10 xl:pt-20'>
+            <div className='warning-message p-4 body2'>
+                <Trans i18nKey="external_access.appointments.can_not_be_canceled">
+                    <a rel='noreferrer' className='underline' target='_blank' href={chatLink}>Chat</a>
+                    {callUsPhone}
+                </Trans>
+            </div>
+        </div>
+        }
         { appointmentType?.instructions && <>
             <div className='pt-10 xl:pt-20'>
                 {t('external_access.appointments.instructions')}
