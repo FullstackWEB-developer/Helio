@@ -114,7 +114,7 @@ const RescheduleAppointment = () => {
             <Select
                 options={currentAppointmentsOptions}                
                 value={selectedAppointment}
-                onChange={(option?: Option, searchQuery?: string) => updateSelectedAppointment(option)}
+                onSelect={(option?: Option) => updateSelectedAppointment(option)}
                 data-test-id='reschedule-existing-appointment-select'
                 label={'reschedule_appointment.select_appointment_to_reschedule'}
             />

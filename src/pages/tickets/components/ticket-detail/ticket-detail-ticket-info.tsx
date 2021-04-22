@@ -278,7 +278,7 @@ const TicketDetailTicketInfo = ({ ticket }: TicketInfoProps) => {
                                 label={'ticket_detail.info_panel.status'}
                                 options={statusOptions}
                                 value={selectedStatus}
-                                onChange={(option?: Option) => {
+                                onSelect={(option?: Option) => {
                                     if (option) {
                                         props.onChange(option.value);
                                         handleChangeItem(option, statusOptions, "status", setSelectedStatus);
@@ -299,7 +299,7 @@ const TicketDetailTicketInfo = ({ ticket }: TicketInfoProps) => {
                                 label={'ticket_detail.info_panel.priority'}
                                 options={priorityOptions}
                                 value={selectedPriority}
-                                onChange={(option?: Option) => {
+                                onSelect={(option?: Option) => {
                                     if (option) {
                                         props.onChange(option.value);
                                         handleChangeItem(option, priorityOptions, "priority", setSelectedPriority);
@@ -320,7 +320,7 @@ const TicketDetailTicketInfo = ({ ticket }: TicketInfoProps) => {
                                 label={'ticket_detail.info_panel.ticket_type'}
                                 options={ticketTypeOptions}
                                 value={selectedTicketTypeOption}
-                                onChange={(option?: Option) => {
+                                onSelect={(option?: Option) => {
                                     if (option) {
                                         props.onChange(option.value);
                                         handleChangeItem(option, ticketTypeOptions, "ticketType", setSelectedTicketTypeOption);
@@ -342,7 +342,7 @@ const TicketDetailTicketInfo = ({ ticket }: TicketInfoProps) => {
                                     label={'ticket_detail.info_panel.reason'}
                                     options={reasonOptions}
                                     value={selectedReason}
-                                    onChange={(option?: Option) => {
+                                    onSelect={(option?: Option) => {
                                         if (option) {
                                             props.onChange(option?.value);
                                             handleChangeItem(option, reasonOptions, "reason", setSelectedReason);
@@ -363,7 +363,7 @@ const TicketDetailTicketInfo = ({ ticket }: TicketInfoProps) => {
                                 label={'ticket_detail.info_panel.department'}
                                 options={departmentOptions}
                                 value={selectedDepartment}
-                                onChange={(option?: Option) => {
+                                onSelect={(option?: Option) => {
                                     if (option) {
                                         props.onChange(option?.value);
                                         handleChangeItem(option, departmentOptions, "department", setSelectedDepartment);
@@ -384,7 +384,7 @@ const TicketDetailTicketInfo = ({ ticket }: TicketInfoProps) => {
 
                                 options={locationOptions}
                                 value={selectedLocation}
-                                onChange={(option?: Option) => {
+                                onSelect={(option?: Option) => {
                                     if (option) {
                                         props.onChange(option.value);
                                         handleChangeItem(option, locationOptions, "location", setSelectedLocation);

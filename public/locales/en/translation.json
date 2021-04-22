@@ -218,7 +218,7 @@
       "copay": "Copay: ",
       "status": "Status: ",
       "error": "Error fetching summary data, please try again",
-      "update_error" : "Patient contact information could not be updated. Please try again later.",
+      "update_error": "Patient contact information could not be updated. Please try again later.",
       "profile_pic_alt_text": "Picture of patient"
     },
     "contact_preference": {
@@ -355,7 +355,11 @@
     "patient_case_number": "Patient Case Number",
     "tags": "Tags",
     "add_note": "Add Note",
-    "create": "Create Ticket"
+    "create": "Create Ticket",
+    "title": "New Ticket",
+    "patient_id_not_found": "Patient Id does not found.",
+    "patient_case_id_not_found": "Patient Case Id does not found.",
+    "error_getting_contacts":"Error getting contacts information."
   },
   "tag_input": {
     "add_tag": "+Add Tag"
@@ -444,18 +448,18 @@
     "joined_chat": " joined the chat.",
     "left_chat": " left the chat."
   },
-  "external_access" : {
+  "external_access": {
     "copyright": "COMPLETE WOMEN CARE - COPYRIGHT © {{year}} - ALL RIGHTS RESERVED",
     "cwc_logo": "CWC Logo",
-    "title_1" : "Manage your appointments online. \nIt’s fast and easy.",
+    "title_1": "Manage your appointments online. \nIt’s fast and easy.",
     "hipaa": {
       "verify_title": "Please verify your identity to proceed.",
       "dob": "Date of birth  (MM/DD/YYYY)",
       "mobile_phone_number": "Mobile Phone Number",
       "zip_code": "Zip Code",
-      "verification_failed" : "We could not validate your information!"
+      "verification_failed": "We could not validate your information!"
     },
-    "appointments" : {
+    "appointments": {
       "list_title": "You have {{number}} upcoming appointments.",
       "select_appointment": "Please select appointment to view details.",
       "appointment_details": "Appointment Details",

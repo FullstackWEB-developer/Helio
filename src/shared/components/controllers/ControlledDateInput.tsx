@@ -12,9 +12,10 @@ export interface ControllerInputProps {
     dataTestId: string;
     max?: string;
     type?: 'date' | 'time';
+    placeholder?: string;
 }
 
-const ControlledDateInput = ({ control, required = false, type = 'date', name, label = '', className = '', dataTestId, max, ...props }: ControllerInputProps) => {
+const ControlledDateInput = ({control, required = false, type = 'date', name, label = '', className = '', dataTestId, max, placeholder, ...props }: ControllerInputProps) => {
 
     const { t } = useTranslation();
     const requiredText = t('common.required');
@@ -27,15 +28,16 @@ const ControlledDateInput = ({ control, required = false, type = 'date', name, l
         rules={{
             required: required ? requiredText : ''
         }}
-        render={(props) => (
+        render={(controllerProps) => (
             <DateTimeInput
                 label={label}
-                {...props}
+                {...controllerProps}
                 max={max}
                 className={className}
                 data-test-id={dataTestId}
                 error={control.formState.errors[name]?.message}
                 type={type}
+                placeholder={placeholder}
             />
         )}
     />);

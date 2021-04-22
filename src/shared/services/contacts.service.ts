@@ -1,4 +1,5 @@
 import { Dispatch } from '@reduxjs/toolkit';
+import { Contact } from '@shared/models/contact.model';
 import {
     setContacts,
     startGetContactsRequest,
@@ -10,6 +11,13 @@ import Logger from './logger';
 const logger = Logger.getInstance();
 
 const getContactsUrl = '/contacts';
+
+export const searchContactsByName = async (searchTerm: string): Promise<Contact[]> => {
+    const { data } = await Api.get(getContactsUrl, {
+        params: { name: searchTerm }
+    });
+    return data.results; 
+}
 
 export const getContacts = () => {
     return async (dispatch: Dispatch) => {

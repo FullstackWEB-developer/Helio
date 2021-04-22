@@ -4,6 +4,7 @@ import {useTranslation} from 'react-i18next';
 import './input.scss';
 // @ts-ignore
 import InputMask from 'react-input-mask';
+import ThreeDotsSmallLoader from '@components/skeleton-loader/three-dots-loader';
 import SvgIcon from '@components/svg-icon/svg-icon';
 import {Icon} from '@components/svg-icon/icon';
 
@@ -18,11 +19,12 @@ interface InputProps extends React.HTMLAttributes<HTMLInputElement> {
     htmlFor?: string,
     assistiveText?: string,
     disabled?: boolean,
+    isLoading?: boolean,
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void,
     shouldDisplayAutocomplete?: boolean,
     required?: boolean
 }
-const Input = React.forwardRef<HTMLInputElement, InputProps>(({label, type, htmlFor, placeholder, mask, ...props}: InputProps, ref) => {
+const Input = React.forwardRef<HTMLInputElement, InputProps>(({label, type, htmlFor, placeholder, mask, assistiveText, isLoading, ...props}: InputProps, ref) => {
     const {t} = useTranslation();
     const [isFocused, setIsFocused] = useState(false);
     const [value, setValue] = useState('');
@@ -60,31 +62,40 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({label, type, html
     }
 
     return (
-        <div className="input-group flex flex-col relative h-20">
-            <InputMask inputRef={innerRef} {...props}
-                mask={mask}
-                type={type}
-                onFocus={(e: React.FocusEvent<HTMLInputElement>) => {setIsFocused(true)}}
-                onBlur={(e: React.FocusEvent<HTMLInputElement>) => {onBlur(e)}}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange(e)}
-                className={`pl-4 pt-6 body2 h-14 ${props.error ? 'input-error' : ''} ` + props.className}
-                placeholder=''
-                value={value}
-                disabled={props.disabled}
-                autoComplete={props.shouldDisplayAutocomplete ? 'on' : 'off'} />
-            <label htmlFor={htmlFor}
-                className={`absolute truncate ${props.required ? 'required' : ''} ${isFocused || value ? 'subtitle3-small label-small' : `body2${props.disabled ? '-medium' : ''}`} ${props.error ? 'text-danger' : ''}`}>
-                {t(label || placeholder || '')}
-            </label>
-            {isFocused &&
-                value &&
-                <span
-                    onMouseDown={(e) => preventMousedownTriggerBlur(e)}
-                    onClick={(e) => {clearValue(e)}}
-                    className="clear-input-icon">
-                    <SvgIcon type={Icon.Clear} fillClass="clear-input-icon-fill" />
-                </span>}
-            {props.assistiveText && !props.error && <div className={`h-6 pl-4 subtitle3-small pt-1 truncate ${isFocused ? 'assistive-text-focus' : ''}`}>{props.assistiveText}</div>}
+        <div className="input-group flex flex-col h-20">
+            <div className={`input-group-container flex flex-wrap items=stretch w-full relative ${props.error ? 'input-error' : ''}`}>
+                <InputMask inputRef={innerRef} {...props}
+                    mask={mask}
+                    type={type}
+                    onFocus={(e: React.FocusEvent<HTMLInputElement>) => {setIsFocused(true)}}
+                    onBlur={(e: React.FocusEvent<HTMLInputElement>) => {onBlur(e)}}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange(e)}
+                    className={`pl-4 pt-6 body2 h-14 flex-shrink flex-grow flex-auto leading-normal w-px flex-1 ` + props.className}
+                    placeholder=''
+                    value={value}
+                    disabled={props.disabled || isLoading}
+                    autoComplete={props.shouldDisplayAutocomplete ? 'on' : 'off'} />
+                <label htmlFor={htmlFor}
+                    className={`absolute truncate ${props.required ? 'required' : ''} ${isFocused || value ? 'subtitle3-small label-small' : `body2${props.disabled ? '-medium' : ''}`} ${props.error ? 'text-danger' : ''}`}>
+                    {t(label || placeholder || '')}
+                </label>
+                {isFocused &&
+                    value &&
+                    <span
+                        className="input-addon clear-input-icon flex items-center leading-normal rounded rounded-l-none px-3"
+                        onMouseDown={(e) => preventMousedownTriggerBlur(e)}
+                        onClick={(e) => {clearValue(e)}}
+                    >
+                        <SvgIcon type={Icon.Clear} fillClass="clear-input-icon-fill" />
+                    </span>}
+                {isLoading &&
+                    <span className="input-addon flex items-center leading-normal rounded rounded-l-none px-3">
+                        <ThreeDotsSmallLoader className="three-dots-loader-small" cx={13} cxSpace={23} cy={16} />
+                    </span>
+                }
+            </div>
+
+            {!!assistiveText && !props.error && !isLoading && <div className={`h-6 pl-4 subtitle3-small pt-1 truncate ${isFocused ? 'assistive-text-focus' : ''}`}>{assistiveText}</div>}
             {props.error && <div className={'h6 pl-4 subtitle3-small pt-1 text-danger truncate'}>{props.error}</div>}
         </div>
     );

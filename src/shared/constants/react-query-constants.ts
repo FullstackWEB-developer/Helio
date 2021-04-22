@@ -12,5 +12,5 @@ export const GetAppointmentType = 'appointment-type';
 export const GetPatientClinical = 'get-patient-clinical';
 export const GetPatientInsurance = 'get-patient-insurance';
 export const GetPatientSummary = 'get-patient-summary';
-
+export const QueryContacts = 'query-contacts';
 export const OneMinute = 60000;

@@ -99,7 +99,7 @@ const LabResults = () => {
                         label={'lab-results.label'}
                         options={labResultsOptions}
                         value={selectedOption as Option}
-                        onChange={handleChange}
+                        onSelect={handleChange}
                     />
                 )}
             />

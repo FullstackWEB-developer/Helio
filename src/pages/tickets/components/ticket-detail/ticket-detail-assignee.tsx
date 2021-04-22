@@ -48,7 +48,7 @@ const TicketDetailAssignee = ({ ticket }: TicketDetailAssigneeProps) => {
                             data-test-id={'assigned-to-user-list'}
                             options={userOptions}
                             value={selectedOption}
-                            onChange={(option?: Option) => {
+                            onSelect={(option?: Option) => {
                                 handleChangeAssignedTo(option);
                             }}
                         />

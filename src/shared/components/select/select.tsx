@@ -15,9 +15,10 @@ interface SelectProps {
     error?: string;
     order?: boolean;
     assistiveText?: string;
-    disabled?: boolean,
-    required?: boolean,
-    onChange?: (option?: Option, searchQuery?: string) => void
+    disabled?: boolean;
+    required?: boolean;
+    onTextChange?: (value: string) => void;
+    onSelect?: (option?: Option) => void;
 }
 const Select = React.forwardRef<HTMLDivElement, SelectProps>(({options, order, label, ...props}: SelectProps, ref) => {
     const {t}: {t: any} = useTranslation();
@@ -34,11 +35,13 @@ const Select = React.forwardRef<HTMLDivElement, SelectProps>(({options, order, l
     customHooks.useOutsideClick([innerRef], () => {
         setOpen(false);
     });
+
+  
     const searchOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearchQuery(e.target.value);
         setCursor(0);
-        if (props.onChange) {
-            props.onChange(undefined, e.target.value);
+        if (props.onTextChange) {
+            props.onTextChange(e.target.value);
         }
     }
     const renderOptions = (): Option[] => {
@@ -51,10 +54,11 @@ const Select = React.forwardRef<HTMLDivElement, SelectProps>(({options, order, l
         setSelectedOption(option);
         setSearchQuery(null);
         inputRef?.current?.blur();
-        if (props.onChange) {
-            props.onChange(option);
+        if (props.onSelect) {
+            props.onSelect(option);
         }
     }
+   
     useEffect(() => {
         if (props.value) {
             setSelectedOption(props.value);

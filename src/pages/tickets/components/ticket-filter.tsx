@@ -328,7 +328,7 @@ const TicketFilter = () => {
                                 data-test-id={'assigned-to-user-list'}                                
                                 options={userOptions}
                                 value={props.value}
-                                onChange={(option?: Option)=>{
+                                onSelect={(option?: Option)=>{
                                     if(option){
                                         props.onChange(option?.value);
                                     }

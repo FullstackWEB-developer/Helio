@@ -190,7 +190,7 @@ const PatientContactInfoUpdate = ({onUpdateComplete} : PatientInformationUpdateP
                                     error={errors.contactPreference?.message}
                                     required={true}
                                     value={props.value}
-                                    onChange={(option?: Option)=>{
+                                    onSelect={(option?: Option)=>{
                                         if(option){
                                             props.onChange(option.value);
                                         }                                    
@@ -218,7 +218,7 @@ const PatientContactInfoUpdate = ({onUpdateComplete} : PatientInformationUpdateP
                                                 options={getStatesOptions()}                                                
                                                 data-test-id={'patient-update-state'}
                                                 error={errors.state?.message}
-                                                onChange={(option?: Option)=>{
+                                                onSelect={(option?: Option)=>{
                                                     if(option){
                                                         props.onChange(option.value);
                                                     }                                    
