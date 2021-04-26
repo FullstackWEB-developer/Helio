@@ -63,14 +63,14 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({label, type, html
 
     return (
         <div className="input-group flex flex-col h-20">
-            <div className={`input-group-container flex flex-wrap items=stretch w-full relative ${props.error ? 'input-error' : ''}`}>
+            <div className={`input-group-container flex flex-wrap items=stretch w-full relative ${props.error ? 'input-error' : ''} ` + props.className}>
                 <InputMask inputRef={innerRef} {...props}
                     mask={mask}
                     type={type}
                     onFocus={(e: React.FocusEvent<HTMLInputElement>) => {setIsFocused(true)}}
                     onBlur={(e: React.FocusEvent<HTMLInputElement>) => {onBlur(e)}}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange(e)}
-                    className={`pl-4 pt-6 body2 h-14 flex-shrink flex-grow flex-auto leading-normal w-px flex-1 ` + props.className}
+                    className={`pl-4 pt-6 body2 h-14 flex-shrink flex-grow flex-auto leading-normal w-px flex-1`}
                     placeholder=''
                     value={value}
                     disabled={props.disabled || isLoading}

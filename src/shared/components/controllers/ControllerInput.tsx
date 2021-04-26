@@ -90,6 +90,7 @@ const ControlledInput = ({control, required = false, type = 'text', name, mask =
                 className={className}
                 error={control.formState.errors[name]?.message}
                 type={type}
+                required={required}
                 assistiveText={props.assistiveText}
                 isLoading={props.isLoading}
                 disabled={props.disabled}

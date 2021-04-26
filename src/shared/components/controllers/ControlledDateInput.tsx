@@ -1,6 +1,6 @@
-import { Controller } from 'react-hook-form';
-import { Control } from 'react-hook-form/dist/types/form';
-import { useTranslation } from 'react-i18next';
+import {Controller} from 'react-hook-form';
+import {Control} from 'react-hook-form/dist/types/form';
+import {useTranslation} from 'react-i18next';
 import DateTimeInput from '@components/date-time-input/date-time-input';
 
 export interface ControllerInputProps {
@@ -13,11 +13,12 @@ export interface ControllerInputProps {
     max?: string;
     type?: 'date' | 'time';
     placeholder?: string;
+    defaultValue?: string;
 }
 
-const ControlledDateInput = ({control, required = false, type = 'date', name, label = '', className = '', dataTestId, max, placeholder, ...props }: ControllerInputProps) => {
+const ControlledDateInput = ({control, required = false, type = 'date', name, label = '', className = '', dataTestId, max, placeholder, ...props}: ControllerInputProps) => {
 
-    const { t } = useTranslation();
+    const {t} = useTranslation();
     const requiredText = t('common.required');
 
 
@@ -28,6 +29,7 @@ const ControlledDateInput = ({control, required = false, type = 'date', name, la
         rules={{
             required: required ? requiredText : ''
         }}
+        defaultValue={props.defaultValue}
         render={(controllerProps) => (
             <DateTimeInput
                 label={label}

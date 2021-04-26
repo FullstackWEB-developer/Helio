@@ -65,4 +65,8 @@ $TagInputMarginPadding: 0.187rem;
       transform: translateX(-50%) translateY(-50%) rotate(-45deg);
     }
   }
+
+  &-label {
+    color: var(--color-primary-800);
+  }
 }

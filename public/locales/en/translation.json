@@ -362,7 +362,7 @@
     "error_getting_contacts":"Error getting contacts information."
   },
   "tag_input": {
-    "add_tag": "+Add Tag"
+    "add_tag": "Add Tag"
   },
   "ticket_detail": {
     "ticket_info": "Ticket Info",

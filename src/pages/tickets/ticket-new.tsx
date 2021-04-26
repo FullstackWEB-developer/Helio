@@ -1,21 +1,20 @@
-import React, { ChangeEvent, useEffect, useState, FocusEvent, useRef } from 'react';
+import React, {ChangeEvent, useEffect, useState, useRef} from 'react';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc'
-import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
-import { Controller, ControllerRenderProps, useForm } from 'react-hook-form';
+import {useTranslation} from 'react-i18next';
+import {useDispatch, useSelector} from 'react-redux';
+import {Controller, ControllerRenderProps, useForm} from 'react-hook-form';
 import withErrorLogging from '../../shared/HOC/with-error-logging';
 
 import ThreeDots from '../../shared/components/skeleton-loader/skeleton-loader';
 import Button from '../../shared/components/button/button';
-import Input from '../../shared/components/input/input';
 import Select from '../../shared/components/select/select';
-import { Option } from '@components/option/option';
-import TagInput, { TagInputLabelPosition } from '../../shared/components/tag-input/tag-input';
-import { Contact } from '@shared/models/contact.model';
-import { Department } from '@shared/models/department';
-import { Ticket } from './models/ticket';
-import { TicketNote } from './models/ticket-note';
+import {Option} from '@components/option/option';
+import TagInput, {TagInputLabelPosition} from '../../shared/components/tag-input/tag-input';
+import {Contact} from '@shared/models/contact.model';
+import {Department} from '@shared/models/department';
+import {Ticket} from './models/ticket';
+import {TicketNote} from './models/ticket-note';
 import {
     selectEnumValues,
     selectIsTicketEnumValuesLoading,
@@ -23,35 +22,36 @@ import {
     selectLookupValues,
     selectTicketOptionsError
 } from './store/tickets.selectors';
-import { selectContacts, selectIsContactOptionsLoading } from '@shared/store/contacts/contacts.selectors';
+import {selectContacts, selectIsContactOptionsLoading} from '@shared/store/contacts/contacts.selectors';
 import {
     selectDepartmentList,
     selectIsDepartmentListLoading,
     selectUserList
 } from '@shared/store/lookups/lookups.selectors';
 
-import { createTicket, getEnumByType, getLookupValues } from './services/tickets.service';
-import { searchContactsByName } from '@shared/services/contacts.service';
-import { getDepartments, getUserList } from '@shared/services/lookups.service';
-import { User } from '@shared/models/user';
-import { useHistory } from 'react-router-dom';
+import {createTicket, getEnumByType, getLookupValues} from './services/tickets.service';
+import {searchContactsByName} from '@shared/services/contacts.service';
+import {getDepartments, getUserList} from '@shared/services/lookups.service';
+import {User} from '@shared/models/user';
+import {useHistory} from 'react-router-dom';
 import utils from '../../shared/utils/utils';
-import { TicketsPath } from '../../app/paths';
-import { getPatientByIdWithQuery } from '@pages/patients/services/patients.service';
-import { getPatientActionNotes, getPatientCaseDocument } from '@pages/patients/services/patient-document.service';
-import { Patient } from '@pages/patients/models/patient';
-import { QueryContacts } from '@constants/react-query-constants';
-import { useQuery } from 'react-query';
+import {TicketsPath} from '../../app/paths';
+import {getPatientByIdWithQuery} from '@pages/patients/services/patients.service';
+import {getPatientActionNotes, getPatientCaseDocument} from '@pages/patients/services/patient-document.service';
+import {Patient} from '@pages/patients/models/patient';
+import {QueryContacts} from '@constants/react-query-constants';
+import {useQuery} from 'react-query';
 import useDebounce from '@shared/hooks/useDebounce';
 import ControlledInput from '@components/controllers/ControllerInput';
 import ControlledDateInput from '@components/controllers/ControlledDateInput';
 import {DEBOUNCE_SEARCH_DELAY_MS} from '@shared/constants/form-constants';
- 
+
 const TicketNew = () => {
     dayjs.extend(utc);
 
-    const {handleSubmit, control, errors, setError, clearErrors } = useForm();
-    const { t } = useTranslation();
+    const {handleSubmit, control, errors, setError, clearErrors, formState} = useForm({mode: 'all'});
+    const {isValid, errors: stateError} = formState;
+    const {t} = useTranslation();
     const history = useHistory();
     const dispatch = useDispatch();
     const requiredText = t('common.required');
@@ -84,11 +84,9 @@ const TicketNew = () => {
     const [isPatientIdLoading, setPatientIdLoading] = useState(false);
     const [patientId, setPatientId] = useState('');
     const [patientName, setPatientName] = useState('');
-    const [patientIdError, setPatientIdError] = useState('');
     const patientIdRef = useRef('');
 
     const [patientCaseId, setPatientCaseId] = useState('');
-    const [patientCaseIdError, setPatientCaseIdError] = useState('');
     const [isPatientCaseIdLoading, setPatientCaseIdLoading] = useState(false);
     const patientCaseIdRef = useRef('');
 
@@ -96,7 +94,7 @@ const TicketNew = () => {
     const [contactOptions, setContactOptions] = useState<Option[]>([]);
     const [debounceContactSearchTerm] = useDebounce(contactSearchTerm, DEBOUNCE_SEARCH_DELAY_MS);
 
-    const { refetch } = useQuery<Contact[], Error>([QueryContacts, debounceContactSearchTerm],
+    const {refetch} = useQuery<Contact[], Error>([QueryContacts, debounceContactSearchTerm],
         () => searchContactsByName(debounceContactSearchTerm), {
         enabled: false,
         onSuccess: (data) => {
@@ -108,7 +106,7 @@ const TicketNew = () => {
             setContactOptions(contactOptionResult)
         },
         onError: () => {
-            setError('contactId', { type: 'notFound', message: t('ticket_new.error_getting_contacts') });
+            setError('contactId', {type: 'notFound', message: t('ticket_new.error_getting_contacts')});
         }
     });
 
@@ -172,7 +170,7 @@ const TicketNew = () => {
 
             setPatientName(`${patient.firstName} ${patient.lastName}`);
         } catch (error) {
-            setError('patientId', { type: 'notFound', message: t('ticket_new.patient_id_not_found') });
+            setError('patientId', {type: 'notFound', message: t('ticket_new.patient_id_not_found')});
         } finally {
             setPatientIdLoading(false);
         }
@@ -199,7 +197,7 @@ const TicketNew = () => {
                 }
             }
         } catch (error) {
-            setError('patientCaseNumber', { type: 'notFound', message: t('ticket_new.patient_case_id_not_found') });
+            setError('patientCaseNumber', {type: 'notFound', message: t('ticket_new.patient_case_id_not_found')});
         } finally {
             setPatientCaseIdLoading(false);
         }
@@ -336,17 +334,16 @@ const TicketNew = () => {
             }
         };
     }
-
     return <div className="flex flex-col w-full mx-6 my-5">
         <h5>{t('ticket_new.title')}</h5>
-        <div className={'w-96 py-4 mx-auto flex flex-col'}>
-            <form onSubmit={handleSubmit(onSubmit)}>
+        <div className={'w-96 pt-10 mx-auto flex flex-col'}>
+            <form onSubmit={handleSubmit(onSubmit)} noValidate={true}>
                 <div>
                     <Controller
                         name='ticketType'
                         control={control}
                         defaultValue=''
-                        rules={{ required: requiredText }}
+                        rules={{required: requiredText}}
                         render={(props) => (
                             <Select
                                 {...props}
@@ -387,7 +384,7 @@ const TicketNew = () => {
                         name='contactId'
                         control={control}
                         defaultValue=''
-                        rules={{ required: requiredText }}
+                        rules={{required: requiredText}}
                         render={(props) => (
                             <Select
                                 {...props}
@@ -410,7 +407,7 @@ const TicketNew = () => {
                                     name='subject'
                                     control={control}
                                     defaultValue=''
-                                    rules={{ required: requiredText }}
+                                    rules={{required: requiredText}}
                                     render={(props) => (
                                         <Select
                                             {...props}
@@ -425,17 +422,13 @@ const TicketNew = () => {
                                     )}
                                 />
                                 :
-                                <Controller
+                                <ControlledInput
                                     name='subjectInput'
                                     control={control}
                                     defaultValue=''
                                     placeholder={t('ticket_new.subject')}
-                                    rules={{required: requiredText}}
                                     required={true}
-                                    as={Input}
-                                    className={'border-none h-14'}
-                                    data-test-id={'ticket-new-assignee'}
-                                    error={errors.subjectInput?.message}
+                                    dataTestId={'ticket-new-assignee'}
                                 />
                         }
                     </div>
@@ -443,7 +436,7 @@ const TicketNew = () => {
                         name='status'
                         control={control}
                         defaultValue=''
-                        rules={{ required: requiredText }}
+                        rules={{required: requiredText}}
                         render={(props) => (
                             <Select
                                 {...props}
@@ -461,7 +454,7 @@ const TicketNew = () => {
                         name='priority'
                         control={control}
                         defaultValue=''
-                        rules={{ required: requiredText }}
+                        rules={{required: requiredText}}
                         render={(props) => (
                             <Select
                                 {...props}
@@ -478,6 +471,7 @@ const TicketNew = () => {
                     <div className="flex">
                         <ControlledDateInput
                             name='dueDate'
+                            defaultValue=''
                             control={control}
                             type='date'
                             className={'w-full border-none h-14'}
@@ -487,6 +481,7 @@ const TicketNew = () => {
                         <ControlledDateInput
                             type='time'
                             name='dueTime'
+                            defaultValue=''
                             control={control}
                             dataTestId={'ticket-new-due-time'}
                             className={'w-full border-none h-14'}
@@ -497,7 +492,6 @@ const TicketNew = () => {
                         name='channel'
                         control={control}
                         defaultValue=''
-                        rules={{ required: requiredText }}
                         render={(props) => (
                             <Select
                                 {...props}
@@ -506,7 +500,6 @@ const TicketNew = () => {
                                 label={'ticket_new.channel'}
                                 value={props.value}
                                 error={errors.channel?.message}
-                                required={true}
                                 onSelect={onSelectChange(props)}
                             />
                         )}
@@ -545,7 +538,7 @@ const TicketNew = () => {
                         name='assignee'
                         control={control}
                         defaultValue=''
-                        rules={{ required: requiredText }}
+                        rules={{required: requiredText}}
                         render={(props) => (
                             <Select
                                 {...props}
@@ -581,6 +574,7 @@ const TicketNew = () => {
                             name='patientCaseNumber'
                             control={control}
                             type='number'
+                            defaultValue=''
                             placeholder={t('ticket_new.patient_case_number')}
                             isLoading={isPatientCaseIdLoading}
                             dataTestId={'ticket-new-patient-case-number'}
@@ -594,6 +588,7 @@ const TicketNew = () => {
                     control={control}
                     placeholder={t('ticket_new.add_note')}
                     dataTestId={'ticket-new-add-note'}
+                    defaultValue=''
                     onChange={(e: ChangeEvent<HTMLInputElement>) => setNoteText(e.target.value)}
                 />
                 <Controller
@@ -621,7 +616,7 @@ const TicketNew = () => {
                         />
                     </div>
                     <div>
-                        <Button buttonType='small' disabled={isCreating} data-test-id='ticket-new-create-button' type={'submit'}
+                        <Button buttonType='small' disabled={isCreating || !isValid || !stateError} data-test-id='ticket-new-create-button' type={'submit'}
                             label={'ticket_new.create'} />
                     </div>
                 </div>
