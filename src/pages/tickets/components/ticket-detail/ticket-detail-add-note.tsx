@@ -34,6 +34,10 @@ const TicketDetailAddNote = ({ ticket }: TicketDetailAddNoteProps) => {
         }
     }
 
+    const isSendEnabled = (): boolean => {
+        return noteText != null && noteText.trim().length > 0;
+    }
+
     return (
         <div className={'p-10 bg-gray-100'}>
             <form onSubmit={handleSubmit(onSubmit)} className='flex flex-row items-center'>
@@ -56,6 +60,7 @@ const TicketDetailAddNote = ({ ticket }: TicketDetailAddNoteProps) => {
                 />
                 <div className='flex ml-4'>
                     <Button
+                        disabled={!isSendEnabled()}
                         data-test-id='ticket-detail-note-send-button'
                         type={'submit'}
                         label={'ticket_detail.note.send'}
