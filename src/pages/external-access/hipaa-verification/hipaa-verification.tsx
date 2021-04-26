@@ -8,7 +8,6 @@ import Button from '@components/button/button';
 import {verifyPatient, VerifyPatientProps} from '@shared/services/search.service';
 import {useQuery} from 'react-query';
 import {VerifyPatient} from '@constants/react-query-constants';
-import ThreeDots from '@components/skeleton-loader/skeleton-loader';
 import {AxiosError} from 'axios';
 import {VerifiedPatient} from '@pages/patients/models/verified-patient';
 import {clearVerifiedPatient, setVerifiedPatient} from '@pages/patients/store/patients.slice';
@@ -16,6 +15,7 @@ import {useHistory} from 'react-router-dom';
 import {useDispatch} from 'react-redux';
 import {ExternalAccessRequestTypes} from '../models/external-updates-request-types.enum';
 import './hipaa-verification.scss';
+import ThreeDotsSmallLoader from '@components/skeleton-loader/three-dots-loader';
 
 export interface HipaaVerificationProps {
     request: RedirectLink
@@ -28,12 +28,7 @@ const HipaaVerification = ({request}: HipaaVerificationProps) => {
     const [values, setValues] = useState<VerifyPatientProps>();
     const [errors, setErrors] = useState<string>('');
     const {handleSubmit, control, formState} = useForm(        {
-        mode: 'onBlur',
-        defaultValues: {
-            dob:'',
-            phone:'',
-            zip:''
-        }
+        mode: 'onBlur'
     });
 
     const forwardToRelatedPage = () => {
@@ -97,10 +92,6 @@ const HipaaVerification = ({request}: HipaaVerificationProps) => {
         setErrors('');
     }, [dispatch] );
 
-    if (isLoading) {
-        return <ThreeDots/>;
-    }
-
     return <>
             <div className='md:px-48'>
                 <div className='md:whitespace-pre md:h-24 my-3 md:pb-10 w-full items-center'>
@@ -145,14 +136,17 @@ const HipaaVerification = ({request}: HipaaVerificationProps) => {
                                 dataTestId='hipaa-zip'/>
                         </div>
                         <div className='py-6 flex md:justify-start justify-center'>
-                            <div><Button
+                            <div>
+                                <Button
                                 label={'common.continue'}
-                                disabled={!formState.isDirty || !formState.isValid}
+                                disabled={!formState.isDirty || !formState.isValid || isLoading}
                                 className='w-full md:w-auto'
                                 type='submit'
                                 data-test-id='hipaa-submit-button'
-                                buttonType='big' /></div>
+                                buttonType='big' />
+                            </div>
                         </div>
+                        {isLoading && <ThreeDotsSmallLoader className="three-dots-loader-small" cx={13} cxSpace={23} cy={16} height={30} />}
                         <div className='text-danger'>
                             {t(errors)}
                         </div>

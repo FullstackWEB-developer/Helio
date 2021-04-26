@@ -50,6 +50,10 @@ const AppointmentDetail = () => {
         return ''
     }
 
+    const displayCancel = () => {
+        return !appointmentType || appointmentType.cancelable;
+    }
+
     const redirectToReschedule = () => {
         history.push(`/o/reschedule-appointment`);
     }
@@ -78,6 +82,9 @@ const AppointmentDetail = () => {
                 })}
             </h5>
         </div>
+        <h5 className='pb-2 appointment-type'>
+            {appointment.appointmentType}
+        </h5>
         {provider && <div className='pb-6'>
             {t('external_access.appointments.withDoctor', {
                 name: provider.displayName
@@ -93,11 +100,10 @@ const AppointmentDetail = () => {
             {`${display(department?.address2)} ${display(department?.city)} ${display(department?.state)}, ${display(department?.zip)}`}
         </div>
         <div className='pt-12 flex flex-col xl:flex-row xl:space-x-6 space-x-0 space-y-6 xl:space-y-0'>
-            <Button buttonType='medium' label='external_access.appointments.online_checkin' />
             {(appointmentType ? appointmentType?.reschedulable : true) && <Button onClick={() => redirectToReschedule()} buttonType='secondary' label='external_access.appointments.reschedule' />}
-            <Button disabled={!appointmentType?.cancelable} onClick={() => redirectToCancel()} buttonType='secondary' label='common.cancel' />
+            <Button disabled={!displayCancel()} onClick={() => redirectToCancel()} buttonType='secondary' label='common.cancel' />
         </div>
-        { !appointmentType?.cancelable && <div className='pt-10 xl:pt-20'>
+        { !displayCancel() && <div className='pt-10 xl:pt-20'>
             <div className='warning-message p-4 body2'>
                 <Trans i18nKey="external_access.appointments.can_not_be_canceled">
                     <a rel='noreferrer' className='underline' target='_blank' href={chatLink}>Chat</a>
