@@ -46,13 +46,11 @@ export const Dashboard = () => {
         }
     });
 
-    customHooks.useOutsideClick([typeDropdownRef], () => {
+    customHooks.useOutsideClick([typeDropdownRef, timeframeDropdownRef], () => {
         setDisplayTypeDropdown(false);
-    });
-
-    customHooks.useOutsideClick([timeframeDropdownRef], () => {
         setDisplayTimeFrameDropdown(false);
     });
+
 
     const {isLoading, error, data, refetch, isFetching} = useQuery<DashboardResponse, Error>(GetDashboard, () =>
             getDashboardData(selectedDashboardType, selectedDashboardTime, selectedStartDate, selectedEndDate), {
@@ -160,6 +158,7 @@ export const Dashboard = () => {
                 <ControlledDateInput label={t('dashboard.timeframes.start_date')} required={true} control={control}
                                      name='startDate' dataTestId='dashboard-start-date'/>
                 <ControlledDateInput label={t('dashboard.timeframes.end_date')} required={true} control={control}
+                                     max={new Date().toISOString().split("T")[0]}
                                      name='endDate' dataTestId='dashboard-end-date'/>
                 <div className='flex justify-center py-4'><Button disabled={!formState.isValid} type='submit'
                                                                   label={t('common.ok')}/></div>

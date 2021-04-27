@@ -16,9 +16,9 @@ const TicketsByChannelsWidget = ({data}: TicketsByChannelsWidgetProps) => {
         return <div className='flex flex-col h-14'>
             <div className='flex flex-row justify-between'>
                 <div>{item.label}</div>
-                <div className='flex flex-row pr-4'>
-                    <div>{item.value}</div>
-                    <div className='w-10 pl-2.5 mr-2.5'>{`${item.percentage}%`}</div>
+                <div className='flex flex-row'>
+                    <div className='pr-6'>{item.value}</div>
+                    <div className='w-10 flex justify-end'>{`${item.percentage}%`}</div>
                 </div>
             </div>
             <div>
