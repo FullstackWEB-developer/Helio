@@ -45,7 +45,7 @@
   },
   "footer": {
     "hotspots": "Hotspots",
-    "status": "Status"
+    "status": "Statuses"
   },
   "tickets": {
     "title": "Tickets",
@@ -489,6 +489,58 @@
       "we_will_be_happy": "We will be happy to assist you.",
       "can_not_be_canceled": "This appointment type can not be canceled. To change appointment date click on the Reschedule button above, <0>Chat</0> with us or call us <1>callUsPhone</1>. We will be happy to assist you.",
       "will_be_charged": "This appointment is within <0>cancelationTimeFrame</0> hours from the appointment time. You will be charged a cancelation fee of $<1>cancelationFee</1>. We will bill you or charge your credit card on file."
+    }
+  },
+  "dashboard": {
+    "no_data_found": "No data found!",
+    "refresh_after": "Dashboard will be refreshed in {{time}}",
+    "types": {
+      "1": "My Dashboard",
+      "2": "Team Dashboard"
+    },
+    "timeframes": {
+      "1": "Today",
+      "2": "This Week",
+      "3": "This Month",
+      "4": "Custom",
+      "start_date": "Start Date",
+      "end_date": "End Date"
+    },
+    "ticket_stats": {
+      "title": "Ticket Stats",
+      "overdue": "Overdue",
+      "due_today": "Due Today",
+      "open": "Open",
+      "on_hold": "On Hold",
+      "closed": "Closed",
+      "total": "Total"
+    },
+    "tickets_volume": {
+      "title": "Tickets Volume",
+      "open": "Open",
+      "closed": "Closed"
+    },
+    "by_priority": {
+      "title": "Open Tickets By Priority"
+    },
+    "by_channel": {
+      "title": "Tickets By Channel"
+    },
+    "by_reason": {
+      "title": "Tickets By Reason",
+      "label_others": "Other"
+    },
+    "response_time": {
+      "title": "Response Time",
+      "average_response_time": "Average Response Time",
+      "average_handle_time": "Average Handle Time"
+    },
+    "ratings": {
+      "title": "Ratings",
+      "overall_ratings": "Overall Ratings",
+      "very_satisfied": "Very satisfied",
+      "neutral": "Neutral",
+      "unsatisfied": "Unsatisfied"
     }
   }
 }

@@ -1,0 +1,19 @@
+.dashboard {
+ background-color: var(--dashboard-background);
+}
+
+.dashboard-header {
+ height: 4.5rem;
+}
+
+.tickets-priority-chart {
+  height: 28rem;
+}
+
+.tickets-reason-chart {
+  height: 28rem;
+}
+
+.dashboard-dropdown-arrows {
+  fill: var(--dashboard-dropdown-arrows);
+}

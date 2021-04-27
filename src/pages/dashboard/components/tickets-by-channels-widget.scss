@@ -1,0 +1,13 @@
+.tickets-by-channel-row {
+  background-color: var(--dashboard-tickets-by-channel-row);
+}
+
+.tickets-by-channel-body {
+  height: 28rem;
+}
+
+.tickets-by-channel-row-bg {
+  background-color: var(--dashboard-tickets-by-channel-row-bg);
+  position: relative;
+  bottom: 0.5rem;
+}

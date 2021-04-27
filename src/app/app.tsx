@@ -1,15 +1,17 @@
 import React from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import {BrowserRouter, Route, Switch} from 'react-router-dom'
 import Layout from '../shared/layout/layout';
 import Login from '../pages/login/login';
 import GuardedRoute from './guarded-route';
-import { Dashboard } from '@pages/dashboard/dashboard';
-import { withSuspense } from '@shared/HOC/with-suspense';
+import {Dashboard} from '@pages/dashboard/dashboard';
+import {withSuspense} from '@shared/HOC/with-suspense';
 import TicketList from '../pages/tickets/ticket-list';
-import { QueryClient, QueryClientProvider } from "react-query";
-import { TicketsPath } from './paths';
+import {QueryClient, QueryClientProvider} from "react-query";
+import {TicketsPath} from './paths';
 import RealTimeUserStatusUpdate from '@shared/websockets/real-time-user-status-update';
 import ExternalAccessLayout from '@pages/external-access/layout/external-access-layout';
+import Logger from '@shared/services/logger';
+
 const SearchResults = React.lazy(() => import('../shared/components/search-bar/components/search-results'));
 const PatientChart = React.lazy(() => import('../pages/patients/patient-chart'));
 const VerifyRedirectLink = React.lazy(() => import('../pages/external-access/hipaa-verification/verify-redirect-link'));
@@ -25,11 +27,20 @@ const TicketDetail = React.lazy(() => import('../pages/tickets/ticket-detail'));
 const RescheduleAppointment = React.lazy(() => import('../pages/external-access/reschedule-appointment/reschedule-appointment'));
 
 function App() {
+    const logger = Logger.getInstance();
     const queryClient = new QueryClient({
         defaultOptions: {
             queries: {
                 refetchOnWindowFocus: false,
-                retry: false
+                retry: false,
+                onError: (error) => {
+                    logger.error("Query Error ", error);
+                }
+            },
+            mutations: {
+                onError: (error) => {
+                    logger.error("Mutation Error ", error);
+                }
             }
         }
     });

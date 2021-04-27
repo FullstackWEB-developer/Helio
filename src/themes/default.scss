@@ -288,6 +288,11 @@
   --search-input-field-icon-color: rgba(0, 0, 0, 0.3);
   --note-context-created-by-color: rgba(0, 0, 0, 0.45);
 
+  --dashboard-background: rgba(0, 0, 0, 0.02);
+  --dashboard-tickets-by-channel-row: rgb(0, 0, 0, 0.38);
+  --dashboard-tickets-by-channel-row-bg: rgb(0, 0, 0, 0.07);
+  --dashboard-dropdown-arrows: rgb(0, 0, 0, 0.5);
+
   ::-webkit-scrollbar {
     width: 0.3125rem;
   }

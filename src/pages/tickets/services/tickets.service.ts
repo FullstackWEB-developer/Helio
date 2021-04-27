@@ -30,6 +30,8 @@ import {Ticket} from '../models/ticket';
 import {Paging} from '@shared/models/paging.model';
 import {TicketQuery} from '../models/ticket-query';
 import {TicketFeed} from '../models/ticket-feed';
+import {DashboardTypes} from '@pages/dashboard/enums/dashboard-type.enum';
+import {DashboardTimeframes} from '@pages/dashboard/enums/dashboard.timeframes';
 
 const logger = Logger.getInstance();
 const ticketsBaseUrl = '/tickets';
@@ -273,6 +275,12 @@ export const setDelete = async ({id, undoDelete = false}: setDeleteProps) => {
 
 export const getTicketByNumber = async (ticketNumber: number) => {
     const url = `${ticketsBaseUrl}/${ticketNumber}`;
+    const response = await Api.get(url);
+    return response.data;
+}
+
+export const getDashboardData = async (type: DashboardTypes, timeFrame: DashboardTimeframes, startDate: Date, endDate: Date) => {
+    const url = `${ticketsBaseUrl}/dashboard?timeFrame=${timeFrame}&type=${type}&startDate=${startDate}&endDate=${endDate}`;
     const response = await Api.get(url);
     return response.data;
 }

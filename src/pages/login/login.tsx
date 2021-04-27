@@ -1,18 +1,18 @@
-import Button from '../../shared/components/button/button';
+import Button from '@components/button/button';
 import {msalInstance} from './auth-config';
 import {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {AuthenticationInfo} from '../../shared/store/app-user/app-user.models';
-import {setAuthentication, setLoginLoading} from '../../shared/store/app-user/appuser.slice';
+import {AuthenticationInfo} from '@shared/store/app-user/app-user.models';
+import {setAuthentication, setLoginLoading} from '@shared/store/app-user/appuser.slice';
 import {Redirect, useHistory} from 'react-router-dom';
 import {AuthenticationResult} from '@azure/msal-browser';
 import {Dispatch} from '@reduxjs/toolkit';
 import {History} from 'history';
-import Logger from '../../shared/services/logger';
-import {authenticationSelector, selectIsLoginLoading} from '../../shared/store/app-user/appuser.selectors';
-import {resetState} from '../../shared/layout/store/layout.slice';
-import ThreeDots from '../../shared/components/skeleton-loader/skeleton-loader';
-import HelioLogo from '../../shared/icons/helio-logo';
+import Logger from '@shared/services/logger';
+import {authenticationSelector, selectIsLoginLoading} from '@shared/store/app-user/appuser.selectors';
+import {resetState} from '@shared/layout/store/layout.slice';
+import ThreeDots from '@components/skeleton-loader/skeleton-loader';
+import HelioLogo from '@icons/helio-logo';
 
 const Login = () => {
     const dispatch = useDispatch();
@@ -41,7 +41,7 @@ const Login = () => {
     }
 
     if (auth.isLoggedIn && (Date.parse(auth.expiresOn) > new Date().valueOf())) {
-        return <Redirect to='/' />
+        return <Redirect to='/dashboard'/>
     }
 
 
@@ -68,7 +68,7 @@ function SetAuthenticationInfo(info: AuthenticationResult | null, dispatch: Disp
             isLoggedIn: true
         };
         dispatch(setAuthentication(auth));
-        history.push('/');
+        history.push('/dashboard');
     }
 }
 
