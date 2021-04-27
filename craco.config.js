@@ -24,7 +24,21 @@ module.exports = {
         plugins: [
             process.env.REACT_APP_REMOVE_TEST_ID === "true" ? ["babel-plugin-jsx-remove-data-test-id", {
                 "attributes": ["data-test-id"]
-            }] : [() => { return [] }]
+            }] : [() => {
+                return []
+            }]
         ]
     },
+    webpack: {
+        configure: {
+            module: {
+                rules: [
+                    {
+                        test: /react-spring/,
+                        sideEffects: true
+                    }
+                ]
+            }
+        }
+    }
 }
