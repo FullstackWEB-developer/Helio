@@ -52,6 +52,10 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({label, type, html
 
     const clearValue = (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
         setValue('');
+        if(type === 'tel'){
+            // @ts-ignore
+            innerRef?.current?.props?.inputRef?.current?.setCursorPosition(1);
+        }        
         let event = Object.create(e);
         event.target.value = '';
         onChange(event as React.ChangeEvent<HTMLInputElement>);
@@ -64,7 +68,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({label, type, html
     return (
         <div className="input-group flex flex-col h-20">
             <div className={`input-group-container flex flex-wrap items=stretch w-full relative ${props.error ? 'input-error' : ''} ` + props.className}>
-                <InputMask inputRef={innerRef} {...props}
+                <InputMask ref={innerRef} inputRef={innerRef} {...props}
                     mask={mask}
                     type={type}
                     onFocus={(e: React.FocusEvent<HTMLInputElement>) => {setIsFocused(true)}}
