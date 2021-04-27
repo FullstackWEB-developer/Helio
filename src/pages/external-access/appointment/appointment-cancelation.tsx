@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Trans, useTranslation} from 'react-i18next';
 import {useDispatch, useSelector} from 'react-redux';
 import {selectSelectedAppointment} from '@pages/external-access/appointment/store/appointments.selectors';
@@ -38,6 +38,8 @@ const AppointmentCancelation = () => {
     const appointment = useSelector(selectSelectedAppointment);
     const departments = useSelector(selectDepartmentList);
     const providers = useSelector(selectProviderList);
+    const [errorMessage, setErrorMessage] = useState('');
+
     useEffect(() => {
         dispatch(getProviders());
         dispatch(getDepartments());
@@ -92,6 +94,12 @@ const AppointmentCancelation = () => {
     const cancelAppointmentMutation = useMutation(cancelAppointment, {
         onSuccess: () => {
             history.push(`/o/appointment-canceled`);
+        },
+        onError: (error: AxiosError) => {
+            const prefix = 'Error Message: ';
+            let errMsg = error.response?.data.message;
+            errMsg = errMsg.slice(errMsg.indexOf( prefix ) + prefix.length);
+            setErrorMessage(errMsg);
         }
     });
 
@@ -179,7 +187,7 @@ const AppointmentCancelation = () => {
         </div>
         <div>
             <form onSubmit={handleSubmit(onSubmit)}>
-                <div className='pb-6 lg:w-1/2 xl:w-1/3 2xl:w-1/4'>
+                <div className='lg:w-1/2 xl:w-1/3 2xl:w-1/4'>
                     <Controller
                         name='appointmentCancelReasonId'
                         control={control}
@@ -204,9 +212,9 @@ const AppointmentCancelation = () => {
                     />
                 </div>
                 {cancelAppointmentMutation.isError && <div className='text-danger'>
-                    {t('external_access.appointments.cancel_appointment_error')}
+                    {t('external_access.appointments.cancel_appointment_error')} {errorMessage}
                 </div>}
-                <div className='pb-16'>
+                <div className='pt-6 pb-16'>
                     <Button buttonType='big' disabled={!isDirty} label='external_access.appointments.cancel_appointment' type='submit'/>
                 </div>
             </form>

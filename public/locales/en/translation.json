@@ -483,7 +483,7 @@
       "want_to_cancel": "Still want to cancel?",
       "to_cancel": "To cancel your appointment please select reason for cancelation below.",
       "cancel_appointment": "Cancel Appointment",
-      "cancel_appointment_error": "There is an error when cancel appointment ",
+      "cancel_appointment_error": "There is an error when cancel appointment. ",
       "select_reason": "Select Reason for Cancelation",
       "appointment_canceled": "Thank you. Your Appointment has been canceled.",
       "to_schedule": "To schedule appointment online please click <0>here</0> or <1>Chat</1> with us or call us <2>callUsPhone</2>.",

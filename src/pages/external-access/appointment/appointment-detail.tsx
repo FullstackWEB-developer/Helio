@@ -106,7 +106,7 @@ const AppointmentDetail = () => {
         { !displayCancel() && <div className='pt-10 xl:pt-20'>
             <div className='warning-message p-4 body2'>
                 <Trans i18nKey="external_access.appointments.can_not_be_canceled">
-                    <a rel='noreferrer' className='underline' target='_blank' href={chatLink}>Chat</a>
+                    <a rel='noreferrer' className='underline' target='_self' href={chatLink}>Chat</a>
                     {callUsPhone}
                 </Trans>
             </div>
