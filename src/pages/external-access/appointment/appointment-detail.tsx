@@ -100,7 +100,7 @@ const AppointmentDetail = () => {
             {`${display(department?.address2)} ${display(department?.city)} ${display(department?.state)}, ${display(department?.zip)}`}
         </div>
         <div className='pt-12 flex flex-col xl:flex-row xl:space-x-6 space-x-0 space-y-6 xl:space-y-0'>
-            {(appointmentType ? appointmentType?.reschedulable : true) && <Button onClick={() => redirectToReschedule()} buttonType='secondary' label='external_access.appointments.reschedule' />}
+            {(appointmentType ? appointmentType?.reschedulable : true) && <Button onClick={() => redirectToReschedule()} buttonType='medium' label='external_access.appointments.reschedule' />}
             <Button disabled={!displayCancel()} onClick={() => redirectToCancel()} buttonType='secondary' label='common.cancel' />
         </div>
         { !displayCancel() && <div className='pt-10 xl:pt-20'>

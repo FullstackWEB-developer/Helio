@@ -39,7 +39,7 @@ const AppointmentsListItem = ({ item }: AppointmentDetailProps) => {
 
         return <Fragment>
             <div className='2xl:w-96 subtitle2'>
-                {utils.formatUtcDate(item.date, 'ddd, MMM DD, YYYY')} {item.startTime}
+                {utils.formatUtcDate(item.date, 'ddd, MMM DD, YYYY')} {item.startTime} {utils.formatUtcDate(item.date, 'A')}
             </div>
             <div className='2xl:w-96 body2'>{providerName}</div>
             <div className='2xl:w-96 body2'>{departmentName}</div>

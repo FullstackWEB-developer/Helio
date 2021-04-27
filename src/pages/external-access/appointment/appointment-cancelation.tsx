@@ -151,7 +151,10 @@ const AppointmentCancelation = () => {
             </div>
         </div>
         <div className='pb-6'>
-            {`${t('external_access.appointments.appointment_slots')} ${display(provider?.displayName)} ${display(department?.name)}`}
+            <Trans i18nKey="external_access.appointments.appointment_slots">
+                {display(provider?.displayName)}
+                {display(department?.name)}
+            </Trans>
         </div>
         <div className='pb-6'>
             {

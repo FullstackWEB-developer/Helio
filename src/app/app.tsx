@@ -15,6 +15,7 @@ import Logger from '@shared/services/logger';
 const SearchResults = React.lazy(() => import('../shared/components/search-bar/components/search-results'));
 const PatientChart = React.lazy(() => import('../pages/patients/patient-chart'));
 const VerifyRedirectLink = React.lazy(() => import('../pages/external-access/hipaa-verification/verify-redirect-link'));
+const AppointmentSchedule = React.lazy(() => import('@pages/external-access/appointment/appointment-schedule'));
 const AppointmentCancelation = React.lazy(() => import('@pages/external-access/appointment/appointment-cancelation'));
 const AppointmentCanceled = React.lazy(() => import('../pages/external-access/appointment/appointment-canceled'));
 const AppointmentDetail = React.lazy(() => import('@pages/external-access/appointment/appointment-detail'));
@@ -57,6 +58,7 @@ function App() {
                                 <Route path='/o/request-refill' component={withSuspense(RequestRefill)} />
                                 <Route path='/o/request-medical-records' component={withSuspense(RequestMedicalRecords)} />
                                 <Route path='/o/lab-results' component={withSuspense(LabResults)} />
+                                <Route path='/o/appointment-schedule' component={withSuspense(AppointmentSchedule)} />
                                 <Route path='/o/appointment-cancelation' component={withSuspense(AppointmentCancelation)} />
                                 <Route path='/o/appointment-canceled' component={withSuspense(AppointmentCanceled)} />
                                 <Route path='/o/reschedule-appointment' component={withSuspense(RescheduleAppointment)} />

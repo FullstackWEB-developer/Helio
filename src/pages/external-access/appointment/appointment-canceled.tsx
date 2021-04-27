@@ -4,7 +4,7 @@ import {Trans, useTranslation} from 'react-i18next';
 const AppointmentCanceled = () => {
     const {t} = useTranslation();
     const callUsPhone = process.env.REACT_APP_CALL_US_PHONE;
-    const scheduleAppointmentLink = process.env.REACT_APP_SCHEDULE_APPOINTMENT_LINK;
+    const scheduleAppointmentLink = '/o/appointment-schedule';
     const chatLink = process.env.REACT_APP_CHAT_LINK;
 
     return <div className='2xl:px-48'>

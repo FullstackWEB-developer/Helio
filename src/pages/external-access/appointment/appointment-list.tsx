@@ -54,9 +54,9 @@ const AppointmentList = () => {
                         {t('external_access.appointments.list_title', {number: appointments.length})}
                     </h4>
                 </div>
-                <div className='pt-6 pb-8'>
+                {appointments.length > 0 && <div className='pt-6 pb-8'>
                     {t('external_access.appointments.select_appointment')}
-                </div>
+                </div>}
                 <div className='pb-16'>
                     {
                         appointments.map((appointment) => {
