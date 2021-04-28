@@ -19,32 +19,21 @@ import Dropdown from '@components/dropdown/dropdown';
 import customHooks from '@shared/hooks/customHooks';
 import {DashboardTypes} from '@pages/dashboard/enums/dashboard-type.enum';
 import {DashboardTimeframes} from '@pages/dashboard/enums/dashboard.timeframes';
-import ControlledDateInput from '@components/controllers/ControlledDateInput';
-import {useForm} from 'react-hook-form';
-import Button from '@components/button/button';
-import dayjs from 'dayjs';
 import CountdownTimer from '@pages/dashboard/components/countdown-timer';
 import {Icon} from '@components/svg-icon/icon';
 import SvgIcon from '@components/svg-icon/svg-icon';
+import DashboardDateForm from './components/dashboard-date-form';
 
 export const Dashboard = () => {
     const {t} = useTranslation();
     const [selectedDashboardType, setSelectedDashboardType] = useState<number>(DashboardTypes.team);
     const [selectedDashboardTime, setSelectedDashboardTime] = useState<number>(DashboardTimeframes.week);
-    const [selectedStartDate, setSelectedStartDate] = useState<Date>(new Date());
-    const [selectedEndDate, setSelectedEndDate] = useState<Date>(dayjs().add(-1, 'day').toDate());
     const [displayTimeFrameDropdown, setDisplayTimeFrameDropdown] = useState<boolean>(false);
     const [displayTypeDropdown, setDisplayTypeDropdown] = useState<boolean>(false);
     const typeDropdownRef = useRef<HTMLDivElement>(null);
     const timeframeDropdownRef = useRef<HTMLDivElement>(null);
-
-    const {handleSubmit, control, formState} = useForm({
-        mode: 'onBlur',
-        defaultValues: {
-            startDate: dayjs(selectedStartDate).format('YYYY-MM-DD'),
-            endDate: dayjs(selectedEndDate).format('YYYY-MM-DD')
-        }
-    });
+    const [selectedStartDate, setSelectedStartDate] = useState<Date>(new Date());
+    const [selectedEndDate, setSelectedEndDate] = useState<Date>(new Date());
 
     customHooks.useOutsideClick([typeDropdownRef, timeframeDropdownRef], () => {
         setDisplayTypeDropdown(false);
@@ -57,6 +46,13 @@ export const Dashboard = () => {
             retry: 3
         }
     );
+
+    const datesSelected = (startDate: Date, endDate: Date) => {
+        setSelectedStartDate(startDate);
+        setSelectedEndDate(endDate);
+        setDisplayTimeFrameDropdown(false);
+        refreshDashboard();
+    }
 
     const refreshDashboard = () => {
         setTimeout(() => {
@@ -145,27 +141,6 @@ export const Dashboard = () => {
         })
     };
 
-    const onSubmit = (values: any) => {
-        setSelectedStartDate(values.startDate);
-        setSelectedEndDate(values.endDate);
-        setDisplayTimeFrameDropdown(false);
-        refreshDashboard();
-    }
-
-    const DateForm = () => {
-        return <form onSubmit={handleSubmit(onSubmit)}>
-            <div className='flex flex-col bg-white border-l border-b px-4 pt-4'>
-                <ControlledDateInput label={t('dashboard.timeframes.start_date')} required={true} control={control}
-                                     name='startDate' dataTestId='dashboard-start-date'/>
-                <ControlledDateInput label={t('dashboard.timeframes.end_date')} required={true} control={control}
-                                     max={new Date().toISOString().split("T")[0]}
-                                     name='endDate' dataTestId='dashboard-end-date'/>
-                <div className='flex justify-center py-4'><Button disabled={!formState.isValid} type='submit'
-                                                                  label={t('common.ok')}/></div>
-            </div>
-        </form>
-    }
-
 
     return (
         <div className='dashboard px-6 w-full overflow-y-auto pb-10'>
@@ -203,7 +178,8 @@ export const Dashboard = () => {
                             <div className='absolute right-12'>
                                 <div className='flex flex-col'>
                                     <Dropdown model={dashboardTimeFrameDropdownModel}/>
-                                    {selectedDashboardTime === DashboardTimeframes.custom && <DateForm/>}
+                                    {selectedDashboardTime === DashboardTimeframes.custom &&
+                                    <DashboardDateForm onDatesSelected={datesSelected}/>}
                                 </div>
 
                             </div>}

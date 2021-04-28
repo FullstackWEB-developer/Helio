@@ -280,7 +280,10 @@ export const getTicketByNumber = async (ticketNumber: number) => {
 }
 
 export const getDashboardData = async (type: DashboardTypes, timeFrame: DashboardTimeframes, startDate: Date, endDate: Date) => {
-    const url = `${ticketsBaseUrl}/dashboard?timeFrame=${timeFrame}&type=${type}&startDate=${startDate}&endDate=${endDate}`;
+    let url = `${ticketsBaseUrl}/dashboard?timeFrame=${timeFrame}&type=${type}`;
+    if (timeFrame === DashboardTimeframes.custom) {
+        url = url + `&startDate=${startDate}&endDate=${endDate}`;
+    }
     const response = await Api.get(url);
     return response.data;
 }
