@@ -19,7 +19,8 @@ const HotSpots = () => {
     const {isLoading, error, data} = useQuery<HotSpotInfo[], Error>(QueryHotSpots, () =>
             getHotSpots(),
         {
-            staleTime: OneMinute
+            staleTime: OneMinute,
+
         }
     );
     useEffect(() => {

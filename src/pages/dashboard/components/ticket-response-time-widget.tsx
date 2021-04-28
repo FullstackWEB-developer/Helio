@@ -21,9 +21,16 @@ const TicketResponseTimeWidget = ({data}: TicketResponseTimeWidgetProps) => {
     }
 
     const calculatePercentage = (currentSeconds: number, previousSeconds: number) => {
+        if (previousSeconds === 0 || currentSeconds === 0) {
+            return 0;
+        }
         const diff = currentSeconds - previousSeconds;
         const percentage = 100 * diff / currentSeconds;
-        return Math.abs(Math.round(percentage));
+        const result = Math.abs(Math.round(percentage));
+        if (!result || isNaN(result)) {
+            return 0;
+        }
+        return result;
     }
 
     const createWidget = (label: string, time: number, previousTime: number): ReactNode => {

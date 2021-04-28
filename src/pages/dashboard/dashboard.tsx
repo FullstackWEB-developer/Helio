@@ -61,8 +61,11 @@ export const Dashboard = () => {
     }
 
     const dashboardTypeSelected = (id: number) => {
-        setSelectedDashboardType(id);
         setDisplayTypeDropdown(false);
+        if (id === DashboardTypes.wallboard) {
+            return;
+        }
+        setSelectedDashboardType(id);
         refreshDashboard();
     }
 

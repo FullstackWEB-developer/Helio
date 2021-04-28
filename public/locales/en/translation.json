@@ -497,7 +497,8 @@
     "refresh_after": "Dashboard will be refreshed in {{time}}",
     "types": {
       "1": "My Dashboard",
-      "2": "Team Dashboard"
+      "2": "Team Dashboard",
+      "3": "Real-Time Wallboard"
     },
     "timeframes": {
       "1": "Today",
