@@ -11,4 +11,5 @@ export interface Contact {
     cellPhoneNumber?: string;
     addresses?: Address[];
     contactPeople?: ContactPerson[];
+    isCompany?: boolean
 }

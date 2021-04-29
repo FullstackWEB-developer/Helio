@@ -126,3 +126,12 @@ button.secondary-button[disabled] {
     transform: scale(5);
   }
 }
+.disabled-icon-fill {
+  fill: var(--light-text-disabled);
+}
+.enabled-icon-fill {
+  fill: var(--color-white);
+}
+.green-icon-fill {
+  fill: var(--color-primary-800);
+}

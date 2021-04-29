@@ -1,0 +1,46 @@
+.contact-category-section {
+    background-color: var(--color-secondary-50);
+    min-width: 15.5rem;
+}
+.contact-category{
+    &-active, &:hover{
+        color: var(--color-primary-500);
+    }
+}
+.contact-list-section{
+    border-right: 1px solid var(--light-divider-7);     
+    min-width: 18rem;
+}
+.company-fill {
+    fill: var(--light-text-disabled);
+}
+.company-item-selected, .company-item-letter {
+    background-color: var(--color-secondary-200);
+}
+.company-avatar-color {
+    fill: var(--company-avatar-icon);
+}
+.contact-header-quick-action-color {
+    fill: var(--search-icon);
+}
+.contact-light {
+    color: var(--light-text-medium-emphasis);
+    &-fill{
+        fill: var(--light-text-medium-emphasis);
+    }
+}
+.contact-border-color {
+    border-color: var(--light-divider-12);
+    &-lighter{
+        border-color: var(--light-divider-7);
+    }
+}
+.contact-notes-section {
+    height: calc(100vh - 24rem);
+}
+.note-created-by {
+    color: var(--note-context-created-by-color);
+}
+.contact-ticket-label {
+    color: var(--contact-tickets-bold-color);    
+}

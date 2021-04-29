@@ -21,7 +21,8 @@ interface TextAreaProps extends React.HTMLAttributes<HTMLTextAreaElement> {
     iconOnClick?: () => void,
     isLoading?: boolean,
     iconClassNames?: string,
-    iconFill?: string
+    iconFill?: string,
+    iconContainerClassName? : string
 }
 
 const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(({
@@ -50,7 +51,7 @@ const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(({
                         className={`mt-1 shadow-none p-4 ${(hasBorder ? ' border ' : '')} ${resizable ? 'resize' : 'resize-none'} ${props.className}`}/>
                 {
                     props.hasIcon && value && value?.trim()?.length > 0 &&
-                    <div className="flex-grow px-7">
+                    <div className={`flex-grow ${props.iconContainerClassName ? props.iconContainerClassName : 'px-7'}`}>
                         {
                             props.isLoading ? <span>{t('common.processing')}</span> :
                             <SvgIcon 

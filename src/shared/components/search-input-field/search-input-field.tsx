@@ -15,6 +15,7 @@ interface SearchInputProps {
     inputOnClick?: () => void,
     iconOnClick?: () => void,
     onBlur?: () => void,
+    placeholder?: string,
     shouldDisplayAutocomplete?: boolean
 }
 const SearchInputField = React.forwardRef<HTMLInputElement, SearchInputProps>((props: SearchInputProps, ref) => {
@@ -70,7 +71,7 @@ const SearchInputField = React.forwardRef<HTMLInputElement, SearchInputProps>((p
                 <SvgIcon type={Icon.Search} className="icon-small cursor-pointer" fillClass="search-icon-fill" onClick={props?.iconOnClick} />
             </div>
             <input ref={innerRef} type='text' className={`pl-12 py-2.5 h-full w-full search-input-field body2 ${props.inputClassNames ? props.inputClassNames : ''}`}
-                placeholder={t('common.search')}
+                placeholder={props.placeholder || t('common.search')}
                 value={value} onChange={onChange}
                 onFocus={() => { onFocus() }}
                 onClick={() => { onClick() }}

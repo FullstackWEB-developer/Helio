@@ -18,7 +18,8 @@
     "please_select": " Please Select",
     "continue": "Continue",
     "search": "Search",
-    "processing": "Processing"
+    "processing": "Processing",
+    "remove": "Remove"
   },
   "login": {
     "loginButton": "Login"
@@ -359,7 +360,7 @@
     "title": "New Ticket",
     "patient_id_not_found": "Patient Id does not found.",
     "patient_case_id_not_found": "Patient Case Id does not found.",
-    "error_getting_contacts":"Error getting contacts information."
+    "error_getting_contacts": "Error getting contacts information."
   },
   "tag_input": {
     "add_tag": "Add Tag"
@@ -490,6 +491,64 @@
       "we_will_be_happy": "We will be happy to assist you.",
       "can_not_be_canceled": "This appointment type can not be canceled. To change appointment date click on the Reschedule button above, <0>Chat</0> with us or call us <1>callUsPhone</1>. We will be happy to assist you.",
       "will_be_charged": "This appointment is within <0>cancelationTimeFrame</0> hours from the appointment time. You will be charged a cancelation fee of $<1>cancelationFee</1>. We will bill you or charge your credit card on file."
+    }
+  },
+  "contacts": {
+    "category": {
+      "header": "Contacts",
+      "subtitle": "Contact Categories",
+      "all_contacts": "All Contacts",
+      "starred_contacts": "Starred Contacts",
+      "hospitals": "Hospitals",
+      "pharmacies": "Pharmacies",
+      "providers": "Providers",
+      "suppliers": "Suppliers"
+    },
+    "contact-list": {
+      "add": "Add",
+      "search": "Search contacts"
+    },
+    "contact-details": {
+      "details": "Details",
+      "notes": "Notes",
+      "tickets": "Tickets",
+      "enter_note": "Enter your note",
+      "individual": {
+        "company": "Company Name",
+        "category": "Category",
+        "department": "Department",
+        "email": "Email",
+        "work_main_phone": "Work Main Phone",
+        "work_direct_phone": "Work Direct Phone",
+        "mobile_phone": "Mobile Phone",
+        "fax": "Fax",
+        "website": "Website",
+        "address": "Address",
+        "shipping_address": "Shipping Address",
+        "billing_address": "Billing Address",
+        "ext": "Ext.",
+        "first_name": "First Name",
+        "last_name": "Last Name",
+        "job_title": "Job Title",
+        "extension": "Extension",
+        "mobile": "Mobile",
+        "apt": "Apt., Suite #",
+        "city": "City",
+        "state": "State",
+        "zip_code": "Zip Code",
+        "same_as_primary": "Same as primary address"
+      },
+      "company": {
+        "associated_with": "Contacts associated with {{companyName}}",
+        "add_contact": "Add Contact"
+      }      
+    },
+    "new-contact": {
+      "header": "New Contact",
+      "select_type": "Select Contact Type",
+      "company": "Company",
+      "individual": "Individual",
+      "add_more": "Add More"
     }
   },
   "dashboard": {

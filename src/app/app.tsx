@@ -6,8 +6,8 @@ import GuardedRoute from './guarded-route';
 import {Dashboard} from '@pages/dashboard/dashboard';
 import {withSuspense} from '@shared/HOC/with-suspense';
 import TicketList from '../pages/tickets/ticket-list';
-import {QueryClient, QueryClientProvider} from "react-query";
-import {TicketsPath} from './paths';
+import { QueryClient, QueryClientProvider } from "react-query";
+import { TicketsPath, ContactsPath } from './paths';
 import RealTimeUserStatusUpdate from '@shared/websockets/real-time-user-status-update';
 import ExternalAccessLayout from '@pages/external-access/layout/external-access-layout';
 import Logger from '@shared/services/logger';
@@ -26,6 +26,7 @@ const LabResults = React.lazy(() => import('../pages/external-access/lab-results
 const TicketNew = React.lazy(() => import('../pages/tickets/ticket-new'));
 const TicketDetail = React.lazy(() => import('../pages/tickets/ticket-detail'));
 const RescheduleAppointment = React.lazy(() => import('../pages/external-access/reschedule-appointment/reschedule-appointment'));
+const Contacts = React.lazy(() => import('../pages/contacts/contacts'));
 
 function App() {
     const logger = Logger.getInstance();
@@ -79,6 +80,7 @@ function App() {
                             <GuardedRoute exact path='/patients/results' component={withSuspense(SearchResults)} />
                             <GuardedRoute exact path='/patients/:patientId' component={withSuspense(PatientChart)} />
                         </Switch>
+                        <GuardedRoute exact path={`${ContactsPath}/:contactId?`} component={withSuspense(Contacts)} />
                     </Layout>
                 </Switch>
             </BrowserRouter>
