@@ -35,8 +35,11 @@ export const Dashboard = () => {
     const [selectedStartDate, setSelectedStartDate] = useState<Date>(new Date());
     const [selectedEndDate, setSelectedEndDate] = useState<Date>(new Date());
 
-    customHooks.useOutsideClick([typeDropdownRef, timeframeDropdownRef], () => {
+    customHooks.useOutsideClick([typeDropdownRef], () => {
         setDisplayTypeDropdown(false);
+    });
+
+    customHooks.useOutsideClick([timeframeDropdownRef], () => {
         setDisplayTimeFrameDropdown(false);
     });
 

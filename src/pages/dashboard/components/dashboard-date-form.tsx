@@ -14,19 +14,27 @@ const DashboardDateForm = ({onDatesSelected}: DashboardDateFormProps) => {
     const [selectedStartDate, setSelectedStartDate] = useState<Date>(dayjs().add(-1, 'day').toDate());
     const [selectedEndDate, setSelectedEndDate] = useState<Date>(new Date());
     const {t} = useTranslation();
-
-    const {handleSubmit, control, formState} = useForm({
+    const {handleSubmit, control, formState, watch} = useForm({
         mode: 'onBlur',
         defaultValues: {
             startDate: dayjs(selectedStartDate).format('YYYY-MM-DD'),
             endDate: dayjs(selectedEndDate).format('YYYY-MM-DD')
         }
     });
+    const watchStartDate = watch('startDate');
+    const watchEndDate = watch('endDate');
+
 
     const onSubmit = (values: any) => {
-        setSelectedStartDate(values.startDate);
-        setSelectedEndDate(values.endDate);
-        onDatesSelected(values.startDate, values.endDate);
+        if (isValid()) {
+            setSelectedStartDate(values.startDate);
+            setSelectedEndDate(values.endDate);
+            onDatesSelected(values.startDate, values.endDate);
+        }
+    }
+
+    const isValid = () => {
+        return new Date(watchStartDate).getDate() < new Date(watchEndDate).getDate();
     }
 
 
@@ -37,8 +45,9 @@ const DashboardDateForm = ({onDatesSelected}: DashboardDateFormProps) => {
             <ControlledDateInput label={t('dashboard.timeframes.end_date')} required={true} control={control}
                                  max={new Date().toISOString().split("T")[0]}
                                  name='endDate' dataTestId='dashboard-end-date'/>
-            <div className='flex justify-center py-4'><Button disabled={!formState.isValid} type='submit'
+            <div className='flex justify-center py-4'><Button disabled={!formState.isValid || !isValid()} type='submit'
                                                               label={t('common.ok')}/></div>
+            {!isValid() && <div className='pb-4 w-48 text-danger'>{t('dashboard.dates_error')}</div>}
         </div>
     </form>
 }

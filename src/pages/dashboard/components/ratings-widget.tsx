@@ -25,12 +25,19 @@ const RatingsWidget = ({data}: RatingProps) => {
             type={data.overallSatisfiedPercent > 50 ? Icon.RatingVerySatisfied : Icon.RatingDissatisfied}/>
     }
 
+    const calculateOverall = () => {
+        if (isNaN(data.overallSatisfiedPercent) || data.overallSatisfiedPercent < 0) {
+            return 0;
+        }
+        return data.overallSatisfiedPercent;
+    }
+
     return <div className='flex flex-col items-center justify-center pt-2.5'>
         <div className='body3'>{t('dashboard.ratings.overall_ratings')}</div>
         <div>
             <div className='flex flex-row items-center justify-center pb-10'>
                 <WidgetIcon/>
-                <div className='pl-2.5'><h3>{data.overallSatisfiedPercent}%</h3></div>
+                <div className='pl-2.5'><h3>{calculateOverall()}%</h3></div>
             </div>
             <div className='flex flex-row items-center body2 pb-2'>
                 <div className='pr-2.5'><StatusDot status={UserStatus.Available}/></div>

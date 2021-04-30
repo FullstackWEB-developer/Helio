@@ -554,6 +554,7 @@
   "dashboard": {
     "no_data_found": "No data found!",
     "refresh_after": "Dashboard will be refreshed in {{time}}",
+    "dates_error": "Start date cannot be greater then end date",
     "types": {
       "1": "My Dashboard",
       "2": "Team Dashboard",

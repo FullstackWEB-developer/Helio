@@ -2,6 +2,7 @@ import {ResponsiveLine, Serie} from '@nivo/line'
 import {useTranslation} from 'react-i18next';
 import {TicketVolumeData} from '@pages/dashboard/models/ticket-volume-data.model';
 import dayjs from 'dayjs';
+import {BasicStatistic} from '@pages/dashboard/models/basic-statistic.model';
 
 export interface TicketsVolumeChartProps {
     data: TicketVolumeData;
@@ -39,12 +40,15 @@ const TicketsVolumeChart = ({data}: TicketsVolumeChartProps) => {
             })
         }
     ]
+
+    let dates = data.createdTotal.map((x: BasicStatistic) => new Date(x.label).getTime());
+    dates = dates.concat(data.closedTotal.map((x: BasicStatistic) => new Date(x.label).getTime()));
+    const earliest = new Date(Math.min.apply(null, dates));
+    const differenceInDays = dayjs().diff(earliest, 'day');
     let tickRotation = 0;
-    convertedData.forEach(item => {
-        if (item.data.length > 20) {
-            tickRotation = 45;
-        }
-    });
+    if (differenceInDays > 10) {
+        tickRotation = 45;
+    }
 
     let hasData = false;
     if (!convertedData || convertedData.length > 0) {
