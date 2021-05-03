@@ -1,4 +1,4 @@
 export enum ContactType {
-    Individual = 'Individual',
-    Company = 'Company'
+    Company = 1,
+    Individual = 2
 }

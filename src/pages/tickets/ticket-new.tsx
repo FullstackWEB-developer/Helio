@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useEffect, useState, useRef} from 'react';
+import React, {ChangeEvent, useEffect, useRef, useState} from 'react';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc'
 import {useTranslation} from 'react-i18next';
@@ -45,6 +45,7 @@ import useDebounce from '@shared/hooks/useDebounce';
 import ControlledInput from '@components/controllers/ControllerInput';
 import ControlledDateInput from '@components/controllers/ControlledDateInput';
 import {DEBOUNCE_SEARCH_DELAY_MS} from '@shared/constants/form-constants';
+import {ContactType} from '@pages/contacts/models/ContactType';
 
 const TicketNew = () => {
     dayjs.extend(utc);
@@ -99,7 +100,7 @@ const TicketNew = () => {
         enabled: false,
         onSuccess: (data) => {
             const contactOptionResult = data.map(item => ({
-                label: item.name,
+                label: item.type === ContactType.Company ? item.companyName : `${item.firstName} ${item.lastName}`,
                 value: item.id
             }) as Option);
 

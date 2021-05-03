@@ -11,10 +11,10 @@ interface AddNewContactProps {
     contactType?: ContactType
 }
 const AddNewContact = ({contactType}: AddNewContactProps) => {
-    const [contactTypeRadio, setContactTypeRadio] = useState<string>(contactType ?? ContactType.Individual);
+    const [contactTypeRadio, setContactTypeRadio] = useState<ContactType>(contactType ?? ContactType.Individual);
     const {t} = useTranslation();
     const onContactTypeChange = (value: string) => {
-        setContactTypeRadio(value);
+        setContactTypeRadio(Number(value));
     }
     const newContactTypeOptions: Option[] = [
         {value: String(ContactType.Company), label: `${t('contacts.new-contact.company')}`},
@@ -25,14 +25,18 @@ const AddNewContact = ({contactType}: AddNewContactProps) => {
             <div className="flex justify-between items-center mb-10">
                 <h4>{t('contacts.new-contact.header')}</h4>
                 <div className='flex'>
-                    <div className="pr-6"><SvgIcon type={Icon.Star} className='cursor-pointer' fillClass='contact-header-quick-action-color' /></div>
-                    <div className="pr-6"><SvgIcon type={Icon.Save} className='cursor-pointer' fillClass='contact-header-quick-action-color' /></div>
-                    <div className="pr-6"><SvgIcon type={Icon.Delete} className='cursor-pointer' fillClass='contact-header-quick-action-color' /></div>
+                    <div className="pr-6"><SvgIcon type={Icon.Star} className='cursor-pointer'
+                                                   fillClass='contact-header-quick-action-color'/></div>
+                    <div className="pr-6"><SvgIcon type={Icon.Save} className='cursor-pointer'
+                                                   fillClass='contact-header-quick-action-color'/></div>
+                    <div className="pr-6"><SvgIcon type={Icon.Delete} className='cursor-pointer'
+                                                   fillClass='contact-header-quick-action-color'/></div>
                 </div>
             </div>
             <div className='body2 mb-6'>{t('contacts.new-contact.select_type')}</div>
-            <Radio name='new-contact-type' className='flex space-x-8' defaultValue={contactTypeRadio} items={newContactTypeOptions} onChange={onContactTypeChange} />
-            <ContactForm contactType={ContactType[contactTypeRadio as keyof typeof ContactType]} />
+            <Radio name='new-contact-type' className='flex space-x-8' defaultValue={contactTypeRadio.toString()}
+                   items={newContactTypeOptions} onChange={onContactTypeChange}/>
+            <ContactForm contactType={contactTypeRadio}/>
         </div>
     )
 }
