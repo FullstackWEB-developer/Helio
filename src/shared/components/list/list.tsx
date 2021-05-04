@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import React, {useState} from 'react';
+import {useTranslation} from 'react-i18next';
 import './list.scss';
-import { Option } from '../option/option';
-import { UserStatus } from 'src/shared/store/app-user/app-user.models';
+import {Option} from '../option/option';
+import {UserStatus} from 'src/shared/store/app-user/app-user.models';
 import StatusDot from '@components/status-dot/status-dot';
 import SvgIcon from '@components/svg-icon/svg-icon';
 import {Icon} from '@components/svg-icon/icon';
+import SearchInputField from '@components/search-input-field/search-input-field';
 
 interface ListProps {
   options: ListOption[];
@@ -18,8 +19,8 @@ export interface ListOption extends Option {
   status?: UserStatus;
 }
 
-const List = ({ options, title, isSearchable = true, onSelect }: ListProps) => {
-  const { t } = useTranslation();
+const List = ({options, title, isSearchable = true, onSelect}: ListProps) => {
+  const {t} = useTranslation();
   const [filter, setFilter] = useState<string>('');
 
   const optionSelected = (option: Option) => {
@@ -68,20 +69,11 @@ const List = ({ options, title, isSearchable = true, onSelect }: ListProps) => {
         </div>
       )}
       {isSearchable && (
-        <div>
-          <div className='inline-flex flex-1 border-b h-10 w-full'>
-            <span className='pl-4 items-center flex'>
-              <SvgIcon type={Icon.Search} className='icon-small cursor-pointer' fillClass='list-active-icon'/>
-            </span>
-            <input
-              onKeyDown={handleKeyDown}
-              value={filter}
-              className='h-full w-full pl-4'
-              placeholder={t('search.placeholder')}
-              onChange={(e) => setFilter(e.target.value)}
-            />
-          </div>
-        </div>
+        <SearchInputField onKeyDown={handleKeyDown}
+          inputClassNames='h-full w-full'
+          wrapperClassNames='h-10 w-full'
+          value={filter} placeholder={t('search.placeholder')}
+          onChange={(value) => setFilter(value)} />
       )}
       <div className='pt-1 list-items overflow-y-auto'>
         {filteredOptionsContent}

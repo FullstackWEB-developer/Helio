@@ -28,6 +28,11 @@ const SearchInputField = React.forwardRef<HTMLInputElement, SearchInputProps>((p
             setValue(props.value);
         }
     }, []);
+    useEffect(() => {
+        if(!props.value?.length){
+            setValue('');
+        }
+    }, [props.value])
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setValue(e.target.value);
         if (props.onChange) {
