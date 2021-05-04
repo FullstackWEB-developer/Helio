@@ -48,7 +48,8 @@ const TicketDetailHeader = ({ticket, patient}: TicketDetailHeaderProps) => {
         onSuccess: (data, variables) => {
             dispatch(setTicketDelete({
                 id: variables.id,
-                isDeleted: !!variables.undoDelete
+                isDeleted: !!variables.undoDelete,
+                status: ticket.status
             }));
             history.push(TicketsPath);
 

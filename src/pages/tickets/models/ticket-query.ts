@@ -14,4 +14,5 @@ export interface TicketQuery extends Paging {
     assignedTo?: string[];
     tags?: string[];
     includeDeletedItems?: boolean;
+    sorts?: string[];
 }

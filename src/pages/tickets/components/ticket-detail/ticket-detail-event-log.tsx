@@ -37,7 +37,8 @@ const TicketDetailEventLog = ({ticket}: TicketDetailEventLogProps) => {
     const setDateTime = async (dueDateTime: Date) => {
         if (ticket && ticket.id && dueDateTime) {
             const ticketData: Ticket = {
-                dueDate: dueDateTime ? dueDateTime : undefined
+                dueDate: dueDateTime ? dueDateTime : undefined,
+                status: ticket.status
             };
             updateTicketMutation.mutate({id: ticket.id, ticketData},
                 {

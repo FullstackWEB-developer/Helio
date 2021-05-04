@@ -10,7 +10,7 @@ const DropdownTitle = ({title, icon, link, content, hasDivider=true }: DropdownT
         return <span data-test-id='dropdown-title-content'>{content}</span>
     }
     if (title) {
-        return <div className={'pt-2 px-4 dropdown-title flex items-center justify-between subtitle2 ' + (hasDivider ? 'border-t' : '')}>
+        return <div className={'px-4 dropdown-title flex items-center justify-between subtitle2 ' + (hasDivider ? 'border-t' : '')}>
             <div className='flex flex-row'>
                 {icon && <div className='pr-2' data-test-id='dropdown-title-icon'>{icon}</div> }
                 <div data-test-id='dropdown-title-text'>{t(title)}</div>

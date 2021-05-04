@@ -76,7 +76,7 @@ const TicketDetailTicketInfo = ({ ticket }: TicketInfoProps) => {
         const ticketData: Ticket = {
             type: isDirty('ticketType') ? selectedTicketTypeOption?.value : undefined,
             reason: isDirty('reason') ? selectedReason?.value : undefined,
-            status: isDirty('status') && selectedStatus ? parseInt(selectedStatus.value) : undefined,
+            status: isDirty('status') && selectedStatus ? parseInt(selectedStatus.value) : ticket.status,
             priority: isDirty('priority') && selectedPriority ? parseInt(selectedPriority.value) : undefined,
             department: isDirty('department') ? selectedDepartment?.value : undefined,
             location: isDirty('location') ? selectedLocation?.value : undefined,

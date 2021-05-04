@@ -7,7 +7,7 @@ import { getEnumByType, getList, getLookupValues } from '../services/tickets.ser
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import Checkbox, { CheckboxCheckEvent } from '@components/checkbox/checkbox';
-import { selectEnumValues, selectLookupValues, selectSearchTerm, selectTicketsPaging } from '../store/tickets.selectors';
+import { selectEnumValues, selectLookupValues, selectSearchTerm, selectTicketFilter, selectTicketsPaging } from '../store/tickets.selectors';
 import Radio  from '@components/radio/radio';
 import { TicketOptionsBase } from '../models/ticket-options-base.model';
 import { Controller, useForm } from 'react-hook-form';
@@ -19,10 +19,12 @@ import { TicketQuery } from '../models/ticket-query';
 import dayjs from 'dayjs';
 import { TicketEnumValue } from '../models/ticket-enum-value.model';
 import utc from 'dayjs/plugin/utc';
-import Button from '@components/button/button';
 import DateTimeInput from '@components/date-time-input/date-time-input';
 import TagInput from '@components/tag-input/tag-input';
 import './ticket-filter.scss';
+import {setTicketListQueryType} from '../store/tickets.slice';
+import {authenticationSelector} from '@shared/store/app-user/appuser.selectors';
+import {TicketListQueryType} from '../models/ticket-list-type';
 const TicketFilter = () => {
     dayjs.extend(utc);
     const dispatch = useDispatch();
@@ -30,6 +32,7 @@ const TicketFilter = () => {
     const anyKey = '0';
     const timePeriod_DateRange = '4';
     const paging = useSelector(selectTicketsPaging);
+    const ticketQueryFilter = useSelector(selectTicketFilter);
     const departments = useSelector((state) => selectLookupValues(state, 'Department'));
     const tags = useSelector((state) => selectLookupValues(state, 'TicketTags'));
     const userList = useSelector(selectUserList);
@@ -38,6 +41,7 @@ const TicketFilter = () => {
     const ticketStatuses = useSelector((state => selectEnumValues(state, 'TicketStatus')));
     const ticketTypes = useSelector((state => selectEnumValues(state, 'TicketType')));
     const offices = useSelector(selectDepartmentList);
+    const {username} = useSelector(authenticationSelector);
     const searchTerm: string = useSelector(selectSearchTerm);
     const { control, handleSubmit, watch, setValue } = useForm({});
 
@@ -68,7 +72,8 @@ const TicketFilter = () => {
 
     const fetchTickets = (values: any) => {
         const query: TicketQuery = {
-            ...paging
+            ...paging,
+            ...ticketQueryFilter
         };
         query.statuses = getSelectedFromCheckbox(values.statuses).map((a: string) => parseInt(a));
         query.channels = getSelectedFromCheckbox(values.channels).map((a: string) => parseInt(a));
@@ -113,14 +118,25 @@ const TicketFilter = () => {
                 query.fromDate = date.toDate();
             }
         }
-        if (values.assignedTo) {
-            query.assignedTo = [];
+        
+        query.assignedTo = [];
+        if (values.assignedTo)
+        {
             query.assignedTo.push(values.assignedTo);
         }
+
         if (searchTerm) {
             query.searchTerm = searchTerm;
         }
+
         dispatch(getList(query, true));
+
+        if (query.assignedTo && query.assignedTo.length === 1 && query.assignedTo[0] === username) {
+            dispatch(setTicketListQueryType(TicketListQueryType.MyTicket));
+        } else {
+            dispatch(setTicketListQueryType(TicketListQueryType.AllTicket));
+        }
+
     }
 
     const convertOfficesToOptions = (): TicketOptionsBase[] => {
@@ -301,13 +317,14 @@ const TicketFilter = () => {
     const setSelectedTags = (tags: string[]) => {
         setValue('tags', tags);
     }
-
+ 
     return <div className='bg-secondary-100 pb-20 min-h-full px-6'>
         <div className='flex flex-row justify-between pt-7'>
             <div className='subtitle pb-8 h7'>{t('tickets.filter.filter_tickets')}</div>
+            <div className='cursor-pointer' onClick={() => handleSubmit(fetchTickets)()}>{t('tickets.filter.fetch')}</div>
             <div className='cursor-pointer' onClick={() => resetForm()}>{t('tickets.filter.clear_all')}</div>
         </div>
-        {formVisible && <form onSubmit={handleSubmit(fetchTickets)}>
+        {formVisible && <form>
             {GetCollapsibleCheckboxControl('tickets.filter.statuses', 'statuses', addAnyOption(convertEnumToOptions(ticketStatuses)))}
             {GetRadioCollapsibleControl('tickets.filter.time_period', 'timePeriod', timePeriodList)}
             {dateFilters()}
@@ -325,7 +342,7 @@ const TicketFilter = () => {
                         render={(props) => (
                             <Select
                                 {...props}
-                                data-test-id={'assigned-to-user-list'}                                
+                                data-test-id={'assigned-to-user-list'}
                                 options={userOptions}
                                 value={props.value}
                                 onSelect={(option?: Option)=>{
@@ -355,9 +372,6 @@ const TicketFilter = () => {
                     )}
                 />
             </Collapsible>
-            <div className='flex w-full justify-center pt-4'>
-                <Button label={'tickets.filter.fetch'} type='submit' />
-            </div>
         </form>}
     </div>;
 }

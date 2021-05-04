@@ -5,13 +5,14 @@ import React from 'react';
 export interface SvgIconProps {
     type: Icon,
     className?: string,
+    wrapperClassName?: string,
     fillClass?: string,
     strokeClass?: string,
     opacity?: string,
     onClick?: (e: any) => void
 }
 
-const SvgIcon = ({type, className = 'icon-medium', fillClass = 'fill-default', strokeClass = 'stroke-default', opacity, onClick}: SvgIconProps) => {
+const SvgIcon = ({type, wrapperClassName, className = 'icon-medium', fillClass = 'fill-default', strokeClass = 'stroke-default', opacity, onClick}: SvgIconProps) => {
     const mainClass = `${className} ${fillClass ? '' : 'fill-default'}`;
 
     const getIconAdd = () => {
@@ -336,6 +337,13 @@ const SvgIcon = ({type, className = 'icon-medium', fillClass = 'fill-default', s
             <path
                 d="M17.156,0H.845a.844.844,0,0,0-.6,1.44l6.5,6.5v7.244a.844.844,0,0,0,.36.691l2.813,1.968a.844.844,0,0,0,1.328-.691V7.943l6.5-6.5A.844.844,0,0,0,17.156,0Z"
                 transform="translate(3 3)" className={fillClass}/>
+        </svg>
+    }
+
+    const getIconFilterList = () => {
+        return <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className={mainClass}>
+            <rect width="24" height="24" fill="none" />
+            <path d="M10,18h4V16H10ZM3,6V8H21V6Zm3,7H18V11H6Z" className={fillClass}/>
         </svg>
     }
 
@@ -686,6 +694,7 @@ const SvgIcon = ({type, className = 'icon-medium', fillClass = 'fill-default', s
         [Icon.Edit]: getIconEdit,
         [Icon.Email]: getIconEmail,
         [Icon.Filter]: getIconFilter,
+        [Icon.FilterList]: getIconFilterList,
         [Icon.Info]: getIconInfo,
         [Icon.Location]: getIconLocation,
         [Icon.Menu]: getIconMenu,
@@ -719,7 +728,7 @@ const SvgIcon = ({type, className = 'icon-medium', fillClass = 'fill-default', s
         [Icon.LightRadioOn]: getIconLightRadioOn
     }
 
-    return <div onClick={onClick}>
+    return <div className={wrapperClassName} onClick={onClick}>
             {icons[type]()}
         </div>
 }

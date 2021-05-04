@@ -90,6 +90,7 @@ const TicketDetailPatientInfo = ({ ticket, patient }: TicketDetailPatientInfoPro
 
         const ticketData: Ticket = {
             patientCaseNumber: parseInt(patientCaseNumber),
+            status: ticket.status
         };
 
         if (ticket && ticket.id) {

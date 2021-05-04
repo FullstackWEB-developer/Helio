@@ -27,7 +27,7 @@ const DropdownCell = ({item, isSelected, onClick}: DropdownCellProps) => {
         if (textContent) {
             return <span data-test-id='dropdown-cell-content'>{textContent}</span>;
         } else {
-            return <div className='flex items-center' data-test-id={`dropdown-cell-text-${text}`}>{t(text)}</div>;
+            return <div className={`flex items-center ${className}`} data-test-id={`dropdown-cell-text-${text}`}>{t(text)}</div>;
         }
     }
 

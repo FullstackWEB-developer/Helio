@@ -32,6 +32,7 @@ export enum Icon {
     Edit = 'Edit',
     Email = 'Email',
     Filter = 'Filter',
+    FilterList = 'FilterList',
     Info = 'Info',
     Location = 'Location',
     Menu = 'Menu',

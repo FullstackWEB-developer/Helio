@@ -20,6 +20,7 @@ import {
     setTicket,
     setTicketEnum,
     setTicketFilter,
+    setTicketListQueryType,
     setTicketsLoading,
     startGeLookupValuesRequest,
     startGetTicketEnumRequest,
@@ -30,11 +31,15 @@ import {Ticket} from '../models/ticket';
 import {Paging} from '@shared/models/paging.model';
 import {TicketQuery} from '../models/ticket-query';
 import {TicketFeed} from '../models/ticket-feed';
+import {TicketListQueryType} from '../models/ticket-list-type';
 import {DashboardTypes} from '@pages/dashboard/enums/dashboard-type.enum';
 import {DashboardTimeframes} from '@pages/dashboard/enums/dashboard.timeframes';
+import TicketStatus from '../components/ticket-status';
+import TicketStatusDisplay from '../components/ticket-status-display';
+import {TicketStatusType} from '../models/ticket-status';
 
 const logger = Logger.getInstance();
-const ticketsBaseUrl = '/tickets';
+const ticketsBaseUrl = "/tickets";
 
 export function getList(ticketQuery: TicketQuery, resetPagination?: boolean) {
     return async (dispatch: Dispatch) => {
@@ -66,8 +71,12 @@ export function getList(ticketQuery: TicketQuery, resetPagination?: boolean) {
                 ...paging,
                 ...query
             };
-            dispatch(setTicketFilter(saveQuery));
 
+            if (!query.assignedTo || query.assignedTo.length < 1) {
+                dispatch(setTicketListQueryType(TicketListQueryType.AllTicket));
+            }
+            
+            dispatch(setTicketFilter(saveQuery));
             dispatch(setTicketsLoading(false));
         } catch (error) {
             dispatch(setFailure(error.message));
@@ -125,7 +134,8 @@ export const setAssignee = (id: string, assignee: string) => {
             .then(() => {
                 dispatch(changeAssignee({
                     id: id,
-                    assignee: assignee
+                    assignee: assignee,
+                    status: TicketStatusType.Open
                 }));
             })
             .catch(err => {

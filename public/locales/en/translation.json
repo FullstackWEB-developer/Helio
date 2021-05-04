@@ -50,16 +50,22 @@
   },
   "tickets": {
     "title": "Tickets",
+    "channel": "Channel",
     "subject": "Subject",
+    "id": "Id",
+    "due_in":"Due In",
     "status": "Status",
+    "priority_label": "Priority",
+    "ticket_type": "Ticket Type",
     "action": "Action",
     "set": "Set",
     "all_tickets": "All Tickets",
+    "my_tickets": "My Tickets",
     "search": "Search tickets",
     "search_assignees": "Search",
     "created": "Created",
     "closed": "Closed",
-    "type": "Type",
+    "type": "Ticket Type",
     "reason": "Reason",
     "assigned_to": "Assigned To",
     "priority": {
@@ -86,7 +92,7 @@
       "pharmacy": "Pharmacy"
     },
     "filter": {
-      "filter_tickets": "Filter Tickets",
+      "filter_tickets": "Filters",
       "clear_all": "Clear All",
       "statuses": "Statuses",
       "time_period": "Time period",
@@ -97,7 +103,7 @@
       "office_location": "Office/Location",
       "assigned_to": "Assigned to",
       "tags": "Tags",
-      "fetch": "Apply filter",
+      "fetch": "Apply",
       "from_date": "From",
       "to_date": "To",
       "time_periods": {

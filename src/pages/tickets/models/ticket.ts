@@ -15,7 +15,7 @@ export interface Ticket {
     patientId?: number;
     assignee?: string;
     connectContactId?: string;
-    status?: number;
+    status: number;
     priority?: number
     channel?: number;
     tags?: string[];

@@ -6,6 +6,8 @@ import {LookupValue} from '../models/lookup-value';
 import {Paging} from '../../../shared/models/paging.model';
 import {TicketEnum} from '../models/ticket-enum.model';
 import {TicketEnumValue} from '../models/ticket-enum-value.model';
+import {TicketListQueryType} from '../models/ticket-list-type';
+import {TicketStatusType} from '../models/ticket-status';
 
 export const ticketState = (state: RootState) => state.ticketState;
 
@@ -13,6 +15,8 @@ export const selectTickets = (state: RootState) => state.ticketState.tickets as 
 
 export const selectTicketsPaging = (state: RootState) => state.ticketState.paging as Paging;
 export const selectTicketFilter = (state: RootState) => state.ticketState.ticketFilter;
+export const selectTicketQueryType = (state: RootState): TicketStatusType =>
+  state.ticketState.ticketListQueryType || TicketListQueryType.AllTicket;
 export const selectSearchTerm = (state: RootState) => state.ticketState.searchTerm;
 export const selectFeedLastMessageOn = (state: RootState) => state.ticketState.feedLastMessageOn;
 

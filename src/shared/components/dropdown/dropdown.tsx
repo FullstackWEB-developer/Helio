@@ -4,6 +4,8 @@ import DropdownCategory from './dropdown-category';
 import DropdownTitle from './dropdown-title';
 import './dropdown.scss';
 import DropdownSelect from '@components/dropdown/dropdown-select';
+import SearchInputField from '@components/search-input-field/search-input-field';
+import {useEffect, useState} from 'react';
 
 export interface DropdownProps {
     model: DropdownModel
@@ -11,15 +13,32 @@ export interface DropdownProps {
 
 const Dropdown = ({model}: DropdownProps) => {
 
-    const {header, title, categorizedItems, items = [], onClick, defaultValue, asSelect = false} = model;
+    const {header, title, categorizedItems, items = [], onClick, defaultValue, asSelect = false, isSearchable = false} = model;
+    const [dropDownItems, setDropDownItems] = useState<DropdownItemModel[]>([]);
+    const [searchTerm, setSearchTerm] = useState('');
+
+    useEffect(() => {
+        if (!searchTerm) {
+            setDropDownItems(items);
+        } else {
+            const results = items.filter(item => item.label.toLowerCase().startsWith(searchTerm.toLowerCase()))
+            setDropDownItems(results);
+        }
+
+    }, [searchTerm, items])
+
     const getItemContent = (item: DropdownItemModel) => {
         const isSelected = item.value === defaultValue
         if (item.isTitle) {
-            return <DropdownTitle link={item.link} title={item.label} icon={item.icon} content={item.content}/>
+            return <DropdownTitle link={item.link} title={item.label} icon={item.icon} content={item.content} />
         }
         return <DropdownCell onClick={(value: string, selected: DropdownItemModel) => itemSelected(value, selected)}
-                             isSelected={isSelected} key={item.value} item={item}/>
+            isSelected={isSelected} key={item.value} item={item} />
 
+    }
+
+    const searchInputChanged = (value: string) => {
+        setSearchTerm(value);
     }
 
     const itemSelected = (value: string, item: DropdownItemModel) => {
@@ -32,15 +51,15 @@ const Dropdown = ({model}: DropdownProps) => {
     }
 
     const getItemListContent = () => {
-        if (items && items.length > 0) {
-            return items.map((item) => <span key={item.value}>{getItemContent(item)}</span>)
+        if (dropDownItems && dropDownItems.length > 0) {
+            return dropDownItems.map((item) => <span key={item.value}>{getItemContent(item)}</span>)
         }
         return null;
     }
 
     const getCategoryContent = (category: CategoryItemModel) => {
         return <div className='flex flex-row border-t' key={category.category.key}>
-            <DropdownCategory key={category.category.key} icon={category.category.icon} text={category.category.text}/>
+            <DropdownCategory key={category.category.key} icon={category.category.icon} text={category.category.text} />
             <div className={category.itemsCssClass ? category.itemsCssClass : 'w-full'}>
                 {category.items.map((item) => <span key={item.label}>{getItemContent(item)}</span>)}
             </div>
@@ -58,16 +77,21 @@ const Dropdown = ({model}: DropdownProps) => {
     if (asSelect) {
         let selectedValue = null;
         if (defaultValue) {
-            selectedValue = items.find(a => a.value === defaultValue);
+            selectedValue = dropDownItems.find(a => a.value === defaultValue);
         }
         return <DropdownSelect defaultValue={selectedValue ? selectedValue : undefined}
-                               onClick={(value, item) => itemSelected(value, item)} items={items}/>
+            onClick={(value, item) => itemSelected(value, item)} items={items} />
     }
 
-    return <div className='bg-white dropdown-body' data-test-id={'dropdown-' + title}>
-        <DropdownTitle hasDivider={false} content={header} title={title}/>
-        {getCategoryItemListContent()}
-        {getItemListContent()}
+    return <div className='bg-white dropdown-body py-2' data-test-id={'dropdown-' + title}>
+        <DropdownTitle hasDivider={false} content={header} title={title} />
+        {isSearchable &&
+            <SearchInputField onChange={searchInputChanged} value={searchTerm} />
+        }
+        <div className='overflow-y-auto overflow-x-hidden max-h-96'>
+            {getCategoryItemListContent()}
+            {getItemListContent()}
+        </div>
     </div>
 }
 
