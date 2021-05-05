@@ -9,6 +9,7 @@ interface DateTimeInputProps extends React.HTMLAttributes<HTMLInputElement> {
     error?: string,
     type?: 'date' | 'time',
     htmlFor?: string,
+    min?: string,
     max?: string,
     onChange?: (e: ChangeEvent<HTMLInputElement>) => void
 }
@@ -32,6 +33,7 @@ const DateTimeInput = React.forwardRef<HTMLInputElement, DateTimeInputProps>(({ 
                        setIsFocusedDateTime(true)
                    }}
                    onBlur={(e) => onBlur(e)}
+                   min={props.min}
                    max={props.max}
                    className={'border mt-1 rounded-md p-4 ' + props.className} />
             {props.error && <div className='text-danger'>{props.error}</div>}

@@ -6,7 +6,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {selectDepartmentList, selectProviderList} from '@shared/store/lookups/lookups.selectors';
 import {useEffect} from 'react';
 import {getDepartments, getProviders} from '@shared/services/lookups.service';
-import {AppointmentSlot} from '@pages/external-access/reschedule-appointment/models/appointment-slot.model';
+import {AppointmentSlot} from '@pages/external-access/appointment/models/appointment-slot.model';
 interface AppointmentDetailProps {
     item: Appointment | AppointmentSlot
 }

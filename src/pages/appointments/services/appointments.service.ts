@@ -3,6 +3,7 @@ import { Appointment } from '@pages/external-access/appointment/models/appointme
 import dayjs from 'dayjs';
 import {AppointmentCancellationModel} from '@pages/external-access/appointment/models/appointment-cancellation.model';
 
+const itemCount = 100;
 const appointmentsBaseUrl = '/appointments';
 
 export const getHotSpots = async () => {
@@ -33,7 +34,23 @@ export const getAppointmentSlots = async (providerId: number, departmentId: numb
      getOpenSlotsUrl = getOpenSlotsUrl + `&appointmentTypeId=${appointmentTypeId}`;
      getOpenSlotsUrl = getOpenSlotsUrl + `&startDate=${dayjs(startDate, 'YYYY/MM/DD')}`;
      getOpenSlotsUrl = getOpenSlotsUrl + `&endDate=${dayjs(endDate, 'YYYY/MM/DD')}`;
+     getOpenSlotsUrl = getOpenSlotsUrl + `&itemCount=${itemCount}`;
      const result = await Api.get(getOpenSlotsUrl);
+     return result.data;
+}
+
+export interface RescheduleAppointmentProps {
+     appointmentId: number;
+     newAppointmentId: number;
+     patientId: number;
+}
+
+export const rescheduleAppointment = async ({appointmentId, newAppointmentId, patientId}: RescheduleAppointmentProps) => {
+     let url = `${appointmentsBaseUrl}/${appointmentId}/reschedule`;
+     const result = await Api.put(url, {
+          newAppointmentId,
+          patientId
+     });
      return result.data;
 }
 

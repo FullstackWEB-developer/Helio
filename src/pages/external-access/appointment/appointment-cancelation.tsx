@@ -13,7 +13,7 @@ import {
     cancelAppointment, getAppointmentTypeById
 } from '@pages/appointments/services/appointments.service';
 import ThreeDots from '@components/skeleton-loader/skeleton-loader';
-import {AppointmentSlot} from '@pages/external-access/reschedule-appointment/models/appointment-slot.model';
+import {AppointmentSlot} from '@pages/external-access/appointment/models/appointment-slot.model';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc'
 import AppointmentsListItem from '@pages/external-access/appointment/components/appointments-list-item';
@@ -27,6 +27,7 @@ import {useHistory} from 'react-router-dom';
 import {selectVerifiedPatent} from '@pages/patients/store/patients.selectors';
 import {AppointmentType} from '@pages/external-access/appointment/models/appointment-type.model';
 import './appointment.scss';
+import {setSelectedAppointmentSlot} from '@pages/external-access/appointment/store/appointments.slice';
 
 const AppointmentCancelation = () => {
     dayjs.extend(utc);
@@ -119,8 +120,13 @@ const AppointmentCancelation = () => {
         });
     }
 
+    const selectSlot = (slot: AppointmentSlot) => {
+        dispatch(setSelectedAppointmentSlot(slot));
+        history.push('/o/appointment-reschedule-confirm');
+    }
+
     const showMoreSlots = () => {
-        history.push(`/o/reschedule-appointment`);
+        history.push(`/o/appointment-reschedule`);
     }
 
     if (isAppointmentTypesLoading || isAppointmentSlotsLoading || isGetCancellationReasonsLoading) {
@@ -167,7 +173,9 @@ const AppointmentCancelation = () => {
         <div className='pb-6'>
             {
                 appointmentSlots?.map((slot) => {
-                    return <div key={slot.appointmentId} className='cursor-pointer'>
+                    return <div key={slot.appointmentId}
+                                className='cursor-pointer'
+                                onClick={() => selectSlot(slot)}>
                         <AppointmentsListItem item={slot}/></div>
                 })
             }

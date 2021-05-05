@@ -7,22 +7,18 @@ import {
     GetAppointmentType,
 } from '@constants/react-query-constants';
 import {getDepartments, getProviders} from '@shared/services/lookups.service';
-import Button from '@components/button/button';
 import {AppointmentType} from '@pages/external-access/appointment/models/appointment-type.model';
 import {getAppointmentTypeById} from '@pages/appointments/services/appointments.service';
 import ThreeDots from '@components/skeleton-loader/skeleton-loader';
-import {useHistory} from 'react-router-dom';
-import {selectSelectedAppointment} from '@pages/external-access/appointment/store/appointments.selectors';
+import {
+    selectSelectedAppointment
+} from '@pages/external-access/appointment/store/appointments.selectors';
 import {useDispatch, useSelector} from 'react-redux';
 import {selectDepartmentList, selectProviderList} from '@shared/store/lookups/lookups.selectors';
-import './appointment.scss';
 
-const AppointmentDetail = () => {
+const AppointmentRescheduled = () => {
     const {t} = useTranslation();
-    const history = useHistory();
     const dispatch = useDispatch();
-    const callUsPhone = process.env.REACT_APP_CALL_US_PHONE;
-    const chatLink = process.env.REACT_APP_CHAT_LINK;
     const appointment = useSelector(selectSelectedAppointment);
     const departments = useSelector(selectDepartmentList);
     const providers = useSelector(selectProviderList);
@@ -50,30 +46,11 @@ const AppointmentDetail = () => {
         return ''
     }
 
-    const displayCancel = () => {
-        return !appointmentType || appointmentType.cancelable;
-    }
-
-    const redirectToReschedule = () => {
-        history.push(`/o/appointment-reschedule`);
-    }
-    const redirectToCancel = () => {
-        history.push(`/o/appointment-cancelation`);
-    }
-
     if (isAppointmentTypesLoading) {
         return <ThreeDots/>
     }
 
     return  <div className='2xl:px-48'>
-        <div className='2xl:whitespace-pre 2xl:h-12 2xl:my-3 flex w-full items-center'>
-            <h4>
-                {t('external_access.appointments.appointment_details')}
-            </h4>
-        </div>
-        <div className='pt-6 pb-9'>
-            {t('external_access.appointments.see_appointment_details')}
-        </div>
         <div className='pb-2'>
             <h5>
                 {t('external_access.appointments.appointment_date', {
@@ -99,26 +76,14 @@ const AppointmentDetail = () => {
         <div>
             {`${display(department?.address2)} ${display(department?.city)} ${display(department?.state)}, ${display(department?.zip)}`}
         </div>
-        <div className='pt-12 flex flex-col xl:flex-row xl:space-x-6 space-x-0 space-y-6 xl:space-y-0'>
-            {(appointmentType ? appointmentType?.reschedulable : true) && <Button onClick={() => redirectToReschedule()} buttonType='medium' label='external_access.appointments.reschedule' />}
-            <Button disabled={!displayCancel()} onClick={() => redirectToCancel()} buttonType='secondary' label='common.cancel' />
-        </div>
-        { !displayCancel() && <div className='pt-10 xl:pt-20'>
-            <div className='warning-message p-4 body2'>
-                <Trans i18nKey="external_access.appointments.can_not_be_canceled">
-                    <a rel='noreferrer' className='underline' target='_self' href={chatLink}>Chat</a>
-                    {callUsPhone}
-                </Trans>
-            </div>
-        </div>
-        }
-        { appointmentType?.instructions && <>
-            <div className='pt-10 xl:pt-20'>
-                {t('external_access.appointments.instructions')}
-            </div>
-            <div className='border-b pt-2'/>
-                <div className='pt-4 body2' dangerouslySetInnerHTML={{__html: appointmentType?.instructions}} />
-        </>
+
+        {appointmentType?.instructions && <>
+                <div className='pt-10 xl:pt-20'>
+                    {t('external_access.appointments.instructions')}
+                </div>
+                <div className='border-b pt-2'/>
+                <div className='pt-4 body2' dangerouslySetInnerHTML={{__html: appointmentType?.instructions}}/>
+            </>
         }
 
         { department?.parkingInformation && <>
@@ -143,4 +108,4 @@ const AppointmentDetail = () => {
     </div>
 
 }
-export default AppointmentDetail;
+export default AppointmentRescheduled;

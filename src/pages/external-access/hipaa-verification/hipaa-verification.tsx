@@ -41,7 +41,7 @@ const HipaaVerification = ({request}: HipaaVerificationProps) => {
                     history.push('/o/request-refill');
                     break;
                 case ExternalAccessRequestTypes.RescheduleAppointment:
-                    history.push('/o/reschedule-appointment');
+                    history.push('/o/appointment-list');
                     break;
                 case ExternalAccessRequestTypes.RequestMedicalRecords:
                     history.push('/o/request-medical-records');
