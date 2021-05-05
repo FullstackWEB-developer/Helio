@@ -13,26 +13,25 @@ input[type=checkbox] {
 .checkbox-control {
   position: relative;
   display: inline-block;
-  width: 1rem;
-  height: 1rem;
+  width: 1.125rem;
+  height: 1.125rem;
   margin-right: 1rem;
   vertical-align: middle;
   background-color: inherit;
-  color: var(--color-secondary-900);
-  border: 1px solid var(--color-secondary-900);
-}
+  color: var(--color-primary-500);
+  border: 2px solid var(--light-text-disabled);
 
-.checkbox:checked+.checkbox-control:after {
-  content: "";
-  display: block;
-  position: absolute;
-  top: 0.2rem;
-  left: 0.2rem;
-  width: 0.5rem;
-  height: 0.5rem;
-  background-color: var(--color-secondary-900);
+  svg {
+    transform: scale(0);
+  }
+}
+.svg-checkbox {
+    fill: var(--color-primary-500);
 }
 
 .checkbox:checked+.checkbox-control {
-  border-color: var(--color-secondary-900);
+  border: none;
+  svg {
+    transform: scale(1);
+  }
 }

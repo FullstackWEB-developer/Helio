@@ -639,7 +639,7 @@ const SvgIcon = ({type, wrapperClassName, className = 'icon-medium', fillClass =
             <rect width="24" height="24" fill="none"/>
             <path
                 d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
-                transform="translate(3 3)" className={fillClass}/>
+                className={fillClass}/>
         </svg>
     }
 
