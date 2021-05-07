@@ -475,7 +475,8 @@ const TicketNew = () => {
                             defaultValue=''
                             control={control}
                             type='date'
-                            className={'w-full border-none h-14'}
+                            max='9999-12-31'
+                            className='w-full border-none h-14'
                             placeholder={t('ticket_new.due_date')}
                             dataTestId={'ticket-new-due-date'}
                         />
@@ -608,7 +609,7 @@ const TicketNew = () => {
                         />
                     )}
                 />
-                <div className='flex flex-row space-x-4 justify-start mt-5'>
+                <div className='flex flex-row space-x-4 justify-start mt-7'>
                     <div className='flex items-center'>
                         <Button data-test-id='ticket-new-cancel-button' type={'button'}
                             buttonType='secondary'

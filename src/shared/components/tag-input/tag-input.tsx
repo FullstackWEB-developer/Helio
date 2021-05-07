@@ -59,11 +59,14 @@ const TagInput = React.forwardRef<HTMLSelectElement, TagInputProps>(({label, tag
         filteredOptions = filteredOptions.filter(a => a.label !== tag);
     });
 
+    const isHorizontalLabelPosition = () => labelPosition === TagInputLabelPosition.Horizontal;
+
+
     return (
         <Fragment>
-            <div className={`flex ${labelPosition === TagInputLabelPosition.Horizontal ? "flex-row" : "flex-col"}`}>
+            <div className={`flex ${isHorizontalLabelPosition() ? "flex-row" : "flex-col"}`}>
                 <div>{label && <Label text={t(label)} className='body2 pr-4' />}</div>
-                <div>
+                <div className={`${!isHorizontalLabelPosition() ? 'pt-5':''}`}>
                     {
                         !isTagsListVisible &&
                         <span className='flex flex-row flex-nowrap cursor-pointer items-center' onClick={() => handleAddTagClick()}>

@@ -1,4 +1,4 @@
-import {Controller, ControllerProps, ControllerRenderProps} from 'react-hook-form';
+import {Controller, ControllerRenderProps} from 'react-hook-form';
 import {Control} from 'react-hook-form/dist/types/form';
 import Input from '@components/input/input';
 import {useTranslation} from 'react-i18next';
@@ -9,6 +9,8 @@ export class InputTypes {
     static Email = new RegExp('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$');
     static Zip = new RegExp('^\\d{5}(?:[-\\s]\\d{4})?$');
 }
+
+const blockNumericInvalidChar = (event: React.KeyboardEvent<HTMLInputElement>) => isNaN(Number(event.key))  && event.preventDefault();
 
 export interface ControllerInputProps {
     control: Control;
@@ -34,6 +36,7 @@ const ControlledInput = ({control, required = false, type = 'text', name, mask =
 
     const {t} = useTranslation();
     const requiredText = t('common.required');
+    let inputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>): void => undefined;
     let pattern = undefined;
     if (type === 'tel') {
         mask = '(999) 999-9999'
@@ -51,7 +54,10 @@ const ControlledInput = ({control, required = false, type = 'text', name, mask =
             value: InputTypes.Zip,
             message: t('components.input.invalid_zip')
         }
+    } else if (type === 'number') {
+        inputKeyDown = blockNumericInvalidChar;
     }
+
 
     const cleanMask = (value?: string) => {
         if (value) {
@@ -60,6 +66,7 @@ const ControlledInput = ({control, required = false, type = 'text', name, mask =
     }
 
     const onInputChanged = (event: React.ChangeEvent<HTMLInputElement>, controllerProps: ControllerRenderProps<Record<string, any>>) => {
+   
         if (type === 'tel') {
             const value = cleanMask(event.target.value);
             controllerProps.onChange(value);
@@ -95,6 +102,7 @@ const ControlledInput = ({control, required = false, type = 'text', name, mask =
                 isLoading={props.isLoading}
                 disabled={props.disabled}
                 data-test-id={dataTestId}
+                onKeyDown={inputKeyDown}
                 onBlur={props.onBlur || controllerProps.onBlur}
                 onChange={(event) => onInputChanged(event, controllerProps)}
             />

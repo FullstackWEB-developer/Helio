@@ -362,7 +362,7 @@
     "patient_id": "Patient Chart Number",
     "patient_case_number": "Patient Case Number",
     "tags": "Tags",
-    "add_note": "Add Note",
+    "add_note": "Note",
     "create": "Create Ticket",
     "title": "New Ticket",
     "patient_id_not_found": "Patient Id does not found.",
