@@ -161,15 +161,15 @@ const TicketNew = () => {
             return;
         }
 
-        patientIdRef.current = patientId;
+       
         setPatientIdLoading(true);
         try {
             const patient: Patient = await getPatientByIdWithQuery(Number(patientId));
             if (!patient) {
                 throw new Error();
             }
-
             setPatientName(`${patient.firstName} ${patient.lastName}`);
+            patientIdRef.current = patientId;
         } catch (error) {
             setError('patientId', {type: 'notFound', message: t('ticket_new.patient_id_not_found')});
         } finally {
@@ -183,20 +183,19 @@ const TicketNew = () => {
         }
 
         setPatientCaseIdLoading(true);
-        patientCaseIdRef.current = patientCaseId;
         try {
             if (!!patientId) {
                 const patientCase = await getPatientCaseDocument(Number(patientId), Number(patientCaseId));
                 if (!patientCase) {
                     throw new Error();
                 }
-
             } else {
                 const patientActionNotes = await getPatientActionNotes(Number(patientCaseId));
                 if (!patientActionNotes || patientActionNotes.length < 1) {
                     throw new Error();
                 }
             }
+            patientCaseIdRef.current = patientCaseId;
         } catch (error) {
             setError('patientCaseNumber', {type: 'notFound', message: t('ticket_new.patient_case_id_not_found')});
         } finally {
