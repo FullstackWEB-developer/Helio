@@ -10,6 +10,8 @@ import {HTML5Backend} from 'react-dnd-html5-backend';
 import {DndContainer} from './dragndrop/dnd-container'
 import StatusBar from './statusbar';
 import './layout.scss';
+import Snackbar from '@components/snackbar/snackbar';
+import {SnackbarPosition} from '@components/snackbar/snackbar-type.enum';
 
 interface LayoutProps {
     children: React.ReactNode
@@ -53,6 +55,7 @@ const Layout = (props: LayoutProps) => {
                                 </div>
                             </div>
                         </div>
+                        <Snackbar position={SnackbarPosition.TopRight}/>
                     </DndContainer>
                 </DndProvider>
             </div>

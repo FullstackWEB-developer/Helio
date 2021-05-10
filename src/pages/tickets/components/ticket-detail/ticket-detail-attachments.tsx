@@ -1,17 +1,19 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+import {useTranslation} from 'react-i18next';
 import withErrorLogging from '../../../../shared/HOC/with-error-logging';
-import { Ticket } from '../../models/ticket';
-import Button from '../../../../shared/components/button/button';
-import { getRecordedConversation } from '../../services/tickets.service';
-import { ChannelTypes } from '../../models/ticket-channel';
+import {Ticket} from '../../models/ticket';
+import {getRecordedConversation} from '../../services/tickets.service';
+import {ChannelTypes} from '../../models/ticket-channel';
 import utils from '../../../../shared/utils/utils';
+import SvgIcon from '@components/svg-icon/svg-icon';
+import {Icon} from '@components/svg-icon/icon';
+
 interface TicketDetailAttachmentsProps {
     ticket: Ticket
 }
 
-const TicketDetailAttachments = ({ ticket }: TicketDetailAttachmentsProps) => {
-    const { t } = useTranslation();
+const TicketDetailAttachments = ({ticket}: TicketDetailAttachmentsProps) => {
+    const {t} = useTranslation();
 
     const getChannel = () => {
         switch (ticket.channel) {
@@ -106,20 +108,25 @@ const TicketDetailAttachments = ({ ticket }: TicketDetailAttachmentsProps) => {
     return <div className={'py-4 mx-auto flex flex-col'}>
         <div>
             <dl>
-                <div className='sm:grid sm:grid-cols-2'>
-                    <dt className='subtitle2'>
+                <div className='flex flex row justify-between'>
+                    <div className='body2-medium'>
                         {t(`ticket_detail.info_panel.recorded_conversation.title_${getChannel()}`)}
-                    </dt>
-                    <dd className='body2'>
-                        {
-                            ticket.recordedConversationLink ?
-                                <Button data-test-id='ticket-detail-recorded_conversation-button'
-                                    buttonType='secondary'
-                                    onClick={() => downloadRecordedConversation()}
-                                    label={'ticket_detail.info_panel.recorded_conversation.download'} />
-                                : t('common.not_available')
-                        }
-                    </dd>
+                    </div>
+                    {
+                        ticket.recordedConversationLink ?
+                            <div className='flex flex-row space-x-6'>
+                                <div>
+                                    {
+                                        <SvgIcon type={Icon.Play} fillClass={'channel-icon-fill'}/>
+                                    }
+                                </div>
+                                <div onClick={() => downloadRecordedConversation()} className='cursor-pointer'>
+                                    {
+                                        <SvgIcon type={Icon.Download} fillClass={'select-arrow-fill'}/>
+                                    }
+                                </div>
+                            </div> : t('common.not_available')
+                    }
                 </div>
             </dl>
         </div>

@@ -303,6 +303,13 @@ const SvgIcon = ({type, wrapperClassName, className = 'icon-medium', fillClass =
         </svg>
     }
 
+    const getIconDownload = () => {
+        return <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className={mainClass}>
+            <rect width="24" height="24" fill="none"/>
+            <path d="M19,9H15V3H9V9H5l7,7ZM5,18v2H19V18Z" transform="translate(0 1)" className={fillClass}/>
+        </svg>
+    }
+
     const getIconDelete = () => {
         return <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className={mainClass}>
             <g transform="translate(-1749 -527)">
@@ -328,6 +335,15 @@ const SvgIcon = ({type, wrapperClassName, className = 'icon-medium', fillClass =
             <path
                 d="M18.125,64H1.875A1.875,1.875,0,0,0,0,65.875v11.25A1.875,1.875,0,0,0,1.875,79h16.25A1.875,1.875,0,0,0,20,77.125V65.875A1.875,1.875,0,0,0,18.125,64Zm0,1.875v1.594c-.876.713-2.272,1.822-5.257,4.16-.658.517-1.961,1.761-2.868,1.746-.907.015-2.21-1.229-2.868-1.746-2.985-2.337-4.381-3.446-5.257-4.16V65.875ZM1.875,77.125v-7.25c.9.713,2.164,1.713,4.1,3.228.854.672,2.349,2.156,4.026,2.147,1.669.009,3.145-1.453,4.026-2.146,1.935-1.515,3.2-2.516,4.1-3.229v7.25Z"
                 transform="translate(2 -59)" className={fillClass}/>
+        </svg>
+    }
+
+    const getIconError = () => {
+        return <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className={mainClass}>
+            <rect width="24" height="24" fill="none"/>
+            <path
+                d="M11,15h2v2H11Zm0-8h2v6H11Zm.99-5A10,10,0,1,0,22,12,10,10,0,0,0,11.99,2ZM12,20a8,8,0,1,1,8-8A8,8,0,0,1,12,20Z"
+                className={fillClass}/>
         </svg>
     }
 
@@ -463,6 +479,13 @@ const SvgIcon = ({type, wrapperClassName, className = 'icon-medium', fillClass =
     const getIconPlaceholder = () => {
         return <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" className={mainClass}>
             <rect width="16" height="16" fill="#eaeaea" className={fillClass}/>
+        </svg>
+    }
+
+    const getIconPlay = () => {
+        return <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className={mainClass}>
+            <rect width="24" height="24" fill="none"/>
+            <path d="M12,2A10,10,0,1,0,22,12,10,10,0,0,0,12,2ZM10,16.5v-9L16,12Z" className={fillClass}/>
         </svg>
     }
 
@@ -690,9 +713,11 @@ const SvgIcon = ({type, wrapperClassName, className = 'icon-medium', fillClass =
         [Icon.Company]: getIconCompany,
         [Icon.Contacts]: getIconContacts,
         [Icon.Dashboard]: getIconDashboard,
+        [Icon.Download]: getIconDownload,
         [Icon.Delete]: getIconDelete,
         [Icon.Edit]: getIconEdit,
         [Icon.Email]: getIconEmail,
+        [Icon.Error]: getIconError,
         [Icon.Filter]: getIconFilter,
         [Icon.FilterList]: getIconFilterList,
         [Icon.Info]: getIconInfo,
@@ -706,6 +731,7 @@ const SvgIcon = ({type, wrapperClassName, className = 'icon-medium', fillClass =
         [Icon.PatientChart]: getIconPatientChart,
         [Icon.Patients]: getIconPatients,
         [Icon.Placeholder]: getIconPlaceholder,
+        [Icon.Play]: getIconPlay,
         [Icon.Phone]: getIconPhone,
         [Icon.RatingDissatisfied]: getIconRatingDissatisfied,
         [Icon.RatingSatisfied]: getIconRatingSatisfied,

@@ -5,12 +5,13 @@ export interface TicketFeed {
     modifiedBy?: string;
     createdOn?: Date;
     modifiedOn?: Date;
-    feedType: number;
+    feedType: FeedTypes;
     description?: string;
 }
 
 export enum FeedTypes {
     SendSms = 1,
     SendEmail,
-    StatusChange
+    StatusChange,
+    Note
 }

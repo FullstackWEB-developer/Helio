@@ -1,5 +1,6 @@
-import { TicketFeed } from './ticket-feed';
-import { TicketNote } from './ticket-note';
+import {TicketFeed} from './ticket-feed';
+import {TicketNote} from './ticket-note';
+import {TicketStatuses} from './ticket.status.enum';
 
 export interface Ticket {
     id?: string;
@@ -15,7 +16,7 @@ export interface Ticket {
     patientId?: number;
     assignee?: string;
     connectContactId?: string;
-    status: number;
+    status?: TicketStatuses;
     priority?: number
     channel?: number;
     tags?: string[];
@@ -30,4 +31,7 @@ export interface Ticket {
     feeds?: TicketFeed[];
     recordedConversationLink?: string;
     isDeleted?: boolean;
+    ratingScore?: number;
+    originationNumber?: string;
+    isOverdue?: boolean;
 }

@@ -1,18 +1,18 @@
-import { TicketStatusType } from "../models/ticket-status";
+import {TicketStatuses} from '@pages/tickets/models/ticket.status.enum';
 
 export const statusTranslationKeyMap = {
-  [TicketStatusType.Open]: "tickets.statuses.open",
-  [TicketStatusType.OnHold]: "tickets.statuses.on_hold",
-  [TicketStatusType.InProgress]: "tickets.statuses.in_progress",
-  [TicketStatusType.Solved]: "tickets.statuses.solved",
-  [TicketStatusType.Closed]: "tickets.statuses.closed",
+  [TicketStatuses.Open]: "tickets.statuses.1",
+  [TicketStatuses.OnHold]: "tickets.statuses.2",
+  [TicketStatuses.InProgress]: "tickets.statuses.3",
+  [TicketStatuses.Solved]: "tickets.statuses.4",
+  [TicketStatuses.Closed]: "tickets.statuses.5",
 } as const;
 
 
 export const statusCssClassMap = {
-  [TicketStatusType.Open]: "text-yellow-300",
-  [TicketStatusType.OnHold]: "text-yellow-300",
-  [TicketStatusType.InProgress]: "text-green-300",
-  [TicketStatusType.Solved]: "text-gray-300",
-  [TicketStatusType.Closed]: "text-gray-300"
+  [TicketStatuses.Open]: "text-yellow-300",
+  [TicketStatuses.OnHold]: "text-yellow-300",
+  [TicketStatuses.InProgress]: "text-green-300",
+  [TicketStatuses.Solved]: "text-gray-300",
+  [TicketStatuses.Closed]: "text-gray-300"
 } as const;

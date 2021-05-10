@@ -1,80 +1,69 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Ticket } from "../models/ticket";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {Ticket} from "../models/ticket";
 import initialTicketState from "./tickets.initial-state";
-import { LookupValue } from "../models/lookup-value";
-import { Paging } from "@shared/models/paging.model";
-import { TicketEnum } from "../models/ticket-enum.model";
-import { TicketQuery } from "../models/ticket-query";
-import { TicketListQueryType } from "../models/ticket-list-type";
-import {setDefaults} from "react-i18next";
+import {LookupValue} from "../models/lookup-value";
+import {Paging} from "@shared/models/paging.model";
+import {TicketEnum} from "../models/ticket-enum.model";
+import {TicketQuery} from "../models/ticket-query";
+import {TicketListQueryType} from "../models/ticket-list-type";
+import {TicketUpdateModel} from '@pages/tickets/models/ticket-update.model';
 
 const ticketsSlice = createSlice({
   name: "tickets",
   initialState: initialTicketState,
   reducers: {
-    add(state, { payload }: PayloadAction<Ticket[]>) {
+    add(state, {payload}: PayloadAction<Ticket[]>) {
       state.tickets = payload;
     },
-    addPaging(state, { payload }: PayloadAction<Paging>) {
+    addPaging(state, {payload}: PayloadAction<Paging>) {
       state.paging = payload;
     },
-    changeStatus(state, { payload }: PayloadAction<Ticket>) {
+    changeStatus(state, {payload}: PayloadAction<Ticket>) {
       const ticket = state.tickets.find((t) => t.id === payload.id);
       if (ticket) {
         ticket.status = payload.status;
       }
     },
-    changeAssignee(state, { payload }: PayloadAction<Ticket>) {
-      const ticket = state.tickets.find((t) => t.id === payload.id);
+    setTicketUpdateModel(state, {payload}: PayloadAction<TicketUpdateModel>) {
+      state.ticketUpdate = payload
+    },
+    changeAssignee(state, {payload}: PayloadAction<{ ticketId: string, assigneeId: string }>) {
+      const ticket = state.tickets.find((t) => t.id === payload.ticketId);
       if (ticket) {
-        ticket.assignee = payload.assignee;
+        ticket.assignee = payload.assigneeId;
       }
     },
-    changeTicket(state, { payload }: PayloadAction<Ticket>) {
-      const { id, subject, status } = payload;
+    changeTicket(state, {payload}: PayloadAction<Ticket>) {
+      const {id, subject, status} = payload;
       let ticket = state.tickets.find((t) => t.id === id);
       if (ticket) {
         ticket.subject = subject;
         ticket.status = status;
       }
     },
-    setTicket(state, { payload }: PayloadAction<Ticket>) {
-      state.selectedTicket = payload;
-    },
-    setFailure: (state, { payload }: PayloadAction<string>) => {
-      state.errors = payload;
-      state.ticketsLoading = false;
-    },
-    setTicketsLoading(state, { payload }: PayloadAction<boolean>) {
-      state.ticketsLoading = payload;
-    },
-    startRequestAddNote(state) {
-      state.isRequestAddNoteLoading = true;
-      state.error = "";
-    },
-    endRequestAddNote(state, { payload }: PayloadAction<string>) {
-      state.isRequestAddNoteLoading = false;
-      state.error = payload;
-    },
-    startRequestAddFeed(state) {
-      state.isRequestAddFeedLoading = true;
-      state.error = "";
-    },
-    endRequestAddFeed(state, { payload }: PayloadAction<string>) {
-      state.isRequestAddFeedLoading = false;
-      state.error = payload;
-    },
-    setFeedLastMessageOn(state, { payload }: PayloadAction<Date>) {
-      state.feedLastMessageOn = payload;
-    },
-    setTicketEnum(state, { payload }: PayloadAction<any>) {
-      state.error = "";
-      state.isTicketEnumValuesLoading = false;
-      const enumValue: TicketEnum = {
-        key: payload.key,
-        value: payload.result,
-      };
-      if (!state.enumValues) {
+      setTicket(state, {payload}: PayloadAction<Ticket>) {
+          state.selectedTicket = payload;
+
+      },
+      setFailure: (state, {payload}: PayloadAction<string>) => {
+          state.errors = payload;
+          state.ticketsLoading = false;
+      },
+      setTicketsLoading(state, {payload}: PayloadAction<boolean>) {
+          state.ticketsLoading = payload;
+      },
+
+      setFeedLastMessageOn(state, {payload}: PayloadAction<Date>) {
+          state.feedLastMessageOn = payload;
+      },
+      setTicketEnum(state, {payload}: PayloadAction<any>) {
+          state.error = "";
+          state.isTicketEnumValuesLoading = false;
+          const enumValue: TicketEnum = {
+              key: payload.key,
+              value: payload.result,
+          };
+          if (!state.enumValues) {
         state.enumValues = [];
       }
       state.enumValues.push(enumValue);
@@ -116,12 +105,6 @@ const ticketsSlice = createSlice({
     setTicketFilter(state, { payload }: PayloadAction<TicketQuery>) {
       state.ticketFilter = payload;
     },
-    setTicketDelete(state, { payload }: PayloadAction<Ticket>) {
-      const ticket = state.tickets.find((t) => t.id === payload.id);
-      if (ticket) {
-        ticket.isDeleted = !payload.isDeleted;
-      }
-    },
     setTicketListQueryType(
       state,
       { payload }: PayloadAction<TicketListQueryType>
@@ -139,10 +122,6 @@ export const {
   changeAssignee,
   setTicket,
   setFailure,
-  startRequestAddNote,
-  endRequestAddNote,
-  startRequestAddFeed,
-  endRequestAddFeed,
   setFeedLastMessageOn,
   setTicketEnum,
   startGetTicketEnumRequest,
@@ -154,8 +133,8 @@ export const {
   toggleTicketListFilter,
   setSearchTerm,
   setTicketFilter,
-  setTicketDelete,
   setTicketListQueryType,
+  setTicketUpdateModel
 } = ticketsSlice.actions;
 
 export default ticketsSlice.reducer;

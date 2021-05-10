@@ -1,28 +1,34 @@
 import React from 'react';
 import withErrorLogging from '../../../shared/HOC/with-error-logging';
-import { Ticket } from '../models/ticket';
-import { ChannelTypes } from '../models/ticket-channel';
+import {ChannelTypes} from '../models/ticket-channel';
 import '../tickets.scss';
 import SvgIcon from '@components/svg-icon/svg-icon';
 import {Icon} from '@components/svg-icon/icon';
 
 interface TicketChannelIconProps {
-    ticket: Ticket
+    channel?: number
 }
 
-const TicketChannelIcon = ({ ticket }: TicketChannelIconProps) => {
-    switch (ticket.channel) {
+const TicketChannelIcon = ({channel}: TicketChannelIconProps) => {
+    let type: Icon;
+    switch (channel) {
         case ChannelTypes.Chat:
-            return <SvgIcon type={Icon.ChannelChat} className='icon-x-large' fillClass='channel-icon-fill' strokeClass='channel-icon-stroke'/>;
+            type = Icon.ChannelChat;
+            break;
         case ChannelTypes.PhoneCall:
-            return <SvgIcon type={Icon.ChannelPhone} className='icon-x-large' fillClass='channel-icon-fill' strokeClass='channel-icon-stroke'/>;
+            type = Icon.ChannelPhone;
+            break;
         case ChannelTypes.WebSite:
-            return <SvgIcon type={Icon.ChannelWeb} className='icon-x-large' fillClass='channel-icon-fill' strokeClass='channel-icon-stroke'/>;
+            type = Icon.ChannelWeb;
+            break;
         case ChannelTypes.UserCreated:
-            return <SvgIcon type={Icon.ChannelSms} className='icon-x-large' fillClass='channel-icon-fill' strokeClass='channel-icon-stroke'/>;
+            type = Icon.ChannelSms
+            break;
         default:
-            return <SvgIcon type={Icon.ChannelChat} className='icon-x-large' fillClass='channel-icon-fill' strokeClass='channel-icon-stroke'/>;
+            type = Icon.ChannelChat;
     }
+    return <SvgIcon type={type} className='icon-x-large' fillClass='channel-icon-fill'
+                    strokeClass='channel-icon-stroke'/>;
 }
 
 export default withErrorLogging(TicketChannelIcon);

@@ -1,23 +1,28 @@
 import withErrorLogging from '@shared/HOC/with-error-logging';
 import Collapsible from '@components/collapsible/collapsible';
-import React, { useEffect, useState } from 'react';
-import { getContacts } from '@shared/services/contacts.service';
-import { getDepartments, getUserList } from '@shared/services/lookups.service';
-import { getEnumByType, getList, getLookupValues } from '../services/tickets.service';
-import { useDispatch, useSelector } from 'react-redux';
-import { useTranslation } from 'react-i18next';
-import Checkbox, { CheckboxCheckEvent } from '@components/checkbox/checkbox';
-import { selectEnumValues, selectLookupValues, selectSearchTerm, selectTicketFilter, selectTicketsPaging } from '../store/tickets.selectors';
-import Radio  from '@components/radio/radio';
-import { TicketOptionsBase } from '../models/ticket-options-base.model';
-import { Controller, useForm } from 'react-hook-form';
+import React, {useEffect, useState} from 'react';
+import {getContacts} from '@shared/services/contacts.service';
+import {getDepartments, getUserList} from '@shared/services/lookups.service';
+import {getEnumByType, getList, getLookupValues} from '../services/tickets.service';
+import {useDispatch, useSelector} from 'react-redux';
+import {useTranslation} from 'react-i18next';
+import Checkbox, {CheckboxCheckEvent} from '@components/checkbox/checkbox';
+import {
+    selectEnumValues,
+    selectLookupValues,
+    selectSearchTerm,
+    selectTicketFilter,
+    selectTicketsPaging
+} from '../store/tickets.selectors';
+import Radio from '@components/radio/radio';
+import {TicketOptionsBase} from '../models/ticket-options-base.model';
+import {Controller, useForm} from 'react-hook-form';
 import Select from '@components/select/select';
-import { Option } from '@components/option/option';
-import { selectDepartmentList, selectUserList } from '@shared/store/lookups/lookups.selectors';
-import { User } from '@shared/models/user';
-import { TicketQuery } from '../models/ticket-query';
+import {Option} from '@components/option/option';
+import {selectDepartmentList, selectUserOptions} from '@shared/store/lookups/lookups.selectors';
+import {TicketQuery} from '../models/ticket-query';
 import dayjs from 'dayjs';
-import { TicketEnumValue } from '../models/ticket-enum-value.model';
+import {TicketEnumValue} from '../models/ticket-enum-value.model';
 import utc from 'dayjs/plugin/utc';
 import DateTimeInput from '@components/date-time-input/date-time-input';
 import TagInput from '@components/tag-input/tag-input';
@@ -25,6 +30,7 @@ import './ticket-filter.scss';
 import {setTicketListQueryType} from '../store/tickets.slice';
 import {authenticationSelector} from '@shared/store/app-user/appuser.selectors';
 import {TicketListQueryType} from '../models/ticket-list-type';
+
 const TicketFilter = () => {
     dayjs.extend(utc);
     const dispatch = useDispatch();
@@ -35,7 +41,7 @@ const TicketFilter = () => {
     const ticketQueryFilter = useSelector(selectTicketFilter);
     const departments = useSelector((state) => selectLookupValues(state, 'Department'));
     const tags = useSelector((state) => selectLookupValues(state, 'TicketTags'));
-    const userList = useSelector(selectUserList);
+    const userList = useSelector(selectUserOptions);
     const ticketChannels = useSelector((state => selectEnumValues(state, 'TicketChannel')));
     const ticketPriorities = useSelector((state => selectEnumValues(state, 'TicketPriority')));
     const ticketStatuses = useSelector((state => selectEnumValues(state, 'TicketStatus')));
@@ -118,7 +124,7 @@ const TicketFilter = () => {
                 query.fromDate = date.toDate();
             }
         }
-        
+
         query.assignedTo = [];
         if (values.assignedTo)
         {
@@ -262,23 +268,14 @@ const TicketFilter = () => {
         </Collapsible>
     }
 
-    const createAssignedToOptions = () => {
-        const options: Option[] = userList.map((item: User) => {
-            return {
-                value: item.id,
-                label: item.id
-            };
-        });
-
-        options.unshift({
+    const getUserOptions = (): Option[] => {
+        const cloned = [...userList];
+        cloned.unshift({
             label: t('common.all'),
             value: ''
         });
-
-        return options;
+        return cloned;
     }
-
-    const userOptions: Option[] = userList ? createAssignedToOptions() : [];
 
     const resetForm = () => {
         setformVisible(false);
@@ -317,7 +314,7 @@ const TicketFilter = () => {
     const setSelectedTags = (tags: string[]) => {
         setValue('tags', tags);
     }
- 
+
     return <div className='bg-secondary-100 pb-20 min-h-full px-6'>
         <div className='flex flex-row justify-between pt-7'>
             <div className='subtitle pb-8 h7'>{t('tickets.filter.filter_tickets')}</div>
@@ -343,10 +340,10 @@ const TicketFilter = () => {
                             <Select
                                 {...props}
                                 data-test-id={'assigned-to-user-list'}
-                                options={userOptions}
+                                options={getUserOptions()}
                                 value={props.value}
-                                onSelect={(option?: Option)=>{
-                                    if(option){
+                                onSelect={(option?: Option) => {
+                                    if (option) {
                                         props.onChange(option?.value);
                                     }
                                 }}

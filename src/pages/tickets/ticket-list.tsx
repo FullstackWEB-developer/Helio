@@ -1,9 +1,9 @@
 import {useDispatch, useSelector} from 'react-redux';
 import {
+    selectIsTicketFilterOpen,
     selectTickets,
     selectTicketsLoading,
-    selectTicketsPaging,
-    selectIsTicketFilterOpen
+    selectTicketsPaging
 } from './store/tickets.selectors';
 import React, {useEffect} from 'react';
 import {getList, getLookupValues} from './services/tickets.service';
@@ -25,12 +25,12 @@ const TicketList = () => {
     const isFilterOpen = useSelector(selectIsTicketFilterOpen);
 
     useEffect(() => {
-        dispatch(getList({...paging, sorts: ['Status Asc','DueDate Asc']}));
+        dispatch(getList({...paging, sorts: ['Status Asc', 'DueDate Asc']}));
         dispatch(getUserList());
         dispatch(getLookupValues('Department'));
         dispatch(getLookupValues('TicketReason'));
         dispatch(getLookupValues('TicketTags'));
-    }, [dispatch]);
+    }, [dispatch, paging.page]);
 
     return (
         <>

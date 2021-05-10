@@ -4,8 +4,6 @@ import './list.scss';
 import {Option} from '../option/option';
 import {UserStatus} from 'src/shared/store/app-user/app-user.models';
 import StatusDot from '@components/status-dot/status-dot';
-import SvgIcon from '@components/svg-icon/svg-icon';
-import {Icon} from '@components/svg-icon/icon';
 import SearchInputField from '@components/search-input-field/search-input-field';
 
 interface ListProps {
@@ -13,13 +11,14 @@ interface ListProps {
   title?: string;
   isSearchable?: boolean;
   onSelect?: (option: ListOption) => void;
+  onKeyDown?: (key: string) => void;
 }
 
 export interface ListOption extends Option {
   status?: UserStatus;
 }
 
-const List = ({options, title, isSearchable = true, onSelect}: ListProps) => {
+const List = ({options, title, onKeyDown, isSearchable = true, onSelect}: ListProps) => {
   const {t} = useTranslation();
   const [filter, setFilter] = useState<string>('');
 
@@ -59,6 +58,9 @@ const List = ({options, title, isSearchable = true, onSelect}: ListProps) => {
       if (opts && opts.length > 0) {
         optionSelected(opts[0]);
       }
+    }
+    if (onKeyDown) {
+      onKeyDown(e.key);
     }
   };
   return (

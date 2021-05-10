@@ -26,13 +26,12 @@ import {selectContacts, selectIsContactOptionsLoading} from '@shared/store/conta
 import {
     selectDepartmentList,
     selectIsDepartmentListLoading,
-    selectUserList
+    selectUserOptions
 } from '@shared/store/lookups/lookups.selectors';
 
 import {createTicket, getEnumByType, getLookupValues} from './services/tickets.service';
 import {searchContactsByName} from '@shared/services/contacts.service';
 import {getDepartments, getUserList} from '@shared/services/lookups.service';
-import {User} from '@shared/models/user';
 import {useHistory} from 'react-router-dom';
 import utils from '../../shared/utils/utils';
 import {TicketsPath} from '../../app/paths';
@@ -57,7 +56,7 @@ const TicketNew = () => {
     const dispatch = useDispatch();
     const requiredText = t('common.required');
     const TicketTypeDefault = '1';
-    const users = useSelector(selectUserList);
+    const users = useSelector(selectUserOptions);
     const departments = useSelector(selectDepartmentList);
     const contacts = useSelector(selectContacts);
     const ticketChannels = useSelector((state => selectEnumValues(state, 'TicketChannel')));
@@ -160,8 +159,6 @@ const TicketNew = () => {
         if (!patientId || patientIdRef.current === patientId) {
             return;
         }
-
-       
         setPatientIdLoading(true);
         try {
             const patient: Patient = await getPatientByIdWithQuery(Number(patientId));
@@ -247,12 +244,6 @@ const TicketNew = () => {
     let priorityOptions: Option[] = getOptions(ticketPriorities);
     let statusOptions: Option[] = getOptions(ticketStatuses);
     let ticketTypeOptions: Option[] = getOptions(ticketTypes);
-    const assigneeOptions: Option[] = users ? users.map((item: User) => {
-        return {
-            value: item.id,
-            label: item.id
-        };
-    }) : [];
 
     const locationOptions: Option[] = departments ? departments.map((item: Department) => {
         return {
@@ -499,6 +490,7 @@ const TicketNew = () => {
                                 data-test-id={'ticket-new-channel'}
                                 options={sourceOptions}
                                 label={'ticket_new.channel'}
+                                required={true}
                                 value={props.value}
                                 error={errors.channel?.message}
                                 onSelect={onSelectChange(props)}
@@ -544,7 +536,7 @@ const TicketNew = () => {
                             <Select
                                 {...props}
                                 data-test-id={'ticket-new-assignee'}
-                                options={assigneeOptions}
+                                options={users}
                                 label={'ticket_new.assignee'}
                                 value={props.value}
                                 error={errors.assignee?.message}

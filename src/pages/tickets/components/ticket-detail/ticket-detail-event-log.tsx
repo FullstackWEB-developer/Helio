@@ -55,29 +55,29 @@ const TicketDetailEventLog = ({ticket}: TicketDetailEventLogProps) => {
     };
 
     return <div className={'py-4 mx-auto flex flex-col'}>
-        <dl>
-            <div className='sm:grid sm:grid-cols-2'>
-                <dt className='subtitle2 py-1'>
+        <div className='flex justify-between w-full'>
+            <div className='flex flex-row items-center'>
+                <div className='body2-medium pr-2'>
                     {t('ticket_detail.info_panel.due')}
-                </dt>
-                <dd className='body2 flex flex-row'>
-                    <span className='py-1'>
+                </div>
+                <div className='body2 flex flex-row'>
+                    <div className='py-1'>
                         {
                             dueDate ?
                                 (
-                                    `${dayjs().to(dayjs(dueDate))} ${utils.formatUtcDate(dueDate, 'D/M/YY h:mm A')}`
+                                    `${dayjs().to(dayjs(dueDate))} (${utils.formatUtcDate(dueDate, 'MMM DD, YYYY h:mm A')})`
                                 )
-                            : t('common.not_available')
+                                : t('common.not_available')
                         }
-                    </span>
-                    <div className = 'pt-0.5 pl-4 cursor-pointer' onClick={() => openCalendar()}>
-                        <SvgIcon type={Icon.Calendar}
-                             className='icon-medium h-8 w-8 pl-2 cursor-pointer'
-                             fillClass='active-item-icon'/>
                     </div>
-                </dd>
+                </div>
             </div>
-        </dl>
+            <div className='cursor-pointer' onClick={() => openCalendar()}>
+                <SvgIcon type={Icon.Calendar}
+                         className='icon-medium h-8 w-8 pl-2 cursor-pointer'
+                         fillClass='active-item-icon'/>
+            </div>
+        </div>
         <DateTime
             isVisible={isVisible}
             placeholderDate='Select date'
@@ -87,25 +87,25 @@ const TicketDetailEventLog = ({ticket}: TicketDetailEventLogProps) => {
         />
         <dl>
             <div className='sm:grid sm:grid-cols-2'>
-                <dt className='subtitle2 mt-6'>
+                <dt className='body2-medium mt-6'>
                     {t('ticket_detail.info_panel.created_on')}
                 </dt>
                 <dd className='body2 mt-6'>
                     {utils.formatUtcDate(ticket?.createdOn, formatTemplate)}
                 </dd>
-                <dt className='subtitle2'>
+                <dt className='body2-medium'>
                     {t('ticket_detail.info_panel.assigned_on')}
                 </dt>
                 <dd className='body2'>
                     {utils.formatUtcDate(ticket?.assignedOn, formatTemplate)}
                 </dd>
-                <dt className='subtitle2'>
+                <dt className='body2-medium'>
                     {t('ticket_detail.info_panel.updated_on')}
                 </dt>
                 <dd className='body2'>
                     {utils.formatUtcDate(ticket?.modifiedOn, formatTemplate)}
                 </dd>
-                <dt className='subtitle2'>
+                <dt className='body2-medium'>
                     {t('ticket_detail.info_panel.closed_on')}
                 </dt>
                 <dd className='body2'>
@@ -113,7 +113,7 @@ const TicketDetailEventLog = ({ticket}: TicketDetailEventLogProps) => {
                 </dd>
             </div>
         </dl>
-    </div>
+    </div>;
 }
 
 export default withErrorLogging(TicketDetailEventLog);

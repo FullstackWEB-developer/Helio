@@ -7,6 +7,7 @@ export const QueryQueueMetrics = 'queue-metrics';
 export const GetRedirectLink = 'redirect-link';
 export const VerifyPatient = 'verify-patient';
 export const QueryGetPatientById = 'patient-by-id';
+export const GetContactById = 'contact-by-id';
 export const GetPatientAppointments = 'patient-appointments';
 export const GetAppointmentType = 'appointment-type';
 export const GetAppointmentSlots = 'appointment-slots';

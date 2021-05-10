@@ -1,0 +1,16 @@
+.snackbar-message-body {
+  background: var(--light-text-high-emphasis);
+  transition: .3s ease;
+  position: relative;
+  overflow: hidden;
+  min-width: 21rem;
+  box-shadow: var(--snackbar-button-shadow);
+}
+
+.snackbar-close-button {
+  padding-right: 1.125rem;
+
+  &-fill {
+    fill: var(--color-white);
+  }
+}

@@ -15,6 +15,11 @@ export const searchContactsByName = async (searchTerm: string): Promise<Contact[
     return data.results;
 }
 
+export const getContactById = async (contactId: string): Promise<Contact> => {
+    const result = await Api.get(`${getContactsUrl}/${contactId}`);
+    return result.data;
+}
+
 export const getContacts = () => {
     return async (dispatch: Dispatch) => {
         dispatch(startGetContactsRequest());

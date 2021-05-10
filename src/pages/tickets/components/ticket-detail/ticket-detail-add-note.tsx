@@ -1,27 +1,37 @@
 import React, {ChangeEvent, useState} from 'react';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime'
-import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
+import {useTranslation} from 'react-i18next';
 import withErrorLogging from '../../../../shared/HOC/with-error-logging';
-import { Ticket } from '../../models/ticket';
-import Button from '../../../../shared/components/button/button';
-import { Controller, useForm } from 'react-hook-form';
-import TextArea from '../../../../shared/components/textarea/textarea';
-import { TicketNote } from '../../models/ticket-note';
-import { addNote } from '../../services/tickets.service';
+import {Ticket} from '../../models/ticket';
+import {Controller, useForm} from 'react-hook-form';
+import {TicketNote} from '../../models/ticket-note';
+import {addNote} from '../../services/tickets.service';
+import {useMutation} from 'react-query';
+import {setTicket} from '@pages/tickets/store/tickets.slice';
+import {Icon} from '@components/svg-icon/icon';
+import TextArea from '@components/textarea/textarea';
+import {useDispatch} from 'react-redux';
 
 interface TicketDetailAddNoteProps {
-    ticket: Ticket
+    ticket: Ticket,
+    onNoteAdded: () => void;
 }
 
-const TicketDetailAddNote = ({ ticket }: TicketDetailAddNoteProps) => {
+const TicketDetailAddNote = ({ticket, onNoteAdded}: TicketDetailAddNoteProps) => {
     dayjs.extend(relativeTime)
-    const dispatch = useDispatch();
-    const { t } = useTranslation();
-    const { handleSubmit, control, errors } = useForm();
 
-    const [noteText, setNoteText] = useState('')
+    const {t} = useTranslation();
+    const dispatch = useDispatch();
+    const {handleSubmit, control, errors} = useForm();
+    const [noteText, setNoteText] = useState('');
+    const addNoteMutation = useMutation(addNote, {
+        onSuccess: (data) => {
+            dispatch(setTicket(data));
+            setNoteText('');
+            onNoteAdded();
+        }
+    });
 
     const onSubmit = async () => {
         const note: TicketNote = {
@@ -29,44 +39,42 @@ const TicketDetailAddNote = ({ ticket }: TicketDetailAddNoteProps) => {
             isVisibleToPatient: false
         };
         if (ticket.id) {
-            dispatch(addNote(ticket.id, note));
-            setNoteText('');
+            addNoteMutation.mutate({
+                ticketId: ticket.id,
+                note
+            });
         }
     }
 
-    const isSendEnabled = (): boolean => {
-        return noteText != null && noteText.trim().length > 0;
-    }
-
     return (
-        <div className={'p-10 bg-gray-100'}>
-            <form onSubmit={handleSubmit(onSubmit)} className='flex flex-row items-center'>
+        <div className='border-t'>
+            <form onSubmit={handleSubmit(onSubmit)} className="w-full add-note-section">
                 <Controller
-                    name='note'
+                    name='noteText'
                     control={control}
                     defaultValue={''}
                     render={() => (
                         <TextArea
                             error={errors.note?.message}
-                            className='w-full pb-4 h-20'
-                            data-test-id='ticket-detail-note-text'
-                            placeholder={t('ticket_detail.note.type_message')}
-                            value={noteText}
-                            required={false}
+                            className='pl-6 pt-2 pb-0 pr-0 body2 w-full h-full'
+                            data-test-id='ticket-add-notes'
+                            placeholder={t('ticket_detail.add_note')}
+                            required={true}
                             rows={2}
+                            resizable={false}
+                            value={noteText}
+                            hasBorder={false}
                             onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setNoteText(e.target.value)}
+                            hasIcon={true}
+                            iconClassNames='medium cursor-pointer'
+                            icon={Icon.Send}
+                            iconFill='notes-send'
+                            iconOnClick={() => {
+                                handleSubmit(onSubmit)()
+                            }}
                         />
                     )}
                 />
-                <div className='flex ml-4'>
-                    <Button
-                        disabled={!isSendEnabled()}
-                        data-test-id='ticket-detail-note-send-button'
-                        type={'submit'}
-                        label={'ticket_detail.note.send'}
-                        buttonType='medium'
-                    />
-                </div>
             </form>
         </div>
     );

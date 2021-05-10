@@ -1,435 +1,230 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
-import { addFeed, getEnumByType, getLookupValues, updateTicket } from '../../services/tickets.service';
-import { Ticket } from '../../models/ticket';
-import { Controller, useForm } from 'react-hook-form';
-import Select from '@components/select/select';
-import { Option } from '@components/option/option';
-import TagInput from '@components/tag-input/tag-input';
-import Button from '@components/button/button';
-import { selectDepartmentList, selectIsDepartmentListLoading } from '@shared/store/lookups/lookups.selectors';
-import {
-    selectEnumValues,
-    selectIsTicketEnumValuesLoading,
-    selectIsTicketLookupValuesLoading,
-    selectLookupValues,
-    selectTicketOptionsError
-} from '../../store/tickets.selectors';
-import { setTicket } from '../../store/tickets.slice';
-import { getDepartments } from '@shared/services/lookups.service';
-import { Department } from '@shared/models/department';
-import ThreeDots from '@components/skeleton-loader/skeleton-loader';
+import React, {useEffect, useState} from 'react';
+import {Ticket} from '../../models/ticket';
 import withErrorLogging from '@shared/HOC/with-error-logging';
-import { FeedTypes, TicketFeed } from '../../models/ticket-feed';
-import { useMutation } from 'react-query';
-import Logger from '@shared/services/logger';
+import {useDispatch, useSelector} from 'react-redux';
+import {
+    selectEnumValuesAsOptions,
+    selectLookupValuesAsOptions,
+    selectTicketUpdateModel
+} from '@pages/tickets/store/tickets.selectors';
+import ControlledSelect from '@components/controllers/controlled-select';
+import {Option} from '@components/option/option';
+import {Controller, useForm} from 'react-hook-form';
+import ThreeDots from '@components/skeleton-loader/skeleton-loader';
+import {setTicket, setTicketUpdateModel} from '@pages/tickets/store/tickets.slice';
+import {selectDepartmentListAsOptions} from '@shared/store/lookups/lookups.selectors';
+import Button from '@components/button/button';
+import {useMutation} from 'react-query';
+import {addFeed, updateTicket} from '@pages/tickets/services/tickets.service';
+import {FeedTypes, TicketFeed} from '@pages/tickets/models/ticket-feed';
+import {useTranslation} from 'react-i18next';
+import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
+import {SnackbarType} from '@components/snackbar/snackbar-position.enum';
+import TagInput from '@components/tag-input/tag-input';
 
 interface TicketInfoProps {
     ticket: Ticket
 }
 
-const TicketDetailTicketInfo = ({ ticket }: TicketInfoProps) => {
-    const { handleSubmit, control, errors, formState } = useForm();
-    const [formVisible, setFormVisible] = useState(true);
-    const [isTicketInfoButtonsVisible, setIsTicketInfoButtonsVisible] = useState(false);
+const TicketDetailTicketInfo = ({ticket}: TicketInfoProps) => {
 
-    const { t } = useTranslation();
+    const updateModel = useSelector(selectTicketUpdateModel);
+    const {handleSubmit, control, formState} = useForm({
+        defaultValues: updateModel
+    });
     const dispatch = useDispatch();
-    const departments = useSelector(selectDepartmentList);
-    const ticketPriorities = useSelector((state => selectEnumValues(state, 'TicketPriority')));
-    const ticketStatuses = useSelector((state => selectEnumValues(state, 'TicketStatus')));
-    const ticketTypes = useSelector((state => selectEnumValues(state, 'TicketType')));
-    const ticketLookupValuesDepartment = useSelector((state) => selectLookupValues(state, 'Department'));
-    const ticketLookupValuesReason = useSelector((state) => selectLookupValues(state, 'TicketReason'));
-    const ticketLookupValuesTags = useSelector((state) => selectLookupValues(state, 'TicketTags'));
+    const {t} = useTranslation();
+    const [isDirty, setDirty] = useState(false);
+    const statusOptions = useSelector((state => selectEnumValuesAsOptions(state, 'TicketStatus')));
+    const departmentOptions = useSelector(selectDepartmentListAsOptions);
+    const priorityOptions = useSelector((state => selectEnumValuesAsOptions(state, 'TicketPriority')));
+    const locationOptions = useSelector((state) => selectLookupValuesAsOptions(state, 'Department'));
+    const reasonOptions = useSelector((state) => selectLookupValuesAsOptions(state, 'TicketReason'));
+    const tagOptions = useSelector((state) => selectLookupValuesAsOptions(state, 'TicketTags'));
+    const ticketTypeOptions = useSelector((state) => selectEnumValuesAsOptions(state, 'TicketType'));
 
-    const error = useSelector(selectTicketOptionsError);
+    const generateTicketUpdateModel = () => {
+        dispatch(setTicketUpdateModel({
+            status: statusOptions.find(a => a.value.toString() === ticket.status?.toString()),
+            priority: priorityOptions.find(a => a.value.toString() === ticket.priority?.toString()),
+            department: departmentOptions.find(a => a.value.toString() === ticket.department?.toString()),
+            type: ticketTypeOptions.find(a => a.value.toString() === ticket.type?.toString()),
+            reason: reasonOptions.find(a => a.value.toString() === ticket.reason?.toString()),
+            location: locationOptions.find(a => a.value.toString() === ticket.location?.toString()),
+            tags: ticket.tags ? ticket.tags : []
+        }));
+    }
+    useEffect(() => {
+        generateTicketUpdateModel();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [ticket]);
 
-    const isDepartmentListLoading = useSelector(selectIsDepartmentListLoading);
-    const isLookupValuesLoading = useSelector(selectIsTicketLookupValuesLoading);
-    const isTicketEnumValuesLoading = useSelector(selectIsTicketEnumValuesLoading);
-    const logger = Logger.getInstance();
+    const addFeedMutation = useMutation(addFeed, {
+        onSuccess: (data) => {
+            dispatch(setTicket(data));
+        }
+    });
 
     const ticketUpdateMutation = useMutation(updateTicket, {
         onSuccess: (data, variables) => {
             const ticketData = variables.ticketData;
-            if (ticketData.tags) {
-                setInitialTags(ticketData.tags);
-            }
             dispatch(setTicket(data));
-            if (ticketData.id && ticketData.status) {
+            if (data.id && ticketData.status) {
                 const feedData: TicketFeed = {
                     feedType: FeedTypes.StatusChange,
-                    description: `${t('ticket_detail.feed.description_prefix')} ${selectedStatus?.label}`
+                    description: `${t('ticket_detail.feed.description_prefix')} ${updateModel.status?.label}`
                 };
-                dispatch(addFeed(ticketData.id, feedData));
+                addFeedMutation.mutate({ticketId: ticket.id!, feed: feedData});
             }
+            dispatch(addSnackbarMessage({
+                type: SnackbarType.Success,
+                message: 'ticket_detail.ticket_updated'
+            }));
+            setDirty(false);
             resetForm();
         },
-        onError: (error) => {
-            logger.error('Error updating ticket', error);
+        onError: () => {
+            dispatch(addSnackbarMessage({
+                message: 'ticket_detail.ticket_update_failed',
+                type: SnackbarType.Error
+            }));
         }
     });
 
-    const onSubmit = async () => {
-        const ticketData: Ticket = {
-            type: isDirty('ticketType') ? selectedTicketTypeOption?.value : undefined,
-            reason: isDirty('reason') ? selectedReason?.value : undefined,
-            status: isDirty('status') && selectedStatus ? parseInt(selectedStatus.value) : ticket.status,
-            priority: isDirty('priority') && selectedPriority ? parseInt(selectedPriority.value) : undefined,
-            department: isDirty('department') ? selectedDepartment?.value : undefined,
-            location: isDirty('location') ? selectedLocation?.value : undefined,
-            tags: isDirty('tagsInput') ? tags : undefined
-        };
-        if (ticket?.id) {
-            ticketUpdateMutation.mutate({ id: ticket.id, ticketData: ticketData });
-        }
-    }
-
-    const isDirty = (field: string) => {
-        return !!formState.dirtyFields[field];
-    };
-
-    useEffect(() => {
-        dispatch(getDepartments());
-        dispatch(getEnumByType('FeedType'));
-        dispatch(getEnumByType('TicketPriority'));
-        dispatch(getEnumByType('TicketStatus'));
-        dispatch(getEnumByType('TicketType'));
-        dispatch(getLookupValues('Department'));
-        dispatch(getLookupValues('TicketReason'));
-        dispatch(getLookupValues('TicketTags'));
-    }, [dispatch]);
-
-    const getOptions = (data: any[] | undefined) => {
-        return data !== undefined ? data?.map((item: any) => {
-            return {
-                value: item.key,
-                label: item.value
-            };
-        }) : [];
-    }
-
-    const priorityOptions: Option[] = getOptions(ticketPriorities);
-    const statusOptions: Option[] = getOptions(ticketStatuses);
-    const ticketTypeOptions: Option[] = getOptions(ticketTypes);
-
-    const locationOptions: Option[] = useMemo(() => {
-        return departments ? departments.map((item: Department) => {
-            return {
-                value: item.id.toString(),
-                label: item.address
-            };
-        }) : []
-    }, [departments]);
-
-    const [selectedStatus, setSelectedStatus] = useState(
-        statusOptions ? statusOptions.find((o: Option) => parseInt(o.value) === ticket?.status) : undefined
-    );
-
-    const [selectedPriority, setSelectedPriority] = useState(
-        priorityOptions ? priorityOptions.find((o: Option) => parseInt(o.value) === ticket?.priority) : undefined
-    );
-
-    const [selectedLocation, setSelectedLocation] = useState(
-        locationOptions ? locationOptions.find((o: Option) => o.value === ticket?.location) : undefined
-    );
-
-    useEffect(() => {
-        if (statusOptions?.length > 0 && !selectedStatus) {
-            setSelectedStatus(statusOptions.find((o: Option) => parseInt(o.value) === ticket?.status));
-        }
-        if (priorityOptions?.length > 0 && !selectedPriority) {
-            setSelectedPriority(priorityOptions.find((o: Option) => parseInt(o.value) === ticket?.priority));
-        }
-
-        if (locationOptions?.length > 0 && !selectedLocation) {
-            setSelectedLocation(locationOptions.find((o: Option) => o.value === ticket?.location));
-        }
-    }, [
-        statusOptions, selectedStatus, ticket?.status,
-        priorityOptions, selectedPriority, ticket?.priority,
-        locationOptions, selectedLocation, ticket?.location,
-    ]);
-
-    useEffect(() => {
-        if (ticket?.status && ticket.status.toString() !== selectedStatus?.value?.toString()) {
-            setSelectedStatus(selectedStatus);
-        }
-    }, [statusOptions, ticket?.status])
-
-    const getTicketLookupValuesOptions = (data: any[] | undefined) => {
-        if (data) {
-            return convertToOptions(data)
-        }
-        return [];
-    }
-
-    const [selectedTicketTypeOption, setSelectedTicketTypeOption] =
-        useState(ticketTypeOptions ? ticketTypeOptions.find((o: Option) => o.value === ticket?.type) : undefined);
-
-    const getTicketLookupValuesOptionsByTicketType = (data: any[] | undefined) => {
-        if (data && selectedTicketTypeOption) {
-            const filtered = data.filter(v => v.parentValue === selectedTicketTypeOption.value.toString());
-            return convertToOptions(filtered);
-        }
-        return [];
-    }
-
-    const convertToOptions = (data: any[]) => {
-        return data.map((item: any) => {
-            return {
-                value: item.value,
-                label: item.label
-            };
+    const onSubmit = () => {
+        console.log(formState.dirtyFields);
+        ticketUpdateMutation.mutate({
+            id: ticket.id!,
+            ticketData: {
+                department: updateModel.department?.value !== ticket.department?.toString() ? updateModel.department?.value : undefined,
+                status: updateModel.status?.value !== ticket.status?.toString() ? Number(updateModel.status?.value) : undefined,
+                priority: updateModel.priority?.value !== ticket.priority?.toString() ? Number(updateModel.priority?.value) : undefined,
+                reason: updateModel.reason?.value !== ticket.reason?.toString() ? updateModel.reason?.value : undefined,
+                location: updateModel.location?.value !== ticket.location?.toString() ? updateModel.location?.value : undefined,
+                type: updateModel.type?.value !== ticket.type?.toString() ? updateModel.type?.value : undefined,
+                tags: updateModel.tags
+            }
         })
     }
 
-    const reasonOptions: Option[] = getTicketLookupValuesOptionsByTicketType(ticketLookupValuesReason);
-    const departmentOptions: Option[] = getTicketLookupValuesOptions(ticketLookupValuesDepartment);
-    const tagOptions: Option[] = getTicketLookupValuesOptions(ticketLookupValuesTags);
-
-    const [selectedReason, setSelectedReason] = useState(
-        reasonOptions ? reasonOptions.find((o: Option) => o.value === ticket?.reason) : undefined
-    );
-
-    const [selectedDepartment, setSelectedDepartment] = useState(
-        departmentOptions ? departmentOptions.find((o: Option) => o.value === ticket?.department) : undefined
-    );
-
-    const [tags, setTags] = useState<string[]>(ticket?.tags || []);
-    const [initialTags, setInitialTags] = useState<string[]>(ticket?.tags || []);
-
-    useEffect(() => {
-        if (ticketTypeOptions?.length > 0 && !selectedTicketTypeOption) {
-            setSelectedTicketTypeOption(ticketTypeOptions.find((o: Option) => o.value === ticket?.type));
-        }
-
-        if (reasonOptions?.length > 0 && !selectedReason) {
-            setSelectedReason(reasonOptions.find((o: Option) => o.value === ticket?.reason));
-        }
-
-        if (departmentOptions?.length > 0 && !selectedDepartment) {
-            setSelectedDepartment(departmentOptions.find((o: Option) => o.value === ticket?.department));
-        }
-    }, [
-        ticketTypeOptions, selectedTicketTypeOption, ticket?.type,
-        reasonOptions, selectedReason, ticket?.reason,
-        departmentOptions, selectedDepartment, ticket?.department]);
-
-    const handleChangeItem = (option: Option, itemType: Option[], dirtyField: string, setter: Function) => {
-
-        const selectedOption =
-            itemType ? itemType.find((o: Option) => o.value === option?.value) : {} as any;
-
-        if (selectedOption) {
-            setter(selectedOption);
-            formState.dirtyFields[dirtyField] = true
-            setIsTicketInfoButtonsVisible(true);
+    const handleChangeItem = (fieldName: string, option?: Option) => {
+        if (option) {
+            dispatch(setTicketUpdateModel({
+                ...updateModel,
+                [fieldName]: option
+            }));
+            setDirty(true);
         }
     }
 
-    const setSelectedTags = (tags: string[]) => {
-        setTags(tags);
-        formState.dirtyFields.tagsInput = true
-        setIsTicketInfoButtonsVisible(true);
-    };
+    const handleTags = (tags: string[]) => {
+        dispatch(setTicketUpdateModel({
+            ...updateModel,
+            tags
+        }));
+        setDirty(true);
+    }
+
+    if (!updateModel) {
+        return <ThreeDots/>
+    }
 
     const resetForm = () => {
-        setFormVisible(false);
-        setTimeout(() => {
-            setFormVisible(true);
-        }, 0);
-        setIsTicketInfoButtonsVisible(false);
+        generateTicketUpdateModel();
+        setDirty(false);
     }
 
-    if (isDepartmentListLoading || isLookupValuesLoading || isTicketEnumValuesLoading) {
-        return <ThreeDots data-test-id='ticket-detail-loading' />;
-    }
-
-    if (departments === undefined
-        || ticketPriorities === undefined
-        || ticketStatuses === undefined
-        || ticketTypes === undefined
-        || ticketLookupValuesDepartment === undefined
-        || ticketLookupValuesReason === undefined
-        || ticketLookupValuesTags === undefined
-    ) {
-        return <div data-test-id='ticket-detail-load-failed'>{t('ticket_detail.info_panel.load_failed')}</div>
-    }
-
-    if (error) {
-        return <div data-test-id='ticket-detail-error'>{t('common.error')}</div>
-    }
-
-    return <div className={'py-4 mx-auto flex flex-col'}>
-        {formVisible &&
+    return (
+        <div className='pt-2'>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div>
-                    <Controller
+                    <ControlledSelect
                         name='status'
+                        label={'ticket_detail.info_panel.status'}
+                        options={statusOptions}
+                        value={updateModel.status}
                         control={control}
-                        defaultValue=''
-                        render={(props) => (
-                            <Select
-                                {...props}
-                                data-test-id={'ticket-detail-status'}
-                                label={'ticket_detail.info_panel.status'}
-                                options={statusOptions}
-                                value={selectedStatus}
-                                onSelect={(option?: Option) => {
-                                    if (option) {
-                                        props.onChange(option.value);
-                                        handleChangeItem(option, statusOptions, "status", setSelectedStatus);
-                                    }
-                                }}
-                                error={errors.status?.message}
-                            />
-                        )}
+                        onSelect={(option?: Option) => handleChangeItem('status', option)}
                     />
-                    <Controller
+                    <ControlledSelect
                         name='priority'
+                        label={'ticket_detail.info_panel.priority'}
+                        options={priorityOptions}
+                        value={updateModel.priority}
                         control={control}
-                        defaultValue=''
-                        render={(props) => (
-                            <Select
-                                {...props}
-                                data-test-id={'ticket-detail-priority'}
-                                label={'ticket_detail.info_panel.priority'}
-                                options={priorityOptions}
-                                value={selectedPriority}
-                                onSelect={(option?: Option) => {
-                                    if (option) {
-                                        props.onChange(option.value);
-                                        handleChangeItem(option, priorityOptions, "priority", setSelectedPriority);
-                                    }
-                                }}
-                                error={errors.priority?.message}
-                            />
-                        )}
+                        onSelect={(option?: Option) => handleChangeItem('priority', option)}
                     />
-                    <Controller
+
+                    <ControlledSelect
                         name='ticketType'
+                        label={'ticket_detail.info_panel.ticket_type'}
+                        options={ticketTypeOptions}
+                        value={updateModel.type}
                         control={control}
-                        defaultValue=''
-                        render={(props) => (
-                            <Select
-                                {...props}
-                                data-test-id={'ticket-detail-ticket-type'}
-                                label={'ticket_detail.info_panel.ticket_type'}
-                                options={ticketTypeOptions}
-                                value={selectedTicketTypeOption}
-                                onSelect={(option?: Option) => {
-                                    if (option) {
-                                        props.onChange(option.value);
-                                        handleChangeItem(option, ticketTypeOptions, "ticketType", setSelectedTicketTypeOption);
-                                    }
-                                }}
-                                error={errors.ticketType?.message}
-                            />
-                        )}
+                        onSelect={(option?: Option) => handleChangeItem('ticketType', option)}
                     />
-                    {(selectedTicketTypeOption && reasonOptions.length > 0) &&
+                    {(reasonOptions.length > 0) &&
+                    <ControlledSelect
+                        name='reason'
+                        label={'ticket_detail.info_panel.reason'}
+                        options={reasonOptions}
+                        value={updateModel.reason}
+                        control={control}
+                        onSelect={(option?: Option) => handleChangeItem('reason', option)}
+                    />
+                    }
+                    <ControlledSelect
+                        name='department'
+                        label={'ticket_detail.info_panel.department'}
+                        options={departmentOptions}
+                        value={updateModel.department}
+                        control={control}
+                        onSelect={(option?: Option) => handleChangeItem('department', option)}
+                    />
+                    <ControlledSelect
+                        name='location'
+                        label={'ticket_detail.info_panel.location'}
+                        options={locationOptions}
+                        value={updateModel.location}
+                        control={control}
+                        onSelect={(option?: Option) => handleChangeItem('location', option)}
+                    />
+                    <div className='pb-8'>
                         <Controller
-                            name='reason'
+                            name='tagsInput'
                             control={control}
                             defaultValue=''
                             render={(props) => (
-                                <Select
+                                <TagInput
+                                    labelAway={true}
                                     {...props}
-                                    data-test-id={'ticket-detail-reason'}
-                                    label={'ticket_detail.info_panel.reason'}
-                                    options={reasonOptions}
-                                    value={selectedReason}
-                                    onSelect={(option?: Option) => {
-                                        if (option) {
-                                            props.onChange(option?.value);
-                                            handleChangeItem(option, reasonOptions, "reason", setSelectedReason);
-                                        }
-                                    }}
+                                    tagOptions={tagOptions}
+                                    label={'ticket_detail.info_panel.tags'}
+                                    initialTags={updateModel.tags}
+                                    data-test-id='ticket-detail-tag-input'
+                                    className={'w-full border-none h-14'}
+                                    setSelectedTags={handleTags}
                                 />
                             )}
                         />
-                    }
-                    <Controller
-                        name='department'
-                        control={control}
-                        defaultValue=''
-                        render={(props) => (
-                            <Select
-                                {...props}
-                                data-test-id='ticket-detail-department'
-                                label={'ticket_detail.info_panel.department'}
-                                options={departmentOptions}
-                                value={selectedDepartment}
-                                onSelect={(option?: Option) => {
-                                    if (option) {
-                                        props.onChange(option?.value);
-                                        handleChangeItem(option, departmentOptions, "department", setSelectedDepartment);
-                                    }
-                                }}
-                            />
-                        )}
-                    />
-                    <Controller
-                        name='location'
-                        control={control}
-                        defaultValue={locationOptions ? locationOptions[0] : ''}
-                        render={(props) => (
-                            <Select
-                                {...props}
-                                data-test-id={'ticket-detail-location'}
-                                label={'ticket_detail.info_panel.location'}
-
-                                options={locationOptions}
-                                value={selectedLocation}
-                                onSelect={(option?: Option) => {
-                                    if (option) {
-                                        props.onChange(option.value);
-                                        handleChangeItem(option, locationOptions, "location", setSelectedLocation);
-                                    }
-                                }}
-                                error={errors.location?.message}
-                            />
-                        )}
-                    />
-                </div>
-                <Controller
-                    name='tagsInput'
-                    control={control}
-                    defaultValue=''
-                    render={(props) => (
-                        <TagInput
-                            {...props}
-                            tagOptions={tagOptions}
-                            label={'ticket_detail.info_panel.tags'}
-                            initialTags={initialTags}
-                            data-test-id='ticket-detail-tag-input'
-                            className={'w-full border-none h-14'}
-                            setSelectedTags={setSelectedTags}
-                        />
-                    )}
-                />
-                {isTicketInfoButtonsVisible &&
-                    <div className='flex flex-row space-x-4 justify-end bg-secondary-50 mt-2'>
+                    </div>
+                    {isDirty && <div className='flex flex-row space-x-4 justify-end bg-secondary-50 mt-2'>
                         <div className='flex items-center'>
                             <Button data-test-id='ticket-detail-info-panel-cancel-ticket-button' type={'button'}
-                                buttonType='secondary'
-                                label={'common.cancel'}
-                                onClick={() => resetForm()}
+                                    buttonType='secondary'
+                                    label={'common.cancel'}
+                                    onClick={() => resetForm()}
                             />
                         </div>
                         <div>
                             <Button data-test-id='ticket-detail-info-panel-update-ticket-button' type={'submit'}
-                                buttonType='small'
-                                label={'ticket_detail.info_panel.update_ticket'} />
+                                    buttonType='small'
+                                    label={'ticket_detail.info_panel.update_ticket'}/>
                         </div>
-                    </div>
-                }
+                    </div>}
+                </div>
             </form>
-        }
-    </div>
+        </div>
+    )
 }
-
 export default withErrorLogging(TicketDetailTicketInfo);

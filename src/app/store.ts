@@ -8,6 +8,7 @@ import patientsReducer from '../pages/patients/store/patients.slice';
 import externalAccessState from '../pages/external-access/store/external-access-state';
 import lookupsReducer from '../shared/store/lookups/lookups.slice';
 import contactsReducer from '../shared/store/contacts/contacts.slice';
+import snackbarReducer from '../shared/store/snackbar/snackbar.slice';
 import {useDispatch} from 'react-redux';
 import storage from 'redux-persist/lib/storage'
 import {persistReducer} from 'redux-persist'
@@ -23,7 +24,8 @@ const reducers = combineReducers({
     ccpState: ccpReducer,
     externalAccessState,
     lookupsState: lookupsReducer,
-    contactState: contactsReducer
+    contactState: contactsReducer,
+    snackbarState: snackbarReducer
 })
 
 const rootReducer: Reducer = (state: RootState, action: AnyAction) => {

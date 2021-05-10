@@ -8,24 +8,17 @@ import store from '../../../app/store';
 import {
     add,
     addPaging,
-    changeAssignee,
-    changeStatus,
     endGetLookupValuesRequest,
     endGetTicketEnumRequest,
-    endRequestAddFeed,
-    endRequestAddNote,
     setFailure,
     setLookupValues,
     setSearchTerm,
-    setTicket,
     setTicketEnum,
     setTicketFilter,
     setTicketListQueryType,
     setTicketsLoading,
     startGeLookupValuesRequest,
-    startGetTicketEnumRequest,
-    startRequestAddFeed,
-    startRequestAddNote
+    startGetTicketEnumRequest
 } from '../store/tickets.slice';
 import {Ticket} from '../models/ticket';
 import {Paging} from '@shared/models/paging.model';
@@ -34,9 +27,6 @@ import {TicketFeed} from '../models/ticket-feed';
 import {TicketListQueryType} from '../models/ticket-list-type';
 import {DashboardTypes} from '@pages/dashboard/enums/dashboard-type.enum';
 import {DashboardTimeframes} from '@pages/dashboard/enums/dashboard.timeframes';
-import TicketStatus from '../components/ticket-status';
-import TicketStatusDisplay from '../components/ticket-status-display';
-import {TicketStatusType} from '../models/ticket-status';
 
 const logger = Logger.getInstance();
 const ticketsBaseUrl = "/tickets";
@@ -75,7 +65,7 @@ export function getList(ticketQuery: TicketQuery, resetPagination?: boolean) {
             if (!query.assignedTo || query.assignedTo.length < 1) {
                 dispatch(setTicketListQueryType(TicketListQueryType.AllTicket));
             }
-            
+
             dispatch(setTicketFilter(saveQuery));
             dispatch(setTicketsLoading(false));
         } catch (error) {
@@ -105,75 +95,40 @@ const serialize = (obj: any) => {
     return str.join("&");
 }
 
-export const setStatus = (id: string, status: number) => {
+export const setStatus = async ({id, status}: { id: string, status: number }): Promise<Ticket> => {
     const url = `${ticketsBaseUrl}/${id}/status`;
-    return async (dispatch: Dispatch) => {
-        await Api.put(url, {
-            id: id,
-            status: status
-        })
-            .then(() => {
-                dispatch(changeStatus({
-                    id: id,
-                    status: status
-                }));
-            })
-            .catch(err => {
-                dispatch(setFailure(err.message));
-            });
-    }
+    const result = await Api.put(url, {
+        id: id,
+        status: status
+    });
+    return result.data;
 }
 
-export const setAssignee = (id: string, assignee: string) => {
-    const url = `${ticketsBaseUrl}/${id}/assignee`;
-    return async (dispatch: Dispatch) => {
-        await Api.put(url, {
-            id: id,
-            assignee: assignee
-        })
-            .then(() => {
-                dispatch(changeAssignee({
-                    id: id,
-                    assignee: assignee,
-                    status: TicketStatusType.Open
-                }));
-            })
-            .catch(err => {
-                dispatch(setFailure(err.message));
-            });
-    }
+export interface setAssigneeProps {
+    ticketId: string;
+    assignee: string;
 }
 
-export const addNote = (id: string, note: TicketNote) => {
-    const url = `${ticketsBaseUrl}/${id}/notes`;
-    return async (dispatch: Dispatch) => {
-        dispatch(startRequestAddNote());
-        await Api.post(url, note)
-            .then((response) => {
-                dispatch(endRequestAddNote(''));
-                dispatch(setTicket(response.data));
-            })
-            .catch(error => {
-                logger.error('Failed to add Note', error);
-                dispatch(endRequestAddNote('ccp.note_context.error'));
-            })
-    }
+export const setAssignee = async ({ticketId, assignee}: setAssigneeProps): Promise<Ticket> => {
+    const url = `${ticketsBaseUrl}/${ticketId}/assignee`;
+    const result = await Api.put(url, {
+        id: ticketId,
+        assignee: assignee
+    });
+    return result.data;
 }
 
-export const addFeed = (id: string, feed: TicketFeed) => {
-    const url = `${ticketsBaseUrl}/${id}/feed`;
-    return async (dispatch: Dispatch) => {
-        dispatch(startRequestAddFeed());
-        await Api.post(url, feed)
-            .then((response) => {
-                dispatch(endRequestAddFeed(''));
-                dispatch(setTicket(response.data));
-            })
-            .catch(error => {
-                logger.error('Failed to add Feed', error);
-                dispatch(endRequestAddNote('ticket_detail.feed.error'));
-            })
-    }
+export const addNote = async ({ticketId, note}: { ticketId: string, note: TicketNote }): Promise<Ticket> => {
+    const url = `${ticketsBaseUrl}/${ticketId}/notes`;
+    const result = await Api.post(url, note);
+    return result.data;
+}
+
+export const addFeed = async ({ticketId, feed}: { ticketId: string, feed: TicketFeed }): Promise<Ticket> => {
+    const url = `${ticketsBaseUrl}/${ticketId}/feed`;
+    const result = await Api.post(url, feed);
+    return result.data;
+
 }
 
 export const getEnumByType = (enumType: string) => {

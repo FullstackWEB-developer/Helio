@@ -1,5 +1,6 @@
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc'
+
 const getWindowCenter = () => {
     const {width, height} = getWindowDimensions();
     return {x: width / 2, y: height / 2};
@@ -12,6 +13,16 @@ const getWindowDimensions = () => {
         height
     };
 }
+
+const formatPhone = (phone: string) => {
+    phone = phone.replaceAll('-', '');
+    if (phone && phone.length >= 10) {
+
+        return `(${phone.slice(0, 3)}) ${phone.slice(3, 6)}-${phone.slice(6, phone.length)}`;
+    } else {
+        return phone;
+    }
+};
 
 const formatDate = (datetime: string) => {
     const date = new Date(datetime);
@@ -103,7 +114,8 @@ const utils = {
     getInitialsFromFullName,
     getDateTime,
     getRelativeTime,
-    formatRelativeTime
+    formatRelativeTime,
+    formatPhone
 }
 
 export default utils;

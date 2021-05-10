@@ -16,7 +16,7 @@ import {setStates} from '@shared/store/lookups/lookups.slice';
 import {selectStates} from '@shared/store/lookups/lookups.selectors';
 import {updatePatientContactInformation} from '@pages/patients/services/patients.service';
 import ThreeDots from '@components/skeleton-loader/skeleton-loader';
-import { setPatient } from '@pages/patients/store/patients.slice';
+import {setPatient} from '@pages/patients/store/patients.slice';
 import ControlledInput from '@components/controllers/ControllerInput';
 
 export interface PatientInformationUpdateProps
@@ -189,7 +189,6 @@ const PatientContactInfoUpdate = ({onUpdateComplete} : PatientInformationUpdateP
                                     data-test-id={'patient-update-contact_preference'}
                                     error={errors.contactPreference?.message}
                                     required={true}
-                                    value={props.value}
                                     onSelect={(option?: Option)=>{
                                         if(option){
                                             props.onChange(option.value);

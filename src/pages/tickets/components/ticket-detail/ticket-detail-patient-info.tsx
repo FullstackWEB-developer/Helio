@@ -1,30 +1,30 @@
-import React, { useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
-import { Controller, useForm } from 'react-hook-form';
+import React, {useRef, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {useTranslation} from 'react-i18next';
+import {useHistory} from 'react-router-dom';
+import {Controller, useForm} from 'react-hook-form';
 import withErrorLogging from '../../../../shared/HOC/with-error-logging';
-import { Ticket } from '../../models/ticket';
+import {Ticket} from '../../models/ticket';
 import Input from '../../../../shared/components/input/input';
-import { selectIsPatientError, selectPatientLoading } from '@pages/patients/store/patients.selectors';
+import {selectIsPatientError, selectPatientLoading} from '@pages/patients/store/patients.selectors';
 import ThreeDots from '../../../../shared/components/skeleton-loader/skeleton-loader';
 import Button from '../../../../shared/components/button/button';
-import { updateTicket } from '../../services/tickets.service';
-import { useMutation } from 'react-query';
-import { setTicket } from '@pages/tickets/store/tickets.slice';
+import {updateTicket} from '../../services/tickets.service';
+import {useMutation} from 'react-query';
+import {setTicket} from '@pages/tickets/store/tickets.slice';
 import Logger from '../../../../shared/services/logger';
-import { Patient } from '@pages/patients/models/patient';
-import { Icon } from '@components/svg-icon/icon';
+import {Patient} from '@pages/patients/models/patient';
+import {Icon} from '@components/svg-icon/icon';
 import SvgIcon from '@components/svg-icon/svg-icon';
-import { getPatientActionNotes, getPatientCaseDocument } from '@pages/patients/services/patient-document.service';
+import {getPatientActionNotes, getPatientCaseDocument} from '@pages/patients/services/patient-document.service';
 
 interface TicketDetailPatientInfoProps {
     ticket: Ticket,
     patient?: Patient
 }
 
-const TicketDetailPatientInfo = ({ ticket, patient }: TicketDetailPatientInfoProps) => {
-    const { t } = useTranslation();
+const TicketDetailPatientInfo = ({ticket, patient}: TicketDetailPatientInfoProps) => {
+    const {t} = useTranslation();
     const history = useHistory();
     const { handleSubmit, control, setError, clearErrors, errors } = useForm();
     const dispatch = useDispatch();
@@ -147,7 +147,6 @@ const TicketDetailPatientInfo = ({ ticket, patient }: TicketDetailPatientInfoPro
                                         type='number'
                                         label={'ticket_detail.info_panel.patient_case_number'}
                                         data-test-id={'ticket-detail-info_panel-patient-case-number'}
-                                        className={'h-14'}
                                         isLoading={isPatientCaseNumberLoading}
                                         value={patientCaseNumber ? patientCaseNumber : ''}
                                         error={errors.patientCaseNumber?.message}

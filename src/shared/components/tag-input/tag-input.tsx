@@ -11,17 +11,18 @@ import {Icon} from '@components/svg-icon/icon';
 export enum TagInputLabelPosition {
     Vertical,
     Horizontal
-};
+}
 interface TagInputProps extends React.HTMLAttributes<HTMLSelectElement> {
     label?: string,
     tagOptions: Option[],
     labelPosition?: TagInputLabelPosition
     initialTags?: string[],
     initialIsListVisible?: boolean,
-    setSelectedTags: (tags: string[]) => void
+    setSelectedTags: (tags: string[]) => void,
+    labelAway?: boolean
 }
 
-const TagInput = React.forwardRef<HTMLSelectElement, TagInputProps>(({label, tagOptions, initialTags, initialIsListVisible = false, labelPosition, ...props}: TagInputProps, ref) => {
+const TagInput = React.forwardRef<HTMLSelectElement, TagInputProps>(({label, tagOptions, initialTags, initialIsListVisible = false, labelAway = false, labelPosition, ...props}: TagInputProps, ref) => {
     const {t} = useTranslation();
     const [isTagsVisible, setIsTagsVisible] = useState(false);
     const [isTagsListVisible, setIsTagsListVisible] = useState(initialIsListVisible);
@@ -52,6 +53,10 @@ const TagInput = React.forwardRef<HTMLSelectElement, TagInputProps>(({label, tag
         tagsNew.splice(i, 1);
         setTags(tagsNew);
         props.setSelectedTags(tagsNew);
+        if (tagsNew.length === 0) {
+            setIsTagsVisible(false);
+            setIsTagsListVisible(false);
+        }
     }
     let filteredOptions = [...tagOptions];
 
@@ -61,17 +66,27 @@ const TagInput = React.forwardRef<HTMLSelectElement, TagInputProps>(({label, tag
 
     const isHorizontalLabelPosition = () => labelPosition === TagInputLabelPosition.Horizontal;
 
+    const onListKeyDown = (key: string) => {
+        if (key === 'Escape' && isTagsListVisible) {
+            setIsTagsListVisible(false);
+        } else if (key === 'Backspace') {
+            if (tags.length > 0) {
+                removeTag(tags.length - 1);
+            }
+        }
+    }
 
     return (
         <Fragment>
             <div className={`flex ${isHorizontalLabelPosition() ? "flex-row" : "flex-col"}`}>
-                <div>{label && <Label text={t(label)} className='body2 pr-4' />}</div>
-                <div className={`${!isHorizontalLabelPosition() ? 'pt-5':''}`}>
+                <div>{label && <Label text={t(label)} className={`body2 ${labelAway ? 'pr-16' : 'pr-4'}`}/>}</div>
+                <div className={`${!isHorizontalLabelPosition() ? 'pt-5' : ''}`}>
                     {
                         !isTagsListVisible &&
-                        <span className='flex flex-row flex-nowrap cursor-pointer items-center' onClick={() => handleAddTagClick()}>
+                        <span className='flex flex-row flex-nowrap cursor-pointer items-center'
+                              onClick={() => handleAddTagClick()}>
                             <span className='mr-3.5'>
-                                <SvgIcon type={Icon.Add} />
+                                <SvgIcon type={Icon.Add}/>
                             </span>
                             <span className='body2'>
                                 <span className='tag-input-label'>
@@ -95,6 +110,7 @@ const TagInput = React.forwardRef<HTMLSelectElement, TagInputProps>(({label, tag
                             />
                         ))}
                         {isTagsListVisible && <List
+                            onKeyDown={(key) => onListKeyDown(key)}
                             options={filteredOptions}
                             onSelect={(option: Option) => {
                                 handleChangeTags(option);

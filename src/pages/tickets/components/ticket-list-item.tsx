@@ -14,6 +14,7 @@ import {TicketLookupValue} from '../models/ticket-lookup-values.model';
 import {TicketsPath} from '../../../app/paths';
 import {DropdownAlignmentHorizontalPosition} from '@components/dropdown/dropdown.models';
 import DueInRelativeTime from './ticket-due-in-relative-time';
+
 interface TicketListItemProps {
     item: Ticket
 }
@@ -75,7 +76,7 @@ const TicketListItem = ({item}: TicketListItemProps) => {
 
     return <div className='grid grid-flow-col auto-cols-max body2 border-b relative cursor-pointer hover:bg-gray-100 px-7 items-center h-20' onClick={openTicket} >
         <div className='w-20'>
-            <TicketChannelIcon ticket={item} />
+            <TicketChannelIcon channel={item.channel}/>
         </div>
         <div className='w-20 pr-5'>
             {item.ticketNumber}
@@ -87,7 +88,7 @@ const TicketListItem = ({item}: TicketListItemProps) => {
             <DueInRelativeTime date={item.dueDate} />
         </div>
         <div className='w-40 h-full'>
-            <TicketStatus ticketId={ticketId} status={item.status} />
+            <TicketStatus ticketId={ticketId} status={item.status!}/>
         </div>
         <div className='w-28'>
             {item.priority ? selectedPriority?.value : null}
@@ -99,7 +100,8 @@ const TicketListItem = ({item}: TicketListItemProps) => {
             {item.reason ? selectedReason?.label : '-'}
         </div>
         <div className='w-60'>
-            <TicketAssignee ticketId={ticketId} assignee={item.assignee} dropdownHorizontalPostion={DropdownAlignmentHorizontalPosition.Right} />
+            <TicketAssignee ticketId={ticketId} assignee={item.assignee}
+                            dropdownHorizontalPosition={DropdownAlignmentHorizontalPosition.Right}/>
         </div>
     </div>
 };

@@ -1,5 +1,5 @@
 import Api from '../../../shared/services/api';
-import { Appointment } from '@pages/external-access/appointment/models/appointment.model';
+import {Appointment} from '@pages/external-access/appointment/models/appointment.model';
 import dayjs from 'dayjs';
 import {AppointmentCancellationModel} from '@pages/external-access/appointment/models/appointment-cancellation.model';
 
@@ -46,7 +46,7 @@ export interface RescheduleAppointmentProps {
 }
 
 export const rescheduleAppointment = async ({appointmentId, newAppointmentId, patientId}: RescheduleAppointmentProps) => {
-     let url = `${appointmentsBaseUrl}/${appointmentId}/reschedule`;
+     const url = `${appointmentsBaseUrl}/${appointmentId}/reschedule`;
      const result = await Api.put(url, {
           newAppointmentId,
           patientId
@@ -55,7 +55,7 @@ export const rescheduleAppointment = async ({appointmentId, newAppointmentId, pa
 }
 
 export const getCancellationReasons = async () => {
-     let url = `${appointmentsBaseUrl}/cancellation-reasons`;
+     const url = `${appointmentsBaseUrl}/cancellation-reasons`;
      const result = await Api.get(url);
      return result.data;
 }
@@ -66,7 +66,7 @@ export interface CancelAppointmentProps {
 }
 
 export const cancelAppointment = async ({appointmentId, data}: CancelAppointmentProps) => {
-     let url = `${appointmentsBaseUrl}/${appointmentId}/cancel`;
+     const url = `${appointmentsBaseUrl}/${appointmentId}/cancel`;
      const result = await Api.put(url, {
           patientId: data.patientId,
           appointmentCancelReasonId: +data.appointmentCancelReasonId,

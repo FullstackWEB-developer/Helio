@@ -3,11 +3,13 @@ import {RootState} from '../../../app/store';
 import {createSelector} from '@reduxjs/toolkit';
 import {TicketLookupValue} from '../models/ticket-lookup-values.model';
 import {LookupValue} from '../models/lookup-value';
-import {Paging} from '../../../shared/models/paging.model';
+import {Paging} from '@shared/models/paging.model';
 import {TicketEnum} from '../models/ticket-enum.model';
 import {TicketEnumValue} from '../models/ticket-enum-value.model';
 import {TicketListQueryType} from '../models/ticket-list-type';
-import {TicketStatusType} from '../models/ticket-status';
+import {TicketStatuses} from '@pages/tickets/models/ticket.status.enum';
+import {Option} from '@components/option/option';
+import {TicketUpdateModel} from '@pages/tickets/models/ticket-update.model';
 
 export const ticketState = (state: RootState) => state.ticketState;
 
@@ -15,8 +17,8 @@ export const selectTickets = (state: RootState) => state.ticketState.tickets as 
 
 export const selectTicketsPaging = (state: RootState) => state.ticketState.paging as Paging;
 export const selectTicketFilter = (state: RootState) => state.ticketState.ticketFilter;
-export const selectTicketQueryType = (state: RootState): TicketStatusType =>
-  state.ticketState.ticketListQueryType || TicketListQueryType.AllTicket;
+export const selectTicketQueryType = (state: RootState): TicketStatuses =>
+    state.ticketState.ticketListQueryType || TicketListQueryType.AllTicket;
 export const selectSearchTerm = (state: RootState) => state.ticketState.searchTerm;
 export const selectFeedLastMessageOn = (state: RootState) => state.ticketState.feedLastMessageOn;
 
@@ -32,12 +34,38 @@ export const selectEnumValues = (state: RootState, key: string): TicketEnumValue
     return values ? values : [];
 }
 
+export const selectEnumValuesAsOptions = (state: RootState, key: string): Option[] => {
+    if (!state.ticketState.enumValues) {
+        return [];
+    }
+    const values = state.ticketState.enumValues.find((a: TicketEnum) => a.key === key)?.value;
+    return values ? values.map((item: any) => {
+        return {
+            value: item.key.toString(),
+            label: item.value
+        };
+    }) : [];
+}
+
 export const selectLookupValues = (state: RootState, key: string): TicketLookupValue[] => {
     if (!state.ticketState.lookupValues) {
         return [] as TicketLookupValue[];
     }
     const values = state.ticketState.lookupValues.find((a: LookupValue) => a.key === key)?.value;
     return values ? values : [] as TicketLookupValue[];
+}
+
+export const selectLookupValuesAsOptions = (state: RootState, key: string): Option[] => {
+    if (!state.ticketState.lookupValues) {
+        return [] as TicketLookupValue[];
+    }
+    const values = state.ticketState.lookupValues.find((a: LookupValue) => a.key === key)?.value;
+    return values ? values.map((item: any) => {
+        return {
+            value: item.value,
+            label: item.label
+        };
+    }) : [] as Option[];
 }
 
 export const selectIsTicketEnumValuesLoading = createSelector(
@@ -60,12 +88,7 @@ export const selectIsTicketFilterOpen = createSelector(
     items => items.isFilterOpen
 )
 
-export const selectIsRequestAddNoteLoading = createSelector(
+export const selectTicketUpdateModel = createSelector(
     ticketState,
-    items => items.isRequestAddNoteLoading as boolean
-)
-
-export const selectIsRequestAddFeedLoading = createSelector(
-    ticketState,
-    items => items.isRequestAddFeedLoading as boolean
+    state => state.ticketUpdate as TicketUpdateModel
 )

@@ -1,27 +1,28 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import React, {useEffect, useRef, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {useHistory} from 'react-router-dom';
 import 'amazon-connect-streams';
 import withErrorLogging from '@shared/HOC/with-error-logging';
-import { isCcpVisibleSelector } from '@shared/layout/store/layout.selectors';
-import { setAssignee } from '../tickets/services/tickets.service';
-import { setBotContext, setChatCounter, setContextPanel, setNoteContext, setVoiceCounter } from './store/ccp.slice';
-import { authenticationSelector } from '@shared/store/app-user/appuser.selectors';
-import { DragPreviewImage, useDrag } from 'react-dnd';
-import { DndItemTypes } from '@shared/layout/dragndrop/dnd-item-types';
+import {isCcpVisibleSelector} from '@shared/layout/store/layout.selectors';
+import {setAssignee} from '../tickets/services/tickets.service';
+import {setBotContext, setChatCounter, setContextPanel, setNoteContext, setVoiceCounter} from './store/ccp.slice';
+import {authenticationSelector} from '@shared/store/app-user/appuser.selectors';
+import {DragPreviewImage, useDrag} from 'react-dnd';
+import {DndItemTypes} from '@shared/layout/dragndrop/dnd-item-types';
 import './ccp.scss';
-import { toggleCcp } from '@shared/layout/store/layout.slice';
-import { useTranslation } from 'react-i18next';
+import {toggleCcp} from '@shared/layout/store/layout.slice';
+import {useTranslation} from 'react-i18next';
 import CcpContext from './components/ccp-context';
 import contextPanels from './models/context-panels';
-import { ccpImage } from './ccpImage';
-import { setAgentStates, updateUserStatus } from '@shared/store/app-user/appuser.slice';
-import { UserStatus } from '@shared/store/app-user/app-user.models';
+import {ccpImage} from './ccpImage';
+import {setAgentStates, updateUserStatus} from '@shared/store/app-user/appuser.slice';
+import {UserStatus} from '@shared/store/app-user/app-user.models';
 import Logger from '@shared/services/logger';
-import { AgentState } from '@shared/models/agent-state';
-import { Icon } from '@components/svg-icon/icon';
+import {AgentState} from '@shared/models/agent-state';
+import {Icon} from '@components/svg-icon/icon';
 import SvgIcon from '@components/svg-icon/svg-icon';
-import { selectContextPanel } from './store/ccp.selectors';
+import {selectContextPanel} from './store/ccp.selectors';
+import {useMutation} from 'react-query';
 
 const ccpConfig = {
     region: process.env.REACT_APP_AWS_REGION,
@@ -58,7 +59,7 @@ const Ccp: React.FC<BoxProps> = ({
     const [isBottomBarVisible, setIsBottomBarVisible] = useState(false);
     const [ticketId, setTicketId] = useState('');
     const currentContext = useSelector(selectContextPanel);
-
+    const updateAssigneeMutation = useMutation(setAssignee);
     const isCcpVisibleRef = useRef();
     isCcpVisibleRef.current = useSelector(isCcpVisibleSelector);
 
@@ -116,7 +117,7 @@ const Ccp: React.FC<BoxProps> = ({
                     let tId;
                     if (attributeMap.TicketId.value) {
                         tId = attributeMap.TicketId.value;
-                        dispatch(setAssignee(tId, username));
+                        updateAssigneeMutation.mutate({ticketId: tId, assignee: username})
                     } else {
                         tId = contact.getContactId();
                     }

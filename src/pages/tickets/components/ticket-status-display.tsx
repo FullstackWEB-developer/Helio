@@ -1,9 +1,10 @@
 import CircleIcon from '../../../shared/icons/circle-icon';
 import {useTranslation} from 'react-i18next';
-import {TicketStatusType} from '../models/ticket-status';
 import {statusCssClassMap, statusTranslationKeyMap} from '../utils/statusUtils';
+import {TicketStatuses} from '@pages/tickets/models/ticket.status.enum';
+
 interface TicketStatusDisplayProps {
-    status: TicketStatusType,
+    status: TicketStatuses,
     iconClass: string,
     labelClass?: string
 }

@@ -3,6 +3,7 @@ import {Control} from 'react-hook-form/dist/types/form';
 import Input from '@components/input/input';
 import {useTranslation} from 'react-i18next';
 import React from 'react';
+import {Icon} from '@components/svg-icon/icon';
 
 export class InputTypes {
     static Phone = new RegExp('1?\\W*([2-9][0-8][0-9])\\W*([2-9][0-9]{2})\\W*([0-9]{4})(\\se?x?t?(\\d*))?');
@@ -30,6 +31,7 @@ export interface ControllerInputProps {
     isLoading?: boolean,
     onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
     onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
+    dropdownIcon?: Icon
 }
 
 const ControlledInput = ({control, required = false, type = 'text', name, mask = '', label = '', className = '', dataTestId, max, placeholder, ...props}: ControllerInputProps) => {
@@ -66,7 +68,7 @@ const ControlledInput = ({control, required = false, type = 'text', name, mask =
     }
 
     const onInputChanged = (event: React.ChangeEvent<HTMLInputElement>, controllerProps: ControllerRenderProps<Record<string, any>>) => {
-   
+
         if (type === 'tel') {
             const value = cleanMask(event.target.value);
             controllerProps.onChange(value);
@@ -90,22 +92,23 @@ const ControlledInput = ({control, required = false, type = 'text', name, mask =
         defaultValue={props.defaultValue}
         render={(controllerProps) => {
             return (<Input
-                {...controllerProps}
-                label={label}
-                mask={mask}
-                placeholder={placeholder}
-                className={className}
-                error={control.formState.errors[name]?.message}
-                type={type}
-                required={required}
-                assistiveText={props.assistiveText}
-                isLoading={props.isLoading}
-                disabled={props.disabled}
-                data-test-id={dataTestId}
-                onKeyDown={inputKeyDown}
-                onBlur={props.onBlur || controllerProps.onBlur}
-                onChange={(event) => onInputChanged(event, controllerProps)}
-            />
+                    {...controllerProps}
+                    label={label}
+                    mask={mask}
+                    placeholder={placeholder}
+                    dropdownIcon={props.dropdownIcon}
+                    className={className}
+                    error={control.formState.errors[name]?.message}
+                    type={type}
+                    required={required}
+                    assistiveText={props.assistiveText}
+                    isLoading={props.isLoading}
+                    disabled={props.disabled}
+                    data-test-id={dataTestId}
+                    onKeyDown={inputKeyDown}
+                    onBlur={props.onBlur || controllerProps.onBlur}
+                    onChange={(event) => onInputChanged(event, controllerProps)}
+                />
             );
         }}
     />);

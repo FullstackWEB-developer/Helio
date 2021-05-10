@@ -1,22 +1,24 @@
-import React, { ChangeEvent, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useTranslation } from 'react-i18next';
-import { useForm, Controller } from 'react-hook-form';
+import React, {ChangeEvent, useRef, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {useTranslation} from 'react-i18next';
+import {Controller, useForm} from 'react-hook-form';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc'
 import withErrorLogging from '../../../shared/HOC/with-error-logging';
-import { selectNoteContext, selectNotes } from '../store/ccp.selectors';
-import { setNotes } from '../store/ccp.slice';
+import {selectNoteContext, selectNotes} from '../store/ccp.selectors';
+import {setNotes} from '../store/ccp.slice';
 import TextArea from '../../../shared/components/textarea/textarea';
-import { addNote } from '../../tickets/services/tickets.service';
-import { TicketNote } from '../../tickets/models/ticket-note';
+import {addNote} from '../../tickets/services/tickets.service';
+import {TicketNote} from '../../tickets/models/ticket-note';
 import NoteDetailItem from './note-detail-item';
 import './note-context.scss';
-import { Icon } from '@components/svg-icon/icon';
+import {Icon} from '@components/svg-icon/icon';
+import {useMutation} from 'react-query';
+import {setTicket} from '@pages/tickets/store/tickets.slice';
 
 const NoteContext = () => {
     dayjs.extend(utc);
-    const { t } = useTranslation();
+    const {t} = useTranslation();
     const dispatch = useDispatch();
     const ticketId = useSelector(selectNoteContext).ticketId;
     const username = useSelector(selectNoteContext).username;
@@ -24,13 +26,20 @@ const NoteContext = () => {
     const [noteText, setNoteText] = useState('');
     const notesBottom = useRef<HTMLDivElement>(null);
 
+
+    const addNoteMutation = useMutation(addNote, {
+        onSuccess: (data) => {
+            setTicket(data);
+        }
+    });
+
     const onSubmit = async () => {
         const note: TicketNote = {
             noteText: noteText,
             isVisibleToPatient: false
         };
         if (ticketId) {
-            dispatch(addNote(ticketId, note));
+            addNoteMutation.mutate({ticketId, note});
             note.createdOn = dayjs().utc().toDate();
             note.createdBy = username;
             dispatch(setNotes([...notes, note]));
@@ -53,7 +62,7 @@ const NoteContext = () => {
                     {
                         notes.map((item, key) => <NoteDetailItem key={key} item={item} displayBottomBorder={key < notes.length - 1} />)
                     }
-                    <div ref={notesBottom}></div>
+                    <div ref={notesBottom}/>
                 </div>
             </div>
             <div className="overflow-hidden border-t">

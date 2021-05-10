@@ -1,4 +1,4 @@
-import React, {useRef, useState, useEffect} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import './select.scss';
 import customHooks from '@shared/hooks/customHooks';
@@ -7,9 +7,10 @@ import {Option} from '@components/option/option';
 import {keyboardKeys} from '@components/search-bar/constants/keyboard-keys';
 import SvgIcon from '@components/svg-icon/svg-icon';
 import {Icon} from '@components/svg-icon/icon';
+
 interface SelectProps {
     label?: string;
-    value?: Option;
+    value?: Option | string;
     searchQuery?: string;
     options: Option[];
     error?: string;
@@ -58,15 +59,21 @@ const Select = React.forwardRef<HTMLDivElement, SelectProps>(({options, order, l
             props.onSelect(option);
         }
     }
-   
+
     useEffect(() => {
-        if (props.value) {
-            setSelectedOption(props.value);
+        if (typeof props.value === 'string') {
+            if (props.value && selectedOption?.value !== props.value) {
+                setSelectedOption(options.find(a => a.value.toString() === props.value?.toString())!);
+            }
+        } else if (props.value?.value) {
+            if (props.value && selectedOption?.value !== props.value.value) {
+                setSelectedOption(props.value);
+            }
         }
         if (props.searchQuery) {
             setSearchQuery(props.searchQuery);
         }
-    }, []);
+    }, [props.value]);
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (!open) return;
         switch (e.key) {

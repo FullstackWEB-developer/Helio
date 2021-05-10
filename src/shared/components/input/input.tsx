@@ -22,9 +22,20 @@ interface InputProps extends React.HTMLAttributes<HTMLInputElement> {
     isLoading?: boolean,
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void,
     shouldDisplayAutocomplete?: boolean,
-    required?: boolean
+    required?: boolean,
+    dropdownIcon?: Icon
 }
-const Input = React.forwardRef<HTMLInputElement, InputProps>(({label, type, htmlFor, placeholder, mask, assistiveText, isLoading, ...props}: InputProps, ref) => {
+const Input = React.forwardRef<HTMLInputElement, InputProps>(({
+                                                                  label,
+                                                                  type,
+                                                                  htmlFor,
+                                                                  placeholder,
+                                                                  mask,
+                                                                  assistiveText,
+                                                                  dropdownIcon,
+                                                                  isLoading,
+                                                                  ...props
+                                                              }: InputProps, ref) => {
     const {t} = useTranslation();
     const [isFocused, setIsFocused] = useState(false);
     const [value, setValue] = useState('');
@@ -34,6 +45,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({label, type, html
         if (props.value) {
             setValue(props.value);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const onBlur = (e: React.FocusEvent<HTMLInputElement>) => {
@@ -69,28 +81,39 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({label, type, html
         <div className="input-group flex flex-col h-20">
             <div className={`input-group-container flex flex-wrap items=stretch w-full relative ${props.error ? 'input-error' : ''} ` + props.className}>
                 <InputMask ref={innerRef} inputRef={innerRef} {...props}
-                    mask={mask}
-                    type={type}
-                    onFocus={(e: React.FocusEvent<HTMLInputElement>) => {setIsFocused(true)}}
-                    onBlur={(e: React.FocusEvent<HTMLInputElement>) => {onBlur(e)}}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange(e)}
-                    className={`pl-4 pt-6 body2 h-14 flex-shrink flex-grow flex-auto leading-normal w-px flex-1`}
-                    placeholder=''
-                    value={value}
-                    disabled={props.disabled || isLoading}
-                    autoComplete={props.shouldDisplayAutocomplete ? 'on' : 'off'} />
+                           mask={mask}
+                           type={type}
+                           onFocus={(e: React.FocusEvent<HTMLInputElement>) => {
+                               setIsFocused(true)
+                           }}
+                           onBlur={(e: React.FocusEvent<HTMLInputElement>) => {
+                               onBlur(e)
+                           }}
+                           onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange(e)}
+                           className={`pl-4 pt-6 body2 h-14 flex-shrink flex-grow flex-auto leading-normal w-px flex-1`}
+                           placeholder=''
+                           value={value}
+                           disabled={props.disabled || isLoading}
+                           autoComplete={props.shouldDisplayAutocomplete ? 'on' : 'off'}/>
                 <label htmlFor={htmlFor}
-                    className={`absolute truncate ${props.required ? 'required' : ''} ${isFocused || value ? 'body3 label-small' : `body2${props.disabled ? '-medium' : ''}`} ${props.error ? 'text-danger' : ''}`}>
+                       className={`absolute truncate ${props.required ? 'required' : ''} ${isFocused || value ? 'body3 label-small' : `body2${props.disabled ? '-medium' : ''}`} ${props.error ? 'text-danger' : ''}`}>
                     {t(label || placeholder || '')}
                 </label>
+                {dropdownIcon && <div className={`absolute pt-${!label ? '3' : '4'} right-4`}>
+                    {
+                        <SvgIcon type={dropdownIcon} fillClass={'select-arrow-fill'}/>
+                    }
+                </div>}
                 {isFocused &&
-                    value &&
-                    <span
-                        className="input-addon clear-input-icon flex items-center leading-normal rounded rounded-l-none px-3"
-                        onMouseDown={(e) => preventMousedownTriggerBlur(e)}
-                        onClick={(e) => {clearValue(e)}}
-                    >
-                        <SvgIcon type={Icon.Clear} fillClass="clear-input-icon-fill" />
+                value &&
+                <span
+                    className="input-addon clear-input-icon flex items-center leading-normal rounded rounded-l-none px-3"
+                    onMouseDown={(e) => preventMousedownTriggerBlur(e)}
+                    onClick={(e) => {
+                        clearValue(e)
+                    }}
+                >
+                        <SvgIcon type={Icon.Clear} fillClass="clear-input-icon-fill"/>
                     </span>}
                 {isLoading &&
                     <span className="input-addon flex items-center leading-normal rounded rounded-l-none px-3">
