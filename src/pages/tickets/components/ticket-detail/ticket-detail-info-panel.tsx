@@ -25,10 +25,12 @@ const TicketDetailInfoPanel = ({ticket, patient, contact}: TicketDetailInfoPanel
                 <Collapsible title={'ticket_detail.info_panel.ticket_info'} isOpen={true}>
                     <TicketDetailTicketInfo ticket={ticket}/>
                 </Collapsible>
-                <Collapsible title={'ticket_detail.info_panel.assigned_to'} isOpen={true}>
-                    <TicketDetailAssignee ticket={ticket}/>
-                </Collapsible>
             </div>
+        </div>
+        <div className='px-6'>
+            <Collapsible title={'ticket_detail.info_panel.assigned_to'} isOpen={true}>
+                <TicketDetailAssignee ticket={ticket}/>
+            </Collapsible>
         </div>
         <div className='border-b'>
             <div className='px-6'>

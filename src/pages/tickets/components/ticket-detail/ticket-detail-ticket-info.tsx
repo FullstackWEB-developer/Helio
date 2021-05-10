@@ -29,7 +29,7 @@ interface TicketInfoProps {
 const TicketDetailTicketInfo = ({ticket}: TicketInfoProps) => {
 
     const updateModel = useSelector(selectTicketUpdateModel);
-    const {handleSubmit, control, formState} = useForm({
+    const {handleSubmit, control} = useForm({
         defaultValues: updateModel
     });
     const dispatch = useDispatch();
@@ -54,9 +54,9 @@ const TicketDetailTicketInfo = ({ticket}: TicketInfoProps) => {
             tags: ticket.tags ? ticket.tags : []
         }));
     }
+
     useEffect(() => {
         generateTicketUpdateModel();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ticket]);
 
     const addFeedMutation = useMutation(addFeed, {
@@ -81,7 +81,6 @@ const TicketDetailTicketInfo = ({ticket}: TicketInfoProps) => {
                 message: 'ticket_detail.ticket_updated'
             }));
             setDirty(false);
-            resetForm();
         },
         onError: () => {
             dispatch(addSnackbarMessage({
@@ -92,7 +91,6 @@ const TicketDetailTicketInfo = ({ticket}: TicketInfoProps) => {
     });
 
     const onSubmit = () => {
-        console.log(formState.dirtyFields);
         ticketUpdateMutation.mutate({
             id: ticket.id!,
             ticketData: {
@@ -125,7 +123,7 @@ const TicketDetailTicketInfo = ({ticket}: TicketInfoProps) => {
         setDirty(true);
     }
 
-    if (!updateModel) {
+    if (!updateModel || ticketUpdateMutation.isLoading) {
         return <ThreeDots/>
     }
 
@@ -156,12 +154,12 @@ const TicketDetailTicketInfo = ({ticket}: TicketInfoProps) => {
                     />
 
                     <ControlledSelect
-                        name='ticketType'
+                        name='type'
                         label={'ticket_detail.info_panel.ticket_type'}
                         options={ticketTypeOptions}
                         value={updateModel.type}
                         control={control}
-                        onSelect={(option?: Option) => handleChangeItem('ticketType', option)}
+                        onSelect={(option?: Option) => handleChangeItem('type', option)}
                     />
                     {(reasonOptions.length > 0) &&
                     <ControlledSelect

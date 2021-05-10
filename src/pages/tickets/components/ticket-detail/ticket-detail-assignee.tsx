@@ -31,7 +31,7 @@ const TicketDetailAssignee = ({ticket}: TicketDetailAssigneeProps) => {
     useEffect(() => {
         const user = userList ? userList.find((o: Option) => o.value === ticket.assignee) : {} as any;
         setSelectedUser(user);
-    }, [selectedUser])
+    }, [ticket.assignee, userList])
 
     const updateAssigneeMutation = useMutation(setAssignee, {
         onSuccess: (data) => {
