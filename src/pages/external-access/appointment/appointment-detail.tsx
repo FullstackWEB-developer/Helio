@@ -16,6 +16,7 @@ import {selectSelectedAppointment} from '@pages/external-access/appointment/stor
 import {useDispatch, useSelector} from 'react-redux';
 import {selectDepartmentList, selectProviderList} from '@shared/store/lookups/lookups.selectors';
 import './appointment.scss';
+import {setRescheduleTimeFrame} from '@pages/external-access/appointment/store/appointments.slice';
 
 const AppointmentDetail = () => {
     const {t} = useTranslation();
@@ -23,6 +24,7 @@ const AppointmentDetail = () => {
     const dispatch = useDispatch();
     const callUsPhone = process.env.REACT_APP_CALL_US_PHONE;
     const chatLink = process.env.REACT_APP_CHAT_LINK;
+    const defaultTimeFrame = 7;
     const appointment = useSelector(selectSelectedAppointment);
     const departments = useSelector(selectDepartmentList);
     const providers = useSelector(selectProviderList);
@@ -39,6 +41,10 @@ const AppointmentDetail = () => {
             enabled: !!appointment
         }
     );
+
+    useEffect(() => {
+        dispatch(setRescheduleTimeFrame(appointmentType?.rescheduleTimeFrame || defaultTimeFrame));
+    }, [appointmentType?.rescheduleTimeFrame, dispatch]);
 
     const provider = providers?.find(a => a.id === appointment.providerId);
     const department = departments?.find(a => a.id === appointment.departmentId);

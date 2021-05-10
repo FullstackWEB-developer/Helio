@@ -325,16 +325,6 @@
       "error": "Error loading notes"
     }
   },
-  "reschedule_appointment": {
-    "select_appointment_to_reschedule": "Appointment to reschedule",
-    "start_date": "Start date",
-    "end_date": "End date",
-    "find_open_slots": "Find open slots",
-    "new_appointment": "Please select new appointment date",
-    "reschedule": "Reschedule now!",
-    "no_slots_found": "No open slot found for this range, please select any other date range.",
-    "appointment_rescheduled": "Appointment is rescheduled"
-  },
   "lab-results": {
     "label": "Lab results",
     "detail_display_item_status": "Status",
@@ -537,7 +527,9 @@
       "below_available_appointments": "Below are available appointments, starting with first available date.",
       "date": "Date",
       "confirm_reschedule_appointment": "Confirm Appointment",
-      "reschedule_appointment_error": "There is an error when reschedule appointment. "
+      "reschedule_appointment_error": "There is an error when reschedule appointment. ",
+      "no_slots_found": "No open slot found for this range, please select any other date range.",
+      "appointment_scheduled": "Thank you. Your appointment is scheduled."
     }
   },
   "contacts": {

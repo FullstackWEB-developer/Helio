@@ -10,17 +10,23 @@ import {
 } from '@pages/appointments/services/appointments.service';
 import {useHistory} from 'react-router-dom';
 import {
+    selectIsAppointmentRescheduled,
     selectSelectedAppointment,
     selectSelectedAppointmentSlot
 } from '@pages/external-access/appointment/store/appointments.selectors';
 import {useDispatch, useSelector} from 'react-redux';
 import {selectDepartmentList, selectProviderList} from '@shared/store/lookups/lookups.selectors';
 import {selectVerifiedPatent} from '@pages/patients/store/patients.selectors';
-import {setSelectedAppointment} from '@pages/external-access/appointment/store/appointments.slice';
+import {
+    setIsAppointmentRescheduled,
+    setSelectedAppointment
+} from '@pages/external-access/appointment/store/appointments.slice';
 import {Appointment} from '@pages/external-access/appointment/models/appointment.model';
 import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
 
 const AppointmentRescheduleConfirm = () => {
+    dayjs.extend(customParseFormat);
     const {t} = useTranslation();
     const history = useHistory();
     const dispatch = useDispatch();
@@ -28,6 +34,7 @@ const AppointmentRescheduleConfirm = () => {
     const appointment = useSelector(selectSelectedAppointment);
     const appointmentSlot = useSelector(selectSelectedAppointmentSlot);
     const departments = useSelector(selectDepartmentList);
+    const isAppointmentRescheduled = useSelector(selectIsAppointmentRescheduled);
     const providers = useSelector(selectProviderList);
     const [errorMessage, setErrorMessage] = useState('');
 
@@ -51,6 +58,7 @@ const AppointmentRescheduleConfirm = () => {
             const startDateTime = `${dayjs(newAppointment.date).format('YYYY-MM-DD')}T${newAppointment.startTime}`;
             newAppointment.startDateTime = dayjs(startDateTime).toDate();
             dispatch(setSelectedAppointment(newAppointment));
+            dispatch(setIsAppointmentRescheduled(true));
             history.push(`/o/appointment-rescheduled`);
         },
         onError: (error: AxiosError) => {
@@ -68,9 +76,6 @@ const AppointmentRescheduleConfirm = () => {
             patientId: verifiedPatient.patientId
         });
     }
-    const redirectToReschedule = () => {
-        history.push(`/o/appointment-reschedule`);
-    }
 
     return  <div className='2xl:px-48'>
         <div className='2xl:whitespace-pre 2xl:h-12 2xl:my-3 flex w-full items-center'>
@@ -78,10 +83,10 @@ const AppointmentRescheduleConfirm = () => {
                 {utils.formatUtcDate(appointmentSlot.date, 'dddd, MMM DD, YYYY')}
             </h4>
         </div>
-        <h5 className='pt-6 pb-2'>
-            {`${appointmentSlot.startTime} ${utils.formatUtcDate(appointmentSlot.date, 'A')}`}
+        <h5 className='pt-7 pb-2'>
+            {dayjs(appointmentSlot.startTime, 'HH:mm').format('h:mm A')}
         </h5>
-        {provider && <div className='pb-6'>
+        {provider && <div className='pb-8'>
             {t('external_access.appointments.withDoctor', {
                 name: provider.displayName
             })}
@@ -99,8 +104,11 @@ const AppointmentRescheduleConfirm = () => {
             {t('external_access.appointments.reschedule_appointment_error')} {errorMessage}
         </div>}
         <div className='pt-12 flex flex-col xl:flex-row xl:space-x-6 space-x-0 space-y-6 xl:space-y-0'>
-            <Button onClick={() => confirmAppointment()} buttonType='medium' label='external_access.appointments.confirm_reschedule_appointment' />
-            <Button onClick={() => redirectToReschedule()} buttonType='secondary' label='common.back' />
+            <Button onClick={() => confirmAppointment()}
+                    buttonType='medium'
+                    disabled={isAppointmentRescheduled}
+                    label='external_access.appointments.confirm_reschedule_appointment' />
+            <Button onClick={() => history.goBack()} buttonType='secondary' label='common.back' />
         </div>
     </div>
 }

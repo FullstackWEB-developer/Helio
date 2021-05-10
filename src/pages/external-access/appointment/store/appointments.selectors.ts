@@ -5,6 +5,16 @@ import {AppointmentSlot} from '@pages/external-access/appointment/models/appoint
 
 export const appointmentsState = (state: RootState) => state.externalAccessState.appointmentsState;
 
+export const selectIsAppointmentRescheduled = createSelector(
+    appointmentsState,
+    state => state.isAppointmentRescheduled as boolean
+)
+
+export const selectRescheduleTimeFrame = createSelector(
+    appointmentsState,
+    state => state.rescheduleTimeFrame as number
+)
+
 export const selectSelectedAppointment = createSelector(
     appointmentsState,
     items => items.selectedAppointment as Appointment

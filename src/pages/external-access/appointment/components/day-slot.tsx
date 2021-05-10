@@ -1,4 +1,5 @@
 import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
 import {AppointmentSlot} from '@pages/external-access/appointment/models/appointment-slot.model';
 import React, {useState} from 'react';
 import {useTranslation} from 'react-i18next';
@@ -13,6 +14,7 @@ export interface DaySlotsProps {
 }
 
 const DaySlots = ({date, column, startDate}: DaySlotsProps) => {
+    dayjs.extend(customParseFormat);
     const {t} = useTranslation();
     const dispatch = useDispatch();
     const history = useHistory();
@@ -27,14 +29,10 @@ const DaySlots = ({date, column, startDate}: DaySlotsProps) => {
         return slots.length > 0 && dayjs(slotsDate).isSame(startDate);
     }
 
-    const showMore = () => {
-        setDisplayMore(!displayMore);
-    }
-
     const getShowMore = () => {
-        return <div className='pb-4 2xl:pb-2 cursor-pointer' onClick={() => showMore()}>
-            <div className='appointment-list-item h-12 2xl:h-12 reschedule-slot px-4 flex flex-col 2xl:flex-row items-center justify-center'>
-                <div className='2xl:w-96 subtitle2'>
+        return <div className='pb-4 cursor-pointer' onClick={() => setDisplayMore(!displayMore)}>
+            <div className='appointment-list-item h-12 w-56 md:w-80 lg:w-32 reschedule-slot px-4 flex flex-col flex-row items-center justify-center'>
+                <div className='body2'>
                     {displayMore ? t('common.show_less') : t('common.show_more')}
                 </div>
             </div>
@@ -42,11 +40,11 @@ const DaySlots = ({date, column, startDate}: DaySlotsProps) => {
     }
 
     const getSlot = (slot: AppointmentSlot) => {
-        return <div key={slot.appointmentId} className='pb-4 md:w-full 2xl:pb-2 cursor-pointer'>
-            <div className='appointment-list-item h-12 2xl:h-12 md:reschedule-slot px-4 flex flex-col 2xl:flex-row items-center justify-center'
+        return <div key={slot.appointmentId} className='pb-4 md:w-full cursor-pointer'>
+            <div className='appointment-list-item h-12 w-56 md:w-80 lg:w-32 reschedule-slot px-4 flex flex-col flex-row items-center justify-center'
                  onClick={() => selectSlot(slot)}>
-                <div className='2xl:w-96 subtitle2'>
-                    {slot.startTime} {dayjs(date).format('A')}
+                <div className='body2'>
+                    {dayjs(slot.startTime, 'HH:mm').format('h:mm A')}
                 </div>
             </div>
         </div>

@@ -39,6 +39,7 @@ const AppointmentCancelation = () => {
     const appointment = useSelector(selectSelectedAppointment);
     const departments = useSelector(selectDepartmentList);
     const providers = useSelector(selectProviderList);
+    const maxSlots = 3;
     const [errorMessage, setErrorMessage] = useState('');
 
     useEffect(() => {
@@ -83,8 +84,8 @@ const AppointmentCancelation = () => {
         return ''
     }
 
-    const getCancellationReasonsOptions = (cancellationReasons: AppointmentCancelReason[] | undefined) => {
-        return cancellationReasons ? cancellationReasons.map((item: AppointmentCancelReason) => {
+    const getCancellationReasonsOptions = (reasons: AppointmentCancelReason[] | undefined) => {
+        return reasons ? reasons.map((item: AppointmentCancelReason) => {
             return {
                 value:  item.appointmentCancelReasonId.toString(),
                 label: item.name
@@ -172,7 +173,7 @@ const AppointmentCancelation = () => {
         </div>
         <div className='pb-6'>
             {
-                appointmentSlots?.map((slot) => {
+                appointmentSlots?.slice(0, maxSlots).map((slot) => {
                     return <div key={slot.appointmentId}
                                 className='cursor-pointer'
                                 onClick={() => selectSlot(slot)}>

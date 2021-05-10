@@ -8,6 +8,12 @@ const appointmentsSlice = createSlice({
     name: 'appointmentsSlice',
     initialState: initialAppointmentState,
     reducers: {
+        setIsAppointmentRescheduled(state, { payload }: PayloadAction<boolean>) {
+            state.isAppointmentRescheduled = payload;
+        },
+        setRescheduleTimeFrame(state, { payload }: PayloadAction<number>) {
+            state.rescheduleTimeFrame = payload;
+        },
         setSelectedAppointment(state, { payload }: PayloadAction<Appointment>) {
             state.selectedAppointment = payload;
         },
@@ -18,6 +24,8 @@ const appointmentsSlice = createSlice({
 });
 
 export const {
+    setIsAppointmentRescheduled,
+    setRescheduleTimeFrame,
     setSelectedAppointment,
     setSelectedAppointmentSlot
 } = appointmentsSlice.actions

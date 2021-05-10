@@ -27,8 +27,6 @@ const AppointmentRescheduled = () => {
         dispatch(getDepartments());
     }, [dispatch]);
 
-
-
     const {isLoading: isAppointmentTypesLoading, data: appointmentType} = useQuery<AppointmentType, AxiosError>([GetAppointmentType, appointment.appointmentTypeId], () =>
         getAppointmentTypeById(appointment.appointmentTypeId),
         {
@@ -51,6 +49,14 @@ const AppointmentRescheduled = () => {
     }
 
     return  <div className='2xl:px-48'>
+        <div className='2xl:whitespace-pre 2xl:h-12 2xl:my-3 flex w-full items-center'>
+            <h4>
+                {t('external_access.appointments.appointment_scheduled')}
+            </h4>
+        </div>
+        <div className='pt-9 pb-8'>
+            {t('external_access.appointments.see_appointment_details')}
+        </div>
         <div className='pb-2'>
             <h5>
                 {t('external_access.appointments.appointment_date', {
@@ -59,9 +65,9 @@ const AppointmentRescheduled = () => {
                 })}
             </h5>
         </div>
-        <h5 className='pb-2 appointment-type'>
+        <h6 className='pb-2 appointment-type'>
             {appointment.appointmentType}
-        </h5>
+        </h6>
         {provider && <div className='pb-6'>
             {t('external_access.appointments.withDoctor', {
                 name: provider.displayName
@@ -78,7 +84,7 @@ const AppointmentRescheduled = () => {
         </div>
 
         {appointmentType?.instructions && <>
-                <div className='pt-10 xl:pt-20'>
+                <div className='pt-10'>
                     {t('external_access.appointments.instructions')}
                 </div>
                 <div className='border-b pt-2'/>
