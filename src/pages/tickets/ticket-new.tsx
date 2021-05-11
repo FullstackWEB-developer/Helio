@@ -167,7 +167,7 @@ const TicketNew = () => {
             }
             setPatientName(`${patient.firstName} ${patient.lastName}`);
             patientIdRef.current = patientId;
-        } catch (error) {
+        } catch {
             setError('patientId', {type: 'notFound', message: t('ticket_new.patient_id_not_found')});
         } finally {
             setPatientIdLoading(false);
@@ -188,12 +188,12 @@ const TicketNew = () => {
                 }
             } else {
                 const patientActionNotes = await getPatientActionNotes(Number(patientCaseId));
-                if (!patientActionNotes || patientActionNotes.length < 1) {
+                if (!patientActionNotes) {
                     throw new Error();
                 }
             }
             patientCaseIdRef.current = patientCaseId;
-        } catch (error) {
+        } catch {
             setError('patientCaseNumber', {type: 'notFound', message: t('ticket_new.patient_case_id_not_found')});
         } finally {
             setPatientCaseIdLoading(false);
@@ -201,11 +201,13 @@ const TicketNew = () => {
     }
 
     const onPatientCaseIdChanged = (value: string) => {
+        patientCaseIdRef.current = '';
         setPatientCaseId(value);
         clearErrors('patientCaseNumber');
     }
 
     const onPatientIdChanged = (value: string) => {
+        patientIdRef.current = '';
         setPatientId(value);
         setPatientName('');
         clearErrors('patientId');

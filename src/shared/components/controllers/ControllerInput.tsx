@@ -11,7 +11,12 @@ export class InputTypes {
     static Zip = new RegExp('^\\d{5}(?:[-\\s]\\d{4})?$');
 }
 
-const blockNumericInvalidChar = (event: React.KeyboardEvent<HTMLInputElement>) => isNaN(Number(event.key))  && event.preventDefault();
+const blockNumericInvalidChar = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    const invalidChars = ['-', '+', 'e'];
+    if (invalidChars.includes(event.key)) {
+        event.preventDefault();
+    }
+}
 
 export interface ControllerInputProps {
     control: Control;
