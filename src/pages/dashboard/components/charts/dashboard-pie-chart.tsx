@@ -12,9 +12,9 @@ const DashboardPieChart = ({data}: DashboardPieChartProps) => {
         margin={{top: 32}}
         innerRadius={0.60}
         colors={d => getPieChartColor(d.data)}
-        enableRadialLabels={false}
+        enableArcLabels={false}
         isInteractive={true}
-        enableSliceLabels={false}
+        enableArcLinkLabels={false}
     />
 }
 

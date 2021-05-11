@@ -1,5 +1,4 @@
-import React, {useState} from 'react';
-import {useTranslation} from 'react-i18next';
+import React, {useEffect, useState} from 'react';
 import {useHistory} from 'react-router-dom';
 import {keyboardKeys} from '@components/search-bar/constants/keyboard-keys';
 import {useDispatch, useSelector} from 'react-redux';
@@ -13,16 +12,23 @@ import './tickets.scss';
 import SvgIcon from '@components/svg-icon/svg-icon';
 import {Icon} from '@components/svg-icon/icon';
 import SearchInputField from '@components/search-input-field/search-input-field';
+import * as queryString from 'querystring';
 
 const TicketsSearch = () => {
-    const {t} = useTranslation();
     const dispatch = useDispatch();
     const history = useHistory();
     const ticketFilter: TicketQuery = useSelector(selectTicketFilter);
     const paging: Paging = useSelector(selectTicketsPaging);
 
     const [searchTerm, setSearchTerm] = useState('');
-    
+
+    useEffect(() => {
+        let queries = queryString.parse(history.location.search);
+        if (queries.searchTerm) {
+            setSearchTerm(queries.searchTerm.toString());
+        }
+    }, [history.location.search]);
+
     const searchList = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === keyboardKeys.enter) {
             const query: TicketQuery = {

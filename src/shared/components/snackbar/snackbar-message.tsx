@@ -38,7 +38,7 @@ const SnackbarMessage = ({message, position}: SnackbarMessageProps) => {
     }
 
     return <div key={message.id!}
-                className={` pl-4 py-3 shadow-lg snackbar-message-body overflow-hidden relative rounded-md snackbar-position-${position}`}>
+                className={`pl-4 py-3 snackbar-message-body overflow-hidden relative rounded-md snackbar-position-${position}`}>
         <div className='flex flex-row'>
 
             {message.type && message.type !== SnackbarType.Info && <div className='pr-2'><SvgIcon
@@ -49,7 +49,7 @@ const SnackbarMessage = ({message, position}: SnackbarMessageProps) => {
                 {t(message.message)}
             </div>
 
-            {message.onButtonClick && message.buttonTitle && <div className='pr-4'>
+            {message.onButtonClick && message.buttonTitle && <div className='px-4'>
                 <Button className='secondary-button-snackbar' buttonType='secondary' label={t(message.buttonTitle)}
                         onClick={() => buttonClicked()}/>
             </div>}

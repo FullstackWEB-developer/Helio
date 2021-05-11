@@ -385,13 +385,12 @@
       "call_home": "Call Home",
       "call_work": "Call Work",
       "send_sms": "Send SMS",
+      "call_failed": "Failed to call phone number {{phone}}",
       "send_email": "Email",
       "archive_confirmation_title": "Archive ticket?",
       "archive_confirmation_message": "Archived tickets can be accessed by checking “Show Archived” filter in tickets.",
-      "solve_confirmation_title": "Solve ticket?",
-      "solve_confirmation_message": "Are you sure you want to solve ticket?",
-      "close_confirmation_title": "Close ticket?",
-      "close_confirmation_message": "Are you sure you want to close ticket?"
+      "archived_successfully": "Ticket archived successfully",
+      "archive_fail": "Ticket archive failed"
     },
     "info_panel": {
       "ticket_info": "Ticket Info",

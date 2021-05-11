@@ -10,13 +10,14 @@ import {TicketListQueryType} from '../models/ticket-list-type';
 import {TicketStatuses} from '@pages/tickets/models/ticket.status.enum';
 import {Option} from '@components/option/option';
 import {TicketUpdateModel} from '@pages/tickets/models/ticket-update.model';
+import {TicketQuery} from '@pages/tickets/models/ticket-query';
 
 export const ticketState = (state: RootState) => state.ticketState;
 
 export const selectTickets = (state: RootState) => state.ticketState.tickets as Ticket[];
 
 export const selectTicketsPaging = (state: RootState) => state.ticketState.paging as Paging;
-export const selectTicketFilter = (state: RootState) => state.ticketState.ticketFilter;
+export const selectTicketFilter = (state: RootState) => state.ticketState.ticketFilter as TicketQuery;
 export const selectTicketQueryType = (state: RootState): TicketStatuses =>
     state.ticketState.ticketListQueryType || TicketListQueryType.AllTicket;
 export const selectSearchTerm = (state: RootState) => state.ticketState.searchTerm;

@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import React, {useEffect, useState} from 'react';
+import {useTranslation} from 'react-i18next';
 import './search-input-field.scss';
-import { Icon } from '@components/svg-icon/icon';
+import {Icon} from '@components/svg-icon/icon';
 import SvgIcon from '@components/svg-icon/svg-icon';
 import customHooks from '@shared/hooks/customHooks';
 
@@ -19,7 +19,7 @@ interface SearchInputProps {
     shouldDisplayAutocomplete?: boolean
 }
 const SearchInputField = React.forwardRef<HTMLInputElement, SearchInputProps>((props: SearchInputProps, ref) => {
-    const { t } = useTranslation();
+    const {t} = useTranslation();
     const [isFocused, setIsFocused] = useState(false);
     const [value, setValue] = useState('');
     const innerRef = customHooks.useCombinedForwardAndInnerRef(ref);
@@ -27,9 +27,10 @@ const SearchInputField = React.forwardRef<HTMLInputElement, SearchInputProps>((p
         if (props.value) {
             setValue(props.value);
         }
-    }, []);
+    }, [props.value]);
+
     useEffect(() => {
-        if(!props.value?.length){
+        if (!props.value?.length) {
             setValue('');
         }
     }, [props.value])

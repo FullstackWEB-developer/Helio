@@ -1,7 +1,12 @@
-import React, {useEffect, useState, useRef} from 'react';
+import React, {useEffect, useState} from 'react';
 import {getList} from './services/tickets.service';
 import {useDispatch, useSelector} from 'react-redux';
-import {selectSearchTerm, selectTicketFilter, selectTicketQueryType, selectTicketsPaging} from './store/tickets.selectors';
+import {
+    selectSearchTerm,
+    selectTicketFilter,
+    selectTicketQueryType,
+    selectTicketsPaging
+} from './store/tickets.selectors';
 import {useTranslation} from 'react-i18next';
 import {keyboardKeys} from '@components/search-bar/constants/keyboard-keys';
 import {Paging} from '@shared/models/paging.model';

@@ -4,11 +4,12 @@
   position: relative;
   overflow: hidden;
   min-width: 21rem;
-  box-shadow: var(--snackbar-button-shadow);
+  box-shadow: var(--snackbar-message-shadow);
 }
 
 .snackbar-close-button {
   padding-right: 1.125rem;
+  box-shadow: var(--snackbar-button-shadow);
 
   &-fill {
     fill: var(--color-white);

@@ -1,11 +1,11 @@
-import { Paging } from '../../../shared/models/paging.model';
+import {Paging} from '@shared/models/paging.model';
 
 export interface TicketQuery extends Paging {
     searchTerm?: string;
     ticketNumber?: number;
     statuses?: number[];
-    fromDate?: Date;
-    toDate?: Date;
+    fromDate?: string;
+    toDate?: string;
     priority?: number;
     channels?: number[];
     ticketTypes?: number[];

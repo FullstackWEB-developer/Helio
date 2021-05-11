@@ -100,11 +100,11 @@ const TicketFilter = () => {
         if (values.timePeriod) {
             if (values.timePeriod === timePeriod_DateRange) {
                 if (values.fromDate) {
-                    query.fromDate = dayjs(values.fromDate).utc(true).toDate();
+                    query.fromDate = dayjs(values.fromDate).utc(true).format('YYYY-MM-DD');
                 }
 
                 if (values.toDate) {
-                    query.toDate = dayjs(values.toDate).utc(true).toDate();
+                    query.toDate = dayjs(values.toDate).utc(true).format('YYYY-MM-DD');
                 }
             } else {
                 values.fromDate = undefined;
@@ -121,7 +121,7 @@ const TicketFilter = () => {
                         date = date.subtract(30, 'day').startOf('day')
                         break;
                 }
-                query.fromDate = date.toDate();
+                query.fromDate = date.format('YYYY-MM-DD');
             }
         }
 
@@ -281,6 +281,7 @@ const TicketFilter = () => {
         setformVisible(false);
         setTimeout(() => {
             setformVisible(true);
+            fetchTickets({});
         }, 0);
     }
 

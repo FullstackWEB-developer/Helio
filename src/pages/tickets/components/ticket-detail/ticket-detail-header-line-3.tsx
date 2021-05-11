@@ -57,9 +57,9 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
     });
 
     const confirmProcess = () => {
-        setConfirmationTitle('ticket_detail.header.close_confirmation_title');
-        setConfirmationMessage('ticket_detail.header.close_confirmation_message');
-        setConfirmationOkButtonLabel('ticket_detail.header.close');
+        setConfirmationTitle('ticket_detail.header.archive_confirmation_title');
+        setConfirmationMessage('ticket_detail.header.archive_confirmation_message');
+        setConfirmationOkButtonLabel('ticket_detail.header.archive');
         setDisplayConfirmation(true);
     }
 
@@ -77,7 +77,7 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
     }
 
     const displayCall = () => {
-        if (patient?.mobilePhone || contact?.mobilePhone) {
+        if (patient?.mobilePhone || contact?.mobilePhone || ticket.originationNumber) {
             return 'mobile';
         } else if (patient?.homePhone) {
             return 'home';
@@ -92,7 +92,9 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
         setSelectedPhoneToCall(type);
         setDisplayPhoneDropdown(false);
         let phoneNumber = '';
-        if (patient) {
+        if (ticket.originationNumber) {
+            phoneNumber = ticket.originationNumber;
+        } else if (patient) {
             phoneNumber = type === PhoneType.Mobile ? patient.mobilePhone : patient.homePhone;
         } else if (contact) {
             phoneNumber = type === PhoneType.Mobile ? contact.mobilePhone : contact.workMainPhone;
@@ -101,6 +103,10 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
             const endpoint = connect.Endpoint.byPhoneNumber(phoneNumber);
             window.CCP.agent.connect(endpoint, {
                 failure: (e: any) => {
+                    dispatch(addSnackbarMessage({
+                        type: SnackbarType.Error,
+                        message: t('ticket_detail.header.call_failed', {phone: phoneNumber})
+                    }));
                     logger.error('Cannot make a call to patient / contact: ' + phoneNumber, e);
                 }
             })
@@ -109,7 +115,17 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
 
     const archiveTicketMutation = useMutation(setDelete, {
         onSuccess: () => {
+            dispatch(addSnackbarMessage({
+                type: SnackbarType.Success,
+                message: t('ticket_detail.header.archived_successfully')
+            }));
             history.push(TicketsPath);
+        },
+        onError: () => {
+            dispatch(addSnackbarMessage({
+                type: SnackbarType.Error,
+                message: t('ticket_detail.header.archive_fail')
+            }));
         }
     });
 
@@ -161,11 +177,9 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
     }
 
     const getCallablePhoneListCallback = useCallback(() => {
-
         const items: DropdownItemModel[] = [];
 
         if (patient) {
-
             if (patient.mobilePhone) {
                 setSelectedPhoneToCall(PhoneType.Mobile)
             } else if (patient.homePhone) {
@@ -209,6 +223,8 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
                 } as DropdownItemModel);
             }
             setPhoneDropdownList(items);
+        } else if (ticket.originationNumber && ticket.originationNumber.length > 0) {
+            setSelectedPhoneToCall(PhoneType.Mobile);
         }
     }, [PhoneType.Home, PhoneType.Mobile, PhoneType.Work, callRelated, patient, contact, selectedPhoneToCall]);
 
