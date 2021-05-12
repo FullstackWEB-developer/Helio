@@ -2,51 +2,57 @@ import Button from '@components/button/button';
 import SearchInputField from '@components/search-input-field/search-input-field';
 import ContactListItem from './contact-list-item';
 import ContactListLetter from './contact-list-letter';
-import React, {useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {Contact} from '@shared/models/contact.model';
+import {ContactBase, ContactExtended} from '@shared/models/contact.model';
 import {Icon} from '@components/svg-icon/icon';
 import ThreeDots from '@components/skeleton-loader/skeleton-loader';
-
-
+import {ContactType} from '@shared/models/contact-type.enum';
 interface ContactListProps {
-    contacts: Contact[],
-    onContactSelect: (c: Contact) => void,
+    contacts: ContactExtended[],
+    onContactSelect: (c: ContactExtended) => void,
     handleAddNewContactClick: () => void,
     currentlySelected?: string,
     fetchMore: () => void,
-    isFetchingNextPage: boolean
+    isFetchingNextPage: boolean,
+    isFetching: boolean,
+    searchValue: string,
+    searchHandler: (value: string) => void
 }
-const ContactList = ({contacts, onContactSelect, currentlySelected, fetchMore, isFetchingNextPage, handleAddNewContactClick}: ContactListProps) => {
+const ContactList = ({contacts, onContactSelect, currentlySelected, fetchMore, isFetching, isFetchingNextPage, handleAddNewContactClick, ...props}: ContactListProps) => {
     const {t} = useTranslation();
-    const [searchTerm, setSearchTerm] = useState('');
-    let [filteredContacts, setFilteredContacts] = useState<Contact[]>();
 
-    const getFirstChar = (s: string) => {
-        return s.trim()?.charAt(0);
+    const getFirstChar = (c: ContactBase) => {
+        const isCompany = c.type === ContactType.Company;
+        const firstChar = isCompany ? c.companyName?.trim()?.charAt(0) : c.firstName?.trim()?.charAt(0);
+        return firstChar ?? '';
     }
 
     const renderList = () => {
-        let body: any = [];
-        (filteredContacts || contacts).forEach((c, index) => {
-            body.push(<ContactListItem key={index} contact={c} onSelect={onContactSelect} selected={c.id === currentlySelected} />);
-            if (index < (filteredContacts || contacts).length - 1 && !searchTerm) {
-                let nextLetter = getFirstChar(contacts[index + 1].name);
-                if (getFirstChar(c.name) !== nextLetter) {
-                    body.push(<ContactListLetter key={`letter-${nextLetter}`} letter={nextLetter} />)
+        const body: React.ReactNode[] = [];
+        if (!contacts || contacts.length === 0) {
+            body.push(<div className='subtitle3-small w-full text-center mt-5'>{t('contacts.contact-list.no_results')}</div>);
+        }
+        contacts.forEach((c, index) => {
+            if (index === 0) {
+                const firstLetter = getFirstChar(c);
+                body.push(<ContactListLetter key={`letter-${firstLetter}${index}`} letter={firstLetter} />);
+            }
+
+            body.push(<ContactListItem key={c.id} contact={c} onSelect={onContactSelect} selected={c.id === currentlySelected} />);
+
+            if (index < contacts.length - 1 && !props.searchValue.length) {
+                const nextLetter = getFirstChar(contacts[index + 1]);
+                if (getFirstChar(c) !== nextLetter) {
+                    body.push(<ContactListLetter key={`letter-${nextLetter}${index}`} letter={nextLetter} />)
                 }
             }
         });
+        body.push(<div key={`loading-container`} className={`${!isFetchingNextPage ? 'in' : ''}visible`}><ThreeDots className='w-72 h-10' /></div>);
         return body;
-    }
-    const renderFirstLetterComponent = () => {
-        const firstLetterToRender = searchTerm && searchTerm.trim().length > 0 ? getFirstChar(searchTerm.trim()).toUpperCase() : 'A';
-        return <ContactListLetter key={`letter-${firstLetterToRender}`} letter={`${firstLetterToRender}`} />
     }
 
     const handleSearch = (value: string) => {
-        setSearchTerm(value);
-        setFilteredContacts(contacts.filter(c => c.name.toLowerCase().includes(value.toLowerCase())));
+        props.searchHandler(value);
     }
 
     const handleScroll = (event: any) => {
@@ -57,24 +63,19 @@ const ContactList = ({contacts, onContactSelect, currentlySelected, fetchMore, i
     }
 
     return (
-        <div className="w-72 overflow-x-hidden relative flex flex-col contact-list-section overflow-y-auto" onScroll={(e) => handleScroll(e)}>
+        <div className="w-72 overflow-x-hidden relative flex flex-col contact-list-section" >
             <div className="w-full border-b">
                 <div className="w-24 py-3 pl-4">
                     <Button buttonType='small' label={t('contacts.contact-list.add')} icon={Icon.AddContact} onClick={handleAddNewContactClick} />
                 </div>
             </div>
-            <SearchInputField wrapperClassNames="h-12" onChange={handleSearch} value={searchTerm} placeholder={`${t('contacts.contact-list.search')}`} />
-            {
-                renderFirstLetterComponent()
-            }
-            <div className="relative max-w-full">
+            <SearchInputField wrapperClassNames="h-12" onChange={handleSearch} value={props.searchValue} placeholder={`${t('contacts.contact-list.search')}`} />
+            <div className="relative max-w-full overflow-y-auto overflow-x-hidden" onScroll={(e) => handleScroll(e)}>
                 {
-                    renderList().map((element: any) => element)
+                    isFetching && !isFetchingNextPage ? <ThreeDots className='w-72' /> :
+                        renderList().map((element: any) => element)
                 }
             </div>
-            {
-                isFetchingNextPage && <ThreeDots />
-            }
         </div>
     );
 }

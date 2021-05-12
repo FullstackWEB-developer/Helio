@@ -10,7 +10,7 @@ export enum ContactCategory {
 
 const translate = getI18n();
 
-export const getCategoryName = (category: ContactCategory) => {
+export const getCategoryName = (category: ContactCategory | Option) => {
     switch (category) {
         case ContactCategory.Hospitals:
             return translate.t('contacts.category.hospitals');
@@ -25,7 +25,7 @@ export const getCategoryName = (category: ContactCategory) => {
     }
 }
 
-export const createCategorySelectOptions = (): Option[] => {
+export const createCategorySelectOptions = () :Option[] => {
     return [
         {value: String(ContactCategory.Hospitals), label: translate.t('contacts.category.hospitals')},
         {value: String(ContactCategory.Pharmacies), label: translate.t('contacts.category.pharmacies')},

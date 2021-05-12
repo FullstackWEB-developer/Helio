@@ -16,6 +16,8 @@ export const GetPatientClinical = 'get-patient-clinical';
 export const GetPatientInsurance = 'get-patient-insurance';
 export const GetPatientSummary = 'get-patient-summary';
 export const GetDashboard = 'get-dashboard';
-
+export const QueryContactsInfinite = 'contacts';
 export const QueryContacts = 'query-contacts';
 export const OneMinute = 60000;
+export const QueryContactNotes = 'contact-notes';
+export const QueryCompanyContacts = 'company-contacts';

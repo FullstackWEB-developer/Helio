@@ -8,7 +8,7 @@ export interface ControlledSelectProps {
     name: string;
     control: Control;
     label?: string;
-    value?: Option;
+    value?: Option | string;
     searchQuery?: string;
     options: Option[];
     order?: boolean;
@@ -20,19 +20,19 @@ export interface ControlledSelectProps {
 }
 
 const ControlledSelect = ({
-                              control,
-                              options,
-                              name,
-                              label,
-                              value,
-                              searchQuery,
-                              order,
-                              assistiveText,
-                              disabled,
-                              onSelect,
-                              onTextChange,
-                              required = false
-                          }: ControlledSelectProps) => {
+    control,
+    options,
+    name,
+    label,
+    value,
+    searchQuery,
+    order,
+    assistiveText,
+    disabled,
+    onSelect,
+    onTextChange,
+    required = false
+}: ControlledSelectProps) => {
     const onSelected = (controllerProps: ControllerRenderProps, option?: Option) => {
         if (option) {
             if (onSelect) {

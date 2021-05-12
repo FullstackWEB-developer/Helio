@@ -1,4 +1,4 @@
-import {ContactAvatarModel} from '../models/ContactAvatarModel';
+import {ContactAvatarModel} from '../models/contact-avatar-model';
 import './contact-avatar.scss';
 import SvgIcon from '@components/svg-icon/svg-icon';
 export interface ContactAvatarProps {

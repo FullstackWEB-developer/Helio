@@ -1,19 +1,25 @@
 import React from 'react';
-import {ContactAvatarModel} from '../models/ContactAvatarModel';
-import {Contact} from '@shared/models/contact.model';
+import {ContactAvatarModel} from '../models/contact-avatar-model';
+import {ContactExtended} from '@shared/models/contact.model';
 import ContactHeaderQuickActions from './contact-header-quick-actions';
 import {Icon} from '@components/svg-icon/icon';
 import ContactAvatar from './contact-avatar';
+import {ContactType} from '@shared/models/contact-type.enum';
+import utils from '@shared/utils/utils';
 interface ContactHeaderProps {
-    contact: Contact,
+    contact: ContactExtended,
     editMode: boolean,
-    editIconClickHandler?: () => void
+    editIconClickHandler?: () => void,
+    starIconClickHandler?: () => void,
+    deleteIconClickHandler?: () => void,
+    isLoading: boolean
 }
-const ContactHeader = ({contact, editMode, editIconClickHandler}: ContactHeaderProps) => {
+const ContactHeader = ({contact, editMode, editIconClickHandler, starIconClickHandler, isLoading, deleteIconClickHandler}: ContactHeaderProps) => {
+    const isCompany = contact.type === ContactType.Company;
     const avatarModel: ContactAvatarModel = {
-        initials: contact.name.trim().split(' ').map(name => name.charAt(0)).join(''),
+        initials: !isCompany ? `${utils.getInitialsFromFullName(`${contact.firstName} ${contact.lastName}`)}` : '',
         className: 'h-24 w-24',
-        isCompany: contact.isCompany,
+        isCompany,
         iconClassName: 'icon-large-40',
         iconFillClass: 'company-avatar-color',
         iconType: Icon.Company
@@ -23,15 +29,17 @@ const ContactHeader = ({contact, editMode, editIconClickHandler}: ContactHeaderP
             <div className="flex items-start">
                 <ContactAvatar model={avatarModel} />
                 <div className="flex flex-col pl-6">
-                    <h4>{contact.name}</h4>
+                    <h4>{isCompany ? contact.companyName : `${contact.firstName} ${contact.lastName}`}</h4>
                     {
-                        !contact.isCompany && <div className="pt-3 contact-light">Manager at Advantage MRI</div>
+                        !isCompany && (contact.description || contact.jobTitle) && <div className="pt-3 contact-light">{contact.description || contact.jobTitle}</div>
                     }
                 </div>
 
             </div>
-            <ContactHeaderQuickActions editMode={editMode} editIconClickHandler={editIconClickHandler} />
-        </div>
+            <ContactHeaderQuickActions contact={contact} editMode={editMode}
+                starIconClickHandler={starIconClickHandler} editIconClickHandler={editIconClickHandler}
+                deleteIconClickHandler={deleteIconClickHandler} isLoading={isLoading} />
+        </div >
     )
 }
 

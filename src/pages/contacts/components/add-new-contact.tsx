@@ -2,43 +2,71 @@ import Radio from '@components/radio/radio';
 import {Option} from '@components/option/option';
 import React, {useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {ContactType} from '../models/ContactType';
+import {ContactType} from '../../../shared/models/contact-type.enum';
 import ContactForm from './contact-form';
 import SvgIcon from '@components/svg-icon/svg-icon';
 import {Icon} from '@components/svg-icon/icon';
-
+import {useMutation} from 'react-query';
+import ThreeDots from '@components/skeleton-loader/skeleton-loader';
+import {ContactFormModel} from '../models/contact-form.model';
+import {createNewContact} from '@shared/services/contacts.service';
+import {ContactExtended} from '@shared/models/contact.model';
+import {mapContactFormModelToDto} from '../contact-helpers/helpers';
 interface AddNewContactProps {
-    contactType?: ContactType
+    contactType?: ContactType,
+    onContactAddSuccess: (contact: ContactExtended) => void;
+    onContactAddError?: () => void;
+    closeAddNewContactForm: () => void;
 }
-const AddNewContact = ({contactType}: AddNewContactProps) => {
-    const [contactTypeRadio, setContactTypeRadio] = useState<ContactType>(contactType ?? ContactType.Individual);
+const AddNewContact = ({contactType = ContactType.Individual, onContactAddSuccess, onContactAddError, closeAddNewContactForm}: AddNewContactProps) => {
+    const [contactTypeRadio, setContactTypeRadio] = useState<number>(contactType);
+    const [addToFavorites, setAddToFavorites] = useState(false);
     const {t} = useTranslation();
-    const onContactTypeChange = (value: string) => {
-        setContactTypeRadio(Number(value));
-    }
+
     const newContactTypeOptions: Option[] = [
         {value: String(ContactType.Company), label: `${t('contacts.new-contact.company')}`},
         {value: String(ContactType.Individual), label: `${t('contacts.new-contact.individual')}`}
-    ]
+    ];
+
+
+    const {isLoading, isError, mutate} = useMutation(createNewContact,
+        {
+            onSuccess: (data) => onContactAddSuccess(data),
+            onError: () => onContactAddError && onContactAddError()
+        });
+
+    const onSubmit = (formData: ContactFormModel) => {
+        const contactDto = mapContactFormModelToDto(formData, contactTypeRadio, undefined, addToFavorites);
+        mutate(contactDto);
+    };
+
+    const onContactTypeChange = (value: string) => setContactTypeRadio(Number(value));
+    const onClose = () => closeAddNewContactForm();
+    const toggleFavorite = () => setAddToFavorites(!addToFavorites);
+
+    if (isLoading) {
+        return <ThreeDots />
+    }
+
     return (
         <div className='h-full w-full overflow-y-auto px-8 pt-7 flex flex-col'>
             <div className="flex justify-between items-center mb-10">
                 <h4>{t('contacts.new-contact.header')}</h4>
                 <div className='flex'>
-                    <div className="pr-6"><SvgIcon type={Icon.Star} className='cursor-pointer'
-                                                   fillClass='contact-header-quick-action-color'/></div>
+                    <div className="pr-6" onClick={toggleFavorite}><SvgIcon type={Icon.Star} className='cursor-pointer'
+                        fillClass={`contact-header-quick-action-color${!addToFavorites ? '' : '-starred'}`} /></div>
                     <div className="pr-6"><SvgIcon type={Icon.Save} className='cursor-pointer'
-                                                   fillClass='contact-header-quick-action-color'/></div>
-                    <div className="pr-6"><SvgIcon type={Icon.Delete} className='cursor-pointer'
-                                                   fillClass='contact-header-quick-action-color'/></div>
+                        fillClass='contact-header-quick-action-color' /></div>
+                    <div className="pr-6" onClick={onClose}><SvgIcon type={Icon.Delete} className='cursor-pointer'
+                        fillClass='contact-header-quick-action-color' /></div>
                 </div>
             </div>
-            <div className='body2 mb-6'>{t('contacts.new-contact.select_type')}</div>
-            <Radio name='new-contact-type' className='flex space-x-8' defaultValue={contactTypeRadio.toString()}
-                   items={newContactTypeOptions} onChange={onContactTypeChange}/>
-            <ContactForm contactType={contactTypeRadio}/>
+            {isError && <h6 className='text-danger mt-2 mb-5'>{t('contacts.new-contact.add_fail')}</h6>}
+            <div className='body2 mb-6 pointer-events-none'>{t('contacts.new-contact.select_type')}</div>
+            <Radio name='new-contact-type' className='flex space-x-8' defaultValue={String(contactTypeRadio)} items={newContactTypeOptions} onChange={onContactTypeChange} />
+            <ContactForm contactType={contactTypeRadio} submitHandler={onSubmit} closeHandler={onClose} editMode={false} />
         </div>
-    )
+    );
 }
 
 export default AddNewContact;

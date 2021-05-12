@@ -24,6 +24,23 @@
     .input-addon {
       background-color: var(--input-focus-background-color);
     }
+    .options {    
+      top: 100%;
+      left: 0;
+      right: 0;
+      background-color: var(--color-white);
+      z-index: 999;
+      box-shadow: var(--select-box-shadow);
+      min-width: 12rem;
+      border-radius: 0.188rem;
+      overflow-y: auto;
+      max-height: 29rem;
+    } 
+    .options-visible {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: all;
+    }
   }
 
   label {

@@ -25,7 +25,7 @@ const ContactInfoField = ({label, value, icon, appendix, appendixLabel, appendix
                 {icon && <div className='pr-1'><SvgIcon fillClass='contact-light-fill' className='cursor-pointer' type={icon} onClick={handleClick} /></div>}
                 {value}
                 {
-                    appendix && appendixLabel && <span className='contact-light pl-4'>{appendixLabel}</span>
+                    appendix && appendixLabel && appendixValue && <span className='contact-light pl-4'>{appendixLabel}</span>
 
                 }
                 {

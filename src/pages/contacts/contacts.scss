@@ -22,6 +22,9 @@
 }
 .contact-header-quick-action-color {
     fill: var(--search-icon);
+    &-starred {
+        fill: var(--color-yellow);
+    }
 }
 .contact-light {
     color: var(--light-text-medium-emphasis);
@@ -43,4 +46,7 @@
 }
 .contact-ticket-label {
     color: var(--contact-tickets-bold-color);    
+}
+.secondary-contact-form-btn {
+    width: 6.5rem;
 }

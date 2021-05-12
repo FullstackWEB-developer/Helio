@@ -20,7 +20,8 @@
     "search": "Search",
     "processing": "Processing",
     "remove": "Remove",
-    "back": "Back"
+    "back": "Back",
+    "autocomplete_search": "Start typing to see the results..."
   },
   "login": {
     "loginButton": "Login"
@@ -54,7 +55,7 @@
     "channel": "Channel",
     "subject": "Subject",
     "id": "Id",
-    "due_in":"Due In",
+    "due_in": "Due In",
     "status": "Status",
     "priority_label": "Priority",
     "ticket_type": "Ticket Type",
@@ -546,13 +547,31 @@
     },
     "contact-list": {
       "add": "Add",
-      "search": "Search contacts"
+      "search": "Search contacts",
+      "no_results": "No contacts found"
     },
     "contact-details": {
       "details": "Details",
       "notes": "Notes",
       "tickets": "Tickets",
       "enter_note": "Enter your note",
+      "error_fetching_contact": "Contact not found",
+      "error_updating_contact": "Error updating contact",
+      "error_deleting_contact": "Error deleting contact",
+      "confirm_delete_title": "Are you sure you want to delete {{contact}}?",
+      "confirm_delete_yes": "Delete",
+      "error_favorite_contact": "Error (un)favoriting contact",
+      "error_adding_note": "Error adding note for contact",
+      "error_dialing_phone": "Error dialing phone",
+      "company_search_placeholder": "Start typing a company name to see available companies...",
+      "contact_deleted": "Contact has been deleted",
+      "contact_updated": "Contact has been updated",
+      "contact_created": "Contact has been created",
+      "set_star": "",
+      "error_deleted_contact": "Contact delete failed",
+      "error_updated_contact": "Contact update failed",
+      "error_created_contact": "Contact created failed",
+      "error_set_star": "",
       "individual": {
         "company": "Company Name",
         "category": "Category",
@@ -588,7 +607,8 @@
       "select_type": "Select Contact Type",
       "company": "Company",
       "individual": "Individual",
-      "add_more": "Add More"
+      "add_more": "Add More",
+      "add_fail": "Error adding contact"
     }
   },
   "dashboard": {

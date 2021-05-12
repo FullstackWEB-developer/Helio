@@ -3,6 +3,7 @@ import {Control} from 'react-hook-form/dist/types/form';
 import Input from '@components/input/input';
 import {useTranslation} from 'react-i18next';
 import React from 'react';
+import {Option} from '@components/option/option';
 import {Icon} from '@components/svg-icon/icon';
 
 export class InputTypes {
@@ -37,6 +38,12 @@ export interface ControllerInputProps {
     onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
     onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
     dropdownIcon?: Icon
+    autosuggestDropdown?: boolean;
+    autosuggestOptions?: Option[];
+    onDropdownSuggestionClick?: (suggestion: Option) => void;
+    isFetchingSuggestions?: boolean;
+    selectedSuggestion?: Option;
+    fetchingSuggestionsPlaceholder?: string;
 }
 
 const ControlledInput = ({control, required = false, type = 'text', name, mask = '', label = '', className = '', dataTestId, max, placeholder, ...props}: ControllerInputProps) => {
@@ -97,23 +104,29 @@ const ControlledInput = ({control, required = false, type = 'text', name, mask =
         defaultValue={props.defaultValue}
         render={(controllerProps) => {
             return (<Input
-                    {...controllerProps}
-                    label={label}
-                    mask={mask}
-                    placeholder={placeholder}
-                    dropdownIcon={props.dropdownIcon}
-                    className={className}
-                    error={control.formState.errors[name]?.message}
-                    type={type}
-                    required={required}
-                    assistiveText={props.assistiveText}
-                    isLoading={props.isLoading}
-                    disabled={props.disabled}
-                    data-test-id={dataTestId}
-                    onKeyDown={inputKeyDown}
-                    onBlur={props.onBlur || controllerProps.onBlur}
-                    onChange={(event) => onInputChanged(event, controllerProps)}
-                />
+                {...controllerProps}
+                label={label}
+                mask={mask}
+                placeholder={placeholder}
+                dropdownIcon={props.dropdownIcon}
+                className={className}
+                error={control.formState.errors[name]?.message}
+                type={type}
+                required={required}
+                assistiveText={props.assistiveText}
+                isLoading={props.isLoading}
+                disabled={props.disabled}
+                data-test-id={dataTestId}
+                onKeyDown={inputKeyDown}
+                onBlur={props.onBlur || controllerProps.onBlur}
+                onChange={(event) => onInputChanged(event, controllerProps)}
+                autosuggestDropdown={props.autosuggestDropdown}
+                autosuggestOptions={props.autosuggestOptions}
+                onDropdownSuggestionClick={props.onDropdownSuggestionClick}
+                isFetchingSuggestions={props.isFetchingSuggestions}
+                selectedSuggestion={props.selectedSuggestion}
+                fetchingSuggestionsPlaceholder={props.fetchingSuggestionsPlaceholder}
+            />
             );
         }}
     />);

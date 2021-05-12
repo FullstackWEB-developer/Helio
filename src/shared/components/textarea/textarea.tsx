@@ -35,6 +35,7 @@ const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(({
                                                                            hasIcon = false,
                                                                            iconClassNames,
                                                                            iconFill,
+                                                                           iconContainerClassName,
                                                                            iconOnClick,
                                                                            ...props
                                                                        }: TextAreaProps, ref) => {
@@ -57,9 +58,9 @@ const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(({
                 {
                     hasIcon && value && value?.trim()?.length > 0 &&
                     <div
-                        className={`flex-grow ${props.iconContainerClassName ? props.iconContainerClassName : 'px-7'}`}>
+                        className={`flex-grow ${iconContainerClassName ? iconContainerClassName : 'px-7'}`}>
                         {
-                            props.isLoading ? <span>{t('common.processing')}</span> :
+                            props.isLoading ? <span className='subtitle3-small'>{`${t('common.processing')}...`}</span> :
                                 <SvgIcon
                                     type={props.icon ?? Icon.Send}
                                     fillClass={iconFill ? iconFill : ''}

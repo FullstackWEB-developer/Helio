@@ -14,15 +14,6 @@ const getWindowDimensions = () => {
     };
 }
 
-const formatPhone = (phone: string) => {
-    phone = phone.replaceAll('-', '');
-    if (phone && phone.length >= 10) {
-
-        return `(${phone.slice(0, 3)}) ${phone.slice(3, 6)}-${phone.slice(6, phone.length)}`;
-    } else {
-        return phone;
-    }
-};
 
 const formatDate = (datetime: string) => {
     const date = new Date(datetime);
@@ -71,9 +62,9 @@ const getDateTime = (dueDate?: Date, dueTime?: string) => {
     return dateTime;
 }
 
-const formatRelativeTime = (days?: number, hours?: number, minutes?: number, abs: boolean= false): string => {
+const formatRelativeTime = (days?: number, hours?: number, minutes?: number, abs = false): string => {
     const getTimePart = (timePart: number) => abs ? Math.abs(timePart) : timePart;
-   
+
     if (days && days !== 0) {
         return `${getTimePart(days)} d ${getTimePart(hours ?? 0)} h`;
     }
@@ -81,7 +72,7 @@ const formatRelativeTime = (days?: number, hours?: number, minutes?: number, abs
     if (hours && hours !== 0) {
         return `${getTimePart(hours)} h ${getTimePart(minutes ?? 0)} m`;
     }
-     
+
     if (minutes) {
         return `${getTimePart(minutes)} m`;
     }
@@ -104,6 +95,20 @@ const getRelativeTime = (date?: Date): [number, number, number] | [] => {
     return [totalDays, totalHours, totalMinutes]
 
 }
+
+const formatPhone = (phone: string) => {
+    phone = phone.replaceAll('-', '');
+    if (phone && phone.length >= 10) {
+        return `(${phone.slice(0, 3)}) ${phone.slice(3, 6)}-${phone.slice(6, phone.length)}`;
+    } else {
+        return phone;
+    }
+};
+
+const isString = (obj: any) => {
+    return typeof obj === 'string' || obj instanceof String;
+}
+
 const utils = {
     getWindowCenter,
     formatUtcDate,
@@ -115,7 +120,8 @@ const utils = {
     getDateTime,
     getRelativeTime,
     formatRelativeTime,
-    formatPhone
+    formatPhone,
+    isString
 }
 
 export default utils;
