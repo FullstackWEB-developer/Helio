@@ -50,6 +50,7 @@ const AppointmentReschedule = () => {
     });
 
     const [startDate, setStartDate] = useState(minStartDate);
+    const [isWeekendSelected, setIsWeekendSelected] = useState(false);
 
     useEffect(() => {
         dispatch(getProviders());
@@ -72,11 +73,15 @@ const AppointmentReschedule = () => {
     );
 
     useEffect(() => {
-        if(provider?.id && department?.id)
-        {
+        if(provider?.id && department?.id) {
             refetch();
         }
-    }, [department?.id, provider?.id, refetch]);
+
+        if (appointmentSlots && appointmentSlots.length > 0) {
+            setValue('selectedDate', utils.formatUtcDate(appointmentSlots[0].date, 'YYYY-MM-DD'));
+            setStartDate(appointmentSlots[0].date);
+        }
+    }, [appointmentSlots, department?.id, provider?.id, refetch, setValue]);
 
     const getWorkDates = () => {
         let workDates = [] as string[];
@@ -122,21 +127,31 @@ const AppointmentReschedule = () => {
     }
 
     const onDateChange = (event: any) => {
+        if (!businessDays.isBusinessDay(dayjs(event.target.value))) {
+            setValue('selectedDate', utils.formatUtcDate(startDate, 'YYYY-MM-DD'));
+            setIsWeekendSelected(true);
+            return null;
+        }
+        setIsWeekendSelected(false);
         refreshCalendar(event.target.value);
     }
 
     const nextPage = (isMobile = false) => {
+        setIsWeekendSelected(false);
         let nextStartDate = dayjs(startDate).startOf('isoWeek').utc().add(7, 'day').toDate();
         if (isMobile) {
-            nextStartDate = dayjs(startDate).utc().add(1, 'day').toDate();
+            let d = (dayjs(startDate).day() === 5) ? 3 : 1;
+            nextStartDate = dayjs(startDate).utc().add(d, 'day').toDate();
         }
         refreshCalendar(nextStartDate);
     };
 
     const previousPage = (isMobile = false) => {
+        setIsWeekendSelected(false);
         let prevStartDate = dayjs(startDate).startOf('isoWeek').utc().add(-7, 'day').toDate();
         if (isMobile) {
-            prevStartDate = dayjs(startDate).utc().add(-1, 'day').toDate();
+            const d = (dayjs(startDate).day() === 1) ? -3 : -1;
+            prevStartDate = dayjs(startDate).utc().add(d, 'day').toDate();
         }
         refreshCalendar(prevStartDate);
     };
@@ -171,42 +186,62 @@ const AppointmentReschedule = () => {
                     onChange={(event) => onDateChange(event)}
                     dataTestId='external-access-appointments-reschedule-date'/>
             </form>
+            {isWeekendSelected && <div className='text-danger'>
+                {t('external_access.appointments.select_business_day')}
+            </div>
+            }
         </div>
         <div className='pb-1'>
             <div className='hidden lg:flex flex-row'>
-                <SvgIcon type={Icon.ArrowLeft} className='cursor-pointer mt-1' fillClass='active-item-icon'
+                <SvgIcon type={Icon.ArrowLeft} className='cursor-pointer' fillClass='active-item-icon'
                          onClick={() => previousPage()}/>
-                <div className="grid grid-flow-col auto-cols-max md:auto-cols-min w-full justify-between">
-                    {
-                        appointmentSlots && getWorkDates().map(date => {
-                            let column = mappedSlots.get(date);
-                            return <div className='p-1' key={date}>
-                                <div className='flex justify-center h-12 2xl:h-12 reschedule-slot subtitle2'>
+                <div>
+                    <div className="grid grid-flow-col auto-cols-max md:auto-cols-min pb-3">
+                        {
+                            appointmentSlots && getWorkDates().map(date => {
+                                return <div key={date} className='flex justify-center reschedule-slot mx-2 subtitle2'>
                                     {dayjs(date).format('ddd, MMM D')}
                                 </div>
-                                {
-                                    !isFetching && <DaySlots date={date} column={column} startDate={startDate} key={date}/>
-                                }
-                            </div>
-                        })
-                    }
+                            })
+                        }
+                    </div>
+                    <div className="grid grid-flow-col auto-cols-max md:auto-cols-min w-full justify-between border-t pt-4">
+                        {
+                            appointmentSlots && getWorkDates().map(date => {
+                                let column = mappedSlots.get(date);
+                                return <div className='flex justify-center pt-1' key={date}>
+                                    {
+                                        !isFetching && <DaySlots date={date} column={column} startDate={startDate} key={date}/>
+                                    }
+                                </div>
+                            })
+                        }
+                    </div>
                 </div>
-                <SvgIcon type={Icon.ArrowRight} className='cursor-pointer mt-1' fillClass='active-item-icon'
+                <SvgIcon type={Icon.ArrowRight} className='cursor-pointer' fillClass='active-item-icon'
                          onClick={() => nextPage()}/>
             </div>
             <div className='lg:hidden flex flex-row'>
                 <SvgIcon type={Icon.ArrowLeft} className='cursor-pointer mt-1' fillClass='active-item-icon'
                          onClick={() => previousPage(true)}/>
-                <div className="grid grid-flow-col auto-cols-max md:auto-cols-min w-full justify-between">
+                <div className="w-full">
                     {
                         appointmentSlots && <div className='p-1'>
-                            <div className='flex justify-center h-12 2xl:h-12 w-auto px-4 subtitle2 border-b-2'>
+                            <div className='flex justify-center w-auto px-4 subtitle2 border-b pb-3 mb-4'>
                                 {dayjs(startDate).format('ddd, MMM D')}
                             </div>
                             {
-                                !isFetching && <DaySlots date={dayjs(startDate).format('ddd, MMM D')}
-                                          column={mappedSlots.get(dayjs(startDate).format('YYYY-MM-DDT00:00:00'))}
-                                          startDate={startDate} />
+                                !isFetching && <>
+                                    {
+                                        mappedSlots.get(dayjs(startDate).format('YYYY-MM-DDT00:00:00'))
+                                            ? <DaySlots date={dayjs(startDate).format('ddd, MMM D')}
+                                                  column={mappedSlots.get(dayjs(startDate).format('YYYY-MM-DDT00:00:00'))}
+                                                  startDate={startDate} />
+                                            : <div data-test-id='external-access-appointments-no-day-slots'>
+                                                {t('external_access.appointments.no_day_slots_found')}
+                                            </div>
+                                    }
+                                </>
                             }
                         </div>
                     }

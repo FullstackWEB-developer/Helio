@@ -54,14 +54,14 @@ const AppointmentRescheduled = () => {
                 {t('external_access.appointments.appointment_scheduled')}
             </h4>
         </div>
-        <div className='pt-9 pb-8'>
+        <div className='pt-6 pb-8'>
             {t('external_access.appointments.see_appointment_details')}
         </div>
         <div className='pb-2'>
             <h5>
                 {t('external_access.appointments.appointment_date', {
-                    date: utils.formatUtcDate(appointment.startDateTime, 'dddd, MMM DD, YYYY'),
-                    time: utils.formatUtcDate(appointment.startDateTime, 'hh:mm A')
+                    date: utils.formatUtcDate(appointment.startDateTime, 'dddd, MMMM DD, YYYY'),
+                    time: utils.formatUtcDate(appointment.startDateTime, 'h:mm A')
                 })}
             </h5>
         </div>

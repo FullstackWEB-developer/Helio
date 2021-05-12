@@ -29,8 +29,8 @@ const DaySlots = ({date, column, startDate}: DaySlotsProps) => {
         return slots.length > 0 && dayjs(slotsDate).isSame(startDate);
     }
 
-    const getShowMore = () => {
-        return <div className='pb-4 cursor-pointer' onClick={() => setDisplayMore(!displayMore)}>
+    const getShowMore = (slot: AppointmentSlot) => {
+        return <div key={slot.appointmentId} className='pb-4 cursor-pointer' onClick={() => setDisplayMore(!displayMore)}>
             <div className='appointment-list-item h-12 w-56 md:w-80 lg:w-32 reschedule-slot px-4 flex flex-col flex-row items-center justify-center'>
                 <div className='body2'>
                     {displayMore ? t('common.show_less') : t('common.show_more')}
@@ -51,17 +51,17 @@ const DaySlots = ({date, column, startDate}: DaySlotsProps) => {
     }
 
     if (!column || !column.slots) {
-        return null;
+        return <div className='w-36'> </div>;
     }
     let countToDisplay = ((column.slots.length > maxSlots && displayMore) || column.slots.length < maxSlots) ? column.slots.length : maxSlots;
 
-    return <div className='p-1'>
+    return <div className='pt-1'>
         {column && <div
             className={'grid grid-flow-row auto-rows-max md:auto-rows-min p-2' + (isBordered(date, column.slots) ? ' border rounded' : '')}>
             {
                 column.slots.slice(0, countToDisplay).map((slot: AppointmentSlot, index: number) => {
                     if (maxSlots && index + 1 === countToDisplay) {
-                        return getShowMore()
+                        return getShowMore(slot)
                     }
                     return getSlot(slot)
                 })

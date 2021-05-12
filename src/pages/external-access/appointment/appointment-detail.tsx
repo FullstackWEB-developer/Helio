@@ -109,7 +109,7 @@ const AppointmentDetail = () => {
             {(appointmentType ? appointmentType?.reschedulable : true) && <Button onClick={() => redirectToReschedule()} buttonType='medium' label='external_access.appointments.reschedule' />}
             <Button disabled={!displayCancel()} onClick={() => redirectToCancel()} buttonType='secondary' label='common.cancel' />
         </div>
-        { !displayCancel() && <div className='pt-10 xl:pt-20'>
+        { !displayCancel() && <div className='pt-12'>
             <div className='warning-message p-4 body2'>
                 <Trans i18nKey="external_access.appointments.can_not_be_canceled">
                     <a rel='noreferrer' className='underline' target='_self' href={chatLink}>Chat</a>

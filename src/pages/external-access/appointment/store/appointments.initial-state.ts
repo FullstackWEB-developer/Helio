@@ -12,7 +12,7 @@ const initialAppointmentState: AppointmentsState = {
     selectedAppointment: undefined,
     selectedAppointmentSlot: undefined,
     isAppointmentRescheduled: false,
-    rescheduleTimeFrame: 7
+    rescheduleTimeFrame: 0
 }
 
 export default initialAppointmentState;
