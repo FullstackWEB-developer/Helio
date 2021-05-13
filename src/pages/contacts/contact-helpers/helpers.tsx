@@ -16,16 +16,41 @@ export const mapContactFormModelToDto = (formModel: ContactFormModel, type: numb
         ...(formModel.email && {emailAddress: formModel.email}),
         ...(formModel.workMainPhone && {workMainPhone: formModel.workMainPhone}),
         ...(formModel.workMainExtension && {workMainExtension: formModel.workMainExtension}),
-        ...(formModel.workDirectPhone && {workDirectPhone: formModel.workDirectPhone}),
-        ...(formModel.mobile && {mobilePhone: formModel.mobile}),
-        ...(formModel.fax && {fax: formModel.fax}),
-        ...(formModel.website && {website: formModel.website}),
-        ...(addresses && addresses.length && {addresses}),
-        type,
-        ...(addToFavorites && {addToFavorites: addToFavorites}),
-        ...(formModel.isStarred && {isStarred: formModel.isStarred}),
-        ...(formModel.isStarred && !addToFavorites && {addToFavorites: formModel.isStarred})
+        type
     }
+
+    if (formModel.workDirectPhone) {
+        contact.workDirectPhone = formModel.workDirectPhone;
+    }
+
+    if (formModel.mobile) {
+        contact.mobilePhone = formModel.mobile;
+    }
+
+    if (formModel.fax) {
+        contact.fax = formModel.fax;
+    }
+
+    if (formModel.website) {
+        contact.website = formModel.website;
+    }
+
+    if (addresses && addresses.length) {
+        contact.addresses = addresses;
+    }
+
+    if (addToFavorites) {
+        contact.addToFavorites = addToFavorites;
+    }
+
+    if (formModel.isStarred) {
+        contact.isStarred = formModel.isStarred;
+    }
+
+    if (formModel.isStarred && !addToFavorites) {
+        contact.addToFavorites = formModel.isStarred;
+    }
+
     return contact;
 }
 
