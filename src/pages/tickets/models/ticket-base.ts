@@ -8,7 +8,7 @@ export interface TicketBase {
     priority?: number
     channel: ChannelTypes;
     subject: string;
-    dueDate?: string;
-    createdOn?: string;
-    closedOn?: string;
+    dueDate?: Date;
+    createdOn?: Date;
+    closedOn?: Date;
 }

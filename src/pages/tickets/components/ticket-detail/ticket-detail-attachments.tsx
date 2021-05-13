@@ -7,6 +7,7 @@ import {ChannelTypes} from '../../models/ticket-channel';
 import utils from '../../../../shared/utils/utils';
 import SvgIcon from '@components/svg-icon/svg-icon';
 import {Icon} from '@components/svg-icon/icon';
+import dayjs from 'dayjs';
 
 interface TicketDetailAttachmentsProps {
     ticket: Ticket
@@ -62,7 +63,7 @@ const TicketDetailAttachments = ({ticket}: TicketDetailAttachmentsProps) => {
     
         let shouldIgnoreNextMessage = false;
         if (transcript.Type === "MESSAGE" && transcript.ContentType === "text/plain") {
-            output += `(${utils.formatDate12HoursTime(transcript.AbsoluteTime)}) ${transcript.DisplayName}:`;
+            output += `(${utils.formatUtcDate(transcript.AbsoluteTime, 'MMM D, YYYY h:mm A')}) ${transcript.DisplayName}:`;
             output += newLine;
             output += `- ${transcript.Content}`;
     
@@ -78,7 +79,7 @@ const TicketDetailAttachments = ({ticket}: TicketDetailAttachmentsProps) => {
         }
         else if (transcript?.Type === "EVENT" && !transcript?.ContentType?.includes("connect.event.chat.ended")) {
             let eventAction = '';
-            output += `(${utils.formatDate12HoursTime(transcript.AbsoluteTime)}) ${transcript.DisplayName}`;
+            output += `(${utils.formatUtcDate(transcript.AbsoluteTime, 'MMM D, YYYY h:mm A')}) ${transcript.DisplayName}`;
     
             if (transcript.ContentType?.includes("participant.joined")) {
                 eventAction = t('chat_transcripts.joined_chat');
@@ -102,7 +103,7 @@ const TicketDetailAttachments = ({ticket}: TicketDetailAttachmentsProps) => {
     }
 
     const isNextMessageSamePersonAndTime = (displayName: string, time: string, nextTranscript: any) => {
-        return displayName === nextTranscript.DisplayName && utils.formatDate12HoursTime(time) === utils.formatDate12HoursTime(nextTranscript.AbsoluteTime);
+        return displayName === nextTranscript.DisplayName && utils.formatUtcDate(dayjs(time).toDate(), 'MMM D, YYYY h:mm A') === utils.formatUtcDate(nextTranscript.AbsoluteTime, 'MMM D, YYYY h:mm A');
     }
 
     return <div className={'py-4 mx-auto flex flex-col'}>

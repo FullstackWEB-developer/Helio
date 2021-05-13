@@ -32,7 +32,7 @@ const ContactTicketStatusDisplay = ({status, iconClass, labelClass}: ContactTick
             break;
     }
 
-    const statuses = [t('tickets.statuses.open'), t('tickets.statuses.on_hold'), t('tickets.statuses.in_progress'), t('tickets.statuses.solved'), t('tickets.statuses.closed')];
+    const statuses = [t('tickets.statuses.1'), t('tickets.statuses.2'), t('tickets.statuses.3'), t('tickets.statuses.4'), t('tickets.statuses.5')];
 
     return <Fragment>
         <div className={iconClass}><CircleIcon color={colorClass} /></div>

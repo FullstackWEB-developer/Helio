@@ -1,4 +1,4 @@
-import {PatientTicketsRequest} from '../models/patient-tickets-request';
+import {ContactTicketsRequest, PatientTicketsRequest} from '../models/patient-tickets-request';
 import {Dispatch} from '@reduxjs/toolkit';
 import Api from '../../../shared/services/api';
 import Logger from '../../../shared/services/logger';
@@ -200,6 +200,19 @@ export const updateTicket = async ({id, ticketData}: updateTicketProps) => {
         data: patchData
     });
     return result.data as Ticket;
+}
+
+export const getContactTickets = async (queryRequest: ContactTicketsRequest, resetPagination?: boolean) => {
+    let query: any = queryRequest;
+    let queryParams = serialize(query);
+
+    if (resetPagination) {
+        const {totalCount, totalPages, page, ...newQuery} = query;
+        queryParams = serialize(newQuery);
+    }
+    let ticketsUrl = `${ticketsBaseUrl}/GetContactTickets?${queryParams}`;
+    const response = await Api.get(ticketsUrl);
+    return response.data.results;
 }
 
 export const getRecordedConversation = async (id: string) => {

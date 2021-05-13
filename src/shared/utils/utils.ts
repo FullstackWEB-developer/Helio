@@ -28,10 +28,6 @@ const formatUtcDate = (date?: Date, format: string = 'ddd, MMM DD, YYYY h:mm A')
     return dayjs.utc(date).local().format(format);
 }
 
-const formatDate12HoursTime = (date: string) => {
-    return dayjs(date).format('MMM D, YYYY h:mm A')
-}
-
 const formatDateShortMonth = (date: string) => {
     return dayjs(date).format('MMM D, YYYY');
 }
@@ -114,7 +110,6 @@ const utils = {
     formatUtcDate,
     getWindowDimensions,
     formatDate,
-    formatDate12HoursTime,
     formatDateShortMonth,
     getInitialsFromFullName,
     getDateTime,

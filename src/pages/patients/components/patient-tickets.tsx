@@ -80,10 +80,10 @@ const PatientTickets: React.FC<PatientTicketProps> = ({patientId}) => {
                                                     isDanger={dayjs(item.dueDate).isBefore(sysdate)} />
                                             )}
                                             {item.closedOn && (
-                                                <PatientTicketLabel labelText={t('tickets.closed')} valueText={utils.formatDate12HoursTime(item.closedOn)} />
+                                                <PatientTicketLabel labelText={t('tickets.closed')} valueText={utils.formatUtcDate(item.closedOn, 'MMM D, YYYY h:mm A')} />
                                             )}
                                             {item.createdOn && (
-                                                <PatientTicketLabel labelText={t('tickets.created')} valueText={utils.formatDate12HoursTime(item.createdOn)} />
+                                                <PatientTicketLabel labelText={t('tickets.created')} valueText={utils.formatUtcDate(item.createdOn, 'MMM D, YYYY h:mm A')} />
                                             )}
                                         </div>
                                     </div>

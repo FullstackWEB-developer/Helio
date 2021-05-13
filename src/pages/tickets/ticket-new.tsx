@@ -30,7 +30,7 @@ import {
 } from '@shared/store/lookups/lookups.selectors';
 
 import {createTicket, getEnumByType, getLookupValues} from './services/tickets.service';
-import {searchContactsByName} from '@shared/services/contacts.service';
+import {getContactById, searchContactsByName} from '@shared/services/contacts.service';
 import {getDepartments, getUserList} from '@shared/services/lookups.service';
 import {useHistory} from 'react-router-dom';
 import utils from '../../shared/utils/utils';
@@ -38,24 +38,30 @@ import {TicketsPath} from '../../app/paths';
 import {getPatientByIdWithQuery} from '@pages/patients/services/patients.service';
 import {getPatientActionNotes, getPatientCaseDocument} from '@pages/patients/services/patient-document.service';
 import {Patient} from '@pages/patients/models/patient';
-import {QueryContacts} from '@constants/react-query-constants';
+import {GetContactById, QueryContacts} from '@constants/react-query-constants';
 import {useQuery} from 'react-query';
 import useDebounce from '@shared/hooks/useDebounce';
 import ControlledInput from '@components/controllers/ControllerInput';
 import ControlledDateInput from '@components/controllers/ControlledDateInput';
 import {DEBOUNCE_SEARCH_DELAY_MS} from '@shared/constants/form-constants';
 import {ContactType} from '@pages/contacts/models/ContactType';
+import {AxiosError} from 'axios';
 
 const TicketNew = () => {
     dayjs.extend(utc);
 
-    const {handleSubmit, control, errors, setError, clearErrors, formState} = useForm({mode: 'all'});
+    const {handleSubmit, control, errors, setError, clearErrors, formState, setValue} = useForm({mode: 'all'});
     const {isValid, errors: stateError} = formState;
     const {t} = useTranslation();
     const history = useHistory();
     const dispatch = useDispatch();
     const requiredText = t('common.required');
     const TicketTypeDefault = '1';
+
+    const queryParams = new URLSearchParams(window.location.search);
+    const queryPatientId = queryParams.get('patientId');
+    const queryContactId = queryParams.get('contactId');
+
     const users = useSelector(selectUserOptions);
     const departments = useSelector(selectDepartmentList);
     const contacts = useSelector(selectContacts);
@@ -94,7 +100,7 @@ const TicketNew = () => {
     const [contactOptions, setContactOptions] = useState<Option[]>([]);
     const [debounceContactSearchTerm] = useDebounce(contactSearchTerm, DEBOUNCE_SEARCH_DELAY_MS);
 
-    const {refetch} = useQuery<Contact[], Error>([QueryContacts, debounceContactSearchTerm],
+    const {refetch: refetchContacts} = useQuery<Contact[], Error>([QueryContacts, debounceContactSearchTerm],
         () => searchContactsByName(debounceContactSearchTerm), {
         enabled: false,
         onSuccess: (data) => {
@@ -109,6 +115,27 @@ const TicketNew = () => {
             setError('contactId', {type: 'notFound', message: t('ticket_new.error_getting_contacts')});
         }
     });
+
+    const {data: contact, refetch: refetchContact} = useQuery<Contact, AxiosError>([GetContactById, queryContactId], () =>
+            getContactById(queryContactId!),
+        {
+            enabled: false,
+            onSuccess: ((data) => {
+                if (data) {
+                    const contactOption = getContactOption(data);
+                    setContactOptions([contactOption]);
+                    setValue('contactId', queryContactId, {shouldValidate: true});
+                }
+            })
+        }
+    );
+
+    const getContactOption = (contact: Contact) => {
+        return contact ? {
+            value: contact.id,
+            label: contact.type === ContactType.Company ? contact.companyName : `${contact.firstName} ${contact.lastName}`
+        } : {} as Option;
+    }
 
     const onSubmit = async (formData: any) => {
         if (!formData) {
@@ -151,9 +178,6 @@ const TicketNew = () => {
         setCreating(false);
         history.push(TicketsPath);
     }
-
-    const queryParams = new URLSearchParams(window.location.search);
-    const queryPatientId = queryParams.get('patientId');
 
     const validatePatientId = async () => {
         if (!patientId || patientIdRef.current === patientId) {
@@ -227,11 +251,14 @@ const TicketNew = () => {
 
     useEffect(() => {
         if (debounceContactSearchTerm && debounceContactSearchTerm.length > 2) {
-            refetch()
+            refetchContacts();
         } else {
             setContactOptions([]);
         }
-    }, [debounceContactSearchTerm, refetch]);
+        if (queryContactId) {
+            refetchContact();
+        }
+    }, [contact, debounceContactSearchTerm, queryContactId, refetchContact, refetchContacts, setValue]);
 
     const getOptions = (data: any[] | undefined) => {
         return data !== undefined ? data?.map((item: any) => {
