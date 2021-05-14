@@ -1,0 +1,110 @@
+.date-time-picker {
+  user-select: none;
+  & input {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Chrome/Safari/Opera */
+    -khtml-user-select: none; /* Konqueror */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently */
+    &[type="date"]::-webkit-calendar-picker-indicator,
+    &[type="date"]::-webkit-inner-spin-button {
+      display: none;
+    }
+
+    &[value=""]::-webkit-datetime-edit {
+      color: transparent;
+    }
+    &:focus::-webkit-datetime-edit {
+      color: unset;
+    }
+    &:focus ~ label,
+    &.activated ~ label {
+      top: 0rem;
+    }
+    &:focus ~ label > span.label-span {
+      color: var(--datetime-picker-label-color);
+    }
+
+    &:disabled {
+      background-color: var(--color-white);
+      border-bottom-color: var(--light-divider-7);
+    }
+
+    &:disabled ~ label > span.label-span {
+      color: var(--light-text-medium-emphasis);
+    }
+
+    &.error,
+    &:focus.error {
+      border-bottom-color: var(--color-red);
+      background-color: var(--color-white);
+    }
+
+    &:focus.error ~ label > span.label-span,
+    &.error ~ label > span.label-span {
+      color: var(--color-red);
+    }
+  }
+
+  & label {
+    pointer-events: none;
+    top: 1rem;
+    left: 1rem;
+    transition: 0.05s ease all;
+    -moz-transition: 0.05s ease all;
+    -webkit-transition: 0.05s ease all;
+    max-width: 80%;
+  }
+
+  &-disabled {
+    pointer-events: none;
+    cursor: not-allowed;
+  }
+
+  &-container {
+    border-bottom: 1px solid var(--light-divider-12);
+
+    &:focus-within,
+    &.open {
+      border-bottom: 1px solid var(--color-primary-500);
+      background-color: var(--input-focus-background-color);
+      & label > span.label-span {
+        color: var(--datetime-picker-label-color);
+      }
+    }
+    &.open > input,
+    input:focus {
+      background-color: var(--input-focus-background-color);
+    }
+
+    &:not(.open)
+      input.activated:not(:focus):not(.error)
+      ~ label
+      > span.label-span {
+      color: var(--light-text-medium-emphasis);
+    }
+
+    &:not(.open) input:hover:not(:focus):not(:disabled):not(.error) {
+      border-bottom-color: var(--light-text-disabled);
+    }
+  }
+
+  .input-pt {
+    padding-top: 1.125rem;
+  }
+
+  .assistive-text-color {
+    &-inactive {
+      color: var(--light-text-medium-emphasis);
+    }
+
+    &-focused {
+      color: var(--datetime-picker-label-color);
+    }
+  }
+
+  &-arrow, &-clear {
+    fill: var(--light-text-medium-emphasis);
+  }
+}

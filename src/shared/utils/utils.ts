@@ -105,6 +105,15 @@ const isString = (obj: any) => {
     return typeof obj === 'string' || obj instanceof String;
 }
 
+
+const toShortISOString = (value?: Date) => {
+    if (!value) {
+        return '';
+    }
+    const iso = value.toISOString();
+    return iso.substr(0, iso.indexOf('T'));
+} 
+
 const utils = {
     getWindowCenter,
     formatUtcDate,
@@ -116,7 +125,8 @@ const utils = {
     getRelativeTime,
     formatRelativeTime,
     formatPhone,
-    isString
+    isString,
+    toShortISOString
 }
 
 export default utils;

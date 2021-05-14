@@ -1,0 +1,32 @@
+.calendar {
+  width: 23rem;
+  min-height: 24rem;
+  box-shadow: 0 0.03125rem 0.625rem rgba(96, 97, 112, 0.16);
+  background-color: var(--color-bg-primary);
+  .highlight {
+    &-today:not(.disabled) {
+      border: 0.0625rem solid var(--color-blue);
+    }
+    &-selected:not(.disabled) {
+      background: var(--color-blue);
+      color: var(--color-white);
+    }
+  }
+  .disabled {
+    color: var(--light-text-disabled);
+  }
+  .arrow-disabled {
+    fill: var(--light-text-disabled);
+  }
+  &-day {
+    &-container {
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 100%;
+      &:hover:not(.highlight-selected):not(.disabled) {
+        cursor: pointer;
+        background: var(--color-secondary-200);
+      }
+    }
+  }
+}

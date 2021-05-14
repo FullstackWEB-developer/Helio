@@ -43,6 +43,7 @@ import {useQuery} from 'react-query';
 import useDebounce from '@shared/hooks/useDebounce';
 import ControlledInput from '@components/controllers/ControllerInput';
 import ControlledDateInput from '@components/controllers/ControlledDateInput';
+import ControlledTimeInput from '@components/controllers/ControlledTimeInput';
 import {DEBOUNCE_SEARCH_DELAY_MS} from '@shared/constants/form-constants';
 import {ContactType} from '@pages/contacts/models/ContactType';
 import {AxiosError} from 'axios';
@@ -354,6 +355,7 @@ const TicketNew = () => {
             }
         };
     }
+
     return <div className="flex flex-col w-full mx-6 my-5">
         <h5>{t('ticket_new.title')}</h5>
         <div className={'w-96 pt-10 mx-auto flex flex-col'}>
@@ -491,15 +493,13 @@ const TicketNew = () => {
                     <div className="flex">
                         <ControlledDateInput
                             name='dueDate'
-                            defaultValue=''
+                            label='ticket_new.due_date'
                             control={control}
                             type='date'
-                            max='9999-12-31'
-                            className='w-full border-none h-14'
-                            placeholder={t('ticket_new.due_date')}
                             dataTestId={'ticket-new-due-date'}
+                            onValidationError={() => setError('dueDate', {message: 'Validation error'})}
                         />
-                        <ControlledDateInput
+                        <ControlledTimeInput
                             type='time'
                             name='dueTime'
                             defaultValue=''

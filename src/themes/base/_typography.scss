@@ -64,6 +64,17 @@ h6 {
   color: var(--h6-color);
 }
 
+.h5-regular {
+  font-family: var(--h5-regular-font-family);
+  font-size: var(--h5-regular-font-size);
+  font-weight: var(--h5-regular-font-weight);
+  font-stretch: var(--h5-regular-font-stretch);
+  font-style: var(--h5-regular-font-style);
+  line-height: var(--h5-regular-line-height);
+  letter-spacing: var(--h5-regular-letter-spacing);
+  color: var(--h5-regular-color);
+}
+
 .h7 {
   font-family: var(--h7-font-family);
   font-size: var(--h7-font-size);

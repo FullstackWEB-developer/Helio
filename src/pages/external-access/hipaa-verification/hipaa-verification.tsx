@@ -107,12 +107,11 @@ const HipaaVerification = ({request}: HipaaVerificationProps) => {
                         <div className='pb-6'>
                             <ControlledDateInput
                                 type='date'
-                                className='w-full md:w-auto'
                                 required={true}
-                                label={t('external_access.hipaa.dob')}
+                                label='external_access.hipaa.dob'
                                 control={control}
                                 name='dob'
-                                max={new Date().toISOString().split("T")[0]}
+                                max={new Date(new Date().toDateString())}
                                 dataTestId='hipaa-dob'/>
                         </div>
                         <div className='pb-6'>

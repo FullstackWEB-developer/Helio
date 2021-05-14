@@ -1,56 +1,60 @@
 import React from 'react';
-import {Controller, ControllerRenderProps} from 'react-hook-form';
+import {Controller} from 'react-hook-form';
 import {Control} from 'react-hook-form/dist/types/form';
 import {useTranslation} from 'react-i18next';
-import DateTimeInput from '@components/date-time-input/date-time-input';
-
+import DateTimePicker from '@components/date-time-picker';
+import {CalendarHorizontalAlign} from "@components/date-time-picker/calendar-align-enum";
 export interface ControllerDateInputProps {
     control: Control;
     required?: boolean;
     name: string;
-    className?: string;
+    value?: Date,
+    max?: Date,
+    min?: Date,
     label?: string;
     dataTestId: string;
-    min?: string;
-    max?: string;
     type?: 'date' | 'time';
-    placeholder?: string;
-    defaultValue?: string;
+    isWeekendDisabled?: boolean;
+    calendarHorizontalAlign?: CalendarHorizontalAlign;
+    onValidationError?: () => void;
     onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const ControlledDateInput = ({control, required = false, type = 'date', name, label = '', className = '', dataTestId, min, max, placeholder, ...props}: ControllerDateInputProps) => {
+const ControlledDateInput = ({
+    control,
+    name,
+    dataTestId,
+    max,
+    min,
+    required = false,
+    type = 'date',
+    label = '',
+    calendarHorizontalAlign,
+    onValidationError,
+    isWeekendDisabled,
+    ...props
+}: ControllerDateInputProps) => {
 
     const {t} = useTranslation();
     const requiredText = t('common.required');
-
-    const onDateInputChanged = (event: React.ChangeEvent<HTMLInputElement>, controllerProps: ControllerRenderProps<Record<string, any>>) => {
-        controllerProps.onChange(event);
-        if (props.onChange) {
-            props.onChange(event);
-        }
-    }
-
     return (<Controller
         name={name}
         control={control}
         {...props}
-        rules={{
-            required: required ? requiredText : ''
-        }}
-        defaultValue={props.defaultValue}
+        rules={{required: required ? requiredText : ''}}
+        defaultValue=''
         render={(controllerProps) => (
-            <DateTimeInput
-                label={label}
+            <DateTimePicker
                 {...controllerProps}
-                min={min}
+                required={required}
+                isWeekendDisabled={isWeekendDisabled}
+                calendarHorizontalAlign={calendarHorizontalAlign}
                 max={max}
-                className={className}
-                data-test-id={dataTestId}
+                min={min}
+                label={t(label)}
                 error={control.formState.errors[name]?.message}
-                type={type}
-                placeholder={placeholder}
-                onChange={(event) => onDateInputChanged(event, controllerProps)}
+                onChange={(date) => controllerProps.onChange(date)}
+                onValidationError={onValidationError}
             />
         )}
     />);

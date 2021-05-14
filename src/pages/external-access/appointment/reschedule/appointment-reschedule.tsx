@@ -177,12 +177,11 @@ const AppointmentReschedule = () => {
             <form>
                 <ControlledDateInput
                     type='date'
-                    className='w-full md:w-auto'
-                    required={true}
-                    label={'external_access.appointments.date'}
+                    required
+                    label='external_access.appointments.date'
                     control={control}
                     name='selectedDate'
-                    min={new Date().toISOString().split("T")[0]}
+                    min={new Date(new Date().toDateString())}
                     onChange={(event) => onDateChange(event)}
                     dataTestId='external-access-appointments-reschedule-date'/>
             </form>
