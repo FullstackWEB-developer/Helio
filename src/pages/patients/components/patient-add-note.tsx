@@ -48,7 +48,7 @@ const PatientAddNote = () => {
             <TextArea
                 className='pl-6 pt-2 pb-0 pr-0 body2 w-full'
                 data-test-id='note-context-notes'
-                placeholder={t('ccp.note_context.enter_your_note')}
+                placeholder={t('patient.activity.notes.enter_your_note')}
                 value={noteText}
                 required={true}
                 rows={3}
