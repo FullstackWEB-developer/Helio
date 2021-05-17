@@ -1,8 +1,7 @@
 import withErrorLogging from '../../../shared/HOC/with-error-logging';
 import {HotSpotDetail, HotSpotInfo} from '../models/hotspot.model';
-import dayjs from 'dayjs';
 import {useSelector} from 'react-redux';
-import {selectDepartmentList, selectProviderList} from '../../../shared/store/lookups/lookups.selectors';
+import {selectDepartmentList, selectProviderList} from '@shared/store/lookups/lookups.selectors';
 import {TableModel} from '@components/table/table.models';
 import Table from '@components/table/table';
 
@@ -29,10 +28,8 @@ const DailyHotspots = ({dailyhotspot}: DailyHotspotsProps) => {
 
     const hotspotTableModel: TableModel = {
         hasRowsBottomBorder: true,
-        title: {
-            title: dayjs(dailyhotspot.date).format('dddd, MMM DD, YYYY'),
-        },
         rows: getEnrichedData(dailyhotspot.details),
+        wrapperClassName: 'h-96 overflow-y-auto',
         columns: [
             {
                 title: 'appointment.hot_spots.provider',
@@ -56,7 +53,7 @@ const DailyHotspots = ({dailyhotspot}: DailyHotspotsProps) => {
         ]
     }
     return (<>
-        <div className='pb-9' data-test-id='hot-spot-table'>
+        <div className='pb-9 pt-4' data-test-id='hot-spot-table'>
             <Table model={hotspotTableModel}/>
         </div>
     </>);

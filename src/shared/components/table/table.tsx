@@ -9,13 +9,21 @@ export interface Table2Props {
 }
 
 const Table = ({model}: Table2Props) => {
-    const {columns, rows, hideHeader = false, hasRowsBottomBorder, title, isCompact = false} = model;
+    const {
+        columns,
+        rows,
+        hideHeader = false,
+        hasRowsBottomBorder,
+        title,
+        isCompact = false,
+        wrapperClassName = ''
+    } = model;
     const rowContent = React.Children.toArray(rows.map(row => {
         return <div className={hasRowsBottomBorder ? 'border-b' : ''}>
             <TableRow isCompact={isCompact} columns={columns} data={row}/>
         </div>
     }));
-    return <div className='flex flex-col'>
+    return <div className={`flex flex-col ${wrapperClassName}`}>
         {title && <TableTitle model={title} isCompact={isCompact}/>}
         {!hideHeader && <TableHeader className={model.headerClassName} headers={columns}/>}
         {rowContent}

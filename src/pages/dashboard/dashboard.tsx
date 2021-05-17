@@ -107,7 +107,7 @@ export const Dashboard = () => {
                 total: 0,
                 closed: 0,
                 onHold: 0,
-                dueToday: 0,
+                due: 0,
                 open: 0,
                 overdue: 0
             },
@@ -168,10 +168,10 @@ export const Dashboard = () => {
                             <Dropdown model={dashboardTypeDropdownModel}/>
                         </div>}
                     </div>
-                    <div className='pr-8' ref={timeframeDropdownRef}>
+                    <div className='pr-8 relative' ref={timeframeDropdownRef}>
                         <div className='flex flex-row justify-end cursor-pointer'
                              onClick={() => setDisplayTimeFrameDropdown(!displayTypeDropdown)}>
-                            <div className='relative'>
+                            <div>
                                 {t(`dashboard.timeframes.${selectedDashboardTime}`)}
                             </div>
                             <div className='pl-2'>
@@ -208,7 +208,7 @@ export const Dashboard = () => {
                                     </div>
                                     <div>
                                         <BasicStatistic title='dashboard.ticket_stats.due_today'
-                                                        count={dashboardInformation.statusStats.dueToday}/>
+                                                        count={dashboardInformation.statusStats.due}/>
                                     </div>
                                     <div>
                                         <BasicStatistic title='dashboard.ticket_stats.open'

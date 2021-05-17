@@ -65,7 +65,6 @@ const TicketDetailAddNote = ({ticket, onNoteAdded}: TicketDetailAddNoteProps) =>
                             value={noteText}
                             hasBorder={false}
                             onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setNoteText(e.target.value)}
-                            hasIcon={true}
                             iconClassNames='medium cursor-pointer'
                             icon={Icon.Send}
                             iconFill='notes-send'

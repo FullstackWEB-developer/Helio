@@ -39,7 +39,7 @@ import {getPatientByIdWithQuery} from '@pages/patients/services/patients.service
 import {getPatientActionNotes, getPatientCaseDocument} from '@pages/patients/services/patient-document.service';
 import {Patient} from '@pages/patients/models/patient';
 import {GetContactById, QueryContacts} from '@constants/react-query-constants';
-import {useQuery} from 'react-query';
+import {useMutation, useQuery} from 'react-query';
 import useDebounce from '@shared/hooks/useDebounce';
 import ControlledInput from '@components/controllers/ControllerInput';
 import ControlledDateInput from '@components/controllers/ControlledDateInput';
@@ -47,6 +47,8 @@ import ControlledTimeInput from '@components/controllers/ControlledTimeInput';
 import {DEBOUNCE_SEARCH_DELAY_MS} from '@shared/constants/form-constants';
 import {ContactType} from '@pages/contacts/models/ContactType';
 import {AxiosError} from 'axios';
+import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
+import {SnackbarType} from '@components/snackbar/snackbar-position.enum';
 
 const TicketNew = () => {
     dayjs.extend(utc);
@@ -86,7 +88,6 @@ const TicketNew = () => {
     const [isTicketTypeSelected, setIsTicketTypeSelected] = useState(false);
     const [tags, setTags] = useState<string[]>([]);
     const [noteText, setNoteText] = useState('');
-    const [isCreating, setCreating] = useState(false);
 
     const [isPatientIdLoading, setPatientIdLoading] = useState(false);
     const [patientId, setPatientId] = useState('');
@@ -103,20 +104,35 @@ const TicketNew = () => {
 
     const {refetch: refetchContacts} = useQuery<Contact[], Error>([QueryContacts, debounceContactSearchTerm],
         () => searchContactsByName(debounceContactSearchTerm), {
-        enabled: false,
-        onSuccess: (data) => {
-            const contactOptionResult = data.map(item => ({
-                label: item.type === ContactType.Company ? item.companyName : `${item.firstName} ${item.lastName}`,
-                value: item.id
-            }) as Option);
+            enabled: false,
+            onSuccess: (data) => {
+                const contactOptionResult = data.map(item => ({
+                    label: item.type === ContactType.Company ? item.companyName : `${item.firstName} ${item.lastName}`,
+                    value: item.id
+                }) as Option);
 
-            setContactOptions(contactOptionResult)
+                setContactOptions(contactOptionResult)
+            },
+            onError: () => {
+                setError('contactId', {type: 'notFound', message: t('ticket_new.error_getting_contacts')});
+            }
+        });
+
+    const createTicketMutation = useMutation(createTicket, {
+        onSuccess: (data) => {
+            dispatch(addSnackbarMessage({
+                type: SnackbarType.Success,
+                message: t('tickets.ticket_created', {ticketNumber: data.ticketNumber})
+            }));
+            history.push(TicketsPath);
         },
         onError: () => {
-            setError('contactId', {type: 'notFound', message: t('ticket_new.error_getting_contacts')});
+            dispatch(addSnackbarMessage({
+                type: SnackbarType.Error,
+                message: t('tickets.ticket_creation_failed')
+            }));
         }
     });
-
     const {data: contact, refetch: refetchContact} = useQuery<Contact, AxiosError>([GetContactById, queryContactId], () =>
             getContactById(queryContactId!),
         {
@@ -159,7 +175,6 @@ const TicketNew = () => {
             type: selectedTicketTypeOption ? selectedTicketTypeOption.value : TicketTypeDefault,
             reason: formData.reason,
             contactId: formData.contactId,
-            connectContactId: '00000000-0000-0000-0000-000000000000',
             subject: subjectValue,
             status: formData.status,
             priority: formData.priority,
@@ -174,10 +189,7 @@ const TicketNew = () => {
             tags: tags,
             notes: notes
         };
-        setCreating(true);
-        await createTicket(ticketData);
-        setCreating(false);
-        history.push(TicketsPath);
+        createTicketMutation.mutate(ticketData);
     }
 
     const validatePatientId = async () => {
@@ -278,7 +290,7 @@ const TicketNew = () => {
     const locationOptions: Option[] = departments ? departments.map((item: Department) => {
         return {
             value: item.id.toString(),
-            label: item.address
+            label: item.name
         };
     }) : [];
 
@@ -632,14 +644,15 @@ const TicketNew = () => {
                 <div className='flex flex-row space-x-4 justify-start mt-7'>
                     <div className='flex items-center'>
                         <Button data-test-id='ticket-new-cancel-button' type={'button'}
-                            buttonType='secondary'
-                            label={'common.cancel'}
-                            onClick={() => history.push(TicketsPath)}
+                                buttonType='secondary'
+                                label={'common.cancel'}
+                                onClick={() => history.push(TicketsPath)}
                         />
                     </div>
                     <div>
-                        <Button buttonType='small' disabled={isCreating || !isValid || !stateError} data-test-id='ticket-new-create-button' type={'submit'}
-                            label={'ticket_new.create'} />
+                        <Button buttonType='small' disabled={createTicketMutation.isLoading || !isValid || !stateError}
+                                data-test-id='ticket-new-create-button' type={'submit'}
+                                label={'ticket_new.create'}/>
                     </div>
                 </div>
             </form>

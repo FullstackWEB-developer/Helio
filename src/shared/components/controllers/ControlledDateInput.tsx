@@ -4,6 +4,7 @@ import {Control} from 'react-hook-form/dist/types/form';
 import {useTranslation} from 'react-i18next';
 import DateTimePicker from '@components/date-time-picker';
 import {CalendarHorizontalAlign} from "@components/date-time-picker/calendar-align-enum";
+
 export interface ControllerDateInputProps {
     control: Control;
     required?: boolean;
@@ -17,7 +18,7 @@ export interface ControllerDateInputProps {
     isWeekendDisabled?: boolean;
     calendarHorizontalAlign?: CalendarHorizontalAlign;
     onValidationError?: () => void;
-    onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    onChange?: (date: Date | undefined) => void;
 }
 
 const ControlledDateInput = ({
@@ -37,6 +38,18 @@ const ControlledDateInput = ({
 
     const {t} = useTranslation();
     const requiredText = t('common.required');
+
+    const onChange = (date: Date | undefined) => {
+        control.setValue(name, date, {
+            shouldValidate: true
+        });
+
+        if (props.onChange) {
+            props.onChange(date);
+        }
+    }
+
+
     return (<Controller
         name={name}
         control={control}
@@ -53,7 +66,7 @@ const ControlledDateInput = ({
                 min={min}
                 label={t(label)}
                 error={control.formState.errors[name]?.message}
-                onChange={(date) => controllerProps.onChange(date)}
+                onChange={onChange}
                 onValidationError={onValidationError}
             />
         )}

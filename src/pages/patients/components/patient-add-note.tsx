@@ -1,5 +1,5 @@
 import TextArea from '@components/textarea/textarea';
-import React, {useState} from 'react';
+import React, {ChangeEvent, useState} from 'react';
 import {Note} from '@pages/patients/models/note';
 import dayjs from 'dayjs';
 import {useMutation} from 'react-query';
@@ -10,7 +10,6 @@ import {userFullNameSelector} from '@shared/store/app-user/appuser.selectors';
 import {selectPatient} from '@pages/patients/store/patients.selectors';
 import {useTranslation} from 'react-i18next';
 import {Icon} from '@components/svg-icon/icon';
-import SvgIcon from '@components/svg-icon/svg-icon';
 
 const PatientAddNote = () => {
 
@@ -43,29 +42,26 @@ const PatientAddNote = () => {
             mutation.mutate({patientId: patient.patientId, note});
         }
     }
-
-    const showSendButton = (): boolean => {
-        return noteText != null && noteText.trim().length > 0;
-    }
-
     return <>
         {mutation.isError && <div>{t('patient.activity.notes.note_add_error')}</div>}
         <div className='flex flex-row border-t w-full'>
             <TextArea
-                required={true}
-                resizable={false}
-                onChange={(e) => setNoteText(e.target.value)}
-                hasBorder={false}
+                className='pl-6 pt-2 pb-0 pr-0 body2 w-full'
+                data-test-id='note-context-notes'
+                placeholder={t('ccp.note_context.enter_your_note')}
                 value={noteText}
-                className='w-5/6'
-                placeholder={t('patient.activity.notes.enter_your_note')}
+                required={true}
+                rows={3}
+                resizable={false}
+                hasBorder={false}
+                onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setNoteText(e.target.value)}
+                iconClassNames='medium cursor-pointer'
+                icon={Icon.Send}
+                iconFill='notes-send'
+                iconOnClick={() => {
+                    sendNote()
+                }}
             />
-
-            {showSendButton() && <div className='flex items-center justify-center w-1/6'>
-                {mutation.isLoading ? t('patient.activity.notes.sending') :
-                    <SvgIcon type={Icon.Send} className='icon-medium cursor-pointer' onClick={() => sendNote()}/>}
-
-            </div>}
         </div>
     </>
 }

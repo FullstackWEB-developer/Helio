@@ -70,6 +70,8 @@
     "type": "Ticket Type",
     "reason": "Reason",
     "assigned_to": "Assigned To",
+    "ticket_created": "Ticket {{ticketNumber}} created successfully",
+    "ticket_creation_failed": "Ticket creation failed.",
     "priority": {
       "low": "Low",
       "medium": "Medium",
@@ -98,6 +100,7 @@
       "clear_all": "Clear All",
       "statuses": "Statuses",
       "time_period": "Time period",
+      "state": "State",
       "priority": "Priority",
       "channel": "Channel",
       "ticket_type": "Ticket Type",
@@ -108,6 +111,12 @@
       "fetch": "Apply",
       "from_date": "From",
       "to_date": "To",
+      "states": {
+        "all": "All",
+        "overdue": "Overdue",
+        "unassigned": "Unassigned",
+        "archived": "Archived"
+      },
       "time_periods": {
         "today": "Today",
         "last_7_days": "Last 7 Days",
@@ -218,6 +227,7 @@
       "upcoming_appointment": "UPCOMING APPOINTMENT",
       "upcoming_appointments": "UPCOMING APPOINTMENTS",
       "recent_patient_cases": "Recent Patient Cases",
+      "no_patient_cases": "There is no case for this patient.",
       "apt_number": "Apt. #",
       "city": "City",
       "zip_code": "Zip Code",

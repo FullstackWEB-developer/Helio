@@ -1,8 +1,9 @@
 import {Ticket} from '@pages/tickets/models/ticket';
 import {TicketStatuses} from '@pages/tickets/models/ticket.status.enum';
+import {TicketBase} from '@pages/tickets/models/ticket-base';
 
 export interface TicketStatusDotProps {
-    ticket: Ticket,
+    ticket: Ticket | TicketBase,
 }
 
 const TicketStatusDot = ({ticket}: TicketStatusDotProps) => {

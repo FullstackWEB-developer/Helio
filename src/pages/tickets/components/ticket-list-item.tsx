@@ -81,14 +81,14 @@ const TicketListItem = ({item}: TicketListItemProps) => {
         <div className='w-20 pr-5'>
             {item.ticketNumber}
         </div>
-        <div className='w-60 pr-5'>
+        <div className='w-60 pr-5 subtitle2'>
             <span>{item.subject ? item.subject : '-'}</span>
         </div>
         <div className='w-36 body3'>
-            <DueInRelativeTime date={item.dueDate} />
+            <DueInRelativeTime date={item.dueDate}/>
         </div>
         <div className='w-40 h-full'>
-            <TicketStatus ticketId={ticketId} status={item.status!}/>
+            <TicketStatus ticket={item} status={item.status!}/>
         </div>
         <div className='w-28'>
             {item.priority ? selectedPriority?.value : null}

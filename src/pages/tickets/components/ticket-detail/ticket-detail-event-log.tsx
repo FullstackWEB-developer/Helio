@@ -65,7 +65,7 @@ const TicketDetailEventLog = ({ticket}: TicketDetailEventLogProps) => {
                         {
                             dueDate ?
                                 (
-                                    `${dayjs().to(dayjs(dueDate))} (${utils.formatUtcDate(dueDate, 'MMM DD, YYYY h:mm A')})`
+                                    `${dayjs().to(dayjs.utc(ticket.dueDate))} (${utils.formatUtcDate(dueDate, 'MMM DD, YYYY h:mm A')})`
                                 )
                                 : t('common.not_available')
                         }

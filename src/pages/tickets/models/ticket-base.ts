@@ -1,4 +1,4 @@
-import { ChannelTypes } from "./ticket-channel";
+import {ChannelTypes} from "./ticket-channel";
 
 export interface TicketBase {
     id: string;
@@ -11,4 +11,5 @@ export interface TicketBase {
     dueDate?: Date;
     createdOn?: Date;
     closedOn?: Date;
+    isOverdue?: boolean;
 }

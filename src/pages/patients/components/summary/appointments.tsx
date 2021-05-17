@@ -48,6 +48,8 @@ const Appointments = ({patientChartSummary} : AppointmentsProps) => {
             </div>
             <div>
                 <div className='body1 border-b pb-2'>{t('patient.summary.recent_patient_cases')}</div>
+                {(!recentPatientsCases || recentPatientsCases.length === 0) &&
+                <div className='pt-2'>{t('patient.summary.no_patient_cases')}</div>}
                 <div className='pt-3'>
                     <PatientChartList rows={recentPatientsCases} dividerLine={true} isLongValue={true}/>
                 </div>

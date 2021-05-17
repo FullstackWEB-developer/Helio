@@ -1,11 +1,15 @@
-import React, { Fragment } from 'react';
-import { useSelector } from 'react-redux';
-import { Appointment } from '../../external-access/appointment/models/appointment.model';
-import { selectDepartmentById, selectProviderById } from '@shared/store/lookups/lookups.selectors';
-import { RootState } from '../../../app/store';
+import React, {Fragment} from 'react';
+import {useSelector} from 'react-redux';
+import {Appointment} from '../../external-access/appointment/models/appointment.model';
+import {selectDepartmentById, selectProviderById} from '@shared/store/lookups/lookups.selectors';
+import {RootState} from '../../../app/store';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
+import utc from 'dayjs/plugin/utc';
+
 dayjs.extend(customParseFormat);
+dayjs.extend(utc);
+
 interface AppointmentDisplayProps {
     appointment: Appointment,
     border?: boolean,
@@ -21,7 +25,7 @@ const AppointmentDisplay = ({ appointment, border, isLast, isDetailed }: Appoint
             <Fragment>
                 {`${dayjs(appointment.date).format('MMM, DD, YYYY')}`}
                 {!isLast && <span className='subtitle2'>
-                    {` at ${dayjs(appointment.startTime, 'HH:mm').format('h:mm A')} `}
+                    {` ${dayjs.utc(appointment.startTime, 'HH:mm').local().format('[at] h:mm A')} `}
                 </span>}
             </Fragment>
         )
@@ -34,7 +38,7 @@ const AppointmentDisplay = ({ appointment, border, isLast, isDetailed }: Appoint
                 <span className='subtitle2'>{` ${appointment.patientAppointmentTypeName}`}</span>
             </div>
             <div className='subtitle2'>
-                {provider?.displayName}, {department?.patientDepartmentName}
+                {provider?.displayName ? `${provider.displayName},` : ''} {department?.patientDepartmentName}
                 {(appointment.notes && appointment.notes.length > 0) && appointment.notes.map((note) => {
                     return <div className='subtitle2' key={note.noteId}>{note.noteText}</div>
                 })}

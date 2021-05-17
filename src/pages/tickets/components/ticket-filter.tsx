@@ -34,8 +34,8 @@ import {TicketListQueryType} from '../models/ticket-list-type';
 const TicketFilter = () => {
     dayjs.extend(utc);
     const dispatch = useDispatch();
-    const { t } = useTranslation();
-    const anyKey = '0';
+    const {t} = useTranslation();
+    const allKey = '0';
     const timePeriod_DateRange = '4';
     const paging = useSelector(selectTicketsPaging);
     const ticketQueryFilter = useSelector(selectTicketFilter);
@@ -45,6 +45,7 @@ const TicketFilter = () => {
     const ticketChannels = useSelector((state => selectEnumValues(state, 'TicketChannel')));
     const ticketPriorities = useSelector((state => selectEnumValues(state, 'TicketPriority')));
     const ticketStatuses = useSelector((state => selectEnumValues(state, 'TicketStatus')));
+    const statesFilter = useSelector((state => selectEnumValues(state, 'TicketStateFilter')));
     const ticketTypes = useSelector((state => selectEnumValues(state, 'TicketType')));
     const offices = useSelector(selectDepartmentList);
     const {username} = useSelector(authenticationSelector);
@@ -60,6 +61,7 @@ const TicketFilter = () => {
         dispatch(getEnumByType('TicketChannel'));
         dispatch(getEnumByType('TicketPriority'));
         dispatch(getEnumByType('TicketStatus'));
+        dispatch(getEnumByType('TicketStateFilter'));
         dispatch(getEnumByType('TicketType'));
         dispatch(getLookupValues('Department'));
         dispatch(getLookupValues('TicketTags'));
@@ -68,8 +70,8 @@ const TicketFilter = () => {
     const [formVisible, setformVisible] = useState(true);
     const getSelectedFromCheckbox = (items: CheckboxCheckEvent[]): string[] => {
         if (items) {
-            const isAny = items.find(a => a && parseInt(a.value) === parseInt(anyKey) && a.checked);
-            if (!isAny) {
+            const isAll = items.find(a => a && parseInt(a.value) === parseInt(allKey) && a.checked);
+            if (!isAll) {
                 return items.filter((a: CheckboxCheckEvent) => a.checked).map((b: CheckboxCheckEvent) => b.value);
             }
         }
@@ -85,6 +87,7 @@ const TicketFilter = () => {
         query.channels = getSelectedFromCheckbox(values.channels).map((a: string) => parseInt(a));
         query.ticketTypes = getSelectedFromCheckbox(values.ticketTypes).map((a: string) => parseInt(a));
         query.locations = getSelectedFromCheckbox(values.offices);
+        query.states = getSelectedFromCheckbox(values.states).map((a: string) => parseInt(a));
         if (values.priority) {
             query.priority = values.priority;
         }
@@ -93,10 +96,11 @@ const TicketFilter = () => {
         }
         if (values.department) {
             query.departments = [];
-            if (values.department !== anyKey) {
+            if (values.department !== allKey) {
                 query.departments.push(values.department);
             }
         }
+
         if (values.timePeriod) {
             if (values.timePeriod === timePeriod_DateRange) {
                 if (values.fromDate) {
@@ -211,10 +215,10 @@ const TicketFilter = () => {
         }
     ]
 
-    const addAnyOption = (list: any[]): TicketOptionsBase[] => {
+    const addAllOption = (list: any[]): TicketOptionsBase[] => {
         return [{
-            key: anyKey,
-            value: t('common.any')
+            key: allKey,
+            value: t('common.all')
         }, ...list];
     }
 
@@ -308,7 +312,7 @@ const TicketFilter = () => {
                 />
             </div>);
         } else {
-            return <span />;
+            return <span/>;
         }
     }
 
@@ -319,18 +323,20 @@ const TicketFilter = () => {
     return <div className='bg-secondary-100 pb-20 min-h-full px-6'>
         <div className='flex flex-row justify-between pt-7'>
             <div className='subtitle pb-8 h7'>{t('tickets.filter.filter_tickets')}</div>
-            <div className='cursor-pointer' onClick={() => handleSubmit(fetchTickets)()}>{t('tickets.filter.fetch')}</div>
+            <div className='cursor-pointer'
+                 onClick={() => handleSubmit(fetchTickets)()}>{t('tickets.filter.fetch')}</div>
             <div className='cursor-pointer' onClick={() => resetForm()}>{t('tickets.filter.clear_all')}</div>
         </div>
         {formVisible && <form>
-            {GetCollapsibleCheckboxControl('tickets.filter.statuses', 'statuses', addAnyOption(convertEnumToOptions(ticketStatuses)))}
+            {GetCollapsibleCheckboxControl('tickets.filter.statuses', 'statuses', addAllOption(convertEnumToOptions(ticketStatuses)))}
+            {GetCollapsibleCheckboxControl('tickets.filter.state', 'states', addAllOption(convertEnumToOptions(statesFilter)))}
             {GetRadioCollapsibleControl('tickets.filter.time_period', 'timePeriod', timePeriodList)}
             {dateFilters()}
-            {GetRadioCollapsibleControl('tickets.filter.priority', 'priority', addAnyOption(convertEnumToOptions([...ticketPriorities].reverse())))}
-            {GetCollapsibleCheckboxControl('tickets.filter.channel', 'channels', addAnyOption(convertEnumToOptions(ticketChannels)))}
-            {GetCollapsibleCheckboxControl('tickets.filter.ticket_type', 'ticketTypes', addAnyOption(convertEnumToOptions(ticketTypes)))}
-            {GetRadioCollapsibleControl('tickets.filter.department', 'department', addAnyOption(convertDepartmentsToOptions()))}
-            {GetCollapsibleCheckboxControl('tickets.filter.office_location', 'offices', addAnyOption(convertOfficesToOptions()))}
+            {GetRadioCollapsibleControl('tickets.filter.priority', 'priority', addAllOption(convertEnumToOptions([...ticketPriorities].reverse())))}
+            {GetCollapsibleCheckboxControl('tickets.filter.channel', 'channels', addAllOption(convertEnumToOptions(ticketChannels)))}
+            {GetCollapsibleCheckboxControl('tickets.filter.ticket_type', 'ticketTypes', addAllOption(convertEnumToOptions(ticketTypes)))}
+            {GetRadioCollapsibleControl('tickets.filter.department', 'department', addAllOption(convertDepartmentsToOptions()))}
+            {GetCollapsibleCheckboxControl('tickets.filter.office_location', 'offices', addAllOption(convertOfficesToOptions()))}
             <Collapsible title={'tickets.filter.assigned_to'}>
                 <div>
                     <Controller

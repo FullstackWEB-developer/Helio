@@ -35,10 +35,14 @@ export function getList(ticketQuery: TicketQuery, resetPagination?: boolean) {
     return async (dispatch: Dispatch) => {
         dispatch(setTicketsLoading(true));
 
-        let query: any = ticketQuery;
+
+        const query: any = ticketQuery;
+        if (!isNaN(Number(ticketQuery.searchTerm))) {
+            query.ticketNumber = ticketQuery.searchTerm;
+        }
         let queryParams = serialize(query);
         if (resetPagination) {
-            const { totalCount, totalPages, page, ...newQuery } = query;
+            const {totalCount, totalPages, page, ...newQuery} = query;
             queryParams = serialize(newQuery);
         }
 
@@ -169,12 +173,9 @@ export const getLookupValues = (key: string) => {
     }
 }
 
-export const createTicket = async (data: Ticket) => {
-    await Api.post(ticketsBaseUrl, data)
-        .then()
-        .catch(error => {
-            logger.error(`Failed creating new ticket`, error);
-        });
+export const createTicket = async (data: Ticket): Promise<Ticket> => {
+    const result = await Api.post(ticketsBaseUrl, data);
+    return result.data;
 }
 
 export interface updateTicketProps {
@@ -203,14 +204,14 @@ export const updateTicket = async ({id, ticketData}: updateTicketProps) => {
 }
 
 export const getContactTickets = async (queryRequest: ContactTicketsRequest, resetPagination?: boolean) => {
-    let query: any = queryRequest;
+    const query: any = queryRequest;
     let queryParams = serialize(query);
 
     if (resetPagination) {
         const {totalCount, totalPages, page, ...newQuery} = query;
         queryParams = serialize(newQuery);
     }
-    let ticketsUrl = `${ticketsBaseUrl}/GetContactTickets?${queryParams}`;
+    const ticketsUrl = `${ticketsBaseUrl}/GetContactTickets?${queryParams}`;
     const response = await Api.get(ticketsUrl);
     return response.data.results;
 }

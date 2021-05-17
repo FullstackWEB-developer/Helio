@@ -12,9 +12,7 @@ import PatientTabs from './components/patient-tabs';
 import {getDepartments, getProviders} from '@shared/services/lookups.service';
 import ActivityPanel from './components/activity-panel';
 import './patient-chart.scss';
-import {
-    getPatientById, getPatientSummary
-} from './services/patients.service';
+import {getPatientById, getPatientSummary} from './services/patients.service';
 import {useQuery} from 'react-query';
 import {PatientChartSummary} from '@pages/patients/models/patient-chart-summary';
 import {GetPatientSummary, OneMinute} from '@constants/react-query-constants';
@@ -51,13 +49,21 @@ const PatientChart = () => {
     }, [dispatch, patient]);
 
 
-    const {isLoading: isSummaryLoading, data: patientChartSummary} = useQuery<PatientChartSummary, Error>([GetPatientSummary, patientId], () =>
+    const {
+        isLoading: isSummaryLoading,
+        data: patientChartSummary,
+        refetch
+    } = useQuery<PatientChartSummary, Error>([GetPatientSummary, patientId], () =>
             getPatientSummary(Number(patientId)),
         {
             staleTime: OneMinute
         }
     );
 
+    const refreshPatient = () => {
+        dispatch(getPatientById(patientId));
+        refetch();
+    }
 
 
     if (loading || isSummaryLoading) {
@@ -81,8 +87,8 @@ const PatientChart = () => {
                 </div>
                 {patientChartSummary &&
                     <>
-                    <PatientHeader patientChartSummary={patientChartSummary}/>
-                     <PatientTabs patientChartSummary={patientChartSummary} patientId={patient.patientId}/>
+                        <PatientHeader refreshPatient={refreshPatient} patientChartSummary={patientChartSummary}/>
+                        <PatientTabs patientChartSummary={patientChartSummary} patientId={patient.patientId}/>
                     </>
                 }
 

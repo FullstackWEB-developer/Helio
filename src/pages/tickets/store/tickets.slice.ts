@@ -42,27 +42,29 @@ const ticketsSlice = createSlice({
       }
     },
       setTicket(state, {payload}: PayloadAction<Ticket>) {
-          state.selectedTicket = payload;
+        state.selectedTicket = payload;
 
       },
-      setFailure: (state, {payload}: PayloadAction<string>) => {
-          state.errors = payload;
-          state.ticketsLoading = false;
-      },
-      setTicketsLoading(state, {payload}: PayloadAction<boolean>) {
-          state.ticketsLoading = payload;
-      },
-
-      setFeedLastMessageOn(state, {payload}: PayloadAction<Date>) {
-          state.feedLastMessageOn = payload;
-      },
-      setTicketEnum(state, {payload}: PayloadAction<any>) {
-          state.error = "";
-          state.isTicketEnumValuesLoading = false;
-          const enumValue: TicketEnum = {
-              key: payload.key,
-              value: payload.result,
-          };
+    setFailure: (state, {payload}: PayloadAction<string>) => {
+      state.errors = payload;
+      state.ticketsLoading = false;
+    },
+    setTicketsLoading(state, {payload}: PayloadAction<boolean>) {
+      state.ticketsLoading = payload;
+    },
+    resetLastFeedMessageOn(state) {
+      state.feedLastMessageOn = undefined;
+    },
+    setFeedLastMessageOn(state, {payload}: PayloadAction<Date>) {
+      state.feedLastMessageOn = payload;
+    },
+    setTicketEnum(state, {payload}: PayloadAction<any>) {
+      state.error = "";
+      state.isTicketEnumValuesLoading = false;
+      const enumValue: TicketEnum = {
+        key: payload.key,
+        value: payload.result,
+      };
           if (!state.enumValues) {
         state.enumValues = [];
       }
@@ -134,7 +136,8 @@ export const {
   setSearchTerm,
   setTicketFilter,
   setTicketListQueryType,
-  setTicketUpdateModel
+  setTicketUpdateModel,
+  resetLastFeedMessageOn
 } = ticketsSlice.actions;
 
 export default ticketsSlice.reducer;

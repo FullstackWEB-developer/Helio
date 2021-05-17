@@ -5,7 +5,7 @@ import {Ticket} from '../../models/ticket';
 import {FeedDetailDisplayItem} from '../../models/feed-detail-display-item';
 import FeedDetailItem from './feed-detail-item';
 import {getEnumByType} from '../../services/tickets.service';
-import {setFeedLastMessageOn} from '../../store/tickets.slice';
+import {resetLastFeedMessageOn, setFeedLastMessageOn} from '../../store/tickets.slice';
 import {FeedTypes} from '../../models/ticket-feed';
 import './ticket-detail-feed.scss';
 
@@ -21,6 +21,7 @@ const TicketDetailFeed = React.forwardRef<HTMLDivElement, TicketDetailFeedProps>
     }
 
     useEffect(() => {
+        dispatch(resetLastFeedMessageOn());
         dispatch(getEnumByType('TicketPriority'));
         dispatch(getEnumByType('TicketStatus'));
         dispatch(getEnumByType('TicketType'));

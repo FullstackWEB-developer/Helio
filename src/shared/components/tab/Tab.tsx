@@ -2,7 +2,7 @@ import React from 'react'
 import withErrorLogging from '../../HOC/with-error-logging';
 
 type TabProps = {
-    title: string,
+    title: string | React.ReactNode,
     children: React.ReactNode
 }
 

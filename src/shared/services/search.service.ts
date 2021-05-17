@@ -2,10 +2,8 @@ import Api from './api';
 import {Dispatch} from '@reduxjs/toolkit';
 import Logger from './logger';
 import {setError, setSearching} from '@components/search-bar/store/search-bar.slice';
-import {
-    clearPatients,
-    setPatients
-} from '@pages/patients/store/patients.slice';
+import {clearPatients, setPatients} from '@pages/patients/store/patients.slice';
+import dayjs from 'dayjs';
 
 const logger = Logger.getInstance();
 const patientsUrl = '/patients';
@@ -42,7 +40,7 @@ export interface VerifyPatientProps{
 }
 
 export const verifyPatient = async ({ phone, dob, zip} : VerifyPatientProps) => {
-    const url = `${patientsUrl}/verify?dateOfBirth=${dob}&phoneNumber=${phone}&zipCode=${zip}`;
+    const url = `${patientsUrl}/verify?dateOfBirth=${dayjs(dob).format('YYYY-MM-DD')}&phoneNumber=${phone}&zipCode=${zip}`;
     const response = await Api.get(url);
     return response.data;
 }

@@ -33,7 +33,7 @@ const TicketDetailHeaderLine2 = ({ticket, patientOrContactName}: { ticket: Ticke
         </div>
         <div>
             {ticket.dueDate &&
-            <SmallLabel text='ticket_detail.header.due_in' value={dayjs().to(dayjs.utc(ticket.dueDate).local())}/>}
+            <SmallLabel text='ticket_detail.header.due_in' value={dayjs().to(dayjs.utc(ticket.dueDate))}/>}
         </div>
         <div>
             {feedLastMessageOn && <SmallLabel text='ticket_detail.header.last_activity'

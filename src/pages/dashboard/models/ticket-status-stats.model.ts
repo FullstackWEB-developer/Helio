@@ -1,6 +1,6 @@
 export interface TicketStatusStats {
     overdue: number;
-    dueToday: number;
+    due: number;
     open: number;
     onHold: number;
     closed: number;

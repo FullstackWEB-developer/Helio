@@ -1,10 +1,10 @@
 import axios from 'axios';
-import { InteractionRequiredAuthError } from '@azure/msal-common';
-import { logOut, setAuthentication } from '../store/app-user/appuser.slice';
-import { loginRequest, msalInstance } from '@pages/login/auth-config';
+import {InteractionRequiredAuthError} from '@azure/msal-common';
+import {logOut, setAuthentication} from '../store/app-user/appuser.slice';
+import {loginRequest, msalInstance} from '@pages/login/auth-config';
 import Logger from './logger';
 import store from '../../app/store';
-import { AuthenticationInfo } from '../store/app-user/app-user.models';
+import {AuthenticationInfo} from '../store/app-user/app-user.models';
 
 const logger = Logger.getInstance();
 
@@ -66,7 +66,7 @@ export const refreshAccessToken = async () => {
                         return null;
                     });
             } else {
-                logger.error('Error refreshing token.');
+                logger.error('Error refreshing token.', error);
             }
         }
     }

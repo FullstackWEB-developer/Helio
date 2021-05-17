@@ -17,7 +17,6 @@ interface TextAreaProps extends React.HTMLAttributes<HTMLTextAreaElement> {
     textareaContainerClasses?: string,
     overwriteDefaultContainerClasses?: boolean,
     onChange?: (e: ChangeEvent<HTMLTextAreaElement>) => void,
-    hasIcon?: boolean,
     icon?: Icon,
     iconOnClick?: () => void,
     isLoading?: boolean,
@@ -32,7 +31,6 @@ const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(({
                                                                            htmlFor,
                                                                            hasBorder = true,
                                                                            resizable = true,
-                                                                           hasIcon = false,
                                                                            iconClassNames,
                                                                            iconFill,
                                                                            iconContainerClassName,
@@ -56,7 +54,7 @@ const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(({
                 <textarea ref={ref} {...props} value={value}
                         className={`mt-1 shadow-none p-4 ${(hasBorder ? ' border ' : '')} ${resizable ? 'resize' : 'resize-none'} ${props.className}`}/>
                 {
-                    hasIcon && value && value?.trim()?.length > 0 &&
+                    props.icon && value && value?.trim()?.length > 0 &&
                     <div
                         className={`flex-grow ${iconContainerClassName ? iconContainerClassName : 'px-7'}`}>
                         {

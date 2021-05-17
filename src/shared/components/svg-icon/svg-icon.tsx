@@ -531,6 +531,16 @@ const SvgIcon = ({type, wrapperClassName, className = 'icon-medium', fillClass =
         </svg>
     }
 
+    const getIconRefresh = () => {
+        return <svg id="Icon_Refresh_24px" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                    className={mainClass}>
+            <rect id="Rectangle" width="24" height="24" fill="none"/>
+            <path id="ic_refresh_24px"
+                  d="M17.65,6.35A8,8,0,1,0,19.73,14H17.65A6,6,0,1,1,12,6a5.915,5.915,0,0,1,4.22,1.78L13,11h7V4Z"
+                  transform="translate(-0.01)" className={fillClass}/>
+        </svg>
+    }
+
     const getIconSave = () => {
         return <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className={mainClass}>
             <g transform="translate(-971 -295)">
@@ -736,6 +746,7 @@ const SvgIcon = ({type, wrapperClassName, className = 'icon-medium', fillClass =
         [Icon.RatingDissatisfied]: getIconRatingDissatisfied,
         [Icon.RatingSatisfied]: getIconRatingSatisfied,
         [Icon.RatingVerySatisfied]: getIconRatingVerySatisfied,
+        [Icon.Refresh]: getIconRefresh,
         [Icon.Save]: getIconSave,
         [Icon.Scripts]: getIconScripts,
         [Icon.Search]: getIconSearch,

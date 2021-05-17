@@ -14,6 +14,18 @@ const getWindowDimensions = () => {
     };
 }
 
+const formatPhone = (phone: string) => {
+    if (!phone) {
+        return '';
+    }
+    phone = phone.replaceAll('-', '');
+    if (phone && phone.length >= 10) {
+
+        return `(${phone.slice(0, 3)}) ${phone.slice(3, 6)}-${phone.slice(6, phone.length)}`;
+    } else {
+        return phone;
+    }
+};
 
 const formatDate = (datetime: string) => {
     const date = new Date(datetime);
@@ -81,9 +93,10 @@ const getRelativeTime = (date?: Date): [number, number, number] | [] => {
         return [];
     }
 
-    let totalMinutes = dayjs(date).diff(dayjs(), 'minute');
-    const totalDays = Math.floor(totalMinutes / (24 * 60));
-    totalMinutes = totalMinutes - (totalDays * (24 * 60));
+    let totalMinutes = dayjs.utc(date).diff(dayjs(), 'minute');
+    const isNegative = totalMinutes < 0;
+    const totalDays = Math.floor(Math.abs(totalMinutes) / (24 * 60));
+    totalMinutes = totalMinutes - ((isNegative ? (-1 * totalDays) : totalDays) * (24 * 60));
 
     const totalHours = Math.floor(totalMinutes / 60);
     totalMinutes = totalMinutes - (totalHours * 60);
@@ -91,16 +104,6 @@ const getRelativeTime = (date?: Date): [number, number, number] | [] => {
     return [totalDays, totalHours, totalMinutes]
 
 }
-
-const formatPhone = (phone: string) => {
-    phone = phone.replaceAll('-', '');
-    if (phone && phone.length >= 10) {
-        return `(${phone.slice(0, 3)}) ${phone.slice(3, 6)}-${phone.slice(6, phone.length)}`;
-    } else {
-        return phone;
-    }
-};
-
 const isString = (obj: any) => {
     return typeof obj === 'string' || obj instanceof String;
 }
@@ -112,7 +115,7 @@ const toShortISOString = (value?: Date) => {
     }
     const iso = value.toISOString();
     return iso.substr(0, iso.indexOf('T'));
-} 
+}
 
 const utils = {
     getWindowCenter,

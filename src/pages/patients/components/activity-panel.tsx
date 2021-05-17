@@ -21,12 +21,12 @@ const ActivityPanel = () => {
         return <ThreeDots/>
     }
 
-    return <div className='flex flex-col'>
+    return <div className='flex flex-col h-full overflow-hidden'>
         <div className='px-8 flex-grow'>
             <h5 className='pb-3'>{t('patient.activity.title')}</h5>
             <Tabs onSelect={(index) => setSelectedTab(index)}>
                 <Tab title={t('patient.notes_tab_label')}>
-                    <div className='overflow-y-auto patient-notes-container' data-test-id='patient-activity-panel'>
+                    <div data-test-id='patient-activity-panel'>
                         <PatientNotes notes={patient?.notes}/>
                     </div>
                 </Tab>

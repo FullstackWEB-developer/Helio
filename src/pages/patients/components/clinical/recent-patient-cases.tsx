@@ -37,6 +37,8 @@ const RecentPatientCases = ({clinical}: RecentPatientCasesProps) => {
                 <div>{t('patient.clinical.recent_patient_cases')} </div>
             </div>
             <div className='pt-3'>
+                {(!recentPatientsCases || recentPatientsCases.length === 0) &&
+                <div className='pt-2'>{t('patient.summary.no_patient_cases')}</div>}
                 <PatientChartList rows={recentPatientsCases} dividerLine={true}/>
             </div>
         </div>

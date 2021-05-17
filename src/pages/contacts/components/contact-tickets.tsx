@@ -6,11 +6,11 @@ import React, {Fragment} from 'react';
 import {useTranslation} from 'react-i18next';
 import {useHistory} from 'react-router';
 import {TicketsPath} from 'src/app/paths';
-import ContactTicketStatusDisplay from './contact-ticket-status';
 import ContactTicketLabel from './contact-ticket-label';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import utils from '@shared/utils/utils';
+import TicketStatusDot from '@pages/tickets/components/ticket-status-dot';
 import {ContactTicketsRequest} from '@pages/tickets/models/patient-tickets-request';
 import {DefaultPagination} from '@shared/models/paging.model';
 import {useQuery} from 'react-query';
@@ -67,9 +67,18 @@ const ContactTickets = ({contactId}: ContactTicketsProps) => {
                 }
                 <span className="mx-2">{ticket.ticketNumber}</span>
                 <span className='flex-auto subtitle2'>{ticket.subject}</span>
-                <div className='flex w-36 body3'>
-                    <ContactTicketStatusDisplay status={ticket.status} iconClass='w-5 mt-0.5'/>
-                </div>
+                {
+                    ticket.status && (
+                        <div className='flex w-36 body3'>
+                            <div>
+                                <TicketStatusDot ticket={ticket}/>
+                            </div>
+                            <div className='pl-3'>
+                                {ticket.status && t(`tickets.statuses.${(ticket.status)}`)}
+                            </div>
+                        </div>
+                    )
+                }
             </div>
             <div className='flex flex-row body2 items-center pt-1'>
                 {

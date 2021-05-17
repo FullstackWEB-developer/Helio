@@ -1,5 +1,5 @@
 import * as msal from '@azure/msal-browser';
-import { PopupRequest } from '@azure/msal-browser';
+import {PopupRequest} from '@azure/msal-browser';
 
 const msalConfig = {
     auth: {
@@ -9,6 +9,9 @@ const msalConfig = {
     },
     cache: {
         cacheLocation: 'localStorage'
+    },
+    system: {
+        iframeHashTimeout: 10000
     }
 };
 

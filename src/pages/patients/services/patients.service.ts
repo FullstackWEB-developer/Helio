@@ -2,12 +2,7 @@ import Api from '../../../shared/services/api';
 import {Note} from '@pages/patients/models/note';
 import Logger from '../../../shared/services/logger';
 import {Dispatch} from '@reduxjs/toolkit';
-import {
-     clearPatient,
-     setError as setPatientError,
-     setLoading,
-     setPatient,
-} from '@pages/patients/store/patients.slice';
+import {clearPatient, setError as setPatientError, setLoading, setPatient,} from '@pages/patients/store/patients.slice';
 import {PatientUpdateModel} from '@pages/patients/models/patient-update-model';
 
 export interface AddNoteProps {

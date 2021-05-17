@@ -51,6 +51,7 @@ export enum Icon {
     RatingDissatisfied = 'RatingDissatisfied',
     RatingSatisfied = 'RatingSatisfied',
     RatingVerySatisfied = 'RatingVerySatisfied',
+    Refresh = 'Refresh',
     Save = 'Save',
     Scripts = 'Scripts',
     Search = 'Search',

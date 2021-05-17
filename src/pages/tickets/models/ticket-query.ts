@@ -13,6 +13,6 @@ export interface TicketQuery extends Paging {
     locations?: string[];
     assignedTo?: string[];
     tags?: string[];
-    includeDeletedItems?: boolean;
     sorts?: string[];
+    states?: number[];
 }

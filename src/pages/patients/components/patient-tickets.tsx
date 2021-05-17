@@ -13,11 +13,11 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import {useQuery} from 'react-query';
 import {TicketBase} from '../../tickets/models/ticket-base';
 import PatientTicketLabel from './patient-ticket-label';
-import TicketStatusDisplay from '../../tickets/components/ticket-status-display';
 import {TicketsPath} from '../../../app/paths';
 import {OneMinute, QueryPatientTickets} from '@constants/react-query-constants';
 import SvgIcon from '@components/svg-icon/svg-icon';
 import {Icon} from '@components/svg-icon/icon';
+import TicketStatusDot from '@pages/tickets/components/ticket-status-dot';
 
 interface PatientTicketProps {
     patientId: number;
@@ -68,9 +68,14 @@ const PatientTickets: React.FC<PatientTicketProps> = ({patientId}) => {
                                             <span className="mx-2">{item.ticketNumber}</span>
                                             <span className='flex-auto subtitle2'>{item.subject}</span>
                                             {item.status && (
-                                                <div className='flex w-36 subtitle3'>
-                                                    <TicketStatusDisplay status={item.status} iconClass='w-5 mt-0.5'/>
-                                                </div>    
+                                                <div className='flex flex-row items-center w-36 '>
+                                                    <div>
+                                                        <TicketStatusDot ticket={item}/>
+                                                    </div>
+                                                    <div className='pl-3 subtitle3'>
+                                                        {item.status && t(`tickets.statuses.${(item.status)}`)}
+                                                    </div>
+                                                </div>
                                             )}
                                         </div>
                                         <div className='flex flex-row body2'>

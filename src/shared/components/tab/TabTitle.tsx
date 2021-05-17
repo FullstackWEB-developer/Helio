@@ -3,7 +3,7 @@ import withErrorLogging from '../../HOC/with-error-logging';
 import './tab-title.scss';
 
 type TabTitleProps = {
-    title: string;
+    title: string | React.ReactNode;
     index: number;
     setSelectedTab: (index: number) => void;
     isSelected: boolean;
