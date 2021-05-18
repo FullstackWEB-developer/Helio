@@ -18,9 +18,11 @@ const ContactHeaderQuickActions = ({editMode, editIconClickHandler, contact, sta
                 <span className={`pr-6 cursor-pointer`} >
                     <SvgIcon onClick={starIconClickHandler} type={Icon.Star} fillClass={`contact-header-quick-action-color${contact?.isStarred ? '-starred' : ''}`} />
                 </span>
-                <span className="pr-6 cursor-pointer">
-                    <SvgIcon type={!editMode ? Icon.Email : Icon.Save} onClick={!editMode ? () => { } : editIconClickHandler} fillClass='contact-header-quick-action-color' />
-                </span>
+                {
+                    !editMode && <span className="pr-6 cursor-pointer">
+                        <SvgIcon type={Icon.Email} fillClass='contact-header-quick-action-color' />
+                    </span>
+                }
                 {!editMode && <span className="pr-6 cursor-pointer" onClick={editIconClickHandler}><SvgIcon type={Icon.Edit} fillClass='contact-header-quick-action-color' /></span>}
                 <span className="pr-6 cursor-pointer" onClick={deleteIconClickHandler}>
                     <SvgIcon type={Icon.Delete} fillClass='contact-header-quick-action-color' />

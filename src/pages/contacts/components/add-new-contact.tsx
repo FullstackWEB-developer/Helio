@@ -2,7 +2,7 @@ import Radio from '@components/radio/radio';
 import {Option} from '@components/option/option';
 import React, {useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {ContactType} from '../../../shared/models/contact-type.enum';
+import {ContactType} from '@shared/models/contact-type.enum';
 import ContactForm from './contact-form';
 import SvgIcon from '@components/svg-icon/svg-icon';
 import {Icon} from '@components/svg-icon/icon';
@@ -55,8 +55,6 @@ const AddNewContact = ({contactType = ContactType.Individual, onContactAddSucces
                 <div className='flex'>
                     <div className="pr-6" onClick={toggleFavorite}><SvgIcon type={Icon.Star} className='cursor-pointer'
                         fillClass={`contact-header-quick-action-color${!addToFavorites ? '' : '-starred'}`} /></div>
-                    <div className="pr-6"><SvgIcon type={Icon.Save} className='cursor-pointer'
-                        fillClass='contact-header-quick-action-color' /></div>
                     <div className="pr-6" onClick={onClose}><SvgIcon type={Icon.Delete} className='cursor-pointer'
                         fillClass='contact-header-quick-action-color' /></div>
                 </div>
