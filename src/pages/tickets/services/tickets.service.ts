@@ -66,7 +66,7 @@ export function getList(ticketQuery: TicketQuery, resetPagination?: boolean) {
                 ...query
             };
 
-            if (!query.assignedTo || query.assignedTo.length < 1) {
+            if (!saveQuery.assignedTo || saveQuery.assignedTo.length < 1) {
                 dispatch(setTicketListQueryType(TicketListQueryType.AllTicket));
             }
 

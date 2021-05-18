@@ -78,6 +78,7 @@
       "high": "High",
       "critical": "Critical"
     },
+
     "statuses": {
       "1": "Open",
       "2": "On hold",

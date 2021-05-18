@@ -29,10 +29,10 @@ const TicketListContainer = ({dataSource}: TicketListContainerProps) => {
 
     return (
         <div className="">
-            <div className='grid grid-flow-col auto-cols-min bg-gray-100 px-7 py-4 h-12 items-center body2-medium content-center'>
-                <TicketListHeaderCell className='w-20'>{t('tickets.channel')}</TicketListHeaderCell>
+            <div className='flex flex-row w-full auto-cols-min bg-gray-100 px-7 py-4 h-12 items-center body2-medium content-center'>
+                <TicketListHeaderCell className='w-24'>{t('tickets.channel')}</TicketListHeaderCell>
                 <TicketListHeaderCell
-                    className='w-20'
+                    className='w-1/12'
                     field={'Id'}
                     isSortable
                     sortDirection={getSortDirection(ticketFilter.sorts, 'Id')}
@@ -41,9 +41,9 @@ const TicketListContainer = ({dataSource}: TicketListContainerProps) => {
                 >
                     {t('tickets.id')}
                 </TicketListHeaderCell>
-                <TicketListHeaderCell className='w-60'>{t('tickets.subject')}</TicketListHeaderCell>
+                <TicketListHeaderCell className='w-2/12'>{t('tickets.subject')}</TicketListHeaderCell>
                 <TicketListHeaderCell
-                    className='w-36'
+                    className='w-2/12'
                     field={'DueDate'}
                     isSortable
                     sortDirection={getSortDirection(ticketFilter.sorts, 'DueDate')}
@@ -53,7 +53,7 @@ const TicketListContainer = ({dataSource}: TicketListContainerProps) => {
                     {t('tickets.due_in')}
                 </TicketListHeaderCell>
                 <TicketListHeaderCell
-                    className='w-40'
+                    className='w-2/12'
                     field={'Status'}
                     isSortable
                     sortDirection={getSortDirection(ticketFilter.sorts, 'Status')}
@@ -62,10 +62,10 @@ const TicketListContainer = ({dataSource}: TicketListContainerProps) => {
                 >
                     {t('tickets.status')}
                 </TicketListHeaderCell>
-                <TicketListHeaderCell className='w-28'>{t('tickets.priority_label')}</TicketListHeaderCell>
-                <TicketListHeaderCell className='w-36'>{t('tickets.type')}</TicketListHeaderCell>
-                <TicketListHeaderCell className='w-44'>{t('tickets.reason')}</TicketListHeaderCell>
-                <TicketListHeaderCell className='w-60'>{t('tickets.assigned_to')}</TicketListHeaderCell>
+                <TicketListHeaderCell className='w-2/12'>{t('tickets.priority_label')}</TicketListHeaderCell>
+                <TicketListHeaderCell className='w-2/12'>{t('tickets.type')}</TicketListHeaderCell>
+                <TicketListHeaderCell className='w-2/12'>{t('tickets.reason')}</TicketListHeaderCell>
+                <TicketListHeaderCell className='w-2/12'>{t('tickets.assigned_to')}</TicketListHeaderCell>
             </div>
             { dataSource.map(item => <TicketListItem key={item.id} item={item} />)}
         </div>

@@ -12,7 +12,8 @@ import {
     selectLookupValues,
     selectSearchTerm,
     selectTicketFilter,
-    selectTicketsPaging
+    selectTicketsPaging,
+    selectTicketQueryType
 } from '../store/tickets.selectors';
 import Radio from '@components/radio/radio';
 import {TicketOptionsBase} from '../models/ticket-options-base.model';
@@ -50,8 +51,9 @@ const TicketFilter = () => {
     const offices = useSelector(selectDepartmentList);
     const {username} = useSelector(authenticationSelector);
     const searchTerm: string = useSelector(selectSearchTerm);
-    const { control, handleSubmit, watch, setValue } = useForm({});
-
+    const {control, handleSubmit, watch, setValue} = useForm({});
+    const ticketListQueryType = useSelector(selectTicketQueryType);
+    const [collapsibleState, setCollapsibleState] = useState<{[key: string]: boolean}>({});
     const watchTimePeriod = watch('timePeriod');
 
     useEffect(() => {
@@ -63,6 +65,7 @@ const TicketFilter = () => {
         dispatch(getEnumByType('TicketStatus'));
         dispatch(getEnumByType('TicketStateFilter'));
         dispatch(getEnumByType('TicketType'));
+        dispatch(getEnumByType('TicketState'));
         dispatch(getLookupValues('Department'));
         dispatch(getLookupValues('TicketTags'));
     }, [dispatch]);
@@ -88,12 +91,20 @@ const TicketFilter = () => {
         query.ticketTypes = getSelectedFromCheckbox(values.ticketTypes).map((a: string) => parseInt(a));
         query.locations = getSelectedFromCheckbox(values.offices);
         query.states = getSelectedFromCheckbox(values.states).map((a: string) => parseInt(a));
+        query.departments = [];
+        query.tags = [];
+        query.priority = undefined;
+        query.fromDate = undefined;
+        query.toDate = undefined;
+        query.assignedTo = [];
+
         if (values.priority) {
             query.priority = values.priority;
         }
         if (values.tags) {
             query.tags = values.tags;
         }
+
         if (values.department) {
             query.departments = [];
             if (values.department !== allKey) {
@@ -129,9 +140,7 @@ const TicketFilter = () => {
             }
         }
 
-        query.assignedTo = [];
-        if (values.assignedTo)
-        {
+        if (values.assignedTo) {
             query.assignedTo.push(values.assignedTo);
         }
 
@@ -223,7 +232,8 @@ const TicketFilter = () => {
     }
 
     const GetCollapsibleCheckboxControl = (title: string, name: string, items: TicketOptionsBase[]) => {
-        return <Collapsible title={title}>
+        const isChecked = (option: TicketOptionsBase) => (ticketQueryFilter as any)[name]?.some((value: number) => value.toString() === option.key);
+        return <Collapsible title={title} isOpen={collapsibleState[name]} onClick={(isOpen) => setCollapsibleState({...collapsibleState, [name]: isOpen})}>
             {
                 items.map((item) => {
                     return <Controller
@@ -235,6 +245,7 @@ const TicketFilter = () => {
                             <Checkbox
                                 name={`${name}[${item.key}]`}
                                 ref={props.ref}
+                                defaultChecked={isChecked(item)}
                                 truncate={true}
                                 label={item.value}
                                 data-test-id={`${name}-checkbox-' + ${item.key}`}
@@ -251,22 +262,23 @@ const TicketFilter = () => {
     }
 
     const GetRadioCollapsibleControl = (title: string, name: string, items: TicketOptionsBase[]) => {
-        return <Collapsible title={title}>
+        return <Collapsible title={title} isOpen={collapsibleState[name]} onClick={(isOpen) => setCollapsibleState({...collapsibleState, [name]: isOpen})}>
             <Controller
                 control={control}
                 defaultValue=''
                 name={name}
                 render={(props) => (<Radio
-                        name={name}
-                        truncate={true}
-                        ref={props.ref}
-                        data-test-id={`${name}-radio`}
-                        labelClassName='ticket-filter-radio'
-                        items={convertOptionsToRadio(items)}
-                        onChange={(e: string) => {
-                            props.onChange(e);
-                        }}
-                    />
+                    name={name}
+                    truncate={true}
+                    ref={props.ref}
+                    data-test-id={`${name}-radio`}
+                    labelClassName='ticket-filter-radio'
+                    defaultValue={(ticketQueryFilter as any)[name]?.toString()}
+                    items={convertOptionsToRadio(items)}
+                    onChange={(e: string) => {
+                        props.onChange(e);
+                    }}
+                />
                 )}
             />
         </Collapsible>
@@ -337,29 +349,35 @@ const TicketFilter = () => {
             {GetCollapsibleCheckboxControl('tickets.filter.ticket_type', 'ticketTypes', addAllOption(convertEnumToOptions(ticketTypes)))}
             {GetRadioCollapsibleControl('tickets.filter.department', 'department', addAllOption(convertDepartmentsToOptions()))}
             {GetCollapsibleCheckboxControl('tickets.filter.office_location', 'offices', addAllOption(convertOfficesToOptions()))}
-            <Collapsible title={'tickets.filter.assigned_to'}>
-                <div>
-                    <Controller
-                        name='assignedTo'
-                        control={control}
-                        defaultValue=''
-                        render={(props) => (
-                            <Select
-                                {...props}
-                                data-test-id={'assigned-to-user-list'}
-                                options={getUserOptions()}
-                                value={props.value}
-                                onSelect={(option?: Option) => {
-                                    if (option) {
-                                        props.onChange(option?.value);
-                                    }
-                                }}
-                            />
-                        )}
-                    />
-                </div>
-            </Collapsible>
-            <Collapsible title={'tickets.filter.tags'}>
+            {ticketListQueryType !== TicketListQueryType.MyTicket &&
+                <Collapsible title={'tickets.filter.assigned_to'}
+                    isOpen={collapsibleState['assignedTo']}
+                    onClick={(isOpen) => setCollapsibleState({...collapsibleState, "assignedTo": isOpen})}>
+                    <div>
+                        <Controller
+                            name='assignedTo'
+                            control={control}
+                            defaultValue=''
+                            render={(props) => (
+                                <Select
+                                    {...props}
+                                    data-test-id={'assigned-to-user-list'}
+                                    options={getUserOptions()}
+                                    value={props.value}
+                                    onSelect={(option?: Option) => {
+                                        if (option) {
+                                            props.onChange(option?.value);
+                                        }
+                                    }}
+                                />
+                            )}
+                        />
+                    </div>
+                </Collapsible>
+            }
+            <Collapsible title={'tickets.filter.tags'}
+                isOpen={collapsibleState['tags']}
+                onClick={(isOpen) => setCollapsibleState({...collapsibleState, "tags": isOpen})}>
                 <Controller
                     name='tags'
                     control={control}

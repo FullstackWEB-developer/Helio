@@ -18,11 +18,10 @@ import {Ticket} from '@pages/tickets/models/ticket';
 
 interface TicketStatusProps {
     ticket: Ticket,
-    status: TicketStatuses,
+    isExpired?: boolean,
     isArrow?: boolean
 }
-
-const TicketStatus = ({ticket, status, isArrow = true}: TicketStatusProps) => {
+const TicketStatus = ({ticket, isArrow = true}: TicketStatusProps) => {
     const {t} = useTranslation();
     const dispatch = useDispatch();
     const [isVisible, setIsVisible, elementRef] = useComponentVisibility<HTMLDivElement>(false);
@@ -57,7 +56,7 @@ const TicketStatus = ({ticket, status, isArrow = true}: TicketStatusProps) => {
     }
 
     const statusesDropdownModel: DropdownModel = {
-        defaultValue: status?.toString(),
+        defaultValue: ticket.status?.toString(),
         items: [
             {label: t(statusTranslationKeyMap[TicketStatuses.Open]), value: TicketStatuses.Open.toString()},
             {label: t(statusTranslationKeyMap[TicketStatuses.OnHold]), value: TicketStatuses.OnHold.toString()},
@@ -73,23 +72,23 @@ const TicketStatus = ({ticket, status, isArrow = true}: TicketStatusProps) => {
     };
 
     return <div ref={elementRef} className='col-span-2 flex flex-row items-center h-full relative'
-                onClick={(event) => isArrow && openStatus(event)}>
+        onClick={(event) => isArrow && openStatus(event)}>
         <div>
-            <TicketStatusDot ticket={ticket}/>
+            <TicketStatusDot ticket={ticket} />
         </div>
         <div className='pl-3'>
             {ticket.status && t(`tickets.statuses.${(ticket.status)}`)}
         </div>
         {isArrow &&
-        <div className='pl-3 cursor-pointer' onClick={openStatus}>
-            <SvgIcon type={!isVisible ? Icon.ArrowDown : Icon.ArrowUp} className='cursor-pointer'
-                     fillClass='active-item-icon'/>
-        </div>
+            <div className='pl-3 cursor-pointer' onClick={openStatus}>
+                <SvgIcon type={!isVisible ? Icon.ArrowDown : Icon.ArrowUp} className='cursor-pointer'
+                    fillClass='active-item-icon' />
+            </div>
         }
         {isVisible &&
-        <div className='absolute top-16 w-48 z-10'>
-            <Dropdown model={statusesDropdownModel}/>
-        </div>
+            <div className='absolute top-16 w-48 z-10'>
+                <Dropdown model={statusesDropdownModel} />
+            </div>
         }
     </div>
 }

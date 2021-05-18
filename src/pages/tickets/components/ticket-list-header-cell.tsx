@@ -41,7 +41,7 @@ const TicketListHeaderCell = ({
         }
     }
 
-    return (<div className={`uppercase flex flew-row items-center ${className} ${isSortable ? 'cursor-pointer' : ''}`} onClick={onClicked}>
+    return (<div className={`uppercase flex items-center ${className} ${isSortable ? 'cursor-pointer' : ''}`} onClick={onClicked}>
         {children}
         {isSortable && currentSortDirection !== SortDirection.None &&
             <SvgIcon type={SortIconMap[currentSortDirection]}

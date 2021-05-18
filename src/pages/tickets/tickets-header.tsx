@@ -42,9 +42,9 @@ const TicketsHeader = () => {
             setCurrentListQueryType(value);
 
             if (value === TicketListQueryType.AllTicket) {
-                dispatch(getList({...ticketFilter, assignedTo: []}));
+                dispatch(getList({...ticketFilter, page: 1, assignedTo: []}));
             } else {
-                dispatch(getList({...ticketFilter, assignedTo: [username]}));
+                dispatch(getList({...ticketFilter, page: 1, assignedTo: [username]}));
             }
 
             dispatch(setTicketListQueryType(value as TicketListQueryType));

@@ -8,10 +8,11 @@ interface AccordionProps {
     title?: string;
     children: React.ReactNode;
     isOpen?: boolean;
+    onClick?: (isCollapsed: boolean) => void;
 }
 
-const Collapsible = ({title, children, isOpen = false} : AccordionProps) => {
-    const { t } = useTranslation();
+const Collapsible = ({title, children, isOpen = false, ...props}: AccordionProps) => {
+    const {t} = useTranslation();
     const [open, setOpen] = useState(false);
 
     useEffect(() => {
@@ -21,13 +22,19 @@ const Collapsible = ({title, children, isOpen = false} : AccordionProps) => {
     const toggle = () => {
         setOpen(!open);
     }
+    const onClick = () => {
+        toggle();
+        if (props.onClick) {
+            props.onClick(!open);
+        }
+    }
 
     return <div>
-        <div className='h-12 cursor-pointer flex flex-row justify-between items-center' onClick={ () => toggle()}>
+        <div className='h-12 cursor-pointer flex flex-row justify-between items-center' onClick={() => onClick()}>
             <div className='subtitle'>{t(title || '')}</div>
             <div>
-                {open ? <SvgIcon type={Icon.ArrowUp} className='cursor-pointer' fillClass='active-item-icon'/>
-                    : <SvgIcon type={Icon.ArrowDown} className='cursor-pointer' fillClass='active-item-icon'/>}
+                {open ? <SvgIcon type={Icon.ArrowUp} className='cursor-pointer' fillClass='active-item-icon' />
+                    : <SvgIcon type={Icon.ArrowDown} className='cursor-pointer' fillClass='active-item-icon' />}
             </div>
         </div>
         {<div hidden={!open}>{children}</div>}

@@ -125,15 +125,15 @@ const TicketAssignee = ({ticketId, assignee, dropdownHorizontalPosition}: Ticket
     return <div ref={elementRef} className='col-span-2 cursor-pointer relative'>
         <div ref={assigneeDisplayRef} onClick={openSearchAssignee}>
             {selectedUser?.id ?
-                <div className='grid grid-cols-5 items-center'>
-                    <div className='col-span-1'>
+                <div className='flex flex-wrap items-center'>
+                    <div className='mr-4'>
                         <Avatar
                             model={{
                                 initials: utils.getInitialsFromFullName(`${selectedUser.firstName} ${selectedUser.lastName}` || '')
                             }}
                         />
                     </div>
-                    <div className='col-span-3 pl-2' ref={chevronPosition}>
+                    <div ref={chevronPosition}>
                         <div>{selectedUser.firstName} {selectedUser.lastName}</div>
                     </div>
                 </div>

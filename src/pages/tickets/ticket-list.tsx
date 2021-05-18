@@ -1,10 +1,11 @@
 import {useDispatch, useSelector} from 'react-redux';
 import {
-    selectIsTicketFilterOpen,
-    selectTicketFilter,
     selectTickets,
     selectTicketsLoading,
-    selectTicketsPaging
+    selectTicketsPaging,
+    selectIsTicketFilterOpen,
+    selectTicketFilter,
+    selectTicketQueryType
 } from './store/tickets.selectors';
 import React, {useEffect, useState} from 'react';
 import {getList, getLookupValues} from './services/tickets.service';
@@ -17,6 +18,7 @@ import TicketFilter from './components/ticket-filter';
 import {getUserList} from '@shared/services/lookups.service';
 import {Paging} from '@shared/models/paging.model';
 import TicketListContainer from './components/ticket-list-container';
+import {TicketListQueryType} from './models/ticket-list-type';
 import {TicketQuery} from '@pages/tickets/models/ticket-query';
 import {useHistory} from 'react-router-dom';
 import queryString from 'query-string';
@@ -28,6 +30,7 @@ const TicketList = () => {
     const ticketsLoading = useSelector(selectTicketsLoading);
     const isFilterOpen = useSelector(selectIsTicketFilterOpen);
     const currentFilter = useSelector(selectTicketFilter);
+    const ticketListQueryType = useSelector(selectTicketQueryType);
     const history = useHistory();
     const [lastAppliedFilter, setLastAppliedFilter] = useState<string>(JSON.stringify(currentFilter));
 
@@ -45,11 +48,14 @@ const TicketList = () => {
 
     useEffect(() => {
         const query = queryString.parse(history.location.search);
-        let newQuery: TicketQuery = {...query as any as TicketQuery};
+        const newQuery: TicketQuery = {...query as any as TicketQuery};
         if (newQuery) {
             dispatch(getList(newQuery, true));
         } else {
-            dispatch(getList({...paging, sorts: ['Status Asc', 'DueDate Asc']}));
+            dispatch(getList({
+                ...paging,
+                assignedTo: ticketListQueryType === TicketListQueryType.MyTicket ? currentFilter.assignedTo : []
+            }));
         }
     }, []);
 
@@ -61,18 +67,19 @@ const TicketList = () => {
     }, [dispatch, paging.page]);
 
     return (
-        <>
-            <div className={`${isFilterOpen ? 'w-96 transition-width transition-slowest ease' : 'hidden'}`}>
-                <TicketFilter/></div>
+        <div className="flex flex-auto h-full overflow-auto">
+            <div className={`${isFilterOpen ? 'w-96 transition-width transition-slowest ease sticky top-0 overflow-y-auto z-10 bg-secondary-100' : 'hidden'}`}>
+                <TicketFilter />
+            </div>
             <div className={'flex flex-col h-full w-full'}>
-                <TicketsHeader/>
-                <TicketsSearch/>
+                <TicketsHeader />
+                <TicketsSearch />
                 {ticketsLoading ?
-                    <ThreeDots/> :
-                    <TicketListContainer dataSource={items}/>
+                    <ThreeDots /> :
+                    <TicketListContainer dataSource={items} />
                 }
             </div>
-        </>
+        </div>
     );
 };
 

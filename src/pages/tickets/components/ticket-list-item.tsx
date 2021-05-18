@@ -14,6 +14,7 @@ import {TicketLookupValue} from '../models/ticket-lookup-values.model';
 import {TicketsPath} from '../../../app/paths';
 import {DropdownAlignmentHorizontalPosition} from '@components/dropdown/dropdown.models';
 import DueInRelativeTime from './ticket-due-in-relative-time';
+import utils from '@shared/utils/utils';
 
 interface TicketListItemProps {
     item: Ticket
@@ -74,34 +75,36 @@ const TicketListItem = ({item}: TicketListItemProps) => {
         history.push(`${TicketsPath}/${item.ticketNumber}`);
     }
 
-    return <div className='grid grid-flow-col auto-cols-max body2 border-b relative cursor-pointer hover:bg-gray-100 px-7 items-center h-20' onClick={openTicket} >
-        <div className='w-20'>
-            <TicketChannelIcon channel={item.channel}/>
+    const getRelativeTime = utils.getRelativeTime(item.dueDate);
+
+    return <div className='flex flex-row w-full auto-cols-max body2 border-b relative cursor-pointer hover:bg-gray-100 px-7 items-center h-20 py-3.5' onClick={openTicket} >
+        <div className='w-24'>
+            <TicketChannelIcon channel={item.channel} />
         </div>
-        <div className='w-20 pr-5'>
+        <div className='w-1/12'>
             {item.ticketNumber}
         </div>
-        <div className='w-60 pr-5 subtitle2'>
+        <div className='w-2/12 subtitle2'>
             <span>{item.subject ? item.subject : '-'}</span>
         </div>
-        <div className='w-36 body3'>
-            <DueInRelativeTime date={item.dueDate}/>
+        <div className='w-2/12 body3'>
+            <DueInRelativeTime value={getRelativeTime} isOverdue={item.isOverdue} />
         </div>
-        <div className='w-40 h-full'>
-            <TicketStatus ticket={item} status={item.status!}/>
+        <div className='w-2/12 h-full'>
+            <TicketStatus ticket={item} />
         </div>
-        <div className='w-28'>
+        <div className='w-2/12'>
             {item.priority ? selectedPriority?.value : null}
         </div>
-        <div className='w-36'>
+        <div className='w-2/12'>
             {item.type ? selectedTicketType?.value : '-'}
         </div>
-        <div className='w-44'>
+        <div className='w-2/12'>
             {item.reason ? selectedReason?.label : '-'}
         </div>
-        <div className='w-60'>
+        <div className='w-2/12'>
             <TicketAssignee ticketId={ticketId} assignee={item.assignee}
-                            dropdownHorizontalPosition={DropdownAlignmentHorizontalPosition.Right}/>
+                dropdownHorizontalPosition={DropdownAlignmentHorizontalPosition.Right} />
         </div>
     </div>
 };

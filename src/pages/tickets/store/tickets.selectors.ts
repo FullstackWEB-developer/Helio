@@ -18,7 +18,7 @@ export const selectTickets = (state: RootState) => state.ticketState.tickets as 
 
 export const selectTicketsPaging = (state: RootState) => state.ticketState.paging as Paging;
 export const selectTicketFilter = (state: RootState) => state.ticketState.ticketFilter as TicketQuery;
-export const selectTicketQueryType = (state: RootState): TicketStatuses =>
+export const selectTicketQueryType = (state: RootState): TicketListQueryType =>
     state.ticketState.ticketListQueryType || TicketListQueryType.AllTicket;
 export const selectSearchTerm = (state: RootState) => state.ticketState.searchTerm;
 export const selectFeedLastMessageOn = (state: RootState) => state.ticketState.feedLastMessageOn;

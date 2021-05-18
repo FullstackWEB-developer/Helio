@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc'
-
+import {RelativeTime} from './types';
 const getWindowCenter = () => {
     const {width, height} = getWindowDimensions();
     return {x: width / 2, y: height / 2};
@@ -87,8 +87,7 @@ const formatRelativeTime = (days?: number, hours?: number, minutes?: number, abs
 
     return '';
 }
-
-const getRelativeTime = (date?: Date): [number, number, number] | [] => {
+const getRelativeTime = (date?: Date): RelativeTime  => {
     if (!date) {
         return [];
     }
