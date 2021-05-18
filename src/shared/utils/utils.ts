@@ -70,7 +70,7 @@ const getDateTime = (dueDate?: Date, dueTime?: string) => {
     return dateTime;
 }
 
-const formatRelativeTime = (days?: number, hours?: number, minutes?: number, abs = false): string => {
+const formatRelativeTime = (days?: number, hours?: number, minutes?: number, abs = false, minutesFormat = 'm'): string => {
     const getTimePart = (timePart: number) => abs ? Math.abs(timePart) : timePart;
 
     if (days && days !== 0) {
@@ -78,11 +78,11 @@ const formatRelativeTime = (days?: number, hours?: number, minutes?: number, abs
     }
 
     if (hours && hours !== 0) {
-        return `${getTimePart(hours)} h ${getTimePart(minutes ?? 0)} m`;
+        return `${getTimePart(hours)} h ${getTimePart(minutes ?? 0)} ${minutesFormat}`;
     }
 
     if (minutes) {
-        return `${getTimePart(minutes)} m`;
+        return `${getTimePart(minutes)} ${minutesFormat}`;
     }
 
     return '';

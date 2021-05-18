@@ -28,7 +28,7 @@ const ContactTickets = ({contactId}: ContactTicketsProps) => {
     const {t} = useTranslation();
     dayjs.extend(relativeTime);
     dayjs.extend(utc);
-    const sysdate = Date.now();
+    const sysdate = dayjs.utc();
 
     const query: ContactTicketsRequest = {
         contactId,
@@ -58,6 +58,24 @@ const ContactTickets = ({contactId}: ContactTicketsProps) => {
         }
     }
 
+    const formatDueDate = (dueDate: Date) => {
+        const relativeTime = utils.getRelativeTime(dueDate);
+        const [days, hours, minute] = relativeTime;
+
+        return days || hours ? utils.formatRelativeTime(days, hours, minute, true, 'min')
+            : ` In ${utils.formatRelativeTime(days, hours, minute, true, 'min')}`;
+    }
+
+    const getDueDate = (dueDate: Date) => {
+        return dayjs.utc(dueDate).isBefore(sysdate) ?
+            <ContactTicketLabel labelText={t('tickets.overdue')}
+                                valueText={formatDueDate(dueDate)}
+                                isDanger={true}/> :
+            <ContactTicketLabel labelText={t('tickets.due')}
+                                valueText={formatDueDate(dueDate)}
+                                isDanger={false}/>
+    }
+
     const getTicket = (ticket: TicketBase) => {
         return <div className='py-4 border-b cursor-pointer' key={ticket.id}
                                         onClick={() => history.push(`${TicketsPath}/${ticket.ticketNumber}`)}>
@@ -70,10 +88,10 @@ const ContactTickets = ({contactId}: ContactTicketsProps) => {
                 {
                     ticket.status && (
                         <div className='flex w-36 body3'>
-                            <div>
+                            <div className='pt-1.5'>
                                 <TicketStatusDot ticket={ticket}/>
                             </div>
-                            <div className='pl-3'>
+                            <div className='pl-2.5 pt-1'>
                                 {ticket.status && t(`tickets.statuses.${(ticket.status)}`)}
                             </div>
                         </div>
@@ -82,11 +100,7 @@ const ContactTickets = ({contactId}: ContactTicketsProps) => {
             </div>
             <div className='flex flex-row body2 items-center pt-1'>
                 {
-                    ticket.dueDate && (
-                        <ContactTicketLabel labelText={t('tickets.overdue')}
-                                            valueText={dayjs().to(dayjs.utc(ticket.dueDate).local())}
-                                            isDanger={dayjs(ticket.dueDate).isBefore(sysdate)}/>
-                    )
+                    ticket.dueDate && <Fragment>{getDueDate(ticket.dueDate)}</Fragment>
                 }
                 {
                     ticket.closedOn && (
