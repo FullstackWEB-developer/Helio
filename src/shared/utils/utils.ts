@@ -107,13 +107,12 @@ const isString = (obj: any) => {
     return typeof obj === 'string' || obj instanceof String;
 }
 
-
-const toShortISOString = (value?: Date) => {
-    if (!value) {
+const toShortISOLocalString = (date?: Date) => {
+    if (!date) {
         return '';
     }
-    const iso = value.toISOString();
-    return iso.substr(0, iso.indexOf('T'));
+    const dateISO = dayjs(date).utc().toISOString();
+    return dateISO.substr(0, dateISO.indexOf('T'))
 }
 
 const utils = {
@@ -128,7 +127,7 @@ const utils = {
     formatRelativeTime,
     formatPhone,
     isString,
-    toShortISOString
+    toShortISOLocalString
 }
 
 export default utils;

@@ -33,14 +33,14 @@ export const searchPatients = (type: number, term: string) => {
 }
 
 
-export interface VerifyPatientProps{
-    dob:string,
+export interface VerifyPatientProps {
+    dob: Date,
     phone: string,
     zip: string
 }
 
 export const verifyPatient = async ({ phone, dob, zip} : VerifyPatientProps) => {
-    const url = `${patientsUrl}/verify?dateOfBirth=${dayjs(dob).format('YYYY-MM-DD')}&phoneNumber=${phone}&zipCode=${zip}`;
+    const url = `${patientsUrl}/verify?dateOfBirth=${dayjs(dob).utc().format('YYYY-MM-DD')}&phoneNumber=${phone}&zipCode=${zip}`;
     const response = await Api.get(url);
     return response.data;
 }

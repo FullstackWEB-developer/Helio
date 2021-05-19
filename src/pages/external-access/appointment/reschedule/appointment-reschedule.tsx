@@ -45,7 +45,7 @@ const AppointmentReschedule = () => {
     const { control, setValue } = useForm({
         mode: 'onBlur',
         defaultValues: {
-            selectedDate: dayjs().format('YYYY-MM-DD')
+            selectedDate: dayjs().toDate()
         }
     });
 
@@ -78,8 +78,8 @@ const AppointmentReschedule = () => {
         }
 
         if (appointmentSlots && appointmentSlots.length > 0) {
-            setValue('selectedDate', utils.formatUtcDate(appointmentSlots[0].date, 'YYYY-MM-DD'));
-            setStartDate(appointmentSlots[0].date);
+            setValue('selectedDate', new Date(appointmentSlots[0].date));
+            setStartDate(new Date(appointmentSlots[0].date));
         }
     }, [appointmentSlots, department?.id, provider?.id, refetch, setValue]);
 
@@ -119,21 +119,24 @@ const AppointmentReschedule = () => {
     }, [appointmentSlots]);
 
     const refreshCalendar = (newStartDate: Date) => {
-        setValue('selectedDate', utils.formatUtcDate(newStartDate, 'YYYY-MM-DD'));
+        setValue('selectedDate', newStartDate);
         setStartDate(newStartDate);
         setTimeout(() => {
             refetch();
         }, 300);
     }
 
-    const onDateChange = (event: any) => {
-        if (!businessDays.isBusinessDay(dayjs(event.target.value))) {
-            setValue('selectedDate', utils.formatUtcDate(startDate, 'YYYY-MM-DD'));
+    const onDateChange = (date?: Date) => {
+        if (!date) {
+            return;
+        }
+        if (!businessDays.isBusinessDay(dayjs(date))) {
+            setValue('selectedDate', startDate);
             setIsWeekendSelected(true);
-            return null;
+            return;
         }
         setIsWeekendSelected(false);
-        refreshCalendar(event.target.value);
+        refreshCalendar(date);
     }
 
     const nextPage = (isMobile = false) => {

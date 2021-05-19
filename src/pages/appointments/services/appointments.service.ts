@@ -32,8 +32,8 @@ export const getAppointmentSlots = async (providerId: number, departmentId: numb
      getOpenSlotsUrl = getOpenSlotsUrl + `&departmentId=${departmentId}`;
      getOpenSlotsUrl = getOpenSlotsUrl + `&providerId=${providerId}`;
      getOpenSlotsUrl = getOpenSlotsUrl + `&appointmentTypeId=${appointmentTypeId}`;
-     getOpenSlotsUrl = getOpenSlotsUrl + `&startDate=${dayjs(startDate).format('YYYY-MM-DD')}`;
-     getOpenSlotsUrl = getOpenSlotsUrl + `&endDate=${dayjs(endDate).format( 'YYYY-MM-DD')}`;
+     getOpenSlotsUrl = getOpenSlotsUrl + `&startDate=${dayjs(startDate).utc().format('YYYY-MM-DD')}`;
+     getOpenSlotsUrl = getOpenSlotsUrl + `&endDate=${dayjs(endDate).utc().format( 'YYYY-MM-DD')}`;
      getOpenSlotsUrl = getOpenSlotsUrl + `&itemCount=${itemCount}`;
      const result = await Api.get(getOpenSlotsUrl);
      return result.data;

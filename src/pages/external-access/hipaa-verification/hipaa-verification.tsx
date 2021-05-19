@@ -27,7 +27,7 @@ const HipaaVerification = ({request}: HipaaVerificationProps) => {
     const dispatch = useDispatch();
     const [values, setValues] = useState<VerifyPatientProps>();
     const [errors, setErrors] = useState<string>('');
-    const {handleSubmit, control, formState} = useForm(        {
+    const {handleSubmit, control, formState} = useForm({
         mode: 'onBlur'
     });
 
@@ -54,26 +54,26 @@ const HipaaVerification = ({request}: HipaaVerificationProps) => {
     }
 
     const {isLoading, refetch} = useQuery<VerifiedPatient, AxiosError>([VerifyPatient, values], () =>
-            verifyPatient(values!), {
-            enabled:false,
-            onSuccess : (data) => {
-                if (data.patientId.toString() === request.patientId) {
-                    dispatch(setVerifiedPatient(data));
-                    forwardToRelatedPage();
-                } else {
-                    setErrors('external_access.hipaa.verification_failed');
-                }
-            },
-            onError: (err) => {
-                if (err.response?.status === 404) {
-                    setErrors('external_access.hipaa.verification_failed');
-                } else {
-                    return setErrors('common.error');
-                }
+        verifyPatient(values!), {
+        enabled: false,
+        onSuccess: (data) => {
+            if (data.patientId.toString() === request.patientId) {
+                dispatch(setVerifiedPatient(data));
+                forwardToRelatedPage();
+            } else {
+                setErrors('external_access.hipaa.verification_failed');
+            }
+        },
+        onError: (err) => {
+            if (err.response?.status === 404) {
+                setErrors('external_access.hipaa.verification_failed');
+            } else {
+                return setErrors('common.error');
             }
         }
+    }
     );
-    
+
     const onSubmit = async (values: VerifyPatientProps) => {
         setValues(values);
     }
@@ -81,77 +81,79 @@ const HipaaVerification = ({request}: HipaaVerificationProps) => {
         if (values) {
             refetch();
         }
-    }, [values, refetch] );
+    }, [values, refetch]);
 
     useEffect(() => {
 
-    }, [formState] );
+    }, [formState]);
 
     useEffect(() => {
         dispatch(clearVerifiedPatient());
         setErrors('');
-    }, [dispatch] );
+    }, [dispatch]);
 
     return <>
-            <div className='md:px-48'>
-                <div className='md:whitespace-pre md:h-24 my-3 md:pb-10 w-full items-center'>
-                    <h4>
-                        {t(`external_access.title_${request.requestType}`)}
-                    </h4>
-                </div>
-                <div className='pb-6 md:pb-10'>
-                    {t('external_access.hipaa.verify_title')}
-                </div>
-                <form onSubmit={handleSubmit(onSubmit)} onChange={() => setErrors('')}>
-                    <div className='hipaa-verification-form'>
-                        <div className='pb-6'>
-                            <ControlledDateInput
-                                type='date'
-                                required={true}
-                                label='external_access.hipaa.dob'
-                                control={control}
-                                name='dob'
-                                max={new Date(new Date().toDateString())}
-                                dataTestId='hipaa-dob'/>
-                        </div>
-                        <div className='pb-6'>
-                            <ControlledInput
-                                type='tel'
-                                required={true}
-                                className='w-full md:w-auto'
-                                label={t('external_access.hipaa.mobile_phone_number')}
-                                control={control}
-                                name='phone'
-                                dataTestId='hipaa-phone'/>
-                        </div>
-                        <div className='pb-6'>
-                            <ControlledInput
-                                type='zip'
-                                required={true}
-                                className='w-full md:w-auto'
-                                label={t('external_access.hipaa.zip_code')}
-                                control={control}
-                                name='zip'
-                                dataTestId='hipaa-zip'/>
-                        </div>
-                        <div className='py-6 flex md:justify-start justify-center'>
-                            <div>
-                                <Button
+        <div className='md:px-48'>
+            <div className='md:whitespace-pre md:h-24 my-3 md:pb-10 w-full items-center'>
+                <h4>
+                    {t(`external_access.title_${request.requestType}`)}
+                </h4>
+            </div>
+            <div className='pb-6 md:pb-10'>
+                {t('external_access.hipaa.verify_title')}
+            </div>
+            <form onSubmit={handleSubmit(onSubmit)} onChange={() => setErrors('')}>
+                <div className='hipaa-verification-form'>
+                    <div className='pb-6'>
+                        <ControlledDateInput
+                            type='date'
+                            required={true}
+                            label='external_access.hipaa.dob'
+                            control={control}
+                            name='dob'
+                            max={new Date(new Date().toDateString())}
+                            dataTestId='hipaa-dob' />
+                    </div>
+                    <div className='pb-6'>
+                        <ControlledInput
+                            type='tel'
+                            defaultValue=''
+                            required={true}
+                            className='w-full md:w-auto'
+                            label={t('external_access.hipaa.mobile_phone_number')}
+                            control={control}
+                            name='phone'
+                            dataTestId='hipaa-phone' />
+                    </div>
+                    <div className='pb-6'>
+                        <ControlledInput
+                            type='zip'
+                            required={true}
+                            defaultValue=''
+                            className='w-full md:w-auto'
+                            label={t('external_access.hipaa.zip_code')}
+                            control={control}
+                            name='zip'
+                            dataTestId='hipaa-zip' />
+                    </div>
+                    <div className='py-6 flex md:justify-start justify-center'>
+                        <div>
+                            <Button
                                 label={'common.continue'}
                                 disabled={!formState.isDirty || !formState.isValid || isLoading}
                                 className='w-full md:w-auto'
                                 type='submit'
                                 data-test-id='hipaa-submit-button'
                                 buttonType='big' />
-                            </div>
-                        </div>
-                        {isLoading && <ThreeDotsSmallLoader className="three-dots-loader-small" cx={13} cxSpace={23} cy={16} height={30} />}
-                        <div className='text-danger'>
-                            {t(errors)}
                         </div>
                     </div>
-                </form>
-            </div>
+                    {isLoading && <ThreeDotsSmallLoader className="three-dots-loader-small" cx={13} cxSpace={23} cy={16} height={30} />}
+                    <div className='text-danger'>
+                        {t(errors)}
+                    </div>
+                </div>
+            </form>
+        </div>
     </>
 }
 

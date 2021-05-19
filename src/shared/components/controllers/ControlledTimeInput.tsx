@@ -1,43 +1,57 @@
 import {Controller} from 'react-hook-form';
 import {Control} from 'react-hook-form/dist/types/form';
 import {useTranslation} from 'react-i18next';
-import DateTimeInput from '@components/date-time-input/date-time-input';
+import TimePicker from '@components/time-picker';
 export interface ControllerTimeInputProps {
     control: Control;
     required?: boolean;
+    disabled?: boolean;
     name: string;
     className?: string;
     label?: string;
     dataTestId: string;
-    max?: string;
-    type?: 'date' | 'time';
-    placeholder?: string;
     defaultValue?: string;
+    onChange?: (time: string | undefined) => void;
 }
 
-const ControlledTimeInput = ({control, required = false, type = 'date', name, label = '', className = '', dataTestId, max, placeholder, ...props}: ControllerTimeInputProps) => {
+const ControlledTimeInput = ({control,
+    required,
+    disabled,
+    name,
+    label,
+    dataTestId,
+    defaultValue,
+    ...props
+}: ControllerTimeInputProps) => {
 
     const {t} = useTranslation();
     const requiredText = t('common.required');
+
+    const onChange = (value: string | undefined) => {
+        control.setValue(name, value, {
+            shouldValidate: true
+        });
+
+        if (props.onChange) {
+            props.onChange(value);
+        }
+    }
 
     return (<Controller
         name={name}
         control={control}
         {...props}
-        rules={{
-            required: required ? requiredText : ''
-        }}
-        defaultValue=''
+        rules={{required: required ? requiredText : ''}}
+        defaultValue={defaultValue}
         render={(controllerProps) => (
-            <DateTimeInput
-                label={label}
+            <TimePicker
                 {...controllerProps}
-                max={max}
-                className={className}
-                data-test-id={dataTestId}
+                label={label}
+                required={required}
+                disabled={disabled}
+                dataTestId={dataTestId}
                 error={control.formState.errors[name]?.message}
-                type={type}
-                placeholder={placeholder}
+                onChange={onChange}
             />
         )}
     />);

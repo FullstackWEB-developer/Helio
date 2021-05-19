@@ -2,26 +2,28 @@ import {useEffect, useState} from "react";
 import SvgIcon from "../svg-icon/svg-icon";
 import {Icon} from '../svg-icon/icon';
 import dayjs from 'dayjs';
-import localeData from 'dayjs/plugin/localeData';
 import {DateDetail} from './date-detail.type';
 import {getMonthDetails, getTodayTimestamp} from './calendarUtils';
 import classNames from 'classnames';
 import './calendar.scss';
-dayjs.extend(localeData);
 
 interface CalendarProps {
     date?: Date,
     max?: Date,
     min?: Date,
     isWeekendDisabled?: boolean,
+    highlightToday?: boolean,
     onChange?: (date: Date) => void;
+    onBlur?: () => void;
 }
 const Calendar = ({
     date,
+    highlightToday,
     min = new Date(1900, 0, 1),
     max = new Date(9999, 11, 12),
     isWeekendDisabled = false,
-    onChange
+    onChange,
+    onBlur
 }: CalendarProps) => {
     const [currentDate, setCurrentDate] = useState(dayjs(date));
     const [monthDetail, setMonthDetail] = useState<DateDetail[]>([]);
@@ -43,9 +45,10 @@ const Calendar = ({
     }, [currentDate, max, min])
 
     useEffect(() => {
-        setCurrentDate(dayjs(date ?? new Date().toDateString()));
+        setCurrentDate(dayjs(date));
         if (date) {
-            setSelectedDay(date.getTime());
+            const dateUTCWithoutTime = new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate());
+            setSelectedDay(dateUTCWithoutTime.getTime());
         }
     }, [date]);
 
@@ -68,7 +71,7 @@ const Calendar = ({
 
     const getClassName = (day: DateDetail) => classNames({
         'disabled': isDisabled(day),
-        'highlight-today': isCurrentDay(day),
+        'highlight-today': highlightToday && isCurrentDay(day),
         'highlight-selected': isSelectedDay(day),
         'weekend': day.isWeekend
     });
@@ -83,7 +86,7 @@ const Calendar = ({
         }
     }
 
-    return (<div className='calendar py-6 px-6 overflow-hidden'>
+    return (<div className='calendar px-7 pb-7 pt-10 overflow-hidden' onBlur={(e) => onBlur}>
         <div className='calendar-container'>
             <div className='flex flex-row items-center justify-between'>
                 <div role='button' className='cursor-pointer' onClick={() => !isDisabledBackward && goBackward('month')}>

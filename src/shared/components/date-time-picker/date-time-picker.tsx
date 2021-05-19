@@ -1,7 +1,5 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import './date-time-picker.scss';
-import customHooks from '@shared/hooks/customHooks';
 import useComponentVisibility from '@shared/hooks/useComponentVisibility';
 import SvgIcon from '@components/svg-icon/svg-icon';
 import {Icon} from '@components/svg-icon/icon';
@@ -9,8 +7,12 @@ import Calendar from '@components/calendar';
 import utils from '@shared/utils/utils';
 import {CalendarHorizontalAlign} from './calendar-align-enum';
 import classNames from 'classnames';
+import './date-time-picker.scss';
+import utc from 'dayjs/plugin/utc';
+import dayjs from 'dayjs';
 
 interface DateTimePickerProps {
+    name?: string,
     label?: string;
     value?: Date;
     error?: string;
@@ -20,55 +22,68 @@ interface DateTimePickerProps {
     max?: Date,
     min?: Date,
     type?: 'date' | 'time' | 'datetime';
-    calendarHorizontalAlign?: CalendarHorizontalAlign
+    calendarHorizontalAlign?: CalendarHorizontalAlign;
     isWeekendDisabled?: boolean;
     calendarContainerClassName?: string;
     onChange?: (date: Date | undefined) => void;
+    onBlur?: () => void;
+    onCalendarVisibilityChange?: (isVisible: boolean) => void;
     onValidationError?: () => void;
+
 }
 const DateTimePicker = React.forwardRef<HTMLDivElement, DateTimePickerProps>(({
     label,
     value,
     type = 'datetime',
-    min = new Date(1900, 0, 1),
-    max = new Date(9999, 11, 12),
+    name,
+    min = new Date('0001-01-01T00:00:00'),
+    max = new Date('9999-12-31T00:00:00'),
     calendarContainerClassName = '',
-    onValidationError,
     isWeekendDisabled,
     calendarHorizontalAlign = CalendarHorizontalAlign.Right,
+    onBlur,
+    onValidationError,
+    onCalendarVisibilityChange,
     ...props
 }: DateTimePickerProps) => {
+    dayjs.extend(utc);
     const {t}: {t: any} = useTranslation();
-    const [inputValue, setInputValue] = useState(utils.toShortISOString(value));
+    const [inputValue, setInputValue] = useState(!value ? '' : utils.toShortISOLocalString(value));
     const [date, setDate] = useState(value);
     const [isCalendarOpen, setCalendarOpen, calendarWrapperRef] = useComponentVisibility<HTMLDivElement>(false)
 
     useEffect(() => {
         if (value) {
             setDate(value);
-            setInputValue(utils.toShortISOString(value));
+            setInputValue(utils.toShortISOLocalString(value));
         }
 
     }, [value])
+
+    useEffect(() => {
+        if (onCalendarVisibilityChange) {
+            onCalendarVisibilityChange(isCalendarOpen);
+        }
+    }, [isCalendarOpen])
 
     const onChange = (dateValue?: Date) => {
         if (props.onChange) {
             props.onChange(dateValue);
         }
     }
+
     const isValidDate = (valueDate: Date) => valueDate >= min && valueDate <= max;
 
     const onInputValueChange = ({target}: React.ChangeEvent<HTMLInputElement>) => {
         const targetValue = target.value;
-        setInputValue(targetValue);
-
         if (targetValue === '') {
+            setInputValue(targetValue);
             setDate(undefined);
             onChange();
             return;
         }
 
-        const dateValue = new Date(targetValue);
+        const dateValue = new Date(targetValue)
         if (!isValidDate(dateValue)) {
             setDate(undefined);
             if (onValidationError) {
@@ -76,13 +91,13 @@ const DateTimePicker = React.forwardRef<HTMLDivElement, DateTimePickerProps>(({
             }
             return;
         }
-
+        setInputValue(targetValue);
         setDate(dateValue);
         onChange(dateValue);
     }
 
     const onCalendarValueChange = (valueDate: Date) => {
-        setInputValue(utils.toShortISOString(valueDate));
+        setInputValue(utils.toShortISOLocalString(valueDate));
         onChange(valueDate);
         setCalendarOpen(false);
     }
@@ -122,6 +137,9 @@ const DateTimePicker = React.forwardRef<HTMLDivElement, DateTimePickerProps>(({
         if (inputValue === '') {
             target.valueAsDate = null;
         }
+        if (onBlur) {
+            onBlur();
+        }
     }
 
     const onClearClick = () => {
@@ -130,16 +148,17 @@ const DateTimePicker = React.forwardRef<HTMLDivElement, DateTimePickerProps>(({
     }
 
     return (
-        <div ref={calendarWrapperRef} className={classNames('date-time-picker relative w-full flex flex-col h-20', {'date-time-picker-disabled': props.disabled})}>
+        <div ref={calendarWrapperRef} className={classNames('date-time-picker relative w-full flex flex-col h-20', calendarContainerClassName, {'date-time-picker-disabled': props.disabled})}>
             <div className={classNames('date-time-picker-container relative flex flex-wrap', {'open': isCalendarOpen})}>
                 <input
+                    name={name}
                     type='date'
                     onClick={onInputClick}
                     onChange={onInputValueChange}
                     onFocus={() => setCalendarOpen(true)}
                     onBlur={onInputBlur}
-                    max={max ? utils.toShortISOString(max) : undefined}
-                    min={min ? utils.toShortISOString(min) : undefined}
+                    max={max ? utils.toShortISOLocalString(max) : undefined}
+                    min={min ? utils.toShortISOLocalString(min) : undefined}
                     className={`w-px pl-4 body2 ${getInputClassName()} relative truncate flex-shrink flex-grow flex-auto leading-normal`}
                     value={inputValue}
                     disabled={props.disabled}
@@ -170,12 +189,13 @@ const DateTimePicker = React.forwardRef<HTMLDivElement, DateTimePickerProps>(({
                 </div>
                 {isCalendarOpen &&
                     <div
-                        className={classNames('absolute top-14 z-10', {'right-0': calendarHorizontalAlign === CalendarHorizontalAlign.Left})}
+                        className={classNames('absolute top-14 z-20', {'right-0': calendarHorizontalAlign === CalendarHorizontalAlign.Left})}
                         onClick={onCalendarWrapperClick}
                     >
                         <Calendar
                             isWeekendDisabled={isWeekendDisabled}
-                            date={date ? new Date(date.toDateString()) : undefined}
+                            onBlur={onBlur}
+                            date={date}
                             max={max}
                             min={min}
                             onChange={onCalendarValueChange} />

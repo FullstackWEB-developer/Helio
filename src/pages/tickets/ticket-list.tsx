@@ -68,9 +68,7 @@ const TicketList = () => {
 
     return (
         <div className="flex flex-auto h-full overflow-auto">
-            <div className={`${isFilterOpen ? 'w-96 transition-width transition-slowest ease sticky top-0 overflow-y-auto z-10 bg-secondary-100' : 'hidden'}`}>
-                <TicketFilter />
-            </div>
+            <TicketFilter isOpen={isFilterOpen} />
             <div className={'flex flex-col h-full w-full'}>
                 <TicketsHeader />
                 <TicketsSearch />

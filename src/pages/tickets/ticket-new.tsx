@@ -44,6 +44,7 @@ import useDebounce from '@shared/hooks/useDebounce';
 import ControlledInput from '@components/controllers/ControllerInput';
 import ControlledDateInput from '@components/controllers/ControlledDateInput';
 import ControlledTimeInput from '@components/controllers/ControlledTimeInput';
+import TimePicker from '@components/time-picker';
 import {DEBOUNCE_SEARCH_DELAY_MS} from '@shared/constants/form-constants';
 import {ContactType} from '@pages/contacts/models/ContactType';
 import {AxiosError} from 'axios';
@@ -506,19 +507,18 @@ const TicketNew = () => {
                         <ControlledDateInput
                             name='dueDate'
                             label='ticket_new.due_date'
+                            className='mr-8'
                             control={control}
                             type='date'
                             dataTestId={'ticket-new-due-date'}
                             onValidationError={() => setError('dueDate', {message: 'Validation error'})}
                         />
                         <ControlledTimeInput
-                            type='time'
                             name='dueTime'
                             defaultValue=''
                             control={control}
                             dataTestId={'ticket-new-due-time'}
-                            className={'w-full border-none h-14'}
-                            placeholder={t('ticket_new.due_time')}
+                            label='ticket_new.due_time'
                         />
                     </div>
                     <Controller

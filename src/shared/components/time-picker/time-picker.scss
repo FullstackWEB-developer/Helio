@@ -1,4 +1,4 @@
-.date-time-picker {
+.time-picker {
   user-select: none;
   & input {
     -webkit-touch-callout: none; /* iOS Safari */
@@ -7,10 +7,9 @@
     -moz-user-select: none; /* Firefox */
     -ms-user-select: none; /* Internet Explorer/Edge */
     user-select: none; /* Non-prefixed version, currently */
-    &[type="date"]::-webkit-calendar-picker-indicator,
-    &[type="date"]::-webkit-inner-spin-button,
-    &[type="date"]::-webkit-clear-button {
-      display: none;
+    &[type="time"]::-webkit-calendar-picker-indicator,
+    &[type="time"]::-webkit-inner-spin-button {
+        display: none;
     }
 
     &[value=""]::-webkit-datetime-edit {
