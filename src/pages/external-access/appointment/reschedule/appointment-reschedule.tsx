@@ -176,7 +176,7 @@ const AppointmentReschedule = () => {
         <div className='pt-6 pb-4'>
             {t('external_access.appointments.below_available_appointments')}
         </div>
-        <div className='pb-6'>
+        <div className='pb-6 start-date'>
             <form>
                 <ControlledDateInput
                     type='date'
