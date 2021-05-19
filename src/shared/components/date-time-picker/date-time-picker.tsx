@@ -10,6 +10,7 @@ import classNames from 'classnames';
 import './date-time-picker.scss';
 import utc from 'dayjs/plugin/utc';
 import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
 
 interface DateTimePickerProps {
     name?: string,
@@ -46,6 +47,7 @@ const DateTimePicker = React.forwardRef<HTMLDivElement, DateTimePickerProps>(({
     onCalendarVisibilityChange,
     ...props
 }: DateTimePickerProps) => {
+    dayjs.extend(customParseFormat);
     dayjs.extend(utc);
     const {t}: {t: any} = useTranslation();
     const [inputValue, setInputValue] = useState(!value ? '' : utils.toShortISOLocalString(value));
@@ -96,9 +98,10 @@ const DateTimePicker = React.forwardRef<HTMLDivElement, DateTimePickerProps>(({
         onChange(dateValue);
     }
 
-    const onCalendarValueChange = (valueDate: Date) => {
-        setInputValue(utils.toShortISOLocalString(valueDate));
-        onChange(valueDate);
+    const onCalendarValueChange = (valueDate: string) => {
+        const date = dayjs(valueDate, 'YYYY-MM-DD').utc(true).toDate();
+        setInputValue(valueDate);
+        onChange(date);
         setCalendarOpen(false);
     }
 

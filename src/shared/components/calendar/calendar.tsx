@@ -13,7 +13,7 @@ interface CalendarProps {
     min?: Date,
     isWeekendDisabled?: boolean,
     highlightToday?: boolean,
-    onChange?: (date: Date) => void;
+    onChange?: (date: string) => void;
     onBlur?: () => void;
 }
 const Calendar = ({
@@ -82,7 +82,7 @@ const Calendar = ({
         }
         setSelectedDay(day.timestamp);
         if (onChange) {
-            onChange(new Date(day.timestamp));
+            onChange(dayjs(day.date).format('YYYY-MM-DD'));
         }
     }
 
