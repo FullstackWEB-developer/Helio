@@ -32,6 +32,7 @@ const formatDate = (datetime: string) => {
     return date.toLocaleDateString('en-US');
 }
 
+
 const formatUtcDate = (date?: Date, format: string = 'ddd, MMM DD, YYYY h:mm A') => {
     dayjs.extend(utc);
     if (!date) {

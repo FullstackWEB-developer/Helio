@@ -9,6 +9,7 @@ export interface ControlledSelectProps {
     control: Control;
     label?: string;
     value?: Option | string;
+    defaultValue?: Option | string;
     searchQuery?: string;
     options: Option[];
     order?: boolean;
@@ -24,14 +25,15 @@ const ControlledSelect = ({
     options,
     name,
     label,
-    value,
+    defaultValue,
     searchQuery,
     order,
     assistiveText,
     disabled,
     onSelect,
     onTextChange,
-    required = false
+    required = false,
+    ...props
 }: ControlledSelectProps) => {
     const onSelected = (controllerProps: ControllerRenderProps, option?: Option) => {
         if (option) {
@@ -43,9 +45,10 @@ const ControlledSelect = ({
     }
 
     return <Controller
+        {...props}
         name={name}
         control={control}
-        defaultValue=''
+        defaultValue={defaultValue}
         render={(controllerProps) => (
             <Select
                 {...controllerProps}
@@ -58,7 +61,7 @@ const ControlledSelect = ({
                 order={order}
                 assistiveText={assistiveText}
                 disabled={disabled}
-                value={value}
+                value={controllerProps.value}
                 onTextChange={onTextChange}
                 error={control.formState.errors[name]?.message}
             />

@@ -222,7 +222,7 @@ const ContactForm = ({contact, contactType, submitHandler, closeHandler, editMod
                     <div className="col-span-12 lg:col-span-5">
                         <ControlledSelect
                             name='category'
-                            value={defaultCategory}
+                            defaultValue={defaultCategory}
                             control={control}
                             label='contacts.contact-details.individual.category'
                             options={categoryOptions}

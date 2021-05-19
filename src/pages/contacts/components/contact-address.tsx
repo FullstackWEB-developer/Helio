@@ -81,7 +81,7 @@ const ContactAddress = ({title, addressType, control, removeCTAClickHandler, def
                 <div className="col-span-12 lg:col-span-3">
                     <ControlledSelect
                         name={`${determineFormNamePrefix()}State`}
-                        value={defaultStateOption}
+                        defaultValue={defaultStateOption}
                         control={control}
                         label={t('contacts.contact-details.individual.state')}
                         options={options}
