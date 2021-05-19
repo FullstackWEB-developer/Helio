@@ -28,6 +28,7 @@ import {selectVerifiedPatent} from '@pages/patients/store/patients.selectors';
 import {AppointmentType} from '@pages/external-access/appointment/models/appointment-type.model';
 import './appointment.scss';
 import {setSelectedAppointmentSlot} from '@pages/external-access/appointment/store/appointments.slice';
+import {CancellationReasonTypes} from '@pages/external-access/models/cancellation-reason-types.enum';
 
 const AppointmentCancelation = () => {
     dayjs.extend(utc);
@@ -85,9 +86,9 @@ const AppointmentCancelation = () => {
     }
 
     const getCancellationReasonsOptions = (reasons: AppointmentCancelReason[] | undefined) => {
-        return reasons ? reasons.map((item: AppointmentCancelReason) => {
+        return reasons ? reasons.filter(r => r.type === CancellationReasonTypes.Cancel).map((item: AppointmentCancelReason) => {
             return {
-                value:  item.appointmentCancelReasonId.toString(),
+                value:  item.id.toString(),
                 label: item.name
             } as Option;
         }) : [];

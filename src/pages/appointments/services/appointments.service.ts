@@ -55,7 +55,7 @@ export const rescheduleAppointment = async ({appointmentId, newAppointmentId, pa
 }
 
 export const getCancellationReasons = async () => {
-     const url = `${appointmentsBaseUrl}/cancellation-reasons`;
+     const url = `${appointmentsBaseUrl}/lookup/cancellation-reasons`;
      const result = await Api.get(url);
      return result.data;
 }
