@@ -2,7 +2,6 @@ import {Link} from 'react-router-dom';
 import {useTranslation} from 'react-i18next';
 import {useSelector} from 'react-redux';
 import {isNavigationExpandedSelector} from '../store/layout.selectors';
-import {bool} from 'aws-sdk/clients/redshiftdata';
 import withErrorLogging from '../../HOC/with-error-logging';
 import React, {useState} from 'react';
 import './navigation-item.scss';
@@ -12,7 +11,7 @@ interface NavigationItemProps {
     title: string,
     link: string,
     icon: React.ReactNode,
-    isSelected: bool
+    isSelected: boolean
 }
 
 const NavigationItem = ({title, link, icon, isSelected}: NavigationItemProps) => {

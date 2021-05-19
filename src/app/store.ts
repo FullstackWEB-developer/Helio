@@ -14,7 +14,7 @@ import storage from 'redux-persist/lib/storage'
 import {persistReducer} from 'redux-persist'
 import thunk from 'redux-thunk'
 
-const persistenceStoreName = 'helio-ui-store';
+const persistenceStoreName =  process.env.REACT_APP_PERSIST_HELIO_STORE_NAME || 'helio-ui-store';
 const reducers = combineReducers({
     ticketState: ticketReducer,
     layoutState: layoutReducer,

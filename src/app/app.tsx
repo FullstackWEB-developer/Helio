@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {BrowserRouter, Route, Switch} from 'react-router-dom'
 import Layout from '../shared/layout/layout';
 import Login from '../pages/login/login';
@@ -31,7 +31,7 @@ const TicketDetail = React.lazy(() => import('@pages/tickets/ticket-detail'));
 const Contacts = React.lazy(() => import('../pages/contacts/contacts'));
 
 function App() {
-    const logger = Logger.getInstance();
+    let logger = Logger.getInstance();
     const queryClient = new QueryClient({
         defaultOptions: {
             queries: {
@@ -48,6 +48,15 @@ function App() {
             }
         }
     });
+
+    useEffect(() => {
+        const logStreamInterval = setInterval(() => {
+            logger = Logger.getInstance();
+        }, Number(process.env.REACT_APP_LOG_STREAM_CHECK_INTERVAL) || 5000);
+        return () => {
+            clearInterval(logStreamInterval)
+        }
+    }, []);
 
     return (
         <QueryClientProvider client={queryClient}>

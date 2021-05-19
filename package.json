@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@aws-sdk/client-cloudwatch-logs": "^3.16.0",
+    "@aws-sdk/client-cognito-identity": "^3.16.0",
+    "@aws-sdk/credential-provider-cognito-identity": "^3.16.0",
     "@azure/msal-browser": "^2.13.0",
     "@azure/msal-react": "^1.0.0-beta.1",
     "@craco/craco": "^6.1.1",
@@ -26,7 +29,6 @@
     "@types/react-select": "^4.0.4",
     "amazon-connect-streams": "^1.6.2",
     "autoprefixer": "^9.8.6",
-    "aws-sdk": "^2.824.0",
     "axios": "^0.21.1",
     "classnames": "^2.3.1",
     "dayjs": "^1.10.4",
