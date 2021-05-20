@@ -129,6 +129,6 @@ const utils = {
     formatPhone,
     isString,
     toShortISOLocalString
-}
+};
 
 export default utils;

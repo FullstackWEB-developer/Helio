@@ -63,7 +63,8 @@ const createContactAddressArray = (formModel: ContactFormModel): Address[] => {
             state: formModel.primaryState,
             ...(formModel.primaryAddressLine && {line: formModel.primaryAddressLine}),
             ...(formModel.primaryCity && {city: formModel.primaryCity}),
-            ...(formModel.primaryZipCode && {zipCode: formModel.primaryZipCode})
+            ...(formModel.primaryZipCode && {zipCode: formModel.primaryZipCode}),
+            ...(formModel.primaryApt && {apartmentNumber: formModel.primaryApt})
         })
     }
     if (formModel?.shippingState) {
@@ -72,7 +73,8 @@ const createContactAddressArray = (formModel: ContactFormModel): Address[] => {
             state: formModel.shippingState,
             ...(formModel.shippingAddressLine && {line: formModel.shippingAddressLine}),
             ...(formModel.shippingCity && {city: formModel.shippingCity}),
-            ...(formModel.shippingZipCode && {zipCode: formModel.shippingZipCode})
+            ...(formModel.shippingZipCode && {zipCode: formModel.shippingZipCode}),
+            ...(formModel.shippingApt && {apartmentNumber: formModel.shippingApt})
         })
     }
     if (formModel?.billingState) {
@@ -81,7 +83,9 @@ const createContactAddressArray = (formModel: ContactFormModel): Address[] => {
             state: formModel.billingState,
             ...(formModel.billingAddressLine && {line: formModel.billingAddressLine}),
             ...(formModel.billingCity && {city: formModel.billingCity}),
-            ...(formModel.billingZipCode && {zipCode: formModel.billingZipCode})
+            ...(formModel.billingZipCode && {zipCode: formModel.billingZipCode}),
+            ...(formModel.billingApt && {apartmentNumber: formModel.billingApt})
+
         })
     }
     return addresses;

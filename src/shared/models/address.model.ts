@@ -8,6 +8,7 @@ export interface Address {
     addressType?:  AddressType;
     line?: string;
     city?: string;
+    apartmentNumber?: string;
 }
 
 export enum AddressType {

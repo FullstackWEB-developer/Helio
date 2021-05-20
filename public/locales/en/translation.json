@@ -611,7 +611,7 @@
       "company": {
         "associated_with": "Contacts associated with {{companyName}}",
         "add_contact": "Add Contact"
-      }      
+      }
     },
     "new-contact": {
       "header": "New Contact",
