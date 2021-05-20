@@ -1,6 +1,5 @@
 import React, {useEffect} from 'react';
 import {Trans, useTranslation} from 'react-i18next';
-import utils from '@shared/utils/utils';
 import {useQuery} from 'react-query';
 import {AxiosError} from 'axios';
 import {
@@ -17,8 +16,11 @@ import {useDispatch, useSelector} from 'react-redux';
 import {selectDepartmentList, selectProviderList} from '@shared/store/lookups/lookups.selectors';
 import './appointment.scss';
 import {setRescheduleTimeFrame} from '@pages/external-access/appointment/store/appointments.slice';
+import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
 
 const AppointmentDetail = () => {
+    dayjs.extend(customParseFormat);
     const {t} = useTranslation();
     const history = useHistory();
     const dispatch = useDispatch();
@@ -83,8 +85,8 @@ const AppointmentDetail = () => {
         <div className='pb-2'>
             <h5>
                 {t('external_access.appointments.appointment_date', {
-                    date: utils.formatUtcDate(appointment.startDateTime, 'dddd, MMM DD, YYYY'),
-                    time: utils.formatUtcDate(appointment.startDateTime, 'hh:mm A')
+                    date: dayjs(appointment.startDateTime).format('dddd, MMM DD, YYYY'),
+                    time: dayjs(appointment.startTime, 'hh:mm').format('hh:mm A')
                 })}
             </h5>
         </div>

@@ -61,7 +61,7 @@ const AppointmentList = () => {
                     {
                         appointments.map((appointment) => {
                             return <div key={appointment.appointmentId} className='cursor-pointer' onClick={() => selectAppointment(appointment)}>
-                                <AppointmentsListItem item={appointment}/></div>
+                                <AppointmentsListItem data={appointment}/></div>
                         })
                     }
                 </div>

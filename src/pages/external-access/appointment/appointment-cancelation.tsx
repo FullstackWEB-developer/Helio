@@ -178,7 +178,7 @@ const AppointmentCancelation = () => {
                     return <div key={slot.appointmentId}
                                 className='cursor-pointer'
                                 onClick={() => selectSlot(slot)}>
-                        <AppointmentsListItem item={slot}/></div>
+                        <AppointmentsListItem data={slot}/></div>
                 })
             }
         </div>
