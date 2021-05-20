@@ -40,8 +40,10 @@ class Logger {
         const identityClient = new CognitoIdentityClient({region: logConfig.region});
         const credentials = fromCognitoIdentityPool({identityPoolId: logConfig.identityPoolId, client: identityClient});
         this.log = new CloudWatchLogsClient({credentials, region: logConfig.region});
-        this.logGroup = logConfig.logGroup
-        this.setupLogStream();
+        this.logGroup = logConfig.logGroup;
+        if (!this.isLoginLoading()) {
+            this.setupLogStream();
+        }
     }
 
     public static getInstance = (): Logger => {
@@ -63,7 +65,7 @@ class Logger {
     private readonly setupLogStream = async () => {
         const logStream = this.getStoredLogStream();
         if (!logStream || !this.isLogStreamValid()) {
-            const newStreamName = `${logConfig.logStream}-${dayjs().format(this.LogStreamNameDateFormat)}`
+            const newStreamName = `${logConfig.logStream}-${dayjs().format(this.LogStreamNameDateFormat)}-${this.getUserName()}`
             const newLogStreamStatusCode = await this.createStream(newStreamName);
             if (newLogStreamStatusCode && String(newLogStreamStatusCode)?.startsWith('2')) {
                 const newLogStream = await this.getStream(newStreamName);
@@ -80,7 +82,7 @@ class Logger {
             logStreamName: streamName
         });
         Logger.isStreamCreationInProgress = true;
-        try {            
+        try {
             const data = await this.log.send(params);
             Logger.isStreamCreationInProgress = false;
             return data.$metadata.httpStatusCode;
@@ -140,12 +142,18 @@ class Logger {
     isLogStreamValid = () => {
         const storedLogStream: LogStream = this.getStoredLogStream();
         if (!storedLogStream || !storedLogStream.creationTime) return false;
-        return new Date().getTime() - storedLogStream.creationTime < Number(logConfig.logStreamValidityDuration);
+        return new Date().getTime() - storedLogStream.creationTime < Number(logConfig.logStreamValidityDuration) &&
+            storedLogStream.logStreamName?.slice(storedLogStream.logStreamName.lastIndexOf('-') + 1) === this.getUserName();
     }
 
     getUserName = () => {
-        const userName = store.getState()?.appUserState?.auth?.username;
-        return userName ?? 'no-user';
+        const appUserState = JSON.parse(JSON.parse(localStorage.getItem(`persist:${logConfig.helioStoreName}`) || '{}')?.appUserState || '{}');
+        return appUserState?.auth?.username ?? 'anonymous';
+    }
+
+    isLoginLoading = () => {
+        const appUserState = JSON.parse(JSON.parse(localStorage.getItem(`persist:${logConfig.helioStoreName}`) || '{}')?.appUserState || '{}');
+        return appUserState?.isLoading;
     }
 
     info = (message: string, data?: object) => {
