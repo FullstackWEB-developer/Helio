@@ -2,6 +2,10 @@ import {Address, AddressType} from '@shared/models/address.model';
 import {ContactExtended} from '@shared/models/contact.model';
 import {ContactFormModel} from '../models/contact-form.model';
 
+
+const DEFAULT_PAGE_SIZE = 25;
+const DEFAULT_MAX_SCREEN_HEIGHT_SIZE = 1300;
+
 export const mapContactFormModelToDto = (formModel: ContactFormModel, type: number, contactId?: string, addToFavorites?: boolean): ContactExtended => {
     const addresses = createContactAddressArray(formModel);
     const contact: ContactExtended = {
@@ -89,4 +93,16 @@ const createContactAddressArray = (formModel: ContactFormModel): Address[] => {
         })
     }
     return addresses;
+}
+
+
+export const getPageSize = () => {
+    const currentScreenHeight = window.innerHeight;
+
+    if (currentScreenHeight <= DEFAULT_MAX_SCREEN_HEIGHT_SIZE) {
+        return DEFAULT_PAGE_SIZE;
+    }
+
+    const result = DEFAULT_PAGE_SIZE + (currentScreenHeight - DEFAULT_MAX_SCREEN_HEIGHT_SIZE) * (DEFAULT_PAGE_SIZE / DEFAULT_MAX_SCREEN_HEIGHT_SIZE);
+    return Math.round(result);
 }

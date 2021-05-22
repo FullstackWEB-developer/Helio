@@ -118,6 +118,7 @@ const ContactAddress = ({title, addressType, control, removeCTAClickHandler, def
                         control={control}
                         label={t('contacts.contact-details.individual.state')}
                         options={options}
+                        autoComplete={false}
                     />
                 </div>
                 <div className="col-span-12 lg:col-span-2">

@@ -227,6 +227,7 @@ const ContactForm = ({contact, contactType, submitHandler, closeHandler, editMod
                             label='contacts.contact-details.individual.category'
                             options={categoryOptions}
                             required={true}
+                            autoComplete={false}
                         />
                     </div>
                     {

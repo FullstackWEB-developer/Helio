@@ -21,6 +21,7 @@ import Confirmation from '@components/confirmation/confirmation';
 import {QueryContactNotes} from '@constants/react-query-constants';
 import {SnackbarType} from '@components/snackbar/snackbar-position.enum';
 import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
+import {Icon} from '@components/svg-icon/icon';
 
 interface ContactDetailsProps {
     contact: ContactExtended;
@@ -179,11 +180,15 @@ const ContactDetails = ({contact,
             {
                 selectedTab === 1 &&
                 <div className='h-20 absolute bottom-0 w-full border-t'>
-                    <TextArea className='w-full pt-2 body2' value={note} resizable={false} hasBorder={false}
+                    <TextArea className='w-full pt-2 body2'
+                        value={note}
+                        resizable={false}
+                        hasBorder={false}
                         iconFill='contact-light-fill'
                         placeholder={t('contacts.contact-details.enter_note')}
                         iconContainerClassName='px-10'
                         iconClassNames='cursor-pointer'
+                        icon={Icon.Send}
                         onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {setNote(e.target.value)}}
                         iconOnClick={() => {addNote()}}
                         isLoading={addNoteMutation.isLoading} />

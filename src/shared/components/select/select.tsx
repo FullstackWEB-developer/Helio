@@ -12,6 +12,7 @@ interface SelectProps {
     label?: string;
     value?: Option | string;
     searchQuery?: string;
+    autoComplete?: boolean;
     options: Option[];
     error?: string;
     order?: boolean;
@@ -21,7 +22,7 @@ interface SelectProps {
     onTextChange?: (value: string) => void;
     onSelect?: (option?: Option) => void;
 }
-const Select = React.forwardRef<HTMLDivElement, SelectProps>(({options, order, label, ...props}: SelectProps, ref) => {
+const Select = React.forwardRef<HTMLDivElement, SelectProps>(({options, order, label, autoComplete = true, ...props}: SelectProps, ref) => {
     const {t}: {t: any} = useTranslation();
     const [open, setOpen] = useState(false);
     const [selectedOption, setSelectedOption] = useState<Option | null>(null);
@@ -37,7 +38,7 @@ const Select = React.forwardRef<HTMLDivElement, SelectProps>(({options, order, l
         setOpen(false);
     });
 
-  
+
     const searchOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearchQuery(e.target.value);
         setCursor(0);
@@ -120,6 +121,7 @@ const Select = React.forwardRef<HTMLDivElement, SelectProps>(({options, order, l
                 <input
                     ref={inputRef}
                     type='text'
+                    autoComplete={autoComplete ? 'on' : 'off'}
                     onChange={(e) => searchOnChange(e)}
                     onFocus={(e) => {setOpen(true); e.target.select()}}
                     onBlur={(e) => {setOpen(false); e.target.value = ''; setSearchQuery(null); setCursor(-1)}}

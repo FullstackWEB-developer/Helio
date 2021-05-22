@@ -22,6 +22,7 @@ import {Option} from '@components/option/option';
 import {DEBOUNCE_SEARCH_DELAY_MS} from '@constants/form-constants';
 import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
 import {SnackbarType} from '@components/snackbar/snackbar-position.enum';
+import {getPageSize} from './contact-helpers/helpers';
 
 interface ContactProps { }
 const Contacts: React.FC<ContactProps> = () => {
@@ -32,7 +33,7 @@ const Contacts: React.FC<ContactProps> = () => {
     const [debounceSearchTerm] = useDebounce(searchTerm, DEBOUNCE_SEARCH_DELAY_MS);
     const [editMode, setEditMode] = useState(false);
     const [addNewContactMode, setAddNewContactMode] = useState(false);
-    const [queryParams, setQueryParams] = useState<QueryContactRequest>({pageSize: 25});
+    const [queryParams, setQueryParams] = useState<QueryContactRequest>({pageSize: getPageSize()});
     const history = useHistory();
     const {contactId} = useParams<{contactId: string}>();
     const handleContactSelect = (c: ContactExtended) => {
