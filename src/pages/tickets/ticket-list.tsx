@@ -47,17 +47,17 @@ const TicketList = () => {
 
 
     useEffect(() => {
-        const query = queryString.parse(history.location.search);
-        const newQuery: TicketQuery = {...query as any as TicketQuery};
+        const query: any = queryString.parse(history.location.search, {parseNumbers: true});
+        const newQuery: TicketQuery = {...query};
         if (newQuery) {
-            dispatch(getList(newQuery, true));
+            dispatch(getList(newQuery));
         } else {
             dispatch(getList({
                 ...paging,
                 assignedTo: ticketListQueryType === TicketListQueryType.MyTicket ? currentFilter.assignedTo : []
             }));
         }
-    }, []);
+    },[]);
 
     useEffect(() => {
         dispatch(getUserList());
