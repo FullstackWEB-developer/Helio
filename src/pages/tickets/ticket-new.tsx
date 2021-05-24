@@ -19,8 +19,7 @@ import {
     selectEnumValues,
     selectIsTicketEnumValuesLoading,
     selectIsTicketLookupValuesLoading,
-    selectLookupValues,
-    selectTicketOptionsError
+    selectLookupValues
 } from './store/tickets.selectors';
 import {selectContacts, selectIsContactOptionsLoading} from '@shared/store/contacts/contacts.selectors';
 import {
@@ -44,7 +43,6 @@ import useDebounce from '@shared/hooks/useDebounce';
 import ControlledInput from '@components/controllers/ControllerInput';
 import ControlledDateInput from '@components/controllers/ControlledDateInput';
 import ControlledTimeInput from '@components/controllers/ControlledTimeInput';
-import TimePicker from '@components/time-picker';
 import {DEBOUNCE_SEARCH_DELAY_MS} from '@shared/constants/form-constants';
 import {ContactType} from '@pages/contacts/models/ContactType';
 import {AxiosError} from 'axios';
@@ -78,8 +76,6 @@ const TicketNew = () => {
     const ticketLookupValuesReason = useSelector((state) => selectLookupValues(state, 'TicketReason'));
     const ticketLookupValuesSubject = useSelector((state) => selectLookupValues(state, 'TicketSubject'));
     const ticketLookupValuesTags = useSelector((state) => selectLookupValues(state, 'TicketTags'));
-
-    const error = useSelector(selectTicketOptionsError);
 
     const isContactsLoading = useSelector(selectIsContactOptionsLoading);
     const isDepartmentListLoading = useSelector(selectIsDepartmentListLoading);
@@ -144,14 +140,17 @@ const TicketNew = () => {
                     setContactOptions([contactOption]);
                     setValue('contactId', queryContactId, {shouldValidate: true});
                 }
-            })
+            }),
+            onError: () => {
+                setError('contactId', {type: 'notFound', message: t('ticket_new.error_getting_contacts')});
+            }
         }
     );
 
-    const getContactOption = (contact: Contact) => {
-        return contact ? {
-            value: contact.id,
-            label: contact.type === ContactType.Company ? contact.companyName : `${contact.firstName} ${contact.lastName}`
+    const getContactOption = (data: Contact) => {
+        return data ? {
+            value: data.id,
+            label: data.type === ContactType.Company ? data.companyName : `${data.firstName} ${data.lastName}`
         } : {} as Option;
     }
 
@@ -335,8 +334,8 @@ const TicketNew = () => {
         setIsTicketTypeSelected(true);
     }
 
-    const setSelectedTags = (tags: string[]) => {
-        setTags(tags);
+    const setSelectedTags = (data: string[]) => {
+        setTags(data);
     };
 
     if (isContactsLoading || isDepartmentListLoading || isLookupValuesLoading || isTicketEnumValuesLoading) {
@@ -355,10 +354,6 @@ const TicketNew = () => {
         || ticketLookupValuesTags === undefined
     ) {
         return <div data-test-id='ticket-new-load-failed'>{t('ticket_new.load_failed')}</div>
-    }
-
-    if (error) {
-        return <div data-test-id='ticket-new-error'>{t('common.error')}</div>
     }
 
     function onSelectChange<TFieldValues>(props: ControllerRenderProps<TFieldValues>) {

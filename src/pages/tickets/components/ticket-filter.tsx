@@ -70,7 +70,6 @@ const TicketFilter = ({isOpen}: {isOpen: boolean}) => {
         dispatch(getEnumByType('TicketStatus'));
         dispatch(getEnumByType('TicketStateFilter'));
         dispatch(getEnumByType('TicketType'));
-        dispatch(getEnumByType('TicketState'));
         dispatch(getLookupValues('Department'));
         dispatch(getLookupValues('TicketTags'));
     }, [dispatch]);
