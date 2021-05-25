@@ -30,14 +30,14 @@ const AppointmentsListItem = ({ data }: AppointmentDetailProps) => {
     const getItem = (item: Appointment | AppointmentSlot) => {
         if ('startDateTime' in item && item.startDateTime) {
             return <Fragment>
-                <div className='2xl:w-96 subtitle2'>
+                <div className='lg:w-96 subtitle2'>
                     {
                         `${dayjs(item.startDateTime).format('ddd, MMM DD, YYYY')}
                         ${dayjs(item.startTime, 'hh:mm').format('h:mm A')}`
                     }
                 </div>
-                <div className='2xl:w-96 body2'>{item.patientAppointmentTypeName}</div>
-                <div className='flex flex-col body2'>
+                <div className='lg:w-96 body2'>{item.patientAppointmentTypeName}</div>
+                <div className='lg:w-96 flex flex-col body2'>
                     <div>{providerName}</div>
                     <div>{departmentName}</div>
                 </div>
@@ -45,17 +45,17 @@ const AppointmentsListItem = ({ data }: AppointmentDetailProps) => {
         }
 
         return <Fragment>
-            <div className='2xl:w-96 subtitle2'>
+            <div className='lg:w-96 subtitle2'>
                 {utils.formatUtcDate(item.date, 'ddd, MMM DD, YYYY')} {item.startTime} {utils.formatUtcDate(item.date, 'A')}
             </div>
-            <div className='2xl:w-96 body2'>{providerName}</div>
-            <div className='2xl:w-96 body2'>{departmentName}</div>
+            <div className='lg:w-96 body2'>{providerName}</div>
+            <div className='lg:w-96 body2'>{departmentName}</div>
         </Fragment>
     }
 
     return (
         <div className='pb-4 2xl:pb-2'>
-           <div className='appointment-list-item h-32 2xl:h-16 px-4 flex flex-col 2xl:flex-row items-center justify-center 2xl:justify-start'>
+           <div className='appointment-list-item h-32 lg:h-16 px-4 flex flex-col lg:flex-row items-center justify-center lg:justify-start'>
                {getItem(data)}
            </div>
         </div>
