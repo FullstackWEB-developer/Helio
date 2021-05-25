@@ -10,6 +10,7 @@ import {Icon} from '@components/svg-icon/icon';
 import {Option} from '@components/option/option';
 import SelectCell from '@components/select/select-cell';
 import ThreeDots from '@components/skeleton-loader/skeleton-loader';
+
 interface InputProps extends React.HTMLAttributes<HTMLInputElement> {
     id?: string,
     name?: string,
@@ -158,17 +159,18 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({
                         {autosuggestOptions && autosuggestOptions.length > 0 &&
                             autosuggestOptions.map((option: Option) =>
                                 <SelectCell item={option} key={`${option.value}`}
-                                    isSelected={option.value === selectedSuggestion?.value}
-                                    onClick={() => onSelectCellClick(option)}
-                                    disabled={option.disabled}
+                                            isSelected={option.value === selectedSuggestion?.value}
+                                            onClick={() => onSelectCellClick(option)}
+                                            disabled={option.disabled}
                                 />)
                         }
                     </div>
                 }
             </div>
 
-            {!!assistiveText && !props.error && !isLoading && <div className={`h-6 pl-4 body3 pt-1 truncate ${isFocused ? 'assistive-text-focus' : ''}`}>{assistiveText}</div>}
-            {props.error && <div className={'h6 pl-4 body3 pt-1 text-danger truncate'}>{props.error}</div>}
+            {!!assistiveText && !props.error && !isLoading && <div
+                className={`h-6 pl-4 body3 pt-1 truncate ${isFocused ? 'assistive-text-focus' : ''}`}>{t(assistiveText)}</div>}
+            {props.error && <div className={'h6 pl-4 body3 pt-1 text-danger truncate'}>{t(props.error)}</div>}
         </div>
     );
 })

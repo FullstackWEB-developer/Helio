@@ -34,7 +34,7 @@ button.big-button:after, button.medium-button:after, button.small-button:after {
   background-color: var(--light-divider-12);
 }
 
-button.secondary-button:after {
+button.secondary-button:after, button.secondary-big-button:after {
   background-color: rgba(var(--color-primary-500-rgb), 0.07);
 }
 
@@ -47,14 +47,14 @@ button.big-button:focus:enabled, button.medium-button:focus:enabled, button.smal
   outline:none;
 }
 
-button.secondary-button:hover:enabled {
+button.secondary-button:hover:enabled, button.secondary-big-button:hover:enabled {
   background-color: rgba(var(--color-primary-500-rgb), 0.04);
 }
 
-button.secondary-button:focus:enabled {
+button.secondary-button:focus:enabled, button.secondary-big-button:focus:enabled {
   background-color: rgba(var(--color-primary-500-rgb), 0.07);
   border: var(--color-primary-500) 1px solid;
-  outline:none;
+  outline: none;
 }
 
 button:active {
@@ -106,7 +106,19 @@ button.secondary-button {
   }
 }
 
-button.big-button:disabled, button.medium-button:disabled, button.small-button:disabled ,
+button.secondary-big-button {
+  @extend .button-common;
+  min-width: 7.5rem;
+  min-height: 3rem;
+  border-radius: 1.5rem;
+  padding: 0 2rem;
+  border: var(--light-divider-12) 1px solid;
+  @extend .subtitle3-white;
+  color: var(--color-primary-800);
+  background-color: var(--color-white);
+}
+
+button.big-button:disabled, button.medium-button:disabled, button.small-button:disabled,
 button.big-button[disabled], button.medium-button[disabled], button.small-button[disabled] {
   background-color: var(--light-divider-7);
   color: var(--light-text-disabled);
@@ -114,7 +126,9 @@ button.big-button[disabled], button.medium-button[disabled], button.small-button
 }
 
 button.secondary-button:disabled,
-button.secondary-button[disabled] {
+button.secondary-button[disabled],
+button.secondary-big-button:disabled,
+button.secondary-big-button[disabled] {
   background-color: var(--color-white);
   cursor: default;
   @extend .subtitle3-white;

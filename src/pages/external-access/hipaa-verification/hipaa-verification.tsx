@@ -44,7 +44,9 @@ const HipaaVerification = ({request}: HipaaVerificationProps) => {
                     history.push('/o/appointment-list');
                     break;
                 case ExternalAccessRequestTypes.RequestMedicalRecords:
-                    history.push('/o/request-medical-records');
+                    history.push('/o/request-medical-records', {
+                        request: request
+                    });
                     break;
                 case ExternalAccessRequestTypes.GetLabResults:
                     history.push('/o/lab-results');

@@ -3,7 +3,7 @@ import {ExternalAccessRequestTypes} from '@pages/external-access/models/external
 export interface RedirectLink {
     attributes: object,
     fullUrl: string,
-    linkCreationDate: string
+    linkCreationDate: Date
     linkId: string
     patientId: string
     requestChannel: number

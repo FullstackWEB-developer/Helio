@@ -1,15 +1,18 @@
-import {ReactNode} from 'react';
+import React, {ReactNode} from 'react';
 import './external-access-layout.scss';
 import {useTranslation} from 'react-i18next';
 import dayjs from 'dayjs';
+import Snackbar from '@components/snackbar/snackbar';
+import {SnackbarPosition} from '@components/snackbar/snackbar-type.enum';
 
 export interface ExternalAccessLayoutProps {
     children: ReactNode;
 }
 
-const ExternalAccessLayout = ({children} : ExternalAccessLayoutProps) => {
+const ExternalAccessLayout = ({children}: ExternalAccessLayoutProps) => {
     const {t} = useTranslation();
     const year = dayjs().year();
+
     return <>
         <div className='flex flex-col h-screen'>
             <div className='h-20 md:px-40 external-access-layout-header'>
@@ -24,6 +27,7 @@ const ExternalAccessLayout = ({children} : ExternalAccessLayoutProps) => {
                 </div>
             </div>
         </div>
+        <Snackbar position={SnackbarPosition.TopRight}/>
     </>
 }
 export default ExternalAccessLayout;

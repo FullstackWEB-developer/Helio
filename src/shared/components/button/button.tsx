@@ -3,20 +3,23 @@ import SvgIcon from '@components/svg-icon/svg-icon';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 import './button.scss';
+
 interface ButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
     label: string,
     type?: 'button' | 'submit' | 'reset'
     disabled?: boolean,
-    buttonType?: 'small' | 'medium' | 'big' | 'secondary',
+    buttonType?: 'small' | 'medium' | 'big' | 'secondary-big' | 'secondary',
     icon?: Icon,
     className?: string
 }
 const Button = ({label, type = 'button', disabled = false, buttonType = 'medium', icon, className, ...props}: ButtonProps) => {
+
+    const isSecondary = buttonType === 'secondary' || 'secondary-big';
     const determineIconPosition = () => {
-        return `${buttonType === 'small' || buttonType === 'secondary' ? ' top-1 ' : ' align-middle '}`;
+        return `${buttonType === 'small' || buttonType === isSecondary ? ' top-1 ' : ' align-middle '}`;
     }
     const determineIconFill = () => {
-        if (!disabled && buttonType === 'secondary') {
+        if (!disabled && buttonType === isSecondary) {
             return `green-icon-fill`;
         }
         return `${disabled ? 'disa' : 'ena'}bled-icon-fill`;

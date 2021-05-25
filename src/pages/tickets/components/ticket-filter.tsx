@@ -12,8 +12,8 @@ import {
     selectLookupValues,
     selectSearchTerm,
     selectTicketFilter,
-    selectTicketsPaging,
-    selectTicketQueryType
+    selectTicketQueryType,
+    selectTicketsPaging
 } from '../store/tickets.selectors';
 import Radio from '@components/radio/radio';
 import {TicketOptionsBase} from '../models/ticket-options-base.model';

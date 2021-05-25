@@ -639,13 +639,13 @@ const TicketNew = () => {
                 <div className='flex flex-row space-x-4 justify-start mt-7'>
                     <div className='flex items-center'>
                         <Button data-test-id='ticket-new-cancel-button' type={'button'}
-                                buttonType='secondary'
+                                buttonType='secondary-big'
                                 label={'common.cancel'}
                                 onClick={() => history.push(TicketsPath)}
                         />
                     </div>
                     <div>
-                        <Button buttonType='small' disabled={createTicketMutation.isLoading || !isValid || !stateError}
+                        <Button buttonType='big' disabled={createTicketMutation.isLoading || !isValid || !stateError}
                                 data-test-id='ticket-new-create-button' type={'submit'}
                                 label={'ticket_new.create'}/>
                     </div>

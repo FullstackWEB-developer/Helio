@@ -307,9 +307,6 @@
     "completed": "Refill request completed",
     "provider_department_load_failed": "Providers or departments could not be loaded. Please try again later."
   },
-  "request-medical-records": {
-    "download": "Download"
-  },
   "appointment": {
     "error": "Apologies, an error occurred. Please try your query again.",
     "data_verified_successfully": "Provided data verified successfully.",
@@ -496,6 +493,7 @@
     "copyright": "COMPLETE WOMEN CARE - COPYRIGHT © {{year}} - ALL RIGHTS RESERVED",
     "cwc_logo": "CWC Logo",
     "title_1": "Manage your appointments online. \nIt’s fast and easy.",
+    "title_5": "Manage your medical records. \nIt’s fast and easy.",
     "hipaa": {
       "verify_title": "Please verify your identity to proceed.",
       "dob": "Date of birth  (MM/DD/YYYY)",
@@ -543,6 +541,32 @@
       "no_day_slots_found": "No open slot found for this day, please select any other date.",
       "appointment_scheduled": "Thank you. Your appointment is scheduled.",
       "select_business_day": "Select business day, please."
+    },
+    "medical_records_request": {
+      "title": "Your Medical Record",
+      "subtitle": "Download your health records, or share them with your medical care providers.",
+      "select_time_header": "1. Select Time Period for your Health Record",
+      "select_what_to_do": "2. Choose what you would like to do with your health information",
+      "all_time": "All time",
+      "select_date_range": "Select date range",
+      "start_date": "Start Date",
+      "end_date": "End Date",
+      "download_tab_header": "Download",
+      "share_tab_header": "Share via email",
+      "download_info": "Download zip file containing PDF and XML file formats.",
+      "preview_button_title": "Preview",
+      "download_button_title": "Download",
+      "email_info": "Your health information will be sent to the email address below.",
+      "email_input_header": "Enter Email",
+      "email_confirm_input_header": "Confirm Email",
+      "share_button_title": "Share",
+      "confirm_email_error": "Email and confirm email fields do not match.",
+      "downloading_file": "Downloading file...",
+      "file_not_found": "File not found, file might have been deleted due to timeout. If you still need these documents, please request medical records again!",
+      "file_downloaded": "File downloaded successfully",
+      "file_download_failed": "File download failed.",
+      "email_sent_successfully": "Your email was sent successfully.",
+      "email_sent_failed": "Sorry, could not send email."
     }
   },
   "contacts": {
