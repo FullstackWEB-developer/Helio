@@ -1,10 +1,10 @@
-import React, {useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import Avatar from '@components/avatar/avatar';
 import SearchBar from '../components/search-bar/search-bar';
 import {useDispatch, useSelector} from 'react-redux';
 import {toggleCcp, toggleUserProfileMenu} from './store/layout.slice';
 import {authenticationSelector, selectUserStatus} from '../store/app-user/appuser.selectors';
-import {isProfileMenuExpandedSelector} from './store/layout.selectors';
+import {isCcpVisibleSelector, isProfileMenuExpandedSelector} from './store/layout.selectors';
 import HelioLogo from '@icons/helio-logo';
 import ProfileDropdown from './components/profile-dropdown';
 import utils from '../utils/utils';
@@ -27,6 +27,28 @@ const Header = () => {
     const numberOfAgentChats = useSelector(selectChatCounter);
     const numberOfAgentVoices = useSelector(selectVoiceCounter);
     const currentUserStatus = useSelector(selectUserStatus);
+    const isCcpVisible = useSelector(isCcpVisibleSelector);
+
+    const [animate, setAnimate] = useState(false);
+    const [ccpOpened, setCcpOpened] = useState(false);
+
+    useEffect(() => {
+        if (isCcpVisible) {
+            setCcpOpened(true);
+        }
+
+        if (!isCcpVisible && ccpOpened) {
+            setAnimate(true);
+        }
+
+        let animationTimer = setTimeout(() => {
+            setAnimate(false)
+        }, 2000)
+
+        return () => {
+            clearTimeout(animationTimer);
+        }
+    }, [isCcpVisible, ccpOpened])
 
     const displayProfileMenu = () => {
         setTimeout(() => dispatch(toggleUserProfileMenu(true)), 100);
@@ -52,7 +74,10 @@ const Header = () => {
                 </div>
                 <div className='flex flex-row items-center'>
                     <div className='cursor-pointer pr-4'>
-                        <SvgIcon type={Icon.Ccp} data-test-id='toggle-ccp' className='icon-large-40' fillClass='header-active-item-icon' onClick={() => dispatch(toggleCcp())}/>
+                        <SvgIcon type={Icon.Ccp} data-test-id='toggle-ccp'
+                                 className={`${animate ? 'icon-large-40 animate-pulse' : 'icon-large-40'}`}
+                                 fillClass={`${animate ? 'header-active-item-icon header-animation-fill' : 'header-active-item-icon'}`}
+                                 onClick={() => dispatch(toggleCcp())}/>
                     </div>
                     <div className='pr-1'>
                         <SvgIcon type={Icon.Phone} className='icon-small' fillClass='header-inactive-item-icon'/>

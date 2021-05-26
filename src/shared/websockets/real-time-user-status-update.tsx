@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { HubConnection, HubConnectionBuilder, LogLevel } from '@microsoft/signalr';
+import React, {useEffect, useState} from 'react';
+import {HubConnection, HubConnectionBuilder, LogLevel} from '@microsoft/signalr';
 import {useDispatch, useSelector} from 'react-redux';
-import { useQueryClient } from 'react-query';
+import {useQueryClient} from 'react-query';
 import {authenticationSelector, selectAccessToken} from '../store/app-user/appuser.selectors';
-import { UserStatusUpdate } from '../models/user-status-update.model';
-import { QuickConnectExtension } from '../models/quick-connect-extension';
+import {UserStatusUpdate} from '../models/user-status-update.model';
+import {QuickConnectExtension} from '../models/quick-connect-extension';
 import RealTimeConnectionLogger from './real-time-connection-logger';
-import { QueryQuickConnects } from '@constants/react-query-constants';
+import {QueryQuickConnects} from '@constants/react-query-constants';
 import {updateUserStatus} from '@shared/store/app-user/appuser.slice';
+import {updateLatestUsersStatusUpdateTime} from '@shared/layout/store/layout.slice';
 
 const RealTimeUserStatusUpdate = () => {
     const dispatch = useDispatch();
@@ -19,7 +20,6 @@ const RealTimeUserStatusUpdate = () => {
     const realtimeConnectionLogger = new RealTimeConnectionLogger();
 
     useEffect(() => {
-
         const hubUrl = provideQuickconnectStatusHubUrl();
         const newConnection = new HubConnectionBuilder()
             .withUrl(hubUrl,
@@ -37,9 +37,9 @@ const RealTimeUserStatusUpdate = () => {
         if (connection) {
             connection.start()
                 .then(_ => {
-
                     connection.on('UserStatusChange', (data: UserStatusUpdate) => {
                         propagateStatusChangeValue(data);
+                        dispatch(updateLatestUsersStatusUpdateTime());
                     });
                 })
                 .catch(error => realtimeConnectionLogger.log(LogLevel.Error, `Connection to UserStatusChangeHub failed: ${error}.`))

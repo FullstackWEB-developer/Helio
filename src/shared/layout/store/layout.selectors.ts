@@ -1,5 +1,6 @@
-import { RootState } from '../../../app/store';
-import { createSelector } from '@reduxjs/toolkit';
+import {RootState} from '../../../app/store';
+import {createSelector} from '@reduxjs/toolkit';
+
 export const layoutState = (state: RootState) => state.layoutState
 
 export const isNavigationExpandedSelector = createSelector(
@@ -25,4 +26,9 @@ export const selectIsHotspotsVisible = createSelector(
 export const selectIsStatusBarVisible = createSelector(
     layoutState,
     state => state.isStatusBarVisible
+)
+
+export const selectLatestUsersStatusUpdateTime = createSelector(
+    layoutState,
+    state => state.latestUsersStatusUpdateTime as Date
 )

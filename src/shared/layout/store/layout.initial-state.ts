@@ -1,10 +1,10 @@
-
 export interface LayoutState {
     isNavigationExpanded: boolean;
     isProfileMenuExpanded: boolean;
     isCcpVisible: boolean;
     isHotspotsVisible: boolean;
     isStatusBarVisible: boolean;
+    latestUsersStatusUpdateTime?: Date;
 }
 
 const initialState: LayoutState = {

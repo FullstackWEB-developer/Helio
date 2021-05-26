@@ -1,7 +1,7 @@
 import './dropdown-select.scss';
 import {useTranslation} from 'react-i18next';
 import {DropdownItemModel} from '@components/dropdown/dropdown.models';
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import DropdownCell from '@components/dropdown/dropdown-cell';
 import customHooks from '../../hooks/customHooks';
 import {Icon} from '@components/svg-icon/icon';
@@ -17,9 +17,12 @@ export interface DropdownSelectProps {
 const DropdownSelect = ({items, defaultValue, onClick}: DropdownSelectProps) => {
     const {t} = useTranslation();
     const [isOpen, setOpen] = useState<boolean>(false);
-    const [selected, setSelected] = useState(defaultValue);
+    const [selected, setSelected] = useState<DropdownItemModel | undefined>(defaultValue);
     const dropdownRef = useRef<HTMLDivElement>(null);
 
+    useEffect(() => {
+        setSelected(defaultValue)
+    }, [defaultValue?.value]);
     const itemSelected = (item: DropdownItemModel) => {
         setSelected(item);
         setOpen(false);
