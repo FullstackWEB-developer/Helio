@@ -14,8 +14,10 @@ import './header.scss';
 import {useHistory} from 'react-router-dom';
 import SvgIcon from '@components/svg-icon/svg-icon';
 import {Icon} from '@components/svg-icon/icon';
+import {CCP_ANIMATION_DURATION} from '@constants/form-constants';
 
-const Header = () => {
+
+const Header = ({headsetIconRef}:{headsetIconRef: React.RefObject<HTMLDivElement>}) => {
     const dispatch = useDispatch();
     const history = useHistory();
     const auth = useSelector(authenticationSelector);
@@ -43,7 +45,7 @@ const Header = () => {
 
         let animationTimer = setTimeout(() => {
             setAnimate(false)
-        }, 2000)
+        }, CCP_ANIMATION_DURATION*1000);
 
         return () => {
             clearTimeout(animationTimer);
@@ -73,7 +75,7 @@ const Header = () => {
                     </div>
                 </div>
                 <div className='flex flex-row items-center'>
-                    <div className='cursor-pointer pr-4'>
+                    <div ref={headsetIconRef} className='cursor-pointer pr-4'>
                         <SvgIcon type={Icon.Ccp} data-test-id='toggle-ccp'
                                  className={`${animate ? 'icon-large-40 animate-pulse' : 'icon-large-40'}`}
                                  fillClass={`${animate ? 'header-active-item-icon header-animation-fill' : 'header-active-item-icon'}`}

@@ -23,6 +23,7 @@ import {Icon} from '@components/svg-icon/icon';
 import SvgIcon from '@components/svg-icon/svg-icon';
 import {selectContextPanel} from './store/ccp.selectors';
 import {useMutation} from 'react-query';
+import {CCP_ANIMATION_DURATION} from '@constants/form-constants';
 
 const ccpConfig = {
     region: process.env.REACT_APP_AWS_REGION,
@@ -34,7 +35,9 @@ const ccpConfig = {
 export interface BoxProps {
     id: any
     left: number
-    top: number
+    top: number,
+    headsetIconRef: React.RefObject<HTMLDivElement>,
+    moveBox: (left: number, top: number) => void
 }
 
 declare global {
@@ -49,9 +52,11 @@ window.CCP = window.CCP || {};
 const Ccp: React.FC<BoxProps> = ({
     id,
     left,
-    top
+    top,
+    headsetIconRef,
+    moveBox
 }) => {
-    const { t } = useTranslation();
+    const {t} = useTranslation();
     const dispatch = useDispatch();
     const history = useHistory();
     const logger = Logger.getInstance();
@@ -63,6 +68,8 @@ const Ccp: React.FC<BoxProps> = ({
     const updateAssigneeMutation = useMutation(setAssignee);
     const isCcpVisibleRef = useRef();
     isCcpVisibleRef.current = useSelector(isCcpVisibleSelector);
+    const [animateToggle, setAnimateToggle] = useState(false);
+    const [delayCcpDisplaying, setDelayCcpDisplaying] = useState(true);
 
     useEffect(() => {
         const ccpContainer = document.getElementById('ccp-container');
@@ -124,11 +131,11 @@ const Ccp: React.FC<BoxProps> = ({
                     }
 
                     setTicketId(tId);
-                    dispatch(setNoteContext({ ticketId: tId, username: username }));
+                    dispatch(setNoteContext({ticketId: tId, username: username}));
                 }
 
                 dispatch(setContextPanel(contextPanels.bot));
-                dispatch(setBotContext({ queue: queueName, reason }));
+                dispatch(setBotContext({queue: queueName, reason}));
             });
 
             contact.onDestroy(() => {
@@ -171,8 +178,8 @@ const Ccp: React.FC<BoxProps> = ({
     }, [dispatch, history, logger, username]);
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [{ opacity }, drag, preview] = useDrag({
-        item: { id, left, top, type: DndItemTypes.BOX },
+    const [{opacity}, drag, preview] = useDrag({
+        item: {id, left, top, type: DndItemTypes.BOX},
         collect: (monitor) => ({
             opacity: monitor.isDragging() ? 0.3 : 1
         })
@@ -187,18 +194,67 @@ const Ccp: React.FC<BoxProps> = ({
         }
     }
 
+    const minimizeCcpControl = () => {
+        const animationDuration = CCP_ANIMATION_DURATION;
+        if (headsetIconRef?.current) {
+            const headsetIconDimensions = headsetIconRef.current.getBoundingClientRect();
+            const ccp = document.getElementById('ccpControl');
+            if (ccp) {
+                const ccpDimensions = ccp?.getBoundingClientRect();
+                ccp.style.setProperty('--headsetIconPositionX', `${headsetIconDimensions.x + headsetIconDimensions.width / 2 - ccpDimensions.width / 2}px`);
+                ccp.style.setProperty('--headsetIconPositionY', `${headsetIconDimensions.top}px`);
+                ccp.style.setProperty('--ccpAnimationDuration', `${animationDuration}s`);
+                ccp.style.setProperty('--ccpAnimationInitialScale', '1');
+                ccp.style.setProperty('--ccpAnimationFinalScale', '0');
+            }
+        }
+        setAnimateToggle(true);
+
+        setTimeout(() => {
+            dispatch(toggleCcp());
+            setAnimateToggle(false);
+            setDelayCcpDisplaying(true);
+        }, animationDuration * 1000);
+    }
+    const maximizeCcpControl = () => {
+        const animationDuration = CCP_ANIMATION_DURATION;
+        const ccp = document.getElementById('ccpControl');
+        if (ccp && headsetIconRef?.current) {
+            const headsetIconBoundingClientRect = headsetIconRef.current.getBoundingClientRect();
+            moveBox(headsetIconBoundingClientRect.x - headsetIconBoundingClientRect.width / 2, headsetIconBoundingClientRect.top);
+            const ccpBoundingClientRect = ccp.getBoundingClientRect();
+            ccp.style.setProperty('--headsetIconPositionX', `${ccpBoundingClientRect.x}px`);
+            ccp.style.setProperty('--headsetIconPositionY', `${ccpBoundingClientRect.y}px`);
+            ccp.style.setProperty('--ccpAnimationDuration', `${animationDuration}s`);
+            ccp.style.setProperty('--ccpAnimationInitialScale', '0');
+            ccp.style.setProperty('--ccpAnimationFinalScale', '1');
+            setAnimateToggle(true);
+            setDelayCcpDisplaying(false);
+            setTimeout(() => {setAnimateToggle(false); moveBox(ccpBoundingClientRect.x, ccpBoundingClientRect.y)}, animationDuration * 1000);
+        }
+    }
+
+    useEffect(() => {
+        if (isCcpVisibleRef.current) {
+            maximizeCcpControl();
+        }
+    }, [isCcpVisibleRef.current]);
+
+
+
     return (
         <>
             <DragPreviewImage src={ccpImage} connect={preview} />
-            <div className={'ccp-main z-50 ' + (isCcpVisibleRef.current ? 'block' : 'hidden')}
-                style={{ left, top, opacity: opacity }}
+            <div className={`ccp-main z-50 ${animateToggle ? 'ccp-toggle-animate' : ''} ` + (isCcpVisibleRef.current ? 'block' : 'hidden')}
+                style={{left, top, opacity: opacity, visibility: delayCcpDisplaying ? 'hidden' : 'visible'}}
                 onMouseEnter={() => setHover(true)}
                 onMouseLeave={() => setHover(false)}
                 ref={drag}
+                id={'ccpControl'}
             >
                 <div className={'ccp-title h-8 flex items-center flex-row justify-between pl-4 body2-white ' + (isHover ? 'visible' : 'invisible')}>
                     <div>{t('ccp.title')}</div>
-                    <div className='w-8 flex justify-center items-center h-full cursor-pointer' onClick={() => dispatch(toggleCcp())}>-</div>
+                    <div className='w-8 flex justify-center items-center h-full cursor-pointer' onClick={minimizeCcpControl}>-</div>
                 </div>
                 <div className={'flex h-full shadow-md'}>
                     <div className={'flex flex-col h-full min-ccp-width'}>

@@ -14,13 +14,14 @@ const Ccp = React.lazy(() => import('../../../pages/ccp/ccp'));
 export interface ContainerProps {
     className: string
     children: ReactNode;
+    headsetIconRef: React.RefObject<HTMLDivElement>;
 }
 
 export interface ContainerState {
     boxes: { [key: string]: { top: number; left: number; } }
 }
 
-export const DndContainer: React.FC<ContainerProps> = ({children} : ContainerProps) => {
+export const DndContainer: React.FC<ContainerProps> = ({children, headsetIconRef} : ContainerProps) => {
     const {x, y} = utils.getWindowCenter();
     const displayHotspots = useSelector(selectIsHotspotsVisible);
 
@@ -68,6 +69,8 @@ export const DndContainer: React.FC<ContainerProps> = ({children} : ContainerPro
                             id={key}
                             left={left}
                             top={top}
+                            headsetIconRef={headsetIconRef}
+                            moveBox={(left: number, top: number) => moveBox('a', left, top)}
                         />
                     </Suspense>
                 )

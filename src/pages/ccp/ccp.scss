@@ -2,6 +2,13 @@
   position: absolute;
   padding: 0;
   height: 32.5rem;
+  --headsetIconPositionX: 0px;
+  --headsetIconPositionY: 0px;
+  --ccpPositionX: 0px;
+  --ccpPositionY: 0px;
+  --ccpAnimationDuration: .35s;
+  --ccpAnimationInitialScale: 1;
+  --ccpAnimationFinalScale: 0
 }
 .min-ccp-width {
   min-width: 21rem;
@@ -52,3 +59,19 @@
 .ccp-drag-background {
   background-color: var(--ccp-background-color);
 }
+
+@keyframes toggleAnimation {
+  0% { scale: (var(--ccpAnimationInitialScale)); opacity: 1;}
+  50% { scale: (0.75); opacity: 0.25;}
+  100% {
+    scale:  (var(--ccpAnimationFinalScale)) ; opacity: 0; top: var(--headsetIconPositionY); 
+    left: var(--headsetIconPositionX)
+  }
+}
+
+.ccp-toggle-animate {
+  animation: toggleAnimation var(--ccpAnimationDuration) ease-in-out;
+  transform-origin: top right;  
+  transform: skew(7.5deg);
+}
+
