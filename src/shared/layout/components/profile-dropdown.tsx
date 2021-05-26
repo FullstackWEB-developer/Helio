@@ -12,10 +12,16 @@ import {AgentState} from '@shared/models/agent-state';
 import {Icon} from '@components/svg-icon/icon';
 import SvgIcon from '@components/svg-icon/svg-icon';
 import React from 'react';
+import axios from "axios";
 
 interface UserStatuses {
     label: string;
     value: string;
+}
+
+const ccpConfig = {
+    connectBaseUrl: process.env.REACT_APP_CONNECT_BASE_URL,
+    ccpLogOutUrl: process.env.REACT_APP_CCP_LOGOUT_URL
 }
 
 const ProfileDropdown = () => {
@@ -26,11 +32,20 @@ const ProfileDropdown = () => {
     const logger = Logger.getInstance();
 
     const signOut = () => {
+        signOutFromCcp();
         dispatch(logOut());
         msalInstance.logout()
             .then()
             .catch((reason: any) => {
                 logger.error('Error logging out ' + JSON.stringify(reason));
+            });
+    }
+
+    const signOutFromCcp = () => {
+        axios.get(ccpConfig.connectBaseUrl! + ccpConfig.ccpLogOutUrl, {withCredentials: true})
+            .catch(() => {
+                // Note: This will result in 'CORS policy' error but it will still logout the user which is our goal.
+                // We will ignore the error received since we do not care about the response.
             });
     }
 
@@ -65,12 +80,12 @@ const ProfileDropdown = () => {
         dispatch(updateUserStatus(status));
     }
 
-    const GetIconByStatus =(status : string) => {
+    const GetIconByStatus = (status: string) => {
         const icon = <StatusDot status={status as UserStatus}/>;
         return <span className="w-4 h-4 flex items-center justify-around">{icon}</span>;
     }
 
-    const items : DropdownItemModel[] = [];
+    const items: DropdownItemModel[] = [];
     statusList.forEach((status) => {
         if (status.value !== currentUserStatus) {
             items.push({

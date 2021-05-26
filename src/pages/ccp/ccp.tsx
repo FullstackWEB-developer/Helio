@@ -26,8 +26,9 @@ import {useMutation} from 'react-query';
 
 const ccpConfig = {
     region: process.env.REACT_APP_AWS_REGION,
-    ccpUrl: process.env.REACT_APP_CCP_ACCESS_URL || '',
-    ccpLoginUrl: process.env.REACT_APP_CCP_LOGIN_URL || ''
+    connectBaseUrl: process.env.REACT_APP_CONNECT_BASE_URL,
+    ccpUrl: process.env.REACT_APP_CCP_ACCESS_URL,
+    ccpLoginUrl: process.env.REACT_APP_CCP_LOGIN_URL
 }
 
 export interface BoxProps {
@@ -66,7 +67,7 @@ const Ccp: React.FC<BoxProps> = ({
     useEffect(() => {
         const ccpContainer = document.getElementById('ccp-container');
         connect.core.initCCP(ccpContainer as HTMLDivElement, {
-            ccpUrl: ccpConfig.ccpUrl,
+            ccpUrl: ccpConfig.connectBaseUrl! + ccpConfig.ccpUrl,
             loginPopup: true, // optional, defaults to `true`
             loginPopupAutoClose: true, // optional, defaults to `true`
             loginOptions: {
