@@ -18,7 +18,14 @@ interface TimePickerProps {
     onBlur?: () => void;
 }
 
-const TimePicker = ({label, name, value, dataTestId, onChange, onBlur, ...props}: TimePickerProps) => {
+const TimePicker = React.forwardRef<HTMLInputElement, TimePickerProps>(({
+    label,
+    name,
+    value,
+    dataTestId,
+    onChange,
+    onBlur,
+    ...props}: TimePickerProps, ref) => {
     const {t}: {t: any} = useTranslation();
     const [inputValue, setInputValue] = useState('');
     const [isPickerOpen, setPickerOpen] = useState(false);
@@ -62,6 +69,7 @@ const TimePicker = ({label, name, value, dataTestId, onChange, onBlur, ...props}
     return (<div className={classNames('time-picker relative w-full flex flex-col h-20', {'time-picker-disabled': props.disabled})}>
         <div className={classNames('time-picker-container relative flex flex-wrap')}>
             <input
+                ref={ref}
                 name={name}
                 type='time'
                 onChange={onInputValueChange}
@@ -97,7 +105,7 @@ const TimePicker = ({label, name, value, dataTestId, onChange, onBlur, ...props}
             <div className='h6 pl-4 body3 pt-1 text-danger truncate'>{props.error}</div>
         }
     </div>);
-}
+});
 
 export default TimePicker;
 

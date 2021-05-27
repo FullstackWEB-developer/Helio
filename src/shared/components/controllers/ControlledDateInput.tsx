@@ -10,19 +10,21 @@ export interface ControllerDateInputProps {
     required?: boolean;
     disabled?: boolean;
     name: string;
-    value?: Date,
-    max?: Date,
-    min?: Date,
+    value?: Date;
+    max?: Date;
+    min?: Date;
     label?: string;
     defaultValue?: Date;
     className?: string;
     dataTestId: string;
+    longDateFormat?: boolean;
     type?: 'date' | 'time';
     isWeekendDisabled?: boolean;
     calendarHorizontalAlign?: CalendarHorizontalAlign;
     onValidationError?: () => void;
     onChange?: (date: Date | undefined) => void;
     onCalendarVisibilityChange?: (isVisible: boolean) => void;
+    onPressEnter?: () => void;
 }
 
 const ControlledDateInput = ({
@@ -34,12 +36,14 @@ const ControlledDateInput = ({
     min,
     defaultValue,
     className,
+    longDateFormat = true,
     required = false,
     type = 'date',
     label = '',
     calendarHorizontalAlign,
     onValidationError,
     onCalendarVisibilityChange,
+    onPressEnter,
     isWeekendDisabled,
     ...props
 }: ControllerDateInputProps) => {
@@ -57,7 +61,6 @@ const ControlledDateInput = ({
         }
     }
 
-
     return (<Controller
         name={name}
         control={control}
@@ -74,11 +77,13 @@ const ControlledDateInput = ({
                 calendarContainerClassName={className}
                 max={max}
                 min={min}
+                longDateFormat={longDateFormat}
                 label={t(label)}
                 error={control.formState.errors[name]?.message}
                 onChange={onChange}
                 onValidationError={onValidationError}
                 onCalendarVisibilityChange={onCalendarVisibilityChange}
+                onPressEnter={onPressEnter}
             />
         )}
     />);

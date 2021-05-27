@@ -8,7 +8,7 @@
       border: 0.0625rem solid var(--color-blue);
     }
     &-selected:not(.disabled) {
-      background: var(--color-blue);
+      background: var(--color-primary-500);
       color: var(--color-white);
     }
   }

@@ -109,6 +109,7 @@ const HipaaVerification = ({request}: HipaaVerificationProps) => {
                     <div className='pb-6'>
                         <ControlledDateInput
                             type='date'
+                            longDateFormat={false}
                             required={true}
                             label='external_access.hipaa.dob'
                             control={control}

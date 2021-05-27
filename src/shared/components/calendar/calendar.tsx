@@ -1,7 +1,9 @@
 import {useEffect, useState} from "react";
 import SvgIcon from "../svg-icon/svg-icon";
 import {Icon} from '../svg-icon/icon';
+import utc from 'dayjs/plugin/utc';
 import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
 import {DateDetail} from './date-detail.type';
 import {getMonthDetails, getTodayTimestamp} from './calendarUtils';
 import classNames from 'classnames';
@@ -15,6 +17,7 @@ interface CalendarProps {
     highlightToday?: boolean,
     onChange?: (date: string) => void;
     onBlur?: () => void;
+    onFocus?: () => void;
 }
 const Calendar = ({
     date,
@@ -23,8 +26,11 @@ const Calendar = ({
     max = new Date(9999, 11, 12),
     isWeekendDisabled = false,
     onChange,
-    onBlur
+    onBlur,
+    onFocus
 }: CalendarProps) => {
+    dayjs.extend(customParseFormat);
+    dayjs.extend(utc);
     const [currentDate, setCurrentDate] = useState(dayjs(date));
     const [monthDetail, setMonthDetail] = useState<DateDetail[]>([]);
     const [selectedDay, setSelectedDay] = useState<number | undefined>();
@@ -47,8 +53,9 @@ const Calendar = ({
     useEffect(() => {
         setCurrentDate(dayjs(date));
         if (date) {
-            const dateUTCWithoutTime = new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate());
-            setSelectedDay(dateUTCWithoutTime.getTime());
+            const dateTimeLocal = dayjs(date).utc().local().startOf('hour');
+            const dateMs = new Date(dateTimeLocal.year(), dateTimeLocal.month(), dateTimeLocal.date()).getTime();
+            setSelectedDay(dateMs);
         }
     }, [date]);
 
@@ -82,11 +89,11 @@ const Calendar = ({
         }
         setSelectedDay(day.timestamp);
         if (onChange) {
-            onChange(dayjs(day.date).format('YYYY-MM-DD'));
+            onChange(dayjs(day.date).utc().local().format('YYYY-MM-DD'));
         }
     }
 
-    return (<div className='calendar px-7 pb-7 pt-10 overflow-hidden' onBlur={(e) => onBlur}>
+    return (<div tabIndex={0}  className='calendar px-7 pb-7 pt-10 overflow-hidden' onBlur={onBlur} onFocus={onFocus}>
         <div className='calendar-container'>
             <div className='flex flex-row items-center justify-between'>
                 <div role='button' className='cursor-pointer' onClick={() => !isDisabledBackward && goBackward('month')}>
@@ -107,7 +114,7 @@ const Calendar = ({
                     {monthDetail &&
                         monthDetail.map((dateDetail, index) => (
                             <div key={index}>
-                                <div onClick={() => !isDisabled(dateDetail) && onDayClick(dateDetail)}
+                                <div role="button" onClick={() => !isDisabled(dateDetail) && onDayClick(dateDetail)}
                                     className={`${getClassName(dateDetail)} calendar-day-container flex items-center justify-center body2`}>
                                     <span className={classNames({'weekend': dateDetail.isWeekend})}>{dateDetail.isCurrentMonth ? dateDetail.day : ''}</span>
                                 </div>

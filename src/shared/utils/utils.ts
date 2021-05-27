@@ -112,8 +112,9 @@ const toShortISOLocalString = (date?: Date) => {
     if (!date) {
         return '';
     }
-    const dateISO = dayjs(date).utc().toISOString();
-    return dateISO.substr(0, dateISO.indexOf('T'))
+    dayjs.extend(utc);
+    const dateDayJs = dayjs(date).utc().local();
+    return `${dateDayJs.format('YYYY').padStart(4, '0')}-${dateDayJs.format('MM-DD')}`;
 }
 
 const stringJoin = (separator: string, ...params: Array<string | undefined>) => params.join(separator);

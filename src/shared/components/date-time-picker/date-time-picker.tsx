@@ -11,18 +11,20 @@ import './date-time-picker.scss';
 import utc from 'dayjs/plugin/utc';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
-
+import {InputType} from '@shared/models/input.types';
+import {DATE_ISO_FORMAT, DATE_INPUT_LONG_FORMAT} from '@shared/constants/form-constants';
 interface DateTimePickerProps {
-    name?: string,
+    name?: string;
     label?: string;
     value?: Date;
     error?: string;
     assistiveText?: string;
     disabled?: boolean;
     required?: boolean;
-    max?: Date,
-    min?: Date,
-    type?: 'date' | 'time' | 'datetime';
+    longDateFormat?: boolean;
+    max?: Date;
+    min?: Date;
+    type?: InputType;
     calendarHorizontalAlign?: CalendarHorizontalAlign;
     isWeekendDisabled?: boolean;
     calendarContainerClassName?: string;
@@ -30,9 +32,9 @@ interface DateTimePickerProps {
     onBlur?: () => void;
     onCalendarVisibilityChange?: (isVisible: boolean) => void;
     onValidationError?: () => void;
-
+    onPressEnter?: () => void;
 }
-const DateTimePicker = React.forwardRef<HTMLDivElement, DateTimePickerProps>(({
+const DateTimePicker = React.forwardRef<HTMLInputElement, DateTimePickerProps>(({
     label,
     value,
     type = 'datetime',
@@ -42,31 +44,56 @@ const DateTimePicker = React.forwardRef<HTMLDivElement, DateTimePickerProps>(({
     calendarContainerClassName = '',
     isWeekendDisabled,
     calendarHorizontalAlign = CalendarHorizontalAlign.Right,
+    longDateFormat = false,
     onBlur,
     onValidationError,
+    onPressEnter,
     onCalendarVisibilityChange,
     ...props
-}: DateTimePickerProps) => {
+}: DateTimePickerProps, ref) => {
     dayjs.extend(customParseFormat);
     dayjs.extend(utc);
     const {t}: {t: any} = useTranslation();
-    const [inputValue, setInputValue] = useState(!value ? '' : utils.toShortISOLocalString(value));
+    const [inputValue, setInputValue] = useState('');
     const [date, setDate] = useState(value);
-    const [isCalendarOpen, setCalendarOpen, calendarWrapperRef] = useComponentVisibility<HTMLDivElement>(false)
+    const [isCalendarOpen, setCalendarOpen, calendarWrapperRef] = useComponentVisibility<HTMLDivElement>(false);
+    const [inputDateFormat, setInputDateFormat] = useState(DATE_ISO_FORMAT);
+    const [isInputReadOnly, setInputReadOnly] = useState(false);
+    const [inputType, setInputType] = useState<InputType>('date');
+    const [isISOFormat, setIsISOFormat] = useState(!longDateFormat);
+
+    const switchDateFormat = (isISOFormatEnabled: boolean) => {
+        if (isISOFormatEnabled) {
+            setInputDateFormat(DATE_ISO_FORMAT);
+            setInputReadOnly(false);
+            setInputType('date');
+        } else {
+            setInputDateFormat(DATE_INPUT_LONG_FORMAT);
+            setInputReadOnly(true);
+            setInputType('text');
+        }
+    }
+
+    useEffect(() => {
+        switchDateFormat(isISOFormat);
+    }, [isISOFormat]);
 
     useEffect(() => {
         if (value) {
             setDate(value);
-            setInputValue(utils.toShortISOLocalString(value));
+            if (isISOFormat) {
+                setInputValue(utils.toShortISOLocalString(value));
+            } else {
+                setInputValue(dayjs(value).utc().local().format(DATE_INPUT_LONG_FORMAT));
+            }
         }
-
-    }, [value])
+    }, [value, isISOFormat])
 
     useEffect(() => {
         if (onCalendarVisibilityChange) {
             onCalendarVisibilityChange(isCalendarOpen);
         }
-    }, [isCalendarOpen])
+    }, [isCalendarOpen, onCalendarVisibilityChange])
 
     const onChange = (dateValue?: Date) => {
         if (props.onChange) {
@@ -78,14 +105,14 @@ const DateTimePicker = React.forwardRef<HTMLDivElement, DateTimePickerProps>(({
 
     const onInputValueChange = ({target}: React.ChangeEvent<HTMLInputElement>) => {
         const targetValue = target.value;
-        if (targetValue === '') {
+        if (targetValue === '' || !target.valueAsDate) {
             setInputValue(targetValue);
             setDate(undefined);
             onChange();
             return;
         }
+        const dateValue = dayjs(new Date(`${targetValue}T00:00:00`)).utc().local().toDate();
 
-        const dateValue = new Date(targetValue)
         if (!isValidDate(dateValue)) {
             setDate(undefined);
             if (onValidationError) {
@@ -93,15 +120,18 @@ const DateTimePicker = React.forwardRef<HTMLDivElement, DateTimePickerProps>(({
             }
             return;
         }
+
         setInputValue(targetValue);
         setDate(dateValue);
         onChange(dateValue);
     }
 
     const onCalendarValueChange = (valueDate: string) => {
-        const date = dayjs(valueDate, 'YYYY-MM-DD').utc(true).toDate();
-        setInputValue(valueDate);
-        onChange(date);
+        const dateDayJs = dayjs(valueDate, DATE_ISO_FORMAT).utc().local();
+        const newDate = dateDayJs.toDate();
+        const newInputValue = dateDayJs.format(inputDateFormat);
+        setInputValue(newInputValue);
+        onChange(newDate);
         setCalendarOpen(false);
     }
 
@@ -117,12 +147,20 @@ const DateTimePicker = React.forwardRef<HTMLDivElement, DateTimePickerProps>(({
         'assistive-text-color-inactive': !isCalendarOpen
     });
 
-    const getInputClassName = () => classNames({
-        'pt-2.5 h-10': !label,
-        'input-pt h-14': label,
-        'activated': !!inputValue,
-        'error': !!props.error
-    });
+    const getCalendarWrapper = () =>
+        classNames('date-time-picker relative w-full flex flex-col h-20',
+            calendarContainerClassName,
+            {'date-time-picker-disabled': props.disabled}
+        );
+
+    const getInputClassName = () =>
+        classNames('relative truncate flex-shrink flex-grow flex-auto leading-normal w-px pl-4 body2', {
+            'pt-2.5 h-10': !label,
+            'input-pt h-14': label,
+            'activated': !!inputValue,
+            'error': !!props.error,
+            'cursor-pointer': longDateFormat
+        });
 
     const onCalendarWrapperClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         event.stopPropagation();
@@ -135,13 +173,38 @@ const DateTimePicker = React.forwardRef<HTMLDivElement, DateTimePickerProps>(({
             setCalendarOpen(true);
         }
     }
-
+    const onInputFocus = () => {
+        setCalendarOpen(true);
+        if (longDateFormat) {
+            setIsISOFormat(true);
+        }
+    }
     const onInputBlur = ({target}: React.FocusEvent<HTMLInputElement>) => {
-        if (inputValue === '') {
+        if (inputValue === '' && inputType === 'date') {
             target.valueAsDate = null;
         }
         if (onBlur) {
             onBlur();
+        }
+        if (longDateFormat) {
+            setIsISOFormat(false);
+        }
+    }
+
+    const onCalendarBlur = () => {
+        if (onBlur) {
+            onBlur();
+        }
+        setCalendarOpen(false);
+    }
+
+    const onInputPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key !== 'Enter') {
+            return;
+        }
+        setCalendarOpen(false);
+        if (onPressEnter) {
+            onPressEnter();
         }
     }
 
@@ -151,19 +214,22 @@ const DateTimePicker = React.forwardRef<HTMLDivElement, DateTimePickerProps>(({
     }
 
     return (
-        <div ref={calendarWrapperRef} className={classNames('date-time-picker relative w-full flex flex-col h-20', calendarContainerClassName, {'date-time-picker-disabled': props.disabled})}>
+        <div ref={calendarWrapperRef} className={getCalendarWrapper()}>
             <div className={classNames('date-time-picker-container relative flex flex-wrap', {'open': isCalendarOpen})}>
                 <input
+                    ref={ref}
                     name={name}
-                    type='date'
+                    type={inputType}
                     onClick={onInputClick}
                     onChange={onInputValueChange}
-                    onFocus={() => setCalendarOpen(true)}
+                    onFocus={onInputFocus}
                     onBlur={onInputBlur}
+                    onKeyPress={onInputPress}
                     max={max ? utils.toShortISOLocalString(max) : undefined}
                     min={min ? utils.toShortISOLocalString(min) : undefined}
-                    className={`w-px pl-4 body2 ${getInputClassName()} relative truncate flex-shrink flex-grow flex-auto leading-normal`}
+                    className={getInputClassName()}
                     value={inputValue}
+                    readOnly={isInputReadOnly}
                     disabled={props.disabled}
                 />
                 {label &&
@@ -197,7 +263,7 @@ const DateTimePicker = React.forwardRef<HTMLDivElement, DateTimePickerProps>(({
                     >
                         <Calendar
                             isWeekendDisabled={isWeekendDisabled}
-                            onBlur={onBlur}
+                            onBlur={onCalendarBlur}
                             date={date}
                             max={max}
                             min={min}
