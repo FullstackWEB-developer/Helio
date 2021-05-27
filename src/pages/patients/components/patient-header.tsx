@@ -53,24 +53,20 @@ const PatientHeader = ({patientChartSummary, refreshPatient}: PatientHeaderProps
         window.open(url, '_blank');
     }
 
-    const GetImage = () => {
+    const getImage = () => {
         if (patientChartSummary?.patientPicture && patientChartSummary.patientPicture.length > 0) {
             return <img alt={t('patient.summary.profile_pic_alt_text')} className='w-24 h-24 rounded-full'
-                        src={`data:image/jpeg;base64,${patientChartSummary.patientPicture}`}/>
+                src={`data:image/jpeg;base64,${patientChartSummary.patientPicture}`} />
         }
-        const initials = utils.getInitialsFromFullName(`${patient.firstName} ${patient.lastName}`);
-        const model: AvatarModel = {
-            initials,
-            className: 'w-24 h-24'
-        }
-        return <Avatar model={model}/>
+
+        return <Avatar className='w-24 h-24' userFullName={utils.stringJoin(' ', patient.firstName, patient.lastName)} />
     }
 
     return (
         <div className={'flex flex-row p-8 bg-gray-50  justify-between'}>
             <div className='flex flex-row'>
                 <div className={'h-24 w-24'}>
-                    {GetImage()}
+                    {getImage()}
                 </div>
                 <div className={'pl-8 pt-4'}>
                     <div className={'flex flex-row items-start'}>
@@ -87,12 +83,12 @@ const PatientHeader = ({patientChartSummary, refreshPatient}: PatientHeaderProps
                             patientChartSummary?.chartAlert &&
                             <div ref={tooltipDiv} className='pt-1'>
                                 <div ref={chartAlertIcon} onClick={() => setDisplayChartAlert(!displayChartAlert)}
-                                     className='cursor-pointer'>
-                                    <SvgIcon type={Icon.Info} className='icon-medium' fillClass='warning-icon'/>
+                                    className='cursor-pointer'>
+                                    <SvgIcon type={Icon.Info} className='icon-medium' fillClass='warning-icon' />
                                 </div>
                                 <Tooltip targetRef={chartAlertIcon} isVisible={displayChartAlert}
-                                         placement='bottom-start'>
-                                    <PatientChartAlert chartAlert={patientChartSummary.chartAlert}/>
+                                    placement='bottom-start'>
+                                    <PatientChartAlert chartAlert={patientChartSummary.chartAlert} />
                                 </Tooltip>
                             </div>
                         }
@@ -117,12 +113,12 @@ const PatientHeader = ({patientChartSummary, refreshPatient}: PatientHeaderProps
             </div>
             <div className='flex flex-col'>
                 <Button data-test-id='patient-header-view-in-athena-button'
-                        buttonType='medium'
-                        onClick={() => viewInAthena()}
-                        label={'patient.header.view_in_athena'}/>
+                    buttonType='medium'
+                    onClick={() => viewInAthena()}
+                    label={'patient.header.view_in_athena'} />
                 <div className='pt-5 flex flex-row justify-end'>
                     <span className='cursor-pointer'>
-                        <SvgIcon type={Icon.Refresh} onClick={() => refreshPatient()} fillClass='rgba-05-fill'/>
+                        <SvgIcon type={Icon.Refresh} onClick={() => refreshPatient()} fillClass='rgba-05-fill' />
                     </span>
                 </div>
             </div>

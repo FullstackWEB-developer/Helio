@@ -1,29 +1,35 @@
-import {AvatarModel} from './avatar.models';
 import StatusDot from '@components/status-dot/status-dot';
+import {UserStatus} from '@shared/store/app-user/app-user.models';
+import utils from '@shared/utils/utils';
+import {useState} from 'react';
+import classnames from 'classnames';
 import './avatar.scss';
+
 export interface AvatarProps {
-    model: AvatarModel
+    userFullName: string;
+    className?: string;
+    userPhoto?: string;
+    status?: UserStatus;
 }
 
-const Avatar = ({model}: AvatarProps) => {
-    const {initials, status, className = 'avatar-default'} = model;
-    return (
-        <svg xmlns='http://www.w3.org/2000/svg' className={className} viewBox='0 0 40 40'>
-            <g data-name='Avatar/40px/Letters' >
-                <circle cx='20' cy='20' r='20' fill='#9e9e9e' />
-                <text fill='#fff' textAnchor='middle' dominantBaseline="middle">
-                    <tspan x='50%' y='55%' >{initials}</tspan>
-                </text>
-                {status &&
-                    <svg>
-                        <g transform='translate(30, 30)'>
-                            <StatusDot status={status} isBorderAround={true} />
-                        </g>
-                    </svg>
-                }
-            </g>
-        </svg>
-    );
-}
+const Avatar = ({userFullName, userPhoto, status, className = 'h-10 w-10'}: AvatarProps) => {
 
+    const [isErrorPhoto, setErrorPhoto] = useState(false);
+
+    return (<div className={classnames('avatar rounded-full flex items-center justify-center relative', className)}>
+        {(!userPhoto || isErrorPhoto) &&
+            <div className='avatar-initial'>{utils.getInitialsFromFullName(userFullName)}</div>
+        }
+
+        {userPhoto && !isErrorPhoto &&
+            <img src={userPhoto} className='rounded-full h-full w-full' alt='user' onError={() => setErrorPhoto(true)} />
+        }
+
+        {status &&
+            <div className='absolute bottom-0 right-0'>
+                <StatusDot status={status} isBorderAround={true} />
+            </div>
+        }
+    </div>);
+}
 export default Avatar;

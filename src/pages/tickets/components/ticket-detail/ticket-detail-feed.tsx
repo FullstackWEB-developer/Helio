@@ -1,5 +1,5 @@
 import React, {useEffect, useMemo} from 'react';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {useTranslation} from 'react-i18next';
 import {Ticket} from '../../models/ticket';
 import {FeedDetailDisplayItem} from '../../models/feed-detail-display-item';
@@ -8,7 +8,9 @@ import {getEnumByType} from '../../services/tickets.service';
 import {resetLastFeedMessageOn, setFeedLastMessageOn} from '../../store/tickets.slice';
 import {FeedTypes} from '../../models/ticket-feed';
 import './ticket-detail-feed.scss';
-
+import {selectUserList} from '@shared/store/lookups/lookups.selectors';
+import {User} from '@shared/models/user';
+import utils from '@shared/utils/utils';
 interface TicketDetailFeedProps {
     ticket: Ticket
 }
@@ -16,6 +18,8 @@ interface TicketDetailFeedProps {
 const TicketDetailFeed = React.forwardRef<HTMLDivElement, TicketDetailFeedProps>(({ticket}, ref) => {
     const {t} = useTranslation();
     const dispatch = useDispatch();
+    const users = useSelector(selectUserList);
+
     const getTime = (date?: Date) => {
         return date != null ? new Date(date).getTime() : 0;
     }
@@ -27,19 +31,25 @@ const TicketDetailFeed = React.forwardRef<HTMLDivElement, TicketDetailFeedProps>
         dispatch(getEnumByType('TicketType'));
     }, [dispatch, ticket]);
 
+    const getUser = (id: string | undefined): User | undefined => !!id ? users.find(user => user.id === id) : undefined;
+
     const memoizedFeeds: FeedDetailDisplayItem[] = useMemo(() => {
         const feedItems: FeedDetailDisplayItem[] = [];
         ticket.notes?.forEach(note => {
+            const user = getUser(note.createdBy);
             feedItems.push({
-                createdBy: note.createdBy,
+                userFullName: utils.stringJoin(' ', user?.firstName, user?.lastName),
+                userPicture: user?.profilePicture,
                 dateTime: note.createdOn,
                 feedText: note.noteText,
                 feedType: FeedTypes.Note
             });
         });
         ticket.feeds?.forEach(feed => {
+            const user = getUser(feed.createdBy);
             feedItems.push({
-                createdBy: feed.createdBy,
+                userFullName: utils.stringJoin(' ', user?.firstName, user?.lastName),
+                userPicture: user?.profilePicture,
                 dateTime: feed.createdOn,
                 feedType: feed.feedType,
                 feedText: feed.description
@@ -58,7 +68,7 @@ const TicketDetailFeed = React.forwardRef<HTMLDivElement, TicketDetailFeedProps>
 
     if (memoizedFeeds?.length < 1) {
         return <div className='p-4 h7'
-                    data-test-id='ticket-detail-feed-not-found'>{t('ticket_detail.feed.not_found')}</div>
+            data-test-id='ticket-detail-feed-not-found'>{t('ticket_detail.feed.not_found')}</div>
     }
 
     return <div>
@@ -68,9 +78,9 @@ const TicketDetailFeed = React.forwardRef<HTMLDivElement, TicketDetailFeedProps>
         <div className={'overflow-y-auto h-full-minus-26'}>
             {
                 memoizedFeeds.map((feedItem: FeedDetailDisplayItem, index) => <FeedDetailItem key={index}
-                                                                                              item={feedItem}/>)
+                    item={feedItem} />)
             }
-            <div ref={ref}/>
+            <div ref={ref} />
         </div>
     </div>
 });

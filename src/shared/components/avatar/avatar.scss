@@ -2,3 +2,10 @@
   width: 2.5rem;
   height: 2.5rem;
 }
+
+.avatar {
+    background-color: #9e9e9e;
+  &-initial {
+    color: var(--color-white)
+  }
+}

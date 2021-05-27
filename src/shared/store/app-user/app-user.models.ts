@@ -3,7 +3,8 @@ export interface AuthenticationInfo {
     name?: string,
     username?: string,
     expiresOn?: Date,
-    isLoggedIn: boolean
+    isLoggedIn: boolean,
+    profilePicture?: string
 }
 
 export enum UserStatus {

@@ -5,7 +5,7 @@ import withErrorLogging from '../../../../shared/HOC/with-error-logging';
 import {Ticket} from '../../models/ticket';
 import Select from '../../../../shared/components/select/select';
 import {Option} from '@components/option/option';
-import {selectUserOptions} from '@shared/store/lookups/lookups.selectors';
+import {selectUserList, selectUserOptions} from '@shared/store/lookups/lookups.selectors';
 import {setAssignee} from '../../services/tickets.service';
 import {useMutation} from 'react-query';
 import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
@@ -16,6 +16,7 @@ import {AvatarModel} from '@components/avatar/avatar.models';
 import utils from '@shared/utils/utils';
 import {useTranslation} from 'react-i18next';
 import './ticket-detail-assignee.scss';
+import {User} from '@shared/models/user';
 
 interface TicketDetailAssigneeProps {
     ticket: Ticket
@@ -23,13 +24,15 @@ interface TicketDetailAssigneeProps {
 
 const TicketDetailAssignee = ({ticket}: TicketDetailAssigneeProps) => {
     const {control} = useForm();
-    const dispatch = useDispatch();
-    const userList = useSelector(selectUserOptions);
-    const [isEditMode, setEditMode] = useState<boolean>(false);
     const {t} = useTranslation();
-    const [selectedUser, setSelectedUser] = useState<Option | undefined>();
+    const dispatch = useDispatch();
+    const userListOptions = useSelector(selectUserOptions);
+    const userList = useSelector(selectUserList);
+    const [isEditMode, setEditMode] = useState<boolean>(false);
+    const [selectedUser, setSelectedUser] = useState<User>();
+
     useEffect(() => {
-        const user = userList ? userList.find((o: Option) => o.value === ticket.assignee) : {} as any;
+        const user: User | undefined = userList ? userList.find(item => item.id === ticket.assignee) : undefined;
         setSelectedUser(user);
     }, [ticket.assignee, userList])
 
@@ -51,31 +54,30 @@ const TicketDetailAssignee = ({ticket}: TicketDetailAssigneeProps) => {
     });
 
     const [selectedOption, setSelectedOption] = useState(
-        userList ? userList.find((o: Option) => o.value === ticket?.assignee) : undefined
+        userListOptions ? userListOptions.find((o: Option) => o.value === ticket?.assignee) : undefined
     );
 
+
     const handleChangeAssignedTo = (option?: Option) => {
-        const user = userList ? userList.find((o: Option) => o.value === option?.value) : {} as any;
+        const user = userListOptions ? userListOptions.find((o: Option) => o.value === option?.value) : {} as any;
         if (ticket.id && user) {
             updateAssigneeMutation.mutate({ticketId: ticket.id, assignee: user.value});
             setSelectedOption(user.value);
         }
     }
 
-    const avatarModel: AvatarModel = {
-        initials: utils.getInitialsFromFullName(selectedUser?.label ? selectedUser?.label : '')
-    }
+    const getFullName = () => selectedUser ? `${selectedUser?.firstName} ${selectedUser?.lastName}` : '';
 
     if (!isEditMode) {
         return <div className='flex h-14 pb-4 flex-row items-center justify-between'>
             <div className='flex flex-row items-center'>
                 <div>
-                    <Avatar model={avatarModel}/>
+                    <Avatar userFullName={getFullName()} userPhoto={selectedUser?.profilePicture} />
                 </div>
-                <div className='pl-4'>{selectedUser?.label}</div>
+                <div className='pl-4'>{getFullName()}</div>
             </div>
             <div onClick={() => setEditMode(true)}
-                 className='body2 justify-end cursor-pointer ticket-detail-assignee-change'>
+                className='body2 justify-end cursor-pointer ticket-detail-assignee-change'>
                 {t('ticket_detail.info_panel.change')}
             </div>
 
@@ -93,7 +95,7 @@ const TicketDetailAssignee = ({ticket}: TicketDetailAssigneeProps) => {
                         <Select
                             {...props}
                             data-test-id={'assigned-to-user-list'}
-                            options={userList}
+                            options={userListOptions}
                             value={selectedOption}
                             onSelect={(option?: Option) => {
                                 handleChangeAssignedTo(option);

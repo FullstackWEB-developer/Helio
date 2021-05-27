@@ -7,7 +7,7 @@ import Calendar from '@components/calendar';
 import utils from '@shared/utils/utils';
 import {CalendarHorizontalAlign} from './calendar-align-enum';
 import classNames from 'classnames';
-import './date-time-picker.scss';
+import './date-time-picker.scss'; 
 import utc from 'dayjs/plugin/utc';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';

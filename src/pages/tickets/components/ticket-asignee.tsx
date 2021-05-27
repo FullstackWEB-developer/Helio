@@ -4,8 +4,8 @@ import {useDispatch, useSelector} from 'react-redux';
 import withErrorLogging from '../../../shared/HOC/with-error-logging';
 import {selectUserList} from '@shared/store/lookups/lookups.selectors';
 import {User} from '@shared/models/user';
-import Avatar from '../../../shared/components/avatar/avatar';
-import utils from '../../../shared/utils/utils';
+import Avatar from '@shared/components/avatar/avatar';
+import utils from '@shared/utils/utils';
 import {Icon} from '@components/svg-icon/icon';
 import SvgIcon from '@components/svg-icon/svg-icon';
 import {
@@ -127,11 +127,7 @@ const TicketAssignee = ({ticketId, assignee, dropdownHorizontalPosition}: Ticket
             {selectedUser?.id ?
                 <div className='flex flex-wrap items-center'>
                     <div className='mr-4'>
-                        <Avatar
-                            model={{
-                                initials: utils.getInitialsFromFullName(`${selectedUser.firstName} ${selectedUser.lastName}` || '')
-                            }}
-                        />
+                        <Avatar userFullName={utils.stringJoin(' ', selectedUser.firstName, selectedUser.lastName)} userPhoto={selectedUser.profilePicture} />
                     </div>
                     <div ref={chevronPosition}>
                         <div>{selectedUser.firstName} {selectedUser.lastName}</div>
@@ -141,14 +137,14 @@ const TicketAssignee = ({ticketId, assignee, dropdownHorizontalPosition}: Ticket
                 <div className='flex flex-row'>
                     <div className='pt-3'>{t('tickets.unassigned')}</div>
                     <div className='pt-3 pl-3' ref={chevronPosition} >
-                        <SvgIcon type={!isVisible? Icon.ArrowDown: Icon.ArrowUp} className='cursor-pointer' fillClass='active-item-icon' />
+                        <SvgIcon type={!isVisible ? Icon.ArrowDown : Icon.ArrowUp} className='cursor-pointer' fillClass='active-item-icon' />
                     </div>
                 </div>
             }
         </div>
         {isVisible &&
             <div onClick={e => e.stopPropagation()}
-            className='absolute w-48 z-10 top-12'
+                className='absolute w-48 z-10 top-12'
                 style={determineDropdownPosition()}>
                 <Dropdown model={userDropdownModel} />
             </div>

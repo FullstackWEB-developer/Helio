@@ -88,7 +88,7 @@ const formatRelativeTime = (days?: number, hours?: number, minutes?: number, abs
 
     return '';
 }
-const getRelativeTime = (date?: Date): RelativeTime  => {
+const getRelativeTime = (date?: Date): RelativeTime => {
     if (!date) {
         return [];
     }
@@ -116,6 +116,8 @@ const toShortISOLocalString = (date?: Date) => {
     return dateISO.substr(0, dateISO.indexOf('T'))
 }
 
+const stringJoin = (separator: string, ...params: Array<string | undefined>) => params.join(separator);
+
 const utils = {
     getWindowCenter,
     formatUtcDate,
@@ -128,7 +130,8 @@ const utils = {
     formatRelativeTime,
     formatPhone,
     isString,
-    toShortISOLocalString
+    toShortISOLocalString,
+    stringJoin,
 };
 
 export default utils;

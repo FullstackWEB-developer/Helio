@@ -22,4 +22,5 @@ export const QueryContacts = 'query-contacts';
 export const OneMinute = 60000;
 export const QueryContactNotes = 'contact-notes';
 export const QueryCompanyContacts = 'company-contacts';
+export const QueryUserById = 'get-user'
 export const PreviewMedicalRecords = 'preview-medical-records';
