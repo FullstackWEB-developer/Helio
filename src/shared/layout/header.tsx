@@ -132,7 +132,7 @@ const Header = ({headsetIconRef}:{headsetIconRef: React.RefObject<HTMLDivElement
                             <div ref={dropdownRef} className='hidden h-full md:block relative'>
                                 <div ref={avatarRef} data-test-id='letter-avatar' className='cursor-pointer pr-6'
                                     onClick={() => displayProfileMenu()}>
-                                    <Avatar userFullName={auth.isLoggedIn ? username : ''} status={currentUserStatus} userPhoto={auth.profilePicture ?? profilePicture} />
+                                    <Avatar userFullName={auth.isLoggedIn ? username : ''} status={currentUserStatus} userPicture={auth.profilePicture ?? profilePicture} />
                                 </div>
                                 <div>
                                     {isProfileMenuOpen &&

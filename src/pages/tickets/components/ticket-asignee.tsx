@@ -127,7 +127,7 @@ const TicketAssignee = ({ticketId, assignee, dropdownHorizontalPosition}: Ticket
             {selectedUser?.id ?
                 <div className='flex flex-wrap items-center'>
                     <div className='mr-4'>
-                        <Avatar userFullName={utils.stringJoin(' ', selectedUser.firstName, selectedUser.lastName)} userPhoto={selectedUser.profilePicture} />
+                        <Avatar userFullName={utils.stringJoin(' ', selectedUser.firstName, selectedUser.lastName)} userPicture={selectedUser.profilePicture} />
                     </div>
                     <div ref={chevronPosition}>
                         <div>{selectedUser.firstName} {selectedUser.lastName}</div>

@@ -12,8 +12,6 @@ import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
 import {SnackbarType} from '@components/snackbar/snackbar-position.enum';
 import {setTicket} from '@pages/tickets/store/tickets.slice';
 import Avatar from '@components/avatar/avatar';
-import {AvatarModel} from '@components/avatar/avatar.models';
-import utils from '@shared/utils/utils';
 import {useTranslation} from 'react-i18next';
 import './ticket-detail-assignee.scss';
 import {User} from '@shared/models/user';
@@ -72,7 +70,7 @@ const TicketDetailAssignee = ({ticket}: TicketDetailAssigneeProps) => {
         return <div className='flex h-14 pb-4 flex-row items-center justify-between'>
             <div className='flex flex-row items-center'>
                 <div>
-                    <Avatar userFullName={getFullName()} userPhoto={selectedUser?.profilePicture} />
+                    <Avatar userFullName={getFullName()} userPicture={selectedUser?.profilePicture} />
                 </div>
                 <div className='pl-4'>{getFullName()}</div>
             </div>

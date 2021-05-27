@@ -17,7 +17,7 @@ const FeedDetailItem = ({item}: FeedDetailItemProps) => {
     return (
         <div className={'flex flex-row pl-6 py-4 border-b'}>
             <div className='w-8 h-8 pt-2'>
-                <Avatar userFullName={item.userFullName ?? ''} />
+                <Avatar userFullName={item.userFullName ?? ''} userPicture={item.userPicture} />
             </div>
             <div className='pl-6'>
                 <div className='flex flex-row'>

@@ -8,21 +8,21 @@ import './avatar.scss';
 export interface AvatarProps {
     userFullName: string;
     className?: string;
-    userPhoto?: string;
+    userPicture?: string;
     status?: UserStatus;
 }
 
-const Avatar = ({userFullName, userPhoto, status, className = 'h-10 w-10'}: AvatarProps) => {
+const Avatar = ({userFullName, userPicture, status, className = 'h-10 w-10'}: AvatarProps) => {
 
     const [isErrorPhoto, setErrorPhoto] = useState(false);
 
     return (<div className={classnames('avatar rounded-full flex items-center justify-center relative', className)}>
-        {(!userPhoto || isErrorPhoto) &&
+        {(!userPicture || isErrorPhoto) &&
             <div className='avatar-initial'>{utils.getInitialsFromFullName(userFullName)}</div>
         }
 
-        {userPhoto && !isErrorPhoto &&
-            <img src={userPhoto} className='rounded-full h-full w-full' alt='user' onError={() => setErrorPhoto(true)} />
+        {userPicture && !isErrorPhoto &&
+            <img src={userPicture} className='rounded-full h-full w-full' alt='user' onError={() => setErrorPhoto(true)} />
         }
 
         {status &&
