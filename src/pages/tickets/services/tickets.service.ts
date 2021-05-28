@@ -27,7 +27,7 @@ import {TicketFeed} from '../models/ticket-feed';
 import {TicketListQueryType} from '../models/ticket-list-type';
 import {DashboardTypes} from '@pages/dashboard/enums/dashboard-type.enum';
 import {DashboardTimeframes} from '@pages/dashboard/enums/dashboard.timeframes';
-
+import utils from '@shared/utils/utils';
 const logger = Logger.getInstance();
 const ticketsBaseUrl = "/tickets";
 
@@ -260,8 +260,8 @@ export const getTicketByNumber = async (ticketNumber: number) => {
 
 export const getDashboardData = async (type: DashboardTypes, timeFrame: DashboardTimeframes, startDate: Date, endDate: Date) => {
     let url = `${ticketsBaseUrl}/dashboard?timeFrame=${timeFrame}&type=${type}`;
-    if (timeFrame === DashboardTimeframes.custom) {
-        url = url + `&startDate=${startDate.toISOString()}&endDate=${endDate.toISOString()}`;
+    if (timeFrame === DashboardTimeframes.custom) { 
+        url = url + `&startDate=${utils.toISOLocalString(startDate)}&endDate=${utils.toISOLocalString(endDate)}`;
     }
     const response = await Api.get(url);
     return response.data;

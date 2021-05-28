@@ -32,6 +32,7 @@ import ControlledDateInput from '@components/controllers/ControlledDateInput';
 import classNames from 'classnames';
 import ControlledSelect from '@components/controllers/controlled-select';
 import {DATE_ISO_FORMAT} from '@shared/constants/form-constants'
+import utils from '@shared/utils/utils';
 import './ticket-filter.scss';
 
 
@@ -58,7 +59,8 @@ const TicketFilter = ({isOpen}: {isOpen: boolean}) => {
     const [fromDate, setFromDate] = useState<Date | undefined>();
     const ticketListQueryType = useSelector(selectTicketQueryType);
     const [collapsibleState, setCollapsibleState] = useState<{[key: string]: boolean}>({});
-    const [isCalendarOpen, setIsCalendarOpen] = useState(false);
+    const [isFromDateCalendarOpen, setIsFromDateCalendarOpen] = useState(false);
+    const [isToDateCalendarOpen, setIsToDateCalendarOpen] = useState(false);
     const watchTimePeriod = watch('timePeriod');
 
     useEffect(() => {
@@ -186,12 +188,13 @@ const TicketFilter = ({isOpen}: {isOpen: boolean}) => {
 
         if (values.timePeriod) {
             if (values.timePeriod === timePeriod_DateRange) {
-                if (values.fromDate) {
-                    query.fromDate = dayjs(values.fromDate).utc(true).format(DATE_ISO_FORMAT);
+                const {fromDate: fromDateValue, toDate}: {fromDate: Date | undefined, toDate: Date | undefined} = values;
+                if (fromDateValue) {
+                    query.fromDate = utils.toShortISOLocalString(fromDateValue);
                 }
 
-                if (values.toDate) {
-                    query.toDate = dayjs(values.toDate).utc(true).format(DATE_ISO_FORMAT);
+                if (toDate) {
+                    query.toDate = utils.toShortISOLocalString(toDate);
                 }
             } else {
                 values.fromDate = undefined;
@@ -386,11 +389,6 @@ const TicketFilter = ({isOpen}: {isOpen: boolean}) => {
             timePeriod: ''
         });
     }
-
-    const onDateCalendarVisibility = (isVisible: boolean) => {
-        setIsCalendarOpen(isVisible);
-    }
-
     const dateFilters = () => {
         if (watchTimePeriod === timePeriod_DateRange) {
             return (<div>
@@ -402,7 +400,7 @@ const TicketFilter = ({isOpen}: {isOpen: boolean}) => {
                     dataTestId='ticket-filter-from-date'
                     value={fromDate}
                     onChange={setFromDate}
-                    onCalendarVisibilityChange={onDateCalendarVisibility}
+                    onCalendarVisibilityChange={setIsFromDateCalendarOpen}
                 />
                 <ControlledDateInput
                     control={control}
@@ -412,7 +410,7 @@ const TicketFilter = ({isOpen}: {isOpen: boolean}) => {
                     label='tickets.filter.to_date'
                     name='toDate'
                     dataTestId='ticket-filter-to-date'
-                    onCalendarVisibilityChange={onDateCalendarVisibility}
+                    onCalendarVisibilityChange={setIsToDateCalendarOpen}
                 />
             </div>);
         } else {
@@ -427,8 +425,8 @@ const TicketFilter = ({isOpen}: {isOpen: boolean}) => {
     const getClassNames = () => classNames({
         'w-96 transition-width transition-slowest ease top-0 bg-secondary-100': isOpen,
         'hidden': !isOpen,
-        'overflow-y-auto z-0 sticky': !isCalendarOpen,
-        'overflow-y-visible z-20 relative': isCalendarOpen
+        'overflow-y-auto z-0 sticky': !isFromDateCalendarOpen || !isToDateCalendarOpen,
+        'overflow-y-visible z-20 relative': isFromDateCalendarOpen || isToDateCalendarOpen
     });
 
     return <div className={getClassNames()}>

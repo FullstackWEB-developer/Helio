@@ -178,7 +178,7 @@ const TicketNew = () => {
             subject: subjectValue,
             status: formData.status,
             priority: formData.priority,
-            dueDate: dueDateTime ? dueDateTime.toDate() : undefined,
+            dueDate: dueDateTime ? dueDateTime.utc().local().toDate() : undefined,
             channel: formData.channel,
             department: formData.department,
             location: formData.location,
@@ -189,6 +189,7 @@ const TicketNew = () => {
             tags: tags,
             notes: notes
         };
+
         createTicketMutation.mutate(ticketData);
     }
 

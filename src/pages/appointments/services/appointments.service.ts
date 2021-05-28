@@ -1,6 +1,7 @@
 import Api from '../../../shared/services/api';
 import {Appointment} from '@pages/external-access/appointment/models/appointment.model';
 import dayjs from 'dayjs';
+import utils from '@shared/utils/utils';
 import {AppointmentCancellationModel} from '@pages/external-access/appointment/models/appointment-cancellation.model';
 
 const itemCount = 100;
@@ -32,8 +33,8 @@ export const getAppointmentSlots = async (providerId: number, departmentId: numb
      getOpenSlotsUrl = getOpenSlotsUrl + `&departmentId=${departmentId}`;
      getOpenSlotsUrl = getOpenSlotsUrl + `&providerId=${providerId}`;
      getOpenSlotsUrl = getOpenSlotsUrl + `&appointmentTypeId=${appointmentTypeId}`;
-     getOpenSlotsUrl = getOpenSlotsUrl + `&startDate=${dayjs(startDate).utc().format('YYYY-MM-DD')}`;
-     getOpenSlotsUrl = getOpenSlotsUrl + `&endDate=${dayjs(endDate).utc().format( 'YYYY-MM-DD')}`;
+     getOpenSlotsUrl = getOpenSlotsUrl + `&startDate=${utils.toShortISOLocalString(startDate)}`;
+     getOpenSlotsUrl = getOpenSlotsUrl + `&endDate=${utils.toShortISOLocalString(endDate)}`;
      getOpenSlotsUrl = getOpenSlotsUrl + `&itemCount=${itemCount}`;
      const result = await Api.get(getOpenSlotsUrl);
      return result.data;

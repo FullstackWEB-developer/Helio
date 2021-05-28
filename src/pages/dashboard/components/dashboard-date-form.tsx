@@ -11,7 +11,6 @@ export interface DashboardDateFormProps {
 }
 
 const DashboardDateForm = ({onDatesSelected}: DashboardDateFormProps) => {
-
     const [selectedStartDate, setSelectedStartDate] = useState<Date>(dayjs().add(-1, 'day').toDate());
     const [selectedEndDate, setSelectedEndDate] = useState<Date>(new Date());
     const {t} = useTranslation();
@@ -26,7 +25,7 @@ const DashboardDateForm = ({onDatesSelected}: DashboardDateFormProps) => {
     const watchEndDate = watch('endDate');
 
 
-    const onSubmit = (values: any) => {
+    const onSubmit = (values: {startDate: Date, endDate: Date}) => {
         if (isValid()) {
             setSelectedStartDate(values.startDate);
             setSelectedEndDate(values.endDate);

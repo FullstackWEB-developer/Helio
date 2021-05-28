@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc'
 import {RelativeTime} from './types';
+
 const getWindowCenter = () => {
     const {width, height} = getWindowDimensions();
     return {x: width / 2, y: height / 2};
@@ -78,6 +79,8 @@ const getDateTime = (dueDate?: Date, dueTime?: string) => {
     return dateTime;
 }
 
+
+
 const formatRelativeTime = (days?: number, hours?: number, minutes?: number, abs = false, minutesFormat = 'm'): string => {
     const getTimePart = (timePart: number) => abs ? Math.abs(timePart) : timePart;
 
@@ -95,6 +98,7 @@ const formatRelativeTime = (days?: number, hours?: number, minutes?: number, abs
 
     return '';
 }
+
 const getRelativeTime = (date?: Date): RelativeTime => {
     if (!date) {
         return [];
@@ -109,8 +113,8 @@ const getRelativeTime = (date?: Date): RelativeTime => {
     totalMinutes = totalMinutes - (totalHours * 60);
 
     return [totalDays, totalHours, totalMinutes]
-
 }
+
 const isString = (obj: any) => {
     return typeof obj === 'string' || obj instanceof String;
 }
@@ -122,6 +126,16 @@ const toShortISOLocalString = (date?: Date) => {
     dayjs.extend(utc);
     const dateDayJs = dayjs(date).utc().local();
     return `${dateDayJs.format('YYYY').padStart(4, '0')}-${dateDayJs.format('MM-DD')}`;
+}
+
+
+const toISOLocalString = (date?: Date) => {
+    if (!date) {
+        return '';
+    }
+    dayjs.extend(utc);
+    const dateDayJs = dayjs(date).utc().local();
+    return `${dateDayJs.format('YYYY').padStart(4, '0')}-${dateDayJs.format('MM-DDTHH:mm:ss.SSS[Z]')}`;
 }
 
 const stringJoin = (separator: string, ...params: Array<string | undefined>) => params.join(separator);
@@ -140,6 +154,7 @@ const utils = {
     clearFormatPhone,
     isString,
     toShortISOLocalString,
+    toISOLocalString,
     stringJoin,
 };
 
