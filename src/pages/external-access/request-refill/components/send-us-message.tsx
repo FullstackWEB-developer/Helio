@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useState} from 'react';
+import React, {useState} from 'react';
 import {Icon} from '@components/svg-icon/icon';
 import SvgIcon from '@components/svg-icon/svg-icon';
 import {useTranslation} from 'react-i18next';
@@ -43,7 +43,8 @@ const SendUsMessage = () => {
     }
 
     const onSubmit = () => {
-        const internalNote = `** Patient Note \n ${getMessageText()} \n `;
+        let internalNote = `** Patient Note \n ${getMessageText()} \n `;
+        internalNote += `ProviderId: ${verifiedPatient.defaultProviderId}`;
 
         mutate({
             patientId: verifiedPatient.patientId,
@@ -61,14 +62,14 @@ const SendUsMessage = () => {
     const closeButtonHandler = () => setIsVisibleForm(!isVisibleForm);
 
     return isVisibleForm ? <div className='border mb-12'>
-        <div className='flex flex-row justify-between pl-6 py-4 pr-28'>
+        <div className='flex flex-row justify-between px-6 py-4 lg:pr-28'>
             <div className='flex flex-row'>
                 <SvgIcon type={Icon.Chat} fillClass='rgba-05-fill'/>
                 <div className='subtitle pl-4.5'>
                     {t('external_access.medication_refill.have_questions')}
                 </div>
             </div>
-            <div className='body2 cursor-pointer' onClick={closeButtonHandler}>
+            <div className='body2 cursor-pointer lg:pr-2' onClick={closeButtonHandler}>
                 {t('common.close')}
             </div>
         </div>
@@ -86,13 +87,14 @@ const SendUsMessage = () => {
                             error={errors.messageText?.message}
                             className='pl-4 pt-2 pb-11 pr-8 body2 w-full h-full'
                             data-test-id='send-us-message-text'
-                            placeholder={t('common.enter_your_message')}
+                            placeHolder={t('common.enter_your_message')}
                             required={true}
                             rows={2}
                             resizable={false}
                             value={messageText}
                             hasBorder={true}
-                            onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setMessageText(e.target.value)}
+                            maxlength={maxlength}
+                            onChange={(message) => setMessageText(message)}
                             iconClassNames='medium cursor-pointer'
                             iconOnClick={() => {
                                 handleSubmit(onSubmit)()
@@ -100,9 +102,6 @@ const SendUsMessage = () => {
                         />
                     )}
                 />
-                <div className='flex justify-end pt-1 pr-4 body3'>
-                    {t('external_access.characters', {maxlength: maxlength})}
-                </div>
                 <div className={`flex justify-start items-center full-w mt-3 ${getMarginBottom()}`}>
                     <Button buttonType='secondary' label={t('common.cancel')} className='h-10 secondary-contact-form-btn' onClick={closeButtonHandler} />
                     <Button type='submit' buttonType='medium' label={t('common.send')} className='ml-6' disabled={!messageText || isLoading} />
@@ -121,14 +120,14 @@ const SendUsMessage = () => {
         </div>
     </div> :
     <div className='border mb-12'>
-        <div className='flex flex-row justify-between pl-6 py-4 pr-28'>
+        <div className='flex flex-row justify-between px-6 py-4 lg:pr-28'>
             <div className='flex flex-row'>
                 <SvgIcon type={Icon.Chat} fillClass='rgba-05-fill'/>
                 <div className='subtitle pl-4.5'>
                     {t('external_access.medication_refill.have_questions')}
                 </div>
             </div>
-            <div className='body2 cursor-pointer' onClick={() => setIsVisibleForm(!isVisibleForm)}>
+            <div className='body2 cursor-pointer lg:pr-2' onClick={() => setIsVisibleForm(!isVisibleForm)}>
                 {t('external_access.send_us_message')}
             </div>
         </div>

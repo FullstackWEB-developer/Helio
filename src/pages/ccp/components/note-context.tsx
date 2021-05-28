@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {useTranslation} from 'react-i18next';
 import {Controller, useForm} from 'react-hook-form';
@@ -76,13 +76,13 @@ const NoteContext = () => {
                                 error={errors.note?.message}
                                 className='h-full pl-6 pt-2 pb-0 pr-0 body2 w-full'
                                 data-test-id='note-context-notes'
-                                placeholder={t('ccp.note_context.enter_your_note')}
+                                placeHolder={t('ccp.note_context.enter_your_note')}
                                 value={noteText}
                                 required={true}
                                 rows={2}
                                 resizable={false}
                                 hasBorder={false}
-                                onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setNoteText(e.target.value)}
+                                onChange={(message) => setNoteText(message)}
                                 iconClassNames='medium cursor-pointer'
                                 icon={Icon.Send}
                                 iconFill='notes-send'

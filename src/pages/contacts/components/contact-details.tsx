@@ -181,17 +181,21 @@ const ContactDetails = ({contact,
                 selectedTab === 1 &&
                 <div className='h-20 absolute bottom-0 w-full border-t'>
                     <TextArea className='w-full pt-2 body2'
-                        value={note}
-                        resizable={false}
-                        hasBorder={false}
-                        iconFill='contact-light-fill'
-                        placeholder={t('contacts.contact-details.enter_note')}
-                        iconContainerClassName='px-10'
-                        iconClassNames='cursor-pointer'
-                        icon={Icon.Send}
-                        onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {setNote(e.target.value)}}
-                        iconOnClick={() => {addNote()}}
-                        isLoading={addNoteMutation.isLoading} />
+                              value={note}
+                              resizable={false}
+                              hasBorder={false}
+                              iconFill='contact-light-fill'
+                              placeHolder={t('contacts.contact-details.enter_note')}
+                              iconContainerClassName='px-10'
+                              iconClassNames='cursor-pointer'
+                              icon={Icon.Send}
+                              onChange={(message) => {
+                                  setNote(message)
+                              }}
+                              iconOnClick={() => {
+                                  addNote()
+                              }}
+                              isLoading={addNoteMutation.isLoading} />
                 </div>
             }
             <Confirmation title={t('contacts.contact-details.confirm_delete_title', {contact: `${isCompany ? contact.companyName : `${contact?.firstName} ${contact?.lastName}`}`})}

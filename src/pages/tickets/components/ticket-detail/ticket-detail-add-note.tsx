@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useState} from 'react';
+import React, {useState} from 'react';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime'
 import {useTranslation} from 'react-i18next';
@@ -58,13 +58,13 @@ const TicketDetailAddNote = ({ticket, onNoteAdded}: TicketDetailAddNoteProps) =>
                             error={errors.note?.message}
                             className='pl-6 pt-2 pb-0 pr-0 body2 w-full h-full'
                             data-test-id='ticket-add-notes'
-                            placeholder={t('ticket_detail.add_note')}
+                            placeHolder={t('ticket_detail.add_note')}
                             required={true}
                             rows={2}
                             resizable={false}
                             value={noteText}
                             hasBorder={false}
-                            onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setNoteText(e.target.value)}
+                            onChange={(message) => setNoteText(message)}
                             iconClassNames='medium cursor-pointer'
                             icon={Icon.Send}
                             iconFill='notes-send'

@@ -1,5 +1,5 @@
 import TextArea from '@components/textarea/textarea';
-import React, {ChangeEvent, useState} from 'react';
+import React, {useState} from 'react';
 import {Note} from '@pages/patients/models/note';
 import dayjs from 'dayjs';
 import {useMutation} from 'react-query';
@@ -48,13 +48,13 @@ const PatientAddNote = () => {
             <TextArea
                 className='pl-6 pt-2 pb-0 pr-0 body2 w-full'
                 data-test-id='note-context-notes'
-                placeholder={t('patient.activity.notes.enter_your_note')}
+                placeHolder={t('patient.activity.notes.enter_your_note')}
                 value={noteText}
                 required={true}
                 rows={3}
                 resizable={false}
                 hasBorder={false}
-                onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setNoteText(e.target.value)}
+                onChange={(message) => setNoteText(message)}
                 iconClassNames='medium cursor-pointer'
                 icon={Icon.Send}
                 iconFill='notes-send'

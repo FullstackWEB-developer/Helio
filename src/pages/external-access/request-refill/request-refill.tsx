@@ -1,5 +1,5 @@
-import React, {ChangeEvent, Fragment, useEffect, useState} from 'react';
-import { useTranslation } from 'react-i18next';
+import React, {Fragment, useEffect, useState} from 'react';
+import {useTranslation} from 'react-i18next';
 import withErrorLogging from '../../../shared/HOC/with-error-logging';
 import SvgIcon from '@components/svg-icon/svg-icon';
 import {Icon} from '@components/svg-icon/icon';
@@ -12,8 +12,10 @@ import {useDispatch, useSelector} from 'react-redux';
 import {selectVerifiedPatent} from '@pages/patients/store/patients.selectors';
 import {useMutation, useQuery} from 'react-query';
 import {
-    createPatientCase, getPatientDefaultPharmacy,
-    getPatientMedications, searchPharmacies
+    createPatientCase,
+    getPatientDefaultPharmacy,
+    getPatientMedications,
+    searchPharmacies
 } from '@pages/external-access/request-refill/services/request-refill.service';
 import ControlledSelect from '@components/controllers/controlled-select';
 import {Option} from '@components/option/option';
@@ -286,13 +288,14 @@ const RequestRefill = () => {
                             error={errors.messageText?.message}
                             className='pl-4 pt-2 pb-11 pr-8 body2 w-full h-full'
                             data-test-id='send-us-message-text'
-                            placeholder={t('common.enter_message')}
+                            placeHolder={t('common.enter_message')}
                             required={true}
                             rows={2}
                             resizable={false}
                             value={messageText}
                             hasBorder={true}
-                            onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setMessageText(e.target.value)}
+                            maxlength={maxlength}
+                            onChange={(message) => setMessageText(message)}
                             iconClassNames='medium cursor-pointer'
                             iconOnClick={() => {
                                 handleSubmit(onSubmit)()
@@ -300,9 +303,6 @@ const RequestRefill = () => {
                         />
                     )}
                 />
-                <div className='flex justify-end pt-1 pr-4 body3'>
-                    {t('external_access.characters', {maxlength: maxlength})}
-                </div>
                 <div className='border mt-7'>
                     <div className='p-6'>
                         {isVisibleForm ? <Fragment>
