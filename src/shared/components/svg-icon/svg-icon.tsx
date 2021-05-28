@@ -489,6 +489,13 @@ const SvgIcon = ({type, wrapperClassName, className = 'icon-medium', fillClass =
         </svg>
     }
 
+    const getIconPrint = () => {
+        return <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" className={mainClass}>
+            <rect width="32" height="32" fill="none"/>
+            <path d="M26.667,12.667H8a4,4,0,0,0-4,4v8H9.333V30h16V24.667h5.333v-8A4,4,0,0,0,26.667,12.667Zm-4,14.667H12V20.667H22.667Zm4-9.333A1.333,1.333,0,1,1,28,16.667,1.329,1.329,0,0,1,26.667,18ZM25.333,6h-16v5.333h16Z" transform="translate(-1.333 -2)" className={fillClass} />
+        </svg>
+    }
+
     const getIconPhone = () => {
         return <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className={mainClass}>
             <rect width="24" height="24" fill="none"/>
@@ -742,6 +749,7 @@ const SvgIcon = ({type, wrapperClassName, className = 'icon-medium', fillClass =
         [Icon.Patients]: getIconPatients,
         [Icon.Placeholder]: getIconPlaceholder,
         [Icon.Play]: getIconPlay,
+        [Icon.Print]: getIconPrint,
         [Icon.Phone]: getIconPhone,
         [Icon.RatingDissatisfied]: getIconRatingDissatisfied,
         [Icon.RatingSatisfied]: getIconRatingSatisfied,

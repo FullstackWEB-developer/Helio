@@ -22,7 +22,9 @@ const requestRefillSlice = createSlice({
             state.medications = [];
             state.isRequestRefillLoading = false;
         },
-
+        setMedication(state, { payload }: PayloadAction<Medication>) {
+            state.medication = payload;
+        },
         setMedications(state, { payload }: PayloadAction<Medication[]>) {
             state.medications = payload?.filter(a => a.refillsAllowed > 0);
             state.isMedicationsLoading = false;
@@ -43,6 +45,7 @@ const requestRefillSlice = createSlice({
 export const {
     startGetMedicationRequest,
     endGetMedicationRequest,
+    setMedication,
     setMedications,
     startRequestRefillRequest,
     endRequestRefillRequest,

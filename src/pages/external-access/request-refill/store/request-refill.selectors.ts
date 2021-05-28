@@ -3,6 +3,11 @@ import { createSelector } from '@reduxjs/toolkit';
 import { Medication } from '../models/medication.model';
 export const requestRefillState = (state: RootState) => state.externalAccessState.requestRefillState;
 
+export const selectMedication = createSelector(
+    requestRefillState,
+    items => items.medication as Medication
+)
+
 export const selectMedications = createSelector(
     requestRefillState,
     items => items.medications as Medication[]

@@ -24,3 +24,6 @@ export const QueryContactNotes = 'contact-notes';
 export const QueryCompanyContacts = 'company-contacts';
 export const QueryUserById = 'get-user'
 export const PreviewMedicalRecords = 'preview-medical-records';
+export const QueryPatientMedication = 'patient-medication';
+export const QueryDefaultPharmacy = 'default-pharmacy';
+export const QueryPharmacies = 'pharmacies';

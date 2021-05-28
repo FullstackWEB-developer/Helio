@@ -8,7 +8,9 @@ import {
     startGetMedicationRequest,
     startRequestRefillRequest
 } from '../store/request-refill.slice';
+import {PatientCaseCreateProps} from '@pages/external-access/request-refill/models/patient-case-external.model';
 
+const patientsBaseUrl = '/patients';
 const logger = Logger.getInstance();
 
 export const getPatientsMedications = (patientId: string, departmentId: number) => {
@@ -42,4 +44,35 @@ export const requestRefill = (patientId: string, departmentId: string, providerI
                 dispatch(endRequestRefillRequest('request-refill.error'));
             })
     }
+}
+
+export const getPatientMedications = async (patientId: number) => {
+    const url = `${patientsBaseUrl}/${patientId}/chart/medications`;
+    const result = await Api.get(url);
+    return result.data;
+}
+
+export const getPatientDefaultPharmacy = async (patientId: number) => {
+    const url = `${patientsBaseUrl}/${patientId}/pharmacies/default`;
+    const result = await Api.get(url);
+    return result.data;
+}
+
+export const searchPharmacies = async (patientId: number, departmentId: number, name: string) => {
+    const url = `${patientsBaseUrl}/${patientId}/pharmacies?departmentId=${departmentId}&name=${name}`;
+    const result = await Api.get(url);
+    return result.data;
+}
+
+export const createPatientCase = async ({patientId, patientCaseExternal}: PatientCaseCreateProps) => {
+    let url = `${patientsBaseUrl}/${patientId}/cases`;
+    url += `?departmentId=${patientCaseExternal.departmentId}`;
+    url += `&providerId=${patientCaseExternal.providerId}`;
+    url += `&internalNote=${patientCaseExternal.internalNote}`;
+    url += `&ignoreNotification=${patientCaseExternal.ignoreNotification}`;
+    url += `&documentSubClass=${patientCaseExternal.documentSubClass}`;
+    url += `&documentSource=${patientCaseExternal.documentSource}`;
+
+    const {data} = await Api.post(url);
+    return data;
 }

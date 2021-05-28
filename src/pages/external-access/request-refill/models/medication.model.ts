@@ -1,5 +1,9 @@
 export interface Medication {
-    medicationId: number;
     medicationName: string;
+    enteredBy: string;
+    unstructuredSig: string;
+    prescribed?: Date;
+    stopDate?: Date;
     refillsAllowed: number;
+    defaultProviderId: number;
 }

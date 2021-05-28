@@ -4,4 +4,6 @@ export interface VerifiedPatient {
     patientId: number;
     primaryProviderId: number;
     departmentId: number;
+    defaultProviderId: number;
+    defaultDepartmentId: number;
 }

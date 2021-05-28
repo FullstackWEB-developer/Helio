@@ -27,6 +27,13 @@ const formatPhone = (phone: string) => {
     }
 };
 
+const clearFormatPhone = (phone: string) => {
+    if (!phone) {
+        return '';
+    }
+    return phone.replace(/[^\d]/g, '')
+}
+
 const formatDate = (datetime: string) => {
     const date = new Date(datetime);
     return date.toLocaleDateString('en-US');
@@ -130,6 +137,7 @@ const utils = {
     getRelativeTime,
     formatRelativeTime,
     formatPhone,
+    clearFormatPhone,
     isString,
     toShortISOLocalString,
     stringJoin,

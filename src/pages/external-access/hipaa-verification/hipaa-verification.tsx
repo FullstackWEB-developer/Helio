@@ -38,7 +38,7 @@ const HipaaVerification = ({request}: HipaaVerificationProps) => {
                     history.push('/o/appointment-list');
                     break;
                 case ExternalAccessRequestTypes.RequestRefill:
-                    history.push('/o/request-refill');
+                    history.push('/o/view-medications');
                     break;
                 case ExternalAccessRequestTypes.RescheduleAppointment:
                     history.push('/o/appointment-list');

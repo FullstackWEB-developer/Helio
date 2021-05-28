@@ -47,6 +47,7 @@ export enum Icon {
     Patients = 'Patients',
     Placeholder = 'Placeholder',
     Play = 'Play',
+    Print = 'Print',
     Phone = 'Phone',
     RatingDissatisfied = 'RatingDissatisfied',
     RatingSatisfied = 'RatingSatisfied',

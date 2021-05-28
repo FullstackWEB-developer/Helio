@@ -11,7 +11,9 @@
     "show_more": "Show more",
     "show_less": "Show less",
     "save": "Save",
+    "send": "Send",
     "cancel": "Cancel",
+    "close": "Close",
     "any": "Any",
     "not_available": "N/A",
     "all": "All",
@@ -21,7 +23,10 @@
     "processing": "Processing",
     "remove": "Remove",
     "back": "Back",
-    "autocomplete_search": "Start typing to see the results..."
+    "autocomplete_search": "Start typing to see the results...",
+    "none": "None",
+    "enter_your_message": "Enter your message",
+    "enter_message": "Enter message"
   },
   "login": {
     "loginButton": "Login"
@@ -493,7 +498,12 @@
     "copyright": "COMPLETE WOMEN CARE - COPYRIGHT © {{year}} - ALL RIGHTS RESERVED",
     "cwc_logo": "CWC Logo",
     "title_1": "Manage your appointments online. \nIt’s fast and easy.",
+    "title_4": "Request your medication refill.\nIt’s fast and easy.",
     "title_5": "Manage your medical records. \nIt’s fast and easy.",
+    "send_us_message": "Send us a message",
+    "message_sent": "This message has been sent",
+    "message_send_failed": "This message could not be sent",
+    "characters": "{{maxlength}} characters",
     "hipaa": {
       "verify_title": "Please verify your identity to proceed.",
       "dob": "Date of birth  (MM/DD/YYYY)",
@@ -567,6 +577,41 @@
       "file_download_failed": "File download failed.",
       "email_sent_successfully": "Your email was sent successfully.",
       "email_sent_failed": "Sorry, could not send email."
+    },
+    "medication_refill": {
+      "your_medications": "Your medications.",
+      "below_list": "Below is the list of your medications.",
+      "have_questions": "Have a question about your medication?",
+      "message_your_provider": "If you have any questions regarding your medication refill, please message your provider’s office and we will reply within 24 hours.",
+      "medication_list": {
+        "medication": "Medication",
+        "entered_by": "Entered By",
+        "prescribed": "Prescribed",
+        "stop_date": "Stop Date",
+        "request_refill": "Request Refill"
+      },
+      "pharmacy_information": "Pharmacy Information",
+      "change_primary_pharmacy": "Change Primary Pharmacy",
+      "pharmacy_information_ph": "Ph.",
+      "pharmacy_information_fax": "Fax.",
+      "pharmacy_change": "Change",
+      "pharmacy_name": "Pharmacy Name",
+      "pharmacy_address": "Address",
+      "pharmacy_suite": "Suite #",
+      "pharmacy_city": "City",
+      "pharmacy_state": "State",
+      "pharmacy_zip": "Zip Code",
+      "pharmacy_phone": "Phone Number",
+      "pharmacy_fax": "Fax Number",
+      "use_this_pharmacy": "Use this pharmacy",
+      "error_getting_pharmacies": "Error getting pharmacies information.",
+      "refill_request": "Medication Refill Request",
+      "refill_request_send_message": "Send us a message and we will respond within 2 business days. All messages are confidential.\nNote: Please use this tool for health-related inquiries only. All messages are included in your patient record.",
+      "select_provider": "Select Provider",
+      "select_prescription": "Select Prescription",
+      "back_to_medications": "Back to Medications",
+      "refill_request_sent": "Thank you. Your medication refill request has been sent.",
+      "refill_request_sent_details": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis."
     }
   },
   "contacts": {
