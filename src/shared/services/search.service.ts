@@ -3,7 +3,6 @@ import {Dispatch} from '@reduxjs/toolkit';
 import Logger from './logger';
 import {setError, setSearching} from '@components/search-bar/store/search-bar.slice';
 import {clearPatients, setPatients} from '@pages/patients/store/patients.slice';
-import dayjs from 'dayjs';
 import utils from '@shared/utils/utils';
 const logger = Logger.getInstance();
 const patientsUrl = '/patients';

@@ -53,9 +53,9 @@ const RequestRefill = () => {
     const medication = useSelector(selectMedication);
     const verifiedPatient = useSelector(selectVerifiedPatent);
     const [isVisibleForm, setIsVisibleForm] = useState(false);
-    const {handleSubmit, control, errors, setError, setValue} = useForm();
+    const {handleSubmit, control, errors, setError, setValue, getValues } = useForm();
     const [messageText, setMessageText] = useState('');
-    const maxlength = 1000;
+    const maxLength = 1000;
     const [pharmaciesSearchTerm, setPharmaciesSearchTerm] = useState('');
     const [debouncePharmaciesSearchTerm] = useDebounce(pharmaciesSearchTerm, DEBOUNCE_SEARCH_DELAY_MS);
     const [pharmacyOptions, setPharmacyOptions] = useState<Option[]>([]);
@@ -96,7 +96,16 @@ const RequestRefill = () => {
                     object: item
                 };
             }) : [] as Option[];
-            setPharmacyOptions(pharmacyOptionsResult)
+            if (pharmacyOptionsResult.length > 0) {
+                setPharmacyOptions(pharmacyOptionsResult);
+                setIsReadonlyPharmacy(true);
+            } else {
+                setSelectedPharmacy({} as Facility);
+                setIsReadonlyPharmacy(false);
+                setTimeout(() => {
+                    setValue('pharmacyName', debouncePharmaciesSearchTerm);
+                }, 300)
+            }
         },
         onError: () => {
             setError('pharmacyName', {type: 'notFound', message: t('external_access.medication_refill.error_getting_pharmacies')});
@@ -148,7 +157,7 @@ const RequestRefill = () => {
         return providerOptions.find(p => p.value === verifiedPatient.defaultProviderId.toString());
     }
 
-    function onSelectChange(option?: Option) {
+    const onPharmacySelectChange = (option?: Option) => {
         if (option) {
             const pharmacy = option.object;
             setIsReadonlyPharmacy(true);
@@ -169,8 +178,14 @@ const RequestRefill = () => {
         }
     }
 
+    const onPharmacyInputChange = (value:string) => {
+        if (!value.trim()) {
+            setIsReadonlyPharmacy(true);
+        }
+    }
+
     const useThisPharmacy = () => {
-        if (selectedPharmacy) {
+        if (selectedPharmacy?.name !== undefined) {
             setDefaultPharmacy({
                 pharmacyType: selectedPharmacy.pharmacyType,
                 state: selectedPharmacy.state,
@@ -182,8 +197,20 @@ const RequestRefill = () => {
                 address1: selectedPharmacy.address,
                 faxNumber: utils.clearFormatPhone(selectedPharmacy.faxNumber)
             } as Pharmacy);
-            setIsVisibleForm(false);
+        } else {
+            setDefaultPharmacy({
+                suite: getValues('pharmacySuite'),
+                state: getValues('pharmacyState'),
+                city: getValues('pharmacyCity'),
+                clinicalProviderId: getValues('providerId').value,
+                zip: getValues('pharmacyZip'),
+                phoneNumber: utils.clearFormatPhone(getValues('pharmacyPhone')),
+                clinicalProviderName: getValues('pharmacyName'),
+                address1: getValues('pharmacyAddress'),
+                faxNumber: utils.clearFormatPhone(getValues('pharmacyFax'))
+            } as Pharmacy);
         }
+        setIsVisibleForm(false);
     }
 
     const {isLoading, isError, mutate} = useMutation(createPatientCase, {
@@ -198,10 +225,14 @@ const RequestRefill = () => {
     }
 
     const getMessageText = () => {
-        if (messageText.length > maxlength) {
-            return messageText.slice(maxlength);
+        if (messageText.length > maxLength) {
+            return messageText.slice(maxLength);
         }
         return messageText;
+    }
+
+    const getSuite = (suite: string | undefined) => {
+        return suite ? `${suite}, ` : '';
     }
 
     const onSubmit = (data: any) => {
@@ -210,7 +241,7 @@ const RequestRefill = () => {
         if (defaultPharmacy) {
             internalNote += `**  Pharmacy Information `;
             internalNote += `${defaultPharmacy?.clinicalProviderName} `;
-            internalNote += `${defaultPharmacy.address1}, ${defaultPharmacy.city} `;
+            internalNote += `${getSuite(defaultPharmacy.suite)} ${defaultPharmacy.address1}, ${defaultPharmacy.city} `;
             internalNote += `${t('external_access.medication_refill.pharmacy_information_ph')} ${utils.formatPhone(defaultPharmacy.phoneNumber)}, `;
             internalNote += `${t('external_access.medication_refill.pharmacy_information_fax')} ${utils.formatPhone(defaultPharmacy.faxNumber)} `;
         }
@@ -242,6 +273,31 @@ const RequestRefill = () => {
 
     if (medicationOptions && medicationOptions.length < 1) {
         return <div data-test-id='request-refill-no-medication-found'>{t('request-refill.no_medication_found')}</div>
+    }
+
+    const getPharmacyNameSelect = () => {
+        return <ControlledSelect
+            name='pharmacyName'
+            data-test-id='request-refill-pharmacy-name'
+            control={control}
+            required={true}
+            label={'external_access.medication_refill.pharmacy_name'}
+            options={pharmacyOptions}
+            onTextChange={(value: string) => setPharmaciesSearchTerm(value || '')}
+            onSelect={(option) => onPharmacySelectChange(option)}
+        />;
+    }
+
+    const getPharmacyNameInput = () => {
+        return <ControlledInput control={control} name='pharmacyName' required={true}
+                                label={'external_access.medication_refill.pharmacy_name'}
+                                data-test-id='request-refill-pharmacy-name'
+                                onChange={({target}) => onPharmacyInputChange(target.value)}
+        />;
+    }
+
+    const getPharmacyNameControl = () => {
+        return isReadonlyPharmacy ? getPharmacyNameSelect() : getPharmacyNameInput();
     }
 
     return  <div className='2xl:px-48'>
@@ -294,7 +350,7 @@ const RequestRefill = () => {
                             resizable={false}
                             value={messageText}
                             hasBorder={true}
-                            maxlength={maxlength}
+                            maxLength={maxLength}
                             onChange={(message) => setMessageText(message)}
                             iconClassNames='medium cursor-pointer'
                             iconOnClick={() => {
@@ -315,16 +371,9 @@ const RequestRefill = () => {
                                 </div>
                             </div>
                             <div className='request-refill-fields'>
-                                <ControlledSelect
-                                    name='pharmacyName'
-                                    data-test-id='request-refill-pharmacy-name'
-                                    control={control}
-                                    required={true}
-                                    label={'external_access.medication_refill.pharmacy_name'}
-                                    options={pharmacyOptions}
-                                    onTextChange={(value: string) => setPharmaciesSearchTerm(value || '')}
-                                    onSelect={(option) => onSelectChange(option)}
-                                />
+                                {
+                                    getPharmacyNameControl()
+                                }
                                 <ControlledInput name='pharmacyAddress' control={control} required={true} disabled={isReadonlyPharmacy}
                                                  label={t('external_access.medication_refill.pharmacy_address')}
                                                  dataTestId='request-refill-pharmacy-address'
@@ -393,7 +442,7 @@ const RequestRefill = () => {
                                     {defaultPharmacy.clinicalProviderName}
                                 </div>
                                 <div className='body2'>
-                                    {`${defaultPharmacy.address1}, ${defaultPharmacy.city}`} <br/>
+                                    {`${getSuite(defaultPharmacy.suite)}${defaultPharmacy.address1}, ${defaultPharmacy.city}`} <br/>
                                     {`${t('external_access.medication_refill.pharmacy_information_ph')} ${utils.formatPhone(defaultPharmacy.phoneNumber)}, 
                               ${t('external_access.medication_refill.pharmacy_information_fax')} ${utils.formatPhone(defaultPharmacy.faxNumber)}`}
                                 </div>

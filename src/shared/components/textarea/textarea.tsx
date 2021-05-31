@@ -23,7 +23,7 @@ interface TextAreaProps {
     iconClassNames?: string,
     iconFill?: string,
     iconContainerClassName?: string,
-    maxlength?: number;
+    maxLength?: number;
     className?: string;
     placeHolder?: string;
 }
@@ -42,7 +42,7 @@ const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(({
                                                                        }: TextAreaProps, ref) => {
 
     const {t} = useTranslation();
-    const [remainLength, setRemainLength] = useState(props.maxlength);
+    const [remainLength, setRemainLength] = useState(props.maxLength);
     const [textAreaValue, setTextAreaValue] = useState<string>('');
     const onClick = () => {
         if (iconOnClick) {
@@ -52,8 +52,8 @@ const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(({
     const handleOnChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
         const message = event.target.value;
         setTextAreaValue(message);
-        if (props.maxlength) {
-            setRemainLength(props.maxlength - event.target.value.length);
+        if (props.maxLength) {
+            setRemainLength(props.maxLength - message.length);
         }
         if (props.onChange) {
             props.onChange(message);
@@ -85,8 +85,8 @@ const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(({
                 }
             </div>
             {
-                props.maxlength && <div className='flex justify-end pt-1 pr-4 body3'>
-                    {t('external_access.characters', {maxlength: remainLength})}
+                props.maxLength && <div className='flex justify-end pt-1 pr-4 body3'>
+                    {t('external_access.characters', {maxLength: remainLength})}
                 </div>
             }
             {props.error && <div className='text-red-500'>{props.error}</div>}

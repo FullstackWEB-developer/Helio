@@ -11,4 +11,5 @@ export interface Pharmacy {
     address1: string;
     address2: string;
     faxNumber: string;
+    suite?: string;
 }

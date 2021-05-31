@@ -36,8 +36,7 @@ const MedicationListItem = ({data}: MedicationListItemProps) => {
         </div>
         <div className='hidden lg:flex items-center'>
             <div ref={tooltipDiv} className='pt-1'>
-                <div ref={infoAlertIcon} onClick={() => setDisplayAlert(!displayInfoAlert)}
-                     className='cursor-pointer'>
+                <div ref={infoAlertIcon} onClick={() => setDisplayAlert(!displayInfoAlert)} className='cursor-pointer'>
                     <SvgIcon type={Icon.Info} fillClass='rgba-05-fill' />
                 </div>
                 <Tooltip targetRef={infoAlertIcon} isVisible={displayInfoAlert} placement='bottom-start'>

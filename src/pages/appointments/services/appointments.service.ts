@@ -1,6 +1,5 @@
 import Api from '../../../shared/services/api';
 import {Appointment} from '@pages/external-access/appointment/models/appointment.model';
-import dayjs from 'dayjs';
 import utils from '@shared/utils/utils';
 import {AppointmentCancellationModel} from '@pages/external-access/appointment/models/appointment-cancellation.model';
 

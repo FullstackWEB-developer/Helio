@@ -22,7 +22,7 @@ const SendUsMessage = () => {
     const [isVisibleForm, setIsVisibleForm] = useState(false);
     const {handleSubmit, control, errors} = useForm();
     const [messageText, setMessageText] = useState('');
-    const maxlength = 1000;
+    const maxLength = 1000;
 
     const {isLoading, isError, mutate} = useMutation(createPatientCase, {
         onSuccess: () => {
@@ -36,8 +36,8 @@ const SendUsMessage = () => {
     }
 
     const getMessageText = () => {
-        if (messageText.length > maxlength) {
-            return messageText.slice(maxlength);
+        if (messageText.length > maxLength) {
+            return messageText.slice(maxLength);
         }
         return messageText;
     }
@@ -93,7 +93,7 @@ const SendUsMessage = () => {
                             resizable={false}
                             value={messageText}
                             hasBorder={true}
-                            maxlength={maxlength}
+                            maxLength={maxLength}
                             onChange={(message) => setMessageText(message)}
                             iconClassNames='medium cursor-pointer'
                             iconOnClick={() => {

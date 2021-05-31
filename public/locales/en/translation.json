@@ -503,7 +503,7 @@
     "send_us_message": "Send us a message",
     "message_sent": "This message has been sent",
     "message_send_failed": "This message could not be sent",
-    "characters": "{{maxlength}} characters",
+    "characters": "{{maxLength}} characters",
     "hipaa": {
       "verify_title": "Please verify your identity to proceed.",
       "dob": "Date of birth  (MM/DD/YYYY)",
