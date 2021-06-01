@@ -63,13 +63,18 @@ const ViewMedications = () => {
         </div>
         <SendUsMessage />
         {medications && (<div>
-            <div className="px-6 py-4 grid grid-cols-6 gap-8 medication-list-header">
-                <div>{t('external_access.medication_refill.medication_list.medication')}</div>
-                <div className='hidden lg:flex'> </div>
-                <div className='hidden lg:flex'>{t('external_access.medication_refill.medication_list.entered_by')}</div>
-                <div className='hidden lg:flex'>{t('external_access.medication_refill.medication_list.prescribed')}</div>
-                <div className='hidden lg:flex'>{t('external_access.medication_refill.medication_list.stop_date')}</div>
-                <div className='hidden lg:flex'> </div>
+            <div className="px-6 py-4 flex medication-list-header caption-caps">
+                <div className='flex w-11/12 xl:w-4/12'>{t('external_access.medication_refill.medication_list.medication')}</div>
+                <div className='hidden xl:flex flex-none w-8'> </div>
+                <div className='hidden xl:flex w-6'> </div>
+                <div className='hidden xl:flex flex-none w-8'> </div>
+                <div className='hidden xl:flex w-3/12'>{t('external_access.medication_refill.medication_list.entered_by')}</div>
+                <div className='hidden xl:flex flex-none w-8'> </div>
+                <div className='hidden xl:flex w-1/12'>{t('external_access.medication_refill.medication_list.prescribed')}</div>
+                <div className='hidden xl:flex flex-none w-8'> </div>
+                <div className='hidden xl:flex w-1/12'>{t('external_access.medication_refill.medication_list.stop_date')}</div>
+                <div className='hidden xl:flex flex-none w-8'> </div>
+                <div className='hidden xl:flex w-2/12'> </div>
             </div>
             <div>
                 {
@@ -79,7 +84,7 @@ const ViewMedications = () => {
                 }
             </div>
         </div>)}
-        <div className='border mt-8'>
+        <div className='border mt-8 lg:w-1/2'>
             <div className='p-6'>
                 <div className='subtitle pb-4.5'>
                     {t('external_access.medication_refill.pharmacy_information')}

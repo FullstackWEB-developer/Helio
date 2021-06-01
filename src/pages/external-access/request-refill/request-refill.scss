@@ -4,6 +4,9 @@
 
 .request-refill-form {
   max-width: 34rem;
+}
+
+@media (min-width: 1024px) {
   .request-refill-fields {
     padding-right: 4.5rem;
   }

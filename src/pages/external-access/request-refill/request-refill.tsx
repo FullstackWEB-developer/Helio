@@ -386,7 +386,7 @@ const RequestRefill = () => {
                                                  label={t('external_access.medication_refill.pharmacy_city')}
                                                  dataTestId='request-refill-pharmacy-city'
                                 />
-                                <div className="grid grid-cols-1 lg:grid-cols-12 gap-x-8">
+                                <div className="grid grid-cols-1 lg:grid-cols-12 lg:gap-x-8">
                                     <div className="col-span-12 lg:col-span-6">
                                         <ControlledSelect
                                             name='pharmacyState'
@@ -405,7 +405,7 @@ const RequestRefill = () => {
                                         />
                                     </div>
                                 </div>
-                                <div className="grid grid-cols-1 lg:grid-cols-12 gap-x-8">
+                                <div className="grid grid-cols-1 lg:grid-cols-12 lg:gap-x-8">
                                     <div className="col-span-12 lg:col-span-6">
                                         <ControlledInput name='pharmacyPhone' control={control} type='tel' mask={mask} disabled={isReadonlyPharmacy}
                                                          label={t('external_access.medication_refill.pharmacy_phone')}

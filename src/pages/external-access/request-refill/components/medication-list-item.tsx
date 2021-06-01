@@ -27,14 +27,15 @@ const MedicationListItem = ({data}: MedicationListItemProps) => {
         history.push('/o/request-refill');
     }
 
-    return <div className="px-6 py-4 grid grid-cols-6 lg:gap-8 border-b">
-        <div className='flex items-center col-span-5 lg:col-span-1' onClick={() => data.refillsAllowed ? requestRefill() : {}}>
+    return <div className="px-6 py-4 flex border-b">
+        <div className='flex w-11/12 xl:w-4/12 items-center' onClick={() => data.refillsAllowed ? requestRefill() : {}}>
             {data.medicationName}
         </div>
-        <div className='lg:hidden col-start-6 ml-6'>
+        <div className='hidden xl:flex flex-none w-8'> </div>
+        <div className='xl:hidden ml-6 w-1/12'>
             <SvgIcon type={Icon.ArrowRight} fillClass='rgba-05-fill' onClick={() => data.refillsAllowed ? requestRefill() : {}} />
         </div>
-        <div className='hidden lg:flex items-center'>
+        <div className='hidden xl:flex items-center w-6'>
             <div ref={tooltipDiv} className='pt-1'>
                 <div ref={infoAlertIcon} onClick={() => setDisplayAlert(!displayInfoAlert)} className='cursor-pointer'>
                     <SvgIcon type={Icon.Info} fillClass='rgba-05-fill' />
@@ -44,16 +45,20 @@ const MedicationListItem = ({data}: MedicationListItemProps) => {
                 </Tooltip>
             </div>
         </div>
-        <div className='hidden lg:flex items-center'>
+        <div className='hidden xl:flex flex-none w-8 items-center'> </div>
+        <div className='hidden xl:flex w-3/12 items-center'>
             {data.enteredBy}
         </div>
-        <div className='hidden lg:flex items-center'>
+        <div className='hidden xl:flex flex-none w-8 items-center'> </div>
+        <div className='hidden xl:flex w-1/12 items-center'>
             {data.prescribed && dayjs(data.prescribed).format('MMM DD, YYYY')}
         </div>
-        <div className='hidden lg:flex items-center'>
+        <div className='hidden xl:flex flex-none w-8 items-center'> </div>
+        <div className='hidden xl:flex w-1/12 items-center'>
             {data.stopDate ? dayjs(data.stopDate).format('MMM DD, YYYY') : t('common.none')}
         </div>
-        <div className='hidden lg:flex items-center'>
+        <div className='hidden xl:flex flex-none w-8 items-center'> </div>
+        <div className='hidden xl:flex w-2/12 items-center justify-center'>
             <Button onClick={() => requestRefill()}
                     buttonType='medium'
                     disabled={!data.refillsAllowed}
