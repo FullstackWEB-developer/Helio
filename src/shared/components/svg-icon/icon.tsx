@@ -68,5 +68,6 @@ export enum Icon {
     LightCheckBoxOff = 'LightCheckBoxOff',
     LightCheckBoxOn = 'LightCheckBoxOn',
     LightRadioOff = 'LightRadioOff',
-    LightRadioOn = 'LightRadioOn'
+    LightRadioOn = 'LightRadioOn',
+    CwcLogo = 'CwcLogo'
 }

@@ -66,8 +66,9 @@ button.big-button {
   min-width: 7.5rem;
   min-height: 3rem;
   border-radius: 1.5rem;
-  padding: 0 2rem;
+  padding: var(--button-primary-big-padding);
   @extend .subtitle2-white;
+  font-size: var(--button-primary-big-font-size);
 }
 
 button.medium-button {
@@ -75,8 +76,9 @@ button.medium-button {
   min-width: 6.5rem;
   min-height: 2.5rem;
   border-radius: 1.25rem;
-  padding: 0 1.5rem;
+  padding: var(--button-primary-medium-padding);
   @extend .subtitle2-white;
+  font-size: var(--button-primary-medium-font-size);
 }
 
 
@@ -94,11 +96,12 @@ button.secondary-button {
   min-width: 6rem;
   min-height: 2rem;
   border-radius: 1rem;
-  padding: 0 1.25rem;
-  border: var(--light-divider-12) 1px solid;
+  padding: var(--button-secondary-medium-padding);
+  border: var(--button-secondary-border-color) 1px solid;
   @extend .subtitle3-white;
   color: var(--color-primary-800);
   background-color: var(--color-white);
+  font-size: var(--button-secondary-medium-font-size);
 
   &-snackbar {
     background-color: transparent;
@@ -111,9 +114,10 @@ button.secondary-big-button {
   min-width: 7.5rem;
   min-height: 3rem;
   border-radius: 1.5rem;
-  padding: 0 2rem;
-  border: var(--light-divider-12) 1px solid;
+  padding: var(--button-secondary-big-padding);
+  border:  var(--button-secondary-border-color) 1px solid;
   @extend .subtitle3-white;
+  font-size: var(--button-secondary-big-font-size);
   color: var(--color-primary-800);
   background-color: var(--color-white);
 }

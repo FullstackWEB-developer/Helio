@@ -1,13 +1,13 @@
-.default {
-  --color-primary-default: #00cc88;
-  --color-primary-900: #00ad58;
-  --color-primary-800: #00b96b;
-  --color-primary-700: #00c075;
-  --color-primary-600: #00c780;
-  --color-primary-500: #00cc88;
-  --color-primary-400: #0bd994;
-  --color-primary-300: #17e69d;
-  --color-primary-200: #61f2b8;
+.cwc-theme {
+  --color-primary-default: #bd3a6c;
+  --color-primary-900: #bd3a6c;
+  --color-primary-800: #bd3a6c;
+  --color-primary-700: #b03664;
+  --color-primary-600: #bd3a6c;
+  --color-primary-500: #bd3a6c;
+  --color-primary-400: #ef508c;
+  --color-primary-300: #dd719a;
+  --color-primary-200: #dd719a;
   --color-primary-100: #e0f5eb;
   --color-primary-50: #f5fcf8;
 
@@ -24,16 +24,18 @@
   --color-secondary-50: #fafafa;
 
   //RGB Color
-  --color-primary-500-rgb: 0, 204, 136;
+  --color-primary-500-rgb: 189, 58, 108;
 
   --color-white: #ffffff;
   --color-gray50: #fafafa;
-  --color-red: #f86854;
+  --color-red: #d32f2f;
   --color-yellow: #fdc06a;
   --color-gray: #bdbdbd;
   --color-blue: #006eff;
-
+  --color-burgundy: #7b2c3b;
+  --color-white-06: rgba(255, 255, 255, 0.6);
   --color-bg-primary: #fff;
+
   --color-text-primary: --color-secondary-900;
   --light-text-high-emphasis: rgba(0, 0, 0, 0.87);
   --light-text-medium-emphasis: rgba(0, 0, 0, 0.5);
@@ -49,7 +51,7 @@
   --h1-font-weight: 300;
   --h1-font-stretch: normal;
   --h1-font-style: normal;
-  --h1-line-height: 4.5rem;
+  --h1-line-height: 6rem;
   --h1-letter-spacing: normal;
   --h1-color: var(--light-text-high-emphasis);
 
@@ -58,7 +60,7 @@
   --h2-font-weight: 300;
   --h2-font-stretch: normal;
   --h2-font-style: normal;
-  --h2-line-height: 4rem;
+  --h2-line-height: 4.5rem;
   --h2-letter-spacing: normal;
   --h2-color: var(--light-text-high-emphasis);
 
@@ -67,7 +69,7 @@
   --h3-font-weight: 500;
   --h3-font-stretch: normal;
   --h3-font-style: normal;
-  --h3-line-height: 3rem;
+  --h3-line-height: 3.5rem;
   --h3-letter-spacing: normal;
   --h3-color: var(--light-text-high-emphasis);
 
@@ -76,27 +78,27 @@
   --h4-font-weight: 300;
   --h4-font-stretch: normal;
   --h4-font-style: normal;
-  --h4-line-height: 2.5rem;
+  --h4-line-height: 3rem;
   --h4-letter-spacing: normal;
-  --h4-color: var(--light-text-high-emphasis);
+  --h4-color: var(--color-burgundy);
 
   --h5-font-family: var(--font-medium);
   --h5-font-size: 1.5rem;
   --h5-font-weight: 500;
   --h5-font-stretch: normal;
   --h5-font-style: normal;
-  --h5-line-height: 2rem;
+  --h5-line-height: 2.5rem;
   --h5-letter-spacing: normal;
-  --h5-color: var(--light-text-high-emphasis);
+  --h5-color: var(--color-primary-300);
 
   --h5-regular-font-family: var(--font-regular);
   --h5-regular-font-size: 1.5rem;
   --h5-regular-font-weight: 500;
   --h5-regular-font-stretch: normal;
   --h5-regular-font-style: normal;
-  --h5-regular-line-height: 2rem;
+  --h5-regular-line-height: 2.5rem;
   --h5-regular-letter-spacing: normal;
-  --h5-regular-color: var(--light-text-high-emphasis);
+  --h5-regular-color: var(--color-primary-300);
 
   --h6-font-family: var(--font-medium);
   --h6-font-size: 1.25rem;
@@ -123,7 +125,7 @@
   --h8-font-style: normal;
   --h8-line-height: 1.5rem;
   --h8-letter-spacing: 0.42px;
-  --h8-color: var(--color-primary-900);
+  --h8-color: var(--color-primary-300);
 
   --subtitle-font-family: var(--font-medium);
   --subtitle-font-size: 1rem;
@@ -291,7 +293,7 @@
   --profile-dropdown-shadow: 0 0.25rem 0.125rem 0 rgba(0, 0, 0, 0.15);
   --ccp-header-color: #4a4a4a;
 
-  --input-focus-background-color: #f4fcf8;
+  --input-focus-background-color: rgba(189, 58, 108, 0.04);
   --select-box-shadow: 0 0.25rem 0.125rem 0 rgba(0, 0, 0, 0.15);
   --external-access-background: rgba(0, 0, 0, 0.04);
   --appointment-list-item-background: rgba(0, 0, 0, 0.04);
@@ -313,20 +315,19 @@
 
   --datetime-picker-label-color: var(--color-primary-800);
 
-  --button-primary-big-padding: 0 2rem;
-  --button-primary-big-font-size: var(--subtitle2-font-size);
+  --button-secondary-border-color: var(--light-text-medium-emphasis);
+  
+  --button-primary-big-padding: 0 2.1875rem;
+  --button-primary-big-font-size: var(--subtitle1-font-size);
 
   --button-primary-medium-padding: 0 1.5rem;
   --button-primary-medium-font-size: var(--subtitle2-font-size);
 
-  --button-secondary-big-padding: 0 2rem;
-  --button-secondary-big-font-size: var(--subtitle3-font-size);
+  --button-secondary-big-padding: 0 2.1875rem;
+  --button-secondary-big-font-size: var(--subtitle1-font-size);
 
-  --button-secondary-medium-padding: 0 1.25rem;
-  --button-secondary-medium-font-size: var(--subtitle3-font-size);
-
-  --button-secondary-border-color: var(--light-divider-12);
-  
+  --button-secondary-medium-padding: 0 1.5rem;
+  --button-secondary-medium-font-size: var(--subtitle2-font-size);
 
   ::-webkit-scrollbar {
     width: 0.3125rem;
@@ -356,6 +357,14 @@
 
 .text-disabled {
   color: var(--light-text-disabled) !important;
+}
+
+a {
+  color: var(--color-primary-800) !important;
+}
+
+a:hover {
+  color: var(--color-primary-400) !important;
 }
 
 textarea:focus,

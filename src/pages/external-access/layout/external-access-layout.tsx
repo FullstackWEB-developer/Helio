@@ -1,10 +1,11 @@
-import React, {ReactNode} from 'react';
+import React, {ReactNode, useEffect} from 'react';
 import './external-access-layout.scss';
 import {useTranslation} from 'react-i18next';
 import dayjs from 'dayjs';
 import Snackbar from '@components/snackbar/snackbar';
 import {SnackbarPosition} from '@components/snackbar/snackbar-type.enum';
-
+import '../../../themes/cwc-theme.scss';
+import SvgIcon, {Icon} from '@shared/components/svg-icon';
 export interface ExternalAccessLayoutProps {
     children: ReactNode;
 }
@@ -13,11 +14,18 @@ const ExternalAccessLayout = ({children}: ExternalAccessLayoutProps) => {
     const {t} = useTranslation();
     const year = dayjs().year();
 
+    useEffect(() => {
+        const bodyEl = document.getElementsByTagName('body')[0];
+        if (bodyEl.classList.contains('default')) {
+            bodyEl.classList.replace('default', 'cwc-theme');
+        }
+    }, [])
+
     return <>
         <div className='flex flex-col h-screen'>
             <div className='h-20 md:px-40 external-access-layout-header'>
                 <div className='md:px-6 md:justify-start justify-center flex h-full items-center'>
-                    {t('external_access.cwc_logo')}
+                    <SvgIcon type={Icon.CwcLogo} />
                 </div>
             </div>
             <div className='flex-grow overflow-y-auto px-8 md:px-40 pt-6 md:pt-14'>{children}</div>
@@ -27,7 +35,7 @@ const ExternalAccessLayout = ({children}: ExternalAccessLayoutProps) => {
                 </div>
             </div>
         </div>
-        <Snackbar position={SnackbarPosition.TopRight}/>
+        <Snackbar position={SnackbarPosition.TopRight} />
     </>
 }
 export default ExternalAccessLayout;

@@ -15,8 +15,8 @@ const AppointmentCanceled = () => {
         </div>
         <div className='pt-6'>
             <Trans i18nKey="external_access.appointments.to_schedule">
-                <a rel='noreferrer' className='underline' target='_self' href={scheduleAppointmentLink}>here</a>
-                <a rel='noreferrer' className='underline' target='_self' href={chatLink}>Chat</a>
+                <a rel='noreferrer' target='_self' href={scheduleAppointmentLink}>here</a>
+                <a rel='noreferrer' target='_self' href={chatLink}>Chat</a>
                 {callUsPhone}
             </Trans>
         </div>

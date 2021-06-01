@@ -108,8 +108,8 @@ const AppointmentDetail = () => {
             {`${display(department?.address2)} ${display(department?.city)} ${display(department?.state)}, ${display(department?.zip)}`}
         </div>
         <div className='pt-12 flex flex-col xl:flex-row xl:space-x-6 space-x-0 space-y-6 xl:space-y-0'>
-            {(appointmentType ? appointmentType?.reschedulable : true) && <Button onClick={() => redirectToReschedule()} buttonType='medium' label='external_access.appointments.reschedule' />}
-            <Button disabled={!displayCancel()} onClick={() => redirectToCancel()} buttonType='secondary' label='common.cancel' />
+            {(appointmentType ? appointmentType?.reschedulable : true) && <Button onClick={() => redirectToReschedule()} buttonType='big' label='external_access.appointments.reschedule' />}
+            <Button disabled={!displayCancel()} onClick={() => redirectToCancel()} buttonType='secondary-big' label='common.cancel' />
         </div>
         { !displayCancel() && <div className='pt-12'>
             <div className='warning-message p-4 body2'>
@@ -145,7 +145,7 @@ const AppointmentDetail = () => {
         <div className='border-b pt-2'/>
         <div className='pt-4 pb-16 body2'>
             <Trans i18nKey="external_access.appointments.get_directions">
-                <a rel='noreferrer' className='underline' target='_blank' href={`https://maps.google.com/?q=${department?.latitude},${department?.longitude}`}>Get directions</a> to your appointment location.
+                <a rel='noreferrer' target='_blank' href={`https://maps.google.com/?q=${department?.latitude},${department?.longitude}`}>Get directions</a> to your appointment location.
             </Trans>
         </div>
     </div>

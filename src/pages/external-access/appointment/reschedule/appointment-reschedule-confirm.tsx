@@ -105,10 +105,10 @@ const AppointmentRescheduleConfirm = () => {
         </div>}
         <div className='pt-12 flex flex-col xl:flex-row xl:space-x-6 space-x-0 space-y-6 xl:space-y-0'>
             <Button onClick={() => confirmAppointment()}
-                    buttonType='medium'
+                    buttonType='big'
                     disabled={isAppointmentRescheduled}
                     label='external_access.appointments.confirm_reschedule_appointment' />
-            <Button onClick={() => history.goBack()} buttonType='secondary' label='common.back' />
+            <Button onClick={() => history.goBack()} buttonType='secondary-big' label='common.back' />
         </div>
     </div>
 }
