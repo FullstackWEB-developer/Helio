@@ -6,4 +6,5 @@ export interface VerifiedPatient {
     departmentId: number;
     defaultProviderId: number;
     defaultDepartmentId: number;
+    dateOfBirth: Date;
 }

@@ -28,6 +28,7 @@ const ViewMedications = React.lazy(() => import('@pages/external-access/request-
 const RequestRefillConfirmation = React.lazy(() => import('@pages/external-access/request-refill/request-refill-confirmation'));
 const RequestMedicalRecords = React.lazy(() => import('@pages/external-access/request-medical-records/request-medical-records'));
 const LabResults = React.lazy(() => import('@pages/external-access/lab-results/lab-results'));
+const LabResultsDetailed = React.lazy(() => import('@pages/external-access/lab-results/lab-result-detailed'));
 const TicketNew = React.lazy(() => import('@pages/tickets/ticket-new'));
 const TicketDetail = React.lazy(() => import('@pages/tickets/ticket-detail'));
 const Contacts = React.lazy(() => import('../pages/contacts/contacts'));
@@ -76,7 +77,8 @@ function App() {
                                 <Route path='/o/request-refill-confirmation' component={withSuspense(RequestRefillConfirmation)} />
                                 <Route path='/o/request-medical-records'
                                        component={withSuspense(RequestMedicalRecords)}/>
-                                <Route path='/o/lab-results' component={withSuspense(LabResults)}/>
+                                <Route exact path='/o/lab-results' component={withSuspense(LabResults)}/>                                
+                                <Route path='/o/lab-results/:labResultId' component={withSuspense(LabResultsDetailed)} />                                
                                 <Route path='/o/appointment-schedule' component={withSuspense(AppointmentSchedule)}/>
                                 <Route path='/o/appointment-cancelation'
                                        component={withSuspense(AppointmentCancelation)}/>

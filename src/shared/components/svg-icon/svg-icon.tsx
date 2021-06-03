@@ -701,6 +701,14 @@ const SvgIcon = ({type, wrapperClassName, className = 'icon-medium', fillClass =
         </svg>
     }
 
+    const getIconComment = () => {
+        return <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className={mainClass}>
+            <rect width="24" height="24" fill="none"/>
+            <path 
+            d="M20,2H4A2,2,0,0,0,2.01,4L2,22l4-4H20a2.006,2.006,0,0,0,2-2V4A2.006,2.006,0,0,0,20,2ZM6,9H18v2H6Zm8,5H6V12h8Zm4-6H6V6H18Z"
+            className={fillClass}/>       
+        </svg>
+    }
     const getCwcLogo = () => <CwcLogo className={mainClass} />
 
     const icons = {
@@ -774,6 +782,7 @@ const SvgIcon = ({type, wrapperClassName, className = 'icon-medium', fillClass =
         [Icon.LightCheckBoxOn]: getIconLightCheckBoxOn,
         [Icon.LightRadioOff]: getIconLightRadioOff,
         [Icon.LightRadioOn]: getIconLightRadioOn,
+        [Icon.Comment]: getIconComment,
         [Icon.CwcLogo]: getCwcLogo
     }
 

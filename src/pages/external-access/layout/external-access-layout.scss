@@ -1,8 +1,10 @@
 .external-access-layout-header {
   background-color: var(--color-primary-300);
+  min-height: 5rem;
 }
 
 .external-access-layout-footer {
+  min-height: 4rem;
   background-color: var(--color-secondary-default);
   & > div {
     color: var(--color-white-06);

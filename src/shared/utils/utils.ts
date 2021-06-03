@@ -140,6 +140,10 @@ const toISOLocalString = (date?: Date) => {
 
 const stringJoin = (separator: string, ...params: Array<string | undefined>) => params.join(separator);
 
+const checkIfDateIsntMinValue = (date: string | Date) => {
+    return new Date(date).getFullYear() !== 1; 
+}
+
 const utils = {
     getWindowCenter,
     formatUtcDate,
@@ -156,6 +160,7 @@ const utils = {
     toShortISOLocalString,
     toISOLocalString,
     stringJoin,
+    checkIfDateIsntMinValue
 };
 
 export default utils;

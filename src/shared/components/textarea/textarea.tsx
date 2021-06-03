@@ -26,6 +26,7 @@ interface TextAreaProps {
     maxLength?: number;
     className?: string;
     placeHolder?: string;
+    maxLengthClassName?: string
 }
 
 const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(({
@@ -38,6 +39,8 @@ const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(({
                                                                            iconFill,
                                                                            iconContainerClassName,
                                                                            iconOnClick,
+                                                                           placeHolder,
+                                                                           maxLengthClassName,
                                                                            ...props
                                                                        }: TextAreaProps, ref) => {
 
@@ -67,7 +70,7 @@ const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(({
             </label>
             <div className={`${props.overwriteDefaultContainerClasses ? '' : defaultContainerClasses} ${props.textareaContainerClasses ? props.textareaContainerClasses : ''}`}>
                 <textarea ref={ref} {...props} value={textAreaValue} onChange={(e => handleOnChange(e))}
-                          placeholder={props.placeHolder ? props.placeHolder : ''}
+                          placeholder={placeHolder ? placeHolder : ''}
                           className={`mt-1 shadow-none p-4 ${(hasBorder ? ' border ' : '')} ${resizable ? 'resize' : 'resize-none'} ${props.className}`}/>
                 {
                     props.icon && textAreaValue && textAreaValue?.trim()?.length > 0 &&
@@ -85,7 +88,7 @@ const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(({
                 }
             </div>
             {
-                props.maxLength && <div className='flex justify-end pt-1 pr-4 body3'>
+                props.maxLength && <div className={`flex justify-end pt-1 pr-4 ${maxLengthClassName ? maxLengthClassName : 'body3'}`}>
                     {t('external_access.characters', {maxLength: remainLength})}
                 </div>
             }

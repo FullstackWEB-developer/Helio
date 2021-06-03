@@ -1,7 +1,10 @@
 export interface LabResult {
     labResultId: number,
-    labResultDate: string,
-    labResultDateTime: string,
+    labResultDate: Date,
     labResultNote: string,
-    resultStatus: string
+    resultStatus: string,
+    providerName: string,
+    description: string,
+    providerId: number,
+    defaultProviderId: number
 }
