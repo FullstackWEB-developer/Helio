@@ -252,7 +252,7 @@ const RequestRefill = () => {
             patientId: verifiedPatient.patientId,
             patientCaseExternal: {
                 departmentId: verifiedPatient.defaultDepartmentId,
-                providerId: verifiedPatient.defaultProviderId,
+                providerId: data.providerId,
                 internalNote: internalNote,
                 ignoreNotification: false,
                 documentSubClass: PatientCaseDocumentSubClass.Refill,
@@ -321,7 +321,7 @@ const RequestRefill = () => {
                     <ControlledSelect
                         name='providerId'
                         control={control}
-                        defaultValue={getDefaultProvider()}
+                        defaultValue={getDefaultProvider()?.value}
                         options={providerOptions}
                         data-test-id='request-refill-provider'
                         label={'external_access.medication_refill.select_provider'}

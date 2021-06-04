@@ -55,7 +55,7 @@ const ViewMedications = () => {
                 {t('external_access.medication_refill.your_medications')}
             </h4>
             <div className='cursor-pointer' onClick={() => window.print()} >
-                <SvgIcon type={Icon.Print} fillClass='rgba-05-fill' />
+                <SvgIcon type={Icon.Print} className='icon-medium h-8 w-8 cursor-pointer' fillClass='rgba-05-fill' />
             </div>
         </div>
         <div className='pt-9 pb-9'>

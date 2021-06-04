@@ -69,7 +69,7 @@ const SendUsMessage = () => {
                     {t('external_access.medication_refill.have_questions')}
                 </div>
             </div>
-            <div className='body2 cursor-pointer lg:pr-2' onClick={closeButtonHandler}>
+            <div className='body2 message-link cursor-pointer lg:pr-2' onClick={closeButtonHandler}>
                 {t('common.close')}
             </div>
         </div>
@@ -127,7 +127,7 @@ const SendUsMessage = () => {
                     {t('external_access.medication_refill.have_questions')}
                 </div>
             </div>
-            <div className='body2 cursor-pointer lg:pr-2' onClick={() => setIsVisibleForm(!isVisibleForm)}>
+            <div className='body2 message-link cursor-pointer lg:pr-2' onClick={() => setIsVisibleForm(!isVisibleForm)}>
                 {t('external_access.send_us_message')}
             </div>
         </div>
