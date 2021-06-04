@@ -20,6 +20,7 @@ export interface ControllerDateInputProps {
     longDateFormat?: boolean;
     type?: 'date' | 'time';
     isWeekendDisabled?: boolean;
+    isCalendarPositionComputed?: boolean;
     calendarHorizontalAlign?: CalendarHorizontalAlign;
     onValidationError?: () => void;
     onChange?: (date: Date | undefined) => void;
@@ -41,6 +42,7 @@ const ControlledDateInput = ({
     type = 'date',
     label = '',
     calendarHorizontalAlign,
+    isCalendarPositionComputed,
     onValidationError,
     onCalendarVisibilityChange,
     onPressEnter,
@@ -77,6 +79,7 @@ const ControlledDateInput = ({
                 calendarContainerClassName={className}
                 max={max}
                 min={min}
+                isCalendarPositionComputed={isCalendarPositionComputed}
                 longDateFormat={longDateFormat}
                 label={t(label)}
                 error={control.formState.errors[name]?.message}

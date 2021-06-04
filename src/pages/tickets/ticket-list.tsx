@@ -67,9 +67,9 @@ const TicketList = () => {
     }, [dispatch, paging.page]);
 
     return (
-        <div className="flex flex-auto h-full overflow-auto">
+        <div className="flex flex-auto h-full">
             <TicketFilter isOpen={isFilterOpen} />
-            <div className={'flex flex-col h-full w-full'}>
+            <div className='flex flex-col h-full w-full overflow-auto'>
                 <TicketsHeader />
                 <TicketsSearch />
                 {ticketsLoading ?

@@ -399,6 +399,7 @@ const TicketFilter = ({isOpen}: {isOpen: boolean}) => {
                     name='fromDate'
                     dataTestId='ticket-filter-from-date'
                     value={fromDate}
+                    isCalendarPositionComputed
                     onChange={setFromDate}
                     onCalendarVisibilityChange={setIsFromDateCalendarOpen}
                 />
@@ -407,6 +408,7 @@ const TicketFilter = ({isOpen}: {isOpen: boolean}) => {
                     type='date'
                     disabled={!fromDate}
                     min={fromDate}
+                    isCalendarPositionComputed
                     label='tickets.filter.to_date'
                     name='toDate'
                     dataTestId='ticket-filter-to-date'
@@ -423,10 +425,8 @@ const TicketFilter = ({isOpen}: {isOpen: boolean}) => {
     }
 
     const getClassNames = () => classNames({
-        'w-96 transition-width transition-slowest ease top-0 bg-secondary-100': isOpen,
-        'hidden': !isOpen,
-        'overflow-y-auto z-0 sticky': !isFromDateCalendarOpen || !isToDateCalendarOpen,
-        'overflow-y-visible z-20 relative': isFromDateCalendarOpen || isToDateCalendarOpen
+        'w-96 transition-width transition-slowest ease top-0 bg-secondary-100 overflow-y-auto': isOpen,
+        'hidden': !isOpen
     });
 
     return <div className={getClassNames()}>

@@ -365,7 +365,7 @@ const TicketNew = () => {
         };
     }
 
-    return <div className="flex flex-col w-full mx-6 my-5">
+    return <div className="flex flex-col w-full mx-6 my-5 overflow-y-auto">
         <h5>{t('ticket_new.title')}</h5>
         <div className={'w-96 pt-10 mx-auto flex flex-col'}>
             <form onSubmit={handleSubmit(onSubmit)} noValidate={true}>

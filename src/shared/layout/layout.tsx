@@ -39,7 +39,7 @@ const Layout = (props: LayoutProps) => {
                                 </div>
                                 <div className='flex flex-col w-full'>
                                     <div className='flex flex-row layout-content w-full'>
-                                        <div className='flex-auto overflow-y-auto'>
+                                        <div className='flex-auto'>
                                             <main className='flex flex-col h-full w-full'>
                                                 <div className='flex flex-auto h-full'>
                                                     {props.children}
