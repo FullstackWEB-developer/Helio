@@ -64,7 +64,7 @@ const ControlledSelect = ({
                 order={order}
                 assistiveText={assistiveText}
                 disabled={disabled}
-                value={controllerProps.value}
+                value={props.value}
                 onTextChange={onTextChange}
                 error={control.formState.errors[name]?.message}
             />
