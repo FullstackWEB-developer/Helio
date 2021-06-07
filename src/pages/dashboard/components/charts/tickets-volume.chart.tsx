@@ -3,6 +3,7 @@ import {useTranslation} from 'react-i18next';
 import {TicketVolumeData} from '@pages/dashboard/models/ticket-volume-data.model';
 import dayjs from 'dayjs';
 import {BasicStatistic} from '@pages/dashboard/models/basic-statistic.model';
+import {DashboardColors} from '@pages/dashboard/utils/dashboard-utils';
 
 export interface TicketsVolumeChartProps {
     data: TicketVolumeData;
@@ -70,14 +71,16 @@ const TicketsVolumeChart = ({data}: TicketsVolumeChartProps) => {
         xScale={{format: "%Y-%m-%d", type: "time"}}
         xFormat="time:%Y-%m-%d"
         yFormat=" >-.0f"
+        curve='catmullRom'
         pointSize={6}
-        colors={{scheme: 'pastel2'}}
+        colors={DashboardColors()}
         pointColor={{theme: 'background'}}
         pointBorderWidth={5}
         pointBorderColor={{from: 'serieColor'}}
         enableGridX={false}
         pointLabelYOffset={-12}
         useMesh={true}
+        enableArea={true}
         axisBottom={{
             tickValues: "every 1 day",
             format: function (value) {

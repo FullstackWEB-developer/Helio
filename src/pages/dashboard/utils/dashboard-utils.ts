@@ -1,9 +1,26 @@
-import {BasicStatistic} from '@pages/dashboard/models/basic-statistic.model';
-
-export const shadeColor = (amount: number, color = "#151515") => {
-    return '#' + color.replace(/^#/, '').replace(/../g, color => ('0' + Math.min(255, Math.max(0, parseInt(color, 16) + amount)).toString(16)).substr(-2));
+let colors: string[] = [];
+export const getPieChartColor = (i: number) => {
+    if (!colors || colors.length === 0) {
+        DashboardColors();
+    }
+    return colors[i];
 }
 
-export const getPieChartColor = (item: BasicStatistic) => {
-    return shadeColor(item.percentage * item.label.toString().length / 5);
+export const DashboardColors = (): string[] => {
+    if (colors.length > 0) {
+        return colors;
+    }
+    const style = getComputedStyle(document.body);
+    colors.push(style.getPropertyValue('--chart-color-1'));
+    colors.push(style.getPropertyValue('--chart-color-2'));
+    colors.push(style.getPropertyValue('--chart-color-3'));
+    colors.push(style.getPropertyValue('--chart-color-4'));
+    colors.push(style.getPropertyValue('--chart-color-5'));
+    colors.push(style.getPropertyValue('--chart-color-6'));
+    colors.push(style.getPropertyValue('--chart-color-7'));
+    colors.push(style.getPropertyValue('--chart-color-8'));
+    colors.push(style.getPropertyValue('--chart-color-9'));
+    colors.push(style.getPropertyValue('--chart-color-10'));
+    colors.push(style.getPropertyValue('--chart-color-11'));
+    return colors;
 }

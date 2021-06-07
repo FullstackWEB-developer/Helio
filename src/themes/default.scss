@@ -33,6 +33,20 @@
   --color-gray: #bdbdbd;
   --color-blue: #006eff;
 
+
+  //Chart colors:
+  --chart-color-1: #2D9FFB;
+  --chart-color-2: #00CC88;
+  --chart-color-3: #734DEA;
+  --chart-color-4: #FDBC45;
+  --chart-color-5: #F5935E;
+  --chart-color-6: #F4516C;
+  --chart-color-7: #BDBDBD;
+  --chart-color-8: #0047CC;
+  --chart-color-9: #006C3A;
+  --chart-color-10: #3E1C9F;
+  --chart-color-11: #CC0C1F;
+
   --color-bg-primary: #fff;
   --color-text-primary: --color-secondary-900;
   --light-text-high-emphasis: rgba(0, 0, 0, 0.87);
@@ -300,7 +314,7 @@
   --note-context-created-by-color: rgba(0, 0, 0, 0.45);
 
   --dashboard-background: rgba(0, 0, 0, 0.02);
-  --dashboard-tickets-by-channel-row: rgb(0, 0, 0, 0.38);
+  --dashboard-tickets-by-channel-row: var(--chart-color-1);
   --dashboard-tickets-by-channel-row-bg: rgb(0, 0, 0, 0.07);
   --dashboard-dropdown-arrows: rgb(0, 0, 0, 0.5);
 

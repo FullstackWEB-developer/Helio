@@ -11,8 +11,11 @@ const DashboardPieChart = ({data}: DashboardPieChartProps) => {
         data={data}
         margin={{top: 32}}
         innerRadius={0.60}
-        colors={d => getPieChartColor(d.data)}
+        colors={d => getPieChartColor(d.data.index)}
         enableArcLabels={false}
+        animate={true}
+        motionConfig="wobbly"
+        transitionMode="pushOut"
         isInteractive={true}
         enableArcLinkLabels={false}
     />

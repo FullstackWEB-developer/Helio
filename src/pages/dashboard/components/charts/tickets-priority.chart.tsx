@@ -16,17 +16,18 @@ const TicketsPriorityChart = ({data}: TicketsPriorityChartProps) => {
             className='w-full px-6 space-y-4 tickets-priority-body justify-center items-center flex'>{t('dashboard.no_data_found')}</div>
     }
 
-    const convertedData = data.map(item => {
+    const convertedData = data.map((item, index) => {
         return {
             id: item.label,
             label: item.label,
             value: item.value,
-            percentage: item.percentage
+            percentage: item.percentage,
+            index
         }
     });
-    const ChartItem = (item: BasicStatistic) => {
+    const ChartItem = ({item, index}: { item: BasicStatistic, index: number }) => {
         return <div className='flex flex-row w-full items-center justify-center' key={item.label.toString()}>
-            <div className='h-2 w-2 rounded-xl' style={{backgroundColor: getPieChartColor(item)}}/>
+            <div className='h-2 w-2 rounded-xl' style={{backgroundColor: getPieChartColor(index)}}/>
             <div className='pl-2.5 w-32 truncate'>{item.label}</div>
             <div className='w-10'>{item.value}</div>
             <div className='w-10'>{Math.round(item.percentage * 100) / 100}%</div>
@@ -37,8 +38,7 @@ const TicketsPriorityChart = ({data}: TicketsPriorityChartProps) => {
             <DashboardPieChart data={convertedData}/>
         </div>
         <div className='h-72 flex flex-col space-y-4 pt-10'>
-            {convertedData.map(item => <ChartItem key={item.label.toString()} label={item.label} value={item.value}
-                                                  percentage={item.percentage}/>)}
+            {convertedData.map((item, i) => <ChartItem key={item.label.toString()} item={item} index={i}/>)}
         </div>
     </div>;
 }
