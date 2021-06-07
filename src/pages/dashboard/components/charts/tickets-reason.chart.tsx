@@ -50,7 +50,7 @@ const TicketsReasonChart = ({data}: TicketsReasonChartProps) => {
     });
 
     const ChartItem = ({item, index}: { item: BasicStatistic, index: number }) => {
-        return <div className='flex flex-row w-full items-center justify-center px-40' key={item.label.toString()}>
+        return <div className='flex flex-row w-full items-center justify-center px-28' key={item.label.toString()}>
             <div className='h-2 w-2 rounded-xl' style={{backgroundColor: getPieChartColor(index)}}/>
             <div className='pl-2.5 flex-auto truncate'>{item.label}</div>
             <div className='w-10'>{item.value}</div>
