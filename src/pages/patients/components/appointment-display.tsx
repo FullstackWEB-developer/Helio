@@ -25,7 +25,7 @@ const AppointmentDisplay = ({ appointment, border, isLast, isDetailed }: Appoint
             <Fragment>
                 {`${dayjs(appointment.date).format('MMM, DD, YYYY')}`}
                 {!isLast && <span className='subtitle2'>
-                    {` ${dayjs.utc(appointment.startTime, 'HH:mm').local().format('[at] h:mm A')} `}
+                    {` ${dayjs.utc(appointment.startTime, 'HH:mm').format('[at] h:mm A')} `}
                 </span>}
             </Fragment>
         )
