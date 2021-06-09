@@ -10,3 +10,7 @@
     color: var(--color-white-06);
   }
 }
+
+.padding-top>:not(.without-default-padding) {
+  padding-top: 4rem;
+}

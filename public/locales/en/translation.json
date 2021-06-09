@@ -603,9 +603,10 @@
       "use_this_pharmacy": "Use this pharmacy",
       "error_getting_pharmacies": "Error getting pharmacies information.",
       "refill_request": "Medication Refill Request",
-      "refill_request_send_message": "Send us a message and we will respond within 2 business days. All messages are confidential.\nNote: Please use this tool for health-related inquiries only. All messages are included in your patient record.",
-      "select_provider": "Select Provider",
-      "select_prescription": "Select Prescription",
+      "refill_request_send_message": "Send us a message and we will respond within 2 business days. All messages are confidential.",
+      "refill_request_send_message_note":"Note: Please use this tool for health-related inquiries only. All messages are included in your patient record.",
+      "select_provider": "Provider",
+      "select_prescription": "Prescription",
       "back_to_medications": "Back to Medications",
       "refill_request_sent": "Thank you. Your medication refill request has been sent.",
       "refill_request_sent_details": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis."

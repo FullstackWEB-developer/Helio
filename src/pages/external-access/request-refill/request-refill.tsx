@@ -261,8 +261,6 @@ const RequestRefill = () => {
         });
     }
 
-    const cancelButtonHandler = () => history.goBack();
-
     if (isMedicationLoading || isDefaultPharmacyLoading || isStatesLoading) {
         return <ThreeDots/>
     }
@@ -307,13 +305,15 @@ const RequestRefill = () => {
                 {t('external_access.medication_refill.back_to_medications')}
             </div>
         </div>
-        <div className='2xl:whitespace-pre 2xl:h-12 2xl:my-3 flex w-full items-center'>
+        <div className='2xl:whitespace-pre 2xl:h-12 flex w-full items-center'>
             <h4>
                 {t('external_access.medication_refill.refill_request')}
             </h4>
         </div>
-        <div className='pt-10 pb-8'>
+        <div className='pt-8 pb-10'>
             {t('external_access.medication_refill.refill_request_send_message')}
+            <br />
+            {t('external_access.medication_refill.refill_request_send_message_note')}
         </div>
         <div className='pt-2 request-refill-form'>
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -342,7 +342,7 @@ const RequestRefill = () => {
                     render={() => (
                         <TextArea
                             error={errors.messageText?.message}
-                            className='pl-4 pt-2 pb-11 pr-8 body2 w-full h-full'
+                            className='pl-4 pt-2 pb-11 pr-8 body2 w-full h-full rounded'
                             data-test-id='send-us-message-text'
                             placeHolder={t('common.enter_message')}
                             required={true}
@@ -359,7 +359,7 @@ const RequestRefill = () => {
                         />
                     )}
                 />
-                <div className='border mt-7'>
+                <div className='border mt-7 rounded'>
                     <div className='p-6'>
                         {isVisibleForm ? <Fragment>
                             <div className='flex justify-between'>
@@ -433,9 +433,6 @@ const RequestRefill = () => {
                                 <div className='subtitle pb-4.5'>
                                     {t('external_access.medication_refill.pharmacy_information')}
                                 </div>
-                                <div className='body2 pharmacy-change cursor-pointer' onClick={() => setIsVisibleForm(!isVisibleForm)}>
-                                    {t('external_access.medication_refill.pharmacy_change')}
-                                </div>
                             </div>
                             {defaultPharmacy && <Fragment>
                                 <div className='subtitle2'>
@@ -451,8 +448,7 @@ const RequestRefill = () => {
                     </div>
                 </div>
                 <div className={`flex justify-start items-center full-w mt-8 ${getMarginBottom()}`}>
-                    <Button buttonType='secondary' label={t('common.cancel')} className='h-10 secondary-contact-form-btn' onClick={cancelButtonHandler} />
-                    <Button type='submit' buttonType='medium' label={t('common.send')} className='ml-6' disabled={!messageText || isLoading} />
+                    <Button type='submit' buttonType='big' label={t('common.send')} disabled={!messageText || isLoading} />
                 </div>
                 {
                     isLoading && <div className='h-8 w-20'>

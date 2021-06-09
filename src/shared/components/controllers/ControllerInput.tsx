@@ -48,18 +48,18 @@ export interface ControllerInputProps {
 }
 
 const ControlledInput = ({
-                             control,
-                             required = false,
-                             type = 'text',
-                             name,
-                             mask = '',
-                             label = '',
-                             className = '',
-                             dataTestId = name,
-                             max,
-                             placeholder,
-                             ...props
-                         }: ControllerInputProps) => {
+    control,
+    required = false,
+    type = 'text',
+    name,
+    mask = '',
+    label = '',
+    className = '',
+    dataTestId = name,
+    max,
+    placeholder,
+    ...props
+}: ControllerInputProps) => {
 
     const {t} = useTranslation();
     const requiredText = t('common.required');
@@ -93,17 +93,14 @@ const ControlledInput = ({
     }
 
     const onInputChanged = (event: React.ChangeEvent<HTMLInputElement>, controllerProps: ControllerRenderProps<Record<string, any>>) => {
+        const value = cleanMask(event.target.value);
 
-        if (type === 'tel') {
-            const value = cleanMask(event.target.value);
-            controllerProps.onChange(value);
-        } else {
-            controllerProps.onChange(event);
-        }
+        controllerProps.onChange(type === 'tel' ? value : event);
 
         if (props.onChange) {
             props.onChange(event);
         }
+        control.setValue(name, value, {shouldValidate: true});
     }
 
     return (<Controller
@@ -117,29 +114,29 @@ const ControlledInput = ({
         defaultValue={props.defaultValue}
         render={(controllerProps) => {
             return (<Input
-                    {...controllerProps}
-                    label={label}
-                    mask={mask}
-                    placeholder={placeholder}
-                    dropdownIcon={props.dropdownIcon}
-                    className={className}
-                    error={props.errorMessage || control.formState.errors[name]?.message}
-                    type={type}
-                    required={required}
-                    assistiveText={props.assistiveText}
-                    isLoading={props.isLoading}
-                    disabled={props.disabled}
-                    data-test-id={dataTestId}
-                    onKeyDown={inputKeyDown}
-                    onBlur={props.onBlur || controllerProps.onBlur}
-                    onChange={(event) => onInputChanged(event, controllerProps)}
-                    autosuggestDropdown={props.autosuggestDropdown}
-                    autosuggestOptions={props.autosuggestOptions}
-                    onDropdownSuggestionClick={props.onDropdownSuggestionClick}
-                    isFetchingSuggestions={props.isFetchingSuggestions}
-                    selectedSuggestion={props.selectedSuggestion}
-                    fetchingSuggestionsPlaceholder={props.fetchingSuggestionsPlaceholder}
-                />
+                {...controllerProps}
+                label={label}
+                mask={mask}
+                placeholder={placeholder}
+                dropdownIcon={props.dropdownIcon}
+                className={className}
+                error={props.errorMessage || control.formState.errors[name]?.message}
+                type={type}
+                required={required}
+                assistiveText={props.assistiveText}
+                isLoading={props.isLoading}
+                disabled={props.disabled}
+                data-test-id={dataTestId}
+                onKeyDown={inputKeyDown}
+                onBlur={props.onBlur || controllerProps.onBlur}
+                onChange={(event) => onInputChanged(event, controllerProps)}
+                autosuggestDropdown={props.autosuggestDropdown}
+                autosuggestOptions={props.autosuggestOptions}
+                onDropdownSuggestionClick={props.onDropdownSuggestionClick}
+                isFetchingSuggestions={props.isFetchingSuggestions}
+                selectedSuggestion={props.selectedSuggestion}
+                fetchingSuggestionsPlaceholder={props.fetchingSuggestionsPlaceholder}
+            />
             );
         }}
     />);

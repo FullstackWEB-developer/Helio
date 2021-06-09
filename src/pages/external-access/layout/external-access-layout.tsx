@@ -28,7 +28,7 @@ const ExternalAccessLayout = ({children}: ExternalAccessLayoutProps) => {
                     <SvgIcon type={Icon.CwcLogo} />
                 </div>
             </div>
-            <div className='flex-grow px-8 md:px-40 pt-16 pb-36'>{children}</div>
+            <div className='padding-top flex-grow px-8 md:px-40 pb-36'>{children}</div>
             <div className='h-16 md:px-40 external-access-layout-footer body3-medium'>
                 <div className='h-full px-16 flex items-center text-center'>
                     {t('external_access.copyright', {'year': year})}

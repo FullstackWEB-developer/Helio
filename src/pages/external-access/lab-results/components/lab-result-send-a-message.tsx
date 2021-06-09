@@ -98,9 +98,9 @@ const LabResultSendAMessage = ({labResult}: {labResult?: LabResultDetail}) => {
             <div className="flex flex-col md:flex-row items-center">
                 <SvgIcon type={Icon.Chat} className='icon-large' fillClass='message-icon-fill' />
                 <span className='subtitle pl-4'>{t('external_access.lab_results.send_a_message_title')}</span>
-                <span className='body2 cursor-pointer md:ml-auto xl:pr-24' onClick={onClose}>
-                    {t(!expanded ? 'external_access.lab_results.send_a_message' : 'common.close')}
-                </span>
+                <Button type="button" buttonType="link" label={t(!expanded ? 'external_access.lab_results.send_a_message' : 'common.close')}
+                    className='body2 cursor-pointer md:ml-auto xl:pr-24'
+                    onClick={onClose}></Button>
             </div>
             {
                 expanded &&

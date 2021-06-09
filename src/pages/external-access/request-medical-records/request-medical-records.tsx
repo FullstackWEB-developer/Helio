@@ -154,7 +154,7 @@ const RequestMedicalRecords = () => {
             {t('external_access.medical_records_request.select_what_to_do')}
         </div>
 
-        <div className='pt-7 xl:w-1/3'>
+        <div className='pt-7 xl:w-2/5'>
             <Tabs>
                 <Tab title={t('external_access.medical_records_request.download_tab_header')}>
                     <div className='pt-8'>
@@ -199,6 +199,7 @@ const RequestMedicalRecords = () => {
                                     label='external_access.medical_records_request.email_confirm_input_header'
                                 />
                                 <Button
+                                    className='mt-1'
                                     buttonType='big'
                                     onClick={() => downloadOrShare(false)}
                                     disabled={!formState.isDirty || email !== emailConfirm || downloadZipMutation.isLoading}

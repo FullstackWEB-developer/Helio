@@ -41,7 +41,7 @@ const LabResultDetailed = () => {
 
     return (
         data ?
-            <div className='w-full h-full'>
+            <div className='w-full h-full without-default-padding pt-6'>
                 <LabResultDetailHeader labResultDetail={data} />
                 <LabResultDetailProviderComment labResultDetail={data} />
                 <div className='mt-8 mb-6'>
@@ -115,7 +115,7 @@ const LabResultDetailed = () => {
                     </div>
                 </LabResultsSection>
                 <LabResultsSection title={t('external_access.lab_results.note')}>
-                    <div className='subtitle2 mb-28'>
+                    <div className='subtitle2'>
                         <b>{t('external_access.lab_results.note_paragraph_1')}</b>&nbsp;
                         {t('external_access.lab_results.note_paragraph_2')}
                     </div>

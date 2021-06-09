@@ -79,6 +79,7 @@ button.big-button {
   border-radius: 1.5rem;
   padding: var(--button-primary-big-padding);
   @extend .subtitle2-white;
+  font-family: var(--button-primary-big-font-family);
   font-size: var(--button-primary-big-font-size);
 }
 
