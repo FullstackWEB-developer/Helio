@@ -79,7 +79,11 @@ const DateTimePicker = React.forwardRef<HTMLInputElement, DateTimePickerProps>((
             setInputType('text');
         }
     }
-
+    const calcCalendarPosition = () => {
+        const inputElementRef = (ref as React.MutableRefObject<HTMLButtonElement>).current;
+        const position = getElementPosition(inputElementRef);
+        setCalendarPositionTop(position.top + inputElementRef.offsetHeight);
+    }
     useEffect(() => {
         switchDateFormat(isISOFormat);
     }, [isISOFormat]);
@@ -99,7 +103,10 @@ const DateTimePicker = React.forwardRef<HTMLInputElement, DateTimePickerProps>((
         if (onCalendarVisibilityChange) {
             onCalendarVisibilityChange(isCalendarOpen);
         }
-    }, [isCalendarOpen, onCalendarVisibilityChange])
+        if (isCalendarPositionComputed) {
+            calcCalendarPosition();
+        }
+    }, [isCalendarOpen, isCalendarPositionComputed, onCalendarVisibilityChange, calcCalendarPosition])
 
     useEffect(() => {
         const empty = () => undefined;
@@ -113,17 +120,10 @@ const DateTimePicker = React.forwardRef<HTMLInputElement, DateTimePickerProps>((
             return empty;
         }
 
-        const calcCalendarPosition = () => {
-            const position = getElementPosition(inputElementRef);
-            setCalendarPositionTop(position.top + inputElementRef.offsetHeight);
-        }
-
-        calcCalendarPosition();
         const parent = getScrollParent(inputElementRef) as HTMLElement;
         if (!parent) {
             return empty;
         }
-
 
         parent.addEventListener('scroll', calcCalendarPosition);
         return () => {
