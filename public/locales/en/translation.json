@@ -496,12 +496,19 @@
     "characters": "{{maxLength}} characters",
     "hipaa": {
       "verify_title": "Please verify your identity to proceed.",
-      "dob": "Date of birth  (MM/DD/YYYY)",
-      "mobile_phone_number": "Mobile Phone Number",
+      "dob": "Date of birth",
+      "birth_date_format": "(MM/DD/YYYY)",
+      "mobile_phone_number": "Mobile Phones",
       "zip_code": "Zip Code",
       "verification_failed": "We could not validate your information!"
     },
     "appointments": {
+      "appointment_list": {
+        "appointment_date": "Appointment date",
+        "details": "Details",
+        "provider": "Provider",
+        "location": "Location"
+      },
       "list_title": "You have {{number}} upcoming appointments.",
       "select_appointment": "Please select appointment to view details.",
       "appointment_details": "Appointment Details",

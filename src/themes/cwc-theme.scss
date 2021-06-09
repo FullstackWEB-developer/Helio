@@ -165,7 +165,7 @@
 
   --body1-font-family: var(--font-regular);
   --body1-font-size: 1rem;
-  --body1-font-weight: 500;
+  --body1-font-weight: normal;
   --body1-font-stretch: normal;
   --body1-font-style: normal;
   --body1-line-height: 1.5rem;
@@ -174,7 +174,7 @@
 
   --body1-medium-font-family: var(--font-regular);
   --body1-medium-font-size: 1rem;
-  --body1-medium-font-weight: 500;
+  --body1-medium-font-weight: normal;
   --body1-medium-font-stretch: normal;
   --body1-medium-font-style: normal;
   --body1-medium-line-height: 1.5rem;
@@ -317,7 +317,6 @@
   --datetime-picker-label-color: var(--color-primary-800);
 
   --button-secondary-border-color: var(--light-text-medium-emphasis);
-  
   --button-primary-big-padding: 0 2.1875rem;
   --button-primary-big-font-size: var(--subtitle1-font-size);
 
@@ -329,6 +328,7 @@
 
   --button-secondary-medium-padding: 0 1.5rem;
   --button-secondary-medium-font-size: var(--subtitle2-font-size);
+
 
   ::-webkit-scrollbar {
     width: 0.3125rem;

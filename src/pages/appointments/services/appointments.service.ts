@@ -27,6 +27,12 @@ export const getAppointmentTypeById = async (appointmentTypeId: number) => {
      return result.data;
 }
 
+export const getAppointmentTypes = async () => {
+     const url = `${appointmentsBaseUrl}/appointmenttypes`;
+     const result = await Api.get(url);
+     return result.data;
+}
+
 export const getAppointmentSlots = async (providerId: number, departmentId: number, appointmentTypeId: number, startDate: Date, endDate: Date) => {
      let getOpenSlotsUrl = `${appointmentsBaseUrl}/open-slots?ignoreschedulablepermission=true`;
      getOpenSlotsUrl = getOpenSlotsUrl + `&departmentId=${departmentId}`;

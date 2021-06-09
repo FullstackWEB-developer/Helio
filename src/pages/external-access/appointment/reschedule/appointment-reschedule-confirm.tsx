@@ -100,7 +100,7 @@ const AppointmentRescheduleConfirm = () => {
         <div>
             {`${display(department?.address2)} ${display(department?.city)} ${display(department?.state)}, ${display(department?.zip)}`}
         </div>
-        {rescheduleAppointmentMutation.isError && <div className='text-danger'>
+        {rescheduleAppointmentMutation.isError && <div className='text-danger pt-12'>
             {t('external_access.appointments.reschedule_appointment_error')} {errorMessage}
         </div>}
         <div className='pt-12 flex flex-col xl:flex-row xl:space-x-6 space-x-0 space-y-6 xl:space-y-0'>

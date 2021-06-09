@@ -108,7 +108,7 @@ const AppointmentRescheduled = () => {
             {t('external_access.appointments.directions')}
         </div>
         <div className='border-b pt-2'/>
-        <div className='pt-4 pb-16 body2'>
+        <div className='pt-4 body2'>
             <Trans i18nKey="external_access.appointments.get_directions">
                 <a rel='noreferrer' target='_blank' href={`https://maps.google.com/?q=${department?.latitude},${department?.longitude}`}>Get directions</a> to your appointment location.
             </Trans>

@@ -101,7 +101,7 @@ const HipaaVerification = ({request}: HipaaVerificationProps) => {
                     {t(`external_access.title_${request.requestType}`)}
                 </h4>
             </div>
-            <div className='pb-6 md:pb-10'>
+            <div className='py-6 md:py-10'>
                 {t('external_access.hipaa.verify_title')}
             </div>
             <form onSubmit={handleSubmit(onSubmit)} onChange={() => setErrors('')}>
@@ -110,8 +110,10 @@ const HipaaVerification = ({request}: HipaaVerificationProps) => {
                         <ControlledDateInput
                             type='date'
                             longDateFormat={false}
+                            isCalendarDisabled
                             required={true}
                             label='external_access.hipaa.dob'
+                            assistiveText='external_access.hipaa.birth_date_format'
                             control={control}
                             name='dob'
                             max={new Date(new Date().toDateString())}

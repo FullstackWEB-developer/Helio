@@ -22,12 +22,12 @@ import ControlledDateInput from '@components/controllers/ControlledDateInput';
 import SvgIcon from '@components/svg-icon/svg-icon';
 import {Icon} from '@components/svg-icon/icon';
 import utils from '@shared/utils/utils';
-import '../components/appointment-list-item.scss';
 import DaySlots from '@pages/external-access/appointment/components/day-slot';
 import './appointment-reschedule.scss';
 import ThreeDotsSmallLoader from '@components/skeleton-loader/three-dots-loader';
 import {setIsAppointmentRescheduled} from '@pages/external-access/appointment/store/appointments.slice';
 import businessDays from '@shared/utils/business-days';
+import classnames from 'classnames';
 
 const AppointmentReschedule = () => {
     dayjs.extend(utc);
@@ -41,8 +41,8 @@ const AppointmentReschedule = () => {
     const numberOfDays = 14;
     const numberOfWorkDays = 5;
     const rescheduleTimeFrame = useSelector(selectRescheduleTimeFrame);
-    const minStartDate = rescheduleTimeFrame ? businessDays.add(dayjs(appointment.startDateTime).utc().toDate(), rescheduleTimeFrame): dayjs(appointment.startDateTime).utc().toDate();
-    const { control, setValue } = useForm({
+    const minStartDate = rescheduleTimeFrame ? businessDays.add(dayjs(appointment.startDateTime).utc().toDate(), rescheduleTimeFrame) : dayjs(appointment.startDateTime).utc().toDate();
+    const {control, setValue} = useForm({
         mode: 'onBlur',
         defaultValues: {
             selectedDate: dayjs().toDate()
@@ -67,13 +67,13 @@ const AppointmentReschedule = () => {
             beginDate = dayjs(beginDate).isBefore(minStartDate) ? minStartDate : beginDate;
             return getAppointmentSlots(provider?.id as number, department?.id as number, appointment.appointmentTypeId, beginDate, dayjs(beginDate).utc().add(numberOfDays, 'day').toDate());
         },
-        {
-            enabled: false
-        }
-    );
+            {
+                enabled: false
+            }
+        );
 
     useEffect(() => {
-        if(provider?.id && department?.id) {
+        if (provider?.id && department?.id && !appointmentSlots) {
             refetch();
         }
 
@@ -160,14 +160,16 @@ const AppointmentReschedule = () => {
     };
 
     if (isAppointmentSlotsLoading) {
-        return <ThreeDots/>
+        return <ThreeDots />
     }
 
     if (!verifiedPatient) {
         return <div>{t('common.error')}</div>
     }
-
-    return <div className='2xl:px-80'>
+    const isBordered = (slotsDate: string) => {
+        return dayjs(slotsDate).isSame(startDate);
+    }
+    return <div>
         <div className='2xl:whitespace-pre 2xl:h-12 2xl:my-3 flex items-center'>
             <h4>
                 {t('external_access.appointments.select_your_appointment')}
@@ -176,17 +178,17 @@ const AppointmentReschedule = () => {
         <div className='pt-6 pb-4'>
             {t('external_access.appointments.below_available_appointments')}
         </div>
-        <div className='pb-6 start-date'>
+        <div className='pb-6 md:w-48 sm:w-full'>
             <form>
                 <ControlledDateInput
                     type='date'
-                    required
                     label='external_access.appointments.date'
+                    isCalendarDisabled
                     control={control}
                     name='selectedDate'
                     min={new Date(new Date().toDateString())}
                     onChange={(event) => onDateChange(event)}
-                    dataTestId='external-access-appointments-reschedule-date'/>
+                    dataTestId='external-access-appointments-reschedule-date' />
             </form>
             {isWeekendSelected && <div className='text-danger'>
                 {t('external_access.appointments.select_business_day')}
@@ -196,12 +198,12 @@ const AppointmentReschedule = () => {
         <div className='pb-1'>
             <div className='hidden lg:flex flex-row'>
                 <SvgIcon type={Icon.ArrowLeft} className='cursor-pointer' fillClass='active-item-icon'
-                         onClick={() => previousPage()}/>
+                    onClick={() => previousPage()} />
                 <div>
                     <div className="grid grid-flow-col auto-cols-max md:auto-cols-min pb-3">
                         {
                             appointmentSlots && getWorkDates().map(date => {
-                                return <div key={date} className='flex justify-center reschedule-slot mx-2 subtitle2'>
+                                return <div key={date} className={classnames('flex justify-center reschedule-slot subtitle2 w-56 md:w-80 mx-2', {'slot-date-selected body2': isBordered(date)})}>
                                     {dayjs(date).format('ddd, MMM D')}
                                 </div>
                             })
@@ -209,11 +211,11 @@ const AppointmentReschedule = () => {
                     </div>
                     <div className="grid grid-flow-col auto-cols-max md:auto-cols-min w-full justify-between border-t pt-4">
                         {
-                            appointmentSlots && getWorkDates().map(date => {
-                                let column = mappedSlots.get(date);
-                                return <div className='flex justify-center pt-1' key={date}>
-                                    {
-                                        !isFetching && <DaySlots date={date} column={column} startDate={startDate} key={date}/>
+                            appointmentSlots && getWorkDates().map((date, index) => {
+                                const column = mappedSlots.get(date);
+                                return <div className='flex justify-center pt-1' key={index}>
+                                    {!isFetching &&
+                                        <DaySlots column={column} />
                                     }
                                 </div>
                             })
@@ -221,11 +223,11 @@ const AppointmentReschedule = () => {
                     </div>
                 </div>
                 <SvgIcon type={Icon.ArrowRight} className='cursor-pointer' fillClass='active-item-icon'
-                         onClick={() => nextPage()}/>
+                    onClick={() => nextPage()} />
             </div>
             <div className='lg:hidden flex flex-row'>
                 <SvgIcon type={Icon.ArrowLeft} className='cursor-pointer mt-1' fillClass='active-item-icon'
-                         onClick={() => previousPage(true)}/>
+                    onClick={() => previousPage(true)} />
                 <div className="w-full">
                     {
                         appointmentSlots && <div className='p-1'>
@@ -236,9 +238,9 @@ const AppointmentReschedule = () => {
                                 !isFetching && <>
                                     {
                                         mappedSlots.get(dayjs(startDate).format('YYYY-MM-DDT00:00:00'))
-                                            ? <DaySlots date={dayjs(startDate).format('ddd, MMM D')}
-                                                  column={mappedSlots.get(dayjs(startDate).format('YYYY-MM-DDT00:00:00'))}
-                                                  startDate={startDate} />
+                                            ? <DaySlots
+                                                column={mappedSlots.get(dayjs(startDate).format('YYYY-MM-DDT00:00:00'))}
+                                            />
                                             : <div data-test-id='external-access-appointments-no-day-slots'>
                                                 {t('external_access.appointments.no_day_slots_found')}
                                             </div>
@@ -249,15 +251,15 @@ const AppointmentReschedule = () => {
                     }
                 </div>
                 <SvgIcon type={Icon.ArrowRight} className='cursor-pointer mt-1' fillClass='active-item-icon'
-                         onClick={() => nextPage(true)}/>
+                    onClick={() => nextPage(true)} />
             </div>
             {
                 isFetching && <div className='h-8 w-20'>
-                    <ThreeDotsSmallLoader className="three-dots-loader-small" cx={13} cxSpace={23} cy={16}/>
+                    <ThreeDotsSmallLoader className="three-dots-loader-small" cx={13} cxSpace={23} cy={16} />
                 </div>
             }
             {
-                !isFetching && (!appointmentSlots || appointmentSlots.length <=0) && <div data-test-id='external-access-appointments-not-found'>
+                !isFetching && (!appointmentSlots || appointmentSlots.length <= 0) && <div data-test-id='external-access-appointments-not-found'>
                     {t('external_access.appointments.no_slots_found')}
                 </div>
             }

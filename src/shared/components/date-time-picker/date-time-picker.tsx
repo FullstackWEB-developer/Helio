@@ -27,6 +27,7 @@ interface DateTimePickerProps {
     min?: Date;
     type?: InputType;
     calendarHorizontalAlign?: CalendarHorizontalAlign;
+    isCalendarDisabled?: boolean;
     isWeekendDisabled?: boolean;
     calendarContainerClassName?: string;
     isCalendarPositionComputed?: boolean;
@@ -46,6 +47,7 @@ const DateTimePicker = React.forwardRef<HTMLInputElement, DateTimePickerProps>((
     calendarContainerClassName = '',
     isWeekendDisabled,
     calendarHorizontalAlign = CalendarHorizontalAlign.Right,
+    isCalendarDisabled = false,
     longDateFormat = false,
     isCalendarPositionComputed = false,
     onBlur,
@@ -274,31 +276,32 @@ const DateTimePicker = React.forwardRef<HTMLInputElement, DateTimePickerProps>((
                 />
                 {label &&
                     <label className='absolute truncate'>
+                        <span className={getLabelClassName()}>{t(label)}</span>
                         {props.required && !props.disabled &&
                             <span className='text-danger'>*</span>
                         }
-                        <span className={getLabelClassName()}>{t(label)}</span>
                     </label>
                 }
                 {inputValue && isCalendarOpen &&
                     <div
                         role="button"
-                        className={classNames('input-addon', {'pt-3': !label, 'pt-4': !!label})}
+                        className={classNames('input-addon', {'pt-3': !label, 'pt-4': !!label, 'px-3': isCalendarDisabled})}
                         onClick={onClearClick}>
                         <SvgIcon type={Icon.Clear} fillClass='date-time-picker-clear' />
                     </div>
                 }
-                <div
-                    role="button"
-                    className={classNames('input-addon px-3', {'pt-3': !label, 'pt-4': !!label})}
-                    onClick={() => setCalendarOpen(!isCalendarOpen)}
-                    onMouseDown={(event) => event.preventDefault()}
-                >
-                    <SvgIcon type={isCalendarOpen ? Icon.ArrowUp : Icon.ArrowDown} fillClass='date-time-picker-arrow' />
-                </div>
-
+                {!isCalendarDisabled &&
+                    <div
+                        role="button"
+                        className={classNames('input-addon px-3', {'pt-3': !label, 'pt-4': !!label})}
+                        onClick={() => setCalendarOpen(!isCalendarOpen)}
+                        onMouseDown={(event) => event.preventDefault()}
+                    >
+                        <SvgIcon type={isCalendarOpen ? Icon.ArrowUp : Icon.ArrowDown} fillClass='date-time-picker-arrow' />
+                    </div>
+                }
             </div>
-            {isCalendarOpen &&
+            {!isCalendarDisabled && isCalendarOpen &&
                 <div
                     className={classNames('absolute top-14 z-20', {'right-0': calendarHorizontalAlign === CalendarHorizontalAlign.Left})}
                     style={isCalendarPositionComputed ? {top: calendarPositionTop} : undefined}
@@ -318,7 +321,7 @@ const DateTimePicker = React.forwardRef<HTMLInputElement, DateTimePickerProps>((
                     <span className={getAssistiveTextClassName()}>{props.assistiveText}</span>
                 </div>
             }
-            {props.error &&
+            {!!props.error &&
                 <div className='h6 pl-4 body3 pt-1 text-danger truncate'>{props.error}</div>
             }
         </div>

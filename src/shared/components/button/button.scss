@@ -1,4 +1,4 @@
-@import '../../../themes/base/typography';
+@import "../../../themes/base/typography";
 
 .button-common {
   display: inline-block;
@@ -26,32 +26,43 @@
   display: block;
 }
 
-button.big-button:hover:enabled, button.medium-button:hover:enabled, button.small-button:hover:enabled {
+button.big-button:hover:enabled,
+button.medium-button:hover:enabled,
+button.small-button:hover:enabled {
   background-color: var(--color-primary-700);
 }
 
-button.big-button:after, button.medium-button:after, button.small-button:after {
+button.big-button:after,
+button.medium-button:after,
+button.small-button:after {
   background-color: var(--light-divider-12);
 }
 
-button.secondary-button:after, button.secondary-big-button:after {
+button.secondary-button:after,
+button.secondary-big-button:after {
   background-color: rgba(var(--color-primary-500-rgb), 0.07);
 }
 
-button.big-button:enabled, button.medium-button:enabled, button.small-button:enabled {
+button.big-button:enabled,
+button.medium-button:enabled,
+button.small-button:enabled {
   background-color: var(--color-primary-500);
 }
 
-button.big-button:focus:enabled, button.medium-button:focus:enabled, button.small-button:focus:enabled {
+button.big-button:focus:enabled,
+button.medium-button:focus:enabled,
+button.small-button:focus:enabled {
   background-color: var(--color-primary-900);
-  outline:none;
+  outline: none;
 }
 
-button.secondary-button:hover:enabled, button.secondary-big-button:hover:enabled {
+button.secondary-button:hover:enabled,
+button.secondary-big-button:hover:enabled {
   background-color: rgba(var(--color-primary-500-rgb), 0.04);
 }
 
-button.secondary-button:focus:enabled, button.secondary-big-button:focus:enabled {
+button.secondary-button:focus:enabled,
+button.secondary-big-button:focus:enabled {
   background-color: rgba(var(--color-primary-500-rgb), 0.07);
   border: var(--color-primary-500) 1px solid;
   outline: none;
@@ -81,7 +92,6 @@ button.medium-button {
   font-size: var(--button-primary-medium-font-size);
 }
 
-
 button.small-button {
   @extend .button-common;
   min-width: 6rem;
@@ -109,21 +119,46 @@ button.secondary-button {
   }
 }
 
+button.link-button {
+  @extend .button-common;
+  min-width: 6rem;
+  min-height: 2rem;
+  border-radius: 1rem;
+  padding: var(--button-secondary-medium-padding);
+  @extend .subtitle3-white;
+  color: var(--color-primary-800);
+  font-size: var(--button-secondary-medium-font-size);
+  background-color: transparent;
+  border: none;
+  outline: none;
+
+  &:focus {
+    outline: none !important;
+  }
+  &:hover {
+    color: var(--color-primary-400) 
+  }
+}
+
 button.secondary-big-button {
   @extend .button-common;
   min-width: 7.5rem;
   min-height: 3rem;
   border-radius: 1.5rem;
   padding: var(--button-secondary-big-padding);
-  border:  var(--button-secondary-border-color) 1px solid;
+  border: var(--button-secondary-border-color) 1px solid;
   @extend .subtitle3-white;
   font-size: var(--button-secondary-big-font-size);
   color: var(--color-primary-800);
   background-color: var(--color-white);
 }
 
-button.big-button:disabled, button.medium-button:disabled, button.small-button:disabled,
-button.big-button[disabled], button.medium-button[disabled], button.small-button[disabled] {
+button.big-button:disabled,
+button.medium-button:disabled,
+button.small-button:disabled,
+button.big-button[disabled],
+button.medium-button[disabled],
+button.small-button[disabled] {
   background-color: var(--light-divider-7);
   color: var(--light-text-disabled);
   cursor: default;

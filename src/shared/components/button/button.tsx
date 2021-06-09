@@ -4,11 +4,12 @@ import React from 'react';
 import {useTranslation} from 'react-i18next';
 import './button.scss';
 
+type ButtonType = 'small' | 'medium' | 'big' | 'secondary-big' | 'secondary' | 'link';
 interface ButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
     label: string,
     type?: 'button' | 'submit' | 'reset'
     disabled?: boolean,
-    buttonType?: 'small' | 'medium' | 'big' | 'secondary-big' | 'secondary',
+    buttonType?: ButtonType,
     icon?: Icon,
     className?: string
 }
@@ -27,7 +28,7 @@ const Button = ({label, type = 'button', disabled = false, buttonType = 'medium'
     const {t} = useTranslation();
 
     const constructButtonClassString = () => {
-        let buttonClassName = `${buttonType}-button`;     
+        let buttonClassName = `${buttonType}-button`;
         if (className) {
             buttonClassName += ` ${className}`;
         }       

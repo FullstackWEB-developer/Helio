@@ -103,7 +103,7 @@
     }
   }
 
-  .required:before {
+  .required::after {
     content: "*";
     color: var(--color-red);
   }
