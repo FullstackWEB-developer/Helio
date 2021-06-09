@@ -85,6 +85,7 @@ const ControlledDateInput = ({
                 max={max}
                 min={min}
                 isCalendarDisabled={isCalendarDisabled}
+                isCalendarPositionComputed={isCalendarPositionComputed}
                 longDateFormat={longDateFormat}
                 label={t(label)}
                 error={control.formState.errors[name]?.message}
