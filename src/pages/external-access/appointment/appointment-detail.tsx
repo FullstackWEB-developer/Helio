@@ -18,7 +18,6 @@ const AppointmentDetail = () => {
     const history = useHistory();
     const dispatch = useDispatch();
     const callUsPhone = process.env.REACT_APP_CALL_US_PHONE;
-    const chatLink = process.env.REACT_APP_CHAT_LINK;
     const defaultTimeFrame = 7;
     const appointment = useSelector(selectSelectedAppointment);
     const appointmentTypes = useSelector(selectAppointmentTypes);
@@ -113,7 +112,7 @@ const AppointmentDetail = () => {
         }
 
         { department?.parkingInformation && <>
-            <div className={classnames({'pt-8': appointmentType?.instructions, 'pt-12': !appointmentType?.instructions})}>
+            <div className={classnames({'pt-8': appointmentType?.instructions, 'pt-20': !appointmentType?.instructions})}>
                 {t('external_access.appointments.parking_information')}
             </div>
             <div className='border-b pt-2'/>
@@ -122,7 +121,7 @@ const AppointmentDetail = () => {
             </div>
         </>
         }
-        <div className='pt-6'>
+        <div className={classnames({'pt-8': department?.parkingInformation, 'pt-20': !department?.parkingInformation})}>
             {t('external_access.appointments.directions')}
         </div>
         <div className='border-b pt-2'/>
