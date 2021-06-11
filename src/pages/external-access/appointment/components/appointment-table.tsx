@@ -21,15 +21,15 @@ const AppointmentTable = ({
 }: AppointmentTableProps) => {
     const {t} = useTranslation();
     return (<div>
-        <div className="px-6 py-4 flex caption-caps appointment-list-header">
-            <div className='flex w-11/12 xl:w-4/12'>{t('external_access.appointments.appointment_list.appointment_date')}</div>
+        <div className="px-6 py-4 flex caption-caps appointment-list-header h-12">
+            <div className='flex w-11/12 xl:w-4/12 items-center'>{t('external_access.appointments.appointment_list.appointment_date')}</div>
             {isDetailsColumnVisible &&
-                <div className='hidden xl:flex w-3/12'>{t('external_access.appointments.appointment_list.details')}</div>
+                <div className='hidden xl:flex w-3/12 items-center'>{t('external_access.appointments.appointment_list.details')}</div>
             }
-            <div className='hidden xl:flex w-3/12'>{t('external_access.appointments.appointment_list.provider')}</div>
-            <div className='hidden xl:flex w-3/12'>{t('external_access.appointments.appointment_list.location')}</div>
+            <div className='hidden xl:flex w-3/12 items-center'>{t('external_access.appointments.appointment_list.provider')}</div>
+            <div className='hidden xl:flex w-3/12 items-center'>{t('external_access.appointments.appointment_list.location')}</div>
             {isActionColumnVisible &&
-                <div className='hidden xl:flex w-3/12'></div>
+                <div className='hidden xl:flex w-3/12 items-center'></div>
             }
         </div>
         {
@@ -48,3 +48,4 @@ const AppointmentTable = ({
 }
 
 export default AppointmentTable;
+

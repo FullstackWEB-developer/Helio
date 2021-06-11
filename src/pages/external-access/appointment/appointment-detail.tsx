@@ -62,6 +62,14 @@ const AppointmentDetail = () => {
                 {t('external_access.appointments.appointment_details')}
             </h4>
         </div>
+        {!displayCancel() && <div className='pt-6 pb-2 w-4/5'>
+            <div className='warning-message body2 px-6 py-3.5 rounded border border-solid'>
+                <Trans i18nKey="external_access.appointments.can_not_be_canceled">
+                    {callUsPhone}
+                </Trans>
+            </div>
+        </div>
+        }
         <div className='pt-6 pb-9'>
             {t('external_access.appointments.see_appointment_details')}
         </div>
@@ -94,17 +102,9 @@ const AppointmentDetail = () => {
             {(appointmentType ? appointmentType?.reschedulable : true) && <Button onClick={() => redirectToReschedule()} buttonType='big' label='external_access.appointments.reschedule' />}
             <Button disabled={!displayCancel()} onClick={() => redirectToCancel()} buttonType='secondary-big' label='common.cancel' />
         </div>
-        { !displayCancel() && <div className='pt-12'>
-            <div className='warning-message p-4 body2'>
-                <Trans i18nKey="external_access.appointments.can_not_be_canceled">
-                    <a rel='noreferrer' className='underline' target='_self' href={chatLink}>Chat</a>
-                    {callUsPhone}
-                </Trans>
-            </div>
-        </div>
-        }
+        
         { appointmentType?.instructions && <>
-            <div className='pt-12'>
+            <div className='pt-20'>
                 {t('external_access.appointments.instructions')}
             </div>
             <div className='border-b pt-2'/>

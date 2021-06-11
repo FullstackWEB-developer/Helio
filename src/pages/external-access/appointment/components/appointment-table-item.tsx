@@ -49,7 +49,7 @@ const AppointmentTableItem = ({data,
     }
 
     const getClassName = () => {
-        return classnames('appointment-table-row px-6 py-4 flex border-b ', {
+        return classnames('appointment-table-row px-6 py-3.5 flex border-b body2 h-12', {
             'cursor-pointer': !!onClick,
             'hover:bg-gray-100': !isRowHoverDisabled
         });
@@ -61,12 +61,12 @@ const AppointmentTableItem = ({data,
                 {getAppointmentDate(data)}
             </div>
             {isDetailsColumnVisible &&
-                <div className='hidden xl:flex w-3/12 pr-1'>{data.patientAppointmentTypeName}</div>
+                <div className='hidden xl:flex w-3/12 pr-1 items-center'>{data.patientAppointmentTypeName}</div>
             }
-            <div className='hidden xl:flex w-3/12 pr-1'>{providerName}</div>
-            <div className='hidden xl:flex w-3/12 pr-1'>{departmentName}</div>
+            <div className='hidden xl:flex w-3/12 pr-1 items-center'>{providerName}</div>
+            <div className='hidden xl:flex w-3/12 pr-1 items-center'>{departmentName}</div>
             {isActionColumnVisible &&
-                <div className='hidden xl:flex w-3/12'>
+                <div className='hidden xl:flex w-3/12 items-center'>
                     <Button
                         buttonType='link'
                         label='external_access.appointments.reschedule'
