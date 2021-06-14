@@ -1,7 +1,7 @@
-import {MedicalRecordPreviewModel} from '@pages/external-access/models/medical-record-preview.model';
+import {DownloadMedicalRecordsProps} from '@pages/patients/services/patients.service';
 
 export interface MedicalRecordsState {
-    data?: MedicalRecordPreviewModel
+    data?: DownloadMedicalRecordsProps
 }
 
 const initialMedicalRecordsState: MedicalRecordsState = {}

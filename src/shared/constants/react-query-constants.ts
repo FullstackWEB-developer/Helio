@@ -31,3 +31,4 @@ export const GetLabResultsProviderPicture = 'get-lab-results-provider-picture';
 export const QueryPatientMedication = 'patient-medication';
 export const QueryDefaultPharmacy = 'default-pharmacy';
 export const QueryPharmacies = 'pharmacies';
+export const CheckMedicalRecordStatus = 'check-medical-record-status';

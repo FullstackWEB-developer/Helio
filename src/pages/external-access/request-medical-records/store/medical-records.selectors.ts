@@ -1,4 +1,4 @@
 import {RootState} from '../../../../app/store';
-import {MedicalRecordPreviewModel} from '@pages/external-access/models/medical-record-preview.model';
+import {DownloadMedicalRecordsProps} from '@pages/patients/services/patients.service';
 
-export const selectRequestMedicalRecordsPreviewData = (state: RootState) => state.externalAccessState.requestMedicalRecordState.data as MedicalRecordPreviewModel;
+export const selectRequestMedicalRecordsPreviewData = (state: RootState) => state.externalAccessState.requestMedicalRecordState.data as DownloadMedicalRecordsProps;

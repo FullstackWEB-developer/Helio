@@ -9,10 +9,7 @@ const MedicalRecordsPreview = () => {
     const previewModel = useSelector(selectRequestMedicalRecordsPreviewData);
     const {isLoading, data, isError, error} = useQuery<string, Error>(PreviewMedicalRecords, () =>
             getMedicalRecordsAsHtml({
-                patientId: previewModel.patientId,
-                departmentId: previewModel.departmentId,
-                startDate: previewModel.startDate,
-                endDate: previewModel.endDate
+                linkId: previewModel.downloadLink
             }), {
             retry: 3
         }

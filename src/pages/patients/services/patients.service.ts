@@ -4,7 +4,7 @@ import Logger from '../../../shared/services/logger';
 import {Dispatch} from '@reduxjs/toolkit';
 import {clearPatient, setError as setPatientError, setLoading, setPatient,} from '@pages/patients/store/patients.slice';
 import {PatientUpdateModel} from '@pages/patients/models/patient-update-model';
-import {MedicalRecordPreviewModel} from '@pages/external-access/models/medical-record-preview.model';
+import {AsyncJobInfo} from '@pages/patients/models/async-job-info.model';
 
 export interface AddNoteProps {
      patientId: number;
@@ -78,6 +78,7 @@ export interface DownloadMedicalRecordsProps {
      isDownload: boolean;
      startDate?: Date;
      endDate?: Date;
+     asHtml: boolean;
 }
 
 export const prepareAndDownloadMedicalRecords = async ({
@@ -87,9 +88,10 @@ export const prepareAndDownloadMedicalRecords = async ({
                                                             isDownload,
                                                             emailAddress,
                                                             startDate,
-                                                            endDate
-                                                       }: DownloadMedicalRecordsProps) => {
-     const url = `${patientsUrl}/${patientId}/documents/medical-records`;
+                                                            endDate,
+                                                            asHtml
+                                                       }: DownloadMedicalRecordsProps) : Promise<AsyncJobInfo> => {
+     const url = `${patientsUrl}/documents/medical-records`;
      let data = {
           'departmentId': departmentId,
           'downloadLink': downloadLink,
@@ -97,14 +99,17 @@ export const prepareAndDownloadMedicalRecords = async ({
           'download': isDownload,
           'startDate': startDate,
           'endDate': endDate,
+          'asHtml': asHtml,
+          'patientId': patientId
      };
-     const response = await Api.post(url, data, {
-          responseType: 'arraybuffer'
-     });
-     if (isDownload) {
-          downloadFileFromData(response.data, `${patientId}_medical_records.zip`);
-     }
+     const response = await Api.post(url, data);
      return response.data;
+}
+
+export const checkMedicalRecordJobStatus = async (messageId: string) : Promise<AsyncJobInfo> => {
+     const url = `${patientsUrl}/documents/medical-records/${messageId}`;
+     const result = await Api.get(url);
+     return result.data;
 }
 
 export const downloadMedicalRecords = async ({linkId} : { linkId: string }) => {
@@ -116,20 +121,9 @@ export const downloadMedicalRecords = async ({linkId} : { linkId: string }) => {
      return response.data;
 }
 
-export const getMedicalRecordsAsHtml = async ({
-                                                  patientId,
-                                                  departmentId,
-                                                  startDate,
-                                                  endDate
-                                             }: MedicalRecordPreviewModel) => {
-     const url = `${patientsUrl}/${patientId}/documents/medical-records`;
-     const response = await Api.get(url, {
-          params: {
-               departmentId,
-               startDate,
-               endDate
-          }
-     });
+export const getMedicalRecordsAsHtml = async ({linkId} : { linkId: string }) => {
+     const url = `${patientsUrl}/documents/medical-records/${linkId}/html`;
+     const response = await Api.get(url);
      return response.data;
 }
 
