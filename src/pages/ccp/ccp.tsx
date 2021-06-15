@@ -77,14 +77,6 @@ const Ccp: React.FC<BoxProps> = ({
             ccpUrl: ccpConfig.connectBaseUrl! + ccpConfig.ccpUrl,
             loginPopup: true, // optional, defaults to `true`
             loginPopupAutoClose: true, // optional, defaults to `true`
-            loginOptions: {
-                // optional, if provided opens login in new window
-                autoClose: true, // optional, defaults to `false`
-                height: 600, // optional, defaults to 578
-                width: 400, // optional, defaults to 433
-                top: 0, // optional, defaults to 0
-                left: 0, // optional, defaults to 0
-            },
             loginUrl: ccpConfig.ccpLoginUrl,
             region: ccpConfig.region,
             softphone: {
