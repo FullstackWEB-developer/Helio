@@ -321,7 +321,7 @@ const RequestRefill = () => {
                     <ControlledSelect
                         name='providerId'
                         control={control}
-                        defaultValue={getDefaultProvider()?.value}
+                        value={getDefaultProvider()}
                         options={providerOptions}
                         data-test-id='request-refill-provider'
                         label={'external_access.medication_refill.select_provider'}
@@ -329,7 +329,7 @@ const RequestRefill = () => {
                     <ControlledSelect
                         name='medication'
                         control={control}
-                        defaultValue={getDefaultMedication()}
+                        value={getDefaultMedication()}
                         options={medicationOptions}
                         data-test-id='request-refill-medication'
                         label={'external_access.medication_refill.select_prescription'}

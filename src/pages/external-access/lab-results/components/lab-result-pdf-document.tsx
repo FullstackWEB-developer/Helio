@@ -81,7 +81,7 @@ const LabResultPdfDocument = ({labResultDetail, provider, providerImage, verifie
         <Document>
             <Page size="A4" wrap={true}>
                 <View style={styles.header} fixed>
-                    <LabResultPdfHeaderLogo />
+                    <LabResultPdfHeaderLogo key={Math.random()} />
                 </View>
                 <View style={styles.container}>
                     <Text style={styles.labTitle}>{labResultDetail?.description || ''}</Text>
