@@ -8,7 +8,7 @@ const RequestRefillConfirmation = () => {
     const {t} = useTranslation();
     const history = useHistory();
 
-    return  <div className='2xl:px-48'>
+    return <div className='2xl:px-48 pt-7 without-default-padding'>
         <div className='flex flex-row pb-5 cursor-pointer' onClick={() => history.goBack()}>
             <SvgIcon type={Icon.ArrowBack} />
             <div className='body2 pl-4'>

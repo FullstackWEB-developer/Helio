@@ -57,6 +57,7 @@ const ControlledSelect = ({
                 onSelect={(option) => onSelected(controllerProps, option)}
                 data-test-id={`${name}-test-id`}
                 label={label}
+                defaultValue={defaultValue}
                 autoComplete={autoComplete}
                 options={options}
                 required={required}

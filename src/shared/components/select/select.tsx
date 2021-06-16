@@ -18,14 +18,15 @@ interface SelectProps {
     order?: boolean;
     assistiveText?: string;
     disabled?: boolean;
+    defaultValue?: Option | string | null;
     required?: boolean;
     onTextChange?: (value: string) => void;
     onSelect?: (option?: Option) => void;
 }
-const Select = React.forwardRef<HTMLDivElement, SelectProps>(({options, order, label, autoComplete = true, ...props}: SelectProps, ref) => {
+const Select = React.forwardRef<HTMLDivElement, SelectProps>(({options, order, label, autoComplete = true, defaultValue = null, ...props}: SelectProps, ref) => {
     const {t}: {t: any} = useTranslation();
     const [open, setOpen] = useState(false);
-    const [selectedOption, setSelectedOption] = useState<Option | null>(null);
+    const [selectedOption, setSelectedOption] = useState<Option | null | undefined>(typeof defaultValue === 'string' ? options.find(a => a.value === defaultValue) : defaultValue);
     const [searchQuery, setSearchQuery] = useState<string | null>(null);
     const [cursor, setCursor] = useState<number>(-1);
     let managedOptions = options && options.length > 0 ? [...options] : [];

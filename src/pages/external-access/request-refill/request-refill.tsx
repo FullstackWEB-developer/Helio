@@ -149,13 +149,8 @@ const RequestRefill = () => {
         };
     }) : [];
 
-    const getDefaultMedication = () => {
-        return medicationOptions?.find(m => m.value === medication.medicationName);
-    }
-
-    const getDefaultProvider = () => {
-        return providerOptions.find(p => p.value === verifiedPatient.defaultProviderId.toString());
-    }
+    const defaultMedication = medicationOptions?.find(m => m.value === medication.medicationName)?.value;
+    const defaultProvider = providerOptions.find(p => p.value === verifiedPatient.defaultProviderId.toString())?.value;
 
     const onPharmacySelectChange = (option?: Option) => {
         if (option) {
@@ -237,7 +232,7 @@ const RequestRefill = () => {
 
     const onSubmit = (data: any) => {
         let internalNote = `"** Prescription `;
-        internalNote += `${data.medication.label} `;
+        internalNote += `${data.medication} `;
         if (defaultPharmacy) {
             internalNote += `**  Pharmacy Information `;
             internalNote += `${defaultPharmacy?.clinicalProviderName} `;
@@ -298,7 +293,7 @@ const RequestRefill = () => {
         return isReadonlyPharmacy ? getPharmacyNameSelect() : getPharmacyNameInput();
     }
 
-    return  <div className='2xl:px-48'>
+    return <div className='2xl:px-48 pt-7 without-default-padding'>
         <div className='flex flex-row pb-5 cursor-pointer' onClick={() => history.goBack()}>
             <SvgIcon type={Icon.ArrowBack} />
             <div className='body2 pl-4'>
@@ -321,7 +316,7 @@ const RequestRefill = () => {
                     <ControlledSelect
                         name='providerId'
                         control={control}
-                        value={getDefaultProvider()}
+                        defaultValue={defaultProvider}
                         options={providerOptions}
                         data-test-id='request-refill-provider'
                         label={'external_access.medication_refill.select_provider'}
@@ -329,7 +324,7 @@ const RequestRefill = () => {
                     <ControlledSelect
                         name='medication'
                         control={control}
-                        value={getDefaultMedication()}
+                        defaultValue={defaultMedication}
                         options={medicationOptions}
                         data-test-id='request-refill-medication'
                         label={'external_access.medication_refill.select_prescription'}
