@@ -69,7 +69,7 @@ const LabResultPdfDocument = ({labResultDetail, provider, providerImage, verifie
             case "low":
                 return 'red';
             default:
-                return 'inherit';
+                return 'black';
         }
     }
 
