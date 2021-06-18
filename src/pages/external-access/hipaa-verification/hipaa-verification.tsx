@@ -16,6 +16,7 @@ import {useDispatch} from 'react-redux';
 import {ExternalAccessRequestTypes} from '../models/external-updates-request-types.enum';
 import './hipaa-verification.scss';
 import ThreeDotsSmallLoader from '@components/skeleton-loader/three-dots-loader';
+import utils from '@shared/utils/utils';
 
 export interface HipaaVerificationProps {
     request: RedirectLink
@@ -113,7 +114,7 @@ const HipaaVerification = ({request}: HipaaVerificationProps) => {
                             isCalendarDisabled
                             required={true}
                             label='external_access.hipaa.dob'
-                            assistiveText='external_access.hipaa.birth_date_format'
+                            assistiveText={utils.getBrowserDatePattern()}
                             control={control}
                             name='dob'
                             max={new Date(new Date().toDateString())}

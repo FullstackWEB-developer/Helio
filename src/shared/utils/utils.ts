@@ -141,7 +141,23 @@ const toISOLocalString = (date?: Date) => {
 const stringJoin = (separator: string, ...params: Array<string | undefined>) => params.join(separator);
 
 const checkIfDateIsntMinValue = (date: string | Date) => {
-    return new Date(date).getFullYear() !== 1; 
+    return new Date(date).getFullYear() !== 1;
+}
+
+const getBrowserDatePattern = () => {
+    const formatter = new Intl.DateTimeFormat().formatToParts();
+    return formatter.map((part) => {
+        switch (part.type) {
+            case 'month':
+                return 'MM';
+            case 'day':
+                return 'DD';
+            case 'year':
+                return 'YYYY';
+            default:
+                return part.value;
+        }
+    }).join('');
 }
 
 const utils = {
@@ -160,7 +176,8 @@ const utils = {
     toShortISOLocalString,
     toISOLocalString,
     stringJoin,
-    checkIfDateIsntMinValue
+    checkIfDateIsntMinValue,
+    getBrowserDatePattern
 };
 
 export default utils;

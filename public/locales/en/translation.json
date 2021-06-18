@@ -542,12 +542,14 @@
       "select_your_appointment": "Select Your Appointment.",
       "below_available_appointments": "Below are available appointments, starting with first available date.",
       "date": "Date",
-      "confirm_reschedule_appointment": "Confirm Appointment",
+      "confirm_reschedule_appointment": "Reschedule Appointment",
       "reschedule_appointment_error": "There is an error when reschedule appointment. ",
       "no_slots_found": "No open slot found for this range, please select any other date range.",
       "no_day_slots_found": "No open slot found for this day, please select any other date.",
       "appointment_scheduled": "Thank you. Your appointment is scheduled.",
-      "select_business_day": "Select business day, please."
+      "select_business_day": "Select business day, please.",
+      "new_appointment_date_time":"New Appointment date and time",
+      "reschedule_appointment_title":"Reschedule Appointment"
     },
     "medical_records_request": {
       "title": "Your Medical Record",

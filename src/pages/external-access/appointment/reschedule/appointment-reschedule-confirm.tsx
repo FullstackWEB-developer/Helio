@@ -80,11 +80,14 @@ const AppointmentRescheduleConfirm = () => {
     return  <div className='2xl:px-48'>
         <div className='2xl:whitespace-pre 2xl:h-12 2xl:my-3 flex w-full items-center'>
             <h4>
-                {utils.formatUtcDate(appointmentSlot.date, 'dddd, MMM DD, YYYY')}
+                {t('external_access.appointments.reschedule_appointment_title')}
             </h4>
         </div>
-        <h5 className='pt-7 pb-2'>
-            {dayjs(appointmentSlot.startTime, 'HH:mm').format('h:mm A')}
+        <div className="pt-7">
+            {t('external_access.appointments.new_appointment_date_time')}
+        </div>
+        <h5 className='pb-2'>
+            {utils.formatUtcDate(appointmentSlot.date, 'dddd, MMM DD, YYYY')} {dayjs(appointmentSlot.startTime, 'HH:mm').format('[at] h:mm A')}
         </h5>
         {provider && <div className='pb-8'>
             {t('external_access.appointments.withDoctor', {
@@ -104,11 +107,12 @@ const AppointmentRescheduleConfirm = () => {
             {t('external_access.appointments.reschedule_appointment_error')} {errorMessage}
         </div>}
         <div className='pt-12 flex flex-col xl:flex-row xl:space-x-6 space-x-0 space-y-6 xl:space-y-0'>
+            <Button onClick={() => history.goBack()} buttonType='secondary-big' label='common.back' />
+
             <Button onClick={() => confirmAppointment()}
                     buttonType='big'
                     disabled={isAppointmentRescheduled}
                     label='external_access.appointments.confirm_reschedule_appointment' />
-            <Button onClick={() => history.goBack()} buttonType='secondary-big' label='common.back' />
         </div>
     </div>
 }

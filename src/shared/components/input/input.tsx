@@ -170,7 +170,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({
 
             {!!assistiveText && !props.error && !isLoading && <div
                 className={`h-6 pl-4 body3 pt-1 truncate ${isFocused ? 'assistive-text-focus' : ''}`}>{t(assistiveText)}</div>}
-            {props.error && <div className={'h6 pl-4 body3 pt-1 text-danger truncate'}>{t(props.error)}</div>}
+            {props.error && <div className={'h6 pl-4 body3 pt-1 text-danger'}>{t(props.error)}</div>}
         </div>
     );
 })
