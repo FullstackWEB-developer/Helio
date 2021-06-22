@@ -220,7 +220,7 @@ const RequestMedicalRecords = () => {
             <Tabs>
                 <Tab title={t('external_access.medical_records_request.download_tab_header')}>
                     <div className='pt-8'>
-                        <div>
+                        <div className='body2'>
                             {t('external_access.medical_records_request.download_info')}
                         </div>
                         <div className='flex flex-row space-x-6 pt-6'>
@@ -238,7 +238,7 @@ const RequestMedicalRecords = () => {
                 </Tab>
                 <Tab title={t('external_access.medical_records_request.share_tab_header')}>
                     <div className='pt-8'>
-                        <div>
+                        <div className='body2'>
                             {t('external_access.medical_records_request.email_info')}
                         </div>
                         <div className='pt-2 w-3/5'>
