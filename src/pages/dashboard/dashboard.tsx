@@ -3,7 +3,6 @@ import {useQuery} from 'react-query';
 import {GetDashboard} from '@constants/react-query-constants';
 import {getDashboardData} from '@pages/tickets/services/tickets.service';
 import {DashboardResponse} from '@pages/dashboard/models/dashboardResponse';
-import ThreeDots from '@components/skeleton-loader/skeleton-loader';
 import {useTranslation} from 'react-i18next';
 import './dashboard.scss';
 import {DropdownModel} from '@components/dropdown/dropdown.models';
@@ -54,7 +53,7 @@ export const Dashboard = () => {
 
     const refreshDashboard = () => {
         setTimeout(() => {
-            refetch();
+            refetch().then();
         }, 300);
     }
 
@@ -73,10 +72,6 @@ export const Dashboard = () => {
             setDisplayTimeFrameDropdown(false);
             refreshDashboard();
         }
-    }
-
-    if (isLoading) {
-        return <ThreeDots/>;
     }
 
     if (error) {
@@ -204,7 +199,7 @@ export const Dashboard = () => {
                 </div>
                 { isWallboard ?
                     <Wallboard lastUpdateTime={lastUpdateTime} /> :
-                    <DashboardContent data={dashboardInformation} />
+                    <div className={isFetching || isLoading ? 'opacity-40' : ''}><DashboardContent data={dashboardInformation} /></div>
                 }
             </div>
         </div>

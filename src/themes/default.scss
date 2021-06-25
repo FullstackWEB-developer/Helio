@@ -35,8 +35,8 @@
 
 
   //Chart colors:
-  --chart-color-1: #2D9FFB;
-  --chart-color-2: #00CC88;
+  --chart-color-1: #00CC88;
+  --chart-color-2: #2D9FFB;
   --chart-color-3: #734DEA;
   --chart-color-4: #FDBC45;
   --chart-color-5: #F5935E;
@@ -314,7 +314,7 @@
   --note-context-created-by-color: rgba(0, 0, 0, 0.45);
 
   --dashboard-background: rgba(0, 0, 0, 0.02);
-  --dashboard-tickets-by-channel-row: var(--chart-color-1);
+  --dashboard-tickets-by-channel-row: var(--chart-color-2);
   --dashboard-tickets-by-channel-row-bg: rgb(0, 0, 0, 0.07);
   --dashboard-dropdown-arrows: rgb(0, 0, 0, 0.5);
   --wallboard-agent-table-item-background: rgba(0, 0, 0, 0.04);

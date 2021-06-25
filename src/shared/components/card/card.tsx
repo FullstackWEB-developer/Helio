@@ -1,16 +1,21 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 import './card.scss';
+import classnames from 'classnames';
 
 export interface CardProps {
     title?: string;
     children: React.ReactNode;
     extra?: React.ReactNode;
+    hasBorderRadius?: boolean
 }
 
-const Card = ({title, children, extra}: CardProps) => {
+const Card = ({title, children, extra, hasBorderRadius = false}: CardProps) => {
     const {t} = useTranslation();
-    return <div className='card w-full'>
+    const cardClass = classnames('card w-full', {
+        'rounded-xl' : hasBorderRadius
+    });
+    return <div className={cardClass}>
         { title &&
         <div className='h-14 px-6 pt-5 h7 w-full flex justify-between'>
             <div>

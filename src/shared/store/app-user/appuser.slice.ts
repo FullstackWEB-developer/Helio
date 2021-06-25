@@ -28,6 +28,9 @@ const appUserSlice = createSlice({
             state.agentStates = payload;
         },
         addLiveAgentStatus(state, {payload}: PayloadAction<UserStatusUpdate>) {
+            if (!state.liveAgentStatuses) {
+                state.liveAgentStatuses = [];
+            }
             state.liveAgentStatuses = state.liveAgentStatuses.filter(a => a.userId !== payload.userId);
             const currentAgent = state.liveAgentStatuses.find(a => a.userId === payload.userId);
             if (!currentAgent) {

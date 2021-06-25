@@ -759,17 +759,21 @@
     "tickets_volume": {
       "title": "Tickets Volume",
       "open": "Open",
-      "closed": "Closed"
+      "closed": "Closed",
+      "Open_tickets": "Open Tickets:",
+      "Closed_tickets": "Closed Tickets:"
     },
     "by_priority": {
-      "title": "Open Tickets By Priority"
+      "title": "Open Tickets By Priority",
+      "tooltip_title": "Priority"
     },
     "by_channel": {
       "title": "Tickets By Channel"
     },
     "by_reason": {
       "title": "Tickets By Reason",
-      "label_others": "Other"
+      "label_others": "Other",
+      "tooltip_title": "Reason"
     },
     "response_time": {
       "title": "Response Time",

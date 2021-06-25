@@ -26,16 +26,17 @@ const TicketsPriorityChart = ({data}: TicketsPriorityChartProps) => {
         }
     });
     const ChartItem = ({item, index}: { item: BasicStatistic, index: number }) => {
-        return <div className='flex flex-row w-full items-center justify-center' key={item.label.toString()}>
-            <div className='h-2 w-2 rounded-xl' style={{backgroundColor: getPieChartColor(index)}}/>
-            <div className='pl-2.5 w-32 truncate'>{item.label}</div>
-            <div className='w-10'>{item.value}</div>
-            <div className='w-10'>{Math.round(item.percentage * 100) / 100}%</div>
+        return <div key={item.label.toString()} className='px-20  grid grid-cols-12 gap-2 items-center'>
+            <div className='col-start-3 h-2.5 w-2.5 rounded-xl' style={{backgroundColor: getPieChartColor(index)}}/>
+            <div className='col-span-4'>{item.label}</div>
+            <div className='col-span-2'>{item.value}</div>
+            <div className='col-span-2'>{Math.round(item.percentage * 100) / 100}%</div>
         </div>
     }
+
     return <div>
-        <div className='h-40'>
-            <DashboardPieChart data={convertedData}/>
+        <div className='h-48'>
+            <DashboardPieChart data={convertedData} tooltipTitle='dashboard.by_priority.tooltip_title'/>
         </div>
         <div className='h-72 flex flex-col space-y-4 pt-10'>
             {convertedData.map((item, i) => <ChartItem key={item.label.toString()} item={item} index={i}/>)}

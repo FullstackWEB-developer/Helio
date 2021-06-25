@@ -1,10 +1,10 @@
-import {ResponsiveLine, Serie} from '@nivo/line'
+import {Point, ResponsiveLine, Serie} from '@nivo/line'
 import {useTranslation} from 'react-i18next';
 import {TicketVolumeData} from '@pages/dashboard/models/ticket-volume-data.model';
 import dayjs from 'dayjs';
 import {BasicStatistic} from '@pages/dashboard/models/basic-statistic.model';
 import {DashboardColors} from '@pages/dashboard/utils/dashboard-utils';
-
+import './tickets-volume-chart.scss';
 export interface TicketsVolumeChartProps {
     data: TicketVolumeData;
 }
@@ -27,7 +27,7 @@ const TicketsVolumeChart = ({data}: TicketsVolumeChartProps) => {
             data: data.createdTotal.map(item => {
                 return {
                     x: dayjs(item.label).format('YYYY-MM-DD'),
-                    y: item.value | 0
+                    y: item.value
                 }
             })
         },
@@ -36,7 +36,7 @@ const TicketsVolumeChart = ({data}: TicketsVolumeChartProps) => {
             data: data.closedTotal.map(item => {
                 return {
                     x: dayjs(item.label).format('YYYY-MM-DD'),
-                    y: item.value | 0
+                    y: item.value
                 }
             })
         }
@@ -65,21 +65,42 @@ const TicketsVolumeChart = ({data}: TicketsVolumeChartProps) => {
         return <div
             className='w-full px-6 space-y-4 tickets-by-channel-body justify-center items-center flex'>{t('dashboard.no_data_found')}</div>
     }
+
+    const ChartTooltip = ({point}: {point: Point}) => {
+        return <div className='flex flex-col bg-white border rounded-md px-2 py-2 shadow-md line-chart-tool-tip'>
+            <div className='body3'>
+                {dayjs(point.data.x).format('MMM D')}
+            </div>
+            <div>
+                <div key={point.id} className='flex flex-row items-center'>
+                    <div style={{backgroundColor: point.serieColor}} className='rounded-md w-2 h-2'/>
+                    <div className='body3-medium pl-2'>{t(`dashboard.tickets_volume.${point.serieId}_tickets`)}</div>
+                    <div className='body2 pl-2'>{point.data.y}</div>
+                </div>
+            </div>
+        </div>
+    }
+
     return <ResponsiveLine
         data={convertedData}
+        enableSlices={false}
+        useMesh={true}
         margin={{top: 10, right: 110, bottom: 100, left: 60}}
         xScale={{format: "%Y-%m-%d", type: "time"}}
         xFormat="time:%Y-%m-%d"
         yFormat=" >-.0f"
+        enableCrosshair={false}
         curve='catmullRom'
-        pointSize={6}
+        pointSize={14}
         colors={DashboardColors()}
-        pointColor={{theme: 'background'}}
-        pointBorderWidth={5}
-        pointBorderColor={{from: 'serieColor'}}
+        pointColor={{from: 'color'}}
+        areaOpacity={0.2}
+        pointBorderWidth={2.2}
+        pointBorderColor='white'
+        lineWidth={4}
         enableGridX={false}
         pointLabelYOffset={-12}
-        useMesh={true}
+        tooltip={({ point }) => <ChartTooltip point={point}/>}
         enableArea={true}
         axisBottom={{
             tickValues: "every 1 day",

@@ -18,7 +18,7 @@ const DashboardContent = (dataInput: DashboardContentProps) => {
     const {data} = dataInput;
     return <div className='grid grid-cols-1 lg:grid-cols-12'>
         <div className='flex flex-col col-span-12 lg:col-span-8'>
-            <Card title='dashboard.ticket_stats.title'>
+            <Card hasBorderRadius title='dashboard.ticket_stats.title'>
                 <div className='flex flex-col'>
                     <div className='flex flex-col xl:flex-row justify-around h-24'>
                         <div>
@@ -49,9 +49,11 @@ const DashboardContent = (dataInput: DashboardContentProps) => {
                         </div>
                     </div>
                     <div className='border-t'>
-                        <Card title='dashboard.tickets_volume.title'>
-                            <div className='h-80'>
-                                <TicketsVolumeChart data={data.volumes}/>
+                        <Card hasBorderRadius={true} title='dashboard.tickets_volume.title'>
+                            <div>
+                                <div className='h-80'>
+                                    <TicketsVolumeChart data={data.volumes}/>
+                                </div>
                             </div>
                         </Card>
                     </div>
@@ -60,12 +62,12 @@ const DashboardContent = (dataInput: DashboardContentProps) => {
             <div
                 className='pt-8 flex flex-row flex flex-col xl:flex-row space-y-8 xl:space-y-0 xl:space-x-8 grid grid-cols-1 lg:grid-cols-12'>
                 <div className='col-span-12 lg:col-span-6'>
-                    <Card title='dashboard.by_priority.title'>
+                    <Card hasBorderRadius title='dashboard.by_priority.title'>
                         <TicketsPriorityChart data={data.priorities}/>
                     </Card>
                 </div>
                 <div className='col-span-12 lg:col-span-6'>
-                    <Card title='dashboard.by_reason.title'>
+                    <Card hasBorderRadius title='dashboard.by_reason.title'>
                         <TicketsReasonChart data={data.reasons}/>
                     </Card>
                 </div>
@@ -73,20 +75,20 @@ const DashboardContent = (dataInput: DashboardContentProps) => {
         </div>
         <div className='col-span-12 px-0 py-8 xl:py-0 xl:px-8 lg:col-span-4 xl:space-y-8 space-y-0'>
             <div>
-                <Card title='dashboard.ratings.title'>
+                <Card hasBorderRadius title='dashboard.ratings.title'>
                     <div className='h-64'>
                         <RatingsWidget data={data.ratingStats}/>
                     </div>
                 </Card>
             </div>
             <div>
-                <Card title='dashboard.response_time.title'>
+                <Card hasBorderRadius title='dashboard.response_time.title'>
                     <div className='h-32'>
                         <TicketResponseTimeWidget data={data.times}/>
                     </div>
                 </Card>
             </div>
-            <div><Card title='dashboard.by_channel.title'>
+            <div><Card hasBorderRadius title='dashboard.by_channel.title'>
                 <div>
                     <TicketsByChannelsWidget data={data.channels}/>
                 </div>

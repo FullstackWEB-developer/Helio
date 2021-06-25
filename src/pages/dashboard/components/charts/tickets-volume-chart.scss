@@ -1,0 +1,25 @@
+.line-chart-tool-tip {
+  position: relative;
+  margin: 0.5rem;
+  padding: 0.4rem;
+  box-sizing: border-box;
+  background: var(--color-white);
+  box-shadow: 0 0.2rem 0.2rem 0 rgba(0, 0, 0, 0.1);
+}
+.line-chart-tool-tip::after{
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  bottom: -0.8rem;
+  margin-left: -0.6rem;
+  left: 50%;
+  box-sizing: border-box;
+  border: 0.4rem solid var(--color-white);
+  border-color: transparent transparent var(--color-white) var(--color-white);
+
+  transform-origin: 0 0;
+  transform: rotate(-45deg);
+
+  box-shadow: -0.3rem 0.3rem 0.3rem 0 rgba(0, 0, 0, 0.1);
+}
