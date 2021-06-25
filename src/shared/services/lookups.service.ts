@@ -13,9 +13,11 @@ import Logger from './logger';
 import store from '../../app/store';
 import {setFailure} from '@pages/tickets/store/tickets.slice';
 import {User} from '../models/user';
-import {QueueuMetric} from '../models/queue-metric.model';
+import {QueueMetric} from '../models/queue-metric.model';
 import {QuickConnectExtension} from '../models/quick-connect-extension';
 import {QueueCurrentMetricQuery} from "@shared/models/queue-current-metric-query";
+import {PerformanceMetric} from '@pages/dashboard/models/performance-metric.model';
+import {AgentStatus} from '@shared/models/agent-status.model';
 
 const logger = Logger.getInstance();
 
@@ -92,14 +94,28 @@ export const getUserList = () => {
     };
 };
 
-export const getQueueStatus = async (query?: QueueCurrentMetricQuery) => {
+export const getQueueStatus = async (query?: QueueCurrentMetricQuery) : Promise<QueueMetric[]> => {
     let url = '/lookups/queue-metrics';
-    if (query) {
-        url = url + `?agentUsername=${query.agentUsername}`;
-    }
 
+    const response = await Api.get(url, {
+        params: {
+            agentUsername: query?.agentUsername,
+            grouping: query?.grouping
+        }
+    });
+    return response.data;
+};
+
+export const getAgentsStatus = async () : Promise<AgentStatus[]> => {
+    let url = '/lookups/agents-status';
     const response = await Api.get(url);
-    return response.data as QueueuMetric[];
+    return response.data;
+};
+
+export const GetTodaysPerformanceMetrics = async () : Promise<PerformanceMetric[]> => {
+    let url = '/lookups/queue-history';
+    const response = await Api.get(url);
+    return response.data as PerformanceMetric[];
 };
 
 export const getMetricOptions = () => {

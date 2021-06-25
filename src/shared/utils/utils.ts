@@ -20,6 +20,9 @@ const formatPhone = (phone: string) => {
         return '';
     }
     phone = phone.replaceAll('-', '');
+    if (phone && phone.startsWith('+1')) {
+        phone = phone.substring(2);
+    }
     if (phone && phone.length >= 10) {
 
         return `(${phone.slice(0, 3)}) ${phone.slice(3, 6)}-${phone.slice(6, phone.length)}`;
@@ -160,6 +163,20 @@ const getBrowserDatePattern = () => {
     }).join('');
 }
 
+const groupBy = (list: any[], keyGetter: (item: any) => string) : Map<string, any[]> => {
+    const map = new Map();
+    list.forEach((item) => {
+        const key = keyGetter(item);
+        const collection = map.get(key);
+        if (!collection) {
+            map.set(key, [item]);
+        } else {
+            collection.push(item);
+        }
+    });
+    return map;
+}
+
 const utils = {
     getWindowCenter,
     formatUtcDate,
@@ -177,7 +194,8 @@ const utils = {
     toISOLocalString,
     stringJoin,
     checkIfDateIsntMinValue,
-    getBrowserDatePattern
+    getBrowserDatePattern,
+    groupBy
 };
 
 export default utils;

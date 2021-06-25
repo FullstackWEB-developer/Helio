@@ -783,5 +783,55 @@
       "neutral": "Neutral",
       "unsatisfied": "Unsatisfied"
     }
+  },
+  "wallboard": {
+    "refresh_after": "Wallboard will be refreshed in {{time}}",
+    "performance_today" : {
+      "title": "Performance Today",
+      "call_tab_title": "Calls",
+      "chat_tab_title": "Chats",
+      "total": "Total",
+      "inbound": "Inbound",
+      "outbound": "Outbound",
+      "callbacks": "Callbacks",
+      "aht": "AHT",
+      "answered": "Answered",
+      "missed": "Missed",
+      "abandoned": "Abandoned",
+      "awt": "AWT",
+      "hold_time": "Hold Time"
+    },
+    "realtime_status_summary": {
+      "title": "Real-Time Status",
+      "on_contact": "On Contact",
+      "in_queue": "In Queue",
+      "lwt": "LWT",
+      "unavailable": "Unavailable",
+      "available": "Available"
+    },
+    "realtime_status": {
+      "title": "Real-Time Status",
+      "all_channels_tab_title": "All Channels",
+      "call_tab_title": "Calls",
+      "chats_tab_title": "Chats",
+      "queue": "Queue",
+      "on_contact": "On Contact",
+      "in_queue": "In Queue",
+      "lwt": "LWT",
+      "awt": "AWT",
+      "agents_online": "Agents Online",
+      "agents_available": "Agents Available",
+      "npt": "Npt",
+      "acw": "Acw"
+    },
+    "agent_status": {
+      "title": "Agent Status",
+      "agent_name": "Agent Name",
+      "status": "Status",
+      "duration": "Duration",
+      "live_calls": "Live Calls",
+      "live_chats": "Live Chats",
+      "show_all": "Show All"
+    }
   }
 }

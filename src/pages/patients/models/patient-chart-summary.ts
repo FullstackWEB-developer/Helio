@@ -1,6 +1,6 @@
 import { ChartInsurance } from './chart-insurance';
 import { PatientOutstandingBalance } from './patient-outstanding-balance';
-import { Appointment } from '../../external-access/appointment/models/appointment.model';
+import { Appointment } from '@pages/external-access/appointment/models';
 import { PatientCase } from './patient-case';
 import { ChartAlert} from './chart-alert';
 export interface PatientChartSummary {

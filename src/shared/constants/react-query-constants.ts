@@ -32,3 +32,5 @@ export const QueryPatientMedication = 'patient-medication';
 export const QueryDefaultPharmacy = 'default-pharmacy';
 export const QueryPharmacies = 'pharmacies';
 export const CheckMedicalRecordStatus = 'check-medical-record-status';
+export const GetTodaysPerformanceMetricsRequest = 'get-today-performance-metric';
+export const GetAgentStatus = 'get-agents-status';

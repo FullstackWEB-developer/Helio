@@ -3,25 +3,29 @@ import {useTranslation} from 'react-i18next';
 import ThreeDotsSmallLoader from '@components/skeleton-loader/three-dots-loader';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
+import {DashboardTypes} from '@pages/dashboard/enums/dashboard-type.enum';
+import classnames from 'classnames';
 
 export interface CountdownTimerProps {
     onTimerEnd: () => void;
-    isLoading: boolean
+    isLoading: boolean,
+    type: DashboardTypes
 }
 
-const CountdownTimer = ({onTimerEnd, isLoading}: CountdownTimerProps) => {
+const CountdownTimer = ({onTimerEnd, isLoading, type}: CountdownTimerProps) => {
     dayjs.extend(duration);
-    const refreshInterval = 3 * 60;
+    const WallboardRefreshIntervalInMinutes = 1;
+    const DashboardRefreshIntervalInMinutes = 3;
     const {t} = useTranslation();
-    const [leftSeconds, setLeftSeconds] = useState<number>(refreshInterval);
-
+    const [interval, setInterval] = useState<number>(DashboardRefreshIntervalInMinutes * 60);
+    const [leftSeconds, setLeftSeconds] = useState<number>(interval);
     useEffect(() => {
         let isMounted = true;
         setTimeout(() => {
             if (isMounted) {
                 setLeftSeconds(leftSeconds - 1);
                 if (leftSeconds <= 0) {
-                    setLeftSeconds(refreshInterval);
+                    setLeftSeconds(interval);
                     onTimerEnd();
                 }
             }
@@ -31,6 +35,12 @@ const CountdownTimer = ({onTimerEnd, isLoading}: CountdownTimerProps) => {
             isMounted = false;
         };
     });
+
+    useEffect(() => {
+        const newInterval = type === DashboardTypes.wallboard ? WallboardRefreshIntervalInMinutes * 60 : DashboardRefreshIntervalInMinutes * 60;
+        setInterval(newInterval);
+        setLeftSeconds(newInterval);
+    }, [type]);
 
     const getTimeLeft = () => {
         const duration = dayjs.duration(leftSeconds, 'seconds');
@@ -42,7 +52,10 @@ const CountdownTimer = ({onTimerEnd, isLoading}: CountdownTimerProps) => {
             <ThreeDotsSmallLoader className="three-dots-loader-small" cx={13} cxSpace={23} cy={16}/>
         </div>
     }
-    return <div className='body2-medium'>{t('dashboard.refresh_after', {time: getTimeLeft()})}</div>
+    const messageClass = classnames('body2-medium', {
+        'pt-8': type === DashboardTypes.wallboard
+    });
+    return <div className={messageClass}>{t(`${type === DashboardTypes.wallboard ? 'wallboard' : 'dashboard'}.refresh_after`, {time: getTimeLeft()})}</div>
 }
 
 export default CountdownTimer;

@@ -19,7 +19,7 @@ const LabResultDetailProviderComment = ({labResultDetail}: {labResultDetail: Lab
             <span className='subtitle pb-5'>{t('external_access.lab_results.providers_comment')}</span>
             <div className='flex flex-row items-start'>
                 {
-                    data && <img src={data} className='mr-6 h-24 w-24 lab-results-provider-picture' alt='provider-photo' />
+                    data && <img src={data} className='mr-6 h-24 w-24 lab-results-provider-picture' alt='provider' />
                 }
                 <div className='flex flex-col'>
                     <span className='subtitle2 pb-3'>{provider?.displayName || ''}</span>

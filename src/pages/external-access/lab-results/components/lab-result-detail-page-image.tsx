@@ -25,7 +25,7 @@ const LabResultDetailPageImage = ({page, labResultId}: {page: LabResultDetailPag
         <div className='w-full'>
             {
                 data?.contentType && data?.content &&
-                <img className='w-full object-contain' src={`data:${determineContentType()};base64,${data.content}`} />
+                <img alt='lab result' className='w-full object-contain' src={`data:${determineContentType()};base64,${data.content}`} />
             }
         </div>
     )

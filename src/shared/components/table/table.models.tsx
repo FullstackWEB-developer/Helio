@@ -9,6 +9,7 @@ export interface TableModel {
     title?: TableTitleModel;
     headerClassName?: string,
     wrapperClassName?: string;
+    rowClass?:string;
 }
 
 export interface TableColumnModel {
@@ -17,7 +18,8 @@ export interface TableColumnModel {
     rowClassname?: string;
     widthClass: string;
     field: string;
-    alignment?: 'start' | 'end' | 'center'
+    alignment?: 'start' | 'end' | 'center',
+    render?: (field: any, row: any) => ReactNode;
 }
 
 export interface TableTitleModel {

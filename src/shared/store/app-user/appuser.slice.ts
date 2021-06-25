@@ -3,6 +3,8 @@ import initialState from './appuser.initial-state';
 import {AuthenticationInfo, UserStatus} from './app-user.models';
 import {AgentState} from '@shared/models/agent-state';
 import {LogStream} from '@aws-sdk/client-cloudwatch-logs';
+import {UserStatusUpdate} from '@shared/models/user-status-update.model';
+import {LiveAgentStatusInfo} from '@shared/models/live-agent-status-info.model';
 const appUserSlice = createSlice({
     name: 'appuser',
     initialState,
@@ -25,13 +27,62 @@ const appUserSlice = createSlice({
         setAgentStates(state, {payload}: PayloadAction<AgentState[]>) {
             state.agentStates = payload;
         },
+        addLiveAgentStatus(state, {payload}: PayloadAction<UserStatusUpdate>) {
+            state.liveAgentStatuses = state.liveAgentStatuses.filter(a => a.userId !== payload.userId);
+            const currentAgent = state.liveAgentStatuses.find(a => a.userId === payload.userId);
+            if (!currentAgent) {
+                const agentInfo = convertUserStatusUpdateToLiveAgentStatus(payload);
+                if (agentInfo) {
+                    state.liveAgentStatuses.push(agentInfo);
+                }
+            }
+        },
         setLogStream(state, {payload}: PayloadAction<LogStream>) {
             state.logStream = payload;
         }
     }
 });
 
-export const {setAuthentication, logOut, loginInitiated, setLoginLoading, updateUserStatus, setAgentStates,
-    setLogStream} = appUserSlice.actions
+const convertUserStatusUpdateToLiveAgentStatus = (payload: UserStatusUpdate) : LiveAgentStatusInfo | null => {
+
+    let data : LiveAgentStatusInfo = {
+        status: payload.status,
+        userId: payload.userId,
+        timestamp: payload.timestamp,
+        chats: [],
+        calls: []
+    };
+    if (payload.activities && payload.activities.length > 0) {
+        const activityType = payload.activities[0].channel;
+        if (activityType === 'CHAT') {
+            data.chats =  payload.activities.map((a) => {
+                return {
+                    timestamp: a.timestamp,
+                    customerData: a.customerData
+                }
+            });
+        } else if (activityType === 'VOICE') {
+            data.calls =  payload.activities.map((a) => {
+                return {
+                    timestamp: a.timestamp,
+                    customerData: a.customerData
+                }
+            });
+        }
+    }
+
+    return data;
+}
+
+export const {
+    setAuthentication,
+    logOut,
+    loginInitiated,
+    setLoginLoading,
+    updateUserStatus,
+    setAgentStates,
+    setLogStream,
+    addLiveAgentStatus
+} = appUserSlice.actions
 
 export default appUserSlice.reducer

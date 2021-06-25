@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {getMetricOptions, getQueueStatus,} from '../../services/lookups.service';
 import {selectMetricOptions} from '../../store/lookups/lookups.selectors';
-import {QueueuMetric} from '../../models/queue-metric.model';
+import {QueueMetric} from '../../models/queue-metric.model';
 import Dropdown from '../../components/dropdown/dropdown';
 import {DropdownModel} from '@components/dropdown/dropdown.models';
 import {TableModel} from '@components/table/table.models';
@@ -28,12 +28,12 @@ const QueueStatus = ({queueType}: QueueStatusProps) => {
     const dispatch = useDispatch();
     const {t: translate} = useTranslation();
     const metricOptions = useSelector(selectMetricOptions);
-    const [activeMetric, setMetric] = useState<QueueuMetric[]>([]);
+    const [activeMetric, setMetric] = useState<QueueMetric[]>([]);
     const {username} = useSelector(authenticationSelector);
     const latestUserUpdateTime = useSelector(selectLatestUsersStatusUpdateTime);
     const [selectedOption, setSelectedOption] = useState<KeyValuePair | undefined>();
 
-    const {isLoading, error, data: quickConnectExtensions, refetch} = useQuery<QueueuMetric[],
+    const {isLoading, error, data: quickConnectExtensions, refetch} = useQuery<QueueMetric[],
         Error>([QueryQueueMetrics, queueType, username], () => queueType === QueueStatusType.AllQueues
         ? getQueueStatus()
         : getQueueStatus({

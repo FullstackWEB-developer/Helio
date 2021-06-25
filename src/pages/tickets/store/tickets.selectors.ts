@@ -7,7 +7,6 @@ import {Paging} from '@shared/models/paging.model';
 import {TicketEnum} from '../models/ticket-enum.model';
 import {TicketEnumValue} from '../models/ticket-enum-value.model';
 import {TicketListQueryType} from '../models/ticket-list-type';
-import {TicketStatuses} from '@pages/tickets/models/ticket.status.enum';
 import {Option} from '@components/option/option';
 import {TicketUpdateModel} from '@pages/tickets/models/ticket-update.model';
 import {TicketQuery} from '@pages/tickets/models/ticket-query';

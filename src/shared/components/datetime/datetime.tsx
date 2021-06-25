@@ -1,7 +1,5 @@
 import React, {Fragment, useEffect, useState} from 'react';
-import {useTranslation} from 'react-i18next';
-import {Controller, useForm} from 'react-hook-form';
-import DateTimeInput from '../date-time-input/date-time-input';
+import {useForm} from 'react-hook-form';
 import Button from '../button/button';
 import utils from '../../utils/utils';
 import ControlledTimeInput from '@components/controllers/ControlledTimeInput';
@@ -16,8 +14,7 @@ interface DateTimeProps extends React.HTMLAttributes<HTMLElement> {
 }
 
 const DateTime = React.forwardRef<HTMLElement, DateTimeProps>(({isVisible, placeholderDate, placeholderTime, ...props}: DateTimeProps, ref) => {
-    const {t} = useTranslation();
-    const {handleSubmit, control, errors} = useForm();
+    const {handleSubmit, control} = useForm();
     const [visible, setVisible] = useState(false);
 
     useEffect(() => {

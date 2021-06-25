@@ -1,3 +1,6 @@
+import {MetricGrouping} from '@shared/models/metric-grouping.enum';
+
 export interface QueueCurrentMetricQuery {
-    agentUsername?: string
+    agentUsername?: string,
+    grouping? :MetricGrouping
 }

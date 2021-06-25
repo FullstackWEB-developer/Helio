@@ -2,6 +2,7 @@ import {RootState} from '../../../app/store';
 import {createSelector} from '@reduxjs/toolkit';
 import {UserStatus} from './app-user.models';
 import {AgentState} from '@shared/models/agent-state';
+import {LiveAgentStatusInfo} from '@shared/models/live-agent-status-info.model';
 
 export const appUserState = (state: RootState) => state.appUserState
 
@@ -33,4 +34,8 @@ export const selectAccessToken = createSelector(
 export const selectAgentStates = createSelector(
     appUserState,
     state => state.agentStates as AgentState[]
+)
+export const selectLiveAgentStatuses = createSelector(
+    appUserState,
+    state => state.liveAgentStatuses as LiveAgentStatusInfo[]
 )

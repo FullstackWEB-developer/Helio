@@ -16,11 +16,12 @@ const Table = ({model}: Table2Props) => {
         hasRowsBottomBorder,
         title,
         isCompact = false,
-        wrapperClassName = ''
+        wrapperClassName = '',
+        rowClass
     } = model;
     const rowContent = React.Children.toArray(rows.map(row => {
         return <div className={hasRowsBottomBorder ? 'border-b' : ''}>
-            <TableRow isCompact={isCompact} columns={columns} data={row}/>
+            <TableRow rowClass={rowClass} isCompact={isCompact} columns={columns} data={row}/>
         </div>
     }));
     return <div className={`flex flex-col ${wrapperClassName}`}>

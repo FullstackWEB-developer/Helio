@@ -8,7 +8,6 @@ import {PatientChartSummary} from '../models/patient-chart-summary';
 import PatientChartAlert from './patient-chart-alert';
 import Button from '@components/button/button';
 import Avatar from '@components/avatar/avatar';
-import {AvatarModel} from '@components/avatar/avatar.models';
 import patientUtils from '../utils/utils';
 import utils from "@shared/utils/utils";
 import {Icon} from '@components/svg-icon/icon';

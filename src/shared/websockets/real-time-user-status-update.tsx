@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {HubConnection, HubConnectionBuilder, LogLevel} from '@microsoft/signalr';
 import {useDispatch, useSelector} from 'react-redux';
 import {useQueryClient} from 'react-query';
@@ -7,7 +7,7 @@ import {UserStatusUpdate} from '../models/user-status-update.model';
 import {QuickConnectExtension} from '../models/quick-connect-extension';
 import RealTimeConnectionLogger from './real-time-connection-logger';
 import {QueryQuickConnects} from '@constants/react-query-constants';
-import {updateUserStatus} from '@shared/store/app-user/appuser.slice';
+import {addLiveAgentStatus, updateUserStatus} from '@shared/store/app-user/appuser.slice';
 import {updateLatestUsersStatusUpdateTime} from '@shared/layout/store/layout.slice';
 
 const RealTimeUserStatusUpdate = () => {
@@ -20,7 +20,7 @@ const RealTimeUserStatusUpdate = () => {
     const realtimeConnectionLogger = new RealTimeConnectionLogger();
 
     useEffect(() => {
-        const hubUrl = provideQuickconnectStatusHubUrl();
+        const hubUrl = provideQuickConnectStatusHubUrl();
         const newConnection = new HubConnectionBuilder()
             .withUrl(hubUrl,
                 {
@@ -51,7 +51,7 @@ const RealTimeUserStatusUpdate = () => {
 
     }, [connection]);
 
-    const provideQuickconnectStatusHubUrl = () => {
+    const provideQuickConnectStatusHubUrl = () => {
         const envHubEndpoint = process?.env?.REACT_APP_REALTIME_EVENTS_ENDPOINT;
         if (!envHubEndpoint) {
             const errorMessage = "REACT_APP_REALTIME_EVENTS_ENDPOINT variable missing from .env. Please check and ensure it is provided!";
@@ -64,7 +64,7 @@ const RealTimeUserStatusUpdate = () => {
         if (statusChange.userId === username) {
             dispatch(updateUserStatus(statusChange.status));
         }
-
+        dispatch(addLiveAgentStatus(statusChange));
         const quickConnects: QuickConnectExtension[] = queryClient.getQueryData(QueryQuickConnects) ?? [];
         const index = quickConnects.findIndex(qc => qc.id === statusChange.userId);
         if (index !== -1) {
