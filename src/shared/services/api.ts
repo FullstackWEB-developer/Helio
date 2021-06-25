@@ -16,7 +16,7 @@ Api.interceptors.request.use(async (config) => {
     config.headers['x-api-challenge'] = localStorage.getItem('challenge') || 'no-key-found';
     const token = await refreshAccessToken();
     if (token) {
-        config.headers.Authorization = token.idToken;
+        config.headers.Authorization = token;
     }
     return config;
 },
@@ -24,6 +24,10 @@ Api.interceptors.request.use(async (config) => {
 );
 
 export const refreshAccessToken = async () => {
+    if (isCustomToken()) {
+        return store.getState().appUserState.auth.accessToken;
+    }
+
     const isLoggedIn = store.getState().appUserState.auth.isLoggedIn;
     if (!isLoggedIn) {
         return null;
@@ -53,7 +57,7 @@ export const refreshAccessToken = async () => {
                 {
                     store.dispatch(setAuthentication(auth));
                 }                
-                return response;
+                return response.idToken;
             }            
         }
         catch(error: any)
@@ -78,9 +82,20 @@ Api.interceptors.response.use(
         if (error.response.status !== 401) {
             return Promise.reject(error);
         }
+
+        if (store.getState().appUserState.auth.authenticationLink) {
+            window.location.replace(store.getState().appUserState.auth.authenticationLink);
+            return;
+        }
+
         signOut();
     }
 )
+
+const isCustomToken = (): boolean => {
+    return store.getState().appUserState.auth.accessToken
+        && store.getState().appUserState.auth.accessToken.startsWith('*CAT*');
+}
 
 const signOut = () => {
     store.dispatch(logOut());

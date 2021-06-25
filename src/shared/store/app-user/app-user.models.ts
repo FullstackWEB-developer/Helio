@@ -5,6 +5,7 @@ export interface AuthenticationInfo {
     expiresOn?: Date,
     isLoggedIn: boolean,
     profilePicture?: string
+    authenticationLink?: string
 }
 
 export enum UserStatus {

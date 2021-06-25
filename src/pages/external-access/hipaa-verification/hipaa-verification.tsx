@@ -12,11 +12,13 @@ import {AxiosError} from 'axios';
 import {VerifiedPatient} from '@pages/patients/models/verified-patient';
 import {clearVerifiedPatient, setVerifiedPatient} from '@pages/patients/store/patients.slice';
 import {useHistory} from 'react-router-dom';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {ExternalAccessRequestTypes} from '../models/external-updates-request-types.enum';
 import './hipaa-verification.scss';
 import ThreeDotsSmallLoader from '@components/skeleton-loader/three-dots-loader';
 import utils from '@shared/utils/utils';
+import {setAuthentication} from "@shared/store/app-user/appuser.slice";
+import {authenticationSelector} from "@shared/store/app-user/appuser.selectors";
 
 export interface HipaaVerificationProps {
     request: RedirectLink
@@ -26,11 +28,18 @@ const HipaaVerification = ({request}: HipaaVerificationProps) => {
     const {t} = useTranslation();
     const history = useHistory();
     const dispatch = useDispatch();
+    const authentication = useSelector(authenticationSelector);
     const [values, setValues] = useState<VerifyPatientProps>();
     const [errors, setErrors] = useState<string>('');
     const {handleSubmit, control, formState} = useForm({
         mode: 'onBlur'
     });
+
+    const checkAuthenticationState = () => {
+       if (authentication && (Date.parse(authentication.expiresOn) > new Date().valueOf())) {
+           forwardToRelatedPage();
+       }
+    }
 
     const forwardToRelatedPage = () => {
         if (request !== undefined) {
@@ -62,6 +71,13 @@ const HipaaVerification = ({request}: HipaaVerificationProps) => {
         onSuccess: (data) => {
             if (data.patientId.toString() === request.patientId) {
                 dispatch(setVerifiedPatient(data));
+                dispatch(setAuthentication({
+                    name: `${data.firstName} ${data.lastName}`,
+                    isLoggedIn: true,
+                    accessToken: data.token,
+                    expiresOn: data.tokenExpiration,
+                    authenticationLink: request.fullUrl
+                }));
                 forwardToRelatedPage();
             } else {
                 setErrors('external_access.hipaa.verification_failed');
@@ -80,6 +96,11 @@ const HipaaVerification = ({request}: HipaaVerificationProps) => {
     const onSubmit = async (values: VerifyPatientProps) => {
         setValues(values);
     }
+
+    useEffect(() => {
+        checkAuthenticationState()
+    }, [checkAuthenticationState]);
+
     useEffect(() => {
         if (values) {
             refetch();
