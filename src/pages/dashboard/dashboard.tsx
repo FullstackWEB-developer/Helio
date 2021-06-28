@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {useQuery} from 'react-query';
 import {GetDashboard} from '@constants/react-query-constants';
 import {getDashboardData} from '@pages/tickets/services/tickets.service';
@@ -16,9 +16,12 @@ import SvgIcon from '@components/svg-icon/svg-icon';
 import DashboardDateForm from './components/dashboard-date-form';
 import DashboardContent from '@pages/dashboard/dashboard-content';
 import Wallboard from '@pages/dashboard/wallboard';
+import * as queryString from 'querystring';
+import {useHistory} from 'react-router-dom';
 
 export const Dashboard = () => {
     const {t} = useTranslation();
+    const history = useHistory();
     const [selectedDashboardType, setSelectedDashboardType] = useState<DashboardTypes>(DashboardTypes.team);
     const [selectedDashboardTime, setSelectedDashboardTime] = useState<number>(DashboardTimeframes.week);
     const [displayTimeFrameDropdown, setDisplayTimeFrameDropdown] = useState<boolean>(false);
@@ -36,6 +39,16 @@ export const Dashboard = () => {
     customHooks.useOutsideClick([timeframeDropdownRef], () => {
         setDisplayTimeFrameDropdown(false);
     });
+
+    useEffect(() => {
+        let params = new URLSearchParams(history.location.search)
+        if (params.get('type')) {
+            const type =  Number(params.get('type'));
+            if (type > 0 && type < 4) {
+                setSelectedDashboardType(type);
+            }
+        }
+    }, [history.location.search])
 
 
     const {isLoading, error, data, refetch, isFetching} = useQuery<DashboardResponse, Error>(GetDashboard, () =>
@@ -60,6 +73,10 @@ export const Dashboard = () => {
     const dashboardTypeSelected = (type: DashboardTypes) => {
         setDisplayTypeDropdown(false);
         setSelectedDashboardType(type);
+        history.replace({
+            pathname: history.location.pathname,
+            search: queryString.stringify({type})
+        });
         if (isWallboard) {
             return;
         }
