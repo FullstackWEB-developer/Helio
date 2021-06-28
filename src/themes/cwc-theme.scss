@@ -348,6 +348,14 @@
   ::-webkit-scrollbar-thumb:hover {
     background: var(--color-secondary-400);
   }
+
+  a {
+    color: var(--color-primary-800);
+  }
+
+  a:hover {
+    color: var(--color-primary-400);
+  }
 }
 
 .text-success {
@@ -360,14 +368,6 @@
 
 .text-disabled {
   color: var(--light-text-disabled) !important;
-}
-
-a {
-  color: var(--color-primary-800) !important;
-}
-
-a:hover {
-  color: var(--color-primary-400) !important;
 }
 
 textarea:focus,
