@@ -51,7 +51,7 @@ const TicketsReasonChart = ({data}: TicketsReasonChartProps) => {
 
     const ChartItem = ({item, index}: { item: BasicStatistic, index: number }) => {
         return <div key={item.label.toString()} className='px-20  grid grid-cols-12 gap-2 items-center'>
-            <div className='h-2.5 w-2.5 rounded-xl' style={{backgroundColor: getPieChartColor(index)}}/>
+            <div className='ml-4 h-2.5 w-2.5 rounded-xl' style={{backgroundColor: getPieChartColor(index)}}/>
             <div className='col-span-8'>{item.label}</div>
             <div className='col-span-1'>{item.value}</div>
             <div className='col-span-2'>{Math.round(item.percentage * 100) / 100}%</div>

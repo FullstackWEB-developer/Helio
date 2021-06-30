@@ -81,6 +81,29 @@ const TicketsVolumeChart = ({data}: TicketsVolumeChartProps) => {
         </div>
     }
 
+    const style = getComputedStyle(document.body);
+    const CustomTick = (tick: any) => {
+        return (
+            <g transform={`translate(${tick.x  + (tickRotation ? 4 : -4) },${tick.y})` + (tickRotation ? ' rotate(45)' : '')}>
+                <text
+                    dominantBaseline="middle"
+                    style={{
+                        fontSize: Number(style.getPropertyValue('--dashboard-volume-chart-axis-label-fontSize')),
+                        fontFamily: style.getPropertyValue('--dashboard-volume-chart-axis-label-fontFamily'),
+                        fill: style.getPropertyValue('--dashboard-volume-chart-axis-label-color')
+                    }}
+                >
+                    {tickRotation ? <tspan x="0" dy="1.2em">{dayjs(tick.value).format('ddd, MMM DD')}</tspan>
+                        :
+                        <>
+                            <tspan x="0" dy="1.2em">{dayjs(tick.value).format('ddd')}</tspan>
+                            <tspan  x="-6" dy="1.2em">{dayjs(tick.value).format('MMM DD')}</tspan>
+                        </>
+                    }
+                </text>
+            </g>
+        );
+    };
     return <ResponsiveLine
         data={convertedData}
         enableSlices={false}
@@ -98,18 +121,21 @@ const TicketsVolumeChart = ({data}: TicketsVolumeChartProps) => {
         pointBorderWidth={2.2}
         pointBorderColor='white'
         lineWidth={4}
+        theme={{
+            fontSize: Number(style.getPropertyValue('--dashboard-volume-chart-axis-label-fontSize')),
+            fontFamily: style.getPropertyValue('--dashboard-volume-chart-axis-label-fontFamily'),
+            textColor: style.getPropertyValue('--dashboard-volume-chart-axis-label-color')
+        }}
         enableGridX={false}
         pointLabelYOffset={-12}
         tooltip={({ point }) => <ChartTooltip point={point}/>}
         enableArea={true}
         axisBottom={{
             tickValues: "every 1 day",
-            format: function (value) {
-                return dayjs(value) ? dayjs(value).format('ddd, MMM DD') : "";
-            },
             legendOffset: 36,
             legendPosition: "middle",
-            tickRotation: tickRotation
+            tickRotation: tickRotation,
+            renderTick: CustomTick,
         }}
         legends={[
             {
