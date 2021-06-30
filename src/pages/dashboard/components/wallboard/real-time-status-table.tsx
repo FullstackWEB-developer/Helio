@@ -55,7 +55,7 @@ const RealTimeStatusTable = ({lastUpdateTime}:RealTimeStatusTableProps) => {
                 case MetricType.Voice:
                 return metric.voiceCount;
                 case MetricType.All:
-                return metric.chatCount + metric.voiceCount;
+                return metric.channelSummaryCount;
         }
     }
 
