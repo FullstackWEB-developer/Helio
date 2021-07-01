@@ -45,6 +45,8 @@ const HipaaVerification = ({request}: HipaaVerificationProps) => {
         if (request !== undefined) {
             switch (request.requestType) {
                 case ExternalAccessRequestTypes.GetAppointmentDetail:
+                case ExternalAccessRequestTypes.CancelAppointment:
+                case ExternalAccessRequestTypes.BookAppointment:
                     history.push('/o/appointment-list');
                     break;
                 case ExternalAccessRequestTypes.RequestRefill:

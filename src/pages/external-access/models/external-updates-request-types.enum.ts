@@ -3,5 +3,8 @@ export enum ExternalAccessRequestTypes {
     RescheduleAppointment,
     GetLabResults,
     RequestRefill,
-    RequestMedicalRecords
+    RequestMedicalRecords,
+    CancelAppointment,
+    BookAppointment
+
 }
