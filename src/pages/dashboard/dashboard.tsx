@@ -41,19 +41,23 @@ export const Dashboard = () => {
     });
 
     useEffect(() => {
-        let params = new URLSearchParams(history.location.search)
+        let params = new URLSearchParams(history.location.search);
         if (params.get('type')) {
             const type =  Number(params.get('type'));
             if (type > 0 && type < 4) {
                 setSelectedDashboardType(type);
             }
+        } else {
+            setSelectedDashboardType(DashboardTypes.team);
         }
+        refreshDashboard();
     }, [history.location.search])
 
 
     const {isLoading, error, data, refetch, isFetching} = useQuery<DashboardResponse, Error>(GetDashboard, () =>
             getDashboardData(selectedDashboardType, selectedDashboardTime, selectedStartDate, selectedEndDate), {
-            retry: 3
+            retry: 3,
+            enabled:false
         }
     );
 
