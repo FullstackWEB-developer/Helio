@@ -84,6 +84,7 @@ const DateTimePicker = React.forwardRef<HTMLInputElement, DateTimePickerProps>((
         const position = getElementPosition(inputElementRef);
         setCalendarPositionTop(position.top + inputElementRef.offsetHeight);
     }
+
     useEffect(() => {
         switchDateFormat(isISOFormat);
     }, [isISOFormat]);
@@ -97,6 +98,8 @@ const DateTimePicker = React.forwardRef<HTMLInputElement, DateTimePickerProps>((
                 setInputValue(dayjs(value).utc().local().format(DATE_INPUT_LONG_FORMAT));
             }
         }
+        showDateFormat(false);
+
     }, [value, isISOFormat])
 
     useEffect(() => {
@@ -140,6 +143,17 @@ const DateTimePicker = React.forwardRef<HTMLInputElement, DateTimePickerProps>((
 
     const isValidDate = (valueDate: Date) => valueDate >= min && valueDate <= max;
 
+    const showDateFormat = (v: boolean) => {
+        if (!isISOFormat || !!inputValue) {
+            return;
+        }
+        if (v) {
+            setInputType('date');
+        } else {
+            setInputType('text')
+        }
+    }
+    
     const onInputValueChange = ({target}: React.ChangeEvent<HTMLInputElement>) => {
         const targetValue = target.value;
         if (targetValue === '' || !target.valueAsDate) {
@@ -218,6 +232,7 @@ const DateTimePicker = React.forwardRef<HTMLInputElement, DateTimePickerProps>((
         if (longDateFormat) {
             setIsISOFormat(true);
         }
+        showDateFormat(true);
     }
     const onInputBlur = ({target}: React.FocusEvent<HTMLInputElement>) => {
         if (inputValue === '' && inputType === 'date') {
@@ -229,6 +244,7 @@ const DateTimePicker = React.forwardRef<HTMLInputElement, DateTimePickerProps>((
         if (longDateFormat) {
             setIsISOFormat(false);
         }
+        showDateFormat(false);
     }
 
     const onCalendarBlur = () => {
