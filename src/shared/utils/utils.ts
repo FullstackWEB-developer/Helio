@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc'
 import {RelativeTime} from './types';
+import {msalInstance} from '@pages/login/auth-config';
 
 const getWindowCenter = () => {
     const {width, height} = getWindowDimensions();
@@ -177,6 +178,11 @@ const groupBy = (list: any[], keyGetter: (item: any) => string) : Map<string, an
     return map;
 }
 
+const isLoggedIn = () : boolean => {
+    const accounts = msalInstance.getAllAccounts();
+    return !!(accounts && accounts[0]);
+}
+
 const utils = {
     getWindowCenter,
     formatUtcDate,
@@ -195,7 +201,8 @@ const utils = {
     stringJoin,
     checkIfDateIsntMinValue,
     getBrowserDatePattern,
-    groupBy
+    groupBy,
+    isLoggedIn
 };
 
 export default utils;

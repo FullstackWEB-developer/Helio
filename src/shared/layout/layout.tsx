@@ -1,10 +1,7 @@
 import Header from './header';
 import Navigation from './navigation';
 import Footer from './footer';
-import React, {Fragment, useRef} from 'react';
-import {useSelector} from 'react-redux';
-import {authenticationSelector} from '../store/app-user/appuser.selectors';
-import {Redirect} from 'react-router';
+import React, {Fragment, useEffect, useRef} from 'react';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 import {DndContainer} from './dragndrop/dnd-container'
@@ -12,17 +9,21 @@ import StatusBar from './statusbar';
 import './layout.scss';
 import Snackbar from '@components/snackbar/snackbar';
 import {SnackbarPosition} from '@components/snackbar/snackbar-type.enum';
+import {useHistory} from 'react-router-dom';
+import utils from '@shared/utils/utils';
 
 interface LayoutProps {
     children: React.ReactNode
 }
 
 const Layout = (props: LayoutProps) => {
-    const isLoggedIn = useSelector(authenticationSelector).isLoggedIn;
     const headsetIconRef = useRef<HTMLDivElement>(null);
-    if (!isLoggedIn) {
-        return <Redirect to='/login'/>
-    }
+    const history = useHistory();
+    useEffect(() => {
+        if (!utils.isLoggedIn()) {
+            history.push(`/login`);
+        }
+    })
     
     return (
         <Fragment>

@@ -13,6 +13,7 @@ import {authenticationSelector, selectIsLoginLoading} from '@shared/store/app-us
 import {resetState} from '@shared/layout/store/layout.slice';
 import ThreeDots from '@components/skeleton-loader/skeleton-loader';
 import HelioLogo from '@icons/helio-logo';
+import utils from '@shared/utils/utils';
 
 const Login = () => {
     const dispatch = useDispatch();
@@ -40,7 +41,7 @@ const Login = () => {
         return <ThreeDots />
     }
 
-    if (auth.isLoggedIn && (Date.parse(auth.expiresOn) > new Date().valueOf())) {
+    if (utils.isLoggedIn() && (Date.parse(auth.expiresOn) > new Date().valueOf())) {
         return <Redirect to='/dashboard'/>
     }
 

@@ -33,12 +33,13 @@ const ProfileDropdown = () => {
 
     const signOut = () => {
         signOutFromCcp();
-        dispatch(logOut());
-        msalInstance.logout()
+        msalInstance.logoutRedirect({
+            postLogoutRedirectUri: '/login'
+        })
             .then()
             .catch((reason: any) => {
                 logger.error('Error logging out ' + JSON.stringify(reason));
-            });
+            }).finally(() =>dispatch(logOut()));
     }
 
     const signOutFromCcp = () => {
