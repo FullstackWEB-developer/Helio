@@ -5,6 +5,7 @@ import {Dispatch} from '@reduxjs/toolkit';
 import {clearPatient, setError as setPatientError, setLoading, setPatient,} from '@pages/patients/store/patients.slice';
 import {PatientUpdateModel} from '@pages/patients/models/patient-update-model';
 import {AsyncJobInfo} from '@pages/patients/models/async-job-info.model';
+import {ExtendedPatient} from '@pages/patients/models/extended-patient';
 
 export interface AddNoteProps {
      patientId: number;
@@ -64,7 +65,7 @@ export const getPatientInsurance = async (patientId: number) => {
      return result.data;
 }
 
-export const getPatientByIdWithQuery = async (patientId: number) => {
+export const getPatientByIdWithQuery = async (patientId: number) : Promise<ExtendedPatient> => {
      const url = `${patientsUrl}/${patientId}`;
      const response = await Api.get(url);
      return response.data;

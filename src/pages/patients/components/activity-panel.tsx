@@ -8,8 +8,8 @@ import PatientTickets from './patient-tickets';
 import {useSelector} from 'react-redux';
 import {selectPatient, selectPatientLoading} from '../store/patients.selectors';
 import PatientAddNote from '@pages/patients/components/patient-add-note';
-import ThreeDots from '@components/skeleton-loader/skeleton-loader';
 import './activity-panel.scss';
+import Spinner from '@components/spinner/Spinner';
 
 const ActivityPanel = () => {
     const {t} = useTranslation();
@@ -18,7 +18,7 @@ const ActivityPanel = () => {
     const isLoading = useSelector(selectPatientLoading);
 
     if (isLoading) {
-        return <ThreeDots/>
+        return <Spinner fullScreen/>
     }
 
     return <div className='flex flex-col h-full overflow-hidden'>

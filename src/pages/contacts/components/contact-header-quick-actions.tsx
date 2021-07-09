@@ -2,7 +2,7 @@ import React from 'react';
 import SvgIcon from '@components/svg-icon/svg-icon';
 import {Icon} from '@components/svg-icon/icon';
 import {ContactExtended} from '@shared/models/contact.model';
-import ThreeDots from '@components/skeleton-loader/skeleton-loader';
+import Spinner from '@components/spinner/Spinner';
 interface ContactHeaderQuickActionsProps {
     editMode?: boolean;
     editIconClickHandler?: () => void;
@@ -13,7 +13,7 @@ interface ContactHeaderQuickActionsProps {
 }
 const ContactHeaderQuickActions = ({editMode, editIconClickHandler, contact, starIconClickHandler, isLoading, deleteIconClickHandler}: ContactHeaderQuickActionsProps) => {
     return (
-        isLoading ? <ThreeDots /> :
+        isLoading ? <Spinner /> :
             <div className='flex justify-center'>
                 <span className={`pr-6 cursor-pointer`} >
                     <SvgIcon onClick={starIconClickHandler} type={Icon.Star} fillClass={`contact-header-quick-action-color${contact?.isStarred ? '-starred' : ''}`} />

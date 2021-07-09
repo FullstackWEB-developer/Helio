@@ -16,7 +16,6 @@ import {
     setTicketEnum,
     setTicketFilter,
     setTicketListQueryType,
-    setTicketsLoading,
     startGeLookupValuesRequest,
     startGetTicketEnumRequest
 } from '../store/tickets.slice';
@@ -28,14 +27,13 @@ import {TicketListQueryType} from '../models/ticket-list-type';
 import {DashboardTypes} from '@pages/dashboard/enums/dashboard-type.enum';
 import {DashboardTimeframes} from '@pages/dashboard/enums/dashboard.timeframes';
 import utils from '@shared/utils/utils';
+import {setGlobalLoading} from '@shared/store/app/app.slice';
 const logger = Logger.getInstance();
 const ticketsBaseUrl = "/tickets";
 
 export function getList(ticketQuery: TicketQuery, resetPagination?: boolean) {
     return async (dispatch: Dispatch) => {
-        dispatch(setTicketsLoading(true));
-
-
+        dispatch(setGlobalLoading(true));
         const query: any = ticketQuery;
         if (!isNaN(Number(ticketQuery.searchTerm))) {
             query.ticketNumber = ticketQuery.searchTerm;
@@ -71,9 +69,10 @@ export function getList(ticketQuery: TicketQuery, resetPagination?: boolean) {
             }
 
             dispatch(setTicketFilter(saveQuery));
-            dispatch(setTicketsLoading(false));
         } catch (error) {
             dispatch(setFailure(error.message));
+        } finally {
+            dispatch(setGlobalLoading(false));
         }
     }
 }

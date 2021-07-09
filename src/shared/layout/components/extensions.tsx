@@ -2,11 +2,11 @@ import React from 'react';
 import { getQuickConnects } from 'src/shared/services/lookups.service';
 import List, { ListOption } from '@components/list/list';
 import { useQuery } from 'react-query';
-import ThreeDots from '@components/skeleton-loader/skeleton-loader';
 import { useTranslation } from 'react-i18next';
 import { UserStatus } from 'src/shared/store/app-user/app-user.models';
 import { QuickConnectExtension } from 'src/shared/models/quick-connect-extension';
 import {QueryQuickConnects} from '@constants/react-query-constants';
+import Spinner from '@components/spinner/Spinner';
 
 const Extensions = () => {
   const { t: translate } = useTranslation();
@@ -40,7 +40,7 @@ const Extensions = () => {
     return <div>{translate('statuses.extensions.loading_error')}</div>;
   }
   if (isLoading) {
-    return <ThreeDots className='w-48'/>;
+    return <Spinner size='large-40'/>;
   }
 
   return (

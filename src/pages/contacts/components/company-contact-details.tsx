@@ -5,7 +5,7 @@ import {useTranslation} from 'react-i18next';
 import {Icon} from '@components/svg-icon/icon';
 import {ContactExtended} from '@shared/models/contact.model';
 import SvgIcon from '@components/svg-icon/svg-icon';
-import {ContactType} from '../../../shared/models/contact-type.enum';
+import {ContactType} from '@shared/models/contact-type.enum';
 import ContactForm from './contact-form';
 import utils from '@shared/utils/utils';
 import {getCategoryName} from '@shared/models/contact-category.enum';
@@ -13,7 +13,6 @@ import {AddressType, determineAddressTranslation} from '@shared/models/address.m
 import {mapContactFormModelToDto} from '../contact-helpers/helpers';
 import {useMutation} from 'react-query';
 import {updateContact} from '@shared/services/contacts.service';
-import ThreeDots from '@components/skeleton-loader/skeleton-loader';
 interface CompanyContactDetailsProps {
     contact: ContactExtended,
     editMode?: boolean,
@@ -86,10 +85,7 @@ const CompanyContactDetails = ({editMode, contact, initiateACall, addNewContactH
                             </div>
                         </>
                     ) :
-                    (
-                        updateContactMutation.isLoading ? <ThreeDots /> :
-                            <ContactForm contactType={ContactType.Company} contact={contact} submitHandler={onSubmit} closeHandler={closeEditMode} editMode={true} />
-                    )
+                    <ContactForm isSaving={updateContactMutation.isLoading} contactType={ContactType.Company} contact={contact} submitHandler={onSubmit} closeHandler={closeEditMode} editMode={true} />
             }
         </>
 

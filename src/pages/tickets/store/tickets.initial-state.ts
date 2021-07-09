@@ -16,7 +16,6 @@ export interface TicketState {
     paging: Paging;
     searchTerm: string;
     errors: string;
-    ticketsLoading: boolean;
     ticketChannels?: TicketOptionsBase[];
     ticketStatuses?: TicketOptionsBase[];
     ticketPriorities?: TicketOptionsBase[];
@@ -43,7 +42,6 @@ const initialTicketState: TicketState = {
     },
     searchTerm: '',
     errors: '',
-    ticketsLoading: false,
     ticketChannels: [],
     ticketStatuses: [],
     ticketPriorities: [],

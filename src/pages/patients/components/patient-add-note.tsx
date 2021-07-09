@@ -53,9 +53,10 @@ const PatientAddNote = () => {
                 required={true}
                 rows={3}
                 resizable={false}
+                isLoading={mutation.isLoading}
                 hasBorder={false}
                 onChange={(message) => setNoteText(message)}
-                iconClassNames='medium cursor-pointer'
+                iconClassNames='icon-medium'
                 icon={Icon.Send}
                 iconFill='notes-send'
                 iconOnClick={() => {

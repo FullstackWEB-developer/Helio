@@ -9,13 +9,12 @@ import {ContactsPath} from 'src/app/paths';
 import ContactDetails from './components/contact-details';
 import {useInfiniteQuery, useQuery, useQueryClient} from 'react-query';
 import AddNewContact from './components/add-new-contact';
-import {QueryContactsInfinite, QueryStates} from '../../shared/constants/react-query-constants';
+import {QueryContactsInfinite, QueryStates} from '@constants/react-query-constants';
 import {getContactById, queryContactsInfinite} from '@shared/services/contacts.service';
 import {QueryContactRequest} from '@shared/models/query-contact-request';
 import {ContactCategory as ContactCategoryEnum} from '@shared/models/contact-category.enum';
-import ThreeDots from '@components/skeleton-loader/skeleton-loader';
 import useDebounce from '@shared/hooks/useDebounce';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {getStates} from '@shared/services/lookups.service';
 import {setStates} from '@shared/store/lookups/lookups.slice';
 import {Option} from '@components/option/option';
@@ -23,6 +22,9 @@ import {DEBOUNCE_SEARCH_DELAY_MS} from '@constants/form-constants';
 import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
 import {SnackbarType} from '@components/snackbar/snackbar-position.enum';
 import {getPageSize} from './contact-helpers/helpers';
+import {setGlobalLoading} from '@shared/store/app/app.slice';
+import Spinner from '@components/spinner/Spinner';
+import {selectGlobalLoading} from '@shared/store/app/app.selectors';
 
 interface ContactProps { }
 const Contacts: React.FC<ContactProps> = () => {
@@ -33,6 +35,7 @@ const Contacts: React.FC<ContactProps> = () => {
     const [debounceSearchTerm] = useDebounce(searchTerm, DEBOUNCE_SEARCH_DELAY_MS);
     const [editMode, setEditMode] = useState(false);
     const [addNewContactMode, setAddNewContactMode] = useState(false);
+    const isGlobalLoading = useSelector(selectGlobalLoading);
     const [queryParams, setQueryParams] = useState<QueryContactRequest>({pageSize: getPageSize()});
     const history = useHistory();
     const {contactId} = useParams<{contactId: string}>();
@@ -63,9 +66,15 @@ const Contacts: React.FC<ContactProps> = () => {
         }
     );
 
-    const {fetchNextPage, hasNextPage, isFetchingNextPage, isFetching, refetch, data} = useInfiniteQuery([QueryContactsInfinite],
-        ({pageParam = 1}) => queryContactsInfinite(pageParam, queryParams), {
-        getNextPageParam: (lastPage) => lastPage.nextPage
+    const {fetchNextPage, hasNextPage, isFetchingNextPage, isFetching, refetch, data} = useInfiniteQuery([QueryContactsInfinite, queryParams],
+        ({pageParam = 1}) => {
+            dispatch(setGlobalLoading(true));
+            return queryContactsInfinite(pageParam, queryParams);
+        }, {
+        getNextPageParam: (lastPage) => lastPage.nextPage,
+        onSettled: () => {
+            dispatch(setGlobalLoading(false));
+        }
     });
 
     useEffect(() => {
@@ -225,7 +234,7 @@ const Contacts: React.FC<ContactProps> = () => {
                 isErrorFetchingSingleContact && <h6 className='text-danger mt-2 mb-5 px-8'>{t('contacts.contact-details.error_fetching_contact')}</h6>
             }
             {
-                (isFetchingStates || isFetchingSingleContact) && <ThreeDots />
+                (isFetchingStates || isFetchingSingleContact) && !isGlobalLoading && <Spinner fullScreen />
             }
             {
                 selectedContact && !isFetchingSingleContact && !isFetchingStates &&

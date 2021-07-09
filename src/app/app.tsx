@@ -11,12 +11,11 @@ import {ContactsPath, TicketsPath} from './paths';
 import RealTimeUserStatusUpdate from '@shared/websockets/real-time-user-status-update';
 import ExternalAccessLayout from '@pages/external-access/layout/external-access-layout';
 import Logger from '@shared/services/logger';
-
 const SearchResults = React.lazy(() => import('../shared/components/search-bar/components/search-results'));
 const PatientChart = React.lazy(() => import('@pages/patients/patient-chart'));
 const VerifyRedirectLink = React.lazy(() => import('@pages/external-access/hipaa-verification/verify-redirect-link'));
 const AppointmentSchedule = React.lazy(() => import('@pages/external-access/appointment/appointment-schedule'));
-const AppointmentCancelation = React.lazy(() => import('@pages/external-access/appointment/appointment-cancelation'));
+const AppointmentCancellation = React.lazy(() => import('@pages/external-access/appointment/appointment-cancelation'));
 const AppointmentCanceled = React.lazy(() => import('@pages/external-access/appointment/appointment-canceled'));
 const AppointmentReschedule = React.lazy(() => import('@pages/external-access/appointment/reschedule/appointment-reschedule'));
 const AppointmentRescheduleConfirm = React.lazy(() => import('@pages/external-access/appointment/reschedule/appointment-reschedule-confirm'));
@@ -81,7 +80,7 @@ function App() {
                                 <Route path='/o/lab-results/:labResultId' component={withSuspense(LabResultsDetailed)} />                                
                                 <Route path='/o/appointment-schedule' component={withSuspense(AppointmentSchedule)}/>
                                 <Route path='/o/appointment-cancelation'
-                                       component={withSuspense(AppointmentCancelation)}/>
+                                       component={withSuspense(AppointmentCancellation)}/>
                                 <Route path='/o/appointment-canceled' component={withSuspense(AppointmentCanceled)}/>
                                 <Route path='/o/appointment-reschedule'
                                        component={withSuspense(AppointmentReschedule)}/>

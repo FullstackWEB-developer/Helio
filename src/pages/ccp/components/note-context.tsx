@@ -80,10 +80,11 @@ const NoteContext = () => {
                                 value={noteText}
                                 required={true}
                                 rows={2}
+                                isLoading={addNoteMutation.isLoading}
                                 resizable={false}
                                 hasBorder={false}
                                 onChange={(message) => setNoteText(message)}
-                                iconClassNames='medium cursor-pointer'
+                                iconClassNames='icon-medium'
                                 icon={Icon.Send}
                                 iconFill='notes-send'
                                 iconOnClick={() => { handleSubmit(onSubmit)() }}

@@ -4,7 +4,6 @@ import {useTranslation} from 'react-i18next';
 import {PatientTicketsRequest} from '../../tickets/models/patient-tickets-request';
 import {DefaultPagination} from '@shared/models/paging.model';
 import {getPatientTickets} from '../../tickets/services/tickets.service';
-import ThreeDots from '@shared/components/skeleton-loader/skeleton-loader';
 import {useHistory} from 'react-router-dom';
 import TicketChannelTypeIcon from '../../tickets/components/ticket-channel-type-icon';
 import utils from '@shared/utils/utils';
@@ -18,6 +17,7 @@ import {OneMinute, QueryPatientTickets} from '@constants/react-query-constants';
 import SvgIcon from '@components/svg-icon/svg-icon';
 import {Icon} from '@components/svg-icon/icon';
 import TicketStatusDot from '@pages/tickets/components/ticket-status-dot';
+import Spinner from '@components/spinner/Spinner';
 
 interface PatientTicketProps {
     patientId: number;
@@ -46,7 +46,7 @@ const PatientTickets: React.FC<PatientTicketProps> = ({patientId}) => {
    
     return <Fragment>
         {
-            isLoading ? <ThreeDots/>
+            isLoading ? <Spinner fullScreen/>
                 : (
                     <Fragment>
                         <div className={'py-3 cursor-pointer align-middle border-b'}

@@ -9,7 +9,6 @@ import {useParams} from 'react-router';
 import withErrorLogging from '../../../shared/HOC/with-error-logging';
 import {getPatientLabResultDetail} from './services/lab-results.service';
 import {LabResultDetail} from './models/lab-result-detail.model';
-import ThreeDots from '@components/skeleton-loader/skeleton-loader';
 import LabResultDetailHeader from './components/lab-result-detail-header';
 import LabResultDetailProviderComment from './components/lab-result-detail-provider-comment';
 import './lab-results.scss';
@@ -19,6 +18,7 @@ import LabResultObservationItem from './components/lab-result-observation-item';
 import LabResultsSection from './components/lab-results-section';
 import {LabResultDetailPage} from './models/lab-result-detail-page.model';
 import LabResultDetailPageImage from './components/lab-result-detail-page-image';
+import Spinner from '@components/spinner/Spinner';
 
 const LabResultDetailed = () => {
     const verifiedPatient = useSelector(selectVerifiedPatent);
@@ -36,7 +36,7 @@ const LabResultDetailed = () => {
         return <h6 className='text-danger'>{t('external_access.lab_results.error')}</h6>;
     }
     if (isFetching) {
-        return <ThreeDots />;
+        return <Spinner fullScreen />;
     }
 
     return (
@@ -68,12 +68,12 @@ const LabResultDetailed = () => {
                         key={observation.observationIdentifier} />)
                         : <div className='subtitle3 text-center pt-4'>{t('external_access.lab_results.no_observations')}</div>
                 }
-                <div className='mt-8'></div>
+                <div className='mt-8'/>
                 {
                     data.pages && data.pages.length > 0 &&
                     data.pages.map((page: LabResultDetailPage) => <LabResultDetailPageImage key={page.pageId} labResultId={data.labResultId} page={page} />)
                 }
-                <div className="mt-8"></div>
+                <div className="mt-8"/>
                 <LabResultsSection title={t('external_access.lab_results.test_information')}>
                     <div className='grid grid-cols-2 gap-x-8 body2'>
                         <div>
@@ -93,19 +93,19 @@ const LabResultDetailed = () => {
                             <span className='lab-results-grayed-label'>{t('external_access.lab_results.laboratory')}</span>
                             {data.performingLabName || t('common.not_available')}
                         </div>
-                        <div></div>
+                        <div/>
                         <div>
                             <span className='lab-results-grayed-label'>{t('external_access.lab_results.specimen_id')}</span>
                             {data.labResultId}
                         </div>
-                        <div></div>
+                        <div/>
                         <div>
                             <span className='lab-results-grayed-label'>
                                 {t('external_access.lab_results.collected')}:&nbsp;
                             </span>
                             {data.encounterDate && utils.checkIfDateIsntMinValue(data.encounterDate) ? utils.formatDateShortMonth(data.encounterDate.toString()) : t('common.not-available')}
                         </div>
-                        <div></div>
+                        <div/>
                         <div>
                             <span className='lab-results-grayed-label'>
                                 {t('external_access.lab_results.received')}:&nbsp;

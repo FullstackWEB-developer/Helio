@@ -2,7 +2,6 @@ import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {useSelector} from 'react-redux';
 import {getPatientsLabResults} from './services/lab-results.service';
-import ThreeDots from '../../../shared/components/skeleton-loader/skeleton-loader';
 import {selectVerifiedPatent} from '../../patients/store/patients.selectors';
 import LabResultListItem from './components/lab-result-list-item';
 import withErrorLogging from '../../../shared/HOC/with-error-logging';
@@ -11,6 +10,7 @@ import {useQuery} from 'react-query';
 import {GetLabResults} from '@constants/react-query-constants';
 import {LabResult} from './models/lab-result.model';
 import './lab-results.scss';
+import Spinner from '@components/spinner/Spinner';
 
 const LabResults = () => {
 
@@ -46,7 +46,7 @@ const LabResults = () => {
                     (!data || !data.length) && !isLoading && <div className='subtitle3 text-center pt-4'>{t('external_access.lab_results.no_lab_results_found')}</div>
                 }
                 {
-                    isLoading && <ThreeDots data-test-id='lab-results-loading' />
+                    isLoading && <Spinner fullScreen/>
                 }
                 {
                     isError && <h6 className='text-danger'>{t('external_access.lab_results.error')}</h6>

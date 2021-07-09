@@ -1,6 +1,6 @@
 import {Icon} from '@components/svg-icon/icon';
 import SvgIcon from '@components/svg-icon/svg-icon';
-import React, {ChangeEvent, Fragment, useState} from 'react';
+import React, {ChangeEvent, Fragment, useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 
 interface TextAreaProps {
@@ -26,7 +26,7 @@ interface TextAreaProps {
     maxLength?: number;
     className?: string;
     placeHolder?: string;
-    maxLengthClassName?: string
+    maxLengthClassName?: string;
 }
 
 const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(({
@@ -47,6 +47,11 @@ const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(({
     const {t} = useTranslation();
     const [remainLength, setRemainLength] = useState(props.maxLength);
     const [textAreaValue, setTextAreaValue] = useState<string>('');
+
+    useEffect(() => {
+        setTextAreaValue(value || '');
+    }, [value]);
+
     const onClick = () => {
         if (iconOnClick) {
             iconOnClick();
@@ -75,15 +80,13 @@ const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(({
                 {
                     props.icon && textAreaValue && textAreaValue?.trim()?.length > 0 &&
                     <div
-                        className={`flex-grow ${iconContainerClassName ? iconContainerClassName : 'px-7'}`}>
-                        {
-                            props.isLoading ? <span className='subtitle3-small'>{`${t('common.processing')}...`}</span> :
-                                <SvgIcon
-                                    type={props.icon ?? Icon.Send}
-                                    fillClass={iconFill ? iconFill : ''}
-                                    className={iconClassNames ? iconClassNames : ''}
-                                    onClick={onClick}/>
-                        }
+                        className={`flex-grow ${iconContainerClassName ? iconContainerClassName : 'px-7'} ${props.isLoading ? '' : 'cursor-pointer'}`}>
+                        <SvgIcon
+                            isLoading={props.isLoading}
+                            type={props.icon ?? Icon.Send}
+                            fillClass={iconFill ? iconFill : ''}
+                            className={iconClassNames ? iconClassNames : ''}
+                            onClick={onClick}/>
                     </div>
                 }
             </div>

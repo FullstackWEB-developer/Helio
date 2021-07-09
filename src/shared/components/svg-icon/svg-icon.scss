@@ -77,6 +77,10 @@
   fill: var(--light-text-medium-emphasis);
 }
 
+.fill-loading {
+  fill: var(--loading-icon-fill);
+}
+
 .warning-icon {
   fill: var(--color-yellow);
 }

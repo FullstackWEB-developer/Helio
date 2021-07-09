@@ -4,12 +4,11 @@ import {useTranslation} from 'react-i18next';
 import './input.scss';
 // @ts-ignore
 import InputMask from 'react-input-mask';
-import ThreeDotsSmallLoader from '@components/skeleton-loader/three-dots-loader';
 import SvgIcon from '@components/svg-icon/svg-icon';
 import {Icon} from '@components/svg-icon/icon';
 import {Option} from '@components/option/option';
 import SelectCell from '@components/select/select-cell';
-import ThreeDots from '@components/skeleton-loader/skeleton-loader';
+import Spinner from '@components/spinner/Spinner';
 
 interface InputProps extends React.HTMLAttributes<HTMLInputElement> {
     id?: string,
@@ -27,8 +26,8 @@ interface InputProps extends React.HTMLAttributes<HTMLInputElement> {
     shouldDisplayAutocomplete?: boolean,
     required?: boolean;
     dropdownIcon?: Icon
-    autosuggestDropdown?: boolean;
-    autosuggestOptions?: Option[];
+    autoSuggestDropdown?: boolean;
+    autoSuggestOptions?: Option[];
     onDropdownSuggestionClick?: (suggestion: Option) => void;
     isFetchingSuggestions?: boolean;
     selectedSuggestion?: Option;
@@ -43,8 +42,8 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({
     assistiveText,
     dropdownIcon,
     isLoading,
-    autosuggestDropdown,
-    autosuggestOptions,
+    autoSuggestDropdown,
+    autoSuggestOptions,
     isFetchingSuggestions,
     selectedSuggestion,
     fetchingSuggestionsPlaceholder,
@@ -65,7 +64,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({
     }, [props.value]);
     const onBlur = (e: React.FocusEvent<HTMLInputElement>) => {
         setIsFocused(false);
-        if (autosuggestDropdown) {
+        if (autoSuggestDropdown) {
             setDropdownOpen(false);
         }
         if (props.onBlur) {
@@ -104,7 +103,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({
 
     const onInputFocus = () => {
         setIsFocused(true);
-        if (autosuggestDropdown) {
+        if (autoSuggestDropdown) {
             setDropdownOpen(true);
         }
     }
@@ -145,19 +144,19 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({
                     </span>}
                 {isLoading &&
                     <span className="input-addon flex items-center leading-normal rounded rounded-l-none px-3">
-                        <ThreeDotsSmallLoader className="three-dots-loader-small" cx={13} cxSpace={23} cy={16} />
+                        <Spinner size='small' />
                     </span>
                 }
-                {autosuggestDropdown &&
+                {autoSuggestDropdown &&
                     <div className={`options ${dropdownOpen ? 'options-visible' : ''} absolute block py-2`}>
-                        {(!autosuggestOptions || autosuggestOptions.length <= 0) && !isFetchingSuggestions &&
+                        {(!autoSuggestOptions || autoSuggestOptions.length <= 0) && !isFetchingSuggestions &&
                             <div className="subtitle3-small w-full text-center pt-2">
                                 {t(fetchingSuggestionsPlaceholder || 'common.autocomplete_search')}
                             </div>
                         }
-                        {isFetchingSuggestions && <ThreeDots className='w-full h-10' />}
-                        {autosuggestOptions && autosuggestOptions.length > 0 &&
-                            autosuggestOptions.map((option: Option) =>
+                        {isFetchingSuggestions && <Spinner size='medium' />}
+                        {autoSuggestOptions && autoSuggestOptions.length > 0 &&
+                            autoSuggestOptions.map((option: Option) =>
                                 <SelectCell item={option} key={`${option.value}`}
                                             isSelected={option.value === selectedSuggestion?.value}
                                             onClick={() => onSelectCellClick(option)}

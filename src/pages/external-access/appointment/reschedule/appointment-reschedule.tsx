@@ -16,7 +16,6 @@ import {
 import {selectDepartmentList, selectProviderList} from '@shared/store/lookups/lookups.selectors';
 import React, {useEffect, useMemo, useState} from 'react';
 import {getDepartments, getProviders} from '@shared/services/lookups.service';
-import ThreeDots from '@components/skeleton-loader/skeleton-loader';
 import {useForm} from 'react-hook-form';
 import ControlledDateInput from '@components/controllers/ControlledDateInput';
 import SvgIcon from '@components/svg-icon/svg-icon';
@@ -24,10 +23,10 @@ import {Icon} from '@components/svg-icon/icon';
 import utils from '@shared/utils/utils';
 import DaySlots from '@pages/external-access/appointment/components/day-slot';
 import './appointment-reschedule.scss';
-import ThreeDotsSmallLoader from '@components/skeleton-loader/three-dots-loader';
 import {setIsAppointmentRescheduled} from '@pages/external-access/appointment/store/appointments.slice';
 import businessDays from '@shared/utils/business-days';
 import classnames from 'classnames';
+import Spinner from '@components/spinner/Spinner';
 
 const AppointmentReschedule = () => {
     dayjs.extend(utc);
@@ -160,7 +159,7 @@ const AppointmentReschedule = () => {
     };
 
     if (isAppointmentSlotsLoading) {
-        return <ThreeDots />
+        return <Spinner fullScreen />
     }
 
     if (!verifiedPatient) {
@@ -255,7 +254,7 @@ const AppointmentReschedule = () => {
             </div>
             {
                 isFetching && <div className='h-8 w-20'>
-                    <ThreeDotsSmallLoader className="three-dots-loader-small" cx={13} cxSpace={23} cy={16} />
+                    <Spinner fullScreen />
                 </div>
             }
             {

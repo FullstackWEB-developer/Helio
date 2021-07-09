@@ -4,7 +4,7 @@ import {useMutation} from 'react-query';
 import {downloadMedicalRecords} from '@pages/patients/services/patients.service';
 import {useEffect, useState} from 'react';
 import {AxiosError} from 'axios';
-import ThreeDots from '@components/skeleton-loader/skeleton-loader';
+import Spinner from '@components/spinner/Spinner';
 
 const DownloadMedicalRecord = () => {
     const {t} = useTranslation();
@@ -34,8 +34,7 @@ const DownloadMedicalRecord = () => {
 
     if (downloadZipMutation.isLoading) {
         return <div className='flex flex-col'>
-            <div><ThreeDots/></div>
-            <div>{t('external_access.medical_records_request.downloading_file')}</div>
+            <div><Spinner fullScreen/></div>
         </div>
     }
 

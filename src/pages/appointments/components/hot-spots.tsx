@@ -8,13 +8,13 @@ import withErrorLogging from '@shared/HOC/with-error-logging';
 import {HotSpotInfo} from '../models/hotspot.model';
 import DailyHotspots from './daily-hot-spots';
 import {useTranslation} from 'react-i18next';
-import ThreeDots from '@components/skeleton-loader/skeleton-loader';
 import {useQuery} from 'react-query';
 import {OneMinute, QueryHotSpots} from '@constants/react-query-constants';
 import Tabs from '@components/tab/Tabs';
 import Tab from '@components/tab/Tab';
 import dayjs from 'dayjs';
 import {BadgeNumber} from '@icons/BadgeNumber';
+import Spinner from '@components/spinner/Spinner';
 
 const HotSpots = () => {
     const dispatch = useDispatch();
@@ -44,10 +44,13 @@ const HotSpots = () => {
 
     const getContent = () => {
         if (isLoading) {
-            return <ThreeDots/>;
+            return <div className='w-96 h-80'>
+                <Spinner fullScreen/>
+            </div>;
         }
+
         if (error) {
-            return <div data-test-id='hot-spot-error'> {error.message} - {t('appointment.hot_spots.error')}</div>;
+            return <div className='w-96 h-80' data-test-id='hot-spot-error'> {error.message} - {t('appointment.hot_spots.error')}</div>;
         }
         return <Tabs>{hotSpotsView}</Tabs>;
     }

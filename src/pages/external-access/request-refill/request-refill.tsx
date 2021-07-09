@@ -19,7 +19,6 @@ import {
 } from '@pages/external-access/request-refill/services/request-refill.service';
 import ControlledSelect from '@components/controllers/controlled-select';
 import {Option} from '@components/option/option';
-import ThreeDots from '@components/skeleton-loader/skeleton-loader';
 import {Medication} from '@pages/external-access/request-refill/models/medication.model';
 import {AxiosError} from 'axios';
 import {
@@ -31,7 +30,6 @@ import {
 import {Pharmacy} from '@pages/external-access/request-refill/models/pharmacy.model';
 import TextArea from '@components/textarea/textarea';
 import Button from '@components/button/button';
-import ThreeDotsSmallLoader from '@components/skeleton-loader/three-dots-loader';
 import {useHistory} from 'react-router-dom';
 import utils from '@shared/utils/utils';
 import './request-refill.scss';
@@ -43,6 +41,7 @@ import {selectMedication} from '@pages/external-access/request-refill/store/requ
 import useDebounce from '@shared/hooks/useDebounce';
 import {DEBOUNCE_SEARCH_DELAY_MS} from '@constants/form-constants';
 import {Facility} from '@pages/external-access/request-refill/models/facility.model';
+import Spinner from '@components/spinner/Spinner';
 
 const RequestRefill = () => {
     const { t } = useTranslation();
@@ -257,7 +256,7 @@ const RequestRefill = () => {
     }
 
     if (isMedicationLoading || isDefaultPharmacyLoading || isStatesLoading) {
-        return <ThreeDots/>
+        return <Spinner fullScreen/>
     }
 
     if (!verifiedPatient) {
@@ -344,10 +343,11 @@ const RequestRefill = () => {
                             rows={2}
                             resizable={false}
                             value={messageText}
+                            isLoading={isLoading}
                             hasBorder={true}
                             maxLength={maxLength}
                             onChange={(message) => setMessageText(message)}
-                            iconClassNames='medium cursor-pointer'
+                            iconClassNames='icon-medium'
                             iconOnClick={() => {
                                 handleSubmit(onSubmit)()
                             }}
@@ -443,13 +443,8 @@ const RequestRefill = () => {
                     </div>
                 </div>
                 <div className={`flex justify-start items-center full-w mt-8 ${getMarginBottom()}`}>
-                    <Button type='submit' buttonType='big' label={t('common.send')} disabled={!messageText || isLoading} />
+                    <Button type='submit' isLoading={isLoading} buttonType='big' label={t('common.send')} disabled={!messageText || isLoading} />
                 </div>
-                {
-                    isLoading && <div className='h-8 w-20'>
-                        <ThreeDotsSmallLoader className="three-dots-loader-small" cx={13} cxSpace={23} cy={16}/>
-                    </div>
-                }
                 {
                     isError && <div className='text-danger'>
                         {t('external_access.message_send_failed')}

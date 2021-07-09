@@ -12,7 +12,6 @@ import {
     getCancellationReasons,
     cancelAppointment, getAppointmentTypeById
 } from '@pages/appointments/services/appointments.service';
-import ThreeDots from '@components/skeleton-loader/skeleton-loader';
 import {AppointmentSlot} from '@pages/external-access/appointment/models/appointment-slot.model';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc'
@@ -29,6 +28,7 @@ import './appointment.scss';
 import {setSelectedAppointmentSlot} from '@pages/external-access/appointment/store/appointments.slice';
 import {CancellationReasonTypes} from '@pages/external-access/models/cancellation-reason-types.enum';
 import AppointmentTable from '@pages/external-access/appointment/components/appointment-table';
+import Spinner from '@components/spinner/Spinner';
 
 const AppointmentCancelation = () => {
     dayjs.extend(utc);
@@ -131,7 +131,7 @@ const AppointmentCancelation = () => {
     }
 
     if (isAppointmentTypesLoading || isAppointmentSlotsLoading || isGetCancellationReasonsLoading) {
-        return <ThreeDots />
+        return <Spinner fullScreen />
     }
 
     if (!verifiedPatient) {

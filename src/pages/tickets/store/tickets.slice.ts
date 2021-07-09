@@ -47,10 +47,6 @@ const ticketsSlice = createSlice({
       },
     setFailure: (state, {payload}: PayloadAction<string>) => {
       state.errors = payload;
-      state.ticketsLoading = false;
-    },
-    setTicketsLoading(state, {payload}: PayloadAction<boolean>) {
-      state.ticketsLoading = payload;
     },
     resetLastFeedMessageOn(state) {
       state.feedLastMessageOn = undefined;
@@ -129,7 +125,6 @@ export const {
   startGetTicketEnumRequest,
   endGetTicketEnumRequest,
   setLookupValues,
-  setTicketsLoading,
   startGeLookupValuesRequest,
   endGetLookupValuesRequest,
   toggleTicketListFilter,

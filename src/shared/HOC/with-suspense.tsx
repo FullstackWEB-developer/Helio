@@ -1,14 +1,10 @@
-import { ComponentType, Suspense } from 'react';
-import { Route } from 'react-router-dom';
-import ThreeDots from '../components/skeleton-loader/skeleton-loader';
+import {ComponentType, Suspense} from 'react';
+import Spinner from '@components/spinner/Spinner';
 
 export function withSuspense<P extends string | number | object>(WrappedComponent: ComponentType<P>) {
     return (props: P) => (
-
-        <Suspense fallback={<ThreeDots />}>
-            <Route>
-                <WrappedComponent {...props} />
-            </Route>
+        <Suspense fallback={<Spinner fullScreen />}>
+            <WrappedComponent {...props} />
         </Suspense>
     );
 }

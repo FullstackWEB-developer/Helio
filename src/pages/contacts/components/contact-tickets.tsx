@@ -16,8 +16,8 @@ import {DefaultPagination} from '@shared/models/paging.model';
 import {useQuery} from 'react-query';
 import {OneMinute, QueryContactTickets} from '@constants/react-query-constants';
 import {getContactTickets} from '@pages/tickets/services/tickets.service';
-import ThreeDots from '@components/skeleton-loader/skeleton-loader';
 import utc from 'dayjs/plugin/utc';
+import Spinner from '@components/spinner/Spinner';
 
 interface ContactTicketsProps {
     contactId: string;
@@ -119,7 +119,7 @@ const ContactTickets = ({contactId}: ContactTicketsProps) => {
     }
 
     if (isLoading) {
-        return <ThreeDots/>;
+        return <Spinner fullScreen/>;
     }
 
     return <Fragment>

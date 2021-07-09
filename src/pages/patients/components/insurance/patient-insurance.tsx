@@ -6,11 +6,11 @@ import {
 } from '../../store/patients.selectors';
 import patientUtils from '@pages/patients/utils/utils';
 import utils from '../../../../shared/utils/utils';
-import ThreeDots from '../../../../shared/components/skeleton-loader/skeleton-loader';
 import {getPatientInsurance} from '@pages/patients/services/patients.service';
 import {useQuery} from 'react-query';
 import {GetPatientInsurance, OneMinute} from '@constants/react-query-constants';
 import {Insurance} from '@pages/patients/models/insurance';
+import Spinner from '@components/spinner/Spinner';
 
 export interface PatientInsuranceProps {
     patientId : number;
@@ -101,7 +101,7 @@ const PatientInsurance = ({patientId}: PatientInsuranceProps) => {
                     : <div>{t('patient.insurance.no_insurance')}</div>
             }
             <div hidden={!isError} className={'p-4 text-danger'}>{t('patient.insurance.error')}</div>
-        </div> : !isError ? <ThreeDots /> : <div className={'p-4 text-danger'}>{t('patient.summary.error')}</div>
+        </div> : !isError ? <Spinner fullScreen /> : <div className={'p-4 text-danger'}>{t('patient.summary.error')}</div>
     );
 };
 

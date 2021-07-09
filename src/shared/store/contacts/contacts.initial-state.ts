@@ -4,7 +4,6 @@ import { ContactPerson } from '../../models/contact-person.model';
 
 export interface ContactsState {
     error?: string;
-    isContactsLoading: boolean;
     addresses?: Address[];
     contacts?: Contact[];
     contactPeople?: ContactPerson[];
@@ -12,7 +11,6 @@ export interface ContactsState {
 
 const initialContactsState: ContactsState = {
     error: '',
-    isContactsLoading: false,
     addresses: [],
     contacts: [],
     contactPeople: []

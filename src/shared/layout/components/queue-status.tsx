@@ -10,13 +10,13 @@ import Table from '@components/table/table';
 import {KeyValuePair} from 'src/shared/models/key-value-pair';
 import {useTranslation} from 'react-i18next';
 import {useQuery} from 'react-query';
-import ThreeDots from '@components/skeleton-loader/skeleton-loader';
 import {QueryQueueMetrics} from '@constants/react-query-constants';
 import SvgIcon from '@components/svg-icon/svg-icon';
 import {Icon} from '@components/svg-icon/icon';
 import {authenticationSelector} from "@shared/store/app-user/appuser.selectors";
 import {selectLatestUsersStatusUpdateTime} from '@shared/layout/store/layout.selectors';
 import {QueueStatusType} from "@shared/layout/enums/queue-status-type";
+import Spinner from '@components/spinner/Spinner';
 
 interface QueueStatusProps {
     queueType: QueueStatusType
@@ -151,7 +151,7 @@ const QueueStatus = ({queueType}: QueueStatusProps) => {
         return <div>{translate('statuses.queuestatus.loading_error')}</div>;
     }
     if (isLoading) {
-        return <ThreeDots className='w-48'/>;
+        return <Spinner fullScreen/>;
     }
 
     return (

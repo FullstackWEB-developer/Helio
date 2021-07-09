@@ -10,7 +10,6 @@ import {
 import ControlledSelect from '@components/controllers/controlled-select';
 import {Option} from '@components/option/option';
 import {Controller, useForm} from 'react-hook-form';
-import ThreeDots from '@components/skeleton-loader/skeleton-loader';
 import {setTicket, setTicketUpdateModel} from '@pages/tickets/store/tickets.slice';
 import {selectDepartmentListAsOptions} from '@shared/store/lookups/lookups.selectors';
 import Button from '@components/button/button';
@@ -21,6 +20,7 @@ import {useTranslation} from 'react-i18next';
 import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
 import {SnackbarType} from '@components/snackbar/snackbar-position.enum';
 import TagInput from '@components/tag-input/tag-input';
+import Spinner from '@components/spinner/Spinner';
 
 interface TicketInfoProps {
     ticket: Ticket
@@ -123,8 +123,8 @@ const TicketDetailTicketInfo = ({ticket}: TicketInfoProps) => {
         setDirty(true);
     }
 
-    if (!updateModel || ticketUpdateMutation.isLoading) {
-        return <ThreeDots/>
+    if (!updateModel) {
+        return <Spinner size='medium'/>
     }
 
     const resetForm = () => {
@@ -217,6 +217,7 @@ const TicketDetailTicketInfo = ({ticket}: TicketInfoProps) => {
                         <div>
                             <Button data-test-id='ticket-detail-info-panel-update-ticket-button' type={'submit'}
                                     buttonType='small'
+                                    isLoading={ticketUpdateMutation.isLoading}
                                     label={'ticket_detail.info_panel.update_ticket'}/>
                         </div>
                     </div>}

@@ -19,9 +19,10 @@ const athenaPatientUrl = process.env.REACT_APP_ATHENAHEALTH_CLIENT_SUMMARY;
 export interface PatientHeaderProps {
     patientChartSummary: PatientChartSummary;
     refreshPatient: () => void;
+    isRefreshing: boolean;
 }
 
-const PatientHeader = ({patientChartSummary, refreshPatient}: PatientHeaderProps) => {
+const PatientHeader = ({patientChartSummary, refreshPatient, isRefreshing}: PatientHeaderProps) => {
     const {t} = useTranslation();
     const patient: ExtendedPatient = useSelector(selectPatient);
     const chartAlertIcon = useRef(null);
@@ -115,9 +116,9 @@ const PatientHeader = ({patientChartSummary, refreshPatient}: PatientHeaderProps
                     buttonType='medium'
                     onClick={() => viewInAthena()}
                     label={'patient.header.view_in_athena'} />
-                <div className='pt-5 flex flex-row justify-end'>
+                <div className='h-16 items-center flex flex-row justify-end'>
                     <span className='cursor-pointer'>
-                        <SvgIcon type={Icon.Refresh} onClick={() => refreshPatient()} fillClass='rgba-05-fill' />
+                        <SvgIcon isLoading={isRefreshing} type={Icon.Refresh} onClick={() => refreshPatient()} fillClass='rgba-05-fill' />
                     </span>
                 </div>
             </div>

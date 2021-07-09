@@ -48,15 +48,12 @@ const searchBarSlice = createSlice({
         clearRecentPatients(state) {
             state.recentPatients = [];
         },
-        setSearching(state, action) {
-            state.isSearching = action.payload;
-        },
         setError(state, action) {
             state.isError = action.payload;
         }
     }
 });
 
-export const {changeFilteredTypes, setType, changeTypeDown, changeTypeUp, addRecentPatient, clearRecentPatients, setSearching, setError } = searchBarSlice.actions
+export const {changeFilteredTypes, setType, changeTypeDown, changeTypeUp, addRecentPatient, clearRecentPatients, setError } = searchBarSlice.actions
 
 export default searchBarSlice.reducer

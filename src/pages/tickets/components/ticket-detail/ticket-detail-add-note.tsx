@@ -56,16 +56,17 @@ const TicketDetailAddNote = ({ticket, onNoteAdded}: TicketDetailAddNoteProps) =>
                     render={() => (
                         <TextArea
                             error={errors.note?.message}
-                            className='pl-6 pt-2 pb-0 pr-0 body2 w-full h-full'
+                            className='pl-6 pt-2 pb-0 pr-0 body2 w-full'
                             data-test-id='ticket-add-notes'
                             placeHolder={t('ticket_detail.add_note')}
                             required={true}
                             rows={2}
                             resizable={false}
+                            isLoading={addNoteMutation.isLoading}
                             value={noteText}
                             hasBorder={false}
                             onChange={(message) => setNoteText(message)}
-                            iconClassNames='medium cursor-pointer'
+                            iconClassNames='icon-medium'
                             icon={Icon.Send}
                             iconFill='notes-send'
                             iconOnClick={() => {

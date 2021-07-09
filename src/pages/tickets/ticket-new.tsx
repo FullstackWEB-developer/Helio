@@ -6,7 +6,6 @@ import {useDispatch, useSelector} from 'react-redux';
 import {Controller, ControllerRenderProps, useForm} from 'react-hook-form';
 import withErrorLogging from '../../shared/HOC/with-error-logging';
 
-import ThreeDots from '../../shared/components/skeleton-loader/skeleton-loader';
 import Button from '../../shared/components/button/button';
 import Select from '../../shared/components/select/select';
 import {Option} from '@components/option/option';
@@ -21,7 +20,7 @@ import {
     selectIsTicketLookupValuesLoading,
     selectLookupValues
 } from './store/tickets.selectors';
-import {selectContacts, selectIsContactOptionsLoading} from '@shared/store/contacts/contacts.selectors';
+import {selectContacts} from '@shared/store/contacts/contacts.selectors';
 import {
     selectDepartmentList,
     selectIsDepartmentListLoading,
@@ -48,6 +47,8 @@ import {ContactType} from '@pages/contacts/models/ContactType';
 import {AxiosError} from 'axios';
 import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
 import {SnackbarType} from '@components/snackbar/snackbar-position.enum';
+import {setGlobalLoading} from '@shared/store/app/app.slice';
+import Spinner from '@components/spinner/Spinner';
 
 const TicketNew = () => {
     dayjs.extend(utc);
@@ -77,7 +78,6 @@ const TicketNew = () => {
     const ticketLookupValuesSubject = useSelector((state) => selectLookupValues(state, 'TicketSubject'));
     const ticketLookupValuesTags = useSelector((state) => selectLookupValues(state, 'TicketTags'));
 
-    const isContactsLoading = useSelector(selectIsContactOptionsLoading);
     const isDepartmentListLoading = useSelector(selectIsDepartmentListLoading);
     const isLookupValuesLoading = useSelector(selectIsTicketLookupValuesLoading);
     const isTicketEnumValuesLoading = useSelector(selectIsTicketEnumValuesLoading);
@@ -100,7 +100,10 @@ const TicketNew = () => {
     const [debounceContactSearchTerm] = useDebounce(contactSearchTerm, DEBOUNCE_SEARCH_DELAY_MS);
 
     const {refetch: refetchContacts} = useQuery<Contact[], Error>([QueryContacts, debounceContactSearchTerm],
-        () => searchContactsByName(debounceContactSearchTerm), {
+        () => {
+            dispatch(setGlobalLoading(true));
+            return searchContactsByName(debounceContactSearchTerm)
+        }, {
             enabled: false,
             onSuccess: (data) => {
                 const contactOptionResult = data.map(item => ({
@@ -112,6 +115,9 @@ const TicketNew = () => {
             },
             onError: () => {
                 setError('contactId', {type: 'notFound', message: t('ticket_new.error_getting_contacts')});
+            },
+            onSettled: () => {
+                dispatch(setGlobalLoading(false));
             }
         });
 
@@ -339,8 +345,8 @@ const TicketNew = () => {
         setTags(data);
     };
 
-    if (isContactsLoading || isDepartmentListLoading || isLookupValuesLoading || isTicketEnumValuesLoading) {
-        return <ThreeDots data-test-id='ticket-new-loading' />;
+    if (isDepartmentListLoading || isLookupValuesLoading || isTicketEnumValuesLoading) {
+        return <Spinner fullScreen />;
     }
 
     if (contacts === undefined
@@ -646,7 +652,7 @@ const TicketNew = () => {
                         />
                     </div>
                     <div>
-                        <Button buttonType='big' disabled={createTicketMutation.isLoading || !isValid || !stateError}
+                        <Button isLoading={createTicketMutation.isLoading} buttonType='big' disabled={!isValid || !stateError}
                                 data-test-id='ticket-new-create-button' type={'submit'}
                                 label={'ticket_new.create'}/>
                     </div>

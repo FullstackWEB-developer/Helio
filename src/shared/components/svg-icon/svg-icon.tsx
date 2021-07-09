@@ -2,6 +2,7 @@ import {Icon} from '@components/svg-icon/icon';
 import CwcLogo from '@shared/icons/cwc-logo';
 import './svg-icon.scss';
 import React from 'react';
+import classNames from 'classnames';
 
 export interface SvgIconProps {
     type: Icon,
@@ -10,10 +11,11 @@ export interface SvgIconProps {
     fillClass?: string,
     strokeClass?: string,
     opacity?: string,
-    onClick?: (e: any) => void
+    onClick?: (e: any) => void,
+    isLoading?: boolean
 }
 
-const SvgIcon = ({type, wrapperClassName, className = 'icon-medium', fillClass = 'fill-default', strokeClass = 'stroke-default', opacity, onClick}: SvgIconProps) => {
+const SvgIcon = ({type, wrapperClassName='', className = 'icon-medium', fillClass = 'fill-default', strokeClass = 'stroke-default', opacity, onClick, isLoading = false}: SvgIconProps) => {
     const mainClass = `${className} ${fillClass ? '' : 'fill-default'}`;
 
     const getIconAdd = () => {
@@ -667,6 +669,12 @@ const SvgIcon = ({type, wrapperClassName, className = 'icon-medium', fillClass =
         </svg>
     }
 
+    const getIconSpinner = (overriddenMainClass= mainClass) => {
+        return <svg className={`spinner ${overriddenMainClass}`} viewBox="0 0 40 40">
+            <circle className="path" cx="20" cy="20" r="16" fill="none" strokeWidth="4"/>
+        </svg>;
+    }
+
     const getIconLightCheckBoxOff = () => {
         return <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className={mainClass}>
             <rect width="24" height="24" fill="none" />
@@ -783,11 +791,27 @@ const SvgIcon = ({type, wrapperClassName, className = 'icon-medium', fillClass =
         [Icon.LightRadioOff]: getIconLightRadioOff,
         [Icon.LightRadioOn]: getIconLightRadioOn,
         [Icon.Comment]: getIconComment,
-        [Icon.CwcLogo]: getCwcLogo
+        [Icon.CwcLogo]: getCwcLogo,
+        [Icon.Spinner]: getIconSpinner,
     }
 
-    return <div className={wrapperClassName} onClick={onClick}>
-        {icons[type]()}
+    if (!isLoading) {
+        return <div className={wrapperClassName} onClick={onClick}>
+            {icons[type]()}
+        </div>
+    }
+
+    const overriddenMainClass = classNames('flex items-center justify-center' ,{
+        'icon-large-40' : className === 'icon-medium' || 'icon-large' || 'icon-medium-18',
+        'icon-x-large' : className === 'icon-large-40' || 'icon-x-large',
+        'icon-large' : className === 'icon-small'
+    });
+
+    return <div className={`${wrapperClassName} relative`} onClick={onClick}>
+        <div className={`absolute`} onClick={onClick}>{getIconSpinner(overriddenMainClass)}</div>
+        <div className={overriddenMainClass} onClick={onClick}>
+            <SvgIcon type={type} fillClass='fill-loading'/>
+        </div>
     </div>
 }
 

@@ -277,6 +277,7 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
                 <div className='pr-6'>
                     <Button data-test-id='ticket-detail-header-delete-button'
                             buttonType='secondary'
+                            isLoading={archiveTicketMutation.isLoading}
                             disabled={archiveTicketMutation.isLoading}
                             onClick={() => confirmProcess()}
                             label={'ticket_detail.header.archive'}/>
@@ -285,6 +286,7 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
                     <Button disabled={ticket.status === TicketStatuses.Solved || updateStatusMutation.isLoading}
                             data-test-id='ticket-detail-header-solved-button'
                             buttonType='small'
+                            isLoading={updateStatusMutation.isLoading && updateStatusMutation.variables?.status === TicketStatuses.Solved}
                             onClick={() => updateStatus('Solved')}
                             label={'ticket_detail.header.solved'}/>
                 </div>
@@ -292,6 +294,7 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
                     <Button disabled={ticket.status === TicketStatuses.Closed || updateStatusMutation.isLoading}
                             data-test-id='ticket-detail-header-close-button'
                             buttonType='small'
+                            isLoading={updateStatusMutation.isLoading && updateStatusMutation.variables?.status === TicketStatuses.Closed}
                             onClick={() => updateStatus('Closed')}
                             label={'ticket_detail.header.close'}/>
                 </div>

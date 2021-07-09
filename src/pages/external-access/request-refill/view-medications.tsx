@@ -17,7 +17,7 @@ import MedicationListItem from '@pages/external-access/request-refill/components
 import {Pharmacy} from '@pages/external-access/request-refill/models/pharmacy.model';
 import utils from '@shared/utils/utils';
 import SendUsMessage from '@pages/external-access/request-refill/components/send-us-message';
-import ThreeDots from '@components/skeleton-loader/skeleton-loader';
+import Spinner from '@components/spinner/Spinner';
 
 const ViewMedications = () => {
     const {t} = useTranslation();
@@ -38,7 +38,7 @@ const ViewMedications = () => {
     );
 
     if (isMedicationLoading || isDefaultPharmacyLoading) {
-        return <ThreeDots/>
+        return <Spinner fullScreen/>
     }
 
     if (!verifiedPatient) {

@@ -19,7 +19,6 @@ import {
 } from '@pages/patients/services/patients.service';
 import {useLocation} from 'react-router-dom';
 import {useMutation, useQuery} from 'react-query';
-import ThreeDotsSmallLoader from '@components/skeleton-loader/three-dots-loader';
 import {RedirectLink} from '@pages/external-access/hipaa-verification/models/redirect-link';
 import {setMedicalRecordsPreviewData} from '@pages/external-access/request-medical-records/store/medical-records.slice';
 import dayjs from 'dayjs';
@@ -226,14 +225,15 @@ const RequestMedicalRecords = () => {
                         <div className='flex flex-row space-x-6 pt-6'>
                             <Button buttonType='secondary-big'
                                     disabled={isLoading}
+                                    isLoading={isLoading && requestType === RequestType.Preview}
                                     label='external_access.medical_records_request.preview_button_title'
                                     onClick={() => startRequest(RequestType.Preview)}/>
                             <Button label='external_access.medical_records_request.download_button_title'
                                     disabled={isLoading}
+                                    isLoading={isLoading && requestType === RequestType.Download}
                                     buttonType='big'
                                     onClick={() => startRequest(RequestType.Download)}/>
                         </div>
-                        {isLoading && <ThreeDotsSmallLoader/>}
                     </div>
                 </Tab>
                 <Tab title={t('external_access.medical_records_request.share_tab_header')}>
@@ -264,10 +264,10 @@ const RequestMedicalRecords = () => {
                                     className='mt-1'
                                     buttonType='big'
                                     onClick={() => startRequest(RequestType.Share)}
+                                    isLoading={isLoading && requestType === RequestType.Share}
                                     disabled={!formState.isDirty || email !== emailConfirm || isLoading}
                                     label={t('external_access.medical_records_request.share_button_title')}
                                     type='submit'/>
-                                {isLoading && <ThreeDotsSmallLoader/>}
                             </form>
                         </div>
                     </div>

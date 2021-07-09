@@ -1,6 +1,7 @@
 import {AnyAction, combineReducers, configureStore, Reducer} from '@reduxjs/toolkit';
 import ticketReducer from '../pages/tickets/store/tickets.slice';
 import appUserReducer from '../shared/store/app-user/appuser.slice';
+import appReducer from '../shared/store/app/app.slice';
 import layoutReducer from '../shared/layout/store/layout.slice';
 import ccpReducer from '../pages/ccp/store/ccp.slice';
 import searchReducer from '../shared/components/search-bar/store/search-bar.slice';
@@ -25,7 +26,8 @@ const reducers = combineReducers({
     externalAccessState,
     lookupsState: lookupsReducer,
     contactState: contactsReducer,
-    snackbarState: snackbarReducer
+    snackbarState: snackbarReducer,
+    appState: appReducer
 })
 
 const rootReducer: Reducer = (state: RootState, action: AnyAction) => {

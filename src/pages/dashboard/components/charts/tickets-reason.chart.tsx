@@ -4,10 +4,10 @@ import {useEffect} from 'react';
 import {getLookupValues} from '@pages/tickets/services/tickets.service';
 import {useDispatch, useSelector} from 'react-redux';
 import {selectLookupValues} from '@pages/tickets/store/tickets.selectors';
-import ThreeDots from '@components/skeleton-loader/skeleton-loader';
 import DashboardPieChart from '@pages/dashboard/components/charts/dashboard-pie-chart';
 import './tickets-reason.chart.scss';
 import {getPieChartColor} from '@pages/dashboard/utils/dashboard-utils';
+import Spinner from '@components/spinner/Spinner';
 
 export interface TicketsReasonChartProps {
     data: BasicStatistic[]
@@ -22,7 +22,7 @@ const TicketsReasonChart = ({data}: TicketsReasonChartProps) => {
     }, [dispatch]);
 
     if (!ticketLookupValuesReason) {
-        return <ThreeDots/>
+        return <Spinner fullScreen/>
     }
 
     if (!data || data.length === 0) {
@@ -50,7 +50,7 @@ const TicketsReasonChart = ({data}: TicketsReasonChartProps) => {
     });
 
     const ChartItem = ({item, index}: { item: BasicStatistic, index: number }) => {
-        return <div key={item.label.toString()} className='px-20  grid grid-cols-12 gap-2 items-center'>
+        return <div className='px-20  grid grid-cols-12 gap-2 items-center'>
             <div className='ml-4 h-2.5 w-2.5 rounded-xl' style={{backgroundColor: getPieChartColor(index)}}/>
             <div className='col-span-8'>{item.label}</div>
             <div className='col-span-1'>{item.value}</div>

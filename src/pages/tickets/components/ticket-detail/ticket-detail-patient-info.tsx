@@ -7,7 +7,6 @@ import withErrorLogging from '../../../../shared/HOC/with-error-logging';
 import {Ticket} from '../../models/ticket';
 import Input from '../../../../shared/components/input/input';
 import {selectIsPatientError, selectPatientLoading} from '@pages/patients/store/patients.selectors';
-import ThreeDots from '../../../../shared/components/skeleton-loader/skeleton-loader';
 import Button from '../../../../shared/components/button/button';
 import {updateTicket} from '../../services/tickets.service';
 import {useMutation} from 'react-query';
@@ -17,6 +16,7 @@ import {Patient} from '@pages/patients/models/patient';
 import {Icon} from '@components/svg-icon/icon';
 import SvgIcon from '@components/svg-icon/svg-icon';
 import {getPatientActionNotes, getPatientCaseDocument} from '@pages/patients/services/patient-document.service';
+import Spinner from '@components/spinner/Spinner';
 
 interface TicketDetailPatientInfoProps {
     ticket: Ticket,
@@ -107,12 +107,13 @@ const TicketDetailPatientInfo = ({ticket, patient}: TicketDetailPatientInfoProps
         }, 0);
     }
 
+    if (loading) {
+        return <Spinner fullScreen/>
+    }
+
     return <div className={'py-4 mx-auto flex flex-col'}>
-        <div hidden={!loading}>
-            <ThreeDots />
-        </div>
         {
-            !loading && !error && patient
+            !error && patient
                 ?
                 <div>
                     <dl>
@@ -184,7 +185,6 @@ const TicketDetailPatientInfo = ({ticket, patient}: TicketDetailPatientInfoProps
                     <span className={'h6'}>{t('patient.not_found')}</span>
                 </div>
         }
-
     </div>
 }
 

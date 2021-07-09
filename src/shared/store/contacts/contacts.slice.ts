@@ -10,27 +10,22 @@ const contactsSlice = createSlice({
     reducers: {
         setAddresses(state, { payload }: PayloadAction<Address[]>) {
             state.error = '';
-            state.isContactsLoading = false;
             state.addresses = payload;
         },
         setContacts(state, { payload }: PayloadAction<Contact[]>) {
             state.error = '';
-            state.isContactsLoading = false;
             state.contacts = payload;
         },
         setContactPeople(state, { payload }: PayloadAction<ContactPerson[]>) {
             state.error = '';
-            state.isContactsLoading = false;
             state.contactPeople = payload;
         },
         startGetContactsRequest(state) {
             state.error = '';
-            state.isContactsLoading = true;
             state.contacts = []
         },
         endGetContactsRequest(state, { payload }: PayloadAction<string>) {
             state.error = payload;
-            state.isContactsLoading = false;
         }
     }
 });

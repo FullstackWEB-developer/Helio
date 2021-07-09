@@ -5,7 +5,6 @@ import {useDispatch, useSelector} from 'react-redux';
 import {useParams} from 'react-router';
 import {useTranslation} from 'react-i18next';
 import withErrorLogging from '@shared/HOC/with-error-logging';
-import ThreeDots from '@shared/components/skeleton-loader/skeleton-loader';
 import TicketDetailHeader from './components/ticket-detail/ticket-detail-header';
 import TicketInfoPanel from './components/ticket-detail/ticket-detail-info-panel';
 import TicketDetailFeed from './components/ticket-detail/ticket-detail-feed';
@@ -20,6 +19,7 @@ import {getPatientByIdWithQuery} from '@pages/patients/services/patients.service
 import {ExtendedPatient} from '@pages/patients/models/extended-patient';
 import {Contact} from '@shared/models/contact.model';
 import {getContactById} from '@shared/services/contacts.service';
+import Spinner from '@components/spinner/Spinner';
 
 interface TicketParams {
     ticketNumber: string
@@ -72,7 +72,7 @@ const TicketDetail = () => {
     }, [contactRefetch, ticket?.contactId]);
 
     if (isLoading || isFetching) {
-        return <ThreeDots/>;
+        return <Spinner fullScreen/>;
     }
 
     if (error) {

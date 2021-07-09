@@ -15,10 +15,10 @@ import {useHistory} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import {ExternalAccessRequestTypes} from '../models/external-updates-request-types.enum';
 import './hipaa-verification.scss';
-import ThreeDotsSmallLoader from '@components/skeleton-loader/three-dots-loader';
 import utils from '@shared/utils/utils';
-import {setAuthentication} from "@shared/store/app-user/appuser.slice";
+import {logOut, setAuthentication} from "@shared/store/app-user/appuser.slice";
 import {authenticationSelector} from "@shared/store/app-user/appuser.selectors";
+import {selectVerifiedPatent} from '@pages/patients/store/patients.selectors';
 
 export interface HipaaVerificationProps {
     request: RedirectLink
@@ -30,6 +30,7 @@ const HipaaVerification = ({request}: HipaaVerificationProps) => {
     const dispatch = useDispatch();
     const authentication = useSelector(authenticationSelector);
     const [values, setValues] = useState<VerifyPatientProps>();
+    const verifiedPatient = useSelector(selectVerifiedPatent);
     const [errors, setErrors] = useState<string>('');
     const {handleSubmit, control, formState} = useForm({
         mode: 'onBlur'
@@ -37,7 +38,11 @@ const HipaaVerification = ({request}: HipaaVerificationProps) => {
 
     const checkAuthenticationState = () => {
        if (authentication && (Date.parse(authentication.expiresOn) > new Date().valueOf())) {
-           forwardToRelatedPage();
+           if (verifiedPatient) {
+               forwardToRelatedPage();
+           } else {
+               logOut();
+           }
        }
     }
 
@@ -172,11 +177,11 @@ const HipaaVerification = ({request}: HipaaVerificationProps) => {
                                 disabled={!formState.isDirty || !formState.isValid || isLoading}
                                 className='w-full md:w-auto'
                                 type='submit'
+                                isLoading={isLoading}
                                 data-test-id='hipaa-submit-button'
                                 buttonType='big' />
                         </div>
                     </div>
-                    {isLoading && <ThreeDotsSmallLoader className="three-dots-loader-small" cx={13} cxSpace={23} cy={16} height={30} />}
                     <div className='text-danger'>
                         {t(errors)}
                     </div>

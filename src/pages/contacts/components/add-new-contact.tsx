@@ -7,7 +7,6 @@ import ContactForm from './contact-form';
 import SvgIcon from '@components/svg-icon/svg-icon';
 import {Icon} from '@components/svg-icon/icon';
 import {useMutation} from 'react-query';
-import ThreeDots from '@components/skeleton-loader/skeleton-loader';
 import {ContactFormModel} from '../models/contact-form.model';
 import {createNewContact} from '@shared/services/contacts.service';
 import {ContactExtended} from '@shared/models/contact.model';
@@ -44,10 +43,6 @@ const AddNewContact = ({contactType = ContactType.Individual, onContactAddSucces
     const onClose = () => closeAddNewContactForm();
     const toggleFavorite = () => setAddToFavorites(!addToFavorites);
 
-    if (isLoading) {
-        return <ThreeDots />
-    }
-
     return (
         <div className='h-full w-full overflow-y-auto px-8 pt-7 flex flex-col'>
             <div className="flex justify-between items-center mb-10">
@@ -62,7 +57,7 @@ const AddNewContact = ({contactType = ContactType.Individual, onContactAddSucces
             {isError && <h6 className='text-danger mt-2 mb-5'>{t('contacts.new-contact.add_fail')}</h6>}
             <div className='body2 mb-6 pointer-events-none'>{t('contacts.new-contact.select_type')}</div>
             <Radio name='new-contact-type' className='flex space-x-8' defaultValue={String(contactTypeRadio)} items={newContactTypeOptions} onChange={onContactTypeChange} />
-            <ContactForm contactType={contactTypeRadio} submitHandler={onSubmit} closeHandler={onClose} editMode={false} />
+            <ContactForm isSaving={isLoading} contactType={contactTypeRadio} submitHandler={onSubmit} closeHandler={onClose} editMode={false} />
         </div>
     );
 }

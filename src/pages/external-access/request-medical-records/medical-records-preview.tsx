@@ -1,9 +1,9 @@
 import {useQuery} from 'react-query';
 import {PreviewMedicalRecords} from '@constants/react-query-constants';
 import {getMedicalRecordsAsHtml} from '@pages/patients/services/patients.service';
-import ThreeDots from '@components/skeleton-loader/skeleton-loader';
 import {useSelector} from 'react-redux';
 import {selectRequestMedicalRecordsPreviewData} from '@pages/external-access/request-medical-records/store/medical-records.selectors';
+import Spinner from '@components/spinner/Spinner';
 
 const MedicalRecordsPreview = () => {
     const previewModel = useSelector(selectRequestMedicalRecordsPreviewData);
@@ -16,7 +16,7 @@ const MedicalRecordsPreview = () => {
     );
 
     if (isLoading) {
-        return <ThreeDots/>
+        return <Spinner fullScreen/>
     }
 
     if (isError || !data) {

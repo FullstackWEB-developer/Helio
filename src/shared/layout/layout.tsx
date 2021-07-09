@@ -11,6 +11,9 @@ import Snackbar from '@components/snackbar/snackbar';
 import {SnackbarPosition} from '@components/snackbar/snackbar-type.enum';
 import {useHistory} from 'react-router-dom';
 import utils from '@shared/utils/utils';
+import Overlay from '@components/overlay/overlay';
+import {useSelector} from 'react-redux';
+import {selectGlobalLoading} from '@shared/store/app/app.selectors';
 
 interface LayoutProps {
     children: React.ReactNode
@@ -24,9 +27,10 @@ const Layout = (props: LayoutProps) => {
             history.push(`/login`);
         }
     })
-    
+    const isGlobalLoading = useSelector(selectGlobalLoading);
     return (
         <Fragment>
+            <Overlay isActive={isGlobalLoading}>
             <div>
                 <DndProvider backend={HTML5Backend}>
                     <DndContainer className='flex flex-auto' headsetIconRef={headsetIconRef}>
@@ -61,6 +65,7 @@ const Layout = (props: LayoutProps) => {
                     </DndContainer>
                 </DndProvider>
             </div>
+            </Overlay>
         </Fragment>
     );
 }

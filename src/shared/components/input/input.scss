@@ -29,7 +29,7 @@
       left: 0;
       right: 0;
       background-color: var(--color-white);
-      z-index: 999;
+      z-index: 998;
       box-shadow: var(--select-box-shadow);
       min-width: 12rem;
       border-radius: 0.188rem;
@@ -106,10 +106,5 @@
   .required::after {
     content: "*";
     color: var(--color-red);
-  }
-
-  .three-dots-loader-small {
-    height: 1.5rem;
-    width: 4.3125rem;
   }
 }

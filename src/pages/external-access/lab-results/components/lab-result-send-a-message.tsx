@@ -18,7 +18,6 @@ import {LabResultDetail} from '../models/lab-result-detail.model';
 import {useMutation} from 'react-query';
 import {createPatientCase} from '@pages/external-access/request-refill/services/request-refill.service';
 import {PatientCaseDocumentSource, PatientCaseDocumentSubClass} from '@pages/external-access/request-refill/models/patient-case-external.model';
-import ThreeDots from '@components/skeleton-loader/skeleton-loader';
 import {SnackbarType} from '@components/snackbar/snackbar-position.enum';
 import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
 
@@ -38,7 +37,7 @@ const LabResultSendAMessage = ({labResult}: {labResult?: LabResultDetail}) => {
     const onClose = () => {
         if (expanded) {
             setMessage('');
-        };
+        }
         setExpanded(!expanded);
     }
 
@@ -50,7 +49,9 @@ const LabResultSendAMessage = ({labResult}: {labResult?: LabResultDetail}) => {
     }) : [];
 
     const getDefaultProvider = () => {
-        return providerOptions.find(p => p.value === verifiedPatient.defaultProviderId.toString())?.value;
+        if (verifiedPatient.defaultProviderId) {
+            return providerOptions.find(p => p.value === verifiedPatient.defaultProviderId.toString())?.value;
+        }
     }
 
     const {control, handleSubmit, errors} = useForm();
@@ -100,7 +101,7 @@ const LabResultSendAMessage = ({labResult}: {labResult?: LabResultDetail}) => {
                 <span className='subtitle pl-4'>{t('external_access.lab_results.send_a_message_title')}</span>
                 <Button type="button" buttonType="link" label={t(!expanded ? 'external_access.lab_results.send_a_message' : 'common.close')}
                     className='body2 cursor-pointer md:ml-auto xl:pr-24'
-                    onClick={onClose}></Button>
+                    onClick={onClose}/>
             </div>
             {
                 expanded &&
@@ -135,15 +136,11 @@ const LabResultSendAMessage = ({labResult}: {labResult?: LabResultDetail}) => {
                         />
                     </div>
                     <div className="flex pt-6 pb-10">
-                        {
-                            isLoading ?
-                                <ThreeDots /> :
-                                <>
-                                    <Button buttonType='secondary' label={t('common.cancel')} onClick={onClose} />
-                                    <span className="pl-6"></span>
-                                    <Button type='submit' disabled={!message} label={t('common.send')} />
-                                </>
-                        }
+                        <>
+                            <Button buttonType='secondary' label={t('common.cancel')} onClick={onClose} />
+                            <span className="pl-6"/>
+                            <Button type='submit' isLoading={isLoading} disabled={!message} label={t('common.send')} />
+                        </>
                     </div>
                 </form>
             }

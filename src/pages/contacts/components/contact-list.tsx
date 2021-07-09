@@ -5,8 +5,9 @@ import ContactListLetter from './contact-list-letter';
 import {useTranslation} from 'react-i18next';
 import {ContactBase, ContactExtended} from '@shared/models/contact.model';
 import {Icon} from '@components/svg-icon/icon';
-import ThreeDots from '@components/skeleton-loader/skeleton-loader';
 import {ContactType} from '@shared/models/contact-type.enum';
+import React from 'react';
+import Spinner from '@components/spinner/Spinner';
 interface ContactListProps {
     contacts: ContactExtended[],
     onContactSelect: (c: ContactExtended) => void,
@@ -47,7 +48,7 @@ const ContactList = ({contacts, onContactSelect, currentlySelected, fetchMore, i
                 }
             }
         });
-        body.push(<div key={`loading-container`} className={`${!isFetchingNextPage ? 'in' : ''}visible`}><ThreeDots className='w-72 h-10' /></div>);
+        body.push(<div key={`loading-container`} className={!isFetchingNextPage ? 'invisible' : 'visible'}><Spinner fullScreen /></div>);
         return body;
     }
 
@@ -72,8 +73,8 @@ const ContactList = ({contacts, onContactSelect, currentlySelected, fetchMore, i
             <SearchInputField wrapperClassNames="h-12" onChange={handleSearch} value={props.searchValue} placeholder={`${t('contacts.contact-list.search')}`} />
             <div className="relative max-w-full overflow-y-auto overflow-x-hidden" onScroll={(e) => handleScroll(e)}>
                 {
-                    isFetching && !isFetchingNextPage ? <ThreeDots className='w-72' /> :
-                        renderList().map((element: any) => element)
+                    isFetching && !isFetchingNextPage ? <div /> :
+                        React.Children.toArray(renderList().map((element: any) => element))
                 }
             </div>
         </div>

@@ -1,13 +1,13 @@
 import Appointments from './appointments';
 import RecentPatientCases from './recent-patient-cases';
 import { useTranslation } from 'react-i18next';
-import ThreeDots from '../../../../shared/components/skeleton-loader/skeleton-loader';
 import {
     getPatientClinicalDetails,
 } from '@pages/patients/services/patients.service';
 import {useQuery} from 'react-query';
 import {GetPatientClinical, OneMinute} from '@constants/react-query-constants';
 import {ClinicalDetails} from '@pages/patients/models/clinical-details';
+import Spinner from '@components/spinner/Spinner';
 
 export interface PatientClinicalProps {
     patientId: number;
@@ -24,7 +24,7 @@ const PatientClinical = ({patientId} : PatientClinicalProps) => {
     );
 
     if (isLoading || !data) {
-        return <ThreeDots />;
+        return <Spinner fullScreen/>;
     }
     if (isError) {
         return <div className={'p-4 text-danger'}>{t('patient.clinical.error')}</div>;

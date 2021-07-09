@@ -28,8 +28,9 @@ interface ContactFormProps {
     submitHandler?: (formData: ContactFormModel) => void;
     closeHandler?: () => void;
     editMode: boolean;
+    isSaving: boolean;
 }
-const ContactForm = ({contact, contactType, submitHandler, closeHandler, editMode}: ContactFormProps) => {
+const ContactForm = ({contact, contactType, submitHandler, closeHandler, editMode, isSaving}: ContactFormProps) => {
     const {t} = useTranslation();
     const mask = '(999) 999-9999';
     const isCompanyContact = contactType === ContactType.Company;
@@ -313,7 +314,7 @@ const ContactForm = ({contact, contactType, submitHandler, closeHandler, editMod
                 }
                 <ContactAddressPicker options={addressDropdownOptions} onSelect={handleAddressPickerChange} />
                 <div className="flex justify-center items-center full-w h-20 mb-4">
-                    <Button type='submit' buttonType='medium' label={t('common.save')} className='mr-8' disabled={!isValid} />
+                    <Button isLoading={isSaving} type='submit' buttonType='medium' label={t('common.save')} className='mr-8' disabled={!isValid} />
                     <Button buttonType='secondary' label={t('common.cancel')} className='h-10 secondary-contact-form-btn' onClick={closeButtonHandler} />
                 </div>
             </form>

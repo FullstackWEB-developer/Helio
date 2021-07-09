@@ -160,7 +160,7 @@ button.small-button:disabled,
 button.big-button[disabled],
 button.medium-button[disabled],
 button.small-button[disabled] {
-  background-color: var(--light-divider-7);
+  background-color: var(--loading-button-background);
   color: var(--light-text-disabled);
   cursor: default;
 }

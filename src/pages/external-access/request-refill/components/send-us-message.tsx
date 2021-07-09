@@ -14,7 +14,6 @@ import {
     PatientCaseDocumentSource,
     PatientCaseDocumentSubClass
 } from '@pages/external-access/request-refill/models/patient-case-external.model';
-import ThreeDotsSmallLoader from '@components/skeleton-loader/three-dots-loader';
 
 const SendUsMessage = () => {
     const {t} = useTranslation();
@@ -94,8 +93,9 @@ const SendUsMessage = () => {
                             value={messageText}
                             hasBorder={true}
                             maxLength={maxLength}
+                            isLoading={isLoading}
                             onChange={(message) => setMessageText(message)}
-                            iconClassNames='medium cursor-pointer'
+                            iconClassNames='icon-medium'
                             iconOnClick={() => {
                                 handleSubmit(onSubmit)()
                             }}
@@ -104,13 +104,8 @@ const SendUsMessage = () => {
                 />
                 <div className={`flex justify-start items-center full-w mt-3 ${getMarginBottom()}`}>
                     <Button buttonType='secondary' label={t('common.cancel')} className='h-10 secondary-contact-form-btn' onClick={closeButtonHandler} />
-                    <Button type='submit' buttonType='medium' label={t('common.send')} className='ml-6' disabled={!messageText || isLoading} />
+                    <Button type='submit' isLoading={isLoading} buttonType='medium' label={t('common.send')} className='ml-6' disabled={!messageText} />
                 </div>
-                {
-                    isLoading && <div className='h-8 w-20'>
-                        <ThreeDotsSmallLoader className="three-dots-loader-small" cx={13} cxSpace={23} cy={16}/>
-                    </div>
-                }
                 {
                     isError && <div className='text-danger'>
                         {t('external_access.message_send_failed')}

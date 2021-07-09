@@ -2,7 +2,6 @@ import PatientHeader from './components/patient-header';
 import {useParams} from 'react-router';
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import ThreeDots from '@components/skeleton-loader/skeleton-loader';
 import {selectIsPatientError, selectPatient, selectPatientLoading} from './store/patients.selectors';
 import {useTranslation} from 'react-i18next';
 import {RecentPatient} from '@components/search-bar/models/recent-patient';
@@ -16,6 +15,7 @@ import {getPatientById, getPatientSummary} from './services/patients.service';
 import {useQuery} from 'react-query';
 import {PatientChartSummary} from '@pages/patients/models/patient-chart-summary';
 import {GetPatientSummary, OneMinute} from '@constants/react-query-constants';
+import Spinner from '@components/spinner/Spinner';
 
 interface PatientParams {
     patientId: string
@@ -48,7 +48,6 @@ const PatientChart = () => {
         }
     }, [dispatch, patient]);
 
-
     const {
         isLoading: isSummaryLoading,
         data: patientChartSummary,
@@ -66,8 +65,8 @@ const PatientChart = () => {
     }
 
 
-    if (loading || isSummaryLoading) {
-        return <ThreeDots/>
+    if (isSummaryLoading) {
+        return <Spinner fullScreen/>
     }
     if (error) {
         return <div hidden={!error} className={'p-4 text-red-500'}>{t('search.search_results.heading_error')}</div>
@@ -82,12 +81,9 @@ const PatientChart = () => {
     return (
         <div className='flex w-full'>
             <div className='w-2/3 overflow-y-auto'>
-                <div hidden={!loading}>
-                    <ThreeDots/>
-                </div>
                 {patientChartSummary &&
                     <>
-                        <PatientHeader refreshPatient={refreshPatient} patientChartSummary={patientChartSummary}/>
+                        <PatientHeader isRefreshing={loading} refreshPatient={refreshPatient} patientChartSummary={patientChartSummary}/>
                         <PatientTabs patientChartSummary={patientChartSummary} patientId={patient.patientId}/>
                     </>
                 }

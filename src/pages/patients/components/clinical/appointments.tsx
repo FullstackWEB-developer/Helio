@@ -3,9 +3,9 @@ import AppointmentDisplay from '../appointment-display';
 import { useQuery } from 'react-query';
 import { getAppointmentNotes } from '@pages/appointments/services/appointments.service';
 import { AppointmentNote, AppointmentNoteInfo } from '@pages/appointments/models/note.model';
-import ThreeDots from '@components/skeleton-loader/skeleton-loader';
 import { Appointment } from '@pages/external-access/appointment/models/appointment.model';
 import {ClinicalDetails} from '@pages/patients/models/clinical-details';
+import Spinner from '@components/spinner/Spinner';
 
 export interface AppointmentsProps {
     clinical: ClinicalDetails
@@ -33,7 +33,7 @@ const Appointments = ({clinical} : AppointmentsProps) => {
 
     const getContent = () => {
         if (isLoading) {
-            return <ThreeDots/>;
+            return <Spinner fullScreen/>;
         }
         if (error) {
             return <div data-test-id='appointment-notes-error'>
@@ -57,10 +57,6 @@ const Appointments = ({clinical} : AppointmentsProps) => {
         } else {
             return <div>{t('patient.clinical.no_upcoming_appointments')}</div>;
         }
-    }
-
-    if (!clinical) {
-        return <ThreeDots/>;
     }
 
     return (

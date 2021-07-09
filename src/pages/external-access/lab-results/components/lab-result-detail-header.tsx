@@ -14,7 +14,6 @@ import {useQueryClient} from 'react-query';
 import {GetLabResultDetailImage, GetLabResultsProviderPicture} from '@constants/react-query-constants';
 import {selectVerifiedPatent} from '@pages/patients/store/patients.selectors';
 import {LabResultDetailPage} from '../models/lab-result-detail-page.model';
-import ThreeDots from '@components/skeleton-loader/skeleton-loader';
 
 const LabResultDetailHeader = ({labResultDetail}: {labResultDetail: LabResultDetail}) => {
     const {t} = useTranslation();
@@ -58,10 +57,9 @@ const LabResultDetailHeader = ({labResultDetail}: {labResultDetail: LabResultDet
                 </div>
                 <div className='flex items-center cursor-pointer'>
                     {
-                        !preparingPdf ? <SvgIcon type={Icon.Download} className='icon-large' fillClass='lab-result-icons-fill' onClick={downloadPdf} />
-                            : <ThreeDots className='h-20 w-20' />
+                        <SvgIcon isLoading={preparingPdf} type={Icon.Download} className='icon-large' fillClass='lab-result-icons-fill' onClick={downloadPdf} />
                     }
-                    <span className='pl-6'></span>
+                    <span className='pl-6'/>
                     <SvgIcon type={Icon.Print} className='icon-large' fillClass='lab-result-icons-fill' onClick={() => window.print()} />
                 </div>
             </div>

@@ -13,7 +13,6 @@ import withErrorLogging from '../../shared/HOC/with-error-logging';
 import {Ticket} from './models/ticket';
 import TicketsHeader from './tickets-header';
 import TicketsSearch from './tickets-search';
-import ThreeDots from '../../shared/components/skeleton-loader/skeleton-loader';
 import TicketFilter from './components/ticket-filter';
 import {getUserList} from '@shared/services/lookups.service';
 import {Paging} from '@shared/models/paging.model';
@@ -73,7 +72,7 @@ const TicketList = () => {
                 <TicketsHeader />
                 <TicketsSearch />
                 {ticketsLoading ?
-                    <ThreeDots /> :
+                    <div/>:
                     <TicketListContainer dataSource={items} />
                 }
             </div>

@@ -11,9 +11,9 @@ import {History} from 'history';
 import Logger from '@shared/services/logger';
 import {authenticationSelector, selectIsLoginLoading} from '@shared/store/app-user/appuser.selectors';
 import {resetState} from '@shared/layout/store/layout.slice';
-import ThreeDots from '@components/skeleton-loader/skeleton-loader';
 import HelioLogo from '@icons/helio-logo';
 import utils from '@shared/utils/utils';
+import Spinner from '@components/spinner/Spinner';
 
 const Login = () => {
     const dispatch = useDispatch();
@@ -38,7 +38,7 @@ const Login = () => {
     }, [dispatch, history]);
 
     if (isLoading) {
-        return <ThreeDots />
+        return <Spinner fullScreen={true} />
     }
 
     if (utils.isLoggedIn() && (Date.parse(auth.expiresOn) > new Date().valueOf())) {

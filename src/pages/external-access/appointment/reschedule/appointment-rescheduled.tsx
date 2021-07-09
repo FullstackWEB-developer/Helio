@@ -8,7 +8,6 @@ import {
 import {getDepartments, getProviders} from '@shared/services/lookups.service';
 import {AppointmentType} from '@pages/external-access/appointment/models/appointment-type.model';
 import {getAppointmentTypeById} from '@pages/appointments/services/appointments.service';
-import ThreeDots from '@components/skeleton-loader/skeleton-loader';
 import {
     selectSelectedAppointment
 } from '@pages/external-access/appointment/store/appointments.selectors';
@@ -16,6 +15,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {selectDepartmentList, selectProviderList} from '@shared/store/lookups/lookups.selectors';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
+import Spinner from '@components/spinner/Spinner';
 
 const AppointmentRescheduled = () => {
     dayjs.extend(customParseFormat);
@@ -47,7 +47,7 @@ const AppointmentRescheduled = () => {
     }
 
     if (isAppointmentTypesLoading) {
-        return <ThreeDots/>
+        return <Spinner fullScreen/>
     }
 
     return  <div className='2xl:px-48'>

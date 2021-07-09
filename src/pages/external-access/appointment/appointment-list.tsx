@@ -7,7 +7,6 @@ import {useQuery} from 'react-query';
 import {AxiosError} from 'axios';
 import {GetPatientAppointments} from '@constants/react-query-constants';
 import {getAppointments} from '@pages/patients/services/patients.service';
-import ThreeDots from '@components/skeleton-loader/skeleton-loader';
 import Logger from '@shared/services/logger';
 import {setSelectedAppointment, setAppointmentTypes} from '@pages/external-access/appointment/store/appointments.slice';
 import {useHistory} from 'react-router-dom';
@@ -15,6 +14,7 @@ import './appointment.scss';
 import AppointmentTable from './components/appointment-table';
 import {getAppointmentTypes} from '@pages/appointments/services/appointments.service';
 import {AppointmentType} from './models/appointment-type.model';
+import Spinner from '@components/spinner/Spinner';
 
 const AppointmentList = () => {
     const {t} = useTranslation();
@@ -62,7 +62,7 @@ const AppointmentList = () => {
     }
 
     if (isLoading || isAppointmentTypeLoading) {
-        return <ThreeDots />
+        return <Spinner fullScreen />
     }
 
     if (error) {

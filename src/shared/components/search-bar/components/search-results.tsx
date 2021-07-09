@@ -1,21 +1,20 @@
-import { Patient } from '../../../../pages/patients/models/patient';
+import { Patient } from '@pages/patients/models/patient';
 import { useSelector } from 'react-redux';
-import { selectPatientList } from '../../../../pages/patients/store/patients.selectors';
-import ThreeDots from '../../skeleton-loader/skeleton-loader';
-import { selectIsSearching, selectIsSearchError } from '../store/search-bar.selectors';
+import { selectPatientList } from '@pages/patients/store/patients.selectors';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import patientUtils from '../../../../pages/patients/utils/utils';
 import { useCallback, useEffect } from 'react';
 import Button from '../../button/button';
+import {selectIsSearchError} from '@components/search-bar/store/search-bar.selectors';
+import {selectGlobalLoading} from '@shared/store/app/app.selectors';
 
 const SearchResults = () => {
     const { t } = useTranslation();
     const history = useHistory();
     const patients: Patient[] | undefined = useSelector(selectPatientList);
-    const isSearching: boolean = useSelector(selectIsSearching);
     const isError: boolean = useSelector(selectIsSearchError);
-
+    const isGlobalLoading = useSelector(selectGlobalLoading);
     const select = useCallback((patient: Patient) => {
         history.push('/patients/' + patient.patientId);
     }, [history])
@@ -26,16 +25,21 @@ const SearchResults = () => {
         }
     }, [select, patients])
 
+    if (isGlobalLoading) {
+        return <div/>;
+    }
+
     const heading = (patients !== undefined && patients.length > 0)
         ? t('search.search_results.heading_list')
         : t('search.search_results.heading_empty');
 
+    if (isError) {
+        return <div className={'p-4 text-red-500'}>{t('search.search_results.heading_error')}</div>
+    }
+
     return (
         <div>
-            <div hidden={!isSearching}>
-                <ThreeDots />
-            </div>
-            <div hidden={isError || isSearching} className={'p-4'}>
+            <div className={'p-4'}>
                 <h5>{heading}</h5>
                 <div className='grid grid-flow-row auto-rows-max md:auto-rows-min'>
                     <div hidden={patients === undefined || patients.length === 0}>
@@ -60,7 +64,7 @@ const SearchResults = () => {
                     </div>
                 </div>
             </div>
-            <div hidden={!isError} className={'p-4 text-red-500'}>{t('search.search_results.heading_error')}</div>
+
         </div>
     );
 }

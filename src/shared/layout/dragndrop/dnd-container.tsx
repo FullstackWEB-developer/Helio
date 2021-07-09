@@ -4,10 +4,10 @@ import {DndItemTypes} from './dnd-item-types'
 import update from 'immutability-helper'
 import {DragItem} from './dnd-interfaces'
 import utils from '../../utils/utils';
-import ThreeDots from '../../components/skeleton-loader/skeleton-loader';
 import HotSpots from '../../../pages/appointments/components/hot-spots';
 import {useSelector} from 'react-redux';
 import {selectIsHotspotsVisible} from '../store/layout.selectors';
+import Spinner from '@components/spinner/Spinner';
 
 const Ccp = React.lazy(() => import('../../../pages/ccp/ccp'));
 
@@ -64,7 +64,7 @@ export const DndContainer: React.FC<ContainerProps> = ({children, headsetIconRef
                 return (
                     <Suspense
                         key={key}
-                        fallback={<ThreeDots />}>
+                        fallback={<Spinner />}>
                         <Ccp
                             id={key}
                             left={left}

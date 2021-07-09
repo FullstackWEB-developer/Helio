@@ -1,11 +1,11 @@
 import { useParams } from 'react-router';
 import { useTranslation } from 'react-i18next';
-import ThreeDots from '../../../shared/components/skeleton-loader/skeleton-loader';
 import { getRedirectLink } from './services/link.service';
 import HipaaVerification from './hipaa-verification';
 import {useQuery} from 'react-query';
 import {GetRedirectLink} from '@constants/react-query-constants';
 import {RedirectLink} from '@pages/external-access/hipaa-verification/models/redirect-link';
+import Spinner from '@components/spinner/Spinner';
 
 interface RedirectLinkParams {
     linkId: string
@@ -19,7 +19,7 @@ const VerifyRedirectLink = () => {
     );
 
     if (isLoading) {
-        return <ThreeDots />;
+        return <Spinner fullScreen />;
     }
 
     if (isError) {

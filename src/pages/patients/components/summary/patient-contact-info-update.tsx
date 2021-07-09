@@ -15,7 +15,6 @@ import {getStates} from '@shared/services/lookups.service';
 import {setStates} from '@shared/store/lookups/lookups.slice';
 import {selectStates} from '@shared/store/lookups/lookups.selectors';
 import {updatePatientContactInformation} from '@pages/patients/services/patients.service';
-import ThreeDots from '@components/skeleton-loader/skeleton-loader';
 import {setPatient} from '@pages/patients/store/patients.slice';
 import ControlledInput from '@components/controllers/ControllerInput';
 
@@ -110,9 +109,6 @@ const PatientContactInfoUpdate = ({onUpdateComplete} : PatientInformationUpdateP
         }
     ];
 
-    if (updatePatientContactInfoMutation.isLoading) {
-        return <ThreeDots/>;
-    }
     return (
         <div>
             {updatePatientContactInfoMutation.isError && <div className='text-danger'>
@@ -309,7 +305,7 @@ const PatientContactInfoUpdate = ({onUpdateComplete} : PatientInformationUpdateP
                     </div>
                 </div>
                 <div className='pt-4'>
-                    <Button disabled={!isDirty} label={t('common.save')} buttonType='small' type='submit'/>
+                    <Button isLoading={updatePatientContactInfoMutation.isLoading} disabled={!isDirty} label={t('common.save')} buttonType='small' type='submit'/>
                 </div>
             </form>
         </div>

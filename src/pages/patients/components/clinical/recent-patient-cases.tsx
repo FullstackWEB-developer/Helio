@@ -2,7 +2,6 @@ import {useTranslation} from 'react-i18next';
 import PatientChartList, {Row} from '@pages/patients/components/patient-chart-list';
 import utils from '../../../../shared/utils/utils';
 import withErrorLogging from '../../../../shared/HOC/with-error-logging';
-import ThreeDots from '@components/skeleton-loader/skeleton-loader';
 import {ClinicalDetails} from '@pages/patients/models/clinical-details';
 import {PatientCase} from '@pages/patients/models/patient-case';
 
@@ -25,10 +24,6 @@ const RecentPatientCases = ({clinical}: RecentPatientCasesProps) => {
                 )
             }
         );
-    }
-
-    if (!clinical) {
-        return <ThreeDots/>;
     }
 
     return (

@@ -130,8 +130,8 @@ const ControlledInput = ({
                 onKeyDown={inputKeyDown}
                 onBlur={props.onBlur || controllerProps.onBlur}
                 onChange={(event) => onInputChanged(event, controllerProps)}
-                autosuggestDropdown={props.autosuggestDropdown}
-                autosuggestOptions={props.autosuggestOptions}
+                autoSuggestDropdown={props.autosuggestDropdown}
+                autoSuggestOptions={props.autosuggestOptions}
                 onDropdownSuggestionClick={props.onDropdownSuggestionClick}
                 isFetchingSuggestions={props.isFetchingSuggestions}
                 selectedSuggestion={props.selectedSuggestion}

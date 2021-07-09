@@ -1,17 +1,18 @@
 import Api from './api';
 import {Dispatch} from '@reduxjs/toolkit';
 import Logger from './logger';
-import {setError, setSearching} from '@components/search-bar/store/search-bar.slice';
+import {setError} from '@components/search-bar/store/search-bar.slice';
 import {clearPatients, setPatients} from '@pages/patients/store/patients.slice';
 import utils from '@shared/utils/utils';
+import {setGlobalLoading} from '@shared/store/app/app.slice';
 const logger = Logger.getInstance();
 const patientsUrl = '/patients';
 
 export const searchPatients = (type: number, term: string) => {
     const url = `${patientsUrl}?SearchType=${type}&SearchTerm=${term}&forceSingleReturn=false`;
     return async (dispatch: Dispatch) => {
+        dispatch(setGlobalLoading(true));
         dispatch(setError(false));
-        dispatch(setSearching(true));
         await Api.get(url)
             .then(response => {
                 dispatch(setPatients(response.data))
@@ -26,7 +27,7 @@ export const searchPatients = (type: number, term: string) => {
                 }
             })
             .finally(() => {
-                dispatch(setSearching(false));
+                dispatch(setGlobalLoading(false));
             })
     }
 }

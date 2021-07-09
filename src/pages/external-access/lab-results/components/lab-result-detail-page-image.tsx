@@ -1,5 +1,4 @@
 import React from 'react';
-import ThreeDots from '@components/skeleton-loader/skeleton-loader';
 import {GetLabResultDetailImage} from '@constants/react-query-constants';
 import {selectVerifiedPatent} from '@pages/patients/store/patients.selectors';
 import {useQuery} from 'react-query';
@@ -7,6 +6,7 @@ import {useSelector} from 'react-redux';
 import {LabResultDetailPage} from '../models/lab-result-detail-page.model';
 import {getPatientLabResultDetailImage} from '../services/lab-results.service';
 import {useTranslation} from 'react-i18next';
+import Spinner from '@components/spinner/Spinner';
 
 const LabResultDetailPageImage = ({page, labResultId}: {page: LabResultDetailPage, labResultId: number}) => {
 
@@ -19,8 +19,12 @@ const LabResultDetailPageImage = ({page, labResultId}: {page: LabResultDetailPag
         return data?.contentType?.slice(0, data.contentType.indexOf(';') !== -1 ? data.contentType.indexOf(';') : data.contentType.length);
     }
 
-    if (isLoading) return <ThreeDots />;
-    if (isError) return  <h6 className='text-danger py-5'>{t('external_access.lab_results.lab_results_image_error', {pageNumber: page.pageId})}</h6>;
+    if (isLoading) {
+        return <Spinner fullScreen />;
+    }
+    if (isError) {
+        return <h6 className='text-danger py-5'>{t('external_access.lab_results.lab_results_image_error', {pageNumber: page.pageId})}</h6>;
+    }
     return (
         <div className='w-full'>
             {

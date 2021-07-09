@@ -3,8 +3,9 @@ import {Contact, ContactExtended} from '@shared/models/contact.model';
 import {endGetContactsRequest, setContacts, startGetContactsRequest} from '../store/contacts/contacts.slice';
 import Api from './api';
 import Logger from './logger';
-import {QueryContactRequest} from '../../shared/models/query-contact-request';
+import {QueryContactRequest} from '@shared/models/query-contact-request';
 import {AddContactNoteProps} from '@pages/contacts/models/contact-note.model';
+import {setGlobalLoading} from '@shared/store/app/app.slice';
 
 const logger = Logger.getInstance();
 
@@ -20,6 +21,7 @@ export const searchContactsByName = async (searchTerm: string): Promise<Contact[
 export const getContacts = () => {
     return async (dispatch: Dispatch) => {
         dispatch(startGetContactsRequest());
+        dispatch(setGlobalLoading(true));
         await Api.get(contactsUrl)
             .then(response => {
                 dispatch(setContacts(response.data.results));
@@ -28,6 +30,9 @@ export const getContacts = () => {
             .catch(error => {
                 logger.error(`Failed getting Contacts values`, error);
                 dispatch(endGetContactsRequest('ticket-new.error'));
+            })
+            .finally(() => {
+                dispatch(setGlobalLoading(false));
             });
     }
 }

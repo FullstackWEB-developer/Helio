@@ -174,7 +174,7 @@ const AgentStatusTable = () => {
         return <div className='relative cursor-pointer'>
                     <div className='flex flex-row body2' onClick={() => setAgentStatusDropdownOpen(!agentStatusDropdownOpen)}>
                         <div>
-                            {selectedStatus.label}
+                            {t(selectedStatus.label)}
                         </div>
                         <div>
                             <SvgIcon type={agentStatusDropdownOpen ? Icon.ArrowUp : Icon.ArrowDown} className='icon-medium' fillClass='rgba-05-fill'/>

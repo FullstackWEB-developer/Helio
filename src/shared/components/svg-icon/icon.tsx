@@ -59,6 +59,7 @@ export enum Icon {
     Send = 'Send',
     SignOut = 'SignOut',
     Sms = 'Sms',
+    Spinner = 'Spinner',
     Star = 'Star',
     StarOutlined = 'StarOutlined',
     Tickets = 'Tickets',

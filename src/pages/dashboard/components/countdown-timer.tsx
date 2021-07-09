@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import ThreeDotsSmallLoader from '@components/skeleton-loader/three-dots-loader';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 import {DashboardTypes} from '@pages/dashboard/enums/dashboard-type.enum';
 import classnames from 'classnames';
+import Spinner from '@components/spinner/Spinner';
 
 export interface CountdownTimerProps {
     onTimerEnd: () => void;
@@ -49,7 +49,7 @@ const CountdownTimer = ({onTimerEnd, isLoading, type}: CountdownTimerProps) => {
 
     if (isLoading) {
         return <div className='h-8 flex justify-end w-20'>
-            <ThreeDotsSmallLoader className="three-dots-loader-small" cx={13} cxSpace={23} cy={16}/>
+            <Spinner size='small'/>
         </div>
     }
     const messageClass = classnames('body2-medium', {

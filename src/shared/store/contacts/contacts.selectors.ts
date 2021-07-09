@@ -18,10 +18,7 @@ export const selectContactPeople = createSelector(
     contactState,
     items => items.contactPeople as ContactPerson[]
 )
-export const selectIsContactOptionsLoading = createSelector(
-    contactState,
-    items => items.isContactsLoading as boolean
-)
+
 export const selectContactOptionsError = createSelector(
     contactState,
     items => items.error as string

@@ -3,7 +3,7 @@ import React from 'react';
 import {useTranslation} from 'react-i18next';
 import ContactInfoField from './contact-info-field';
 import ContactForm from './contact-form';
-import {ContactType} from '../../../shared/models/contact-type.enum';
+import {ContactType} from '@shared/models/contact-type.enum';
 import {ContactExtended} from '@shared/models/contact.model';
 import {getCategoryName} from '@shared/models/contact-category.enum';
 import utils from '@shared/utils/utils';
@@ -11,7 +11,6 @@ import {AddressType, determineAddressTranslation} from '@shared/models/address.m
 import {mapContactFormModelToDto} from '../contact-helpers/helpers';
 import {useMutation} from 'react-query';
 import {updateContact} from '@shared/services/contacts.service';
-import ThreeDots from '@components/skeleton-loader/skeleton-loader';
 interface IndividualContactDetailsProps {
     contact: ContactExtended;
     editMode?: boolean;
@@ -84,11 +83,8 @@ const IndividualContactDetails = ({contact, editMode, initiateACall, closeEditMo
                     </div>
                 )
                 :
-                (
-                    updateContactMutation.isLoading ? <ThreeDots /> :
-                        <ContactForm contactType={ContactType.Individual} contact={contact}
+                <ContactForm isSaving={updateContactMutation.isLoading} contactType={ContactType.Individual} contact={contact}
                             submitHandler={onSubmit} closeHandler={closeEditMode} editMode={true} />
-                )
             }
         </>
     )

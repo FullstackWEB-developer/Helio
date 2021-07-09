@@ -5,15 +5,13 @@ export interface SearchBarState {
     searchTypeFiltered: SearchType[];
     recentPatients: RecentPatient[];
     selectedType: number,
-    isError: boolean,
-    isSearching: boolean
+    isError: boolean
 }
 
 const initialState: SearchBarState = {
     searchTypeFiltered: [],
     recentPatients: [],
     selectedType: 1,
-    isError: false,
-    isSearching: false
+    isError: false
 }
 export default initialState;
