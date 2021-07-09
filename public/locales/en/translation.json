@@ -473,7 +473,7 @@
   "components": {
     "input": {
       "invalid_email": "Email is not valid",
-      "invalid_phone": "Phone numbers must follow the North American Numbering Plan.",
+      "invalid_phone": "Phone number is not valid.",
       "invalid_date": "Date is not valid",
       "invalid_zip": "Zip code is not valid"
     }
