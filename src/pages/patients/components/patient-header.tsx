@@ -59,7 +59,7 @@ const PatientHeader = ({patientChartSummary, refreshPatient, isRefreshing}: Pati
                 src={`data:image/jpeg;base64,${patientChartSummary.patientPicture}`} />
         }
 
-        return <Avatar className='w-24 h-24' userFullName={utils.stringJoin(' ', patient.firstName, patient.lastName)} />
+        return <Avatar className='w-24 h-24 h5-regular' userFullName={utils.stringJoin(' ', patient.firstName, patient.lastName)} />
     }
 
     return (
@@ -118,7 +118,7 @@ const PatientHeader = ({patientChartSummary, refreshPatient, isRefreshing}: Pati
                     label={'patient.header.view_in_athena'} />
                 <div className='h-16 items-center flex flex-row justify-end'>
                     <span className='cursor-pointer'>
-                        <SvgIcon isLoading={isRefreshing} type={Icon.Refresh} onClick={() => refreshPatient()} fillClass='rgba-05-fill' />
+                        <SvgIcon isLoading={isRefreshing} wrapperClassName={isRefreshing ? '-mr-2' : ''} type={Icon.Refresh} onClick={() => refreshPatient()} fillClass='rgba-05-fill' />
                     </span>
                 </div>
             </div>

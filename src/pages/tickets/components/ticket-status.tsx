@@ -15,6 +15,7 @@ import {SnackbarType} from '@components/snackbar/snackbar-position.enum';
 import {changeStatus, setTicket} from '@pages/tickets/store/tickets.slice';
 import TicketStatusDot from '@pages/tickets/components/ticket-status-dot';
 import {Ticket} from '@pages/tickets/models/ticket';
+import {setGlobalLoading} from '@shared/store/app/app.slice';
 
 interface TicketStatusProps {
     ticket: Ticket,
@@ -43,10 +44,14 @@ const TicketStatus = ({ticket, isArrow = true}: TicketStatusProps) => {
                 message: 'ticket_detail.ticket_status_update_error',
                 type: SnackbarType.Error
             }));
+        },
+        onSettled: () => {
+            dispatch(setGlobalLoading(false));
         }
 
     });
     const updateStatus = (id: string, status: number) => {
+        dispatch(setGlobalLoading(true));
         updateStatusMutation.mutate({id, status})
         setIsVisible(false);
     };
@@ -63,7 +68,7 @@ const TicketStatus = ({ticket, isArrow = true}: TicketStatusProps) => {
             {label: t(statusTranslationKeyMap[TicketStatuses.InProgress]), value: TicketStatuses.InProgress.toString()},
             {label: t(statusTranslationKeyMap[TicketStatuses.Solved]), value: TicketStatuses.Solved.toString()},
             {label: t(statusTranslationKeyMap[TicketStatuses.Closed]), value: TicketStatuses.Closed.toString()}
-        ],
+        ].filter(a => a.value !== ticket.status?.toString()),
         onClick: (value: string) => {
             if (ticket.id) {
                 updateStatus(ticket.id, Number(value));

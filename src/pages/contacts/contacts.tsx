@@ -22,7 +22,6 @@ import {DEBOUNCE_SEARCH_DELAY_MS} from '@constants/form-constants';
 import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
 import {SnackbarType} from '@components/snackbar/snackbar-position.enum';
 import {getPageSize} from './contact-helpers/helpers';
-import {setGlobalLoading} from '@shared/store/app/app.slice';
 import Spinner from '@components/spinner/Spinner';
 import {selectGlobalLoading} from '@shared/store/app/app.selectors';
 
@@ -68,13 +67,9 @@ const Contacts: React.FC<ContactProps> = () => {
 
     const {fetchNextPage, hasNextPage, isFetchingNextPage, isFetching, refetch, data} = useInfiniteQuery([QueryContactsInfinite, queryParams],
         ({pageParam = 1}) => {
-            dispatch(setGlobalLoading(true));
             return queryContactsInfinite(pageParam, queryParams);
         }, {
-        getNextPageParam: (lastPage) => lastPage.nextPage,
-        onSettled: () => {
-            dispatch(setGlobalLoading(false));
-        }
+        getNextPageParam: (lastPage) => lastPage.nextPage
     });
 
     useEffect(() => {

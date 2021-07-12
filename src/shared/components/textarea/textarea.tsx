@@ -80,7 +80,7 @@ const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(({
                 {
                     props.icon && textAreaValue && textAreaValue?.trim()?.length > 0 &&
                     <div
-                        className={`flex-grow ${iconContainerClassName ? iconContainerClassName : 'px-7'} ${props.isLoading ? '' : 'cursor-pointer'}`}>
+                        className={`flex-grow ${iconContainerClassName ? iconContainerClassName : 'px-7'} ${props.isLoading ? '-mr-2' : 'cursor-pointer'}`}>
                         <SvgIcon
                             isLoading={props.isLoading}
                             type={props.icon ?? Icon.Send}

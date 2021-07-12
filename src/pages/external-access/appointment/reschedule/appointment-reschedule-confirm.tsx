@@ -111,6 +111,7 @@ const AppointmentRescheduleConfirm = () => {
 
             <Button onClick={() => confirmAppointment()}
                     buttonType='big'
+                    isLoading={rescheduleAppointmentMutation.isLoading}
                     disabled={isAppointmentRescheduled}
                     label='external_access.appointments.confirm_reschedule_appointment' />
         </div>

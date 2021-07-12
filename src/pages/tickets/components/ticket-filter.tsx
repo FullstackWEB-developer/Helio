@@ -59,8 +59,6 @@ const TicketFilter = ({isOpen}: {isOpen: boolean}) => {
     const [fromDate, setFromDate] = useState<Date | undefined>();
     const ticketListQueryType = useSelector(selectTicketQueryType);
     const [collapsibleState, setCollapsibleState] = useState<{[key: string]: boolean}>({});
-    const [isFromDateCalendarOpen, setIsFromDateCalendarOpen] = useState(false);
-    const [isToDateCalendarOpen, setIsToDateCalendarOpen] = useState(false);
     const watchTimePeriod = watch('timePeriod');
 
     useEffect(() => {
@@ -401,7 +399,6 @@ const TicketFilter = ({isOpen}: {isOpen: boolean}) => {
                     value={fromDate}
                     isCalendarPositionComputed
                     onChange={setFromDate}
-                    onCalendarVisibilityChange={setIsFromDateCalendarOpen}
                 />
                 <ControlledDateInput
                     control={control}
@@ -412,7 +409,6 @@ const TicketFilter = ({isOpen}: {isOpen: boolean}) => {
                     label='tickets.filter.to_date'
                     name='toDate'
                     dataTestId='ticket-filter-to-date'
-                    onCalendarVisibilityChange={setIsToDateCalendarOpen}
                 />
             </div>);
         } else {

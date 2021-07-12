@@ -4,15 +4,13 @@ import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 import {DashboardTypes} from '@pages/dashboard/enums/dashboard-type.enum';
 import classnames from 'classnames';
-import Spinner from '@components/spinner/Spinner';
 
 export interface CountdownTimerProps {
     onTimerEnd: () => void;
-    isLoading: boolean,
     type: DashboardTypes
 }
 
-const CountdownTimer = ({onTimerEnd, isLoading, type}: CountdownTimerProps) => {
+const CountdownTimer = ({onTimerEnd, type}: CountdownTimerProps) => {
     dayjs.extend(duration);
     const WallboardRefreshIntervalInMinutes = 1;
     const DashboardRefreshIntervalInMinutes = 3;
@@ -47,11 +45,6 @@ const CountdownTimer = ({onTimerEnd, isLoading, type}: CountdownTimerProps) => {
         return duration.format('mm:ss')
     }
 
-    if (isLoading) {
-        return <div className='h-8 flex justify-end w-20'>
-            <Spinner size='small'/>
-        </div>
-    }
     const messageClass = classnames('body2-medium', {
         'pt-8': type === DashboardTypes.wallboard
     });

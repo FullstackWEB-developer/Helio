@@ -13,6 +13,7 @@ import {Icon} from '@components/svg-icon/icon';
 import SvgIcon from '@components/svg-icon/svg-icon';
 import React from 'react';
 import axios from "axios";
+import {toggleUserProfileMenu} from '@shared/layout/store/layout.slice';
 
 interface UserStatuses {
     label: string;
@@ -122,7 +123,8 @@ const ProfileDropdown = () => {
             <div className='subtitle2 whitespace-pre'>{`${t('user_profile.my_status')}: `}</div>
             <div className='body2'>{currentUserStatus}</div>
         </div>,
-        items
+        items,
+        onClick: ()=> {dispatch(toggleUserProfileMenu(false))}
     }
     return (<Dropdown model={dropdownModel}/>)
 

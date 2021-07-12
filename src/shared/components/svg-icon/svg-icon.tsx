@@ -803,8 +803,7 @@ const SvgIcon = ({type, wrapperClassName='', className = 'icon-medium', fillClas
 
     const overriddenMainClass = classNames('flex items-center justify-center' ,{
         'icon-large-40' : className === 'icon-medium' || 'icon-large' || 'icon-medium-18',
-        'icon-x-large' : className === 'icon-large-40' || 'icon-x-large',
-        'icon-large' : className === 'icon-small'
+        'icon-medium' : className === 'icon-large-40' || 'icon-x-large' || 'icon-small'
     });
 
     return <div className={`${wrapperClassName} relative`} onClick={onClick}>

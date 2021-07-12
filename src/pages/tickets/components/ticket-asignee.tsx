@@ -20,6 +20,7 @@ import {setAssignee} from '@pages/tickets/services/tickets.service';
 import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
 import {SnackbarType} from '@components/snackbar/snackbar-position.enum';
 import {changeAssignee, setTicket} from '@pages/tickets/store/tickets.slice';
+import {setGlobalLoading} from '@shared/store/app/app.slice';
 
 interface TicketAssigneeProps {
     ticketId: string,
@@ -69,12 +70,15 @@ const TicketAssignee = ({ticketId, assignee, dropdownHorizontalPosition}: Ticket
     });
 
     useEffect(() => {
-        const results = users.map(user => ({
+        let results = users.map(user => ({
             label: `${user.firstName} ${user.lastName}`,
             value: user.id
         } as DropdownItemModel));
+        if (assignee) {
+            results = results.filter(a =>a.value !== assignee);
+        }
         setUserDropdownItems(results);
-    }, [users]);
+    }, [users, assignee]);
 
     useEffect(() => {
         const user = users.find(user => user.id === assignee);
@@ -85,12 +89,16 @@ const TicketAssignee = ({ticketId, assignee, dropdownHorizontalPosition}: Ticket
 
 
     const updateAssignee = (tId: string, assig: User) => {
+        dispatch(setGlobalLoading(true));
         mutation.mutate({ticketId: tId, assignee: assig.id}, {
             onSuccess: () => {
                 dispatch(changeAssignee({
                     ticketId: tId,
                     assigneeId: assig.id
                 }));
+            },
+            onSettled:() => {
+                dispatch(setGlobalLoading(false));
             }
         });
         setSearchAssigneeToggle(false);

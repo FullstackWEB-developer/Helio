@@ -10,7 +10,7 @@ import {useQuery} from 'react-query';
 import {VerifyPatient} from '@constants/react-query-constants';
 import {AxiosError} from 'axios';
 import {VerifiedPatient} from '@pages/patients/models/verified-patient';
-import {clearVerifiedPatient, setVerifiedPatient} from '@pages/patients/store/patients.slice';
+import {setVerifiedPatient} from '@pages/patients/store/patients.slice';
 import {useHistory} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import {ExternalAccessRequestTypes} from '../models/external-updates-request-types.enum';
@@ -119,7 +119,6 @@ const HipaaVerification = ({request}: HipaaVerificationProps) => {
     }, [formState]);
 
     useEffect(() => {
-        dispatch(clearVerifiedPatient());
         setErrors('');
     }, [dispatch]);
 

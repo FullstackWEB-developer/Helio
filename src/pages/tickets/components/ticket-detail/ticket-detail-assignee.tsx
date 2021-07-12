@@ -15,6 +15,7 @@ import Avatar from '@components/avatar/avatar';
 import {useTranslation} from 'react-i18next';
 import './ticket-detail-assignee.scss';
 import {User} from '@shared/models/user';
+import {setGlobalLoading} from '@shared/store/app/app.slice';
 
 interface TicketDetailAssigneeProps {
     ticket: Ticket
@@ -48,6 +49,9 @@ const TicketDetailAssignee = ({ticket}: TicketDetailAssigneeProps) => {
                 message: 'ticket_detail.ticket_assign_error',
                 type: SnackbarType.Error
             }));
+        },
+        onSettled:()=> {
+            dispatch(setGlobalLoading(false));
         }
     });
 
@@ -59,6 +63,7 @@ const TicketDetailAssignee = ({ticket}: TicketDetailAssigneeProps) => {
     const handleChangeAssignedTo = (option?: Option) => {
         const user = userListOptions ? userListOptions.find((o: Option) => o.value === option?.value) : {} as any;
         if (ticket.id && user) {
+            dispatch(setGlobalLoading(true));
             updateAssigneeMutation.mutate({ticketId: ticket.id, assignee: user.value});
             setSelectedOption(user.value);
         }
@@ -70,13 +75,14 @@ const TicketDetailAssignee = ({ticket}: TicketDetailAssigneeProps) => {
         return <div className='flex h-14 pb-4 flex-row items-center justify-between'>
             <div className='flex flex-row items-center'>
                 <div>
-                    <Avatar userFullName={getFullName()} userPicture={selectedUser?.profilePicture} />
+                    {selectedUser && <Avatar userFullName={getFullName()} userPicture={selectedUser?.profilePicture}/>}
                 </div>
                 <div className='pl-4'>{getFullName()}</div>
             </div>
             <div onClick={() => setEditMode(true)}
                 className='body2 justify-end cursor-pointer ticket-detail-assignee-change'>
-                {t('ticket_detail.info_panel.change')}
+                {selectedUser && t('ticket_detail.info_panel.change')}
+                {!selectedUser && t('ticket_detail.info_panel.assign')}
             </div>
 
         </div>

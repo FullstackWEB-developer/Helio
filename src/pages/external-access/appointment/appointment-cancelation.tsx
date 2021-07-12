@@ -223,7 +223,7 @@ const AppointmentCancelation = () => {
                     {t('external_access.appointments.cancel_appointment_error')} {errorMessage}
                 </div>}
                 <div className='pt-6'>
-                    <Button buttonType='big' disabled={!isDirty} label='external_access.appointments.cancel_appointment' type='submit' />
+                    <Button buttonType='big' isLoading={cancelAppointmentMutation.isLoading} disabled={!isDirty} label='external_access.appointments.cancel_appointment' type='submit' />
                 </div>
             </form>
         </div>

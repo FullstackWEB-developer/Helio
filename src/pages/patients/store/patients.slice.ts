@@ -3,7 +3,7 @@ import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import initialState from './patients.initial-state';
 import {Patient} from '../models/patient';
 import {ExtendedPatient} from '../models/extended-patient';
-import {Appointment} from '../../external-access/appointment/models/appointment.model';
+import {Appointment} from '@pages/external-access/appointment/models';
 
 const patientsSlice = createSlice({
     name: 'patients',
@@ -30,9 +30,6 @@ const patientsSlice = createSlice({
         setVerifiedPatient(state, { payload }: PayloadAction<VerifiedPatient>) {
             state.verifiedPatient = payload;
         },
-        clearVerifiedPatient(state) {
-            state.verifiedPatient = undefined;
-        },
         setAppointments(state, { payload }: PayloadAction<Appointment[]>) {
             state.appointmentList = payload;
             state.isLoading = false;
@@ -53,7 +50,6 @@ export const {
     setVerifiedPatient,
     setAppointments,
     clearAppointments,
-    clearVerifiedPatient,
 } = patientsSlice.actions
 
 export default patientsSlice.reducer

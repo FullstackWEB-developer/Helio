@@ -423,6 +423,9 @@
       "attachments": "Attachments",
       "change": "Change",
       "contact_name": "Contact Name",
+      "assign": "Assign",
+      "select_time": "Select time",
+      "select_date": "Select date",
       "contact_details": {
         "facility_name": "Facility Name",
         "facility_type": "Facility Type",

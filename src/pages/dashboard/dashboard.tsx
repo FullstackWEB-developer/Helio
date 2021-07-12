@@ -213,7 +213,6 @@ export const Dashboard = () => {
                         <div>
                             <CountdownTimer
                                 type={selectedDashboardType}
-                                isLoading={isFetching}
                                 onTimerEnd={() => refetchData()}/>
                         </div>
                     </div>
