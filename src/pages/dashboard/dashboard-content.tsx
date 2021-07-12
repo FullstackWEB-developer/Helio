@@ -73,7 +73,7 @@ const DashboardContent = (dataInput: DashboardContentProps) => {
                 </div>
             </div>
         </div>
-        <div className='col-span-12 px-0 py-8 xl:py-0 xl:px-8 lg:col-span-4 xl:space-y-8 space-y-0'>
+        <div className='col-span-12 px-0 py-8 xl:py-0 xl:pl-8 lg:col-span-4 xl:space-y-8 space-y-0'>
             <div>
                 <Card hasBorderRadius title='dashboard.ratings.title'>
                     <div className='h-64'>

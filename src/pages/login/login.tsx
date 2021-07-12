@@ -27,14 +27,16 @@ const Login = () => {
     }
 
     useEffect(() => {
-        dispatch(resetState());
-        dispatch(setLoginLoading(true));
-        msalInstance.handleRedirectPromise()
-            .then((info) => {
-                SetAuthenticationInfo(info, dispatch, history);
-            }).catch((err: any) => {
+        if (!utils.isLoggedIn()) {
+            dispatch(resetState());
+            dispatch(setLoginLoading(true));
+            msalInstance.handleRedirectPromise()
+                .then((info) => {
+                    SetAuthenticationInfo(info, dispatch, history);
+                }).catch((err: any) => {
                 Logger.getInstance().error('Error logging in', err);
             }).finally(() => dispatch(setLoginLoading(false)))
+        }
     }, [dispatch, history]);
 
     if (isLoading) {

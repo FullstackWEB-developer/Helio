@@ -59,7 +59,7 @@ const PatientHeader = ({patientChartSummary, refreshPatient, isRefreshing}: Pati
                 src={`data:image/jpeg;base64,${patientChartSummary.patientPicture}`} />
         }
 
-        return <Avatar className='w-24 h-24 h5-regular' userFullName={utils.stringJoin(' ', patient.firstName, patient.lastName)} />
+        return <Avatar className='w-24 h-24 h3' userFullName={utils.stringJoin(' ', patient.firstName, patient.lastName)} />
     }
 
     return (

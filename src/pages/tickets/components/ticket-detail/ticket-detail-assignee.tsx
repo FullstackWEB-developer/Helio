@@ -90,7 +90,7 @@ const TicketDetailAssignee = ({ticket}: TicketDetailAssigneeProps) => {
 
     return <div className={'w-96 h-14 pb-4 mx-auto flex flex-col'}>
         <form>
-            <div className='divide-y px-8'>
+            <div className='divide-y'>
                 <Controller
                     name='assignedTo'
                     control={control}

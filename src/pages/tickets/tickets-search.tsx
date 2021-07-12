@@ -40,6 +40,15 @@ const TicketsSearch = () => {
         }
     };
 
+    const search = () => {
+        const query: TicketQuery = {
+            ...ticketFilter,
+            ...paging,
+            searchTerm: ''
+        }
+        dispatch(getList(query, true));
+    }
+
     return <div className='flex flex-row border-b h-14'>
         <div className='pr-6 pl-5 border-r flex flex-row items-center'>
             <SvgIcon type={Icon.FilterList} onClick={() => dispatch(toggleTicketListFilter())}
@@ -55,6 +64,7 @@ const TicketsSearch = () => {
             wrapperClassNames='relative w-full h-full'
             inputClassNames='border-b-0'
             onChange={(value: string) => {setSearchTerm(value)}}
+            onClear={search}
             value={searchTerm}
             onKeyDown={(e) => {searchList(e)}}
         />

@@ -16,7 +16,8 @@ interface SearchInputProps {
     iconOnClick?: () => void,
     onBlur?: () => void,
     placeholder?: string,
-    shouldDisplayAutocomplete?: boolean
+    shouldDisplayAutocomplete?: boolean,
+    onClear?: () => void;
 }
 const SearchInputField = React.forwardRef<HTMLInputElement, SearchInputProps>((props: SearchInputProps, ref) => {
     const {t} = useTranslation();
@@ -71,6 +72,14 @@ const SearchInputField = React.forwardRef<HTMLInputElement, SearchInputProps>((p
             props.onKeyDown(e);
         }
     }
+
+    const onTextClear= () => {
+        clearValue()
+        if (props.onClear) {
+            props.onClear();
+        }
+    }
+
     return (
         <div className={`relative h-10 w-full flex items-center ${props.wrapperClassNames ? props.wrapperClassNames : ''}`}>
             <div className="absolute pl-4">
@@ -86,7 +95,7 @@ const SearchInputField = React.forwardRef<HTMLInputElement, SearchInputProps>((p
                 autoComplete={props.shouldDisplayAutocomplete ? 'on': 'off'} />
             {
                 isFocused && value && (
-                    <span onClick={(e) => { clearValue() }} onMouseDown={(e) => { e.preventDefault() }} className="absolute right-4 cursor-pointer">
+                    <span onClick={onTextClear} onMouseDown={(e) => { e.preventDefault() }} className="absolute right-4 cursor-pointer">
                         <SvgIcon type={Icon.Clear} fillClass="clear-input-icon-fill" />
                     </span>
                 )

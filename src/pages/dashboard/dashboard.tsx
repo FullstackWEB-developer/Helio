@@ -187,7 +187,7 @@ export const Dashboard = () => {
                             <Dropdown model={dashboardTypeDropdownModel}/>
                         </div>}
                     </div>
-                    <div className={!isWallboard ? 'pr-8 relative' : 'relative'} ref={timeframeDropdownRef}>
+                    <div className='relative' ref={timeframeDropdownRef}>
                         {!isWallboard &&
                         <div className='flex flex-row justify-end cursor-pointer'
                              onClick={() => setDisplayTimeFrameDropdown(!displayTypeDropdown)}>
