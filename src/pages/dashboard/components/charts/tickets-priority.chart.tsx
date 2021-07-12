@@ -25,9 +25,12 @@ const TicketsPriorityChart = ({data}: TicketsPriorityChartProps) => {
             index
         }
     });
+
     const ChartItem = ({item, index}: { item: BasicStatistic, index: number }) => {
-        return <div key={item.label.toString()} className='px-32 grid grid-cols-12 gap-2 items-center'>
-            <div className='ml-4 col-start-3 h-2.5 w-2.5 rounded-xl' style={{backgroundColor: getPieChartColor(index)}}/>
+        return <div className='px-32 grid grid-cols-12 gap-1 items-center'>
+            <div className='col-start-3 flex justify-center'>
+                <div className='h-2.5 w-2.5 rounded-xl' style={{backgroundColor: getPieChartColor(index)}}/>
+            </div>
             <div className='col-span-3'>{item.label}</div>
             <div className='col-span-2'>{item.value}</div>
             <div className='col-span-2'>{Math.round(item.percentage * 100) / 100}%</div>
