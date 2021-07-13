@@ -36,9 +36,9 @@ const TicketDetailTicketInfo = ({ticket}: TicketInfoProps) => {
     const {t} = useTranslation();
     const [isDirty, setDirty] = useState(false);
     const statusOptions = useSelector((state => selectEnumValuesAsOptions(state, 'TicketStatus')));
-    const departmentOptions = useSelector(selectDepartmentListAsOptions);
+    const locationOptions = useSelector(selectDepartmentListAsOptions);
     const priorityOptions = useSelector((state => selectEnumValuesAsOptions(state, 'TicketPriority')));
-    const locationOptions = useSelector((state) => selectLookupValuesAsOptions(state, 'Department'));
+    const departmentOptions = useSelector((state) => selectLookupValuesAsOptions(state, 'Department'));
     const reasonOptions = useSelector((state) => selectLookupValuesAsOptions(state, 'TicketReason'));
     const tagOptions = useSelector((state) => selectLookupValuesAsOptions(state, 'TicketTags'));
     const ticketTypeOptions = useSelector((state) => selectEnumValuesAsOptions(state, 'TicketType'));
