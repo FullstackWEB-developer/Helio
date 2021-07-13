@@ -7,6 +7,7 @@ import {Option} from '@components/option/option';
 import {keyboardKeys} from '@components/search-bar/constants/keyboard-keys';
 import SvgIcon from '@components/svg-icon/svg-icon';
 import {Icon} from '@components/svg-icon/icon';
+import Spinner from '@components/spinner/Spinner';
 
 interface SelectProps {
     label?: string;
@@ -20,6 +21,8 @@ interface SelectProps {
     disabled?: boolean;
     defaultValue?: Option | string | null;
     required?: boolean;
+    suggestionsPlaceholder?: string;
+    isLoading?: boolean;
     onTextChange?: (value: string) => void;
     onSelect?: (option?: Option) => void;
 }
@@ -76,8 +79,11 @@ const Select = React.forwardRef<HTMLDivElement, SelectProps>(({options, order, l
             setSearchQuery(props.searchQuery);
         }
     }, [props.value]);
+
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        if (!open) return;
+        if (!open) {
+            return;
+        }
         switch (e.key) {
             case keyboardKeys.arrowUp: {
                 e.preventDefault();
@@ -115,6 +121,36 @@ const Select = React.forwardRef<HTMLDivElement, SelectProps>(({options, order, l
         return `assistive-text-color-${open ? 'focused' : 'inactive'}`;
     }
 
+    const OptionSection = () => {
+        if (props.isLoading) {
+            return <Spinner />
+        }
+
+        const currentOptions = renderOptions();
+        if (currentOptions.length > 0) {
+            return (
+                <>
+                    {
+                        currentOptions.map((option: Option, index) =>
+                            <SelectCell item={option}
+                                key={`${index}-${option.value}`}
+                                isSelected={option.value === selectedOption?.value}
+                                onClick={() => selectValueChange(option)}
+                                disabled={option.disabled}
+                                className={`${cursor === index ? 'active' : ''}`}
+                                changeCursorValueOnHover={() => setCursor(index)}
+                            />)
+                    }
+                </>
+            );
+        }
+        return (
+            <div className="w-full pt-2 text-center subtitle3-small">
+                {t(props.suggestionsPlaceholder || 'common.autocomplete_search')}
+            </div>
+        )
+    }
+
     return (
         <div ref={innerRef}
             className={`select-wrapper relative w-full flex flex-col h-20 ${props.disabled ? 'select-wrapper-disabled' : ''}`}>
@@ -143,15 +179,8 @@ const Select = React.forwardRef<HTMLDivElement, SelectProps>(({options, order, l
                         <SvgIcon type={open ? Icon.ArrowUp : Icon.ArrowDown} fillClass={'select-arrow-fill'} />
                     }
                 </div>
-                <div className="options absolute block py-2">
-                    {
-                        renderOptions().map((option: Option, index) =>
-                            <SelectCell item={option} key={`${index}-${option.value}`} isSelected={option.value === selectedOption?.value}
-                                onClick={() => selectValueChange(option)} disabled={option.disabled}
-                                className={`${cursor === index ? 'active' : ''}`}
-                                changeCursorValueOnHover={() => setCursor(index)}
-                            />)
-                    }
+                <div className="absolute block py-2 options">
+                    <OptionSection />
                 </div>
             </div>
             {

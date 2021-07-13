@@ -64,7 +64,7 @@ const PatientTickets: React.FC<PatientTicketProps> = ({patientId}) => {
                                     <div className={'py-4 border-b cursor-pointer'}
                                          onClick={() => history.push(`${TicketsPath}/${item.ticketNumber}`)} key={item.id}>
                                         <div className='flex flex-row body2'>
-                                            <TicketChannelTypeIcon channel={item.channel} />
+                                            <TicketChannelTypeIcon channel={item.channel} fillClass='rgba-03-fill' />
                                             <span className="mx-2">{item.ticketNumber}</span>
                                             <span className='flex-auto subtitle2'>{item.subject}</span>
                                             {item.status && (

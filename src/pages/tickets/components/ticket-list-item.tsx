@@ -15,6 +15,8 @@ import {TicketsPath} from '../../../app/paths';
 import {DropdownAlignmentHorizontalPosition} from '@components/dropdown/dropdown.models';
 import DueInRelativeTime from './ticket-due-in-relative-time';
 import utils from '@shared/utils/utils';
+import {useTranslation} from 'react-i18next';
+import classnames from 'classnames';
 
 interface TicketListItemProps {
     item: Ticket
@@ -22,7 +24,7 @@ interface TicketListItemProps {
 
 const TicketListItem = ({item}: TicketListItemProps) => {
     dayjs.extend(relativeTime);
-
+    const {t} = useTranslation();
     const history = useHistory();
 
     const ticketPriorities = useSelector((state => selectEnumValues(state, 'TicketPriority')));
@@ -84,8 +86,8 @@ const TicketListItem = ({item}: TicketListItemProps) => {
         <div className='w-1/12'>
             {item.ticketNumber}
         </div>
-        <div className='w-2/12 subtitle2'>
-            <span>{item.subject ? item.subject : '-'}</span>
+        <div className={classnames('w-2/12 ', {'subtitle2': !!item.subject, 'body2': !item.subject})}>
+            <span>{item.subject ? item.subject : t('tickets.no_subject')}</span>
         </div>
         <div className='w-2/12 body3'>
             <DueInRelativeTime value={getRelativeTime} isOverdue={item.isOverdue} />
@@ -97,10 +99,10 @@ const TicketListItem = ({item}: TicketListItemProps) => {
             {item.priority ? selectedPriority?.value : null}
         </div>
         <div className='w-2/12'>
-            {item.type ? selectedTicketType?.value : '-'}
+            {item.type ? selectedTicketType?.value : ''}
         </div>
         <div className='w-2/12'>
-            {item.reason ? selectedReason?.label : '-'}
+            {item.reason ? selectedReason?.label : ''}
         </div>
         <div className='w-2/12'>
             <TicketAssignee ticketId={ticketId} assignee={item.assignee}

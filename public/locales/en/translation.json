@@ -24,6 +24,7 @@
     "remove": "Remove",
     "back": "Back",
     "autocomplete_search": "Start typing to see the results...",
+    "empty_search_result": "There are no more items.",
     "none": "None",
     "enter_your_message": "Enter your message",
     "enter_message": "Enter message"
@@ -74,9 +75,12 @@
     "closed": "Closed",
     "type": "Ticket Type",
     "reason": "Reason",
+    "no_subject": "No Subject",
     "assigned_to": "Assigned To",
     "ticket_created": "Ticket {{ticketNumber}} created successfully",
     "ticket_creation_failed": "Ticket creation failed.",
+    "search_tag": "Search Tags",
+    "tag_suggestion_placeholder": "Type to filter",
     "priority": {
       "low": "Low",
       "medium": "Medium",
@@ -360,7 +364,8 @@
     "title": "New Ticket",
     "patient_id_not_found": "Patient Id does not found.",
     "patient_case_id_not_found": "Patient Case Id does not found.",
-    "error_getting_contacts": "Error getting contacts information."
+    "error_getting_contacts": "Error getting contacts information.",
+    "suggestion_placeholder": "Type two or more characters to filter."
   },
   "tag_input": {
     "add_tag": "Add Tag"

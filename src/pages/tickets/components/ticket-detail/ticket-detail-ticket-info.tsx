@@ -194,7 +194,6 @@ const TicketDetailTicketInfo = ({ticket}: TicketInfoProps) => {
                             defaultValue=''
                             render={(props) => (
                                 <TagInput
-                                    labelAway={true}
                                     {...props}
                                     tagOptions={tagOptions}
                                     label={'ticket_detail.info_panel.tags'}

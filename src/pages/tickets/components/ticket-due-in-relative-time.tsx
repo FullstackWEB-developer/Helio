@@ -12,7 +12,7 @@ const DueInRelativeTime = ({value = [], isOverdue}: DueInRelativeTimeProps) => {
     const className = isOverdue ? 'text-red-600' : 'body2-medium';
 
     return (<span className={className}>
-        {utils.formatRelativeTime(days, hours, minute, true) || '-'}
+        {utils.formatRelativeTime(days, hours, minute, true) || ''}
     </span>)
 }
 

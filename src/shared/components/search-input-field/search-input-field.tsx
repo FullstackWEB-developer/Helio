@@ -4,6 +4,8 @@ import './search-input-field.scss';
 import {Icon} from '@components/svg-icon/icon';
 import SvgIcon from '@components/svg-icon/svg-icon';
 import customHooks from '@shared/hooks/customHooks';
+import {Option} from '@components/option/option';
+import SelectCell from '@components/select/select-cell';
 
 interface SearchInputProps {
     value?: string,
@@ -15,14 +17,30 @@ interface SearchInputProps {
     inputOnClick?: () => void,
     iconOnClick?: () => void,
     onBlur?: () => void,
+    onClear?: () => void;
     placeholder?: string,
     shouldDisplayAutocomplete?: boolean,
-    onClear?: () => void;
+    autosuggestOptions?: Option[],
+    autosuggestDropdown?: boolean,
+    onDropdownSuggestionClick?: (suggestion: Option) => void,
+    suggestionsPlaceholder?: string,
+    suggestionsEmptyPlaceholder?: string,
+    autoSuggestDropdownClose?: boolean
 }
-const SearchInputField = React.forwardRef<HTMLInputElement, SearchInputProps>((props: SearchInputProps, ref) => {
+const SearchInputField = React.forwardRef<HTMLInputElement, SearchInputProps>(({
+    autosuggestOptions,
+    autosuggestDropdown,
+    onDropdownSuggestionClick,
+    suggestionsPlaceholder,
+    suggestionsEmptyPlaceholder,
+    autoSuggestDropdownClose,
+    ...props
+}: SearchInputProps, ref) => {
     const {t} = useTranslation();
     const [isFocused, setIsFocused] = useState(false);
     const [value, setValue] = useState('');
+    const [dropdownOpen, setDropdownOpen] = useState(false);
+
     const innerRef = customHooks.useCombinedForwardAndInnerRef(ref);
     useEffect(() => {
         if (props.value) {
@@ -55,11 +73,17 @@ const SearchInputField = React.forwardRef<HTMLInputElement, SearchInputProps>((p
         if (props.onFocus) {
             props.onFocus();
         }
+        if (autosuggestDropdown) {
+            setDropdownOpen(true);
+        }
     }
     const onBlur = () => {
         setIsFocused(false);
         if (props.onBlur) {
             props.onBlur();
+        }
+        if (autosuggestDropdown) {
+            setDropdownOpen(false);
         }
     }
     const onClick = () => {
@@ -72,6 +96,14 @@ const SearchInputField = React.forwardRef<HTMLInputElement, SearchInputProps>((p
             props.onKeyDown(e);
         }
     }
+    const onSelectCellClick = (option: Option) => {
+        if (onDropdownSuggestionClick) {
+            onDropdownSuggestionClick(option);
+        }
+        if (autoSuggestDropdownClose) {
+            setDropdownOpen(false);
+        }
+    }
 
     const onTextClear= () => {
         clearValue()
@@ -81,24 +113,45 @@ const SearchInputField = React.forwardRef<HTMLInputElement, SearchInputProps>((p
     }
 
     return (
-        <div className={`relative h-10 w-full flex items-center ${props.wrapperClassNames ? props.wrapperClassNames : ''}`}>
+        <div className={`relative h-10 w-full search-input-field flex items-center ${props.wrapperClassNames ? props.wrapperClassNames : ''}`}>
             <div className="absolute pl-4">
-                <SvgIcon type={Icon.Search} className="icon-small cursor-pointer" fillClass="search-icon-fill" onClick={props?.iconOnClick} />
+                <SvgIcon type={Icon.Search} className="cursor-pointer icon-small" fillClass="search-icon-fill" onClick={props?.iconOnClick} />
             </div>
             <input ref={innerRef} type='text' className={`pl-12 py-2.5 h-full w-full search-input-field body2 ${props.inputClassNames ? props.inputClassNames : ''}`}
                 placeholder={props.placeholder || t('common.search')}
                 value={value} onChange={onChange}
-                onFocus={() => { onFocus() }}
-                onClick={() => { onClick() }}
-                onBlur={() => { onBlur() }}
-                onKeyDown={(e) => { onKeyDown(e) }}
-                autoComplete={props.shouldDisplayAutocomplete ? 'on': 'off'} />
+                onFocus={() => {onFocus()}}
+                onClick={() => {onClick()}}
+                onBlur={() => {onBlur()}}
+                onKeyDown={(e) => {onKeyDown(e)}}
+                autoComplete={props.shouldDisplayAutocomplete ? 'on' : 'off'} />
             {
                 isFocused && value && (
-                    <span onClick={onTextClear} onMouseDown={(e) => { e.preventDefault() }} className="absolute right-4 cursor-pointer">
+                    <span onClick={onTextClear} onMouseDown={(e) => { e.preventDefault() }} className="absolute cursor-pointer right-4">
                         <SvgIcon type={Icon.Clear} fillClass="clear-input-icon-fill" />
                     </span>
                 )
+            }
+            {autosuggestDropdown &&
+                <div className={`options ${dropdownOpen ? 'options-visible' : ''} absolute block py-2 mt-0.5`}>
+                    {(!autosuggestOptions || autosuggestOptions.length <= 0) &&
+                        <div className="w-full pt-2 text-center subtitle3-small">
+                            {t(suggestionsEmptyPlaceholder || 'common.empty_search_result')}
+                        </div>
+                    }
+                    {autosuggestOptions && autosuggestOptions.length > 0 &&
+                        autosuggestOptions.map((option: Option) =>
+                            <SelectCell item={option} key={`${option.value}`}
+                                onClick={() => onSelectCellClick(option)}
+                                disabled={option.disabled}
+                            />)
+                    }
+                    {(!value && (!autosuggestOptions || autosuggestOptions.length > 0)) &&
+                        <div className="w-full pt-2 text-center subtitle3-small">
+                            {t(suggestionsPlaceholder || 'common.autocomplete_search')}
+                        </div>
+                    }
+                </div>
             }
         </div>
     );

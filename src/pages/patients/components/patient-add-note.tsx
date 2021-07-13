@@ -57,6 +57,7 @@ const PatientAddNote = () => {
                 hasBorder={false}
                 onChange={(message) => setNoteText(message)}
                 iconClassNames='icon-medium'
+                iconContainerClassName='pl-7 pr-9'
                 icon={Icon.Send}
                 iconFill='notes-send'
                 iconOnClick={() => {

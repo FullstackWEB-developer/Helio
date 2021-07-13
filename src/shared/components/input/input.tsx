@@ -9,6 +9,7 @@ import {Icon} from '@components/svg-icon/icon';
 import {Option} from '@components/option/option';
 import SelectCell from '@components/select/select-cell';
 import Spinner from '@components/spinner/Spinner';
+import {InputTypes} from './InputTypes';
 
 interface InputProps extends React.HTMLAttributes<HTMLInputElement> {
     id?: string,
@@ -58,10 +59,31 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({
 
     useEffect(() => {
         if (props.value) {
-        setValue(props.value || '');
+            setValue(props.value || '');
 
         }
     }, [props.value]);
+
+    const validateNumberValue = React.useCallback((event: any) => {
+        if (!event.target.value || !InputTypes.Number.test(event.target.value)) {
+            event.target.value = '';
+        }
+    }, []);
+
+    useEffect(() => {
+        if (type !== 'number') {
+            return;
+        }
+
+        const inputNode: HTMLInputElement = (innerRef?.current as any)?.getInputDOMNode();
+        inputNode.addEventListener('input', validateNumberValue);
+
+        return () => {
+            inputNode.removeEventListener('input', validateNumberValue)
+        }
+
+    }, [])
+
     const onBlur = (e: React.FocusEvent<HTMLInputElement>) => {
         setIsFocused(false);
         if (autoSuggestDropdown) {
@@ -123,24 +145,24 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({
                     disabled={props.disabled || isLoading}
                     autoComplete={props.shouldDisplayAutocomplete ? 'on' : 'off'} />
                 <label htmlFor={htmlFor}
-                       className={`absolute truncate ${props.required ? 'required' : ''} ${isFocused || value ? 'body3 label-small' : `body2${props.disabled ? '-medium' : ''}`} ${props.error ? 'text-danger' : ''}`}>
+                    className={`absolute truncate ${props.required ? 'required' : ''} ${isFocused || value ? 'body3 label-small' : `body2${props.disabled ? '-medium' : ''}`} ${props.error ? 'text-danger' : ''}`}>
                     {t(label || placeholder || '')}
                 </label>
                 {dropdownIcon && <div className={`absolute pt-${!label ? '3' : '4'} right-4`}>
                     {
-                        <SvgIcon type={dropdownIcon} fillClass={'select-arrow-fill'}/>
+                        <SvgIcon type={dropdownIcon} fillClass={'select-arrow-fill'} />
                     }
                 </div>}
                 {isFocused &&
-                value &&
-                <span
-                    className="input-addon clear-input-icon flex items-center leading-normal rounded rounded-l-none px-3"
-                    onMouseDown={(e) => preventMousedownTriggerBlur(e)}
-                    onClick={(e) => {
-                        clearValue(e)
-                    }}
-                >
-                        <SvgIcon type={Icon.Clear} fillClass="clear-input-icon-fill"/>
+                    value &&
+                    <span
+                        className="input-addon clear-input-icon flex items-center leading-normal rounded rounded-l-none px-3"
+                        onMouseDown={(e) => preventMousedownTriggerBlur(e)}
+                        onClick={(e) => {
+                            clearValue(e)
+                        }}
+                    >
+                        <SvgIcon type={Icon.Clear} fillClass="clear-input-icon-fill" />
                     </span>}
                 {isLoading &&
                     <span className="input-addon flex items-center leading-normal rounded rounded-l-none px-3">
@@ -158,9 +180,9 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({
                         {autoSuggestOptions && autoSuggestOptions.length > 0 &&
                             autoSuggestOptions.map((option: Option) =>
                                 <SelectCell item={option} key={`${option.value}`}
-                                            isSelected={option.value === selectedSuggestion?.value}
-                                            onClick={() => onSelectCellClick(option)}
-                                            disabled={option.disabled}
+                                    isSelected={option.value === selectedSuggestion?.value}
+                                    onClick={() => onSelectCellClick(option)}
+                                    disabled={option.disabled}
                                 />)
                         }
                     </div>

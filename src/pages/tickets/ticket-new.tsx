@@ -9,7 +9,7 @@ import withErrorLogging from '../../shared/HOC/with-error-logging';
 import Button from '../../shared/components/button/button';
 import Select from '../../shared/components/select/select';
 import {Option} from '@components/option/option';
-import TagInput, {TagInputLabelPosition} from '../../shared/components/tag-input/tag-input';
+import TagInput from '../../shared/components/tag-input/tag-input';
 import {Contact} from '@shared/models/contact.model';
 import {Department} from '@shared/models/department';
 import {Ticket} from './models/ticket';
@@ -47,7 +47,6 @@ import {ContactType} from '@pages/contacts/models/ContactType';
 import {AxiosError} from 'axios';
 import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
 import {SnackbarType} from '@components/snackbar/snackbar-position.enum';
-import {setGlobalLoading} from '@shared/store/app/app.slice';
 import Spinner from '@components/spinner/Spinner';
 
 const TicketNew = () => {
@@ -99,25 +98,21 @@ const TicketNew = () => {
     const [contactOptions, setContactOptions] = useState<Option[]>([]);
     const [debounceContactSearchTerm] = useDebounce(contactSearchTerm, DEBOUNCE_SEARCH_DELAY_MS);
 
-    const {refetch: refetchContacts} = useQuery<Contact[], Error>([QueryContacts, debounceContactSearchTerm],
+    const {refetch: refetchContacts, isFetching, isLoading} = useQuery<Contact[], Error>([QueryContacts, debounceContactSearchTerm],
         () => {
-            dispatch(setGlobalLoading(true));
             return searchContactsByName(debounceContactSearchTerm)
         }, {
-            enabled: false,
-            onSuccess: (data) => {
-                const contactOptionResult = data.map(item => ({
-                    label: item.type === ContactType.Company ? item.companyName : `${item.firstName} ${item.lastName}`,
-                    value: item.id
-                }) as Option);
+        enabled: false,
+        onSuccess: (data) => {
+            const contactOptionResult = data.map(item => ({
+                label: item.type === ContactType.Company ? item.companyName : `${item.firstName} ${item.lastName}`,
+                value: item.id
+            }) as Option);
 
                 setContactOptions(contactOptionResult)
             },
             onError: () => {
                 setError('contactId', {type: 'notFound', message: t('ticket_new.error_getting_contacts')});
-            },
-            onSettled: () => {
-                dispatch(setGlobalLoading(false));
             }
         });
 
@@ -137,7 +132,7 @@ const TicketNew = () => {
         }
     });
     const {data: contact, refetch: refetchContact} = useQuery<Contact, AxiosError>([GetContactById, queryContactId], () =>
-            getContactById(queryContactId!),
+        getContactById(queryContactId!),
         {
             enabled: false,
             onSuccess: ((data) => {
@@ -371,7 +366,7 @@ const TicketNew = () => {
         };
     }
 
-    return <div className="flex flex-col w-full mx-6 my-5 overflow-y-auto">
+    return <div className="flex flex-col w-full pb-5 mx-6 mt-5 overflow-y-auto">
         <h5>{t('ticket_new.title')}</h5>
         <div className={'w-96 pt-10 mx-auto flex flex-col'}>
             <form onSubmit={handleSubmit(onSubmit)} noValidate={true}>
@@ -430,7 +425,9 @@ const TicketNew = () => {
                                 options={contactOptions}
                                 value={props.value}
                                 error={errors.contactId?.message}
+                                isLoading={isLoading || isFetching}
                                 required={true}
+                                suggestionsPlaceholder={t('ticket_new.suggestion_placeholder')}
                                 onTextChange={(value: string) => setContactSearchTerm(value || '')}
                                 onSelect={(option) => option && props.onChange(option.value)}
                             />
@@ -636,25 +633,24 @@ const TicketNew = () => {
                             {...props}
                             tagOptions={tagOptions}
                             label={'ticket_new.tags'}
-                            labelPosition={TagInputLabelPosition.Vertical}
                             data-test-id='ticket-new-tag-input'
                             className={'w-full border-none h-14'}
                             setSelectedTags={setSelectedTags}
                         />
                     )}
                 />
-                <div className='flex flex-row space-x-4 justify-start mt-7'>
+                <div className='flex flex-row justify-start space-x-4 mt-7'>
                     <div className='flex items-center'>
                         <Button data-test-id='ticket-new-cancel-button' type={'button'}
-                                buttonType='secondary-big'
-                                label={'common.cancel'}
-                                onClick={() => history.push(TicketsPath)}
+                            buttonType='secondary-big'
+                            label={'common.cancel'}
+                            onClick={() => history.push(TicketsPath)}
                         />
                     </div>
                     <div>
                         <Button isLoading={createTicketMutation.isLoading} buttonType='big' disabled={!isValid || !stateError}
-                                data-test-id='ticket-new-create-button' type={'submit'}
-                                label={'ticket_new.create'}/>
+                            data-test-id='ticket-new-create-button' type={'submit'}
+                            label={'ticket_new.create'} />
                     </div>
                 </div>
             </form>

@@ -1,47 +1,38 @@
-import React, {Fragment, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import Label from '../label/label';
 import Tag from './components/tag'
 import './tag-input.scss';
-import List from '../list/list';
 import {Option} from '../option/option';
-import SvgIcon from '@components/svg-icon/svg-icon';
-import {Icon} from '@components/svg-icon/icon';
+import classnames from 'classnames';
+import SearchInputField from '@components/search-input-field/search-input-field';
 
-export enum TagInputLabelPosition {
-    Vertical,
-    Horizontal
-}
 interface TagInputProps extends React.HTMLAttributes<HTMLSelectElement> {
     label?: string,
     tagOptions: Option[],
-    labelPosition?: TagInputLabelPosition
     initialTags?: string[],
     initialIsListVisible?: boolean,
     setSelectedTags: (tags: string[]) => void,
-    labelAway?: boolean
+    tagHolderClassName?: string,
 }
 
-const TagInput = React.forwardRef<HTMLSelectElement, TagInputProps>(({label, tagOptions, initialTags, initialIsListVisible = false, labelAway = false, labelPosition, ...props}: TagInputProps, ref) => {
+const TagInput = React.forwardRef<HTMLSelectElement, TagInputProps>(({
+    label,
+    tagOptions,
+    initialTags,
+    tagHolderClassName ='pb-5',
+    ...props
+}: TagInputProps, ref) => {
     const {t} = useTranslation();
-    const [isTagsVisible, setIsTagsVisible] = useState(false);
-    const [isTagsListVisible, setIsTagsListVisible] = useState(initialIsListVisible);
+    const [searchTag, setSearchTag] = useState('');
     const [tags, setTags] = useState<string[]>([]);
 
     useEffect(() => {
         setTags(initialTags || []);
 
-        if ((initialTags && initialTags.length > 0) || initialIsListVisible) {
-            setIsTagsVisible(true);
-        }
-    }, [initialIsListVisible, initialTags]);
+    }, [initialTags]);
 
-    const handleAddTagClick = () => {
-        setIsTagsVisible(true);
-        setIsTagsListVisible(true);
-    }
-
-    const handleChangeTags = (option: Option) => {
+    const addTag = (option: Option) => {
         if (!tags.includes(option.label)) {
             setTags([...tags, option.label]);
             props.setSelectedTags([...tags, option.label]);
@@ -53,54 +44,37 @@ const TagInput = React.forwardRef<HTMLSelectElement, TagInputProps>(({label, tag
         tagsNew.splice(i, 1);
         setTags(tagsNew);
         props.setSelectedTags(tagsNew);
-        if (tagsNew.length === 0) {
-            setIsTagsVisible(false);
-            setIsTagsListVisible(false);
-        }
     }
-    let filteredOptions = [...tagOptions];
 
-    tags.forEach(tag => {
-        filteredOptions = filteredOptions.filter(a => a.label !== tag);
-    });
+    const getOptionFiltered = () => {
+        return tagOptions.filter(opt =>
+            opt.label.toLowerCase().includes(searchTag.toLowerCase()) &&
+            !tags.some(tag => opt.label === tag)
+        );
+    }
 
-    const isHorizontalLabelPosition = () => labelPosition === TagInputLabelPosition.Horizontal;
-
-    const onListKeyDown = (key: string) => {
-        if (key === 'Escape' && isTagsListVisible) {
-            setIsTagsListVisible(false);
-        } else if (key === 'Backspace') {
-            if (tags.length > 0) {
-                removeTag(tags.length - 1);
+    const onSearchInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === 'Backspace' && tags.length > 0 && !searchTag) {
+            removeTag(tags.length - 1);
+        } else if (event.key === 'Enter') {
+            event.preventDefault();
+            const firstOption = getOptionFiltered()[0];
+            if (firstOption) {
+                addTag(firstOption);
+                setSearchTag('');
             }
         }
     }
 
     return (
-        <Fragment>
-            <div className={`flex ${isHorizontalLabelPosition() ? "flex-row" : "flex-col"}`}>
-                <div>{label && <Label text={t(label)} className={`body2 ${labelAway ? 'pr-16' : 'pr-4'}`}/>}</div>
-                <div className={`${!isHorizontalLabelPosition() ? 'pt-5' : ''}`}>
-                    {
-                        !isTagsListVisible &&
-                        <span className='flex flex-row flex-nowrap cursor-pointer items-center'
-                              onClick={() => handleAddTagClick()}>
-                            <span className='mr-3.5'>
-                                <SvgIcon type={Icon.Add}/>
-                            </span>
-                            <span className='body2'>
-                                <span className='tag-input-label'>
-                                    {t('tag_input.add_tag')}
-                                </span>
-                            </span>
-                        </span>
-                    }
-                </div>
+        <>
+            <div className={classnames('flex flex-col', tagHolderClassName)}>
+                {label && <Label text={t(label)} className='body2' />}
             </div>
             <div>
                 {
-                    isTagsVisible &&
-                    <div className='tag-input'>
+                    tags.length > 0 &&
+                    <div className={'tag-input mb-4'}>
                         {tags.map((tag: string, i: number) => (
                             <Tag
                                 key={i}
@@ -109,21 +83,21 @@ const TagInput = React.forwardRef<HTMLSelectElement, TagInputProps>(({label, tag
                                 remove={removeTag}
                             />
                         ))}
-                        {isTagsListVisible && <List
-                            onKeyDown={(key) => onListKeyDown(key)}
-                            options={filteredOptions}
-                            onSelect={(option: Option) => {
-                                handleChangeTags(option);
-                            }}
-                        />}
                     </div>
                 }
+                <SearchInputField
+                    placeholder={t('tickets.search_tag')}
+                    autosuggestDropdown
+                    autosuggestOptions={getOptionFiltered()}
+                    onKeyDown={onSearchInputKeyDown}
+                    value={searchTag}
+                    suggestionsPlaceholder={t('tickets.tag_suggestion_placeholder')}
+                    onChange={(e) => setSearchTag(e)}
+                    onDropdownSuggestionClick={addTag}
+                />
             </div>
-        </Fragment>
+        </>
     );
 })
-TagInput.defaultProps = {
-    labelPosition: TagInputLabelPosition.Horizontal
-}
 
 export default TagInput;

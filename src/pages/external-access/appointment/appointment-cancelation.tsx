@@ -139,7 +139,7 @@ const AppointmentCancelation = () => {
     }
 
     return <div>
-        <div className='2xl:whitespace-pre 2xl:h-12 2xl:my-3 flex w-full items-center'>
+        <div className='flex items-center w-full 2xl:whitespace-pre 2xl:h-12 2xl:my-3'>
             <h4>
                 {t('external_access.appointments.appointment_cancelation')}
             </h4>
@@ -149,7 +149,7 @@ const AppointmentCancelation = () => {
             (appointmentType?.cancelationTimeFrame &&
                 dayjs.utc(appointment.startDateTime).diff(dayjs.utc(), 'hour') < appointmentType?.cancelationTimeFrame) &&
             <div className='pt-9 xl:pt-8'>
-                <div className='warning-message p-4 body2'>
+                <div className='p-4 warning-message body2'>
                     <Trans i18nKey="external_access.appointments.will_be_charged">
                         {appointmentType.cancelationTimeFrame?.toString()}
                         {appointmentType.cancelationFee?.toString()}
@@ -160,36 +160,42 @@ const AppointmentCancelation = () => {
         <div className='pt-8 pb-6'>
             {t('external_access.appointments.please_confirm')}
         </div>
-        <div className=''>
-            <div className='h7'>
-                {t('external_access.appointments.you_can_reschedule')}
-            </div>
-        </div>
+
         {appointmentSlots && appointmentSlots?.length > 0 &&
-            <div className='pt-4'>
-                <Trans i18nKey="external_access.appointments.appointment_slots">
-                    {display(provider?.displayName)}
-                    {display(department?.name)}
-                </Trans>
-            </div>
+            <>
+                <div className=''>
+                    <div className='h7'>
+                        {t('external_access.appointments.you_can_reschedule')}
+                    </div>
+                </div>
+                <div className='pt-4'>
+                    <Trans i18nKey="external_access.appointments.appointment_slots">
+                        {display(provider?.displayName)}
+                        {display(department?.name)}
+                    </Trans>
+                </div>
+                <div className='pt-12 pb-12'>
+                    <AppointmentTable
+                        isDetailsColumnVisible={false}
+                        isRowHoverDisabled
+                        data={appointmentSlots?.slice(0, maxSlots)}
+                        onActionClick={(slot) => selectSlot(slot as AppointmentSlot)} />
+                </div>
+            </>
         }
-        <div className='pb-12 pt-12'>
-            <AppointmentTable
-                isDetailsColumnVisible={false}
-                isRowHoverDisabled
-                data={appointmentSlots?.slice(0, maxSlots)}
-                onActionClick={(slot) => selectSlot(slot as AppointmentSlot)} />
-        </div>
         {
-            appointmentSlots && appointmentSlots?.length > 3 && <div className='pb-16'>
+            appointmentSlots && appointmentSlots?.length > 3 &&
+            <div className='pb-16'>
                 <Button buttonType='secondary-big' label='external_access.appointments.view_more_slots' onClick={() => showMoreSlots()} />
             </div>
         }
-        <div className='pb-6'>
-            <div className='h7'>
-                {t('external_access.appointments.want_to_cancel')}
+        {appointmentSlots && appointmentSlots?.length > 0 &&
+            <div className='pb-6'>
+                <div className='h7'>
+                    {t('external_access.appointments.want_to_cancel')}
+                </div>
             </div>
-        </div>
+        }
         <div className='pb-5'>
             {t('external_access.appointments.to_cancel')}
         </div>

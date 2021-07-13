@@ -469,6 +469,7 @@ const TicketFilter = ({isOpen}: {isOpen: boolean}) => {
                                 tagOptions={tags}
                                 data-test-id='ticket-new-tag-input'
                                 className={'w-full border-none h-14'}
+                                tagHolderClassName=''
                                 setSelectedTags={setSelectedTags}
                                 initialIsListVisible={true}
                             />

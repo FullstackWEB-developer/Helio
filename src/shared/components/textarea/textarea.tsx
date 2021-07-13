@@ -30,19 +30,20 @@ interface TextAreaProps {
 }
 
 const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(({
-                                                                           label,
-                                                                           value,
-                                                                           htmlFor,
-                                                                           hasBorder = true,
-                                                                           resizable = true,
-                                                                           iconClassNames,
-                                                                           iconFill,
-                                                                           iconContainerClassName,
-                                                                           iconOnClick,
-                                                                           placeHolder,
-                                                                           maxLengthClassName,
-                                                                           ...props
-                                                                       }: TextAreaProps, ref) => {
+    label,
+    value,
+    htmlFor,
+    hasBorder = true,
+    resizable = true,
+    iconClassNames,
+    iconFill,
+    iconContainerClassName,
+    iconOnClick,
+    placeHolder,
+    maxLengthClassName,
+    isLoading,
+    ...props
+}: TextAreaProps, ref) => {
 
     const {t} = useTranslation();
     const [remainLength, setRemainLength] = useState(props.maxLength);
@@ -75,18 +76,18 @@ const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(({
             </label>
             <div className={`${props.overwriteDefaultContainerClasses ? '' : defaultContainerClasses} ${props.textareaContainerClasses ? props.textareaContainerClasses : ''}`}>
                 <textarea ref={ref} {...props} value={textAreaValue} onChange={(e => handleOnChange(e))}
-                          placeholder={placeHolder ? placeHolder : ''}
-                          className={`mt-1 shadow-none p-4 ${(hasBorder ? ' border ' : '')} ${resizable ? 'resize' : 'resize-none'} ${props.className}`}/>
+                    placeholder={placeHolder ? placeHolder : ''}
+                    className={`mt-1 shadow-none p-4 ${(hasBorder ? ' border ' : '')} ${resizable ? 'resize' : 'resize-none'} ${props.className}`} />
                 {
                     props.icon && textAreaValue && textAreaValue?.trim()?.length > 0 &&
                     <div
-                        className={`flex-grow ${iconContainerClassName ? iconContainerClassName : 'px-7'} ${props.isLoading ? '-mr-2' : 'cursor-pointer'}`}>
+                        className={`flex-grow ${iconContainerClassName ? iconContainerClassName : 'px-7'} ${isLoading ? '-mr-2' : 'cursor-pointer'}`}>
                         <SvgIcon
-                            isLoading={props.isLoading}
+                            isLoading={isLoading}
                             type={props.icon ?? Icon.Send}
                             fillClass={iconFill ? iconFill : ''}
                             className={iconClassNames ? iconClassNames : ''}
-                            onClick={onClick}/>
+                            onClick={onClick} />
                     </div>
                 }
             </div>

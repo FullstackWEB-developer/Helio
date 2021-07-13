@@ -64,36 +64,43 @@ const PatientHeader = ({patientChartSummary, refreshPatient, isRefreshing}: Pati
 
     return (
         <div className={'flex flex-row p-8 bg-gray-50  justify-between'}>
-            <div className='flex flex-row'>
+            <div className='flex flex-row w-full'>
                 <div className={'h-24 w-24'}>
                     {getImage()}
                 </div>
-                <div className={'pl-8 pt-4'}>
-                    <div className={'flex flex-row items-start'}>
-                        <div>
-                            <h5 className={'h5'}>{`${patient.firstName} ${patient.lastName}`}</h5>
-                        </div>
-                        <div>
-                            <h5 className={'pl-6 gray-id'}>{t('patient.header.id')}</h5>
-                        </div>
-                        <div>
-                            <h5 className={'pl-1 pr-2'}>{patient.patientId}</h5>
-                        </div>
-                        {
-                            patientChartSummary?.chartAlert &&
-                            <div ref={tooltipDiv} className='pt-1'>
-                                <div ref={chartAlertIcon} onClick={() => setDisplayChartAlert(!displayChartAlert)}
-                                    className='cursor-pointer'>
-                                    <SvgIcon type={Icon.Info} className='icon-medium' fillClass='warning-icon' />
-                                </div>
-                                <Tooltip targetRef={chartAlertIcon} isVisible={displayChartAlert}
-                                    placement='bottom-start'>
-                                    <PatientChartAlert chartAlert={patientChartSummary.chartAlert} />
-                                </Tooltip>
+                <div className='w-full pt-4 pl-8'>
+                    <div className='flex flex-row items-center justify-between'>
+                        <div className='flex flex-row items-start'>
+                            <div>
+                                <h5 className={'h5'}>{`${patient.firstName} ${patient.lastName}`}</h5>
                             </div>
-                        }
+                            <div>
+                                <h5 className={'pl-6 gray-id'}>{t('patient.header.id')}</h5>
+                            </div>
+                            <div>
+                                <h5 className={'pl-1 pr-2'}>{patient.patientId}</h5>
+                            </div>
+                            {
+                                patientChartSummary?.chartAlert &&
+                                <div ref={tooltipDiv} className='pt-1'>
+                                    <div ref={chartAlertIcon} onClick={() => setDisplayChartAlert(!displayChartAlert)}
+                                        className='cursor-pointer'>
+                                        <SvgIcon type={Icon.Info} className='icon-medium' fillClass='warning-icon' />
+                                    </div>
+                                    <Tooltip targetRef={chartAlertIcon} isVisible={displayChartAlert}
+                                        placement='bottom-start'>
+                                        <PatientChartAlert chartAlert={patientChartSummary.chartAlert} />
+                                    </Tooltip>
+                                </div>
+                            }
+                        </div>
+                        <Button data-test-id='patient-header-view-in-athena-button'
+                            buttonType='medium'
+                            onClick={() => viewInAthena()}
+                            className=""
+                            label={'patient.header.view_in_athena'} />
                     </div>
-                    <div className={'pt-4 flex flex-row'}>
+                    <div className='flex flex-row justify-between pt-4'>
                         <div className='flex flex-row'>
                             {
                                 SmallLabel(t('patient.header.age'), patientUtils.getAge(patient.dateOfBirth).toString())
@@ -108,18 +115,15 @@ const PatientHeader = ({patientChartSummary, refreshPatient, isRefreshing}: Pati
                                 SmallLabel(t('patient.header.ssn'), patient.ssn ? patient.ssn.replace(/.{1,5}/, (m) => '*'.repeat(m.length)) : t('common.not_available'), 'pl-6')
                             }
                         </div>
+                        <span className='cursor-pointer'>
+                            <SvgIcon isLoading={isRefreshing}
+                                className={isRefreshing ? 'icon-small' : 'icon-medium'}
+                                type={Icon.Refresh}
+                                onClick={() => refreshPatient()}
+                                fillClass='rgba-05-fill'
+                            />
+                        </span>
                     </div>
-                </div>
-            </div>
-            <div className='flex flex-col'>
-                <Button data-test-id='patient-header-view-in-athena-button'
-                    buttonType='medium'
-                    onClick={() => viewInAthena()}
-                    label={'patient.header.view_in_athena'} />
-                <div className='h-16 items-center flex flex-row justify-end'>
-                    <span className='cursor-pointer'>
-                        <SvgIcon isLoading={isRefreshing} wrapperClassName={isRefreshing ? '-mr-2' : ''} type={Icon.Refresh} onClick={() => refreshPatient()} fillClass='rgba-05-fill' />
-                    </span>
                 </div>
             </div>
         </div>

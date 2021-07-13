@@ -1,23 +1,10 @@
 import {Controller, ControllerRenderProps} from 'react-hook-form';
 import {Control} from 'react-hook-form/dist/types/form';
-import Input from '@components/input/input';
+import Input, {InputTypes}  from '@components/input';
 import {useTranslation} from 'react-i18next';
 import React from 'react';
 import {Option} from '@components/option/option';
 import {Icon} from '@components/svg-icon/icon';
-
-export class InputTypes {
-    static Phone = new RegExp('1?\\W*([2-9][0-8][0-9])\\W*([2-9][0-9]{2})\\W*([0-9]{4})(\\se?x?t?(\\d*))?');
-    static Email = new RegExp('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$');
-    static Zip = new RegExp('^\\d{5}(?:[-\\s]\\d{4})?$');
-}
-
-const blockNumericInvalidChar = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    const invalidChars = ['-', '+', 'e'];
-    if (invalidChars.includes(event.key)) {
-        event.preventDefault();
-    }
-}
 
 export interface ControllerInputProps {
     control: Control;
@@ -81,15 +68,13 @@ const ControlledInput = ({
             value: InputTypes.Zip,
             message: t('components.input.invalid_zip')
         }
-    } else if (type === 'number') {
-        inputKeyDown = blockNumericInvalidChar;
-    }
-
+    } 
 
     const cleanMask = (value?: string) => {
-        if (value) {
+        if (value && !!mask) {
             return value.replace('(', '').replace(' ', '').replace(')', '').replace('-', '');
         }
+        return value;
     }
 
     const onInputChanged = (event: React.ChangeEvent<HTMLInputElement>, controllerProps: ControllerRenderProps<Record<string, any>>) => {
