@@ -98,6 +98,9 @@ const DateTimePicker = React.forwardRef<HTMLInputElement, DateTimePickerProps>((
                 setInputValue(dayjs(value).utc().local().format(DATE_INPUT_LONG_FORMAT));
             }
         }
+        else {
+            onClearClick();
+        }
         showDateFormat(false);
 
     }, [value, isISOFormat])
@@ -153,7 +156,7 @@ const DateTimePicker = React.forwardRef<HTMLInputElement, DateTimePickerProps>((
             setInputType('text')
         }
     }
-    
+
     const onInputValueChange = ({target}: React.ChangeEvent<HTMLInputElement>) => {
         const targetValue = target.value;
         if (targetValue === '' || !target.valueAsDate) {

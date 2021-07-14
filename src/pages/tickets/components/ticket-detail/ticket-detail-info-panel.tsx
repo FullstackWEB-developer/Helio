@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import withErrorLogging from '../../../../shared/HOC/with-error-logging';
 import {Ticket} from '../../models/ticket';
 import Collapsible from '../../../../shared/components/collapsible/collapsible';
@@ -11,7 +11,24 @@ import {Patient} from '@pages/patients/models/patient';
 import {Contact} from '@shared/models/contact.model';
 import TicketDetailContactInfo from '@pages/tickets/components/ticket-detail/ticket-detail-contact-info';
 import TicketDetailTicketInfo from '@pages/tickets/components/ticket-detail/ticket-detail-ticket-info';
-
+import {useForm} from 'react-hook-form';
+import {setTicketUpdateModel, setTicketUpdateHash} from '@pages/tickets/store/tickets.slice';
+import {useDispatch, useSelector} from 'react-redux';
+import {selectEnumValuesAsOptions, selectLookupValuesAsOptions, selectTicketUpdateHash, selectTicketUpdateModel} from '@pages/tickets/store/tickets.selectors';
+import {useMutation} from 'react-query';
+import {addFeed, updateTicket} from '@pages/tickets/services/tickets.service';
+import {setTicket} from '@pages/tickets/store/tickets.slice';
+import {FeedTypes, TicketFeed} from '@pages/tickets/models/ticket-feed';
+import {useTranslation} from 'react-i18next';
+import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
+import {SnackbarType} from '@components/snackbar/snackbar-position.enum';
+import Button from '@components/button/button';
+import {selectDepartmentListAsOptions} from '@shared/store/lookups/lookups.selectors';
+import {getPatientActionNotes, getPatientCaseDocument} from '@pages/patients/services/patient-document.service';
+import utils from '@shared/utils/utils';
+import {TicketUpdateModel} from '@pages/tickets/models/ticket-update.model';
+import hash from 'object-hash';
+import './ticket-detail-info-panel.scss';
 interface TicketDetailInfoPanelProps {
     ticket: Ticket,
     patient?: Patient,
@@ -19,45 +36,186 @@ interface TicketDetailInfoPanelProps {
 }
 
 const TicketDetailInfoPanel = ({ticket, patient, contact}: TicketDetailInfoPanelProps) => {
-    return <div>
-        <div className='border-b'>
+    const dispatch = useDispatch();
+    const {t} = useTranslation();
+    const updateModel = useSelector(selectTicketUpdateModel);
+    const storedUpdateModelHash = useSelector(selectTicketUpdateHash);
+    const {handleSubmit, control, formState, setError, clearErrors, errors, reset} = useForm({
+        defaultValues: updateModel,
+        mode: 'onChange'
+    });
+
+    const statusOptions = useSelector((state => selectEnumValuesAsOptions(state, 'TicketStatus')));
+    const departmentOptions = useSelector((state) => selectLookupValuesAsOptions(state, 'Department'));
+    const priorityOptions = useSelector((state => selectEnumValuesAsOptions(state, 'TicketPriority')));
+    const locationOptions = useSelector(selectDepartmentListAsOptions);
+    const reasonOptions = useSelector((state) => selectLookupValuesAsOptions(state, 'TicketReason'));
+    const ticketTypeOptions = useSelector((state) => selectEnumValuesAsOptions(state, 'TicketType'));
+    const [isPatientCaseNumberLoading, setPatientCaseNumberLoading] = useState(false);
+    const [isDueDateVisible, setIsDueDateVisible] = useState(false);
+
+    const isDirty = () => {
+        return storedUpdateModelHash !== hash.MD5(updateModel);
+    }
+
+    const generateTicketUpdateModel = () => {
+        const ticketUpdateModel: TicketUpdateModel = {
+            status: statusOptions.find(a => a.value.toString() === ticket.status?.toString()),
+            priority: priorityOptions.find(a => a.value.toString() === ticket.priority?.toString()),
+            department: departmentOptions.find(a => a.value.toString() === ticket.department?.toString()),
+            type: ticketTypeOptions.find(a => a.value.toString() === ticket.type?.toString()),
+            reason: reasonOptions.find(a => a.value.toString() === ticket.reason?.toString()),
+            location: locationOptions.find(a => a.value.toString() === ticket.location?.toString()),
+            tags: ticket.tags ? ticket.tags : [],
+            callbackPhoneNumber: ticket.callbackPhoneNumber ?? '',
+            patientCaseNumber: ticket.patientCaseNumber,
+            storedDueDate: ticket.dueDate,
+            dueDate: undefined,
+            dueTime: undefined
+        };
+        const initialTicketHash = hash.MD5(ticketUpdateModel);
+        dispatch(setTicketUpdateHash(initialTicketHash));
+        dispatch(setTicketUpdateModel(ticketUpdateModel));
+    }
+
+    useEffect(() => {
+        generateTicketUpdateModel();
+    }, [ticket]);
+
+    const ticketUpdateMutation = useMutation(updateTicket, {
+        onSuccess: (data, variables) => {
+            const ticketData = variables.ticketData;
+            dispatch(setTicket(data));
+            if (data.id && ticketData.status) {
+                const feedData: TicketFeed = {
+                    feedType: FeedTypes.StatusChange,
+                    description: `${t('ticket_detail.feed.description_prefix')} ${updateModel.status?.label}`
+                };
+                addFeedMutation.mutate({ticketId: ticket.id!, feed: feedData});
+            }
+            dispatch(addSnackbarMessage({
+                type: SnackbarType.Success,
+                message: 'ticket_detail.ticket_updated'
+            }));
+            setIsDueDateVisible(false);
+        },
+        onError: () => {
+            dispatch(addSnackbarMessage({
+                message: 'ticket_detail.ticket_update_failed',
+                type: SnackbarType.Error
+            }));
+        }
+    });
+
+    const addFeedMutation = useMutation(addFeed, {
+        onSuccess: (data) => {
+            dispatch(setTicket(data));
+        }
+    });
+
+    const validatePatientCaseNumber = async () => {
+
+        if (!updateModel.patientCaseNumber || updateModel.patientCaseNumber === ticket.patientCaseNumber) {
+            clearErrors('patientCaseNumber');
+            return;
+        }
+
+        setPatientCaseNumberLoading(true);
+        clearErrors('patientCaseNumber');
+        try {
+            if (patient && patient.patientId) {
+                const patientCase = await getPatientCaseDocument(patient.patientId, Number(updateModel.patientCaseNumber));
+                if (!patientCase) throw new Error();
+            } else {
+                const patientActionNotes = await getPatientActionNotes(Number(updateModel.patientCaseNumber));
+                if (!patientActionNotes) throw new Error();
+            }
+        } catch (e) {
+            setError('patientCaseNumber', {type: 'validate', message: t('ticket_new.patient_case_id_not_found')});
+        } finally {
+            setPatientCaseNumberLoading(false);
+        }
+    }
+
+    const onSubmit = () => {
+        const dateTime = utils.getDateTime(updateModel.dueDate, updateModel.dueTime);
+        ticketUpdateMutation.mutate({
+            id: ticket.id!,
+            ticketData: {
+                department: updateModel.department?.value !== ticket.department?.toString() ? updateModel.department?.value : undefined,
+                status: updateModel.status?.value !== ticket.status?.toString() ? Number(updateModel.status?.value) : undefined,
+                priority: updateModel.priority?.value !== ticket.priority?.toString() ? Number(updateModel.priority?.value) : undefined,
+                reason: updateModel.reason?.value !== ticket.reason?.toString() ? updateModel.reason?.value : undefined,
+                location: updateModel.location?.value !== ticket.location?.toString() ? updateModel.location?.value : undefined,
+                type: updateModel.type?.value !== ticket.type?.toString() ? updateModel.type?.value : undefined,
+                tags: updateModel.tags,
+                callbackPhoneNumber: updateModel.callbackPhoneNumber,
+                patientCaseNumber: updateModel.patientCaseNumber,
+                dueDate: dateTime ? dateTime.toDate() : undefined
+            }
+        });
+    }
+
+    const resetForm = () => {
+        generateTicketUpdateModel();
+        setIsDueDateVisible(false);
+        clearErrors();
+    }
+
+    return (
+        <form className='relative flex flex-col' onSubmit={handleSubmit(onSubmit)}>
+            <div className='flex px-6 justify-between items-center sticky top-0 z-10 ticket-details-info-header'>
+                <h6>{t('ticket_detail.info_panel.details')}</h6>
+                {
+                    isDirty() &&
+                    <div className='flex flex-row items-center'>
+                        <Button onClick={resetForm} className='mr-6' buttonType='secondary' label={'common.cancel'} />
+                        <Button buttonType='small' label={'common.save'} type='submit'
+                            disabled={!formState.isValid || isPatientCaseNumberLoading} isLoading={ticketUpdateMutation.isLoading} />
+                    </div>
+                }
+            </div>
+            <div className='border-b'>
+                <div className='px-6'>
+                    <Collapsible title={'ticket_detail.info_panel.ticket_info'} isOpen={true}>
+                        <TicketDetailTicketInfo ticket={ticket} control={control} />
+                    </Collapsible>
+                </div>
+            </div>
             <div className='px-6'>
-                <Collapsible title={'ticket_detail.info_panel.ticket_info'} isOpen={true}>
-                    <TicketDetailTicketInfo ticket={ticket}/>
+                <Collapsible title={'ticket_detail.info_panel.assigned_to'} isOpen={true}>
+                    <TicketDetailAssignee ticket={ticket} />
                 </Collapsible>
             </div>
-        </div>
-        <div className='px-6'>
-            <Collapsible title={'ticket_detail.info_panel.assigned_to'} isOpen={true}>
-                <TicketDetailAssignee ticket={ticket}/>
-            </Collapsible>
-        </div>
-        <div className='border-b'>
-            <div className='px-6'>
-                {patient && <Collapsible title={'ticket_detail.info_panel.patient_info'} isOpen={true}>
-                    <TicketDetailPatientInfo ticket={ticket} patient={patient}/>
-                </Collapsible>}
-                {patient && <Collapsible title={'ticket_detail.info_panel.appointments'} isOpen={true}>
-                    <TicketDetailAppointments ticket={ticket}/>
-                </Collapsible>}
-                {contact && <Collapsible title={'ticket_detail.info_panel.contact_details.contact_info'} isOpen={true}>
-                    <TicketDetailContactInfo contact={contact}/>
-                </Collapsible>}
+            <div className='border-b'>
+                <div className='px-6'>
+                    {patient && <Collapsible title={'ticket_detail.info_panel.patient_info'} isOpen={true}>
+                        <TicketDetailPatientInfo ticket={ticket} patient={patient}
+                            control={control} isPatientCaseNumberLoading={isPatientCaseNumberLoading} errorMessage={errors.patientCaseNumber?.message}
+                            validatePatientCaseNumber={validatePatientCaseNumber} />
+                    </Collapsible>}
+                    {patient && <Collapsible title={'ticket_detail.info_panel.appointments'} isOpen={true}>
+                        <TicketDetailAppointments ticket={ticket} />
+                    </Collapsible>}
+                    {contact && <Collapsible title={'ticket_detail.info_panel.contact_details.contact_info'} isOpen={true}>
+                        <TicketDetailContactInfo contact={contact} />
+                    </Collapsible>}
+                </div>
             </div>
-        </div>
-        <div className='border-b'>
+            <div className='border-b'>
+                <div className='px-6'>
+                    <Collapsible title={'ticket_detail.info_panel.attachments'} isOpen={true}>
+                        <TicketDetailAttachments ticket={ticket} />
+                    </Collapsible>
+                </div>
+            </div>
             <div className='px-6'>
-                <Collapsible title={'ticket_detail.info_panel.attachments'} isOpen={true}>
-                    <TicketDetailAttachments ticket={ticket}/>
+                <Collapsible title={'ticket_detail.info_panel.event_log'} isOpen={true}>
+                    <TicketDetailEventLog ticket={ticket} control={control}
+                        setIsVisible={setIsDueDateVisible} isVisible={isDueDateVisible} />
                 </Collapsible>
             </div>
-        </div>
-        <div className='px-6'>
-            <Collapsible title={'ticket_detail.info_panel.event_log'} isOpen={true}>
-                <TicketDetailEventLog ticket={ticket}/>
-            </Collapsible>
-        </div>
-    </div>
+        </form>)
 }
 
 export default withErrorLogging(TicketDetailInfoPanel);

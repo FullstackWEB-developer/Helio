@@ -70,14 +70,16 @@ const getInitialsFromFullName = (username: string): string => {
 const getDateTime = (dueDate?: Date, dueTime?: string) => {
     let dateTime;
     if (dueDate && dueTime) {
-        const hours = parseInt(dueTime.split(':')[0]);
-        const minutes = parseInt(dueTime.split(':')[1]);
+        var time = dayjs(dueTime, "hh:mm A").format('HH:mm');
+        const hours = parseInt(time.split(':')[0]);
+        const minutes = parseInt(time.split(':')[1]);
         dateTime = dayjs.utc(dueDate).local().hour(hours).minute(minutes);
     } else if (dueDate) {
         dateTime = dayjs.utc(dueDate).local();
     } else if (dueTime) {
-        const hours = parseInt(dueTime.split(':')[0]);
-        const minutes = parseInt(dueTime.split(':')[1]);
+        var time = dayjs(dueTime, "hh:mm A").format('HH:mm');
+        const hours = parseInt(time.split(':')[0]);
+        const minutes = parseInt(time.split(':')[1]);
         dateTime = dayjs.utc().local().hour(hours).minute(minutes);
     }
     return dateTime;

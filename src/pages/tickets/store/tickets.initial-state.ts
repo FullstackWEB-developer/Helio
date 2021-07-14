@@ -27,6 +27,7 @@ export interface TicketState {
     ticketListQueryType: TicketListQueryType;
     feedLastMessageOn?: Date;
     ticketUpdate?: TicketUpdateModel;
+    ticketUpdateHash?: string;
 }
 
 const initialTicketState: TicketState = {
@@ -55,7 +56,8 @@ const initialTicketState: TicketState = {
     feedLastMessageOn: undefined,
     selectedTicket: null,
     ticketListQueryType: TicketListQueryType.AllTicket,
-    ticketUpdate: undefined
+    ticketUpdate: undefined,
+    ticketUpdateHash: undefined
 }
 
 export default initialTicketState;

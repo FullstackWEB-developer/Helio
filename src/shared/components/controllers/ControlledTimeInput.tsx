@@ -10,7 +10,8 @@ export interface ControllerTimeInputProps {
     className?: string;
     label?: string;
     dataTestId: string;
-    defaultValue?: string;
+    defaultValue?: string | undefined;
+    value?: string | undefined;
     onChange?: (time: string | undefined) => void;
 }
 
@@ -21,6 +22,7 @@ const ControlledTimeInput = ({control,
     label,
     dataTestId,
     defaultValue,
+    value,
     ...props
 }: ControllerTimeInputProps) => {
 
@@ -47,6 +49,7 @@ const ControlledTimeInput = ({control,
             <TimePicker
                 {...controllerProps}
                 label={label}
+                value={value}
                 required={required}
                 disabled={disabled}
                 dataTestId={dataTestId}

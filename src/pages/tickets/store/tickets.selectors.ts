@@ -92,3 +92,8 @@ export const selectTicketUpdateModel = createSelector(
     ticketState,
     state => state.ticketUpdate as TicketUpdateModel
 )
+
+export const selectTicketUpdateHash = createSelector(
+    ticketState,
+    state => state.ticketUpdateHash
+)

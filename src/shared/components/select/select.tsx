@@ -78,6 +78,10 @@ const Select = React.forwardRef<HTMLDivElement, SelectProps>(({options, order, l
         if (props.searchQuery) {
             setSearchQuery(props.searchQuery);
         }
+        if(!props.value)
+        {
+            setSelectedOption(null);
+        }
     }, [props.value]);
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {

@@ -19,7 +19,8 @@ i18n
         },
         interpolation: {
             escapeValue: false
-        }
+        },
+        nsSeparator: false
     });
 
 export default i18n;

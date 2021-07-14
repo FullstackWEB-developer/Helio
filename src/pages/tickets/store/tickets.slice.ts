@@ -27,6 +27,9 @@ const ticketsSlice = createSlice({
     setTicketUpdateModel(state, {payload}: PayloadAction<TicketUpdateModel>) {
       state.ticketUpdate = payload
     },
+    setTicketUpdateHash(state, {payload}: PayloadAction<string>){
+      state.ticketUpdateHash = payload
+    },
     changeAssignee(state, {payload}: PayloadAction<{ ticketId: string, assigneeId: string }>) {
       const ticket = state.tickets.find((t) => t.id === payload.ticketId);
       if (ticket) {
@@ -132,6 +135,7 @@ export const {
   setTicketFilter,
   setTicketListQueryType,
   setTicketUpdateModel,
+  setTicketUpdateHash,
   resetLastFeedMessageOn
 } = ticketsSlice.actions;
 

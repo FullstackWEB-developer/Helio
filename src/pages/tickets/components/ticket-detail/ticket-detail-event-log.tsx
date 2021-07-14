@@ -1,71 +1,51 @@
-import React, {useState} from 'react';
+import React from 'react';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime'
 import {useTranslation} from 'react-i18next';
 import withErrorLogging from '@shared/HOC/with-error-logging';
 import {Ticket} from '../../models/ticket';
-import {updateTicket} from '../../services/tickets.service';
-import {useMutation} from 'react-query';
-import {setTicket} from '@pages/tickets/store/tickets.slice';
-import {useDispatch} from 'react-redux';
-import Logger from '@shared/services/logger';
 import utils from '@shared/utils/utils';
 import SvgIcon from '@components/svg-icon/svg-icon';
 import {Icon} from '@components/svg-icon/icon';
-import Button from '@components/button/button';
 import ControlledDateInput from '@components/controllers/ControlledDateInput';
 import ControlledTimeInput from '@components/controllers/ControlledTimeInput';
-import {useForm} from 'react-hook-form';
-
+import {Control} from 'react-hook-form';
+import {TicketUpdateModel} from '@pages/tickets/models/ticket-update.model';
+import {useDispatch, useSelector} from 'react-redux';
+import {selectTicketUpdateModel} from '@pages/tickets/store/tickets.selectors';
+import {setTicketUpdateModel} from '@pages/tickets/store/tickets.slice';
 interface TicketDetailEventLogProps {
-    ticket: Ticket
+    ticket: Ticket,
+    control: Control<TicketUpdateModel>,
+    isVisible: boolean,
+    setIsVisible: (isVisible: boolean) => void
 }
 
-const TicketDetailEventLog = ({ticket}: TicketDetailEventLogProps) => {
+const TicketDetailEventLog = ({ticket, control, isVisible, setIsVisible}: TicketDetailEventLogProps) => {
     dayjs.extend(relativeTime);
     const {t} = useTranslation();
-    const dispatch = useDispatch();
-    const logger = Logger.getInstance();
     const formatTemplate = 'ddd, MMM DD, YYYY h:mm A';
-    const [isVisible, setIsVisible] = useState(false);
-    const [dueDate, setDueDate] = useState(ticket ? ticket.dueDate : null);
-    const {handleSubmit, control} = useForm();
+    const dispatch = useDispatch();
+
+
     const openCalendar = () => {
         setIsVisible(!isVisible);
-        setDueDate(ticket.dueDate);
     }
 
-    const updateTicketMutation = useMutation(updateTicket);
+    const updateModel = useSelector(selectTicketUpdateModel);
 
-    const setDateTime = async (dueDateTime: Date) => {
-        if (ticket && ticket.id && dueDateTime) {
-            const ticketData: Ticket = {
-                dueDate: dueDateTime ? dueDateTime : undefined,
-                status: ticket.status
-            };
-            updateTicketMutation.mutate({id: ticket.id, ticketData},
-                {
-                    onSuccess: (data) => {
-                        setDueDate(dueDateTime);
-                        setIsVisible(false);
-                        dispatch(setTicket(data));
-                    },
-                    onError: (error) => {
-                        logger.error('Error updating ticket', error);
-                    }
-                });
-        }
-    };
+    const handleDateChange = (date: Date | undefined) => {
+        dispatch(setTicketUpdateModel({
+            ...updateModel,
+            dueDate: date
+        }));
+    }
 
-    const onSubmit = async (formData: any) => {
-        if (!formData) {
-            return;
-        }
-
-        const dateTime = utils.getDateTime(formData.date, formData.time);
-        if (dateTime) {
-            await setDateTime(dateTime.toDate());
-        }
+    const handleTimeChange = (time: string | undefined) => {
+        dispatch(setTicketUpdateModel({
+            ...updateModel,
+            dueTime: time
+        }));
     }
 
     return <div className={'py-4 mx-auto flex flex-col'}>
@@ -77,9 +57,9 @@ const TicketDetailEventLog = ({ticket}: TicketDetailEventLogProps) => {
                 <div className='body2 flex flex-row'>
                     <div className='py-1'>
                         {
-                            dueDate ?
+                            updateModel.storedDueDate ?
                                 (
-                                    `${dayjs().to(dayjs.utc(ticket.dueDate))} (${utils.formatUtcDate(dueDate, 'MMM DD, YYYY h:mm A')})`
+                                    `${dayjs().to(dayjs.utc(ticket.dueDate))} (${utils.formatUtcDate(updateModel.storedDueDate, 'MMM DD, YYYY h:mm A')})`
                                 )
                                 : t('common.not_available')
                         }
@@ -88,42 +68,34 @@ const TicketDetailEventLog = ({ticket}: TicketDetailEventLogProps) => {
             </div>
             <div className='cursor-pointer' onClick={() => openCalendar()}>
                 <SvgIcon type={Icon.Calendar}
-                         className='icon-medium h-8 w-8 pl-2 cursor-pointer'
-                         fillClass='active-item-icon'/>
+                    className='icon-medium h-8 w-8 pl-2 cursor-pointer'
+                    fillClass='active-item-icon' />
             </div>
         </div>
-        {isVisible &&
-        <form onSubmit={handleSubmit(onSubmit)}>
-            <ControlledDateInput
-                name='date'
-                control={control}
-                label='ticket_detail.info_panel.select_date'
-                dataTestId='datetime-date'
-            />
-            <ControlledTimeInput
-                name='time'
-                control={control}
-                label='ticket_detail.info_panel.select_time'
-                dataTestId='datetime-time'
-            />
-            <div className='flex flex-row space-x-4 justify-end bg-secondary-50 mt-2'>
-                <div className='flex items-center'>
-                    <Button data-test-id='datetime-cancel-button'
-                            type={'button'}
-                            buttonType='secondary'
-                            label={'common.cancel'}
-                            onClick={() => setIsVisible(false)}
-                    />
-                </div>
-                <div>
-                    <Button data-test-id='datetime-save-button'
-                            type={'submit'}
-                            buttonType='small'
-                            isLoading={updateTicketMutation.isLoading}
-                            label={'common.save'} />
-                </div>
-            </div>
-        </form>}
+
+        {
+            isVisible &&
+            <>
+                <ControlledDateInput
+                    name='date'
+                    control={control}
+                    label='ticket_detail.info_panel.select_date'
+                    dataTestId='datetime-date'
+                    onChange={handleDateChange}
+                    value={updateModel.dueDate}
+                />
+                <ControlledTimeInput
+                    name='time'
+                    control={control}
+                    label='ticket_detail.info_panel.select_time'
+                    dataTestId='datetime-time'
+                    onChange={handleTimeChange}
+                    defaultValue={updateModel.dueTime}
+                    value={updateModel.dueTime}
+                />
+            </>
+        }
+
         <dl>
             <div className='sm:grid sm:grid-cols-2'>
                 <dt className='body2-medium mt-6'>

@@ -233,12 +233,12 @@ const PatientContactInfoUpdate = ({onUpdateComplete} : PatientInformationUpdateP
                             </div>
                         </div>
                     </div>
-                    {watchContactPreference === 'MOBILEPHONE' && <div className='col-span-12 lg:col-span-6 pt-10'>
+                    {watchContactPreference === 'MOBILEPHONE' && <div className='col-span-12 lg:col-span-6 pt-4'>
                         <Controller
                             name='consentToText'
                             control={control}
                             render={(props) => (
-                                <div className='pt-4'>
+                                <div>
                                     <div>
                                         {t('patient.summary.consent_to_text')}
                                     </div>
@@ -275,7 +275,7 @@ const PatientContactInfoUpdate = ({onUpdateComplete} : PatientInformationUpdateP
                         />
                     </div>
                     <div className='col-span-12 lg:col-span-5 lg:col-start-7 pt-4'>
-                        <div className='col-span-12 lg:col-span-6 pt-8'>
+                        <div className='col-span-12 lg:col-span-6'>
                             <Controller
                                 name='portalAccessGiven'
                                 control={control}

@@ -28,6 +28,7 @@ export interface ControllerInputProps {
     dropdownIcon?: Icon
     autosuggestDropdown?: boolean;
     autosuggestOptions?: Option[];
+    dropdownIconClickHandler?: () => void;
     onDropdownSuggestionClick?: (suggestion: Option) => void;
     isFetchingSuggestions?: boolean;
     selectedSuggestion?: Option;
@@ -87,7 +88,6 @@ const ControlledInput = ({
         }
         control.setValue(name, value, {shouldValidate: true});
     }
-
     return (<Controller
         name={name}
         control={control}
@@ -111,12 +111,14 @@ const ControlledInput = ({
                 assistiveText={props.assistiveText}
                 isLoading={props.isLoading}
                 disabled={props.disabled}
+                value={props.value}
                 data-test-id={dataTestId}
                 onKeyDown={inputKeyDown}
                 onBlur={props.onBlur || controllerProps.onBlur}
                 onChange={(event) => onInputChanged(event, controllerProps)}
                 autoSuggestDropdown={props.autosuggestDropdown}
                 autoSuggestOptions={props.autosuggestOptions}
+                dropdownIconClickHandler={props.dropdownIconClickHandler}
                 onDropdownSuggestionClick={props.onDropdownSuggestionClick}
                 isFetchingSuggestions={props.isFetchingSuggestions}
                 selectedSuggestion={props.selectedSuggestion}

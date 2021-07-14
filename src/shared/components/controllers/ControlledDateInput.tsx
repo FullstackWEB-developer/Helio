@@ -38,6 +38,7 @@ const ControlledDateInput = ({
     max,
     min,
     defaultValue,
+    value,
     className,
     longDateFormat = true,
     required = false,
@@ -78,6 +79,7 @@ const ControlledDateInput = ({
                 {...controllerProps}
                 required={required}
                 disabled={disabled}
+                value={value}
                 isWeekendDisabled={isWeekendDisabled}
                 calendarHorizontalAlign={calendarHorizontalAlign}
                 calendarContainerClassName={className}

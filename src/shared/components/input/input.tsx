@@ -29,6 +29,7 @@ interface InputProps extends React.HTMLAttributes<HTMLInputElement> {
     dropdownIcon?: Icon
     autoSuggestDropdown?: boolean;
     autoSuggestOptions?: Option[];
+    dropdownIconClickHandler?: () => void;
     onDropdownSuggestionClick?: (suggestion: Option) => void;
     isFetchingSuggestions?: boolean;
     selectedSuggestion?: Option;
@@ -42,6 +43,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({
     mask,
     assistiveText,
     dropdownIcon,
+    dropdownIconClickHandler,
     isLoading,
     autoSuggestDropdown,
     autoSuggestOptions,
@@ -58,10 +60,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({
     const [dropdownOpen, setDropdownOpen] = useState(false);
 
     useEffect(() => {
-        if (props.value) {
-            setValue(props.value || '');
-
-        }
+        setValue(props.value || '');
     }, [props.value]);
 
     const validateNumberValue = React.useCallback((event: any) => {
@@ -148,9 +147,9 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({
                     className={`absolute truncate ${props.required ? 'required' : ''} ${isFocused || value ? 'body3 label-small' : `body2${props.disabled ? '-medium' : ''}`} ${props.error ? 'text-danger' : ''}`}>
                     {t(label || placeholder || '')}
                 </label>
-                {dropdownIcon && <div className={`absolute pt-${!label ? '3' : '4'} right-4`}>
+                {dropdownIcon && (!isFocused || !value) && <div className={`absolute pt-${!label ? '3' : '4'} right-4 ${dropdownIconClickHandler ? 'cursor-pointer' : ''}`}>
                     {
-                        <SvgIcon type={dropdownIcon} fillClass={'select-arrow-fill'} />
+                        <SvgIcon type={dropdownIcon} onClick={dropdownIconClickHandler} fillClass={'select-arrow-fill'} />
                     }
                 </div>}
                 {isFocused &&

@@ -8,4 +8,9 @@ export interface TicketUpdateModel {
     department?: Option;
     location?: Option;
     tags: string[];
+    callbackPhoneNumber?: string;
+    patientCaseNumber?: number;
+    storedDueDate?: Date;
+    dueDate?: Date;
+    dueTime?: string;
 }

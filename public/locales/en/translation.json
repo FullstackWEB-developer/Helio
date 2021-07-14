@@ -362,8 +362,8 @@
     "add_note": "Note",
     "create": "Create Ticket",
     "title": "New Ticket",
-    "patient_id_not_found": "Patient Id does not found.",
-    "patient_case_id_not_found": "Patient Case Id does not found.",
+    "patient_id_not_found": "Patient Id not found.",
+    "patient_case_id_not_found": "Patient Case not found.",
     "error_getting_contacts": "Error getting contacts information.",
     "suggestion_placeholder": "Type two or more characters to filter."
   },
@@ -446,7 +446,9 @@
         "download": "Download",
         "file_name_chat": "chat-transcript",
         "file_name_voice": "voice-recording"
-      }
+      },
+      "callback_number": "Callback Number",
+      "details": "Details"
     },
     "note": {
       "add_note": "Add Note",
