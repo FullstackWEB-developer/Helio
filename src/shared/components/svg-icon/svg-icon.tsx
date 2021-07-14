@@ -323,12 +323,44 @@ const SvgIcon = ({type, wrapperClassName='', className = 'icon-medium', fillClas
         </svg>
     }
 
+    const getIconDeleteCircled = () => {
+        return <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" className={mainClass}>
+            <rect width="48" height="48" fill="none" />
+            <g transform="translate(4 4)" fill="none" className={strokeClass}>
+                <circle cx="20" cy="20" r="20" stroke="none" />
+                <circle cx="20" cy="20" r="19.5" fill="none" />
+            </g>
+            <g transform="translate(12.08 12)">
+                <rect width="24" height="24" transform="translate(-0.08)" fill="none" />
+                <path
+                    d="M6,19a2.006,2.006,0,0,0,2,2h8a2.006,2.006,0,0,0,2-2V7H6ZM19,4H15.5l-1-1h-5l-1,1H5V6H19Z"
+                    className={fillClass} />
+            </g>
+        </svg>
+    }
+
     const getIconEdit = () => {
         return <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className={mainClass}>
             <path d="M0,0H24V24H0Z" fill="none" />
             <path
                 d="M3,15.665V19H6.333l9.83-9.83L12.83,5.835ZM18.74,6.59a.885.885,0,0,0,0-1.253l-2.08-2.08a.885.885,0,0,0-1.253,0L13.781,4.884l3.333,3.333L18.74,6.59Z"
                 transform="translate(1 1)" className={fillClass} />
+        </svg>
+    }
+
+    const getIconEditCircled = () => {
+        return <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" className={mainClass}>
+            <rect width="48" height="48" fill="none" />
+            <g transform="translate(4 4)" fill="none" className={strokeClass}>
+                <circle cx="20" cy="20" r="20" stroke="none" />
+                <circle cx="20" cy="20" r="19.5" fill="none" />
+            </g>
+            <g transform="translate(12.08 12)">
+                <rect width="24" height="24" transform="translate(-0.08)" fill="none" />
+                <path
+                    d="M3,15.665V19H6.333l9.83-9.83L12.83,5.835ZM18.74,6.59a.885.885,0,0,0,0-1.253l-2.08-2.08a.885.885,0,0,0-1.253,0L13.781,4.884l3.333,3.333L18.74,6.59Z"
+                    transform="translate(1 1)" className={fillClass} />
+            </g>
         </svg>
     }
 
@@ -751,7 +783,9 @@ const SvgIcon = ({type, wrapperClassName='', className = 'icon-medium', fillClas
         [Icon.Dashboard]: getIconDashboard,
         [Icon.Download]: getIconDownload,
         [Icon.Delete]: getIconDelete,
+        [Icon.DeleteCircled]: getIconDeleteCircled,
         [Icon.Edit]: getIconEdit,
+        [Icon.EditCircled]: getIconEditCircled,
         [Icon.Email]: getIconEmail,
         [Icon.Error]: getIconError,
         [Icon.Filter]: getIconFilter,

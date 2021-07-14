@@ -675,7 +675,7 @@
       "suppliers": "Suppliers"
     },
     "contact-list": {
-      "add": "Add",
+      "add": "Add Contact",
       "search": "Search contacts",
       "no_results": "No contacts found"
     },
@@ -683,7 +683,8 @@
       "details": "Details",
       "notes": "Notes",
       "tickets": "Tickets",
-      "enter_note": "Enter your note",
+      "create_ticket": "Create Ticket",
+      "enter_note": "Enter note",
       "error_fetching_contact": "Contact not found",
       "error_updating_contact": "Error updating contact",
       "error_deleting_contact": "Error deleting contact",
@@ -720,11 +721,16 @@
         "job_title": "Job Title",
         "extension": "Extension",
         "mobile": "Mobile",
-        "apt": "Apt., Suite #",
+        "apt": "Suite #",
         "city": "City",
         "state": "State",
         "zip_code": "Zip Code",
-        "same_as_primary": "Same as primary address"
+        "same_as_primary": "Same as primary address",
+        "phone_types": {
+          "1": "Mobile Phone",
+          "2": "Work Main Phone",
+          "3": "Work Direct Phone"
+        }
       },
       "company": {
         "associated_with": "Contacts associated with {{companyName}}",
@@ -736,7 +742,7 @@
       "select_type": "Select Contact Type",
       "company": "Company",
       "individual": "Individual",
-      "add_more": "Add More",
+      "add_more": "Add Address",
       "add_fail": "Error adding contact"
     }
   },

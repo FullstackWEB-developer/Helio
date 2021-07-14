@@ -329,7 +329,14 @@
   --loading-icon-fill: rgba(0, 0, 0, 0.12);
 
   --company-avatar-icon: rgba(255, 255, 255, 0.8);
+  --contact-light-stroke-12: rgba(0, 0, 0, 0.12);
+  --contact-accent-color: var(--color-primary-800);
+  --contact-list-color-inverted: rgba(255, 255, 255, 0.87);
   --contact-tickets-bold-color: rgba(0, 0, 0, 0.45);
+  --contact-phone-type-fontFamily: 'PoppinsRegular';
+  --contact-phone-type-fontSize: 0.8125rem;
+  --contact-phone-type-color: rgba(0, 0, 0, 0.87);
+  --contact-dropdown-arrows: rgb(0, 0, 0, 0.5);
 
   --snackbar-button-border: rgba(255, 255, 255, 0.3);
   --snackbar-button-shadow: 0 0.25rem 0.125rem 0 rgba(0, 0, 0, 0.15);

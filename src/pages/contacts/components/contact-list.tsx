@@ -1,4 +1,3 @@
-import Button from '@components/button/button';
 import SearchInputField from '@components/search-input-field/search-input-field';
 import ContactListItem from './contact-list-item';
 import ContactListLetter from './contact-list-letter';
@@ -8,6 +7,7 @@ import {Icon} from '@components/svg-icon/icon';
 import {ContactType} from '@shared/models/contact-type.enum';
 import React from 'react';
 import Spinner from '@components/spinner/Spinner';
+import SvgIcon from '@components/svg-icon';
 interface ContactListProps {
     contacts: ContactExtended[],
     onContactSelect: (c: ContactExtended) => void,
@@ -66,11 +66,19 @@ const ContactList = ({contacts, onContactSelect, currentlySelected, fetchMore, i
     return (
         <div className="w-72 overflow-x-hidden relative flex flex-col contact-list-section" >
             <div className="w-full border-b">
-                <div className="w-24 py-3 pl-4">
-                    <Button buttonType='small' label={t('contacts.contact-list.add')} icon={Icon.AddContact} onClick={handleAddNewContactClick} />
+                <div className='flex items-center pl-4 py-3 cursor-pointer align-middle border-b'
+                     onClick={handleAddNewContactClick}>
+                    <SvgIcon type={Icon.AddContact}
+                             className='icon-large pl-1 cursor-pointer'
+                             fillClass='active-item-icon'/>
+                    <span className='body2 pl-4 contact-accent-color'>{`${t('contacts.contact-list.add')}`}</span>
                 </div>
             </div>
-            <SearchInputField wrapperClassNames="h-12" onChange={handleSearch} value={props.searchValue} placeholder={`${t('contacts.contact-list.search')}`} />
+            <SearchInputField wrapperClassNames="pl-2 py-6"
+                              inputClassNames='contact-search-input-field'
+                              onChange={handleSearch}
+                              value={props.searchValue}
+                              placeholder={`${t('contacts.contact-list.search')}`} />
             <div className="relative max-w-full overflow-y-auto overflow-x-hidden" onScroll={(e) => handleScroll(e)}>
                 {
                     isFetching && !isFetchingNextPage ? <div /> :

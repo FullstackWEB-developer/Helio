@@ -14,8 +14,17 @@
 .company-fill {
     fill: var(--light-text-disabled);
 }
-.company-item-selected, .company-item-letter {
+.company-fill-inverted {
+    fill: var(--contact-list-color-inverted);
+}
+.company-item-letter {
     background-color: var(--color-secondary-200);
+}
+.company-item-selected {
+    background-color: var(--color-primary-default);
+}
+.company-item-selected-inverted {
+    color: var(--contact-list-color-inverted);
 }
 .company-avatar-color {
     fill: var(--company-avatar-icon);
@@ -25,6 +34,15 @@
     &-starred {
         fill: var(--color-yellow);
     }
+}
+.contact-header-quick-action-accent-color {
+    fill: var(--contact-accent-color);
+}
+.contact-subheader-quick-action-color {
+    fill: var(--contact-accent-color);
+}
+.contact-stroke-color {
+    stroke: var(--contact-light-stroke-12);
 }
 .contact-light {
     color: var(--light-text-medium-emphasis);
@@ -49,4 +67,19 @@
 }
 .secondary-contact-form-btn {
     width: 6.5rem;
+}
+.contact-accent-color {
+    color: var(--color-primary-800);
+}
+.contact-phone-type {
+    font-family: var(--contact-phone-type-fontFamily);
+    font-size: var(--contact-phone-type-fontSize);
+    color: var(--contact-phone-type-color);
+    min-width: 5.5rem;
+}
+.contact-dropdown-arrows {
+    fill: var(--contact-dropdown-arrows);
+}
+.contact-search-input-field {
+    border-bottom: 0;
 }

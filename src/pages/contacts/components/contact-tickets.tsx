@@ -1,8 +1,7 @@
 import {Icon} from '@components/svg-icon/icon';
 import SvgIcon from '@components/svg-icon/svg-icon';
 import {TicketBase} from '@pages/tickets/models/ticket-base';
-import {ChannelTypes} from '@pages/tickets/models/ticket-channel';
-import React, {Fragment} from 'react';
+import React, {Fragment, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {useHistory} from 'react-router';
 import {TicketsPath} from 'src/app/paths';
@@ -10,13 +9,21 @@ import ContactTicketLabel from './contact-ticket-label';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import utils from '@shared/utils/utils';
-import TicketStatusDot from '@pages/tickets/components/ticket-status-dot';
 import {ContactTicketsRequest} from '@pages/tickets/models/patient-tickets-request';
 import {DefaultPagination} from '@shared/models/paging.model';
 import {useQuery} from 'react-query';
 import {OneMinute, QueryContactTickets} from '@constants/react-query-constants';
 import {getContactTickets} from '@pages/tickets/services/tickets.service';
 import utc from 'dayjs/plugin/utc';
+import TicketListHeaderCell, {
+    getSortDirection,
+    getSortOrder,
+    updateSort
+} from '@pages/tickets/components/ticket-list-header-cell';
+import {SortDirection} from '@pages/tickets/models/sort-direction';
+import {TicketQuery} from '@pages/tickets/models/ticket-query';
+import TicketChannelIcon from '@pages/tickets/components/ticket-channel-icon';
+import TicketStatus from '@pages/tickets/components/ticket-status';
 import Spinner from '@components/spinner/Spinner';
 
 interface ContactTicketsProps {
@@ -29,39 +36,42 @@ const ContactTickets = ({contactId}: ContactTicketsProps) => {
     dayjs.extend(relativeTime);
     dayjs.extend(utc);
     const sysdate = dayjs.utc();
+    const [contactTicketFilter, setContactTicketFilter] = useState<TicketQuery>({
+        ...DefaultPagination
+    });
 
-    const query: ContactTicketsRequest = {
+    let query: ContactTicketsRequest = {
         contactId,
         ...DefaultPagination,
         pageSize: 10
     }
 
-    const {isLoading, data: tickets} = useQuery<TicketBase[], Error>([QueryContactTickets, query], () =>
+    const {isLoading, data: tickets, refetch} = useQuery<TicketBase[], Error>([QueryContactTickets, query], () =>
             getContactTickets(query),
         {
             staleTime: OneMinute
         }
     );
 
-    const renderChannelIcon = (channel: number) => {
-        switch (channel) {
-            case ChannelTypes.Chat:
-                return <SvgIcon type={Icon.Chat} fillClass='contact-light-fill' />;
-            case ChannelTypes.PhoneCall:
-                return <SvgIcon type={Icon.Phone} fillClass='contact-light-fill' />;
-            case ChannelTypes.WebSite:
-                return <SvgIcon type={Icon.Web} fillClass='contact-light-fill' />;
-            case ChannelTypes.UserCreated:
-                return <SvgIcon type={Icon.Sms} fillClass='contact-light-fill' />;
-            default:
-                return channel;
+    const applySort = (field: string | undefined, direction: SortDirection) => {
+        if (!field) {
+            return;
         }
+
+        const sorts = updateSort([...contactTicketFilter.sorts || []], field, direction);
+        query = {
+            contactId,
+            sorts: [...sorts],
+            ...DefaultPagination,
+            pageSize: 10
+        }
+        setContactTicketFilter(query);
+
+        refetch();
     }
 
     const formatDueDate = (dueDate: Date) => {
-        const relativeTime = utils.getRelativeTime(dueDate);
-        const [days, hours, minute] = relativeTime;
-
+        const [days, hours, minute] = utils.getRelativeTime(dueDate);
         return days || hours ? utils.formatRelativeTime(days, hours, minute, true, 'min')
             : ` In ${utils.formatRelativeTime(days, hours, minute, true, 'min')}`;
     }
@@ -71,63 +81,80 @@ const ContactTickets = ({contactId}: ContactTicketsProps) => {
             <ContactTicketLabel labelText={t('tickets.overdue')}
                                 valueText={formatDueDate(dueDate)}
                                 isDanger={true}/> :
-            <ContactTicketLabel labelText={t('tickets.due')}
+            <ContactTicketLabel labelText=''
                                 valueText={formatDueDate(dueDate)}
                                 isDanger={false}/>
     }
 
     const getTicket = (ticket: TicketBase) => {
-        return <div className='py-4 border-b cursor-pointer' key={ticket.id}
-                                        onClick={() => history.push(`${TicketsPath}/${ticket.ticketNumber}`)}>
-            <div className='flex flex-row body2'>
-                {
-                    renderChannelIcon(ticket.channel)
-                }
-                <span className="mx-2">{ticket.ticketNumber}</span>
-                <span className='flex-auto subtitle2'>{ticket.subject}</span>
-                {
-                    ticket.status && (
-                        <div className='flex w-36 body3'>
-                            <div className='pt-1.5'>
-                                <TicketStatusDot ticket={ticket}/>
-                            </div>
-                            <div className='pl-2.5 pt-1'>
-                                {ticket.status && t(`tickets.statuses.${(ticket.status)}`)}
-                            </div>
-                        </div>
-                    )
-                }
+        return <div className='flex flex-row w-full auto-cols-max body2 border-b relative cursor-pointer hover:bg-gray-100 px-6 items-center h-18 py-3'
+                    key={ticket.id}
+                    onClick={() => history.push(`${TicketsPath}/${ticket.ticketNumber}`)}>
+            <div className='w-24'>
+                <TicketChannelIcon channel={ticket.channel} />
             </div>
-            <div className='flex flex-row body2 items-center pt-1'>
+            <div className='w-2/12'>
+                {ticket.ticketNumber}
+            </div>
+            <div className='w-3/12 subtitle2'>
+                <span>{ticket.subject ? ticket.subject : '-'}</span>
+            </div>
+            <div className='w-3/12 body3'>
                 {
                     ticket.dueDate && <Fragment>{getDueDate(ticket.dueDate)}</Fragment>
                 }
-                {
-                    ticket.closedOn && (
-                        <ContactTicketLabel labelText={t('tickets.closed')}
-                                            valueText={utils.formatUtcDate(ticket.closedOn, 'MMM DD, YYYY h:mm a')}/>
-                    )
-                }
-                {
-                    ticket.createdOn && (
-                        <ContactTicketLabel labelText={t('tickets.created')}
-                                            valueText={utils.formatUtcDate(ticket.createdOn, 'MMM DD, YYYY h:mm a')}/>
-                    )
-                }
+            </div>
+            <div className='w-2/12 h-full'>
+                <TicketStatus ticket={ticket} isArrow={false} />
             </div>
         </div>
-    }
+    };
 
     if (isLoading) {
         return <Spinner fullScreen/>;
     }
 
     return <Fragment>
-        <div className={'py-3 cursor-pointer align-middle border-b'}
+        <div className={'flex items-center py-3 cursor-pointer align-middle border-b'}
              onClick={() => history.push(`${TicketsPath}/new?contactId=${contactId}`)}>
-            <SvgIcon type={Icon.AddBlack}
-                     className='icon-medium h-8 w-8 pl-2 cursor-pointer'
+            <SvgIcon type={Icon.Add}
+                     className='icon-large pl-1 cursor-pointer'
                      fillClass='active-item-icon'/>
+            <span className='body2 pl-2 contact-accent-color'>{`${t('contacts.contact-details.create_ticket')}`}</span>
+        </div>
+        <div className='flex flex-row w-full auto-cols-min bg-gray-100 px-6 py-4 h-12 items-center body2-medium content-center'>
+            <TicketListHeaderCell className='w-24'>{t('tickets.channel')}</TicketListHeaderCell>
+            <TicketListHeaderCell
+                className='w-2/12'
+                field={'Id'}
+                isSortable
+                sortDirection={getSortDirection(contactTicketFilter.sorts, 'Id')}
+                sortOrder={getSortOrder(contactTicketFilter.sorts, 'Id')}
+                onClick={applySort}
+            >
+                {t('tickets.id')}
+            </TicketListHeaderCell>
+            <TicketListHeaderCell className='w-3/12'>{t('tickets.subject')}</TicketListHeaderCell>
+            <TicketListHeaderCell
+                className='w-3/12'
+                field={'DueDate'}
+                isSortable
+                sortDirection={getSortDirection(contactTicketFilter.sorts, 'DueDate')}
+                sortOrder={getSortOrder(contactTicketFilter.sorts, 'DueDate')}
+                onClick={applySort}
+            >
+                {t('tickets.due_in')}
+            </TicketListHeaderCell>
+            <TicketListHeaderCell
+                className='w-2/12'
+                field={'Status'}
+                isSortable
+                sortDirection={getSortDirection(contactTicketFilter.sorts, 'Status')}
+                sortOrder={getSortOrder(contactTicketFilter.sorts, 'Status')}
+                onClick={applySort}
+            >
+                {t('tickets.status')}
+            </TicketListHeaderCell>
         </div>
         {
             tickets && tickets.map(ticket => {

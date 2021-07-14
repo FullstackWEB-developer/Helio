@@ -13,6 +13,8 @@ import {AddressType, determineAddressTranslation} from '@shared/models/address.m
 import {mapContactFormModelToDto} from '../contact-helpers/helpers';
 import {useMutation} from 'react-query';
 import {updateContact} from '@shared/services/contacts.service';
+import '../contacts.scss';
+
 interface CompanyContactDetailsProps {
     contact: ContactExtended,
     editMode?: boolean,
@@ -81,7 +83,9 @@ const CompanyContactDetails = ({editMode, contact, initiateACall, addNewContactH
                             }
                             <div className='flex items-center cursor-pointer body2 pt-5' onClick={addNewContactHandler}>
                                 <span className='pr-4'><SvgIcon type={Icon.AddContact} fillClass='contact-light-fill' /></span>
-                                {t('contacts.contact-details.company.add_contact')}
+                                <span className='contact-accent-color'>
+                                    {t('contacts.contact-details.company.add_contact')}
+                                </span>
                             </div>
                         </>
                     ) :

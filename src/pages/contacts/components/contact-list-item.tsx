@@ -23,9 +23,9 @@ const ContactListItem = ({contact, selected, onSelect}: ContactListItemProps) =>
             onMouseOut={() => setHovered(false)}
             onClick={onClick}
             className={`max-h-10 max-w-full truncate body2 pl-6 py-2.5 relative border-b cursor-pointer${selected || hovered ? ' company-item-selected' : ''}`}>
-            <div className='pr-10 truncate'>{isCompany ? contact.companyName : `${contact.firstName} ${contact.lastName}`}</div>
+            <div className={`pr-10 truncate ${selected || hovered ? ' company-item-selected-inverted' : ''}`}>{isCompany ? contact.companyName : `${contact.firstName} ${contact.lastName}`}</div>
             {
-                isCompany && <span className="absolute top-2 right-4"><SvgIcon fillClass="company-fill" type={Icon.Company} /></span>
+                isCompany && <span className="absolute top-2 right-4"><SvgIcon fillClass={`${selected || hovered ? 'company-fill-inverted' : 'company-fill'}`} type={Icon.Company} /></span>
             }
         </div>
     )

@@ -6,6 +6,7 @@ import {Icon} from '@components/svg-icon/icon';
 import ContactAvatar from './contact-avatar';
 import {ContactType} from '@shared/models/contact-type.enum';
 import utils from '@shared/utils/utils';
+import ContactSubheaderQuickActions from '@pages/contacts/components/contact-subheader-quick-actions';
 interface ContactHeaderProps {
     contact: ContactExtended,
     editMode: boolean,
@@ -33,8 +34,10 @@ const ContactHeader = ({contact, editMode, editIconClickHandler, starIconClickHa
                     {
                         !isCompany && (contact.description || contact.jobTitle) && <div className="pt-3 contact-light">{contact.description || contact.jobTitle}</div>
                     }
+                    <ContactSubheaderQuickActions contact={contact} editMode={editMode}
+                                                  editIconClickHandler={editIconClickHandler}
+                                                  deleteIconClickHandler={deleteIconClickHandler} isLoading={isLoading} />
                 </div>
-
             </div>
             <ContactHeaderQuickActions contact={contact} editMode={editMode}
                 starIconClickHandler={starIconClickHandler} editIconClickHandler={editIconClickHandler}

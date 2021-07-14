@@ -47,11 +47,17 @@ const AddNewContact = ({contactType = ContactType.Individual, onContactAddSucces
         <div className='h-full w-full overflow-y-auto px-8 pt-7 flex flex-col'>
             <div className="flex justify-between items-center mb-10">
                 <h4>{t('contacts.new-contact.header')}</h4>
-                <div className='flex'>
-                    <div className="pr-6" onClick={toggleFavorite}><SvgIcon type={Icon.Star} className='cursor-pointer'
-                        fillClass={`contact-header-quick-action-color${!addToFavorites ? '' : '-starred'}`} /></div>
-                    <div className="pr-6" onClick={onClose}><SvgIcon type={Icon.Delete} className='cursor-pointer'
-                        fillClass='contact-header-quick-action-color' /></div>
+                <div className='flex items-center'>
+                    <div className="pr-6" onClick={toggleFavorite}>
+                        <SvgIcon type={Icon.Star} className='cursor-pointer'
+                        fillClass={`contact-header-quick-action-color${!addToFavorites ? '' : '-starred'}`} />
+                    </div>
+                    <div className="pr-6" onClick={onClose}>
+                        <SvgIcon type={Icon.DeleteCircled} className='cursor-pointer'
+                            fillClass='contact-header-quick-action-accent-color'
+                             strokeClass='contact-stroke-color'
+                        />
+                    </div>
                 </div>
             </div>
             {isError && <h6 className='text-danger mt-2 mb-5'>{t('contacts.new-contact.add_fail')}</h6>}

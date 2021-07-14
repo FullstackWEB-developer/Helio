@@ -6,4 +6,5 @@ export interface PatientTicketsRequest extends Paging {
 
 export interface ContactTicketsRequest extends Paging {
     contactId: string;
+    sorts?: string[];
 }

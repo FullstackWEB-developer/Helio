@@ -32,7 +32,7 @@ const ContactAddressPicker = (props: ContactAddressPickerProps) => {
         <div className='relative py-2.5 cursor-pointer'>
             <div ref={dropdownRef} className='flex items-center' onClick={() => {setShowDropdown(true)}}>
                 <SvgIcon type={Icon.Add} />
-                <span className='body2 pl-2'>{`${t('contacts.new-contact.add_more')}`}</span>
+                <span className='body2 pl-2 contact-accent-color'>{`${t('contacts.new-contact.add_more')}`}</span>
             </div>
             {
                 showDropdown && <div className="absolute"><Dropdown model={addressDropdownModel} /></div>
