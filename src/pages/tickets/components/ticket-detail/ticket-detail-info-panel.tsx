@@ -55,6 +55,7 @@ const TicketDetailInfoPanel = ({ticket, patient, contact}: TicketDetailInfoPanel
     const [isDueDateVisible, setIsDueDateVisible] = useState(false);
 
     const isDirty = () => {
+        if(!updateModel) return false;
         return storedUpdateModelHash !== hash.MD5(updateModel);
     }
 
