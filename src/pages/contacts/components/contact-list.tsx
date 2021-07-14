@@ -5,7 +5,7 @@ import {useTranslation} from 'react-i18next';
 import {ContactBase, ContactExtended} from '@shared/models/contact.model';
 import {Icon} from '@components/svg-icon/icon';
 import {ContactType} from '@shared/models/contact-type.enum';
-import React from 'react';
+import React, {useState} from 'react';
 import Spinner from '@components/spinner/Spinner';
 import SvgIcon from '@components/svg-icon';
 interface ContactListProps {
@@ -21,6 +21,7 @@ interface ContactListProps {
 }
 const ContactList = ({contacts, onContactSelect, currentlySelected, fetchMore, isFetching, isFetchingNextPage, handleAddNewContactClick, ...props}: ContactListProps) => {
     const {t} = useTranslation();
+    const [searchValue, setSearchValue] = useState('');
 
     const getFirstChar = (c: ContactBase) => {
         const isCompany = c.type === ContactType.Company;
@@ -28,18 +29,26 @@ const ContactList = ({contacts, onContactSelect, currentlySelected, fetchMore, i
         return firstChar ?? '';
     }
 
+    const isSelectedBySearch = (contact: ContactExtended) => {
+        if (searchValue.length <= 0) {
+            return false
+        }
+        return contact.firstName === searchValue || contact.lastName === searchValue || contact.companyName === searchValue;
+    }
+
     const renderList = () => {
         const body: React.ReactNode[] = [];
         if (!contacts || contacts.length === 0) {
             body.push(<div className='subtitle3-small w-full text-center mt-5'>{t('contacts.contact-list.no_results')}</div>);
         }
+
         contacts.forEach((c, index) => {
             if (index === 0) {
                 const firstLetter = getFirstChar(c);
                 body.push(<ContactListLetter key={`letter-${firstLetter}${index}`} letter={firstLetter} />);
             }
 
-            body.push(<ContactListItem key={c.id} contact={c} onSelect={onContactSelect} selected={c.id === currentlySelected} />);
+            body.push(<ContactListItem key={c.id} contact={c} onSelect={onContactSelect} selected={c.id === currentlySelected || isSelectedBySearch(c)} />);
 
             if (index < contacts.length - 1 && !props.searchValue.length) {
                 const nextLetter = getFirstChar(contacts[index + 1]);
@@ -53,6 +62,7 @@ const ContactList = ({contacts, onContactSelect, currentlySelected, fetchMore, i
     }
 
     const handleSearch = (value: string) => {
+        setSearchValue(value);
         props.searchHandler(value);
     }
 
