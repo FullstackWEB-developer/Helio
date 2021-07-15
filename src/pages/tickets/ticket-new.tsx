@@ -109,12 +109,12 @@ const TicketNew = () => {
                 value: item.id
             }) as Option);
 
-                setContactOptions(contactOptionResult)
-            },
-            onError: () => {
-                setError('contactId', {type: 'notFound', message: t('ticket_new.error_getting_contacts')});
-            }
-        });
+            setContactOptions(contactOptionResult)
+        },
+        onError: () => {
+            setError('contactId', {type: 'notFound', message: t('ticket_new.error_getting_contacts')});
+        }
+    });
 
     const createTicketMutation = useMutation(createTicket, {
         onSuccess: (data) => {
@@ -518,6 +518,7 @@ const TicketNew = () => {
                             control={control}
                             dataTestId={'ticket-new-due-time'}
                             label='ticket_new.due_time'
+                            autoComplete={false}
                         />
                     </div>
                     <Controller

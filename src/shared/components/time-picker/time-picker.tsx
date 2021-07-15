@@ -16,6 +16,7 @@ interface TimePickerProps {
     assistiveText?: string;
     disabled?: boolean;
     required?: boolean;
+    autoComplete?: boolean;
     onChange?: (time: string | undefined) => void;
     onBlur?: () => void;
 }
@@ -126,6 +127,7 @@ const TimePicker = React.forwardRef<HTMLInputElement, TimePickerProps>(({
                 className={`w-px pl-4 body2 relative truncate flex-shrink flex-grow flex-auto leading-normal ${getInputClassName()}`}
                 value={inputValue}
                 disabled={props.disabled}
+                autoComplete={props.autoComplete ? 'on' : 'none'}
             />
             {label &&
                 <label className='absolute truncate'>

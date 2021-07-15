@@ -57,7 +57,7 @@ const TicketDetailEventLog = ({ticket, control, isVisible, setIsVisible}: Ticket
                 <div className='body2 flex flex-row'>
                     <div className='py-1'>
                         {
-                            updateModel.storedDueDate ?
+                            updateModel?.storedDueDate ?
                                 (
                                     `${dayjs().to(dayjs.utc(ticket.dueDate))} (${utils.formatUtcDate(updateModel.storedDueDate, 'MMM DD, YYYY h:mm A')})`
                                 )
@@ -92,6 +92,7 @@ const TicketDetailEventLog = ({ticket, control, isVisible, setIsVisible}: Ticket
                     onChange={handleTimeChange}
                     defaultValue={updateModel.dueTime}
                     value={updateModel.dueTime}
+                    autoComplete={false}
                 />
             </>
         }

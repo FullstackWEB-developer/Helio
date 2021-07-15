@@ -12,6 +12,7 @@ export interface ControllerTimeInputProps {
     dataTestId: string;
     defaultValue?: string | undefined;
     value?: string | undefined;
+    autoComplete?: boolean;
     onChange?: (time: string | undefined) => void;
 }
 
@@ -23,6 +24,7 @@ const ControlledTimeInput = ({control,
     dataTestId,
     defaultValue,
     value,
+    autoComplete,
     ...props
 }: ControllerTimeInputProps) => {
 
@@ -53,6 +55,7 @@ const ControlledTimeInput = ({control,
                 required={required}
                 disabled={disabled}
                 dataTestId={dataTestId}
+                autoComplete={autoComplete}
                 error={control.formState.errors[name]?.message}
                 onChange={onChange}
             />
