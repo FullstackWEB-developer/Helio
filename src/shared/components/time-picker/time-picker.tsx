@@ -127,7 +127,7 @@ const TimePicker = React.forwardRef<HTMLInputElement, TimePickerProps>(({
                 className={`w-px pl-4 body2 relative truncate flex-shrink flex-grow flex-auto leading-normal ${getInputClassName()}`}
                 value={inputValue}
                 disabled={props.disabled}
-                autoComplete={props.autoComplete ? 'on' : 'none'}
+                autoComplete={props.autoComplete ? 'on' : 'off'}
             />
             {label &&
                 <label className='absolute truncate'>

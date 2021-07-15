@@ -72,7 +72,7 @@ const TicketDetailInfoPanel = ({ticket, patient, contact}: TicketDetailInfoPanel
             patientCaseNumber: ticket.patientCaseNumber,
             storedDueDate: ticket.dueDate,
             dueDate: undefined,
-            dueTime: undefined
+            dueTime: ''
         };
         const initialTicketHash = hash.MD5(ticketUpdateModel);
         dispatch(setTicketUpdateHash(initialTicketHash));
