@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import './contacts.scss';
 import {useTranslation} from 'react-i18next';
 import ContactCategory from './components/contact-category';
 import ContactList from './components/contact-list';
@@ -24,6 +23,7 @@ import {SnackbarType} from '@components/snackbar/snackbar-position.enum';
 import {getPageSize} from './contact-helpers/helpers';
 import Spinner from '@components/spinner/Spinner';
 import {selectGlobalLoading} from '@shared/store/app/app.selectors';
+import './contacts.scss';
 
 interface ContactProps { }
 const Contacts: React.FC<ContactProps> = () => {
@@ -174,19 +174,22 @@ const Contacts: React.FC<ContactProps> = () => {
     const onDeleteSuccess = (contactId: string) => {
         setSelectedContact(undefined);
 
-        const paginatedContacts: any = queryClient.getQueryData([QueryContactsInfinite]);
-
-        for (let page of paginatedContacts?.pages) {
-            let foundOnPage = false;
-            if (page?.data?.results && page?.data?.results.length > 0) {
-                page.data.results = page.data.results.filter((c: ContactBase) => {
-                    foundOnPage = c.id === contactId;
-                    return c.id !== contactId;
-                });
+        const paginatedContacts: any = queryClient.getQueryData([QueryContactsInfinite, queryParams]);
+        if (paginatedContacts) {
+            for (const page of paginatedContacts.pages) {
+                let foundOnPage = false;
+                if (page?.data?.results && page?.data?.results.length > 0) {
+                    page.data.results = page.data.results.filter((c: ContactBase) => {
+                        foundOnPage = c.id === contactId;
+                        return c.id !== contactId;
+                    });
+                }
+                if (foundOnPage) {
+                    break;
+                };
             }
-            if (foundOnPage) break;
         }
-        queryClient.setQueryData([QueryContactsInfinite], paginatedContacts);
+        queryClient.setQueryData([QueryContactsInfinite, queryParams], paginatedContacts);
 
         dispatch(addSnackbarMessage({
             type: SnackbarType.Success,
@@ -226,7 +229,7 @@ const Contacts: React.FC<ContactProps> = () => {
                 fetchMore={fetchMore} isFetching={isFetching} isFetchingNextPage={isFetchingNextPage} handleAddNewContactClick={handleAddNewContactClick}
                 searchValue={searchTerm} searchHandler={(value: string) => {setSearchTerm(value)}} />
             {
-                isErrorFetchingSingleContact && <h6 className='text-danger mt-2 mb-5 px-8'>{t('contacts.contact-details.error_fetching_contact')}</h6>
+                isErrorFetchingSingleContact && <h6 className='px-8 mt-2 mb-5 text-danger'>{t('contacts.contact-details.error_fetching_contact')}</h6>
             }
             {
                 (isFetchingStates || isFetchingSingleContact) && !isGlobalLoading && <Spinner fullScreen />
