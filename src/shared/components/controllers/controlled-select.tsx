@@ -1,7 +1,6 @@
 import Select from '@components/select/select';
 import {Option} from '@components/option/option';
 import {Controller, ControllerRenderProps} from 'react-hook-form';
-import React from 'react';
 import {Control} from 'react-hook-form/dist/types/form';
 
 export interface ControlledSelectProps {
@@ -45,7 +44,6 @@ const ControlledSelect = ({
             controllerProps.onChange(option.value);
         }
     }
-
     return <Controller
         {...props}
         name={name}
@@ -64,8 +62,8 @@ const ControlledSelect = ({
                 searchQuery={searchQuery}
                 order={order}
                 assistiveText={assistiveText}
-                disabled={disabled}
                 value={props.value}
+                disabled={disabled}
                 onTextChange={onTextChange}
                 error={control.formState.errors[name]?.message}
             />

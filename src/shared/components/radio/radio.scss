@@ -1,54 +1,54 @@
-[type='radio']:checked,
-[type='radio']:not(:checked) {
-  position: absolute;
-  left: -9999px;
-}
-[type='radio']:checked + label,
-[type='radio']:not(:checked) + label
-{
-  position: relative;
-  padding-left: 1.875rem;
-  cursor: pointer;
-  display: inline-block;
-}
-[type='radio']:checked + label:before,
-[type='radio']:not(:checked) + label:before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 1.25rem;
-  height: 1.25rem;
-  border: 2px solid var(--light-text-disabled);
-  border-radius: 100%;
-  background: transparent;
-}
-[type='radio']:checked + label:after,
-[type='radio']:not(:checked) + label:after {
-  content: '';
-  width: 0.625rem;
-  height: 0.625rem;
-  background: var(--color-primary-500);
-  position: absolute;
-  top: 0.3125rem;
-  left: 0.3125rem;
-  border-radius: 100%;
-  -webkit-transition: all 0.2s ease;
-  transition: all 0.2s ease;
-}
-[type='radio']:not(:checked) + label:after {
-  opacity: 0;
-  -webkit-transform: scale(0);
-  transform: scale(0);
-}
+.radio {
+  [type="radio"]:checked,
+  [type="radio"]:not(:checked) {
+    position: absolute;
+    left: -9999px;
+  }
+  [type="radio"]:checked + label,
+  [type="radio"]:not(:checked) + label {
+    position: relative;
+    padding-left: 1.875rem;
+    cursor: pointer;
+    display: inline-block;
+  }
+  [type="radio"]:checked + label:before,
+  [type="radio"]:not(:checked) + label:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1.25rem;
+    height: 1.25rem;
+    border: 2px solid var(--light-text-disabled);
+    border-radius: 100%;
+    background: transparent;
+  }
+  [type="radio"]:checked + label:after,
+  [type="radio"]:not(:checked) + label:after {
+    content: "";
+    width: 0.625rem;
+    height: 0.625rem;
+    background: var(--color-primary-500);
+    position: absolute;
+    top: 0.3125rem;
+    left: 0.3125rem;
+    border-radius: 100%;
+    -webkit-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+  }
+  [type="radio"]:not(:checked) + label:after {
+    opacity: 0;
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  }
 
-[type='radio']:checked + label:after {
-  opacity: 1;
-  -webkit-transform: scale(1);
-  transform: scale(1);
-}
+  [type="radio"]:checked + label:after {
+    opacity: 1;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
 
-[type='radio']:checked + label:before
-{
-  border-color: var(--color-primary-500);
+  [type="radio"]:checked + label:before {
+    border-color: var(--color-primary-500);
+  }
 }

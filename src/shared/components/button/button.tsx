@@ -5,7 +5,7 @@ import {useTranslation} from 'react-i18next';
 import './button.scss';
 import Spinner from '@components/spinner/Spinner';
 
-type ButtonType = 'small' | 'medium' | 'big' | 'secondary-big' | 'secondary' | 'link';
+type ButtonType = 'small' | 'medium' | 'big' | 'secondary-big' | 'secondary' | 'secondary-medium' | 'link' ;
 interface ButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
     label: string;
     type?: 'button' | 'submit' | 'reset';
@@ -16,7 +16,7 @@ interface ButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
     isLoading?: boolean;
 }
 const Button = ({label, type = 'button', disabled = false, buttonType = 'medium', icon, className, isLoading, ...props}: ButtonProps) => {
-    const isSecondary = buttonType === 'secondary' || 'secondary-big';
+    const isSecondary = buttonType === 'secondary' || 'secondary-big' || 'secondary-medium';
     const determineIconPosition = () => {
         return `${buttonType === 'small' || buttonType === isSecondary ? ' top-1 ' : ' align-middle '}`;
     }

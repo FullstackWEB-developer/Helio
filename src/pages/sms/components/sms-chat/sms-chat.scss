@@ -1,0 +1,9 @@
+.sms-chat {
+  &-header {
+    min-height: 6.5rem;
+  }
+  &-footer {
+      background-color: var(--color-secondary-50);
+      max-height: 15rem;
+  }
+}

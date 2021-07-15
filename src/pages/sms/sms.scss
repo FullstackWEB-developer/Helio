@@ -1,0 +1,10 @@
+.sms {
+  &-sidebar {
+    flex-grow: 1;
+    max-width: 22.5rem;
+    min-width: 22.5rem;
+  }
+  &-message {
+    flex-grow: 6.88;
+  }
+}

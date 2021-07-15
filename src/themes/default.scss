@@ -33,7 +33,6 @@
   --color-gray: #bdbdbd;
   --color-blue: #006eff;
 
-
   //Chart colors:
   --chart-color-1: #00CC88;
   --chart-color-2: #2D9FFB;
@@ -202,6 +201,15 @@
   --body2-letter-spacing: normal;
   --body2-color: var(--light-text-high-emphasis);
 
+  --body2-primary-font-family: var(--font-regular);
+  --body2-primary-font-size: 0.875rem;
+  --body2-primary-font-weight: normal;
+  --body2-primary-font-stretch: normal;
+  --body2-primary-font-style: normal;
+  --body2-primary-line-height: 1.5rem;
+  --body2-primary-letter-spacing: normal;
+  --body2-primary-color: var(--color-primary-800);
+
   --body2-medium-font-family: var(--font-regular);
   --body2-medium-font-size: 0.875rem;
   --body2-medium-font-weight: 500;
@@ -301,7 +309,9 @@
   --search-icon: rgba(0, 0, 0, 0.5);
   --channel-icon: rgba(0, 0, 0, 0.2);
   --ccp-bottom-bar-icon: rgba(0, 0, 0, 0.6);
+  --default-toolbar-icon: rgba(0, 0, 0, 0.5);
   --rgba-color-03: rgba(0, 0, 0, 0.3);
+  --rgba-color-05: rgba(0, 0, 0, 0.5);
   
   --profile-dropdown-shadow: 0 0.25rem 0.125rem 0 rgba(0, 0, 0, 0.15);
   --ccp-header-color: #4a4a4a;
@@ -342,7 +352,7 @@
   --snackbar-button-shadow: 0 0.25rem 0.125rem 0 rgba(0, 0, 0, 0.15);
   --snackbar-message-shadow: 0 3px 3px 0px rgb(0 0 0 / 0.5);
   --snackbar-icon-success-color: #00cc88;
-  
+
   --datetime-picker-label-color: var(--color-primary-800);
 
   --button-primary-big-padding: 0 2rem;
@@ -354,12 +364,28 @@
   --button-secondary-big-padding: 0 2rem;
   --button-secondary-big-font-size: var(--subtitle3-font-size);
 
-  --button-secondary-medium-padding: 0 1.25rem;
-  --button-secondary-medium-font-size: var(--subtitle3-font-size);
-  --loading-button-background: var(--light-divider-7);
+  --button-secondary-small-padding: 0 1.25rem;
+  --button-secondary-small-font-size: var(--subtitle3-font-size);
   --button-secondary-border-color: var(--light-divider-12);
 
   --highlight-text-background-color: #ABEED6;
+
+  --button-secondary-medium-padding: 0 1.5rem;
+  --button-secondary-medium-font-size: var(--subtitle2-font-size);
+
+  --loading-button-background: var(--light-divider-7);
+
+  --badge-default-color: rgba(0, 0, 0, 0.6);
+  --badge-danger-color: var(--color-red);
+  --badge-text-color: var(--color-white);
+  --badge-font-size: 0.625rem;
+
+
+  --svg-Icon-default-disable-color: rgba(0, 0, 0, 0.25);
+
+  --message-ticket-table-row-selected-color: rgba(0, 173, 88, 0.04);
+  --message-outgoing-background-color: rgba(170, 223, 188, 0.55);
+
 
   ::-webkit-scrollbar {
     width: 0.3125rem;
@@ -389,6 +415,14 @@
 
 .text-disabled {
   color: var(--light-text-disabled) !important;
+}
+
+.item-flex-end {
+  align-items: flex-end;
+}
+
+.item-flex-start {
+  align-items: flex-start;
 }
 
 textarea:focus,

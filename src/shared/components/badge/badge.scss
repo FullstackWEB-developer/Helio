@@ -1,0 +1,11 @@
+.badge {
+    color: var(--badge-text-color);
+    height: 1.125rem;
+    font-size: var(--badge-font-size);
+   &-default {
+     background-color: var(--badge-default-color);
+   } 
+   &-danger {
+    background-color: var( --badge-danger-color);
+   }
+}

@@ -27,7 +27,18 @@
     "empty_search_result": "There are no more items.",
     "none": "None",
     "enter_your_message": "Enter your message",
-    "enter_message": "Enter message"
+    "enter_message": "Enter message",
+    "time_periods": {
+      "today": "Today",
+      "last_7_days": "Last 7 Days",
+      "last_30_days": "Last 30 Days",
+      "date_range": "Date Range",
+      "date_range_value": "Date ({{from}} - {{to}})"
+    },
+    "clear_all": "Clear All",
+    "apply": "Apply",
+    "filters": "Filters",
+    "enter_text": "Enter Text"
   },
   "login": {
     "loginButton": "Login"
@@ -300,7 +311,8 @@
         "add-note": "Add note",
         "sending": "Sending..."
       }
-    }
+    },
+    "search_heading_result": "Patient search results"
   },
   "redirect_link": {
     "link_not_active": "We apologize, but this link is not active. Please contact the call center.",
@@ -560,8 +572,8 @@
       "no_day_slots_found": "No open slot found for this day, please select any other date.",
       "appointment_scheduled": "Thank you. Your appointment is scheduled.",
       "select_business_day": "Select business day, please.",
-      "new_appointment_date_time":"New Appointment date and time",
-      "reschedule_appointment_title":"Reschedule Appointment"
+      "new_appointment_date_time": "New Appointment date and time",
+      "reschedule_appointment_title": "Reschedule Appointment"
     },
     "medical_records_request": {
       "title": "Your Medical Record",
@@ -618,7 +630,7 @@
       "error_getting_pharmacies": "Error getting pharmacies information.",
       "refill_request": "Medication Refill Request",
       "refill_request_send_message": "Send us a message and we will respond within 2 business days. All messages are confidential.",
-      "refill_request_send_message_note":"Note: Please use this tool for health-related inquiries only. All messages are included in your patient record.",
+      "refill_request_send_message_note": "Note: Please use this tool for health-related inquiries only. All messages are included in your patient record.",
       "select_provider": "Provider",
       "select_prescription": "Prescription",
       "back_to_medications": "Back to Medications",
@@ -640,7 +652,7 @@
       "ordered_by": "Ordered by",
       "collected": "Collected",
       "back_to_tests": "Back to Tests",
-      "providers_comment":"Comments from your provider’s office",
+      "providers_comment": "Comments from your provider’s office",
       "lab_results": "Lab Results",
       "received": "Received",
       "analytes": "Analytes",
@@ -652,11 +664,11 @@
       "note": "Note",
       "note_paragraph_1": "A test result listed as “abnormal” may be normal for you.",
       "note_paragraph_2": "Your provider will contact you about any important abnormal test results.",
-      "patient_name":"Patient Name: ",
-      "test":"Test: ",
-      "dob":"Date of birth: ",
-      "laboratory":"Laboratory: ",
-      "specimen_id":"Specimen ID: ",
+      "patient_name": "Patient Name: ",
+      "test": "Test: ",
+      "dob": "Date of birth: ",
+      "laboratory": "Laboratory: ",
+      "specimen_id": "Specimen ID: ",
       "no_lab_results_found": "There are no lab results",
       "lab_results_image_error": "Could not load page {{pageNumber}} for this lab result.",
       "error": "There is an error, please try again later",
@@ -808,7 +820,7 @@
   },
   "wallboard": {
     "refresh_after": "Wallboard will be refreshed in {{time}}",
-    "performance_today" : {
+    "performance_today": {
       "title": "Performance Today",
       "call_tab_title": "Calls",
       "chat_tab_title": "Chats",
@@ -854,6 +866,61 @@
       "live_calls": "Live Calls",
       "live_chats": "Live Chats",
       "show_all": "Show All"
+    }
+  },
+  "searchbox_result": {
+    "id": "ID",
+    "name": "Name",
+    "dob": "DOB",
+    "email": "Email",
+    "phone": "Phone",
+    "text_consent": "Text consent",
+    "tooltip_unavailable_sms_message": "SMS not available. SMS message can not be sent to this contact."
+  },
+  "sms": {
+    "you":"You",
+    "query_type": {
+      "my_sms": "My SMS",
+      "team_sms": "Team SMS"
+    },
+    "filter": {
+      "search_placeholder": "Search Messages",
+      "team_section": "Team Member",
+      "time_section": "Time Period"
+    },
+    "chat": {
+      "view_patient": "View Helio Patient Chart",
+      "view_ticket": "View Ticket Details",
+      "empty": {
+        "title": "Start your new SMS conversation.",
+        "description": "Enter you message bellow."
+      },
+      "header": {
+        "patient_id": "Patient ID",
+        "ticket_id": "Ticket ID",
+        "ticket_type": "Ticket Type",
+        "reason": "Reason"
+      },
+      "new": {
+        "to":"To",
+        "draft": "Draft",
+        "existing_ticket": {
+          "title": "Existing open Tickets found.",
+          "description": "We have found existing open tickets for this patient. Please select ticket you would like this communication to be associated with or select create new ticket below.",
+          "select_ticket": "Select Existing Ticket",
+          "create_ticket": "Create a New Ticket",
+          "list":{
+            "ticket_type": "Ticket Type",
+            "reason": "Reason",
+            "created_label": "Created:",
+            "relative_time_suffix": "ago"
+          }
+        },
+        "new_ticket" : {
+          "title":"You are starting a new email conversation",
+          "form_title":"Enter Ticket Information"
+        }
+      }
     }
   }
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import withErrorLogging from '../../../shared/HOC/with-error-logging';
-import {ChannelTypes} from '../models/ticket-channel';
+import {ChannelTypes} from '@shared/models/ticket-channel';
 import '../tickets.scss';
 import SvgIcon from '@components/svg-icon/svg-icon';
 import {Icon} from '@components/svg-icon/icon';

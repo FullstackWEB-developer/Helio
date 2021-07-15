@@ -1,4 +1,4 @@
-import {ChannelTypes} from "./ticket-channel";
+import {ChannelTypes} from "@shared/models/ticket-channel";
 
 export interface TicketBase {
     id: string;
@@ -12,4 +12,9 @@ export interface TicketBase {
     createdOn?: Date;
     closedOn?: Date;
     isOverdue?: boolean;
+    patientId?: number;
+    contactId: string;
+    reason: string;
+    assignee?: string;
+    createdForName: string;
 }

@@ -19,6 +19,7 @@ interface TextAreaProps {
     onChange?: (message: string) => void,
     icon?: Icon,
     iconOnClick?: () => void,
+    onCtrlEnter?: () => void,
     isLoading?: boolean,
     iconClassNames?: string,
     iconFill?: string,
@@ -68,6 +69,14 @@ const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(({
             props.onChange(message);
         }
     }
+
+
+    const onKeyPress = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+        if (event.ctrlKey && event.nativeEvent.code === 'Enter' && props.onCtrlEnter) {
+            props.onCtrlEnter();
+        }
+    }
+
     const defaultContainerClasses = 'flex flex-row w-full h-full items-center';
     return (
         <Fragment>
@@ -77,7 +86,10 @@ const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(({
             <div className={`${props.overwriteDefaultContainerClasses ? '' : defaultContainerClasses} ${props.textareaContainerClasses ? props.textareaContainerClasses : ''}`}>
                 <textarea ref={ref} {...props} value={textAreaValue} onChange={(e => handleOnChange(e))}
                     placeholder={placeHolder ? placeHolder : ''}
-                    className={`mt-1 shadow-none p-4 ${(hasBorder ? ' border ' : '')} ${resizable ? 'resize' : 'resize-none'} ${props.className}`} />
+                    className={`mt-1 shadow-none p-4 ${(hasBorder ? ' border ' : '')} ${resizable ? 'resize' : 'resize-none'} ${props.className}`}
+                    onKeyPress={onKeyPress}
+
+                />
                 {
                     props.icon && textAreaValue && textAreaValue?.trim()?.length > 0 &&
                     <div

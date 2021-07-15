@@ -1,6 +1,7 @@
 import {Icon} from '@components/svg-icon/icon';
 import SvgIcon from '@components/svg-icon/svg-icon';
 import {TicketBase} from '@pages/tickets/models/ticket-base';
+import {ChannelTypes} from '@shared/models/ticket-channel';
 import React, {Fragment, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {useHistory} from 'react-router';

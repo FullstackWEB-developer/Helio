@@ -34,5 +34,6 @@ export interface Ticket {
     ratingScore?: number;
     originationNumber?: string;
     isOverdue?: boolean;
+    createdForName?: string;
     callbackPhoneNumber?: string;
 }

@@ -1,0 +1,11 @@
+.sms-new-message-existing-ticket-list {
+  margin-left: 1.875rem;
+  .row {
+    background-color: var(--table-header-background);
+    &.selected {
+      border: solid 0.125rem var(--color-primary-500);
+      background-color: var(--message-ticket-table-row-selected-color);
+      border-radius: 0.24rem;
+    }
+  }
+}

@@ -1,0 +1,19 @@
+@import "./../../../../themes/base/typography";
+
+.sms-summary {
+  height: 5.5rem;
+  &:hover, &-selected {
+    background-color: var(--message-ticket-table-row-selected-color);
+  }
+
+  &-message-unread {
+    @extend .subtitle3;
+    line-height: 1.25rem;
+  }
+   &-message-read {
+    @extend .body3;
+    line-height: 1.25rem;
+    font-size: 0.8125rem;
+    color: var(--rgba-color-05);
+  }
+}

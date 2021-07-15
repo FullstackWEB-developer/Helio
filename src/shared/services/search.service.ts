@@ -5,6 +5,7 @@ import {setError} from '@components/search-bar/store/search-bar.slice';
 import {clearPatients, setPatients} from '@pages/patients/store/patients.slice';
 import utils from '@shared/utils/utils';
 import {setGlobalLoading} from '@shared/store/app/app.slice';
+import {Patient} from '@pages/patients/models/patient';
 const logger = Logger.getInstance();
 const patientsUrl = '/patients';
 
@@ -32,6 +33,17 @@ export const searchPatients = (type: number, term: string) => {
     }
 }
 
+export const getPatients = async (type: number, term: string) => {
+    const response = await Api.get<Patient[]>(patientsUrl, {
+        params: {
+            searchType: type,
+            searchTerm: term,
+            forceSingleReturn: false
+        }
+    });
+    return response.data;
+}
+
 
 export interface VerifyPatientProps {
     dob: Date,
@@ -39,7 +51,7 @@ export interface VerifyPatientProps {
     zip: string
 }
 
-export const verifyPatient = async ({ phone, dob, zip} : VerifyPatientProps) => {
+export const verifyPatient = async ({phone, dob, zip}: VerifyPatientProps) => {
     const url = `${patientsUrl}/verify?dateOfBirth=${utils.toShortISOLocalString(dob)}&phoneNumber=${phone}&zipCode=${zip}`;
     const response = await Api.get(url);
     return response.data;

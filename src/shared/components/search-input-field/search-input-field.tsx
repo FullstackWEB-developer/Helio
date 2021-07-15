@@ -6,12 +6,14 @@ import SvgIcon from '@components/svg-icon/svg-icon';
 import customHooks from '@shared/hooks/customHooks';
 import {Option} from '@components/option/option';
 import SelectCell from '@components/select/select-cell';
-
+import classnames from 'classnames';
 interface SearchInputProps {
     value?: string,
     onChange?: (value: string) => void,
     wrapperClassNames?: string,
+    iconWrapperClassName?: string,
     inputClassNames?: string,
+    disableSearchIcon?: boolean,
     onFocus?: () => void,
     onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void,
     inputOnClick?: () => void,
@@ -114,12 +116,14 @@ const SearchInputField = React.forwardRef<HTMLInputElement, SearchInputProps>(({
 
     return (
         <div className={`relative h-10 w-full search-input-field flex items-center ${props.wrapperClassNames ? props.wrapperClassNames : ''}`}>
-            <div className="absolute pl-4">
+            {!props.disableSearchIcon && <div className={classnames("absolute pl-4", props.iconWrapperClassName)}>
                 <SvgIcon type={Icon.Search} className="cursor-pointer icon-small" fillClass="search-icon-fill" onClick={props?.iconOnClick} />
-            </div>
-            <input ref={innerRef} type='text' className={`pl-12 py-2.5 h-full w-full search-input-field body2 ${props.inputClassNames ? props.inputClassNames : ''}`}
+            </div>}
+            <input ref={innerRef} type='text'
+                className={classnames('py-2.5 h-full w-full search-input-field body2', props.inputClassNames, {'pl-12': !props.disableSearchIcon})}
                 placeholder={props.placeholder || t('common.search')}
-                value={value} onChange={onChange}
+                value={value}
+                onChange={onChange}
                 onFocus={() => {onFocus()}}
                 onClick={() => {onClick()}}
                 onBlur={() => {onBlur()}}

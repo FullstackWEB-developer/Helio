@@ -197,6 +197,16 @@ body {
   color: var(--body2-color);
 }
 
+.body2-primary {
+  font-family: var(--body2-primary-font-family);
+  font-size: var(--body2-primary-font-size);
+  font-weight: var(--body2-primary-font-weight);
+  font-stretch: var(--body2-primary-font-stretch);
+  font-style: var(--body2-primary-font-style);
+  line-height: var(--body2-primary-line-height);
+  letter-spacing: var(--body2-primary-letter-spacing);
+  color: var(--body2-primary-color);
+}
 .body2-medium {
   font-family: var(--body2-medium-font-family);
   font-size: var(--body2-medium-font-size);
@@ -241,6 +251,17 @@ body {
   color: var(--body3-medium-color);
 }
 
+.body3-small {
+  font-family: var(--body3-small-font-family);
+  font-size: var(--body3-small-font-size);
+  font-weight: var(--body3-small-font-weight);
+  font-stretch: var(--body3-small-font-stretch);
+  font-style: var(--body3-small-font-style);
+  line-height: var(--body3-small-line-height);
+  letter-spacing: var(--body3-small-letter-spacing);
+  color: var(--body3-small-color);
+}
+
 .caption-caps {
   font-family: var(--caption-caps-font-family);
   font-size: var(--caption-caps-font-size);
@@ -262,4 +283,8 @@ body {
   line-height: var(--light-badge-line-height);
   letter-spacing: var(--light-badge-letter-spacing);
   color: var(--light-badge-color);
+}
+
+.default-toolbar-icon {
+  fill:var(--default-toolbar-icon);
 }

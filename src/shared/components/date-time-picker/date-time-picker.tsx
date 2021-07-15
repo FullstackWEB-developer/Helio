@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import useComponentVisibility from '@shared/hooks/useComponentVisibility';
 import SvgIcon from '@components/svg-icon/svg-icon';
@@ -13,7 +13,7 @@ import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import {InputType} from '@shared/models/input.types';
 import {DATE_ISO_FORMAT, DATE_INPUT_LONG_FORMAT} from '@shared/constants/form-constants';
-import {getElementPosition, getScrollParent} from './date-time-picker-utils';
+import {getScrollParent} from './date-time-picker-utils';
 interface DateTimePickerProps {
     name?: string;
     label?: string;
@@ -79,11 +79,12 @@ const DateTimePicker = React.forwardRef<HTMLInputElement, DateTimePickerProps>((
             setInputType('text');
         }
     }
-    const calcCalendarPosition = () => {
+    const calcCalendarPosition = useCallback(() => {
         const inputElementRef = (ref as React.MutableRefObject<HTMLButtonElement>).current;
-        const position = getElementPosition(inputElementRef);
+        const position = utils.getElementPosition(inputElementRef);
         setCalendarPositionTop(position.top + inputElementRef.offsetHeight);
-    }
+    }, [ref]);
+
 
     useEffect(() => {
         switchDateFormat(isISOFormat);
@@ -341,7 +342,7 @@ const DateTimePicker = React.forwardRef<HTMLInputElement, DateTimePickerProps>((
                 </div>
             }
             {!!props.error &&
-                <div className='h6 pl-4 body3 pt-1 text-danger truncate'>{props.error}</div>
+                <div className='pt-1 pl-4 truncate h6 body3 text-danger'>{props.error}</div>
             }
         </div>
     );

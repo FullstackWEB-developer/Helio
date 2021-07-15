@@ -1,7 +1,6 @@
 import {Icon} from '@components/svg-icon/icon';
 import CwcLogo from '@shared/icons/cwc-logo';
 import './svg-icon.scss';
-import React from 'react';
 import classNames from 'classnames';
 
 export interface SvgIconProps {
@@ -15,7 +14,7 @@ export interface SvgIconProps {
     isLoading?: boolean
 }
 
-const SvgIcon = ({type, wrapperClassName='', className = 'icon-medium', fillClass = 'fill-default', strokeClass = 'stroke-default', opacity, onClick, isLoading = false}: SvgIconProps) => {
+const SvgIcon = ({type, wrapperClassName = '', className = 'icon-medium', fillClass = 'fill-default', strokeClass = 'stroke-default', opacity, onClick, isLoading = false}: SvgIconProps) => {
     const mainClass = `${className} ${fillClass ? '' : 'fill-default'}`;
 
     const getIconAdd = () => {
@@ -701,9 +700,9 @@ const SvgIcon = ({type, wrapperClassName='', className = 'icon-medium', fillClas
         </svg>
     }
 
-    const getIconSpinner = (overriddenMainClass= mainClass) => {
+    const getIconSpinner = (overriddenMainClass = mainClass) => {
         return <svg className={`spinner ${overriddenMainClass}`} viewBox="0 0 40 40">
-            <circle className="path" cx="20" cy="20" r="16" fill="none" strokeWidth="4"/>
+            <circle className="path" cx="20" cy="20" r="16" fill="none" strokeWidth="4" />
         </svg>;
     }
 
@@ -743,13 +742,48 @@ const SvgIcon = ({type, wrapperClassName='', className = 'icon-medium', fillClas
 
     const getIconComment = () => {
         return <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className={mainClass}>
-            <rect width="24" height="24" fill="none"/>
-            <path 
-            d="M20,2H4A2,2,0,0,0,2.01,4L2,22l4-4H20a2.006,2.006,0,0,0,2-2V4A2.006,2.006,0,0,0,20,2ZM6,9H18v2H6Zm8,5H6V12h8Zm4-6H6V6H18Z"
-            className={fillClass}/>       
+            <rect width="24" height="24" fill="none" />
+            <path
+                d="M20,2H4A2,2,0,0,0,2.01,4L2,22l4-4H20a2.006,2.006,0,0,0,2-2V4A2.006,2.006,0,0,0,20,2ZM6,9H18v2H6Zm8,5H6V12h8Zm4-6H6V6H18Z"
+                className={fillClass} />
         </svg>
     }
     const getCwcLogo = () => <CwcLogo className={mainClass} />
+
+    const getIconFormat = () => (
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className={mainClass}>
+            <rect width="24" height="24" fill="none" />
+            <path
+                d="M5,17v2H19V17Zm4.5-4.2h5l.9,2.2h2.1L12.75,4h-1.5L6.5,15H8.6ZM12,5.98,13.87,11H10.13Z" transform="translate(0 1)"
+                className={fillClass}
+            />
+        </svg>
+    );
+
+    const getIconSentimentSatisfied = () => (
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className={mainClass}>
+            <rect width="24" height="24" fill="none" />
+            <g>
+                <circle cx="1.5" cy="1.5" r="1.5" transform="translate(14 8)" className={fillClass} />
+                <circle cx="1.5" cy="1.5" r="1.5" transform="translate(7 8)" className={fillClass} />
+                <path
+                    d="M11.99,2A10,10,0,1,0,22,12,10,10,0,0,0,11.99,2ZM12,20a8,8,0,1,1,8-8A8,8,0,0,1,12,20Zm0-4a4,4,0,0,1-3.45-2H6.88a5.495,5.495,0,0,0,10.24,0H15.45A4,4,0,0,1,12,16Z"
+                    className={fillClass}
+                />
+            </g>
+        </svg>
+    );
+
+    const getIconCheckMark = () => (
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className={mainClass}>
+            <rect width="24" height="24" fill="none" />
+            <path
+                d="M9,16.17,4.83,12,3.41,13.41,9,19,21,7,19.59,5.59Z"
+                transform="translate(-0.41 -0.59)"
+                className={fillClass}
+            />
+        </svg>
+    );
 
     const icons = {
         [Icon.Add]: getIconAdd,
@@ -807,6 +841,7 @@ const SvgIcon = ({type, wrapperClassName='', className = 'icon-medium', fillClas
         [Icon.RatingDissatisfied]: getIconRatingDissatisfied,
         [Icon.RatingSatisfied]: getIconRatingSatisfied,
         [Icon.RatingVerySatisfied]: getIconRatingVerySatisfied,
+        [Icon.SentimentSatisfied]: getIconSentimentSatisfied,
         [Icon.Refresh]: getIconRefresh,
         [Icon.Save]: getIconSave,
         [Icon.Scripts]: getIconScripts,
@@ -827,6 +862,8 @@ const SvgIcon = ({type, wrapperClassName='', className = 'icon-medium', fillClas
         [Icon.Comment]: getIconComment,
         [Icon.CwcLogo]: getCwcLogo,
         [Icon.Spinner]: getIconSpinner,
+        [Icon.Format]: getIconFormat,
+        [Icon.CheckMark]: getIconCheckMark
     }
 
     if (!isLoading) {
@@ -843,7 +880,7 @@ const SvgIcon = ({type, wrapperClassName='', className = 'icon-medium', fillClas
     return <div className={`${wrapperClassName} relative`} onClick={onClick}>
         <div className={`absolute`} onClick={onClick}>{getIconSpinner(overriddenMainClass)}</div>
         <div className={overriddenMainClass} onClick={onClick}>
-            <SvgIcon type={type} fillClass='fill-loading'/>
+            <SvgIcon type={type} fillClass='fill-loading' />
         </div>
     </div>
 }

@@ -1,5 +1,7 @@
+import {PagedList} from '@shared/models';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc'
+import {InfiniteData} from 'react-query';
 import {RelativeTime} from './types';
 import {msalInstance} from '@pages/login/auth-config';
 
@@ -166,10 +168,11 @@ const getBrowserDatePattern = () => {
     }).join('');
 }
 
-const groupBy = (list: any[], keyGetter: (item: any) => string) : Map<string, any[]> => {
-    const map = new Map();
-    list.forEach((item) => {
-        const key = keyGetter(item);
+
+const groupBy = <TKey extends unknown, TValue extends unknown>(array: TValue[], keyExpression: (item: TValue) => TKey) => {
+    const map = new Map<TKey, TValue[]>();
+    array.forEach(item => {
+        const key = keyExpression(item);
         const collection = map.get(key);
         if (!collection) {
             map.set(key, [item]);
@@ -178,6 +181,28 @@ const groupBy = (list: any[], keyGetter: (item: any) => string) : Map<string, an
         }
     });
     return map;
+}
+
+export const getElementPosition = (element: HTMLElement | Element, scrolledElement?: Element) => {
+    const rect = element.getBoundingClientRect();
+    let scrollLeft = 0;
+    let scrollTop = 0;
+
+    if (!scrolledElement) {
+        scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+        scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    } else {
+        scrollLeft = scrolledElement.scrollLeft;
+        scrollTop = scrolledElement.scrollTop;
+    }
+    return {top: rect.top + scrollTop, left: rect.left + scrollLeft}
+}
+
+const accumulateInfiniteData = <T extends unknown>(infiniteData: InfiniteData<PagedList<T>> | undefined): T[] => {
+    if (infiniteData && infiniteData.pages) {
+        return infiniteData.pages.reduce((acc: T[], val) => acc.concat(val.results), []);
+    }
+    return [];
 }
 
 const isLoggedIn = () : boolean => {
@@ -204,7 +229,9 @@ const utils = {
     checkIfDateIsntMinValue,
     getBrowserDatePattern,
     groupBy,
-    isLoggedIn
+    getElementPosition,
+    isLoggedIn,
+    accumulateInfiniteData
 };
 
 export default utils;

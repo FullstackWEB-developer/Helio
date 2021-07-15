@@ -1,0 +1,88 @@
+import {useState, useEffect} from 'react';
+import {Option} from '@components/option/option';
+import {selectLookupValues, selectEnumValues} from '@pages/tickets/store/tickets.selectors';
+import {useDispatch, useSelector} from 'react-redux';
+import {getEnumByType, getLookupValues} from '@pages/tickets/services/tickets.service';
+import Select from '@components/select/select';
+import {getOptions, getReasonOption} from '@pages/sms/utils';
+import {useTranslation} from 'react-i18next';
+
+interface SmsNewMessageNewTicketFormProps {
+    disabled?: boolean;
+    onTicketTypeChange?: (value: string) => void;
+    onTicketReasonChange?: (value: string) => void;
+    onValidate?: (isValid: boolean) => void;
+}
+const SmsNewMessageNewTicketForm = ({disabled, ...props}: SmsNewMessageNewTicketFormProps) => {
+    const dispatch = useDispatch();
+    const {t} = useTranslation();
+    const ticketLookupValuesReason = useSelector((state) => selectLookupValues(state, 'TicketReason'));
+    const ticketTypes = useSelector((state => selectEnumValues(state, 'TicketType')));
+
+    const [selectedTicketType, setSelectedTicketType] = useState<Option>();
+    const [selectedReason, setSelectedReason] = useState<Option>();
+    const ticketTypeOptions = getOptions(ticketTypes);
+    const reasonOptions = getReasonOption(ticketLookupValuesReason, selectedTicketType);
+
+
+    const onTicketTypeSelected = (option?: Option) => {
+        setSelectedTicketType(option);
+        if (option && props.onTicketTypeChange) {
+            props.onTicketTypeChange(option.value)
+        }
+    }
+    const onTicketReasonSelected = (option?: Option) => {
+        setSelectedReason(option);
+        if (option && props.onTicketReasonChange) {
+            props.onTicketReasonChange(option.value)
+        }
+    }
+
+    useEffect(() => {
+        if (!props.onValidate) {
+            return;
+
+        }
+        if (selectedTicketType) {
+            if (reasonOptions.length > 0) {
+                props.onValidate(!!selectedReason);
+            } else {
+                props.onValidate(true);
+            }
+        } else {
+            props.onValidate(false);
+        }
+
+    }, [selectedTicketType, selectedReason])
+
+    useEffect(() => {
+        dispatch(getLookupValues('TicketReason'));
+        dispatch(getEnumByType('TicketType'));
+    }, [dispatch]);
+
+    return (<div className='flex flex-col'>
+        <span className='mb-4 body1 mt-7'>{t('sms.chat.new.new_ticket.form_title')}</span>
+        <div className='w-80'>
+
+            <Select
+                disabled={disabled}
+                label='ticket_new.ticket_type'
+                onSelect={onTicketTypeSelected}
+                data-test-id='ticket-type-test-id'
+                options={ticketTypeOptions}
+            />
+
+            {selectedTicketType && reasonOptions.length > 0 &&
+                <Select
+                    disabled={disabled}
+                    label='ticket_new.reason'
+                    onSelect={onTicketReasonSelected}
+                    data-test-id='ticket-reason-test-id'
+                    options={reasonOptions}
+                />
+            }
+        </div>
+    </div>);
+}
+
+export default SmsNewMessageNewTicketForm;

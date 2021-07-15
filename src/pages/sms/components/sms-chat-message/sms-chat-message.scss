@@ -1,0 +1,31 @@
+@import "./../../../../themes/base/typography";
+
+.sms-chat-message {
+  max-width: 41.5rem;
+
+  &-body {
+    @extend .body2;
+    max-width: 34.5rem;
+    border-radius: 1.25rem;
+    line-height: 1.25rem;
+
+    .out-going & {
+      background-color: var(--message-outgoing-background-color);
+    }
+    .in-going & {
+      background-color: var(--light-divider-7);
+    }
+  }
+  &-sender {
+    max-width: 34.5rem;
+  }
+  &-time {
+    min-width: 3.25rem;
+  }
+  &.out-going {
+    align-self: flex-end;
+  }
+  &.in-going {
+    align-self: flex-start;
+  }
+}

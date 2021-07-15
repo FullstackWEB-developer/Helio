@@ -31,7 +31,7 @@ const Radio = React.forwardRef<HTMLInputElement, RadioProps>(({
     return <div className={className ? className : ''}>
         {
             items.map(item => {
-                return <div key={`${name}_${item.value}`} className={`h-9 ${radioClassname ? radioClassname : ''}`}>
+                return <div key={`${name}_${item.value}`} className={`radio h-9 ${radioClassname ? radioClassname : ''}`}>
                     <input
                         {...props}
                         type='radio'

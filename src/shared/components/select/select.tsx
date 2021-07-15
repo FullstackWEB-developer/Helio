@@ -67,7 +67,7 @@ const Select = React.forwardRef<HTMLDivElement, SelectProps>(({options, order, l
 
     useEffect(() => {
         if (typeof props.value === 'string') {
-            if (props.value && selectedOption?.value !== props.value) {
+            if (selectedOption?.value !== props.value) {
                 setSelectedOption(options.find(a => a.value.toString() === props.value?.toString())!);
             }
         } else if (props.value?.value) {

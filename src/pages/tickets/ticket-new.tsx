@@ -96,6 +96,7 @@ const TicketNew = () => {
 
     const [contactSearchTerm, setContactSearchTerm] = useState('');
     const [contactOptions, setContactOptions] = useState<Option[]>([]);
+    const [contactName, setContactName] = useState<string>();
     const [debounceContactSearchTerm] = useDebounce(contactSearchTerm, DEBOUNCE_SEARCH_DELAY_MS);
 
     const {refetch: refetchContacts, isFetching, isLoading} = useQuery<Contact[], Error>([QueryContacts, debounceContactSearchTerm],
@@ -188,10 +189,18 @@ const TicketNew = () => {
             patientId: patientId ? Number(patientId) : undefined,
             patientCaseNumber: patientCaseId ? Number(patientCaseId) : undefined,
             tags: tags,
-            notes: notes
+            notes: notes,
+            createdForName: getCreatedForName()
         };
 
         createTicketMutation.mutate(ticketData);
+    }
+
+    const getCreatedForName = () => {
+        if (!!patientName) {
+            return patientName;
+        }
+        return contactName;
     }
 
     const validatePatientId = async () => {
@@ -366,7 +375,15 @@ const TicketNew = () => {
         };
     }
 
-    return <div className="flex flex-col w-full pb-5 mx-6 mt-5 overflow-y-auto">
+    const onContactSelectChanged = (controllerProps: ControllerRenderProps<Record<string, any>>, option?: Option) => {
+        if (!option) {
+            return;
+        }
+        controllerProps.onChange(option.value);
+        setContactName(option.label);
+    }
+
+    return <div className="flex flex-col w-full mx-6 my-5 overflow-y-auto">
         <h5>{t('ticket_new.title')}</h5>
         <div className={'w-96 pt-10 mx-auto flex flex-col'}>
             <form onSubmit={handleSubmit(onSubmit)} noValidate={true}>
@@ -429,7 +446,7 @@ const TicketNew = () => {
                                 required={true}
                                 suggestionsPlaceholder={t('ticket_new.suggestion_placeholder')}
                                 onTextChange={(value: string) => setContactSearchTerm(value || '')}
-                                onSelect={(option) => option && props.onChange(option.value)}
+                                onSelect={(option) => onContactSelectChanged(props, option)}
                             />
                         )}
                     />
