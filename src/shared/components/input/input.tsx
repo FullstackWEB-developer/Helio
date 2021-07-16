@@ -55,12 +55,12 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({
 }: InputProps, ref) => {
     const {t} = useTranslation();
     const [isFocused, setIsFocused] = useState(false);
-    const [value, setValue] = useState(props.defaultValue);
+    const [value, setValue] = useState('');
     const innerRef = customHooks.useCombinedForwardAndInnerRef(ref);
     const [dropdownOpen, setDropdownOpen] = useState(false);
 
     useEffect(() => {
-        setValue(props.value);
+        setValue(props.value || '');
     }, [props.value]);
 
     const validateNumberValue = React.useCallback((event: any) => {

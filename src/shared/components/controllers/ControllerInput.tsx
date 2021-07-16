@@ -1,6 +1,6 @@
 import {Controller, ControllerRenderProps} from 'react-hook-form';
 import {Control} from 'react-hook-form/dist/types/form';
-import Input, {InputTypes}  from '@components/input';
+import Input, {InputTypes} from '@components/input';
 import {useTranslation} from 'react-i18next';
 import React from 'react';
 import {Option} from '@components/option/option';
@@ -18,7 +18,7 @@ export interface ControllerInputProps {
     type?: 'text' | 'tel' | 'email' | 'zip' | 'number';
     placeholder?: string;
     value?: string;
-    defaultValue?: string;
+    defaultValue?: unknown;
     assistiveText?: string;
     disabled?: boolean,
     isLoading?: boolean,
@@ -69,7 +69,7 @@ const ControlledInput = ({
             value: InputTypes.Zip,
             message: t('components.input.invalid_zip')
         }
-    } 
+    }
 
     const cleanMask = (value?: string) => {
         if (value && !!mask) {
@@ -96,13 +96,13 @@ const ControlledInput = ({
             required: required ? requiredText : '',
             pattern: pattern
         }}
+        defaultValue={props.defaultValue}
         render={(controllerProps) => {
             return (<Input
                 {...controllerProps}
                 label={label}
                 mask={mask}
                 placeholder={placeholder}
-                defaultValue={props.defaultValue}
                 dropdownIcon={props.dropdownIcon}
                 className={className}
                 error={props.errorMessage || control.formState.errors[name]?.message}
@@ -111,7 +111,6 @@ const ControlledInput = ({
                 assistiveText={props.assistiveText}
                 isLoading={props.isLoading}
                 disabled={props.disabled}
-                value={props.value}
                 data-test-id={dataTestId}
                 onKeyDown={inputKeyDown}
                 onBlur={props.onBlur || controllerProps.onBlur}

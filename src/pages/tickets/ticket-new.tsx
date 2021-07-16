@@ -608,7 +608,7 @@ const TicketNew = () => {
                         <ControlledInput
                             name='patientId'
                             control={control}
-                            defaultValue={queryPatientId || ''}
+                            defaultValue={queryPatientId}
                             type='number'
                             placeholder={t('ticket_new.patient_id')}
                             isLoading={isPatientIdLoading}
