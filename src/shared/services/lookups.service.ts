@@ -1,4 +1,4 @@
-import {KeyValuePair} from '../models/key-value-pair';
+import {KeyValuePair} from '@shared/models';
 import {Dispatch} from '@reduxjs/toolkit';
 import {setError} from '@components/search-bar/store/search-bar.slice';
 import {
@@ -13,8 +13,8 @@ import Logger from './logger';
 import store from '../../app/store';
 import {setFailure} from '@pages/tickets/store/tickets.slice';
 import {User} from '../models/user';
-import {QueueMetric} from '../models/queue-metric.model';
-import {QuickConnectExtension} from '../models/quick-connect-extension';
+import {QueueMetric} from '@shared/models';
+import {QuickConnectExtension} from '@shared/models';
 import {QueueCurrentMetricQuery} from "@shared/models/queue-current-metric-query";
 import {PerformanceMetric} from '@pages/dashboard/models/performance-metric.model';
 import {AgentStatus} from '@shared/models/agent-status.model';
@@ -79,13 +79,17 @@ export const getStates = async () => {
 };
 
 export const getUserList = () => {
-    const url = '/users/list';
+    const url = '/users';
     const userList = store.getState().lookupsState.userList;
     return async (dispatch: Dispatch) => {
         if (!userList || userList.length === 0) {
             try {
-                const response = await Api.get(url);
-                const list = response.data as User[];
+                const response = await Api.get(url, {
+                    params: {
+                        pageSize: 1000
+                    }
+                });
+                const list = response.data.results as User[];
                 dispatch(setUserList(list));
             } catch (error) {
                 dispatch(setFailure(error.message));

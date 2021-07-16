@@ -18,7 +18,7 @@ export interface ControllerInputProps {
     type?: 'text' | 'tel' | 'email' | 'zip' | 'number';
     placeholder?: string;
     value?: string;
-    defaultValue?: unknown;
+    defaultValue?: string;
     assistiveText?: string;
     disabled?: boolean,
     isLoading?: boolean,
@@ -96,13 +96,13 @@ const ControlledInput = ({
             required: required ? requiredText : '',
             pattern: pattern
         }}
-        defaultValue={props.defaultValue}
         render={(controllerProps) => {
             return (<Input
                 {...controllerProps}
                 label={label}
                 mask={mask}
                 placeholder={placeholder}
+                defaultValue={props.defaultValue}
                 dropdownIcon={props.dropdownIcon}
                 className={className}
                 error={props.errorMessage || control.formState.errors[name]?.message}

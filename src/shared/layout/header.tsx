@@ -14,7 +14,7 @@ import {useHistory} from 'react-router-dom';
 import SvgIcon from '@components/svg-icon/svg-icon';
 import {Icon} from '@components/svg-icon/icon';
 import {CCP_ANIMATION_DURATION} from '@constants/form-constants';
-import {getUserById} from '@shared/services/user.service';
+import {getUserByEmail} from '@shared/services/user.service';
 import {useQuery} from 'react-query';
 import {QueryUserById} from '@constants/react-query-constants';
 import {setAuthentication} from '@shared/store/app-user/appuser.slice';
@@ -39,7 +39,7 @@ const Header = ({headsetIconRef}:{headsetIconRef: React.RefObject<HTMLDivElement
         if (!auth || !auth.username) {
             return '';
         }
-        const user = await getUserById(auth.username);
+        const user = await getUserByEmail(auth.username);
         if (!user) {
             return '';
         }

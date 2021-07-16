@@ -3,11 +3,16 @@ import Api from './api';
 
 const userBaseUrl = '/users';
 
-export const getUserById = async (id: string): Promise<User | undefined> => {
-    if (!id) {
+export const getUserByEmail = async (email: string): Promise<User | undefined> => {
+    if (!email) {
         return Promise.resolve(undefined);
     }
-    const result = await Api.get(`${userBaseUrl}/${id}`);
+    const result = await Api.get(userBaseUrl,
+        {
+            params: {
+                'email':email
+            }
+        });
     return result.data;
 }
 

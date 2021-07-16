@@ -116,7 +116,8 @@ const TicketDetailTicketInfo = ({ticket, control}: TicketInfoProps) => {
             />
             {
                 ticket.callbackPhoneNumber &&
-                <ControlledInput value={updateModel.callbackPhoneNumber}
+                <ControlledInput
+                    value={updateModel.callbackPhoneNumber}
                     name='callbackPhoneNumber'
                     type='tel'
                     control={control}

@@ -120,6 +120,7 @@ const PatientContactInfoUpdate = ({onUpdateComplete} : PatientInformationUpdateP
                         <ControlledInput
                             control={control}
                             name='address'
+                            value={patient.address}
                             dataTestId='patient-update-address'
                             className='w-full'
                             label='patient.summary.address'
@@ -129,6 +130,7 @@ const PatientContactInfoUpdate = ({onUpdateComplete} : PatientInformationUpdateP
                         <ControlledInput
                             control={control}
                             name='homePhone'
+                            value={patient.homePhone}
                             dataTestId='patient-update-home_phone'
                             required={watchContactPreference === 'HOMEPHONE'}
                             type='tel'
@@ -143,6 +145,7 @@ const PatientContactInfoUpdate = ({onUpdateComplete} : PatientInformationUpdateP
                         <ControlledInput
                             control={control}
                             name='address2'
+                            value={patient.address2}
                             dataTestId='patient-update-address2'
                             className='w-full'
                             label='patient.summary.apt_number'
@@ -152,6 +155,7 @@ const PatientContactInfoUpdate = ({onUpdateComplete} : PatientInformationUpdateP
                         <ControlledInput
                             control={control}
                             name='mobilePhone'
+                            value={patient.mobilePhone}
                             dataTestId='patient-update-mobile_phone'
                             required={watchContactPreference === 'MOBILEPHONE'}
                             type='tel'
@@ -166,6 +170,7 @@ const PatientContactInfoUpdate = ({onUpdateComplete} : PatientInformationUpdateP
                         <ControlledInput
                             control={control}
                             name='city'
+                            value={patient.city}
                             dataTestId='patient-update-city'
                             className='w-full'
                             label='patient.summary.city'
@@ -181,7 +186,7 @@ const PatientContactInfoUpdate = ({onUpdateComplete} : PatientInformationUpdateP
                                 <Select
                                     options={contactPreferenceOptions}
                                     label='patient.summary.contact_preference'
-                                    {...props}                                    
+                                    {...props}
                                     data-test-id={'patient-update-contact_preference'}
                                     error={errors.contactPreference?.message}
                                     required={true}
@@ -226,6 +231,7 @@ const PatientContactInfoUpdate = ({onUpdateComplete} : PatientInformationUpdateP
                                 <ControlledInput
                                     control={control}
                                     name='zip'
+                                    value={patient.zip}
                                     dataTestId='patient-update-zip-code'
                                     className='w-full'
                                     label='patient.summary.zip_code'
@@ -270,6 +276,7 @@ const PatientContactInfoUpdate = ({onUpdateComplete} : PatientInformationUpdateP
                             name='email'
                             dataTestId='patient-update-email'
                             className='w-full'
+                            value={patient.emailAddress}
                             label='patient.summary.email'
                             type='email'
                         />
