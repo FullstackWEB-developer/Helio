@@ -26,7 +26,7 @@ const ContactHeader = ({contact, editMode, editIconClickHandler, starIconClickHa
         iconType: Icon.Company
     }
     return (
-        <div className="h-32 w-full flex px-8 pt-6 pb-4 mt-12 items-center justify-between">
+        <div className="w-full flex px-8 pt-6 pb-4 mt-4 justify-between">
             <div className="flex items-start">
                 <ContactAvatar model={avatarModel} />
                 <div className="flex flex-col pl-6">
@@ -40,9 +40,9 @@ const ContactHeader = ({contact, editMode, editIconClickHandler, starIconClickHa
                 </div>
             </div>
             <ContactHeaderQuickActions contact={contact}
-                starIconClickHandler={starIconClickHandler}
-                isLoading={isLoading} />
-        </div >
+                                       starIconClickHandler={starIconClickHandler}
+                                       isLoading={isLoading} />
+        </div>
     )
 }
 
