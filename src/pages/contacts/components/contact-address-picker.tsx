@@ -35,7 +35,7 @@ const ContactAddressPicker = (props: ContactAddressPickerProps) => {
                 <span className='body2 pl-2 contact-accent-color'>{`${t('contacts.new-contact.add_more')}`}</span>
             </div>
             {
-                showDropdown && <div className="absolute"><Dropdown model={addressDropdownModel} /></div>
+                showDropdown && <div className="absolute pl-8"><Dropdown model={addressDropdownModel} /></div>
             }
         </div>
     )

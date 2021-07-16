@@ -83,13 +83,17 @@ const ContactSubheaderQuickActions = ({editMode, editIconClickHandler, contact, 
         }
     }
 
+    const getIconColor = () => {
+        return editMode ? 'contact-subheader-quick-action-second-color' : 'contact-subheader-quick-action-color';
+    }
+
     return (
         isLoading ? <Spinner /> :
             <div className='flex justify-center pt-5'>
                 <span className={`pr-3 cursor-pointer`} >
                     <SvgIcon type={Icon.ChannelPhone}
                              className='icon-x-large'
-                             fillClass='contact-subheader-quick-action-color'
+                             fillClass={getIconColor()}
                              strokeClass='contact-stroke-color'
                              onClick={handleOnPhoneClick}
                     />
@@ -116,19 +120,17 @@ const ContactSubheaderQuickActions = ({editMode, editIconClickHandler, contact, 
                 <span className={`pl-10 pr-8 cursor-pointer`} >
                     <SvgIcon type={Icon.ChannelSms}
                              className='icon-x-large'
-                             fillClass='contact-subheader-quick-action-color'
+                             fillClass={getIconColor()}
                              strokeClass='contact-stroke-color'
                     />
                 </span>
-                {
-                    !editMode && <span className="pr-8 cursor-pointer">
-                        <SvgIcon type={Icon.ChannelEmail}
-                                 className='icon-x-large'
-                                 fillClass='contact-subheader-quick-action-color'
-                                 strokeClass='contact-stroke-color'
-                        />
-                    </span>
-                }
+                <span className="pr-8 cursor-pointer">
+                    <SvgIcon type={Icon.ChannelEmail}
+                             className='icon-x-large'
+                             fillClass={getIconColor()}
+                             strokeClass='contact-stroke-color'
+                    />
+                </span>
                 {!editMode && <span className="pr-8 cursor-pointer" onClick={editIconClickHandler}>
                     <SvgIcon type={Icon.EditCircled}
                              className='icon-x-large'

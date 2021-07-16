@@ -312,10 +312,15 @@ const ContactForm = ({contact, contactType, submitHandler, closeHandler, editMod
                             defaultValue={defaultBillingAddress} />
                     )
                 }
+
                 <ContactAddressPicker options={addressDropdownOptions} onSelect={handleAddressPickerChange} />
-                <div className="flex justify-center items-center full-w h-20 mb-4">
-                    <Button isLoading={isSaving} type='submit' buttonType='medium' label={t('common.save')} className='mr-8' disabled={!isValid} />
-                    <Button buttonType='secondary' label={t('common.cancel')} className='h-10 secondary-contact-form-btn' onClick={closeButtonHandler} />
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-x-8">
+                    <div className="col-span-12 lg:col-span-10">
+                        <div className="flex justify-center items-center full-w h-20 mb-4">
+                            <Button isLoading={isSaving} type='submit' buttonType='medium' label={t('common.save')} className='mr-8' disabled={!isValid} />
+                            <Button buttonType='secondary' label={t('common.cancel')} className='h-10 secondary-contact-form-btn' onClick={closeButtonHandler} />
+                        </div>
+                    </div>
                 </div>
             </form>
         </div>)

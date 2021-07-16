@@ -186,7 +186,7 @@ const Contacts: React.FC<ContactProps> = () => {
                 }
                 if (foundOnPage) {
                     break;
-                };
+                }
             }
         }
         queryClient.setQueryData([QueryContactsInfinite, queryParams], paginatedContacts);

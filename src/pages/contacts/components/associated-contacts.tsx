@@ -10,7 +10,7 @@ const AssociatedContacts = ({contacts}: AssociatedContactsProps) => {
     const {t} = useTranslation();
     return (
         <div>
-            <div className="h-10 border-b contact-border-color mb-4">
+            <div className="h-10 contact-border-color mb-4">
                 {`${t('contacts.contact-details.company.associated_with', {companyName: contacts[0]?.companyName || ''})}`}
             </div>
             {

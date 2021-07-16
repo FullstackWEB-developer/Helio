@@ -89,7 +89,7 @@ const ContactList = ({contacts, onContactSelect, currentlySelected, fetchMore, i
                               onChange={handleSearch}
                               value={props.searchValue}
                               placeholder={`${t('contacts.contact-list.search')}`} />
-            <div className="relative max-w-full overflow-y-auto overflow-x-hidden" onScroll={(e) => handleScroll(e)}>
+            <div className="relative max-w-full overflow-y-auto overflow-x-hidden h-full" onScroll={(e) => handleScroll(e)}>
                 {
                     isFetching && !isFetchingNextPage ? <div /> :
                         React.Children.toArray(renderList().map((element: any) => element))
