@@ -1,11 +1,11 @@
-import {KeyValuePair} from '../../models/key-value-pair'
-import {Department} from '../../models/department';
-import {Provider} from '../../models/provider';
-import {User} from '../../models/user';
+import {KeyValuePair} from '@shared/models'
+import {Location} from '@shared/models';
+import {Provider} from '@shared/models';
+import {User} from '@shared/models';
 import {Option} from '@components/option/option';
 
 export interface LookupsState {
-    departmentList?: Department[];
+    locationList?: Location[];
     providerList?: Provider[];
     userList?: User[];
     isLoading: boolean;
@@ -15,7 +15,7 @@ export interface LookupsState {
 }
 
 const initialState: LookupsState = {
-    departmentList: undefined,
+    locationList: undefined,
     providerList: undefined,
     isLoading: false,
     isError: false,

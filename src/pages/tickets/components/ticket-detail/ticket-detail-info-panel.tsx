@@ -23,7 +23,7 @@ import {useTranslation} from 'react-i18next';
 import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
 import {SnackbarType} from '@components/snackbar/snackbar-position.enum';
 import Button from '@components/button/button';
-import {selectDepartmentListAsOptions} from '@shared/store/lookups/lookups.selectors';
+import {selectLocationsAsOptions} from '@shared/store/lookups/lookups.selectors';
 import {getPatientActionNotes, getPatientCaseDocument} from '@pages/patients/services/patient-document.service';
 import utils from '@shared/utils/utils';
 import {TicketUpdateModel} from '@pages/tickets/models/ticket-update.model';
@@ -48,14 +48,16 @@ const TicketDetailInfoPanel = ({ticket, patient, contact}: TicketDetailInfoPanel
     const statusOptions = useSelector((state => selectEnumValuesAsOptions(state, 'TicketStatus')));
     const departmentOptions = useSelector((state) => selectLookupValuesAsOptions(state, 'Department'));
     const priorityOptions = useSelector((state => selectEnumValuesAsOptions(state, 'TicketPriority')));
-    const locationOptions = useSelector(selectDepartmentListAsOptions);
+    const locationOptions = useSelector(selectLocationsAsOptions);
     const reasonOptions = useSelector((state) => selectLookupValuesAsOptions(state, 'TicketReason'));
     const ticketTypeOptions = useSelector((state) => selectEnumValuesAsOptions(state, 'TicketType'));
     const [isPatientCaseNumberLoading, setPatientCaseNumberLoading] = useState(false);
     const [isDueDateVisible, setIsDueDateVisible] = useState(false);
 
     const isDirty = () => {
-        if(!updateModel) return false;
+        if(!updateModel) {
+            return false;
+        }
         return storedUpdateModelHash !== hash.MD5(updateModel);
     }
 

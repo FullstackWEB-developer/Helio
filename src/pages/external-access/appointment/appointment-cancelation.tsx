@@ -2,8 +2,8 @@ import React, {useEffect, useState} from 'react';
 import {Trans, useTranslation} from 'react-i18next';
 import {useDispatch, useSelector} from 'react-redux';
 import {selectSelectedAppointment} from '@pages/external-access/appointment/store/appointments.selectors';
-import {selectDepartmentList, selectProviderList} from '@shared/store/lookups/lookups.selectors';
-import {getDepartments, getProviders} from '@shared/services/lookups.service';
+import {selectLocationList, selectProviderList} from '@shared/store/lookups/lookups.selectors';
+import {getLocations, getProviders} from '@shared/services/lookups.service';
 import {useMutation, useQuery} from 'react-query';
 import {AxiosError} from 'axios';
 import {GetAppointmentSlots, GetAppointmentType, GetCancellationReasons} from '@constants/react-query-constants';
@@ -38,14 +38,14 @@ const AppointmentCancelation = () => {
     const dispatch = useDispatch();
     const verifiedPatient = useSelector(selectVerifiedPatent);
     const appointment = useSelector(selectSelectedAppointment);
-    const departments = useSelector(selectDepartmentList);
+    const departments = useSelector(selectLocationList);
     const providers = useSelector(selectProviderList);
     const maxSlots = 3;
     const [errorMessage, setErrorMessage] = useState('');
 
     useEffect(() => {
         dispatch(getProviders());
-        dispatch(getDepartments());
+        dispatch(getLocations());
     }, [dispatch]);
 
     const provider = providers?.find(a => a.id === appointment.providerId);

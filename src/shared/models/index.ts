@@ -5,7 +5,7 @@ export * from "./contact-category.enum";
 export * from "./contact-person.model";
 export * from "./contact-type.enum";
 export * from "./contact.model";
-export * from "./department";
+export * from "./location";
 export * from "./input.types";
 export * from "./key-value-pair";
 export * from "./paged-list.model";

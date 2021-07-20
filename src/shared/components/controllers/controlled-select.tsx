@@ -2,6 +2,7 @@ import Select from '@components/select/select';
 import {Option} from '@components/option/option';
 import {Controller, ControllerRenderProps} from 'react-hook-form';
 import {Control} from 'react-hook-form/dist/types/form';
+import {useTranslation} from 'react-i18next';
 
 export interface ControlledSelectProps {
     name: string;
@@ -25,7 +26,7 @@ const ControlledSelect = ({
     options,
     name,
     label,
-    defaultValue,
+    defaultValue = '',
     searchQuery,
     order,
     assistiveText,
@@ -36,6 +37,10 @@ const ControlledSelect = ({
     required = false,
     ...props
 }: ControlledSelectProps) => {
+
+    const {t} = useTranslation();
+    const requiredText = t('common.required');
+
     const onSelected = (controllerProps: ControllerRenderProps, option?: Option) => {
         if (option) {
             if (onSelect) {
@@ -48,6 +53,9 @@ const ControlledSelect = ({
         {...props}
         name={name}
         control={control}
+        rules={{
+            required: required ? requiredText : ''
+        }}
         defaultValue={defaultValue}
         render={(controllerProps) => (
             <Select

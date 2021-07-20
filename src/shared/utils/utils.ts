@@ -41,7 +41,10 @@ const clearFormatPhone = (phone: string) => {
     return phone.replace(/[^\d]/g, '')
 }
 
-const formatDate = (datetime: string) => {
+const formatDate = (datetime?: string) => {
+    if (!datetime) {
+        return '';
+    }
     const date = new Date(datetime);
     return date.toLocaleDateString('en-US');
 }
@@ -72,14 +75,14 @@ const getInitialsFromFullName = (username: string): string => {
 const getDateTime = (dueDate?: Date, dueTime?: string) => {
     let dateTime;
     if (dueDate && dueTime) {
-        var time = dayjs(dueTime, "hh:mm A").format('HH:mm');
+        const time = dayjs(dueTime, "hh:mm A").format('HH:mm');
         const hours = parseInt(time.split(':')[0]);
         const minutes = parseInt(time.split(':')[1]);
         dateTime = dayjs.utc(dueDate).local().hour(hours).minute(minutes);
     } else if (dueDate) {
         dateTime = dayjs.utc(dueDate).local();
     } else if (dueTime) {
-        var time = dayjs(dueTime, "hh:mm A").format('HH:mm');
+        const time = dayjs(dueTime, "hh:mm A").format('HH:mm');
         const hours = parseInt(time.split(':')[0]);
         const minutes = parseInt(time.split(':')[1]);
         dateTime = dayjs.utc().local().hour(hours).minute(minutes);
@@ -185,8 +188,8 @@ const groupBy = <TKey extends unknown, TValue extends unknown>(array: TValue[], 
 
 export const getElementPosition = (element: HTMLElement | Element, scrolledElement?: Element) => {
     const rect = element.getBoundingClientRect();
-    let scrollLeft = 0;
-    let scrollTop = 0;
+    let scrollLeft;
+    let scrollTop;
 
     if (!scrolledElement) {
         scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;

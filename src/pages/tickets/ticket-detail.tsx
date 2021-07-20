@@ -13,13 +13,15 @@ import {Ticket} from './models/ticket';
 import {useQuery} from 'react-query';
 import {getTicketByNumber} from './services/tickets.service';
 import {GetContactById, QueryGetPatientById, QueryTickets} from '@constants/react-query-constants';
-import {setTicket} from './store/tickets.slice';
-import {selectSelectedTicket} from '@pages/tickets/store/tickets.selectors';
+import {setTicket, toggleChatTranscriptWindowVisible} from './store/tickets.slice';
+import {selectIsChatTranscriptModalVisible, selectSelectedTicket} from '@pages/tickets/store/tickets.selectors';
 import {getPatientByIdWithQuery} from '@pages/patients/services/patients.service';
 import {ExtendedPatient} from '@pages/patients/models/extended-patient';
 import {Contact} from '@shared/models/contact.model';
 import {getContactById} from '@shared/services/contacts.service';
 import Spinner from '@components/spinner/Spinner';
+import Modal from '@components/modal/modal';
+import ChatTranscript from '@pages/tickets/components/ticket-detail/chat-transcript';
 
 interface TicketParams {
     ticketNumber: string
@@ -30,6 +32,7 @@ const TicketDetail = () => {
     const dispatch = useDispatch();
     const {t} = useTranslation();
     const {ticketNumber} = useParams<TicketParams>();
+    const displayChatTranscript = useSelector(selectIsChatTranscriptModalVisible);
     const ticket = useSelector(selectSelectedTicket);
     const feedsRef = React.useRef<HTMLDivElement | null>();
     const {isLoading, error, isFetching} = useQuery<Ticket, Error>([QueryTickets, ticketNumber], () =>
@@ -90,20 +93,31 @@ const TicketDetail = () => {
     }
 
     return (
-        <div className='flex w-full'>
-            <div className='w-3/4 relative flex flex-col'>
-                <TicketDetailHeader ticket={ticket} contact={contact} patient={patient}/>
-                <div className='mb-auto flex-1'>
-                    <TicketDetailFeed ticket={ticket} ref={(ref) => feedsRef.current = ref}/>
+        <>
+            <div className='flex w-full'>
+                <div className='w-3/4 relative flex flex-col'>
+                    <TicketDetailHeader ticket={ticket} contact={contact} patient={patient}/>
+                    <div className='flex items-center justify-center justify-self-center' data-test-id='chat-transcript-modal'>
+                        <Modal isOpen={displayChatTranscript}
+                               top={10}
+                               title='ticket_detail.chat_transcript.title'
+                               isClosable={true}
+                               onClose={() => (dispatch(toggleChatTranscriptWindowVisible()))}>
+                            <ChatTranscript ticket={ticket} patient={patient} />
+                        </Modal>
+                    </div>
+                    <div className='mb-auto flex-1'>
+                        <TicketDetailFeed ticket={ticket} ref={(ref) => feedsRef.current = ref}/>
+                    </div>
+                    <div className='absolute bottom-0 w-full'>
+                        <TicketDetailAddNote patient={patient} contact={contact} onNoteAdded={() => onNoteAdded()} ticket={ticket}/>
+                    </div>
                 </div>
-                <div className=''>
-                    <TicketDetailAddNote onNoteAdded={() => onNoteAdded()} ticket={ticket}/>
+                <div className='w-1/4 border-l overflow-y-auto'>
+                    <TicketInfoPanel ticket={ticket} patient={patient} contact={contact}/>
                 </div>
             </div>
-            <div className='w-1/4 border-l overflow-y-auto'>
-                <TicketInfoPanel ticket={ticket} patient={patient} contact={contact}/>
-            </div>
-        </div>
+        </>
     );
 }
 

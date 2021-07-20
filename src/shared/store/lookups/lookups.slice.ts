@@ -1,9 +1,9 @@
-import {KeyValuePair} from '../../models/key-value-pair';
+import {KeyValuePair} from '@shared/models';
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import initialState from './lookups.initial-state';
-import {Provider} from '../../models/provider';
-import {Department} from '../../models/department';
-import {User} from '../../models/user';
+import {Provider} from '@shared/models';
+import {Location} from '@shared/models';
+import {User} from '@shared/models';
 import {Option} from '@components/option/option';
 
 const lookupsSlice = createSlice({
@@ -23,8 +23,8 @@ const lookupsSlice = createSlice({
         setStates(state, { payload }: PayloadAction<Option[] | undefined>) {
             state.states = payload;
         },
-        setDepartments(state, { payload }: PayloadAction<Department[] | undefined>) {
-            state.departmentList = payload;
+        setLocations(state, { payload }: PayloadAction<Location[] | undefined>) {
+            state.locationList = payload;
             state.isLoading = false;
         },
         setUserList(state, { payload }: PayloadAction<User[] | undefined>) {
@@ -41,7 +41,7 @@ export const {
     setLoading,
     setError,
     setProviders,
-    setDepartments,
+    setLocations,
     setUserList,    
     setMetricOptions,
     setStates

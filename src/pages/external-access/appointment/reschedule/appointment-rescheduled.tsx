@@ -5,14 +5,14 @@ import {AxiosError} from 'axios';
 import {
     GetAppointmentType,
 } from '@constants/react-query-constants';
-import {getDepartments, getProviders} from '@shared/services/lookups.service';
+import {getLocations, getProviders} from '@shared/services/lookups.service';
 import {AppointmentType} from '@pages/external-access/appointment/models/appointment-type.model';
 import {getAppointmentTypeById} from '@pages/appointments/services/appointments.service';
 import {
     selectSelectedAppointment
 } from '@pages/external-access/appointment/store/appointments.selectors';
 import {useDispatch, useSelector} from 'react-redux';
-import {selectDepartmentList, selectProviderList} from '@shared/store/lookups/lookups.selectors';
+import {selectLocationList, selectProviderList} from '@shared/store/lookups/lookups.selectors';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import Spinner from '@components/spinner/Spinner';
@@ -22,11 +22,11 @@ const AppointmentRescheduled = () => {
     const {t} = useTranslation();
     const dispatch = useDispatch();
     const appointment = useSelector(selectSelectedAppointment);
-    const departments = useSelector(selectDepartmentList);
+    const departments = useSelector(selectLocationList);
     const providers = useSelector(selectProviderList);
     useEffect(() => {
         dispatch(getProviders());
-        dispatch(getDepartments());
+        dispatch(getLocations());
     }, [dispatch]);
 
     const {isLoading: isAppointmentTypesLoading, data: appointmentType} = useQuery<AppointmentType, AxiosError>([GetAppointmentType, appointment.appointmentTypeId], () =>

@@ -1,4 +1,4 @@
-export interface Department {
+export interface Location {
     medicationHistoryConsent: boolean,
     timeZoneOffset: number,
     isHospitalDepartment: boolean,

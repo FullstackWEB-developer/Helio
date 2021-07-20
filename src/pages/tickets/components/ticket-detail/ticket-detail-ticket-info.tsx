@@ -10,7 +10,7 @@ import ControlledSelect from '@components/controllers/controlled-select';
 import {Option} from '@components/option/option';
 import {Control, Controller} from 'react-hook-form';
 import {setTicketUpdateModel} from '@pages/tickets/store/tickets.slice';
-import {selectDepartmentListAsOptions} from '@shared/store/lookups/lookups.selectors';
+import {selectLocationsAsOptions} from '@shared/store/lookups/lookups.selectors';
 import {useTranslation} from 'react-i18next';
 import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
 import {SnackbarType} from '@components/snackbar/snackbar-position.enum';
@@ -36,7 +36,7 @@ const TicketDetailTicketInfo = ({ticket, control}: TicketInfoProps) => {
     const dispatch = useDispatch();
     const {t} = useTranslation();
     const statusOptions = useSelector((state => selectEnumValuesAsOptions(state, 'TicketStatus')));
-    const locationOptions = useSelector(selectDepartmentListAsOptions);
+    const locationOptions = useSelector(selectLocationsAsOptions);
     const priorityOptions = useSelector((state => selectEnumValuesAsOptions(state, 'TicketPriority')));
     const departmentOptions = useSelector((state) => selectLookupValuesAsOptions(state, 'Department'));
     const reasonOptions = useSelector((state) => selectLookupValuesAsOptions(state, 'TicketReason'));

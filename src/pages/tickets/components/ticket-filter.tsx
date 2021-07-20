@@ -2,7 +2,7 @@ import withErrorLogging from '@shared/HOC/with-error-logging';
 import Collapsible from '@components/collapsible/collapsible';
 import React, {useEffect, useState} from 'react';
 import {getContacts} from '@shared/services/contacts.service';
-import {getDepartments, getUserList} from '@shared/services/lookups.service';
+import {getLocations, getUserList} from '@shared/services/lookups.service';
 import {getEnumByType, getList, getLookupValues} from '../services/tickets.service';
 import {useDispatch, useSelector} from 'react-redux';
 import {useTranslation} from 'react-i18next';
@@ -19,7 +19,7 @@ import Radio from '@components/radio/radio';
 import {TicketOptionsBase} from '../models/ticket-options-base.model';
 import {Controller, useForm} from 'react-hook-form';
 import {Option} from '@components/option/option';
-import {selectDepartmentList, selectUserOptions} from '@shared/store/lookups/lookups.selectors';
+import {selectLocationList, selectUserOptions} from '@shared/store/lookups/lookups.selectors';
 import {TicketQuery} from '../models/ticket-query';
 import dayjs from 'dayjs';
 import {TicketEnumValue} from '../models/ticket-enum-value.model';
@@ -52,7 +52,7 @@ const TicketFilter = ({isOpen}: {isOpen: boolean}) => {
     const ticketStatuses = useSelector((state => selectEnumValues(state, 'TicketStatus')));
     const statesFilter = useSelector((state => selectEnumValues(state, 'TicketStateFilter')));
     const ticketTypes = useSelector((state => selectEnumValues(state, 'TicketType')));
-    const offices = useSelector(selectDepartmentList);
+    const offices = useSelector(selectLocationList);
     const {username} = useSelector(authenticationSelector);
     const searchTerm: string = useSelector(selectSearchTerm);
     const {control, handleSubmit, watch, setValue, getValues, reset} = useForm({});
@@ -63,7 +63,7 @@ const TicketFilter = ({isOpen}: {isOpen: boolean}) => {
 
     useEffect(() => {
         dispatch(getContacts());
-        dispatch(getDepartments());
+        dispatch(getLocations());
         dispatch(getUserList());
         dispatch(getEnumByType('TicketChannel'));
         dispatch(getEnumByType('TicketPriority'));

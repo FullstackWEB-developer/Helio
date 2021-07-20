@@ -76,5 +76,6 @@ export enum Icon {
     CwcLogo = 'CwcLogo',
     SentimentSatisfied = "SentimentSatisfied",
     Format = "Format",
-    CheckMark = "CheckMark"
+    CheckMark = "CheckMark",
+    Templates = "Templates"
 }

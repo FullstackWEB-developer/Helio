@@ -28,6 +28,7 @@ import {DashboardTypes} from '@pages/dashboard/enums/dashboard-type.enum';
 import {DashboardTimeframes} from '@pages/dashboard/enums/dashboard.timeframes';
 import utils from '@shared/utils/utils';
 import {setGlobalLoading} from '@shared/store/app/app.slice';
+import {ChatTranscript} from '@pages/tickets/models/chat-transcript.model';
 import {TicketBase} from '../models/ticket-base';
 import {PagedList} from '@shared/models';
 
@@ -101,7 +102,7 @@ const serialize = (obj: any) => {
     return str.join("&");
 }
 
-export const setStatus = async ({id, status}: {id: string, status: number}): Promise<Ticket> => {
+export const setStatus = async ({id, status}: { id: string, status: number }): Promise<Ticket> => {
     const url = `${ticketsBaseUrl}/${id}/status`;
     const result = await Api.put(url, {
         id: id,
@@ -124,13 +125,13 @@ export const setAssignee = async ({ticketId, assignee}: setAssigneeProps): Promi
     return result.data;
 }
 
-export const addNote = async ({ticketId, note}: {ticketId: string, note: TicketNote}): Promise<Ticket> => {
+export const addNote = async ({ticketId, note}: { ticketId: string, note: TicketNote }): Promise<Ticket> => {
     const url = `${ticketsBaseUrl}/${ticketId}/notes`;
     const result = await Api.post(url, note);
     return result.data;
 }
 
-export const addFeed = async ({ticketId, feed}: {ticketId: string, feed: TicketFeed}): Promise<Ticket> => {
+export const addFeed = async ({ticketId, feed}: { ticketId: string, feed: TicketFeed }): Promise<Ticket> => {
     const url = `${ticketsBaseUrl}/${ticketId}/feed`;
     const result = await Api.post(url, feed);
     return result.data;
@@ -145,7 +146,7 @@ export const getEnumByType = (enumType: string) => {
             dispatch(startGetTicketEnumRequest());
             await Api.get(getEnumUrl)
                 .then(response => {
-                    dispatch(setTicketEnum({key: enumType, result: response.data}));
+                    dispatch(setTicketEnum({ key: enumType, result: response.data }));
                     dispatch(endGetTicketEnumRequest(''));
                 })
                 .catch(error => {
@@ -164,7 +165,7 @@ export const getLookupValues = (key: string) => {
             dispatch(startGeLookupValuesRequest());
             await Api.get(getLookupValuesUrl)
                 .then(response => {
-                    dispatch(setLookupValues({key: key, result: response.data}));
+                    dispatch(setLookupValues({ key: key, result: response.data }));
                     dispatch(endGetLookupValuesRequest(''));
                 })
                 .catch(error => {
@@ -218,15 +219,10 @@ export const getContactTickets = async (queryRequest: ContactTicketsRequest, res
     return response.data.results;
 }
 
-export const getRecordedConversation = async (id: string) => {
+export const getRecordedConversation = async (id: string) : Promise<ChatTranscript> => {
     const url = `${ticketsBaseUrl}/${id}/download`;
-    try {
-        const response = await Api.get(url)
-        return response.data;
-    } catch (error) {
-        logger.error(`Failed to get the recorded conversation `, error);
-        return null;
-    }
+    const response = await Api.get(url)
+    return response.data;
 }
 
 export const getPatientTickets = async (queryRequest: PatientTicketsRequest, resetPagination?: boolean) => {

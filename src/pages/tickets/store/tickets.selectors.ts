@@ -93,6 +93,12 @@ export const selectTicketUpdateModel = createSelector(
     state => state.ticketUpdate as TicketUpdateModel
 )
 
+export const selectIsChatTranscriptModalVisible = createSelector(
+    ticketState,
+    state => state.isChatTranscriptModalVisible as boolean
+)
+
+
 export const selectTicketUpdateHash = createSelector(
     ticketState,
     state => state.ticketUpdateHash

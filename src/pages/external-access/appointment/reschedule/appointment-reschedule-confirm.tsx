@@ -3,7 +3,7 @@ import {useTranslation} from 'react-i18next';
 import utils from '@shared/utils/utils';
 import {useMutation} from 'react-query';
 import {AxiosError} from 'axios';
-import {getDepartments, getProviders} from '@shared/services/lookups.service';
+import {getLocations, getProviders} from '@shared/services/lookups.service';
 import Button from '@components/button/button';
 import {
     rescheduleAppointment
@@ -16,7 +16,7 @@ import {
     selectSelectedAppointmentSlot
 } from '@pages/external-access/appointment/store/appointments.selectors';
 import {useDispatch, useSelector} from 'react-redux';
-import {selectDepartmentList, selectProviderList} from '@shared/store/lookups/lookups.selectors';
+import {selectLocationList, selectProviderList} from '@shared/store/lookups/lookups.selectors';
 import {selectVerifiedPatent} from '@pages/patients/store/patients.selectors';
 import {
     setIsAppointmentRescheduled,
@@ -36,14 +36,14 @@ const AppointmentRescheduleConfirm = () => {
     const appointmentTypes = useSelector(selectAppointmentTypes);
     const appointmentType = appointmentTypes.find(a => a.id === Number(appointment.appointmentTypeId));
     const appointmentSlot = useSelector(selectSelectedAppointmentSlot);
-    const departments = useSelector(selectDepartmentList);
+    const departments = useSelector(selectLocationList);
     const isAppointmentRescheduled = useSelector(selectIsAppointmentRescheduled);
     const providers = useSelector(selectProviderList);
     const [errorMessage, setErrorMessage] = useState('');
 
     useEffect(() => {
         dispatch(getProviders());
-        dispatch(getDepartments());
+        dispatch(getLocations());
     }, [dispatch]);
 
     const provider = providers?.find(a => a.id === appointmentSlot.providerId);

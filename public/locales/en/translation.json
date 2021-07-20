@@ -377,7 +377,8 @@
     "patient_id_not_found": "Patient Id not found.",
     "patient_case_id_not_found": "Patient Case not found.",
     "error_getting_contacts": "Error getting contacts information.",
-    "suggestion_placeholder": "Type two or more characters to filter."
+    "suggestion_placeholder": "Type two or more characters to filter.",
+    "patient_label": "Patient:"
   },
   "tag_input": {
     "add_tag": "Add Tag"
@@ -390,7 +391,32 @@
     "ticket_update_failed": "Ticket update failed",
     "ticket_assign_error": "Ticket assignment failed",
     "ticket_status_update_error": "Ticket status change failed",
-    "add_note": "Enter your note",
+    "internal_note_title": "Internal Note",
+    "send_sms_title": "Send SMS",
+    "send_email_title": "Send Email",
+    "add_note": "Enter Text",
+    "sms_send_success": "Your message was sent.",
+    "email_subject" : "About ticket {{ticketNumber}}",
+    "sms_send_fail": "Sms sent failed.",
+    "email_send_success": "Your message was sent.",
+    "email_send_fail": "Email sent failed.",
+    "chat_transcript" : {
+      "title": "Chat Transcript",
+      "chat_info": "Chat Info",
+      "patient": "Patient",
+      "contact": "Contact",
+      "wait_time": "Wait Time",
+      "duration": "Duration",
+      "queue": "Queue",
+      "reason": "Reason",
+      "date_time": "Date & Time",
+      "agent": "Agent",
+      "transcript": "Transcript",
+      "started": "{{name}} Started chat",
+      "joined": "{{name}} joined chat.",
+      "left": "{{name}} left chat.",
+      "ended": "Chat ended."
+    },
     "header": {
       "id": "ID",
       "requested_by": "Requested by",

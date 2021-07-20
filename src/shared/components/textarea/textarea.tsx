@@ -2,7 +2,7 @@ import {Icon} from '@components/svg-icon/icon';
 import SvgIcon from '@components/svg-icon/svg-icon';
 import React, {ChangeEvent, Fragment, useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
-
+import classnames from 'classnames';
 interface TextAreaProps {
     id?: string;
     name?: string;
@@ -28,6 +28,7 @@ interface TextAreaProps {
     className?: string;
     placeHolder?: string;
     maxLengthClassName?: string;
+    disabled?: boolean;
 }
 
 const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(({
@@ -77,23 +78,28 @@ const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(({
         }
     }
 
-    const defaultContainerClasses = 'flex flex-row w-full h-full items-center';
+    const defaultContainerClasses = 'flex flex-row w-full h-full items-center border-b';
+    const textAreaClass = classnames('mt-1 shadow-none p-4', props.className, {
+        'border': hasBorder,
+        'resize': resizable,
+        'resize-none':!resizable
+    });
+
     return (
         <Fragment>
             <label htmlFor={htmlFor} className='block subtitle'>
                 {label}
             </label>
-            <div className={`${props.overwriteDefaultContainerClasses ? '' : defaultContainerClasses} ${props.textareaContainerClasses ? props.textareaContainerClasses : ''}`}>
+            <div className={`relative ${props.overwriteDefaultContainerClasses ? '' : defaultContainerClasses} ${props.textareaContainerClasses ? props.textareaContainerClasses : ''}`}>
                 <textarea ref={ref} {...props} value={textAreaValue} onChange={(e => handleOnChange(e))}
                     placeholder={placeHolder ? placeHolder : ''}
-                    className={`mt-1 shadow-none p-4 ${(hasBorder ? ' border ' : '')} ${resizable ? 'resize' : 'resize-none'} ${props.className}`}
+                    className={textAreaClass}
                     onKeyPress={onKeyPress}
-
                 />
                 {
                     props.icon && textAreaValue && textAreaValue?.trim()?.length > 0 &&
                     <div
-                        className={`flex-grow ${iconContainerClassName ? iconContainerClassName : 'px-7'} ${isLoading ? '-mr-2' : 'cursor-pointer'}`}>
+                        className={`absolute right-8 ${iconContainerClassName ? iconContainerClassName : ''} ${isLoading ? 'bottom-4 -mr-2' : 'bottom-6 cursor-pointer'}`}>
                         <SvgIcon
                             isLoading={isLoading}
                             type={props.icon ?? Icon.Send}

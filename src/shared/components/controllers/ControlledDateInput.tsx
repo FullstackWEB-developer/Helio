@@ -15,7 +15,7 @@ export interface ControllerDateInputProps {
     max?: Date;
     min?: Date;
     label?: string;
-    defaultValue?: Date;
+    defaultValue?: Date | null;
     className?: string;
     dataTestId: string;
     longDateFormat?: boolean;

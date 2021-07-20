@@ -27,11 +27,13 @@ export interface TicketState {
     ticketListQueryType: TicketListQueryType;
     feedLastMessageOn?: Date;
     ticketUpdate?: TicketUpdateModel;
+    isChatTranscriptModalVisible: boolean;
     ticketUpdateHash?: string;
 }
 
 const initialTicketState: TicketState = {
     error: '',
+    isChatTranscriptModalVisible: false,
     isLookupValuesLoading: false,
     isTicketEnumValuesLoading: false,
     tickets: [],

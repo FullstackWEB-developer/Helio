@@ -1,11 +1,11 @@
 import React, {useEffect} from 'react';
 import {Trans, useTranslation} from 'react-i18next';
-import {getDepartments, getProviders} from '@shared/services/lookups.service';
+import {getLocations, getProviders} from '@shared/services/lookups.service';
 import Button from '@components/button/button';
 import {useHistory} from 'react-router-dom';
 import {selectAppointmentTypes, selectSelectedAppointment} from '@pages/external-access/appointment/store/appointments.selectors';
 import {useDispatch, useSelector} from 'react-redux';
-import {selectDepartmentList, selectProviderList} from '@shared/store/lookups/lookups.selectors';
+import {selectLocationList, selectProviderList} from '@shared/store/lookups/lookups.selectors';
 import './appointment.scss';
 import {setRescheduleTimeFrame} from '@pages/external-access/appointment/store/appointments.slice';
 import dayjs from 'dayjs';
@@ -22,14 +22,14 @@ const AppointmentDetail = () => {
     const appointment = useSelector(selectSelectedAppointment);
     const appointmentTypes = useSelector(selectAppointmentTypes);
     const appointmentType = appointmentTypes.find(a => a.id === Number(appointment.appointmentTypeId));
-    const departments = useSelector(selectDepartmentList);
+    const departments = useSelector(selectLocationList);
     const department = departments?.find(a => a.id === appointment.departmentId);
     const providers = useSelector(selectProviderList);
     const provider = providers?.find(a => a.id === appointment.providerId);
 
     useEffect(() => {
         dispatch(getProviders());
-        dispatch(getDepartments());
+        dispatch(getLocations());
     }, [dispatch]);
 
 

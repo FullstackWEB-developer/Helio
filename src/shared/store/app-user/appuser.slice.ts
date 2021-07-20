@@ -5,6 +5,7 @@ import {AgentState} from '@shared/models/agent-state';
 import {LogStream} from '@aws-sdk/client-cloudwatch-logs';
 import {UserStatusUpdate} from '@shared/models/user-status-update.model';
 import {LiveAgentStatusInfo} from '@shared/models/live-agent-status-info.model';
+
 const appUserSlice = createSlice({
     name: 'appuser',
     initialState,
@@ -46,9 +47,9 @@ const appUserSlice = createSlice({
     }
 });
 
-const convertUserStatusUpdateToLiveAgentStatus = (payload: UserStatusUpdate) : LiveAgentStatusInfo | null => {
+const convertUserStatusUpdateToLiveAgentStatus = (payload: UserStatusUpdate): LiveAgentStatusInfo | null => {
 
-    let data : LiveAgentStatusInfo = {
+    let data: LiveAgentStatusInfo = {
         status: payload.status,
         userId: payload.userId,
         timestamp: payload.timestamp,
@@ -58,14 +59,14 @@ const convertUserStatusUpdateToLiveAgentStatus = (payload: UserStatusUpdate) : L
     if (payload.activities && payload.activities.length > 0) {
         const activityType = payload.activities[0].channel;
         if (activityType === 'CHAT') {
-            data.chats =  payload.activities.map((a) => {
+            data.chats = payload.activities.map((a) => {
                 return {
                     timestamp: a.timestamp,
                     customerData: a.customerData
                 }
             });
         } else if (activityType === 'VOICE') {
-            data.calls =  payload.activities.map((a) => {
+            data.calls = payload.activities.map((a) => {
                 return {
                     timestamp: a.timestamp,
                     customerData: a.customerData

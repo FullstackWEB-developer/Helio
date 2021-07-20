@@ -661,6 +661,15 @@ const SvgIcon = ({type, wrapperClassName = '', className = 'icon-medium', fillCl
         </svg>
     }
 
+    const getIconTemplates = () => {
+        return <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"  className={mainClass}>
+            <rect width="24" height="24" fill="none"/>
+            <path data-name="icon templates"
+                  d="M20,2H4A2,2,0,0,0,2.01,4L2,22l4-4H20a2.006,2.006,0,0,0,2-2V4A2.006,2.006,0,0,0,20,2ZM8,14H6V12H8Zm0-3H6V9H8ZM8,8H6V6H8Zm7,6H10V12h5Zm3-3H10V9h8Zm0-3H10V6h8Z"
+                  className={fillClass}/>
+        </svg>
+    }
+
     const getIconTickets = () => {
         return <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className={mainClass}>
             <rect width="24" height="24" fill="none" />
@@ -863,7 +872,8 @@ const SvgIcon = ({type, wrapperClassName = '', className = 'icon-medium', fillCl
         [Icon.CwcLogo]: getCwcLogo,
         [Icon.Spinner]: getIconSpinner,
         [Icon.Format]: getIconFormat,
-        [Icon.CheckMark]: getIconCheckMark
+        [Icon.CheckMark]: getIconCheckMark,
+        [Icon.Templates]: getIconTemplates
     }
 
     if (!isLoading) {

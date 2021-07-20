@@ -11,25 +11,24 @@ import Select from '../../shared/components/select/select';
 import {Option} from '@components/option/option';
 import TagInput from '../../shared/components/tag-input/tag-input';
 import {Contact} from '@shared/models/contact.model';
-import {Department} from '@shared/models/department';
 import {Ticket} from './models/ticket';
 import {TicketNote} from './models/ticket-note';
 import {
-    selectEnumValues,
+    selectEnumValuesAsOptions,
     selectIsTicketEnumValuesLoading,
     selectIsTicketLookupValuesLoading,
-    selectLookupValues
+    selectLookupValues,
+    selectLookupValuesAsOptions
 } from './store/tickets.selectors';
 import {selectContacts} from '@shared/store/contacts/contacts.selectors';
 import {
-    selectDepartmentList,
     selectIsDepartmentListLoading,
+    selectLocationsAsOptions,
     selectUserOptions
 } from '@shared/store/lookups/lookups.selectors';
-
 import {createTicket, getEnumByType, getLookupValues} from './services/tickets.service';
 import {getContactById, searchContactsByName} from '@shared/services/contacts.service';
-import {getDepartments, getUserList} from '@shared/services/lookups.service';
+import {getLocations, getUserList} from '@shared/services/lookups.service';
 import {useHistory} from 'react-router-dom';
 import utils from '../../shared/utils/utils';
 import {TicketsPath} from '../../app/paths';
@@ -48,48 +47,46 @@ import {AxiosError} from 'axios';
 import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
 import {SnackbarType} from '@components/snackbar/snackbar-position.enum';
 import Spinner from '@components/spinner/Spinner';
+import ControlledSelect from '@components/controllers/controlled-select';
+import {TicketType} from '@pages/tickets/models/ticket-type.enum';
+import './ticket-new.scss';
 
 const TicketNew = () => {
     dayjs.extend(utc);
 
-    const {handleSubmit, control, errors, setError, clearErrors, formState, setValue} = useForm({mode: 'all'});
+    const {handleSubmit, control, errors, setError, clearErrors, formState, setValue, watch} = useForm({mode: 'all'});
     const {isValid, errors: stateError} = formState;
     const {t} = useTranslation();
     const history = useHistory();
     const dispatch = useDispatch();
-    const requiredText = t('common.required');
-    const TicketTypeDefault = '1';
-
     const queryParams = new URLSearchParams(window.location.search);
-    const queryPatientId = queryParams.get('patientId');
+    const queryPatientId = queryParams.get('patientId') || '';
     const queryContactId = queryParams.get('contactId');
 
     const users = useSelector(selectUserOptions);
-    const departments = useSelector(selectDepartmentList);
+    const locationOptions = useSelector(selectLocationsAsOptions);
     const contacts = useSelector(selectContacts);
-    const ticketChannels = useSelector((state => selectEnumValues(state, 'TicketChannel')));
-    const ticketPriorities = useSelector((state => selectEnumValues(state, 'TicketPriority')));
-    const ticketStatuses = useSelector((state => selectEnumValues(state, 'TicketStatus')));
-    const ticketTypes = useSelector((state => selectEnumValues(state, 'TicketType')));
+    const sourceOptions = useSelector((state => selectEnumValuesAsOptions(state, 'TicketChannel')));
+    const priorityOptions = useSelector((state => selectEnumValuesAsOptions(state, 'TicketPriority')));
+    const statusOptions = useSelector((state => selectEnumValuesAsOptions(state, 'TicketStatus')));
+    const ticketTypeOptions = useSelector((state => selectEnumValuesAsOptions(state, 'TicketType')));
 
-    const ticketLookupValuesDepartment = useSelector((state) => selectLookupValues(state, 'Department'));
+    const departmentOptions = useSelector((state) => selectLookupValuesAsOptions(state, 'Department'));
     const ticketLookupValuesReason = useSelector((state) => selectLookupValues(state, 'TicketReason'));
     const ticketLookupValuesSubject = useSelector((state) => selectLookupValues(state, 'TicketSubject'));
-    const ticketLookupValuesTags = useSelector((state) => selectLookupValues(state, 'TicketTags'));
+    const tagOptions = useSelector((state) => selectLookupValuesAsOptions(state, 'TicketTags'));
 
     const isDepartmentListLoading = useSelector(selectIsDepartmentListLoading);
     const isLookupValuesLoading = useSelector(selectIsTicketLookupValuesLoading);
     const isTicketEnumValuesLoading = useSelector(selectIsTicketEnumValuesLoading);
 
-    const [isTicketTypeSelected, setIsTicketTypeSelected] = useState(false);
     const [tags, setTags] = useState<string[]>([]);
     const [noteText, setNoteText] = useState('');
-
     const [isPatientIdLoading, setPatientIdLoading] = useState(false);
     const [patientId, setPatientId] = useState('');
     const [patientName, setPatientName] = useState('');
     const patientIdRef = useRef('');
-
+    const [defaultContact, setDefaultContact] = useState<string>('');
     const [patientCaseId, setPatientCaseId] = useState('');
     const [isPatientCaseIdLoading, setPatientCaseIdLoading] = useState(false);
     const patientCaseIdRef = useRef('');
@@ -99,23 +96,30 @@ const TicketNew = () => {
     const [contactName, setContactName] = useState<string>();
     const [debounceContactSearchTerm] = useDebounce(contactSearchTerm, DEBOUNCE_SEARCH_DELAY_MS);
 
-    const {refetch: refetchContacts, isFetching, isLoading} = useQuery<Contact[], Error>([QueryContacts, debounceContactSearchTerm],
+    const {
+        refetch: refetchContacts,
+        isFetching,
+        isLoading
+    } = useQuery<Contact[], Error>([QueryContacts, debounceContactSearchTerm],
         () => {
             return searchContactsByName(debounceContactSearchTerm)
         }, {
-        enabled: false,
-        onSuccess: (data) => {
-            const contactOptionResult = data.map(item => ({
-                label: item.type === ContactType.Company ? item.companyName : `${item.firstName} ${item.lastName}`,
-                value: item.id
-            }) as Option);
+            enabled: false,
+            onSuccess: (data) => {
+                const contactOptionResult = data.map(item => ({
+                    label: item.type === ContactType.Company ? item.companyName : `${item.firstName} ${item.lastName}`,
+                    value: item.id
+                }) as Option);
 
-            setContactOptions(contactOptionResult)
-        },
-        onError: () => {
-            setError('contactId', {type: 'notFound', message: t('ticket_new.error_getting_contacts')});
-        }
-    });
+                setContactOptions(contactOptionResult);
+                if (contactOptionResult && contactOptionResult[0]) {
+                    setValue('contactId', contactOptionResult[0]);
+                }
+            },
+            onError: () => {
+                setError('contactId', {type: 'notFound', message: t('ticket_new.error_getting_contacts')});
+            }
+        });
 
     const createTicketMutation = useMutation(createTicket, {
         onSuccess: (data) => {
@@ -132,15 +136,19 @@ const TicketNew = () => {
             }));
         }
     });
-    const {data: contact, refetch: refetchContact} = useQuery<Contact, AxiosError>([GetContactById, queryContactId], () =>
-        getContactById(queryContactId!),
+    const {
+        data: contact,
+        refetch: refetchContact
+    } = useQuery<Contact, AxiosError>([GetContactById, queryContactId], () =>
+            getContactById(queryContactId!),
         {
             enabled: false,
             onSuccess: ((data) => {
                 if (data) {
                     const contactOption = getContactOption(data);
                     setContactOptions([contactOption]);
-                    setValue('contactId', queryContactId, {shouldValidate: true});
+                    setValue('contactId', queryContactId, {shouldDirty: true});
+                    setDefaultContact(contactOption.value);
                 }
             }),
             onError: () => {
@@ -174,17 +182,9 @@ const TicketNew = () => {
         }
 
         const ticketData: Ticket = {
-            type: selectedTicketTypeOption ? selectedTicketTypeOption.value : TicketTypeDefault,
-            reason: formData.reason,
-            contactId: formData.contactId,
+            ...formData,
             subject: subjectValue,
-            status: formData.status,
-            priority: formData.priority,
             dueDate: dueDateTime ? dueDateTime.utc().local().toDate() : undefined,
-            channel: formData.channel,
-            department: formData.department,
-            location: formData.location,
-            assignee: formData.assignee,
             assignedOn: formData.assignee !== '' ? new Date() : undefined,
             patientId: patientId ? Number(patientId) : undefined,
             patientCaseNumber: patientCaseId ? Number(patientCaseId) : undefined,
@@ -203,24 +203,29 @@ const TicketNew = () => {
         return contactName;
     }
 
-    const validatePatientId = async () => {
+    useEffect(() => {
         if (!patientId || patientIdRef.current === patientId) {
             return;
         }
-        setPatientIdLoading(true);
-        try {
-            const patient: Patient = await getPatientByIdWithQuery(Number(patientId));
-            if (!patient) {
-                throw new Error();
+
+        async function getPatientById() {
+            setPatientIdLoading(true);
+            try {
+                const patient: Patient = await getPatientByIdWithQuery(Number(patientId));
+                if (!patient) {
+                    throw new Error();
+                }
+                setPatientName(`${patient.firstName} ${patient.lastName}`);
+                patientIdRef.current = patientId;
+            } catch {
+                setError('patientId', {type: 'notFound', message: t('ticket_new.patient_id_not_found')});
+            } finally {
+                setPatientIdLoading(false);
             }
-            setPatientName(`${patient.firstName} ${patient.lastName}`);
-            patientIdRef.current = patientId;
-        } catch {
-            setError('patientId', {type: 'notFound', message: t('ticket_new.patient_id_not_found')});
-        } finally {
-            setPatientIdLoading(false);
         }
-    }
+
+        getPatientById().then();
+    }, [patientId]);
 
     const validatePatientCaseId = async () => {
         if (!patientCaseId || patientCaseIdRef.current === patientCaseId) {
@@ -260,9 +265,16 @@ const TicketNew = () => {
         setPatientName('');
         clearErrors('patientId');
     }
+
+    useEffect(() => {
+        if (!!queryPatientId) {
+            onPatientIdChanged(queryPatientId);
+        }
+    }, [queryPatientId]);
+
     useEffect(() => {
         dispatch(getUserList());
-        dispatch(getDepartments());
+        dispatch(getLocations());
         dispatch(getEnumByType('TicketChannel'));
         dispatch(getEnumByType('TicketPriority'));
         dispatch(getEnumByType('TicketStatus'));
@@ -275,49 +287,22 @@ const TicketNew = () => {
 
     useEffect(() => {
         if (debounceContactSearchTerm && debounceContactSearchTerm.length > 2) {
-            refetchContacts();
+            refetchContacts().then();
         } else {
             setContactOptions([]);
         }
         if (queryContactId) {
-            refetchContact();
+            refetchContact().then();
         }
     }, [contact, debounceContactSearchTerm, queryContactId, refetchContact, refetchContacts, setValue]);
 
-    const getOptions = (data: any[] | undefined) => {
-        return data !== undefined ? data?.map((item: any) => {
-            return {
-                value: item.key,
-                label: item.value
-            };
-        }) : [];
-    }
-
-    let sourceOptions: Option[] = getOptions(ticketChannels);
-    let priorityOptions: Option[] = getOptions(ticketPriorities);
-    let statusOptions: Option[] = getOptions(ticketStatuses);
-    let ticketTypeOptions: Option[] = getOptions(ticketTypes);
-
-    const locationOptions: Option[] = departments ? departments.map((item: Department) => {
-        return {
-            value: item.id.toString(),
-            label: item.name
-        };
-    }) : [];
-
-    const getTicketLookupValuesOptions = (data: any[] | undefined) => {
-        if (data) {
-            return convertToOptions(data)
-        }
-        return [];
-    }
-
-    const [selectedTicketTypeOption, setSelectedTicketTypeOption] =
-        useState<Option>();
-
     const getTicketLookupValuesOptionsByTicketType = (data: any[] | undefined) => {
-        if (data && selectedTicketTypeOption) {
-            const filtered = data.filter(v => v.parentValue === selectedTicketTypeOption.value.toString());
+        if (data) {
+            const ticketType = watch('type');
+            if (!ticketType) {
+                return [];
+            }
+            const filtered = data.filter(v => v.parentValue === ticketType.toString());
             return convertToOptions(filtered);
         }
         return [];
@@ -334,45 +319,55 @@ const TicketNew = () => {
 
     const subjectOptions: Option[] = getTicketLookupValuesOptionsByTicketType(ticketLookupValuesSubject);
     const reasonOptions: Option[] = getTicketLookupValuesOptionsByTicketType(ticketLookupValuesReason);
-    const departmentOptions: Option[] = getTicketLookupValuesOptions(ticketLookupValuesDepartment);
-    const tagOptions: Option[] = getTicketLookupValuesOptions(ticketLookupValuesTags);
-
-    const handleChangeTicketType = (option?: Option) => {
-        const selectedTicketType =
-            ticketTypeOptions ? ticketTypeOptions.find((o: Option) => o.value === option?.value) : {} as any;
-
-        setSelectedTicketTypeOption(selectedTicketType);
-        setIsTicketTypeSelected(true);
-    }
 
     const setSelectedTags = (data: string[]) => {
         setTags(data);
     };
 
     if (isDepartmentListLoading || isLookupValuesLoading || isTicketEnumValuesLoading) {
-        return <Spinner fullScreen />;
+        return <Spinner fullScreen/>;
     }
 
     if (contacts === undefined
-        || departments === undefined
-        || ticketChannels === undefined
-        || ticketPriorities === undefined
-        || ticketStatuses === undefined
-        || ticketTypes === undefined
-        || ticketLookupValuesDepartment === undefined
+        || locationOptions === undefined
+        || sourceOptions === undefined
+        || priorityOptions === undefined
+        || statusOptions === undefined
+        || ticketTypeOptions === undefined
+        || departmentOptions === undefined
         || ticketLookupValuesReason === undefined
         || ticketLookupValuesSubject === undefined
-        || ticketLookupValuesTags === undefined
+        || tagOptions === undefined
     ) {
         return <div data-test-id='ticket-new-load-failed'>{t('ticket_new.load_failed')}</div>
     }
 
-    function onSelectChange<TFieldValues>(props: ControllerRenderProps<TFieldValues>) {
-        return (option?: Option) => {
-            if (option) {
-                props.onChange(option.value);
+    const shouldDisplayField = (field: string) => {
+        const ticketType = watch('type');
+        const patientId = watch('patientId');
+        const patientCaseNumber = watch('patientCaseNumber');
+        const contactId = watch('contactId');
+        if (!ticketType) {
+            return false;
+        }
+        switch (field) {
+            case 'contactId': {
+                return !(ticketType === TicketType.EstablishedPatient || ticketType === TicketType.NewPatient || !!patientId || !!patientCaseNumber) || (!!contactId && !!queryContactId)
             }
-        };
+            case 'patientId':
+            case 'patientCaseNumber': {
+                const result = !(!!contactId ||
+                    ticketType === TicketType.BusinessOffice ||
+                    ticketType === TicketType.Facility ||
+                    ticketType === TicketType.Lab ||
+                    ticketType === TicketType.Pharmacy);
+                return result;
+            }
+            case 'reason': {
+                return !(ticketType === TicketType.Default || ticketType === TicketType.Callback)
+            }
+        }
+        return false;
     }
 
     const onContactSelectChanged = (controllerProps: ControllerRenderProps<Record<string, any>>, option?: Option) => {
@@ -383,94 +378,41 @@ const TicketNew = () => {
         setContactName(option.label);
     }
 
-    return <div className="flex flex-col w-full mx-6 my-5 overflow-y-auto">
-        <h5>{t('ticket_new.title')}</h5>
-        <div className={'w-96 pt-10 mx-auto flex flex-col'}>
+    return <div className="flex flex-col w-full pb-5 mx-6 mt-5 overflow-y-auto">
+        <div className='h-18'>
+            <h5>{t('ticket_new.title')}</h5>
+        </div>
+        <div className='pt-7'>
             <form onSubmit={handleSubmit(onSubmit)} noValidate={true}>
-                <div>
-                    <Controller
-                        name='ticketType'
+                <div className='grid grid-cols-3 gap-x-8'>
+                    <ControlledSelect
+                        name='type'
+                        label={'ticket_new.ticket_type'}
+                        options={ticketTypeOptions}
                         control={control}
-                        defaultValue=''
-                        rules={{required: requiredText}}
-                        render={(props) => (
-                            <Select
-                                {...props}
-                                data-test-id={'ticket-new-ticket-type'}
-                                label={'ticket_new.ticket_type'}
-                                options={ticketTypeOptions}
-                                value={props.value}
-                                onSelect={(option?: Option) => {
-                                    if (option) {
-                                        props.onChange(option?.value);
-                                        handleChangeTicketType(option);
-                                    }
-                                }}
-                                error={errors.ticketType?.message}
-                                required={true}
-                            />
-                        )}
+                        required={true}
                     />
-                    {(isTicketTypeSelected && reasonOptions.length > 0) &&
-                        <Controller
+                    <div>
+                        {shouldDisplayField('reason') &&
+                        <ControlledSelect
                             name='reason'
+                            label={'ticket_new.reason'}
+                            options={reasonOptions}
                             control={control}
-                            defaultValue=''
-                            render={(props) => (
-                                <Select
-                                    {...props}
-                                    label={'ticket_new.reason'}
-                                    data-test-id={'ticket-new-reason'}
-                                    options={reasonOptions}
-                                    value={props.value}
-                                    onSelect={onSelectChange(props)}
-                                />
-                            )}
                         />
-                    }
-
-                    <Controller
-                        name='contactId'
-                        control={control}
-                        defaultValue=''
-                        rules={{required: requiredText}}
-                        render={(props) => (
-                            <Select
-                                {...props}
-                                data-test-id='ticket_new.contact'
-                                label={'ticket_new.contact'}
-                                options={contactOptions}
-                                value={props.value}
-                                error={errors.contactId?.message}
-                                isLoading={isLoading || isFetching}
-                                required={true}
-                                suggestionsPlaceholder={t('ticket_new.suggestion_placeholder')}
-                                onTextChange={(value: string) => setContactSearchTerm(value || '')}
-                                onSelect={(option) => onContactSelectChanged(props, option)}
-                            />
-                        )}
-                    />
+                        }
+                    </div>
+                    <div/>
                     <div>
                         {
                             subjectOptions && subjectOptions.length > 1
                                 ?
-                                <Controller
+                                <ControlledSelect
                                     name='subject'
+                                    label={'ticket_new.subject'}
+                                    options={subjectOptions}
                                     control={control}
-                                    defaultValue=''
-                                    rules={{required: requiredText}}
-                                    render={(props) => (
-                                        <Select
-                                            {...props}
-                                            data-test-id={'ticket-new-subject-select'}
-                                            label={'ticket_new.subject'}
-                                            options={subjectOptions}
-                                            value={props.value}
-                                            error={errors.subject?.message}
-                                            required={true}
-                                            onSelect={onSelectChange(props)}
-                                        />
-                                    )}
+                                    required={true}
                                 />
                                 :
                                 <ControlledInput
@@ -483,45 +425,33 @@ const TicketNew = () => {
                                 />
                         }
                     </div>
-                    <Controller
+                    <ControlledSelect
+                        name='assignee'
+                        label={'ticket_new.assignee'}
+                        options={users}
+                        control={control}
+                        required={true}
+                    />
+                    <div/>
+                    <ControlledSelect
                         name='status'
+                        label={'ticket_new.status'}
+                        options={statusOptions}
                         control={control}
-                        defaultValue=''
-                        rules={{required: requiredText}}
-                        render={(props) => (
-                            <Select
-                                {...props}
-                                data-test-id={'ticket-new-status'}
-                                label={'ticket_new.status'}
-                                options={statusOptions}
-                                value={props.value}
-                                error={errors.status?.message}
-                                required={true}
-                                onSelect={onSelectChange(props)}
-                            />
-                        )}
+                        required={true}
                     />
-                    <Controller
+                    <ControlledSelect
                         name='priority'
+                        label={'ticket_new.priority'}
+                        options={priorityOptions}
                         control={control}
-                        defaultValue=''
-                        rules={{required: requiredText}}
-                        render={(props) => (
-                            <Select
-                                {...props}
-                                data-test-id={'ticket-new-priority'}
-                                label={'ticket_new.priority'}
-                                options={priorityOptions}
-                                value={props.value}
-                                error={errors.priority?.message}
-                                required={true}
-                                onSelect={onSelectChange(props)}
-                            />
-                        )}
+                        required={true}
                     />
+                    <div/>
                     <div className="flex">
                         <ControlledDateInput
                             name='dueDate'
+                            defaultValue={null}
                             label='ticket_new.due_date'
                             className='mr-8'
                             control={control}
@@ -535,76 +465,31 @@ const TicketNew = () => {
                             control={control}
                             dataTestId={'ticket-new-due-time'}
                             label='ticket_new.due_time'
-                            autoComplete={false}
                         />
                     </div>
-                    <Controller
+                    <ControlledSelect
                         name='channel'
+                        label={'ticket_new.channel'}
+                        options={sourceOptions}
                         control={control}
-                        defaultValue=''
-                        render={(props) => (
-                            <Select
-                                {...props}
-                                data-test-id={'ticket-new-channel'}
-                                options={sourceOptions}
-                                label={'ticket_new.channel'}
-                                required={true}
-                                value={props.value}
-                                error={errors.channel?.message}
-                                onSelect={onSelectChange(props)}
-                            />
-                        )}
+                        required={true}
                     />
-                    <Controller
+                    <div/>
+                    <ControlledSelect
                         name='department'
+                        label={'ticket_new.department'}
+                        options={departmentOptions}
                         control={control}
-                        defaultValue=''
-                        render={(props) => (
-                            <Select
-                                {...props}
-                                data-test-id='ticket-new-department'
-                                label={'ticket_new.department'}
-                                options={departmentOptions}
-                                value={props.value}
-                                onSelect={onSelectChange(props)}
-                            />
-                        )}
                     />
-                    <Controller
+                    <ControlledSelect
                         name='location'
+                        label={'ticket_new.location'}
+                        options={locationOptions}
                         control={control}
-                        defaultValue=''
-                        render={(props) => (
-                            <Select
-                                {...props}
-                                data-test-id={'ticket-new-location'}
-                                label={'ticket_new.location'}
-                                options={locationOptions}
-                                value={props.value}
-                                onSelect={onSelectChange(props)}
-                            />
-                        )}
                     />
-                    <Controller
-                        name='assignee'
-                        control={control}
-                        defaultValue=''
-                        rules={{required: requiredText}}
-                        render={(props) => (
-                            <Select
-                                {...props}
-                                data-test-id={'ticket-new-assignee'}
-                                options={users}
-                                label={'ticket_new.assignee'}
-                                value={props.value}
-                                error={errors.assignee?.message}
-                                required={true}
-                                onSelect={onSelectChange(props)}
-                            />
-                        )}
-                    />
-                    {
-                        isTicketTypeSelected &&
+                    <div/>
+                    <div>
+                        {shouldDisplayField('patientId') &&
                         <ControlledInput
                             name='patientId'
                             control={control}
@@ -613,64 +498,99 @@ const TicketNew = () => {
                             placeholder={t('ticket_new.patient_id')}
                             isLoading={isPatientIdLoading}
                             disabled={!!queryPatientId}
-                            assistiveText={patientName}
-                            dataTestId={'ticket-new-patient-id'}
-                            onChange={({target}: ChangeEvent<HTMLInputElement>) => onPatientIdChanged(target.value)}
-                            onBlur={validatePatientId}
+                            onBlur={({target}: ChangeEvent<HTMLInputElement>) => onPatientIdChanged(target.value)}
                         />
-                    }
-                    {
-                        isTicketTypeSelected &&
-                        <ControlledInput
-                            name='patientCaseNumber'
-                            control={control}
-                            type='number'
-                            defaultValue=''
-                            placeholder={t('ticket_new.patient_case_number')}
-                            isLoading={isPatientCaseIdLoading}
-                            dataTestId={'ticket-new-patient-case-number'}
-                            onChange={({target}: ChangeEvent<HTMLInputElement>) => onPatientCaseIdChanged(target.value)}
-                            onBlur={validatePatientCaseId}
-                        />
-                    }
-                </div>
-                <ControlledInput
-                    name='note'
-                    control={control}
-                    placeholder={t('ticket_new.add_note')}
-                    dataTestId={'ticket-new-add-note'}
-                    defaultValue=''
-                    onChange={(e: ChangeEvent<HTMLInputElement>) => setNoteText(e.target.value)}
-                />
-                <Controller
-                    name='tagsInput'
-                    control={control}
-                    defaultValue=''
-                    render={(props) => (
-                        <TagInput
-                            {...props}
-                            tagOptions={tagOptions}
-                            label={'ticket_new.tags'}
-                            data-test-id='ticket-new-tag-input'
-                            className={'w-full border-none h-14'}
-                            setSelectedTags={setSelectedTags}
-                        />
-                    )}
-                />
-                <div className='flex flex-row justify-start space-x-4 mt-7'>
-                    <div className='flex items-center'>
-                        <Button data-test-id='ticket-new-cancel-button' type={'button'}
-                            buttonType='secondary-big'
-                            label={'common.cancel'}
-                            onClick={() => history.push(TicketsPath)}
-                        />
-                    </div>
+                        }</div>
                     <div>
-                        <Button isLoading={createTicketMutation.isLoading} buttonType='big' disabled={!isValid || !stateError}
-                            data-test-id='ticket-new-create-button' type={'submit'}
-                            label={'ticket_new.create'} />
+                        {
+                            shouldDisplayField('patientCaseNumber') &&
+                            <ControlledInput
+                                name='patientCaseNumber'
+                                control={control}
+                                type='number'
+                                defaultValue=''
+                                placeholder={t('ticket_new.patient_case_number')}
+                                isLoading={isPatientCaseIdLoading}
+                                onChange={({target}: ChangeEvent<HTMLInputElement>) => onPatientCaseIdChanged(target.value)}
+                                onBlur={validatePatientCaseId}
+                            />
+                        }</div>
+                    <div/>
+                    {shouldDisplayField('patientId') && patientName && <>
+                        <div
+                            className='new-ticket-patient-background w-full h-12 rounded-md flex flex-row items-center px-6'>
+                            <div className='body2-medium'>{`${t('ticket_new.patient_label')} `}</div>
+                            <div className='body2'>{patientName}</div>
+                        </div>
+                        <div/>
+                        <div/>
+                    </>}
+                    <div>
+                        {<div hidden={!shouldDisplayField('contactId')}><Controller
+                            name='contactId'
+                            control={control}
+                            defaultValue=''
+                            render={(props) => (
+                                <Select
+                                    {...props}
+                                    data-test-id='ticket_new.contact'
+                                    label={'ticket_new.contact'}
+                                    options={contactOptions}
+                                    defaultValue={defaultContact}
+                                    error={errors.contactId?.message}
+                                    isLoading={isLoading || isFetching}
+                                    suggestionsPlaceholder={t('ticket_new.suggestion_placeholder')}
+                                    onTextChange={(value: string) => setContactSearchTerm(value || '')}
+                                    onSelect={(option) => onContactSelectChanged(props, option)}
+                                />
+                            )}
+                        /></div>}
+                    </div>
+                    <div/>
+                    <div/>
+                    <div className='col-span-2'>
+                        <ControlledInput
+                            name='note'
+                            control={control}
+                            placeholder={t('ticket_new.add_note')}
+                            defaultValue=''
+                            onChange={(e: ChangeEvent<HTMLInputElement>) => setNoteText(e.target.value)}
+                        />
+                    </div>
+                    <div/>
+                    <div className='flex flex-col '>
+                        <Controller
+                            name='tagsInput'
+                            control={control}
+                            defaultValue=''
+                            render={(props) => (
+                                <TagInput
+                                    {...props}
+                                    tagOptions={tagOptions}
+                                    label={'ticket_new.tags'}
+                                    data-test-id='ticket-new-tag-input'
+                                    className={'w-full border-none h-14'}
+                                    setSelectedTags={setSelectedTags}
+                                />
+                            )}
+                        />
+                    </div>
+                    <div/>
+                    <div/>
+                    <div className='pt-8'>
+                        <Button data-test-id='ticket-new-cancel-button' type={'button'}
+                                label={'common.cancel'}
+                                onClick={() => history.push(TicketsPath)}
+                        />
+                    </div>
+                    <div className='flex justify-end pt-8'>
+                        <Button isLoading={createTicketMutation.isLoading} disabled={!isValid || !stateError}
+                                data-test-id='ticket-new-create-button' type={'submit'}
+                                label={'ticket_new.create'}/>
                     </div>
                 </div>
+
+                <div/>
             </form>
         </div>
     </div>

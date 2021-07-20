@@ -8,10 +8,11 @@ type TabsProps = {
     title?: string;
     titleClass?: string;
     asCard?: boolean;
+    hasBorder?: boolean;
     onSelect?: (selectedTabIndex: number) => void;
 }
 
-const Tabs: React.FC<TabsProps> = ({onSelect, children, title, titleClass='', asCard= false}) => {
+const Tabs: React.FC<TabsProps> = ({onSelect, children, title, titleClass='', asCard= false, hasBorder= true}) => {
     const [selectedTab, setSelectedTab] = useState(0)
 
     const tabSelected = (index: number) => {
@@ -26,9 +27,12 @@ const Tabs: React.FC<TabsProps> = ({onSelect, children, title, titleClass='', as
         'pt-2.5': !asCard
     }, titleClass);
 
+    const wrapperClass = classnames('flex flex-row ', {
+        'border-b': hasBorder
+    });
     return (
         <div>
-            <div className={'flex flex-row border-b'}>
+            <div className={wrapperClass}>
                 {title && <div className={calculatedTitleClass}>{title}</div>}
                 {children.map((item, index) => (
                     <TabTitle

@@ -36,4 +36,11 @@ export interface Ticket {
     isOverdue?: boolean;
     createdForName?: string;
     callbackPhoneNumber?: string;
+    contactAgent?: string;
+    queueName?: string;
+    conversationMainIntent?: string;
+    contactInitiationTimestamp?: string;
+    contactDisconnectTimestamp?: string;
+    connectedToAgentTimestamp?: string;
+    contactWaitDuration?: number;
 }

@@ -34,6 +34,7 @@ export const QueryPharmacies = 'pharmacies';
 export const CheckMedicalRecordStatus = 'check-medical-record-status';
 export const GetTodaysPerformanceMetricsRequest = 'get-today-performance-metric';
 export const GetAgentStatus = 'get-agents-status';
+export const GetChatTranscript = 'get-chat-transcript';
 export const QueryTicketMessageSummaryInfinite = 'ticket-message-summary';
 export const QueryTicketMessagesInfinite = 'ticket-messages';
 export const GetTicketMessage = 'get-ticket-message';

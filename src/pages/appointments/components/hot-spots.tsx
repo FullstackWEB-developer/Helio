@@ -1,7 +1,7 @@
 import Modal from '@shared/components/modal/modal';
 import {useDispatch} from 'react-redux';
 import {useEffect} from 'react';
-import {getDepartments, getProviders} from '@shared/services/lookups.service';
+import {getLocations, getProviders} from '@shared/services/lookups.service';
 import {getHotSpots} from '../services/appointments.service';
 import {toggleHotspots} from '@shared/layout/store/layout.slice';
 import withErrorLogging from '@shared/HOC/with-error-logging';
@@ -28,7 +28,7 @@ const HotSpots = () => {
         }
     );
     useEffect(() => {
-        dispatch(getDepartments());
+        dispatch(getLocations());
         dispatch(getProviders());
     }, [dispatch]);
 

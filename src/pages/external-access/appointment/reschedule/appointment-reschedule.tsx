@@ -13,9 +13,9 @@ import {
     selectRescheduleTimeFrame,
     selectSelectedAppointment
 } from '@pages/external-access/appointment/store/appointments.selectors';
-import {selectDepartmentList, selectProviderList} from '@shared/store/lookups/lookups.selectors';
+import {selectLocationList, selectProviderList} from '@shared/store/lookups/lookups.selectors';
 import React, {useEffect, useMemo, useState} from 'react';
-import {getDepartments, getProviders} from '@shared/services/lookups.service';
+import {getLocations, getProviders} from '@shared/services/lookups.service';
 import {useForm} from 'react-hook-form';
 import ControlledDateInput from '@components/controllers/ControlledDateInput';
 import SvgIcon from '@components/svg-icon/svg-icon';
@@ -35,7 +35,7 @@ const AppointmentReschedule = () => {
     const dispatch = useDispatch();
     const verifiedPatient = useSelector(selectVerifiedPatent);
     const appointment = useSelector(selectSelectedAppointment);
-    const departments = useSelector(selectDepartmentList);
+    const departments = useSelector(selectLocationList);
     const providers = useSelector(selectProviderList);
     const numberOfDays = 14;
     const numberOfWorkDays = 5;
@@ -53,7 +53,7 @@ const AppointmentReschedule = () => {
 
     useEffect(() => {
         dispatch(getProviders());
-        dispatch(getDepartments());
+        dispatch(getLocations());
         dispatch(setIsAppointmentRescheduled(false));
     }, [dispatch]);
 

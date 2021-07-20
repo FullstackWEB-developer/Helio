@@ -3,7 +3,7 @@ import {useDispatch} from 'react-redux';
 import {useTranslation} from 'react-i18next';
 import withErrorLogging from '../../../../shared/HOC/with-error-logging';
 import {Ticket} from '../../models/ticket';
-import {getDepartments, getProviders} from '@shared/services/lookups.service';
+import {getLocations, getProviders} from '@shared/services/lookups.service';
 import {getPatientClinicalDetails} from '@pages/patients/services/patients.service';
 import {useQuery} from 'react-query';
 import {ClinicalDetails} from '@pages/patients/models/clinical-details';
@@ -30,7 +30,7 @@ const TicketDetailAppointments = ({ticket}: TicketDetailAppointmentsProps) => {
     useEffect(() => {
         if (ticket?.patientId) {
             dispatch(getProviders());
-            dispatch(getDepartments());
+            dispatch(getLocations());
         }
     }, [dispatch, ticket]);
 

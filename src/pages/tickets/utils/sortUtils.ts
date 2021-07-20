@@ -1,4 +1,4 @@
-import { Icon } from "../../../shared/components/svg-icon/icon";
+import { Icon } from "@components/svg-icon";
 import {SortDirection} from "../models/sort-direction";
 
 export const SortIconMap = {

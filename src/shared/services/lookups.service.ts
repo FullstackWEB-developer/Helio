@@ -2,8 +2,8 @@ import {KeyValuePair} from '@shared/models';
 import {Dispatch} from '@reduxjs/toolkit';
 import {setError} from '@components/search-bar/store/search-bar.slice';
 import {
-    setDepartments,
     setLoading,
+    setLocations,
     setMetricOptions,
     setProviders,
     setUserList,
@@ -48,24 +48,24 @@ export const getProviders = () => {
     };
 };
 
-export const getDepartments = () => {
+export const getLocations = () => {
     const url = lookupsUrl + '/departments';
-    const departments = store.getState().lookupsState.departmentList;
+    const departments = store.getState().lookupsState.locationList;
     return async (dispatch: Dispatch) => {
         if (!departments || departments.length === 0) {
             dispatch(setError(false));
             dispatch(setLoading(true));
             await Api.get(url)
                 .then((response) => {
-                    dispatch(setDepartments(response.data));
+                    dispatch(setLocations(response.data));
                 })
                 .catch((error) => {
                     if (error.response?.status === 404) {
-                        dispatch(setDepartments(undefined));
+                        dispatch(setLocations(undefined));
                     } else {
-                        logger.error('Failed getting Departments', error);
+                        logger.error('Failed getting Locations', error);
                         dispatch(setError(true));
-                        dispatch(setDepartments(undefined));
+                        dispatch(setLocations(undefined));
                         dispatch(setLoading(false));
                     }
                 });
