@@ -8,6 +8,7 @@ import {CalendarHorizontalAlign} from "@components/date-time-picker/calendar-ali
 export interface ControllerDateInputProps {
     control: Control;
     required?: boolean;
+    errorMessage?: string;
     disabled?: boolean;
     name: string;
     value?: Date;
@@ -90,7 +91,7 @@ const ControlledDateInput = ({
                 isCalendarPositionComputed={isCalendarPositionComputed}
                 longDateFormat={longDateFormat}
                 label={t(label)}
-                error={control.formState.errors[name]?.message}
+                error={props.errorMessage || control.formState.errors[name]?.message}
                 onChange={onChange}
                 onValidationError={onValidationError}
                 onCalendarVisibilityChange={onCalendarVisibilityChange}

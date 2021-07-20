@@ -10,6 +10,7 @@ import {
 } from '@pages/appointments/services/appointments.service';
 import {useHistory} from 'react-router-dom';
 import {
+    selectAppointmentTypes,
     selectIsAppointmentRescheduled,
     selectSelectedAppointment,
     selectSelectedAppointmentSlot
@@ -32,6 +33,8 @@ const AppointmentRescheduleConfirm = () => {
     const dispatch = useDispatch();
     const verifiedPatient = useSelector(selectVerifiedPatent);
     const appointment = useSelector(selectSelectedAppointment);
+    const appointmentTypes = useSelector(selectAppointmentTypes);
+    const appointmentType = appointmentTypes.find(a => a.id === Number(appointment.appointmentTypeId));
     const appointmentSlot = useSelector(selectSelectedAppointmentSlot);
     const departments = useSelector(selectDepartmentList);
     const isAppointmentRescheduled = useSelector(selectIsAppointmentRescheduled);
@@ -86,10 +89,24 @@ const AppointmentRescheduleConfirm = () => {
         <div className="pt-7">
             {t('external_access.appointments.new_appointment_date_time')}
         </div>
-        <h5 className='pb-2'>
+        <h5 className='pb-7'>
             {utils.formatUtcDate(appointmentSlot.date, 'dddd, MMM DD, YYYY')} {dayjs(appointmentSlot.startTime, 'HH:mm').format('[at] h:mm A')}
         </h5>
-        {provider && <div className='pb-8'>
+        <div className='2xl:whitespace-pre 2xl:h-12 2xl:my-3 flex w-full items-center pb-2'>
+            <div className='h7'>
+                {t('external_access.appointments.appointment_details')}
+            </div>
+        </div>
+        <div>
+            {t('external_access.appointments.appointment_date', {
+                date: dayjs(appointment.startDateTime).format('dddd, MMM DD, YYYY'),
+                time: dayjs(appointment.startTime, 'hh:mm').format('hh:mm A')
+            })}
+        </div>
+        <div>
+            {appointmentType?.name ?? appointment.appointmentType}
+        </div>
+        {provider && <div className='pb-2'>
             {t('external_access.appointments.withDoctor', {
                 name: provider.displayName
             })}

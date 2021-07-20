@@ -19,6 +19,7 @@ import utils from '@shared/utils/utils';
 import {logOut, setAuthentication} from "@shared/store/app-user/appuser.slice";
 import {authenticationSelector} from "@shared/store/app-user/appuser.selectors";
 import {selectVerifiedPatent} from '@pages/patients/store/patients.selectors';
+import SvgIcon, {Icon} from '@components/svg-icon';
 
 export interface HipaaVerificationProps {
     request: RedirectLink
@@ -129,9 +130,21 @@ const HipaaVerification = ({request}: HipaaVerificationProps) => {
                     {t(`external_access.title_${request.requestType}`)}
                 </h4>
             </div>
-            <div className='py-6 md:py-10'>
+            <div className='pt-10 md:pt-10 pb-6'>
                 {t('external_access.hipaa.verify_title')}
             </div>
+            {
+                (
+                    formState.errors?.dob ||
+                    formState.errors?.phone ||
+                    formState.errors?.zip
+                ) && <div className='flex'>
+                    <SvgIcon type={Icon.Warning} className='icon-medium' fillClass='danger-icon' />
+                    <div className='pl-2.5 pt-0.5 pb-8 text-danger'>
+                        {t('external_access.hipaa.attention')}
+                    </div>
+                </div>
+            }
             <form onSubmit={handleSubmit(onSubmit)} onChange={() => setErrors('')}>
                 <div className='hipaa-verification-form'>
                     <div className='pb-6'>
@@ -140,6 +153,7 @@ const HipaaVerification = ({request}: HipaaVerificationProps) => {
                             longDateFormat={false}
                             isCalendarDisabled
                             required={true}
+                            errorMessage={formState.errors?.dob && formState.errors?.dob?.type === "required" && t('external_access.hipaa.invalid_dob')}
                             label='external_access.hipaa.dob'
                             assistiveText={utils.getBrowserDatePattern()}
                             control={control}
@@ -162,6 +176,7 @@ const HipaaVerification = ({request}: HipaaVerificationProps) => {
                         <ControlledInput
                             type='zip'
                             required={true}
+                            errorMessage={formState.errors?.zip && formState.errors?.zip?.type === "required" && t('components.input.invalid_zip')}
                             defaultValue=''
                             className='w-full md:w-auto'
                             label={t('external_access.hipaa.zip_code')}

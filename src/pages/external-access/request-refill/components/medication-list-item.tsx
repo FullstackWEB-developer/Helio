@@ -18,9 +18,17 @@ const MedicationListItem = ({data}: MedicationListItemProps) => {
     const {t} = useTranslation();
     const dispatch = useDispatch();
     const history = useHistory();
+
+    const scheduleAppointmentLink = '/o/appointment-schedule';
+    const chatLink = process.env.REACT_APP_CHAT_LINK;
+
     const infoAlertIcon = useRef(null);
     const [displayInfoAlert, setDisplayAlert] = useState<boolean>(false);
     const tooltipDiv = useRef<HTMLDivElement>(null);
+
+    const followUpAppointmentIcon = useRef(null);
+    const [displayFollowUpAppointment, setDisplayFollowUpAppointment] = useState<boolean>(false);
+    const tooltipFollowUpAppointmentDiv = useRef<HTMLDivElement>(null);
 
     const requestRefill = () => {
         dispatch(setMedication(data));
@@ -59,10 +67,39 @@ const MedicationListItem = ({data}: MedicationListItemProps) => {
         </div>
         <div className='hidden xl:flex flex-none w-8 items-center'> </div>
         <div className='hidden xl:flex w-2/12 items-center justify-center'>
-            <Button onClick={() => requestRefill()}
-                    buttonType='medium'
-                    disabled={!data.refillsAllowed}
-                    label='external_access.medication_refill.medication_list.request_refill' />
+            {
+                data.refillsAllowed ?
+                    <Button onClick={() => requestRefill()}
+                            buttonType='medium'
+                            label='external_access.medication_refill.medication_list.request_refill' /> :
+                    <div className='flex items-center'>
+                        <div className='pt-1'>
+                            {t('external_access.medication_refill.medication_list.refill_not_available')}
+                        </div>
+                        <div ref={tooltipFollowUpAppointmentDiv} className='pt-1 pl-2.5'>
+                            <div ref={followUpAppointmentIcon}
+                                 onClick={() => setDisplayFollowUpAppointment(!displayFollowUpAppointment)} className='cursor-pointer'>
+                                <SvgIcon type={Icon.Info} fillClass='rgba-05-fill' />
+                            </div>
+                            <Tooltip targetRef={followUpAppointmentIcon} isVisible={displayFollowUpAppointment} placement='bottom-start'>
+                                <div className='follow-up-appointment px-6 pt-6 pb-9'>
+                                    <div className='subtitle2 pb-3'>
+                                        {t('external_access.medication_refill.medication_list.new_prescription_needed')}
+                                    </div>
+                                    <div className='body2 pb-2.5'>
+                                        {t('external_access.medication_refill.medication_list.you_ran_out')}
+                                    </div>
+                                    <div className='body2 message-link cursor-pointer pb-5'>
+                                        <a rel='noreferrer' target='_self' href={scheduleAppointmentLink}>{t('external_access.medication_refill.medication_list.schedule_appointment_online')}</a>
+                                    </div>
+                                    <div className='body2 message-link cursor-pointer'>
+                                        <a rel='noreferrer' target='_self' href={chatLink}>{t('external_access.medication_refill.medication_list.chat_with_us')}</a>
+                                    </div>
+                                </div>
+                            </Tooltip>
+                        </div>
+                    </div>
+            }
         </div>
     </div>
 }

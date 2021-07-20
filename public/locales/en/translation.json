@@ -497,7 +497,7 @@
       "invalid_email": "Email is not valid",
       "invalid_phone": "Phone number is not valid.",
       "invalid_date": "Date is not valid",
-      "invalid_zip": "Zip code is not valid"
+      "invalid_zip": "Enter a valid zip code"
     }
   },
   "chat_transcripts": {
@@ -524,7 +524,9 @@
       "birth_date_format": "(MM/DD/YYYY)",
       "mobile_phone_number": "Mobile Phones",
       "zip_code": "Zip Code",
-      "verification_failed": "We could not validate your information!"
+      "verification_failed": "We could not validate your information!",
+      "invalid_dob": "Enter a valid birth date (MM/DD/YYYY)",
+      "attention": "There are items that require your attention."
     },
     "appointments": {
       "appointment_list": {
@@ -611,7 +613,12 @@
         "entered_by": "Entered By",
         "prescribed": "Prescribed",
         "stop_date": "Stop Date",
-        "request_refill": "Request Refill"
+        "request_refill": "Request Refill",
+        "refill_not_available": "Refill Not Available",
+        "new_prescription_needed": "New Prescription Needed",
+        "you_ran_out": "You ran out of refills and need to see a provider for new prescription.",
+        "schedule_appointment_online": "Schedule appointment online",
+        "chat_with_us": "Chat with us"
       },
       "pharmacy_information": "Pharmacy Information",
       "change_primary_pharmacy": "Change Primary Pharmacy",
@@ -627,6 +634,7 @@
       "pharmacy_phone": "Phone Number",
       "pharmacy_fax": "Fax Number",
       "use_this_pharmacy": "Use this pharmacy",
+      "use_different_pharmacy": "Use different pharmacy",
       "error_getting_pharmacies": "Error getting pharmacies information.",
       "refill_request": "Medication Refill Request",
       "refill_request_send_message": "Send us a message and we will respond within 2 business days. All messages are confidential.",

@@ -42,6 +42,7 @@ import useDebounce from '@shared/hooks/useDebounce';
 import {DEBOUNCE_SEARCH_DELAY_MS} from '@constants/form-constants';
 import {Facility} from '@pages/external-access/request-refill/models/facility.model';
 import Spinner from '@components/spinner/Spinner';
+import Checkbox, {CheckboxCheckEvent} from '@components/checkbox/checkbox';
 
 const RequestRefill = () => {
     const { t } = useTranslation();
@@ -58,6 +59,7 @@ const RequestRefill = () => {
     const [pharmaciesSearchTerm, setPharmaciesSearchTerm] = useState('');
     const [debouncePharmaciesSearchTerm] = useDebounce(pharmaciesSearchTerm, DEBOUNCE_SEARCH_DELAY_MS);
     const [pharmacyOptions, setPharmacyOptions] = useState<Option[]>([]);
+    const [pharmacyState, setPharmacyState] = useState<Option>();
     const [defaultPharmacy, setDefaultPharmacy] = useState<Pharmacy>();
     const [selectedPharmacy, setSelectedPharmacy] = useState<Facility>();
     const [stateOptions, setStateOptions] = useState<Option[]>([]);
@@ -151,6 +153,13 @@ const RequestRefill = () => {
     const defaultMedication = medicationOptions?.find(m => m.value === medication.medicationName)?.value;
     const defaultProvider = providerOptions.find(p => p.value === verifiedPatient.defaultProviderId.toString())?.value;
 
+    const onUseDifferentPharmacyCheckChange = (event: CheckboxCheckEvent) => {
+        setIsVisibleForm(event.checked);
+        if (!event.checked) {
+            return;
+        }
+    }
+
     const onPharmacySelectChange = (option?: Option) => {
         if (option) {
             const pharmacy = option.object;
@@ -161,7 +170,7 @@ const RequestRefill = () => {
 
             if (pharmacy.state) {
                 const selectedState = stateOptions.find(s => s.value === pharmacy.state);
-                setValue('pharmacyState', selectedState);
+                setPharmacyState(selectedState);
             }
 
             setValue('pharmacyZip', pharmacy.zipCode);
@@ -178,7 +187,29 @@ const RequestRefill = () => {
         }
     }
 
-    const useThisPharmacy = () => {
+    const {isLoading, isError, mutate} = useMutation(createPatientCase, {
+        onSuccess: () => {
+            setMessageText('');
+            history.push('/o/request-refill-confirmation');
+        }
+    });
+
+    const getMarginBottom = () => {
+        return (isLoading || isError) ? ' mb-1.5' : ' mb-10'
+    }
+
+    const getMessageText = () => {
+        if (messageText.length > maxLength) {
+            return messageText.slice(maxLength);
+        }
+        return messageText;
+    }
+
+    const getSuite = (suite: string | undefined) => {
+        return suite ? `${suite}, ` : '';
+    }
+
+    const UseThisPharmacy = () => {
         if (selectedPharmacy?.name !== undefined) {
             setDefaultPharmacy({
                 pharmacyType: selectedPharmacy.pharmacyType,
@@ -207,29 +238,8 @@ const RequestRefill = () => {
         setIsVisibleForm(false);
     }
 
-    const {isLoading, isError, mutate} = useMutation(createPatientCase, {
-        onSuccess: () => {
-            setMessageText('');
-            history.push('/o/request-refill-confirmation');
-        }
-    });
-
-    const getMarginBottom = () => {
-        return (isLoading || isError) ? ' mb-1.5' : ' mb-10'
-    }
-
-    const getMessageText = () => {
-        if (messageText.length > maxLength) {
-            return messageText.slice(maxLength);
-        }
-        return messageText;
-    }
-
-    const getSuite = (suite: string | undefined) => {
-        return suite ? `${suite}, ` : '';
-    }
-
     const onSubmit = (data: any) => {
+        UseThisPharmacy();
         let internalNote = `"** Prescription `;
         internalNote += `${data.medication} `;
         if (defaultPharmacy) {
@@ -250,7 +260,7 @@ const RequestRefill = () => {
                 internalNote: internalNote,
                 ignoreNotification: false,
                 documentSubClass: PatientCaseDocumentSubClass.Refill,
-                documentSource: PatientCaseDocumentSource.Portal
+                documentSource: PatientCaseDocumentSource.Partner
             }
         });
     }
@@ -354,93 +364,78 @@ const RequestRefill = () => {
                         />
                     )}
                 />
-                <div className='border mt-7 rounded'>
+                <div className='border mt-7 pb-0.5 rounded'>
                     <div className='p-6'>
-                        {isVisibleForm ? <Fragment>
-                            <div className='flex justify-between'>
-                                <div className='subtitle pb-4.5'>
-                                    {t('external_access.medication_refill.change_primary_pharmacy')}
-                                </div>
-                                <div className='body2 pharmacy-change cursor-pointer' onClick={() => setIsVisibleForm(!isVisibleForm)}>
-                                    {t('common.close')}
-                                </div>
+                        <div className='flex justify-between'>
+                            <div className='subtitle pb-4.5'>
+                                {t('external_access.medication_refill.pharmacy_information')}
                             </div>
-                            <div className='request-refill-fields'>
-                                {
-                                    getPharmacyNameControl()
-                                }
-                                <ControlledInput name='pharmacyAddress' control={control} required={true} disabled={isReadonlyPharmacy}
-                                                 label={t('external_access.medication_refill.pharmacy_address')}
-                                                 dataTestId='request-refill-pharmacy-address'
-                                />
-                                <ControlledInput name='pharmacySuite' control={control} disabled={isReadonlyPharmacy}
-                                                 label={t('external_access.medication_refill.pharmacy_suite')}
-                                                 dataTestId='request-refill-pharmacy-suite'
-                                />
-                                <ControlledInput name='pharmacyCity' control={control} required={true} disabled={isReadonlyPharmacy}
-                                                 label={t('external_access.medication_refill.pharmacy_city')}
-                                                 dataTestId='request-refill-pharmacy-city'
-                                />
-                                <div className="grid grid-cols-1 lg:grid-cols-12 lg:gap-x-8">
-                                    <div className="col-span-12 lg:col-span-6">
-                                        <ControlledSelect
-                                            name='pharmacyState'
-                                            control={control}
-                                            data-test-id='request-refill-pharmacy-state'
-                                            label={'external_access.medication_refill.pharmacy_state'}
-                                            options={stateOptions}
-                                            required={true}
-                                            disabled={isReadonlyPharmacy}
-                                        />
-                                    </div>
-                                    <div className="col-span-12 lg:col-span-6">
-                                        <ControlledInput name='pharmacyZip' control={control} required={true} disabled={isReadonlyPharmacy}
-                                                         label={t('external_access.medication_refill.pharmacy_zip')}
-                                                         dataTestId='request-refill-pharmacy-zip'
-                                        />
-                                    </div>
-                                </div>
-                                <div className="grid grid-cols-1 lg:grid-cols-12 lg:gap-x-8">
-                                    <div className="col-span-12 lg:col-span-6">
-                                        <ControlledInput name='pharmacyPhone' control={control} type='tel' mask={mask} disabled={isReadonlyPharmacy}
-                                                         label={t('external_access.medication_refill.pharmacy_phone')}
-                                                         dataTestId='request-refill-pharmacy-phone'
-                                                         required={true}
-                                        />
-                                    </div>
-                                    <div className="col-span-12 lg:col-span-6">
-                                        <ControlledInput name='pharmacyFax' control={control} type='tel' mask={mask} disabled={isReadonlyPharmacy}
-                                                         label={t('external_access.medication_refill.pharmacy_fax')}
-                                                         dataTestId='request-refill-pharmacy-fax'
-                                                         required={true}
-                                        />
-                                    </div>
-                                </div>
-                                <Button buttonType='medium'
-                                        label={t('external_access.medication_refill.use_this_pharmacy')}
-                                        className='mt-4 mb-4'
-                                        onClick={useThisPharmacy}
-                                />
+                        </div>
+                        {defaultPharmacy && <Fragment>
+                            <div className='subtitle2'>
+                                {defaultPharmacy.clinicalProviderName}
                             </div>
-                        </Fragment> :
-                        <Fragment>
-                            <div className='flex justify-between'>
-                                <div className='subtitle pb-4.5'>
-                                    {t('external_access.medication_refill.pharmacy_information')}
-                                </div>
+                            <div className='body2'>
+                                {`${getSuite(defaultPharmacy.suite)}${defaultPharmacy.address1}, ${defaultPharmacy.city}`} <br/>
+                                {`${t('external_access.medication_refill.pharmacy_information_ph')} ${utils.formatPhone(defaultPharmacy.phoneNumber)}, 
+                          ${t('external_access.medication_refill.pharmacy_information_fax')} ${utils.formatPhone(defaultPharmacy.faxNumber)}`}
                             </div>
-                            {defaultPharmacy && <Fragment>
-                                <div className='subtitle2'>
-                                    {defaultPharmacy.clinicalProviderName}
-                                </div>
-                                <div className='body2'>
-                                    {`${getSuite(defaultPharmacy.suite)}${defaultPharmacy.address1}, ${defaultPharmacy.city}`} <br/>
-                                    {`${t('external_access.medication_refill.pharmacy_information_ph')} ${utils.formatPhone(defaultPharmacy.phoneNumber)}, 
-                              ${t('external_access.medication_refill.pharmacy_information_fax')} ${utils.formatPhone(defaultPharmacy.faxNumber)}`}
-                                </div>
-                            </Fragment>}
                         </Fragment>}
                     </div>
+                </div>
+                <div className='pt-6'>
+                    <Checkbox name='use-different-pharmacy' label={t('external_access.medication_refill.use_different_pharmacy')} onChange={onUseDifferentPharmacyCheckChange} />
+                    {isVisibleForm && <div className='request-refill-fields'>
+                        {
+                            getPharmacyNameControl()
+                        }
+                        <ControlledInput name='pharmacyAddress' control={control} required={true} disabled={isReadonlyPharmacy}
+                                         label={t('external_access.medication_refill.pharmacy_address')}
+                                         dataTestId='request-refill-pharmacy-address'
+                        />
+                        <ControlledInput name='pharmacySuite' control={control} disabled={isReadonlyPharmacy}
+                                         label={t('external_access.medication_refill.pharmacy_suite')}
+                                         dataTestId='request-refill-pharmacy-suite'
+                        />
+                        <ControlledInput name='pharmacyCity' control={control} required={true} disabled={isReadonlyPharmacy}
+                                         label={t('external_access.medication_refill.pharmacy_city')}
+                                         dataTestId='request-refill-pharmacy-city'
+                        />
+                        <div className="grid grid-cols-1 lg:grid-cols-12 lg:gap-x-8">
+                            <div className="col-span-12 lg:col-span-6">
+                                <ControlledSelect
+                                    name='pharmacyState'
+                                    control={control}
+                                    data-test-id='request-refill-pharmacy-state'
+                                    label={'external_access.medication_refill.pharmacy_state'}
+                                    options={stateOptions}
+                                    value={pharmacyState}
+                                    required={true}
+                                    disabled={isReadonlyPharmacy}
+                                />
+                            </div>
+                            <div className="col-span-12 lg:col-span-6">
+                                <ControlledInput name='pharmacyZip' control={control} required={true} disabled={isReadonlyPharmacy}
+                                                 label={t('external_access.medication_refill.pharmacy_zip')}
+                                                 dataTestId='request-refill-pharmacy-zip'
+                                />
+                            </div>
+                        </div>
+                        <div className="grid grid-cols-1 lg:grid-cols-12 lg:gap-x-8">
+                            <div className="col-span-12 lg:col-span-6">
+                                <ControlledInput name='pharmacyPhone' control={control} type='tel' mask={mask} disabled={isReadonlyPharmacy}
+                                                 label={t('external_access.medication_refill.pharmacy_phone')}
+                                                 dataTestId='request-refill-pharmacy-phone'
+                                />
+                            </div>
+                            <div className="col-span-12 lg:col-span-6">
+                                <ControlledInput name='pharmacyFax' control={control} type='tel' mask={mask} disabled={isReadonlyPharmacy}
+                                                 label={t('external_access.medication_refill.pharmacy_fax')}
+                                                 dataTestId='request-refill-pharmacy-fax'
+                                />
+                            </div>
+                        </div>
+                    </div>}
                 </div>
                 <div className={`flex justify-start items-center full-w mt-8 ${getMarginBottom()}`}>
                     <Button type='submit' isLoading={isLoading} buttonType='big' label={t('common.send')} disabled={!messageText || isLoading} />
