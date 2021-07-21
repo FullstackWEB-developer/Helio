@@ -1,9 +1,13 @@
-import {GetLabResultDetail} from '@constants/react-query-constants';
+import {
+    GetLabResultDetail,
+    GetLabResultDetailImage,
+    GetLabResultsProviderPicture
+} from '@constants/react-query-constants';
 import {selectVerifiedPatent} from '@pages/patients/store/patients.selectors';
 import {AxiosError} from 'axios';
-import React from 'react';
+import React, {useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {useQuery} from 'react-query';
+import {useQuery, useQueryClient} from 'react-query';
 import {useSelector} from 'react-redux';
 import {useParams} from 'react-router';
 import withErrorLogging from '../../../shared/HOC/with-error-logging';
@@ -19,15 +23,30 @@ import LabResultsSection from './components/lab-results-section';
 import {LabResultDetailPage} from './models/lab-result-detail-page.model';
 import LabResultDetailPageImage from './components/lab-result-detail-page-image';
 import Spinner from '@components/spinner/Spinner';
+import LabResultPdfDocument from '@pages/external-access/lab-results/components/lab-result-pdf-document';
+import {RootState} from '../../../app/store';
+import {selectProviderById} from '@shared/store/lookups/lookups.selectors';
+import {PDFViewer} from '@react-pdf/renderer';
 
 const LabResultDetailed = () => {
     const verifiedPatient = useSelector(selectVerifiedPatent);
     const {labResultId} = useParams<{labResultId: string}>();
     const {t} = useTranslation();
-    const {isFetching, data, isError} = useQuery<LabResultDetail, AxiosError>([GetLabResultDetail, verifiedPatient?.patientId, labResultId],
+    const queryClient = useQueryClient();
+    const {isFetching, data, isError, isLoading} = useQuery<LabResultDetail, AxiosError>([GetLabResultDetail, verifiedPatient?.patientId, labResultId],
         () => getPatientLabResultDetail(verifiedPatient?.patientId, Number(labResultId)),
-        {enabled: !!verifiedPatient && !!labResultId}
+        {
+            enabled: !!verifiedPatient && !!labResultId,
+            onSuccess: (data) => {
+                setProviderId(data.providerId);
+            }
+        }
     );
+
+    const pages: {contentType: string, content: string}[] = [];
+    const [providerId, setProviderId] = useState(verifiedPatient?.primaryProviderId);
+    const provider = useSelector((state: RootState) => selectProviderById(state, providerId));
+    const providerImage: string | undefined = queryClient.getQueryData([GetLabResultsProviderPicture, providerId]);
 
     if (!verifiedPatient) {
         return <div>{t('hipaa_validation_form.hipaa_verification_failed')}</div>;
@@ -35,13 +54,22 @@ const LabResultDetailed = () => {
     if (isError) {
         return <h6 className='text-danger'>{t('external_access.lab_results.error')}</h6>;
     }
-    if (isFetching) {
+    if (isFetching || isLoading || !data) {
         return <Spinner fullScreen />;
+    }
+
+    if (data.pages && data.pages.length > 0) {
+        data.pages.forEach((p: LabResultDetailPage) => {
+            const pageData: {contentType: string, content: string} | undefined = queryClient.getQueryData([GetLabResultDetailImage, data.labResultId, p.pageId]);
+            if (pageData) {
+                pages.push(pageData);
+            }
+        });
     }
 
     return (
         data ?
-            <div className='w-full h-full without-default-padding pt-6'>
+            <div className='w-full h-full pt-6 without-default-padding'>
                 <LabResultDetailHeader labResultDetail={data} />
                 <LabResultDetailProviderComment labResultDetail={data} />
                 <div className='mt-8 mb-6'>
@@ -51,7 +79,7 @@ const LabResultDetailed = () => {
                     <div className='subtitle'>{t('external_access.lab_results.lab_results')}</div>
                     {
                         data.createdDateTime && utils.checkIfDateIsntMinValue(data.createdDateTime) &&
-                        <div className='body2 flex'>
+                        <div className='flex body2'>
                             <span className='lab-results-grayed-label'>{t('external_access.lab_results.received')}&nbsp;</span>
                             <span>{utils.formatDateShortMonth(data.createdDateTime.toString())}</span>
                         </div>
@@ -66,14 +94,24 @@ const LabResultDetailed = () => {
                 {
                     data.observations && data.observations.length > 0 ? data.observations.map(observation => <LabResultObservationItem observation={observation}
                         key={observation.observationIdentifier} />)
-                        : <div className='subtitle3 text-center pt-4'>{t('external_access.lab_results.no_observations')}</div>
+                        : <div className='pt-4 text-center subtitle3'>{t('external_access.lab_results.no_observations')}</div>
                 }
-                <div className='mt-8'/>
+                <div className='mt-8' />
                 {
                     data.pages && data.pages.length > 0 &&
                     data.pages.map((page: LabResultDetailPage) => <LabResultDetailPageImage key={page.pageId} labResultId={data.labResultId} page={page} />)
                 }
-                <div className="mt-8"/>
+                <div className='pdf-container'>
+                    <PDFViewer width='100%' height='100%' className='pdf-iframe'>
+                        <LabResultPdfDocument
+                            labResultDetail={data}
+                            provider={provider}
+                            providerImage={providerImage}
+                            verifiedPatient={verifiedPatient}
+                            pages={pages} />
+                    </PDFViewer>
+                </div>
+                <div className="mt-8" />
                 <LabResultsSection title={t('external_access.lab_results.test_information')}>
                     <div className='grid grid-cols-2 gap-x-8 body2'>
                         <div>
@@ -93,19 +131,19 @@ const LabResultDetailed = () => {
                             <span className='lab-results-grayed-label'>{t('external_access.lab_results.laboratory')}</span>
                             {data.performingLabName || t('common.not_available')}
                         </div>
-                        <div/>
+                        <div />
                         <div>
                             <span className='lab-results-grayed-label'>{t('external_access.lab_results.specimen_id')}</span>
                             {data.labResultId}
                         </div>
-                        <div/>
+                        <div />
                         <div>
                             <span className='lab-results-grayed-label'>
                                 {t('external_access.lab_results.collected')}:&nbsp;
                             </span>
                             {data.encounterDate && utils.checkIfDateIsntMinValue(data.encounterDate) ? utils.formatDateShortMonth(data.encounterDate.toString()) : t('common.not-available')}
                         </div>
-                        <div/>
+                        <div />
                         <div>
                             <span className='lab-results-grayed-label'>
                                 {t('external_access.lab_results.received')}:&nbsp;
