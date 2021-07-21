@@ -3,7 +3,7 @@ module.exports = {
     content: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
     options: {
       safelist: {
-        greedy: [/^grid-cols-/, /^col-span-/]
+        greedy: [/^grid-cols-/, /^col-span-/, /^top-/]
       }
     }
   },
