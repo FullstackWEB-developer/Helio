@@ -113,6 +113,7 @@ function App() {
                             <GuardedRoute exact path='/dashboard' component={Dashboard} />
                             <GuardedRoute exact path={TicketsPath} component={withSuspense(TicketList)} />
                             <GuardedRoute exact path={`${TicketsPath}/new`} component={withSuspense(TicketNew)} />
+                            <GuardedRoute exact path={`${TicketsPath}/results`} component={withSuspense(SearchResults)} />
                             <GuardedRoute
                                 exact
                                 path={`${TicketsPath}/:ticketNumber(\\d+)`}
@@ -122,7 +123,11 @@ function App() {
                                 <GuardedRoute exact path='/patients/results' component={withSuspense(SearchResults)} />
                                 <GuardedRoute exact path='/patients/:patientId' component={withSuspense(PatientChart)} />
                             </Switch>
-                            <GuardedRoute exact path={`${ContactsPath}/:contactId?`} component={withSuspense(Contacts)} />
+                            <Switch>
+                                <GuardedRoute exact path={`${ContactsPath}/results`} component={withSuspense(SearchResults)} />
+                                <GuardedRoute exact path={`${ContactsPath}/:contactId?`} component={withSuspense(Contacts)} />
+                            </Switch>
+
                             <GuardedRoute exact path={`${SmsPath}/:ticketId?`} component={withSuspense(Sms)} />
                         </Layout>
                     </SignalRProvider>

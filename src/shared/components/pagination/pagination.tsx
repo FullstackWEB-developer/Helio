@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import SvgIcon, {Icon} from '@components/svg-icon';
 import {keyboardKeys} from '@components/search-bar/constants/keyboard-keys';
 import {useTranslation} from 'react-i18next';
@@ -58,6 +58,10 @@ const Pagination = ({value, ...props}: PaginationProps) => {
             onChanged(nextPaging);
         }
     };
+
+    useEffect(() => {
+        setCurrentPage(value.page);        
+    }, [value.page])
 
     const numberOfItemTo = ((currentPaging.pageSize * currentPaging.page) > currentPaging.totalCount) ? currentPaging.totalCount : (currentPaging.pageSize * currentPaging.page);
     let numberOfItemFrom = numberOfItemTo > (currentPaging.pageSize * (currentPaging.page - 1)) ? (currentPaging.pageSize * (currentPaging.page - 1)) : 1;

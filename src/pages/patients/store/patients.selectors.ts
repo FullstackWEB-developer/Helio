@@ -2,7 +2,6 @@ import { createSelector } from '@reduxjs/toolkit';
 import { RootState } from '../../../app/store';
 import { Appointment } from '../../external-access/appointment/models/appointment.model';
 import { ExtendedPatient } from '../models/extended-patient';
-import { Patient } from '../models/patient';
 import { VerifiedPatient } from '../models/verified-patient';
 import { Insurance } from '../models/insurance';
 import { ClinicalDetails } from '../models/clinical-details';
@@ -16,10 +15,7 @@ export const selectPatient = createSelector(
     patientState,
     state => state.patient as ExtendedPatient
 )
-export const selectPatientList = createSelector(
-    patientState,
-    state => state.patientList as Patient[]
-)
+
 export const selectPatientLoading = createSelector(
     patientState,
     state => state.isLoading as boolean

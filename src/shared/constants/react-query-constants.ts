@@ -40,3 +40,5 @@ export const QueryTicketMessagesInfinite = 'ticket-messages';
 export const GetTicketMessage = 'get-ticket-message';
 export const SearchPatient = 'search-patient';
 export const GetPatient = 'get-patient';
+export const SearchContactResults = 'search-contact-results';
+export const SearchTicketResults = 'search-ticket-results';

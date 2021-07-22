@@ -1,0 +1,32 @@
+.search-results {
+    &-grid{
+        display: grid;
+        
+        column-gap: 2rem;      
+        align-items: center;
+
+        &.head-row{
+            background-color: var(--color-secondary-100);
+            text-transform: uppercase
+        }
+        &.data-row{
+            border-bottom: 1px solid var(--light-divider-7);
+        }
+
+        &.col-template{
+            &-patients {
+                grid-template-columns: 14% 14% 6% 8% 12% 14% auto;
+            }
+            &-contacts {
+                grid-template-columns: 10% 10% 14% 14% 22% 9% auto;
+            }
+            &-tickets {
+                grid-template-columns: 6% 22% 14% 14% 14% 9% auto;
+            }
+        }        
+    }
+
+    &-icon-fill {
+        fill: var(--grayed-out);
+    }
+}

@@ -20,6 +20,7 @@ import {ExtendedPatient} from '@pages/patients/models/extended-patient';
 import {Contact} from '@shared/models/contact.model';
 import {getContactById} from '@shared/services/contacts.service';
 import Spinner from '@components/spinner/Spinner';
+import NoSearchResults from '@components/search-bar/components/no-search-results';
 import Modal from '@components/modal/modal';
 import ChatTranscript from '@pages/tickets/components/ticket-detail/chat-transcript';
 
@@ -79,7 +80,7 @@ const TicketDetail = () => {
     }
 
     if (error) {
-        return <div data-test-id='ticket-detail-error'>{t('common.error')}</div>
+        return <NoSearchResults />;
     }
 
     if (!ticket) {

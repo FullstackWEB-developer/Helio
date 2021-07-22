@@ -23,8 +23,13 @@ const getPrimaryInsuranceHeader = (primaryInsurance: Insurance | ChartInsurance,
     return primaryInsuranceHeader;
 }
 
+const displayPatientSsn = (ssn: string) :boolean => {
+    const numberRegex = /\d/;
+    return numberRegex.test(ssn);
+}
+
 const utils = {
-    getAge, formatDob, getPrimaryInsuranceHeader
+    getAge, formatDob, getPrimaryInsuranceHeader, displayPatientSsn
 }
 
 export default utils

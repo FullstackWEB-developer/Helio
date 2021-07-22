@@ -1,7 +1,6 @@
 import {VerifiedPatient} from '../models/verified-patient';
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import initialState from './patients.initial-state';
-import {Patient} from '../models/patient';
 import {ExtendedPatient} from '../models/extended-patient';
 import {Appointment} from '@pages/external-access/appointment/models';
 
@@ -14,9 +13,6 @@ const patientsSlice = createSlice({
         },
         setError(state, {payload}: PayloadAction<boolean>) {
             state.isError = payload;
-        },
-        setPatients(state, { payload }: PayloadAction<Patient[]>) {
-            state.patientList = payload;
         },
         setPatient(state, {payload}: PayloadAction<ExtendedPatient>) {
             state.patient = payload;
@@ -43,7 +39,6 @@ const patientsSlice = createSlice({
 export const {
     setLoading,
     setError,
-    setPatients,
     clearPatients,
     setPatient,
     clearPatient,

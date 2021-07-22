@@ -1,7 +1,7 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import initialState from './search-bar.initial-state';
-import { searchTypes } from '../constants/search-type-const';
-import { RecentPatient } from '../models/recent-patient';
+import {searchTypes} from '../constants/search-type-const';
+import {RecentPatient} from '../models/recent-patient';
 
 const searchBarSlice = createSlice({
     name: 'search',
@@ -14,7 +14,7 @@ const searchBarSlice = createSlice({
 
             state.selectedType = state.searchTypeFiltered.length > 0
                 ? state.searchTypeFiltered
-                    .reduce((acc, current) => { return acc.priority < current.priority ? acc : current })
+                    .reduce((acc, current) => {return acc.priority < current.priority ? acc : current})
                     .type
                 : 1
         },
@@ -35,7 +35,7 @@ const searchBarSlice = createSlice({
                 : state.searchTypeFiltered[0];
             state.selectedType = newType.type;
         },
-        addRecentPatient(state, { payload }: PayloadAction<RecentPatient>) {
+        addRecentPatient(state, {payload}: PayloadAction<RecentPatient>) {
             const findPatientIndex = state.recentPatients.findIndex(patient => patient.patientId === payload.patientId);
 
             if (findPatientIndex >= 0) {
@@ -50,10 +50,17 @@ const searchBarSlice = createSlice({
         },
         setError(state, action) {
             state.isError = action.payload;
+        },
+        setSearchTerm(state, {payload}: PayloadAction<string>) {
+            state.searchTerm = payload;
+        },
+        setSearchTermDisplayValue(state, {payload}: PayloadAction<string>){
+            state.searchTermDisplayValue = payload;
         }
     }
 });
 
-export const {changeFilteredTypes, setType, changeTypeDown, changeTypeUp, addRecentPatient, clearRecentPatients, setError } = searchBarSlice.actions
+export const {changeFilteredTypes, setType, changeTypeDown, changeTypeUp, addRecentPatient, clearRecentPatients, setError, 
+    setSearchTerm, setSearchTermDisplayValue} = searchBarSlice.actions
 
 export default searchBarSlice.reducer

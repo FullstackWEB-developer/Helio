@@ -16,6 +16,7 @@ import {useQuery} from 'react-query';
 import {PatientChartSummary} from '@pages/patients/models/patient-chart-summary';
 import {GetPatientSummary, OneMinute} from '@constants/react-query-constants';
 import Spinner from '@components/spinner/Spinner';
+import NoSearchResults from '@components/search-bar/components/no-search-results';
 
 interface PatientParams {
     patientId: string
@@ -23,8 +24,8 @@ interface PatientParams {
 
 const PatientChart = () => {
     const dispatch = useDispatch();
-    const { t } = useTranslation();
-    const { patientId } = useParams<PatientParams>();
+    const {t} = useTranslation();
+    const {patientId} = useParams<PatientParams>();
     const loading = useSelector(selectPatientLoading);
     const error = useSelector(selectIsPatientError);
     const patient = useSelector(selectPatient);
@@ -53,7 +54,7 @@ const PatientChart = () => {
         data: patientChartSummary,
         refetch
     } = useQuery<PatientChartSummary, Error>([GetPatientSummary, patientId], () =>
-            getPatientSummary(Number(patientId)),
+        getPatientSummary(Number(patientId)),
         {
             staleTime: OneMinute
         }
@@ -66,16 +67,14 @@ const PatientChart = () => {
 
 
     if (isSummaryLoading) {
-        return <Spinner fullScreen/>
+        return <Spinner fullScreen />
     }
     if (error) {
         return <div hidden={!error} className={'p-4 text-red-500'}>{t('search.search_results.heading_error')}</div>
     }
 
     if (patient === undefined) {
-        return <div className={'p-4'}>
-            <span className={'text-xl font-bold'}>{t('patient.not_found')}</span>
-        </div>;
+        return <NoSearchResults />;
     }
 
     return (
@@ -83,14 +82,14 @@ const PatientChart = () => {
             <div className='w-2/3 overflow-y-auto'>
                 {patientChartSummary &&
                     <>
-                        <PatientHeader isRefreshing={loading} refreshPatient={refreshPatient} patientChartSummary={patientChartSummary}/>
-                        <PatientTabs patientChartSummary={patientChartSummary} patientId={patient.patientId}/>
+                        <PatientHeader isRefreshing={loading} refreshPatient={refreshPatient} patientChartSummary={patientChartSummary} />
+                        <PatientTabs patientChartSummary={patientChartSummary} patientId={patient.patientId} />
                     </>
                 }
 
             </div>
             <div className='activity-panel border-l pt-12 w-1/3'>
-                <ActivityPanel/>
+                <ActivityPanel />
             </div>
         </div>
     );

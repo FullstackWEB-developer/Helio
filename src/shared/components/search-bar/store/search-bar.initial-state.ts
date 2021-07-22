@@ -1,17 +1,21 @@
-import { SearchType } from '../models/search-type';
-import { RecentPatient } from '../models/recent-patient';
+import {SearchType} from '../models/search-type';
+import {RecentPatient} from '../models/recent-patient';
 
 export interface SearchBarState {
     searchTypeFiltered: SearchType[];
     recentPatients: RecentPatient[];
     selectedType: number,
-    isError: boolean
+    isError: boolean,
+    searchTerm: string;
+    searchTermDisplayValue: string;
 }
 
 const initialState: SearchBarState = {
     searchTypeFiltered: [],
     recentPatients: [],
     selectedType: 1,
-    isError: false
+    isError: false,
+    searchTerm: '',
+    searchTermDisplayValue: ''
 }
 export default initialState;
