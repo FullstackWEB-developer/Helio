@@ -73,7 +73,7 @@ const ControlledInput = ({
 
     const cleanMask = (value?: string) => {
         if (value && !!mask) {
-            return value.replace('(', '').replace(' ', '').replace(')', '').replace('-', '');
+            return value.replace('(', '').replace(' ', '').replace(')', '').replace('-', '').replace(/_*/, '');
         }
         return value;
     }
