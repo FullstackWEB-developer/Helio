@@ -181,12 +181,28 @@ const TicketNew = () => {
             });
         }
 
+        const type = Number(formData.type);
+        let patient = patientId;
+        if (type === TicketType.BusinessOffice ||
+            type === TicketType.Facility  ||
+            type === TicketType.Lab  ||
+            type === TicketType.Pharmacy ) {
+            patient = '';
+        }
+
+        let contactId = formData.contactId;
+        if (type === TicketType.EstablishedPatient ||
+        type === TicketType.NewPatient) {
+            contactId = '';
+        }
+
         const ticketData: Ticket = {
             ...formData,
             subject: subjectValue,
+            contactId,
             dueDate: dueDateTime ? dueDateTime.utc().local().toDate() : undefined,
             assignedOn: formData.assignee !== '' ? new Date() : undefined,
-            patientId: patientId ? Number(patientId) : undefined,
+            patientId: patient ? Number(patient) : undefined,
             patientCaseNumber: patientCaseId ? Number(patientCaseId) : undefined,
             tags: tags,
             notes: notes,
@@ -347,24 +363,22 @@ const TicketNew = () => {
         const patientId = watch('patientId');
         const patientCaseNumber = watch('patientCaseNumber');
         const contactId = watch('contactId');
-        if (!ticketType) {
-            return false;
-        }
+        const type = Number(ticketType);
         switch (field) {
             case 'contactId': {
-                return !(ticketType === TicketType.EstablishedPatient || ticketType === TicketType.NewPatient || !!patientId || !!patientCaseNumber) || (!!contactId && !!queryContactId)
+                return !(type === TicketType.EstablishedPatient || type === TicketType.NewPatient || !!patientId || !!patientCaseNumber) || (!!contactId && !!queryContactId)
             }
             case 'patientId':
             case 'patientCaseNumber': {
                 const result = !(!!contactId ||
-                    ticketType === TicketType.BusinessOffice ||
-                    ticketType === TicketType.Facility ||
-                    ticketType === TicketType.Lab ||
-                    ticketType === TicketType.Pharmacy);
+                    type === TicketType.BusinessOffice ||
+                    type === TicketType.Facility ||
+                    type === TicketType.Lab ||
+                    type === TicketType.Pharmacy);
                 return result;
             }
             case 'reason': {
-                return !(ticketType === TicketType.Default || ticketType === TicketType.Callback)
+                return !(type === TicketType.Default || type === TicketType.Callback)
             }
         }
         return false;
