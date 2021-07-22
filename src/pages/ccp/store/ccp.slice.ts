@@ -1,8 +1,9 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import initialState from './ccp.initial-state';
-import { BotContext } from '../models/bot-context';
-import { CcpNote } from '../models/ccp-note.model';
+import {BotContext} from '../models/bot-context';
+import {CcpNote} from '../models/ccp-note.model';
 import {TicketNote} from '../../tickets/models/ticket-note';
+import {CCPConnectionStatus} from '../models/connection-status.enum';
 
 const ccpSlice = createSlice({
     name: 'ccp',
@@ -25,10 +26,13 @@ const ccpSlice = createSlice({
         },
         setNotes: (state, {payload}: PayloadAction<TicketNote[]>) => {
             state.notes = payload;
+        },
+        setConnectionStatus: (state, {payload}: PayloadAction<CCPConnectionStatus>) => {
+            state.connectionStatus = payload;
         }
     }
 });
 
-export const { setChatCounter, setVoiceCounter, setContextPanel, setBotContext, setNoteContext, setNotes } = ccpSlice.actions;
+export const {setChatCounter, setVoiceCounter, setContextPanel, setBotContext, setNoteContext, setNotes, setConnectionStatus} = ccpSlice.actions;
 
 export default ccpSlice.reducer;

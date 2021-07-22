@@ -77,5 +77,7 @@ export enum Icon {
     SentimentSatisfied = "SentimentSatisfied",
     Format = "Format",
     CheckMark = "CheckMark",
-    Templates = "Templates"
+    HelioLogo = 'HelioLogo',
+    Templates = "Templates",
+    ErrorFilled = "ErrorFilled"
 }

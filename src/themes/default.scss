@@ -34,17 +34,17 @@
   --color-blue: #006eff;
 
   //Chart colors:
-  --chart-color-1: #00CC88;
-  --chart-color-2: #2D9FFB;
-  --chart-color-3: #734DEA;
-  --chart-color-4: #FDBC45;
-  --chart-color-5: #F5935E;
-  --chart-color-6: #F4516C;
-  --chart-color-7: #BDBDBD;
-  --chart-color-8: #0047CC;
-  --chart-color-9: #006C3A;
-  --chart-color-10: #3E1C9F;
-  --chart-color-11: #CC0C1F;
+  --chart-color-1: #00cc88;
+  --chart-color-2: #2d9ffb;
+  --chart-color-3: #734dea;
+  --chart-color-4: #fdbc45;
+  --chart-color-5: #f5935e;
+  --chart-color-6: #f4516c;
+  --chart-color-7: #bdbdbd;
+  --chart-color-8: #0047cc;
+  --chart-color-9: #006c3a;
+  --chart-color-10: #3e1c9f;
+  --chart-color-11: #cc0c1f;
 
   --color-bg-primary: #fff;
   --color-text-primary: --color-secondary-900;
@@ -313,7 +313,6 @@
   --default-toolbar-icon: rgba(0, 0, 0, 0.5);
   --rgba-color-03: rgba(0, 0, 0, 0.3);
   --rgba-color-05: rgba(0, 0, 0, 0.5);
-  
   --profile-dropdown-shadow: 0 0.25rem 0.125rem 0 rgba(0, 0, 0, 0.15);
   --ccp-header-color: #4a4a4a;
 
@@ -329,7 +328,7 @@
   --dashboard-tickets-by-channel-row: var(--chart-color-2);
   --dashboard-tickets-by-channel-row-bg: rgb(0, 0, 0, 0.07);
   --dashboard-volume-chart-axis-label-color: rgba(0, 0, 0, 0.45);
-  --dashboard-volume-chart-axis-label-fontFamily: 'PoppinsRegular';
+  --dashboard-volume-chart-axis-label-fontFamily: "PoppinsRegular";
   --dashboard-volume-chart-axis-label-fontSize: 12;
   --dashboard-dropdown-arrows: rgb(0, 0, 0, 0.5);
   --wallboard-agent-table-item-background: rgba(0, 0, 0, 0.04);
@@ -345,7 +344,7 @@
   --contact-second-color: rgba(0, 0, 0, 0.38);
   --contact-list-color-inverted: rgba(255, 255, 255, 0.87);
   --contact-tickets-bold-color: rgba(0, 0, 0, 0.45);
-  --contact-phone-type-fontFamily: 'PoppinsRegular';
+  --contact-phone-type-fontFamily: "PoppinsRegular";
   --contact-phone-type-fontSize: 0.8125rem;
   --contact-phone-type-color: rgba(0, 0, 0, 0.87);
   --contact-dropdown-arrows: rgb(0, 0, 0, 0.5);
@@ -370,7 +369,7 @@
   --button-secondary-small-font-size: var(--subtitle3-font-size);
   --button-secondary-border-color: var(--light-divider-12);
 
-  --highlight-text-background-color: #ABEED6;
+  --highlight-text-background-color: #abeed6;
 
   --button-secondary-medium-padding: 0 1.5rem;
   --button-secondary-medium-font-size: var(--subtitle2-font-size);
@@ -404,6 +403,14 @@
 
   ::-webkit-scrollbar-thumb:hover {
     background: var(--color-secondary-400);
+  }
+
+  a {
+    color: var(--color-primary-800);
+  }
+
+  a:hover {
+    color: var(--color-primary-400);
   }
 }
 

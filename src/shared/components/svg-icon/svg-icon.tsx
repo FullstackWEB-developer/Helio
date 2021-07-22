@@ -794,6 +794,33 @@ const SvgIcon = ({type, wrapperClassName = '', className = 'icon-medium', fillCl
         </svg>
     );
 
+    const getHelioLogo = () => {
+        return (
+            <svg xmlns="http://www.w3.org/2000/svg" width="216" height="75.538" viewBox="0 0 216 75.538" className={mainClass}>
+                <g transform="translate(-15 -21.875)">
+                    <path
+                        d="M0,37.051V74.346H12.279V44.562C3.443,42.993.137,37.28,0,37.051ZM83.929,24.376a25.579,25.579,0,1,0,22.715,37.493H93.1a14.366,14.366,0,0,1-9.141,3.047,13.711,13.711,0,0,1-13.574-9.628h38.544a25.9,25.9,0,0,0,.564-5.347A25.579,25.579,0,0,0,83.929,24.376ZM70.218,45.065a13.711,13.711,0,0,1,13.711-10.1,13.711,13.711,0,0,1,13.711,10.1Zm73.92,29.281h12.279V25.671H144.137Zm46.3-49.97a25.61,25.61,0,1,0,.005,0Zm0,40.555c-7.937,0-14.367-5.683-14.367-14.976s6.353-14.915,14.367-14.915,14.382,5.683,14.382,14.991S198.3,64.992,190.436,64.992ZM150.277,5.317a7.176,7.176,0,1,0,7.16,7.16A7.176,7.176,0,0,0,150.277,5.317ZM118.954,74.346h12.279V0H118.954ZM29.921,24.97l-9.339-1.158a9.491,9.491,0,0,1-8.3-9.4V0H0V16.164a19.805,19.805,0,0,0,17.4,19.7l10.3,1.28A10.268,10.268,0,0,1,36.716,47.35v27H49V46.573a21.771,21.771,0,0,0-19.074-21.6Z"
+                        transform="translate(15 21.875)"
+                        className={fillClass}
+                    />
+                </g>
+            </svg>
+        );
+    }
+
+    const getErrorFilled = () => {
+        return (
+            <svg xmlns="https://www.w3.org/2000/svg" width="16" height="16" version="1.1" viewBox="0 0 16 16" className={mainClass}>
+                <g transform="translate(-16.988 -15.519)">
+                    <circle cx="24.988" cy="23.519" r="8" className={fillClass}/>
+                    <rect x="23.988" y="19.519" width="2" height="5" fill="#fff" />
+                    <rect x="23.988" y="25.519" width="2" height="2" fill="#fff" />
+                </g>
+            </svg>
+
+        )
+    }
+
     const icons = {
         [Icon.Add]: getIconAdd,
         [Icon.AddBlack]: getIconAddBlack,
@@ -873,7 +900,10 @@ const SvgIcon = ({type, wrapperClassName = '', className = 'icon-medium', fillCl
         [Icon.Spinner]: getIconSpinner,
         [Icon.Format]: getIconFormat,
         [Icon.CheckMark]: getIconCheckMark,
-        [Icon.Templates]: getIconTemplates
+        [Icon.HelioLogo]: getHelioLogo,
+        [Icon.CheckMark]: getIconCheckMark,
+        [Icon.Templates]: getIconTemplates,
+        [Icon.ErrorFilled]: getErrorFilled
     }
 
     if (!isLoading) {

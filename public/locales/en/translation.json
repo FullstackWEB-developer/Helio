@@ -38,10 +38,14 @@
     "clear_all": "Clear All",
     "apply": "Apply",
     "filters": "Filters",
-    "enter_text": "Enter Text"
+    "enter_text": "Enter Text",
+    "retry": "Retry",
+    "copyright": "© {{year}} Helio Inc."
   },
   "login": {
-    "loginButton": "Login"
+    "title": "Run your medical office efficiently.",
+    "subtitle": "Cloud based software for medical offices.",
+    "loginButton": "Sign In"
   },
   "user_profile": {
     "statuses": {
@@ -171,6 +175,16 @@
       "no_ticket_id": "There are no ticketId",
       "copy_note": "Copy Note",
       "enter_your_note": "Enter note"
+    },
+    "modal": {
+      "aws_connect": "Amazon Connect",
+      "title_connecting": "Connecting to Services",
+      "title_success": "Connected successfully",
+      "title_fail": "Failed to connect",
+      "desc_connecting": "We are connecting you to following services:",
+      "desc_success": "You are now connected to following services:",
+      "desc_fail": "We were unable to connect to some of the services.",
+      "desc_fail_try": "Please retry or contact your technical support team at <0>{{email}}</0> if problem persists."
     }
   },
   "error": {

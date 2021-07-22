@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState, useCallback} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {useHistory} from 'react-router-dom';
 import 'amazon-connect-streams';
@@ -11,7 +11,7 @@ import {DragPreviewImage, useDrag} from 'react-dnd';
 import {DndItemTypes} from '@shared/layout/dragndrop/dnd-item-types';
 import './ccp.scss';
 import {toggleCcp} from '@shared/layout/store/layout.slice';
-import {useTranslation} from 'react-i18next';
+import {Trans, useTranslation} from 'react-i18next';
 import CcpContext from './components/ccp-context';
 import contextPanels from './models/context-panels';
 import {ccpImage} from './ccpImage';
@@ -24,6 +24,11 @@ import SvgIcon from '@components/svg-icon/svg-icon';
 import {selectContextPanel} from './store/ccp.selectors';
 import {useMutation} from 'react-query';
 import {CCP_ANIMATION_DURATION} from '@constants/form-constants';
+import Modal from '@components/modal/modal';
+import Spinner from '@components/spinner/Spinner';
+import Button from '@components/button/button';
+import {setConnectionStatus} from './store/ccp.slice';
+import {CCPConnectionStatus} from './models/connection-status.enum';
 
 const ccpConfig = {
     region: process.env.REACT_APP_AWS_REGION,
@@ -70,8 +75,19 @@ const Ccp: React.FC<BoxProps> = ({
     isCcpVisibleRef.current = useSelector(isCcpVisibleSelector);
     const [animateToggle, setAnimateToggle] = useState(false);
     const [delayCcpDisplaying, setDelayCcpDisplaying] = useState(true);
+    const [ccpConnectionState, setCcpConnectionState] = useState<CCPConnectionStatus>(CCPConnectionStatus.None);
+    const [isModelOpen, setModelOpen] = useState(false);
 
-    useEffect(() => {
+    const ccpConnectionFailed = (isRetry: boolean) => {
+        setCcpConnectionState(CCPConnectionStatus.Failed);
+
+        if (isRetry) {
+            dispatch(setConnectionStatus(CCPConnectionStatus.Failed));
+            setModelOpen(false);
+        }
+    }
+
+    const initCCP = useCallback((isRetry: boolean = false) => {
         const ccpContainer = document.getElementById('ccp-container');
         connect.core.initCCP(ccpContainer as HTMLDivElement, {
             ccpUrl: ccpConfig.connectBaseUrl! + ccpConfig.ccpUrl,
@@ -83,6 +99,26 @@ const Ccp: React.FC<BoxProps> = ({
                 allowFramedSoftphone: true,
             },
         });
+
+        if (!(connect.core as any).initialized) {
+            setCcpConnectionState(CCPConnectionStatus.Loading);
+            dispatch(setConnectionStatus(CCPConnectionStatus.Loading));
+            setModelOpen(true);
+        }
+
+        connect.core.onInitialized(() => {
+            setCcpConnectionState(CCPConnectionStatus.Success);
+            dispatch(setConnectionStatus(CCPConnectionStatus.Success));
+        });
+
+        connect.core.onAuthFail(() => {
+            ccpConnectionFailed(isRetry);
+        });
+
+        connect.core.onAccessDenied(() => {
+            ccpConnectionFailed(isRetry);
+        });
+
         let agentStates: AgentState[];
         const beforeUnload = (agentStates: AgentState[]) => {
             const state = agentStates.find((agentState) => agentState.name === UserStatus.Offline);
@@ -166,7 +202,10 @@ const Ccp: React.FC<BoxProps> = ({
         return () => {
             window.removeEventListener('beforeunload', () => beforeUnload(agentStates));
         }
+    }, [dispatch, history, logger, username])
 
+    useEffect(() => {
+        return initCCP();
     }, [dispatch, history, logger, username]);
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -226,16 +265,83 @@ const Ccp: React.FC<BoxProps> = ({
         }
     }
 
+    const getModelTitle = () => {
+        switch (ccpConnectionState) {
+            case CCPConnectionStatus.Loading:
+                return t('ccp.modal.title_connecting');
+            case CCPConnectionStatus.Success:
+                return t('ccp.modal.title_success');
+            case CCPConnectionStatus.Failed:
+                return t('ccp.modal.title_fail');
+            default:
+                return '';
+        }
+    }
+
+    const getModelDescription = () => {
+        switch (ccpConnectionState) {
+            case CCPConnectionStatus.Loading:
+                return <>{t('ccp.modal.desc_connecting')}</>;
+            case CCPConnectionStatus.Success:
+                return <>{t('ccp.modal.desc_success')}</>;
+            case CCPConnectionStatus.Failed:
+                return (
+                    <div className='flex flex-col'>
+                        <span>{t('ccp.modal.desc_fail')}</span>
+                        <span>
+                            <Trans i18nKey="ccp.modal.desc_fail_try" values={{email: process.env.REACT_APP_HELIO_SUPPORT_EMAIL}}>
+                                <a rel='noreferrer' href={`mailto:${process.env.REACT_APP_HELIO_SUPPORT_EMAIL}`}> </a>
+                            </Trans>
+                        </span>
+                    </div>
+                );
+            default:
+                return <></>;
+        }
+    }
+    const onRetryClick = () => {
+        initCCP(true);
+    }
     useEffect(() => {
         if (isCcpVisibleRef.current) {
             maximizeCcpControl();
         }
     }, [isCcpVisibleRef.current]);
 
-
-
     return (
         <>
+            <div className='flex items-center justify-center justify-self-center'>
+                <Modal
+                    title={getModelTitle()}
+                    isClosable
+                    isOpen={isModelOpen}
+                    className='ccp-modal'
+                    onClose={() => setModelOpen(false)}>
+                    <div className='pb-7'>
+                        <div className='body2'>{getModelDescription()}</div>
+                        <div className='flex flex-row pt-7'>
+                            {ccpConnectionState === CCPConnectionStatus.Success && <SvgIcon type={Icon.CheckMark} fillClass='success-icon' />}
+                            {ccpConnectionState === CCPConnectionStatus.Failed && <SvgIcon type={Icon.Error} fillClass='danger-icon' />}
+                            <span className='ml-2 body2'>{t('ccp.modal.aws_connect')}</span>
+                        </div>
+                        {ccpConnectionState === CCPConnectionStatus.Loading &&
+                            <div className='mt-5 mb-10'>
+                                <Spinner size='large-40' />
+                            </div>
+                        }
+                        {ccpConnectionState === CCPConnectionStatus.Failed &&
+                            <div className='flex flex-row justify-end'>
+                                <Button
+                                    label={t('common.retry')}
+                                    type="button"
+                                    buttonType='medium'
+                                    onClick={onRetryClick}
+                                />
+                            </div>
+                        }
+                    </div>
+                </Modal>
+            </div>
             <DragPreviewImage src={ccpImage} connect={preview} />
             <div className={`ccp-main z-50 ${animateToggle ? 'ccp-toggle-animate' : ''} ` + (isCcpVisibleRef.current ? 'block' : 'hidden')}
                 style={{left, top, opacity: opacity, visibility: delayCcpDisplaying ? 'hidden' : 'visible'}}
@@ -246,7 +352,7 @@ const Ccp: React.FC<BoxProps> = ({
             >
                 <div className={'ccp-title h-8 flex items-center flex-row justify-between pl-4 body2-white ' + (isHover ? 'visible' : 'invisible')}>
                     <div>{t('ccp.title')}</div>
-                    <div className='w-8 flex justify-center items-center h-full cursor-pointer' onClick={minimizeCcpControl}>-</div>
+                    <div className='flex items-center justify-center w-8 h-full cursor-pointer' onClick={minimizeCcpControl}>-</div>
                 </div>
                 <div className={'flex h-full shadow-md'}>
                     <div className={'flex flex-col h-full min-ccp-width'}>
@@ -254,7 +360,7 @@ const Ccp: React.FC<BoxProps> = ({
                         <div className={`flex justify-center items-center w-full p-0 box-content shadow-md border-t footer-ff ccp-bottom-bar ${isBottomBarVisible ? 'block' : 'hidden'}`}>
                             <span className={`h-10 flex items-center justify-center w-12 ${applyProperIconClass(contextPanels.bot, 'background')}`}>
                                 <SvgIcon type={Icon.Bot}
-                                    className='icon-medium cursor-pointer'
+                                    className='cursor-pointer icon-medium'
                                     onClick={() => dispatch(setContextPanel(contextPanels.bot))}
                                     fillClass={applyProperIconClass(contextPanels.bot)} />
                             </span>
@@ -262,7 +368,7 @@ const Ccp: React.FC<BoxProps> = ({
                                 ticketId ?
                                     <span className={`h-10 flex items-center justify-center w-12 ${applyProperIconClass(contextPanels.note, 'background')}`}>
                                         <SvgIcon type={Icon.Note}
-                                            className='icon-medium cursor-pointer'
+                                            className='cursor-pointer icon-medium'
                                             fillClass={applyProperIconClass(contextPanels.note)}
                                             onClick={() => dispatch(setContextPanel(contextPanels.note))} />
                                     </span>
@@ -273,25 +379,25 @@ const Ccp: React.FC<BoxProps> = ({
                             }
                             <span className={`h-10 flex items-center justify-center w-12 ${applyProperIconClass(contextPanels.tickets, 'background')}`}>
                                 <SvgIcon type={Icon.Tickets}
-                                    className='icon-medium cursor-pointer'
+                                    className='cursor-pointer icon-medium'
                                     fillClass={applyProperIconClass(contextPanels.tickets)}
                                     onClick={() => dispatch(setContextPanel(contextPanels.tickets))} />
                             </span>
                             <span className={`h-10 flex items-center justify-center w-12 ${applyProperIconClass(contextPanels.sms, 'background')}`}>
                                 <SvgIcon type={Icon.Sms}
-                                    className='icon-medium cursor-pointer'
+                                    className='cursor-pointer icon-medium'
                                     fillClass={applyProperIconClass(contextPanels.sms)}
                                     onClick={() => dispatch(setContextPanel(contextPanels.sms))} />
                             </span>
                             <span className={`h-10 flex items-center justify-center w-12 ${applyProperIconClass(contextPanels.email, 'background')}`}>
                                 <SvgIcon type={Icon.Email}
-                                    className='icon-medium cursor-pointer'
+                                    className='cursor-pointer icon-medium'
                                     fillClass={applyProperIconClass(contextPanels.email)}
                                     onClick={() => dispatch(setContextPanel(contextPanels.email))} />
                             </span>
                             <span className={`h-10 flex items-center justify-center w-12 ${applyProperIconClass(contextPanels.scripts, 'background')}`}>
                                 <SvgIcon type={Icon.Scripts}
-                                    className='icon-medium cursor-pointer'
+                                    className='cursor-pointer icon-medium'
                                     fillClass={applyProperIconClass(contextPanels.scripts)}
                                     onClick={() => dispatch(setContextPanel(contextPanels.scripts))} />
                             </span>
