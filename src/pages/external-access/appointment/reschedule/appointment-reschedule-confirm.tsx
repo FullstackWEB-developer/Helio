@@ -80,7 +80,7 @@ const AppointmentRescheduleConfirm = () => {
         });
     }
 
-    return  <div className='2xl:px-48'>
+    return  <div className='px-6'>
         <div className='2xl:whitespace-pre 2xl:h-12 2xl:my-3 flex w-full items-center'>
             <h4>
                 {t('external_access.appointments.reschedule_appointment_title')}
