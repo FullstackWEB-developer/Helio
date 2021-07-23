@@ -20,6 +20,7 @@ import {createPatientCase} from '@pages/external-access/request-refill/services/
 import {PatientCaseDocumentSource, PatientCaseDocumentSubClass} from '@pages/external-access/request-refill/models/patient-case-external.model';
 import {SnackbarType} from '@components/snackbar/snackbar-position.enum';
 import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
+import {SnackbarPosition} from '@components/snackbar/snackbar-type.enum';
 
 const LabResultSendAMessage = ({labResult}: {labResult?: LabResultDetail}) => {
     const {t} = useTranslation();
@@ -61,13 +62,15 @@ const LabResultSendAMessage = ({labResult}: {labResult?: LabResultDetail}) => {
             setExpanded(false);
             dispatch(addSnackbarMessage({
                 type: SnackbarType.Success,
-                message: 'external_access.lab_results.message_success'
+                message: 'external_access.lab_results.message_success',
+                position: SnackbarPosition.TopCenter
             }));
         },
         onError: () => {
             dispatch(addSnackbarMessage({
                 type: SnackbarType.Error,
-                message: 'external_access.lab_results.message_error'
+                message: 'external_access.lab_results.message_error',
+                position: SnackbarPosition.TopCenter
             }));
         }
     });
