@@ -25,7 +25,7 @@ const Modal = ({isOpen, children, title = '', isClosable, className, onClose, to
             <div className={classname(`modal-body bg-white z-50 top-${top} absolute border rounded px-6`, className)}>
                 <div className='flex justify-between h-18'>
                     <h6 className='pb-2 pt-9'>{t(title)}</h6>
-                    {isClosable && <div className='cursor-pointer pt-9' onClick={onClose}>
+                    {isClosable && <div className='pt-4 cursor-pointer' onClick={onClose}>
                         <SvgIcon type={Icon.Close} className='icon-medium' fillClass='active-item-icon' />
                     </div>}
                 </div>
