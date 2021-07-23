@@ -378,6 +378,9 @@ const TicketNew = () => {
                 return result;
             }
             case 'reason': {
+                if (!reasonOptions || reasonOptions.length === 0) {
+                    return false;
+                }
                 return !(type === TicketType.Default || type === TicketType.Callback)
             }
         }
