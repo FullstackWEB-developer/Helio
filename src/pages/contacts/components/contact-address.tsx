@@ -3,7 +3,7 @@ import {useTranslation} from 'react-i18next';
 import RemoveCTA from '@components/remove-cta/remove-cta';
 import Checkbox, {CheckboxCheckEvent} from '@components/checkbox/checkbox';
 import {Control, FieldValues} from 'react-hook-form';
-import ControlledInput from '@components/controllers/ControllerInput';
+import ControlledInput from '@components/controllers/ControlledInput';
 import {Address, AddressType} from '@shared/models/address.model';
 import {useSelector} from 'react-redux';
 import {selectStates} from '@shared/store/lookups/lookups.selectors';

@@ -16,7 +16,7 @@ import {setStates} from '@shared/store/lookups/lookups.slice';
 import {selectStates} from '@shared/store/lookups/lookups.selectors';
 import {updatePatientContactInformation} from '@pages/patients/services/patients.service';
 import {setPatient} from '@pages/patients/store/patients.slice';
-import ControlledInput from '@components/controllers/ControllerInput';
+import ControlledInput from '@components/controllers/ControlledInput';
 
 export interface PatientInformationUpdateProps
 {

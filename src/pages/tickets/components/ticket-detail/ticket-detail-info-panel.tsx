@@ -40,7 +40,7 @@ const TicketDetailInfoPanel = ({ticket, patient, contact}: TicketDetailInfoPanel
     const {t} = useTranslation();
     const updateModel = useSelector(selectTicketUpdateModel);
     const storedUpdateModelHash = useSelector(selectTicketUpdateHash);
-    const {handleSubmit, control, formState, setError, clearErrors, errors, reset} = useForm({
+    const {handleSubmit, control, formState: {isValid}, setError, clearErrors, errors, reset} = useForm({
         defaultValues: updateModel,
         mode: 'onChange'
     });
@@ -55,7 +55,7 @@ const TicketDetailInfoPanel = ({ticket, patient, contact}: TicketDetailInfoPanel
     const [isDueDateVisible, setIsDueDateVisible] = useState(false);
 
     const isDirty = () => {
-        if(!updateModel) {
+        if (!updateModel) {
             return false;
         }
         return storedUpdateModelHash !== hash.MD5(updateModel);
@@ -77,6 +77,7 @@ const TicketDetailInfoPanel = ({ticket, patient, contact}: TicketDetailInfoPanel
             dueTime: ''
         };
         const initialTicketHash = hash.MD5(ticketUpdateModel);
+        reset(ticketUpdateModel);
         dispatch(setTicketUpdateHash(initialTicketHash));
         dispatch(setTicketUpdateModel(ticketUpdateModel));
     }
@@ -174,7 +175,7 @@ const TicketDetailInfoPanel = ({ticket, patient, contact}: TicketDetailInfoPanel
                     <div className='flex flex-row items-center'>
                         <Button onClick={resetForm} className='mr-6' buttonType='secondary' label={'common.cancel'} />
                         <Button buttonType='small' label={'common.save'} type='submit'
-                            disabled={!formState.isValid || isPatientCaseNumberLoading} isLoading={ticketUpdateMutation.isLoading} />
+                            disabled={!isValid || isPatientCaseNumberLoading} isLoading={ticketUpdateMutation.isLoading} />
                     </div>
                 }
             </div>

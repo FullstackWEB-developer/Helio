@@ -19,7 +19,7 @@ import {Icon} from '@components/svg-icon';
 import {showCcp} from '@shared/layout/store/layout.slice';
 import Logger from '@shared/services/logger';
 import Spinner from '@components/spinner/Spinner';
-import ControlledInput from '@components/controllers/ControllerInput';
+import ControlledInput from '@components/controllers/ControlledInput';
 import {TicketUpdateModel} from '@pages/tickets/models/ticket-update.model';
 import utils from '@shared/utils/utils';
 import {Ticket} from '@pages/tickets/models/ticket';
@@ -93,7 +93,6 @@ const TicketDetailTicketInfo = ({ticket, control}: TicketInfoProps) => {
                 name='status'
                 label={'ticket_detail.info_panel.status'}
                 options={statusOptions}
-                value={updateModel.status}
                 control={control}
                 onSelect={(option?: Option) => handleChangeItem('status', option)}
             />
@@ -101,7 +100,6 @@ const TicketDetailTicketInfo = ({ticket, control}: TicketInfoProps) => {
                 name='priority'
                 label={'ticket_detail.info_panel.priority'}
                 options={priorityOptions}
-                value={updateModel.priority}
                 control={control}
                 onSelect={(option?: Option) => handleChangeItem('priority', option)}
             />
@@ -110,14 +108,12 @@ const TicketDetailTicketInfo = ({ticket, control}: TicketInfoProps) => {
                 name='type'
                 label={'ticket_detail.info_panel.ticket_type'}
                 options={ticketTypeOptions}
-                value={updateModel.type}
                 control={control}
                 onSelect={(option?: Option) => handleChangeItem('type', option)}
             />
             {
                 ticket.callbackPhoneNumber &&
                 <ControlledInput
-                    value={updateModel.callbackPhoneNumber}
                     name='callbackPhoneNumber'
                     type='tel'
                     control={control}
@@ -130,7 +126,6 @@ const TicketDetailTicketInfo = ({ticket, control}: TicketInfoProps) => {
                     name='reason'
                     label={'ticket_detail.info_panel.reason'}
                     options={reasonOptions}
-                    value={updateModel.reason}
                     control={control}
                     onSelect={(option?: Option) => handleChangeItem('reason', option)}
                 />
@@ -139,7 +134,6 @@ const TicketDetailTicketInfo = ({ticket, control}: TicketInfoProps) => {
                 name='department'
                 label={'ticket_detail.info_panel.department'}
                 options={departmentOptions}
-                value={updateModel.department}
                 control={control}
                 onSelect={(option?: Option) => handleChangeItem('department', option)}
             />
@@ -147,7 +141,6 @@ const TicketDetailTicketInfo = ({ticket, control}: TicketInfoProps) => {
                 name='location'
                 label={'ticket_detail.info_panel.location'}
                 options={locationOptions}
-                value={updateModel.location}
                 control={control}
                 onSelect={(option?: Option) => handleChangeItem('location', option)}
             />
@@ -155,7 +148,7 @@ const TicketDetailTicketInfo = ({ticket, control}: TicketInfoProps) => {
                 <Controller
                     name='tagsInput'
                     control={control}
-                    defaultValue=''
+                    defaultValue={updateModel.tags}
                     render={(props) => (
                         <TagInput
                             {...props}

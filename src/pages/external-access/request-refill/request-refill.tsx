@@ -33,7 +33,7 @@ import Button from '@components/button/button';
 import {useHistory} from 'react-router-dom';
 import utils from '@shared/utils/utils';
 import './request-refill.scss';
-import ControlledInput from '@components/controllers/ControllerInput';
+import ControlledInput from '@components/controllers/ControlledInput';
 import {selectProviderList} from '@shared/store/lookups/lookups.selectors';
 import {Provider} from '@shared/models/provider';
 import {getProviders, getStates} from '@shared/services/lookups.service';
@@ -59,7 +59,6 @@ const RequestRefill = () => {
     const [pharmaciesSearchTerm, setPharmaciesSearchTerm] = useState('');
     const [debouncePharmaciesSearchTerm] = useDebounce(pharmaciesSearchTerm, DEBOUNCE_SEARCH_DELAY_MS);
     const [pharmacyOptions, setPharmacyOptions] = useState<Option[]>([]);
-    const [pharmacyState, setPharmacyState] = useState<Option>();
     const [defaultPharmacy, setDefaultPharmacy] = useState<Pharmacy>();
     const [selectedPharmacy, setSelectedPharmacy] = useState<Facility>();
     const [stateOptions, setStateOptions] = useState<Option[]>([]);
@@ -167,12 +166,10 @@ const RequestRefill = () => {
             setSelectedPharmacy(pharmacy);
             setValue('pharmacyAddress', pharmacy.address);
             setValue('pharmacyCity', pharmacy.city);
-
             if (pharmacy.state) {
                 const selectedState = stateOptions.find(s => s.value === pharmacy.state);
-                setPharmacyState(selectedState);
+                setValue('pharmacyState', selectedState); 
             }
-
             setValue('pharmacyZip', pharmacy.zipCode);
             setValue('pharmacyPhone', pharmacy.phoneNumber);
             setValue('pharmacyFax', pharmacy.faxNumber);
@@ -409,7 +406,6 @@ const RequestRefill = () => {
                                     data-test-id='request-refill-pharmacy-state'
                                     label={'external_access.medication_refill.pharmacy_state'}
                                     options={stateOptions}
-                                    value={pharmacyState}
                                     required={true}
                                     disabled={isReadonlyPharmacy}
                                 />

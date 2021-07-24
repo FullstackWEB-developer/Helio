@@ -10,7 +10,7 @@ import RequestMedicalRecordDateSelection
     from '@pages/external-access/request-medical-records/request-medical-record-date-selection';
 import Tabs from '@components/tab/Tabs';
 import Tab from '@components/tab/Tab';
-import ControlledInput from '@components/controllers/ControllerInput';
+import ControlledInput from '@components/controllers/ControlledInput';
 import {useForm} from 'react-hook-form';
 import {
     checkMedicalRecordJobStatus, downloadMedicalRecords,

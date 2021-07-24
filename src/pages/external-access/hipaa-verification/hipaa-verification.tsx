@@ -2,7 +2,7 @@ import {useTranslation} from 'react-i18next';
 import {RedirectLink} from '@pages/external-access/hipaa-verification/models/redirect-link';
 import {useForm} from 'react-hook-form';
 import React, {useEffect, useState} from 'react';
-import ControlledInput from '@components/controllers/ControllerInput';
+import ControlledInput from '@components/controllers/ControlledInput';
 import ControlledDateInput from '@components/controllers/ControlledDateInput';
 import Button from '@components/button/button';
 import {verifyPatient, VerifyPatientProps} from '@shared/services/search.service';

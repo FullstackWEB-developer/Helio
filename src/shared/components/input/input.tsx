@@ -55,13 +55,8 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({
 }: InputProps, ref) => {
     const {t} = useTranslation();
     const [isFocused, setIsFocused] = useState(false);
-    const [value, setValue] = useState('');
     const innerRef = customHooks.useCombinedForwardAndInnerRef(ref);
     const [dropdownOpen, setDropdownOpen] = useState(false);
-
-    useEffect(() => {
-        setValue(props.value || '');
-    }, [props.value]);
 
     const validateNumberValue = React.useCallback((event: any) => {
         if (!event.target.value || !InputTypes.Number.test(event.target.value)) {
@@ -94,14 +89,12 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({
     }
 
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setValue(e.target.value);
         if (props.onChange) {
             props.onChange(e);
         }
     }
 
     const clearValue = (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
-        setValue('');
         if (type === 'tel') {
             // @ts-ignore
             innerRef?.current?.props?.inputRef?.current?.setCursorPosition(1);
@@ -140,20 +133,20 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({
                     onChange={onChange}
                     className={`pl-4 pt-6 body2 h-14 flex-shrink flex-grow flex-auto leading-normal w-px flex-1`}
                     placeholder=''
-                    value={value}
+                    value={props.value}
                     disabled={props.disabled || isLoading}
                     autoComplete={props.shouldDisplayAutocomplete ? 'on' : 'off'} />
                 <label htmlFor={htmlFor}
-                    className={`absolute truncate ${props.required ? 'required' : ''} ${isFocused || value ? 'body3 label-small' : `body2${props.disabled ? '-medium' : ''}`} ${props.error ? 'text-danger' : ''}`}>
+                    className={`absolute truncate ${props.required ? 'required' : ''} ${isFocused || props.value ? 'body3 label-small' : `body2${props.disabled ? '-medium' : ''}`} ${props.error ? 'text-danger' : ''}`}>
                     {t(label || placeholder || '')}
                 </label>
-                {dropdownIcon && (!isFocused || !value) && <div className={`absolute pt-${!label ? '3' : '4'} right-4 ${dropdownIconClickHandler ? 'cursor-pointer' : ''}`}>
+                {dropdownIcon && (!isFocused || !props.value) && <div className={`absolute pt-${!label ? '3' : '4'} right-4 ${dropdownIconClickHandler ? 'cursor-pointer' : ''}`}>
                     {
                         <SvgIcon type={dropdownIcon} onClick={dropdownIconClickHandler} fillClass={'select-arrow-fill'} />
                     }
                 </div>}
                 {isFocused &&
-                    value &&
+                    props.value &&
                     <span
                         className="input-addon clear-input-icon flex items-center leading-normal rounded rounded-l-none px-3"
                         onMouseDown={(e) => preventMousedownTriggerBlur(e)}

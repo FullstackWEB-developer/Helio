@@ -38,7 +38,7 @@ import {Patient} from '@pages/patients/models/patient';
 import {GetContactById, QueryContacts} from '@constants/react-query-constants';
 import {useMutation, useQuery} from 'react-query';
 import useDebounce from '@shared/hooks/useDebounce';
-import ControlledInput from '@components/controllers/ControllerInput';
+import ControlledInput from '@components/controllers/ControlledInput';
 import ControlledDateInput from '@components/controllers/ControlledDateInput';
 import ControlledTimeInput from '@components/controllers/ControlledTimeInput';
 import {DEBOUNCE_SEARCH_DELAY_MS} from '@shared/constants/form-constants';

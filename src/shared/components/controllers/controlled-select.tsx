@@ -8,7 +8,6 @@ export interface ControlledSelectProps {
     name: string;
     control: Control;
     label?: string;
-    value?: Option | string;
     defaultValue?: Option | string;
     autoComplete?: boolean;
     searchQuery?: string;
@@ -70,7 +69,7 @@ const ControlledSelect = ({
                 searchQuery={searchQuery}
                 order={order}
                 assistiveText={assistiveText}
-                value={props.value}
+                value={controllerProps.value}
                 disabled={disabled}
                 onTextChange={onTextChange}
                 error={control.formState.errors[name]?.message}

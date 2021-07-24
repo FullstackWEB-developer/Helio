@@ -6,7 +6,7 @@ import React from 'react';
 import {Option} from '@components/option/option';
 import {Icon} from '@components/svg-icon/icon';
 
-export interface ControllerInputProps {
+export interface ControlledInputProps {
     control: Control;
     required?: boolean;
     name: string;
@@ -47,7 +47,7 @@ const ControlledInput = ({
     max,
     placeholder,
     ...props
-}: ControllerInputProps) => {
+}: ControlledInputProps) => {
 
     const {t} = useTranslation();
     const requiredText = t('common.required');

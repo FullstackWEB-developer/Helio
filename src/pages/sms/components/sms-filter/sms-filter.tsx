@@ -34,7 +34,6 @@ const SmsFilter = ({className, isUserFilterEnabled, value, defaultValue, ...prop
     const {control, handleSubmit, watch, setValue, reset} = useForm<SmsFilterParamModel>({
         defaultValues: defaultValue
     });
-    const [assignedTo, setAssignedTo] = useState(value?.assignedTo ?? '');
     const watchTimePeriod = watch('timePeriod');
 
     useEffect(() => {
@@ -52,6 +51,7 @@ const SmsFilter = ({className, isUserFilterEnabled, value, defaultValue, ...prop
                     setValue('toDate', value.toDate);
                 }
             }
+            setValue('assignedTo', value.assignedTo);
         }
 
     }, [setValue, value]);
@@ -126,7 +126,6 @@ const SmsFilter = ({className, isUserFilterEnabled, value, defaultValue, ...prop
 
     const onClearFilter = () => {
         reset();
-        setAssignedTo('');
     }
 
     return (<div className={className}>
@@ -193,7 +192,6 @@ const SmsFilter = ({className, isUserFilterEnabled, value, defaultValue, ...prop
                         control={control}
                         name='assignedTo'
                         defaultValue=''
-                        value={assignedTo}
                         options={getUserOptions()}
                     />
                 </Collapsible>

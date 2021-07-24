@@ -52,7 +52,7 @@ const ContactList = ({contacts, onContactSelect, currentlySelected, fetchMore, i
 
             if (index < contacts.length - 1 && !props.searchValue.length) {
                 const nextLetter = getFirstChar(contacts[index + 1]);
-                if (getFirstChar(c) !== nextLetter) {
+                if (getFirstChar(c).toLowerCase() !== nextLetter.toLowerCase()) {
                     body.push(<ContactListLetter key={`letter-${nextLetter}${index}`} letter={nextLetter} />)
                 }
             }

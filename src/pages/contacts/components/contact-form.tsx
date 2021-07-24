@@ -6,7 +6,7 @@ import ContactAddressPicker from './contact-address-picker';
 import {Option} from '@components/option/option';
 import ContactAddress from './contact-address';
 import {useForm} from 'react-hook-form';
-import ControlledInput from '@components/controllers/ControllerInput';
+import ControlledInput from '@components/controllers/ControlledInput';
 import {createCategorySelectOptions} from '@shared/models/contact-category.enum';
 import {Address, AddressType} from '@shared/models/address.model';
 import {ContactFormModel} from '../models/contact-form.model';
