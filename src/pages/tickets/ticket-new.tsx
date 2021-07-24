@@ -278,7 +278,9 @@ const TicketNew = () => {
     const onPatientIdChanged = (value: string) => {
         patientIdRef.current = '';
         setPatientId(value);
-        setPatientName('');
+        if(!value) {
+            setPatientName('');
+        }
         clearErrors('patientId');
     }
 
@@ -535,8 +537,8 @@ const TicketNew = () => {
                     <div/>
                     {shouldDisplayField('patientId') && patientName && <>
                         <div
-                            className='new-ticket-patient-background w-full h-12 rounded-md flex flex-row items-center px-6'>
-                            <div className='body2-medium'>{`${t('ticket_new.patient_label')} `}</div>
+                            className='mb-6 new-ticket-patient-background w-full h-12 rounded-md flex flex-row items-center px-6'>
+                            <div className='body2-medium whitespace-pre'>{`${t('ticket_new.patient_label')} `}</div>
                             <div className='body2'>{patientName}</div>
                         </div>
                         <div/>
@@ -596,6 +598,7 @@ const TicketNew = () => {
                     <div/>
                     <div className='pt-8'>
                         <Button data-test-id='ticket-new-cancel-button' type={'button'}
+                                buttonType='secondary-medium'
                                 label={'common.cancel'}
                                 onClick={() => history.push(TicketsPath)}
                         />
