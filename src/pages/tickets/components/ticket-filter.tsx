@@ -421,7 +421,7 @@ const TicketFilter = ({isOpen}: {isOpen: boolean}) => {
     }
 
     const getClassNames = () => classNames({
-        'w-96 transition-width transition-slowest ease top-0 bg-secondary-100 overflow-y-auto': isOpen,
+        'w-96 transition-width transition-slowest ease top-0 bg-secondary-100 overflow-y-auto relative': isOpen,
         'hidden': !isOpen
     });
 
