@@ -156,7 +156,8 @@ const ContactDetails = ({contact,
                            editIconClickHandler={editIconClickHandler}
                            starIconClickHandler={starIconClickHandler}
                            deleteIconClickHandler={deleteIconClickHandler}
-                           isLoading={toggleFavoriteMutation.isLoading || deleteContactMutation.isLoading} />
+                           isStarring={toggleFavoriteMutation.isLoading}
+                           isDeleting={deleteContactMutation.isLoading} />
             <div className='px-8 pt-4 w-full'>
                 <Tabs onSelect={(selectedTabIndex) => {setSelectedTab(selectedTabIndex)}}>
                     <Tab title={`${t('contacts.contact-details.details')}`}>

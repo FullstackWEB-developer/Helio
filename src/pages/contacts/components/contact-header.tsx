@@ -13,9 +13,10 @@ interface ContactHeaderProps {
     editIconClickHandler?: () => void,
     starIconClickHandler?: () => void,
     deleteIconClickHandler?: () => void,
-    isLoading: boolean
+    isStarring: boolean,
+    isDeleting: boolean
 }
-const ContactHeader = ({contact, editMode, editIconClickHandler, starIconClickHandler, isLoading, deleteIconClickHandler}: ContactHeaderProps) => {
+const ContactHeader = ({contact, editMode, editIconClickHandler, starIconClickHandler, isStarring, isDeleting, deleteIconClickHandler}: ContactHeaderProps) => {
     const isCompany = contact.type === ContactType.Company;
     const avatarModel: ContactAvatarModel = {
         initials: !isCompany ? `${utils.getInitialsFromFullName(`${contact.firstName} ${contact.lastName}`)}` : '',
@@ -36,12 +37,12 @@ const ContactHeader = ({contact, editMode, editIconClickHandler, starIconClickHa
                     }
                     <ContactSubheaderQuickActions contact={contact} editMode={editMode}
                                                   editIconClickHandler={editIconClickHandler}
-                                                  deleteIconClickHandler={deleteIconClickHandler} isLoading={isLoading} />
+                                                  deleteIconClickHandler={deleteIconClickHandler} isLoading={isDeleting} />
                 </div>
             </div>
             <ContactHeaderQuickActions contact={contact}
                                        starIconClickHandler={starIconClickHandler}
-                                       isLoading={isLoading} />
+                                       isLoading={isStarring} />
         </div>
     )
 }

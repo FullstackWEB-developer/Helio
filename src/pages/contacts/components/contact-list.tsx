@@ -91,7 +91,7 @@ const ContactList = ({contacts, onContactSelect, currentlySelected, fetchMore, i
                               placeholder={`${t('contacts.contact-list.search')}`} />
             <div className="relative max-w-full overflow-y-auto overflow-x-hidden h-full" onScroll={(e) => handleScroll(e)}>
                 {
-                    isFetching && !isFetchingNextPage ? <div /> :
+                    isFetching && !isFetchingNextPage ? <Spinner size='small' className='pt-2' /> :
                         React.Children.toArray(renderList().map((element: any) => element))
                 }
             </div>

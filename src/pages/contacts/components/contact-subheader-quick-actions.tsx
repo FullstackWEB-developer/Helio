@@ -88,7 +88,6 @@ const ContactSubheaderQuickActions = ({editMode, editIconClickHandler, contact, 
     }
 
     return (
-        isLoading ? <Spinner /> :
             <div className='flex justify-center pt-5'>
                 <span className={`pr-3 cursor-pointer`} >
                     <SvgIcon type={Icon.ChannelPhone}
@@ -143,6 +142,7 @@ const ContactSubheaderQuickActions = ({editMode, editIconClickHandler, contact, 
                              className='icon-x-large'
                              fillClass='contact-subheader-quick-action-color'
                              strokeClass='contact-stroke-color'
+                             isLoading={isLoading}
                     />
                 </span>
             </div>
