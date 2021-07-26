@@ -22,14 +22,16 @@ const Modal = ({isOpen, children, title = '', isClosable, className, onClose, to
 
     return (
         <>
-            <div className={classname(`modal-body bg-white z-50 top-${top} absolute border rounded px-6`, className)}>
+            <div className={classname(`modal-body bg-white z-50 top-${top} absolute border rounded`, className)}>
                 <div className='flex justify-between h-18'>
-                    <h6 className='pb-2 pt-9'>{t(title)}</h6>
-                    {isClosable && <div className='pt-4 cursor-pointer' onClick={onClose}>
+                    <h6 className='px-6 pb-2 pt-9'>{t(title)}</h6>
+                    {isClosable && <div className='pt-4 pr-4 cursor-pointer' onClick={onClose}>
                         <SvgIcon type={Icon.Close} className='icon-medium' fillClass='active-item-icon' />
                     </div>}
                 </div>
-                {children}
+                <div className='px-6'>
+                    {children}
+                </div>
             </div>
         </>
     );
