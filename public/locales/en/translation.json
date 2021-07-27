@@ -409,7 +409,7 @@
     "patient_id_not_found": "Patient Id not found.",
     "patient_case_id_not_found": "Patient Case not found.",
     "error_getting_contacts": "Error getting contacts information.",
-    "suggestion_placeholder": "Type two or more characters to filter.",
+    "suggestion_placeholder": "Type three or more characters to filter.",
     "patient_label": "Patient:"
   },
   "tag_input": {
