@@ -335,6 +335,9 @@
   
   --loading-button-background: var(--light-divider-7);
 
+  --pagination-active-item: rgba(0, 0, 0, 0.5);
+  --pagination-inactive-item: rgba(0, 0, 0, 0.38);
+
   ::-webkit-scrollbar {
     width: 0.3125rem;
   }

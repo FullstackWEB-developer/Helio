@@ -13,6 +13,8 @@ const Pagination = ({value, ...props}: PaginationProps) => {
     const {t} = useTranslation();
     const [currentPaging, setCurrentPaging] = useState(value);
     const [currentPage, setCurrentPage] = useState(value.page);
+    const [hasNext, setHasNext] = useState(value.page < value.totalPages);
+    const [hasPrevious, setHasPrevious] = useState(currentPage > 1);
 
     const onKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === keyboardKeys.enter) {
@@ -60,7 +62,9 @@ const Pagination = ({value, ...props}: PaginationProps) => {
     };
 
     useEffect(() => {
-        setCurrentPage(value.page);        
+        setCurrentPage(value.page);
+        setHasPrevious(value.page > 1);
+        setHasNext(value.page < value.totalPages);
     }, [value.page])
 
     const numberOfItemTo = ((currentPaging.pageSize * currentPaging.page) > currentPaging.totalCount) ? currentPaging.totalCount : (currentPaging.pageSize * currentPaging.page);
@@ -84,7 +88,7 @@ const Pagination = ({value, ...props}: PaginationProps) => {
             </div>
             <SvgIcon type={Icon.ArrowLeft}
                 className='cursor-pointer'
-                fillClass='active-item-icon'
+                fillClass={`pagination-${hasPrevious ? 'active' : 'inactive'}-icon`}
                 onClick={onPreviousClick}
             />
 
@@ -98,7 +102,7 @@ const Pagination = ({value, ...props}: PaginationProps) => {
             <SvgIcon
                 type={Icon.ArrowRight}
                 className='cursor-pointer'
-                fillClass='active-item-icon'
+                fillClass={`pagination-${hasNext ? 'active' : 'inactive'}-icon`}
                 onClick={nextPage}
             />
         </div>

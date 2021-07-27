@@ -388,6 +388,9 @@
   --message-outgoing-background-color: rgba(170, 223, 188, 0.55);
   --ticket-patient-name-background: rgba(0,0,0, 0.04);
 
+  --pagination-active-item: rgba(0, 0, 0, 0.5);
+  --pagination-inactive-item: rgba(0, 0, 0, 0.38);
+
   ::-webkit-scrollbar {
     width: 0.3125rem;
   }
