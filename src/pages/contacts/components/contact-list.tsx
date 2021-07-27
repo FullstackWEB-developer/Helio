@@ -5,7 +5,7 @@ import {useTranslation} from 'react-i18next';
 import {ContactBase, ContactExtended} from '@shared/models/contact.model';
 import {Icon} from '@components/svg-icon/icon';
 import {ContactType} from '@shared/models/contact-type.enum';
-import React, {useState} from 'react';
+import React from 'react';
 import Spinner from '@components/spinner/Spinner';
 import SvgIcon from '@components/svg-icon';
 interface ContactListProps {
@@ -21,19 +21,11 @@ interface ContactListProps {
 }
 const ContactList = ({contacts, onContactSelect, currentlySelected, fetchMore, isFetching, isFetchingNextPage, handleAddNewContactClick, ...props}: ContactListProps) => {
     const {t} = useTranslation();
-    const [searchValue, setSearchValue] = useState('');
 
     const getFirstChar = (c: ContactBase) => {
         const isCompany = c.type === ContactType.Company;
         const firstChar = isCompany ? c.companyName?.trim()?.charAt(0) : c.firstName?.trim()?.charAt(0);
         return firstChar ?? '';
-    }
-
-    const isSelectedBySearch = (contact: ContactExtended) => {
-        if (searchValue.length <= 0) {
-            return false
-        }
-        return contact.firstName === searchValue || contact.lastName === searchValue || contact.companyName === searchValue;
     }
 
     const renderList = () => {
@@ -48,7 +40,7 @@ const ContactList = ({contacts, onContactSelect, currentlySelected, fetchMore, i
                 body.push(<ContactListLetter key={`letter-${firstLetter}${index}`} letter={firstLetter} />);
             }
 
-            body.push(<ContactListItem key={c.id} contact={c} onSelect={onContactSelect} selected={c.id === currentlySelected || isSelectedBySearch(c)} />);
+            body.push(<ContactListItem key={c.id} contact={c} onSelect={onContactSelect} selected={c.id === currentlySelected} />);
 
             if (index < contacts.length - 1 && !props.searchValue.length) {
                 const nextLetter = getFirstChar(contacts[index + 1]);
@@ -62,7 +54,6 @@ const ContactList = ({contacts, onContactSelect, currentlySelected, fetchMore, i
     }
 
     const handleSearch = (value: string) => {
-        setSearchValue(value);
         props.searchHandler(value);
     }
 
