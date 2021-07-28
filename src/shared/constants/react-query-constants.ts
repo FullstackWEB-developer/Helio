@@ -42,3 +42,5 @@ export const SearchPatient = 'search-patient';
 export const GetPatient = 'get-patient';
 export const SearchContactResults = 'search-contact-results';
 export const SearchTicketResults = 'search-ticket-results';
+export const GetUserExtended = 'get-user-extended';
+export const GetUserConnect = 'get-user-connect';

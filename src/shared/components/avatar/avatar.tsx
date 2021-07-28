@@ -8,21 +8,22 @@ import './avatar.scss';
 export interface AvatarProps {
     userFullName: string;
     className?: string;
+    labelClassName?: string;
     userPicture?: string;
     status?: UserStatus;
 }
 
-const Avatar = ({userFullName, userPicture, status, className = 'h-10 w-10'}: AvatarProps) => {
+const Avatar = ({userFullName, labelClassName, userPicture, status, className = 'w-10 h-10'}: AvatarProps) => {
 
     const [isErrorPhoto, setErrorPhoto] = useState(false);
 
     return (<div className={classnames('avatar rounded-full flex items-center justify-center relative', className)}>
         {(!userPicture || isErrorPhoto) &&
-            <div className='avatar-initial'>{utils.getInitialsFromFullName(userFullName)}</div>
+            <div className={classnames('avatar-initial', labelClassName)}>{utils.getInitialsFromFullName(userFullName)}</div>
         }
 
         {userPicture && !isErrorPhoto &&
-            <img src={userPicture} className='rounded-full h-full w-full' alt='user' onError={() => setErrorPhoto(true)} />
+            <img src={userPicture} className='w-full h-full rounded-full' alt='user' onError={() => setErrorPhoto(true)} />
         }
 
         {status &&

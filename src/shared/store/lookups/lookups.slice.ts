@@ -5,6 +5,8 @@ import {Provider} from '@shared/models';
 import {Location} from '@shared/models';
 import {User} from '@shared/models';
 import {Option} from '@components/option/option';
+import {RoleBase} from '@shared/models/role-base.model';
+import {TicketEnumValue} from '@pages/tickets/models/ticket-enum-value.model';
 
 const lookupsSlice = createSlice({
     name: 'lookups',
@@ -16,21 +18,28 @@ const lookupsSlice = createSlice({
         setError(state, {payload}: PayloadAction<boolean>) {
             state.isError = payload;
         },
-        setProviders(state, { payload }: PayloadAction<Provider[] | undefined>) {
+        setProviders(state, {payload}: PayloadAction<Provider[] | undefined>) {
             state.providerList = payload;
             state.isLoading = false;
         },
-        setStates(state, { payload }: PayloadAction<Option[] | undefined>) {
+        setStates(state, {payload}: PayloadAction<Option[] | undefined>) {
             state.states = payload;
         },
-        setLocations(state, { payload }: PayloadAction<Location[] | undefined>) {
+        setLocations(state, {payload}: PayloadAction<Location[] | undefined>) {
             state.locationList = payload;
             state.isLoading = false;
         },
-        setUserList(state, { payload }: PayloadAction<User[] | undefined>) {
+        setUserList(state, {payload}: PayloadAction<User[] | undefined>) {
             state.userList = payload;
         },
-        setMetricOptions(state, { payload }: PayloadAction<KeyValuePair[] | undefined>) {
+        setRoleList(state, {payload}: PayloadAction<RoleBase[] | undefined>) {
+            state.roleList = payload;
+        },
+
+        setForwardToOptions(state, {payload}: PayloadAction<TicketEnumValue[] | undefined>) {
+            state.forwardToOptions = payload;
+        },
+        setMetricOptions(state, {payload}: PayloadAction<KeyValuePair[] | undefined>) {
             state.metricOptions = payload;
             state.isLoading = false;
         }
@@ -42,8 +51,10 @@ export const {
     setError,
     setProviders,
     setLocations,
-    setUserList,    
+    setUserList,
+    setRoleList,
     setMetricOptions,
+    setForwardToOptions,
     setStates
 } = lookupsSlice.actions
 

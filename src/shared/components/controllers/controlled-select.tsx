@@ -16,6 +16,7 @@ export interface ControlledSelectProps {
     assistiveText?: string;
     disabled?: boolean;
     required?: boolean;
+    className?: string;
     onTextChange?: (value: string) => void;
     onSelect?: (option?: Option) => void
 }
@@ -31,6 +32,7 @@ const ControlledSelect = ({
     assistiveText,
     disabled,
     autoComplete,
+    className,
     onSelect,
     onTextChange,
     required = false,
@@ -62,6 +64,7 @@ const ControlledSelect = ({
                 onSelect={(option) => onSelected(controllerProps, option)}
                 data-test-id={`${name}-test-id`}
                 label={label}
+                className={className}
                 defaultValue={defaultValue}
                 autoComplete={autoComplete}
                 options={options}

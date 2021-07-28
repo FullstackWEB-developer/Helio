@@ -1,15 +1,20 @@
-import {KeyValuePair} from '@shared/models';
+import {
+    ConnectUser,
+    KeyValuePair,
+    Provider,
+    Location,
+    User
+} from '@shared/models';
 import {RootState} from '../../../app/store';
-import {Provider} from '@shared/models';
-import {Location} from '@shared/models';
-import {User} from '@shared/models';
 import {Option} from '@components/option/option';
+import {RoleBase} from '@shared/models/role-base.model';
+import {TicketEnumValue} from '@pages/tickets/models/ticket-enum-value.model';
 
 export const selectLocationList = (state: RootState) => state.lookupsState.locationList as Location[];
-
 export const selectProviderList = (state: RootState) => state.lookupsState.providerList as Provider[];
 export const selectUserList = (state: RootState): User[] => state.lookupsState.userList ? state.lookupsState.userList : [];
-
+export const selectRoleList = (state: RootState) => state.lookupsState.roleList as RoleBase[];
+export const selectConnectUserList = (state: RootState) => state.lookupsState.connectUserList as ConnectUser[]
 export const selectUserOptions = (state: RootState): Option[] => {
     return state.lookupsState.userList ? state.lookupsState.userList.map((item: User) => {
         return {
@@ -45,3 +50,4 @@ export const selectProviderById = (state: RootState, providerId: number) => {
 }
 export const selectIsDepartmentListLoading = (state: RootState) => state.lookupsState.isLoading as boolean;
 export const selectMetricOptions = (state: RootState) => state.lookupsState.metricOptions as KeyValuePair[];
+export const selectForwardToOptions = (state: RootState) => state.lookupsState.forwardToOptions as TicketEnumValue[];

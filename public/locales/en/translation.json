@@ -40,7 +40,10 @@
     "filters": "Filters",
     "enter_text": "Enter Text",
     "retry": "Retry",
-    "copyright": "© {{year}} Helio Inc."
+    "copyright": "© {{year}} Helio Inc.",
+    "activate": "Activate",
+    "deactivate": "Deactivate",
+    "change": "Change"
   },
   "login": {
     "title": "Run your medical office efficiently.",
@@ -223,9 +226,9 @@
       "ssn": "Ssn",
       "department": "Department",
       "phone": "Phone",
-      "company":"Company",
-      "position":"Position",
-      "address":"Address",
+      "company": "Company",
+      "position": "Position",
+      "address": "Address",
       "ticket_id": "Ticket ID",
       "subject": "Subject",
       "name": "Name",
@@ -428,11 +431,11 @@
     "send_email_title": "Send Email",
     "add_note": "Enter Text",
     "sms_send_success": "Your message was sent.",
-    "email_subject" : "About ticket {{ticketNumber}}",
+    "email_subject": "About ticket {{ticketNumber}}",
     "sms_send_fail": "Sms sent failed.",
     "email_send_success": "Your message was sent.",
     "email_send_fail": "Email sent failed.",
-    "chat_transcript" : {
+    "chat_transcript": {
       "title": "Chat Transcript",
       "chat_info": "Chat Info",
       "patient": "Patient",
@@ -944,7 +947,7 @@
     "tooltip_unavailable_sms_message": "SMS not available. SMS message can not be sent to this contact."
   },
   "sms": {
-    "you":"You",
+    "you": "You",
     "query_type": {
       "my_sms": "My SMS",
       "team_sms": "Team SMS"
@@ -968,25 +971,51 @@
         "reason": "Reason"
       },
       "new": {
-        "to":"To",
+        "to": "To",
         "draft": "Draft",
         "existing_ticket": {
           "title": "Existing open Tickets found.",
           "description": "We have found existing open tickets for this patient. Please select ticket you would like this communication to be associated with or select create new ticket below.",
           "select_ticket": "Select Existing Ticket",
           "create_ticket": "Create a New Ticket",
-          "list":{
+          "list": {
             "ticket_type": "Ticket Type",
             "reason": "Reason",
             "created_label": "Created:",
             "relative_time_suffix": "ago"
           }
         },
-        "new_ticket" : {
-          "title":"You are starting a new email conversation",
-          "form_title":"Enter Ticket Information"
+        "new_ticket": {
+          "title": "You are starting a new email conversation",
+          "form_title": "Enter Ticket Information"
         }
       }
     }
+  },
+  "users": {
+    "not_found": "User not found",
+    "info_section": {
+      "title": "User Information",
+      "email": "Email:",
+      "department": "Department:",
+      "created_by": "Created By:",
+      "created_on": "Created On:",
+      "modified_by": "Modified By:",
+      "modified_on": "Modified On:"
+    },
+    "role": "User Role",
+    "role_manager": "Manager",
+    "role_admin": "Admin",
+    "role_agent": "Agent",
+    "ehr_settings": "EHR/EMR settings",
+    "ehr_provider_mapping": "EHR/EMR Provider Mapping",
+    "active_queues": "Active Queues",
+    "call_forwarding": "Call Forwarding",
+    "call_forwarding_enabled": "Enable Call Forwarding",
+    "call_forwarding_value_phone": "Phone",
+    "call_forwarding_value_agent": "Agent",
+    "call_forwarding_type": "Forward To",
+    "user_update_success": "User has been updated",
+    "user_update_error": "Error updating user"
   }
 }

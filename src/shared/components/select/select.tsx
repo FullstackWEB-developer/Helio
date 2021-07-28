@@ -8,7 +8,7 @@ import {keyboardKeys} from '@components/search-bar/constants/keyboard-keys';
 import SvgIcon from '@components/svg-icon/svg-icon';
 import {Icon} from '@components/svg-icon/icon';
 import Spinner from '@components/spinner/Spinner';
-
+import classnames from 'classnames';
 interface SelectProps {
     label?: string;
     value?: Option | string;
@@ -23,10 +23,11 @@ interface SelectProps {
     required?: boolean;
     suggestionsPlaceholder?: string;
     isLoading?: boolean;
+    className?: string;
     onTextChange?: (value: string) => void;
     onSelect?: (option?: Option) => void;
 }
-const Select = React.forwardRef<HTMLDivElement, SelectProps>(({options, order, label, autoComplete = true, defaultValue = null, ...props}: SelectProps, ref) => {
+const Select = React.forwardRef<HTMLDivElement, SelectProps>(({options, order, label, className, autoComplete = true, defaultValue = null, ...props}: SelectProps, ref) => {
     const {t}: {t: any} = useTranslation();
     const [open, setOpen] = useState(false);
     const [selectedOption, setSelectedOption] = useState<Option | null | undefined>(typeof defaultValue === 'string' ? options.find(a => a.value === defaultValue) : defaultValue);
@@ -153,7 +154,7 @@ const Select = React.forwardRef<HTMLDivElement, SelectProps>(({options, order, l
 
     return (
         <div ref={innerRef}
-            className={`select-wrapper relative w-full flex flex-col h-20 ${props.disabled ? 'select-wrapper-disabled' : ''}`}>
+            className={classnames(`select-wrapper relative w-full flex flex-col h-20 ${props.disabled ? 'select-wrapper-disabled' : ''}`, className)}>
             <div className={`select relative flex flex-col ${open ? 'open' : ''}`}>
                 <input
                     ref={inputRef}

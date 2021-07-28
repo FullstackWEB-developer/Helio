@@ -7,7 +7,7 @@ import {Dashboard} from '@pages/dashboard/dashboard';
 import {withSuspense} from '@shared/HOC/with-suspense';
 import TicketList from '../pages/tickets/ticket-list';
 import {QueryClient, QueryClientProvider} from "react-query";
-import {ContactsPath, TicketsPath, SmsPath} from './paths';
+import {ContactsPath, TicketsPath, SmsPath, UsersPath} from './paths';
 import RealTimeUserStatusUpdate from '@shared/websockets/real-time-user-status-update';
 import ExternalAccessLayout from '@pages/external-access/layout/external-access-layout';
 import Logger from '@shared/services/logger';
@@ -40,6 +40,7 @@ const Contacts = React.lazy(() => import('../pages/contacts/contacts'));
 const DownloadMedicalRecords = React.lazy(() => import('@pages/external-access/request-medical-records/download-medical-record'));
 const MedicalRecordsPreview = React.lazy(() => import('@pages/external-access/request-medical-records/medical-records-preview'));
 const Sms = React.lazy(() => import('@pages/sms'));
+const UserDetails = React.lazy(()=> import('@pages/users/details'))
 
 function App() {
     let logger = Logger.getInstance();
@@ -129,6 +130,7 @@ function App() {
                             </Switch>
 
                             <GuardedRoute exact path={`${SmsPath}/:ticketId?`} component={withSuspense(Sms)} />
+                            <GuardedRoute exact path={`${UsersPath}/:userId`} component={withSuspense(UserDetails)} />
                         </Layout>
                     </SignalRProvider>
                 </Switch>

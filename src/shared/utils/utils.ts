@@ -4,6 +4,7 @@ import utc from 'dayjs/plugin/utc'
 import {InfiniteData} from 'react-query';
 import {RelativeTime} from './types';
 import {msalInstance} from '@pages/login/auth-config';
+import {Option} from '@components/option/option';
 
 const getWindowCenter = () => {
     const {width, height} = getWindowDimensions();
@@ -208,9 +209,24 @@ const accumulateInfiniteData = <T extends unknown>(infiniteData: InfiniteData<Pa
     return [];
 }
 
-const isLoggedIn = () : boolean => {
+const isLoggedIn = (): boolean => {
     const accounts = msalInstance.getAllAccounts();
     return !!(accounts && accounts[0]);
+}
+
+const parseOptions = <T extends any>(data: T[],
+    labelExpression: (item: T) => string,
+    valueExpression: (item: T) => string,
+    objectExpression?: (item: T) => any): Option[]=> {
+    if (!data) {
+        return [];
+    }
+
+    return data.map(item => ({
+        label: labelExpression(item),
+        value: valueExpression(item),
+        object: objectExpression ? objectExpression(item) : undefined
+    }));
 }
 
 const utils = {
@@ -234,7 +250,8 @@ const utils = {
     groupBy,
     getElementPosition,
     isLoggedIn,
-    accumulateInfiniteData
+    accumulateInfiniteData,
+    parseOptions
 };
 
 export default utils;

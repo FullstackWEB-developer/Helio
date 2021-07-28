@@ -1,8 +1,13 @@
+import {ConnectUser, UserDetail, UserDetailExtended, UserDetailStatus} from '@shared/models';
 import {User} from '../models/user';
+import {setForwardToOptions, setRoleList} from "@shared/store/lookups/lookups.slice";
+import {queryWithState} from '@shared/services/query-with-state.util';
+import store from '../../app/store';
 import Api from './api';
+import {RoleBase} from '@shared/models/role-base.model';
+import {TicketEnumValue} from '@pages/tickets/models/ticket-enum-value.model';
 
 const userBaseUrl = '/users';
-
 export const getUserByEmail = async (email: string): Promise<User | undefined> => {
     if (!email) {
         return Promise.resolve(undefined);
@@ -10,14 +15,71 @@ export const getUserByEmail = async (email: string): Promise<User | undefined> =
     const result = await Api.get(userBaseUrl,
         {
             params: {
-                'email':email
+                'email': email
             }
         });
     return result.data;
 }
 
-export const getProviderPicture = async(providerId: number) => {
+export const getProviderPicture = async (providerId: number) => {
     const url = `${userBaseUrl}/${providerId}/provider-picture`;
     const {data} = await Api.get(url);
     return data;
 }
+
+export const getUserDetailExtended = async (userId: string): Promise<UserDetailExtended> => {
+    const url = `${userBaseUrl}/${userId}/extended`;
+    const {data} = await Api.get(url);
+    return data;
+}
+
+export const getEnumList = async (enumType: string): Promise<TicketEnumValue[] | undefined> => {
+    if (!enumType) {
+        return Promise.resolve(undefined);
+    }
+
+    const {data} = await Api.get(`${userBaseUrl}/lookups/${enumType}`);
+    return data;
+}
+
+export const getConnectUser = async (): Promise<ConnectUser[]> => {
+    const {data} = await Api.get(`${userBaseUrl}/connect-users`);
+    return data;
+}
+
+export const getCallForwardingTypeWithState = queryWithState(
+    () => getEnumList('CallForwardingType'),
+    (payload) => setForwardToOptions(payload),
+    () => {
+        const forwardToOptions = store.getState().forwardToOptions;
+        return !forwardToOptions || forwardToOptions < 1;
+    }
+);
+
+export const changeUserStatus = async (userId: string, userStatus: UserDetailStatus): Promise<UserDetail> => {
+    const url = `${userBaseUrl}/${userId}/status`;
+    const {data} = await Api.put(url, {
+        userStatus: userStatus
+    });
+    return data;
+}
+
+export const updateUser = async (user: UserDetail): Promise<UserDetail> => {
+    const {data} = await Api.put(userBaseUrl, user);
+    return data;
+}
+
+export const getRole = async (): Promise<RoleBase[]> => {
+    const url = `${userBaseUrl}/roles`;
+    const {data} = await Api.get(url);
+    return data;
+}
+
+export const getRoleWithState = queryWithState(
+    () => getRole(),
+    (payload) => setRoleList(payload),
+    () => {
+        const roleList = store.getState().roleList;
+        return !roleList || roleList < 1;
+    }
+);
