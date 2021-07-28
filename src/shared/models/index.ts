@@ -26,3 +26,7 @@ export * from "./user-status-update.model";
 export * from "./ticket-messages";
 export * from "./user";
 export * from "./user-extended.model";
+export * from "./invite-user.model";
+export * from "./role-base.model";
+export * from "./user-directory-filter.model";
+export * from "./user-active-directory.model";

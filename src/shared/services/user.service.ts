@@ -1,10 +1,19 @@
-import {ConnectUser, UserDetail, UserDetailExtended, UserDetailStatus} from '@shared/models';
+import {
+    ConnectUser,
+    InviteUserRequest,
+    PagedList,
+    RoleBase,
+    UserActiveDirectory,
+    UserDetail,
+    UserDetailExtended,
+    UserDetailStatus,
+    UserDirectoryFilter
+} from '@shared/models';
 import {User} from '../models/user';
 import {setForwardToOptions, setRoleList} from "@shared/store/lookups/lookups.slice";
 import {queryWithState} from '@shared/services/query-with-state.util';
 import store from '../../app/store';
 import Api from './api';
-import {RoleBase} from '@shared/models/role-base.model';
 import {TicketEnumValue} from '@pages/tickets/models/ticket-enum-value.model';
 
 const userBaseUrl = '/users';
@@ -83,3 +92,16 @@ export const getRoleWithState = queryWithState(
         return !roleList || roleList < 1;
     }
 );
+
+export const searchUserInDirectory = async (filter: UserDirectoryFilter): Promise<PagedList<UserActiveDirectory>> => {
+    const url = `${userBaseUrl}/external-users`;
+    const {data} = await Api.get(url, {
+        params: filter
+    });
+    return data;
+}
+
+export const sendUserInvitation = async (inviteUser: InviteUserRequest) => {
+    const url = `${userBaseUrl}/invite-external`;
+    await Api.post(url, inviteUser);
+}

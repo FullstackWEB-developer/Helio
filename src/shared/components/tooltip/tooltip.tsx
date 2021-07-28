@@ -4,7 +4,7 @@ import {Placement} from '@popperjs/core';
 import './tooltip.scss';
 
 type TooltipProps = {
-    targetRef: MutableRefObject<null>;
+    targetRef: MutableRefObject<Element | null>;
     isVisible: boolean;
     children: ReactNode;
     placement?: Placement;
@@ -40,12 +40,12 @@ const Tooltip = ({targetRef, isVisible, children, placement = 'bottom'}: Tooltip
     }
 
     return (
-        <div className='tooltip-container z-10' data-test-id='tooltip-container'
-             ref={popperRef}
-             style={styles.popper}
-             {...attributes.popper}
+        <div className='z-10 tooltip-container' data-test-id='tooltip-container'
+            ref={popperRef}
+            style={styles.popper}
+            {...attributes.popper}
         >
-            <div ref={setArrowRef} style={styles.arrow} className="arrow" data-test-id='tooltip-arrow'/>
+            <div ref={setArrowRef} style={styles.arrow} className="arrow" data-test-id='tooltip-arrow' />
             {children}
         </div>
     );

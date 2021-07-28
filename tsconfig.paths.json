@@ -6,7 +6,8 @@
       "@components/*": ["src/shared/components/*"],
       "@constants/*": ["src/shared/constants/*"],
       "@pages/*": ["src/pages/*"],
-      "@shared/*": ["src/shared/*"]
+      "@shared/*": ["src/shared/*"],
+      "@app/*":["src/app/*"]
     }
   }
 }

@@ -217,7 +217,8 @@ const isLoggedIn = (): boolean => {
 const parseOptions = <T extends any>(data: T[],
     labelExpression: (item: T) => string,
     valueExpression: (item: T) => string,
-    objectExpression?: (item: T) => any): Option[]=> {
+    assistiveTextExpression?: (item: T) => string,
+    objectExpression?: (item: T) => any): Option[] => {
     if (!data) {
         return [];
     }
@@ -225,6 +226,7 @@ const parseOptions = <T extends any>(data: T[],
     return data.map(item => ({
         label: labelExpression(item),
         value: valueExpression(item),
+        assistiveText: assistiveTextExpression ? assistiveTextExpression(item) : undefined,
         object: objectExpression ? objectExpression(item) : undefined
     }));
 }

@@ -1,7 +1,8 @@
-import React from 'react';
+import {useTranslation} from 'react-i18next';
+import {Option} from '@components/option/option';
+import classnames from 'classnames';
 import './select-cell.scss';
-import { useTranslation } from 'react-i18next';
-import { Option } from '@components/option/option';
+
 export interface SelectCellProps {
     item: Option,
     isSelected?: boolean,
@@ -11,9 +12,9 @@ export interface SelectCellProps {
     changeCursorValueOnHover?: () => void
 }
 
-const SelectCell = ({ item, isSelected, onClick, disabled, ...props }: SelectCellProps) => {
+const SelectCell = ({item, isSelected, onClick, disabled, ...props}: SelectCellProps) => {
 
-    const { t } = useTranslation();
+    const {t} = useTranslation();
 
     const calculateCss = (): string => {
         let cssClass = ''
@@ -42,10 +43,13 @@ const SelectCell = ({ item, isSelected, onClick, disabled, ...props }: SelectCel
     if (disabled) return null;
 
     return (
-        <div onClick={() => cellClicked()} onMouseDown={(e) => { e.preventDefault() }} onMouseOver={(e) => handleMouseOver()}
+        <div onClick={() => cellClicked()} onMouseDown={(e) => {e.preventDefault()}} onMouseOver={(e) => handleMouseOver()}
             className={`w-full select-cell justify-between flex items-center ${calculateCss()} ${bgCssClass} ${props.className}`}>
-            <div data-test-id='select-cell-icon-content' className={'flex flex-row w-full items-center'}>
+            <div className={classnames('flex flex-col justify-center w-full', {'py-2': !!item.assistiveText})} data-test-id='select-cell-icon-content' >
                 <div className='flex items-center pl-4' data-test-id={`select-cell-text-${item.label}`}>{t(item.label)}</div>
+                {item.assistiveText &&
+                    <span className='pl-4 body3-small assistive-text'>{item.assistiveText}</span>
+                }
             </div>
         </div>
     );

@@ -1,9 +1,8 @@
-import {KeyValuePair} from '@shared/models'
+import {KeyValuePair, RoleBase} from '@shared/models'
 import {Location} from '@shared/models';
 import {Provider} from '@shared/models';
 import {User} from '@shared/models';
 import {Option} from '@components/option/option';
-import {RoleBase} from '@shared/models/role-base.model';
 import {TicketEnumValue} from '@pages/tickets/models/ticket-enum-value.model';
 
 export interface LookupsState {
@@ -24,6 +23,7 @@ const initialState: LookupsState = {
     isLoading: false,
     isError: false,
     userList: [],
+    roleList:[],
     metricOptions: [],
     forwardToOptions: []
 }

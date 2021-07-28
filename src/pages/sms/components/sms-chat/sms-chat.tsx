@@ -17,6 +17,7 @@ import {useTranslation} from 'react-i18next';
 import './sms-chat.scss';
 import {MORE_MENU_OPTION_PATIENT, MORE_MENU_OPTION_TICKET} from '@pages/sms/constants';
 import {getEnumByType, getLookupValues} from '@pages/tickets/services/tickets.service';
+import {Link} from 'react-router-dom';
 
 interface SmsChatProps {
     info: TicketMessageSummary;
@@ -123,11 +124,11 @@ const SmsChat = ({info, isLoading, isSending, isBottomFocus, messages = [], ...p
                 <div className="flex flex-row pt-2.5">
                     <div className="mr-6">
                         <span className="body2-medium mr-1.5">{t('sms.chat.header.patient_id')}</span>
-                        <span className="cursor-pointer body2-primary" onClick={() => goToPatientChart()}>{info.patientId}</span>
+                        <Link className='body2-primary' to={`${PatientsPath}/${info.patientId}`}>{info.patientId}</Link>
                     </div>
                     <div className="mr-6">
                         <span className="body2-medium mr-1.5">{t('sms.chat.header.ticket_id')}</span>
-                        <span className="cursor-pointer body2-primary" onClick={() => goToTicketDetail()} >{info.ticketNumber}</span>
+                        <Link className='body2-primary' to={`${TicketsPath}/${info.ticketNumber}`}>{info.ticketNumber}</Link>
                     </div>
                     <div className="mr-6">
                         <span className="body2-medium mr-1.5">{t('sms.chat.header.ticket_type')}</span>

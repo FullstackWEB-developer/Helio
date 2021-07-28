@@ -8,8 +8,12 @@
   .select-cell.is-selected {
     background-color: var(--color-primary-500);
     color: var(--color-white);
+    .assistive-text {
+          color: var(--color-white);
+    }
   }
   
+
   .select-cell:hover {
     background: var(--dropdown-item-hover) radial-gradient(circle, var(--dropdown-item-pressed)1%, var(--dropdown-item-hover)1%) center/15000%;
   }

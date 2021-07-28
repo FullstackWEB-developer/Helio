@@ -44,6 +44,8 @@ const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(({
     placeHolder,
     maxLengthClassName,
     isLoading,
+    overwriteDefaultContainerClasses,
+    textareaContainerClasses,
     ...props
 }: TextAreaProps, ref) => {
 
@@ -71,7 +73,6 @@ const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(({
         }
     }
 
-
     const onKeyPress = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
         if (event.ctrlKey && event.nativeEvent.code === 'Enter' && props.onCtrlEnter) {
             props.onCtrlEnter();
@@ -90,7 +91,7 @@ const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(({
             <label htmlFor={htmlFor} className='block subtitle'>
                 {label}
             </label>
-            <div className={`relative ${props.overwriteDefaultContainerClasses ? '' : defaultContainerClasses} ${props.textareaContainerClasses ? props.textareaContainerClasses : ''}`}>
+            <div className={`relative ${overwriteDefaultContainerClasses ? '' : defaultContainerClasses} ${textareaContainerClasses ? textareaContainerClasses : ''}`}>
                 <textarea ref={ref} {...props} value={textAreaValue} onChange={(e => handleOnChange(e))}
                     placeholder={placeHolder ? placeHolder : ''}
                     className={textAreaClass}

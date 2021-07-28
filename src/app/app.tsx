@@ -40,7 +40,9 @@ const Contacts = React.lazy(() => import('../pages/contacts/contacts'));
 const DownloadMedicalRecords = React.lazy(() => import('@pages/external-access/request-medical-records/download-medical-record'));
 const MedicalRecordsPreview = React.lazy(() => import('@pages/external-access/request-medical-records/medical-records-preview'));
 const Sms = React.lazy(() => import('@pages/sms'));
-const UserDetails = React.lazy(()=> import('@pages/users/details'))
+const UserDetails = React.lazy(() => import('@pages/users/details'));
+const UserAdd = React.lazy(() => import('@pages/users/add/user-add'));
+const UserList = React.lazy(() => import('@pages/users/list/user-list'));
 
 function App() {
     let logger = Logger.getInstance();
@@ -130,7 +132,9 @@ function App() {
                             </Switch>
 
                             <GuardedRoute exact path={`${SmsPath}/:ticketId?`} component={withSuspense(Sms)} />
-                            <GuardedRoute exact path={`${UsersPath}/:userId`} component={withSuspense(UserDetails)} />
+                            <GuardedRoute exact path={`${UsersPath}`} component={withSuspense(UserList)} />
+                            <GuardedRoute exact path={`${UsersPath}/new`} component={withSuspense(UserAdd)} />
+                            <GuardedRoute exact path={`${UsersPath}/details/:userId`} component={withSuspense(UserDetails)} />
                         </Layout>
                     </SignalRProvider>
                 </Switch>

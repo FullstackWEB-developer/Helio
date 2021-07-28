@@ -43,7 +43,8 @@
     "copyright": "© {{year}} Helio Inc.",
     "activate": "Activate",
     "deactivate": "Deactivate",
-    "change": "Change"
+    "change": "Change",
+    "add": "Add"
   },
   "login": {
     "title": "Run your medical office efficiently.",
@@ -994,6 +995,9 @@
   },
   "users": {
     "not_found": "User not found",
+    "list_section":{
+      "title": "Manage Users"
+    },
     "info_section": {
       "title": "User Information",
       "email": "Email:",
@@ -1003,12 +1007,24 @@
       "modified_by": "Modified By:",
       "modified_on": "Modified On:"
     },
+    "add_section": {
+      "title":"Add Users",
+      "description":"Enter name or email below to add users to Helio. You can also <0>invite users in bulk</0> to add large number of users at once.",
+      "personalize_message_title": "Personalize Invitation Message",
+      "personalize_message_placeholder": "Invitation Message",
+      "add_button": "Add Users",
+      "name_or_email": "Name or Email",
+      "role":"Role",
+      "invitation_sent_success": "Invitations have been sent successfully.",
+      "invitation_sent_error": "The sending of the invitation has failed."
+    },
     "role": "User Role",
     "role_manager": "Manager",
     "role_admin": "Admin",
     "role_agent": "Agent",
     "ehr_settings": "EHR/EMR settings",
     "ehr_provider_mapping": "EHR/EMR Provider Mapping",
+    "ehr_provider_mapping_assistive_text": "Use for Providers only",
     "active_queues": "Active Queues",
     "call_forwarding": "Call Forwarding",
     "call_forwarding_enabled": "Enable Call Forwarding",
@@ -1016,6 +1032,7 @@
     "call_forwarding_value_agent": "Agent",
     "call_forwarding_type": "Forward To",
     "user_update_success": "User has been updated",
-    "user_update_error": "Error updating user"
+    "user_update_error": "Error updating user",
+    "provider_tooltip":"<0>Please match that user if s/he is a provider in the EHR/EMR system.</0><1>We will use this to show the right information about the provider to the patients.</1>"
   }
 }

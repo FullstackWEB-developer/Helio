@@ -44,10 +44,11 @@ const ControlledSelect = ({
 
     const onSelected = (controllerProps: ControllerRenderProps, option?: Option) => {
         if (option) {
+            controllerProps.onChange(option.value);
+
             if (onSelect) {
                 onSelect(option);
             }
-            controllerProps.onChange(option.value);
         }
     }
     return <Controller

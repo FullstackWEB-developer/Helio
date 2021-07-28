@@ -30,6 +30,7 @@ import {addSnackbarMessage} from "@shared/store/snackbar/snackbar.slice";
 import {SnackbarType} from "@components/snackbar/snackbar-position.enum";
 import {useTranslation} from "react-i18next";
 import './user-details.scss';
+import ProviderMappingToolTip from "../components/provider-tool-tip";
 
 dayjs.extend(utc);
 
@@ -260,7 +261,7 @@ const UserDetails = () => {
                         <Button
                             type='button'
                             buttonType='medium'
-                            label={t('common.save')}
+                            label='common.save'
                             className='mr-5'
                             disabled={!isDirty || !isValid}
                             isLoading={updateMutation.isLoading}
@@ -270,7 +271,7 @@ const UserDetails = () => {
                             type='button'
                             buttonType='secondary-medium'
                             isLoading={changeUserStatusMutation.isLoading}
-                            label={currentUserStatus === UserDetailStatus.Active ? t('common.deactivate') : t('common.activate')}
+                            label={currentUserStatus === UserDetailStatus.Active ? 'common.deactivate' : 'common.activate'}
                             onClick={changeStatus}
                         />
                     </div>
@@ -304,13 +305,18 @@ const UserDetails = () => {
                         </div>
                         <div className='flex-1 pl-4'>
                             <label className='subtitle'>{t('users.ehr_settings')}</label>
-                            <ControlledSelect
-                                label={t('users.ehr_provider_mapping')}
-                                name='provider'
-                                control={control}
-                                defaultValue=''
-                                options={providerOptions}
-                            />
+                            <div className="flex flex-row items-center">
+                                <ControlledSelect
+                                    label={t('users.ehr_provider_mapping')}
+                                    name='provider'
+                                    control={control}
+                                    defaultValue=''
+                                    options={providerOptions}
+                                />
+                                <div className='pb-6 ml-2'>
+                                    <ProviderMappingToolTip />
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -337,7 +343,7 @@ const UserDetails = () => {
 
                             <ControlledSelect
                                 name='forward_to'
-                                label={t('users.call_forwarding_type')}
+                                label='users.call_forwarding_type'
                                 control={control}
                                 className='mt-6'
                                 defaultValue=''
