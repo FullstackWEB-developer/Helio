@@ -21,8 +21,8 @@ const TicketsReasonChart = ({data}: TicketsReasonChartProps) => {
         dispatch(getLookupValues('TicketReason'));
     }, [dispatch]);
 
-    if (!ticketLookupValuesReason) {
-        return <Spinner fullScreen/>
+    if (!ticketLookupValuesReason || ticketLookupValuesReason.length === 0) {
+        return <div className='tickets-reason-body'><Spinner fullScreen/></div> 
     }
 
     if (!data || data.length === 0) {
