@@ -111,8 +111,10 @@ const SmsFilter = ({className, isUserFilterEnabled, value, defaultValue, ...prop
             timePeriod: formData.timePeriod
         };
 
-        if (!!formData.assignedTo) {
+        if (!!formData.assignedTo && isUserFilterEnabled) {
             filter.assignedTo = formData.assignedTo;
+        } else if (!isUserFilterEnabled) {
+            filter.assignedTo = value?.assignedTo;
         }
 
         const formDate = getFormDate(formData)

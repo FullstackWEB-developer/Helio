@@ -41,7 +41,7 @@ const Sms = () => {
     const [selectedTicketSummary, setSelectedTicketSummary] = useState<TicketMessageSummary>();
     const [messages, setMessages] = useState<TicketMessage[]>([]);
     const [isNewSmsChat, setIsNewSmsChat] = useState(false);
-    const [filterParam, setFilterParam] = useState<SmsFilterParamModel>(DEFAULT_FILTER_VALUE);
+    const [filterParam, setFilterParam] = useState<SmsFilterParamModel>({...DEFAULT_FILTER_VALUE, assignedTo: username});
     const [summaryMessages, setSummaryMessages] = useState<TicketMessageSummary[]>([])
     const [smsQueryType, setSmsQueryType] = useState(SmsQueryType.MySms);
     const [newMessageId, setNewMessageId] = useState('');
@@ -182,8 +182,11 @@ const Sms = () => {
 
         if (context === SmsQueryType.MyTeam) {
             setQueryParams({...queryParams, assignedTo: undefined});
+            setFilterParam({...filterParam, assignedTo: undefined});
         } else {
             setQueryParams({...queryParams, assignedTo: username});
+            setFilterParam({...filterParam, assignedTo: username});
+
         }
         setSmsQueryType(context);
     }
