@@ -125,7 +125,7 @@ const Header = ({headsetIconRef}: {headsetIconRef: React.RefObject<HTMLDivElemen
                                         <span>{t('ccp.modal.desc_fail')}</span>
                                         <span>
                                             <Trans i18nKey="ccp.modal.desc_fail_try" values={{email: process.env.REACT_APP_HELIO_SUPPORT_EMAIL}}>
-                                                <a rel='noreferrer' href={`mailto:${process.env.REACT_APP_HELIO_SUPPORT_EMAIL}`}> </a>
+                                                <a rel='noreferrer' className='link' href={`mailto:${process.env.REACT_APP_HELIO_SUPPORT_EMAIL}`}> </a>
                                             </Trans>
                                         </span>
                                     </div>

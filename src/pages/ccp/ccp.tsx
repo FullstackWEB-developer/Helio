@@ -290,7 +290,7 @@ const Ccp: React.FC<BoxProps> = ({
                         <span>{t('ccp.modal.desc_fail')}</span>
                         <span>
                             <Trans i18nKey="ccp.modal.desc_fail_try" values={{email: process.env.REACT_APP_HELIO_SUPPORT_EMAIL}}>
-                                <a rel='noreferrer' href={`mailto:${process.env.REACT_APP_HELIO_SUPPORT_EMAIL}`}> </a>
+                                <a className='link' rel='noreferrer' href={`mailto:${process.env.REACT_APP_HELIO_SUPPORT_EMAIL}`}> </a>
                             </Trans>
                         </span>
                     </div>
@@ -321,7 +321,7 @@ const Ccp: React.FC<BoxProps> = ({
                         <div className='body2'>{getModelDescription()}</div>
                         <div className='flex flex-row pt-7'>
                             {ccpConnectionState === CCPConnectionStatus.Success && <SvgIcon type={Icon.CheckMark} fillClass='success-icon' />}
-                            {ccpConnectionState === CCPConnectionStatus.Failed && <SvgIcon type={Icon.Error} fillClass='danger-icon' />}
+                            {ccpConnectionState === CCPConnectionStatus.Failed && <SvgIcon type={Icon.ErrorFilled} fillClass='danger-icon' />}
                             <span className='ml-2 body2'>{t('ccp.modal.aws_connect')}</span>
                         </div>
                         {ccpConnectionState === CCPConnectionStatus.Loading &&
