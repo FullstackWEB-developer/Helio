@@ -1,12 +1,13 @@
 import {
+    ChangeUserStatusRequest,
     ConnectUser,
     InviteUserRequest,
     PagedList,
+    PhoneNumber,
     RoleBase,
     UserActiveDirectory,
     UserDetail,
     UserDetailExtended,
-    UserDetailStatus,
     UserDirectoryFilter
 } from '@shared/models';
 import {User} from '../models/user';
@@ -65,11 +66,9 @@ export const getCallForwardingTypeWithState = queryWithState(
     }
 );
 
-export const changeUserStatus = async (userId: string, userStatus: UserDetailStatus): Promise<UserDetail> => {
-    const url = `${userBaseUrl}/${userId}/status`;
-    const {data} = await Api.put(url, {
-        userStatus: userStatus
-    });
+export const changeUserStatus = async (...changeUserStatus: ChangeUserStatusRequest[]): Promise<UserDetail> => {
+    const url = `${userBaseUrl}/status`;
+    const {data} = await Api.put(url, changeUserStatus);
     return data;
 }
 
@@ -93,6 +92,11 @@ export const getRoleWithState = queryWithState(
     }
 );
 
+export const getUserMobilePhone = async (userId: string): Promise<PhoneNumber> => {
+    const url = `${userBaseUrl}/${userId}/mobile-phone-number`;
+    const {data} = await Api.get(url);
+    return data;
+}
 export const searchUserInDirectory = async (filter: UserDirectoryFilter): Promise<PagedList<UserActiveDirectory>> => {
     const url = `${userBaseUrl}/external-users`;
     const {data} = await Api.get(url, {

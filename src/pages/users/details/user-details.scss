@@ -1,8 +1,6 @@
 .user-details {
   &-sidebar {
-    flex-grow: 1;
-    max-width: 22.5rem;
-    min-width: 22.5rem;
+    width: 20.5rem;
   }
   .avatar-label {
     font-size: var(--h1-font-size);

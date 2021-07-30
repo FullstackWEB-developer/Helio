@@ -180,7 +180,7 @@ const Select = React.forwardRef<HTMLDivElement, SelectProps>(({options, order, l
                         <SvgIcon type={open ? Icon.ArrowUp : Icon.ArrowDown} fillClass={'select-arrow-fill'} />
                     }
                 </div>
-                <div className="absolute block py-2 options">
+                <div className="absolute py-2 options">
                     <OptionSection />
                 </div>
             </div>

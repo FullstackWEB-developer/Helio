@@ -123,7 +123,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({
     }
 
     return (
-        <div className="input-group flex flex-col h-20">
+        <div className="flex flex-col h-20 input-group">
             <div className={`input-group-container flex flex-wrap items=stretch w-full relative ${props.error ? 'input-error' : ''} ` + props.className}>
                 <InputMask ref={innerRef} inputRef={innerRef} {...props}
                     mask={mask}
@@ -148,7 +148,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({
                 {isFocused &&
                     props.value &&
                     <span
-                        className="input-addon clear-input-icon flex items-center leading-normal rounded rounded-l-none px-3"
+                        className="flex items-center px-3 leading-normal rounded rounded-l-none input-addon clear-input-icon"
                         onMouseDown={(e) => preventMousedownTriggerBlur(e)}
                         onClick={(e) => {
                             clearValue(e)
@@ -157,14 +157,14 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({
                         <SvgIcon type={Icon.Clear} fillClass="clear-input-icon-fill" />
                     </span>}
                 {isLoading &&
-                    <span className="input-addon flex items-center leading-normal rounded rounded-l-none px-3">
+                    <span className="flex items-center px-3 leading-normal rounded rounded-l-none input-addon">
                         <Spinner size='small' />
                     </span>
                 }
                 {autoSuggestDropdown &&
                     <div className={`options ${dropdownOpen ? 'options-visible' : ''} absolute block py-2`}>
                         {(!autoSuggestOptions || autoSuggestOptions.length <= 0) && !isFetchingSuggestions &&
-                            <div className="subtitle3-small w-full text-center pt-2">
+                            <div className="w-full pt-2 text-center subtitle3-small">
                                 {t(fetchingSuggestionsPlaceholder || 'common.autocomplete_search')}
                             </div>
                         }

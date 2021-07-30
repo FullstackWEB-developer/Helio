@@ -80,7 +80,7 @@
     right: 0;
     background-color: var(--color-white);
     opacity: 0;
-    visibility: hidden;
+    display: none;
     pointer-events: none;
     z-index: 998;
     box-shadow: var(--select-box-shadow);
@@ -92,7 +92,7 @@
 
 .select.open .options {
     opacity: 1;
-    visibility: visible;
+    display: block;
     pointer-events: all;
 }
 

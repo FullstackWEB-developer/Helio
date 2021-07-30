@@ -2,9 +2,9 @@ import {useTranslation} from 'react-i18next';
 import {useDispatch, useSelector} from 'react-redux';
 import {logOut, updateUserStatus} from '../../store/app-user/appuser.slice';
 import {msalInstance} from '@pages/login/auth-config';
-import {UserStatus} from '../../store/app-user/app-user.models';
+import {AuthenticationInfo, UserStatus} from '../../store/app-user/app-user.models';
 import {DropdownItemModel, DropdownModel} from '@components/dropdown/dropdown.models';
-import {selectAgentStates, selectUserStatus} from '../../store/app-user/appuser.selectors';
+import {authenticationSelector, selectAgentStates, selectUserStatus} from '../../store/app-user/appuser.selectors';
 import Logger from '../../services/logger';
 import Dropdown from '../../components/dropdown/dropdown';
 import StatusDot from '@components/status-dot/status-dot';
@@ -14,6 +14,11 @@ import SvgIcon from '@components/svg-icon/svg-icon';
 import React from 'react';
 import axios from "axios";
 import {toggleUserProfileMenu} from '@shared/layout/store/layout.slice';
+import {useHistory} from 'react-router-dom';
+import {UserDetailsPath} from '@app/paths';
+import {selectUserByEmail} from '@shared/store/lookups/lookups.selectors';
+import {useEffect} from 'react';
+import {getUserList} from '@shared/services/lookups.service';
 
 interface UserStatuses {
     label: string;
@@ -28,9 +33,16 @@ const ccpConfig = {
 const ProfileDropdown = () => {
     const {t} = useTranslation();
     const dispatch = useDispatch();
+    const auth: AuthenticationInfo = useSelector(authenticationSelector);
     const agentStates = useSelector(selectAgentStates);
     const currentUserStatus = useSelector(selectUserStatus);
     const logger = Logger.getInstance();
+    const history = useHistory();
+    const currentUserDetails = useSelector((state) => selectUserByEmail(state, auth.username));
+
+    useEffect(() => {
+        dispatch(getUserList);
+    }, [dispatch])
 
     const signOut = () => {
         signOutFromCcp();
@@ -40,7 +52,7 @@ const ProfileDropdown = () => {
             .then()
             .catch((reason: any) => {
                 logger.error('Error logging out ' + JSON.stringify(reason));
-            }).finally(() =>dispatch(logOut()));
+            }).finally(() => dispatch(logOut()));
     }
 
     const signOutFromCcp = () => {
@@ -49,6 +61,10 @@ const ProfileDropdown = () => {
                 // Note: This will result in 'CORS policy' error but it will still logout the user which is our goal.
                 // We will ignore the error received since we do not care about the response.
             });
+    }
+
+    const onMyProfileClick = () => {
+        history.push(`${UserDetailsPath}/${currentUserDetails?.id}`);
     }
 
     const statusList: UserStatuses[] = [];
@@ -83,8 +99,8 @@ const ProfileDropdown = () => {
     }
 
     const GetIconByStatus = (status: string) => {
-        const icon = <StatusDot status={status as UserStatus}/>;
-        return <span className="w-4 h-4 flex items-center justify-around">{icon}</span>;
+        const icon = <StatusDot status={status as UserStatus} />;
+        return <span className="flex items-center justify-around w-4 h-4">{icon}</span>;
     }
 
     const items: DropdownItemModel[] = [];
@@ -102,31 +118,32 @@ const ProfileDropdown = () => {
 
     items.push({
         label: t('user_profile.my_profile'),
+        onClick: () => onMyProfileClick(),
         value: 'my_profile',
         hasDivider: true,
-        icon: <SvgIcon type={Icon.Placeholder} className='icon-small' fillClass=''/>
+        icon: <SvgIcon type={Icon.Placeholder} className='icon-small' fillClass='' />
     });
     items.push({
         label: t('user_profile.my_states'),
         value: 'my_states',
-        icon: <SvgIcon type={Icon.Placeholder} className='icon-small' fillClass=''/>
+        icon: <SvgIcon type={Icon.Placeholder} className='icon-small' fillClass='' />
     });
     items.push({
         label: t('user_profile.sign_out'),
         onClick: () => signOut(),
         value: 'sign_out',
-        icon: <SvgIcon type={Icon.Placeholder} className='icon-small' fillClass=''/>
+        icon: <SvgIcon type={Icon.Placeholder} className='icon-small' fillClass='' />
     });
 
     const dropdownModel: DropdownModel = {
-        header: <div className='profile-dropdown-header px-4 h-12 pt-2 items-center flex flex-row'>
-            <div className='subtitle2 whitespace-pre'>{`${t('user_profile.my_status')}: `}</div>
+        header: <div className='flex flex-row items-center h-12 px-4 pt-2 profile-dropdown-header'>
+            <div className='whitespace-pre subtitle2'>{`${t('user_profile.my_status')}: `}</div>
             <div className='body2'>{currentUserStatus}</div>
         </div>,
         items,
-        onClick: ()=> {dispatch(toggleUserProfileMenu(false))}
+        onClick: () => {dispatch(toggleUserProfileMenu(false))}
     }
-    return (<Dropdown model={dropdownModel}/>)
+    return (<Dropdown model={dropdownModel} />)
 
 }
 

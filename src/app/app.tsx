@@ -7,7 +7,7 @@ import {Dashboard} from '@pages/dashboard/dashboard';
 import {withSuspense} from '@shared/HOC/with-suspense';
 import TicketList from '../pages/tickets/ticket-list';
 import {QueryClient, QueryClientProvider} from "react-query";
-import {ContactsPath, TicketsPath, SmsPath, UsersPath} from './paths';
+import {ContactsPath, TicketsPath, SmsPath, UsersPath, UserDetailsPath} from './paths';
 import RealTimeUserStatusUpdate from '@shared/websockets/real-time-user-status-update';
 import ExternalAccessLayout from '@pages/external-access/layout/external-access-layout';
 import Logger from '@shared/services/logger';
@@ -134,7 +134,7 @@ function App() {
                             <GuardedRoute exact path={`${SmsPath}/:ticketId?`} component={withSuspense(Sms)} />
                             <GuardedRoute exact path={`${UsersPath}`} component={withSuspense(UserList)} />
                             <GuardedRoute exact path={`${UsersPath}/new`} component={withSuspense(UserAdd)} />
-                            <GuardedRoute exact path={`${UsersPath}/details/:userId`} component={withSuspense(UserDetails)} />
+                            <GuardedRoute exact path={`${UserDetailsPath}/:userId`} component={withSuspense(UserDetails)} />
                         </Layout>
                     </SignalRProvider>
                 </Switch>

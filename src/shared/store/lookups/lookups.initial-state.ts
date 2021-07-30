@@ -23,8 +23,8 @@ const initialState: LookupsState = {
     isLoading: false,
     isError: false,
     userList: [],
-    roleList:[],
     metricOptions: [],
+    roleList:[],
     forwardToOptions: []
 }
 export default initialState;

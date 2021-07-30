@@ -8,6 +8,11 @@ export enum UserDetailStatus {
     Inactive = 2
 }
 
+export interface ChangeUserStatusRequest {
+    id: string;
+    userStatus: UserDetailStatus;
+}
+
 export enum UserRole {
     Agent = 1,
     Manager = 2,
