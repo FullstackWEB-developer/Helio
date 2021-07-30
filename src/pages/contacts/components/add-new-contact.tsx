@@ -16,8 +16,9 @@ interface AddNewContactProps {
     onContactAddSuccess: (contact: ContactExtended) => void;
     onContactAddError?: () => void;
     closeAddNewContactForm: () => void;
+    contact?: ContactExtended;
 }
-const AddNewContact = ({contactType = ContactType.Individual, onContactAddSuccess, onContactAddError, closeAddNewContactForm}: AddNewContactProps) => {
+const AddNewContact = ({contactType = ContactType.Individual, onContactAddSuccess, onContactAddError, closeAddNewContactForm, contact}: AddNewContactProps) => {
     const [contactTypeRadio, setContactTypeRadio] = useState<number>(contactType);
     const [addToFavorites, setAddToFavorites] = useState(false);
     const {t} = useTranslation();
@@ -42,7 +43,11 @@ const AddNewContact = ({contactType = ContactType.Individual, onContactAddSucces
     const onContactTypeChange = (value: string) => setContactTypeRadio(Number(value));
     const onClose = () => closeAddNewContactForm();
     const toggleFavorite = () => setAddToFavorites(!addToFavorites);
-
+    const parentContact = {
+        relatedId : contact?.id,
+        companyName: contact?.companyName,
+        category: contact?.category ? contact.category : -1
+    }
     return (
         <div className='h-full w-full overflow-y-auto px-8 pt-7 flex flex-col'>
             <div className="flex justify-between items-center mb-10">
@@ -63,7 +68,7 @@ const AddNewContact = ({contactType = ContactType.Individual, onContactAddSucces
             {isError && <h6 className='text-danger mt-2 mb-5'>{t('contacts.new-contact.add_fail')}</h6>}
             <div className='body2 mb-6 pointer-events-none'>{t('contacts.new-contact.select_type')}</div>
             <Radio name='new-contact-type' className='flex space-x-8' defaultValue={String(contactTypeRadio)} items={newContactTypeOptions} onChange={onContactTypeChange} />
-            <ContactForm isSaving={isLoading} contactType={contactTypeRadio} submitHandler={onSubmit} closeHandler={onClose} editMode={false} />
+            <ContactForm contact={parentContact} isSaving={isLoading} contactType={contactTypeRadio} submitHandler={onSubmit} closeHandler={onClose} editMode={false} />
         </div>
     );
 }

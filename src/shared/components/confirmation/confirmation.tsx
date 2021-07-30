@@ -29,11 +29,11 @@ const Confirmation = ({title, onOk, onCancel, onClose, message='', okButtonLabel
     }
 
     return <div className='flex items-center justify-center justify-self-center m-auto'>
-        <Modal isOpen={isOpen} title={t(title)} onClose={() => close()} isClosable={true}>
-            <div className='w-96 h-32 h-full py-4'>
+        <Modal top={96} isOpen={isOpen} title={t(title)} onClose={() => close()} isClosable={true}>
+            <div className='w-full h-32 h-full py-4'>
                 {message && <div className='pb-6'>{t(message)}</div>}
-                <div className='flex items-end justify-end'>
-                    <div className='flex flex-col md:flex-row space-y-6 md:space-y-0 space-x-0 md:space-x-6'>
+                <div className='flex items-end justify-end w-full'>
+                    <div className='flex flex-col md:flex-row space-y-6 md:space-y-0 space-x-0 md:space-x-6 justify-end w-full px-2'>
                         {displayCancel &&
                         <Button buttonType='secondary' label={t(cancelButtonLabel)} onClick={() => cancel()}/>}
                         <Button label={t(okButtonLabel)} onClick={() => onOk()}/>

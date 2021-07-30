@@ -22,7 +22,7 @@ import {useHistory} from 'react-router-dom';
 export const Dashboard = () => {
     const {t} = useTranslation();
     const history = useHistory();
-    const [selectedDashboardType, setSelectedDashboardType] = useState<DashboardTypes>(DashboardTypes.team);
+    const [selectedDashboardType, setSelectedDashboardType] = useState<DashboardTypes>(DashboardTypes.my);
     const [selectedDashboardTime, setSelectedDashboardTime] = useState<number>(DashboardTimeframes.week);
     const [displayTimeFrameDropdown, setDisplayTimeFrameDropdown] = useState<boolean>(false);
     const [displayTypeDropdown, setDisplayTypeDropdown] = useState<boolean>(false);
@@ -48,7 +48,7 @@ export const Dashboard = () => {
                 setSelectedDashboardType(type);
             }
         } else {
-            setSelectedDashboardType(DashboardTypes.team);
+            setSelectedDashboardType(DashboardTypes.my);
         }
         refreshDashboard();
     }, [history.location.search])

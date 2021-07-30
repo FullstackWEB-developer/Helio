@@ -2,6 +2,7 @@ import {Icon} from '@components/svg-icon/icon';
 import CwcLogo from '@shared/icons/cwc-logo';
 import './svg-icon.scss';
 import classNames from 'classnames';
+import React from 'react';
 
 export interface SvgIconProps {
     type: Icon,
@@ -11,11 +12,16 @@ export interface SvgIconProps {
     strokeClass?: string,
     opacity?: string,
     onClick?: (e: any) => void,
-    isLoading?: boolean
+    isLoading?: boolean,
+    disabled?: boolean
 }
 
-const SvgIcon = ({type, wrapperClassName = '', className = 'icon-medium', fillClass = 'fill-default', strokeClass = 'stroke-default', opacity, onClick, isLoading = false}: SvgIconProps) => {
+const SvgIcon = ({type, wrapperClassName = '', className = 'icon-medium', fillClass = 'fill-default',
+                     strokeClass = 'stroke-default', opacity, onClick, isLoading = false, disabled=false}: SvgIconProps) => {
+
     const mainClass = `${className} ${fillClass ? '' : 'fill-default'}`;
+
+    fillClass = disabled ? 'rgba-025-fill' : fillClass;
 
     const getIconAdd = () => {
         return <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className={mainClass}>
@@ -906,8 +912,17 @@ const SvgIcon = ({type, wrapperClassName = '', className = 'icon-medium', fillCl
         [Icon.ErrorFilled]: getErrorFilled
     }
 
+    const iconClicked = (e: React.MouseEvent<HTMLDivElement>) => {
+        if (disabled) {
+            return;
+        }
+        if (onClick) {
+            onClick(e);
+        }
+    }
+
     if (!isLoading) {
-        return <div className={wrapperClassName} onClick={onClick}>
+        return <div className={wrapperClassName} onClick={iconClicked}>
             {icons[type]()}
         </div>
     }
@@ -917,9 +932,9 @@ const SvgIcon = ({type, wrapperClassName = '', className = 'icon-medium', fillCl
         'icon-medium': className === 'icon-large-40' || className === 'icon-small'
     });
 
-    return <div className={`${wrapperClassName} relative`} onClick={onClick}>
-        <div className={`absolute`} onClick={onClick}>{getIconSpinner(overriddenMainClass)}</div>
-        <div className={overriddenMainClass} onClick={onClick}>
+    return <div className={`${wrapperClassName} relative`} onClick={iconClicked}>
+        <div className={`absolute`} onClick={iconClicked}>{getIconSpinner(overriddenMainClass)}</div>
+        <div className={overriddenMainClass} onClick={iconClicked}>
             <SvgIcon type={type} fillClass='fill-loading' />
         </div>
     </div>

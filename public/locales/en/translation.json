@@ -182,6 +182,7 @@
     },
     "modal": {
       "aws_connect": "Amazon Connect",
+      "athena_health": "Athena Health",
       "title_connecting": "Connecting to Services",
       "title_success": "Connected successfully",
       "title_fail": "Failed to connect",
@@ -763,7 +764,7 @@
       "search": "Search contacts",
       "no_results": "No contacts found"
     },
-    "contact-details": {
+    "contact_details": {
       "details": "Details",
       "notes": "Notes",
       "tickets": "Tickets",
@@ -818,7 +819,12 @@
       },
       "company": {
         "associated_with": "Contacts associated with {{companyName}}",
-        "add_contact": "Add Contact"
+        "add_contact": "Add Contact",
+        "mobile_phone": "Mobile Phone",
+        "category": "Category",
+        "email": "Email",
+        "work_main_phone": "Work Main Phone",
+        "website": "Website"
       }
     },
     "new-contact": {

@@ -1,11 +1,18 @@
-import React, {useEffect, useRef, useState, useCallback} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {useHistory} from 'react-router-dom';
 import 'amazon-connect-streams';
 import withErrorLogging from '@shared/HOC/with-error-logging';
 import {isCcpVisibleSelector} from '@shared/layout/store/layout.selectors';
 import {setAssignee} from '../tickets/services/tickets.service';
-import {setBotContext, setChatCounter, setContextPanel, setNoteContext, setVoiceCounter} from './store/ccp.slice';
+import {
+    setBotContext,
+    setChatCounter,
+    setConnectionStatus,
+    setContextPanel,
+    setNoteContext,
+    setVoiceCounter
+} from './store/ccp.slice';
 import {authenticationSelector} from '@shared/store/app-user/appuser.selectors';
 import {DragPreviewImage, useDrag} from 'react-dnd';
 import {DndItemTypes} from '@shared/layout/dragndrop/dnd-item-types';
@@ -25,9 +32,7 @@ import {selectContextPanel} from './store/ccp.selectors';
 import {useMutation} from 'react-query';
 import {CCP_ANIMATION_DURATION} from '@constants/form-constants';
 import Modal from '@components/modal/modal';
-import Spinner from '@components/spinner/Spinner';
 import Button from '@components/button/button';
-import {setConnectionStatus} from './store/ccp.slice';
 import {CCPConnectionStatus} from './models/connection-status.enum';
 
 const ccpConfig = {
@@ -86,6 +91,14 @@ const Ccp: React.FC<BoxProps> = ({
             setModelOpen(false);
         }
     }
+
+    useEffect(() => {
+        if (ccpConnectionState === CCPConnectionStatus.Success) {
+            setTimeout(() => {
+                setModelOpen(false);
+            },3000);
+        }
+    }, [ccpConnectionState]);
 
     const initCCP = useCallback((isRetry: boolean = false) => {
         const ccpContainer = document.getElementById('ccp-container');
@@ -320,15 +333,15 @@ const Ccp: React.FC<BoxProps> = ({
                     <div className='pb-7'>
                         <div className='body2'>{getModelDescription()}</div>
                         <div className='flex flex-row pt-7'>
+                            <SvgIcon type={Icon.CheckMark} fillClass='success-icon' />
+                            <span className='ml-2 body2'>{t('ccp.modal.athena_health')}</span>
+                        </div>
+                        <div className='flex flex-row pt-3'>
                             {ccpConnectionState === CCPConnectionStatus.Success && <SvgIcon type={Icon.CheckMark} fillClass='success-icon' />}
                             {ccpConnectionState === CCPConnectionStatus.Failed && <SvgIcon type={Icon.ErrorFilled} fillClass='danger-icon' />}
+                            {ccpConnectionState === CCPConnectionStatus.Loading && <SvgIcon type={Icon.Spinner}  fillClass='danger-icon' />}
                             <span className='ml-2 body2'>{t('ccp.modal.aws_connect')}</span>
                         </div>
-                        {ccpConnectionState === CCPConnectionStatus.Loading &&
-                            <div className='mt-5 mb-10'>
-                                <Spinner size='large-40' />
-                            </div>
-                        }
                         {ccpConnectionState === CCPConnectionStatus.Failed &&
                             <div className='flex flex-row justify-end'>
                                 <Button

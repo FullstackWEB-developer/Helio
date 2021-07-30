@@ -78,10 +78,10 @@ const TicketDetailTicketInfo = ({ticket, control}: TicketInfoProps) => {
                 failure: (e: any) => {
                     dispatch(addSnackbarMessage({
                         type: SnackbarType.Error,
-                        message: 'contacts.contact-details.error_dialing_phone'
+                        message: 'contacts.contact_details.error_dialing_phone'
                     }));
 
-                    logger.error(t('contacts.contact-details.error_dialing_phone'), e);
+                    logger.error(t('contacts.contact_details.error_dialing_phone'), e);
                 }
             })
         }

@@ -31,7 +31,7 @@ import {getContactById, searchContactsByName} from '@shared/services/contacts.se
 import {getLocations, getUserList} from '@shared/services/lookups.service';
 import {useHistory} from 'react-router-dom';
 import utils from '../../shared/utils/utils';
-import {TicketsPath} from '../../app/paths';
+import {TicketsPath} from '@app/paths';
 import {getPatientByIdWithQuery} from '@pages/patients/services/patients.service';
 import {getPatientActionNotes, getPatientCaseDocument} from '@pages/patients/services/patient-document.service';
 import {Patient} from '@pages/patients/models/patient';
@@ -50,6 +50,8 @@ import Spinner from '@components/spinner/Spinner';
 import ControlledSelect from '@components/controllers/controlled-select';
 import {TicketType} from '@pages/tickets/models/ticket-type.enum';
 import './ticket-new.scss';
+import {TicketStatuses} from '@pages/tickets/models/ticket.status.enum';
+import {ChannelTypes} from '@shared/models';
 
 const TicketNew = () => {
     dayjs.extend(utc);
@@ -127,7 +129,7 @@ const TicketNew = () => {
                 type: SnackbarType.Success,
                 message: t('tickets.ticket_created', {ticketNumber: data.ticketNumber})
             }));
-            history.push(TicketsPath);
+            history.push(`${TicketsPath}/${data.ticketNumber}`);
         },
         onError: () => {
             dispatch(addSnackbarMessage({
@@ -372,12 +374,11 @@ const TicketNew = () => {
             }
             case 'patientId':
             case 'patientCaseNumber': {
-                const result = !(!!contactId ||
+                return !(!!contactId ||
                     type === TicketType.BusinessOffice ||
                     type === TicketType.Facility ||
                     type === TicketType.Lab ||
                     type === TicketType.Pharmacy);
-                return result;
             }
             case 'reason': {
                 if (!reasonOptions || reasonOptions.length === 0) {
@@ -456,6 +457,7 @@ const TicketNew = () => {
                         name='status'
                         label={'ticket_new.status'}
                         options={statusOptions}
+                        defaultValue={TicketStatuses.Open.toString()}
                         control={control}
                         required={true}
                     />
@@ -490,6 +492,7 @@ const TicketNew = () => {
                         name='channel'
                         label={'ticket_new.channel'}
                         options={sourceOptions}
+                        defaultValue={ChannelTypes.UserCreated.toString()}
                         control={control}
                         required={true}
                     />

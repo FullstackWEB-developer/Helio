@@ -1,7 +1,6 @@
 import {Icon} from '@components/svg-icon/icon';
 import SvgIcon from '@components/svg-icon/svg-icon';
 import {TicketBase} from '@pages/tickets/models/ticket-base';
-import {ChannelTypes} from '@shared/models/ticket-channel';
 import React, {Fragment, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {useHistory} from 'react-router';
@@ -68,7 +67,7 @@ const ContactTickets = ({contactId}: ContactTicketsProps) => {
         }
         setContactTicketFilter(query);
 
-        refetch();
+        refetch().then();
     }
 
     const formatDueDate = (dueDate: Date) => {
@@ -121,7 +120,7 @@ const ContactTickets = ({contactId}: ContactTicketsProps) => {
             <SvgIcon type={Icon.Add}
                      className='icon-large pl-1 cursor-pointer'
                      fillClass='active-item-icon'/>
-            <span className='body2 pl-2 contact-accent-color'>{`${t('contacts.contact-details.create_ticket')}`}</span>
+            <span className='body2 pl-2 contact-accent-color'>{`${t('contacts.contact_details.create_ticket')}`}</span>
         </div>
         <div className='flex flex-row w-full auto-cols-min bg-gray-100 px-6 py-4 h-12 items-center body2-medium content-center'>
             <TicketListHeaderCell className='w-24'>{t('tickets.channel')}</TicketListHeaderCell>

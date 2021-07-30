@@ -66,7 +66,7 @@ const ContactAddress = ({title, addressType, control, removeCTAClickHandler, def
                             <div className="col-span-12 lg:col-span-5">
                                 {title}
                             </div>
-                            <div className="col-span-12 lg:col-span-3"></div>
+                            <div className="col-span-12 lg:col-span-3"/>
                             <div className="col-span-12 lg:col-span-2">
                                 <RemoveCTA onClick={removeCTAClickHandler} />
                             </div>
@@ -76,7 +76,7 @@ const ContactAddress = ({title, addressType, control, removeCTAClickHandler, def
             {
                 !primaryAddress &&
                 <div className="relative">
-                    <Checkbox name='' label={t('contacts.contact-details.individual.same_as_primary')} onChange={onAsPrimaryCheckChange} />
+                    <Checkbox name='' label={t('contacts.contact_details.individual.same_as_primary')} onChange={onAsPrimaryCheckChange} />
                 </div>
             }
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-x-8">
@@ -86,7 +86,7 @@ const ContactAddress = ({title, addressType, control, removeCTAClickHandler, def
                         control={control}
                         disabled={disabledFields}
                         defaultValue={defaultValue?.line || ''}
-                        label={t('contacts.contact-details.individual.address')}
+                        label={t('contacts.contact_details.individual.address')}
                         dataTestId={`contact-${determineFormNamePrefix()}-address-line`}
                     />
                 </div>
@@ -96,7 +96,7 @@ const ContactAddress = ({title, addressType, control, removeCTAClickHandler, def
                         control={control}
                         disabled={disabledFields}
                         defaultValue={defaultValue?.apartmentNumber || ''}
-                        label={t('contacts.contact-details.individual.apt')}
+                        label={t('contacts.contact_details.individual.apt')}
                         dataTestId={`contact${determineFormNamePrefix()}-address-apt`}
                     />
                 </div>
@@ -106,7 +106,7 @@ const ContactAddress = ({title, addressType, control, removeCTAClickHandler, def
                         control={control}
                         disabled={disabledFields}
                         defaultValue={defaultValue?.city || ''}
-                        label={t('contacts.contact-details.individual.city')}
+                        label={t('contacts.contact_details.individual.city')}
                         dataTestId={`contact-${determineFormNamePrefix()}-address-city`}
                     />
                 </div>
@@ -116,7 +116,7 @@ const ContactAddress = ({title, addressType, control, removeCTAClickHandler, def
                         defaultValue={defaultStateOption}
                         disabled={disabledFields}
                         control={control}
-                        label={t('contacts.contact-details.individual.state')}
+                        label={t('contacts.contact_details.individual.state')}
                         options={options}
                         autoComplete={false}
                     />
@@ -127,7 +127,7 @@ const ContactAddress = ({title, addressType, control, removeCTAClickHandler, def
                         disabled={disabledFields}
                         control={control}
                         defaultValue={defaultValue?.zipCode || ''}
-                        label={t('contacts.contact-details.individual.zip_code')} dataTestId={`contact-${determineFormNamePrefix()}-zip-code`} />
+                        label={t('contacts.contact_details.individual.zip_code')} dataTestId={`contact-${determineFormNamePrefix()}-zip-code`} />
                 </div>
             </div>
         </>

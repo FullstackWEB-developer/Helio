@@ -27,7 +27,7 @@ interface ContactDetailsProps {
     contact: ContactExtended;
     editMode: boolean;
     editIconClickHandler?: () => void;
-    addNewContactHandler: () => void;
+    addNewContactHandler: (parentContact?: ContactExtended) => void;
     onUpdateSuccess: (contact: ContactExtended) => void;
     onUpdateError?: () => void;
     onToggleFavoriteSuccess: () => void;
@@ -84,10 +84,9 @@ const ContactDetails = ({contact,
                 failure: (e: any) => {
                     dispatch(addSnackbarMessage({
                         type: SnackbarType.Error,
-                        message: 'contacts.contact-details.error_dialing_phone'
+                        message: 'contacts.contact_details.error_dialing_phone'
                     }));
-
-                    logger.error(t('contacts.contact-details.error_dialing_phone'), e);
+                    logger.error(t('contacts.contact_details.error_dialing_phone'), e);
                 }
             })
         }
@@ -141,7 +140,7 @@ const ContactDetails = ({contact,
             contact={contact}
             editMode={editMode}
             initiateACall={initiateACall}
-            addNewContactHandler={addNewContactHandler}
+            addNewContactHandler={() => addNewContactHandler(contact)}
             closeEditMode={editIconClickHandler}
             onUpdateSuccess={onUpdateSuccess}
             onUpdateError={onUpdateError} />);
@@ -149,8 +148,8 @@ const ContactDetails = ({contact,
 
     return (
         <div className={`flex flex-grow flex-col overflow-y-${selectedTab === 1 ? 'hidden' : 'auto'} relative`}>
-            {toggleFavoriteMutation.isError && <h6 className='text-danger mt-2 mb-5'>{t('contacts.contact-details.error_favorite_contact')}</h6>}
-            {deleteContactMutation.isError && <h6 className='text-danger mt-2 mb-5'>{t('contacts.contact-details.error_deleting_contact')}</h6>}
+            {toggleFavoriteMutation.isError && <h6 className='text-danger mt-2 mb-5'>{t('contacts.contact_details.error_favorite_contact')}</h6>}
+            {deleteContactMutation.isError && <h6 className='text-danger mt-2 mb-5'>{t('contacts.contact_details.error_deleting_contact')}</h6>}
             <ContactHeader contact={contact}
                            editMode={editMode}
                            editIconClickHandler={editIconClickHandler}
@@ -160,18 +159,18 @@ const ContactDetails = ({contact,
                            isDeleting={deleteContactMutation.isLoading} />
             <div className='px-8 pt-4 w-full'>
                 <Tabs onSelect={(selectedTabIndex) => {setSelectedTab(selectedTabIndex)}}>
-                    <Tab title={`${t('contacts.contact-details.details')}`}>
+                    <Tab title={`${t('contacts.contact_details.details')}`}>
                         <div className='pt-8 overflow-x-hidden'>
                             <ContactInnerDetails />
                         </div>
                     </Tab>
-                    <Tab title={`${t('contacts.contact-details.notes')}`}>
+                    <Tab title={`${t('contacts.contact_details.notes')}`}>
                         <div className='pt-4 overflow-x-hidden overflow-y-auto contact-notes-section'>
                             <div ref={noteSectionStart}/>
                             <ContactNotes errorAddingNote={addNoteMutation.isError} contactId={contact.id!} />
                         </div>
                     </Tab>
-                    <Tab title={`${t('contacts.contact-details.tickets')}`}>
+                    <Tab title={`${t('contacts.contact_details.tickets')}`}>
                         <div className='pt-2'>
                             <ContactTickets contactId={contact.id!}/>
                         </div>
@@ -186,7 +185,7 @@ const ContactDetails = ({contact,
                               resizable={false}
                               hasBorder={false}
                               iconFill='contact-light-fill'
-                              placeHolder={t('contacts.contact-details.enter_note')}
+                              placeHolder={t('contacts.contact_details.enter_note')}
                               iconContainerClassName='px-10'
                               iconClassNames='cursor-pointer'
                               icon={Icon.Send}
@@ -199,8 +198,8 @@ const ContactDetails = ({contact,
                               isLoading={addNoteMutation.isLoading} />
                 </div>
             }
-            <Confirmation title={t('contacts.contact-details.confirm_delete_title', {contact: `${isCompany ? contact.companyName : `${contact?.firstName} ${contact?.lastName}`}`})}
-                          okButtonLabel={t('contacts.contact-details.confirm_delete_yes')} isOpen={confirmDeleteOpen}
+            <Confirmation title={t('contacts.contact_details.confirm_delete_title', {contact: isCompany ? contact.companyName : `${contact?.firstName} ${contact?.lastName}`})}
+                          okButtonLabel={t('contacts.contact_details.confirm_delete_yes')} isOpen={confirmDeleteOpen}
                           onOk={onDeleteConfirm} onCancel={onDeleteCancel} onClose={onDeleteCancel} />
         </div>
     )

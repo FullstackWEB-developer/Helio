@@ -81,16 +81,11 @@ const Contacts: React.FC<ContactProps> = () => {
     }, [debounceSearchTerm]);
 
     const handleCategoryChange = (selectedCategory: string): QueryContactRequest => {
-        let category;
         let starredOnly = false;
-        if (selectedCategory === t('contacts.category.all_contacts')) {
-            category = null;
-        }
         if (selectedCategory === t('contacts.category.starred_contacts')) {
-            category = null;
             starredOnly = true;
         }
-        category = ContactCategoryEnum[selectedCategory as keyof typeof ContactCategoryEnum];
+        const category = ContactCategoryEnum[selectedCategory as keyof typeof ContactCategoryEnum];
         return {
             ...queryParams,
             category,
@@ -98,28 +93,30 @@ const Contacts: React.FC<ContactProps> = () => {
             starredOnly
         }
     }
+
     useEffect(() => {
-        refetch();
+        refetch().then();
     }, [queryParams, refetch])
 
     const accumulateAllData = (): ContactExtended[] => {
         if (data && data.pages) {
-            return !searchTerm.length ? data?.pages.reduce((acc, val) => acc.concat(val.data.results), []) :
-                data?.pages.reduce((acc, val) => acc.concat(val.data.results), [])
-                    .sort((a: ContactExtended, b: ContactExtended) => a.type! - b.type!);
+            return data?.pages.reduce((acc, val) => acc.concat(val.data.results), []);
         }
         return [];
     }
+
     const fetchMore = () => {
         if (hasNextPage) {
-            fetchNextPage();
+            fetchNextPage().then();
         }
     }
+
     const toggleEditMode = () => {
         setEditMode(!editMode);
     }
-    const handleAddNewContactClick = () => {
-        setSelectedContact(undefined);
+
+    const handleAddNewContactClick = (parentContact?: ContactExtended) => {
+        setSelectedContact(parentContact);
         setEditMode(false);
         history.replace(`${ContactsPath}`);
         setAddNewContactMode(true);
@@ -134,7 +131,7 @@ const Contacts: React.FC<ContactProps> = () => {
 
         dispatch(addSnackbarMessage({
             type: SnackbarType.Success,
-            message: 'contacts.contact-details.contact_created'
+            message: 'contacts.contact_details.contact_created'
         }));
 
         history.replace(`${ContactsPath}/${contact.id}`);
@@ -143,7 +140,7 @@ const Contacts: React.FC<ContactProps> = () => {
     const onContactAddError = () => {
         dispatch(addSnackbarMessage({
             type: SnackbarType.Error,
-            message: 'contacts.contact-details.error_created_contact'
+            message: 'contacts.contact_details.error_created_contact'
         }));
     }
 
@@ -153,14 +150,14 @@ const Contacts: React.FC<ContactProps> = () => {
 
         dispatch(addSnackbarMessage({
             type: SnackbarType.Success,
-            message: 'contacts.contact-details.contact_updated'
+            message: 'contacts.contact_details.contact_updated'
         }))
     }
 
     const onContactUpdateError = () => {
         dispatch(addSnackbarMessage({
             type: SnackbarType.Error,
-            message: 'contacts.contact-details.error_updated_contact'
+            message: 'contacts.contact_details.error_updated_contact'
         }))
     }
     const onToggleFavoriteSuccess = () => {
@@ -193,7 +190,7 @@ const Contacts: React.FC<ContactProps> = () => {
 
         dispatch(addSnackbarMessage({
             type: SnackbarType.Success,
-            message: 'contacts.contact-details.contact_deleted'
+            message: 'contacts.contact_details.contact_deleted'
         }))
 
         history.replace(ContactsPath);
@@ -202,7 +199,7 @@ const Contacts: React.FC<ContactProps> = () => {
     const onDeleteError = () => {
         dispatch(addSnackbarMessage({
             type: SnackbarType.Error,
-            message: 'contacts.contact-details.error_deleted_contact'
+            message: 'contacts.contact_details.error_deleted_contact'
         }))
     }
 
@@ -218,7 +215,7 @@ const Contacts: React.FC<ContactProps> = () => {
 
     useEffect(() => {
         if (contactId) {
-            refetchSingle();
+            refetchSingle().then();
         }
     }, [refetchSingle, contactId]);
 
@@ -229,13 +226,13 @@ const Contacts: React.FC<ContactProps> = () => {
                 fetchMore={fetchMore} isFetching={isFetching} isFetchingNextPage={isFetchingNextPage} handleAddNewContactClick={handleAddNewContactClick}
                 searchValue={searchTerm} searchHandler={(value: string) => {setSearchTerm(value)}} />
             {
-                isErrorFetchingSingleContact && <h6 className='px-8 mt-2 mb-5 text-danger'>{t('contacts.contact-details.error_fetching_contact')}</h6>
+                isErrorFetchingSingleContact && <h6 className='px-8 mt-2 mb-5 text-danger'>{t('contacts.contact_details.error_fetching_contact')}</h6>
             }
             {
                 (isFetchingStates || isFetchingSingleContact) && !isGlobalLoading && <Spinner fullScreen />
             }
             {
-                selectedContact && !isFetchingSingleContact && !isFetchingStates &&
+                !addNewContactMode && selectedContact && !isFetchingSingleContact && !isFetchingStates &&
                 <ContactDetails contact={selectedContact} editMode={editMode}
                     editIconClickHandler={toggleEditMode}
                     addNewContactHandler={handleAddNewContactClick}
@@ -248,6 +245,7 @@ const Contacts: React.FC<ContactProps> = () => {
             }
             {addNewContactMode &&
                 <AddNewContact
+                    contact={selectedContact}
                     onContactAddSuccess={onContactAddSuccess}
                     onContactAddError={onContactAddError}
                     closeAddNewContactForm={closeAddNewContactForm}

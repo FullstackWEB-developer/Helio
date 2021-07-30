@@ -10,9 +10,10 @@ import {ContactPhoneType} from '@pages/contacts/enums/contact-phone-type.enum';
 import {showCcp} from '@shared/layout/store/layout.slice';
 import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
 import {SnackbarType} from '@components/snackbar/snackbar-position.enum';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import Logger from '@shared/services/logger';
-import Spinner from '@components/spinner/Spinner';
+import {ContactType} from '@pages/contacts/models/ContactType';
+import {selectVoiceCounter} from '@pages/ccp/store/ccp.selectors';
 
 interface ContactHeaderQuickActionsProps {
     editMode?: boolean;
@@ -25,6 +26,7 @@ interface ContactHeaderQuickActionsProps {
 const ContactSubheaderQuickActions = ({editMode, editIconClickHandler, contact, isLoading, deleteIconClickHandler}: ContactHeaderQuickActionsProps) => {
     const {t} = useTranslation();
     const dispatch = useDispatch();
+    const voiceCounter = useSelector(selectVoiceCounter);
     const logger = Logger.getInstance();
     const [selectedPhoneType, setSelectedPhoneType] = useState<ContactPhoneType>(ContactPhoneType.mobile);
     const [displayPhoneTypeDropdown, setDisplayPhoneTypeDropdown] = useState<boolean>(false);
@@ -44,7 +46,7 @@ const ContactSubheaderQuickActions = ({editMode, editIconClickHandler, contact, 
         onClick: (id) => phoneTypeSelected(Number(id)),
         items: Object.keys(ContactPhoneType).filter(item => !isNaN(Number(item))).map(item => {
             return {
-                label: t(`contacts.contact-details.individual.phone_types.${item}`),
+                label: t(`contacts.contact_details.individual.phone_types.${item}`),
                 value: item.toString()
             }
         })
@@ -74,10 +76,10 @@ const ContactSubheaderQuickActions = ({editMode, editIconClickHandler, contact, 
                 failure: (e: any) => {
                     dispatch(addSnackbarMessage({
                         type: SnackbarType.Error,
-                        message: 'contacts.contact-details.error_dialing_phone'
+                        message: 'contacts.contact_details.error_dialing_phone'
                     }));
 
-                    logger.error(t('contacts.contact-details.error_dialing_phone'), e);
+                    logger.error(t('contacts.contact_details.error_dialing_phone'), e);
                 }
             })
         }
@@ -88,56 +90,60 @@ const ContactSubheaderQuickActions = ({editMode, editIconClickHandler, contact, 
     }
 
     return (
-            <div className='flex justify-center pt-5'>
+        <div className='flex justify-center pt-5'>
                 <span className={`pr-3 cursor-pointer`} >
                     <SvgIcon type={Icon.ChannelPhone}
                              className='icon-x-large'
                              fillClass={getIconColor()}
                              strokeClass='contact-stroke-color'
                              onClick={handleOnPhoneClick}
+                             disabled={voiceCounter === 1}
                     />
                 </span>
 
-                <div className='flex items-center' ref={typeDropdownRef}>
-                    <div
-                        onClick={() => setDisplayPhoneTypeDropdown(!displayPhoneTypeDropdown)}
-                         className='flex flex-row'>
-                        <div className='contact-phone-type'>
-                            {t(`contacts.contact-details.individual.phone_types.${selectedPhoneType}`)}
-                        </div>
-                        <div className='pl-1.5'>
-                            <SvgIcon type={displayPhoneTypeDropdown ? Icon.ArrowUp : Icon.ArrowDown}
-                                     className='icon-medium' fillClass='contact-dropdown-arrows'/>
-                        </div>
+            <div className='flex items-center' ref={typeDropdownRef}>
+                <div
+                    onClick={() => setDisplayPhoneTypeDropdown(!displayPhoneTypeDropdown)}
+                    className='flex flex-row'>
+                    <div className='contact-phone-type'>
+                        {t(`contacts.contact_details.individual.phone_types.${selectedPhoneType}`)}
                     </div>
-                    {displayPhoneTypeDropdown &&
-                    <div className='absolute'>
-                        <Dropdown model={phoneTypeDropdownModel}/>
-                    </div>}
+                    <div className='pl-1.5'>
+                        <SvgIcon type={displayPhoneTypeDropdown ? Icon.ArrowUp : Icon.ArrowDown}
+                                 disabled={voiceCounter === 1}
+                                 className='icon-medium'
+                                 fillClass='contact-dropdown-arrows'/>
+                    </div>
                 </div>
+                {displayPhoneTypeDropdown &&
+                <div className='absolute'>
+                    <Dropdown model={phoneTypeDropdownModel}/>
+                </div>}
+            </div>
 
-                <span className={`pl-10 pr-8 cursor-pointer`} >
+            <span className={`pl-10 pr-8 ${contact.type === ContactType.Individual ? 'cursor-pointer' : ''}`} >
                     <SvgIcon type={Icon.ChannelSms}
+                             disabled={contact.type === ContactType.Company}
                              className='icon-x-large'
                              fillClass={getIconColor()}
                              strokeClass='contact-stroke-color'
                     />
                 </span>
-                <span className="pr-8 cursor-pointer">
+            <span className="pr-8 cursor-pointer">
                     <SvgIcon type={Icon.ChannelEmail}
                              className='icon-x-large'
                              fillClass={getIconColor()}
                              strokeClass='contact-stroke-color'
                     />
                 </span>
-                {!editMode && <span className="pr-8 cursor-pointer" onClick={editIconClickHandler}>
+            {!editMode && <span className="pr-8 cursor-pointer" onClick={editIconClickHandler}>
                     <SvgIcon type={Icon.EditCircled}
                              className='icon-x-large'
                              fillClass='contact-subheader-quick-action-color'
                              strokeClass='contact-stroke-color'
                     />
                 </span>}
-                <span className="pr-8 cursor-pointer" onClick={deleteIconClickHandler}>
+            <span className="pr-8 cursor-pointer" onClick={deleteIconClickHandler}>
                     <SvgIcon type={Icon.DeleteCircled}
                              className='icon-x-large'
                              fillClass='contact-subheader-quick-action-color'
@@ -145,7 +151,7 @@ const ContactSubheaderQuickActions = ({editMode, editIconClickHandler, contact, 
                              isLoading={isLoading}
                     />
                 </span>
-            </div>
+        </div>
     )
 }
 

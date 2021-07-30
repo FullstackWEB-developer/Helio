@@ -37,10 +37,15 @@ const ContactList = ({contacts, onContactSelect, currentlySelected, fetchMore, i
         contacts.forEach((c, index) => {
             if (index === 0) {
                 const firstLetter = getFirstChar(c);
-                body.push(<ContactListLetter key={`letter-${firstLetter}${index}`} letter={firstLetter} />);
+                body.push(<ContactListLetter key={`letter-${firstLetter}${index}`}
+                                             letter={firstLetter} />);
             }
 
-            body.push(<ContactListItem key={c.id} contact={c} onSelect={onContactSelect} selected={c.id === currentlySelected} />);
+            body.push(<ContactListItem isSearch={!!props.searchValue}
+                                       previousContact={contacts[index-1]}
+                                       key={c.id} contact={c}
+                                       onSelect={onContactSelect}
+                                       selected={c.id === currentlySelected} />);
 
             if (index < contacts.length - 1 && !props.searchValue.length) {
                 const nextLetter = getFirstChar(contacts[index + 1]);
@@ -66,7 +71,7 @@ const ContactList = ({contacts, onContactSelect, currentlySelected, fetchMore, i
 
     return (
         <div className="w-72 overflow-x-hidden relative flex flex-col contact-list-section" >
-            <div className="w-full border-b">
+            <div className="w-full">
                 <div className='flex items-center pl-4 py-3 cursor-pointer align-middle border-b'
                      onClick={handleAddNewContactClick}>
                     <SvgIcon type={Icon.AddContact}

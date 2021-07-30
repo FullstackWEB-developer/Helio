@@ -17,7 +17,7 @@ const ContactNotes = ({contactId, errorAddingNote}: ContactNotesProps) => {
     return (
         <div className='w-full h-full'>
             {
-                errorAddingNote && <div className='text-danger mt-2 mb-2 px-8'>{t('contacts.contact-details.error_adding_note')}</div>
+                errorAddingNote && <div className='text-danger mt-2 mb-2 px-8'>{t('contacts.contact_details.error_adding_note')}</div>
             }
             {
                 isFetching ? <Spinner fullScreen /> :
