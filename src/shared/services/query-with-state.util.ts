@@ -9,7 +9,7 @@ export const queryWithState = <T extends any>(
     canFetch?: () => boolean
 ) => {
     return async (dispatch: Dispatch) => {
-        if (!canFetch || !canFetch()) {
+        if (canFetch && !canFetch()) {
             return;
         }
 

@@ -121,7 +121,7 @@ const UserAddRow = ({
 
     const isValid = () => {
         const values = getValues();
-        return !!values.email && !!values.role;
+        return emailOptionSelected && !!values.role;
     }
 
     const convertToModel = (formData: any): InviteUserModel => {
@@ -170,6 +170,7 @@ const UserAddRow = ({
                 control={control}
                 type='text'
                 label='users.add_section.name_or_email'
+                forceAutoSuggestSelect
                 autosuggestDropdown
                 autosuggestOptions={emailOptions}
                 onDropdownSuggestionClick={onEmailSuggestionClick}

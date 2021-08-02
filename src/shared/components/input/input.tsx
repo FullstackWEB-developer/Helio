@@ -29,6 +29,7 @@ interface InputProps extends React.HTMLAttributes<HTMLInputElement> {
     dropdownIcon?: Icon
     autoSuggestDropdown?: boolean;
     autoSuggestOptions?: Option[];
+    forceAutoSuggestSelect?: boolean;
     dropdownIconClickHandler?: () => void;
     onDropdownSuggestionClick?: (suggestion: Option) => void;
     isFetchingSuggestions?: boolean;
@@ -47,6 +48,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({
     isLoading,
     autoSuggestDropdown,
     autoSuggestOptions,
+    forceAutoSuggestSelect,
     isFetchingSuggestions,
     selectedSuggestion,
     fetchingSuggestionsPlaceholder,
@@ -57,7 +59,6 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({
     const [isFocused, setIsFocused] = useState(false);
     const innerRef = customHooks.useCombinedForwardAndInnerRef(ref);
     const [dropdownOpen, setDropdownOpen] = useState(false);
-
     const validateNumberValue = React.useCallback((event: any) => {
         if (!event.target.value || !InputTypes.Number.test(event.target.value)) {
             event.target.value = '';
@@ -80,8 +81,22 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({
 
     const onBlur = (e: React.FocusEvent<HTMLInputElement>) => {
         setIsFocused(false);
+
         if (autoSuggestDropdown) {
             setDropdownOpen(false);
+
+            if (forceAutoSuggestSelect) {
+                const event = Object.create(e);
+
+                if (!selectedSuggestion) {
+                    event.target.value = '';
+                } else if (props.value === '') {
+                    event.target.value = selectedSuggestion.label;
+                }
+
+                onChange(event as React.ChangeEvent<HTMLInputElement>);
+            }
+
         }
         if (props.onBlur) {
             props.onBlur(e);

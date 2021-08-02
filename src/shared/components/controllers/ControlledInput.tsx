@@ -27,6 +27,7 @@ export interface ControlledInputProps {
     onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
     dropdownIcon?: Icon
     autosuggestDropdown?: boolean;
+    forceAutoSuggestSelect?: boolean;
     autosuggestOptions?: Option[];
     dropdownIconClickHandler?: () => void;
     onDropdownSuggestionClick?: (suggestion: Option) => void;
@@ -44,6 +45,7 @@ const ControlledInput = ({
     label = '',
     className = '',
     dataTestId = name,
+    forceAutoSuggestSelect,
     max,
     placeholder,
     ...props
@@ -109,6 +111,7 @@ const ControlledInput = ({
                 type={type}
                 required={required}
                 assistiveText={props.assistiveText}
+                forceAutoSuggestSelect={forceAutoSuggestSelect}
                 isLoading={props.isLoading}
                 disabled={props.disabled}
                 data-test-id={dataTestId}

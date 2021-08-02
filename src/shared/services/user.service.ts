@@ -61,7 +61,7 @@ export const getCallForwardingTypeWithState = queryWithState(
     () => getEnumList('CallForwardingType'),
     (payload) => setForwardToOptions(payload),
     () => {
-        const forwardToOptions = store.getState().forwardToOptions;
+        const forwardToOptions = store.getState().lookupsState.forwardToOptions;
         return !forwardToOptions || forwardToOptions < 1;
     }
 );
@@ -87,7 +87,7 @@ export const getRoleWithState = queryWithState(
     () => getRole(),
     (payload) => setRoleList(payload),
     () => {
-        const roleList = store.getState().roleList;
+        const roleList = store.getState().lookupsState.roleList;
         return !roleList || roleList < 1;
     }
 );

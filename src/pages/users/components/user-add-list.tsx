@@ -37,9 +37,12 @@ const UserAddList = ({onChange}: UserAddListProps) => {
     }
 
     const onRemoveClick = (index: number) => {
-        const newRow = [...rows];
-        newRow.splice(index, 1);
-        setRows(newRow);
+        const newRows = [...rows];
+        newRows.splice(index, 1);
+        setRows(newRows);
+        if (onChange) {
+            onChange(newRows);
+        }
     }
 
     return (
