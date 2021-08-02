@@ -37,7 +37,7 @@ const SmsNewMessage = ({...props}: SmsNewMessageProps) => {
 
     const {refetch, isLoading: patientsIsLoading, isFetching: patientsIsFetching, isError, data: patientsData = []} = useQuery(SearchPatient,
         () => getPatients(searchParams.type, searchParams.value), {
-        enabled: false,
+        enabled: false
     });
 
     const {refetch: ticketRefetch, isFetching: ticketIsFetching} = useQuery([QueryPatientTickets, ticketQueryParams],
@@ -122,7 +122,7 @@ const SmsNewMessage = ({...props}: SmsNewMessageProps) => {
                     />
                 }
                 {isError &&
-                    <div className='p-4 text-red-500'>{t('search.search_results.heading_error')}</div>
+                    <div className="pt-8 pl-6 body2">{t('search.search_results.empty', {searchTerm: searchParams.value})}</div>
                 }
                 {!isLoading && step === SmsNewMessageSteps.ExistingTicket &&
                     <SmsNewMessageExistingTicket
@@ -141,7 +141,7 @@ const SmsNewMessage = ({...props}: SmsNewMessageProps) => {
                     />
                 }
             </div>
-        </div>
+        </div >
     );
 }
 

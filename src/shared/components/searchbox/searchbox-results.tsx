@@ -24,7 +24,7 @@ const SearchBoxResults = ({items, onSelect}: SearchBoxResultsProps) => {
                         <div className='flex items-center w-1/12 uppercase'>{t('searchbox_result.dob')}</div>
                         <div className='flex items-center justify-center w-1/12 uppercase'>{t('searchbox_result.email')}</div>
                         <div className='flex items-center justify-center w-1/12 uppercase'>{t('searchbox_result.phone')}</div>
-                        <div className='flex items-center justify-center w-1/12 uppercase'>{t('searchbox_result.text_consent')}</div>
+                        <div className='flex items-center justify-center w-1/12 uppercase whitespace-nowrap'>{t('searchbox_result.text_consent')}</div>
                         <div className='flex items-center justify-center w-1/12 '></div>
                     </div>
                     {items?.map(i => <SearchBoxResultItem patient={i} onSelect={onSelect} />)}

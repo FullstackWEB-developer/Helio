@@ -61,7 +61,7 @@ const SmsNewMessageNewTicket = ({patient, ...props}: SmsNewMessageNewTicketProps
     }
     return (
         <div className='px-6 pb-7'>
-            <h5 className='my-7'>{t('sms.chat.new.new_ticket_title')}</h5>
+            <h5 className='my-7'>{t('sms.chat.new.new_ticket.title')}</h5>
             <SmsNewMessageNewTicketForm
                 disabled={createTicketMutation.isLoading}
                 onTicketReasonChange={value => setTicketReasonSelected(value)}

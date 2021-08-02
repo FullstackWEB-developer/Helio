@@ -993,7 +993,7 @@
           }
         },
         "new_ticket": {
-          "title": "You are starting a new email conversation",
+          "title": "You are starting a new email conversation.",
           "form_title": "Enter Ticket Information"
         }
       }

@@ -93,9 +93,11 @@ const Sms = () => {
         }
         const currentSummaryMessagesClone = summaryMessages.slice();
         const currentSummaryMessage = currentSummaryMessagesClone[messageIndex];
-        if (unreadCountIncrease) {
-            currentSummaryMessage.unreadCount += unreadCountIncrease;
+
+        if (unreadCountIncrease !== undefined) {
+            currentSummaryMessage.unreadCount = unreadCountIncrease > 0 ? currentSummaryMessage.unreadCount + unreadCountIncrease : unreadCountIncrease;
         }
+
         if (messageSummaryBody) {
             currentSummaryMessage.messageSummary = messageSummaryTruncate(messageSummaryBody);
         }
@@ -108,7 +110,9 @@ const Sms = () => {
             onSuccess: (result) => {
                 const isTicketSummarySelected = summaryMessages && selectedTicketSummary?.ticketId === result.ticketId;
                 modifySummaryMessage(result.ticketId, !isTicketSummarySelected ? 1 : undefined, result.body);
-                pushMessage(result);
+                if (isTicketSummarySelected) {
+                    pushMessage(result);
+                }
             },
             onSettled: () => {
                 setNewMessageId('');
@@ -201,7 +205,9 @@ const Sms = () => {
         if (summary.ticketId !== selectedTicketSummary?.ticketId) {
             setSelectedTicketSummary(summary);
             setIsNewSmsChat(false);
-            markReadMutation.mutate({ticketId: summary.ticketId, channel: ChannelTypes.SMS});
+            if (summary.unreadCount > 0) {
+                markReadMutation.mutate({ticketId: summary.ticketId, channel: ChannelTypes.SMS});
+            }
         }
     }
 

@@ -34,7 +34,7 @@ const SearchBoxResultItem = ({patient, ...props}: SearchBoxResultItemProps) => {
             <div className='flex items-center justify-center w-1/12 uppercase'>
                 {patient.isEmailExists &&
                     <SvgIcon
-                        type={Icon.CheckmarkOutline}
+                        type={Icon.CheckMark}
                         fillClass="default-toolbar-icon"
                     />}
             </div>
