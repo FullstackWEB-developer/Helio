@@ -231,6 +231,13 @@ const parseOptions = <T extends any>(data: T[],
     }));
 }
 
+const openWebSite = (url: string) => {
+        if (!url.match(/^https?:\/\//i)) {
+            url = 'http://' + url;
+        }
+        return window.open(url);
+}
+
 const utils = {
     getWindowCenter,
     formatUtcDate,
@@ -253,7 +260,8 @@ const utils = {
     getElementPosition,
     isLoggedIn,
     accumulateInfiniteData,
-    parseOptions
+    parseOptions,
+    openWebSite
 };
 
 export default utils;

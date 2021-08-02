@@ -99,7 +99,7 @@ const CompanyContactDetails = ({editMode, contact, initiateACall, addNewContactH
                                                   iconOnClick={() => phoneIconOnClick(contact.mobilePhone)} />
                                 <ContactInfoField label={`${t('contacts.contact_details.company.website')}`}
                                                   value={displayValue(contact.website)}
-                                                  onValueClick={() => contact.website && window.open(contact.website)} />
+                                                  onValueClick={() => contact.website && utils.openWebSite(contact.website)} />
                                 {
                                     renderAddressField(AddressType.PrimaryAddress)
                                 }

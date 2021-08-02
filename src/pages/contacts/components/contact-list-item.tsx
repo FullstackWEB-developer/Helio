@@ -21,10 +21,9 @@ const ContactListItem = ({contact, selected, onSelect, previousContact, isSearch
         }
     }
 
-    const wrapperClass = classNames('max-h-10 max-w-full truncate body2 py-2.5 relative border-b cursor-pointer', {
+    const wrapperClass = classNames('max-h-10 max-w-full truncate body2 py-2.5 relative border-b cursor-pointer pl-6', {
         'company-item-hovered' : hovered && !selected,
         'company-item-selected' : selected,
-        'pl-6' : !(!!contact.relatedId) || !isSearch,
         'pl-9' : isSearch &&
             (contact.relatedId === previousContact?.id || contact.relatedId === previousContact?.relatedId) &&
             (!!previousContact?.relatedId || !!contact.relatedId)

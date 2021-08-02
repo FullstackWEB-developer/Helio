@@ -117,7 +117,7 @@ const IndividualContactDetails = ({contact, editMode, initiateACall, closeEditMo
                                           icon={Icon.Phone} />
                         <ContactInfoField label={`${t('contacts.contact_details.individual.website')}`}
                                           value={displayValue(contact.website)}
-                                          onValueClick={() => window.open(contact.website)}/>
+                                          onValueClick={() => contact.website && utils.openWebSite(contact.website)}/>
                         {
                             renderAddressField(AddressType.PrimaryAddress)
                         }
