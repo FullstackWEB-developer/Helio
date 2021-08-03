@@ -54,6 +54,7 @@ const UserDetails = () => {
     const {userId} = useParams<{userId: string}>();
     const [userDetailExtended, setUserDetailExtended] = useState<UserDetailExtended>();
     const forwardToSelected = Number(watch('forward_to')) as CallForwardingType;
+    const enableForward = watch('enable_forward')?.checked as boolean;
     const forwardValuePhone = watch('forward_to_value_phone') as string;
     const [connectUserList, setConnectUserList] = useState<ConnectUser[]>([]);
     const currentUserStatus = userDetailExtended?.user.status;
@@ -396,6 +397,7 @@ const UserDetails = () => {
                                     label='users.call_forwarding_type'
                                     control={control}
                                     className='mt-6'
+                                    disabled={!enableForward}
                                     defaultValue=''
                                     options={forwardToOptions}
                                 />
@@ -405,7 +407,7 @@ const UserDetails = () => {
                                         name="forward_to_value_phone"
                                         type="tel"
                                         control={control}
-                                        disabled={isMobilePhoneLoading || isMobilePhoneFetching}
+                                        disabled={!enableForward || isMobilePhoneLoading || isMobilePhoneFetching}
                                         label='users.call_forwarding_value_phone'
                                     />
                                 }
@@ -414,6 +416,7 @@ const UserDetails = () => {
                                     <ControlledSelect
                                         control={control}
                                         name='forward_to_value_agent'
+                                        disabled={!enableForward}
                                         label='users.call_forwarding_value_agent'
                                         defaultValue=''
                                         options={connectUserOptions}
