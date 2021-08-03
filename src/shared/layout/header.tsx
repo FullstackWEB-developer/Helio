@@ -45,13 +45,19 @@ const Header = ({headsetIconRef}: {headsetIconRef: React.RefObject<HTMLDivElemen
         if (!auth || !auth.username) {
             return '';
         }
-        const user = await getUserByEmail(auth.username);
-        if (!user) {
+
+        const users = await getUserByEmail(auth.username);
+        if (!users?.results || users?.results.length < 1) {
             return '';
         }
+        const picture = users.results[0].profilePicture;
 
-        dispatch(setAuthentication(auth));
-        return user.profilePicture;
+        const enriched = {
+            ...auth,
+            profilePicture: picture
+        };
+        dispatch(setAuthentication(enriched));
+        return picture;
     }
 
     const {data: profilePicture} = useQuery<string | undefined, Error>([QueryUserById, auth.username], () => setUserPicture(),
@@ -78,7 +84,11 @@ const Header = ({headsetIconRef}: {headsetIconRef: React.RefObject<HTMLDivElemen
         return () => {
             clearTimeout(animationTimer);
         }
-    }, [isCcpVisible, ccpOpened])
+    }, [isCcpVisible, ccpOpened]);
+
+    const openUrl = (address: string) => {
+        window.open(address, '_blank');
+    }
 
     const displayProfileMenu = () => {
         setTimeout(() => dispatch(toggleUserProfileMenu(true)), 100);
@@ -153,10 +163,12 @@ const Header = ({headsetIconRef}: {headsetIconRef: React.RefObject<HTMLDivElemen
                     </div>
                     <div className='flex flex-row items-center'>
                         <div className='hidden pr-6 md:block'>
-                            <SvgIcon type={Icon.Office365} className='cursor-pointer' opacity='0.596' />
+                            <SvgIcon type={Icon.AwsConnect}
+                                     className='cursor-pointer header-icon'
+                                     onClick={() => openUrl(`${process.env.REACT_APP_CONNECT_BASE_URL}connect/home`)} />
                         </div>
                         <div data-test-id='athena-icon' className='hidden pr-10 md:block'>
-                            <SvgIcon type={Icon.Athena} className='cursor-pointer' opacity='0.55' />
+                            <SvgIcon type={Icon.Athena} className='cursor-pointer header-icon' onClick={() => openUrl(`${process.env.REACT_APP_ATHENAHEALTH}`)}/>
                         </div>
                         <div>
                             <div ref={dropdownRef} className='relative hidden h-full md:block'>

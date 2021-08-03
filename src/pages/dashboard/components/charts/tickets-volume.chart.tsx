@@ -45,7 +45,8 @@ const TicketsVolumeChart = ({data}: TicketsVolumeChartProps) => {
     let dates = data.createdTotal.map((x: BasicStatistic) => new Date(x.label).getTime());
     dates = dates.concat(data.closedTotal.map((x: BasicStatistic) => new Date(x.label).getTime()));
     const earliest = new Date(Math.min.apply(null, dates));
-    const differenceInDays = dayjs().diff(earliest, 'day');
+    const latest = new Date(Math.max.apply(null, dates));
+    const differenceInDays = dayjs(latest).diff(earliest, 'day');
     let tickRotation = 0;
     if (differenceInDays > 10) {
         tickRotation = 45;

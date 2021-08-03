@@ -79,5 +79,6 @@ export enum Icon {
     CheckMark = "CheckMark",
     HelioLogo = 'HelioLogo',
     Templates = "Templates",
-    ErrorFilled = "ErrorFilled"
+    ErrorFilled = "ErrorFilled",
+    AwsConnect = "AwsConnect"
 }

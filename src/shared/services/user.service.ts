@@ -16,9 +16,9 @@ import {queryWithState} from '@shared/services/query-with-state.util';
 import store from '../../app/store';
 import Api from './api';
 import {TicketEnumValue} from '@pages/tickets/models/ticket-enum-value.model';
-
 const userBaseUrl = '/users';
-export const getUserByEmail = async (email: string): Promise<User | undefined> => {
+
+export const getUserByEmail = async (email: string): Promise<PagedList<User> | undefined> => {
     if (!email) {
         return Promise.resolve(undefined);
     }

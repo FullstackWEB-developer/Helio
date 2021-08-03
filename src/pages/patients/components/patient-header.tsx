@@ -14,7 +14,7 @@ import {Icon} from '@components/svg-icon/icon';
 import SvgIcon from '@components/svg-icon/svg-icon';
 import customHooks from '@shared/hooks/customHooks';
 
-const athenaPatientUrl = process.env.REACT_APP_ATHENAHEALTH_CLIENT_SUMMARY;
+const athenaPatientUrl = `${process.env.REACT_APP_ATHENAHEALTH}${process.env.REACT_APP_ATHENAHEALTH_CLIENT_SUMMARY}`;
 
 export interface PatientHeaderProps {
     patientChartSummary: PatientChartSummary;

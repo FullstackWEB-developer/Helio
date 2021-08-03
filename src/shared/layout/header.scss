@@ -9,3 +9,10 @@
 .header-animation-fill {
   fill: var(--color-primary-500);
 }
+
+.header-icon {
+  opacity: 0.55;
+  &:hover {
+    opacity: 0.9;
+  }
+}
