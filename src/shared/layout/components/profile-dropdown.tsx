@@ -41,7 +41,7 @@ const ProfileDropdown = () => {
     const currentUserDetails = useSelector((state) => selectUserByEmail(state, auth.username));
 
     useEffect(() => {
-        dispatch(getUserList);
+        dispatch(getUserList());
     }, [dispatch])
 
     const signOut = () => {

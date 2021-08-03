@@ -38,7 +38,7 @@ dayjs.extend(utc);
 const UserDetails = () => {
 
     const {t} = useTranslation();
-    const {control, handleSubmit, watch, formState, setValue, getValues} = useForm({
+    const {control, handleSubmit, watch, formState, setValue, getValues, reset} = useForm({
         shouldUnregister: false,
         mode: "all"
     });
@@ -140,10 +140,10 @@ const UserDetails = () => {
 
 
         for (const role of user.roles) {
-            setValue(`userrole_${role}`, {value: role, checked: true});
+            setValue(`userrole_${role}`, {value: role, checked: true}, {shouldDirty: false, shouldValidate: false});
         }
-    };
 
+    }
     const {isLoading, isFetching, isError} = useQuery([GetUserExtended, userId],
         () => getUserDetailExtended(userId),
         {
@@ -172,7 +172,10 @@ const UserDetails = () => {
 
     const updateMutation = useMutation(updateUser, {
         onSuccess: (data) => {
-            setUserDetailExtended({...userDetailExtended!, user: data});
+            const updatedUserDetail = {...userDetailExtended!, user: data};
+            setUserDetailExtended(updatedUserDetail);
+            reset();
+            loadUserData(updatedUserDetail);
             showMessage(SnackbarType.Success, t('users.user_update_success'));
         },
         onError: () => {
