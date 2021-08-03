@@ -16,6 +16,7 @@ export interface DropdownModel {
   categorizedItems?: CategoryItemModel[];
   onClick?: (id: string, item: DropdownItemModel) => void;
   defaultValue?: string;
+  itemsWrapperClass?: string;
 }
 
 export interface DropdownItemModel extends Option {

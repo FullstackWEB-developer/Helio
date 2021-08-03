@@ -4,7 +4,6 @@ import {useHistory} from 'react-router-dom';
 import 'amazon-connect-streams';
 import withErrorLogging from '@shared/HOC/with-error-logging';
 import {isCcpVisibleSelector} from '@shared/layout/store/layout.selectors';
-import {setAssignee} from '../tickets/services/tickets.service';
 import {
     setBotContext,
     setChatCounter,
@@ -13,6 +12,7 @@ import {
     setNoteContext,
     setVoiceCounter
 } from './store/ccp.slice';
+import {getTicketById, setAssignee} from '../tickets/services/tickets.service';
 import {authenticationSelector} from '@shared/store/app-user/appuser.selectors';
 import {DragPreviewImage, useDrag} from 'react-dnd';
 import {DndItemTypes} from '@shared/layout/dragndrop/dnd-item-types';
@@ -28,12 +28,14 @@ import Logger from '@shared/services/logger';
 import {AgentState} from '@shared/models/agent-state';
 import {Icon} from '@components/svg-icon/icon';
 import SvgIcon from '@components/svg-icon/svg-icon';
-import {selectContextPanel} from './store/ccp.selectors';
-import {useMutation} from 'react-query';
+import {selectBotContext, selectContextPanel} from './store/ccp.selectors';
+import {useMutation, useQuery} from 'react-query';
 import {CCP_ANIMATION_DURATION} from '@constants/form-constants';
 import Modal from '@components/modal/modal';
 import Button from '@components/button/button';
 import {CCPConnectionStatus} from './models/connection-status.enum';
+import {QueryGetPatientById, QueryTickets} from '@constants/react-query-constants';
+import {getPatientByIdWithQuery} from '@pages/patients/services/patients.service';
 
 const ccpConfig = {
     region: process.env.REACT_APP_AWS_REGION,
@@ -74,6 +76,8 @@ const Ccp: React.FC<BoxProps> = ({
     const [isHover, setHover] = useState(false);
     const [isBottomBarVisible, setIsBottomBarVisible] = useState(false);
     const [ticketId, setTicketId] = useState('');
+    const [patientId, setPatientId] = useState<number>();
+    const botContext = useSelector(selectBotContext);
     const currentContext = useSelector(selectContextPanel);
     const updateAssigneeMutation = useMutation(setAssignee);
     const isCcpVisibleRef = useRef();
@@ -82,15 +86,37 @@ const Ccp: React.FC<BoxProps> = ({
     const [delayCcpDisplaying, setDelayCcpDisplaying] = useState(true);
     const [ccpConnectionState, setCcpConnectionState] = useState<CCPConnectionStatus>(CCPConnectionStatus.None);
     const [isModelOpen, setModelOpen] = useState(false);
-
     const ccpConnectionFailed = (isRetry: boolean) => {
         setCcpConnectionState(CCPConnectionStatus.Failed);
-
         if (isRetry) {
             dispatch(setConnectionStatus(CCPConnectionStatus.Failed));
             setModelOpen(false);
         }
     }
+
+    useQuery([QueryGetPatientById, patientId], () => getPatientByIdWithQuery(patientId!), {
+        enabled: !!patientId,
+        onSuccess:(data) => {
+            dispatch(setBotContext({
+                ...botContext,
+                patient: data
+            }));
+        }
+    });
+
+    useQuery([QueryTickets, ticketId], () => getTicketById(ticketId), {
+        enabled: !!ticketId,
+        onSuccess:(data) => {
+            dispatch(setBotContext({
+                ...botContext,
+                ticket: data
+            }));
+        }
+    });
+
+    useEffect(() => {
+        updateAssigneeMutation.mutate({ticketId: ticketId, assignee: username})
+    }, [ticketId]);
 
     useEffect(() => {
         if (ccpConnectionState === CCPConnectionStatus.Success) {
@@ -153,33 +179,37 @@ const Ccp: React.FC<BoxProps> = ({
                 const attributeMap = contact.getAttributes();
                 const queue = contact.getQueue();
                 const queueName = queue.name;
+                let ticketId = '';
                 const reason = attributeMap.CallerMainIntent.value;
 
                 if (attributeMap.PatientId) {
                     const patientId = attributeMap.PatientId.value;
+                    setPatientId(Number(patientId));
                     if (patientId) {
                         history.push('/patients/' + patientId);
                     }
                 }
 
                 if (attributeMap.TicketId) {
-                    let tId;
                     if (attributeMap.TicketId.value) {
-                        tId = attributeMap.TicketId.value;
-                        updateAssigneeMutation.mutate({ticketId: tId, assignee: username})
+                        ticketId = attributeMap.TicketId.value;
                     } else {
-                        tId = contact.getContactId();
+                        ticketId = contact.getContactId();
                     }
 
-                    setTicketId(tId);
-                    dispatch(setNoteContext({ticketId: tId, username: username}));
+                    setTicketId(ticketId);
+                    dispatch(setNoteContext({ticketId: ticketId, username: username}));
                 }
-
                 dispatch(setContextPanel(contextPanels.bot));
-                dispatch(setBotContext({queue: queueName, reason}));
+                dispatch(setBotContext({
+                    ...botContext,
+                    queue: queueName,
+                    reason})
+                );
             });
 
             contact.onDestroy(() => {
+                dispatch(setBotContext(undefined));
                 dispatch(setContextPanel(''));
             })
         });
@@ -202,13 +232,11 @@ const Ccp: React.FC<BoxProps> = ({
             agent.onRefresh(ag => {
                 const numberOfChats = ag.getContacts(connect.ContactType.CHAT).length;
                 dispatch(setChatCounter(numberOfChats));
-
                 const numberOfVoices = ag.getContacts(connect.ContactType.VOICE).length;
                 dispatch(setVoiceCounter(numberOfVoices));
 
                 setIsBottomBarVisible(numberOfChats > 0 || numberOfVoices > 0);
             });
-
             window.addEventListener('beforeunload', () => beforeUnload(agentStates));
         });
 

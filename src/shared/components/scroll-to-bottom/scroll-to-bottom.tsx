@@ -5,7 +5,11 @@ const AlwaysScrollToBottom = ({enabled}: {enabled?: boolean}) => {
 
     useEffect(() => {
         if (enabled && elementRef.current) {
-            elementRef.current.scrollIntoView()
+            elementRef.current.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center'
+
+            })
         }
     }, [enabled]);
 

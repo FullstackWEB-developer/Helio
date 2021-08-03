@@ -6,6 +6,13 @@
     animation: toast-in-right .7s;
   }
 
+  &-top-center {
+    top: 2.2rem;
+    right: 35%;
+    transition: transform .6s ease-in-out;
+    animation: toast-in-top .7s;
+  }
+
   &-bottom-right {
     bottom: 2.2rem;
     right: 0.75rem;
@@ -38,10 +45,19 @@
 @keyframes toast-in-left {
   from {
     transform: translateX(-100%);
-
   }
   to {
     transform: translateX(0);
+  }
+}
+
+
+@keyframes toast-in-top {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
   }
 }
 

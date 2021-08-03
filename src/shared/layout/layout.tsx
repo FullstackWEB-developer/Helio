@@ -8,7 +8,7 @@ import {DndContainer} from './dragndrop/dnd-container'
 import StatusBar from './statusbar';
 import './layout.scss';
 import Snackbar from '@components/snackbar/snackbar';
-import {SnackbarPosition} from '@components/snackbar/snackbar-type.enum';
+import {SnackbarPosition} from '@components/snackbar/snackbar-position.enum';
 import {useHistory} from 'react-router-dom';
 import utils from '@shared/utils/utils';
 import Overlay from '@components/overlay/overlay';
@@ -62,6 +62,7 @@ const Layout = (props: LayoutProps) => {
                             </div>
                         </div>
                         <Snackbar position={SnackbarPosition.TopRight}/>
+                        <Snackbar position={SnackbarPosition.TopCenter}/>
                     </DndContainer>
                 </DndProvider>
             </div>

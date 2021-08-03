@@ -106,7 +106,15 @@
       "high": "High",
       "critical": "Critical"
     },
-
+    "notifications" : {
+      "lab_results" : {
+        "error:": "Error getting lab results, please try again later.",
+        "view_recent_labs": "View recent labs",
+        "collect_date": "Collect Date",
+        "test": "Test",
+        "published": "Published"
+      }
+    },
     "statuses": {
       "1": "Open",
       "2": "On hold",
@@ -190,6 +198,14 @@
       "desc_success": "You are now connected to following services:",
       "desc_fail": "We were unable to connect to some of the services.",
       "desc_fail_try": "Please retry or contact your technical support team at <0>{{email}}</0> if problem persists."
+    },
+    "sms_context": {
+      "title": "Send SMS Message",
+      "to": "To",
+      "select_template": "Select Template",
+      "preview": "Preview",
+      "send": "Send",
+      "message": "Message"
     }
   },
   "error": {
@@ -437,6 +453,7 @@
     "sms_send_fail": "Sms sent failed.",
     "email_send_success": "Your message was sent.",
     "email_send_fail": "Email sent failed.",
+    "template": "Template: ",
     "chat_transcript": {
       "title": "Chat Transcript",
       "chat_info": "Chat Info",
@@ -534,11 +551,7 @@
       "not_found": "There are no feed items.",
       "error": "Failed to add Feed.",
       "description_prefix": "Ticket status was changed to",
-      "title": "Recent Activity",
-      "feed_type_1": "via SMS",
-      "feed_type_2": "via email",
-      "feed_type_3": "status change",
-      "feed_type_4": "via note"
+      "title": "Recent Activity"
     }
   },
   "statuses": {
@@ -561,6 +574,13 @@
       "invalid_phone": "Phone number is not valid.",
       "invalid_date": "Date is not valid",
       "invalid_zip": "Enter a valid zip code"
+    },
+    "textarea" : {
+      "formatting" : {
+        "font_normal": "Normal",
+        "font_subheading" : "Subheading",
+        "font_heading": "Heading"
+      }
     }
   },
   "chat_transcripts": {

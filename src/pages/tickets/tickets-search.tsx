@@ -7,7 +7,7 @@ import {selectTicketFilter, selectTicketsPaging} from './store/tickets.selectors
 import {toggleTicketListFilter} from './store/tickets.slice';
 import {Paging} from '@shared/models/paging.model';
 import {TicketQuery} from './models/ticket-query';
-import {TicketsPath} from '../../app/paths';
+import {TicketsPath} from '@app/paths';
 import './tickets.scss';
 import SvgIcon from '@components/svg-icon/svg-icon';
 import {Icon} from '@components/svg-icon/icon';
@@ -63,6 +63,7 @@ const TicketsSearch = () => {
         <SearchInputField
             wrapperClassNames='relative w-full h-full'
             inputClassNames='border-b-0'
+            hasBorderBottom={false}
             onChange={(value: string) => {setSearchTerm(value)}}
             onClear={search}
             value={searchTerm}

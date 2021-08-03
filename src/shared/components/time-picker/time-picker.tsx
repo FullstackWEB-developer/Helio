@@ -61,7 +61,7 @@ const TimePicker = React.forwardRef<HTMLInputElement, TimePickerProps>(({
     }
 
     const onInputBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-        if (!timepickerDropdownModel.items?.find(t => t.value == inputValue.trim())) {
+        if (!timepickerDropdownModel.items?.find(t => t.value === inputValue.trim())) {
             const event = Object.create(e);
             event.target.value = '';
             onInputValueChange(event as React.ChangeEvent<HTMLInputElement>);

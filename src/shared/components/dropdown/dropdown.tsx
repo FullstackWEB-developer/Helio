@@ -13,16 +13,30 @@ export interface DropdownProps {
 
 const Dropdown = ({model}: DropdownProps) => {
 
-    const {header, title, categorizedItems, items = [], onClick, defaultValue, asSelect = false, isSearchable = false} = model;
+    const {header, title, categorizedItems, items = [], onClick, defaultValue, asSelect = false, isSearchable = false, itemsWrapperClass = ''} = model;
     const [dropDownItems, setDropDownItems] = useState<DropdownItemModel[]>([]);
     const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
+        const querySearch = () => {
+            const results = items.reduce((res: any, item: DropdownItemModel) =>  {
+                    const idx = item.label.toLowerCase().indexOf(searchTerm.toLowerCase());
+                    if (idx === 0) {
+                        res[0].push(item);
+                    } else if (idx > 0) {
+                        res[1].push(item);
+                    }
+                    return res;
+                },
+                [[], []],
+            );
+            return results[0].concat(results[1]);
+        };
+
         if (!searchTerm) {
             setDropDownItems(items);
         } else {
-            const results = items.filter(item => item.label.toLowerCase().startsWith(searchTerm.toLowerCase()))
-            setDropDownItems(results);
+            setDropDownItems(querySearch());
         }
 
     }, [searchTerm, items])
@@ -88,7 +102,7 @@ const Dropdown = ({model}: DropdownProps) => {
         {isSearchable &&
             <SearchInputField onChange={searchInputChanged} value={searchTerm} />
         }
-        <div className='overflow-y-auto overflow-x-hidden max-h-96'>
+        <div className={`overflow-y-auto overflow-x-hidden max-h-96 ${itemsWrapperClass}`}>
             {getCategoryItemListContent()}
             {getItemListContent()}
         </div>

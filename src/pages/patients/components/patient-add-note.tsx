@@ -46,18 +46,18 @@ const PatientAddNote = () => {
         {mutation.isError && <div>{t('patient.activity.notes.note_add_error')}</div>}
         <div className='flex flex-row border-t w-full'>
             <TextArea
-                className='pl-6 pt-2 pb-0 pr-0 body2 w-full'
+                className='body2 w-full'
                 data-test-id='note-context-notes'
                 placeHolder={t('patient.activity.notes.enter_your_note')}
                 value={noteText}
                 required={true}
-                rows={3}
+                rows={2}
+                maxRows={2}
                 resizable={false}
                 isLoading={mutation.isLoading}
                 hasBorder={false}
                 onChange={(message) => setNoteText(message)}
                 iconClassNames='icon-medium'
-                iconContainerClassName='pl-7 pr-9'
                 icon={Icon.Send}
                 iconFill='notes-send'
                 iconOnClick={() => {

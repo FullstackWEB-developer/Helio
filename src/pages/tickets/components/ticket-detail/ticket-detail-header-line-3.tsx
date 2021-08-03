@@ -20,7 +20,7 @@ import Logger from '@shared/services/logger';
 import Dropdown from '@components/dropdown/dropdown';
 import customHooks from '@shared/hooks/customHooks';
 import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
-import {SnackbarType} from '@components/snackbar/snackbar-position.enum';
+import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
 import {TicketStatuses} from '@pages/tickets/models/ticket.status.enum';
 import {Contact} from '@shared/models/contact.model';
 

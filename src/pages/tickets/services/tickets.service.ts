@@ -263,6 +263,12 @@ export const getTicketByNumber = async (ticketNumber: number) => {
     return response.data;
 }
 
+export const getTicketById = async (ticketId: string) => {
+    const url = `${ticketsBaseUrl}/${ticketId}`;
+    const response = await Api.get(url);
+    return response.data;
+}
+
 export const getDashboardData = async (type: DashboardTypes, timeFrame: DashboardTimeframes, startDate: Date, endDate: Date) => {
     let url = `${ticketsBaseUrl}/dashboard?timeFrame=${timeFrame}&type=${type}`;
     if (timeFrame === DashboardTimeframes.custom) {

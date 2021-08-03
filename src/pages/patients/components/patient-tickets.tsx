@@ -4,7 +4,6 @@ import {useTranslation} from 'react-i18next';
 import {PatientTicketsRequest} from '../../tickets/models/patient-tickets-request';
 import {DefaultPagination} from '@shared/models/paging.model';
 import {getPatientTickets} from '../../tickets/services/tickets.service';
-import {useHistory} from 'react-router-dom';
 import TicketChannelTypeIcon from '../../tickets/components/ticket-channel-type-icon';
 import utils from '@shared/utils/utils';
 import dayjs from 'dayjs';
@@ -18,6 +17,7 @@ import SvgIcon from '@components/svg-icon/svg-icon';
 import {Icon} from '@components/svg-icon/icon';
 import TicketStatusDot from '@pages/tickets/components/ticket-status-dot';
 import Spinner from '@components/spinner/Spinner';
+import useCtrlClick from '@shared/hooks/useCtrlHistory';
 
 interface PatientTicketProps {
     patientId: number;
@@ -25,7 +25,7 @@ interface PatientTicketProps {
 
 const PatientTickets: React.FC<PatientTicketProps> = ({patientId}) => {
 
-    const history = useHistory();
+    const history = useCtrlClick();
     const {t} = useTranslation();
     dayjs.extend(relativeTime);
     const sysdate = Date.now();

@@ -18,9 +18,9 @@ import {LabResultDetail} from '../models/lab-result-detail.model';
 import {useMutation} from 'react-query';
 import {createPatientCase} from '@pages/external-access/request-refill/services/request-refill.service';
 import {PatientCaseDocumentSource, PatientCaseDocumentSubClass} from '@pages/external-access/request-refill/models/patient-case-external.model';
-import {SnackbarType} from '@components/snackbar/snackbar-position.enum';
+import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
 import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
-import {SnackbarPosition} from '@components/snackbar/snackbar-type.enum';
+import {SnackbarPosition} from '@components/snackbar/snackbar-position.enum';
 
 const LabResultSendAMessage = ({labResult}: {labResult?: LabResultDetail}) => {
     const {t} = useTranslation();

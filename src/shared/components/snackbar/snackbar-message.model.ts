@@ -1,5 +1,5 @@
-import {SnackbarType} from '@components/snackbar/snackbar-position.enum';
-import {SnackbarPosition} from '@components/snackbar/snackbar-type.enum';
+import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
+import {SnackbarPosition} from '@components/snackbar/snackbar-position.enum';
 
 export interface SnackbarMessageModel {
     id?: string;

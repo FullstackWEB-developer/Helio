@@ -28,7 +28,7 @@ import Spinner from '@components/spinner/Spinner';
 import {DATE_LONG_FORMAT} from "@constants/form-constants";
 import {selectLiveAgentStatuses} from "@shared/store/app-user/appuser.selectors";
 import {addSnackbarMessage} from "@shared/store/snackbar/snackbar.slice";
-import {SnackbarType} from "@components/snackbar/snackbar-position.enum";
+import {SnackbarType} from "@components/snackbar/snackbar-type.enum";
 import {useTranslation} from "react-i18next";
 import ProviderMappingToolTip from "../components/provider-tool-tip";
 import './user-details.scss';

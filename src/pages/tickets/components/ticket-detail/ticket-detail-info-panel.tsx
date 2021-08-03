@@ -21,7 +21,7 @@ import {setTicket} from '@pages/tickets/store/tickets.slice';
 import {FeedTypes, TicketFeed} from '@pages/tickets/models/ticket-feed';
 import {useTranslation} from 'react-i18next';
 import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
-import {SnackbarType} from '@components/snackbar/snackbar-position.enum';
+import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
 import Button from '@components/button/button';
 import {selectLocationsAsOptions} from '@shared/store/lookups/lookups.selectors';
 import {getPatientActionNotes, getPatientCaseDocument} from '@pages/patients/services/patient-document.service';

@@ -9,7 +9,7 @@ import {selectUserList, selectUserOptions} from '@shared/store/lookups/lookups.s
 import {setAssignee} from '../../services/tickets.service';
 import {useMutation} from 'react-query';
 import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
-import {SnackbarType} from '@components/snackbar/snackbar-position.enum';
+import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
 import {setTicket} from '@pages/tickets/store/tickets.slice';
 import Avatar from '@components/avatar/avatar';
 import {useTranslation} from 'react-i18next';

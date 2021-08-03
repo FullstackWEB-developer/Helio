@@ -1,9 +1,9 @@
-import {SnackbarPosition} from '@components/snackbar/snackbar-type.enum';
+import {SnackbarPosition} from '@components/snackbar/snackbar-position.enum';
 import './snackbar.scss';
 import {useSelector} from 'react-redux';
 import SnackbarMessage from '@components/snackbar/snackbar-message';
 import {SnackbarMessageModel} from '@components/snackbar/snackbar-message.model';
-import {selectSnackbarMessages} from '@shared/store/snackbar/snackbar.selectors';
+import {selectSnackbarMessagesByPosition} from '@shared/store/snackbar/snackbar.selectors';
 
 export interface SnackbarProps {
     position: SnackbarPosition;
@@ -11,7 +11,7 @@ export interface SnackbarProps {
 }
 
 const Snackbar = ({position}: SnackbarProps) => {
-    const messages = useSelector(selectSnackbarMessages);
+    const messages = useSelector((state) => selectSnackbarMessagesByPosition(state, position));
     return <div className={`fixed z-50 space-y-4 snackbar-position-${position}`}>
         {
             messages?.map((message: SnackbarMessageModel) =>

@@ -16,7 +16,6 @@ import {createSmsConnectionHub} from '@shared/websockets/create-sms-connection-h
 import {useSelector} from 'react-redux';
 import {selectAccessToken} from '@shared/store/app-user/appuser.selectors';
 import {SMS_INCOMING_NAME} from '@shared/constants/signalr-provider-constants';
-
 const SearchResults = React.lazy(() => import('../shared/components/search-bar/components/search-results'));
 const PatientChart = React.lazy(() => import('@pages/patients/patient-chart'));
 const VerifyRedirectLink = React.lazy(() => import('@pages/external-access/hipaa-verification/verify-redirect-link'));

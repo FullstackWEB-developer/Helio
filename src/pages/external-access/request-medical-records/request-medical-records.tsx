@@ -23,7 +23,7 @@ import {RedirectLink} from '@pages/external-access/hipaa-verification/models/red
 import {setMedicalRecordsPreviewData} from '@pages/external-access/request-medical-records/store/medical-records.slice';
 import dayjs from 'dayjs';
 import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
-import {SnackbarType} from '@components/snackbar/snackbar-position.enum';
+import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
 import {AsyncJobInfo} from '@pages/patients/models/async-job-info.model';
 import {AsyncJobStatus} from '@pages/patients/models/async-job-status.enum';
 import {CheckMedicalRecordStatus} from '@constants/react-query-constants';

@@ -45,7 +45,7 @@ import {DEBOUNCE_SEARCH_DELAY_MS} from '@shared/constants/form-constants';
 import {ContactType} from '@pages/contacts/models/ContactType';
 import {AxiosError} from 'axios';
 import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
-import {SnackbarType} from '@components/snackbar/snackbar-position.enum';
+import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
 import Spinner from '@components/spinner/Spinner';
 import ControlledSelect from '@components/controllers/controlled-select';
 import {TicketType} from '@pages/tickets/models/ticket-type.enum';

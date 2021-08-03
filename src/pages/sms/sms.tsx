@@ -19,12 +19,12 @@ import {SmsFilterParamModel} from './components/sms-filter/sms-filter.model';
 import utils from '@shared/utils/utils';
 import {setAssignee} from '@pages/tickets/services/tickets.service';
 import {TicketBase} from '@pages/tickets/models/ticket-base';
-import {SmsQueryType} from './models/sms-query-type';
+import {SmsQueryType} from '@pages/sms/models';
 import {DEFAULT_FILTER_VALUE, DEFAULT_MESSAGE_QUERY_PARAMS} from './constants';
 import {getNextPage, messageSummaryTruncate} from './utils';
 import Spinner from '@components/spinner/Spinner';
 import {useSignalRConnectionContext} from '@shared/contexts/signalRContext';
-import {SmsNotificationData} from './models/sms-notification-data';
+import {SmsNotificationData} from '@pages/sms/models';
 import './sms.scss';
 
 const Sms = () => {
@@ -211,13 +211,14 @@ const Sms = () => {
         }
     }
 
-    const onSendMessage = (text: string) => {
+    const onSendMessage = (toAddress: string, text: string) => {
         if (!selectedTicketSummary) {
             return;
         }
         const message: TicketMessageBase = {
             channel: ChannelTypes.SMS,
             body: text,
+            toAddress,
             ticketId: selectedTicketSummary.ticketId
         }
         if (!selectedTicketSummary.assignedTo || selectedTicketSummary.assignedTo !== username) {

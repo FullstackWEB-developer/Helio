@@ -1,5 +1,5 @@
 import SvgIcon from '@components/svg-icon/svg-icon';
-import {SnackbarType} from '@components/snackbar/snackbar-position.enum';
+import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
 import {Icon} from '@components/svg-icon/icon';
 import Button from '@components/button/button';
 import {useTranslation} from 'react-i18next';
@@ -8,7 +8,7 @@ import {useDispatch} from 'react-redux';
 import {removeSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
 import {useEffect} from 'react';
 import './snackbar-message.scss';
-import {SnackbarPosition} from '@components/snackbar/snackbar-type.enum';
+import {SnackbarPosition} from '@components/snackbar/snackbar-position.enum';
 
 export interface SnackbarMessageProps {
     message: SnackbarMessageModel;

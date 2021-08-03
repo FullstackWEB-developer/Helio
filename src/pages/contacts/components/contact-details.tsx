@@ -19,7 +19,7 @@ import {useMutation, useQueryClient} from 'react-query';
 import {addContactNote, deleteContact, toggleFavoriteContact} from '@shared/services/contacts.service';
 import Confirmation from '@components/confirmation/confirmation';
 import {QueryContactNotes} from '@constants/react-query-constants';
-import {SnackbarType} from '@components/snackbar/snackbar-position.enum';
+import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
 import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
 import {Icon} from '@components/svg-icon/icon';
 
@@ -179,8 +179,8 @@ const ContactDetails = ({contact,
             </div>
             {
                 selectedTab === 1 &&
-                <div className='h-20 absolute bottom-0 w-full border-t'>
-                    <TextArea className='w-full pt-2 body2'
+                <div className='absolute bottom-0 w-full border-t'>
+                    <TextArea className='w-full body2'
                               value={note}
                               resizable={false}
                               hasBorder={false}
@@ -188,6 +188,8 @@ const ContactDetails = ({contact,
                               placeHolder={t('contacts.contact_details.enter_note')}
                               iconContainerClassName='px-10'
                               iconClassNames='cursor-pointer'
+                              rows={2}
+                              maxRows={5}
                               icon={Icon.Send}
                               onChange={(message) => {
                                   setNote(message)

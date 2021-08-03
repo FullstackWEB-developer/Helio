@@ -3,7 +3,7 @@ import './external-access-layout.scss';
 import {useTranslation} from 'react-i18next';
 import dayjs from 'dayjs';
 import Snackbar from '@components/snackbar/snackbar';
-import {SnackbarPosition} from '@components/snackbar/snackbar-type.enum';
+import {SnackbarPosition} from '@components/snackbar/snackbar-position.enum';
 import '../../../themes/cwc-theme.scss';
 import SvgIcon, {Icon} from '@shared/components/svg-icon';
 export interface ExternalAccessLayoutProps {
@@ -36,6 +36,7 @@ const ExternalAccessLayout = ({children}: ExternalAccessLayoutProps) => {
             </div>
         </div>
         <Snackbar position={SnackbarPosition.TopRight} />
+        <Snackbar position={SnackbarPosition.TopCenter}/>
     </>
 }
 export default ExternalAccessLayout;

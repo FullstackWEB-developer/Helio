@@ -18,7 +18,7 @@ const ccpSlice = createSlice({
         setContextPanel: (state, {payload}: PayloadAction<string>) => {
             state.contextPanel = payload;
         },
-        setBotContext: (state, {payload}: PayloadAction<BotContext>) => {
+        setBotContext: (state, {payload}: PayloadAction<BotContext | undefined>) => {
             state.botContext = payload;
         },
         setNoteContext: (state, {payload}: PayloadAction<CcpNote>) => {

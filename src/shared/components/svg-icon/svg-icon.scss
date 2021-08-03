@@ -77,7 +77,11 @@
   fill: var(--light-text-medium-emphasis);
 }
 .rgba-03-fill {
- fill: var(--rgba-color-03);
+  fill: var(--rgba-color-03);
+}
+
+.rgba-038-fill {
+  fill: var(--rgba-color-038);
 }
 
 .fill-loading {
@@ -85,7 +89,7 @@
 }
 
 .rgba-025-fill {
-  fill: var(--svg-Icon-default-disable-color);
+  fill: var(--svg-Icon-default-disabled-color);
 }
 
 .warning-icon {

@@ -18,7 +18,7 @@ import useComponentVisibility from '@shared/hooks/useComponentVisibility';
 import {useMutation} from 'react-query';
 import {setAssignee} from '@pages/tickets/services/tickets.service';
 import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
-import {SnackbarType} from '@components/snackbar/snackbar-position.enum';
+import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
 import {changeAssignee, setTicket} from '@pages/tickets/store/tickets.slice';
 import {setGlobalLoading} from '@shared/store/app/app.slice';
 

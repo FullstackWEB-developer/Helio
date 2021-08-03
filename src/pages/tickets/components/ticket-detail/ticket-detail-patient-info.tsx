@@ -1,7 +1,6 @@
 import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {useTranslation} from 'react-i18next';
-import {useHistory} from 'react-router-dom';
 import {Control, Controller} from 'react-hook-form';
 import withErrorLogging from '../../../../shared/HOC/with-error-logging';
 import {Ticket} from '../../models/ticket';
@@ -15,6 +14,7 @@ import Spinner from '@components/spinner/Spinner';
 import {TicketUpdateModel} from '@pages/tickets/models/ticket-update.model';
 import {selectTicketUpdateModel} from '@pages/tickets/store/tickets.selectors';
 import {setTicketUpdateModel} from '@pages/tickets/store/tickets.slice';
+import useCtrlHistory from '@shared/hooks/useCtrlHistory';
 
 interface TicketDetailPatientInfoProps {
     ticket: Ticket,
@@ -28,7 +28,7 @@ interface TicketDetailPatientInfoProps {
 const TicketDetailPatientInfo = ({ticket, patient, control, isPatientCaseNumberLoading,
     errorMessage, validatePatientCaseNumber}: TicketDetailPatientInfoProps) => {
     const {t} = useTranslation();
-    const history = useHistory();
+    const useHistory = useCtrlHistory();
     const dispatch = useDispatch();
 
     const loading = useSelector(selectPatientLoading);
@@ -66,7 +66,7 @@ const TicketDetailPatientInfo = ({ticket, patient, control, isPatientCaseNumberL
                                 <SvgIcon type={Icon.PatientChart}
                                     className='icon-medium h-8 w-8 pl-2 cursor-pointer'
                                     fillClass='active-item-icon'
-                                    onClick={() => history.push('/patients/' + ticket.patientId)} />
+                                    onClick={() => useHistory.push('/patients/' + ticket.patientId)} />
                             </dd>
                         </div>
                     </dl>

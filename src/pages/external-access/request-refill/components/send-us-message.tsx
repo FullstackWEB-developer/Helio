@@ -89,6 +89,7 @@ const SendUsMessage = () => {
                             placeHolder={t('common.enter_your_message')}
                             required={true}
                             rows={2}
+                            maxRows={5}
                             resizable={false}
                             value={messageText}
                             hasBorder={true}

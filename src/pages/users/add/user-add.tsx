@@ -10,7 +10,7 @@ import {UsersPath} from '@app/paths';
 import UserAddList from '../components/user-add-list';
 import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
 import {useDispatch} from 'react-redux';
-import {SnackbarType} from '@components/snackbar/snackbar-position.enum';
+import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
 import './user-add.scss';
 
 const UserAdd = () => {
@@ -50,7 +50,7 @@ const UserAdd = () => {
             <h5>{t('users.add_section.title')}</h5>
             <span className='mt-10'>
                 <Trans i18nKey="users.add_section.description" >
-                    <Link to={UsersPath}></Link>
+                    <Link to={UsersPath}/>
                 </Trans>
             </span>
             <div>

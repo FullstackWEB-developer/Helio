@@ -6,7 +6,7 @@ import {useTranslation} from 'react-i18next';
 import Button from '@components/button/button';
 import {useDispatch, useSelector} from "react-redux";
 import {authenticationSelector} from '@shared/store/app-user/appuser.selectors';
-import {SnackbarType} from '@components/snackbar/snackbar-position.enum';
+import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
 import {createTicket} from '@pages/tickets/services/tickets.service';
 import {useMutation} from 'react-query';
 import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';

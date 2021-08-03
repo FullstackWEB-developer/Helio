@@ -27,7 +27,8 @@ interface SearchInputProps {
     onDropdownSuggestionClick?: (suggestion: Option) => void,
     suggestionsPlaceholder?: string,
     suggestionsEmptyPlaceholder?: string,
-    autoSuggestDropdownClose?: boolean
+    autoSuggestDropdownClose?: boolean,
+    hasBorderBottom?: boolean;
 }
 const SearchInputField = React.forwardRef<HTMLInputElement, SearchInputProps>(({
     autosuggestOptions,
@@ -36,6 +37,7 @@ const SearchInputField = React.forwardRef<HTMLInputElement, SearchInputProps>(({
     suggestionsPlaceholder,
     suggestionsEmptyPlaceholder,
     autoSuggestDropdownClose,
+    hasBorderBottom = true,
     ...props
 }: SearchInputProps, ref) => {
     const {t} = useTranslation();
@@ -120,7 +122,7 @@ const SearchInputField = React.forwardRef<HTMLInputElement, SearchInputProps>(({
                 <SvgIcon type={Icon.Search} className="cursor-pointer icon-small" fillClass="search-icon-fill" onClick={props?.iconOnClick} />
             </div>}
             <input ref={innerRef} type='text'
-                className={classnames('py-2.5 h-full w-full search-input-field body2', props.inputClassNames, {'pl-12': !props.disableSearchIcon})}
+                className={classnames('py-2.5 h-full w-full search-input-field body2', props.inputClassNames, {'pl-12': !props.disableSearchIcon, 'border-b' : hasBorderBottom})}
                 placeholder={props.placeholder || t('common.search')}
                 value={value}
                 onChange={onChange}

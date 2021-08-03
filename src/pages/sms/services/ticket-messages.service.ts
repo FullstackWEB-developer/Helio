@@ -3,7 +3,7 @@ import Api from "@shared/services/api";
 
 const ticketMessageUrl = '/tickets/messages';
 
-export const getMessages = async (ticketId: string, channel: ChannelTypes, pagedRequest: PagedRequest) => {
+export const getMessages = async (ticketId: string, channel: ChannelTypes, pagedRequest: PagedRequest) : Promise<PagedList<TicketMessage>> => {
     const url = `${ticketMessageUrl}/${ticketId}/${channel}`;
     const response = await Api.get<PagedList<TicketMessage>>(url, {params: pagedRequest});
     return response.data;

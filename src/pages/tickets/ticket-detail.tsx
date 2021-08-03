@@ -31,11 +31,9 @@ interface TicketParams {
 const TicketDetail = () => {
     dayjs.extend(utc);
     const dispatch = useDispatch();
-    const {t} = useTranslation();
     const {ticketNumber} = useParams<TicketParams>();
     const displayChatTranscript = useSelector(selectIsChatTranscriptModalVisible);
     const ticket = useSelector(selectSelectedTicket);
-    const feedsRef = React.useRef<HTMLDivElement | null>();
     const {isLoading, error, isFetching} = useQuery<Ticket, Error>([QueryTickets, ticketNumber], () =>
             getTicketByNumber(Number(ticketNumber)),
         {
@@ -86,12 +84,6 @@ const TicketDetail = () => {
     if (!ticket) {
         return null;
     }
-    const onNoteAdded = () => {
-        feedsRef.current?.scrollIntoView({
-            block: 'start',
-            behavior: 'smooth'
-        });
-    }
 
     return (
         <>
@@ -108,10 +100,10 @@ const TicketDetail = () => {
                         </Modal>
                     </div>
                     <div className='mb-auto flex-1'>
-                        <TicketDetailFeed ticket={ticket} ref={(ref) => feedsRef.current = ref}/>
+                        <TicketDetailFeed ticket={ticket}/>
                     </div>
                     <div className='absolute bottom-0 w-full'>
-                        <TicketDetailAddNote patient={patient} contact={contact} onNoteAdded={() => onNoteAdded()} ticket={ticket}/>
+                        <TicketDetailAddNote patient={patient} contact={contact} ticket={ticket}/>
                     </div>
                 </div>
                 <div className='w-1/4 border-l overflow-y-auto'>

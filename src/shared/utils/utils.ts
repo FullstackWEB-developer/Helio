@@ -172,7 +172,6 @@ const getBrowserDatePattern = () => {
     }).join('');
 }
 
-
 const groupBy = <TKey extends unknown, TValue extends unknown>(array: TValue[], keyExpression: (item: TValue) => TKey) => {
     const map = new Map<TKey, TValue[]>();
     array.forEach(item => {

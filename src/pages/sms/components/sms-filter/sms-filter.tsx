@@ -171,6 +171,7 @@ const SmsFilter = ({className, isUserFilterEnabled, value, defaultValue, ...prop
                         type='date'
                         label='tickets.filter.from_date'
                         name='fromDate'
+                        defaultValue={null}
                         min={dayjs().subtract(6, 'month').toDate()}
                         dataTestId='ticket-filter-from-date'
                         isCalendarPositionComputed
@@ -180,6 +181,7 @@ const SmsFilter = ({className, isUserFilterEnabled, value, defaultValue, ...prop
                         control={control}
                         type='date'
                         isCalendarPositionComputed
+                        defaultValue={null}
                         min={fromDateField}
                         disabled={!fromDateField}
                         label='tickets.filter.to_date'

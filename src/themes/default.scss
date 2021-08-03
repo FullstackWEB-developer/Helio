@@ -312,6 +312,7 @@
   --grayed-out: rgba(0, 0, 0, 0.6);
   --default-toolbar-icon: rgba(0, 0, 0, 0.5);
   --rgba-color-03: rgba(0, 0, 0, 0.3);
+  --rgba-color-038: rgba(0, 0, 0, 0.38);
   --rgba-color-05: rgba(0, 0, 0, 0.5);
   --profile-dropdown-shadow: 0 0.25rem 0.125rem 0 rgba(0, 0, 0, 0.15);
   --ccp-header-color: #4a4a4a;
@@ -382,7 +383,7 @@
   --badge-font-size: 0.625rem;
 
 
-  --svg-Icon-default-disable-color: rgba(0, 0, 0, 0.25);
+  --svg-Icon-default-disabled-color: rgba(0, 0, 0, 0.25);
 
   --message-ticket-table-row-selected-color: rgba(0, 173, 88, 0.04);
   --message-outgoing-background-color: rgba(170, 223, 188, 0.55);
@@ -391,6 +392,7 @@
   --pagination-active-item: rgba(0, 0, 0, 0.5);
   --pagination-inactive-item: rgba(0, 0, 0, 0.38);
 
+  --text-area-disabled-color: var(--color-secondary-200);
   ::-webkit-scrollbar {
     width: 0.3125rem;
   }

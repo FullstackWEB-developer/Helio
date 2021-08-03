@@ -13,7 +13,7 @@ import {setTicketUpdateModel} from '@pages/tickets/store/tickets.slice';
 import {selectLocationsAsOptions} from '@shared/store/lookups/lookups.selectors';
 import {useTranslation} from 'react-i18next';
 import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
-import {SnackbarType} from '@components/snackbar/snackbar-position.enum';
+import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
 import TagInput from '@components/tag-input/tag-input';
 import {Icon} from '@components/svg-icon';
 import {showCcp} from '@shared/layout/store/layout.slice';

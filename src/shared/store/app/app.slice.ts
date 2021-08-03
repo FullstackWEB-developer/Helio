@@ -10,7 +10,6 @@ const appSlice = createSlice({
     }
 });
 
-
 export const {
     setGlobalLoading
 } = appSlice.actions

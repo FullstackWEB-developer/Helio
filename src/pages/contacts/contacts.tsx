@@ -19,7 +19,7 @@ import {setStates} from '@shared/store/lookups/lookups.slice';
 import {Option} from '@components/option/option';
 import {DEBOUNCE_SEARCH_DELAY_MS} from '@constants/form-constants';
 import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
-import {SnackbarType} from '@components/snackbar/snackbar-position.enum';
+import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
 import {getPageSize} from './contact-helpers/helpers';
 import Spinner from '@components/spinner/Spinner';
 import {selectGlobalLoading} from '@shared/store/app/app.selectors';

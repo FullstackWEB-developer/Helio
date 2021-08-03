@@ -11,7 +11,7 @@ import useComponentVisibility from '@shared/hooks/useComponentVisibility';
 import {TicketStatuses} from '@pages/tickets/models/ticket.status.enum';
 import {useMutation} from 'react-query';
 import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
-import {SnackbarType} from '@components/snackbar/snackbar-position.enum';
+import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
 import {changeStatus, setTicket} from '@pages/tickets/store/tickets.slice';
 import TicketStatusDot from '@pages/tickets/components/ticket-status-dot';
 import {Ticket} from '@pages/tickets/models/ticket';

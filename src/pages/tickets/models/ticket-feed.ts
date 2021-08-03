@@ -10,8 +10,9 @@ export interface TicketFeed {
 }
 
 export enum FeedTypes {
-    SendSms = 1,
-    SendEmail,
+    Sms = 1,
+    Email,
     StatusChange,
-    Note
+    Note,
+    Phone
 }

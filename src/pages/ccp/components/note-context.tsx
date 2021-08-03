@@ -79,7 +79,7 @@ const NoteContext = () => {
                                 placeHolder={t('ccp.note_context.enter_your_note')}
                                 value={noteText}
                                 required={true}
-                                rows={2}
+                                minRows={2}
                                 isLoading={addNoteMutation.isLoading}
                                 resizable={false}
                                 hasBorder={false}
