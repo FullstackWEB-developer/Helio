@@ -18,25 +18,25 @@ const ActivityPanel = () => {
     const isLoading = useSelector(selectPatientLoading);
 
     if (isLoading) {
-        return <Spinner fullScreen/>
+        return <Spinner fullScreen />
     }
 
-    return <div className='flex flex-col h-full overflow-hidden'>
+    return <div className='flex flex-col h-full overflow-hidden pt-12'>
         <div className='px-8 flex-grow'>
             <h5 className='pb-3'>{t('patient.activity.title')}</h5>
             <Tabs onSelect={(index) => setSelectedTab(index)}>
                 <Tab title={t('patient.notes_tab_label')}>
                     <div data-test-id='patient-activity-panel'>
-                        <PatientNotes notes={patient?.notes}/>
+                        <PatientNotes notes={patient?.notes} />
                     </div>
                 </Tab>
                 <Tab title={t('patient.tickets_tab_label')}>
-                    <PatientTickets patientId={patient?.patientId}/>
+                    <PatientTickets patientId={patient?.patientId} />
                 </Tab>
             </Tabs>
         </div>
         {selectedTab === 0 && <div className='flex justify-end flex-col'>
-            <PatientAddNote/>
+            <PatientAddNote />
         </div>}
     </div>
 }

@@ -124,11 +124,6 @@ const ProfileDropdown = () => {
         icon: <SvgIcon type={Icon.Placeholder} className='icon-small' fillClass='' />
     });
     items.push({
-        label: t('user_profile.my_states'),
-        value: 'my_states',
-        icon: <SvgIcon type={Icon.Placeholder} className='icon-small' fillClass='' />
-    });
-    items.push({
         label: t('user_profile.sign_out'),
         onClick: () => signOut(),
         value: 'sign_out',

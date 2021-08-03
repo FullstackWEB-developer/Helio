@@ -103,7 +103,7 @@ const Header = ({headsetIconRef}: {headsetIconRef: React.RefObject<HTMLDivElemen
                 <div className='flex flex-row'>
                     <div className='flex items-center w-full h-16 md:w-auto'>
                         <div className='pl-7 md:pl-0 pr-36'>
-                            <div className='cursor-pointer' onClick={() => history.push('/')}>
+                            <div className='cursor-pointer' onClick={() => history.push('/dashboard')}>
                                 <HelioLogo className='fill-current text-primary-600' />
                             </div>
                         </div>

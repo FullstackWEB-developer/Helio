@@ -88,7 +88,7 @@ const PatientChart = () => {
                 }
 
             </div>
-            <div className='activity-panel border-l pt-12 w-1/3'>
+            <div className='activity-panel border-l w-1/3'>
                 <ActivityPanel />
             </div>
         </div>
