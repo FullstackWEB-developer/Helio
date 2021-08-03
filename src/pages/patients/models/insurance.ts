@@ -30,8 +30,9 @@ export interface Insurance {
     ircName: string,
     ireligibilityLastCheckedCname: string,
     policyNumber: string,
-    relationshipToInsured: string,
-    relationshipToInsuredId: string,
-    insurancePlanDisplayName: string
-    copayAmount: number
+    relationshipToInsured: string;
+    relationshipToInsuredId: string;
+    insurancePlanDisplayName: string;
+    copayAmount: number;
+    sequenceNumber: number;
 }

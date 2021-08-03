@@ -12,7 +12,7 @@ const formatDob = (dob: string) => {
     return dayjs(date).format('MM/DD/YYYY');
 }
 
-const getPrimaryInsuranceHeader = (primaryInsurance: Insurance | ChartInsurance, message: string) => {
+const getInsuranceHeader = (primaryInsurance: Insurance | ChartInsurance, message: string) => {
     let primaryInsuranceHeader = message;
     if (primaryInsurance.insurancePackageId || primaryInsurance.insurancePackageAddress1 ||
         primaryInsurance.insurancePackageCity || primaryInsurance.insurancePackageState ||
@@ -29,7 +29,7 @@ const displayPatientSsn = (ssn: string) :boolean => {
 }
 
 const utils = {
-    getAge, formatDob, getPrimaryInsuranceHeader, displayPatientSsn
+    getAge, formatDob, getInsuranceHeader, displayPatientSsn
 }
 
 export default utils

@@ -24,7 +24,7 @@ const PatientTabs = ({patientId, patientChartSummary} : PatientTabsProps) => {
                     <PatientClinical patientId={patientId} />
                 </Tab>
                 <Tab title={t('patient.tabs.insurance')}>
-                    <PatientInsurance patientId={patientId} />
+                    <PatientInsurance/>
                 </Tab>
             </Tabs>
         </div>

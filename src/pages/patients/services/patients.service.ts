@@ -12,7 +12,7 @@ export interface AddNoteProps {
      note: Note;
 }
 
-const patientsUrl = '/patients';
+const patientsUrl = 'https://localhost:44339/patients';
 export const addNote = async ({patientId, note}: AddNoteProps) => {
      const result = await Api.put(`${patientsUrl}/${patientId}/notes`, {
           date: note.date,

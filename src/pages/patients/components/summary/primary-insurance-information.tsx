@@ -9,7 +9,7 @@ const PrimaryInsuranceInformation = ({patientChartSummary} : PrimaryInsuranceInf
     const {t} = useTranslation();
 
     const primaryInsurance = patientChartSummary.primaryInsurance;
-    const primaryInsuranceHeader = primaryInsurance ? `${patientUtils.getPrimaryInsuranceHeader(primaryInsurance, t('common.not_available'))} ` : '';
+    const primaryInsuranceHeader = primaryInsurance ? `${patientUtils.getInsuranceHeader(primaryInsurance, t('common.not_available'))} ` : '';
 
     const getEligibleTextColor = () => {
         return primaryInsurance?.eligibilityStatus === t('patient.insurance.eligible') ? 'text-primary-400' : 'text-red-500';
