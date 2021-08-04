@@ -2,18 +2,19 @@ import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {useHistory} from 'react-router-dom';
 import 'amazon-connect-streams';
+import 'amazon-connect-chatjs';
 import withErrorLogging from '@shared/HOC/with-error-logging';
 import {isCcpVisibleSelector} from '@shared/layout/store/layout.selectors';
 import {
     setBotContext,
     setChatCounter,
     setConnectionStatus,
-    setContextPanel,
+    setContextPanel, setCurrentContactId,
     setNoteContext,
     setVoiceCounter
 } from './store/ccp.slice';
 import {getTicketById, setAssignee} from '../tickets/services/tickets.service';
-import {authenticationSelector} from '@shared/store/app-user/appuser.selectors';
+import {authenticationSelector, selectAgentStates} from '@shared/store/app-user/appuser.selectors';
 import {DragPreviewImage, useDrag} from 'react-dnd';
 import {DndItemTypes} from '@shared/layout/dragndrop/dnd-item-types';
 import './ccp.scss';
@@ -36,6 +37,7 @@ import Button from '@components/button/button';
 import {CCPConnectionStatus} from './models/connection-status.enum';
 import {QueryGetPatientById, QueryTickets} from '@constants/react-query-constants';
 import {getPatientByIdWithQuery} from '@pages/patients/services/patients.service';
+import useLocalStorage from '@shared/hooks/useLocalStorage';
 
 const ccpConfig = {
     region: process.env.REACT_APP_AWS_REGION,
@@ -82,10 +84,12 @@ const Ccp: React.FC<BoxProps> = ({
     const updateAssigneeMutation = useMutation(setAssignee);
     const isCcpVisibleRef = useRef();
     isCcpVisibleRef.current = useSelector(isCcpVisibleSelector);
+    const [latestStatus, setLatestStatus] = useLocalStorage('latestCCPStatus', '');
     const [animateToggle, setAnimateToggle] = useState(false);
     const [delayCcpDisplaying, setDelayCcpDisplaying] = useState(true);
     const [ccpConnectionState, setCcpConnectionState] = useState<CCPConnectionStatus>(CCPConnectionStatus.None);
     const [isModelOpen, setModelOpen] = useState(false);
+    const agentStates = useSelector(selectAgentStates);
     const ccpConnectionFailed = (isRetry: boolean) => {
         setCcpConnectionState(CCPConnectionStatus.Failed);
         if (isRetry) {
@@ -158,17 +162,26 @@ const Ccp: React.FC<BoxProps> = ({
             ccpConnectionFailed(isRetry);
         });
 
-        let agentStates: AgentState[];
-        const beforeUnload = (agentStates: AgentState[]) => {
-            const state = agentStates.find((agentState) => agentState.name === UserStatus.Offline);
+        connect.core.onViewContact((contactEvent) => {
+            dispatch(setCurrentContactId(contactEvent.contactId));
+        });
+
+        const beforeUnload = () => {
+            setLatestStatus(window.CCP.agent.getState());
+            updateAgentStatus(UserStatus.Offline, agentStates);
+        };
+
+        const updateAgentStatus = (status: string, states :AgentState[]) => {
+            const state = states.find((agentState) => agentState.name === status);
             window.CCP.agent.setState(state, {
                 failure: (e: any) => {
                     logger.error('Cannot set state for agent ', e);
                 }
             });
-        };
+        }
 
         connect.contact((contact) => {
+            window.CCP.contact = contact;
             contact.onConnecting(() => {
                 if (!isCcpVisibleRef.current) {
                     dispatch(toggleCcp());
@@ -217,6 +230,11 @@ const Ccp: React.FC<BoxProps> = ({
             window.CCP.agent = agent;
 
             const agentStates = agent.getAgentStates() as AgentState[];
+
+            if (latestStatus?.name) {
+                updateAgentStatus(latestStatus.name, agentStates);
+            }
+
             if (agentStates?.length > 0) {
                 dispatch(setAgentStates(agentStates));
             }
@@ -237,11 +255,11 @@ const Ccp: React.FC<BoxProps> = ({
 
                 setIsBottomBarVisible(numberOfChats > 0 || numberOfVoices > 0);
             });
-            window.addEventListener('beforeunload', () => beforeUnload(agentStates));
+            window.addEventListener('beforeunload', () => beforeUnload());
         });
 
         return () => {
-            window.removeEventListener('beforeunload', () => beforeUnload(agentStates));
+            window.removeEventListener('beforeunload', () => beforeUnload());
         }
     }, [dispatch, history, logger, username])
 

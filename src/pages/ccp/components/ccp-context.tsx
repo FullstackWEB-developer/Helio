@@ -8,6 +8,7 @@ import contextPanels from '../models/context-panels';
 import { Suggestions } from '../models/suggestions';
 import { selectContextPanel } from '../store/ccp.selectors';
 import SmsContext from '@pages/ccp/components/sms-context';
+import CcpScripts from '@pages/ccp/components/ccp-scripts';
 
 
 const CcpContext = () => {
@@ -26,7 +27,7 @@ const CcpContext = () => {
             case contextPanels.email:
                 return <BotContext />
             case contextPanels.scripts:
-                return <BotContext />
+                return <CcpScripts />
             default:
                 return null;
         }

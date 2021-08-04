@@ -11,6 +11,7 @@ export interface CcpState {
     noteContext?: CcpNote;
     notes?: TicketNote[];
     connectionStatus: CCPConnectionStatus;
+    currentContactId: string;
 }
 
 const initialState: CcpState = {
@@ -20,7 +21,8 @@ const initialState: CcpState = {
     botContext: undefined,
     noteContext: undefined,
     notes: undefined,
-    connectionStatus: CCPConnectionStatus.None
+    connectionStatus: CCPConnectionStatus.None,
+    currentContactId: ''
 }
 
 export default initialState;

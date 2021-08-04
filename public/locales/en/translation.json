@@ -205,6 +205,9 @@
       "preview": "Preview",
       "send": "Send",
       "message": "Message"
+    },
+    "scripts": {
+      "title": "Suggested Chat Scripts"
     }
   },
   "error": {

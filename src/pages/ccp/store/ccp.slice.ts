@@ -29,10 +29,21 @@ const ccpSlice = createSlice({
         },
         setConnectionStatus: (state, {payload}: PayloadAction<CCPConnectionStatus>) => {
             state.connectionStatus = payload;
+        },
+        setCurrentContactId: (state, {payload}: PayloadAction<string>) => {
+            state.currentContactId = payload;
         }
     }
 });
 
-export const {setChatCounter, setVoiceCounter, setContextPanel, setBotContext, setNoteContext, setNotes, setConnectionStatus} = ccpSlice.actions;
+export const {
+    setChatCounter,
+    setVoiceCounter, 
+    setContextPanel,
+    setBotContext,
+    setNoteContext,
+    setNotes,
+    setConnectionStatus,
+    setCurrentContactId} = ccpSlice.actions;
 
 export default ccpSlice.reducer;

@@ -1,4 +1,4 @@
-import {RootState} from '../../../app/store';
+import {RootState} from '@app/store';
 import {BotContext} from '../models/bot-context';
 import {CcpNote} from '../models/ccp-note.model';
 import {TicketNote} from '../../tickets/models/ticket-note';
@@ -11,3 +11,4 @@ export const selectBotContext = (state: RootState) => state.ccpState.botContext 
 export const selectNoteContext = (state: RootState) => state.ccpState.noteContext as CcpNote;
 export const selectNotes = (state: RootState) => state.ccpState.notes as TicketNote[];
 export const selectConnectionStatus = (state: RootState) => state.ccpState.connectionStatus as CCPConnectionStatus;
+export const selectCurrentContactId = (state: RootState) => state.ccpState.currentContactId as string;

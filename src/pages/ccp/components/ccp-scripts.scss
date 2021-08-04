@@ -1,0 +1,6 @@
+.ccp-script-item{
+  background-color: var(--ccp-script-bgcolor);
+  &:hover {
+    background-color: var(--ccp-script-hover-bgcolor);
+  }
+}
