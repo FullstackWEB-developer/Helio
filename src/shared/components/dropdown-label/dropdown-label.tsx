@@ -2,6 +2,7 @@ import {useState} from 'react';
 import Dropdown, {DropdownItemModel, DropdownModel} from "../dropdown";
 import SvgIcon, {Icon} from "../svg-icon";
 import useComponentVisibility from "../../hooks/useComponentVisibility";
+import {useTranslation} from 'react-i18next';
 
 interface DropdownLabelProps {
     value?: string;
@@ -10,6 +11,7 @@ interface DropdownLabelProps {
 }
 
 const DropdownLabel = ({value, items, ...props}: DropdownLabelProps) => {
+    const {t} = useTranslation();
     const [isVisible, setIsVisible, elementRef] = useComponentVisibility<HTMLDivElement>(false);
     const [valueSelected, setValueSelected] = useState(value);
     const [itemSelected, setItemSelected] = useState<DropdownItemModel | null>(items?.find(p => p.value === value) ?? null);
@@ -30,9 +32,9 @@ const DropdownLabel = ({value, items, ...props}: DropdownLabelProps) => {
     };
 
     return (<div ref={elementRef} className="relative">
-        <div className="flex flex-row flex-nowrap items-center relative cursor-pointer" onClick={() => setIsVisible(!isVisible)}>
-            <div className="whitespace-nowrap select-none">
-                <h5> {itemSelected?.label ?? ''}</h5>
+        <div className="relative flex flex-row items-center cursor-pointer flex-nowrap" onClick={() => setIsVisible(!isVisible)}>
+            <div className="select-none whitespace-nowrap">
+                <h5> {t(itemSelected?.label ?? '')}</h5>
             </div>
             <div className="px-3">
                 <SvgIcon type={isVisible ? Icon.ArrowUp : Icon.ArrowDown} fillClass='active-item-icon' />

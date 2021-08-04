@@ -48,8 +48,8 @@ const Sms = () => {
     const {smsIncoming} = useSignalRConnectionContext();
 
     const dropdownItem: DropdownItemModel[] = [
-        {label: t('sms.query_type.my_sms'), value: SmsQueryType.MySms},
-        {label: t('sms.query_type.team_sms'), value: SmsQueryType.MyTeam}
+        {label: 'sms.query_type.my_sms', value: SmsQueryType.MySms},
+        {label: 'sms.query_type.team_sms', value: SmsQueryType.MyTeam}
     ];
 
     const {fetchNextPage, hasNextPage, isFetchingNextPage, isFetching, refetch} = useInfiniteQuery([QueryTicketMessageSummaryInfinite],
