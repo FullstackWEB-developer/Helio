@@ -819,6 +819,7 @@
         "work_direct_phone": "Work Direct Phone",
         "mobile_phone": "Mobile Phone",
         "fax": "Fax",
+        "invalid_fax_format": "Fax number is not valid.",
         "website": "Website",
         "address": "Address",
         "shipping_address": "Shipping Address",

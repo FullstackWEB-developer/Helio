@@ -23,6 +23,7 @@ export interface ControlledInputProps {
     disabled?: boolean,
     isLoading?: boolean,
     errorMessage?: string
+    invalidErrorMessage?: string
     onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
     onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
     dropdownIcon?: Icon
@@ -45,6 +46,7 @@ const ControlledInput = ({
     label = '',
     className = '',
     dataTestId = name,
+    invalidErrorMessage,
     forceAutoSuggestSelect,
     max,
     placeholder,
@@ -59,17 +61,17 @@ const ControlledInput = ({
         mask = '(999) 999-9999'
         pattern = {
             value: InputTypes.Phone,
-            message: t('components.input.invalid_phone')
+            message: t(invalidErrorMessage ?? 'components.input.invalid_phone')
         }
     } else if (type === 'email') {
         pattern = {
             value: InputTypes.Email,
-            message: t('components.input.invalid_email')
+            message: t(invalidErrorMessage ?? 'components.input.invalid_email')
         }
     } else if (type === 'zip') {
         pattern = {
             value: InputTypes.Zip,
-            message: t('components.input.invalid_zip')
+            message: t(invalidErrorMessage ?? 'components.input.invalid_zip')
         }
     }
 

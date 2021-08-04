@@ -281,9 +281,15 @@ const ContactForm = ({contact, contactType, submitHandler, closeHandler, editMod
                                     type='tel' mask={mask} dataTestId='contact-mobile' />
                             </div>
                     <div className="col-span-12 lg:col-span-5">
-                        <ControlledInput type='tel' name='fax' control={control}
-                            defaultValue={contact?.fax || ''} label={t('contacts.contact_details.individual.fax')} mask={mask}
-                            dataTestId='contact-fax' />
+                        <ControlledInput type='tel'
+                            name='fax'
+                            control={control}
+                            defaultValue={contact?.fax || ''}
+                            label={t('contacts.contact_details.individual.fax')}
+                            invalidErrorMessage={t('contacts.contact_details.individual.invalid_fax_format')}
+                            mask={mask}
+                            dataTestId='contact-fax'
+                        />
                     </div>
                     <div className="col-span-12 lg:col-span-5">
                         <ControlledInput name='website' control={control}
@@ -315,7 +321,7 @@ const ContactForm = ({contact, contactType, submitHandler, closeHandler, editMod
                 <ContactAddressPicker options={addressDropdownOptions} onSelect={handleAddressPickerChange} />
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-x-8">
                     <div className="col-span-12 lg:col-span-10">
-                        <div className="flex justify-center items-center full-w h-20 mb-4">
+                        <div className="flex items-center justify-center h-20 mb-4 full-w">
                             <Button isLoading={isSaving} type='submit' buttonType='medium' label={t('common.save')} className='mr-8' disabled={!isValid} />
                             <Button buttonType='secondary' label={t('common.cancel')} className='h-10 secondary-contact-form-btn' onClick={closeButtonHandler} />
                         </div>
