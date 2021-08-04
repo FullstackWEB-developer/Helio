@@ -62,7 +62,7 @@ export const getCallForwardingTypeWithState = queryWithState(
     (payload) => setForwardToOptions(payload),
     () => {
         const forwardToOptions = store.getState().lookupsState.forwardToOptions;
-        return !forwardToOptions || forwardToOptions < 1;
+        return !forwardToOptions || forwardToOptions.length < 1;
     }
 );
 
@@ -88,7 +88,7 @@ export const getRoleWithState = queryWithState(
     (payload) => setRoleList(payload),
     () => {
         const roleList = store.getState().lookupsState.roleList;
-        return !roleList || roleList < 1;
+        return !roleList || roleList.length < 1;
     }
 );
 
