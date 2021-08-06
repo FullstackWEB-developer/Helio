@@ -1,0 +1,28 @@
+.user-list {
+    &-grid {
+
+        display: grid;        
+        column-gap: 2rem;      
+        align-items: center;
+        grid-template-columns: 2% 30% 14% 14% 7% 7% 7% 3%;
+
+        &.head-row{
+            background-color: var(--color-secondary-100);
+            text-transform: uppercase
+        }
+        &.data-row{
+            border-bottom: 1px solid var(--light-divider-7);
+            &:hover{
+                background-color: var(--dashboard-background);
+                cursor: pointer;
+            }
+            &.checked{
+                background-color: var(--checked-row);
+            }
+        }
+    }
+
+    &-icon-fill {
+        fill: var(--grayed-out);
+    }
+}

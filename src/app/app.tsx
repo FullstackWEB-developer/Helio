@@ -13,9 +13,10 @@ import ExternalAccessLayout from '@pages/external-access/layout/external-access-
 import Logger from '@shared/services/logger';
 import {SignalRProvider} from '@shared/contexts/signalRContext';
 import {createSmsConnectionHub} from '@shared/websockets/create-sms-connection-hub';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {selectAccessToken} from '@shared/store/app-user/appuser.selectors';
 import {SMS_INCOMING_NAME} from '@shared/constants/signalr-provider-constants';
+import {setModalOverlayActive} from '@shared/store/app/app.slice';
 const SearchResults = React.lazy(() => import('../shared/components/search-bar/components/search-results'));
 const PatientChart = React.lazy(() => import('@pages/patients/patient-chart'));
 const VerifyRedirectLink = React.lazy(() => import('@pages/external-access/hipaa-verification/verify-redirect-link'));
@@ -46,7 +47,7 @@ const UserList = React.lazy(() => import('@pages/users/list/user-list'));
 function App() {
     let logger = Logger.getInstance();
     const accessToken = useSelector(selectAccessToken);
-
+    const dispatch = useDispatch();
     const queryClient = new QueryClient({
         defaultOptions: {
             queries: {
@@ -65,6 +66,7 @@ function App() {
     });
 
     useEffect(() => {
+        dispatch(setModalOverlayActive(false));
         const logStreamInterval = setInterval(() => {
             logger = Logger.getInstance();
         }, Number(process.env.REACT_APP_LOG_STREAM_CHECK_INTERVAL) || 5000);

@@ -68,7 +68,8 @@
     "email": "Email",
     "sms": "Sms",
     "calls": "Calls",
-    "chat": "Chat"
+    "chat": "Chat",
+    "users": "Users"
   },
   "footer": {
     "hotspots": "Hotspots",
@@ -105,8 +106,8 @@
       "high": "High",
       "critical": "Critical"
     },
-    "notifications" : {
-      "lab_results" : {
+    "notifications": {
+      "lab_results": {
         "error:": "Error getting lab results, please try again later.",
         "view_recent_labs": "View recent labs",
         "collect_date": "Collect Date",
@@ -578,10 +579,10 @@
       "invalid_date": "Date is not valid",
       "invalid_zip": "Enter a valid zip code"
     },
-    "textarea" : {
-      "formatting" : {
+    "textarea": {
+      "formatting": {
         "font_normal": "Normal",
-        "font_subheading" : "Subheading",
+        "font_subheading": "Subheading",
         "font_heading": "Heading"
       }
     }
@@ -1025,8 +1026,43 @@
   },
   "users": {
     "not_found": "User not found",
-    "list_section":{
-      "title": "Manage Users"
+    "filters": {
+      "title": "Filters",
+      "apply": "Apply",
+      "clear_all": "Clear All",
+      "statuses": "Statuses",
+      "invites": "Invites",
+      "role": "Role",
+      "department": "Department",
+      "job_title": "Job Title"
+    },
+    "list_section": {
+      "title": "Manage Users",
+      "no_results": "You currently don’t have any users. Click below to add users to Helio.",
+      "add_users": "Add Users",
+      "add_users_bulk": "Add Users in Bulk",
+      "name": "Name",
+      "department": "Department",
+      "job_title": "Job Title",
+      "role": "Role",
+      "status": "Status",
+      "invite": "Invite",
+      "status_enabled": "Enabled",
+      "status_disabled": "Disabled",
+      "invitation_no_invite": "Not sent",
+      "invitation_accepted": "Accepted",
+      "invitation_sent": "Pending",
+      "edit": "Edit",
+      "resend_invite": "Resend Invite",
+      "enable": "Enable",
+      "disable": "Disable",
+      "disable_modal_title": "Disable user(s)?",
+      "disable_modal_description": "Disabling user(s) will disable user(s) in Helio only. User(s) will remain active in Office 365.",
+      "status_change_success": "User(s) status has been changed successfully.",
+      "status_change_failure": "Updating user(s) status failed.",
+      "resend_invite_success": "Invite successfully sent to user(s)",
+      "resend_invite_failure": "Sending invite failed",
+      "reset_results": "Reset search and filters"
     },
     "info_section": {
       "title": "User Information",
@@ -1038,13 +1074,13 @@
       "modified_on": "Modified On:"
     },
     "add_section": {
-      "title":"Add Users",
-      "description":"Enter name or email below to add users to Helio. You can also <0>invite users in bulk</0> to add large number of users at once.",
+      "title": "Add Users",
+      "description": "Enter name or email below to add users to Helio. You can also <0>invite users in bulk</0> to add large number of users at once.",
       "personalize_message_title": "Personalize Invitation Message",
       "personalize_message_placeholder": "Invitation Message",
       "add_button": "Add Users",
       "name_or_email": "Name or Email",
-      "role":"Role",
+      "role": "Role",
       "invitation_sent_success": "Invitations have been sent successfully.",
       "invitation_sent_error": "The sending of the invitation has failed."
     },
@@ -1063,6 +1099,6 @@
     "call_forwarding_type": "Forward To",
     "user_update_success": "User has been updated",
     "user_update_error": "Error updating user",
-    "provider_tooltip":"<0>Please match with one of the mappings from the dropdown, if s/he is a provider in the EHR/EMR system.</0><1>We will use this to show the right information about the provider to the patients.</1>"
+    "provider_tooltip": "<0>Please match with one of the mappings from the dropdown, if s/he is a provider in the EHR/EMR system.</0><1>We will use this to show the right information about the provider to the patients.</1>"
   }
 }

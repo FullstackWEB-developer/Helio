@@ -7,11 +7,15 @@ const appSlice = createSlice({
         setGlobalLoading(state, {payload}: PayloadAction<boolean>) {
             state.isGlobalLoading = payload;
         },
+        setModalOverlayActive(state, {payload}: PayloadAction<boolean>) {
+            state.modalOverlayActive = payload;
+        }
     }
 });
 
 export const {
-    setGlobalLoading
+    setGlobalLoading,
+    setModalOverlayActive
 } = appSlice.actions
 
 export default appSlice.reducer

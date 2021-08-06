@@ -42,10 +42,10 @@ export function getList(ticketQuery: TicketQuery, resetPagination?: boolean) {
         if (!isNaN(Number(ticketQuery.searchTerm))) {
             query.ticketNumber = ticketQuery.searchTerm;
         }
-        let queryParams = serialize(query);
+        let queryParams = utils.serialize(query);
         if (resetPagination) {
             const {totalCount, totalPages, page, ...newQuery} = query;
-            queryParams = serialize(newQuery);
+            queryParams = utils.serialize(newQuery);
         }
 
         let ticketsUrl = '';
@@ -79,27 +79,6 @@ export function getList(ticketQuery: TicketQuery, resetPagination?: boolean) {
             dispatch(setGlobalLoading(false));
         }
     }
-}
-
-const serialize = (obj: any) => {
-    const str = [];
-    for (const p in obj) {
-        if (obj.hasOwnProperty(p)) {
-            if (Array.isArray(obj[p])) {
-                obj[p].forEach((a: any) => {
-                    str.push(`${encodeURIComponent(p)}=${encodeURIComponent(a)}`);
-                })
-            } else {
-                if (obj[p] instanceof Date) {
-                    str.push(`${encodeURIComponent(p)}=${encodeURIComponent(obj[p].toISOString())}`);
-                } else {
-                    str.push(`${encodeURIComponent(p)}=${encodeURIComponent(obj[p])}`);
-                }
-
-            }
-        }
-    }
-    return str.join("&");
 }
 
 export const setStatus = async ({id, status}: { id: string, status: number }): Promise<Ticket> => {
@@ -208,11 +187,11 @@ export const updateTicket = async ({id, ticketData}: updateTicketProps) => {
 
 export const getContactTickets = async (queryRequest: ContactTicketsRequest, resetPagination?: boolean) => {
     const query: any = queryRequest;
-    let queryParams = serialize(query);
+    let queryParams = utils.serialize(query);
 
     if (resetPagination) {
         const {totalCount, totalPages, page, ...newQuery} = query;
-        queryParams = serialize(newQuery);
+        queryParams = utils.serialize(newQuery);
     }
     const ticketsUrl = `${ticketsBaseUrl}/GetContactTickets?${queryParams}`;
     const response = await Api.get(ticketsUrl);
@@ -227,11 +206,11 @@ export const getRecordedConversation = async (id: string) : Promise<ChatTranscri
 
 export const getPatientTickets = async (queryRequest: PatientTicketsRequest, resetPagination?: boolean) => {
     let query: any = queryRequest;
-    let queryParams = serialize(query);
+    let queryParams = utils.serialize(query);
 
     if (resetPagination) {
         const {totalCount, totalPages, page, ...newQuery} = query;
-        queryParams = serialize(newQuery);
+        queryParams = utils.serialize(newQuery);
     }
     let ticketsUrl = `${ticketsBaseUrl}/GetPatientTickets?${queryParams}`;
     const response = await Api.get(ticketsUrl);

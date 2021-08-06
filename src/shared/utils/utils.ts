@@ -237,6 +237,27 @@ const openWebSite = (url: string) => {
         return window.open(url);
 }
 
+const serialize = (obj: any) => {
+    const str = [];
+    for (const p in obj) {
+        if (obj.hasOwnProperty(p)) {
+            if (Array.isArray(obj[p])) {
+                obj[p].forEach((a: any) => {
+                    str.push(`${encodeURIComponent(p)}=${encodeURIComponent(a)}`);
+                })
+            } else {
+                if (obj[p] instanceof Date) {
+                    str.push(`${encodeURIComponent(p)}=${encodeURIComponent(obj[p].toISOString())}`);
+                } else {
+                    str.push(`${encodeURIComponent(p)}=${encodeURIComponent(obj[p])}`);
+                }
+
+            }
+        }
+    }
+    return str.join("&");
+}
+
 const utils = {
     getWindowCenter,
     formatUtcDate,
@@ -260,7 +281,8 @@ const utils = {
     isLoggedIn,
     accumulateInfiniteData,
     parseOptions,
-    openWebSite
+    openWebSite,
+    serialize
 };
 
 export default utils;

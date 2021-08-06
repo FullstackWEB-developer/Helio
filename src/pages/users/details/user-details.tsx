@@ -189,7 +189,7 @@ const UserDetails = () => {
     }
 
     const changeUserStatusMutation = useMutation(
-        (param: {userId: string, userStatus: UserDetailStatus}) => changeUserStatus({id: param.userId, userStatus: param.userStatus}),
+        (param: {userId: string, userStatus: UserDetailStatus}) => changeUserStatus([{id: param.userId, userStatus: param.userStatus}]),
         {
             onSuccess: () => {
                 const data = {...userDetailExtended!};

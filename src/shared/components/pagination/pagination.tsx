@@ -65,7 +65,8 @@ const Pagination = ({value, ...props}: PaginationProps) => {
         setCurrentPage(value.page);
         setHasPrevious(value.page > 1);
         setHasNext(value.page < value.totalPages);
-    }, [value.page])
+        setCurrentPaging(value);
+    }, [value]);
 
     const numberOfItemTo = ((currentPaging.pageSize * currentPaging.page) > currentPaging.totalCount) ? currentPaging.totalCount : (currentPaging.pageSize * currentPaging.page);
     let numberOfItemFrom = numberOfItemTo > (currentPaging.pageSize * (currentPaging.page - 1)) ? (currentPaging.pageSize * (currentPaging.page - 1)) : 1;

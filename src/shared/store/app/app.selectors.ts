@@ -6,3 +6,8 @@ export const selectGlobalLoading = createSelector(
     appState,
     state => state.isGlobalLoading as boolean
 )
+
+export const selectModalOverlayActive = createSelector(
+    appState,
+    state => state.modalOverlayActive as boolean
+);

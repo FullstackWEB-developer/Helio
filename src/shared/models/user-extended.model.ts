@@ -38,6 +38,7 @@ export interface UserDetail {
     modifiedOn?: string;
     providerId?: number;
     latestConnectStatus?: string;
+    invitationStatus?: UserInvitationStatus;
 }
 
 export interface UserDetailExtended {
@@ -49,4 +50,10 @@ export interface UserDetailExtended {
 export interface ConnectUser {
     userName: string;
     displayName: string;
+}
+
+export enum UserInvitationStatus {
+    NoInvite = 1,
+    Sent,
+    Accepted
 }

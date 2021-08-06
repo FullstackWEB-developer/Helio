@@ -16,6 +16,10 @@ import {queryWithState} from '@shared/services/query-with-state.util';
 import store from '../../app/store';
 import Api from './api';
 import {TicketEnumValue} from '@pages/tickets/models/ticket-enum-value.model';
+import {setInvitationStatusList, setUserDepartments, setUserJobTitles, setUserStatusList} from '@pages/users/store/users.slice';
+import {UserQueryFilter} from '@pages/users/models/user-filter-query.model';
+import utils from '@shared/utils/utils';
+
 const userBaseUrl = '/users';
 
 export const getUserByEmail = async (email: string): Promise<PagedList<User> | undefined> => {
@@ -66,7 +70,7 @@ export const getCallForwardingTypeWithState = queryWithState(
     }
 );
 
-export const changeUserStatus = async (...changeUserStatus: ChangeUserStatusRequest[]): Promise<UserDetail> => {
+export const changeUserStatus = async (changeUserStatus: ChangeUserStatusRequest[]): Promise<UserDetail> => {
     const url = `${userBaseUrl}/status`;
     const {data} = await Api.put(url, changeUserStatus);
     return data;
@@ -108,4 +112,60 @@ export const searchUserInDirectory = async (filter: UserDirectoryFilter): Promis
 export const sendUserInvitation = async (inviteUser: InviteUserRequest) => {
     const url = `${userBaseUrl}/invite-external`;
     await Api.post(url, inviteUser);
+}
+
+export const getUsers = async (queryParams: UserQueryFilter, page = 1, pageSize = 10) => {
+    const serializedQueryParams = utils.serialize(queryParams);
+    const {data} = await Api.get(`${userBaseUrl}?page=${page}&pageSize=${pageSize}${serializedQueryParams ? `&${serializedQueryParams}` : ''}`);
+    return data;
+}
+
+export const getUserStatusWithState = queryWithState(
+    () => getEnumList('UserStatus'),
+    (payload) => setUserStatusList(payload || []),
+    () => {
+        const userStatusList = store.getState().lookupsState.userStatusList;
+        return !userStatusList || userStatusList.length < 1;
+    }
+);
+
+export const getUserInvitationStatusWithState = queryWithState(
+    () => getEnumList('InvitationStatus'),
+    (payload) => setInvitationStatusList(payload || []),
+    () => {
+        const userInvitationStatusList = store.getState().lookupsState.userInvitationStatusList;
+        return !userInvitationStatusList || userInvitationStatusList.length < 1;
+    }
+)
+
+export const getUserDepartmentList = async () => {
+    const {data} = await Api.get(`${userBaseUrl}/lookups/departments`);
+    return data;
+}
+
+export const getUserDepartmentsWithState = queryWithState(
+    () => getUserDepartmentList(),
+    (payload) => setUserDepartments(payload),
+    () => {
+        const userDepartments = store.getState().usersState.userDepartments;
+        return !userDepartments || userDepartments.length < 1;
+    }
+)
+
+export const getUserJobTitleList = async () => {
+    const {data} = await Api.get(`${userBaseUrl}/lookups/job-titles`);
+    return data;
+}
+
+export const getUserJobTitleListWithState = queryWithState(
+    () => getUserJobTitleList(),
+    (payload) => setUserJobTitles(payload),
+    () => {
+        const jobTitles = store.getState().usersState.jobTitles;
+        return !jobTitles || jobTitles.length < 1;
+    }
+)
+
+export const resendInvite = async (inviteUsersBody: InviteUserRequest) => {
+    await Api.post(`${userBaseUrl}/invite`, inviteUsersBody);
 }

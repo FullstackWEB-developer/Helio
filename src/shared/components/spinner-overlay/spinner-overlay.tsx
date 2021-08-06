@@ -1,13 +1,13 @@
 import React from 'react';
-import './overlay.scss';
+import './spinner-overlay.scss';
 import Spinner from '@components/spinner/Spinner';
 import classNames from 'classnames';
-export interface OverlayProps {
+export interface SpinnerOverlayProps {
     isActive: boolean;
     children: React.ReactElement;
 }
 
-const Overlay = ({children, isActive} : OverlayProps) => {
+const SpinnerOverlay = ({children, isActive} : SpinnerOverlayProps) => {
     const overlayClassName = classNames(' h-full w-full', {
         'overlay-active absolute top-0 left-0 pointer-events-none' : isActive,
         'pointer-events' : !isActive
@@ -21,4 +21,4 @@ const Overlay = ({children, isActive} : OverlayProps) => {
             </div>
 }
 
-export default Overlay;
+export default SpinnerOverlay;

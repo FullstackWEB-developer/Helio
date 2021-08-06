@@ -4,7 +4,7 @@ import {useLocation} from 'react-router-dom';
 import {toggleNavigation} from './store/layout.slice';
 import React from 'react';
 import {useDispatch} from 'react-redux';
-import {TicketsPath} from '../../app/paths';
+import {TicketsPath, UsersPath} from '../../app/paths';
 import './navigation.scss';
 import SvgIcon from '@components/svg-icon/svg-icon';
 import {Icon} from '@components/svg-icon/icon';
@@ -53,6 +53,11 @@ const Navigation = () => {
             link: '/email',
             id: 'navigation-email',
             icon: <SvgIcon type={Icon.Email} fillClass='active-item-icon'/>
+        }, {
+            title: t('navigation.users'),
+            link: UsersPath,
+            id: 'navigation-users',
+            icon: <SvgIcon type={Icon.Contacts} fillClass='active-item-icon' />
         }
     ];
 

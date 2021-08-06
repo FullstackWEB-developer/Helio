@@ -14,6 +14,7 @@ import {useDispatch} from 'react-redux';
 import storage from 'redux-persist/lib/storage'
 import {persistReducer} from 'redux-persist'
 import thunk from 'redux-thunk'
+import usersReducer from '../pages/users/store/users.slice';
 
 const persistenceStoreName =  process.env.REACT_APP_PERSIST_HELIO_STORE_NAME || 'helio-ui-store';
 const reducers = combineReducers({
@@ -27,7 +28,8 @@ const reducers = combineReducers({
     lookupsState: lookupsReducer,
     contactState: contactsReducer,
     snackbarState: snackbarReducer,
-    appState: appReducer
+    appState: appReducer,
+    usersState: usersReducer
 })
 
 const rootReducer: Reducer = (state: RootState, action: AnyAction) => {
