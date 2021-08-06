@@ -30,10 +30,14 @@ const UserAdd = () => {
                 }));
                 history.push(UsersPath);
             },
-            onError: () => {
+            onError: (error: any) => {
+                const errorMessage = error.response && error.response.status === 400 ?
+                    error.response.data.message :
+                    'users.add_section.invitation_sent_error';
+
                 dispatch(addSnackbarMessage({
                     type: SnackbarType.Error,
-                    message: 'users.add_section.invitation_sent_error'
+                    message: errorMessage
                 }));
             },
         })
@@ -50,7 +54,7 @@ const UserAdd = () => {
             <h5>{t('users.add_section.title')}</h5>
             <span className='mt-10'>
                 <Trans i18nKey="users.add_section.description" >
-                    <Link to={UsersPath}/>
+                    <Link className='link' to={UsersPath} />
                 </Trans>
             </span>
             <div>
