@@ -265,7 +265,7 @@ const RequestMedicalRecords = () => {
                                     buttonType='big'
                                     onClick={() => startRequest(RequestType.Share)}
                                     isLoading={isLoading && requestType === RequestType.Share}
-                                    disabled={!formState.isDirty || email !== emailConfirm || isLoading}
+                                    disabled={!formState.isDirty || email !== emailConfirm || isLoading || !formState.isValid}
                                     label={t('external_access.medical_records_request.share_button_title')}
                                     type='submit'/>
                             </form>
