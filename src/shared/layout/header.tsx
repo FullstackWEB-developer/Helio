@@ -50,14 +50,15 @@ const Header = ({headsetIconRef}: {headsetIconRef: React.RefObject<HTMLDivElemen
         if (!users?.results || users?.results.length < 1) {
             return '';
         }
-        const picture = users.results[0].profilePicture;
+        const user = users.results[0];
 
         const enriched = {
             ...auth,
-            profilePicture: picture
+            profilePicture: user.profilePicture,
+            id: user.id
         };
         dispatch(setAuthentication(enriched));
-        return picture;
+        return user.profilePicture;
     }
 
     const {data: profilePicture} = useQuery<string | undefined, Error>([QueryUserById, auth.username], () => setUserPicture(),

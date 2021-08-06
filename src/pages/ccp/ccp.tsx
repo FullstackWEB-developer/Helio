@@ -74,7 +74,7 @@ const Ccp: React.FC<BoxProps> = ({
     const dispatch = useDispatch();
     const history = useHistory();
     const logger = Logger.getInstance();
-    const username = useSelector(authenticationSelector).username;
+    const user = useSelector(authenticationSelector);
     const [isHover, setHover] = useState(false);
     const [isBottomBarVisible, setIsBottomBarVisible] = useState(false);
     const [ticketId, setTicketId] = useState('');
@@ -119,7 +119,9 @@ const Ccp: React.FC<BoxProps> = ({
     });
 
     useEffect(() => {
-        updateAssigneeMutation.mutate({ticketId: ticketId, assignee: username})
+        if (!!ticketId) {
+            updateAssigneeMutation.mutate({ticketId: ticketId, assignee: user.id});
+        }
     }, [ticketId]);
 
     useEffect(() => {
@@ -193,7 +195,6 @@ const Ccp: React.FC<BoxProps> = ({
                 const queue = contact.getQueue();
                 const queueName = queue.name;
                 let ticketId = '';
-                const reason = attributeMap.CallerMainIntent.value;
 
                 if (attributeMap.PatientId) {
                     const patientId = attributeMap.PatientId.value;
@@ -211,14 +212,20 @@ const Ccp: React.FC<BoxProps> = ({
                     }
 
                     setTicketId(ticketId);
-                    dispatch(setNoteContext({ticketId: ticketId, username: username}));
+                    dispatch(setNoteContext({ticketId: ticketId, username: user.username}));
                 }
+
                 dispatch(setContextPanel(contextPanels.bot));
-                dispatch(setBotContext({
-                    ...botContext,
-                    queue: queueName,
-                    reason})
-                );
+
+                if (attributeMap.CallerMainIntent) {
+                    const reason = attributeMap.CallerMainIntent.value;
+                    dispatch(setBotContext({
+                            ...botContext,
+                            queue: queueName,
+                            reason
+                        })
+                    );
+                }
             });
 
             contact.onDestroy(() => {
@@ -261,11 +268,11 @@ const Ccp: React.FC<BoxProps> = ({
         return () => {
             window.removeEventListener('beforeunload', () => beforeUnload());
         }
-    }, [dispatch, history, logger, username])
+    }, [dispatch, history, logger, user.username])
 
     useEffect(() => {
         return initCCP();
-    }, [dispatch, history, logger, username]);
+    }, [dispatch, history, logger, user.username]);
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [{opacity}, drag, preview] = useDrag({

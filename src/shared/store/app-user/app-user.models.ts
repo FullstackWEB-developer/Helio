@@ -4,8 +4,9 @@ export interface AuthenticationInfo {
     username?: string,
     expiresOn?: Date,
     isLoggedIn: boolean,
-    profilePicture?: string
-    authenticationLink?: string
+    profilePicture?: string,
+    authenticationLink?: string,
+    id?: string;
 }
 
 export enum UserStatus {

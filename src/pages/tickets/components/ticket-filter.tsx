@@ -45,6 +45,7 @@ const TicketFilter = ({isOpen}: {isOpen: boolean}) => {
     const paging = useSelector(selectTicketsPaging);
     const ticketQueryFilter = useSelector(selectTicketFilter);
     const departments = useSelector((state) => selectLookupValues(state, 'Department'));
+    const reasons = useSelector((state) => selectLookupValues(state, 'TicketReason'));
     const tags = useSelector((state) => selectLookupValues(state, 'TicketTags'));
     const userList = useSelector(selectUserOptions);
     const ticketChannels = useSelector((state => selectEnumValues(state, 'TicketChannel')));
@@ -72,6 +73,7 @@ const TicketFilter = ({isOpen}: {isOpen: boolean}) => {
         dispatch(getEnumByType('TicketType'));
         dispatch(getLookupValues('Department'));
         dispatch(getLookupValues('TicketTags'));
+        dispatch(getLookupValues('TicketReason'));
     }, [dispatch]);
 
     useEffect(() => {
@@ -133,6 +135,7 @@ const TicketFilter = ({isOpen}: {isOpen: boolean}) => {
         setCheckBoxControl('ticketTypes', ticketQueryFilter.ticketTypes);
         setCheckBoxControl('offices', ticketQueryFilter.locations);
         setRadioButtonControl('department', ticketQueryFilter.departments);
+        setRadioButtonControl('reasons', ticketQueryFilter.reasons);
         setRadioButtonControl('priority', ticketQueryFilter.priority);
         setTagValueControl('tags', ticketQueryFilter.tags);
         setDatePickerControl(ticketQueryFilter.fromDate, ticketQueryFilter.toDate);
@@ -165,6 +168,7 @@ const TicketFilter = ({isOpen}: {isOpen: boolean}) => {
         query.states = getSelectedFromCheckbox(values.states).map((a: string) => parseInt(a));
         query.departments = [];
         query.tags = [];
+        query.reasons = [];
         query.priority = undefined;
         query.fromDate = undefined;
         query.toDate = undefined;
@@ -181,6 +185,12 @@ const TicketFilter = ({isOpen}: {isOpen: boolean}) => {
             query.departments = [];
             if (values.department !== allKey) {
                 query.departments.push(values.department);
+            }
+        }
+        if (values.reasons) {
+            query.reasons = [];
+            if (values.reasons !== allKey) {
+                query.reasons.push(values.reasons);
             }
         }
 
@@ -237,6 +247,19 @@ const TicketFilter = ({isOpen}: {isOpen: boolean}) => {
                 return {
                     key: office.id.toString(),
                     value: office.name
+                }
+            })
+        }
+
+        return [];
+    }
+
+    const convertReasonsToOptions = (): TicketOptionsBase[] => {
+        if (reasons && reasons.length > 0) {
+            return reasons.map(reason => {
+                return {
+                    key: reason.value,
+                    value: reason.label
                 }
             })
         }
@@ -382,6 +405,7 @@ const TicketFilter = ({isOpen}: {isOpen: boolean}) => {
             ticketTypes: clearArray(fieldsValue.ticketTypes),
             assignedTo: '',
             department: '',
+            reasons:'',
             priority: '',
             tags: [],
             timePeriod: ''
@@ -439,6 +463,7 @@ const TicketFilter = ({isOpen}: {isOpen: boolean}) => {
                 {GetRadioCollapsibleControl('tickets.filter.priority', 'priority', addAllOption(convertEnumToOptions([...ticketPriorities].reverse())))}
                 {GetCollapsibleCheckboxControl('tickets.filter.channel', 'channels', addAllOption(convertEnumToOptions(ticketChannels)))}
                 {GetCollapsibleCheckboxControl('tickets.filter.ticket_type', 'ticketTypes', addAllOption(convertEnumToOptions(ticketTypes)))}
+                {GetRadioCollapsibleControl('tickets.filter.reason', 'reasons', addAllOption(convertReasonsToOptions()))}
                 {GetRadioCollapsibleControl('tickets.filter.department', 'department', addAllOption(convertDepartmentsToOptions()))}
                 {GetCollapsibleCheckboxControl('tickets.filter.office_location', 'offices', addAllOption(convertOfficesToOptions()))}
                 {ticketListQueryType !== TicketListQueryType.MyTicket &&

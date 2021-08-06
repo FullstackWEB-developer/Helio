@@ -10,6 +10,7 @@ export interface TicketQuery extends Paging {
     channels?: number[];
     ticketTypes?: number[];
     departments?: string[];
+    reasons?: string[];
     locations?: string[];
     assignedTo?: string[];
     tags?: string[];

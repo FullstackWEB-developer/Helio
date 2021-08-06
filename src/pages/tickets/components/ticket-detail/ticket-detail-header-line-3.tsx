@@ -8,8 +8,6 @@ import {addFeed, setDelete, setStatus} from '@pages/tickets/services/tickets.ser
 import {changeStatus, setTicket} from '@pages/tickets/store/tickets.slice';
 import {FeedTypes, TicketFeed} from '@pages/tickets/models/ticket-feed';
 import {useMutation} from 'react-query';
-import {TicketsPath} from '../../../../app/paths';
-import {useHistory} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import {selectEnumValues} from '@pages/tickets/store/tickets.selectors';
 import Button from '@components/button/button';
@@ -41,7 +39,6 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
     const logger = Logger.getInstance();
     const {t} = useTranslation();
     const dispatch = useDispatch();
-    const history = useHistory();
     const [confirmationTitle, setConfirmationTitle] = useState<string>('');
     const [confirmationMessage, setConfirmationMessage] = useState<string>('');
     const [displayConfirmation, setDisplayConfirmation] = useState<boolean>(false);
@@ -119,7 +116,6 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
                 type: SnackbarType.Success,
                 message: t('ticket_detail.header.archived_successfully')
             }));
-            history.push(TicketsPath);
         },
         onError: () => {
             dispatch(addSnackbarMessage({

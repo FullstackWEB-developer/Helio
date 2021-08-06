@@ -100,9 +100,15 @@ const TicketDetailEventLog = ({ticket, control, isVisible, setIsVisible}: Ticket
         <dl>
             <div className='sm:grid sm:grid-cols-2'>
                 <dt className='body2-medium mt-6'>
-                    {t('ticket_detail.info_panel.created_on')}
+                    {t('ticket_detail.info_panel.created_by')}
                 </dt>
                 <dd className='body2 mt-6'>
+                    {ticket?.createdByName || t('common.system_name')}
+                </dd>
+                <dt className='body2-medium'>
+                    {t('ticket_detail.info_panel.created_on')}
+                </dt>
+                <dd className='body2'>
                     {utils.formatUtcDate(ticket?.createdOn, formatTemplate)}
                 </dd>
                 <dt className='body2-medium'>

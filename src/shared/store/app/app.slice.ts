@@ -1,11 +1,18 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import initialAppState from './app.initial-state';
+import {NotificationTemplate} from '@shared/models/notification-template.model';
 const appSlice = createSlice({
     name: 'app',
     initialState: initialAppState,
     reducers: {
         setGlobalLoading(state, {payload}: PayloadAction<boolean>) {
             state.isGlobalLoading = payload;
+        },
+        setEmailTemplates(state, {payload}: PayloadAction<NotificationTemplate[]>) {
+            state.emailTemplates = payload;
+        },
+        setSmsTemplates(state, {payload}: PayloadAction<NotificationTemplate[]>) {
+            state.smsTemplates = payload;
         },
         setModalOverlayActive(state, {payload}: PayloadAction<boolean>) {
             state.modalOverlayActive = payload;
@@ -15,6 +22,8 @@ const appSlice = createSlice({
 
 export const {
     setGlobalLoading,
+    setEmailTemplates,
+    setSmsTemplates,
     setModalOverlayActive
 } = appSlice.actions
 

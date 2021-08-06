@@ -10,6 +10,7 @@ export interface Ticket {
     reason?: string;
     assignedOn?: Date;
     closedOn?: Date;
+    createdByName?: string;
     createdOn?: Date;
     modifiedOn?: Date;
     contactId?: string;
