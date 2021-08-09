@@ -12,7 +12,7 @@ const StatusBar = () => {
         <div>
             <QueueStatusTabs/>
         </div>
-        <div>
+        <div className='overflow-y-auto'>
             <Extensions/>
         </div>
     </div>;

@@ -18,7 +18,8 @@ export interface ControlledSelectProps {
     required?: boolean;
     className?: string;
     onTextChange?: (value: string) => void;
-    onSelect?: (option?: Option) => void
+    onSelect?: (option?: Option) => void;
+    isLoading?: boolean;
 }
 
 const ControlledSelect = ({
@@ -36,6 +37,7 @@ const ControlledSelect = ({
     onSelect,
     onTextChange,
     required = false,
+    isLoading,
     ...props
 }: ControlledSelectProps) => {
 
@@ -77,6 +79,7 @@ const ControlledSelect = ({
                 disabled={disabled}
                 onTextChange={onTextChange}
                 error={control.formState.errors[name]?.message}
+                isLoading={isLoading}
             />
         )}
     />;
