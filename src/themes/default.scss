@@ -397,23 +397,7 @@
 
   --text-area-disabled-color: var(--color-secondary-200);
   --checked-row: rgba(0, 173, 88, 0.04);
-  ::-webkit-scrollbar {
-    width: 0.3125rem;
-  }
-
-  ::-webkit-scrollbar-track {
-    border-radius: 0.3125rem;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background: var(--color-secondary-300);
-    border-radius: 0.625rem;
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    background: var(--color-secondary-400);
-  }
-
+  
   .link {
     color: var(--color-primary-800);
   }

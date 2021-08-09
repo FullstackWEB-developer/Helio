@@ -338,23 +338,6 @@
   --pagination-active-item: rgba(0, 0, 0, 0.5);
   --pagination-inactive-item: rgba(0, 0, 0, 0.38);
 
-  ::-webkit-scrollbar {
-    width: 0.3125rem;
-  }
-
-  ::-webkit-scrollbar-track {
-    border-radius: 0.3125rem;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background: var(--color-secondary-300);
-    border-radius: 0.625rem;
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    background: var(--color-secondary-400);
-  }
-
   a {
     color: var(--color-primary-800);
   }

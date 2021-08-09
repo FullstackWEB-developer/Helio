@@ -130,7 +130,7 @@ const LabResultSendAMessage = ({labResult}: {labResult?: LabResultDetail}) => {
                                     value={message}
                                     onChange={(m) => setMessage(m)}
                                     placeHolder={t('external_access.lab_results.text_area_placeholder')}
-                                    className='w-full h-full lab-results-border'
+                                    className='w-full h-full'
                                     resizable={false}
                                     maxLength={maxMessageLength}
                                     error={errors.messageText?.message}
