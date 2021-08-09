@@ -89,6 +89,7 @@ const Ccp: React.FC<BoxProps> = ({
     const [delayCcpDisplaying, setDelayCcpDisplaying] = useState(true);
     const [ccpConnectionState, setCcpConnectionState] = useState<CCPConnectionStatus>(CCPConnectionStatus.None);
     const [isModelOpen, setModelOpen] = useState(false);
+    const animationDurationOffset = 25;
     const agentStates = useSelector(selectAgentStates);
     const ccpConnectionFailed = (isRetry: boolean) => {
         setCcpConnectionState(CCPConnectionStatus.Failed);
@@ -100,7 +101,7 @@ const Ccp: React.FC<BoxProps> = ({
 
     useQuery([QueryGetPatientById, patientId], () => getPatientByIdWithQuery(patientId!), {
         enabled: !!patientId,
-        onSuccess:(data) => {
+        onSuccess: (data) => {
             dispatch(setBotContext({
                 ...botContext,
                 patient: data
@@ -110,7 +111,7 @@ const Ccp: React.FC<BoxProps> = ({
 
     useQuery([QueryTickets, ticketId], () => getTicketById(ticketId), {
         enabled: !!ticketId,
-        onSuccess:(data) => {
+        onSuccess: (data) => {
             dispatch(setBotContext({
                 ...botContext,
                 ticket: data
@@ -128,7 +129,7 @@ const Ccp: React.FC<BoxProps> = ({
         if (ccpConnectionState === CCPConnectionStatus.Success) {
             setTimeout(() => {
                 setModelOpen(false);
-            },3000);
+            }, 3000);
         }
     }, [ccpConnectionState]);
 
@@ -173,7 +174,7 @@ const Ccp: React.FC<BoxProps> = ({
             updateAgentStatus(UserStatus.Offline, agentStates);
         };
 
-        const updateAgentStatus = (status: string, states :AgentState[]) => {
+        const updateAgentStatus = (status: string, states: AgentState[]) => {
             const state = states.find((agentState) => agentState.name === status);
             window.CCP.agent.setState(state, {
                 failure: (e: any) => {
@@ -220,10 +221,10 @@ const Ccp: React.FC<BoxProps> = ({
                 if (attributeMap.CallerMainIntent) {
                     const reason = attributeMap.CallerMainIntent.value;
                     dispatch(setBotContext({
-                            ...botContext,
-                            queue: queueName,
-                            reason
-                        })
+                        ...botContext,
+                        queue: queueName,
+                        reason
+                    })
                     );
                 }
             });
@@ -311,7 +312,7 @@ const Ccp: React.FC<BoxProps> = ({
             dispatch(toggleCcp());
             setAnimateToggle(false);
             setDelayCcpDisplaying(true);
-        }, animationDuration * 1000);
+        }, (animationDuration * 1000) - animationDurationOffset);
     }
     const maximizeCcpControl = () => {
         const animationDuration = CCP_ANIMATION_DURATION;
@@ -327,7 +328,7 @@ const Ccp: React.FC<BoxProps> = ({
             ccp.style.setProperty('--ccpAnimationFinalScale', '1');
             setAnimateToggle(true);
             setDelayCcpDisplaying(false);
-            setTimeout(() => {setAnimateToggle(false); moveBox(ccpBoundingClientRect.x, ccpBoundingClientRect.y)}, animationDuration * 1000);
+            setTimeout(() => {setAnimateToggle(false); moveBox(ccpBoundingClientRect.x, ccpBoundingClientRect.y)}, (animationDuration * 1000) - animationDurationOffset);
         }
     }
 
@@ -392,7 +393,7 @@ const Ccp: React.FC<BoxProps> = ({
                         <div className='flex flex-row pt-3'>
                             {ccpConnectionState === CCPConnectionStatus.Success && <SvgIcon type={Icon.CheckMark} fillClass='success-icon' />}
                             {ccpConnectionState === CCPConnectionStatus.Failed && <SvgIcon type={Icon.ErrorFilled} fillClass='danger-icon' />}
-                            {ccpConnectionState === CCPConnectionStatus.Loading && <SvgIcon type={Icon.Spinner}  fillClass='danger-icon' />}
+                            {ccpConnectionState === CCPConnectionStatus.Loading && <SvgIcon type={Icon.Spinner} fillClass='danger-icon' />}
                             <span className='ml-2 body2'>{t('ccp.modal.aws_connect')}</span>
                         </div>
                         {ccpConnectionState === CCPConnectionStatus.Failed &&
