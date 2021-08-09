@@ -92,8 +92,8 @@ const LabResultSendAMessage = ({labResult}: {labResult?: LabResultDetail}) => {
                 providerId: data.providerId,
                 internalNote: internalNote,
                 ignoreNotification: false,
-                documentSubClass: PatientCaseDocumentSubClass.PatientCase,
-                documentSource: PatientCaseDocumentSource.Partner
+                documentSubClass: PatientCaseDocumentSubClass.ClinicalQuestion,
+                documentSource: PatientCaseDocumentSource.Patient
             }
         });
     }

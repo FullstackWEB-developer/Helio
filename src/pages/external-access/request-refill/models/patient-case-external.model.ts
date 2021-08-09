@@ -1,11 +1,10 @@
 export enum PatientCaseDocumentSubClass {
     Refill = 1,
-    PatientCase
+    ClinicalQuestion
 }
 
 export enum PatientCaseDocumentSource {
-    Portal = 1,
-    Partner
+    Patient = 1
 }
 
 export interface PatientCaseExternal {

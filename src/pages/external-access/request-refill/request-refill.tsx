@@ -257,7 +257,7 @@ const RequestRefill = () => {
                 internalNote: internalNote,
                 ignoreNotification: false,
                 documentSubClass: PatientCaseDocumentSubClass.Refill,
-                documentSource: PatientCaseDocumentSource.Partner
+                documentSource: PatientCaseDocumentSource.Patient
             }
         });
     }

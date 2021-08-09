@@ -52,8 +52,8 @@ const SendUsMessage = () => {
                 providerId: verifiedPatient.defaultProviderId,
                 internalNote: internalNote,
                 ignoreNotification: false,
-                documentSubClass: PatientCaseDocumentSubClass.PatientCase,
-                documentSource: PatientCaseDocumentSource.Portal
+                documentSubClass: PatientCaseDocumentSubClass.ClinicalQuestion,
+                documentSource: PatientCaseDocumentSource.Patient
             }
         });
     }
