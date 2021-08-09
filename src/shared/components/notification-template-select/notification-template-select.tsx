@@ -63,6 +63,10 @@ const NotificationTemplateSelect = ({channel, category, onSelect, asSelect, sele
             data = emailTemplates;
         }
 
+        if (!data) {
+            return;
+        }
+
         if (asSelect) {
             let opts = data.map(a => {
                 return {
