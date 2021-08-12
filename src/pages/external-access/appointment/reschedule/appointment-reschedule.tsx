@@ -182,7 +182,6 @@ const AppointmentReschedule = () => {
                 <ControlledDateInput
                     type='date'
                     label='external_access.appointments.date'
-                    isCalendarDisabled
                     control={control}
                     name='selectedDate'
                     min={new Date(new Date().toDateString())}

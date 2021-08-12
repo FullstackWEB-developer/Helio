@@ -23,7 +23,7 @@ const MedicalRecordsPreview = () => {
        return <div>{error}</div>
     }
 
-    return <div className='overflow-auto' dangerouslySetInnerHTML={{__html: data}}/>
+    return <div className='p-6 overflow-auto' dangerouslySetInnerHTML={{__html: data}}/>
 }
 
 export default MedicalRecordsPreview;
