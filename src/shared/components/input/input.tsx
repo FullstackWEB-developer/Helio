@@ -26,7 +26,8 @@ interface InputProps extends React.HTMLAttributes<HTMLInputElement> {
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void,
     shouldDisplayAutocomplete?: boolean,
     required?: boolean;
-    dropdownIcon?: Icon
+    dropdownIcon?: Icon,
+    dropdownIconFill? : string,
     autoSuggestDropdown?: boolean;
     autoSuggestOptions?: Option[];
     forceAutoSuggestSelect?: boolean;
@@ -45,6 +46,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({
     assistiveText,
     dropdownIcon,
     dropdownIconClickHandler,
+    dropdownIconFill,
     isLoading,
     autoSuggestDropdown,
     autoSuggestOptions,
@@ -157,7 +159,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({
                 </label>
                 {dropdownIcon && (!isFocused || !props.value) && <div className={`absolute pt-${!label ? '3' : '4'} right-4 ${dropdownIconClickHandler ? 'cursor-pointer' : ''}`}>
                     {
-                        <SvgIcon type={dropdownIcon} onClick={dropdownIconClickHandler} fillClass={'select-arrow-fill'} />
+                        <SvgIcon type={dropdownIcon} onClick={dropdownIconClickHandler} fillClass={dropdownIconFill ?? 'select-arrow-fill'} />
                     }
                 </div>}
                 {isFocused &&

@@ -63,7 +63,7 @@
     }
 }
 .contact-notes-section {
-    height: calc(100vh - 24rem);
+    height: calc(100vh - 30rem);
 }
 .note-created-by {
     color: var(--note-context-created-by-color);
@@ -98,4 +98,9 @@
 .contact-disabled-section{
     pointer-events: none;
     color: var(--svg-Icon-default-disabled-color);
+}
+
+.associated-contacts-item {
+    min-height: 2.5rem;
+    height: auto;
 }

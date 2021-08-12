@@ -24,6 +24,7 @@ import {getPageSize} from './contact-helpers/helpers';
 import Spinner from '@components/spinner/Spinner';
 import {selectGlobalLoading} from '@shared/store/app/app.selectors';
 import './contacts.scss';
+import {ContactType} from './models/ContactType';
 
 interface ContactProps { }
 const Contacts: React.FC<ContactProps> = () => {
@@ -164,10 +165,53 @@ const Contacts: React.FC<ContactProps> = () => {
     }
     const onToggleFavoriteSuccess = () => {
         if (selectedContact) {
+            const newStarredStatus = !selectedContact?.isStarred;
             setSelectedContact({
-                ...selectedContact, isStarred: !selectedContact?.isStarred
+                ...selectedContact, isStarred: newStarredStatus
             });
+
+            if (selectedCategory === t('contacts.category.starred_contacts')) {
+                refreshListAfterTogglingFavorite(String(selectedContact?.id), newStarredStatus);
+            }
         }
+    }
+
+    const refreshListAfterTogglingFavorite = (contactId: String, newFavoriteStatus: boolean) => {
+        const paginatedContacts: any = queryClient.getQueryData([QueryContactsInfinite, queryParams]);
+
+        if (paginatedContacts) {
+            if (!newFavoriteStatus) {
+                let foundOnPage = false;
+                for (const page of paginatedContacts.pages) {
+                    if (page?.data?.results && page?.data?.results.length > 0) {
+                        page.data.results = page.data.results.filter((c: ContactBase) => {
+                            foundOnPage = c.id === contactId;
+                            return c.id !== contactId
+                        });
+                    }
+                    if (foundOnPage) {
+                        break;
+                    }
+                }
+            }
+            else {
+                if (paginatedContacts.pages && paginatedContacts.pages.length > 0) {
+                    paginatedContacts.pages[paginatedContacts.pages.length - 1].data.results = [
+                        ...paginatedContacts.pages[0]?.data?.results,
+                        selectedContact
+                    ]
+
+                    paginatedContacts.pages[paginatedContacts.pages.length - 1].data.results
+                        .sort((a: ContactBase, b: ContactBase) => {
+                            const aCompare = a.type === ContactType.Company ? a.companyName : `${a.firstName} ${a.lastName}`;
+                            const bCompare = b.type === ContactType.Company ? b.companyName : `${b.firstName} ${b.lastName}`;
+                            return aCompare && bCompare ? aCompare.toLowerCase().localeCompare(bCompare.toLowerCase()) : undefined;
+                        });
+                }
+            }
+            queryClient.setQueryData([QueryContactsInfinite, queryParams], paginatedContacts);
+        }
+
     }
 
     const onDeleteSuccess = (contactId: string) => {

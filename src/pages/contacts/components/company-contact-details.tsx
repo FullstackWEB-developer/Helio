@@ -83,13 +83,19 @@ const CompanyContactDetails = ({editMode, contact, initiateACall, addNewContactH
                                                   value={displayValue(contact.workMainPhone, true)}
                                                   isIconDisabled={voiceCounter > 0 || !contact.workMainPhone}
                                                   icon={Icon.Phone}
-                                                  iconOnClick={() => phoneIconOnClick(contact.workMainPhone)} />
+                                                  iconOnClick={() => phoneIconOnClick(contact.workMainPhone)}
+                                                  isValueClickDisabled={voiceCounter > 0 || !contact.workMainPhone}
+                                                  onValueClick={() => phoneIconOnClick(contact.workMainPhone)}
+                                                  isLink={!(voiceCounter > 0 || !contact.workMainPhone)} />
                                 <ContactInfoField label={`${t('contacts.contact_details.company.mobile_phone')}`}
                                                   iconFillClass={getIconFillClass(contact.mobilePhone)}
                                                   value={displayValue(contact.mobilePhone, true)}
                                                   isIconDisabled={voiceCounter > 0 || !contact.mobilePhone}
                                                   icon={Icon.Phone}
-                                                  iconOnClick={() => phoneIconOnClick(contact.mobilePhone)} />
+                                                  iconOnClick={() => phoneIconOnClick(contact.mobilePhone)}
+                                                  onValueClick={() => phoneIconOnClick(contact.mobilePhone)}
+                                                  isLink={!(voiceCounter > 0 || !contact.mobilePhone)}
+                                                  isValueClickDisabled={voiceCounter > 0 || !contact.mobilePhone} />
                                 <ContactInfoField label={`${t('contacts.contact_details.company.website')}`}
                                                   value={displayValue(contact.website)}
                                                   onValueClick={() => contact.website && utils.openWebSite(contact.website)}

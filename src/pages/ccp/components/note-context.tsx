@@ -44,11 +44,11 @@ const NoteContext = () => {
             note.createdBy = username;
             dispatch(setNotes([...notes, note]));
             setNoteText('');
-            notesBottom.current?.scrollIntoView({ behavior: 'smooth' });
+            notesBottom.current?.scrollIntoView({behavior: 'smooth'});
         }
     }
 
-    const { handleSubmit, control, errors } = useForm();
+    const {handleSubmit, control, errors} = useForm();
 
     if (!ticketId) {
         return <div>{t('ccp.note_context.no_ticket_id')}</div>;
@@ -62,7 +62,7 @@ const NoteContext = () => {
                     {
                         notes.map((item, key) => <NoteDetailItem key={key} item={item} displayBottomBorder={key < notes.length - 1} />)
                     }
-                    <div ref={notesBottom}/>
+                    <div ref={notesBottom} />
                 </div>
             </div>
             <div className="overflow-hidden border-t">
@@ -74,7 +74,7 @@ const NoteContext = () => {
                         render={() => (
                             <TextArea
                                 error={errors.note?.message}
-                                className='h-full pl-6 pt-2 pb-0 pr-0 body2 w-full'
+                                className='h-full pb-0 pr-0 body2 w-full'
                                 data-test-id='note-context-notes'
                                 placeHolder={t('ccp.note_context.enter_your_note')}
                                 value={noteText}
@@ -87,7 +87,7 @@ const NoteContext = () => {
                                 iconClassNames='icon-medium'
                                 icon={Icon.Send}
                                 iconFill='notes-send'
-                                iconOnClick={() => { handleSubmit(onSubmit)() }}
+                                iconOnClick={() => {handleSubmit(onSubmit)()}}
                             />
                         )}
                     />

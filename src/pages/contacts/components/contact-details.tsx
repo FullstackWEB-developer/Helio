@@ -72,7 +72,7 @@ const ContactDetails = ({contact,
             createdByName: userFullName,
             contactId: contact.id || ''
         }
-        if (contact.id) {
+        if (contact.id && !addNoteMutation.isLoading) {
             addNoteMutation.mutate({contactId: contact.id, contactNoteDto: newNote});
         }
     }
@@ -187,17 +187,18 @@ const ContactDetails = ({contact,
                         iconFill='contact-light-fill'
                         placeHolder={t('contacts.contact_details.enter_note')}
                         iconContainerClassName='pr-6 bottom-auto'
-                        iconClassNames='cursor-pointer'
+                        iconClassNames='icon-medium'
                         rows={2}
                         maxRows={2}
                         icon={Icon.Send}
+                        isLoading={addNoteMutation.isLoading}
                         onChange={(message) => {
-                            setNote(message)
+                            setNote(message);
                         }}
                         iconOnClick={() => {
-                            addNote()
+                            addNote();
                         }}
-                        isLoading={addNoteMutation.isLoading} />
+                    />
                 </div>
             }
             <Confirmation title={t('contacts.contact_details.confirm_delete_title', {contact: isCompany ? contact.companyName : `${contact?.firstName} ${contact?.lastName}`})}

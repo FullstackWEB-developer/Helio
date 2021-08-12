@@ -89,10 +89,13 @@ const IndividualContactDetails = ({contact, editMode, initiateACall, closeEditMo
                                           icon={Icon.Phone}
                                           appendix={true}
                                           isIconDisabled={voiceCounter === 1 || !contact?.workMainPhone}
+                                          isValueClickDisabled={voiceCounter === 1 || !contact?.workMainPhone}
+                                          onValueClick={() => phoneIconOnClick(contact.workMainPhone)}
                                           iconFillClass={getIconFillClass(contact.workMainPhone)}
                                           appendixLabel={t('contacts.contact_details.individual.ext')}
                                           appendixValue={contact.workMainExtension}
                                           iconOnClick={() => phoneIconOnClick(contact.workMainPhone)}
+                                          isLink={!(voiceCounter === 1 || !contact?.workMainPhone)}
                         />
                         <ContactInfoField label={`${t('contacts.contact_details.individual.work_direct_phone')}`}
                                           value={displayValue(contact.workDirectPhone, true)}
@@ -100,13 +103,19 @@ const IndividualContactDetails = ({contact, editMode, initiateACall, closeEditMo
                                           iconFillClass={getIconFillClass(contact.workDirectPhone)}
                                           icon={Icon.Phone}
                                           iconOnClick={() => phoneIconOnClick(contact.workDirectPhone)}
+                                          isLink={!(voiceCounter === 1 || !contact?.workDirectPhone)}
+                                          isValueClickDisabled={voiceCounter === 1 || !contact?.workDirectPhone}
+                                          onValueClick={() => phoneIconOnClick(contact.workDirectPhone)}
                         />
                         <ContactInfoField label={`${t('contacts.contact_details.individual.mobile_phone')}`}
                                           value={displayValue(contact.mobilePhone, true)}
                                           iconFillClass={getIconFillClass(contact.mobilePhone)}
                                           icon={Icon.Phone}
                                           isIconDisabled={voiceCounter === 1 || !contact?.mobilePhone}
-                                          iconOnClick={() => phoneIconOnClick(contact.mobilePhone)} />
+                                          iconOnClick={() => phoneIconOnClick(contact.mobilePhone)}
+                                          isValueClickDisabled={voiceCounter === 1 || !contact?.mobilePhone}
+                                          isLink={!(voiceCounter === 1 || !contact?.mobilePhone)}
+                                          onValueClick={() => phoneIconOnClick(contact.mobilePhone)} />
                         <ContactInfoField label={`${t('contacts.contact_details.individual.fax')}`}
                                           value={displayValue(contact.fax, true)}
                                           icon={Icon.Phone}
