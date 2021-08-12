@@ -116,9 +116,11 @@ const Contacts: React.FC<ContactProps> = () => {
     }
 
     const handleAddNewContactClick = (parentContact?: ContactExtended) => {
-        setSelectedContact(parentContact);
+        if (!parentContact?.hasOwnProperty('target')) {
+            setSelectedContact(parentContact);
+        }
         setEditMode(false);
-        history.replace(`${ContactsPath}`);
+        history.replace(`${ContactsPath}`, {shouldLinkRelatedCompany: !parentContact?.hasOwnProperty('target')});
         setAddNewContactMode(true);
     }
 

@@ -21,11 +21,11 @@ const ContactNotes = ({contactId, errorAddingNote}: ContactNotesProps) => {
             }
             {
                 isFetching ? <Spinner fullScreen /> :
-                (
-                    notes && notes.map((note) => {
-                        return <ContactNotesItem note={note} key={`${note.id}`} />
-                    })
-                )
+                    (
+                        notes && notes.map((note) => {
+                            return <ContactNotesItem note={note} key={`${note.id}`} />
+                        })
+                    )
             }
         </div>
     )

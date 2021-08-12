@@ -59,13 +59,6 @@ const CompanyContactDetails = ({editMode, contact, initiateACall, addNewContactH
             initiateACall(phoneNumber);
     }
 
-    const sendEmail = () => {
-        if (!contact.emailAddress) {
-            return;
-        }
-        window.open(`mailto:${contact.emailAddress}`);
-    }
-
     const getIconFillClass = (value?: string) => {
         return !!value ? 'success-icon' : '';
     }
@@ -82,24 +75,25 @@ const CompanyContactDetails = ({editMode, contact, initiateACall, addNewContactH
                                                   value={getCategoryName(contact.category)} />
                                 <ContactInfoField label={`${t('contacts.contact_details.company.email')}`}
                                                   iconFillClass={getIconFillClass(contact.emailAddress)}
-                                                  iconOnClick={sendEmail}
                                                   value={displayValue(contact.emailAddress)}
-                                                  icon={Icon.Email} />
+                                                  icon={Icon.Email}
+                                                  isIconDisabled={true} />
                                 <ContactInfoField label={`${t('contacts.contact_details.company.work_main_phone')}`}
                                                   iconFillClass={getIconFillClass(contact.workMainPhone)}
                                                   value={displayValue(contact.workMainPhone, true)}
-                                                  isIconDisabled={voiceCounter > 0}
+                                                  isIconDisabled={voiceCounter > 0 || !contact.workMainPhone}
                                                   icon={Icon.Phone}
                                                   iconOnClick={() => phoneIconOnClick(contact.workMainPhone)} />
                                 <ContactInfoField label={`${t('contacts.contact_details.company.mobile_phone')}`}
                                                   iconFillClass={getIconFillClass(contact.mobilePhone)}
                                                   value={displayValue(contact.mobilePhone, true)}
-                                                  isIconDisabled={voiceCounter > 0}
+                                                  isIconDisabled={voiceCounter > 0 || !contact.mobilePhone}
                                                   icon={Icon.Phone}
                                                   iconOnClick={() => phoneIconOnClick(contact.mobilePhone)} />
                                 <ContactInfoField label={`${t('contacts.contact_details.company.website')}`}
                                                   value={displayValue(contact.website)}
-                                                  onValueClick={() => contact.website && utils.openWebSite(contact.website)} />
+                                                  onValueClick={() => contact.website && utils.openWebSite(contact.website)}
+                                                  isLink={!!contact?.website} />
                                 {
                                     renderAddressField(AddressType.PrimaryAddress)
                                 }

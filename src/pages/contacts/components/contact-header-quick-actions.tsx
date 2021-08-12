@@ -9,7 +9,7 @@ interface ContactHeaderQuickActionsProps {
 }
 const ContactHeaderQuickActions = ({contact, starIconClickHandler, isLoading}: ContactHeaderQuickActionsProps) => {
     return (
-        <div className='pt-1.5 cursor-pointer'>
+        <div className='flex justify-center items-center w-10 h-10 cursor-pointer'>
             <SvgIcon onClick={starIconClickHandler} type={Icon.Star} isLoading={isLoading} fillClass={`contact-header-quick-action-color${contact?.isStarred ? '-starred' : ''}`} />
         </div>
     )

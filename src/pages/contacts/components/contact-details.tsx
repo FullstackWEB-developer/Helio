@@ -35,15 +35,15 @@ interface ContactDetailsProps {
     onDeleteError?: () => void;
 }
 const ContactDetails = ({contact,
-                            editMode,
-                            editIconClickHandler,
-                            addNewContactHandler,
-                            onUpdateSuccess,
-                            onUpdateError,
-                            onToggleFavoriteSuccess,
-                            onDeleteSuccess,
-                            onDeleteError
-                        }: ContactDetailsProps) => {
+    editMode,
+    editIconClickHandler,
+    addNewContactHandler,
+    onUpdateSuccess,
+    onUpdateError,
+    onToggleFavoriteSuccess,
+    onDeleteSuccess,
+    onDeleteError
+}: ContactDetailsProps) => {
     const {t} = useTranslation();
     const [selectedTab, setSelectedTab] = useState(-1);
     const [note, setNote] = useState('');
@@ -151,12 +151,12 @@ const ContactDetails = ({contact,
             {toggleFavoriteMutation.isError && <h6 className='text-danger mt-2 mb-5'>{t('contacts.contact_details.error_favorite_contact')}</h6>}
             {deleteContactMutation.isError && <h6 className='text-danger mt-2 mb-5'>{t('contacts.contact_details.error_deleting_contact')}</h6>}
             <ContactHeader contact={contact}
-                           editMode={editMode}
-                           editIconClickHandler={editIconClickHandler}
-                           starIconClickHandler={starIconClickHandler}
-                           deleteIconClickHandler={deleteIconClickHandler}
-                           isStarring={toggleFavoriteMutation.isLoading}
-                           isDeleting={deleteContactMutation.isLoading} />
+                editMode={editMode}
+                editIconClickHandler={editIconClickHandler}
+                starIconClickHandler={starIconClickHandler}
+                deleteIconClickHandler={deleteIconClickHandler}
+                isStarring={toggleFavoriteMutation.isLoading}
+                isDeleting={deleteContactMutation.isLoading} />
             <div className='px-8 pt-4 w-full'>
                 <Tabs onSelect={(selectedTabIndex) => {setSelectedTab(selectedTabIndex)}}>
                     <Tab title={`${t('contacts.contact_details.details')}`}>
@@ -166,43 +166,43 @@ const ContactDetails = ({contact,
                     </Tab>
                     <Tab title={`${t('contacts.contact_details.notes')}`}>
                         <div className='pt-4 overflow-x-hidden overflow-y-auto contact-notes-section'>
-                            <div ref={noteSectionStart}/>
+                            <div ref={noteSectionStart} />
                             <ContactNotes errorAddingNote={addNoteMutation.isError} contactId={contact.id!} />
                         </div>
                     </Tab>
                     <Tab title={`${t('contacts.contact_details.tickets')}`}>
                         <div className='pt-2'>
-                            <ContactTickets contactId={contact.id!}/>
+                            <ContactTickets contactId={contact.id!} />
                         </div>
                     </Tab>
                 </Tabs>
             </div>
             {
                 selectedTab === 1 &&
-                <div className='absolute bottom-0 w-full border-t'>
+                <div className='absolute bottom-0 w-full border-t bg-white'>
                     <TextArea className='w-full body2'
-                              value={note}
-                              resizable={false}
-                              hasBorder={false}
-                              iconFill='contact-light-fill'
-                              placeHolder={t('contacts.contact_details.enter_note')}
-                              iconContainerClassName='px-10'
-                              iconClassNames='cursor-pointer'
-                              rows={2}
-                              maxRows={5}
-                              icon={Icon.Send}
-                              onChange={(message) => {
-                                  setNote(message)
-                              }}
-                              iconOnClick={() => {
-                                  addNote()
-                              }}
-                              isLoading={addNoteMutation.isLoading} />
+                        value={note}
+                        resizable={false}
+                        hasBorder={false}
+                        iconFill='contact-light-fill'
+                        placeHolder={t('contacts.contact_details.enter_note')}
+                        iconContainerClassName='pr-6 bottom-auto'
+                        iconClassNames='cursor-pointer'
+                        rows={2}
+                        maxRows={2}
+                        icon={Icon.Send}
+                        onChange={(message) => {
+                            setNote(message)
+                        }}
+                        iconOnClick={() => {
+                            addNote()
+                        }}
+                        isLoading={addNoteMutation.isLoading} />
                 </div>
             }
             <Confirmation title={t('contacts.contact_details.confirm_delete_title', {contact: isCompany ? contact.companyName : `${contact?.firstName} ${contact?.lastName}`})}
-                          okButtonLabel={t('contacts.contact_details.confirm_delete_yes')} isOpen={confirmDeleteOpen}
-                          onOk={onDeleteConfirm} onCancel={onDeleteCancel} onClose={onDeleteCancel} />
+                okButtonLabel={t('contacts.contact_details.confirm_delete_yes')} isOpen={confirmDeleteOpen}
+                onOk={onDeleteConfirm} onCancel={onDeleteCancel} onClose={onDeleteCancel} closeableOnEscapeKeyPress={true} />
         </div>
     )
 }

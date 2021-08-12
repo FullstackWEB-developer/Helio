@@ -11,6 +11,9 @@
         }
         &.data-row{
             border-bottom: 1px solid var(--light-divider-7);
+            &:hover{
+                background-color: var(--color-secondary-100);
+            }
         }
 
         &.col-template{

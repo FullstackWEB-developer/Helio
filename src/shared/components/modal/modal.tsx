@@ -4,6 +4,7 @@ import {Icon} from '@components/svg-icon/icon';
 import SvgIcon from '@components/svg-icon/svg-icon';
 import classname from 'classnames';
 import {useTranslation} from 'react-i18next';
+import {useEffect} from 'react';
 
 interface ModalProps {
     isOpen: boolean,
@@ -12,10 +13,22 @@ interface ModalProps {
     isClosable?: boolean,
     className?: string,
     top?: number
-    onClose?: (event: React.MouseEvent<HTMLDivElement>) => void
+    onClose?: (event: React.MouseEvent<HTMLDivElement>) => void,
+    closeableOnEscapeKeyPress?: boolean
 }
-const Modal = ({isOpen, children, title = '', isClosable, className, onClose, top = 60}: ModalProps) => {
+const Modal = ({isOpen, children, title = '', isClosable, className, onClose, top = 60, closeableOnEscapeKeyPress}: ModalProps) => {
     const {t} = useTranslation();
+
+    useEffect(() => {
+        const close = (e: any) => {
+            if (e.key === 'Escape' && closeableOnEscapeKeyPress && onClose) {
+                onClose(e);
+            }
+        }
+        window.addEventListener('keydown', close);
+        return () => window.removeEventListener('keydown', close);
+    }, []);
+
     if (!isOpen) {
         return null;
     }

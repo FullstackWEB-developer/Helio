@@ -14,7 +14,7 @@ interface ContactListItemProps {
 }
 const ContactListItem = ({contact, selected, onSelect, previousContact, isSearch}: ContactListItemProps) => {
     const [hovered, setHovered] = useState(false);
-    const isCompany = contact.type === ContactType.Company;
+    const isCompany = contact?.type === ContactType.Company;
     const onClick = () => {
         if (onSelect) {
             onSelect(contact);
@@ -36,7 +36,7 @@ const ContactListItem = ({contact, selected, onSelect, previousContact, isSearch
             onClick={onClick}
             className={wrapperClass}>
             <div className={`pr-10 truncate ${selected ? 'company-item-selected-inverted' : ''}`}>
-                {isCompany ? contact.companyName : `${contact.firstName} ${contact.lastName}`}
+                {isCompany ? contact?.companyName : `${contact?.firstName} ${contact?.lastName}`}
             </div>
             {
                 isCompany && <span className="absolute top-2 right-4"><SvgIcon fillClass={`${selected ? 'company-fill-inverted' : 'company-fill'}`} type={Icon.Company} /></span>

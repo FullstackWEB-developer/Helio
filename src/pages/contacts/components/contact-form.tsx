@@ -18,6 +18,7 @@ import {QueryCompanyContacts} from '@constants/react-query-constants';
 import useDebounce from '@shared/hooks/useDebounce';
 import {DEBOUNCE_SEARCH_DELAY_MS} from '@constants/form-constants';
 import ControlledSelect from '@components/controllers/controlled-select';
+import Confirmation from '@components/confirmation/confirmation';
 
 const SHIPPING_ADDRESS_LABEL_KEY = 'contacts.contact_details.individual.shipping_address'
 const BILLING_ADDRESS_LABEL_KEY = 'contacts.contact_details.individual.billing_address';
@@ -82,7 +83,7 @@ const ContactForm = ({contact, contactType, submitHandler, closeHandler, editMod
         setAddressDropdownOptions([...addressDropdownOptions, value]);
     }
     const {handleSubmit, control, reset, formState, setValue} = useForm({mode: 'onChange'});
-    const {isValid} = formState;
+    const {isValid, isDirty} = formState;
     const categoryOptions = createCategorySelectOptions();
     const defaultCategory = contact?.category ? categoryOptions?.find(c => Number(c.value) === contact.category) : '';
     const defaultPrimaryAddress: Address | undefined = (contact?.addresses?.some(a => a.addressType === AddressType.PrimaryAddress)) ?
@@ -95,6 +96,7 @@ const ContactForm = ({contact, contactType, submitHandler, closeHandler, editMod
         reset();
     }, [contactType]);
 
+    const [closingPromptOpen, setClosingPromptOpen] = useState(false);
     const onSubmit = (form: ContactFormModel) => {
         form = {
             ...form,
@@ -130,9 +132,25 @@ const ContactForm = ({contact, contactType, submitHandler, closeHandler, editMod
     }
 
     const closeButtonHandler = () => {
+        if (isDirty) {
+            setClosingPromptOpen(true);
+        }
+        else {
+            if (closeHandler) {
+                closeHandler();
+            }
+        }
+    }
+
+    const onCloseConfirm = () => {
         if (closeHandler) {
             closeHandler();
         }
+        setClosingPromptOpen(false);
+    }
+
+    const onCloseCancel = () => {
+        setClosingPromptOpen(false);
     }
 
     const [searchCompanyTerm, setSearchCompanyTerm] = useState('');
@@ -185,7 +203,7 @@ const ContactForm = ({contact, contactType, submitHandler, closeHandler, editMod
     }
 
     return (
-        <div className={`flex flex-col ${editMode ? 'overflow-hidden' : ''}`}>
+        <div className={`flex flex-col relative ${editMode ? 'overflow-hidden' : ''}`}>
             <form onSubmit={handleSubmit(onSubmit)} noValidate={true}>
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-x-8">
                     {
@@ -269,17 +287,17 @@ const ContactForm = ({contact, contactType, submitHandler, closeHandler, editMod
                     }
                     {
                         !isCompanyContact &&
-                            <div className="col-span-12 lg:col-span-5">
-                                <ControlledInput name='workDirectPhone' control={control}
-                                    defaultValue={contact?.workDirectPhone || ''} label={t('contacts.contact_details.individual.work_direct_phone')}
-                                    type='tel' mask={mask} dataTestId='contact-work_direct_phone' />
-                            </div>
-                            }
-                            <div className="col-span-12 lg:col-span-5">
-                                <ControlledInput name='mobile' control={control}
-                                    defaultValue={contact?.mobilePhone || ''} label={t('contacts.contact_details.individual.mobile')}
-                                    type='tel' mask={mask} dataTestId='contact-mobile' />
-                            </div>
+                        <div className="col-span-12 lg:col-span-5">
+                            <ControlledInput name='workDirectPhone' control={control}
+                                defaultValue={contact?.workDirectPhone || ''} label={t('contacts.contact_details.individual.work_direct_phone')}
+                                type='tel' mask={mask} dataTestId='contact-work_direct_phone' />
+                        </div>
+                    }
+                    <div className="col-span-12 lg:col-span-5">
+                        <ControlledInput name='mobile' control={control}
+                            defaultValue={contact?.mobilePhone || ''} label={t('contacts.contact_details.individual.mobile')}
+                            type='tel' mask={mask} dataTestId='contact-mobile' />
+                    </div>
                     <div className="col-span-12 lg:col-span-5">
                         <ControlledInput type='tel'
                             name='fax'
@@ -328,6 +346,9 @@ const ContactForm = ({contact, contactType, submitHandler, closeHandler, editMod
                     </div>
                 </div>
             </form>
+            <Confirmation title={t('contacts.contact_details.confirm_close')}
+                okButtonLabel={t('common.yes')} isOpen={closingPromptOpen}
+                onOk={onCloseConfirm} onCancel={onCloseCancel} onClose={onCloseCancel} closeableOnEscapeKeyPress={true} />
         </div>)
 }
 

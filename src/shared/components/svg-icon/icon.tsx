@@ -80,5 +80,6 @@ export enum Icon {
     HelioLogo = 'HelioLogo',
     Templates = "Templates",
     ErrorFilled = "ErrorFilled",
-    AwsConnect = "AwsConnect"
+    AwsConnect = "AwsConnect",
+    Users = "Users"
 }

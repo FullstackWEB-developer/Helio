@@ -57,7 +57,7 @@ const Navigation = () => {
             title: t('navigation.users'),
             link: UsersPath,
             id: 'navigation-users',
-            icon: <SvgIcon type={Icon.Contacts} fillClass='active-item-icon' />
+            icon: <SvgIcon type={Icon.Users} fillClass='active-item-icon' />
         }
     ];
 

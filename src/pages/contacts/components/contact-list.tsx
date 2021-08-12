@@ -23,8 +23,8 @@ const ContactList = ({contacts, onContactSelect, currentlySelected, fetchMore, i
     const {t} = useTranslation();
 
     const getFirstChar = (c: ContactBase) => {
-        const isCompany = c.type === ContactType.Company;
-        const firstChar = isCompany ? c.companyName?.trim()?.charAt(0) : c.firstName?.trim()?.charAt(0);
+        const isCompany = c?.type === ContactType.Company;
+        const firstChar = isCompany ? c?.companyName?.trim()?.charAt(0) : c?.firstName?.trim()?.charAt(0);
         return firstChar ?? '';
     }
 
@@ -38,14 +38,14 @@ const ContactList = ({contacts, onContactSelect, currentlySelected, fetchMore, i
             if (index === 0) {
                 const firstLetter = getFirstChar(c);
                 body.push(<ContactListLetter key={`letter-${firstLetter}${index}`}
-                                             letter={firstLetter} />);
+                    letter={firstLetter} />);
             }
 
             body.push(<ContactListItem isSearch={!!props.searchValue}
-                                       previousContact={contacts[index-1]}
-                                       key={c.id} contact={c}
-                                       onSelect={onContactSelect}
-                                       selected={c.id === currentlySelected} />);
+                previousContact={contacts[index - 1]}
+                key={c?.id} contact={c}
+                onSelect={onContactSelect}
+                selected={c?.id === currentlySelected} />);
 
             if (index < contacts.length - 1 && !props.searchValue.length) {
                 const nextLetter = getFirstChar(contacts[index + 1]);
@@ -73,18 +73,18 @@ const ContactList = ({contacts, onContactSelect, currentlySelected, fetchMore, i
         <div className="w-72 overflow-x-hidden relative flex flex-col contact-list-section" >
             <div className="w-full">
                 <div className='flex items-center pl-4 py-3 cursor-pointer align-middle border-b'
-                     onClick={handleAddNewContactClick}>
+                    onClick={handleAddNewContactClick}>
                     <SvgIcon type={Icon.AddContact}
-                             className='icon-large pl-1 cursor-pointer'
-                             fillClass='active-item-icon'/>
+                        className='icon-large pl-1 cursor-pointer'
+                        fillClass='active-item-icon' />
                     <span className='body2 pl-4 contact-accent-color'>{`${t('contacts.contact-list.add')}`}</span>
                 </div>
             </div>
             <SearchInputField wrapperClassNames="pl-2 py-6"
-                              inputClassNames='contact-search-input-field'
-                              onChange={handleSearch}
-                              value={props.searchValue}
-                              placeholder={`${t('contacts.contact-list.search')}`} />
+                inputClassNames='contact-search-input-field'
+                onChange={handleSearch}
+                value={props.searchValue}
+                placeholder={`${t('contacts.contact-list.search')}`} />
             <div className="relative max-w-full overflow-y-auto overflow-x-hidden h-full" onScroll={(e) => handleScroll(e)}>
                 {
                     isFetching && !isFetchingNextPage ? <Spinner size='small' className='pt-2' /> :

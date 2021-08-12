@@ -9,6 +9,8 @@ import {createCategorySelectOptions} from '@shared/models/contact-category.enum'
 import {Icon} from '@components/svg-icon/icon';
 import utils from '@shared/utils/utils';
 import Input from '@components/input/input';
+import {useHistory} from 'react-router';
+import {ContactsPath} from '@app/paths';
 
 interface TicketDetailContactInfoProps {
     contact: Contact
@@ -17,7 +19,7 @@ interface TicketDetailContactInfoProps {
 const TicketDetailContactInfo = ({contact}: TicketDetailContactInfoProps) => {
     const {t} = useTranslation();
     const [facilityTypes] = useState<Option[]>(createCategorySelectOptions());
-
+    const history = useHistory();
     const getAddress = memoize(() => {
         if (!contact.addresses || contact.addresses.length === 0) {
             return null;
@@ -36,11 +38,18 @@ const TicketDetailContactInfo = ({contact}: TicketDetailContactInfoProps) => {
         </div>
     }
 
+    const redirectToContactDetailsPage = () => {
+        if (contact?.id) {
+            history.push(`${ContactsPath}/${contact.id}`)
+        }
+    }
+
     return <div className='pt-4 pb-6'>
         <div>
             <Input disabled={true} label='ticket_detail.info_panel.contact_details.contact_name'
                 value={contact?.type === ContactType.Company ? contact.companyName : `${contact.firstName} ${contact.lastName}`}
-                dropdownIcon={Icon.Contacts} />
+                dropdownIcon={Icon.Contacts}
+                dropdownIconClickHandler={redirectToContactDetailsPage} />
             <Input disabled={true} label='ticket_detail.info_panel.contact_details.facility_type'
                 value={facilityTypes.find(a => a.value === contact.category.toString())?.label || ''} />
             <Input disabled={true} label='ticket_detail.info_panel.contact_details.facility_name'

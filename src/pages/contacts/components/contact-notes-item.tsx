@@ -13,7 +13,7 @@ const ContactNotesItem = ({note}: ContactNotesItemProps) => {
                 </div>
                 <span className='body3 note-created-by pr-6'>{note.createdByName ?? ''}</span>
             </div>
-            <div className="body2 text-justify pr-6 pb-5">{note.noteText}</div>
+            <div className="body2 text-justify pr-6 pb-5 whitespace-pre-line">{note.noteText}</div>
         </div>
     )
 }

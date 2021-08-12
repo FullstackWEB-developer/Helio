@@ -814,6 +814,7 @@
       "error_updated_contact": "Contact update failed",
       "error_created_contact": "Contact created failed",
       "error_set_star": "",
+      "confirm_close": "Changes have been made. If you leave they will be discarded. Proceed with closing?",
       "individual": {
         "company": "Company Name",
         "category": "Category",

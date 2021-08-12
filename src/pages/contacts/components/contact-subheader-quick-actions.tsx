@@ -5,7 +5,7 @@ import {ContactExtended} from '@shared/models/contact.model';
 import Dropdown from '@components/dropdown/dropdown';
 import {useTranslation} from 'react-i18next';
 import customHooks from '@shared/hooks/customHooks';
-import {DropdownModel} from '@components/dropdown/dropdown.models';
+import {DropdownItemModel, DropdownModel} from '@components/dropdown/dropdown.models';
 import {ContactPhoneType} from '@pages/contacts/enums/contact-phone-type.enum';
 import {showCcp} from '@shared/layout/store/layout.slice';
 import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
@@ -28,7 +28,7 @@ const ContactSubheaderQuickActions = ({editMode, editIconClickHandler, contact, 
     const dispatch = useDispatch();
     const voiceCounter = useSelector(selectVoiceCounter);
     const logger = Logger.getInstance();
-    const [selectedPhoneType, setSelectedPhoneType] = useState<ContactPhoneType>(ContactPhoneType.mobile);
+    
     const [displayPhoneTypeDropdown, setDisplayPhoneTypeDropdown] = useState<boolean>(false);
     const typeDropdownRef = useRef<HTMLDivElement>(null);
 
@@ -41,30 +41,49 @@ const ContactSubheaderQuickActions = ({editMode, editIconClickHandler, contact, 
         setSelectedPhoneType(type);
     }
 
+    const generatePhoneTypeDropdownOptions = (): DropdownItemModel[] => {
+        let options: DropdownItemModel[] = [];
+        const {mobilePhone, workDirectPhone, workMainPhone} = contact;
+        if (mobilePhone) {
+            options.push({label: t('contacts.contact_details.individual.phone_types.1'), value: String(ContactPhoneType.mobile)});
+        }
+        if (workMainPhone) {
+            options.push({label: t('contacts.contact_details.individual.phone_types.2'), value: String(ContactPhoneType.workMain)});
+        }
+        if (workDirectPhone) {
+            options.push({label: t('contacts.contact_details.individual.phone_types.3'), value: String(ContactPhoneType.workDirect)});
+        }
+        return options;
+    }
+
+    const contactHasAnyPhoneOption = contact?.mobilePhone || contact?.workDirectPhone || contact?.workMainPhone;
+    const phoneTypeOptions = generatePhoneTypeDropdownOptions();
+    const [selectedPhoneType, setSelectedPhoneType] = useState<ContactPhoneType>(phoneTypeOptions?.length > 0 ? Number(phoneTypeOptions[0].value) : ContactPhoneType.mobile);
     const phoneTypeDropdownModel: DropdownModel = {
-        defaultValue: selectedPhoneType.toString(),
+        defaultValue: selectedPhoneType?.toString(),
         onClick: (id) => phoneTypeSelected(Number(id)),
-        items: Object.keys(ContactPhoneType).filter(item => !isNaN(Number(item))).map(item => {
-            return {
-                label: t(`contacts.contact_details.individual.phone_types.${item}`),
-                value: item.toString()
-            }
-        })
+        items: phoneTypeOptions
     };
 
     const handleOnPhoneClick = () => {
         switch (selectedPhoneType) {
             case ContactPhoneType.mobile:
-                initiateACall(contact.mobilePhone);
-                break
+                if (contact?.mobilePhone) {
+                    initiateACall(contact.mobilePhone);
+                }
+                break;
             case ContactPhoneType.workMain:
-                initiateACall(contact.workMainPhone);
-                break
+                if (contact?.workMainPhone) {
+                    initiateACall(contact.workMainPhone);
+                }
+                break;
             case ContactPhoneType.workDirect:
-                initiateACall(contact.workDirectPhone);
-                break
+                if (contact?.workDirectPhone) {
+                    initiateACall(contact.workDirectPhone);
+                }
+                break;
             default:
-                initiateACall(contact.mobilePhone);
+                break;
         }
     }
 
@@ -91,66 +110,65 @@ const ContactSubheaderQuickActions = ({editMode, editIconClickHandler, contact, 
 
     return (
         <div className='flex justify-center pt-5'>
-                <span className={`pr-3 cursor-pointer`} >
-                    <SvgIcon type={Icon.ChannelPhone}
-                             className='icon-x-large'
-                             fillClass={getIconColor()}
-                             strokeClass='contact-stroke-color'
-                             onClick={handleOnPhoneClick}
-                             disabled={voiceCounter === 1}
-                    />
-                </span>
+            <span className={`pr-3 ${contactHasAnyPhoneOption && !editMode ? 'cursor-pointer' : ''}`} >
+                <SvgIcon type={Icon.ChannelPhone}
+                    className='icon-x-large'
+                    fillClass={getIconColor()}
+                    strokeClass='contact-stroke-color'
+                    onClick={handleOnPhoneClick}
+                    disabled={voiceCounter === 1 || !contactHasAnyPhoneOption || editMode}
+                />
+            </span>
 
             <div className='flex items-center' ref={typeDropdownRef}>
                 <div
-                    onClick={() => setDisplayPhoneTypeDropdown(!displayPhoneTypeDropdown)}
+                    onClick={() => {if (contactHasAnyPhoneOption && !editMode) {setDisplayPhoneTypeDropdown(!displayPhoneTypeDropdown)} }}
                     className='flex flex-row'>
-                    <div className='contact-phone-type'>
+                    <div className={`${contactHasAnyPhoneOption && !editMode ? 'contact-phone-type' : 'contact-phone-type-disabled'}`}>
                         {t(`contacts.contact_details.individual.phone_types.${selectedPhoneType}`)}
                     </div>
                     <div className='pl-1.5'>
                         <SvgIcon type={displayPhoneTypeDropdown ? Icon.ArrowUp : Icon.ArrowDown}
-                                 disabled={voiceCounter === 1}
-                                 className='icon-medium'
-                                 fillClass='contact-dropdown-arrows'/>
+                            disabled={voiceCounter === 1}
+                            className={'icon-medium'}
+                            fillClass={`${contactHasAnyPhoneOption ? 'contact-dropdown-arrows' : 'rgba-025-fill'}`} />
                     </div>
                 </div>
                 {displayPhoneTypeDropdown &&
-                <div className='absolute'>
-                    <Dropdown model={phoneTypeDropdownModel}/>
-                </div>}
+                    <div className='absolute mt-20'>
+                        <Dropdown model={phoneTypeDropdownModel} />
+                    </div>}
             </div>
 
-            <span className={`pl-10 pr-8 ${contact.type === ContactType.Individual ? 'cursor-pointer' : ''}`} >
-                    <SvgIcon type={Icon.ChannelSms}
-                             disabled={contact.type === ContactType.Company}
-                             className='icon-x-large'
-                             fillClass={getIconColor()}
-                             strokeClass='contact-stroke-color'
-                    />
-                </span>
-            <span className="pr-8 cursor-pointer">
-                    <SvgIcon type={Icon.ChannelEmail}
-                             className='icon-x-large'
-                             fillClass={getIconColor()}
-                             strokeClass='contact-stroke-color'
-                    />
-                </span>
+            <span className={'pl-10 pr-8'} >
+                <SvgIcon type={Icon.ChannelSms}
+                    disabled={true}
+                    className='icon-x-large'
+                    strokeClass='contact-stroke-color'
+                />
+            </span>
+            <span className="pr-8">
+                <SvgIcon type={Icon.ChannelEmail}
+                    disabled={true}
+                    className='icon-x-large'
+                    strokeClass='contact-stroke-color'
+                />
+            </span>
             {!editMode && <span className="pr-8 cursor-pointer" onClick={editIconClickHandler}>
-                    <SvgIcon type={Icon.EditCircled}
-                             className='icon-x-large'
-                             fillClass='contact-subheader-quick-action-color'
-                             strokeClass='contact-stroke-color'
-                    />
-                </span>}
+                <SvgIcon type={Icon.EditCircled}
+                    className='icon-x-large'
+                    fillClass='contact-subheader-quick-action-color'
+                    strokeClass='contact-stroke-color'
+                />
+            </span>}
             <span className="pr-8 cursor-pointer" onClick={deleteIconClickHandler}>
-                    <SvgIcon type={Icon.DeleteCircled}
-                             className='icon-x-large'
-                             fillClass='contact-subheader-quick-action-color'
-                             strokeClass='contact-stroke-color'
-                             isLoading={isLoading}
-                    />
-                </span>
+                <SvgIcon type={Icon.DeleteCircled}
+                    className='icon-x-large'
+                    fillClass='contact-subheader-quick-action-color'
+                    strokeClass='contact-stroke-color'
+                    isLoading={isLoading}
+                />
+            </span>
         </div>
     )
 }
