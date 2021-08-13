@@ -10,7 +10,7 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import utils from '@shared/utils/utils';
 import {ContactTicketsRequest} from '@pages/tickets/models/patient-tickets-request';
-import {DefaultPagination} from '@shared/models/paging.model';
+import {DefaultPagination, Paging} from '@shared/models/paging.model';
 import {useQuery} from 'react-query';
 import {OneMinute, QueryContactTickets} from '@constants/react-query-constants';
 import {getContactTickets} from '@pages/tickets/services/tickets.service';
@@ -25,6 +25,7 @@ import {TicketQuery} from '@pages/tickets/models/ticket-query';
 import TicketChannelIcon from '@pages/tickets/components/ticket-channel-icon';
 import TicketStatus from '@pages/tickets/components/ticket-status';
 import Spinner from '@components/spinner/Spinner';
+import Pagination from '@components/pagination/pagination';
 
 interface ContactTicketsProps {
     contactId: string;
@@ -36,20 +37,27 @@ const ContactTickets = ({contactId}: ContactTicketsProps) => {
     dayjs.extend(relativeTime);
     dayjs.extend(utc);
     const sysdate = dayjs.utc();
+    const pageSize = 5;
     const [contactTicketFilter, setContactTicketFilter] = useState<TicketQuery>({
-        ...DefaultPagination
+        ...DefaultPagination,
+        pageSize
     });
 
-    let query: ContactTicketsRequest = {
-        contactId,
-        ...DefaultPagination,
-        pageSize: 10
-    }
+    
+    const [paginationProperties, setPaginationProperties] = useState<Paging>({...DefaultPagination, pageSize})
+    const [query, setQuery] = useState<ContactTicketsRequest>({...paginationProperties, contactId});
 
-    const {isLoading, data: tickets, refetch} = useQuery<TicketBase[], Error>([QueryContactTickets, query], () =>
-            getContactTickets(query),
+    const {isFetching, data} = useQuery([QueryContactTickets, contactTicketFilter], () =>
+        getContactTickets(query),
         {
-            staleTime: OneMinute
+            onSuccess: (data) => {
+                setPaginationProperties({
+                    pageSize: data.pageSize,
+                    page: data.page,
+                    totalCount: data.totalCount,
+                    totalPages: data.totalPages
+                });
+            }
         }
     );
 
@@ -57,17 +65,11 @@ const ContactTickets = ({contactId}: ContactTicketsProps) => {
         if (!field) {
             return;
         }
-
         const sorts = updateSort([...contactTicketFilter.sorts || []], field, direction);
-        query = {
-            contactId,
-            sorts: [...sorts],
-            ...DefaultPagination,
-            pageSize: 10
-        }
-        setContactTicketFilter(query);
-
-        refetch().then();
+        const newFilters = {...contactTicketFilter, sorts: [...sorts], page: 1}
+        setContactTicketFilter(newFilters);
+        const newQuery = {...query, ...newFilters};
+        setQuery(newQuery);        
     }
 
     const formatDueDate = (dueDate: Date) => {
@@ -79,17 +81,23 @@ const ContactTickets = ({contactId}: ContactTicketsProps) => {
     const getDueDate = (dueDate: Date) => {
         return dayjs.utc(dueDate).isBefore(sysdate) ?
             <ContactTicketLabel labelText={t('tickets.overdue')}
-                                valueText={formatDueDate(dueDate)}
-                                isDanger={true}/> :
+                valueText={formatDueDate(dueDate)}
+                isDanger={true} /> :
             <ContactTicketLabel labelText=''
-                                valueText={formatDueDate(dueDate)}
-                                isDanger={false}/>
+                valueText={formatDueDate(dueDate)}
+                isDanger={false} />
+    }
+
+    const handlePageChange = (p: Paging) => {
+        setPaginationProperties(p);
+        setContactTicketFilter({...contactTicketFilter, ...p});
+        setQuery({...query, ...p})
     }
 
     const getTicket = (ticket: TicketBase) => {
         return <div className='flex flex-row w-full auto-cols-max body2 border-b relative cursor-pointer hover:bg-gray-100 px-6 items-center h-18 py-3'
-                    key={ticket.id}
-                    onClick={() => history.push(`${TicketsPath}/${ticket.ticketNumber}`)}>
+            key={ticket.id}
+            onClick={() => history.push(`${TicketsPath}/${ticket.ticketNumber}`)}>
             <div className='w-24'>
                 <TicketChannelIcon channel={ticket.channel} />
             </div>
@@ -110,17 +118,18 @@ const ContactTickets = ({contactId}: ContactTicketsProps) => {
         </div>
     };
 
-    if (isLoading) {
-        return <Spinner fullScreen/>;
-    }
-
     return <Fragment>
-        <div className={'flex items-center py-3 cursor-pointer align-middle border-b'}
-             onClick={() => history.push(`${TicketsPath}/new?contactId=${contactId}`)}>
-            <SvgIcon type={Icon.Add}
-                     className='icon-large pl-1 cursor-pointer'
-                     fillClass='active-item-icon'/>
-            <span className='body2 pl-2 contact-accent-color'>{`${t('contacts.contact_details.create_ticket')}`}</span>
+        <div className={'flex items-center justify-between py-3 cursor-pointer border-b'}>
+            <div className='flex items-center body2' onClick={() => history.push(`${TicketsPath}/new?contactId=${contactId}`)}>
+                <SvgIcon type={Icon.Add}
+                    className='icon-large pl-1 cursor-pointer'
+                    fillClass='active-item-icon' />
+                <span className='pl-2 contact-accent-color'>{`${t('contacts.contact_details.create_ticket')}`}</span>
+            </div>
+            {
+                paginationProperties?.totalCount !== 0 &&
+                <Pagination value={paginationProperties} onChange={handlePageChange} />
+            }
         </div>
         <div className='flex flex-row w-full auto-cols-min bg-gray-100 px-6 py-4 h-12 items-center body2-medium content-center'>
             <TicketListHeaderCell className='w-24'>{t('tickets.channel')}</TicketListHeaderCell>
@@ -157,9 +166,12 @@ const ContactTickets = ({contactId}: ContactTicketsProps) => {
             </TicketListHeaderCell>
         </div>
         {
-            tickets && tickets.map(ticket => {
-                return getTicket(ticket)
-            })
+            isFetching ? <Spinner fullScreen className='pt-4' /> :
+                (
+                    data && data.results.length > 0 ? data.results.map((ticket: TicketBase) => {
+                        return getTicket(ticket)
+                    }) : <div className='subtitle3-small w-full text-center mt-5'>{t('contacts.contact_details.no_tickets')}</div>
+                )
         }
     </Fragment>
 }

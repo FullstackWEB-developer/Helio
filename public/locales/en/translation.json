@@ -795,6 +795,7 @@
       "details": "Details",
       "notes": "Notes",
       "tickets": "Tickets",
+      "no_tickets": "Contact has no tickets created yet.",
       "create_ticket": "Create Ticket",
       "enter_note": "Enter note",
       "error_fetching_contact": "Contact not found",

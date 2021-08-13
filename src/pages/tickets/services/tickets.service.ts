@@ -194,8 +194,8 @@ export const getContactTickets = async (queryRequest: ContactTicketsRequest, res
         queryParams = utils.serialize(newQuery);
     }
     const ticketsUrl = `${ticketsBaseUrl}/GetContactTickets?${queryParams}`;
-    const response = await Api.get(ticketsUrl);
-    return response.data.results;
+    const {data} = await Api.get(ticketsUrl);
+    return data;
 }
 
 export const getRecordedConversation = async (id: string) : Promise<ChatTranscript> => {
