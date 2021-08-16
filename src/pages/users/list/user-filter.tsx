@@ -171,14 +171,14 @@ const UserFilter = ({isOpen}: {isOpen: boolean}) => {
             }
 
             if (formValues.invites && formValues.invites.length > 0) {
-                const selectedInviteStatuses = getSelectedFromCheckbox(formValues.invites).map(inv => inv).join(',');
+                const selectedInviteStatuses = getSelectedFromCheckbox(formValues.invites).map(inv => inv).join(';');
                 if (selectedInviteStatuses && selectedInviteStatuses.length > 0) {
                     filters.invitationStatuses = selectedInviteStatuses;
                 }
             }
 
             if (formValues.statuses && formValues.statuses.length > 0) {
-                const selectedStatuses = getSelectedFromCheckbox(formValues.statuses).map(s => s).join(',');
+                const selectedStatuses = getSelectedFromCheckbox(formValues.statuses).map(s => s).join(';');
                 if (selectedStatuses && selectedStatuses.length > 0) {
                     filters.statuses = selectedStatuses;
                 }
@@ -229,10 +229,10 @@ const UserFilter = ({isOpen}: {isOpen: boolean}) => {
             ?.map(role => roleOptions.find(r => r.value === role))
             ?.map(option => option?.key)
 
-        const invitationStatuses = storedFilters?.invitationStatuses?.split(',')
+        const invitationStatuses = storedFilters?.invitationStatuses?.split(';')
             ?.map(option => option);
 
-        const statuses = storedFilters?.statuses?.split(',')?.map(option => option);
+        const statuses = storedFilters?.statuses?.split(';')?.map(option => option);
 
         setCheckBoxControl('statuses', statuses);
         setCheckBoxControl('invites', invitationStatuses);
