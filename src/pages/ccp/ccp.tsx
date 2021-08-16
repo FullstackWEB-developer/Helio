@@ -134,6 +134,12 @@ const Ccp: React.FC<BoxProps> = ({
     }, [ccpConnectionState]);
 
     const initCCP = useCallback((isRetry: boolean = false) => {
+
+        const removeCPPIframeScroll = () => {
+            const iframeEle = document.querySelector('#ccp-container iframe');
+            iframeEle?.setAttribute('scrolling', 'no');
+        }
+
         const ccpContainer = document.getElementById('ccp-container');
         connect.core.initCCP(ccpContainer as HTMLDivElement, {
             ccpUrl: ccpConfig.connectBaseUrl! + ccpConfig.ccpUrl,
@@ -155,6 +161,7 @@ const Ccp: React.FC<BoxProps> = ({
         connect.core.onInitialized(() => {
             setCcpConnectionState(CCPConnectionStatus.Success);
             dispatch(setConnectionStatus(CCPConnectionStatus.Success));
+            removeCPPIframeScroll();
         });
 
         connect.core.onAuthFail(() => {
