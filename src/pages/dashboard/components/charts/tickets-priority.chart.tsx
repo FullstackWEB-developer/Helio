@@ -27,7 +27,7 @@ const TicketsPriorityChart = ({data}: TicketsPriorityChartProps) => {
     });
 
     const ChartItem = ({item, index}: { item: BasicStatistic, index: number }) => {
-        return <div className='px-32 grid grid-cols-12 gap-1 items-center'>
+        return <div className='px-10 grid grid-cols-12 gap-1 items-center'>
             <div className='col-start-3 flex justify-center'>
                 <div className='h-2.5 w-2.5 rounded-xl' style={{backgroundColor: getPieChartColor(index)}}/>
             </div>
