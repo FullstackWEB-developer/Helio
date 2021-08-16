@@ -16,6 +16,9 @@ const appSlice = createSlice({
         },
         setModalOverlayActive(state, {payload}: PayloadAction<boolean>) {
             state.modalOverlayActive = payload;
+        },
+        setNavigationChanged(state, {payload}: PayloadAction<boolean>) {
+            state.isNavigationChanging = payload;
         }
     }
 });
@@ -24,7 +27,8 @@ export const {
     setGlobalLoading,
     setEmailTemplates,
     setSmsTemplates,
-    setModalOverlayActive
+    setModalOverlayActive,
+    setNavigationChanged
 } = appSlice.actions
 
 export default appSlice.reducer

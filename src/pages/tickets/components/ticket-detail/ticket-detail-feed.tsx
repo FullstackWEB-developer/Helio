@@ -109,6 +109,10 @@ const TicketDetailFeed = ({ticket}: TicketDetailFeedProps) => {
         setTimeout(() => {
             setScrollToBottom(false);
         }, 300);
+
+        return () => {
+            dispatch(setFeedLastMessageOn());
+        }
     }, [dispatch, ticket.feeds, ticket.notes, smsMessages, emailMessages, smsLoading, emailLoading]);
 
     if (emailLoading || smsLoading) {

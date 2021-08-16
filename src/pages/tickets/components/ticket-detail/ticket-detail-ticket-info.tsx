@@ -1,8 +1,8 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import withErrorLogging from '@shared/HOC/with-error-logging';
 import {useDispatch, useSelector} from 'react-redux';
 import {
-    selectEnumValuesAsOptions,
+    selectEnumValuesAsOptions, selectLookupValues,
     selectLookupValuesAsOptions,
     selectTicketUpdateModel
 } from '@pages/tickets/store/tickets.selectors';
@@ -26,10 +26,11 @@ import {Ticket} from '@pages/tickets/models/ticket';
 
 interface TicketInfoProps {
     ticket: Ticket,
-    control: Control<TicketUpdateModel>
+    control: Control<TicketUpdateModel>,
+    watch: (fieldName: string) => any
 }
 
-const TicketDetailTicketInfo = ({ticket, control}: TicketInfoProps) => {
+const TicketDetailTicketInfo = ({ticket, control, watch}: TicketInfoProps) => {
 
     const updateModel = useSelector(selectTicketUpdateModel);
     const logger = Logger.getInstance();
@@ -39,18 +40,33 @@ const TicketDetailTicketInfo = ({ticket, control}: TicketInfoProps) => {
     const locationOptions = useSelector(selectLocationsAsOptions);
     const priorityOptions = useSelector((state => selectEnumValuesAsOptions(state, 'TicketPriority')));
     const departmentOptions = useSelector((state) => selectLookupValuesAsOptions(state, 'Department'));
-    const reasonOptions = useSelector((state) => selectLookupValuesAsOptions(state, 'TicketReason'));
+    const reasonOptions = useSelector((state) => selectLookupValues(state, 'TicketReason'));
     const tagOptions = useSelector((state) => selectLookupValuesAsOptions(state, 'TicketTags'));
     const ticketTypeOptions = useSelector((state) => selectEnumValuesAsOptions(state, 'TicketType'));
 
     const handleChangeItem = (fieldName: string, option?: Option) => {
-        if (option) {
-            dispatch(setTicketUpdateModel({
-                ...updateModel,
-                [fieldName]: option
-            }));
-        }
+        const value = option ? option : undefined;
+        dispatch(setTicketUpdateModel({
+            ...updateModel,
+            [fieldName]: value
+        }));
     }
+
+    const ticketType = watch('type');
+    const reasonFilteredOptions = useMemo(() => {
+        if (ticketType) {
+            const type = ticketType.value ?? ticketType;
+            return reasonOptions
+                .filter(v => v.parentValue?.toString() === type)
+                .sort((a, b) => a.label.localeCompare(b.label))
+                .map((item: any) => {
+                return {
+                    value: item.value,
+                    label: item.label
+                };
+            });
+        }
+    }, [ticketType, reasonOptions])
 
     const handleTags = (tags: string[]) => {
         dispatch(setTicketUpdateModel({
@@ -121,12 +137,13 @@ const TicketDetailTicketInfo = ({ticket, control}: TicketInfoProps) => {
                     dropdownIcon={Icon.Phone} label={'ticket_detail.info_panel.callback_number'}
                     dropdownIconClickHandler={() => {initiateACall(updateModel.callbackPhoneNumber)}} />
             }
-            {(reasonOptions.length > 0) &&
+            {(reasonFilteredOptions && reasonFilteredOptions.length > 0) &&
                 <ControlledSelect
                     name='reason'
                     label={'ticket_detail.info_panel.reason'}
-                    options={reasonOptions}
+                    options={reasonFilteredOptions}
                     control={control}
+                    allowClear={true}
                     onSelect={(option?: Option) => handleChangeItem('reason', option)}
                 />
             }
@@ -134,6 +151,7 @@ const TicketDetailTicketInfo = ({ticket, control}: TicketInfoProps) => {
                 name='department'
                 label={'ticket_detail.info_panel.department'}
                 options={departmentOptions}
+                allowClear={true}
                 control={control}
                 onSelect={(option?: Option) => handleChangeItem('department', option)}
             />
@@ -141,6 +159,7 @@ const TicketDetailTicketInfo = ({ticket, control}: TicketInfoProps) => {
                 name='location'
                 label={'ticket_detail.info_panel.location'}
                 options={locationOptions}
+                allowClear={true}
                 control={control}
                 onSelect={(option?: Option) => handleChangeItem('location', option)}
             />

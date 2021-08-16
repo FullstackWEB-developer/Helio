@@ -6,6 +6,7 @@ import Dropdown from '@components/dropdown/dropdown';
 import {DropdownItemModel, DropdownModel} from '@components/dropdown/dropdown.models';
 import customHooks from '@shared/hooks/customHooks';
 import {useEffect} from 'react';
+import SvgIcon, {Icon} from '@components/svg-icon';
 
 interface TimePickerProps {
     name?: string,
@@ -104,7 +105,7 @@ const TimePicker = React.forwardRef<HTMLInputElement, TimePickerProps>(({
         setInputValue(item.value);
         if (onChange) {
             onChange(item.value);
-        };
+        }
         setPickerOpen(false);
         timepickerRef?.current?.blur();
     }
@@ -113,6 +114,13 @@ const TimePicker = React.forwardRef<HTMLInputElement, TimePickerProps>(({
     customHooks.useOutsideClick([innerRef], () => {
         setPickerOpen(false);
     });
+
+    const onClearClick = () => {
+        setInputValue('');
+        if (onChange) {
+            onChange(undefined);
+        }
+    }
 
     return (<div ref={innerRef} className={classNames('time-picker relative w-full flex flex-col h-20', {'time-picker-disabled': props.disabled})}>
         <div className={classNames('time-picker-container relative flex flex-wrap')}>
@@ -136,6 +144,14 @@ const TimePicker = React.forwardRef<HTMLInputElement, TimePickerProps>(({
                     }
                     <span className={getLabelClassName()}>{t(label)}</span>
                 </label>
+            }
+            {inputValue && isPickerOpen &&
+            <div
+                role="button"
+                className={classNames('input-addon pr-3', {'pt-3': !label, 'pt-4': !!label, 'px-3': props.disabled})}
+                onClick={onClearClick}>
+                <SvgIcon type={Icon.Clear} fillClass='date-time-picker-clear' />
+            </div>
             }
         </div>
         {

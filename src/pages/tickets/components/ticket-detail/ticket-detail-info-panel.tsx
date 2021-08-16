@@ -29,6 +29,8 @@ import utils from '@shared/utils/utils';
 import {TicketUpdateModel} from '@pages/tickets/models/ticket-update.model';
 import hash from 'object-hash';
 import './ticket-detail-info-panel.scss';
+import {usePrevious} from '@shared/hooks/usePrevious';
+import dayjs from 'dayjs';
 interface TicketDetailInfoPanelProps {
     ticket: Ticket,
     patient?: Patient,
@@ -40,7 +42,7 @@ const TicketDetailInfoPanel = ({ticket, patient, contact}: TicketDetailInfoPanel
     const {t} = useTranslation();
     const updateModel = useSelector(selectTicketUpdateModel);
     const storedUpdateModelHash = useSelector(selectTicketUpdateHash);
-    const {handleSubmit, control, formState: {isValid}, setError, clearErrors, errors, reset} = useForm({
+    const {handleSubmit, control, formState: {isValid}, setError, clearErrors, errors, reset, watch} = useForm({
         defaultValues: updateModel,
         mode: 'onChange'
     });
@@ -53,7 +55,7 @@ const TicketDetailInfoPanel = ({ticket, patient, contact}: TicketDetailInfoPanel
     const ticketTypeOptions = useSelector((state) => selectEnumValuesAsOptions(state, 'TicketType'));
     const [isPatientCaseNumberLoading, setPatientCaseNumberLoading] = useState(false);
     const [isDueDateVisible, setIsDueDateVisible] = useState(false);
-
+    const previousTicket = usePrevious(ticket);
     const isDirty = () => {
         if (!updateModel) {
             return false;
@@ -73,8 +75,9 @@ const TicketDetailInfoPanel = ({ticket, patient, contact}: TicketDetailInfoPanel
             callbackPhoneNumber: ticket.callbackPhoneNumber ?? '',
             patientCaseNumber: ticket.patientCaseNumber,
             storedDueDate: ticket.dueDate,
-            dueDate: undefined,
-            dueTime: ''
+            dueDate: ticket.dueDate ? dayjs(ticket.dueDate).toDate() : undefined,
+            dueTime: ticket.dueDate ?  utils.formatUtcDate(ticket.dueDate,'HH:mm') : undefined,
+            isDeleted: ticket.isDeleted
         };
         const initialTicketHash = hash.MD5(ticketUpdateModel);
         reset(ticketUpdateModel);
@@ -88,9 +91,8 @@ const TicketDetailInfoPanel = ({ticket, patient, contact}: TicketDetailInfoPanel
 
     const ticketUpdateMutation = useMutation(updateTicket, {
         onSuccess: (data, variables) => {
-            const ticketData = variables.ticketData;
             dispatch(setTicket(data));
-            if (data.id && ticketData.status) {
+            if (data.id && previousTicket?.status !== data.status) {
                 const feedData: TicketFeed = {
                     feedType: FeedTypes.StatusChange,
                     description: `${t('ticket_detail.feed.description_prefix')} ${updateModel.status?.label}`
@@ -146,12 +148,12 @@ const TicketDetailInfoPanel = ({ticket, patient, contact}: TicketDetailInfoPanel
         ticketUpdateMutation.mutate({
             id: ticket.id!,
             ticketData: {
-                department: updateModel.department?.value !== ticket.department?.toString() ? updateModel.department?.value : undefined,
-                status: updateModel.status?.value !== ticket.status?.toString() ? Number(updateModel.status?.value) : undefined,
-                priority: updateModel.priority?.value !== ticket.priority?.toString() ? Number(updateModel.priority?.value) : undefined,
-                reason: updateModel.reason?.value !== ticket.reason?.toString() ? updateModel.reason?.value : undefined,
-                location: updateModel.location?.value !== ticket.location?.toString() ? updateModel.location?.value : undefined,
-                type: updateModel.type?.value !== ticket.type?.toString() ? updateModel.type?.value : undefined,
+                department: updateModel.department?.value,
+                status: Number(updateModel.status?.value),
+                priority: Number(updateModel.priority?.value),
+                reason: updateModel.reason?.value,
+                location: updateModel.location?.value,
+                type: updateModel.type?.value,
                 tags: updateModel.tags,
                 callbackPhoneNumber: updateModel.callbackPhoneNumber,
                 patientCaseNumber: updateModel.patientCaseNumber,
@@ -166,60 +168,65 @@ const TicketDetailInfoPanel = ({ticket, patient, contact}: TicketDetailInfoPanel
         clearErrors();
     }
 
-    return (
+    return <>
         <form className='relative flex flex-col' onSubmit={handleSubmit(onSubmit)}>
             <div className='flex px-6 justify-between items-center sticky top-0 z-10 ticket-details-info-header'>
                 <h6>{t('ticket_detail.info_panel.details')}</h6>
                 {
                     isDirty() &&
                     <div className='flex flex-row items-center'>
-                        <Button onClick={resetForm} className='mr-6' buttonType='secondary' label={'common.cancel'} />
+                        <Button onClick={resetForm} className='mr-6' buttonType='secondary' label={'common.cancel'}/>
                         <Button buttonType='small' label={'common.save'} type='submit'
-                            disabled={!isValid || isPatientCaseNumberLoading} isLoading={ticketUpdateMutation.isLoading} />
+                                disabled={!isValid || isPatientCaseNumberLoading}
+                                isLoading={ticketUpdateMutation.isLoading}/>
                     </div>
                 }
             </div>
             <div className='border-b'>
                 <div className='px-6'>
                     <Collapsible title={'ticket_detail.info_panel.ticket_info'} isOpen={true}>
-                        <TicketDetailTicketInfo ticket={ticket} control={control} />
+                        <TicketDetailTicketInfo ticket={ticket} control={control} watch={watch}/>
                     </Collapsible>
                 </div>
             </div>
             <div className='px-6'>
                 <Collapsible title={'ticket_detail.info_panel.assigned_to'} isOpen={true}>
-                    <TicketDetailAssignee ticket={ticket} />
+                    <TicketDetailAssignee ticket={ticket}/>
                 </Collapsible>
             </div>
             <div className='border-b'>
                 <div className='px-6'>
                     {patient && <Collapsible title={'ticket_detail.info_panel.patient_info'} isOpen={true}>
                         <TicketDetailPatientInfo ticket={ticket} patient={patient}
-                            control={control} isPatientCaseNumberLoading={isPatientCaseNumberLoading} errorMessage={errors.patientCaseNumber?.message}
-                            validatePatientCaseNumber={validatePatientCaseNumber} />
+                                                 control={control}
+                                                 isPatientCaseNumberLoading={isPatientCaseNumberLoading}
+                                                 errorMessage={errors.patientCaseNumber?.message}
+                                                 validatePatientCaseNumber={validatePatientCaseNumber}/>
                     </Collapsible>}
                     {patient && <Collapsible title={'ticket_detail.info_panel.appointments'} isOpen={true}>
-                        <TicketDetailAppointments ticket={ticket} />
+                        <TicketDetailAppointments ticket={ticket}/>
                     </Collapsible>}
-                    {contact && <Collapsible title={'ticket_detail.info_panel.contact_details.contact_info'} isOpen={true}>
-                        <TicketDetailContactInfo contact={contact} />
+                    {contact &&
+                    <Collapsible title={'ticket_detail.info_panel.contact_details.contact_info'} isOpen={true}>
+                        <TicketDetailContactInfo contact={contact}/>
                     </Collapsible>}
                 </div>
             </div>
             <div className='border-b'>
                 <div className='px-6'>
                     <Collapsible title={'ticket_detail.info_panel.attachments'} isOpen={true}>
-                        <TicketDetailAttachments ticket={ticket} />
+                        <TicketDetailAttachments ticket={ticket}/>
                     </Collapsible>
                 </div>
             </div>
             <div className='px-6'>
                 <Collapsible title={'ticket_detail.info_panel.event_log'} isOpen={true}>
                     <TicketDetailEventLog ticket={ticket} control={control}
-                        setIsVisible={setIsDueDateVisible} isVisible={isDueDateVisible} />
+                                          setIsVisible={setIsDueDateVisible} isVisible={isDueDateVisible}/>
                 </Collapsible>
             </div>
-        </form>)
+        </form>
+    </>;
 }
 
 export default withErrorLogging(TicketDetailInfoPanel);

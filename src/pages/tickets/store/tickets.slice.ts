@@ -51,10 +51,7 @@ const ticketsSlice = createSlice({
     setFailure: (state, {payload}: PayloadAction<string>) => {
       state.errors = payload;
     },
-    resetLastFeedMessageOn(state) {
-      state.feedLastMessageOn = undefined;
-    },
-    setFeedLastMessageOn(state, {payload}: PayloadAction<Date>) {
+    setFeedLastMessageOn(state, {payload}: PayloadAction<Date | undefined>) {
       state.feedLastMessageOn = payload;
     },
     setTicketEnum(state, {payload}: PayloadAction<any>) {
@@ -97,8 +94,13 @@ const ticketsSlice = createSlice({
       state.error = payload;
       state.isLookupValuesLoading = false;
     },
-    toggleTicketListFilter(state) {
-      state.isFilterOpen = !state.isFilterOpen;
+    toggleTicketListFilter(state, { payload }: PayloadAction<boolean | undefined>) {
+      if (payload === undefined) {
+        state.isFilterOpen = !state.isFilterOpen;
+      } else {
+        state.isFilterOpen = payload;
+      }
+
     },
     setSearchTerm(state, { payload }: PayloadAction<string>) {
       state.searchTerm = payload;
@@ -139,7 +141,6 @@ export const {
   setTicketListQueryType,
   setTicketUpdateModel,
   setTicketUpdateHash,
-  resetLastFeedMessageOn,
   toggleChatTranscriptWindowVisible
 } = ticketsSlice.actions;
 

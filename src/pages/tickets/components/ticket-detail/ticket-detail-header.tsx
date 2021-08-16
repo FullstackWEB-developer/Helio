@@ -50,7 +50,7 @@ const TicketDetailHeader = ({ticket, patient, contact}: TicketDetailHeaderProps)
             </div>
             <h5 className='pl-3'><span className='ticket-detail-header-id'>{t('ticket_detail.header.id')}</span></h5>
             <h5 className='pl-2'>{ticket.ticketNumber}</h5>
-            <h5 className='pl-4'>{ticket.subject}</h5>
+            <h5 className='pl-4 max-w-5xl truncate'>{ticket.subject}</h5>
         </div>
         <TicketDetailHeaderLine2 ticket={ticket} patientOrContactName={patientOrContactName}/>
         <div className='pt-6'>

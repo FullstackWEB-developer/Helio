@@ -26,8 +26,9 @@ interface SelectProps {
     className?: string;
     onTextChange?: (value: string) => void;
     onSelect?: (option?: Option) => void;
+    allowClear?: boolean;
 }
-const Select = React.forwardRef<HTMLDivElement, SelectProps>(({options, order, label, className, autoComplete = true, defaultValue = null, ...props}: SelectProps, ref) => {
+const Select = React.forwardRef<HTMLDivElement, SelectProps>(({options, order, label, className, autoComplete = true, defaultValue = null, allowClear =false, ...props}: SelectProps, ref) => {
     const {t}: {t: any} = useTranslation();
     const [open, setOpen] = useState(false);
     const [selectedOption, setSelectedOption] = useState<Option | null | undefined>(typeof defaultValue === 'string' ? options.find(a => a.value === defaultValue) : defaultValue);
@@ -57,7 +58,7 @@ const Select = React.forwardRef<HTMLDivElement, SelectProps>(({options, order, l
         }
         return managedOptions;
     }
-    const selectValueChange = (option: Option) => {
+    const selectValueChange = (option?: Option) => {
         setSelectedOption(option);
         setSearchQuery(null);
         inputRef?.current?.blur();
@@ -175,10 +176,22 @@ const Select = React.forwardRef<HTMLDivElement, SelectProps>(({options, order, l
                         <span className={`select-label-span ${determineLabelTypography()}`}>{t(label)}</span>
                     </label>
                 }
-                <div className={`absolute pt-${!label ? '3' : '4'} right-4 cursor-pointer`} onClick={handleArrowClick} onMouseDown={(e) => {e.preventDefault()}}>
-                    {
-                        <SvgIcon type={open ? Icon.ArrowUp : Icon.ArrowDown} fillClass={'select-arrow-fill'} />
-                    }
+                <div className={`absolute pt-${!label ? '3' : '4'} right-4 `}>
+                    <div className='flex flex-row items-start'>
+                            {allowClear && selectedOption && open  &&
+                            <div  onMouseDown={(e) => {e.preventDefault()}}>
+                                <SvgIcon className='cursor-pointer'
+                                         type={Icon.Clear}
+                                         fillClass='select-arrow-fill'
+                                         onClick={() => selectValueChange()} />
+                            </div>
+                            }
+                        <div className='cursor-pointer' onClick={handleArrowClick} onMouseDown={(e) => {e.preventDefault()}}>
+                            {
+                                <SvgIcon type={open ? Icon.ArrowUp : Icon.ArrowDown} fillClass={'select-arrow-fill'} />
+                            }
+                        </div>
+                    </div>
                 </div>
                 <div className="absolute py-2 options">
                     <OptionSection />

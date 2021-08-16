@@ -5,12 +5,14 @@ export interface AppState {
     smsTemplates: NotificationTemplate[];
     emailTemplates: NotificationTemplate[];
     modalOverlayActive: boolean;
+    isNavigationChanging: boolean;
 }
 const initialAppState: AppState = {
     isGlobalLoading : false,
     emailTemplates: [],
     smsTemplates: [],
-    modalOverlayActive: false
+    modalOverlayActive: false,
+    isNavigationChanging: false
 }
 
 export default initialAppState;

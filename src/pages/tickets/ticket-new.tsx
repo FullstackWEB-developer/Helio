@@ -29,7 +29,7 @@ import {
 import {createTicket, getEnumByType, getLookupValues} from './services/tickets.service';
 import {getContactById, searchContactsByName} from '@shared/services/contacts.service';
 import {getLocations, getUserList} from '@shared/services/lookups.service';
-import {useHistory} from 'react-router-dom';
+import {Prompt, useHistory} from 'react-router-dom';
 import utils from '../../shared/utils/utils';
 import {TicketsPath} from '@app/paths';
 import {getPatientByIdWithQuery} from '@pages/patients/services/patients.service';
@@ -52,12 +52,13 @@ import {TicketType} from '@pages/tickets/models/ticket-type.enum';
 import './ticket-new.scss';
 import {TicketStatuses} from '@pages/tickets/models/ticket.status.enum';
 import {ChannelTypes} from '@shared/models';
+import Confirmation from '@components/confirmation/confirmation';
 
 const TicketNew = () => {
     dayjs.extend(utc);
 
     const {handleSubmit, control, errors, setError, clearErrors, formState, setValue, watch} = useForm({mode: 'all'});
-    const {isValid, errors: stateError} = formState;
+    const {isValid, errors: stateError, isDirty} = formState;
     const {t} = useTranslation();
     const history = useHistory();
     const dispatch = useDispatch();
@@ -72,7 +73,7 @@ const TicketNew = () => {
     const priorityOptions = useSelector((state => selectEnumValuesAsOptions(state, 'TicketPriority')));
     const statusOptions = useSelector((state => selectEnumValuesAsOptions(state, 'TicketStatus')));
     const ticketTypeOptions = useSelector((state => selectEnumValuesAsOptions(state, 'TicketType')));
-
+    const [closingPromptOpen, setClosingPromptOpen] = useState(false);
     const departmentOptions = useSelector((state) => selectLookupValuesAsOptions(state, 'Department'));
     const ticketLookupValuesReason = useSelector((state) => selectLookupValues(state, 'TicketReason'));
     const ticketLookupValuesSubject = useSelector((state) => selectLookupValues(state, 'TicketSubject'));
@@ -81,7 +82,6 @@ const TicketNew = () => {
     const isDepartmentListLoading = useSelector(selectIsDepartmentListLoading);
     const isLookupValuesLoading = useSelector(selectIsTicketLookupValuesLoading);
     const isTicketEnumValuesLoading = useSelector(selectIsTicketEnumValuesLoading);
-
     const [tags, setTags] = useState<string[]>([]);
     const [noteText, setNoteText] = useState('');
     const [isPatientIdLoading, setPatientIdLoading] = useState(false);
@@ -292,6 +292,19 @@ const TicketNew = () => {
         }
     }, [queryPatientId]);
 
+    const handlePageClose = () =>{
+        if (isDirty) {
+            setClosingPromptOpen(true);
+        } else {
+            history.push(TicketsPath);
+        }
+    }
+
+    const onCloseConfirm = () => {
+        setClosingPromptOpen(false);
+        history.push(TicketsPath);
+    }
+
     useEffect(() => {
         dispatch(getUserList());
         dispatch(getLocations());
@@ -370,12 +383,12 @@ const TicketNew = () => {
         const type = Number(ticketType);
         switch (field) {
             case 'contactId': {
-                return !(type === TicketType.EstablishedPatient || type === TicketType.NewPatient || !!patientId || !!patientCaseNumber) || (!!contactId && !!queryContactId)
+                return !(type === TicketType.EstablishedPatient || type === TicketType.NewPatient || !!patientId || !!patientCaseNumber);
+
             }
             case 'patientId':
             case 'patientCaseNumber': {
-                return !(!!contactId ||
-                    type === TicketType.BusinessOffice ||
+                return !( type === TicketType.BusinessOffice ||
                     type === TicketType.Facility ||
                     type === TicketType.Lab ||
                     type === TicketType.Pharmacy);
@@ -391,11 +404,13 @@ const TicketNew = () => {
     }
 
     const onContactSelectChanged = (controllerProps: ControllerRenderProps<Record<string, any>>, option?: Option) => {
-        if (!option) {
-            return;
+        if (option) {
+            controllerProps.onChange(option.value);
+            setContactName(option.label);
+        } else {
+            controllerProps.onChange();
         }
-        controllerProps.onChange(option.value);
-        setContactName(option.label);
+
     }
 
     return <div className="flex flex-col w-full pb-5 mx-6 mt-5 overflow-y-auto">
@@ -410,6 +425,7 @@ const TicketNew = () => {
                         label={'ticket_new.ticket_type'}
                         options={ticketTypeOptions}
                         control={control}
+                        allowClear={true}
                         required={true}
                     />
                     <div>
@@ -419,6 +435,7 @@ const TicketNew = () => {
                             label={'ticket_new.reason'}
                             options={reasonOptions}
                             control={control}
+                            allowClear={true}
                         />
                         }
                     </div>
@@ -432,6 +449,7 @@ const TicketNew = () => {
                                     label={'ticket_new.subject'}
                                     options={subjectOptions}
                                     control={control}
+                                    allowClear={true}
                                     required={true}
                                 />
                                 :
@@ -450,6 +468,7 @@ const TicketNew = () => {
                         label={'ticket_new.assignee'}
                         options={users}
                         control={control}
+                        allowClear={true}
                         required={true}
                     />
                     <div/>
@@ -457,6 +476,7 @@ const TicketNew = () => {
                         name='status'
                         label={'ticket_new.status'}
                         options={statusOptions}
+                        allowClear={true}
                         defaultValue={TicketStatuses.Open.toString()}
                         control={control}
                         required={true}
@@ -466,12 +486,14 @@ const TicketNew = () => {
                         label={'ticket_new.priority'}
                         options={priorityOptions}
                         control={control}
+                        allowClear={true}
                         required={true}
                     />
                     <div/>
                     <div className="flex">
                         <ControlledDateInput
                             name='dueDate'
+                            min={new Date()}
                             defaultValue={null}
                             label='ticket_new.due_date'
                             className='mr-8'
@@ -491,6 +513,7 @@ const TicketNew = () => {
                     <ControlledSelect
                         name='channel'
                         label={'ticket_new.channel'}
+                        allowClear={true}
                         options={sourceOptions}
                         defaultValue={ChannelTypes.UserCreated.toString()}
                         control={control}
@@ -502,11 +525,13 @@ const TicketNew = () => {
                         label={'ticket_new.department'}
                         options={departmentOptions}
                         control={control}
+                        allowClear={true}
                     />
                     <ControlledSelect
                         name='location'
                         label={'ticket_new.location'}
                         options={locationOptions}
+                        allowClear={true}
                         control={control}
                     />
                     <div/>
@@ -560,6 +585,7 @@ const TicketNew = () => {
                                     options={contactOptions}
                                     defaultValue={defaultContact}
                                     error={errors.contactId?.message}
+                                    allowClear={true}
                                     isLoading={isLoading || isFetching}
                                     suggestionsPlaceholder={t('ticket_new.suggestion_placeholder')}
                                     onTextChange={(value: string) => setContactSearchTerm(value || '')}
@@ -603,7 +629,7 @@ const TicketNew = () => {
                         <Button data-test-id='ticket-new-cancel-button' type={'button'}
                                 buttonType='secondary-medium'
                                 label={'common.cancel'}
-                                onClick={() => history.push(TicketsPath)}
+                                onClick={() => handlePageClose()}
                         />
                     </div>
                     <div className='flex justify-end pt-8'>
@@ -615,6 +641,13 @@ const TicketNew = () => {
 
                 <div/>
             </form>
+            <Confirmation title={t('common.confirm_close')}
+                          okButtonLabel={t('common.yes')} isOpen={closingPromptOpen}
+                          onOk={onCloseConfirm} onCancel={() => setClosingPromptOpen(false)} onClose={() => setClosingPromptOpen(false)} closeableOnEscapeKeyPress={true} />
+            <Prompt
+                when={isDirty && !closingPromptOpen}
+                message={t('common.confirm_close')}
+            />
         </div>
     </div>
 }

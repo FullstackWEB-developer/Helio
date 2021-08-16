@@ -169,13 +169,11 @@ export const updateTicket = async ({id, ticketData}: updateTicketProps) => {
     const url = `${ticketsBaseUrl}/${id}`;
     let patchData = [];
     for (let [key, value] of Object.entries(ticketData)) {
-        if (value) {
-            patchData.push({
-                op: 'replace',
-                path: '/' + key,
-                value: value
-            });
-        }
+        patchData.push({
+            op: 'replace',
+            path: '/' + key,
+            value: value ?? null
+        });
     }
     const result = await Api({
         method: 'patch',

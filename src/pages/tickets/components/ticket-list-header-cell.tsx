@@ -55,7 +55,7 @@ const TicketListHeaderCell = ({
 };
 
 export const getSortOrder = (sort: string[] | undefined, field: string): number | undefined => {
-    if (sort && sort.length > 1) {
+    if (sort && Array.isArray(sort) && sort.length > 1) {
         const sortIndex = sort.findIndex(p => p.includes(field));
         if (sortIndex < 0) {
             return undefined;
@@ -67,7 +67,10 @@ export const getSortOrder = (sort: string[] | undefined, field: string): number 
 
 export const getSortDirection = (sorts: string[] | undefined, field: string): SortDirection => {
     if (sorts && sorts.length > 0) {
-        const sort = sorts.find(p => p.includes(field))?.split(' ') || [];
+        let sort = sorts;
+        if (Array.isArray(sorts)) {
+            sort = sorts.find(p => p.includes(field))?.split(' ') || [];
+        }
         if (sort.length === 1) {
             return SortDirection.Asc;
         } else {

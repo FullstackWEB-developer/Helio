@@ -79,6 +79,7 @@ const TicketDetailEventLog = ({ticket, control, isVisible, setIsVisible}: Ticket
                 <ControlledDateInput
                     name='date'
                     control={control}
+                    min={new Date()}
                     label='ticket_detail.info_panel.select_date'
                     dataTestId='datetime-date'
                     onChange={handleDateChange}

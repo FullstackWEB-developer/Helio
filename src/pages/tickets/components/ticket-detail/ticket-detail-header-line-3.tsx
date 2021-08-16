@@ -5,11 +5,11 @@ import {ExtendedPatient} from '@pages/patients/models/extended-patient';
 import SvgIcon from '@components/svg-icon/svg-icon';
 import {Icon} from '@components/svg-icon/icon';
 import {addFeed, setDelete, setStatus} from '@pages/tickets/services/tickets.service';
-import {changeStatus, setTicket} from '@pages/tickets/store/tickets.slice';
+import {changeStatus, setTicket, setTicketUpdateModel} from '@pages/tickets/store/tickets.slice';
 import {FeedTypes, TicketFeed} from '@pages/tickets/models/ticket-feed';
 import {useMutation} from 'react-query';
 import {useDispatch, useSelector} from 'react-redux';
-import {selectEnumValues} from '@pages/tickets/store/tickets.selectors';
+import {selectEnumValues, selectTicketUpdateModel} from '@pages/tickets/store/tickets.selectors';
 import Button from '@components/button/button';
 import Confirmation from '@components/confirmation/confirmation';
 import {DropdownItemModel, DropdownModel} from '@components/dropdown/dropdown.models';
@@ -48,6 +48,7 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
     const [selectedPhoneToCall, setSelectedPhoneToCall] = useState<PhoneType>(PhoneType.None);
     const ticketStatuses = useSelector((state => selectEnumValues(state, 'TicketStatus')));
     const phoneDropdownRef = useRef<HTMLDivElement>(null);
+    const ticketUpdateModel = useSelector(selectTicketUpdateModel);
 
     customHooks.useOutsideClick([phoneDropdownRef], () => {
         setDisplayPhoneDropdown(false);
@@ -116,6 +117,10 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
                 type: SnackbarType.Success,
                 message: t('ticket_detail.header.archived_successfully')
             }));
+            dispatch(setTicketUpdateModel({
+                ...ticketUpdateModel,
+                isDeleted:true
+            }))
         },
         onError: () => {
             dispatch(addSnackbarMessage({
@@ -274,7 +279,7 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
                     <Button data-test-id='ticket-detail-header-delete-button'
                             buttonType='secondary'
                             isLoading={archiveTicketMutation.isLoading}
-                            disabled={archiveTicketMutation.isLoading}
+                            disabled={archiveTicketMutation.isLoading || ticketUpdateModel?.isDeleted}
                             onClick={() => confirmProcess()}
                             label={'ticket_detail.header.archive'}/>
                 </div>

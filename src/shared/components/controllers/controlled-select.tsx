@@ -20,6 +20,7 @@ export interface ControlledSelectProps {
     onTextChange?: (value: string) => void;
     onSelect?: (option?: Option) => void;
     isLoading?: boolean;
+    allowClear?: boolean;
 }
 
 const ControlledSelect = ({
@@ -47,9 +48,13 @@ const ControlledSelect = ({
     const onSelected = (controllerProps: ControllerRenderProps, option?: Option) => {
         if (option) {
             controllerProps.onChange(option.value);
-
             if (onSelect) {
                 onSelect(option);
+            }
+        } else {
+            controllerProps.onChange();
+            if (onSelect) {
+                onSelect(undefined);
             }
         }
     }
@@ -67,6 +72,7 @@ const ControlledSelect = ({
                 onSelect={(option) => onSelected(controllerProps, option)}
                 data-test-id={`${name}-test-id`}
                 label={label}
+                allowClear={props.allowClear}
                 className={className}
                 defaultValue={defaultValue}
                 autoComplete={autoComplete}

@@ -11,7 +11,7 @@ import {selectEnumValues, selectLookupValues} from '../store/tickets.selectors';
 import {TicketEnumValue} from '../models/ticket-enum-value.model';
 import {TicketOptionsBase} from '../models/ticket-options-base.model';
 import {TicketLookupValue} from '../models/ticket-lookup-values.model';
-import {TicketsPath} from '../../../app/paths';
+import {TicketsPath} from '@app/paths';
 import {DropdownAlignmentHorizontalPosition} from '@components/dropdown/dropdown.models';
 import DueInRelativeTime from './ticket-due-in-relative-time';
 import utils from '@shared/utils/utils';
@@ -86,7 +86,7 @@ const TicketListItem = ({item}: TicketListItemProps) => {
         <div className='w-1/12'>
             {item.ticketNumber}
         </div>
-        <div className={classnames('w-2/12 ', {'subtitle2': !!item.subject, 'body2': !item.subject})}>
+        <div className={classnames('w-2/12 max-w-xs truncate', {'subtitle2': !!item.subject, 'body2': !item.subject})}>
             <span>{item.subject ? item.subject : t('tickets.no_subject')}</span>
         </div>
         <div className='w-2/12 body3'>

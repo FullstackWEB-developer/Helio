@@ -76,17 +76,16 @@ const TicketStatus = ({ticket, isArrow = true}: TicketStatusProps) => {
         }
     };
 
-    return <div ref={elementRef} className='col-span-2 flex flex-row items-center h-full relative'
-        onClick={(event) => isArrow && openStatus(event)}>
-        <div>
+    return <div ref={elementRef} className='col-span-2 flex flex-row items-center h-full relative'>
+        <div  onClick={openStatus}>
             <TicketStatusDot ticket={ticket} />
         </div>
-        <div className='pl-3'>
+        <div className='pl-3'  onClick={openStatus}>
             {ticket.status && t(`tickets.statuses.${(ticket.status)}`)}
         </div>
         {isArrow &&
-            <div className='pl-3 cursor-pointer' onClick={openStatus}>
-                <SvgIcon type={!isVisible ? Icon.ArrowDown : Icon.ArrowUp} className='cursor-pointer'
+            <div className='pl-3'>
+                <SvgIcon onClick={openStatus} type={!isVisible ? Icon.ArrowDown : Icon.ArrowUp} className='cursor-pointer'
                     fillClass='active-item-icon' />
             </div>
         }

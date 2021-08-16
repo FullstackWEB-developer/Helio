@@ -42,7 +42,7 @@ const TicketList = () => {
             });
             setLastAppliedFilter(JSON.stringify(currentFilter))
         }
-    }, [currentFilter, history]);
+    }, [currentFilter, history, history.location.search]);
 
 
     useEffect(() => {

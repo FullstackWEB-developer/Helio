@@ -29,6 +29,7 @@
     "none": "None",
     "enter_your_message": "Enter your message",
     "enter_message": "Enter message",
+    "confirm_close": "Changes have been made. If you leave they will be discarded. Proceed with closing?",
     "time_periods": {
       "today": "Today",
       "last_7_days": "Last 7 Days",

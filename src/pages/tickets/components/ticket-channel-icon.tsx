@@ -22,7 +22,11 @@ const TicketChannelIcon = ({channel}: TicketChannelIconProps) => {
             type = Icon.ChannelWeb;
             break;
         case ChannelTypes.UserCreated:
+        case ChannelTypes.SMS:
             type = Icon.ChannelSms
+            break;
+        case ChannelTypes.Email:
+            type = Icon.ChannelEmail
             break;
         default:
             type = Icon.ChannelChat;

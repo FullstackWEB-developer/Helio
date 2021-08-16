@@ -256,7 +256,9 @@ const TicketFilter = ({isOpen}: {isOpen: boolean}) => {
 
     const convertReasonsToOptions = (): TicketOptionsBase[] => {
         if (reasons && reasons.length > 0) {
-            return reasons.map(reason => {
+            return [...reasons]
+                .sort((a, b) => a.label.localeCompare(b.label))
+                .map(reason => {
                 return {
                     key: reason.value,
                     value: reason.label

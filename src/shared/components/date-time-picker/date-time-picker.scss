@@ -12,6 +12,9 @@
     &[type="date"]::-webkit-clear-button {
       display: none;
     }
+    &[type="date"] {
+      clip-path: inset(0 17px 0 0);
+    }
 
     &[value=""]::-webkit-datetime-edit {
       color: transparent;

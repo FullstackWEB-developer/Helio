@@ -113,9 +113,9 @@ const CompanyContactDetails = ({editMode, contact, initiateACall, addNewContactH
                             {
                                 contact?.associatedContacts && contact.associatedContacts.length > 0 && <AssociatedContacts contacts={contact.associatedContacts} />
                             }
-                            <div className='flex items-center cursor-pointer body2 pt-5' onClick={() => addNewContactHandler()}>
+                            <div className='flex items-center body2 pt-5'>
                                 <span className='pr-4'><SvgIcon type={Icon.AddContact} fillClass='contact-light-fill' /></span>
-                                <span className='contact-accent-color'>
+                                <span className='contact-accent-color cursor-pointer'  onClick={() => addNewContactHandler()}>
                                     {t('contacts.contact_details.company.add_contact')}
                                 </span>
                             </div>

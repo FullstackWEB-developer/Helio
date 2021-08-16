@@ -14,7 +14,7 @@ import utils from '@shared/utils/utils';
 import SpinnerOverlay from '@components/spinner-overlay/spinner-overlay';
 import ModalOverlay from '@components/modal-overlay/modal-overlay';
 import {useSelector} from 'react-redux';
-import {selectGlobalLoading} from '@shared/store/app/app.selectors';
+import {selectGlobalLoading, selectIsNavigationChanging} from '@shared/store/app/app.selectors';
 import {selectModalOverlayActive} from '@shared/store/app/app.selectors';
 
 interface LayoutProps {
@@ -24,6 +24,7 @@ interface LayoutProps {
 const Layout = (props: LayoutProps) => {
     const headsetIconRef = useRef<HTMLDivElement>(null);
     const history = useHistory();
+    const isNavigationChanging = useSelector(selectIsNavigationChanging);
     useEffect(() => {
         if (!utils.isLoggedIn()) {
             history.push(`/login`);
@@ -51,7 +52,7 @@ const Layout = (props: LayoutProps) => {
                                             <div className='flex-auto'>
                                                 <main className='flex flex-col h-full w-full'>
                                                     <div className='flex flex-auto h-full'>
-                                                        {props.children}
+                                                        {!isNavigationChanging && props.children}
                                                     </div>
                                                 </main>
                                             </div>
