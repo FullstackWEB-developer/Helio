@@ -76,14 +76,18 @@ const LabResultSendAMessage = ({labResult}: {labResult?: LabResultDetail}) => {
     });
 
     const onSubmit = (data: any) => {
+        const newLine = "\r\n";
         let internalNote = '';
         if (labResult && labResult.createdDateTime && labResult.description && utils.checkIfDateIsntMinValue(labResult.createdDateTime)) {
-            internalNote = `"** Lab Result \r\n`;
-            internalNote += `${utils.formatDateShortMonth(labResult.createdDateTime.toString())}: ${labResult.description} \r\n`;
-            internalNote += `\r\n`;
+            internalNote = '** Lab Result';
+            internalNote += newLine;
+            internalNote += `${utils.formatDateShortMonth(labResult.createdDateTime.toString())}: ${labResult.description}`;
+            internalNote += newLine;
+            internalNote += newLine;
         }
-        internalNote += `** Patient Note \r\n`;
-        internalNote += `${message}"`;
+        internalNote += `** Patient Note`;
+        internalNote += newLine;
+        internalNote += `${message}`;
 
         mutate({
             patientId: verifiedPatient.patientId,

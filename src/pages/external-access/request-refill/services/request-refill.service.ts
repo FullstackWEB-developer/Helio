@@ -66,13 +66,16 @@ export const searchPharmacies = async (patientId: number, departmentId: number, 
 
 export const createPatientCase = async ({patientId, patientCaseExternal}: PatientCaseCreateProps) => {
     let url = `${patientsBaseUrl}/${patientId}/cases`;
-    url += `?departmentId=${patientCaseExternal.departmentId}`;
-    url += `&providerId=${patientCaseExternal.providerId}`;
-    url += `&internalNote=${patientCaseExternal.internalNote}`;
-    url += `&ignoreNotification=${patientCaseExternal.ignoreNotification}`;
-    url += `&documentSubClass=${patientCaseExternal.documentSubClass}`;
-    url += `&documentSource=${patientCaseExternal.documentSource}`;
 
-    const {data} = await Api.post(url);
+    const params = {
+        'departmentId': patientCaseExternal.departmentId,
+        'providerId':  parseInt(patientCaseExternal.providerId.toString()),
+        'internalNote': patientCaseExternal.internalNote,
+        'ignoreNotification': patientCaseExternal.ignoreNotification,
+        'documentSubClass': patientCaseExternal.documentSubClass,
+        'documentSource': patientCaseExternal.documentSource
+    };
+
+    const {data} = await Api.post(url, params);
     return data;
 }
