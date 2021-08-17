@@ -31,7 +31,7 @@ const Confirmation = ({title, onOk, onCancel, onClose, message = '', okButtonLab
     }
 
     return <div className='flex items-center justify-center justify-self-center m-auto'>
-        <Modal top={96} isOpen={isOpen} title={t(title)} onClose={() => close()} isClosable={true} closeableOnEscapeKeyPress={closeableOnEscapeKeyPress}>
+        <Modal isOpen={isOpen} title={t(title)} onClose={() => close()} isClosable={true} closeableOnEscapeKeyPress={closeableOnEscapeKeyPress}>
             <div className='w-full h-32 h-full py-4'>
                 {message && <div className='pb-6'>{t(message)}</div>}
                 <div className='flex items-end justify-end w-full'>

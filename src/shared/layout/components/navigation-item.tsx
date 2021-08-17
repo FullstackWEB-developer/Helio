@@ -35,7 +35,7 @@ const NavigationItem = ({title, link, icon, isSelected}: NavigationItemProps) =>
         {<div className={'w-1.5 ' + (isSelected ? 'bg-green-400' : '')}/>}
         <div onClick={() => navigate()} className={(isSelected ? 'subtitle2' : 'body2-medium')}>
             <div
-                className={'items-center flex h-14  navigation-item-active ' + (isNavigationExpanded ? 'w-62' : 'w-20')}>
+                className={'items-center flex h-14  navigation-item-active cursor-pointer ' + (isNavigationExpanded ? 'w-62' : 'w-20')}>
                 <div>{icon}</div>
                 {isNavigationExpanded &&
                 <div className='pl-4 w-full flex flex-row items-center justify-between'>

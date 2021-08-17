@@ -44,13 +44,13 @@ const TicketDetailHeader = ({ticket, patient, contact}: TicketDetailHeaderProps)
     }
 
     return <div className='pt-2 flex flex-col'>
-        <div className='pl-6 h-16 flex flex-row items-center'>
+        <div className='pl-6 ticket-detail-header-wrapper flex flex-row items-center'>
             <div>
                 <TicketChannelIcon channel={ticket.channel}/>
             </div>
             <h5 className='pl-3'><span className='ticket-detail-header-id'>{t('ticket_detail.header.id')}</span></h5>
             <h5 className='pl-2'>{ticket.ticketNumber}</h5>
-            <h5 className='pl-4 max-w-5xl truncate'>{ticket.subject}</h5>
+            <h5 className='px-4'>{ticket.subject}</h5>
         </div>
         <TicketDetailHeaderLine2 ticket={ticket} patientOrContactName={patientOrContactName}/>
         <div className='pt-6'>

@@ -3,7 +3,6 @@ import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc'
 import {useDispatch, useSelector} from 'react-redux';
 import {useParams} from 'react-router';
-import {useTranslation} from 'react-i18next';
 import withErrorLogging from '@shared/HOC/with-error-logging';
 import TicketDetailHeader from './components/ticket-detail/ticket-detail-header';
 import TicketInfoPanel from './components/ticket-detail/ticket-detail-info-panel';
@@ -92,9 +91,9 @@ const TicketDetail = () => {
                     <TicketDetailHeader ticket={ticket} contact={contact} patient={patient}/>
                     <div className='flex items-center justify-center justify-self-center' data-test-id='chat-transcript-modal'>
                         <Modal isOpen={displayChatTranscript}
-                               top={10}
                                title='ticket_detail.chat_transcript.title'
                                isClosable={true}
+                               isDraggable={true}
                                onClose={() => (dispatch(toggleChatTranscriptWindowVisible()))}>
                             <ChatTranscript ticket={ticket} patient={patient} />
                         </Modal>

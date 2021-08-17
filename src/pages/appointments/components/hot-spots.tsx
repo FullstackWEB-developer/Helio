@@ -57,7 +57,7 @@ const HotSpots = () => {
 
     return (
         <div className='flex items-center justify-center justify-self-center' data-test-id='hot-spot-modal-parent'>
-            <Modal isOpen={true} title={t('appointment.hot_spots.title')} onClose={() => dispatch(toggleHotspots())}
+            <Modal isDraggable={true} isOpen={true} title={t('appointment.hot_spots.title')} onClose={() => dispatch(toggleHotspots())}
                    isClosable={true}>
                 <div className='w-full mb-10'>
                     <div data-test-id='hot-spot-modal-content'>{getContent()}</div>
