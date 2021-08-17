@@ -58,7 +58,7 @@ const TicketNew = () => {
     dayjs.extend(utc);
 
     const {handleSubmit, control, errors, setError, clearErrors, formState, setValue, watch} = useForm({mode: 'all'});
-    const {isValid, errors: stateError, isDirty} = formState;
+    const {isValid, errors: stateError, isDirty, isSubmitted} = formState;
     const {t} = useTranslation();
     const history = useHistory();
     const dispatch = useDispatch();
@@ -645,7 +645,7 @@ const TicketNew = () => {
                           okButtonLabel={t('common.yes')} isOpen={closingPromptOpen}
                           onOk={onCloseConfirm} onCancel={() => setClosingPromptOpen(false)} onClose={() => setClosingPromptOpen(false)} closeableOnEscapeKeyPress={true} />
             <Prompt
-                when={isDirty && !closingPromptOpen}
+                when={isDirty && !closingPromptOpen && !isSubmitted}
                 message={t('common.confirm_close')}
             />
         </div>
