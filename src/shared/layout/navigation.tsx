@@ -22,42 +22,47 @@ const Navigation = () => {
             title: t('navigation.dashboard'),
             link: '/dashboard',
             id: 'navigation-dashboard',
-            icon: <SvgIcon type={Icon.Dashboard} fillClass='active-item-icon'/>
+            icon: <SvgIcon type={Icon.Dashboard} fillClass='active-item-icon' />
         }, {
             title: t('navigation.tickets'),
             link: TicketsPath,
             id: 'navigation-tickets',
-            icon: <SvgIcon type={Icon.Tickets} fillClass='active-item-icon'/>
+            icon: <SvgIcon type={Icon.Tickets} fillClass='active-item-icon' />
         }, {
             title: t('navigation.contacts'),
             link: '/contacts',
             id: 'navigation-contacts',
-            icon: <SvgIcon type={Icon.Contacts} fillClass='active-item-icon'/>
+            icon: <SvgIcon type={Icon.Contacts} fillClass='active-item-icon' />
         }, {
             title: t('navigation.calls'),
             link: '/calls',
             id: 'navigation-calls',
-            icon: <SvgIcon type={Icon.Phone} fillClass='active-item-icon'/>
+            icon: <SvgIcon type={Icon.Phone} fillClass='active-item-icon' />
         }, {
             title: t('navigation.chat'),
             link: '/chat',
             id: 'navigation-chat',
-            icon: <SvgIcon type={Icon.Chat} fillClass='active-item-icon'/>
+            icon: <SvgIcon type={Icon.Chat} fillClass='active-item-icon' />
         }, {
             title: t('navigation.sms'),
             link: '/sms',
             id: 'navigation-sms',
-            icon: <SvgIcon type={Icon.Sms} fillClass='active-item-icon'/>
+            icon: <SvgIcon type={Icon.Sms} fillClass='active-item-icon' />
         }, {
             title: t('navigation.email'),
             link: '/email',
             id: 'navigation-email',
-            icon: <SvgIcon type={Icon.Email} fillClass='active-item-icon'/>
+            icon: <SvgIcon type={Icon.Email} fillClass='active-item-icon' />
         }, {
             title: t('navigation.users'),
             link: UsersPath,
             id: 'navigation-users',
             icon: <SvgIcon type={Icon.Users} fillClass='active-item-icon' />
+        }, {
+            title: t('navigation.users_bulk'),
+            link: `${UsersPath}/bulk`,
+            id: 'navigation-users-bulk',
+            icon: <SvgIcon type={Icon.BulkUsers} fillClass='active-item-icon' />
         }
     ];
 
@@ -65,20 +70,20 @@ const Navigation = () => {
         const isSelected = isActive(item.link);
         const icon = React.cloneElement(item.icon, {pathClass: (isSelected ? 'navigation-active-icon-color' : 'navigation-inactive-icon-color')})
         return <div key={index}
-                    className={`hover:bg-secondary-50 border-r ${isSelected ? ' bg-secondary-50 ' : ''}`}>
-            <NavigationItem isSelected={isSelected} key={index} icon={icon} link={item.link} title={item.title}/>
+            className={`hover:bg-secondary-50 border-r ${isSelected ? ' bg-secondary-50 ' : ''}`}>
+            <NavigationItem isSelected={isSelected} key={index} icon={icon} link={item.link} title={item.title} />
         </div>
     });
 
     return (
         <nav className='h-full flex flex-col'>
             <div className='h-16 pl-7 flex items-center border-r'>
-                <SvgIcon type={Icon.Menu} className='cursor-pointer' fillClass='active-item-icon' onClick={() => dispatch(toggleNavigation())}/>
+                <SvgIcon type={Icon.Menu} className='cursor-pointer' fillClass='active-item-icon' onClick={() => dispatch(toggleNavigation())} />
             </div>
             <div className='border-t'>
                 {items}
             </div>
-            <div className='border-r flex-grow'/>
+            <div className='border-r flex-grow' />
         </nav>
     );
 }

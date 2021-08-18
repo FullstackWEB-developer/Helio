@@ -43,6 +43,7 @@ const Sms = React.lazy(() => import('@pages/sms'));
 const UserDetails = React.lazy(() => import('@pages/users/details'));
 const UserAdd = React.lazy(() => import('@pages/users/add/user-add'));
 const UserList = React.lazy(() => import('@pages/users/list/user-list'));
+const BulkAddUser = React.lazy(() => import('@pages/users/bulk-add/bulk-add'));
 
 function App() {
     let logger = Logger.getInstance();
@@ -136,6 +137,7 @@ function App() {
                             <GuardedRoute exact path={`${UsersPath}`} component={withSuspense(UserList)} />
                             <GuardedRoute exact path={`${UsersPath}/new`} component={withSuspense(UserAdd)} />
                             <GuardedRoute exact path={`${UserDetailsPath}/:userId`} component={withSuspense(UserDetails)} />
+                            <GuardedRoute exact path={`${UsersPath}/bulk`} component={withSuspense(BulkAddUser)} />
                         </Layout>
                     </SignalRProvider>
                 </Switch>

@@ -1,0 +1,8 @@
+.stepper {
+    border-radius: 0.125rem;
+    background-color: var(--light-divider-7);
+    & > .step {
+        background-color: var(--color-primary-500);
+        border-radius: inherit;
+    }
+}

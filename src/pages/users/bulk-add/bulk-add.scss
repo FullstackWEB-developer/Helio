@@ -1,0 +1,49 @@
+.bulk-user {
+    &-grid{
+        display: grid;        
+        column-gap: 2rem;      
+        align-items: center;
+
+        &.head-row{
+            background-color: var(--color-secondary-100);
+            text-transform: uppercase
+        }
+
+        &.data-row{
+            border-bottom: 1px solid var(--light-divider-7);
+        }
+
+        &.col-template{
+            &-step-1 {
+                grid-template-columns: 2% 35% 31% 21%;
+            }
+
+            &-step-2 {
+                grid-template-columns: 30% 15% 15% 30%;
+            }
+
+            &-step-3 {
+                grid-template-columns: 30% 15% 15% 30%;
+            }
+
+            &-step-4 {
+                grid-template-columns: 21% 15% 15% 15% 21%;
+            }
+        }     
+        
+        &-role-value {
+            min-width: 4.5rem;
+        }
+        &-ehr-value {
+            min-width: 10.25rem;
+        }
+    }
+}
+
+.group-role-description {
+    color: var(--light-text-medium-emphasis);
+}
+
+.bulk-review-labels {
+    color: var(--light-text-medium-emphasis);
+}

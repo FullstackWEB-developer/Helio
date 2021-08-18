@@ -81,5 +81,6 @@ export enum Icon {
     Templates = "Templates",
     ErrorFilled = "ErrorFilled",
     AwsConnect = "AwsConnect",
-    Users = "Users"
+    Users = "Users",
+    BulkUsers = "BulkUsers"
 }

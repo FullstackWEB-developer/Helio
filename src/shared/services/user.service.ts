@@ -16,7 +16,7 @@ import {queryWithState} from '@shared/services/query-with-state.util';
 import store from '../../app/store';
 import Api from './api';
 import {TicketEnumValue} from '@pages/tickets/models/ticket-enum-value.model';
-import {setInvitationStatusList, setUserDepartments, setUserJobTitles, setUserStatusList} from '@pages/users/store/users.slice';
+import {setExternalUserJobTitles, setInvitationStatusList, setUserDepartments, setUserExternalDepartments, setUserJobTitles, setUserStatusList} from '@pages/users/store/users.slice';
 import {UserQueryFilter} from '@pages/users/models/user-filter-query.model';
 import utils from '@shared/utils/utils';
 
@@ -169,3 +169,37 @@ export const getUserJobTitleListWithState = queryWithState(
 export const resendInvite = async (inviteUsersBody: InviteUserRequest) => {
     await Api.post(`${userBaseUrl}/invite`, inviteUsersBody);
 }
+
+export const getExternalUsersList = async (queryParams: UserQueryFilter, page = 1, pageSize = 10) => {
+    const serializedQueryParams = utils.serialize(queryParams);
+    const {data} = await Api.get(`${userBaseUrl}/external-users?page=${page}&pageSize=${pageSize}${serializedQueryParams ? `&${serializedQueryParams}` : ''}`);
+    return data;
+}
+
+export const getExternalDepartmentList = async () => {
+    const {data} = await Api.get(`${userBaseUrl}/external-departments`);
+    return data;
+}
+
+export const getExternalDepartmentListWithState = queryWithState(
+    () => getExternalDepartmentList(),
+    (payload) => setUserExternalDepartments(payload),
+    () => {
+        const externalDepartments = store.getState().usersState.externalDepartments;
+        return !externalDepartments || externalDepartments.length < 1;
+    }
+)
+
+export const getExternalJobTitleList = async () => {
+    const {data} = await Api.get(`${userBaseUrl}/external-job-titles`);
+    return data;
+}
+
+export const getExternalJobTitleListWithState = queryWithState(
+    () => getExternalJobTitleList(),
+    (payload) => setExternalUserJobTitles(payload),
+    () => {
+        const externalJobTitles = store.getState().usersState.externalJobTitles;
+        return !externalJobTitles || externalJobTitles.length < 1;
+    }
+)

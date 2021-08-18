@@ -46,7 +46,8 @@
     "activate": "Activate",
     "deactivate": "Deactivate",
     "change": "Change",
-    "add": "Add"
+    "add": "Add",
+    "step_x_of_x": "Step {{current}} of {{total}}"
   },
   "login": {
     "title": "Run your medical office efficiently.",
@@ -71,7 +72,8 @@
     "sms": "Sms",
     "calls": "Calls",
     "chat": "Chat",
-    "users": "Users"
+    "users": "Users",
+    "users_bulk": "Add Users In Bulk"
   },
   "footer": {
     "hotspots": "Hotspots",
@@ -1089,6 +1091,39 @@
       "role": "Role",
       "invitation_sent_success": "Invitations have been sent successfully.",
       "invitation_sent_error": "The sending of the invitation has failed."
+    },
+    "bulk_section": {
+      "step_x": "Step {{step}}: ",
+      "step_1_title": "Select Users",
+      "step_1_description": "Select users from your organization that you would like to add to Helio.",
+      "step_2_title": "Apply Role",
+      "step_2_description": "Select how you would like to apply role to your selected users. You can select and apply role to all users you are adding or apply roles to records individually.",
+      "step_3_title": "Provider EHR/EMR Mapping (Optional)",
+      "step_3_description": "Please ",
+      "step_3_description_bold": "match all providers ",
+      "step_3_continuation": "in your list with providers in the EHR/EMR system. We will use this to show the right information about provider to the patients. You can skip this step and map providers later individually on user Details screens.",
+      "step_4_title": "Review and Confirm",
+      "step_4_description": "Please confirm information and add users.",
+      "name": "Name",
+      "department": "Department",
+      "job_title": "Job Title",
+      "role": "Role",
+      "rows_per_page": "Rows per page",
+      "x_users_selected_singular": "User selected",
+      "x_users_selected_plural": "{{count}} users selected",
+      "deselect_all": "Unselect all",
+      "pick_a_role": "Select role",
+      "all_users_role": "Apply role below to all selected users",
+      "invidual_user_role": "Apply role to users individually",
+      "group_role_description": "You can use this option to apply role quickly in bulk. You can later modify user roles on Manage Users screen.",
+      "no_filter_results": "No users you've selected match filtering criteria. Refine your filters.",
+      "ehr_mapping": "EHR/EMR Mapping",
+      "undefined_mapping": "Undefined",
+      "users": "Users:",
+      "department_selected": "Departments Selected:",
+      "roles_applied": "Roles applied to all users:",
+      "add_users":"Add Users",
+      "personalized_message": "Personalize Invitation Message"
     },
     "role": "User Role",
     "role_manager": "Manager",

@@ -57,3 +57,14 @@ export enum UserInvitationStatus {
     Sent,
     Accepted
 }
+
+export interface ExternalUser {
+    azureId: string;
+    displayName?: string;
+    givenName?: string;
+    mail?: string;
+    surname?: string;
+    mobilePhone?: string;
+    jobTitle?: string;
+    department?: string;
+}

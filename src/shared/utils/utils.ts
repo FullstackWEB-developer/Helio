@@ -5,6 +5,7 @@ import {InfiniteData} from 'react-query';
 import {RelativeTime} from './types';
 import {msalInstance} from '@pages/login/auth-config';
 import {Option} from '@components/option/option';
+import {TicketOptionsBase} from '@pages/tickets/models/ticket-options-base.model';
 
 const getWindowCenter = () => {
     const {width, height} = getWindowDimensions();
@@ -258,6 +259,19 @@ const serialize = (obj: any) => {
     return str.join("&");
 }
 
+const convertStringArrayToOptions = (array: string[]): TicketOptionsBase[] => {
+    if (array && array.length > 0) {
+        return array.map((dept, index) => {
+            return {
+                key: String(index + 1),
+                value: dept
+            }
+        })
+    }
+
+    return [];
+}
+
 const utils = {
     getWindowCenter,
     formatUtcDate,
@@ -282,7 +296,8 @@ const utils = {
     accumulateInfiniteData,
     parseOptions,
     openWebSite,
-    serialize
+    serialize,
+    convertStringArrayToOptions
 };
 
 export default utils;

@@ -10,8 +10,8 @@ const UserListNoResults = () => {
     const {t} = useTranslation();
     const history = useHistory();
     const dispatch = useDispatch();
-    const redirectToAdd = () => {
-        history.push(`${UsersPath}/new`);
+    const redirectToAdd = (toBulk = false) => {
+        history.push(toBulk ? `${UsersPath}/bulk` : `${UsersPath}/new`);
     }
 
     useEffect(() => {
@@ -22,8 +22,8 @@ const UserListNoResults = () => {
         <div className='pt-10 px-6 flex flex-col'>
             <span className='mb-4 h-11'>{t('users.list_section.no_results')}</span>
             <div className="flex">
-                <Button label={'users.list_section.add_users'} className='mr-6' onClick={redirectToAdd} />
-                <Button label={'users.list_section.add_users_bulk'} className='mr-6' onClick={redirectToAdd} />
+                <Button label={'users.list_section.add_users'} className='mr-6' onClick={() => redirectToAdd()} />
+                <Button label={'users.list_section.add_users_bulk'} className='mr-6' onClick={() => redirectToAdd(true)} />
                 <Button label={'users.list_section.reset_results'} onClick={() => dispatch(setUserFilters({filters: undefined, resetPagination: true}))} />
             </div>
         </div>

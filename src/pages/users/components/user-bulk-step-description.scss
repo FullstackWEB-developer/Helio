@@ -1,0 +1,7 @@
+.bulk-description {
+  h6 {
+    & > .emphasized {
+        color: var(--color-primary-800);
+    }
+  }    
+}

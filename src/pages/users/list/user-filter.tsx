@@ -20,12 +20,13 @@ import {selectRoleList} from "@shared/store/lookups/lookups.selectors";
 import {UserQueryFilter} from '../models/user-filter-query.model';
 import {setUserFilters} from "../store/users.slice";
 import {UserInvitationStatus} from "@shared/models";
+import utils from "@shared/utils/utils";
 
 const UserFilter = ({isOpen}: {isOpen: boolean}) => {
 
     const {t} = useTranslation();
     const getClassNames = () => classNames({
-        'w-64 transition-width transition-slowest ease top-0 bg-secondary-100 overflow-y-auto relative': isOpen,
+        'w-72 transition-width transition-slowest ease top-0 bg-secondary-100 overflow-y-auto relative': isOpen,
         'hidden': !isOpen
     });
     const dispatch = useDispatch();
@@ -50,19 +51,6 @@ const UserFilter = ({isOpen}: {isOpen: boolean}) => {
                 }
             })
         }
-        return [];
-    }
-
-    const convertStringArrayToOptions = (array: string[]): TicketOptionsBase[] => {
-        if (array && array.length > 0) {
-            return array.map((dept, index) => {
-                return {
-                    key: String(index + 1),
-                    value: dept
-                }
-            })
-        }
-
         return [];
     }
 
@@ -127,9 +115,9 @@ const UserFilter = ({isOpen}: {isOpen: boolean}) => {
         return [];
     }
 
-    const jobTitleOptions = convertStringArrayToOptions(jobTitles);
-    const departmentOptions = convertStringArrayToOptions(departments);
-    const roleOptions = convertStringArrayToOptions(userRoleList.map(r => r.name));
+    const jobTitleOptions = utils.convertStringArrayToOptions(jobTitles);
+    const departmentOptions = utils.convertStringArrayToOptions(departments);
+    const roleOptions = utils.convertStringArrayToOptions(userRoleList.map(r => r.name));
     const userStatusOptions: TicketEnumValue[] = userStatusList?.map(s => ({key: s.key, value: t(`users.list_section.status_${s.key === 1 ? 'enabled' : 'disabled'}`)}));
     const displayInvitationStatus = (invitationStatus: UserInvitationStatus): string => {
         switch (invitationStatus) {
