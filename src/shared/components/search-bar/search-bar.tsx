@@ -8,7 +8,7 @@ import {
     clearRecentPatients,
     setType,
     setSearchTerm,
-    setSearchTermDisplayValue
+    setSearchTermDisplayValue, resetFilteredTypes
 } from './store/search-bar.slice';
 import {useDispatch, useSelector} from 'react-redux';
 import {useTranslation} from 'react-i18next';
@@ -39,8 +39,8 @@ const SearchBar = () => {
 
     const textChange = (value: string) => {
         displayDropdown(true);
-        dispatch(setSearchTermDisplayValue(value));
-        dispatch(changeFilteredTypes(value));
+        dispatch(setSearchTermDisplayValue(value.trim()));
+        dispatch(changeFilteredTypes(value.trim()));
     }
 
     const handleKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -77,6 +77,7 @@ const SearchBar = () => {
     const searchPatientHandler = (type?: number) => {
         const chosenType = commonSearchHandler(type);
         if (searchTermDisplayValue.trim() !== '') {
+            dispatch(resetFilteredTypes());
             if (chosenType === searchTypePatient.patientId) {
                 dispatch(setSearchTermDisplayValue(''));
                 history.push('/patients/' + searchTermDisplayValue.trim());
@@ -90,6 +91,7 @@ const SearchBar = () => {
     const searchContactHandler = (type?: number) => {
         commonSearchHandler(type);
         if (searchTermDisplayValue.trim() !== '') {
+            dispatch(resetFilteredTypes());
             history.push('/contacts/results');
         }
     }
@@ -98,6 +100,7 @@ const SearchBar = () => {
         const chosenType = type || selectedType;
         dispatch(setType(chosenType));
         dispatch(setSearchTerm(searchTermDisplayValue));
+        dispatch(resetFilteredTypes());
         displayDropdown(false);
         return chosenType;
     }
@@ -109,14 +112,18 @@ const SearchBar = () => {
             if (searchForTicketId) {
                 dispatch(setSearchTermDisplayValue(''));
             }
+            dispatch(resetFilteredTypes());
             history.push(`/tickets/${searchForTicketId ? searchTermDisplayValue.trim() : 'results'}`);
         }
     }
 
     const selectRecent = (recentPatient: RecentPatient) => {
         displayDropdown(false);
+        dispatch(resetFilteredTypes());
         history.push('/patients/' + recentPatient.patientId);
     }
+
+
     const clearRecent = () => {
         displayDropdown(false);
         dispatch(clearRecentPatients());
@@ -210,7 +217,6 @@ const SearchBar = () => {
                     {label: t('search.search_type.patient_id'), value: 'item-1-1'},
                     {label: t('search.search_type.patient_name'), value: 'item-1-2'},
                     {label: t('search.search_type.dob'), value: 'item-1-3'},
-                    {label: t('search.search_type.ssn'), value: 'item-1-4'},
                     {label: t('search.search_type.phone'), value: 'item-1-5'}
                 ]
             },

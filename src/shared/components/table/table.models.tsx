@@ -10,6 +10,8 @@ export interface TableModel {
     headerClassName?: string,
     wrapperClassName?: string;
     rowClass?:string;
+    emptyMessage?: string;
+    showEmptyMessage?: boolean;
 }
 
 export interface TableColumnModel {

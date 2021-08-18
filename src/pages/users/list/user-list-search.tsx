@@ -6,7 +6,6 @@ import {keyboardKeys} from '@components/search-bar/constants/keyboard-keys';
 import SearchInputField from '@components/search-input-field/search-input-field';
 import SvgIcon, {Icon} from '@components/svg-icon';
 import {UserDetailStatus} from '@shared/models';
-import {setModalOverlayActive} from '@shared/store/app/app.slice';
 import React, {useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {useDispatch, useSelector} from 'react-redux';
@@ -41,7 +40,6 @@ const UserListSearch = ({handleAllCheck, allChecked, displayActions,
 
     const onDisableCancel = () => {
         setDisableConfirmationOpen(false);
-        dispatch(setModalOverlayActive(false));
     }
 
     const onDisableConfirm = () => {
@@ -58,7 +56,7 @@ const UserListSearch = ({handleAllCheck, allChecked, displayActions,
             }
             {
                 displayDisableAction && <Button label={'users.list_section.disable'}
-                    buttonType='secondary' onClick={() => {setDisableConfirmationOpen(true); dispatch(setModalOverlayActive(true));}} />
+                    buttonType='secondary' onClick={() => {setDisableConfirmationOpen(true); }} />
             }
             {
                 displayEnableAction && <Button label={'users.list_section.enable'} buttonType='secondary'
@@ -99,6 +97,7 @@ const UserListSearch = ({handleAllCheck, allChecked, displayActions,
             }
             <div className='absolute w-1/3 left-1/3 top-0'>
                 <Confirmation title={t('users.list_section.disable_modal_title')}
+                    hasOverlay={true}
                     message={t('users.list_section.disable_modal_description')}
                     okButtonLabel={t('users.list_section.disable')} isOpen={disableConfirmationOpen}
                     onOk={onDisableConfirm} onCancel={onDisableCancel} onClose={onDisableCancel} />

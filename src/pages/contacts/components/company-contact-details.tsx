@@ -8,7 +8,6 @@ import SvgIcon from '@components/svg-icon/svg-icon';
 import {ContactType} from '@shared/models/contact-type.enum';
 import ContactForm from './contact-form';
 import utils from '@shared/utils/utils';
-import {getCategoryName} from '@shared/models/contact-category.enum';
 import {AddressType, determineAddressTranslation} from '@shared/models/address.model';
 import {mapContactFormModelToDto} from '../contact-helpers/helpers';
 import {useMutation} from 'react-query';
@@ -16,6 +15,8 @@ import {updateContact} from '@shared/services/contacts.service';
 import '../contacts.scss';
 import {useSelector} from 'react-redux';
 import {selectVoiceCounter} from '@pages/ccp/store/ccp.selectors';
+import {selectLookupValues} from '@pages/tickets/store/tickets.selectors';
+import {Option} from '@components/option/option';
 
 interface CompanyContactDetailsProps {
     contact: ContactExtended,
@@ -28,6 +29,7 @@ interface CompanyContactDetailsProps {
 }
 const CompanyContactDetails = ({editMode, contact, initiateACall, addNewContactHandler, closeEditMode, onUpdateSuccess, onUpdateError}: CompanyContactDetailsProps) => {
     const {t} = useTranslation();
+    const facilityTypes = useSelector(state => selectLookupValues(state, 'ContactCategory'));
     const voiceCounter = useSelector(selectVoiceCounter);
     const displayValue = (value: string | undefined, isPhone = false) => {
         return value ? isPhone ? utils.formatPhone(value) : value : t('common.not_available');
@@ -62,6 +64,14 @@ const CompanyContactDetails = ({editMode, contact, initiateACall, addNewContactH
     const getIconFillClass = (value?: string) => {
         return !!value ? 'success-icon' : '';
     }
+
+    const getCategoryName = (category: number | Option) => {
+        const calculated = category && category.hasOwnProperty('value') ? (category as Option).value : category?.toString();
+        if (!calculated) {
+            return '';
+        }
+        return facilityTypes.filter(a => a.value == calculated).length > 0 ? facilityTypes.filter(a => a.value == calculated)[0].label : '';
+    };
 
     return (
         <>

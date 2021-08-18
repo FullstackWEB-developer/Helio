@@ -12,7 +12,7 @@ import utils from '@shared/utils/utils';
 import {ContactTicketsRequest} from '@pages/tickets/models/patient-tickets-request';
 import {DefaultPagination, Paging} from '@shared/models/paging.model';
 import {useQuery} from 'react-query';
-import {OneMinute, QueryContactTickets} from '@constants/react-query-constants';
+import {QueryContactTickets} from '@constants/react-query-constants';
 import {getContactTickets} from '@pages/tickets/services/tickets.service';
 import utc from 'dayjs/plugin/utc';
 import TicketListHeaderCell, {
@@ -104,7 +104,7 @@ const ContactTickets = ({contactId}: ContactTicketsProps) => {
             <div className='w-2/12'>
                 {ticket.ticketNumber}
             </div>
-            <div className='w-3/12 subtitle2'>
+            <div className='w-3/12 subtitle2 max-w-xs truncate'>
                 <span>{ticket.subject ? ticket.subject : '-'}</span>
             </div>
             <div className='w-3/12 body3'>

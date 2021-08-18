@@ -1,16 +1,16 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {useTranslation} from 'react-i18next';
 import withErrorLogging from '../../../../shared/HOC/with-error-logging';
 import {Contact} from '@shared/models/contact.model';
 import {ContactType} from '@pages/contacts/models/ContactType';
-import {Option} from '@components/option/option';
 import {memoize} from 'react-dnd-html5-backend/lib/utils/js_utils';
-import {createCategorySelectOptions} from '@shared/models/contact-category.enum';
 import {Icon} from '@components/svg-icon/icon';
 import utils from '@shared/utils/utils';
 import Input from '@components/input/input';
 import {useHistory} from 'react-router';
 import {ContactsPath} from '@app/paths';
+import {useSelector} from 'react-redux';
+import {selectLookupValuesAsOptions} from '@pages/tickets/store/tickets.selectors';
 
 interface TicketDetailContactInfoProps {
     contact: Contact
@@ -18,7 +18,7 @@ interface TicketDetailContactInfoProps {
 
 const TicketDetailContactInfo = ({contact}: TicketDetailContactInfoProps) => {
     const {t} = useTranslation();
-    const [facilityTypes] = useState<Option[]>(createCategorySelectOptions());
+    const facilityTypes = useSelector(state => selectLookupValuesAsOptions(state, 'ContactCategory'))
     const history = useHistory();
     const getAddress = memoize(() => {
         if (!contact.addresses || contact.addresses.length === 0) {

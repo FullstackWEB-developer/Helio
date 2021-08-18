@@ -61,7 +61,7 @@ const formatUtcDate = (date?: Date, format: string = 'ddd, MMM DD, YYYY h:mm A')
 }
 
 const formatDateShortMonth = (date: string) => {
-    return dayjs(date).format('MMM D, YYYY');
+    return dayjs(date).format('MMM DD, YYYY');
 }
 
 const getInitialsFromFullName = (username: string): string => {

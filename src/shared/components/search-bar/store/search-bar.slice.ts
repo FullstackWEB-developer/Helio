@@ -18,6 +18,9 @@ const searchBarSlice = createSlice({
                     .type
                 : 1
         },
+        resetFilteredTypes(state) {
+            state.searchTypeFiltered = searchTypes;
+        },
         setType(state, action) {
             state.selectedType = action.payload;
         },
@@ -60,7 +63,16 @@ const searchBarSlice = createSlice({
     }
 });
 
-export const {changeFilteredTypes, setType, changeTypeDown, changeTypeUp, addRecentPatient, clearRecentPatients, setError, 
-    setSearchTerm, setSearchTermDisplayValue} = searchBarSlice.actions
+export const {
+    changeFilteredTypes,
+    setType,
+    changeTypeDown,
+    changeTypeUp,
+    addRecentPatient,
+    clearRecentPatients,
+    setError,
+    setSearchTerm,
+    setSearchTermDisplayValue,
+    resetFilteredTypes} = searchBarSlice.actions
 
 export default searchBarSlice.reducer

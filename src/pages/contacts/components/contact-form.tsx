@@ -7,7 +7,6 @@ import {Option} from '@components/option/option';
 import ContactAddress from './contact-address';
 import {useForm} from 'react-hook-form';
 import ControlledInput from '@components/controllers/ControlledInput';
-import {createCategorySelectOptions} from '@shared/models/contact-category.enum';
 import {Address, AddressType} from '@shared/models/address.model';
 import {ContactFormModel} from '../models/contact-form.model';
 import {ContactBase, ContactExtended} from '@shared/models/contact.model';
@@ -19,6 +18,8 @@ import useDebounce from '@shared/hooks/useDebounce';
 import {DEBOUNCE_SEARCH_DELAY_MS} from '@constants/form-constants';
 import ControlledSelect from '@components/controllers/controlled-select';
 import Confirmation from '@components/confirmation/confirmation';
+import {useSelector} from 'react-redux';
+import {selectLookupValuesAsOptions} from '@pages/tickets/store/tickets.selectors';
 
 const SHIPPING_ADDRESS_LABEL_KEY = 'contacts.contact_details.individual.shipping_address'
 const BILLING_ADDRESS_LABEL_KEY = 'contacts.contact_details.individual.billing_address';
@@ -36,7 +37,7 @@ const ContactForm = ({contact, contactType, submitHandler, closeHandler, editMod
     const mask = '(999) 999-9999';
     const isCompanyContact = contactType === ContactType.Company;
     const shouldCompanyFieldBeAutosuggest = contactType !== ContactType.Company;
-
+    const categoryOptions = useSelector(state => selectLookupValuesAsOptions(state, 'ContactCategory'));
     const shippingAddressOption: Option = {
         label: `${t(SHIPPING_ADDRESS_LABEL_KEY)}`,
         value: `${t(SHIPPING_ADDRESS_LABEL_KEY)}`
@@ -84,7 +85,6 @@ const ContactForm = ({contact, contactType, submitHandler, closeHandler, editMod
     }
     const {handleSubmit, control, reset, formState, setValue} = useForm({mode: 'onChange'});
     const {isValid, isDirty} = formState;
-    const categoryOptions = createCategorySelectOptions();
     const defaultCategory = contact?.category ? categoryOptions?.find(c => Number(c.value) === contact.category) : '';
     const defaultPrimaryAddress: Address | undefined = (contact?.addresses?.some(a => a.addressType === AddressType.PrimaryAddress)) ?
         (contact.addresses.find(a => a.addressType === AddressType.PrimaryAddress)) : undefined;

@@ -1,7 +1,6 @@
 import {Address} from './address.model';
 import {ContactPerson} from './contact-person.model';
 import {ContactType} from '@pages/contacts/models/ContactType';
-import {ContactCategory} from '@shared/models/contact-category.enum';
 import {AssociatedContact} from './associated-contact.model';
 import {Option} from '@shared/components/option/option';
 export interface Contact {
@@ -18,7 +17,7 @@ export interface Contact {
     secondaryEmailAddress?: string;
     landLineNumber?: string;
     cellPhoneNumber?: string;
-    category: ContactCategory;
+    category: number;
     addresses?: Address[];
     contactPeople?: ContactPerson[];
     isCompany?: boolean

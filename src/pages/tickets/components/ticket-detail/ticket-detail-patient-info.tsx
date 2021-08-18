@@ -9,12 +9,11 @@ import {selectIsPatientError, selectPatientLoading} from '@pages/patients/store/
 import {Patient} from '@pages/patients/models/patient';
 import {Icon} from '@components/svg-icon/icon';
 import SvgIcon from '@components/svg-icon/svg-icon';
-
 import Spinner from '@components/spinner/Spinner';
 import {TicketUpdateModel} from '@pages/tickets/models/ticket-update.model';
 import {selectTicketUpdateModel} from '@pages/tickets/store/tickets.selectors';
 import {setTicketUpdateModel} from '@pages/tickets/store/tickets.slice';
-import useCtrlHistory from '@shared/hooks/useCtrlHistory';
+import { Link } from 'react-router-dom';
 
 interface TicketDetailPatientInfoProps {
     ticket: Ticket,
@@ -28,7 +27,6 @@ interface TicketDetailPatientInfoProps {
 const TicketDetailPatientInfo = ({ticket, patient, control, isPatientCaseNumberLoading,
     errorMessage, validatePatientCaseNumber}: TicketDetailPatientInfoProps) => {
     const {t} = useTranslation();
-    const useHistory = useCtrlHistory();
     const dispatch = useDispatch();
 
     const loading = useSelector(selectPatientLoading);
@@ -63,10 +61,11 @@ const TicketDetailPatientInfo = ({ticket, patient, control, isPatientCaseNumberL
                             </dt>
                             <dd className='body2 flex flex-row'>
                                 <span className='py-1'>{ticket?.patientId}</span>
+                                <Link to={'/patients/' + ticket.patientId}>
                                 <SvgIcon type={Icon.PatientChart}
                                     className='icon-medium h-8 w-8 pl-2 cursor-pointer'
-                                    fillClass='active-item-icon'
-                                    onClick={() => useHistory.push('/patients/' + ticket.patientId)} />
+                                    fillClass='active-item-icon'/>
+                                </Link>
                             </dd>
                         </div>
                     </dl>

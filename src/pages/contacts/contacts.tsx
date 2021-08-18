@@ -1,3 +1,4 @@
+
 import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import ContactCategory from './components/contact-category';
@@ -11,7 +12,6 @@ import AddNewContact from './components/add-new-contact';
 import {QueryContactsInfinite, QueryStates} from '@constants/react-query-constants';
 import {getContactById, queryContactsInfinite} from '@shared/services/contacts.service';
 import {QueryContactRequest} from '@shared/models/query-contact-request';
-import {ContactCategory as ContactCategoryEnum} from '@shared/models/contact-category.enum';
 import useDebounce from '@shared/hooks/useDebounce';
 import {useDispatch, useSelector} from 'react-redux';
 import {getStates} from '@shared/services/lookups.service';
@@ -25,12 +25,15 @@ import Spinner from '@components/spinner/Spinner';
 import {selectGlobalLoading} from '@shared/store/app/app.selectors';
 import './contacts.scss';
 import {ContactType} from './models/ContactType';
+import {getLookupValues} from '@pages/tickets/services/tickets.service';
+import {selectLookupValuesAsOptions} from '@pages/tickets/store/tickets.selectors';
 
 interface ContactProps { }
 const Contacts: React.FC<ContactProps> = () => {
     const {t} = useTranslation();
     const [selectedCategory, setSelectedCategory] = useState<string>(t('contacts.category.all_contacts'));
     const [selectedContact, setSelectedContact] = useState<ContactExtended>();
+    const facilityTypes = useSelector(state => selectLookupValuesAsOptions(state, 'ContactCategory'))
     const [searchTerm, setSearchTerm] = useState('');
     const [debounceSearchTerm] = useDebounce(searchTerm, DEBOUNCE_SEARCH_DELAY_MS);
     const [editMode, setEditMode] = useState(false);
@@ -74,6 +77,10 @@ const Contacts: React.FC<ContactProps> = () => {
     });
 
     useEffect(() => {
+        dispatch(getLookupValues('ContactCategory'));
+    }, []);
+
+    useEffect(() => {
         setQueryParams(handleCategoryChange(selectedCategory));
     }, [selectedCategory]);
 
@@ -86,7 +93,7 @@ const Contacts: React.FC<ContactProps> = () => {
         if (selectedCategory === t('contacts.category.starred_contacts')) {
             starredOnly = true;
         }
-        const category = ContactCategoryEnum[selectedCategory as keyof typeof ContactCategoryEnum];
+        const category = facilityTypes.filter(a => a.label == selectedCategory).length > 0 ? facilityTypes.filter(a => a.label == selectedCategory)[0].value : undefined;
         return {
             ...queryParams,
             category,

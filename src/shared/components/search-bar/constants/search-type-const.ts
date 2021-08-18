@@ -31,13 +31,6 @@ export const searchTypes: SearchType[] = [
         category: SearchCategory.Patient
     },
     {
-        label: 'search.search_type.ssn',
-        regex: '^\\d{9}$',
-        type: searchTypePatient.ssn,
-        priority: 4,
-        category: SearchCategory.Patient
-    },
-    {
         label: 'search.search_type.phone',
         regex: '(^\\d+$|^(\\d)(?:\\d|$)(?:\\d|$)(?:\\-|$)(?:\\d|$)(?:\\d|$)(?:\\d|$)(?:\\-|$)(?:\\d|$)(?:\\d|$)(?:\\d|$)(?:\\d|$)$)',
         type: searchTypePatient.phone,

@@ -379,7 +379,6 @@ const TicketNew = () => {
         const ticketType = watch('type');
         const patientId = watch('patientId');
         const patientCaseNumber = watch('patientCaseNumber');
-        const contactId = watch('contactId');
         const type = Number(ticketType);
         switch (field) {
             case 'contactId': {
@@ -493,7 +492,7 @@ const TicketNew = () => {
                     <div className="flex">
                         <ControlledDateInput
                             name='dueDate'
-                            min={new Date()}
+                            min={dayjs().startOf('day').toDate()}
                             defaultValue={null}
                             label='ticket_new.due_date'
                             className='mr-8'

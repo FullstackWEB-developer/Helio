@@ -2,7 +2,6 @@ export * from "./address.model";
 export * from "./agent-state";
 export * from "./agent-status.model";
 export * from "./associated-contact.model";
-export * from "./contact-category.enum";
 export * from "./contact-person.model";
 export * from "./contact-type.enum";
 export * from "./contact.model";

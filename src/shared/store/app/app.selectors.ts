@@ -18,12 +18,6 @@ export const selectSmsTemplates = createSelector(
     state => state.smsTemplates as NotificationTemplate[]
 )
 
-export const selectModalOverlayActive = createSelector(
-    appState,
-    state => state.modalOverlayActive as boolean
-);
-
-
 export const selectIsNavigationChanging = createSelector(
     appState,
     state => state.isNavigationChanging as boolean

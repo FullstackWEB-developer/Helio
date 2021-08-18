@@ -5,7 +5,6 @@ import ContactInfoField from './contact-info-field';
 import ContactForm from './contact-form';
 import {ContactType} from '@shared/models/contact-type.enum';
 import {ContactExtended} from '@shared/models/contact.model';
-import {getCategoryName} from '@shared/models/contact-category.enum';
 import utils from '@shared/utils/utils';
 import {AddressType, determineAddressTranslation} from '@shared/models/address.model';
 import {mapContactFormModelToDto} from '../contact-helpers/helpers';
@@ -15,6 +14,8 @@ import {useHistory} from 'react-router-dom';
 import {ContactsPath} from '@app/paths';
 import {useSelector} from 'react-redux';
 import {selectVoiceCounter} from '@pages/ccp/store/ccp.selectors';
+import {selectLookupValues} from '@pages/tickets/store/tickets.selectors';
+import {Option} from '@components/option/option';
 interface IndividualContactDetailsProps {
     contact: ContactExtended;
     editMode?: boolean;
@@ -26,6 +27,7 @@ interface IndividualContactDetailsProps {
 const IndividualContactDetails = ({contact, editMode, initiateACall, closeEditMode, onUpdateSuccess, onUpdateError}: IndividualContactDetailsProps) => {
     const {t} = useTranslation();
     const history = useHistory();
+    const facilityTypes = useSelector(state => selectLookupValues(state, 'ContactCategory'));
     const voiceCounter = useSelector(selectVoiceCounter);
 
     const displayValue = (value: string | undefined, isPhone = false) => {
@@ -63,6 +65,14 @@ const IndividualContactDetails = ({contact, editMode, initiateACall, closeEditMo
     const getIconFillClass = (value?: string) => {
         return !!value ? 'success-icon' : '';
     }
+
+    const getCategoryName = (category: number | Option) => {
+        const calculated = category && category.hasOwnProperty('value') ? (category as Option).value : category?.toString();
+        if (!calculated) {
+            return '';
+        }
+        return facilityTypes.filter(a => a.value == calculated).length > 0 ? facilityTypes.filter(a => a.value == calculated)[0].label : '';
+    };
 
     return (
         <>

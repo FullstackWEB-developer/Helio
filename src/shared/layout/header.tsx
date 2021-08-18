@@ -10,7 +10,7 @@ import ProfileDropdown from './components/profile-dropdown';
 import customHooks from '../hooks/customHooks';
 import {selectChatCounter, selectConnectionStatus, selectVoiceCounter} from '@pages/ccp/store/ccp.selectors';
 import './header.scss';
-import {useHistory} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import SvgIcon from '@components/svg-icon/svg-icon';
 import {Icon} from '@components/svg-icon/icon';
 import {CCP_ANIMATION_DURATION} from '@constants/form-constants';
@@ -27,7 +27,6 @@ import {Trans, useTranslation} from 'react-i18next';
 const Header = ({headsetIconRef}: {headsetIconRef: React.RefObject<HTMLDivElement>}) => {
     const {t} = useTranslation();
     const dispatch = useDispatch();
-    const history = useHistory();
     const auth: AuthenticationInfo = useSelector(authenticationSelector);
     const username = auth.name as string;
     const isProfileMenuOpen = useSelector(isProfileMenuExpandedSelector);
@@ -40,7 +39,6 @@ const Header = ({headsetIconRef}: {headsetIconRef: React.RefObject<HTMLDivElemen
     const ccpConnectionState = useSelector(selectConnectionStatus);
     const iconContainerRef = useRef(null);
     const [isErrorToolTipVisible, setErrorToolTipVisible] = useState(true);
-
     const setUserPicture = async () => {
         if (!auth || !auth.username) {
             return '';
@@ -96,7 +94,9 @@ const Header = ({headsetIconRef}: {headsetIconRef: React.RefObject<HTMLDivElemen
     }
 
     customHooks.useOutsideClick([dropdownRef], () => {
-        dispatch(toggleUserProfileMenu(false));
+        if (isProfileMenuOpen) {
+            dispatch(toggleUserProfileMenu(false));
+        }
     });
     return (
         <header className='flex flex-row items-center border-b md:pl-6 bg-primary text-primary'>
@@ -104,9 +104,11 @@ const Header = ({headsetIconRef}: {headsetIconRef: React.RefObject<HTMLDivElemen
                 <div className='flex flex-row'>
                     <div className='flex items-center w-full h-16 md:w-auto'>
                         <div className='pl-7 md:pl-0 pr-36'>
-                            <div className='cursor-pointer' onClick={() => history.push('/dashboard')}>
+                            <Link to='/dashboard' className='cursor-pointer'>
+                            <div>
                                 <HelioLogo className='fill-current text-primary-600' />
                             </div>
+                            </Link>
                         </div>
                     </div>
                     <div className='pl-2'>

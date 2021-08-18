@@ -224,7 +224,6 @@
       "patient_id": "Patient ID (XXXXX)",
       "patient_name": "Patient Name (Last, First)",
       "dob": "Date of birth (02/02/2020)",
-      "ssn": "SSN (XXXX)",
       "phone": "Phone number (310-000-0000)",
       "contact_name": "Contact Name",
       "ticket_id": "Ticket ID",
@@ -358,7 +357,18 @@
       "originated_by": "ORIGINATED BY",
       "error": "Error fetching clinical data, please try again",
       "no_upcoming_appointments": "There is no upcoming appointments",
-      "no_last_appointment": "There is no last appointment"
+      "no_last_appointment": "There is no last appointment",
+      "lab_results": {
+        "title": "Lab results",
+        "date": "Collected",
+        "description": "Test"
+      },
+      "medications": {
+        "title": "Medications",
+        "medication": "Medication",
+        "prescribed": "Prescribed",
+        "description": "Description"
+      }
     },
     "not_found": "Patient with this ID is not found",
     "activity_panel_header": "Activity",
@@ -591,6 +601,9 @@
         "font_subheading": "Subheading",
         "font_heading": "Heading"
       }
+    },
+    "table": {
+      "empty_message": "No data"
     }
   },
   "chat_transcripts": {

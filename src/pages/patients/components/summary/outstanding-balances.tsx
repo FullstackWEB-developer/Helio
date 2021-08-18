@@ -19,7 +19,7 @@ const OutstandingBalances = ({patientChartSummary}: OutstandingBalancesProps) =>
         if (collectionsBalance) {
             return <span className='body2 '>
                 <span className={patientCollectionsBalance > 0 ? 'subtitle in-collections-value' : ''}>{collectionsBalance}</span>
-                <span className='body3'>{` (${t('patient.summary.in_collections')})`}</span>
+                {patientCollectionsBalance > 0 && <span className='body3'>{` (${t('patient.summary.in_collections')})`}</span>}
             </span>
         } else {
             return '';

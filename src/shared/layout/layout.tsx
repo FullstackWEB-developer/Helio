@@ -12,10 +12,8 @@ import {SnackbarPosition} from '@components/snackbar/snackbar-position.enum';
 import {useHistory} from 'react-router-dom';
 import utils from '@shared/utils/utils';
 import SpinnerOverlay from '@components/spinner-overlay/spinner-overlay';
-import ModalOverlay from '@components/modal-overlay/modal-overlay';
 import {useSelector} from 'react-redux';
 import {selectGlobalLoading, selectIsNavigationChanging} from '@shared/store/app/app.selectors';
-import {selectModalOverlayActive} from '@shared/store/app/app.selectors';
 
 interface LayoutProps {
     children: React.ReactNode
@@ -31,12 +29,10 @@ const Layout = (props: LayoutProps) => {
         }
     })
     const isGlobalLoading = useSelector(selectGlobalLoading);
-    const isModalOverlayActive = useSelector(selectModalOverlayActive);
     return (
         <Fragment>
             <SpinnerOverlay isActive={isGlobalLoading}>
                 <div>
-                    <ModalOverlay isActive={isModalOverlayActive} />
                     <DndProvider backend={HTML5Backend}>
                         <DndContainer className='flex flex-auto' headsetIconRef={headsetIconRef}>
                             <div className='flex flex-row h-screen'>

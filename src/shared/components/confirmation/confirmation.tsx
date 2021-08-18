@@ -13,10 +13,11 @@ export interface ConfirmationProps {
     okButtonLabel?: string;
     cancelButtonLabel?: string;
     closeableOnEscapeKeyPress?: boolean;
+    hasOverlay?: boolean;
 }
 
 const Confirmation = ({title, onOk, onCancel, onClose, message = '', okButtonLabel = 'common.ok', cancelButtonLabel = 'common.cancel',
-    displayCancel = true, isOpen, closeableOnEscapeKeyPress}: ConfirmationProps) => {
+    displayCancel = true, isOpen, closeableOnEscapeKeyPress, hasOverlay = false}: ConfirmationProps) => {
     const {t} = useTranslation();
     const close = () => {
         if (onClose) {
@@ -31,7 +32,7 @@ const Confirmation = ({title, onOk, onCancel, onClose, message = '', okButtonLab
     }
 
     return <div className='flex items-center justify-center justify-self-center m-auto'>
-        <Modal isOpen={isOpen} title={t(title)} onClose={() => close()} isClosable={true} closeableOnEscapeKeyPress={closeableOnEscapeKeyPress}>
+        <Modal hasOverlay={hasOverlay} isOpen={isOpen} title={t(title)} onClose={() => close()} isClosable={true} closeableOnEscapeKeyPress={closeableOnEscapeKeyPress}>
             <div className='w-full h-32 h-full py-4'>
                 {message && <div className='pb-6'>{t(message)}</div>}
                 <div className='flex items-end justify-end w-full'>

@@ -1,4 +1,4 @@
-import {useHistory} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import {useTranslation} from 'react-i18next';
 import {useDispatch, useSelector} from 'react-redux';
 import {isNavigationExpandedSelector} from '../store/layout.selectors';
@@ -21,11 +21,9 @@ const NavigationItem = ({title, link, icon, isSelected}: NavigationItemProps) =>
     const isNavigationExpanded = useSelector(isNavigationExpandedSelector);
     const [displayBadge, setDisplayBadge] = useState<boolean>(false);
     const dispatch = useDispatch();
-    const history = useHistory();
     const navigate = () => {
         dispatch(toggleTicketListFilter(false));
         dispatch(setNavigationChanged(true));
-        history.push(link);
         setTimeout(() => {
             dispatch(setNavigationChanged(false));
         }, 0);
@@ -33,7 +31,8 @@ const NavigationItem = ({title, link, icon, isSelected}: NavigationItemProps) =>
 
     return (<div className='flex flex-row'>
         {<div className={'w-1.5 ' + (isSelected ? 'bg-green-400' : '')}/>}
-        <div onClick={() => navigate()} className={(isSelected ? 'subtitle2' : 'body2-medium')}>
+        <Link to={link} onClick={navigate}>
+        <div className={(isSelected ? 'subtitle2' : 'body2-medium')}>
             <div
                 className={'items-center flex h-14  navigation-item-active cursor-pointer ' + (isNavigationExpanded ? 'w-62' : 'w-20')}>
                 <div>{icon}</div>
@@ -49,6 +48,7 @@ const NavigationItem = ({title, link, icon, isSelected}: NavigationItemProps) =>
                 }
             </div>
         </div>
+        </Link>
     </div>);
 }
 

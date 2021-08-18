@@ -14,9 +14,6 @@ const appSlice = createSlice({
         setSmsTemplates(state, {payload}: PayloadAction<NotificationTemplate[]>) {
             state.smsTemplates = payload;
         },
-        setModalOverlayActive(state, {payload}: PayloadAction<boolean>) {
-            state.modalOverlayActive = payload;
-        },
         setNavigationChanged(state, {payload}: PayloadAction<boolean>) {
             state.isNavigationChanging = payload;
         }
@@ -27,7 +24,6 @@ export const {
     setGlobalLoading,
     setEmailTemplates,
     setSmsTemplates,
-    setModalOverlayActive,
     setNavigationChanged
 } = appSlice.actions
 

@@ -10,9 +10,10 @@ import {userFullNameSelector} from '@shared/store/app-user/appuser.selectors';
 import {selectPatient} from '@pages/patients/store/patients.selectors';
 import {useTranslation} from 'react-i18next';
 import {Icon} from '@components/svg-icon/icon';
+import utc from 'dayjs/plugin/utc'
 
 const PatientAddNote = () => {
-
+    dayjs.extend(utc);
     const dispatch = useDispatch();
     const patient = useSelector(selectPatient);
     const {t} = useTranslation();
@@ -35,7 +36,7 @@ const PatientAddNote = () => {
         }
         if (noteText && noteText.trim().length > 0) {
             const note: Note = {
-                date: dayjs().toDate(),
+                date:dayjs.utc().toDate(),
                 userDisplayName: userFullName,
                 text: noteText
             }

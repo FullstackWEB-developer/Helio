@@ -4,10 +4,8 @@ import Dropdown, {DropdownItemModel, DropdownModel} from '@components/dropdown';
 import SvgIcon, {Icon} from '@components/svg-icon';
 import {customHooks} from '@shared/hooks';
 import {ChangeUserStatusRequest, InviteUserRequest, UserDetail, UserDetailStatus, UserInvitationStatus} from '@shared/models';
-import {setModalOverlayActive} from '@shared/store/app/app.slice';
 import React, {useRef, useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {useDispatch} from 'react-redux';
 import {useHistory} from 'react-router';
 
 const UserListActions = ({user, handleStatusChange, handleResendInvite}:
@@ -18,9 +16,8 @@ const UserListActions = ({user, handleStatusChange, handleResendInvite}:
     const [disableConfirmationOpen, setDisableConfirmationOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
     const iconRef = useRef<HTMLDivElement>(null);
-    const dispatch = useDispatch();
 
-    const generateDopdownModelOptions = (): DropdownModel => {
+    const generateDropdownModelOptions = (): DropdownModel => {
         let items: DropdownItemModel[] = [
             {value: t('users.list_section.edit'), label: t('users.list_section.edit')}
         ];
@@ -55,7 +52,6 @@ const UserListActions = ({user, handleStatusChange, handleResendInvite}:
             }
             case t('users.list_section.disable'): {
                 setDisableConfirmationOpen(true);
-                dispatch(setModalOverlayActive(true));
                 setActionDropdownOpen(false);
                 break;
             }
@@ -83,7 +79,6 @@ const UserListActions = ({user, handleStatusChange, handleResendInvite}:
 
     const onDisableCancel = () => {
         setDisableConfirmationOpen(false);
-        dispatch(setModalOverlayActive(false));
     }
 
     const onDisableConfirm = () => {
@@ -104,12 +99,12 @@ const UserListActions = ({user, handleStatusChange, handleResendInvite}:
                 {
                     actionDropdownOpen &&
                     <div className='absolute z-20' style={calculateDropdownPosition()}>
-                        <Dropdown model={generateDopdownModelOptions()} />
+                        <Dropdown model={generateDropdownModelOptions()} />
                     </div>
                 }
             </div>
             <div className='absolute w-1/3 left-1/3 top-0'>
-                <Confirmation title={t('users.list_section.disable_modal_title')}
+                <Confirmation hasOverlay={true} title={t('users.list_section.disable_modal_title')}
                     message={t('users.list_section.disable_modal_description')}
                     okButtonLabel={t('users.list_section.disable')} isOpen={disableConfirmationOpen}
                     onOk={onDisableConfirm} onCancel={onDisableCancel} onClose={onDisableCancel} />
