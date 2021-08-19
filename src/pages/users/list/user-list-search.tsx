@@ -21,11 +21,13 @@ interface UserListSearchProps {
     displayEnableAction: boolean,
     displayResendInviteAction: boolean,
     handleMultiselectionStatusChange: (status: UserDetailStatus) => void,
-    handleMultiselectionInvite: () => void
+    handleMultiselectionInvite: () => void,
+    disableConfirmationTitle: () => string,
+    disableConfirmationDescription: () => string
 }
 const UserListSearch = ({handleAllCheck, allChecked, displayActions,
     displayDisableAction, displayEnableAction, displayResendInviteAction,
-    handleMultiselectionStatusChange, handleMultiselectionInvite}: UserListSearchProps) => {
+    handleMultiselectionStatusChange, handleMultiselectionInvite, disableConfirmationTitle, disableConfirmationDescription}: UserListSearchProps) => {
 
     const history = useHistory();
     const {t} = useTranslation();
@@ -56,7 +58,7 @@ const UserListSearch = ({handleAllCheck, allChecked, displayActions,
             }
             {
                 displayDisableAction && <Button label={'users.list_section.disable'}
-                    buttonType='secondary' onClick={() => {setDisableConfirmationOpen(true); }} />
+                    buttonType='secondary' onClick={() => {setDisableConfirmationOpen(true);}} />
             }
             {
                 displayEnableAction && <Button label={'users.list_section.enable'} buttonType='secondary'
@@ -96,9 +98,9 @@ const UserListSearch = ({handleAllCheck, allChecked, displayActions,
                 />
             }
             <div className='absolute w-1/3 left-1/3 top-0'>
-                <Confirmation title={t('users.list_section.disable_modal_title')}
+                <Confirmation title={disableConfirmationTitle()}
+                    message={disableConfirmationDescription()}
                     hasOverlay={true}
-                    message={t('users.list_section.disable_modal_description')}
                     okButtonLabel={t('users.list_section.disable')} isOpen={disableConfirmationOpen}
                     onOk={onDisableConfirm} onCancel={onDisableCancel} onClose={onDisableCancel} />
             </div>

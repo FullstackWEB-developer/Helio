@@ -85,10 +85,36 @@ const UserList = () => {
         {
             onSuccess: (_, variables) => {
                 updateQueryDataOnStatusChangeSuccess(variables);
-                displaySnack(SnackbarType.Success, t('users.list_section.status_change_success'));
+                if (variables.length === 1) {
+                    const userName = findUserName(variables[0].id);
+                    if (userName) {
+                        displaySnack(SnackbarType.Success, t('users.list_section.status_change_success_user', {
+                            name: userName
+                        }));
+                    }
+                    else {
+                        displaySnack(SnackbarType.Success, t('users.list_section.status_change_success_user_fallback'));
+                    }
+                }
+                else {
+                    displaySnack(SnackbarType.Success, t('users.list_section.status_change_success_multi'));
+                }
             },
-            onError: () => {
-                displaySnack(SnackbarType.Error, t('users.list_section.status_change_failure'));
+            onError: (_, variables) => {
+                if (variables.length === 1) {
+                    const userName = findUserName(variables[0].id);
+                    if (userName) {
+                        displaySnack(SnackbarType.Error, t('users.list_section.status_change_failure', {
+                            name: userName
+                        }));
+                    }
+                    else {
+                        displaySnack(SnackbarType.Error, t('users.list_section.status_change_failure_fallback'));
+                    }
+                }
+                else {
+                    displaySnack(SnackbarType.Error, t('users.list_section.status_change_failure_multi'));
+                }
             },
             onSettled: () => {
                 populateUserCheckboxArray();
@@ -96,6 +122,17 @@ const UserList = () => {
                 dispatch(setGlobalLoading(false));
             }
         });
+
+    const findUserName = (id: string) => {
+        const users: any = queryClient.getQueryData([GetUserList, filters]);
+        if (users && users.results && users.results.length > 0) {
+            const user: UserDetail = users.results.find((u: UserDetail) => u.id === id || u.email === id);
+            if (user?.firstName || user?.lastName) {
+                return `${user.firstName || ''} ${user.lastName || ''}`
+            }
+        }
+        return '';
+    }
 
     const handleStatusChange = (statuses: ChangeUserStatusRequest[]) => {
         changeUserStatusMutation.mutate(statuses);
@@ -113,11 +150,34 @@ const UserList = () => {
     const resendInviteMutation = useMutation(
         (payload: InviteUserRequest) => resendInvite(payload),
         {
-            onSuccess: () => {
-                displaySnack(SnackbarType.Success, t('users.list_section.resend_invite_success'));
+            onSuccess: (_, variables) => {
+                if (variables.users.length === 1 && variables.users[0].email) {
+                    const userName = findUserName(variables.users[0].email);
+                    if (userName) {
+                        displaySnack(SnackbarType.Success, t('users.list_section.resend_invite_success', {name: userName}));
+                    }
+                    else {
+                        displaySnack(SnackbarType.Success, t('users.list_section.resend_invite_success_fallback'));
+                    }
+                }
+                else {
+                    displaySnack(SnackbarType.Success, t('users.list_section.resend_invite_success_multi'));
+                }
+
             },
-            onError: () => {
-                displaySnack(SnackbarType.Error, t('users.list_section.resend_invite_failure'));
+            onError: (_, variables) => {
+                if (variables.users.length === 1 && variables.users[0].email) {
+                    const userName = findUserName(variables.users[0].email);
+                    if (userName) {
+                        displaySnack(SnackbarType.Error, t('users.list_section.resend_invite_failure', {name: userName}));
+                    }
+                    else {
+                        displaySnack(SnackbarType.Error, t('users.list_section.resend_invite_failure_fallback'));
+                    }
+                }
+                else {
+                    displaySnack(SnackbarType.Error, t('users.list_section.resend_invite_failure_multi'));
+                }
             },
             onSettled: () => {
                 populateUserCheckboxArray();
@@ -177,7 +237,6 @@ const UserList = () => {
         }
     }
 
-
     const handleAllCheck = (e: CheckboxCheckEvent) => {
         populateUserCheckboxArray(e.checked);
         setCheckAll(e.checked);
@@ -210,6 +269,31 @@ const UserList = () => {
         resendInviteMutation.mutate(payload);
     }
 
+    const determineDisablePopupTitleTranslation = () => {
+        if (checkedUserState && checkedUserState.length > 0) {
+            const checkedCount = checkedUserState.filter(c => c.checkboxCheckEvent.checked);
+            if (checkedCount && checkedCount.length === 1) {
+                const userName = findUserName(checkedCount[0].checkboxCheckEvent.value);
+                return t('users.list_section.disable_modal_title_identity', {name: userName ?? t('common.user')});
+            }
+            else return t('users.list_section.disable_modal_title');
+        }
+        return '';
+    }
+
+    const determineDisablePopupDescriptionTranslation = () => {
+        if (checkedUserState && checkedUserState.length > 0) {
+            const checkedCount = checkedUserState.filter(c => c.checkboxCheckEvent.checked);
+            if (checkedCount && checkedCount.length === 1) {
+                const userName = findUserName(checkedCount[0].checkboxCheckEvent.value);
+                return t('users.list_section.disable_modal_description_identity', {name: userName ?? t('common.user')});
+            }
+            else return t('users.list_section.disable_modal_description');
+        }
+        return '';
+    }
+
+
     return (
         <div className='flex flex-auto h-full'>
             <UserFilter isOpen={isUserFilterOpen} />
@@ -233,7 +317,9 @@ const UserList = () => {
                                     displayEnableAction={allCheckedUsersDisabled || false}
                                     displayResendInviteAction={allCheckedUsersPending || false}
                                     handleMultiselectionStatusChange={handleMultiselectionStatusChange}
-                                    handleMultiselectionInvite={handleMultiselectionInvite} />
+                                    handleMultiselectionInvite={handleMultiselectionInvite}
+                                    disableConfirmationTitle={determineDisablePopupTitleTranslation}
+                                    disableConfirmationDescription={determineDisablePopupDescriptionTranslation} />
                                 <div className="user-list-grid head-row caption-caps h-12 px-4">
                                     <div></div>
                                     <div className='truncate'>{t('users.list_section.name')}</div>

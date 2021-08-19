@@ -47,7 +47,8 @@
     "deactivate": "Deactivate",
     "change": "Change",
     "add": "Add",
-    "step_x_of_x": "Step {{current}} of {{total}}"
+    "step_x_of_x": "Step {{current}} of {{total}}",
+    "user": "User"
   },
   "login": {
     "title": "Run your medical office efficiently.",
@@ -1078,12 +1079,22 @@
       "resend_invite": "Resend Invite",
       "enable": "Enable",
       "disable": "Disable",
-      "disable_modal_title": "Disable user(s)?",
-      "disable_modal_description": "Disabling user(s) will disable user(s) in Helio only. User(s) will remain active in Office 365.",
-      "status_change_success": "User(s) status has been changed successfully.",
-      "status_change_failure": "Updating user(s) status failed.",
-      "resend_invite_success": "Invite successfully sent to user(s)",
-      "resend_invite_failure": "Sending invite failed",
+      "disable_modal_title_identity": "Disable {{name}}?",
+      "disable_modal_description_identity": "Disabling {{name}} affects Helio only. {{name}} will remain active in Office 365.",
+      "disable_modal_title": "Disable users?",
+      "disable_modal_description": "Disabling users will disable users in Helio only. Users will remain active in Office 365.",
+      "status_change_success_user": "{{name}} status has been changed successfully",
+      "status_change_success_user_fallback": "User status has been changed successfully",
+      "status_change_success_multi": "Statuses of selected users have been changed successfully.",
+      "status_change_failure": "Updating status for {{name}} failed.",
+      "status_change_failure_fallback": "Updating user status failed.",
+      "status_change_failure_multi": "Updating of the selected users statuses failed.",
+      "resend_invite_success": "Invite successfully sent to {{name}}",
+      "resend_invite_success_fallback": "Invite successfully sent to user",
+      "resend_invite_success_multi": "Invite successfully sent to users",
+      "resend_invite_failure": "Sending invite to {{name}} failed",
+      "resend_invite_failure_fallback": "Sending invite failed",
+      "resend_invite_failure_multi": "Sending invites to selected users failed",
       "reset_results": "Reset search and filters"
     },
     "info_section": {

@@ -33,7 +33,7 @@ const Contacts: React.FC<ContactProps> = () => {
     const {t} = useTranslation();
     const [selectedCategory, setSelectedCategory] = useState<string>(t('contacts.category.all_contacts'));
     const [selectedContact, setSelectedContact] = useState<ContactExtended>();
-    const facilityTypes = useSelector(state => selectLookupValuesAsOptions(state, 'ContactCategory'))
+    const facilityTypes = useSelector((state) => selectLookupValuesAsOptions(state, 'ContactCategory'), (left, right)=> left.length === right.length)
     const [searchTerm, setSearchTerm] = useState('');
     const [debounceSearchTerm] = useDebounce(searchTerm, DEBOUNCE_SEARCH_DELAY_MS);
     const [editMode, setEditMode] = useState(false);

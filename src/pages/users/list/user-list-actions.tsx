@@ -104,8 +104,14 @@ const UserListActions = ({user, handleStatusChange, handleResendInvite}:
                 }
             </div>
             <div className='absolute w-1/3 left-1/3 top-0'>
-                <Confirmation hasOverlay={true} title={t('users.list_section.disable_modal_title')}
-                    message={t('users.list_section.disable_modal_description')}
+                <Confirmation title={t('users.list_section.disable_modal_title_identity', {
+                    name: user.firstName || user.lastName ?
+                        `${user.firstName || ''} ${user.lastName || ''}` : t('common.user')
+                    })}
+                    message={t('users.list_section.disable_modal_description_identity', {
+                        name: user.firstName || user.lastName ? `${user.firstName || ''} ${user.lastName || ''}` : t('common.user')
+                    })}
+                    hasOverlay={true}
                     okButtonLabel={t('users.list_section.disable')} isOpen={disableConfirmationOpen}
                     onOk={onDisableConfirm} onCancel={onDisableCancel} onClose={onDisableCancel} />
             </div>
