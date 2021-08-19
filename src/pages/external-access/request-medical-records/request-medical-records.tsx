@@ -138,7 +138,7 @@ const RequestMedicalRecords = () => {
             downloadLink: location.state.request.linkId,
             isDownload: type === RequestType.Download,
             emailAddress: getValues('email'),
-            note: getValues('note'),
+            note: getValues('note')?.replaceAll('\n','<br/>'),
             asHtml: type === RequestType.Preview,
         };
         setRequest(request);

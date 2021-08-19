@@ -131,7 +131,7 @@ const TicketAssignee = ({ticketId, assignee, dropdownHorizontalPosition}: Ticket
     }
 
     return <div ref={elementRef} className='col-span-2 relative'>
-        <div ref={assigneeDisplayRef}>
+        <div ref={assigneeDisplayRef} className='flex items-center h-full'>
             {selectedUser?.id ?
                 <div className='inline-flex flex-row flex-none items-center cursor-pointer' onClick={openSearchAssignee}>
                     <div className='mr-4'>
@@ -143,9 +143,9 @@ const TicketAssignee = ({ticketId, assignee, dropdownHorizontalPosition}: Ticket
                     <SvgIcon type={isVisible ? Icon.ArrowUp : Icon.ArrowDown} fillClass={'select-arrow-fill'} />
                 </div>
                 :
-                <div className='flex flex-row cursor-pointer w-min' onClick={openSearchAssignee}>
-                    <div className='pt-3'>{t('tickets.unassigned')}</div>
-                    <div className='pt-3 pl-3' ref={chevronPosition} >
+                <div className='flex flex-row cursor-pointer w-min items-center' onClick={openSearchAssignee}>
+                    <div>{t('tickets.unassigned')}</div>
+                    <div className='pl-3' ref={chevronPosition} >
                         <SvgIcon type={!isVisible ? Icon.ArrowDown : Icon.ArrowUp} className='cursor-pointer' fillClass='active-item-icon' />
                     </div>
                 </div>
