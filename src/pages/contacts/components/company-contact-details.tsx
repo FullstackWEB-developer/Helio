@@ -46,8 +46,8 @@ const CompanyContactDetails = ({editMode, contact, initiateACall, addNewContactH
     }
     const updateContactMutation = useMutation(updateContact,
         {
-            onSuccess: (_, contact) => {
-                onUpdateSuccess(contact);
+            onSuccess: (_, contactUpdatedFields) => {
+                onUpdateSuccess({...contact, ...contactUpdatedFields});
             },
             onError: () => onUpdateError && onUpdateError()
         });
@@ -82,34 +82,34 @@ const CompanyContactDetails = ({editMode, contact, initiateACall, addNewContactH
                         <>
                             <div className="grid grid-cols-8 gap-2 body2 mb-10">
                                 <ContactInfoField label={`${t('contacts.contact_details.company.category')}`}
-                                                  value={getCategoryName(contact.category)} />
+                                    value={getCategoryName(contact.category)} />
                                 <ContactInfoField label={`${t('contacts.contact_details.company.email')}`}
-                                                  iconFillClass={getIconFillClass(contact.emailAddress)}
-                                                  value={displayValue(contact.emailAddress)}
-                                                  icon={Icon.Email}
-                                                  isIconDisabled={true} />
+                                    iconFillClass={getIconFillClass(contact.emailAddress)}
+                                    value={displayValue(contact.emailAddress)}
+                                    icon={Icon.Email}
+                                    isIconDisabled={true} />
                                 <ContactInfoField label={`${t('contacts.contact_details.company.work_main_phone')}`}
-                                                  iconFillClass={getIconFillClass(contact.workMainPhone)}
-                                                  value={displayValue(contact.workMainPhone, true)}
-                                                  isIconDisabled={voiceCounter > 0 || !contact.workMainPhone}
-                                                  icon={Icon.Phone}
-                                                  iconOnClick={() => phoneIconOnClick(contact.workMainPhone)}
-                                                  isValueClickDisabled={voiceCounter > 0 || !contact.workMainPhone}
-                                                  onValueClick={() => phoneIconOnClick(contact.workMainPhone)}
-                                                  isLink={!(voiceCounter > 0 || !contact.workMainPhone)} />
+                                    iconFillClass={getIconFillClass(contact.workMainPhone)}
+                                    value={displayValue(contact.workMainPhone, true)}
+                                    isIconDisabled={voiceCounter > 0 || !contact.workMainPhone}
+                                    icon={Icon.Phone}
+                                    iconOnClick={() => phoneIconOnClick(contact.workMainPhone)}
+                                    isValueClickDisabled={voiceCounter > 0 || !contact.workMainPhone}
+                                    onValueClick={() => phoneIconOnClick(contact.workMainPhone)}
+                                    isLink={!(voiceCounter > 0 || !contact.workMainPhone)} />
                                 <ContactInfoField label={`${t('contacts.contact_details.company.mobile_phone')}`}
-                                                  iconFillClass={getIconFillClass(contact.mobilePhone)}
-                                                  value={displayValue(contact.mobilePhone, true)}
-                                                  isIconDisabled={voiceCounter > 0 || !contact.mobilePhone}
-                                                  icon={Icon.Phone}
-                                                  iconOnClick={() => phoneIconOnClick(contact.mobilePhone)}
-                                                  onValueClick={() => phoneIconOnClick(contact.mobilePhone)}
-                                                  isLink={!(voiceCounter > 0 || !contact.mobilePhone)}
-                                                  isValueClickDisabled={voiceCounter > 0 || !contact.mobilePhone} />
+                                    iconFillClass={getIconFillClass(contact.mobilePhone)}
+                                    value={displayValue(contact.mobilePhone, true)}
+                                    isIconDisabled={voiceCounter > 0 || !contact.mobilePhone}
+                                    icon={Icon.Phone}
+                                    iconOnClick={() => phoneIconOnClick(contact.mobilePhone)}
+                                    onValueClick={() => phoneIconOnClick(contact.mobilePhone)}
+                                    isLink={!(voiceCounter > 0 || !contact.mobilePhone)}
+                                    isValueClickDisabled={voiceCounter > 0 || !contact.mobilePhone} />
                                 <ContactInfoField label={`${t('contacts.contact_details.company.website')}`}
-                                                  value={displayValue(contact.website)}
-                                                  onValueClick={() => contact.website && utils.openWebSite(contact.website)}
-                                                  isLink={!!contact?.website} />
+                                    value={displayValue(contact.website)}
+                                    onValueClick={() => contact.website && utils.openWebSite(contact.website)}
+                                    isLink={!!contact?.website} />
                                 {
                                     renderAddressField(AddressType.PrimaryAddress)
                                 }
@@ -125,7 +125,7 @@ const CompanyContactDetails = ({editMode, contact, initiateACall, addNewContactH
                             }
                             <div className='flex items-center body2 pt-5'>
                                 <span className='pr-4'><SvgIcon type={Icon.AddContact} fillClass='contact-light-fill' /></span>
-                                <span className='contact-accent-color cursor-pointer'  onClick={() => addNewContactHandler()}>
+                                <span className='contact-accent-color cursor-pointer' onClick={() => addNewContactHandler()}>
                                     {t('contacts.contact_details.company.add_contact')}
                                 </span>
                             </div>

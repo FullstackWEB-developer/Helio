@@ -31,7 +31,9 @@ const Pagination = ({value, ...props}: PaginationProps) => {
     }
     const onInputChanged = ({target}: React.ChangeEvent<HTMLInputElement>) => {
         const valueAsNumber = Number(target.value);
-        setCurrentPage(valueAsNumber);
+        if (valueAsNumber > 0 && valueAsNumber <= currentPaging.totalPages) {
+            setCurrentPage(valueAsNumber);
+        }
     }
 
     const onChanged = (paging: Paging) => {
@@ -97,6 +99,7 @@ const Pagination = ({value, ...props}: PaginationProps) => {
                 className='ml-6 mr-6 text-center border rounded-md w-11'
                 value={currentPage}
                 onChange={onInputChanged}
+                onFocus={(e)=>{e?.target?.select()}}
                 onKeyDown={(e) => onKeyDown(e)}
             />
 

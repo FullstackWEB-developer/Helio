@@ -119,12 +119,12 @@ const ContactTickets = ({contactId}: ContactTicketsProps) => {
     };
 
     return <Fragment>
-        <div className={'flex items-center justify-between py-3 cursor-pointer border-b'}>
+        <div className={'flex items-center justify-between py-3 border-b'}>
             <div className='flex items-center body2' onClick={() => history.push(`${TicketsPath}/new?contactId=${contactId}`)}>
                 <SvgIcon type={Icon.Add}
                     className='icon-large pl-1 cursor-pointer'
                     fillClass='active-item-icon' />
-                <span className='pl-2 contact-accent-color'>{`${t('contacts.contact_details.create_ticket')}`}</span>
+                <span className='pl-2 contact-accent-color cursor-pointer hover:underline'>{`${t('contacts.contact_details.create_ticket')}`}</span>
             </div>
             {
                 paginationProperties?.totalCount !== 0 &&
