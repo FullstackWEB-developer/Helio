@@ -685,6 +685,7 @@
     },
     "medical_records_request": {
       "title": "Your Medical Record",
+      "note": "Note to recipient",
       "subtitle": "Download your health records, or share them with your medical care providers.",
       "select_time_header": "1. Select Time Period for your Health Record",
       "select_what_to_do": "2. Choose what you would like to do with your health information",

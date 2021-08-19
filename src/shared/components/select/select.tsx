@@ -179,7 +179,7 @@ const Select = React.forwardRef<HTMLDivElement, SelectProps>(({options, order, l
                 <div className={`absolute pt-${!label ? '3' : '4'} right-4 `}>
                     <div className='flex flex-row items-start'>
                             {allowClear && selectedOption && open  &&
-                            <div  onMouseDown={(e) => {e.preventDefault()}}>
+                            <div onMouseDown={(e) => {e.preventDefault()}}>
                                 <SvgIcon className='cursor-pointer'
                                          type={Icon.Clear}
                                          fillClass='select-arrow-fill'

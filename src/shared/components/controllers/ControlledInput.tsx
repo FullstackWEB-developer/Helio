@@ -34,6 +34,7 @@ export interface ControlledInputProps {
     onDropdownSuggestionClick?: (suggestion: Option) => void;
     isFetchingSuggestions?: boolean;
     selectedSuggestion?: Option;
+    shouldDisplayAutocomplete?: boolean,
     fetchingSuggestionsPlaceholder?: string;
 }
 
@@ -127,6 +128,7 @@ const ControlledInput = ({
                 isFetchingSuggestions={props.isFetchingSuggestions}
                 selectedSuggestion={props.selectedSuggestion}
                 fetchingSuggestionsPlaceholder={props.fetchingSuggestionsPlaceholder}
+                shouldDisplayAutocomplete={props.shouldDisplayAutocomplete}
             />
             );
         }}

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import dayjs from 'dayjs';
-import {useHistory} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import {useSelector} from 'react-redux';
 import {Ticket} from '../models/ticket';
 import TicketStatus from './ticket-status';
@@ -25,8 +25,6 @@ interface TicketListItemProps {
 const TicketListItem = ({item}: TicketListItemProps) => {
     dayjs.extend(relativeTime);
     const {t} = useTranslation();
-    const history = useHistory();
-
     const ticketPriorities = useSelector((state => selectEnumValues(state, 'TicketPriority')));
     const ticketTypes = useSelector((state => selectEnumValues(state, 'TicketType')));
     const ticketReasons = useSelector((state) => selectLookupValues(state, 'TicketReason'));
@@ -42,6 +40,10 @@ const TicketListItem = ({item}: TicketListItemProps) => {
             })
         }
         return [];
+    }
+
+    const getTicketPath =() => {
+        return `${TicketsPath}/${item.ticketNumber}`;
     }
 
     const priorityOptions = convertEnumToOptions(ticketPriorities);
@@ -72,37 +74,47 @@ const TicketListItem = ({item}: TicketListItemProps) => {
         ticketTypeOptions, selectedTicketType, item?.type,
         ticketReasons, selectedReason, item?.reason
     ]);
-
-    const openTicket = () => {
-        history.push(`${TicketsPath}/${item.ticketNumber}`);
-    }
-
     const getRelativeTime = utils.getRelativeTime(item.dueDate);
 
-    return <div className='flex flex-row w-full auto-cols-max body2 border-b relative cursor-pointer hover:bg-gray-100 px-7 items-center h-20 py-3.5' onClick={openTicket} >
+    return <div className='flex flex-row w-full auto-cols-max body2 border-b relative hover:bg-gray-100 px-7 items-center h-20 py-3.5' >
         <div className='w-24'>
-            <TicketChannelIcon channel={item.channel} />
+            <Link to={getTicketPath()}>
+                <TicketChannelIcon channel={item.channel} />
+            </Link>
         </div>
+
         <div className='w-1/12'>
-            {item.ticketNumber}
+            <Link to={getTicketPath()}>
+                {item.ticketNumber}
+            </Link>
         </div>
         <div className={classnames('w-2/12 max-w-xs truncate', {'subtitle2': !!item.subject, 'body2': !item.subject})}>
-            <span>{item.subject ? item.subject : t('tickets.no_subject')}</span>
+            <Link to={getTicketPath()}>
+                <span>{item.subject ? item.subject : t('tickets.no_subject')}</span>
+            </Link>
         </div>
         <div className='w-2/12 body3'>
-            <DueInRelativeTime value={getRelativeTime} isOverdue={item.isOverdue} />
+            <Link to={getTicketPath()}>
+                <DueInRelativeTime value={getRelativeTime} isOverdue={item.isOverdue} />
+            </Link>
         </div>
         <div className='w-2/12 h-full'>
             <TicketStatus ticket={item} />
         </div>
         <div className='w-2/12'>
-            {item.priority ? selectedPriority?.value : null}
+            <Link to={getTicketPath()}>
+                {item.priority ? selectedPriority?.value : null}
+            </Link>
         </div>
         <div className='w-2/12'>
-            {item.type ? selectedTicketType?.value : ''}
+            <Link to={getTicketPath()}>
+                {item.type ? selectedTicketType?.value : ''}
+            </Link>
         </div>
         <div className='w-2/12'>
-            {item.reason ? selectedReason?.label : ''}
+            <Link to={getTicketPath()}>
+                {item.reason ? selectedReason?.label : ''}
+            </Link>
         </div>
         <div className='w-2/12'>
             <TicketAssignee ticketId={ticketId} assignee={item.assignee}

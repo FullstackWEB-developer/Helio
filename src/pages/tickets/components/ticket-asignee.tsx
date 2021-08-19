@@ -130,19 +130,20 @@ const TicketAssignee = ({ticketId, assignee, dropdownHorizontalPosition}: Ticket
         }
     }
 
-    return <div ref={elementRef} className='col-span-2 cursor-pointer relative'>
-        <div ref={assigneeDisplayRef} onClick={openSearchAssignee}>
+    return <div ref={elementRef} className='col-span-2 relative'>
+        <div ref={assigneeDisplayRef}>
             {selectedUser?.id ?
-                <div className='flex flex-wrap items-center'>
+                <div className='inline-flex flex-row flex-none items-center cursor-pointer' onClick={openSearchAssignee}>
                     <div className='mr-4'>
                         <Avatar userFullName={utils.stringJoin(' ', selectedUser.firstName, selectedUser.lastName)} userPicture={selectedUser.profilePicture} />
                     </div>
-                    <div ref={chevronPosition}>
+                    <div ref={chevronPosition} className='pr-2'>
                         <div>{selectedUser.firstName} {selectedUser.lastName}</div>
                     </div>
+                    <SvgIcon type={isVisible ? Icon.ArrowUp : Icon.ArrowDown} fillClass={'select-arrow-fill'} />
                 </div>
                 :
-                <div className='flex flex-row'>
+                <div className='flex flex-row cursor-pointer w-min' onClick={openSearchAssignee}>
                     <div className='pt-3'>{t('tickets.unassigned')}</div>
                     <div className='pt-3 pl-3' ref={chevronPosition} >
                         <SvgIcon type={!isVisible ? Icon.ArrowDown : Icon.ArrowUp} className='cursor-pointer' fillClass='active-item-icon' />

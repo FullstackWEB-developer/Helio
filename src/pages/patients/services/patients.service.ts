@@ -80,6 +80,7 @@ export interface DownloadMedicalRecordsProps {
      startDate?: Date;
      endDate?: Date;
      asHtml: boolean;
+     note?: string;
 }
 
 export const prepareAndDownloadMedicalRecords = async ({
@@ -90,7 +91,8 @@ export const prepareAndDownloadMedicalRecords = async ({
                                                             emailAddress,
                                                             startDate,
                                                             endDate,
-                                                            asHtml
+                                                            asHtml,
+                                                            note
                                                        }: DownloadMedicalRecordsProps) : Promise<AsyncJobInfo> => {
      const url = `${patientsUrl}/documents/medical-records`;
      let data = {
@@ -101,7 +103,8 @@ export const prepareAndDownloadMedicalRecords = async ({
           'startDate': startDate,
           'endDate': endDate,
           'asHtml': asHtml,
-          'patientId': patientId
+          'patientId': patientId,
+          'note':note
      };
      const response = await Api.post(url, data);
      return response.data;

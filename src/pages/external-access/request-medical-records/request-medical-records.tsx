@@ -11,7 +11,7 @@ import RequestMedicalRecordDateSelection
 import Tabs from '@components/tab/Tabs';
 import Tab from '@components/tab/Tab';
 import ControlledInput from '@components/controllers/ControlledInput';
-import {useForm} from 'react-hook-form';
+import {Controller, useForm} from 'react-hook-form';
 import {
     checkMedicalRecordJobStatus, downloadMedicalRecords,
     DownloadMedicalRecordsProps,
@@ -27,7 +27,7 @@ import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
 import {AsyncJobInfo} from '@pages/patients/models/async-job-info.model';
 import {AsyncJobStatus} from '@pages/patients/models/async-job-status.enum';
 import {CheckMedicalRecordStatus} from '@constants/react-query-constants';
-
+import TextArea from '@components/textarea/textarea';
 const RequestMedicalRecords = () => {
     enum DateOptions {
         AllTime = 1,
@@ -53,6 +53,7 @@ const RequestMedicalRecords = () => {
     const {control, formState, getValues, watch} = useForm({
         mode: 'onBlur'
     });
+    const {isDirty, isValid} = formState;
     const {t} = useTranslation();
 
     const email = watch('email');
@@ -137,7 +138,8 @@ const RequestMedicalRecords = () => {
             downloadLink: location.state.request.linkId,
             isDownload: type === RequestType.Download,
             emailAddress: getValues('email'),
-            asHtml: type === RequestType.Preview
+            note: getValues('note'),
+            asHtml: type === RequestType.Preview,
         };
         setRequest(request);
         dispatch(setMedicalRecordsPreviewData(request));
@@ -247,12 +249,14 @@ const RequestMedicalRecords = () => {
                                     control={control}
                                     name='email'
                                     required={true}
+                                    shouldDisplayAutocomplete={false}
                                     type='email'
                                     defaultValue=''
                                     label='external_access.medical_records_request.email_input_header'
                                 />
                                 <ControlledInput
                                     control={control}
+                                    shouldDisplayAutocomplete={false}
                                     name='email_confirm'
                                     type='email'
                                     required={true}
@@ -260,12 +264,28 @@ const RequestMedicalRecords = () => {
                                     defaultValue=''
                                     label='external_access.medical_records_request.email_confirm_input_header'
                                 />
+                                <Controller
+                                    name='note'
+                                    control={control}
+                                    defaultValue={''}
+                                    render={(controllerProps) => (
+                                        <TextArea
+                                            {...controllerProps}
+                                            placeHolder='external_access.medical_records_request.note'
+                                            className='h-full pb-0 pr-0 body2 w-full'
+                                            data-test-id='medical-records--notes'
+                                            minRows={2}
+                                            resizable={false}
+                                            hasBorder={true}
+                                        />
+                                    )}
+                                />
                                 <Button
-                                    className='mt-1'
+                                    className='mt-6'
                                     buttonType='big'
                                     onClick={() => startRequest(RequestType.Share)}
                                     isLoading={isLoading && requestType === RequestType.Share}
-                                    disabled={!formState.isDirty || email !== emailConfirm || isLoading || !formState.isValid}
+                                    disabled={!isDirty || email !== emailConfirm || isLoading || !isValid}
                                     label={t('external_access.medical_records_request.share_button_title')}
                                     type='submit'/>
                             </form>

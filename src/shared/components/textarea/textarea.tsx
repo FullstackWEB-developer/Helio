@@ -156,7 +156,7 @@ const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(({
                               {...props}
                               value={textAreaValue}
                               onChange={(e => handleOnChange(e))}
-                              placeholder={placeHolder ? placeHolder : ''}
+                              placeholder={placeHolder ? t(placeHolder) : ''}
                               className={textAreaClass}
                               wrap='hard'
                               onKeyPress={onKeyPress}
