@@ -8,6 +8,10 @@ interface SearchBoxResultsProps {
 const SearchBoxResults = ({items, onSelect}: SearchBoxResultsProps) => {
     const {t} = useTranslation();
 
+    if (items?.length === 0) {
+        return null;
+    }
+
     const heading = (items !== undefined && items.length > 0)
         ? t('patient.search_heading_result')
         : t('search.search_results.heading_empty');
@@ -25,9 +29,9 @@ const SearchBoxResults = ({items, onSelect}: SearchBoxResultsProps) => {
                         <div className='flex items-center justify-center w-1/12 uppercase'>{t('searchbox_result.email')}</div>
                         <div className='flex items-center justify-center w-1/12 uppercase'>{t('searchbox_result.phone')}</div>
                         <div className='flex items-center justify-center w-1/12 uppercase whitespace-nowrap'>{t('searchbox_result.text_consent')}</div>
-                        <div className='flex items-center justify-center w-1/12 '></div>
+                        <div className='flex items-center justify-center w-1/12 '/>
                     </div>
-                    {items?.map(i => <SearchBoxResultItem patient={i} onSelect={onSelect} />)}
+                    {items?.map(patient => <SearchBoxResultItem key={patient.patientId} patient={patient} onSelect={onSelect} />)}
                 </div>
             </div>
         </div>

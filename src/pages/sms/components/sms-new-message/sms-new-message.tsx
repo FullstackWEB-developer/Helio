@@ -8,7 +8,7 @@ import {PatientTicketsRequest} from '@pages/tickets/models/patient-tickets-reque
 import {DefaultPagination, PagedList, Paging} from '@shared/models';
 import {getPatientTicketsPaged} from '@pages/tickets/services/tickets.service';
 import {TicketBase} from '@pages/tickets/models/ticket-base';
-import {SmsNewMessageSteps} from '../../models/sms-new-message-steps';
+import {SmsNewMessageSteps} from '@pages/sms/models';
 import Spinner from '@components/spinner/Spinner';
 import SmsNewMessageNewTicket from './sms-new-message-new-ticket';
 import {getPatientByIdWithQuery} from '@pages/patients/services/patients.service';
@@ -36,7 +36,10 @@ const SmsNewMessage = ({...props}: SmsNewMessageProps) => {
     const [step, setStep] = useState<SmsNewMessageSteps>(SmsNewMessageSteps.Search);
 
     const {refetch, isLoading: patientsIsLoading, isFetching: patientsIsFetching, isError, data: patientsData = []} = useQuery(SearchPatient,
-        () => getPatients(searchParams.type, searchParams.value), {
+        () => {
+            setPatients([]);
+            return getPatients(searchParams.type, searchParams.value);
+        }, {
         enabled: false
     });
 
@@ -121,7 +124,7 @@ const SmsNewMessage = ({...props}: SmsNewMessageProps) => {
                         onSelect={onSearchBoxResultSelect}
                     />
                 }
-                {isError &&
+                {isError && !isLoading &&
                     <div className="pt-8 pl-6 body2">{t('search.search_results.empty', {searchTerm: searchParams.value})}</div>
                 }
                 {!isLoading && step === SmsNewMessageSteps.ExistingTicket &&
