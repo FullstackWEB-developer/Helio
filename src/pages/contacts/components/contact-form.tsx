@@ -20,6 +20,7 @@ import ControlledSelect from '@components/controllers/controlled-select';
 import Confirmation from '@components/confirmation/confirmation';
 import {useSelector} from 'react-redux';
 import {selectLookupValuesAsOptions} from '@pages/tickets/store/tickets.selectors';
+import {Prompt} from 'react-router';
 
 const SHIPPING_ADDRESS_LABEL_KEY = 'contacts.contact_details.individual.shipping_address'
 const BILLING_ADDRESS_LABEL_KEY = 'contacts.contact_details.individual.billing_address';
@@ -84,7 +85,7 @@ const ContactForm = ({contact, contactType, submitHandler, closeHandler, editMod
         setAddressDropdownOptions([...addressDropdownOptions, value]);
     }
     const {handleSubmit, control, reset, formState, setValue} = useForm({mode: 'onChange'});
-    const {isValid, isDirty} = formState;
+    const {isValid, isDirty, isSubmitted} = formState;
     const defaultCategory = contact?.category ? categoryOptions?.find(c => Number(c.value) === contact.category) : '';
     const defaultPrimaryAddress: Address | undefined = (contact?.addresses?.some(a => a.addressType === AddressType.PrimaryAddress)) ?
         (contact.addresses.find(a => a.addressType === AddressType.PrimaryAddress)) : undefined;
@@ -339,7 +340,7 @@ const ContactForm = ({contact, contactType, submitHandler, closeHandler, editMod
                 <ContactAddressPicker options={addressDropdownOptions} onSelect={handleAddressPickerChange} />
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-x-8">
                     <div className="col-span-12 lg:col-span-10">
-                        <div className="flex items-center justify-center h-20 mb-4 full-w">                            
+                        <div className="flex items-center justify-center h-20 mb-4 full-w">
                             <Button buttonType='secondary' label={t('common.cancel')} className='h-10 secondary-contact-form-btn mr-8' onClick={closeButtonHandler} />
                             <Button isLoading={isSaving} type='submit' buttonType='medium' label={t('common.save')} disabled={!isValid} />
                         </div>
@@ -349,6 +350,10 @@ const ContactForm = ({contact, contactType, submitHandler, closeHandler, editMod
             <Confirmation title={t('contacts.contact_details.confirm_close')}
                 okButtonLabel={t('common.yes')} isOpen={closingPromptOpen}
                 onOk={onCloseConfirm} onCancel={onCloseCancel} onClose={onCloseCancel} closeableOnEscapeKeyPress={true} />
+            <Prompt
+                when={isDirty && !closingPromptOpen && !isSubmitted}
+                message={t('contacts.contact_details.confirm_close')}
+            />
         </div>)
 }
 
