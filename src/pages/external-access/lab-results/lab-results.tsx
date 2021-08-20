@@ -22,7 +22,7 @@ const LabResults = () => {
     }, {enabled: !!verifiedPatient});
 
     if (!verifiedPatient) {
-        return <div>{t('hipaa_validation_form.hipaa_verification_failed')}</div>;
+        return <div>{t('hipaa_validation_form.not_verified_patient')}</div>;
     }
 
     return <div className={'w-full h-full'} >

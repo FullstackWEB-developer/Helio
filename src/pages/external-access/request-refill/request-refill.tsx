@@ -63,6 +63,7 @@ const RequestRefill = () => {
     const [selectedPharmacy, setSelectedPharmacy] = useState<Facility>();
     const [stateOptions, setStateOptions] = useState<Option[]>([]);
     const [isReadonlyPharmacy, setIsReadonlyPharmacy] = useState(true);
+    const [formReady, setFormReady] = useState(false);
 
     useEffect(() => {
         dispatch(getProviders());
@@ -135,10 +136,12 @@ const RequestRefill = () => {
         }
     }, [debouncePharmaciesSearchTerm, refetchPharmacies]);
 
-    const medicationOptions: Option[] = medications !== undefined ? medications?.map(item => {
+    const medicationOptions: Option[] = medications !== undefined ? medications?.filter(m => m.refillsAllowed)?.map(item => {
         return {
+
             value: item.medicationName,
-            label: item.medicationName
+            label: item.medicationName,
+            object: item
         };
     }) : [];
 
@@ -149,8 +152,41 @@ const RequestRefill = () => {
         };
     }) : [];
 
+    useEffect(() => {
+        if (medicationOptions.length && providerOptions.length && !formReady) {
+            setFormReady(true);
+        }
+    }, [medicationOptions, providerOptions, formReady])
+
     const defaultMedication = medicationOptions?.find(m => m.value === medication.medicationName)?.value;
-    const defaultProvider = providerOptions.find(p => p.value === verifiedPatient.defaultProviderId.toString())?.value;
+
+    const determineDefaultProvider = () => {
+        const medicationProvider = determineProviderForMedication();
+        if (medicationProvider) {
+            return medicationProvider;
+        }
+        return providerOptions.find(p => p.value === verifiedPatient.defaultProviderId.toString())?.value;
+    }
+
+    const determineProviderForMedication = () => {
+        const compareMedication = getValues('medication') ?? medication.medicationName;
+        const chosenMedication = medicationOptions?.find(m => m.value === compareMedication);
+        if (chosenMedication && chosenMedication.object?.defaultProviderId && chosenMedication.object?.enteredBy) {
+            const provider = providerOptions.find(p => p.value === chosenMedication.object.defaultProviderId.toString());
+            if (provider) {
+                return provider.value;
+            }
+        }
+        return null;
+    }
+
+    const defaultProvider = determineDefaultProvider();
+
+    const handleMedicationSelect = (option?: Option) => {
+        if (option) {
+            setValue('providerId', determineDefaultProvider())
+        }
+    }
 
     const onUseDifferentPharmacyCheckChange = (event: CheckboxCheckEvent) => {
         setIsVisibleForm(event.checked);
@@ -240,7 +276,8 @@ const RequestRefill = () => {
     }
 
     const onSubmit = (data: any) => {
-        let pharmacy = UseThisPharmacy();
+
+        let pharmacy = isVisibleForm ? UseThisPharmacy() : defaultPharmacy;
         let internalNote = `"** Prescription `;
         internalNote += `${data.medication} `;
         if (pharmacy) {
@@ -266,7 +303,7 @@ const RequestRefill = () => {
         });
     }
 
-    if (isMedicationLoading || isDefaultPharmacyLoading || isStatesLoading) {
+    if (isMedicationLoading || isDefaultPharmacyLoading || isStatesLoading || !formReady) {
         return <Spinner fullScreen />
     }
 
@@ -304,6 +341,10 @@ const RequestRefill = () => {
         return isReadonlyPharmacy ? getPharmacyNameSelect() : getPharmacyNameInput();
     }
 
+    if (!verifiedPatient) {
+        return <div>{t('external_access.hipaa.not_verified_patient')}</div>
+    }
+
     return <div className='2xl:px-48 pt-7 without-default-padding'>
         <div className='flex flex-row pb-5 cursor-pointer' onClick={() => history.goBack()}>
             <SvgIcon type={Icon.ArrowBack} />
@@ -325,20 +366,23 @@ const RequestRefill = () => {
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className='max-w-md'>
                     <ControlledSelect
-                        name='providerId'
-                        control={control}
-                        defaultValue={defaultProvider}
-                        options={providerOptions}
-                        data-test-id='request-refill-provider'
-                        label={'external_access.medication_refill.select_provider'}
-                    />
-                    <ControlledSelect
                         name='medication'
                         control={control}
                         defaultValue={defaultMedication}
                         options={medicationOptions}
+                        required={true}
                         data-test-id='request-refill-medication'
                         label={'external_access.medication_refill.select_prescription'}
+                        onSelect={handleMedicationSelect}
+                    />
+                    <ControlledSelect
+                        name='providerId'
+                        control={control}
+                        defaultValue={defaultProvider}
+                        required={true}
+                        options={providerOptions}
+                        data-test-id='request-refill-provider'
+                        label={'external_access.medication_refill.select_provider'}
                     />
                 </div>
                 <Controller
@@ -386,7 +430,7 @@ const RequestRefill = () => {
                     </div>
                 </div>
                 <div className='pt-6'>
-                    <Checkbox name='use-different-pharmacy' label={t('external_access.medication_refill.use_different_pharmacy')} onChange={onUseDifferentPharmacyCheckChange} />
+                    <Checkbox name='use-different-pharmacy' checked={isVisibleForm} label={t('external_access.medication_refill.use_different_pharmacy')} onChange={onUseDifferentPharmacyCheckChange} />
                     {isVisibleForm && <div className='request-refill-fields'>
                         {
                             getPharmacyNameControl()

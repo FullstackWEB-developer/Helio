@@ -5,7 +5,7 @@ import TextArea from '@components/textarea/textarea';
 import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import './lab-result-send-a-message.scss';
-import {Controller, useForm} from 'react-hook-form';
+import {useForm} from 'react-hook-form';
 import ControlledSelect from '@components/controllers/controlled-select';
 import {useDispatch, useSelector} from 'react-redux';
 import {selectVerifiedPatent} from '@pages/patients/store/patients.selectors';
@@ -50,12 +50,18 @@ const LabResultSendAMessage = ({labResult}: {labResult?: LabResultDetail}) => {
     }) : [];
 
     const getDefaultProvider = () => {
+        if (labResult && labResult.providerId) {
+            const provider = providerOptions.find(p => p.value === labResult.providerId.toString());
+            if (provider) {
+                return provider.value;
+            }
+        }
         if (verifiedPatient.defaultProviderId) {
             return providerOptions.find(p => p.value === verifiedPatient.defaultProviderId.toString())?.value;
         }
     }
 
-    const {control, handleSubmit, errors} = useForm();
+    const {control, handleSubmit, errors, formState: {isValid}} = useForm({mode: 'onChange'});
     const {isLoading, mutate} = useMutation(createPatientCase, {
         onSuccess: () => {
             setMessage('');
@@ -101,6 +107,7 @@ const LabResultSendAMessage = ({labResult}: {labResult?: LabResultDetail}) => {
             }
         });
     }
+
     return (
         <div className='w-full px-6 py-3 lab-results-border'>
             <div className="flex flex-col md:flex-row items-center">
@@ -108,7 +115,7 @@ const LabResultSendAMessage = ({labResult}: {labResult?: LabResultDetail}) => {
                 <span className='subtitle pl-4'>{t('external_access.lab_results.send_a_message_title')}</span>
                 <Button type="button" buttonType="link" label={t(!expanded ? 'external_access.lab_results.send_a_message' : 'common.close')}
                     className='body2 cursor-pointer md:ml-auto xl:pr-24'
-                    onClick={onClose}/>
+                    onClick={onClose} />
             </div>
             {
                 expanded &&
@@ -118,35 +125,28 @@ const LabResultSendAMessage = ({labResult}: {labResult?: LabResultDetail}) => {
                         <ControlledSelect
                             name='providerId'
                             control={control}
+                            required={true}
                             options={providerOptions}
                             defaultValue={getDefaultProvider()}
                             label={'external_access.lab_results.select_provider'}
                         />
                     </div>
                     <div className='flex flex-col w-full xl:w-7/12 h-28'>
-                        <Controller
-                            name='message'
-                            control={control}
-                            defaultValue={''}
-                            render={() => (
-                                <TextArea
-                                    required={true}
-                                    value={message}
-                                    onChange={(m) => setMessage(m)}
-                                    placeHolder={t('external_access.lab_results.text_area_placeholder')}
-                                    className='w-full h-full'
-                                    resizable={false}
-                                    maxLength={maxMessageLength}
-                                    error={errors.messageText?.message}
-                                    maxLengthClassName={'subtitle3-small'} />
-                            )}
-                        />
+                        <TextArea
+                            value={message}
+                            onChange={(m) => setMessage(m)}
+                            placeHolder={t('external_access.lab_results.text_area_placeholder')}
+                            className='w-full h-full'
+                            resizable={false}
+                            maxLength={maxMessageLength}
+                            error={errors.messageText?.message}
+                            maxLengthClassName={'subtitle3-small'} />
                     </div>
                     <div className="flex pt-6 pb-10">
                         <>
                             <Button buttonType='secondary' label={t('common.cancel')} onClick={onClose} />
-                            <span className="pl-6"/>
-                            <Button type='submit' isLoading={isLoading} disabled={!message} label={t('common.send')} />
+                            <span className="pl-6" />
+                            <Button type='submit' isLoading={isLoading} disabled={!isValid || !message} label={t('common.send')} />
                         </>
                     </div>
                 </form>

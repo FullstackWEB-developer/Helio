@@ -633,7 +633,8 @@
       "zip_code": "Zip Code",
       "verification_failed": "We could not validate your information!",
       "invalid_dob": "Enter a valid birth date (MM/DD/YYYY)",
-      "attention": "There are items that require your attention."
+      "attention": "There are items that require your attention.",
+      "not_verified_patient": "Please use the link that is provided to you."
     },
     "appointments": {
       "appointment_list": {
@@ -716,6 +717,8 @@
       "below_list": "Below is the list of your medications.",
       "have_questions": "Have a question about your medication?",
       "message_your_provider": "If you have any questions regarding your medication refill, please message your provider’s office and we will reply within 24 hours.",
+      "message_success": "Your message was sent.",
+      "message_error": "Sending message failed. Please try again.",
       "medication_list": {
         "medication": "Medication",
         "entered_by": "Entered By",
