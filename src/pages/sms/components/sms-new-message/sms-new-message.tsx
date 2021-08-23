@@ -105,7 +105,7 @@ const SmsNewMessage = ({...props}: SmsNewMessageProps) => {
     }
 
     return (
-        <div className='flex flex-col'>
+        <div className='flex flex-col h-full'>
             <div className='flex flex-row items-center w-full px-4 border-b'>
                 <div className='pr-1 body2'>{t('sms.chat.new.to')}</div>
                 <SearchBox
@@ -114,7 +114,7 @@ const SmsNewMessage = ({...props}: SmsNewMessageProps) => {
                     onSearch={(type, value) => setSearchParams({type, value})}
                 />
             </div>
-            <div>
+            <div className='overflow-y-auto'>
                 {isLoading &&
                     <Spinner fullScreen />
                 }
