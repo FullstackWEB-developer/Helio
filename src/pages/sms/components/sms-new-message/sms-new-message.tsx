@@ -35,7 +35,7 @@ const SmsNewMessage = ({...props}: SmsNewMessageProps) => {
 
     const [step, setStep] = useState<SmsNewMessageSteps>(SmsNewMessageSteps.Search);
 
-    const {refetch, isLoading: patientsIsLoading, isFetching: patientsIsFetching, isError, data: patientsData = []} = useQuery(SearchPatient,
+    const {refetch, isLoading: patientsIsLoading, isFetching: patientsIsFetching, isError, data: patientsData = []} = useQuery([SearchPatient, searchParams.type, searchParams.value],
         () => {
             setPatients([]);
             return getPatients(searchParams.type, searchParams.value);
