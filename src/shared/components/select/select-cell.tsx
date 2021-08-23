@@ -9,7 +9,8 @@ export interface SelectCellProps {
     onClick: (item: Option) => void,
     disabled?: boolean,
     className?: string,
-    changeCursorValueOnHover?: () => void
+    changeCursorValueOnHover?: () => void;
+    truncateAssistiveText?: boolean;
 }
 
 const SelectCell = ({item, isSelected, onClick, disabled, ...props}: SelectCellProps) => {
@@ -42,13 +43,17 @@ const SelectCell = ({item, isSelected, onClick, disabled, ...props}: SelectCellP
 
     if (disabled) return null;
 
+    const assistiveTextCss = classnames('pl-4 body3-small assistive-text', {
+        'select-cell-assistive-text-line-clamped': props.truncateAssistiveText
+    })
+
     return (
-        <div onClick={() => cellClicked()} onMouseDown={(e) => {e.preventDefault()}} onMouseOver={(e) => handleMouseOver()}
+        <div onClick={() => cellClicked()} onMouseDown={(e) => {e.preventDefault()}} onMouseOver={() => handleMouseOver()}
             className={`w-full select-cell justify-between flex items-center ${calculateCss()} ${bgCssClass} ${props.className}`}>
             <div className={classnames('flex flex-col justify-center w-full', {'py-2': !!item.assistiveText})} data-test-id='select-cell-icon-content' >
                 <div className='flex items-center pl-4' data-test-id={`select-cell-text-${item.label}`}>{t(item.label)}</div>
                 {item.assistiveText &&
-                    <span className='pl-4 body3-small assistive-text'>{item.assistiveText}</span>
+                    <span className={assistiveTextCss}>{item.assistiveText}</span>
                 }
             </div>
         </div>

@@ -5,7 +5,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {selectVerifiedPatent} from '@pages/patients/store/patients.selectors';
 import {useQuery} from 'react-query';
 import {AxiosError} from 'axios';
-import {GetPatientAppointments} from '@constants/react-query-constants';
+import {GetAppointmentTypes, GetPatientAppointments} from '@constants/react-query-constants';
 import {getAppointments} from '@pages/patients/services/patients.service';
 import Logger from '@shared/services/logger';
 import {setSelectedAppointment, setAppointmentTypes} from '@pages/external-access/appointment/store/appointments.slice';
@@ -23,7 +23,7 @@ const AppointmentList = () => {
     const dispatch = useDispatch();
     const [appointmentList, setAppointmentList] = useState<Appointment[]>();
 
-    const {isLoading: isAppointmentTypeLoading, data: appointmentTypes} = useQuery<AppointmentType[], AxiosError>([], () => getAppointmentTypes(), {
+    const {isLoading: isAppointmentTypeLoading, data: appointmentTypes} = useQuery<AppointmentType[], AxiosError>([GetAppointmentTypes], () => getAppointmentTypes(), {
         enabled: true,
         onSuccess: (data) => {
             if (data.length < 1) {

@@ -1,8 +1,11 @@
-import { RootState } from '../../../../app/store';
-import { createSelector } from '@reduxjs/toolkit';
-import {Appointment} from '@pages/external-access/appointment/models/appointment.model';
-import {AppointmentSlot} from '@pages/external-access/appointment/models/appointment-slot.model';
-import {AppointmentType} from '@pages/external-access/appointment/models/appointment-type.model';
+import {RootState} from '../../../../app/store';
+import {createSelector} from '@reduxjs/toolkit';
+import {
+    AppointmentSlotRequest,
+    AppointmentType,
+    AppointmentSlot,
+    Appointment
+} from '../models';
 
 export const appointmentsState = (state: RootState) => state.externalAccessState.appointmentsState;
 
@@ -28,4 +31,9 @@ export const selectAppointmentTypes = createSelector(
 export const selectSelectedAppointmentSlot = createSelector(
     appointmentsState,
     items => items.selectedAppointmentSlot as AppointmentSlot
+)
+
+export const selectAppointmentSlotRequest = createSelector(
+    appointmentsState,
+    item => item.appointmentSlotRequest as AppointmentSlotRequest
 )

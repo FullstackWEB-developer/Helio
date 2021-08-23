@@ -67,7 +67,10 @@ const DateTimePicker = React.forwardRef<HTMLInputElement, DateTimePickerProps>((
     const [inputType, setInputType] = useState<InputType>('date');
     const [isISOFormat, setIsISOFormat] = useState(!longDateFormat);
     const [calendarPositionTop, setCalendarPositionTop] = useState(0)
-
+    
+    const maxDate =dayjs(max).utc().local().toDate();
+    const minDate = dayjs(min).utc().local().toDate();
+    
     const switchDateFormat = (isISOFormatEnabled: boolean) => {
         if (isISOFormatEnabled) {
             setInputDateFormat(DATE_ISO_FORMAT);
@@ -84,7 +87,6 @@ const DateTimePicker = React.forwardRef<HTMLInputElement, DateTimePickerProps>((
         const position = utils.getElementPosition(inputElementRef);
         setCalendarPositionTop(position.top + inputElementRef.offsetHeight);
     }, [ref]);
-
 
     useEffect(() => {
         switchDateFormat(isISOFormat);
@@ -145,7 +147,7 @@ const DateTimePicker = React.forwardRef<HTMLInputElement, DateTimePickerProps>((
         }
     }
 
-    const isValidDate = (valueDate: Date) => valueDate >= min && valueDate <= max;
+    const isValidDate = (valueDate: Date) => valueDate >= minDate && valueDate <= maxDate;
 
     const showDateFormat = (v: boolean) => {
         if (!isISOFormat || !!inputValue) {
@@ -287,8 +289,8 @@ const DateTimePicker = React.forwardRef<HTMLInputElement, DateTimePickerProps>((
                     onFocus={onInputFocus}
                     onBlur={onInputBlur}
                     onKeyPress={onInputPress}
-                    max={max ? utils.toShortISOLocalString(max) : undefined}
-                    min={min ? utils.toShortISOLocalString(min) : undefined}
+                    max={max ? utils.toShortISOLocalString(maxDate) : undefined}
+                    min={min ? utils.toShortISOLocalString(minDate) : undefined}
                     className={getInputClassName()}
                     value={inputValue}
                     readOnly={isInputReadOnly}
@@ -347,6 +349,5 @@ const DateTimePicker = React.forwardRef<HTMLInputElement, DateTimePickerProps>((
         </div>
     );
 });
-
 
 export default DateTimePicker;

@@ -45,13 +45,13 @@ const ExternalAccessLayout = ({children}: ExternalAccessLayoutProps) => {
     return <>
         <div className={externalAccessLayoutClassnames}>
             <div className='h-20 md:px-40 external-access-layout-header'>
-                <div className='md:px-6 md:justify-start justify-center flex h-full items-center'>
+                <div className='flex items-center justify-center h-full md:px-6 md:justify-start'>
                     <SvgIcon type={Icon.CwcLogo} />
                 </div>
             </div>
-            <div className='padding-top flex-grow px-8 md:px-40 pb-36'>{children}</div>
+            <div className='flex-grow px-8 padding-top md:px-40 pb-36 external-access-container'>{children}</div>
             <div className='h-16 md:px-40 external-access-layout-footer body3-medium'>
-                <div className='h-full px-16 flex items-center text-center'>
+                <div className='flex items-center h-full px-16 text-center'>
                     {t('external_access.copyright', {'year': year})}
                 </div>
             </div>

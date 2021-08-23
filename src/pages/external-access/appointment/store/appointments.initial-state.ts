@@ -1,6 +1,7 @@
 import {Appointment} from '@pages/external-access/appointment/models/appointment.model';
 import {AppointmentSlot} from '@pages/external-access/appointment/models/appointment-slot.model';
 import {AppointmentType} from '@pages/external-access/appointment/models/appointment-type.model';
+import {AppointmentSlotRequest} from '../models';
 
 export interface AppointmentsState {
     selectedAppointment?: Appointment;
@@ -8,6 +9,7 @@ export interface AppointmentsState {
     isAppointmentRescheduled: boolean;
     rescheduleTimeFrame: number;
     appointmentTypes: AppointmentType[];
+    appointmentSlotRequest?: AppointmentSlotRequest;
 }
 
 const initialAppointmentState: AppointmentsState = {
@@ -15,7 +17,8 @@ const initialAppointmentState: AppointmentsState = {
     selectedAppointmentSlot: undefined,
     isAppointmentRescheduled: false,
     rescheduleTimeFrame: 0,
-    appointmentTypes: []
+    appointmentTypes: [],
+    appointmentSlotRequest: undefined
 }
 
 export default initialAppointmentState;

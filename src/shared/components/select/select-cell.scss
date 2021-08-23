@@ -32,4 +32,11 @@
     min-width: 1rem;
     min-height: 1rem;
   }
-  
+
+
+.select-cell-assistive-text-line-clamped {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

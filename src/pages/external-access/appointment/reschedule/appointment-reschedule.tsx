@@ -64,7 +64,13 @@ const AppointmentReschedule = () => {
         useQuery<AppointmentSlot[], AxiosError>([GetAppointmentSlots, provider?.id, department?.id, appointment.appointmentTypeId], () => {
             let beginDate = dayjs(getWorkDates()[0]).toDate();
             beginDate = dayjs(beginDate).isBefore(minStartDate) ? minStartDate : beginDate;
-            return getAppointmentSlots(provider?.id as number, department?.id as number, appointment.appointmentTypeId, beginDate, dayjs(beginDate).utc().add(numberOfDays, 'day').toDate());
+            return getAppointmentSlots({
+                providerId: [provider?.id as number],
+                departmentId: department?.id as number,
+                appointmentTypeId: appointment.appointmentTypeId,
+                startDate: beginDate,
+                endDate: dayjs(beginDate).utc().add(numberOfDays, 'day').toDate()
+            });
         },
             {
                 enabled: false
@@ -169,7 +175,7 @@ const AppointmentReschedule = () => {
         return dayjs(slotsDate).isSame(startDate);
     }
     return <div>
-        <div className='2xl:whitespace-pre 2xl:h-12 2xl:my-3 flex items-center'>
+        <div className='flex items-center 2xl:whitespace-pre 2xl:h-12 2xl:my-3'>
             <h4>
                 {t('external_access.appointments.select_your_appointment')}
             </h4>
@@ -194,11 +200,11 @@ const AppointmentReschedule = () => {
             }
         </div>
         <div className='pb-1'>
-            <div className='hidden lg:flex flex-row'>
+            <div className='flex-row hidden lg:flex'>
                 <SvgIcon type={Icon.ArrowLeft} className='cursor-pointer' fillClass='active-item-icon'
                     onClick={() => previousPage()} />
                 <div>
-                    <div className="grid grid-flow-col auto-cols-max md:auto-cols-min pb-3">
+                    <div className="grid grid-flow-col pb-3 auto-cols-max md:auto-cols-min">
                         {
                             appointmentSlots && getWorkDates().map(date => {
                                 return <div key={date} className={classnames('flex justify-center reschedule-slot subtitle2 w-56 md:w-80 mx-2', {'slot-date-selected body2': isBordered(date)})}>
@@ -207,7 +213,7 @@ const AppointmentReschedule = () => {
                             })
                         }
                     </div>
-                    <div className="grid grid-flow-col auto-cols-max md:auto-cols-min w-full justify-between border-t pt-4">
+                    <div className="grid justify-between w-full grid-flow-col pt-4 border-t auto-cols-max md:auto-cols-min">
                         {
                             appointmentSlots && getWorkDates().map((date, index) => {
                                 const column = mappedSlots.get(date);
@@ -223,13 +229,13 @@ const AppointmentReschedule = () => {
                 <SvgIcon type={Icon.ArrowRight} className='cursor-pointer' fillClass='active-item-icon'
                     onClick={() => nextPage()} />
             </div>
-            <div className='lg:hidden flex flex-row'>
-                <SvgIcon type={Icon.ArrowLeft} className='cursor-pointer mt-1' fillClass='active-item-icon'
+            <div className='flex flex-row lg:hidden'>
+                <SvgIcon type={Icon.ArrowLeft} className='mt-1 cursor-pointer' fillClass='active-item-icon'
                     onClick={() => previousPage(true)} />
                 <div className="w-full">
                     {
                         appointmentSlots && <div className='p-1'>
-                            <div className='flex justify-center w-auto px-4 subtitle2 border-b pb-3 mb-4'>
+                            <div className='flex justify-center w-auto px-4 pb-3 mb-4 border-b subtitle2'>
                                 {dayjs(startDate).format('ddd, MMM D')}
                             </div>
                             {
@@ -248,11 +254,11 @@ const AppointmentReschedule = () => {
                         </div>
                     }
                 </div>
-                <SvgIcon type={Icon.ArrowRight} className='cursor-pointer mt-1' fillClass='active-item-icon'
+                <SvgIcon type={Icon.ArrowRight} className='mt-1 cursor-pointer' fillClass='active-item-icon'
                     onClick={() => nextPage(true)} />
             </div>
             {
-                isFetching && <div className='h-8 w-20'>
+                isFetching && <div className='w-20 h-8'>
                     <Spinner fullScreen />
                 </div>
             }

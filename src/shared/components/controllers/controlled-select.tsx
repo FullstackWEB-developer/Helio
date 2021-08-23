@@ -19,6 +19,7 @@ export interface ControlledSelectProps {
     className?: string;
     onTextChange?: (value: string) => void;
     onSelect?: (option?: Option) => void;
+    truncateAssistiveText?: boolean;
     isLoading?: boolean;
     allowClear?: boolean;
 }
@@ -39,6 +40,7 @@ const ControlledSelect = ({
     onTextChange,
     required = false,
     isLoading,
+    truncateAssistiveText = false,
     ...props
 }: ControlledSelectProps) => {
 
@@ -75,6 +77,7 @@ const ControlledSelect = ({
                 allowClear={props.allowClear}
                 className={className}
                 defaultValue={defaultValue}
+                truncateAssistiveText={truncateAssistiveText}
                 autoComplete={autoComplete}
                 options={options}
                 required={required}

@@ -4,6 +4,7 @@ export interface AppointmentSlot {
     departmentId: number;
     localProviderId: number;
     appointmentType: string;
+    appointmentTypeId: number;
     providerId: number;
     startTime: string;
     duration: number;

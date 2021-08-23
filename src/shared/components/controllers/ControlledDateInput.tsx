@@ -17,7 +17,7 @@ export interface ControllerDateInputProps {
     label?: string;
     defaultValue?: Date | null;
     className?: string;
-    dataTestId: string;
+    dataTestId?: string;
     longDateFormat?: boolean;
     type?: 'date' | 'time';
     isWeekendDisabled?: boolean;
@@ -35,7 +35,7 @@ const ControlledDateInput = ({
     control,
     name,
     disabled,
-    dataTestId,
+    dataTestId = name,
     max,
     min,
     defaultValue,

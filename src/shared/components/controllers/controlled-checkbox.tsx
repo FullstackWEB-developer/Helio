@@ -8,25 +8,29 @@ interface ControlledCheckboxProps {
     name: string
     label: string;
     value?: string;
+    assistiveText?: string;
     className?: string;
+    onChange?: (event: CheckboxCheckEvent) => void;
 }
-const ControlledCheckbox = ({control, name, label, value, className}: ControlledCheckboxProps) => {
+const ControlledCheckbox = ({control, name, label, value, assistiveText, className, ...props}: ControlledCheckboxProps) => {
     return (
         <Controller
             control={control}
             name={name}
             key={name}
-            render={(props) => {
+            render={(controllerProps) => {
                 return (<Checkbox
-                    {...props}
+                    {...controllerProps}
                     className={className}
-                    checked={props.value?.checked ?? false}
+                    checked={controllerProps.value?.checked ?? false}
                     truncate={true}
                     label={label}
+                    assistiveText={assistiveText}
                     data-test-id={`${name}-checkbox-${value}`}
                     value={value}
                     onChange={(e: CheckboxCheckEvent) => {
-                        props.onChange(e);
+                        controllerProps.onChange(e);
+                        props.onChange?.(e);
                         control.setValue(name, e, {shouldValidate: true})
                     }}
                 />)

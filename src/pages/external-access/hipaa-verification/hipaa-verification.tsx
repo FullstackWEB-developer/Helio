@@ -69,6 +69,9 @@ const HipaaVerification = ({request}: HipaaVerificationProps) => {
                 case ExternalAccessRequestTypes.GetLabResults:
                     history.push('/o/lab-results');
                     break;
+                case ExternalAccessRequestTypes.ScheduleAppointment:
+                    history.push('/o/appointment-schedule');
+                    break;
             }
         }
     }

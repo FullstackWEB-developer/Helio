@@ -2,7 +2,8 @@ import Api from '../../../shared/services/api';
 import {Appointment} from '@pages/external-access/appointment/models/appointment.model';
 import utils from '@shared/utils/utils';
 import {AppointmentCancellationModel} from '@pages/external-access/appointment/models/appointment-cancellation.model';
-
+import {AppointmentSlotRequest, AppointmentType} from '@pages/external-access/appointment/models';
+import {CreateAppointmentRequest} from '../models/create-appointment-request';
 const itemCount = 100;
 const appointmentsBaseUrl = '/appointments';
 
@@ -27,21 +28,59 @@ export const getAppointmentTypeById = async (appointmentTypeId: number) => {
      return result.data;
 }
 
-export const getAppointmentTypes = async () => {
+export const getAppointmentTypes = async (): Promise<AppointmentType[]> => {
      const url = `${appointmentsBaseUrl}/appointmenttypes`;
      const result = await Api.get(url);
      return result.data;
 }
 
-export const getAppointmentSlots = async (providerId: number, departmentId: number, appointmentTypeId: number, startDate: Date, endDate: Date) => {
-     let getOpenSlotsUrl = `${appointmentsBaseUrl}/open-slots?ignoreschedulablepermission=true`;
-     getOpenSlotsUrl = getOpenSlotsUrl + `&departmentId=${departmentId}`;
-     getOpenSlotsUrl = getOpenSlotsUrl + `&providerId=${providerId}`;
-     getOpenSlotsUrl = getOpenSlotsUrl + `&appointmentTypeId=${appointmentTypeId}`;
-     getOpenSlotsUrl = getOpenSlotsUrl + `&startDate=${utils.toShortISOLocalString(startDate)}`;
-     getOpenSlotsUrl = getOpenSlotsUrl + `&endDate=${utils.toShortISOLocalString(endDate)}`;
-     getOpenSlotsUrl = getOpenSlotsUrl + `&itemCount=${itemCount}`;
-     const result = await Api.get(getOpenSlotsUrl);
+export const getAppointmentTypesForPatient = async (patientId: number, providerId: number): Promise<AppointmentType[]> => {
+     const url = `${appointmentsBaseUrl}/patient-appointment-types`;
+     const result = await Api.get(url, {
+          params: {
+               patientId,
+               providerId
+          }
+     });
+     return result.data;
+}
+
+export const getAppointmentSlots = async (params: AppointmentSlotRequest, limitItemCount: boolean = true) => {
+     const url = `${appointmentsBaseUrl}/open-slots`;
+
+     var urlParams = new URLSearchParams();
+
+     if (params.departmentId) {
+          urlParams.append("departmentId", params.departmentId.toString());
+     }
+     if (params.patientId) {
+          urlParams.append("patientId", params.patientId.toString());
+     }
+     if (params.providerId && params.providerId.length > 0) {
+          params.providerId.forEach(p => urlParams.append("providerId", p.toString()));
+     }
+     if (params.allowMultipleDepartment) {
+          urlParams.append("allowMultipleDepartment", "true");
+     }
+     if (params.patientDefaultDepartmentId) {
+          urlParams.append("patientDefaultDepartmentId", params.patientDefaultDepartmentId.toString());
+     }
+     if (params.patientDefaultProviderId) {
+          urlParams.append("patientDefaultProviderId", params.patientDefaultProviderId.toString());
+     }
+     if (params.timeOfDays && params.timeOfDays.length > 0) {
+          params.timeOfDays.forEach(p => urlParams.append("timeOfDays", p.toString()));
+     }
+     if (limitItemCount) {
+          urlParams.append("itemCount", itemCount.toString());
+     }
+     urlParams.append("startDate", utils.toShortISOLocalString(params.startDate));
+     urlParams.append("endDate", utils.toShortISOLocalString(params.endDate));
+     urlParams.append("ignoreSchedulablePermission", "true");
+     urlParams.append("appointmentTypeId", params.appointmentTypeId.toString());
+
+
+     const result = await Api.get(url, {params: urlParams});
      return result.data;
 }
 
@@ -49,6 +88,11 @@ export interface RescheduleAppointmentProps {
      appointmentId: number;
      newAppointmentId: number;
      patientId: number;
+}
+
+export const scheduleAppointment = async (request: CreateAppointmentRequest) => {
+     const {data} = await Api.post(appointmentsBaseUrl, request);
+     return data;
 }
 
 export const rescheduleAppointment = async ({appointmentId, newAppointmentId, patientId}: RescheduleAppointmentProps) => {

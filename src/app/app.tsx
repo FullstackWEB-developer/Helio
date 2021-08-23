@@ -20,6 +20,8 @@ const SearchResults = React.lazy(() => import('../shared/components/search-bar/c
 const PatientChart = React.lazy(() => import('@pages/patients/patient-chart'));
 const VerifyRedirectLink = React.lazy(() => import('@pages/external-access/hipaa-verification/verify-redirect-link'));
 const AppointmentSchedule = React.lazy(() => import('@pages/external-access/appointment/appointment-schedule'));
+const AppointmentScheduleSelect = React.lazy(() => import('@pages/external-access/appointment/appointment-schedule-select/appointment-schedule-select'));
+const AppointmentScheduleConfirm = React.lazy(() => import('@pages/external-access/appointment/appointment-schedule-confirm/appointment-schedule-confirm'));
 const AppointmentCancellation = React.lazy(() => import('@pages/external-access/appointment/appointment-cancelation'));
 const AppointmentCanceled = React.lazy(() => import('@pages/external-access/appointment/appointment-canceled'));
 const AppointmentReschedule = React.lazy(() => import('@pages/external-access/appointment/reschedule/appointment-reschedule'));
@@ -89,7 +91,10 @@ function App() {
                                     component={withSuspense(RequestMedicalRecords)} />
                                 <Route exact path='/o/lab-results' component={withSuspense(LabResults)} />
                                 <Route path='/o/lab-results/:labResultId' component={withSuspense(LabResultsDetailed)} />
-                                <Route path='/o/appointment-schedule' component={withSuspense(AppointmentSchedule)} />
+                                <Route exact path='/o/appointment-schedule' component={withSuspense(AppointmentSchedule)} />
+                                <Route exact path='/o/appointment-schedule/select' component={withSuspense(AppointmentScheduleSelect)} />
+                                <Route exact path='/o/appointment-schedule/confirm' component={withSuspense(AppointmentScheduleConfirm)} />
+                                <Route path='/o/appointment-scheduled' component={withSuspense(AppointmentRescheduled)} />
                                 <Route path='/o/appointment-cancelation'
                                     component={withSuspense(AppointmentCancellation)} />
                                 <Route path='/o/appointment-canceled' component={withSuspense(AppointmentCanceled)} />

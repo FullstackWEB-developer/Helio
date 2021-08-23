@@ -1,0 +1,33 @@
+@media (min-width: 1024px) {
+  .reschedule-slot {
+    width: 8.5rem;
+  }
+}
+
+.slot-date-selected {
+  color: var(--color-primary-400);
+}
+.start-date {
+  max-width: 12rem;
+}
+
+.external-access-container {
+  padding-right: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.appointment-schedule-select {
+  &-modal {
+    width: 37rem;
+    z-index: 401;
+  }
+  .slot-full-container {
+    max-height: 31.875rem;
+  }
+  .map-viewer {
+    height: 100vh;
+    &-wrapper {
+      width: 100%;
+    }
+  }
+}

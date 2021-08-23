@@ -7,4 +7,5 @@ export interface AppointmentType {
     cancelationFee?: number;
     reschedulable: boolean;
     rescheduleTimeFrame?: number;
+    description?: string;
 }

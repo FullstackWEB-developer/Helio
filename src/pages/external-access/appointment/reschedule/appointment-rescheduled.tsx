@@ -24,6 +24,7 @@ const AppointmentRescheduled = () => {
     const appointment = useSelector(selectSelectedAppointment);
     const departments = useSelector(selectLocationList);
     const providers = useSelector(selectProviderList);
+    
     useEffect(() => {
         dispatch(getProviders());
         dispatch(getLocations());
@@ -51,7 +52,7 @@ const AppointmentRescheduled = () => {
     }
 
     return  <div className='2xl:px-48'>
-        <div className='2xl:whitespace-pre 2xl:h-12 2xl:my-3 flex w-full items-center'>
+        <div className='flex items-center w-full 2xl:whitespace-pre 2xl:h-12 2xl:my-3'>
             <h4>
                 {t('external_access.appointments.appointment_scheduled')}
             </h4>
@@ -89,7 +90,7 @@ const AppointmentRescheduled = () => {
                 <div className='pt-10'>
                     {t('external_access.appointments.instructions')}
                 </div>
-                <div className='border-b pt-2'/>
+                <div className='pt-2 border-b'/>
                 <div className='pt-4 body2' dangerouslySetInnerHTML={{__html: appointmentType?.instructions}}/>
             </>
         }
@@ -98,7 +99,7 @@ const AppointmentRescheduled = () => {
             <div className='pt-8'>
                 {t('external_access.appointments.parking_information')}
             </div>
-            <div className='border-b pt-2'/>
+            <div className='pt-2 border-b'/>
             <div className='pt-4 body2'>
                 {department?.parkingInformation}
             </div>
@@ -107,7 +108,7 @@ const AppointmentRescheduled = () => {
         <div className='pt-6'>
             {t('external_access.appointments.directions')}
         </div>
-        <div className='border-b pt-2'/>
+        <div className='pt-2 border-b'/>
         <div className='pt-4 body2'>
             <Trans i18nKey="external_access.appointments.get_directions">
                 <a rel='noreferrer' target='_blank' href={`https://maps.google.com/?q=${department?.latitude},${department?.longitude}`}>Get directions</a> to your appointment location.

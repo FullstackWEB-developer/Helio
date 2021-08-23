@@ -26,9 +26,10 @@ interface SelectProps {
     className?: string;
     onTextChange?: (value: string) => void;
     onSelect?: (option?: Option) => void;
+    truncateAssistiveText?: boolean;
     allowClear?: boolean;
 }
-const Select = React.forwardRef<HTMLDivElement, SelectProps>(({options, order, label, className, autoComplete = true, defaultValue = null, allowClear =false, ...props}: SelectProps, ref) => {
+const Select = React.forwardRef<HTMLDivElement, SelectProps>(({options, order, label, className, autoComplete = true, defaultValue = null, truncateAssistiveText=false, allowClear =false, ...props}: SelectProps, ref) => {
     const {t}: {t: any} = useTranslation();
     const [open, setOpen] = useState(false);
     const [selectedOption, setSelectedOption] = useState<Option | null | undefined>(typeof defaultValue === 'string' ? options.find(a => a.value === defaultValue) : defaultValue);
@@ -119,9 +120,10 @@ const Select = React.forwardRef<HTMLDivElement, SelectProps>(({options, order, l
         return `body${(open || searchQuery || selectedOption) ? '3' : '2'}`;
     }
 
-    const determineAssistiveTextColor = () => {
-        return `assistive-text-color-${open ? 'focused' : 'inactive'}`;
-    }
+    const assistiveTextClass = classnames({
+        'assistive-text-color-focused' : open,
+        'assistive-text-color-inactive' : !open
+    })
 
     const OptionSection = () => {
         if (props.isLoading) {
@@ -135,6 +137,7 @@ const Select = React.forwardRef<HTMLDivElement, SelectProps>(({options, order, l
                     {
                         currentOptions.map((option: Option, index) =>
                             <SelectCell item={option}
+                                truncateAssistiveText={truncateAssistiveText}
                                 key={`${index}-${option.value}`}
                                 isSelected={option.value === selectedOption?.value}
                                 onClick={() => selectValueChange(option)}
@@ -200,7 +203,7 @@ const Select = React.forwardRef<HTMLDivElement, SelectProps>(({options, order, l
             {
                 props.assistiveText && !props.error &&
                 <div className={`h-6 max-h-6 pl-4 ${open ? 'assistive-text-focus' : ''} body3 pt-1 truncate`}>
-                    <span className={determineAssistiveTextColor()}>{props.assistiveText}</span>
+                    <span className={assistiveTextClass}>{t(props.assistiveText)}</span>
                 </div>
             }
             {props.error && <div className={'h6 pl-4 body3 pt-1 text-danger truncate'}>{props.error}</div>}

@@ -621,10 +621,12 @@
     "title_5": "Manage your medical records. \nIt’s fast and easy.",
     "title_6": "Manage your appointments online. \nIt’s fast and easy.",
     "title_7": "Manage your appointments online. \nIt’s fast and easy.",
+    "title_8": "Schedule appointment online. \nIt’s fast and easy.",
     "send_us_message": "Send us a message",
     "message_sent": "This message has been sent",
     "message_send_failed": "This message could not be sent",
     "characters": "{{maxLength}} characters",
+    "prefix_error_message": "Error Message: ",
     "hipaa": {
       "verify_title": "Please verify your identity to proceed.",
       "dob": "Date of birth",
@@ -677,6 +679,7 @@
       "below_available_appointments": "Below are available appointments, starting with first available date.",
       "date": "Date",
       "confirm_reschedule_appointment": "Reschedule Appointment",
+      "confirm_schedule_appointment": "Schedule Appointment",
       "reschedule_appointment_error": "There is an error when reschedule appointment. ",
       "no_slots_found": "No open slot found for this range, please select any other date range.",
       "no_day_slots_found": "No open slot found for this day, please select any other date.",
@@ -794,6 +797,53 @@
       "select_provider": "Provider",
       "message_success": "Your message was sent.",
       "message_error": "Sending message failed. Please try again."
+    },
+    "schedule_appointment": {
+      "what_you_are_coming_for": "Tell us what you are coming in for.",
+      "what_you_are_coming_for_desc": "Give us a bit of information about your visit so we can find the best appointment for you. ",
+      "appointment_type": "Appointment Type",
+      "provider": "Provider",
+      "location": "Location",
+      "select_preference": "Select your preference",
+      "first_available": "First available",
+      "select_preferred": "Select preferred date",
+      "select_date": "Select Date",
+      "find_appointment": "Find Appointment",
+      "select_your_appointment": "Select your appointment",
+      "no_open_slot": "No open slots available on on this date.",
+      "show_more": "Show More",
+      "filters": {
+        "title": "Filters",
+        "time_of_day": "Time of Day",
+        "early_morning": "Early Morning",
+        "750-10": "(7:50 am - 10 am)",
+        "10-12": "(10:00 am - 12 pm)",
+        "12-05": "(12:00 pm - 5:00 pm)",
+        "morning": "Morning",
+        "afternoon": "Afternoon",
+        "gender": "Gender",
+        "female": "Female",
+        "male": "Male"
+      },
+      "with_doctor": "with {{providerName}}",
+      "back": "Back",
+      "schedule_appointment": "Schedule Appointment",
+      "thank_you": "Thank you. Your appointment is scheduled.",
+      "error_scheduling": "Scheduling appointment failed. Please try again later",
+      "time_of_day": {
+        "title":"Time of Day",
+        "afternoon": "Afternoon",
+        "afternoon_info": "(12:00 pm - 5:00 pm)",
+        "morning": "Morning",
+        "morning_info": "(10:00 am - 12 pm)",
+        "early_morning": "Early Morning",
+        "early_morning_info": "(7:50 am - 10 am)"
+      },
+      "gender": {
+        "title": "Gender",
+        "female": "Female",
+        "male": "Male"
+      }
     }
   },
   "contacts": {

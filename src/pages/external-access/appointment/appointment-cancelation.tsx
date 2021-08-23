@@ -61,7 +61,13 @@ const AppointmentCancelation = () => {
     );
 
     const {isLoading: isAppointmentSlotsLoading, data: appointmentSlots, refetch} = useQuery<AppointmentSlot[], AxiosError>([GetAppointmentSlots, provider?.id, department?.id, appointment.appointmentTypeId], () =>
-        getAppointmentSlots(provider?.id as number, department?.id as number, appointment.appointmentTypeId, startDate, endDate),
+        getAppointmentSlots({
+            providerId: [provider?.id as number],
+            departmentId: department?.id as number,
+            appointmentTypeId: appointment.appointmentTypeId,
+            startDate: startDate,
+            endDate: endDate
+        }),
         {
             enabled: false
         }
