@@ -6,7 +6,7 @@ import {useState} from 'react';
 import {Trans, useTranslation} from 'react-i18next';
 import {useMutation} from 'react-query';
 import {Link, useHistory} from 'react-router-dom';
-import {UsersPath} from '@app/paths';
+import {UsersBulkPath, UsersPath} from '@app/paths';
 import UserAddList from '../components/user-add-list';
 import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
 import {useDispatch} from 'react-redux';
@@ -54,7 +54,7 @@ const UserAdd = () => {
             <h5>{t('users.add_section.title')}</h5>
             <span className='mt-10'>
                 <Trans i18nKey="users.add_section.description" >
-                    <Link className='link' to={UsersPath} />
+                    <Link className='link' to={UsersBulkPath} />
                 </Trans>
             </span>
             <div>

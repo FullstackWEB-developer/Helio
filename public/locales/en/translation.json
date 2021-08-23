@@ -1167,8 +1167,8 @@
       "add_button": "Add Users",
       "name_or_email": "Name or Email",
       "role": "Role",
-      "invitation_sent_success": "Invitations have been sent successfully.",
-      "invitation_sent_error": "The sending of the invitation has failed."
+      "invitation_sent_success": "Invitations have been sent successfully",
+      "invitation_sent_error": "The sending of the invitation has failed"
     },
     "bulk_section": {
       "step_x": "Step {{step}}: ",
