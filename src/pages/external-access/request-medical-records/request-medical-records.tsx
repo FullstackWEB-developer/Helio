@@ -129,7 +129,8 @@ const RequestMedicalRecords = () => {
             }
         });
 
-    const startRequest = (type : RequestType) => {
+    const startRequest = (e: React.MouseEvent<HTMLButtonElement>, type : RequestType) => {
+        e.preventDefault();
         setLoading(true);
         setRequestType(type);
         let request: DownloadMedicalRecordsProps = {
@@ -229,12 +230,12 @@ const RequestMedicalRecords = () => {
                                     disabled={isLoading}
                                     isLoading={isLoading && requestType === RequestType.Preview}
                                     label='external_access.medical_records_request.preview_button_title'
-                                    onClick={() => startRequest(RequestType.Preview)}/>
+                                    onClick={(e) => startRequest(e, RequestType.Preview)}/>
                             <Button label='external_access.medical_records_request.download_button_title'
                                     disabled={isLoading}
                                     isLoading={isLoading && requestType === RequestType.Download}
                                     buttonType='big'
-                                    onClick={() => startRequest(RequestType.Download)}/>
+                                    onClick={(e) => startRequest(e, RequestType.Download)}/>
                         </div>
                     </div>
                 </Tab>
@@ -273,7 +274,7 @@ const RequestMedicalRecords = () => {
                                             {...controllerProps}
                                             placeHolder='external_access.medical_records_request.note'
                                             className='h-full pb-0 pr-0 body2 w-full'
-                                            data-test-id='medical-records--notes'
+                                            data-test-id='medical-records-notes'
                                             minRows={2}
                                             resizable={false}
                                             hasBorder={true}
@@ -283,7 +284,7 @@ const RequestMedicalRecords = () => {
                                 <Button
                                     className='mt-6'
                                     buttonType='big'
-                                    onClick={() => startRequest(RequestType.Share)}
+                                    onClick={(e) => startRequest(e, RequestType.Share)}
                                     isLoading={isLoading && requestType === RequestType.Share}
                                     disabled={!isDirty || email !== emailConfirm || isLoading || !isValid}
                                     label={t('external_access.medical_records_request.share_button_title')}
