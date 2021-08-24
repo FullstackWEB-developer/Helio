@@ -46,6 +46,7 @@ const ccpConfig = {
     ccpLoginUrl: process.env.REACT_APP_CCP_LOGIN_URL
 }
 
+const CCP_TIMEOUT_MS = 30000;
 export interface BoxProps {
     id: any
     left: number
@@ -131,6 +132,16 @@ const Ccp: React.FC<BoxProps> = ({
                 setModelOpen(false);
             }, 3000);
         }
+    }, [ccpConnectionState]);
+
+    useEffect(() => {
+        if (ccpConnectionState === CCPConnectionStatus.Loading) {
+            const timer = setTimeout(() => {
+                ccpConnectionFailed(true);
+            }, CCP_TIMEOUT_MS);
+            return () => clearTimeout(timer);
+        }
+        return () => { };
     }, [ccpConnectionState]);
 
     const initCCP = useCallback((isRetry: boolean = false) => {
