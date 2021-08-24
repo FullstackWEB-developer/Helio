@@ -13,28 +13,39 @@ export interface DropdownProps {
 
 const Dropdown = ({model}: DropdownProps) => {
 
-    const {header, title, categorizedItems, items = [], onClick, defaultValue, asSelect = false, isSearchable = false, itemsWrapperClass = ''} = model;
+    const {header,
+        title,
+        categorizedItems,
+        items = [],
+        onClick,
+        defaultValue,
+        asSelect = false,
+        isSearchable = false,
+        excludeSelectedItem,
+        itemsWrapperClass = ''
+    } = model;
     const [dropDownItems, setDropDownItems] = useState<DropdownItemModel[]>([]);
     const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
         const querySearch = () => {
-            const results = items.reduce((res: any, item: DropdownItemModel) =>  {
-                    const idx = item.label.toLowerCase().indexOf(searchTerm.toLowerCase());
-                    if (idx === 0) {
-                        res[0].push(item);
-                    } else if (idx > 0) {
-                        res[1].push(item);
-                    }
-                    return res;
-                },
+            const results = items.reduce((res: any, item: DropdownItemModel) => {
+                const idx = item.label.toLowerCase().indexOf(searchTerm.toLowerCase());
+                if (idx === 0) {
+                    res[0].push(item);
+                } else if (idx > 0) {
+                    res[1].push(item);
+                }
+                return res;
+            },
                 [[], []],
             );
             return results[0].concat(results[1]);
         };
 
         if (!searchTerm) {
-            setDropDownItems(items);
+            const newItems = !excludeSelectedItem ? items : items.filter(item => item.value !== defaultValue);
+            setDropDownItems(newItems);
         } else {
             setDropDownItems(querySearch());
         }
@@ -97,7 +108,7 @@ const Dropdown = ({model}: DropdownProps) => {
             onClick={(value, item) => itemSelected(value, item)} items={items} />
     }
 
-    return <div className='bg-white dropdown-body py-2' data-test-id={'dropdown-' + title}>
+    return <div className='py-2 bg-white dropdown-body' data-test-id={'dropdown-' + title}>
         <DropdownTitle hasDivider={false} content={header} title={title} />
         {isSearchable &&
             <SearchInputField onChange={searchInputChanged} value={searchTerm} />

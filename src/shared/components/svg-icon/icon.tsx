@@ -82,5 +82,5 @@ export enum Icon {
     ErrorFilled = "ErrorFilled",
     AwsConnect = "AwsConnect",
     Users = "Users",
-    BulkUsers = "BulkUsers"
+    Blacklist = "Blacklist"
 }

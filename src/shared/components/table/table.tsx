@@ -21,26 +21,27 @@ const Table = ({model}: Table2Props) => {
         rowClass
     } = model;
     const {t} = useTranslation();
-    const rowContent = React.Children.toArray(rows.map(row => {
+
+    const rowContent = () => React.Children.toArray(rows.map(row => {
         return <div className={hasRowsBottomBorder ? 'border-b' : ''}>
-            <TableRow rowClass={rowClass} isCompact={isCompact} columns={columns} data={row}/>
+            <TableRow rowClass={rowClass} isCompact={isCompact} columns={columns} data={row} />
         </div>
     }));
 
     const getContent = () => {
         if (rows && rows.length > 0) {
-            return rowContent;
+            return rowContent();
         }
         if (model.showEmptyMessage || !!model.emptyMessage) {
             const message = !!model.emptyMessage ? model.emptyMessage : 'components.table.empty_message';
-            return <div className='w-full flex justify-center body2-medium pt-4'>
+            return <div className='flex justify-center w-full pt-4 body2-medium'>
                 {t(message)}
             </div>
         }
     }
     return <div className={`flex flex-col ${wrapperClassName}`}>
-        {title && <TableTitle model={title} isCompact={isCompact}/>}
-        {!hideHeader && <TableHeader className={model.headerClassName} headers={columns}/>}
+        {title && <TableTitle model={title} isCompact={isCompact} />}
+        {!hideHeader && <TableHeader className={model.headerClassName} headers={columns} />}
         {getContent()}
     </div>;
 }

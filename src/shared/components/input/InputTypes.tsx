@@ -3,5 +3,8 @@ export class InputTypes {
     static Phone = new RegExp('1?\\W*([2-9][0-8][0-9])\\W*([2-9][0-9]{2})\\W*([0-9]{4})(\\se?x?t?(\\d*))?');
     static Email = new RegExp('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$');
     static Zip = new RegExp('^\\d{5}(?:[-\\s]\\d{4})?$');
-    static Number = new RegExp('^\\d*$')
+    static Number = new RegExp('^\\d*$');
+    static Ip = new RegExp('^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$');
 }
+
+export type InputType = 'text' | 'number' | 'email' | 'tel' | 'zip' | 'ip';

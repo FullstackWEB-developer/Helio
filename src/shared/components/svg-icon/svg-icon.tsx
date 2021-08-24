@@ -848,7 +848,7 @@ const SvgIcon = ({type, wrapperClassName = '', className = 'icon-medium', fillCl
         );
     }
 
-    const getIconBulkUsers = () => {
+    const getIconBlacklist = () => {
         return (
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g transform="translate(6 1)">
                 <rect width="24" height="24" transform="translate(-6 -1)" fill="none" opacity="0.7" />
@@ -945,7 +945,7 @@ const SvgIcon = ({type, wrapperClassName = '', className = 'icon-medium', fillCl
         [Icon.ErrorFilled]: getErrorFilled,
         [Icon.AwsConnect]: getIconAwsConnect,
         [Icon.Users]: getIconUsers,
-        [Icon.BulkUsers]: getIconBulkUsers
+        [Icon.Blacklist]: getIconBlacklist
     }
 
     const iconClicked = (e: React.MouseEvent<HTMLDivElement>) => {

@@ -51,4 +51,5 @@ export const GetUserConnect = 'get-user-connect';
 export const GetMobilePhone = 'get-mobile-phone';
 export const SearchUserInActiveDirectory = 'search-user-in-active-directory';
 export const GetUserList = 'get-user-list';
+export const GetBlacklist = 'get-blacklist';
 export const GetExternalUserList = 'get-external-user-list';

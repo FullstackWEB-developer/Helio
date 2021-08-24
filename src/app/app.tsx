@@ -7,7 +7,7 @@ import {Dashboard} from '@pages/dashboard/dashboard';
 import {withSuspense} from '@shared/HOC/with-suspense';
 import TicketList from '../pages/tickets/ticket-list';
 import {QueryClient, QueryClientProvider} from "react-query";
-import {ContactsPath, TicketsPath, SmsPath, UsersPath, UserDetailsPath, UsersBulkPath} from './paths';
+import {ContactsPath, TicketsPath, SmsPath, UsersPath, UserDetailsPath, UsersBulkPath, BlackListsPath} from './paths';
 import RealTimeUserStatusUpdate from '@shared/websockets/real-time-user-status-update';
 import ExternalAccessLayout from '@pages/external-access/layout/external-access-layout';
 import Logger from '@shared/services/logger';
@@ -44,6 +44,7 @@ const Sms = React.lazy(() => import('@pages/sms'));
 const UserDetails = React.lazy(() => import('@pages/users/details'));
 const UserAdd = React.lazy(() => import('@pages/users/add/user-add'));
 const UserList = React.lazy(() => import('@pages/users/list/user-list'));
+const BlackList = React.lazy(() => import('@pages/blacklists/blacklists'));
 const BulkAddUser = React.lazy(() => import('@pages/users/bulk-add/bulk-add'));
 
 function App() {
@@ -139,6 +140,7 @@ function App() {
                             <GuardedRoute exact path={`${UsersPath}`} component={withSuspense(UserList)} />
                             <GuardedRoute exact path={`${UsersPath}/new`} component={withSuspense(UserAdd)} />
                             <GuardedRoute exact path={`${UserDetailsPath}/:userId`} component={withSuspense(UserDetails)} />
+                            <GuardedRoute exact path={BlackListsPath} component={withSuspense(BlackList)} />
                             <GuardedRoute exact path={UsersBulkPath} component={withSuspense(BulkAddUser)} />
                         </Layout>
                     </SignalRProvider>

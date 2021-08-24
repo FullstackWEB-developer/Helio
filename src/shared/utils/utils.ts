@@ -271,7 +271,9 @@ const convertStringArrayToOptions = (array: string[]): TicketOptionsBase[] => {
 
     return [];
 }
-
+const applyPhoneMask = (phone: string) => {
+    return phone.replace(/^(\+\d{1,2})?(\d{3})(\d{3})(\d{4}).*/, "($2) $3-$4");
+}
 const utils = {
     getWindowCenter,
     formatUtcDate,
@@ -297,7 +299,8 @@ const utils = {
     parseOptions,
     openWebSite,
     serialize,
-    convertStringArrayToOptions
+    convertStringArrayToOptions,
+    applyPhoneMask
 };
 
 export default utils;

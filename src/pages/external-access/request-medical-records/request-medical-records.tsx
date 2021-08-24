@@ -225,7 +225,7 @@ const RequestMedicalRecords = () => {
                         <div className='body2'>
                             {t('external_access.medical_records_request.download_info')}
                         </div>
-                        <div className='flex flex-row space-x-6 pt-6'>
+                        <div className='flex flex-row pt-6 space-x-6'>
                             <Button buttonType='secondary-big'
                                     disabled={isLoading}
                                     isLoading={isLoading && requestType === RequestType.Preview}
@@ -244,7 +244,7 @@ const RequestMedicalRecords = () => {
                         <div className='body2'>
                             {t('external_access.medical_records_request.email_info')}
                         </div>
-                        <div className='pt-2 w-3/5'>
+                        <div className='w-3/5 pt-2'>
                             <form>
                                 <ControlledInput
                                     control={control}
@@ -273,7 +273,7 @@ const RequestMedicalRecords = () => {
                                         <TextArea
                                             {...controllerProps}
                                             placeHolder='external_access.medical_records_request.note'
-                                            className='h-full pb-0 pr-0 body2 w-full'
+                                            className='w-full h-full pb-0 pr-0 body2'
                                             data-test-id='medical-records-notes'
                                             minRows={2}
                                             resizable={false}

@@ -9,15 +9,15 @@ import {Icon} from '@components/svg-icon/icon';
 import {Option} from '@components/option/option';
 import SelectCell from '@components/select/select-cell';
 import Spinner from '@components/spinner/Spinner';
-import {InputTypes} from './InputTypes';
-
+import {InputType, InputTypes} from './InputTypes';
+import classnames from 'classnames';
 interface InputProps extends React.HTMLAttributes<HTMLInputElement> {
     id?: string,
     name?: string,
     value?: string,
     label?: string,
     error?: string,
-    type?: 'text' | 'number' | 'email' | 'tel' | 'zip',
+    type?: InputType,
     mask?: string,
     htmlFor?: string,
     assistiveText?: string,
@@ -36,6 +36,7 @@ interface InputProps extends React.HTMLAttributes<HTMLInputElement> {
     isFetchingSuggestions?: boolean;
     selectedSuggestion?: Option;
     fetchingSuggestionsPlaceholder?: string;
+    containerClassName?: string;
 }
 const Input = React.forwardRef<HTMLInputElement, InputProps>(({
     label,
@@ -54,6 +55,8 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({
     isFetchingSuggestions,
     selectedSuggestion,
     fetchingSuggestionsPlaceholder,
+    shouldDisplayAutocomplete,
+    containerClassName,
     onDropdownSuggestionClick,
     ...props
 }: InputProps, ref) => {
@@ -140,7 +143,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({
     }
 
     return (
-        <div className="flex flex-col h-20 input-group">
+        <div className={classnames("flex flex-col h-20 input-group", containerClassName)}>
             <div className={`input-group-container flex flex-wrap items=stretch w-full relative ${props.error ? 'input-error' : ''} ` + props.className}>
                 <InputMask ref={innerRef} inputRef={innerRef} {...props}
                     mask={mask}
@@ -152,7 +155,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({
                     placeholder=''
                     value={props.value}
                     disabled={props.disabled || isLoading}
-                    autoComplete={props.shouldDisplayAutocomplete ? 'on' : 'off'} />
+                    autoComplete={shouldDisplayAutocomplete ? 'on' : 'off'} />
                 <label htmlFor={htmlFor}
                     className={`absolute truncate ${props.required ? 'required' : ''} ${isFocused || props.value ? 'body3 label-small' : `body2${props.disabled ? '-medium' : ''}`} ${props.error ? 'text-danger' : ''}`}>
                     {t(label || placeholder || '')}

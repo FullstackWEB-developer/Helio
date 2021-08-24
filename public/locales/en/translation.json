@@ -74,6 +74,7 @@
     "calls": "Calls",
     "chat": "Chat",
     "users": "Users",
+    "blacklists": "Blocked Access",
     "users_bulk": "Add Users In Bulk"
   },
   "footer": {
@@ -594,7 +595,8 @@
       "invalid_email": "Email is not valid",
       "invalid_phone": "Phone number is not valid.",
       "invalid_date": "Date is not valid",
-      "invalid_zip": "Enter a valid zip code"
+      "invalid_zip": "Enter a valid zip code",
+      "invalid_ip": "IP address is not valid"
     },
     "textarea": {
       "formatting": {
@@ -1200,7 +1202,7 @@
       "users": "Users:",
       "department_selected": "Departments Selected:",
       "roles_applied": "Roles applied to all users:",
-      "add_users":"Add Users",
+      "add_users": "Add Users",
       "personalized_message": "Personalize Invitation Message"
     },
     "role": "User Role",
@@ -1219,5 +1221,38 @@
     "user_update_success": "User has been updated",
     "user_update_error": "Error updating user",
     "provider_tooltip": "<0>Please match with one of the mappings from the dropdown, if s/he is a provider in the EHR/EMR system.</0><1>We will use this to show the right information about the provider to the patients.</1>"
+  },
+  "blacklist": {
+    "title": "Manager Blacklist",
+    "tabs_title": {
+      "email": "Email",
+      "phone": "Phone",
+      "ip": "IPs"
+    },
+    "block_access_type": {
+      "email": "Email Address",
+      "ip": "IP Address",
+      "phone": "Phone Number"
+    },
+    "status_type": {
+      "blocked": "Blocked",
+      "unblocked": "Unblocked"
+    },
+    "note": "Note",
+    "reported_on": "Reported On",
+    "reported_by": "Reported By",
+    "status": "Status",
+    "add_new_block": "Add New Block",
+    "add_new_block_form": {
+      "title": "Add New Block",
+      "description": "Blocking contact will block this contact’s communication with your organization.",
+      "note_placeholder": "Enter Note",
+      "block_user": "Block User"
+    },
+    "unblock_contact_modal": {
+      "title":"Unblock Contact?",
+      "message": "Are you sure you want to unblock this contact? Unblocking contact will automatically remove contact from the blacklist.",
+      "ok_button_text": "Unblock User"
+    }
   }
 }

@@ -4,10 +4,10 @@ import {useLocation} from 'react-router-dom';
 import {toggleNavigation} from './store/layout.slice';
 import React from 'react';
 import {useDispatch} from 'react-redux';
-import {TicketsPath, UsersPath} from '../../app/paths';
-import './navigation.scss';
+import {BlackListsPath, TicketsPath, UsersPath} from '../../app/paths';
 import SvgIcon from '@components/svg-icon/svg-icon';
 import {Icon} from '@components/svg-icon/icon';
+import './navigation.scss';
 
 const Navigation = () => {
     const {t} = useTranslation();
@@ -59,10 +59,10 @@ const Navigation = () => {
             id: 'navigation-users',
             icon: <SvgIcon type={Icon.Users} fillClass='active-item-icon' />
         }, {
-            title: t('navigation.users_bulk'),
-            link: `${UsersPath}/bulk`,
-            id: 'navigation-users-bulk',
-            icon: <SvgIcon type={Icon.BulkUsers} fillClass='active-item-icon' />
+            title: t('navigation.blacklists'),
+            link: BlackListsPath,
+            id: 'navigation-blacklists',
+            icon: <SvgIcon type={Icon.Blacklist} fillClass='active-item-icon' />
         }
     ];
 
@@ -76,14 +76,14 @@ const Navigation = () => {
     });
 
     return (
-        <nav className='h-full flex flex-col'>
-            <div className='h-16 pl-7 flex items-center border-r'>
+        <nav className='flex flex-col h-full'>
+            <div className='flex items-center h-16 border-r pl-7'>
                 <SvgIcon type={Icon.Menu} className='cursor-pointer' fillClass='active-item-icon' onClick={() => dispatch(toggleNavigation())} />
             </div>
             <div className='border-t'>
                 {items}
             </div>
-            <div className='border-r flex-grow' />
+            <div className='flex-grow border-r' />
         </nav>
     );
 }

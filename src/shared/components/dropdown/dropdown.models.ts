@@ -8,15 +8,16 @@ export interface CategoryItemModel {
 }
 
 export interface DropdownModel {
-  title?: string;
-  header?: ReactNode;
-  asSelect?: boolean;
-  items?: DropdownItemModel[];
-  isSearchable?: boolean;
-  categorizedItems?: CategoryItemModel[];
-  onClick?: (id: string, item: DropdownItemModel) => void;
-  defaultValue?: string;
-  itemsWrapperClass?: string;
+    title?: string;
+    header?: ReactNode;
+    asSelect?: boolean;
+    items?: DropdownItemModel[];
+    isSearchable?: boolean;
+    categorizedItems?: CategoryItemModel[];
+    onClick?: (id: string, item: DropdownItemModel) => void;
+    defaultValue?: string;
+    itemsWrapperClass?: string;
+    excludeSelectedItem?: boolean;
 }
 
 export interface DropdownItemModel extends Option {

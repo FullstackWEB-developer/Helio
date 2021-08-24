@@ -1,10 +1,11 @@
 import {Controller, ControllerRenderProps} from 'react-hook-form';
 import {Control} from 'react-hook-form/dist/types/form';
-import Input, {InputTypes} from '@components/input';
+import Input, {InputType, InputTypes} from '@components/input';
 import {useTranslation} from 'react-i18next';
 import React from 'react';
 import {Option} from '@components/option/option';
 import {Icon} from '@components/svg-icon/icon';
+
 
 export interface ControlledInputProps {
     control: Control;
@@ -15,7 +16,7 @@ export interface ControlledInputProps {
     label?: string;
     dataTestId?: string;
     max?: string;
-    type?: 'text' | 'tel' | 'email' | 'zip' | 'number';
+    type?: InputType;
     placeholder?: string;
     value?: string;
     defaultValue?: unknown;
@@ -36,6 +37,7 @@ export interface ControlledInputProps {
     selectedSuggestion?: Option;
     shouldDisplayAutocomplete?: boolean,
     fetchingSuggestionsPlaceholder?: string;
+    containerClassName?: string;
 }
 
 const ControlledInput = ({
@@ -51,6 +53,7 @@ const ControlledInput = ({
     forceAutoSuggestSelect,
     max,
     placeholder,
+    containerClassName,
     ...props
 }: ControlledInputProps) => {
 
@@ -58,21 +61,32 @@ const ControlledInput = ({
     const requiredText = t('common.required');
     let inputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>): void => undefined;
     let pattern = undefined;
-    if (type === 'tel') {
-        mask = '(999) 999-9999'
-        pattern = {
-            value: InputTypes.Phone,
-            message: t(invalidErrorMessage ?? 'components.input.invalid_phone')
-        }
-    } else if (type === 'email') {
-        pattern = {
-            value: InputTypes.Email,
-            message: t(invalidErrorMessage ?? 'components.input.invalid_email')
-        }
-    } else if (type === 'zip') {
-        pattern = {
-            value: InputTypes.Zip,
-            message: t(invalidErrorMessage ?? 'components.input.invalid_zip')
+
+    switch (type) {
+        case 'tel':
+            mask = '(999) 999-9999';
+            pattern = {
+                value: InputTypes.Phone,
+                message: t(invalidErrorMessage ?? 'components.input.invalid_phone')
+            };
+            break;
+        case 'email':
+            pattern = {
+                value: InputTypes.Email,
+                message: t(invalidErrorMessage ?? 'components.input.invalid_email')
+            };
+            break;
+        case 'zip':
+            pattern = {
+                value: InputTypes.Zip,
+                message: t(invalidErrorMessage ?? 'components.input.invalid_zip')
+            };
+            break;
+        case 'ip': {
+            pattern = {
+                value: InputTypes.Ip,
+                message: t(invalidErrorMessage ?? 'components.input.invalid_ip')
+            }
         }
     }
 
@@ -129,6 +143,7 @@ const ControlledInput = ({
                 selectedSuggestion={props.selectedSuggestion}
                 fetchingSuggestionsPlaceholder={props.fetchingSuggestionsPlaceholder}
                 shouldDisplayAutocomplete={props.shouldDisplayAutocomplete}
+                containerClassName={containerClassName}
             />
             );
         }}
