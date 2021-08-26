@@ -140,6 +140,13 @@ const SmsChat = ({info, isLoading, isSending, isBottomFocus, messages = [], ...p
         </div>);
     }
 
+    const onSend = ( ) =>  {
+        if (smsText && patient?.mobilePhone) {
+            props.onSendClick(patient.mobilePhone, smsText);
+            setSmsText('');
+        }
+    }
+
     return (<div className="flex flex-col justify-between flex-auto h-full sms-chat">
         <div className="flex flex-row border-b sms-chat-header">
             <div className="pt-4 pl-6"><Avatar userFullName={info.createdForName ?? ''}/></div>
@@ -221,7 +228,7 @@ const SmsChat = ({info, isLoading, isSending, isBottomFocus, messages = [], ...p
                         showFormatting={false}
                         icon={Icon.Send}
                         iconFill='notes-send'
-                        iconOnClick={() => props.onSendClick(patient?.mobilePhone!, smsText!)}
+                        iconOnClick={() => onSend()}
                     />
                 </div>
             </div>

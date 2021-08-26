@@ -244,7 +244,7 @@ const RequestMedicalRecords = () => {
                         <div className='body2'>
                             {t('external_access.medical_records_request.email_info')}
                         </div>
-                        <div className='w-3/5 pt-2'>
+                        <div className='pt-2 md:w-3/5'>
                             <form>
                                 <ControlledInput
                                     control={control}

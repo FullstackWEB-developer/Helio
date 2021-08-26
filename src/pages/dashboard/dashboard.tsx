@@ -172,7 +172,7 @@ export const Dashboard = () => {
             <div className='flex flex-col'>
                 <div className='dashboard-header flex flex-col xl:flex-row items-center justify-between'>
                     <div className='relative' ref={typeDropdownRef}>
-                        <div onClick={() => setDisplayTypeDropdown(!displayTimeFrameDropdown)}
+                        <div onClick={() => setDisplayTypeDropdown(!displayTypeDropdown)}
                              className='flex flex-row items-center cursor-pointer'>
                             <h5>
                                 {t(`dashboard.types.${selectedDashboardType}`)}
@@ -190,7 +190,7 @@ export const Dashboard = () => {
                     <div className='relative' ref={timeframeDropdownRef}>
                         {!isWallboard &&
                         <div className='flex flex-row justify-end cursor-pointer'
-                             onClick={() => setDisplayTimeFrameDropdown(!displayTypeDropdown)}>
+                             onClick={() => setDisplayTimeFrameDropdown(!displayTimeFrameDropdown)}>
                             <div>
                                 {t(`dashboard.timeframes.${selectedDashboardTime}`)}
                             </div>

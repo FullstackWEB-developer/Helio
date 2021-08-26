@@ -17,7 +17,7 @@ import './ticket-detail-add-note.scss';
 import {sendMessage} from '@pages/sms/services/ticket-messages.service';
 import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
 import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
-import {ChannelTypes, Contact} from '@shared/models';
+import {ChannelTypes, Contact, TicketMessageBase} from '@shared/models';
 import utils from '@shared/utils/utils';
 import {ExtendedPatient} from '@pages/patients/models/extended-patient';
 import NotificationTemplateSelect from '@components/notification-template-select/notification-template-select';
@@ -180,13 +180,17 @@ const TicketDetailAddNote = ({ticket, patient, contact}: TicketDetailAddNoteProp
 
     const sendSms = async () => {
         if (ticket.id) {
-            sendSmsMutation.mutate({
+            let message: TicketMessageBase = {
                 body: smsText,
                 ticketId: ticket.id,
                 channel: ChannelTypes.SMS,
                 toAddress: mobileNumber,
                 recipientName
-            });
+            };
+            if (patient) {
+                message.patientId = patient.patientId
+            }
+            sendSmsMutation.mutate(message);
         }
     }
 

@@ -6,6 +6,7 @@ import {useQuery} from 'react-query';
 import {GetRedirectLink} from '@constants/react-query-constants';
 import {RedirectLink} from '@pages/external-access/hipaa-verification/models/redirect-link';
 import Spinner from '@components/spinner/Spinner';
+import {AxiosError} from 'axios';
 
 interface RedirectLinkParams {
     linkId: string
@@ -14,8 +15,11 @@ interface RedirectLinkParams {
 const VerifyRedirectLink = () => {
     const { t } = useTranslation();
     const { linkId } = useParams<RedirectLinkParams>();
-    const {isLoading, isError, data} = useQuery<RedirectLink, Error>([GetRedirectLink, linkId], () =>
-            getRedirectLink(linkId)
+    const {isLoading, isError, data, error} = useQuery<RedirectLink, AxiosError>([GetRedirectLink, linkId], () =>
+            getRedirectLink(linkId),
+        {
+            enabled:!!linkId
+        }
     );
 
     if (isLoading) {
@@ -23,7 +27,13 @@ const VerifyRedirectLink = () => {
     }
 
     if (isError) {
-        return <div className='text-danger'>{t('redirect_link.is_error')}</div>
+        if (error?.response?.status === 404) {
+            return <div className='text-danger'>{t('redirect_link.link_not_valid')}</div>;
+        }
+        else
+        {
+            return <div className='text-danger'>{t('redirect_link.is_error')}</div>
+        }
     }
 
     if (data) {

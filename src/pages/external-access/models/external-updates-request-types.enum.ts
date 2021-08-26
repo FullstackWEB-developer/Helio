@@ -6,6 +6,7 @@ export enum ExternalAccessRequestTypes {
     RequestMedicalRecords,
     CancelAppointment,
     BookAppointment,
-    ScheduleAppointment
+    ScheduleAppointment,
+    SentTicketMessageViaSMS
 
 }

@@ -20,6 +20,7 @@ import {logOut, setAuthentication} from "@shared/store/app-user/appuser.slice";
 import {authenticationSelector} from "@shared/store/app-user/appuser.selectors";
 import {selectVerifiedPatent} from '@pages/patients/store/patients.selectors';
 import SvgIcon, {Icon} from '@components/svg-icon';
+import {TicketSmsPath} from '@app/paths';
 
 export interface HipaaVerificationProps {
     request: RedirectLink
@@ -71,6 +72,11 @@ const HipaaVerification = ({request}: HipaaVerificationProps) => {
                     break;
                 case ExternalAccessRequestTypes.ScheduleAppointment:
                     history.push('/o/appointment-schedule');
+                    break;
+                case ExternalAccessRequestTypes.SentTicketMessageViaSMS:
+                    history.push(TicketSmsPath, {
+                            "ticketId": request.ticketId
+                        });
                     break;
             }
         }

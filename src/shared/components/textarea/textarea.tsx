@@ -26,6 +26,7 @@ interface TextAreaProps {
     onCtrlEnter?: () => void,
     isLoading?: boolean,
     iconClassNames?: string,
+    alwaysDisplayIcon?: boolean,
     iconFill?: string,
     iconContainerClassName?: string,
     maxLength?: number;
@@ -58,6 +59,7 @@ const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(({
     textareaContainerClasses,
     minRows = rows ? rows : 1,
     maxRows = 3,
+   alwaysDisplayIcon,
     ...props
 }: TextAreaProps, ref) => {
 
@@ -158,11 +160,12 @@ const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(({
                               onChange={(e => handleOnChange(e))}
                               placeholder={placeHolder ? t(placeHolder) : ''}
                               className={textAreaClass}
+                              rows={rows}
                               wrap='hard'
                               onKeyPress={onKeyPress}
                     />
                     {
-                        props.icon && textAreaValue && textAreaValue?.trim()?.length > 0 &&
+                        props.icon && (alwaysDisplayIcon || (textAreaValue && textAreaValue?.trim()?.length > 0)) &&
                         <div
                             className={`absolute right-8 ${iconContainerClassName ? iconContainerClassName : ''} ${props.disabled ? 'not-allowed' : ''} ${isLoading ? 'bottom-2 -mr-2' : 'bottom-4 cursor-pointer'}`}>
                             <SvgIcon

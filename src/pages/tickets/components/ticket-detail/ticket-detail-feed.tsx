@@ -13,9 +13,10 @@ import utils from '@shared/utils/utils';
 import {useQuery} from 'react-query';
 import {QueryTicketMessagesInfinite} from '@constants/react-query-constants';
 import {getMessages} from '@pages/sms/services/ticket-messages.service';
-import {ChannelTypes} from '@shared/models';
+import {ChannelTypes, TicketMessagesDirection} from '@shared/models';
 import AlwaysScrollToBottom from '@components/scroll-to-bottom';
 import Spinner from '@components/spinner/Spinner';
+import {getUserList} from '@shared/services/lookups.service';
 
 interface TicketDetailFeedProps {
     ticket: Ticket
@@ -30,6 +31,10 @@ const TicketDetailFeed = ({ticket}: TicketDetailFeedProps) => {
     const getTime = (date?: Date) => {
         return date != null ? new Date(date).getTime() : 0;
     }
+
+    useEffect(() => {
+        dispatch(getUserList());
+    }, []);
 
     const {
         data: smsMessages,
@@ -80,7 +85,7 @@ const TicketDetailFeed = ({ticket}: TicketDetailFeedProps) => {
         smsMessages?.results.forEach(message => {
             const user = getUser(message.createdBy);
             feedItems.push({
-                userFullName: getUsername(user),
+                userFullName: message.direction === TicketMessagesDirection.Incoming ? ticket.createdForName : getUsername(user),
                 userPicture: user?.profilePicture,
                 dateTime: message.createdOn,
                 feedType: FeedTypes.Sms,

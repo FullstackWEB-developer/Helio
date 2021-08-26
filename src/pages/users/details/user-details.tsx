@@ -372,15 +372,18 @@ const UserDetails = () => {
 
                     <div className='flex flex-row mt-8 pr-28'>
                         <div className='flex-1 pr-4'>
-                            <div className='flex flex-row items-center justify-between pr-7'>
-                                <label className='subtitle'>{t('users.active_queues')}</label>
-                                <a rel='noreferrer' target='_blank' className="body2 link" href={userDetailExtended?.contactProfileLink}>{t('common.change')}</a>
-                            </div>
-                            <div className='flex flex-col mt-4 body2'>
-                                {
-                                    React.Children.toArray(userDetailExtended?.contactQueues.map(queue => <label>{queue}</label>))
-                                }
-                            </div>
+                            {!!userDetailExtended?.contactQueues && <>
+                                <div className='flex flex-row items-center justify-between pr-7'>
+                                    <label className='subtitle'>{t('users.active_queues')}</label>
+                                    <a rel='noreferrer' target='_blank' className="body2 link"
+                                       href={userDetailExtended?.contactProfileLink}>{t('common.change')}</a>
+                                </div>
+                                <div className='flex flex-col mt-4 body2'>
+                            {
+                                React.Children.toArray(userDetailExtended?.contactQueues?.map(queue => <label>{queue}</label>))
+                            }
+                                </div>
+                            </>}
                         </div>
                         <div className='flex-1'>
                             <div className='w-80'>

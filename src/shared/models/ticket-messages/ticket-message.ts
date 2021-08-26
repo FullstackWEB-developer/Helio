@@ -1,4 +1,4 @@
-import {TicketMessagesDirection} from "./ticket-messages-direction";
+import {TicketMessagesDirection} from "@shared/models";
 import {ChannelTypes} from "@shared/models/ticket-channel";
 
 export interface TicketMessage extends TicketMessageBase {
@@ -7,6 +7,7 @@ export interface TicketMessage extends TicketMessageBase {
     isRead: boolean;
     createdName: string;
     createdBy: string;
+    createdByName?: string;
     createdOn: Date;
 }
 export interface TicketMessageBase {
@@ -16,4 +17,5 @@ export interface TicketMessageBase {
     recipientName?: string;
     subject?: string;
     body: string;
+    patientId?: number;
 }

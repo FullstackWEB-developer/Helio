@@ -8,7 +8,10 @@
 
   &-top-center {
     top: 2.2rem;
-    right: 35%;
+    right: 3%;
+    @media (min-width:768px) {
+      right: 35%;
+    }
     transition: transform .6s ease-in-out;
     animation: toast-in-top .7s;
   }

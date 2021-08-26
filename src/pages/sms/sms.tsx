@@ -215,11 +215,14 @@ const Sms = () => {
         if (!selectedTicketSummary) {
             return;
         }
-        const message: TicketMessageBase = {
+        let message: TicketMessageBase = {
             channel: ChannelTypes.SMS,
             body: text,
             toAddress,
             ticketId: selectedTicketSummary.ticketId
+        }
+        if (selectedTicketSummary.patientId) {
+            message.patientId = selectedTicketSummary.patientId
         }
         if (!selectedTicketSummary.assignedTo || selectedTicketSummary.assignedTo !== username) {
             changeAssigneeMutation.mutate({assignee: username, ticketId: selectedTicketSummary.ticketId});

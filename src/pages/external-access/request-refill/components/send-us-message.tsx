@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Icon} from '@components/svg-icon/icon';
 import SvgIcon from '@components/svg-icon/svg-icon';
 import {useTranslation} from 'react-i18next';
-import {Controller, useForm} from 'react-hook-form';
+import {useForm} from 'react-hook-form';
 import TextArea from '@components/textarea/textarea';
 import './send-us-message.scss';
 import Button from '@components/button/button';

@@ -33,7 +33,7 @@ const getName = (props: SmsChatMessageProps) => {
 const SmsChatMessageAvatar = ({name, photoUrl}: {name: string, photoUrl?: string}) => (
     <div className="flex flex-col">
         <div><Avatar userFullName={name} userPicture={photoUrl} /></div>
-        <div></div>
+        <div/>
     </div>
 );
 
@@ -47,11 +47,11 @@ const SmsChatMessageBody = ({body}: {body: string}) => (
 
 
 const SmsChatMessageOut = (props: SmsChatMessageProps) => {
-    return (<div className={classnames("flex flex-col mt-2 sms-chat-message out-going", {'is-top': props.isTheTop})}>
+    return (<div className={classnames("flex flex-col mt-2 sms-chat-message out-going pr-2", {'is-top': props.isTheTop})}>
         <div className='flex flex-row'>
-            <div className="sms-chat-message-time body3-small"></div>
+            <div className="sms-chat-message-time body3-small"/>
             <div className="px-4 mx-2 body2 sms-chat-message-sender">{getName(props)}</div>
-            <div className='w-10'></div>
+            <div className='w-10'/>
         </div>
         <div className="flex flex-row justify-end">
             <SmsChatMessageTime date={props.date} />
@@ -64,9 +64,9 @@ const SmsChatMessageOut = (props: SmsChatMessageProps) => {
 const SmsChatMessageIn = (props: SmsChatMessageProps) => {
     return (<div className={classnames("flex flex-col mt-2 sms-chat-message in-going", {'is-top': props.isTheTop})}>
         <div className='flex flex-row'>
-            <div className='w-10'></div>
+            <div className='w-10'/>
             <div className="px-4 mx-2 body2 sms-chat-message-sender">{getName(props)}</div>
-            <div className="sms-chat-message-time body3-small"></div>
+            <div className="sms-chat-message-time body3-small"/>
         </div>
         <div className="flex flex-row justify-start">
             {props.isPhotoVisible && <SmsChatMessageAvatar name={props.name} photoUrl={props.photoProfileUrl} />}

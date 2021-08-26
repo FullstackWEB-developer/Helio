@@ -7,7 +7,16 @@ import {Dashboard} from '@pages/dashboard/dashboard';
 import {withSuspense} from '@shared/HOC/with-suspense';
 import TicketList from '../pages/tickets/ticket-list';
 import {QueryClient, QueryClientProvider} from "react-query";
-import {ContactsPath, TicketsPath, SmsPath, UsersPath, UserDetailsPath, UsersBulkPath, BlackListsPath} from './paths';
+import {
+    ContactsPath,
+    TicketsPath,
+    SmsPath,
+    UsersPath,
+    UserDetailsPath,
+    UsersBulkPath,
+    BlackListsPath,
+    TicketSmsPath
+} from './paths';
 import RealTimeUserStatusUpdate from '@shared/websockets/real-time-user-status-update';
 import ExternalAccessLayout from '@pages/external-access/layout/external-access-layout';
 import Logger from '@shared/services/logger';
@@ -40,6 +49,7 @@ const TicketDetail = React.lazy(() => import('@pages/tickets/ticket-detail'));
 const Contacts = React.lazy(() => import('../pages/contacts/contacts'));
 const DownloadMedicalRecords = React.lazy(() => import('@pages/external-access/request-medical-records/download-medical-record'));
 const MedicalRecordsPreview = React.lazy(() => import('@pages/external-access/request-medical-records/medical-records-preview'));
+const TicketSms = React.lazy(() => import('@pages/external-access/ticket-sms/ticket-sms'));
 const Sms = React.lazy(() => import('@pages/sms'));
 const UserDetails = React.lazy(() => import('@pages/users/details'));
 const UserAdd = React.lazy(() => import('@pages/users/add/user-add'));
@@ -83,6 +93,7 @@ function App() {
                     <Route path='/o/'>
                         <ExternalAccessLayout>
                             <Switch>
+                                <Route path={TicketSmsPath} component={withSuspense(TicketSms)} />
                                 <Route path='/o/appointment-list' component={withSuspense(AppointmentList)} />
                                 <Route path='/o/appointment-detail' component={withSuspense(AppointmentDetail)} />
                                 <Route path='/o/request-refill' component={withSuspense(RequestRefill)} />

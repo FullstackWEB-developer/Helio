@@ -8,6 +8,8 @@ import '../../../themes/cwc-theme.scss';
 import SvgIcon, {Icon} from '@shared/components/svg-icon';
 import {useRouteMatch} from 'react-router';
 import classNames from 'classnames';
+import {useLocation} from 'react-router-dom';
+import {TicketSmsPath} from '@app/paths';
 export interface ExternalAccessLayoutProps {
     children: ReactNode;
 }
@@ -21,6 +23,10 @@ const ExternalAccessLayout = ({children}: ExternalAccessLayoutProps) => {
         strict: true,
         sensitive: true
     });
+
+    const location = useLocation();
+
+    const isSmsTicketPage = location && location.pathname === TicketSmsPath;
 
     useEffect(() => {
         const bodyEl = document.getElementsByTagName('body')[0];
@@ -39,18 +45,30 @@ const ExternalAccessLayout = ({children}: ExternalAccessLayoutProps) => {
     }, [webFormsLabResult]);
 
     const externalAccessLayoutClassnames = classNames('flex flex-col justify-between flex-grow', {
-        'overflow-y-auto': !!(!webFormsLabResult?.isExact)
-    })
+        'overflow-y-auto': (!webFormsLabResult?.isExact)
+    });
+
+    const iconWrapperClass = classNames('h-20 md:px-40 external-access-layout-header', {
+        'hidden': isSmsTicketPage
+    });
+
+    const childrenWrapperClass = classNames('flex-grow md:px-40 external-access-container', {
+        'px-8 pb-36 padding-top': !isSmsTicketPage,
+    });
+
+    const footerWrapperClass = classNames('h-16 md:px-40 external-access-layout-footer body3-medium', {
+        'hidden': isSmsTicketPage
+    });
 
     return <>
         <div className={externalAccessLayoutClassnames}>
-            <div className='h-20 md:px-40 external-access-layout-header'>
+            {<div className={iconWrapperClass}>
                 <div className='flex items-center justify-center h-full md:px-6 md:justify-start'>
-                    <SvgIcon type={Icon.CwcLogo} />
+                    <SvgIcon type={Icon.CwcLogo}/>
                 </div>
-            </div>
-            <div className='flex-grow px-8 padding-top md:px-40 pb-36 external-access-container'>{children}</div>
-            <div className='h-16 md:px-40 external-access-layout-footer body3-medium'>
+            </div>}
+            <div className={childrenWrapperClass}>{children}</div>
+            <div className={footerWrapperClass}>
                 <div className='flex items-center h-full px-16 text-center'>
                     {t('external_access.copyright', {'year': year})}
                 </div>

@@ -21,6 +21,7 @@ export enum Icon {
     ChannelPhone = 'ChannelPhone',
     ChannelSms = 'ChannelSms',
     ChannelWeb = 'ChannelWeb',
+    ChannelUser = 'ChanelUser',
     Chat = 'Chat',
     CheckmarkOutline = 'CheckmarkOutline',
     Clear = 'Clear',

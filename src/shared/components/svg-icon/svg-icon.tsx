@@ -193,6 +193,19 @@ const SvgIcon = ({type, wrapperClassName = '', className = 'icon-medium', fillCl
         </svg>
     }
 
+    const getIconChannelUser = () => {
+        return <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" className={mainClass}>
+            <rect width="48" height="48" fill="none"/>
+            <g transform="translate(4 4)" fill="none" className={strokeClass}>
+                <circle cx="20" cy="20" r="20" stroke="none"/>
+                <circle cx="20" cy="20" r="19.5" fill="none"/>
+            </g>
+            <g transform="translate(-660 -955)">
+            <path d="M17,14a5,5,0,1,0-5-5A5,5,0,0,0,17,14Zm0,2.5c-3.337,0-10,1.675-10,5V24H27V21.5C27,18.175,20.337,16.5,17,16.5Z" transform="translate(667 965)" className={fillClass}/>
+            </g>
+        </svg>
+    }
+
     const getIconChannelEmail = () => {
         return <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" className={mainClass}>
             <rect width="48" height="48" fill="none" />
@@ -945,6 +958,7 @@ const SvgIcon = ({type, wrapperClassName = '', className = 'icon-medium', fillCl
         [Icon.ErrorFilled]: getErrorFilled,
         [Icon.AwsConnect]: getIconAwsConnect,
         [Icon.Users]: getIconUsers,
+        [Icon.ChannelUser]: getIconChannelUser,
         [Icon.Blacklist]: getIconBlacklist
     }
 

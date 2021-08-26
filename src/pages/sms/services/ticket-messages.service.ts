@@ -1,5 +1,6 @@
 import {ChannelTypes, PagedList, TicketMessageSummary, TicketMessage, TicketMessageSummaryRequest, PagedRequest, TicketMessageBase} from "@shared/models";
 import Api from "@shared/services/api";
+import {CreateTicketMessageRequest} from '@pages/sms/models/create-ticket-message-request.model';
 
 const ticketMessageUrl = '/tickets/messages';
 
@@ -23,6 +24,11 @@ export const getChats = async (request: TicketMessageSummaryRequest) => {
 
 export const sendMessage = async (message: TicketMessageBase) => {
     const response = await Api.post<TicketMessage>(ticketMessageUrl, message);
+    return response.data;
+}
+
+export const createTicketMessage = async (request: CreateTicketMessageRequest) => {
+    const response = await Api.post<TicketMessage>(`${ticketMessageUrl}/create-from-sms`, request);
     return response.data;
 }
 
