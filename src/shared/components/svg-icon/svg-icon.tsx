@@ -873,6 +873,42 @@ const SvgIcon = ({type, wrapperClassName = '', className = 'icon-medium', fillCl
         );
     }
 
+    const getIconPause = () => {
+        return (
+            <svg xmlns="https://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className={mainClass}>
+                <rect width="24" height="24" fill="none" />
+                <path d="M12,2A10,10,0,1,0,22,12,10,10,0,0,0,12,2ZM11,16H9V8h2Zm4,0H13V8h2Z" className={fillClass}/>
+            </svg>
+        );
+    }
+
+    const getIconCallOutbound = () => {
+        return (
+            <svg xmlns="https://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className={mainClass}>
+                <rect width="24" height="24" fill="none" />
+                <path d="M9,5V7h6.59L4,18.59,5.41,20,17,8.41V15h2V5Z" transform="translate(1)" className={fillClass}/>
+            </svg>
+        )
+    }
+
+    const getIconCallInbound = () => {
+        return (
+            <svg xmlns="https://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className={mainClass}>
+                <rect width="24" height="24" fill="none" />
+                <path d="M20,5.41,18.59,4,7,15.59V9H5V19H15V17H8.41Z" transform="translate(0 1)" className={fillClass} />
+            </svg>
+        );
+    }
+
+    const getIconCallMissedOutgoing = () => {
+        return (
+            <svg xmlns="https://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className={mainClass}>
+                <rect width="24" height="24" fill="none" />
+                <path d="M3,8.41l9,9,7-7V15h2V7H13V9h4.59L12,14.59,4.41,7Z" className={fillClass}/>
+            </svg>
+        );
+    }
+
     const icons = {
         [Icon.Add]: getIconAdd,
         [Icon.AddBlack]: getIconAddBlack,
@@ -959,7 +995,11 @@ const SvgIcon = ({type, wrapperClassName = '', className = 'icon-medium', fillCl
         [Icon.AwsConnect]: getIconAwsConnect,
         [Icon.Users]: getIconUsers,
         [Icon.ChannelUser]: getIconChannelUser,
-        [Icon.Blacklist]: getIconBlacklist
+        [Icon.Pause]: getIconPause,
+        [Icon.Blacklist]: getIconBlacklist,
+        [Icon.CallOutbound]: getIconCallOutbound,
+        [Icon.CallInbound]: getIconCallInbound,
+        [Icon.CallMissedOutgoing]: getIconCallMissedOutgoing
     }
 
     const iconClicked = (e: React.MouseEvent<HTMLDivElement>) => {

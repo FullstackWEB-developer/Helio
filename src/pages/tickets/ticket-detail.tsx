@@ -12,8 +12,8 @@ import {Ticket} from './models/ticket';
 import {useQuery} from 'react-query';
 import {getTicketByNumber} from './services/tickets.service';
 import {GetContactById, QueryGetPatientById, QueryTickets} from '@constants/react-query-constants';
-import {setTicket, toggleChatTranscriptWindowVisible} from './store/tickets.slice';
-import {selectIsChatTranscriptModalVisible, selectSelectedTicket} from '@pages/tickets/store/tickets.selectors';
+import {setTicket, toggleCallLogPlayerVisible, toggleChatTranscriptWindowVisible} from './store/tickets.slice';
+import {selectIsCallLogPlayerVisible, selectIsChatTranscriptModalVisible, selectSelectedTicket} from '@pages/tickets/store/tickets.selectors';
 import {getPatientByIdWithQuery} from '@pages/patients/services/patients.service';
 import {ExtendedPatient} from '@pages/patients/models/extended-patient';
 import {Contact} from '@shared/models/contact.model';
@@ -22,19 +22,24 @@ import Spinner from '@components/spinner/Spinner';
 import NoSearchResults from '@components/search-bar/components/no-search-results';
 import Modal from '@components/modal/modal';
 import ChatTranscript from '@pages/tickets/components/ticket-detail/chat-transcript';
-
+import CallLogAudioPlayer from '@pages/calls-log/components/call-log-player/call-log-player';
+import {useTranslation} from 'react-i18next';
+import utils from '@shared/utils/utils';
+import {CommunicationDirection} from '@shared/models';
 interface TicketParams {
     ticketNumber: string
 }
 
 const TicketDetail = () => {
     dayjs.extend(utc);
+    const {t} = useTranslation();
     const dispatch = useDispatch();
     const {ticketNumber} = useParams<TicketParams>();
     const displayChatTranscript = useSelector(selectIsChatTranscriptModalVisible);
+    const isCallLogPlayerVisible = useSelector(selectIsCallLogPlayerVisible);
     const ticket = useSelector(selectSelectedTicket);
     const {isLoading, error, isFetching} = useQuery<Ticket, Error>([QueryTickets, ticketNumber], () =>
-            getTicketByNumber(Number(ticketNumber)),
+        getTicketByNumber(Number(ticketNumber)),
         {
             refetchOnMount: 'always',
             onSuccess: data => {
@@ -47,14 +52,14 @@ const TicketDetail = () => {
         refetch: patientRefetch,
         data: patient
     } = useQuery<ExtendedPatient, Error>([QueryGetPatientById, ticket?.patientId], () =>
-            getPatientByIdWithQuery(ticket.patientId as number),
+        getPatientByIdWithQuery(ticket.patientId as number),
         {
             enabled: false
         }
     );
 
     const {refetch: contactRefetch, data: contact} = useQuery<Contact, Error>([GetContactById, ticket?.contactId], () =>
-            getContactById(ticket.contactId!),
+        getContactById(ticket.contactId!),
         {
             enabled: false
         }
@@ -73,7 +78,7 @@ const TicketDetail = () => {
     }, [contactRefetch, ticket?.contactId]);
 
     if (isLoading || isFetching) {
-        return <Spinner fullScreen/>;
+        return <Spinner fullScreen />;
     }
 
     if (error) {
@@ -84,29 +89,55 @@ const TicketDetail = () => {
         return null;
     }
 
+    const getCallLogAudioPlayerTitle = () => {
+        if (!!ticket.createdForName) {
+            return ticket.createdForName;
+        }
+        if (!!ticket.originationNumber) {
+            return utils.applyPhoneMask(ticket.originationNumber);
+        }
+        return t('common.unknown');
+    }
+
+    const getCallLogAudioPlayerSubtitle = () => {
+        if (!ticket.communicationDirection) {
+            return '-';
+        }
+        return t(`calls_log.${CommunicationDirection[ticket.communicationDirection].toString().toLowerCase()}`)
+    }
     return (
         <>
             <div className='flex w-full'>
-                <div className='w-3/4 relative flex flex-col'>
-                    <TicketDetailHeader ticket={ticket} contact={contact} patient={patient}/>
+                <div className='relative flex flex-col w-3/4'>
+                    <TicketDetailHeader ticket={ticket} contact={contact} patient={patient} />
                     <div className='flex items-center justify-center justify-self-center' data-test-id='chat-transcript-modal'>
                         <Modal isOpen={displayChatTranscript}
-                               title='ticket_detail.chat_transcript.title'
-                               isClosable={true}
-                               isDraggable={true}
-                               onClose={() => (dispatch(toggleChatTranscriptWindowVisible()))}>
+                            title='ticket_detail.chat_transcript.title'
+                            isClosable={true}
+                            isDraggable={true}
+                            onClose={() => (dispatch(toggleChatTranscriptWindowVisible()))}>
                             <ChatTranscript ticket={ticket} patient={patient} />
                         </Modal>
+
+                        <CallLogAudioPlayer
+                            isOpen={isCallLogPlayerVisible}
+                            title={getCallLogAudioPlayerTitle()}
+                            agentId={ticket.assignee ?? ''}
+                            ticketId={ticket.id ?? ''}
+                            onClose={() => dispatch(toggleCallLogPlayerVisible())}
+                            subTitle={getCallLogAudioPlayerSubtitle()}
+
+                        />
                     </div>
-                    <div className='mb-auto flex-1'>
-                        <TicketDetailFeed ticket={ticket}/>
+                    <div className='flex-1 mb-auto'>
+                        <TicketDetailFeed ticket={ticket} />
                     </div>
                     <div className='absolute bottom-0 w-full'>
-                        <TicketDetailAddNote patient={patient} contact={contact} ticket={ticket}/>
+                        <TicketDetailAddNote patient={patient} contact={contact} ticket={ticket} />
                     </div>
                 </div>
-                <div className='w-1/4 border-l overflow-y-auto'>
-                    <TicketInfoPanel ticket={ticket} patient={patient} contact={contact}/>
+                <div className='w-1/4 overflow-y-auto border-l'>
+                    <TicketInfoPanel ticket={ticket} patient={patient} contact={contact} />
                 </div>
             </div>
         </>

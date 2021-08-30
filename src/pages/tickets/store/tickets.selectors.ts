@@ -97,7 +97,10 @@ export const selectIsChatTranscriptModalVisible = createSelector(
     ticketState,
     state => state.isChatTranscriptModalVisible as boolean
 )
-
+export const selectIsCallLogPlayerVisible = createSelector(
+    ticketState,
+    state => state.isCallLogPlayerVisible  as boolean
+)
 
 export const selectTicketUpdateHash = createSelector(
     ticketState,

@@ -15,12 +15,13 @@ interface ModalProps {
     title?: string;
     isClosable?: boolean;
     className?: string;
+    contentClassName?: string;
     onClose?: (event: React.MouseEvent<HTMLDivElement>) => void;
     closeableOnEscapeKeyPress?: boolean;
     isDraggable?: boolean;
     hasOverlay?: boolean;
 }
-const Modal = ({isOpen, children, title = '', isClosable, className, onClose, closeableOnEscapeKeyPress, isDraggable = false, hasOverlay = false}: ModalProps) => {
+const Modal = ({isOpen, children, title = '', isClosable, className, contentClassName, onClose, closeableOnEscapeKeyPress, isDraggable = false, hasOverlay = false}: ModalProps) => {
     const {t} = useTranslation();
 
     useEffect(() => {
@@ -47,7 +48,7 @@ const Modal = ({isOpen, children, title = '', isClosable, className, onClose, cl
 
     return (
         <React.Fragment>
-            <div className='flex h-full w-full items-center justify-center'>
+            <div className='flex items-center justify-center w-full h-full'>
                 <div>
                     <Portal className={overlayClassName}>
                         <Draggable disabled={!isDraggable} bounds='parent'>
@@ -60,7 +61,7 @@ const Modal = ({isOpen, children, title = '', isClosable, className, onClose, cl
                                         <SvgIcon type={Icon.Close} className='icon-medium' fillClass='active-item-icon' />
                                     </div>}
                                 </div>
-                                <div className='px-6'>
+                                <div className={classname(contentClassName, {'px-6': !contentClassName})}>
                                     {children}
                                 </div>
                             </div>
@@ -68,7 +69,7 @@ const Modal = ({isOpen, children, title = '', isClosable, className, onClose, cl
                     </Portal>
                 </div>
             </div>
-        </React.Fragment>
+        </React.Fragment >
     );
 }
 

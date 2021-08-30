@@ -232,10 +232,10 @@ const parseOptions = <T extends any>(data: T[],
 }
 
 const openWebSite = (url: string) => {
-        if (!url.match(/^https?:\/\//i)) {
-            url = 'http://' + url;
-        }
-        return window.open(url);
+    if (!url.match(/^https?:\/\//i)) {
+        url = 'http://' + url;
+    }
+    return window.open(url);
 }
 
 const serialize = (obj: any) => {
@@ -271,9 +271,22 @@ const convertStringArrayToOptions = (array: string[]): TicketOptionsBase[] => {
 
     return [];
 }
+
+const formatTime = (sec: number): string => {
+    if (sec < 0) {
+        return '--:--:--'
+    }
+    const seconds = Math.floor(sec % 60) <= 9 ? '0' + Math.floor(sec % 60) : Math.floor(sec % 60)
+    return `${Math.floor(sec / 120) || '00'}:${Math.floor(sec / 60) || '00'}:${seconds || '00'}`
+}
+
 const applyPhoneMask = (phone: string) => {
+    if (!phone) {
+        return phone;
+    }
     return phone.replace(/^(\+\d{1,2})?(\d{3})(\d{3})(\d{4}).*/, "($2) $3-$4");
 }
+
 const utils = {
     getWindowCenter,
     formatUtcDate,
@@ -300,6 +313,7 @@ const utils = {
     openWebSite,
     serialize,
     convertStringArrayToOptions,
+    formatTime,
     applyPhoneMask
 };
 

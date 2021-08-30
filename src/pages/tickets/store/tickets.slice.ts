@@ -111,6 +111,9 @@ const ticketsSlice = createSlice({
     toggleChatTranscriptWindowVisible(state) {
       state.isChatTranscriptModalVisible = !state.isChatTranscriptModalVisible;
     },
+    toggleCallLogPlayerVisible(state) {
+      state.isCallLogPlayerVisible = !state.isCallLogPlayerVisible;
+    },
     setTicketListQueryType(
       state,
       { payload }: PayloadAction<TicketListQueryType>
@@ -141,7 +144,8 @@ export const {
   setTicketListQueryType,
   setTicketUpdateModel,
   setTicketUpdateHash,
-  toggleChatTranscriptWindowVisible
+  toggleChatTranscriptWindowVisible,
+  toggleCallLogPlayerVisible
 } = ticketsSlice.actions;
 
 export default ticketsSlice.reducer;

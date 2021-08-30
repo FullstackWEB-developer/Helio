@@ -1,3 +1,4 @@
+import {CommunicationDirection} from '@shared/models';
 import {TicketFeed} from './ticket-feed';
 import {TicketNote} from './ticket-note';
 import {TicketStatuses} from './ticket.status.enum';
@@ -44,4 +45,5 @@ export interface Ticket {
     contactDisconnectTimestamp?: string;
     connectedToAgentTimestamp?: string;
     contactWaitDuration?: number;
+    communicationDirection?: CommunicationDirection;
 }

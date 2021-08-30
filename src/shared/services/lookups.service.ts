@@ -34,7 +34,7 @@ export const getProviders = () => {
                 .then((response) => {
                     dispatch(setProviders(response.data));
                 })
-                .catch((error) => {
+                .catch((error: any) => {
                     if (error.response?.status === 404) {
                         dispatch(setProviders(undefined));
                     } else {
@@ -91,7 +91,7 @@ export const getUserList = () => {
                 });
                 const list = response.data.results as User[];
                 dispatch(setUserList(list));
-            } catch (error) {
+            } catch (error: any) {
                 dispatch(setFailure(error.message));
             }
         }
@@ -131,7 +131,7 @@ export const getMetricOptions = () => {
                 const response = await Api.get(url);
                 const list = response.data as KeyValuePair[];
                 dispatch(setMetricOptions(list));
-            } catch (error) {
+            } catch (error: any) {
                 dispatch(setFailure(error.message));
             }
         }

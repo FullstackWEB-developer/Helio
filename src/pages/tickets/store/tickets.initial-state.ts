@@ -28,6 +28,7 @@ export interface TicketState {
     feedLastMessageOn?: Date;
     ticketUpdate?: TicketUpdateModel;
     isChatTranscriptModalVisible: boolean;
+    isCallLogPlayerVisible: boolean;
     ticketUpdateHash?: string;
 }
 
@@ -59,7 +60,8 @@ const initialTicketState: TicketState = {
     selectedTicket: null,
     ticketListQueryType: TicketListQueryType.AllTicket,
     ticketUpdate: undefined,
-    ticketUpdateHash: undefined
+    ticketUpdateHash: undefined,
+    isCallLogPlayerVisible: false
 }
 
 export default initialTicketState;

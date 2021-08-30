@@ -16,7 +16,7 @@ export const queryWithState = <T extends any>(
         try {
             const result = await getData();
             dispatch(setState(result));
-        } catch (error) {
+        } catch (error: any) {
             dispatch(setState(undefined));
         }
     }

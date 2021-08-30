@@ -87,7 +87,7 @@ class Logger {
             Logger.isStreamCreationInProgress = false;
             return data.$metadata.httpStatusCode;
         }
-        catch (error) {
+        catch (error: any) {
             Logger.isStreamCreationInProgress = false;
             console.log(error);
         }
@@ -103,7 +103,7 @@ class Logger {
             const data = await this.log.send(params);
             return data.logStreams?.find((stream: LogStream) => stream.logStreamName === streamName);
         }
-        catch (error) {
+        catch (error: any) {
             console.log(error);
         }
     }
@@ -130,7 +130,7 @@ class Logger {
                     this.storeLogStream({...storedLogStream, uploadSequenceToken: data.nextSequenceToken});
                 }
             }
-            catch (error) {
+            catch (error: any) {
                 if (error && error.message && error.expectedSequenceToken && error.message.includes("sequenceToken")) {
                     this.storeLogStream({...storedLogStream, uploadSequenceToken: error.expectedSequenceToken});
                     this.putEvent(payload);

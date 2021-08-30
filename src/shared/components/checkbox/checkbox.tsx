@@ -16,6 +16,7 @@ interface CheckboxProps {
     checked?: boolean,
     value?: string,
     className?: string;
+    labelClassName?: string;
     truncate?: boolean;
     assistiveText?: string;
     onChange?: (event: CheckboxCheckEvent) => void;
@@ -28,6 +29,7 @@ const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(({
     checked,
     defaultChecked,
     className,
+    labelClassName = 'w-60',
     truncate = false,
     assistiveText,
     onChange,
@@ -51,7 +53,7 @@ const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(({
             <span className="checkbox-control">
                 <SvgIcon type={Icon.LightCheckBoxOn} fillClass='svg-checkbox'></SvgIcon>
             </span>
-            <span className={classnames({'truncate': truncate, 'w-60': !assistiveText})}>{t(label)}</span>
+            <span className={classnames(labelClassName, {'truncate': truncate, 'w-60': !assistiveText})}>{t(label)}</span>
             {!!assistiveText &&
                 <span className='body3-medium ml-1.5'>{t(assistiveText)}</span>
             }

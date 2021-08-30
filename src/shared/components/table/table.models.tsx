@@ -9,7 +9,8 @@ export interface TableModel {
     title?: TableTitleModel;
     headerClassName?: string,
     wrapperClassName?: string;
-    rowClass?:string;
+    rowClass?: string;
+    isSelected?: (row: any) => boolean;
     emptyMessage?: string;
     showEmptyMessage?: boolean;
 }

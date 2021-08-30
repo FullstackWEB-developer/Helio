@@ -15,7 +15,8 @@ import {
     UserDetailsPath,
     UsersBulkPath,
     BlackListsPath,
-    TicketSmsPath
+    TicketSmsPath,
+    CallsLogPath
 } from './paths';
 import RealTimeUserStatusUpdate from '@shared/websockets/real-time-user-status-update';
 import ExternalAccessLayout from '@pages/external-access/layout/external-access-layout';
@@ -54,6 +55,7 @@ const Sms = React.lazy(() => import('@pages/sms'));
 const UserDetails = React.lazy(() => import('@pages/users/details'));
 const UserAdd = React.lazy(() => import('@pages/users/add/user-add'));
 const UserList = React.lazy(() => import('@pages/users/list/user-list'));
+const CallsLogList = React.lazy(() => import('@pages/calls-log/calls-log-list'));
 const BlackList = React.lazy(() => import('@pages/blacklists/blacklists'));
 const BulkAddUser = React.lazy(() => import('@pages/users/bulk-add/bulk-add'));
 
@@ -65,7 +67,7 @@ function App() {
             queries: {
                 refetchOnWindowFocus: false,
                 retry: false,
-                onError: (error) => {
+                onError: (error: any) => {
                     logger.error("Query Error ", error);
                 }
             },
@@ -153,6 +155,7 @@ function App() {
                             <GuardedRoute exact path={`${UserDetailsPath}/:userId`} component={withSuspense(UserDetails)} />
                             <GuardedRoute exact path={BlackListsPath} component={withSuspense(BlackList)} />
                             <GuardedRoute exact path={UsersBulkPath} component={withSuspense(BulkAddUser)} />
+                            <GuardedRoute exact path={CallsLogPath} component={withSuspense(CallsLogList)} />
                         </Layout>
                     </SignalRProvider>
                 </Switch>

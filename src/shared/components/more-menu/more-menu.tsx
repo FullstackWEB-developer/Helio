@@ -10,10 +10,11 @@ interface MoreMenuProps {
     iconFillClassname?: string;
     iconClassName?: string;
     menuClassName?: string;
+    containerClassName?: string;
     onClick?: (item: DropdownItemModel) => void
 }
 
-const MoreMenu = ({value, items, menuClassName, iconClassName, iconFillClassname, ...props}: MoreMenuProps) => {
+const MoreMenu = ({value, items, menuClassName, iconClassName, iconFillClassname, containerClassName,...props}: MoreMenuProps) => {
     const [isVisible, setIsVisible, elementRef] = useComponentVisibility<HTMLDivElement>(false);
     const [valueSelected, setValueSelected] = useState(value);
 
@@ -31,7 +32,7 @@ const MoreMenu = ({value, items, menuClassName, iconClassName, iconFillClassname
         }
     };
 
-    return (<div ref={elementRef} className="relative">
+    return (<div ref={elementRef} className={classnames("relative", containerClassName)}>
         <div className="relative flex flex-row items-center cursor-pointer flex-nowrap" onClick={() => setIsVisible(!isVisible)}>
             <SvgIcon type={Icon.MoreVert} className={iconClassName} fillClass={iconFillClassname} />
         </div>

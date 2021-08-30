@@ -3,6 +3,7 @@ import TableHeader from './table-header';
 import TableRow from './table-row';
 import React from 'react';
 import TableTitle from './table-title';
+import classnames from 'classnames';
 import {useTranslation} from 'react-i18next';
 
 export interface Table2Props {
@@ -24,7 +25,7 @@ const Table = ({model}: Table2Props) => {
 
     const rowContent = () => React.Children.toArray(rows.map(row => {
         return <div className={hasRowsBottomBorder ? 'border-b' : ''}>
-            <TableRow rowClass={rowClass} isCompact={isCompact} columns={columns} data={row} />
+            <TableRow rowClass={classnames(rowClass, {'bg-gray-100': model.isSelected?.(row)})} isCompact={isCompact} columns={columns} data={row}/>
         </div>
     }));
 

@@ -30,3 +30,4 @@ export * from "./invite-user.model";
 export * from "./role-base.model";
 export * from "./user-directory-filter.model";
 export * from "./user-active-directory.model";
+export * from "./communication-direction";

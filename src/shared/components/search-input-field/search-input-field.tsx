@@ -7,6 +7,7 @@ import customHooks from '@shared/hooks/customHooks';
 import {Option} from '@components/option/option';
 import SelectCell from '@components/select/select-cell';
 import classnames from 'classnames';
+import {keyboardKeys} from '@components/search-bar/constants/keyboard-keys';
 interface SearchInputProps {
     value?: string,
     onChange?: (value: string) => void,
@@ -29,6 +30,7 @@ interface SearchInputProps {
     suggestionsEmptyPlaceholder?: string,
     autoSuggestDropdownClose?: boolean,
     hasBorderBottom?: boolean;
+    onPressEnter?: (value: string) => void;
 }
 const SearchInputField = React.forwardRef<HTMLInputElement, SearchInputProps>(({
     autosuggestOptions,
@@ -38,6 +40,7 @@ const SearchInputField = React.forwardRef<HTMLInputElement, SearchInputProps>(({
     suggestionsEmptyPlaceholder,
     autoSuggestDropdownClose,
     hasBorderBottom = true,
+    onPressEnter,
     ...props
 }: SearchInputProps, ref) => {
     const {t} = useTranslation();
@@ -99,6 +102,9 @@ const SearchInputField = React.forwardRef<HTMLInputElement, SearchInputProps>(({
         if (props.onKeyDown) {
             props.onKeyDown(e);
         }
+        if (e.key === keyboardKeys.enter) {
+            onPressEnter?.(value);
+        }
     }
     const onSelectCellClick = (option: Option) => {
         if (onDropdownSuggestionClick) {
@@ -109,7 +115,7 @@ const SearchInputField = React.forwardRef<HTMLInputElement, SearchInputProps>(({
         }
     }
 
-    const onTextClear= () => {
+    const onTextClear = () => {
         clearValue()
         if (props.onClear) {
             props.onClear();
@@ -122,8 +128,8 @@ const SearchInputField = React.forwardRef<HTMLInputElement, SearchInputProps>(({
                 <SvgIcon type={Icon.Search} className="cursor-pointer icon-small" fillClass="search-icon-fill" onClick={props?.iconOnClick} />
             </div>}
             <input ref={innerRef} type='text'
-                className={classnames('py-2.5 h-full w-full search-input-field body2', props.inputClassNames, {'pl-12': !props.disableSearchIcon, 'border-b' : hasBorderBottom})}
-                placeholder={props.placeholder || t('common.search')}
+                className={classnames('py-2.5 h-full w-full search-input-field body2', props.inputClassNames, {'pl-12': !props.disableSearchIcon, 'border-b': hasBorderBottom})}
+                placeholder={!props.placeholder ? t('common.search') : t(props.placeholder)}
                 value={value}
                 onChange={onChange}
                 onFocus={() => {onFocus()}}
@@ -133,7 +139,7 @@ const SearchInputField = React.forwardRef<HTMLInputElement, SearchInputProps>(({
                 autoComplete={props.shouldDisplayAutocomplete ? 'on' : 'off'} />
             {
                 isFocused && value && (
-                    <span onClick={onTextClear} onMouseDown={(e) => { e.preventDefault() }} className="absolute cursor-pointer right-4">
+                    <span onClick={onTextClear} onMouseDown={(e) => {e.preventDefault()}} className="absolute cursor-pointer right-4">
                         <SvgIcon type={Icon.Clear} fillClass="clear-input-icon-fill" />
                     </span>
                 )

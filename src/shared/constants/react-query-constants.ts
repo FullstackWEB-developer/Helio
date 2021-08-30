@@ -53,3 +53,5 @@ export const SearchUserInActiveDirectory = 'search-user-in-active-directory';
 export const GetUserList = 'get-user-list';
 export const GetBlacklist = 'get-blacklist';
 export const GetExternalUserList = 'get-external-user-list';
+export const GetCallLogs = 'get-calls-logs';
+export const GetRecordedConversationBlobFile = 'get-recorded-conversation-blob-file';

@@ -447,14 +447,14 @@ const TicketFilter = ({isOpen}: {isOpen: boolean}) => {
     }
 
     const getClassNames = () => classNames({
-        'w-96 transition-width transition-slowest ease top-0 bg-secondary-100 overflow-y-auto relative': isOpen,
+        'w-96 transition-width transition-slowest ease top-0 bg-secondary-100 overflow-y-auto': isOpen,
         'hidden': !isOpen
     });
 
     return <div className={getClassNames()}>
-        <div className='bg-secondary-100 pb-20 min-h-full px-6' >
+        <div className='min-h-full px-6 pb-20 bg-secondary-100' >
             <div className='flex flex-row justify-between pt-7'>
-                <div className='subtitle pb-8 h7'>{t('tickets.filter.filter_tickets')}</div>
+                <div className='pb-8 subtitle h7'>{t('tickets.filter.filter_tickets')}</div>
                 <div className='cursor-pointer' onClick={() => handleSubmit(fetchTickets)()}>{t('tickets.filter.fetch')}</div>
                 <div className='cursor-pointer' onClick={() => resetForm()}>{t('tickets.filter.clear_all')}</div>
             </div>

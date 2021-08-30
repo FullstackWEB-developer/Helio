@@ -5,7 +5,7 @@ const useLocalStorage = (key:string, initialValue: any) =>  {
         try {
             const item = window.localStorage.getItem(key);
             return item ? JSON.parse(item) : initialValue;
-        } catch (error) {
+        } catch (error: any) {
             console.log(error);
             return initialValue;
         }
@@ -16,7 +16,7 @@ const useLocalStorage = (key:string, initialValue: any) =>  {
             const valueToStore = value instanceof Function ? value(storedValue) : value;
             setStoredValue(valueToStore);
             window.localStorage.setItem(key, JSON.stringify(valueToStore));
-        } catch (error) {
+        } catch (error: any) {
             console.log(error);
         }
     };

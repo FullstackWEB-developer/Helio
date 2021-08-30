@@ -73,15 +73,16 @@ export function getList(ticketQuery: TicketQuery, resetPagination?: boolean) {
             }
 
             dispatch(setTicketFilter(saveQuery));
-        } catch (error) {
+        } catch (error: any) {
             dispatch(setFailure(error.message));
+
         } finally {
             dispatch(setGlobalLoading(false));
         }
     }
 }
 
-export const setStatus = async ({id, status}: { id: string, status: number }): Promise<Ticket> => {
+export const setStatus = async ({id, status}: {id: string, status: number}): Promise<Ticket> => {
     const url = `${ticketsBaseUrl}/${id}/status`;
     const result = await Api.put(url, {
         id: id,
@@ -104,13 +105,13 @@ export const setAssignee = async ({ticketId, assignee}: setAssigneeProps): Promi
     return result.data;
 }
 
-export const addNote = async ({ticketId, note}: { ticketId: string, note: TicketNote }): Promise<Ticket> => {
+export const addNote = async ({ticketId, note}: {ticketId: string, note: TicketNote}): Promise<Ticket> => {
     const url = `${ticketsBaseUrl}/${ticketId}/notes`;
     const result = await Api.post(url, note);
     return result.data;
 }
 
-export const addFeed = async ({ticketId, feed}: { ticketId: string, feed: TicketFeed }): Promise<Ticket> => {
+export const addFeed = async ({ticketId, feed}: {ticketId: string, feed: TicketFeed}): Promise<Ticket> => {
     const url = `${ticketsBaseUrl}/${ticketId}/feed`;
     const result = await Api.post(url, feed);
     return result.data;
@@ -125,7 +126,7 @@ export const getEnumByType = (enumType: string) => {
             dispatch(startGetTicketEnumRequest());
             await Api.get(getEnumUrl)
                 .then(response => {
-                    dispatch(setTicketEnum({ key: enumType, result: response.data }));
+                    dispatch(setTicketEnum({key: enumType, result: response.data}));
                     dispatch(endGetTicketEnumRequest(''));
                 })
                 .catch(error => {
@@ -144,7 +145,7 @@ export const getLookupValues = (key: string) => {
             dispatch(startGeLookupValuesRequest());
             await Api.get(getLookupValuesUrl)
                 .then(response => {
-                    dispatch(setLookupValues({ key: key, result: response.data }));
+                    dispatch(setLookupValues({key: key, result: response.data}));
                     dispatch(endGetLookupValuesRequest(''));
                 })
                 .catch(error => {
@@ -196,10 +197,35 @@ export const getContactTickets = async (queryRequest: ContactTicketsRequest, res
     return data;
 }
 
-export const getRecordedConversation = async (id: string) : Promise<ChatTranscript> => {
+export const getRecordedConversation = async (id: string): Promise<ChatTranscript> => {
     const url = `${ticketsBaseUrl}/${id}/download`;
     const response = await Api.get(url)
     return response.data;
+}
+
+
+export const getRecordedConversationBlob = async (id: string): Promise<Blob> => {
+    const url = `${ticketsBaseUrl}/${id}/download`;
+    const {data} = await Api.get(url, {
+        responseType: 'blob'
+    });
+    return data;
+}
+
+export const getRecordedConversationLink = async (id?: string): Promise<string> => {
+    if (!id) {
+        return '';
+    }
+    const blob = await getRecordedConversationBlob(id);
+    return URL.createObjectURL(blob);
+}
+
+export const getRecordConversationText = async (id?: string): Promise<string> => {
+    if (!id) {
+        return '';
+    }
+    const blob = await getRecordedConversationBlob(id);
+    return await blob.text();
 }
 
 export const getPatientTickets = async (queryRequest: PatientTicketsRequest, resetPagination?: boolean) => {

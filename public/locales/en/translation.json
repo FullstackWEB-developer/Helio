@@ -47,8 +47,11 @@
     "deactivate": "Deactivate",
     "change": "Change",
     "add": "Add",
+    "time_period": "Time period",
     "step_x_of_x": "Step {{current}} of {{total}}",
-    "user": "User"
+    "user": "User",
+    "statuses": "Statuses",
+    "unknown": "Unknown"
   },
   "login": {
     "title": "Run your medical office efficiently.",
@@ -1233,7 +1236,29 @@
     "call_forwarding_type": "Forward To",
     "user_update_success": "User has been updated",
     "user_update_error": "Error updating user",
-    "provider_tooltip": "<0>Please match with one of the mappings from the dropdown, if s/he is a provider in the EHR/EMR system.</0><1>We will use this to show the right information about the provider to the patients.</1>"
+    "provider_tooltip": "<0>Please match that user if s/he is a provider in the EHR/EMR system.</0><1>We will use this to show the right information about the provider to the patients.</1>"
+  },
+  "calls_log": {
+    "answered": "Answered",
+    "missed": "Missed",
+    "abandoned": "Abandoned",
+    "inbound": "Inbound",
+    "outbound": "Outbound",
+    "call_type": "Call Type",
+    "all": "All",
+    "my_call_log": "My Calls Log",
+    "team_call_log": "Team Calls Log",
+    "call": "Call",
+    "ticket_details": "Ticket Details",
+    "contact_details": "Contact Details",
+    "from": "From",
+    "to": "To",
+    "date_and_time": "Date and Time",
+    "duration": "Duration",
+    "status": "Status",
+    "recording": "Recording",
+    "rating": "Rating",
+    "search_calls_placeholder": "Search calls"
   },
   "blacklist": {
     "title": "Manager Blacklist",

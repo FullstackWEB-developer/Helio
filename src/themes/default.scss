@@ -396,6 +396,13 @@
   --ccp-script-bgcolor: #e9f6f8;
   --ccp-script-hover-bgcolor: #c8eaef;
 
+  --slider-runnable-track: #eaeaea;
+  --slider-traveled-track: var(--color-primary-default);
+
+  ::-webkit-scrollbar {
+    width: 0.3125rem;
+  }
+
   --text-area-disabled-color: var(--color-secondary-200);
   --checked-row: rgba(0, 173, 88, 0.04);
   

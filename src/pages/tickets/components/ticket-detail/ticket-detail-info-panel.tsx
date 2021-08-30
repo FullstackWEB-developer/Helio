@@ -157,7 +157,8 @@ const TicketDetailInfoPanel = ({ticket, patient, contact}: TicketDetailInfoPanel
                 tags: updateModel.tags,
                 callbackPhoneNumber: updateModel.callbackPhoneNumber,
                 patientCaseNumber: updateModel.patientCaseNumber,
-                dueDate: dateTime ? dateTime.toDate() : undefined
+                dueDate: dateTime ? dateTime.toDate() : undefined,
+                communicationDirection: ticket.communicationDirection
             }
         });
     }
@@ -170,7 +171,7 @@ const TicketDetailInfoPanel = ({ticket, patient, contact}: TicketDetailInfoPanel
 
     return <>
         <form className='relative flex flex-col' onSubmit={handleSubmit(onSubmit)}>
-            <div className='flex px-6 justify-between items-center sticky top-0 z-10 ticket-details-info-header'>
+            <div className='sticky top-0 z-10 flex items-center justify-between px-6 ticket-details-info-header'>
                 <h6>{t('ticket_detail.info_panel.details')}</h6>
                 {
                     isDirty() &&
