@@ -1274,7 +1274,7 @@
     },
     "status_type": {
       "blocked": "Blocked",
-      "unblocked": "Unblocked"
+      "unblock": "Unblock"
     },
     "note": "Note",
     "reported_on": "Reported On",

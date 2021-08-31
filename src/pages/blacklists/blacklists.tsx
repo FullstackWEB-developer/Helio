@@ -7,11 +7,11 @@ const Blacklists = () => {
     const {t} = useTranslation();
 
     return (
-        <div className="flex flex-col w-full h-full pt-6">
+        <div className="flex flex-col w-full h-full pt-6 overflow-y-auto">
             <div className='pb-6 pl-6'>
                 <h5>{t('blacklist.title')}</h5>
             </div>
-            <div>
+            <div className='h-full'>
                 <Tabs>
                     <Tab title={t('blacklist.tabs_title.email')}>
                         <BlacklistsTable type={BlockAccessType.Email} />

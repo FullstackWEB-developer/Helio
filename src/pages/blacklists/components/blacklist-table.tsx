@@ -60,7 +60,7 @@ const BlacklistsTable = ({type, ...props}: BlacklistsTableProps) => {
             value: 'true'
         },
         {
-            label: t('blacklist.status_type.unblocked'),
+            label: t('blacklist.status_type.unblock'),
             value: 'false'
         }
     ];
@@ -216,7 +216,7 @@ const BlacklistsTable = ({type, ...props}: BlacklistsTableProps) => {
 
     return (
         <>
-            <div className='flex items-center justify-center w-full'>
+            <div className='flex items-center justify-center w-full h-full'>
                 <Modal
                     title={t('blacklist.add_new_block_form.title')}
                     className='blacklist-modal-width'
