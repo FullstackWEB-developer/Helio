@@ -11,6 +11,7 @@ import dayjs from 'dayjs';
 import {Ticket} from '@pages/tickets/models/ticket';
 import {ChannelTypes} from '@shared/models';
 import i18n from 'i18next';
+
 export const downloadRecordedConversation = async (ticket: Ticket, data?: ChatTranscript) => {
     if (ticket?.id) {
         if (!data) {

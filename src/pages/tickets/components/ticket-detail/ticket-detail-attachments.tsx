@@ -1,16 +1,15 @@
-import React, {useState} from 'react';
+import {useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import withErrorLogging from '../../../../shared/HOC/with-error-logging';
 import SvgIcon from '@components/svg-icon/svg-icon';
 import {Icon} from '@components/svg-icon/icon';
 import {toggleCallLogPlayerVisible, toggleChatTranscriptWindowVisible} from '@pages/tickets/store/tickets.slice';
 import {useDispatch} from 'react-redux';
-import {getChannel} from '@pages/tickets/utils/ticket-chat-transcript-download-utils';
+import {downloadRecordedConversation, getChannel} from '@pages/tickets/utils/ticket-chat-transcript-download-utils';
 import {Ticket} from '@pages/tickets/models/ticket';
 import {useQuery} from 'react-query';
-import {GetRecordedConversationBlobFile} from '@constants/react-query-constants';
+import {GetRecordedConversationLink} from '@constants/react-query-constants';
 import {getRecordedConversationLink} from '@pages/tickets/services/tickets.service';
-import {Link} from 'react-router-dom';
 import {ChannelTypes} from '@shared/models';
 import Spinner from '@components/spinner/Spinner';
 
@@ -24,16 +23,32 @@ const TicketDetailAttachments = ({ticket}: TicketDetailAttachmentsProps) => {
 
     const [downloadUrl, setDownloadUrl] = useState<string>('');
 
-    const {isLoading, isFetching} = useQuery([GetRecordedConversationBlobFile, ticket.id], () => getRecordedConversationLink(ticket?.id), {
+    const {isLoading, isFetching} = useQuery([GetRecordedConversationLink, ticket.id], () => getRecordedConversationLink(ticket?.id), {
         enabled: true,
         onSuccess: (data) => {
             setDownloadUrl(data);
         }
     });
     const donwloadFileName = () => {
-        const extension = ticket.channel === ChannelTypes.PhoneCall ? '.wav' : '.txt';
-        return `ticket_detail.info_panel.recorded_conversation.file_name_${getChannel(ticket)} - ${ticket.ticketNumber}${extension}`;
+        const extension = ticket.channel === ChannelTypes.PhoneCall ? '.wav' : '.json';
+        return `ticket_detail.info_panel.recorded_conversation.file_name_${getChannel(ticket)}-${ticket.ticketNumber}${extension}`;
     }
+
+    const getDownloadElement = () => {
+        if (ticket.channel === ChannelTypes.PhoneCall) {
+            return (
+                <a href={downloadUrl} download={donwloadFileName()}>
+                    <SvgIcon type={Icon.Download} fillClass='select-arrow-fill' />
+                </a>
+            )
+        }
+        return (
+            <div onClick={() => downloadRecordedConversation(ticket)} className='cursor-pointer'>
+                <SvgIcon type={Icon.Download} fillClass={'select-arrow-fill'} />
+            </div>
+        );
+    }
+
     return <div className={'py-4 mx-auto flex flex-col'}>
         <div>
             <dl>
@@ -56,9 +71,7 @@ const TicketDetailAttachments = ({ticket}: TicketDetailAttachmentsProps) => {
                                     <Spinner />
                                 }
                                 {(!isLoading && !isFetching) &&
-                                    <a href={downloadUrl} download={donwloadFileName()}>
-                                        <SvgIcon type={Icon.Download} fillClass='select-arrow-fill' />
-                                    </a>
+                                    getDownloadElement()
                                 }
                             </div> : t('common.not_available')
                     }

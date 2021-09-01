@@ -1,6 +1,6 @@
-import {getRecordConversationText, getRecordedConversation, getRecordedConversationBlob, getRecordedConversationLink} from '@pages/tickets/services/tickets.service';
+import {getRecordedConversation, getRecordedConversationLink} from '@pages/tickets/services/tickets.service';
 import {useQuery} from 'react-query';
-import {GetChatTranscript, GetRecordedConversationBlobFile} from '@constants/react-query-constants';
+import {GetRecordedConversationContent, GetRecordedConversationLink} from '@constants/react-query-constants';
 import Spinner from '@components/spinner/Spinner';
 import {useTranslation} from 'react-i18next';
 import SvgIcon, {Icon} from '@components/svg-icon';
@@ -29,7 +29,6 @@ const ChatTranscript = ({ticket, patient}: ChatTranscriptProps) => {
     const {t} = useTranslation();
     const dispatch = useDispatch();
     const [chatTranscript, setChatTranscript] = useState<ChatTranscriptModel>();
-    const [downloadUrl, setDownloadUrl] = useState<string>();
 
     useEffect(() => {
         dispatch(getUserList());
@@ -37,25 +36,20 @@ const ChatTranscript = ({ticket, patient}: ChatTranscriptProps) => {
 
     const agent = useSelector((state) => selectUserByEmail(state, ticket.contactAgent));
 
-    const {isLoading, isFetching} = useQuery([GetRecordedConversationBlobFile, ticket.id], () => {
+    const {isLoading, isFetching} = useQuery([GetRecordedConversationContent, ticket.id], () => {
         if (!ticket?.id) {
             return undefined;
         }
-        return getRecordedConversationBlob(ticket.id)
+        return getRecordedConversation(ticket.id)
     }, {
         enabled: true,
         onSuccess: async (data) => {
-            if (!data) {
-                return;
-            }
-
-            const dataContent = await data.text();
-            setChatTranscript(JSON.parse(dataContent));
-            setDownloadUrl(URL.createObjectURL(data));
+            setChatTranscript(data);
         }
     });
+   
 
-    if (isLoading) {
+    if (isLoading || isFetching) {
         return <Spinner fullScreen />
     }
 
@@ -77,17 +71,16 @@ const ChatTranscript = ({ticket, patient}: ChatTranscriptProps) => {
         const diff = dayjs(endDate).diff(dayjs(startDate), 'second');
         return dayjs.duration(diff, 'seconds').format('HH:mm:ss');
     }
-    const donwloadFileName = () => {
-        return `ticket_detail.info_panel.recorded_conversation.file_name_${getChannel(ticket)} - ${ticket.ticketNumber}.txt`;
-    }
+
     return <div className='flex flex-col pt-1 chat-transcript-modal'>
         <div className='flex flex-row items-center justify-between h-10 border-b'>
             <div className=''>
                 {t('ticket_detail.chat_transcript.chat_info')}
             </div>
-            <a className='pr-4 cursor-pointer' href={downloadUrl} download={donwloadFileName()}>
-                <SvgIcon type={Icon.Download} fillClass='select-arrow-fill' />
-            </a>
+
+            <div onClick={() => downloadRecordedConversation(ticket, chatTranscript)} className='cursor-pointer'>
+                <SvgIcon type={Icon.Download} fillClass={'select-arrow-fill'} />
+            </div>
         </div>
         <div className='flex flex-row justify-between pt-2.5'>
             <div className='w-1/2'>

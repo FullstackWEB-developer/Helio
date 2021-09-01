@@ -197,18 +197,14 @@ export const getContactTickets = async (queryRequest: ContactTicketsRequest, res
     return data;
 }
 
-export const getRecordedConversation = async (id: string): Promise<ChatTranscript> => {
-    const url = `${ticketsBaseUrl}/${id}/download`;
-    const response = await Api.get(url)
-    return response.data;
-}
+export const getRecordedConversation = async (id?: string): Promise<ChatTranscript | undefined> => {
+    if (!id) {
+        return undefined;
+    }
 
+    const url = `${ticketsBaseUrl}/${id}/recorded/download`;
+    const {data} = await Api.get(url);
 
-export const getRecordedConversationBlob = async (id: string): Promise<Blob> => {
-    const url = `${ticketsBaseUrl}/${id}/download`;
-    const {data} = await Api.get(url, {
-        responseType: 'blob'
-    });
     return data;
 }
 
@@ -216,16 +212,13 @@ export const getRecordedConversationLink = async (id?: string): Promise<string> 
     if (!id) {
         return '';
     }
-    const blob = await getRecordedConversationBlob(id);
-    return URL.createObjectURL(blob);
-}
 
-export const getRecordConversationText = async (id?: string): Promise<string> => {
-    if (!id) {
-        return '';
-    }
-    const blob = await getRecordedConversationBlob(id);
-    return await blob.text();
+    const url = `${ticketsBaseUrl}/${id}/recorded/link`;
+    const {data} = await Api.get(url, {
+        responseType: 'text'
+    });
+
+    return data;
 }
 
 export const getPatientTickets = async (queryRequest: PatientTicketsRequest, resetPagination?: boolean) => {

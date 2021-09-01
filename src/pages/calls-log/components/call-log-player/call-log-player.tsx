@@ -6,7 +6,7 @@ import {useQuery} from 'react-query';
 import {getRecordedConversationLink} from '@pages/tickets/services/tickets.service';
 import {useState} from 'react';
 import Spinner from '@components/spinner/Spinner';
-import {GetRecordedConversationBlobFile} from '@constants/react-query-constants';
+import {GetRecordedConversationLink} from '@constants/react-query-constants';
 import './call-log-player.scss';
 import Modal from '@components/modal/modal';
 
@@ -31,7 +31,7 @@ const CallLogPlayer = (
     }: CallLogAudioPlayer) => {
 
     const [audioUrl, setAudioUrl] = useState('');
-    const {isLoading, isFetching} = useQuery([GetRecordedConversationBlobFile, ticketId], () => getRecordedConversationLink(ticketId), {
+    const {isLoading, isFetching} = useQuery([GetRecordedConversationLink, ticketId], () => getRecordedConversationLink(ticketId), {
         enabled: isOpen,
         onSuccess: (data) => {
             setAudioUrl(data);
