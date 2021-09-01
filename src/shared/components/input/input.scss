@@ -103,8 +103,4 @@
     }
   }
 
-  .required::before {
-    content: "*";
-    color: var(--color-red);
-  }
 }

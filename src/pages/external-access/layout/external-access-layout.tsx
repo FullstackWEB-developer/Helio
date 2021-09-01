@@ -48,15 +48,15 @@ const ExternalAccessLayout = ({children}: ExternalAccessLayoutProps) => {
         'overflow-y-auto': (!webFormsLabResult?.isExact)
     });
 
-    const iconWrapperClass = classNames('h-20 md:px-40 external-access-layout-header', {
+    const iconWrapperClass = classNames('h-20 xl:px-40 external-access-layout-header', {
         'hidden': isSmsTicketPage
     });
 
-    const childrenWrapperClass = classNames('flex-grow md:px-40 external-access-container', {
-        'px-8 pb-36 padding-top': !isSmsTicketPage,
+    const childrenWrapperClass = classNames('flex-grow xl:px-40 external-access-container', {
+        'px-4 pb-36 padding-top': !isSmsTicketPage,
     });
 
-    const footerWrapperClass = classNames('h-16 md:px-40 external-access-layout-footer body3-medium', {
+    const footerWrapperClass = classNames('h-16 xl:px-40 external-access-layout-footer body3-medium', {
         'hidden': isSmsTicketPage
     });
 

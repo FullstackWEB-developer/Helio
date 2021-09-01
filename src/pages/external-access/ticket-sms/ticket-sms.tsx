@@ -78,16 +78,14 @@ const TicketSms = () => {
     }
 
     if (!verifiedPatient) {
-        return <div>{t('external_access.hipaa.not_verified_patient')}</div>;
+        return <div>{t('external_access.not_verified_patient')}</div>;
     }
 
     if (isLoading) {
         return <Spinner fullScreen />
     }
 
-    if (!messages || messages.length === 0) {
-        return <div>{t('external_access.ticket_sms.no_messages')}</div>;
-    }
+
 
     const DisplayMessage = ({message}: {message: TicketMessage}) => {
         return message.direction === TicketMessagesDirection.Incoming ? <IncomingSms message={message} /> : <OutgoingSms message={message} />
@@ -117,6 +115,7 @@ return <div className='flex flex-col min-h-screen'>
         {t('external_access.ticket_sms.conversation_history')}
     </div>
     <div className='overflow-y-auto flex-grow space-y-4 pb-6'>
+        {(!messages || messages.length === 0) && <div className='pt-4 body2-medium flex justify-center'>{t('external_access.ticket_sms.no_messages')}</div>}
         {sortedMessages.map((message, index) => {
             const previousMessage = sortedMessages[index-1];
             if (shouldPrintDate(message, previousMessage)) {

@@ -58,7 +58,8 @@ const UserList = React.lazy(() => import('@pages/users/list/user-list'));
 const CallsLogList = React.lazy(() => import('@pages/calls-log/calls-log-list'));
 const BlackList = React.lazy(() => import('@pages/blacklists/blacklists'));
 const BulkAddUser = React.lazy(() => import('@pages/users/bulk-add/bulk-add'));
-
+const GetExternalUserDobZip = React.lazy(() => import('@pages/external-access/verify-patient/get-external-user-dob-zip'));
+const ExternalUserVerificationCode = React.lazy(() => import('@pages/external-access/verify-patient/external-user-verification-code'));
 function App() {
     let logger = Logger.getInstance();
     const accessToken = useSelector(selectAccessToken);
@@ -97,6 +98,8 @@ function App() {
                             <Switch>
                                 <Route path={TicketSmsPath} component={withSuspense(TicketSms)} />
                                 <Route path='/o/appointment-list' component={withSuspense(AppointmentList)} />
+                                <Route path='/o/verify-patient' component={withSuspense(GetExternalUserDobZip)} />
+                                <Route path='/o/verify-patient-code' component={withSuspense(ExternalUserVerificationCode)} />
                                 <Route path='/o/appointment-detail' component={withSuspense(AppointmentDetail)} />
                                 <Route path='/o/request-refill' component={withSuspense(RequestRefill)} />
                                 <Route path='/o/view-medications' component={withSuspense(ViewMedications)} />

@@ -1,12 +1,12 @@
 import { useParams } from 'react-router';
 import { useTranslation } from 'react-i18next';
-import { getRedirectLink } from './services/link.service';
-import HipaaVerification from './hipaa-verification';
 import {useQuery} from 'react-query';
 import {GetRedirectLink} from '@constants/react-query-constants';
 import {RedirectLink} from '@pages/external-access/hipaa-verification/models/redirect-link';
 import Spinner from '@components/spinner/Spinner';
 import {AxiosError} from 'axios';
+import GetExternalUserMobileNumber from '@pages/external-access/verify-patient/get-external-user-mobile-number';
+import {getRedirectLink} from '@shared/services/notifications.service';
 
 interface RedirectLinkParams {
     linkId: string
@@ -37,7 +37,7 @@ const VerifyRedirectLink = () => {
     }
 
     if (data) {
-        return <HipaaVerification request={data} />
+        return <GetExternalUserMobileNumber request={data} />
     }
 
     return (

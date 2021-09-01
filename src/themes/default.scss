@@ -405,7 +405,7 @@
 
   --text-area-disabled-color: var(--color-secondary-200);
   --checked-row: rgba(0, 173, 88, 0.04);
-  
+
   .link {
     color: var(--color-primary-800);
   }
@@ -413,6 +413,14 @@
   .link:hover {
     color: var(--color-primary-400);
   }
+
+  .input-group {
+    .required::before {
+      content: "*";
+      color: var(--color-red);
+    }
+  }
+
 }
 
 .text-success {
@@ -440,3 +448,4 @@ input:focus,
 select:focus {
   outline: none;
 }
+

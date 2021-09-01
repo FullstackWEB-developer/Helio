@@ -45,7 +45,7 @@ const SnackbarMessage = ({message, position}: SnackbarMessageProps) => {
                 fillClass={message.type === (SnackbarType.Success) ? 'success-icon' : 'danger-icon'}
                 type={message.type === SnackbarType.Success ? Icon.CheckmarkOutline : Icon.Error}/></div>}
 
-            <div className="flex items-center flex-1 body2-white">
+            <div className="flex items-center flex-1 body2-white pr-2">
                 {t(message.message)}
             </div>
 

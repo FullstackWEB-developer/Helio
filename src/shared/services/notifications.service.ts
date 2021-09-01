@@ -4,10 +4,10 @@ import {Contact} from '@shared/models';
 import {Patient} from '@pages/patients/models/patient';
 import {Ticket} from '@pages/tickets/models/ticket';
 
-const contactsUrl = '/notifications';
+const notificationsUrl = '/notifications';
 
 export const getTemplates = async (channel: NotificationTemplateChannel, category?: string): Promise<NotificationTemplate[]> => {
-    const result = await Api.get(`${contactsUrl}/templates`, {
+    const result = await Api.get(`${notificationsUrl}/templates`, {
         params: {
             channel,
             category
@@ -17,7 +17,7 @@ export const getTemplates = async (channel: NotificationTemplateChannel, categor
 }
 
 export const processTemplate = async (templateId: string, ticket: Ticket, patient?: Patient, contact?: Contact): Promise<NotificationTemplate> => {
-    const url = `${contactsUrl}/templates/${templateId}/process`;
+    const url = `${notificationsUrl}/templates/${templateId}/process`;
     let data = {
         ticket,
         contact,
@@ -29,4 +29,10 @@ export const processTemplate = async (templateId: string, ticket: Ticket, patien
         }
     });
     return result.data;
+}
+
+export const getRedirectLink = async (linkId: string) => {
+    const url = `${notificationsUrl}/${linkId}`;
+    const response = await Api.get(url);
+    return response.data;
 }

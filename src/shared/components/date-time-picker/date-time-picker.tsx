@@ -338,7 +338,7 @@ const DateTimePicker = React.forwardRef<HTMLInputElement, DateTimePickerProps>((
                         onChange={onCalendarValueChange} />
                 </div>
             }
-            {props.assistiveText && !props.error &&
+            {props.assistiveText && !props.error && !date &&
                 <div className={getAssistiveTextContainerClassName()}>
                     <span className={getAssistiveTextClassName()}>{props.assistiveText}</span>
                 </div>

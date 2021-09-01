@@ -400,6 +400,13 @@ const SvgIcon = ({type, wrapperClassName = '', className = 'icon-medium', fillCl
         </svg>
     }
 
+    const getIconEmergency = () => {
+        return <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" className={mainClass}>
+            <rect width="48" height="48" fill="none"/>
+            <path d="M38,6H10a3.982,3.982,0,0,0-3.98,4L6,38a4,4,0,0,0,4,4H38a4,4,0,0,0,4-4V10A4,4,0,0,0,38,6ZM36,28H28v8H20V28H12V20h8V12h8v8h8Z" className={fillClass} />
+        </svg>
+    }
+
     const getIconError = () => {
         return <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className={mainClass}>
             <rect width="24" height="24" fill="none" />
@@ -999,7 +1006,8 @@ const SvgIcon = ({type, wrapperClassName = '', className = 'icon-medium', fillCl
         [Icon.Blacklist]: getIconBlacklist,
         [Icon.CallOutbound]: getIconCallOutbound,
         [Icon.CallInbound]: getIconCallInbound,
-        [Icon.CallMissedOutgoing]: getIconCallMissedOutgoing
+        [Icon.CallMissedOutgoing]: getIconCallMissedOutgoing,
+        [Icon.Emergency]: getIconEmergency
     }
 
     const iconClicked = (e: React.MouseEvent<HTMLDivElement>) => {

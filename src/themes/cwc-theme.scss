@@ -291,7 +291,7 @@
   --ccp-bottom-bar-icon: rgba(0, 0, 0, 0.6);
   --grayed-out: rgba(0, 0, 0, 0.6);
   --rgba-color-06: rgba(0, 0, 0, 0.6);
-
+  --rgba-color-038: rgba(0, 0, 0, 0.38);
   --profile-dropdown-shadow: 0 0.25rem 0.125rem 0 rgba(0, 0, 0, 0.15);
   --ccp-header-color: #4a4a4a;
 
@@ -343,9 +343,24 @@
     color: var(--color-primary-800);
   }
 
+  a.disabled {
+    color: var(--color-primary-300);
+    pointer-events: none;
+    cursor: none;
+  }
+
   a:hover {
     color: var(--color-primary-400);
+    cursor: pointer;
   }
+
+  .input-group {
+    .required::after {
+      content: "*";
+      color: var(--color-red);
+    }
+  }
+
 }
 
 .text-success {
@@ -365,3 +380,4 @@ input:focus,
 select:focus {
   outline: none;
 }
+

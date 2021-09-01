@@ -85,7 +85,7 @@ const AppointmentScheduleConfirm = () => {
 
 
     if (!verifiedPatient) {
-        return <div>{t('external_access.hipaa.not_verified_patient')}</div>;
+        return <div>{t('external_access.not_verified_patient')}</div>;
     }
 
     return (

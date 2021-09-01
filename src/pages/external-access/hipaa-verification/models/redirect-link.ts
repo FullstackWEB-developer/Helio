@@ -2,12 +2,12 @@ import {ExternalAccessRequestTypes} from '@pages/external-access/models/external
 import {RequestChannel} from '@pages/external-access/hipaa-verification/models/request-channel.enum';
 
 export interface RedirectLink {
-    attributes: object,
-    fullUrl: string,
-    linkCreationDate: Date
-    linkId: string
-    patientId: string
-    requestChannel: RequestChannel
-    requestType: ExternalAccessRequestTypes
-    ticketId: string
+    attributes: object;
+    fullUrl: string;
+    linkCreationDate: Date;
+    linkId: string;
+    patientId: string;
+    requestChannel: RequestChannel;
+    requestType: ExternalAccessRequestTypes;
+    ticketId: string;
 }

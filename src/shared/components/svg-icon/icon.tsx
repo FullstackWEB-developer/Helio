@@ -87,5 +87,6 @@ export enum Icon {
     Pause = "Pause",
     CallOutbound = "CallOutbound",
     CallInbound = "CallInbound ",
-    CallMissedOutgoing = "CallMissedOutgoing"
+    CallMissedOutgoing = "CallMissedOutgoing",
+    Emergency = "Emergency"
 }

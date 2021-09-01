@@ -15,7 +15,7 @@ export interface ControlledInputProps {
     className?: string;
     label?: string;
     dataTestId?: string;
-    max?: string;
+    max?: number;
     type?: InputType;
     placeholder?: string;
     value?: string;
@@ -38,6 +38,7 @@ export interface ControlledInputProps {
     shouldDisplayAutocomplete?: boolean,
     fetchingSuggestionsPlaceholder?: string;
     containerClassName?: string;
+    maxLength?: number;
 }
 
 const ControlledInput = ({
@@ -119,8 +120,10 @@ const ControlledInput = ({
         render={(controllerProps) => {
             return (<Input
                 {...controllerProps}
+                maxLength={props.maxLength}
                 label={label}
                 mask={mask}
+                max={max}
                 placeholder={placeholder}
                 dropdownIcon={props.dropdownIcon}
                 className={className}

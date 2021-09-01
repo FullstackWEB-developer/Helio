@@ -37,6 +37,8 @@ interface InputProps extends React.HTMLAttributes<HTMLInputElement> {
     selectedSuggestion?: Option;
     fetchingSuggestionsPlaceholder?: string;
     containerClassName?: string;
+    maxLength?: number;
+    max?: number;
 }
 const Input = React.forwardRef<HTMLInputElement, InputProps>(({
     label,
@@ -109,6 +111,9 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({
     }
 
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (props.maxLength && e.target.value.length > props.maxLength) {
+            return;
+        }
         if (props.onChange) {
             props.onChange(e);
         }

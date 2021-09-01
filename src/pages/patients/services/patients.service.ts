@@ -6,6 +6,12 @@ import {clearPatient, setError as setPatientError, setLoading, setPatient,} from
 import {PatientUpdateModel} from '@pages/patients/models/patient-update-model';
 import {AsyncJobInfo} from '@pages/patients/models/async-job-info.model';
 import {ExtendedPatient} from '@pages/patients/models/extended-patient';
+import {CheckPatientVerification} from '@pages/external-access/models/check-patient-verification.model';
+import {PatientVerificationResponse} from '@pages/external-access/models/patient-verification-response.model';
+import {PatientExistsRequest} from '@pages/external-access/models/patient-exists-request.model';
+import {PatientExistsResponse} from '@pages/external-access/models/patient-exists-response.model';
+import {SendVerificationCodeRequest} from '@pages/external-access/models/send-verification-code-request.model';
+import {CheckVerificationCodeRequest} from '@pages/external-access/models/check-verification-code-request.model';
 
 export interface AddNoteProps {
      patientId: number;
@@ -160,6 +166,31 @@ export const getAppointments = async (patientId: number) => {
      const result = await Api.get(url);
      return result.data;
 }
+
+export const checkPatientVerification = async (request: CheckPatientVerification) : Promise<PatientVerificationResponse> => {
+     const url = `${patientsUrl}/verification/CheckPatientVerification`;
+     const result = await Api.post(url, request);
+     return result.data;
+}
+
+export const checkIfPatientExists = async (request: PatientExistsRequest) : Promise<PatientExistsResponse> => {
+     const url = `${patientsUrl}/verification/CheckIfPatientExist`;
+     const result = await Api.post(url, request);
+     return result.data;
+}
+
+export const sendVerificationCode = async (request: SendVerificationCodeRequest) => {
+     const url = `${patientsUrl}/verification/SendVerificationCode`;
+     const result = await Api.post(url, request);
+     return result.data;
+}
+
+export const checkVerificationCode = async (request: CheckVerificationCodeRequest) : Promise<PatientVerificationResponse> => {
+     const url = `${patientsUrl}/verification/CheckVerificationCode`;
+     const result = await Api.post(url, request);
+     return result.data;
+}
+
 
 const downloadFileFromData = (data: any, fileName: string) => {
      const blob = new Blob([data], {type: 'application/zip'});
