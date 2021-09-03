@@ -56,7 +56,7 @@ const TicketDetailAddNote = ({ticket, patient, contact}: TicketDetailAddNoteProp
     const [selectedMessageTemplate, setSelectedMessageTemplate] = useState<NotificationTemplate>();
     const queryClient = useQueryClient();
     const {isLoading: isProcessing} = useQuery([ProcessTemplate, selectedMessageTemplate?.id!], () =>
-            processTemplate(selectedMessageTemplate?.id!, ticket, patient, contact),
+        processTemplate(selectedMessageTemplate?.id!, ticket, patient, contact),
         {
             enabled: !!selectedMessageTemplate?.requirePreProcessing,
             onSuccess: (data) => {
@@ -215,25 +215,24 @@ const TicketDetailAddNote = ({ticket, patient, contact}: TicketDetailAddNoteProp
         setNoteText('');
         setEmailText('');
     }
-
     return <>
-        <div className='ticket-add-message-body pr-16 pb-6'>
+        <div className='pb-6 pr-16 ticket-add-message-body'>
             <div className='flex flex-row items-end'>
-                <div className='w-16 pl-4 pb-4 flex h-full cursor-pointer'>
+                <div className='flex w-16 h-full pb-4 pl-4 cursor-pointer'>
                     {(selectedTab === ChannelTabs.SmsTab || selectedTab === ChannelTabs.EmailTab) &&
-                    <NotificationTemplateSelect
-                        disabled={!emailAddress && !smsText}
-                        channel={selectedTab === 1 ? NotificationTemplateChannel.Sms : NotificationTemplateChannel.Email}
-                        onSelect={(template) => onTemplateSelect(template)}
-                    />
+                        <NotificationTemplateSelect
+                            disabled={!emailAddress && !smsText}
+                            channel={selectedTab === 1 ? NotificationTemplateChannel.Sms : NotificationTemplateChannel.Email}
+                            onSelect={(template) => onTemplateSelect(template)}
+                        />
                     }
                 </div>
                 <div className='w-full pt-4'>
                     <Tabs hasBorder={false} onSelect={(tabIndex: number) => onTabChange(tabIndex)}>
                         <Tab title={t('ticket_detail.internal_note_title')}>
-                            <div className='pt-6'/>
+                            <div className='pt-6' />
                             <TextArea
-                                className='pl-2 pr-0 body2 w-full'
+                                className='w-full pl-2 pr-0 body2'
                                 data-test-id='ticket-add-notes'
                                 placeHolder={t('ticket_detail.add_note')}
                                 required={true}
@@ -252,21 +251,21 @@ const TicketDetailAddNote = ({ticket, patient, contact}: TicketDetailAddNoteProp
                         </Tab>
                         <Tab title={t('ticket_detail.send_sms_title')}>
                             <div className='pt-6'>
-                                <SelectedTemplateInfo selectedMessageTemplate={selectedMessageTemplate}/>
+                                <SelectedTemplateInfo selectedMessageTemplate={selectedMessageTemplate} />
                             </div>
                             {selectedMessageTemplate && <div>
                                 <ParentExtraTemplate logicKey={selectedMessageTemplate?.logicKey} patient={patient}
-                                                     parentType='ticket'/>
-                                <div className='pb-4'/>
+                                    parentType='ticket' />
+                                <div className='pb-4' />
                             </div>}
                             <TextArea
-                                className='pl-2 pr-0 body2 w-full'
+                                className='w-full pl-2 pr-0 body2'
                                 data-test-id='ticket-send-sms'
                                 placeHolder={t('ticket_detail.add_note')}
                                 required={true}
                                 rows={2}
                                 maxRows={5}
-                                key ='sms'
+                                key='sms'
                                 resizable={false}
                                 isLoading={sendSmsMutation.isLoading || isProcessing}
                                 value={smsText}
@@ -280,37 +279,41 @@ const TicketDetailAddNote = ({ticket, patient, contact}: TicketDetailAddNoteProp
                                 iconOnClick={sendSms}
                             />
                         </Tab>
-                        <Tab title={t('ticket_detail.send_email_title')}>
-                            <div className='pt-2'/>
-                            {selectedMessageTemplate && <div className='pt-3'>
-                                <SelectedTemplateInfo selectedMessageTemplate={selectedMessageTemplate}/>
-                            </div>}
-                            {selectedMessageTemplate && <div>
-                                <ParentExtraTemplate logicKey={selectedMessageTemplate?.logicKey}
-                                                     parentType='ticket'
-                                                     patient={patient}/>
-                            </div>}
-                            <TextArea
-                                className='pl-2 pr-0 body2 w-full'
-                                data-test-id='ticket-send-email'
-                                placeHolder={t('ticket_detail.add_note')}
-                                required={true}
-                                rows={2}
-                                maxRows={5}
-                                key='email'
-                                value={emailText}
-                                disabled={!emailAddress}
-                                onChange={(message) => setEmailText(message)}
-                                resizable={false}
-                                isLoading={sendEmailMutation.isLoading || isProcessing}
-                                hasBorder={false}
-                                iconClassNames='icon-medium'
-                                showFormatting={true}
-                                icon={Icon.Send}
-                                iconFill='notes-send'
-                                iconOnClick={sendEmail}
-                            />
-                        </Tab>
+
+                        {
+                            // PLEASE DON'T DELETE THIS
+                            // <Tab title={t('ticket_detail.send_email_title')}>
+                            //     <div className='pt-2' />
+                            //     {selectedMessageTemplate && <div className='pt-3'>
+                            //         <SelectedTemplateInfo selectedMessageTemplate={selectedMessageTemplate} />
+                            //     </div>}
+                            //     {selectedMessageTemplate && <div>
+                            //         <ParentExtraTemplate logicKey={selectedMessageTemplate?.logicKey}
+                            //             parentType='ticket'
+                            //             patient={patient} />
+                            //     </div>}
+                            //     <TextArea
+                            //         className='w-full pl-2 pr-0 body2'
+                            //         data-test-id='ticket-send-email'
+                            //         placeHolder={t('ticket_detail.add_note')}
+                            //         required={true}
+                            //         rows={2}
+                            //         maxRows={5}
+                            //         key='email'
+                            //         value={emailText}
+                            //         disabled={!emailAddress}
+                            //         onChange={(message) => setEmailText(message)}
+                            //         resizable={false}
+                            //         isLoading={sendEmailMutation.isLoading || isProcessing}
+                            //         hasBorder={false}
+                            //         iconClassNames='icon-medium'
+                            //         showFormatting={true}
+                            //         icon={Icon.Send}
+                            //         iconFill='notes-send'
+                            //         iconOnClick={sendEmail}
+                            //     />
+                            // </Tab>
+                        }
                     </Tabs>
                 </div>
             </div>

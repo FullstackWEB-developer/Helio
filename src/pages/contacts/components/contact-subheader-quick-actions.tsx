@@ -27,7 +27,7 @@ const ContactSubheaderQuickActions = ({editMode, editIconClickHandler, contact, 
     const dispatch = useDispatch();
     const voiceCounter = useSelector(selectVoiceCounter);
     const logger = Logger.getInstance();
-    
+
     const [displayPhoneTypeDropdown, setDisplayPhoneTypeDropdown] = useState<boolean>(false);
     const typeDropdownRef = useRef<HTMLDivElement>(null);
 
@@ -146,13 +146,16 @@ const ContactSubheaderQuickActions = ({editMode, editIconClickHandler, contact, 
                     strokeClass='contact-stroke-color'
                 />
             </span>
-            <span className="pr-8">
-                <SvgIcon type={Icon.ChannelEmail}
-                    disabled={true}
-                    className='icon-x-large'
-                    strokeClass='contact-stroke-color'
-                />
-            </span>
+            {
+                // PLEASE DON'T DELETE THIS
+                // <span className="pr-8">
+                //     <SvgIcon type={Icon.ChannelEmail}
+                //         disabled={true}
+                //         className='icon-x-large'
+                //         strokeClass='contact-stroke-color'
+                //     />
+                // </span>
+            }
             {!editMode && <span className="pr-8 cursor-pointer" onClick={editIconClickHandler}>
                 <SvgIcon type={Icon.EditCircled}
                     className='icon-x-large'

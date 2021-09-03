@@ -48,12 +48,15 @@ const Navigation = () => {
             link: '/sms',
             id: 'navigation-sms',
             icon: <SvgIcon type={Icon.Sms} fillClass='active-item-icon' />
-        }, {
-            title: t('navigation.email'),
-            link: '/email',
-            id: 'navigation-email',
-            icon: <SvgIcon type={Icon.Email} fillClass='active-item-icon' />
-        }, {
+        },
+        // PLEASE DON'T DELETE THIS
+        // {
+        //     title: t('navigation.email'),
+        //     link: '/email',
+        //     id: 'navigation-email',
+        //     icon: <SvgIcon type={Icon.Email} fillClass='active-item-icon' />
+        // },
+        {
             title: t('navigation.users'),
             link: UsersPath,
             id: 'navigation-users',

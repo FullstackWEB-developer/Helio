@@ -239,11 +239,11 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
     }
 
     return <>
-        <div className='pl-8 flex flex-row items-center h-14 border-t border-b justify-between'>
+        <div className='flex flex-row items-center justify-between pl-8 border-t border-b h-14'>
             <div className='flex flex-row items-center'>
                 {
                     displayCall() && <div>
-                        <div ref={phoneDropdownRef} className='flex flex-row items-center cursor-pointer relative'>
+                        <div ref={phoneDropdownRef} className='relative flex flex-row items-center cursor-pointer'>
                             <SvgIcon type={Icon.ChannelPhone} className='icon-x-large'
                                      fillClass='header-active-item-icon'
                                      strokeClass='channel-icon-stroke'/>
@@ -260,18 +260,19 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
                     </div>
                 }
                 {
-                    canSendSms() && <div className='pl-6 flex flex-row items-center cursor-pointer'>
+                    canSendSms() && <div className='flex flex-row items-center pl-6 cursor-pointer'>
                         <SvgIcon type={Icon.ChannelSms} className='icon-x-large' fillClass='header-active-item-icon'
                                  strokeClass='channel-icon-stroke'/>
                         <div className='pl-3 pr-2'>{t('ticket_detail.header.send_sms')}</div>
                     </div>
                 }
                 {
-                    (patient?.emailAddress) && <div className='pl-6 flex flex-row items-center cursor-pointer'>
-                        <SvgIcon type={Icon.ChannelEmail} className='icon-x-large' fillClass='header-active-item-icon'
-                                 strokeClass='channel-icon-stroke'/>
-                        <div className='pl-3 pr-2'>{t('ticket_detail.header.send_email')}</div>
-                    </div>
+                    // PLEASE DON'T DELETE THIS
+                    // (patient?.emailAddress) && <div className='flex flex-row items-center pl-6 cursor-pointer'>
+                    //     <SvgIcon type={Icon.ChannelEmail} className='icon-x-large' fillClass='header-active-item-icon'
+                    //              strokeClass='channel-icon-stroke'/>
+                    //     <div className='pl-3 pr-2'>{t('ticket_detail.header.send_email')}</div>
+                    // </div>
                 }
             </div>
             <div className='flex flex-row'>
