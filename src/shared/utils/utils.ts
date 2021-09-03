@@ -287,8 +287,16 @@ const applyPhoneMask = (phone: string) => {
     return phone.replace(/^(\+\d{1,2})?(\d{3})(\d{3})(\d{4}).*/, "($2) $3-$4");
 }
 
+const maskPhone = (phone: string) => {
+    if (!phone) {
+        return '';
+    }
+    return `(XXX) XXX-${phone.slice(6,10)}`
+}
+
 const utils = {
     getWindowCenter,
+    maskPhone,
     formatUtcDate,
     getWindowDimensions,
     formatDate,

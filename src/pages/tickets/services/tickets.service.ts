@@ -31,6 +31,7 @@ import {setGlobalLoading} from '@shared/store/app/app.slice';
 import {ChatTranscript} from '@pages/tickets/models/chat-transcript.model';
 import {TicketBase} from '../models/ticket-base';
 import {PagedList} from '@shared/models';
+import {CallbackTicket} from '@pages/tickets/models/callback-ticket.model';
 
 const logger = Logger.getInstance();
 const ticketsBaseUrl = "/tickets";
@@ -158,6 +159,11 @@ export const getLookupValues = (key: string) => {
 
 export const createTicket = async (data: Ticket): Promise<Ticket> => {
     const result = await Api.post(ticketsBaseUrl, data);
+    return result.data;
+}
+
+export const createCallbackTicket = async (data: CallbackTicket): Promise<Ticket> => {
+    const result = await Api.post(`${ticketsBaseUrl}/callback`, data);
     return result.data;
 }
 

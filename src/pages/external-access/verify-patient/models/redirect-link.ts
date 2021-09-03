@@ -1,5 +1,5 @@
 import {ExternalAccessRequestTypes} from '@pages/external-access/models/external-updates-request-types.enum';
-import {RequestChannel} from '@pages/external-access/hipaa-verification/models/request-channel.enum';
+import {RequestChannel} from '@pages/external-access/verify-patient/models/request-channel.enum';
 
 export interface RedirectLink {
     attributes: object;
@@ -10,4 +10,5 @@ export interface RedirectLink {
     requestChannel: RequestChannel;
     requestType: ExternalAccessRequestTypes;
     ticketId: string;
+    sentAddress: string;
 }

@@ -2,38 +2,45 @@ import ControlledInput from '@shared/components/controllers/ControlledInput';
 import Button from '@components/button/button';
 import React, {useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {RedirectLink} from '@pages/external-access/hipaa-verification/models/redirect-link';
 import {useForm} from 'react-hook-form';
 import {useQuery} from 'react-query';
 import {CheckPatientIsExist} from '@constants/react-query-constants';
 import {checkIfPatientExists} from '@pages/patients/services/patients.service';
-import {useHistory, useLocation} from 'react-router-dom';
+import {useHistory} from 'react-router-dom';
 import {ControlledDateInput} from '@components/controllers';
 import utils from '@shared/utils/utils';
 import GetExternalUserHeader from '@pages/external-access/verify-patient/get-external-user-header';
-import { useDispatch } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
 import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
 import {SnackbarPosition} from '@components/snackbar/snackbar-position.enum';
 import ExternalUserEmergencyNote from '@pages/external-access/verify-patient/external-user-emergency-note';
+import {AxiosError} from 'axios';
+import {
+    selectExternalUserPhoneNumber,
+    selectRedirectLink
+} from '@pages/external-access/verify-patient/store/verify-patient.selectors';
+import {setExternalUserEmail} from '@pages/external-access/verify-patient/store/verify-patient.slice';
 
 const GetExternalUserDobZip = () => {
     const {t} = useTranslation();
     const history = useHistory();
     const dispatch = useDispatch();
-    const {state} = useLocation<{request: RedirectLink, phoneNumber: string}>();
+    const phoneNumber = useSelector(selectExternalUserPhoneNumber);
+    const request = useSelector(selectRedirectLink);
     const [displayNotFoundError, setDisplayNotFoundError] = useState<boolean>(false);
+    const [failCount, setFailCount] = useState<number>(0);
     const {handleSubmit, control, formState, watch} =
         useForm({
         mode: 'onBlur'
     });
 
     const {isLoading: checkIfPatientExistsLoading, error: checkIfPatientExistsError, refetch: checkIfPatientExistsRefetch} =
-        useQuery([CheckPatientIsExist, state.phoneNumber, watch('zip'), watch('dob')],() =>
+        useQuery([CheckPatientIsExist, phoneNumber, watch('zip'), watch('dob')],() =>
         {
             const date = utils.toShortISOLocalString(watch("dob"));
             return checkIfPatientExists({
-                mobilePhoneNumber: state.phoneNumber,
+                mobilePhoneNumber: phoneNumber,
                 zip: watch('zip'),
                 dateOfBirth: date
             });
@@ -41,13 +48,12 @@ const GetExternalUserDobZip = () => {
             enabled: false,
             onSuccess: (data) => {
                 if (!data.doesExists) {
+                    setFailCount((failCount) => failCount + 1);
                     setDisplayNotFoundError(true);
                 } else {
-                    if (data.patientId.toString() === state.request.patientId) {
-                        history.push('/o/verify-patient-code', {
-                            ...state,
-                            email: data.email
-                        });
+                    if (data.patientId.toString() === request.patientId) {
+                        dispatch(setExternalUserEmail(data.email));
+                        history.push('/o/verify-patient-code');
                     } else {
                         dispatch(addSnackbarMessage({
                             type: SnackbarType.Error,
@@ -57,6 +63,11 @@ const GetExternalUserDobZip = () => {
                     }
 
                 }
+            },
+            onError:(error: AxiosError) => {
+                if (error.response?.status === 404) {
+                    setFailCount(failCount => failCount +1);
+                }
             }
         });
 
@@ -64,10 +75,14 @@ const GetExternalUserDobZip = () => {
        checkIfPatientExistsRefetch();
     }
 
+    if (failCount > Number(process.env.REACT_APP_HIPAA_VERIFICATION_RETRY_NUMBER)) {
+        history.push('/o/callback-ticket');
+    }
+
     return <div className='md:px-48 without-default-padding pt-4 xl:pt-16'>
         <GetExternalUserHeader
-            title={`external_access.title_${state.request.requestType}`}
-            description='external_access.hipaa_verify_description' />
+            title={`external_access.title_${request.requestType}`}
+            description={t('external_access.hipaa_verify_description', {day: process.env.REACT_APP_VERIFIED_PATIENT_EXPIRE_IN_DAY})} />
         {displayNotFoundError && <div className='body2 text-danger pb-6'>
             {t('external_access.mobile_verification_failed', { "phone": process.env.REACT_APP_CALL_US_PHONE})}
         </div>}
@@ -113,7 +128,7 @@ const GetExternalUserDobZip = () => {
                 </form>
             </div>
         {checkIfPatientExistsError && <div className='text-danger'>{t('common.error')}</div>}
-        <ExternalUserEmergencyNote type={state.request.requestType}/>
+        <ExternalUserEmergencyNote type={request.requestType}/>
     </div>
 }
 

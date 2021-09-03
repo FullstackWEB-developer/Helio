@@ -1,8 +1,11 @@
-export interface User {
+export interface UserBase {
     id: string,
     firstName: string,
     lastName: string,
-    latestConnectStatus: string;
     profilePicture?: string;
+}
+
+export interface User extends UserBase {
+    latestConnectStatus: string;
     email: string;
 }

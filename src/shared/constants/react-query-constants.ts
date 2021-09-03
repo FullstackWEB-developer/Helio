@@ -25,6 +25,7 @@ export const OneMinute = 60000;
 export const QueryContactNotes = 'contact-notes';
 export const QueryCompanyContacts = 'company-contacts';
 export const QueryUserById = 'get-user'
+export const UserListBaseData = 'user-list-base-data';
 export const PreviewMedicalRecords = 'preview-medical-records';
 export const GetLabResults = 'get-lab-results';
 export const GetLabResultDetail = 'get-lab-result-detail';

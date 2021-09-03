@@ -2,7 +2,7 @@ import {useState} from 'react';
 import DropdownLabel from '@components/dropdown-label';
 import {DropdownItemModel} from '@components/dropdown';
 import Pagination from '@components/pagination';
-import {CommunicationDirection, Paging} from '@shared/models';
+import {CommunicationDirection} from '@shared/models';
 import SearchInputField from '@components/search-input-field/search-input-field';
 import SvgIcon, {Icon} from '@components/svg-icon';
 import Table from '@components/table/table';
@@ -103,7 +103,7 @@ const CallsLogList = () => {
     const getDirectionIcon = (direction: CommunicationDirection, contactStatus?: ContactStatus) => {
 
         if (contactStatus === undefined || contactStatus === null) {
-            return (null);
+            return null;
         }
 
         if (contactStatus === ContactStatus.Answered) {
@@ -158,7 +158,7 @@ const CallsLogList = () => {
                 title: 'calls_log.duration',
                 field: 'agentInteractionDuration',
                 widthClass: 'w-1/12',
-                render: (field: number, data: CallLogModel) => {
+                render: (field: number) => {
                     return (
                         <span className='body2'>{utils.formatTime(field)}</span>
                     )

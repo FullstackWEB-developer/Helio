@@ -55,6 +55,7 @@ const ControlledInput = ({
     max,
     placeholder,
     containerClassName,
+    maxLength,
     ...props
 }: ControlledInputProps) => {
 
@@ -78,6 +79,7 @@ const ControlledInput = ({
             };
             break;
         case 'zip':
+            maxLength = 5;
             pattern = {
                 value: InputTypes.Zip,
                 message: t(invalidErrorMessage ?? 'components.input.invalid_zip')
@@ -120,7 +122,7 @@ const ControlledInput = ({
         render={(controllerProps) => {
             return (<Input
                 {...controllerProps}
-                maxLength={props.maxLength}
+                maxLength={maxLength}
                 label={label}
                 mask={mask}
                 max={max}

@@ -1,6 +1,6 @@
 import {PagedList} from '@shared/models/paged-list.model';
 import Api from '@shared/services/api';
-import {BlacklistModel, BlacklistRequest, BlockAccessModel, BlockAccessType} from '../models/blacklist.model';
+import {BlacklistModel, BlacklistRequest, BlockAccessModel} from '../models/blacklist.model';
 
 const blackListUrl = '/security/blockedaccess'
 

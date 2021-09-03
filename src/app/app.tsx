@@ -28,7 +28,7 @@ import {selectAccessToken} from '@shared/store/app-user/appuser.selectors';
 import {SMS_INCOMING_NAME} from '@shared/constants/signalr-provider-constants';
 const SearchResults = React.lazy(() => import('../shared/components/search-bar/components/search-results'));
 const PatientChart = React.lazy(() => import('@pages/patients/patient-chart'));
-const VerifyRedirectLink = React.lazy(() => import('@pages/external-access/hipaa-verification/verify-redirect-link'));
+const VerifyRedirectLink = React.lazy(() => import('@pages/external-access/verify-patient/verify-redirect-link'));
 const AppointmentSchedule = React.lazy(() => import('@pages/external-access/appointment/appointment-schedule'));
 const AppointmentScheduleSelect = React.lazy(() => import('@pages/external-access/appointment/appointment-schedule-select/appointment-schedule-select'));
 const AppointmentScheduleConfirm = React.lazy(() => import('@pages/external-access/appointment/appointment-schedule-confirm/appointment-schedule-confirm'));
@@ -60,6 +60,8 @@ const BlackList = React.lazy(() => import('@pages/blacklists/blacklists'));
 const BulkAddUser = React.lazy(() => import('@pages/users/bulk-add/bulk-add'));
 const GetExternalUserDobZip = React.lazy(() => import('@pages/external-access/verify-patient/get-external-user-dob-zip'));
 const ExternalUserVerificationCode = React.lazy(() => import('@pages/external-access/verify-patient/external-user-verification-code'));
+const ExternalUserMobileNumber = React.lazy(() => import('@pages/external-access/verify-patient/get-external-user-mobile-number'));
+const ExternalUserCreateCallbackTicket = React.lazy(() => import('@pages/external-access/verify-patient/external-user-create-callback-ticket'));
 function App() {
     let logger = Logger.getInstance();
     const accessToken = useSelector(selectAccessToken);
@@ -100,6 +102,8 @@ function App() {
                                 <Route path='/o/appointment-list' component={withSuspense(AppointmentList)} />
                                 <Route path='/o/verify-patient' component={withSuspense(GetExternalUserDobZip)} />
                                 <Route path='/o/verify-patient-code' component={withSuspense(ExternalUserVerificationCode)} />
+                                <Route path='/o/verify-patient-get-mobile' component={withSuspense(ExternalUserMobileNumber)} />
+                                <Route path='/o/callback-ticket' component={withSuspense(ExternalUserCreateCallbackTicket)} />
                                 <Route path='/o/appointment-detail' component={withSuspense(AppointmentDetail)} />
                                 <Route path='/o/request-refill' component={withSuspense(RequestRefill)} />
                                 <Route path='/o/view-medications' component={withSuspense(ViewMedications)} />

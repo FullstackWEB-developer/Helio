@@ -1,7 +1,6 @@
 import GetExternalUserHeader from '@pages/external-access/verify-patient/get-external-user-header';
 import React, {useEffect, useState} from 'react';
-import {useHistory, useLocation} from 'react-router-dom';
-import {RedirectLink} from '@pages/external-access/hipaa-verification/models/redirect-link';
+import {useHistory} from 'react-router-dom';
 import {useTranslation} from 'react-i18next';
 import ControlledInput from '../../../shared/components/controllers/ControlledInput';
 import Button from '@components/button/button';
@@ -14,7 +13,7 @@ import {ExternalAccessRequestTypes} from '@pages/external-access/models/external
 import {TicketSmsPath} from '@app/paths';
 import useFingerPrint from '@shared/hooks/useFingerPrint';
 import utils from '@shared/utils/utils';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {setVerifiedPatient} from '@pages/patients/store/patients.slice';
 import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
 import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
@@ -24,15 +23,25 @@ import {VerificationType} from '@pages/external-access/models/verification-type.
 import {setAuthentication} from '@shared/store/app-user/appuser.slice';
 import Checkbox from '@components/checkbox/checkbox';
 import {ResendTimeout} from '@pages/external-access/verify-patient/resend-timeout';
+import {
+    selectExternalUserEmail,
+    selectExternalUserPhoneNumber,
+    selectIsVerified,
+    selectRedirectLink
+} from '@pages/external-access/verify-patient/store/verify-patient.selectors';
+import {setIsVerified} from '@pages/external-access/verify-patient/store/verify-patient.slice';
 
 const ExternalUserVerificationCode = () => {
     const {t} = useTranslation();
-    const {state} = useLocation<{ request: RedirectLink, phoneNumber: string, patientId: number, email: string }>();
+    const email = useSelector(selectExternalUserEmail);
+    const phoneNumber = useSelector(selectExternalUserPhoneNumber);
+    const request = useSelector(selectRedirectLink);
     const history = useHistory();
     const [verificationFailed, setVerificationFailed] = useState<boolean>(false);
     const [sendViaEmail, setSendViaEmail] = useState<boolean>(false);
     const [isResendDisabled, setResendDisabled] = useState<boolean>(false);
     const [emailSentBefore, setEmailSentBefore] = useState<boolean>(false);
+    const isVerified = useSelector(selectIsVerified);
     const fingerPrintCode = useFingerPrint();
     const dispatch = useDispatch();
     const {handleSubmit, control, formState: {isValid, isDirty}, watch} =
@@ -42,8 +51,8 @@ const ExternalUserVerificationCode = () => {
 
 
     const forwardToRelatedPage = () => {
-        if (state.request !== undefined) {
-            switch (state.request.requestType) {
+        if (request !== undefined) {
+            switch (request.requestType) {
                 case ExternalAccessRequestTypes.GetAppointmentDetail:
                 case ExternalAccessRequestTypes.CancelAppointment:
                 case ExternalAccessRequestTypes.BookAppointment:
@@ -56,9 +65,7 @@ const ExternalUserVerificationCode = () => {
                     history.push('/o/appointment-list');
                     break;
                 case ExternalAccessRequestTypes.RequestMedicalRecords:
-                    history.push('/o/request-medical-records', {
-                        request: state.request
-                    });
+                    history.push('/o/request-medical-records');
                     break;
                 case ExternalAccessRequestTypes.GetLabResults:
                     history.push('/o/lab-results');
@@ -67,24 +74,18 @@ const ExternalUserVerificationCode = () => {
                     history.push('/o/appointment-schedule');
                     break;
                 case ExternalAccessRequestTypes.SentTicketMessageViaSMS:
-                    history.push(TicketSmsPath, {
-                        "ticketId": state.request.ticketId
-                    });
+                    history.push(TicketSmsPath);
                     break;
             }
         }
     }
 
     useEffect(() => {
-        sendVerificationCodeMutation.mutate({
-                verificationType: VerificationType.Sms,
-                verificationChannel: VerificationChannel.Web,
-                patientId: Number(state.request.patientId),
-                mobilePhoneNumber: state.phoneNumber
-            },
-            {
-                onSuccess: () =>  setResendDisabled(true)
-            })
+        if (isVerified || request.requestType === ExternalAccessRequestTypes.SentTicketMessageViaSMS && !request.patientId) {
+            forwardToRelatedPage();
+        } else {
+            sendVerification(VerificationType.Sms);
+        }
     }, []);
 
     const sendVerificationCodeMutation = useMutation(sendVerificationCode, {
@@ -99,22 +100,23 @@ const ExternalUserVerificationCode = () => {
 
 
     const {isLoading, isError, refetch: checkVerificationRefetch} =
-        useQuery([CheckVerificationCode, state.phoneNumber, watch('code'), state.patientId], () => checkVerificationCode({
+        useQuery([CheckVerificationCode, phoneNumber, watch('code'), request.patientId], () => checkVerificationCode({
                 verificationCode: watch('code'),
                 verificationChannel: VerificationChannel.Web,
-                patientId: parseInt(state.request.patientId),
+                patientId: parseInt(request.patientId),
                 fingerPrintCode: fingerPrintCode
             }),
             {
                 enabled: false,
                 onSuccess: (data) => {
                     if (data.isVerified) {
+                        dispatch(setIsVerified(true));
                         dispatch(setAuthentication({
                             name: `${data.verifiedPatient.firstName} ${data.verifiedPatient.lastName}`,
                             isLoggedIn: true,
                             accessToken: data.authenticationResponse.token,
                             expiresOn: data.authenticationResponse.expiresAt,
-                            authenticationLink: state.request.fullUrl
+                            authenticationLink: request.fullUrl
                         }));
                         dispatch(setVerifiedPatient(data.verifiedPatient));
                         forwardToRelatedPage();
@@ -130,12 +132,12 @@ const ExternalUserVerificationCode = () => {
                 }
             });
 
-    const resendVerification = (type: VerificationType) => {
+    const sendVerification = (type: VerificationType) => {
         sendVerificationCodeMutation.mutate({
             verificationType: type,
             verificationChannel: VerificationChannel.Web,
-            patientId: Number(state.request.patientId),
-            mobilePhoneNumber: state.phoneNumber
+            patientId: Number(request.patientId),
+            mobilePhoneNumber: phoneNumber
         }, {
             onSuccess: () => {
                 dispatch(addSnackbarMessage({
@@ -146,6 +148,13 @@ const ExternalUserVerificationCode = () => {
                 setResendDisabled(true);
             }
         });
+    }
+
+    const resendVerification = (type: VerificationType) => {
+        if (isVerified) {
+            return;
+        }
+        sendVerification(type);
     }
 
     const triggerEmailSend = (isChecked: boolean) => {
@@ -167,12 +176,23 @@ const ExternalUserVerificationCode = () => {
     const isButtonDisabled = () => {
         return !isDirty || !isValid || watch('code') && watch('code').length !== 6;
     };
+
+    const headerDescription = () => {
+        if (sendViaEmail) {
+            return t('external_access.verification_code_sent_description_email', {
+                'email': email
+            });
+        } else {
+            return t('external_access.verification_code_sent_description', {
+                'phone': utils.maskPhone(phoneNumber)
+            });
+        }
+    }
+
     return <div className='md:px-48'>
         <GetExternalUserHeader
-            title={`external_access.title_${state.request.requestType}`}
-            description={t('external_access.verification_code_sent_description', {
-                'phone': utils.formatPhone(state.phoneNumber)
-            })}/>
+            title={`external_access.title_${request.requestType}`}
+            description={headerDescription()}/>
 
         <div>
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -196,9 +216,11 @@ const ExternalUserVerificationCode = () => {
                             {t('external_access.resend_verification_cta')}
                         </a>
                     </div>
-                    <ResendTimeout isStarted={!isResendDisabled} onTimeOut={() => setResendDisabled(false)}/>
+                    {isResendDisabled && <ResendTimeout message='external_access.resend_in_seconds'
+                                                        countdownSeconds={isResendDisabled ? 60 : 0}
+                                                        onTimeOut={() => setResendDisabled(false)}/>}
                 </div>
-                {!!state.email && <div className='pb-10'>
+                {!!email && <div className='pb-10'>
                     <Checkbox labelClassName='w-96' value='sendViaEmail'
                               onChange={(checked) => triggerEmailSend(checked.checked)}
                               name='sendViaEmail' label='external_access.send_via_email'/>
@@ -218,7 +240,7 @@ const ExternalUserVerificationCode = () => {
             </form>
             {verificationFailed && <div className='text-danger'>{t('external_access.verification_failed')}</div>}
             {isError && <div className='text-danger'>{t('common.error')}</div>}
-            <ExternalUserEmergencyNote type={state.request.requestType}/>
+            <ExternalUserEmergencyNote type={request.requestType}/>
         </div>
     </div>
 }

@@ -19,12 +19,8 @@ export interface RealtimeStatusSummaryProps {
 }
 
 const RealtimeStatusSummary = ({lastUpdateTime}: RealtimeStatusSummaryProps) => {
+
     const {t} = useTranslation();
-
-    useEffect(() => {
-        refetch().then();
-    }, [lastUpdateTime]);
-
     const [callStatistics, setCallStatistics] = useState<RealTimeStatusSummaryData>();
     const [chatStatistics, setChatStatistics] = useState<RealTimeStatusSummaryData>();
 
@@ -37,6 +33,10 @@ const RealtimeStatusSummary = ({lastUpdateTime}: RealtimeStatusSummaryProps) => 
             setCallStatistics(CalculateSummaryData(data, 'VOICE'));
         }
     });
+
+    useEffect(() => {
+        refetch().then();
+    }, [lastUpdateTime, refetch]);
 
     const CalculateSummaryData = (data: QueueMetric[], type: string) => {
         const groupedByChannel = utils.groupBy(data, a => a.channel);

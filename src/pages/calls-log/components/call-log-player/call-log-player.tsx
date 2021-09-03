@@ -1,4 +1,3 @@
-import SvgIcon, {Icon} from '@components/svg-icon';
 import AudioPlayer from '@components/audio-player/audio-player';
 import classnames from 'classnames';
 import CallContactAgentInfo from '../call-contact-info/call-contact-agent-info';

@@ -2,10 +2,10 @@ import {
     ChangeUserStatusRequest,
     ConnectUser,
     InviteUserRequest,
-    PagedList,
+    PagedList, PagedRequest,
     PhoneNumber,
     RoleBase,
-    UserActiveDirectory,
+    UserActiveDirectory, UserBase,
     UserDetail,
     UserDetailExtended,
     UserDirectoryFilter
@@ -203,3 +203,10 @@ export const getExternalJobTitleListWithState = queryWithState(
         return !externalJobTitles || externalJobTitles.length < 1;
     }
 )
+
+export const getUserBaseData = async (userIds: string[], pagedRequest: PagedRequest) : Promise<PagedList<UserBase>> => {
+    let url = `${userBaseUrl}/base?page=${pagedRequest.page}&pageSize=${pagedRequest.pageSize}`;
+    userIds.forEach(id => url = url += `&UserIdList=${id}`)
+    const response = await Api.get(url);
+    return response.data;
+};

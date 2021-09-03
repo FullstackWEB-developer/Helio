@@ -2,7 +2,6 @@ import ControlledInput from '@shared/components/controllers/ControlledInput';
 import Button from '@components/button/button';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
-import {RedirectLink} from '@pages/external-access/hipaa-verification/models/redirect-link';
 import {useForm} from 'react-hook-form';
 import {useQuery} from 'react-query';
 import {CheckPatientVerification} from '@constants/react-query-constants';
@@ -12,17 +11,20 @@ import GetExternalUserHeader from '@pages/external-access/verify-patient/get-ext
 import {VerificationChannel} from '@pages/external-access/models/verification-channel.enum';
 import useFingerPrint from '@shared/hooks/useFingerPrint';
 import ExternalUserEmergencyNote from '@pages/external-access/verify-patient/external-user-emergency-note';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
 import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
+import {ExternalAccessRequestTypes} from '@pages/external-access/models/external-updates-request-types.enum';
+import {selectRedirectLink} from '@pages/external-access/verify-patient/store/verify-patient.selectors';
+import {
+    setExternalUserEmail,
+    setExternalUserPhoneNumber
+} from '@pages/external-access/verify-patient/store/verify-patient.slice';
 
-export interface GetExternalUserMobileNumberProps {
-    request: RedirectLink
-}
-
-const GetExternalUserMobileNumber = ({request}: GetExternalUserMobileNumberProps) => {
+const GetExternalUserMobileNumber = () => {
     const {t} = useTranslation();
     const history = useHistory();
+    const request = useSelector(selectRedirectLink);
     const dispatch = useDispatch();
     const fingerPrintCode = useFingerPrint();
     const {handleSubmit, control, formState, watch} = useForm({
@@ -38,16 +40,12 @@ const GetExternalUserMobileNumber = ({request}: GetExternalUserMobileNumberProps
         {
             enabled: false,
             onSuccess: (data) => {
+                dispatch(setExternalUserPhoneNumber(watch('phone')));
                 if (data.isVerified) {
-                    history.push('/o/verify-patient-code', {
-                        request,
-                        phoneNumber: watch('phone')
-                    });
+                    dispatch(setExternalUserEmail(data.email));
+                    history.push('/o/verify-patient-code');
                 } else {
-                    history.push('/o/verify-patient', {
-                        request,
-                        phoneNumber: watch('phone')
-                    });
+                    history.push('/o/verify-patient');
                 }
             }, onError:() => {
                 dispatch(addSnackbarMessage({
@@ -59,6 +57,11 @@ const GetExternalUserMobileNumber = ({request}: GetExternalUserMobileNumberProps
 
     const onSubmit = () => {
         checkPatientVerificationRefetch();
+    }
+
+    if (request.sentAddress || (request.requestType === ExternalAccessRequestTypes.SentTicketMessageViaSMS && !request.patientId)) {
+        setExternalUserPhoneNumber(request.sentAddress);
+        history.push('/o/verify-patient-code');
     }
 
     return <div className='md:px-48 without-default-padding pt-4 xl:pt-16'>

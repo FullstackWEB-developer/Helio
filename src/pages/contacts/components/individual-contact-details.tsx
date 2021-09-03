@@ -71,7 +71,7 @@ const IndividualContactDetails = ({contact, editMode, initiateACall, closeEditMo
         if (!calculated) {
             return '';
         }
-        return facilityTypes.filter(a => a.value == calculated).length > 0 ? facilityTypes.filter(a => a.value == calculated)[0].label : '';
+        return facilityTypes.filter(a => a.value === calculated).length > 0 ? facilityTypes.filter(a => a.value === calculated)[0].label : '';
     };
 
     return (

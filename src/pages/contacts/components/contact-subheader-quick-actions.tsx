@@ -12,7 +12,6 @@ import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
 import {useDispatch, useSelector} from 'react-redux';
 import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
 import Logger from '@shared/services/logger';
-import {ContactType} from '@pages/contacts/models/ContactType';
 import {selectVoiceCounter} from '@pages/ccp/store/ccp.selectors';
 
 interface ContactHeaderQuickActionsProps {

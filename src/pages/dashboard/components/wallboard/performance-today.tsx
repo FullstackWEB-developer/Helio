@@ -61,7 +61,7 @@ const PerformanceToday = ({lastUpdateTime}: PerformanceTodayProps) => {
 
     useEffect(() => {
         refetch().then();
-    }, [lastUpdateTime]);
+    }, [lastUpdateTime, refetch]);
 
     const mainWrapperClassName =classnames({
         'opacity-40' : isFetching || isLoading

@@ -23,7 +23,7 @@ const ContactCategory = ({selectedCategory, setSelectedCategory}: ContactCategor
         });
 
         return contactCategories;
-    }, [facilityTypes])
+    }, [facilityTypes, t])
 
     return (
         <div className="pt-5 pl-5 min-h-full overflow-hidden w-62 contact-category-section flex flex-col">

@@ -93,7 +93,7 @@ const Contacts: React.FC<ContactProps> = () => {
         if (selectedCategory === t('contacts.category.starred_contacts')) {
             starredOnly = true;
         }
-        const category = facilityTypes.filter(a => a.label == selectedCategory).length > 0 ? facilityTypes.filter(a => a.label == selectedCategory)[0].value : undefined;
+        const category = facilityTypes.filter(a => a.label === selectedCategory).length > 0 ? facilityTypes.filter(a => a.label === selectedCategory)[0].value : undefined;
         return {
             ...queryParams,
             category,

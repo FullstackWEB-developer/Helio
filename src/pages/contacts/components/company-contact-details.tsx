@@ -70,7 +70,7 @@ const CompanyContactDetails = ({editMode, contact, initiateACall, addNewContactH
         if (!calculated) {
             return '';
         }
-        return facilityTypes.filter(a => a.value == calculated).length > 0 ? facilityTypes.filter(a => a.value == calculated)[0].label : '';
+        return facilityTypes.filter(a => a.value === calculated).length > 0 ? facilityTypes.filter(a => a.value === calculated)[0].label : '';
     };
 
     return (

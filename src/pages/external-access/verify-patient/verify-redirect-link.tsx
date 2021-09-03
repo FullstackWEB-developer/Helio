@@ -2,11 +2,13 @@ import { useParams } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import {useQuery} from 'react-query';
 import {GetRedirectLink} from '@constants/react-query-constants';
-import {RedirectLink} from '@pages/external-access/hipaa-verification/models/redirect-link';
+import {RedirectLink} from '@pages/external-access/verify-patient/models/redirect-link';
 import Spinner from '@components/spinner/Spinner';
 import {AxiosError} from 'axios';
-import GetExternalUserMobileNumber from '@pages/external-access/verify-patient/get-external-user-mobile-number';
 import {getRedirectLink} from '@shared/services/notifications.service';
+import {useDispatch} from 'react-redux';
+import {setRedirectLink} from '@pages/external-access/verify-patient/store/verify-patient.slice';
+import {useHistory} from 'react-router';
 
 interface RedirectLinkParams {
     linkId: string
@@ -15,10 +17,16 @@ interface RedirectLinkParams {
 const VerifyRedirectLink = () => {
     const { t } = useTranslation();
     const { linkId } = useParams<RedirectLinkParams>();
-    const {isLoading, isError, data, error} = useQuery<RedirectLink, AxiosError>([GetRedirectLink, linkId], () =>
+    const dispatch = useDispatch();
+    const history = useHistory();
+    const {isLoading, isError, error} = useQuery<RedirectLink, AxiosError>([GetRedirectLink, linkId], () =>
             getRedirectLink(linkId),
         {
-            enabled:!!linkId
+            enabled:!!linkId,
+            onSuccess: (data) => {
+                dispatch(setRedirectLink(data));
+                history.push('/o/verify-patient-get-mobile');
+            }
         }
     );
 
@@ -35,11 +43,6 @@ const VerifyRedirectLink = () => {
             return <div className='text-danger'>{t('redirect_link.is_error')}</div>
         }
     }
-
-    if (data) {
-        return <GetExternalUserMobileNumber request={data} />
-    }
-
     return (
         <div>
             <span className='text-danger'>{t('redirect_link.link_not_active')}</span>

@@ -1,22 +1,13 @@
-import {TicketMessage} from '@shared/models';
+import {TicketMessage, UserBase} from '@shared/models';
 import {useTranslation} from 'react-i18next';
 import dayjs from 'dayjs';
-import {useDispatch, useSelector} from 'react-redux';
-import {selectUserList} from '@shared/store/lookups/lookups.selectors';
-import {getUserList} from '@shared/services/lookups.service';
-import {useEffect} from 'react';
 import Avatar from '@components/avatar';
 import utils from '@shared/utils/utils';
 
-const OutgoingSms = ({message} : {message: TicketMessage}) => {
+const OutgoingSms = ({message, users} : {message: TicketMessage, users?: UserBase[]}) => {
     const {t} = useTranslation();
-    const users = useSelector(selectUserList);
-    const dispatch = useDispatch();
-    useEffect(() => {
-        dispatch(getUserList());
-    }, []);
 
-    const user = users?.filter(a=> a.id === message.createdBy)[0];
+    const user = users ? users.filter(a=> a.id === message.createdBy)[0] : undefined;
 
     return <div className='flex flex-row space-x-2'>
         <div className='pt-7 pl-4'>

@@ -17,9 +17,7 @@ import {
     DownloadMedicalRecordsProps,
     prepareAndDownloadMedicalRecords
 } from '@pages/patients/services/patients.service';
-import {useLocation} from 'react-router-dom';
 import {useMutation, useQuery} from 'react-query';
-import {RedirectLink} from '@pages/external-access/hipaa-verification/models/redirect-link';
 import {setMedicalRecordsPreviewData} from '@pages/external-access/request-medical-records/store/medical-records.slice';
 import dayjs from 'dayjs';
 import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
@@ -28,6 +26,7 @@ import {AsyncJobInfo} from '@pages/patients/models/async-job-info.model';
 import {AsyncJobStatus} from '@pages/patients/models/async-job-status.enum';
 import {CheckMedicalRecordStatus} from '@constants/react-query-constants';
 import TextArea from '@components/textarea/textarea';
+import {selectRedirectLink} from '@pages/external-access/verify-patient/store/verify-patient.selectors';
 const RequestMedicalRecords = () => {
     enum DateOptions {
         AllTime = 1,
@@ -48,7 +47,7 @@ const RequestMedicalRecords = () => {
     const [request, setRequest] = useState<DownloadMedicalRecordsProps>();
     const [jobInformation, setJobInformation] = useState<AsyncJobInfo>();
     const [isLoading, setLoading] = useState<boolean>(false);
-    const location = useLocation<{ request: RedirectLink }>();
+    const verifyLink = useSelector(selectRedirectLink);
     const dispatch = useDispatch();
     const {control, formState, getValues, watch} = useForm({
         mode: 'onBlur'
@@ -97,7 +96,7 @@ const RequestMedicalRecords = () => {
                 if (data.status.toString() === AsyncJobStatus[AsyncJobStatus.Completed]) {
                     switch (requestType) {
                         case RequestType.Download:
-                            downloadMedicalRecordsMutation.mutate({linkId: location.state.request.linkId});
+                            downloadMedicalRecordsMutation.mutate({linkId: verifyLink.linkId});
                             break;
                         case RequestType.Share:
                             displaySuccessSnackbars();
@@ -136,7 +135,7 @@ const RequestMedicalRecords = () => {
         let request: DownloadMedicalRecordsProps = {
             patientId: patient.patientId,
             departmentId: patient.departmentId,
-            downloadLink: location.state.request.linkId,
+            downloadLink: verifyLink.linkId,
             isDownload: type === RequestType.Download,
             emailAddress: getValues('email'),
             note: getValues('note')?.replaceAll('\n','<br/>'),
