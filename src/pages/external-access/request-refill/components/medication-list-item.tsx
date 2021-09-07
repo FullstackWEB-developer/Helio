@@ -9,6 +9,7 @@ import {useTranslation} from 'react-i18next';
 import Tooltip from '@components/tooltip/tooltip';
 import {useDispatch} from 'react-redux';
 import {setMedication} from '@pages/external-access/request-refill/store/request-refill.slice';
+import utils from '@shared/utils/utils';
 
 interface MedicationListItemProps {
     data: Medication
@@ -20,7 +21,6 @@ const MedicationListItem = ({data}: MedicationListItemProps) => {
     const history = useHistory();
 
     const scheduleAppointmentLink = '/o/appointment-schedule';
-    const chatLink = process.env.REACT_APP_CHAT_LINK;
 
     const infoAlertIcon = useRef(null);
     const [displayInfoAlert, setDisplayAlert] = useState<boolean>(false);
@@ -93,7 +93,7 @@ const MedicationListItem = ({data}: MedicationListItemProps) => {
                                         <a rel='noreferrer' target='_self' href={scheduleAppointmentLink}>{t('external_access.medication_refill.medication_list.schedule_appointment_online')}</a>
                                     </div>
                                     <div className='body2 message-link cursor-pointer'>
-                                        <a rel='noreferrer' target='_self' href={chatLink}>{t('external_access.medication_refill.medication_list.chat_with_us')}</a>
+                                        <a rel='noreferrer' target='_self' href={utils.getAppParameter('ChatLink')}>{t('external_access.medication_refill.medication_list.chat_with_us')}</a>
                                     </div>
                                 </div>
                             </Tooltip>

@@ -22,6 +22,7 @@ import {AuthenticationInfo} from '@shared/store/app-user/app-user.models';
 import {CCPConnectionStatus} from '@pages/ccp/models/connection-status.enum';
 import Tooltip from '@components/tooltip/tooltip';
 import {Trans, useTranslation} from 'react-i18next';
+import utils from '@shared/utils/utils';
 
 
 const Header = ({headsetIconRef}: {headsetIconRef: React.RefObject<HTMLDivElement>}) => {
@@ -137,8 +138,8 @@ const Header = ({headsetIconRef}: {headsetIconRef: React.RefObject<HTMLDivElemen
                                     <div className="flex flex-col p-6 body2 w-80">
                                         <span>{t('ccp.modal.desc_fail')}</span>
                                         <span>
-                                            <Trans i18nKey="ccp.modal.desc_fail_try" values={{email: process.env.REACT_APP_HELIO_SUPPORT_EMAIL}}>
-                                                <a rel='noreferrer' className='link' href={`mailto:${process.env.REACT_APP_HELIO_SUPPORT_EMAIL}`}> </a>
+                                            <Trans i18nKey="ccp.modal.desc_fail_try" values={{email: utils.getAppParameter('SupportEmailAddress')}}>
+                                                <a rel='noreferrer' className='link' href={`mailto:${utils.getAppParameter('SupportEmailAddress')}`}> </a>
                                             </Trans>
                                         </span>
                                     </div>
@@ -168,10 +169,10 @@ const Header = ({headsetIconRef}: {headsetIconRef: React.RefObject<HTMLDivElemen
                         <div className='hidden pr-6 md:block'>
                             <SvgIcon type={Icon.AwsConnect}
                                      className='cursor-pointer header-icon'
-                                     onClick={() => openUrl(`${process.env.REACT_APP_CONNECT_BASE_URL}connect/home`)} />
+                                     onClick={() => openUrl(`${utils.getAppParameter('ConnectBaseUrl')}connect/home`)} />
                         </div>
                         <div data-test-id='athena-icon' className='hidden pr-10 md:block'>
-                            <SvgIcon type={Icon.Athena} className='cursor-pointer header-icon' onClick={() => openUrl(`${process.env.REACT_APP_ATHENAHEALTH}`)}/>
+                            <SvgIcon type={Icon.Athena} className='cursor-pointer header-icon' onClick={() => openUrl(utils.getAppParameter('AthenaHealthUrl'))}/>
                         </div>
                         <div>
                             <div ref={dropdownRef} className='relative hidden h-full md:block'>

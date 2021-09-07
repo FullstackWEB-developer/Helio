@@ -38,12 +38,13 @@ import {CCPConnectionStatus} from './models/connection-status.enum';
 import {QueryGetPatientById, QueryTickets} from '@constants/react-query-constants';
 import {getPatientByIdWithQuery} from '@pages/patients/services/patients.service';
 import useLocalStorage from '@shared/hooks/useLocalStorage';
+import utils from '@shared/utils/utils';
 
 const ccpConfig = {
-    region: process.env.REACT_APP_AWS_REGION,
-    connectBaseUrl: process.env.REACT_APP_CONNECT_BASE_URL,
-    ccpUrl: process.env.REACT_APP_CCP_ACCESS_URL,
-    ccpLoginUrl: process.env.REACT_APP_CCP_LOGIN_URL
+    region: utils.getAppParameter('AwsRegion'),
+    connectBaseUrl: utils.getAppParameter('ConnectBaseUrl'),
+    ccpUrl: utils.getAppParameter('CcpAccessUrl'),
+    ccpLoginUrl: utils.getAppParameter('CcpLoginUrl')
 }
 
 const CCP_TIMEOUT_MS = 30000;
@@ -374,8 +375,8 @@ const Ccp: React.FC<BoxProps> = ({
                     <div className='flex flex-col'>
                         <span>{t('ccp.modal.desc_fail')}</span>
                         <span>
-                            <Trans i18nKey="ccp.modal.desc_fail_try" values={{email: process.env.REACT_APP_HELIO_SUPPORT_EMAIL}}>
-                                <a className='link' rel='noreferrer' href={`mailto:${process.env.REACT_APP_HELIO_SUPPORT_EMAIL}`}> </a>
+                            <Trans i18nKey="ccp.modal.desc_fail_try" values={utils.getAppParameter('SupportEmailAddress')}>
+                                <a className='link' rel='noreferrer' href={`mailto:${utils.getAppParameter('SupportEmailAddress')}`}> </a>
                             </Trans>
                         </span>
                     </div>

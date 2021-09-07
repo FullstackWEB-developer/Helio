@@ -6,7 +6,6 @@ import GuardedRoute from './guarded-route';
 import {Dashboard} from '@pages/dashboard/dashboard';
 import {withSuspense} from '@shared/HOC/with-suspense';
 import TicketList from '../pages/tickets/ticket-list';
-import {QueryClient, QueryClientProvider} from "react-query";
 import {
     ContactsPath,
     TicketsPath,
@@ -26,6 +25,7 @@ import {createSmsConnectionHub} from '@shared/websockets/create-sms-connection-h
 import {useSelector} from 'react-redux';
 import {selectAccessToken} from '@shared/store/app-user/appuser.selectors';
 import {SMS_INCOMING_NAME} from '@shared/constants/signalr-provider-constants';
+import utils from '@shared/utils/utils';
 const SearchResults = React.lazy(() => import('../shared/components/search-bar/components/search-results'));
 const PatientChart = React.lazy(() => import('@pages/patients/patient-chart'));
 const VerifyRedirectLink = React.lazy(() => import('@pages/external-access/verify-patient/verify-redirect-link'));
@@ -63,37 +63,19 @@ const ExternalUserVerificationCode = React.lazy(() => import('@pages/external-ac
 const ExternalUserMobileNumber = React.lazy(() => import('@pages/external-access/verify-patient/get-external-user-mobile-number'));
 const ExternalUserCreateCallbackTicket = React.lazy(() => import('@pages/external-access/verify-patient/external-user-create-callback-ticket'));
 function App() {
-    let logger = Logger.getInstance();
     const accessToken = useSelector(selectAccessToken);
-    const queryClient = new QueryClient({
-        defaultOptions: {
-            queries: {
-                refetchOnWindowFocus: false,
-                retry: false,
-                onError: (error: any) => {
-                    logger.error("Query Error ", error);
-                }
-            },
-            mutations: {
-                onError: (error) => {
-                    logger.error("Mutation Error ", error);
-                }
-            }
-        }
-    });
+
 
     useEffect(() => {
         const logStreamInterval = setInterval(() => {
-            logger = Logger.getInstance();
-        }, Number(process.env.REACT_APP_LOG_STREAM_CHECK_INTERVAL) || 5000);
+            Logger.getInstance();
+        }, Number(utils.getAppParameter('LogStreamCheckInterval')) || 5000);
         return () => {
             clearInterval(logStreamInterval)
         }
     }, []);
 
-    return (
-        <QueryClientProvider client={queryClient}>
-            <BrowserRouter>
+    return (<BrowserRouter>
                 <Switch>
                     <Route path='/o/'>
                         <ExternalAccessLayout>
@@ -167,7 +149,6 @@ function App() {
                     </SignalRProvider>
                 </Switch>
             </BrowserRouter>
-        </QueryClientProvider>
     );
 }
 

@@ -1,21 +1,43 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import App from './app/app';
 import store from './app/store';
 import reportWebVitals from './reportWebVitals';
 import './index.scss';
 import '../src/i18n';
 import { PersistGate } from 'redux-persist/integration/react'
 import { persistStore } from 'redux-persist';
+import InitializeApp from '@app/initialize-app';
+import {QueryClient, QueryClientProvider} from 'react-query';
+import Logger from '@shared/services/logger';
 
 const rootElement = document.getElementById('root');
 const persistor = persistStore(store);
 
+let logger = Logger.getInstance();
+const queryClient = new QueryClient({
+    defaultOptions: {
+        queries: {
+            refetchOnWindowFocus: false,
+            retry: false,
+            onError: (error: any) => {
+                logger.error("Query Error ", error);
+            }
+        },
+        mutations: {
+            onError: (error) => {
+                logger.error("Mutation Error ", error);
+            }
+        }
+    }
+});
+
 ReactDOM.render(
     <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-            <App />
+            <QueryClientProvider client={queryClient}>
+                <InitializeApp />
+            </QueryClientProvider>
         </PersistGate>
     </Provider>,
     rootElement);

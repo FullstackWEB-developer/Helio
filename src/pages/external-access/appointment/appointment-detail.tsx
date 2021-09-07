@@ -11,13 +11,13 @@ import {setRescheduleTimeFrame} from '@pages/external-access/appointment/store/a
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import classnames from 'classnames';
+import utils from '@shared/utils/utils';
 
 const AppointmentDetail = () => {
     dayjs.extend(customParseFormat);
     const {t} = useTranslation();
     const history = useHistory();
     const dispatch = useDispatch();
-    const callUsPhone = process.env.REACT_APP_CALL_US_PHONE;
     const defaultTimeFrame = 7;
     const appointment = useSelector(selectSelectedAppointment);
     const appointmentTypes = useSelector(selectAppointmentTypes);
@@ -64,7 +64,7 @@ const AppointmentDetail = () => {
         {!displayCancel() && <div className='pt-6 pb-2 w-4/5'>
             <div className='warning-message body2 px-6 py-3.5 rounded border border-solid'>
                 <Trans i18nKey="external_access.appointments.can_not_be_canceled">
-                    {callUsPhone}
+                    {utils.getAppParameter('CallUsPhone')}
                 </Trans>
             </div>
         </div>

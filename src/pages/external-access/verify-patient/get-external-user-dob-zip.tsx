@@ -84,7 +84,7 @@ const GetExternalUserDobZip = () => {
             title={`external_access.title_${request.requestType}`}
             description={t('external_access.hipaa_verify_description', {day: process.env.REACT_APP_VERIFIED_PATIENT_EXPIRE_IN_DAY})} />
         {displayNotFoundError && <div className='body2 text-danger pb-6'>
-            {t('external_access.mobile_verification_failed', { "phone": process.env.REACT_APP_CALL_US_PHONE})}
+            {t('external_access.mobile_verification_failed', { "phone": utils.getAppParameter('CallUsPhone')})}
         </div>}
             <div>
                 <form onSubmit={handleSubmit(onSubmit)}>

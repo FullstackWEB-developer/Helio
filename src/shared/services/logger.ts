@@ -4,18 +4,10 @@ import {
 } from '@aws-sdk/client-cloudwatch-logs';
 import {fromCognitoIdentityPool} from '@aws-sdk/credential-provider-cognito-identity';
 import {CognitoIdentityClient} from '@aws-sdk/client-cognito-identity';
-import store from '../../app/store';
+import store, {PersistenceStoreName} from '../../app/store';
 import {setLogStream} from '@shared/store/app-user/appuser.slice';
 import dayjs from 'dayjs';
-
-const logConfig = {
-    region: process.env.REACT_APP_AWS_REGION,
-    identityPoolId: process.env.REACT_APP_IDENTITY_POOL_ID as string,
-    logGroup: process.env.REACT_APP_DEFAULT_LOG_GROUP || '',
-    logStream: process.env.REACT_APP_DEFAULT_LOG_STREAM || '',
-    logStreamValidityDuration: process.env.REACT_APP_LOG_STREAM_DURATION || 60000,
-    helioStoreName: process.env.REACT_APP_PERSIST_HELIO_STORE_NAME || 'helio-ui-store'
-}
+import utils from '@shared/utils/utils';
 
 enum LogLevel {
     Info = 1,
@@ -31,30 +23,43 @@ interface Log {
 
 class Logger {
     private static instance: Logger;
-    private readonly log: CloudWatchLogsClient;
-    private readonly logGroup: string;
+    private log: CloudWatchLogsClient | undefined;
+    private logGroup: string = '';
     private readonly LogStreamNameDateFormat = 'YYYY-MM-DDTHH-mm-ss';
     private static isStreamCreationInProgress: boolean;
+    private isReady: boolean = false;
+    private isInitializing: boolean = false;
 
-    constructor() {
-        const identityClient = new CognitoIdentityClient({region: logConfig.region});
-        const credentials = fromCognitoIdentityPool({identityPoolId: logConfig.identityPoolId, client: identityClient});
-        this.log = new CloudWatchLogsClient({credentials, region: logConfig.region});
-        this.logGroup = logConfig.logGroup;
+    private setup() {
+        if (!utils.getAppParameter('AwsRegion') || this.isInitializing) {
+            return;
+        }
+        this.isInitializing = true;
+        const region = utils.getAppParameter('AwsRegion');
+        const identityClient = new CognitoIdentityClient({region});
+        const credentials = fromCognitoIdentityPool({identityPoolId: utils.getAppParameter('IdentityPoolId'), client: identityClient});
+        this.log = new CloudWatchLogsClient({credentials, region});
+        this.logGroup = utils.getAppParameter('DefaultLogGroup');
         if (!this.isLoginLoading()) {
             this.setupLogStream();
         }
+        this.isReady = true;
+        this.isInitializing = false;
     }
 
     public static getInstance = (): Logger => {
         if ((!Logger.instance || !Logger.instance.isLogStreamValid()) && !Logger.isStreamCreationInProgress) {
             Logger.instance = new Logger();
         }
+
+        if (!Logger.instance.isReady) {
+            Logger.instance.setup();
+        }
         return Logger.instance;
     }
 
     private readonly getStoredLogStream = () => {
-        const appUserState = JSON.parse(JSON.parse(localStorage.getItem(`persist:${logConfig.helioStoreName}`) || '{}')?.appUserState || '{}');
+        const appUserState = JSON.parse(JSON.parse(localStorage.getItem(`persist:${PersistenceStoreName}`) || '{}')?.appUserState || '{}');
         return appUserState?.logStream;
     }
 
@@ -65,7 +70,7 @@ class Logger {
     private readonly setupLogStream = async () => {
         const logStream = this.getStoredLogStream();
         if (!logStream || !this.isLogStreamValid()) {
-            const newStreamName = `${logConfig.logStream}-${dayjs().format(this.LogStreamNameDateFormat)}-${this.getUserName()}`
+            const newStreamName = `${this.getUserName()}-${dayjs().format(this.LogStreamNameDateFormat)}`
             const newLogStreamStatusCode = await this.createStream(newStreamName);
             if (newLogStreamStatusCode && String(newLogStreamStatusCode)?.startsWith('2')) {
                 const newLogStream = await this.getStream(newStreamName);
@@ -83,9 +88,9 @@ class Logger {
         });
         Logger.isStreamCreationInProgress = true;
         try {
-            const data = await this.log.send(params);
+            const data = await this.log?.send(params);
             Logger.isStreamCreationInProgress = false;
-            return data.$metadata.httpStatusCode;
+            return data?.$metadata.httpStatusCode;
         }
         catch (error: any) {
             Logger.isStreamCreationInProgress = false;
@@ -100,8 +105,8 @@ class Logger {
         });
 
         try {
-            const data = await this.log.send(params);
-            return data.logStreams?.find((stream: LogStream) => stream.logStreamName === streamName);
+            const data = await this.log?.send(params);
+            return data?.logStreams?.find((stream: LogStream) => stream.logStreamName === streamName);
         }
         catch (error: any) {
             console.log(error);
@@ -109,6 +114,9 @@ class Logger {
     }
 
     private readonly putEvent = async (payload: Log) => {
+        if (!this.isReady) {
+            return;
+        }
         const storedLogStream: LogStream = this.getStoredLogStream();
         if (storedLogStream && storedLogStream?.logStreamName) {
             payload.userName = this.getUserName();
@@ -125,15 +133,18 @@ class Logger {
             });
 
             try {
-                const data = await this.log.send(params);
+                const data = await this.log?.send(params);
                 if (data?.nextSequenceToken) {
                     this.storeLogStream({...storedLogStream, uploadSequenceToken: data.nextSequenceToken});
                 }
             }
             catch (error: any) {
+                if (error.name === 'DataAlreadyAcceptedException') {
+                    this.storeLogStream({...storedLogStream, uploadSequenceToken: error.expectedSequenceToken});
+                    return;
+                }
                 if (error && error.message && error.expectedSequenceToken && error.message.includes("sequenceToken")) {
                     this.storeLogStream({...storedLogStream, uploadSequenceToken: error.expectedSequenceToken});
-                    this.putEvent(payload);
                 }
             }
         }
@@ -142,17 +153,17 @@ class Logger {
     isLogStreamValid = () => {
         const storedLogStream: LogStream = this.getStoredLogStream();
         if (!storedLogStream || !storedLogStream.creationTime) return false;
-        return new Date().getTime() - storedLogStream.creationTime < Number(logConfig.logStreamValidityDuration) &&
+        return new Date().getTime() - storedLogStream.creationTime < Number(utils.getAppParameter('LogStreamDuration')) &&
             storedLogStream.logStreamName?.slice(storedLogStream.logStreamName.lastIndexOf('-') + 1) === this.getUserName();
     }
 
     getUserName = () => {
-        const appUserState = JSON.parse(JSON.parse(localStorage.getItem(`persist:${logConfig.helioStoreName}`) || '{}')?.appUserState || '{}');
+        const appUserState = JSON.parse(JSON.parse(localStorage.getItem(`persist:${PersistenceStoreName}`) || '{}')?.appUserState || '{}');
         return appUserState?.auth?.username ?? 'anonymous';
     }
 
     isLoginLoading = () => {
-        const appUserState = JSON.parse(JSON.parse(localStorage.getItem(`persist:${logConfig.helioStoreName}`) || '{}')?.appUserState || '{}');
+        const appUserState = JSON.parse(JSON.parse(localStorage.getItem(`persist:${PersistenceStoreName}`) || '{}')?.appUserState || '{}');
         return appUserState?.isLoading;
     }
 

@@ -1,25 +1,32 @@
 import * as msal from '@azure/msal-browser';
 import {PopupRequest} from '@azure/msal-browser';
-
-const msalConfig = {
-    auth: {
-        clientId: process.env.REACT_APP_MSAL_CLIENTID as string,
-        authority: 'https://login.microsoftonline.com/' + process.env.REACT_APP_MSAL_TENANTID,
-        validateAuthority: true
-    },
-    cache: {
-        cacheLocation: 'localStorage'
-    },
-    system: {
-        iframeHashTimeout: 10000
-    }
-};
+import {PublicClientApplication} from '@azure/msal-browser/dist/app/PublicClientApplication';
+import utils from '@shared/utils/utils';
 
 export const loginRequest: PopupRequest = {
     scopes: [
         'User.Read',
     ]
 };
-
-export const msalInstance = new msal.PublicClientApplication(msalConfig);
-
+let msalInstance : PublicClientApplication;
+export const getMsalInstance = () => {
+    if (msalInstance) {
+        return msalInstance;
+    } else {
+        if (utils.getAppParameter('MsalClientId')) {
+            msalInstance = new msal.PublicClientApplication({
+                auth: {
+                    clientId: utils.getAppParameter('MsalClientId'),
+                    authority: 'https://login.microsoftonline.com/' + utils.getAppParameter('MsalTenantId')
+                },
+                cache: {
+                    cacheLocation: 'localStorage'
+                },
+                system: {
+                    iframeHashTimeout: 10000
+                }
+            });
+            return msalInstance;
+        }
+    }
+}

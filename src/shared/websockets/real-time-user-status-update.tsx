@@ -3,12 +3,13 @@ import {HubConnection, HubConnectionBuilder, LogLevel} from '@microsoft/signalr'
 import {useDispatch, useSelector} from 'react-redux';
 import {useQueryClient} from 'react-query';
 import {authenticationSelector, selectAccessToken} from '../store/app-user/appuser.selectors';
-import {UserStatusUpdate} from '../models/user-status-update.model';
-import {QuickConnectExtension} from '../models/quick-connect-extension';
+import {UserStatusUpdate} from '@shared/models';
+import {QuickConnectExtension} from '@shared/models';
 import RealTimeConnectionLogger from './real-time-connection-logger';
 import {QueryQuickConnects} from '@constants/react-query-constants';
 import {addLiveAgentStatus, updateUserStatus} from '@shared/store/app-user/appuser.slice';
 import {updateLatestUsersStatusUpdateTime} from '@shared/layout/store/layout.slice';
+import utils from '@shared/utils/utils';
 
 const RealTimeUserStatusUpdate = () => {
     const dispatch = useDispatch();
@@ -52,12 +53,7 @@ const RealTimeUserStatusUpdate = () => {
     }, [connection]);
 
     const provideQuickConnectStatusHubUrl = () => {
-        const envHubEndpoint = process?.env?.REACT_APP_REALTIME_EVENTS_ENDPOINT;
-        if (!envHubEndpoint) {
-            const errorMessage = "REACT_APP_REALTIME_EVENTS_ENDPOINT variable missing from .env. Please check and ensure it is provided!";
-            realtimeConnectionLogger.log(LogLevel.Error, errorMessage);
-        }
-        return `${process.env.REACT_APP_REALTIME_EVENTS_ENDPOINT}user-status-update`;
+        return `${utils.getAppParameter('RealtimeEventsEndpoint')}user-status-update`;
     }
 
     const propagateStatusChangeValue = (statusChange: UserStatusUpdate) => {

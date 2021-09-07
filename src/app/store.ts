@@ -16,7 +16,7 @@ import {persistReducer} from 'redux-persist'
 import thunk from 'redux-thunk'
 import usersReducer from '../pages/users/store/users.slice';
 
-const persistenceStoreName =  process.env.REACT_APP_PERSIST_HELIO_STORE_NAME || 'helio-ui-store';
+export const PersistenceStoreName =  'helio-ui-store';
 const reducers = combineReducers({
     ticketState: ticketReducer,
     layoutState: layoutReducer,
@@ -34,13 +34,18 @@ const reducers = combineReducers({
 
 const rootReducer: Reducer = (state: RootState, action: AnyAction) => {
     if (action.type === 'layout/resetState') {
-        state = {} as RootState;
+        const appParameters = state.appState.appParameters
+        state = {
+            appState : {
+                appParameters
+            }
+        } as RootState;
     }
     return reducers(state, action);
 };
 
 const persistConfig = {
-    key: persistenceStoreName,
+    key: PersistenceStoreName,
     storage
 };
 

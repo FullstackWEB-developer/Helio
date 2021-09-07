@@ -1,5 +1,4 @@
 import Button from '@components/button/button';
-import {msalInstance} from './auth-config';
 import {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {AuthenticationInfo} from '@shared/store/app-user/app-user.models';
@@ -19,6 +18,7 @@ import {useTranslation} from 'react-i18next';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc'
 import './login.scss';
+import {getMsalInstance} from '@pages/login/auth-config';
 dayjs.extend(utc);
 
 const Login = () => {
@@ -30,14 +30,14 @@ const Login = () => {
 
     const initiateLogin = () => {
         dispatch(setLoginLoading(true));
-        msalInstance.loginRedirect();
+        getMsalInstance()?.loginRedirect();
     }
 
     useEffect(() => {
         if (!utils.isLoggedIn()) {
             dispatch(resetState());
             dispatch(setLoginLoading(true));
-            msalInstance.handleRedirectPromise()
+            getMsalInstance()?.handleRedirectPromise()
                 .then((info) => {
                     SetAuthenticationInfo(info, dispatch, history);
                 }).catch((err: any) => {

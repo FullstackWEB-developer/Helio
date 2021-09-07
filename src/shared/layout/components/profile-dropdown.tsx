@@ -1,7 +1,6 @@
 import {useTranslation} from 'react-i18next';
 import {useDispatch, useSelector} from 'react-redux';
 import {logOut, updateUserStatus} from '../../store/app-user/appuser.slice';
-import {msalInstance} from '@pages/login/auth-config';
 import {AuthenticationInfo, UserStatus} from '../../store/app-user/app-user.models';
 import {DropdownItemModel, DropdownModel} from '@components/dropdown/dropdown.models';
 import {authenticationSelector, selectAgentStates, selectUserStatus} from '../../store/app-user/appuser.selectors';
@@ -19,15 +18,13 @@ import {UserDetailsPath} from '@app/paths';
 import {selectUserByEmail} from '@shared/store/lookups/lookups.selectors';
 import {useEffect} from 'react';
 import {getUserList} from '@shared/services/lookups.service';
+import {getMsalInstance} from '@pages/login/auth-config';
+import utils from '@shared/utils/utils';
+import {clearAppParameters} from '@shared/store/app/app.slice';
 
 interface UserStatuses {
     label: string;
     value: string;
-}
-
-const ccpConfig = {
-    connectBaseUrl: process.env.REACT_APP_CONNECT_BASE_URL,
-    ccpLogOutUrl: process.env.REACT_APP_CCP_LOGOUT_URL
 }
 
 const ProfileDropdown = () => {
@@ -46,7 +43,8 @@ const ProfileDropdown = () => {
 
     const signOut = () => {
         signOutFromCcp();
-        msalInstance.logoutRedirect({
+        dispatch(clearAppParameters());
+        getMsalInstance()?.logoutRedirect({
             postLogoutRedirectUri: '/login'
         })
             .then()
@@ -56,7 +54,7 @@ const ProfileDropdown = () => {
     }
 
     const signOutFromCcp = () => {
-        axios.get(ccpConfig.connectBaseUrl! + ccpConfig.ccpLogOutUrl, {withCredentials: true})
+        axios.get(utils.getAppParameter('ConnectBaseUrl') + utils.getAppParameter('CcpLogoutUrl'), {withCredentials: true})
             .catch(() => {
                 // Note: This will result in 'CORS policy' error but it will still logout the user which is our goal.
                 // We will ignore the error received since we do not care about the response.

@@ -1,5 +1,5 @@
 import {Ticket} from '../models/ticket';
-import {RootState} from '../../../app/store';
+import {RootState} from '@app/store';
 import {createSelector} from '@reduxjs/toolkit';
 import {TicketLookupValue} from '../models/ticket-lookup-values.model';
 import {LookupValue} from '../models/lookup-value';

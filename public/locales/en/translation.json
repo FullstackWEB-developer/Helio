@@ -53,6 +53,10 @@
     "statuses": "Statuses",
     "unknown": "Unknown"
   },
+  "app" : {
+    "error_loading_parameters": "Error loading parameters, please try again later",
+    "loading_parameters": "Loading application parameters, please wait..."
+  },
   "login": {
     "title": "Run your medical office efficiently.",
     "subtitle": "Cloud based software for medical offices.",

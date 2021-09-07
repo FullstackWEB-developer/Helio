@@ -1,11 +1,10 @@
 import React from 'react';
 import {Trans, useTranslation} from 'react-i18next';
+import utils from '@shared/utils/utils';
 
 const AppointmentCanceled = () => {
     const {t} = useTranslation();
-    const callUsPhone = process.env.REACT_APP_CALL_US_PHONE;
     const scheduleAppointmentLink = '/o/appointment-schedule';
-    const chatLink = process.env.REACT_APP_CHAT_LINK;
 
     return <div className='2xl:px-48'>
         <div className='2xl:whitespace-pre 2xl:h-12 2xl:my-3 flex w-full items-center'>
@@ -16,8 +15,8 @@ const AppointmentCanceled = () => {
         <div className='pt-6'>
             <Trans i18nKey="external_access.appointments.to_schedule">
                 <a rel='noreferrer' target='_self' href={scheduleAppointmentLink}>here</a>
-                <a rel='noreferrer' target='_self' href={chatLink}>Chat</a>
-                {callUsPhone}
+                <a rel='noreferrer' target='_self' href={utils.getAppParameter('ChatLink')}>Chat</a>
+                {utils.getAppParameter('CallUsPhone')}
             </Trans>
         </div>
         <div>

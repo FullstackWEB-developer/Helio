@@ -14,8 +14,6 @@ import {Icon} from '@components/svg-icon/icon';
 import SvgIcon from '@components/svg-icon/svg-icon';
 import customHooks from '@shared/hooks/customHooks';
 
-const athenaPatientUrl = `${process.env.REACT_APP_ATHENAHEALTH}${process.env.REACT_APP_ATHENAHEALTH_CLIENT_SUMMARY}`;
-
 export interface PatientHeaderProps {
     patientChartSummary: PatientChartSummary;
     refreshPatient: () => void;
@@ -49,7 +47,7 @@ const PatientHeader = ({patientChartSummary, refreshPatient, isRefreshing}: Pati
     }, [patientChartSummary.chartAlert?.noteText])
 
     const viewInAthena = () => {
-        const url = `${athenaPatientUrl}${patient.patientId}`;
+        const url = `${utils.getAppParameter('AthenaHealthUrl')}${utils.getAppParameter('AthenaPatientFormUrl')}${patient.patientId}`;
         window.open(url, '_blank');
     }
 

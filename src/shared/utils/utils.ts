@@ -3,9 +3,11 @@ import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc'
 import {InfiniteData} from 'react-query';
 import {RelativeTime} from './types';
-import {msalInstance} from '@pages/login/auth-config';
 import {Option} from '@components/option/option';
 import {TicketOptionsBase} from '@pages/tickets/models/ticket-options-base.model';
+import store from '@app/store';
+import {getMsalInstance} from '@pages/login/auth-config';
+import {AppParameter} from '@shared/models/app-parameter.model';
 
 const getWindowCenter = () => {
     const {width, height} = getWindowDimensions();
@@ -128,6 +130,15 @@ const getRelativeTime = (date?: Date): RelativeTime => {
     return [totalDays, totalHours, totalMinutes]
 }
 
+const getAppParameter = (key: string) : any => {
+    if (store?.getState()?.appState?.appParameters) {
+        const keyValue = store.getState().appState.appParameters.find((a: AppParameter) => a.Key === key);
+        if (keyValue) {
+            return keyValue.Value;
+        }
+    }
+}
+
 const isString = (obj: any) => {
     return typeof obj === 'string' || obj instanceof String;
 }
@@ -210,7 +221,7 @@ const accumulateInfiniteData = <T extends unknown>(infiniteData: InfiniteData<Pa
 }
 
 const isLoggedIn = (): boolean => {
-    const accounts = msalInstance.getAllAccounts();
+    const accounts = getMsalInstance()?.getAllAccounts();
     return !!(accounts && accounts[0]);
 }
 
@@ -322,7 +333,8 @@ const utils = {
     serialize,
     convertStringArrayToOptions,
     formatTime,
-    applyPhoneMask
+    applyPhoneMask,
+    getAppParameter
 };
 
 export default utils;
