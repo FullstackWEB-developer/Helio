@@ -44,7 +44,9 @@ const BulkUserLocalPagination = ({currentStep}: {currentStep: BulkAddStep}) => {
                 localPaginationProperties &&
                 <div className='flex justify-end items-baseline pb-3 h-14'>
                     <UserBulkPageCountSelect currentStep={currentStep} pageSize={localPaginationProperties.pageSize} />
-                    <Pagination value={localPaginationProperties} onChange={handlePageChange} />
+                    <div className='w-72'>
+                        <Pagination value={localPaginationProperties} onChange={handlePageChange} />
+                    </div>
                 </div>
             }
         </>

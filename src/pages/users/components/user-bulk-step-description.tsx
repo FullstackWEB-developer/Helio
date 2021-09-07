@@ -8,7 +8,7 @@ const BulkAddStepDescription = ({step}: {step: BulkAddStep}) => {
     return (
         <div className='pt-4 flex flex-col bulk-description'>
             <h6>
-                <span className='emphasized'> {t('users.bulk_section.step_x', {step: step})}</span>
+                <span className='emphasized pr-2'> {t('users.bulk_section.step_x', {step: step})}</span>
                 {t(`users.bulk_section.step_${step}_title`)}
             </h6>
             <div className='body2 pt-4 w-10/12'>

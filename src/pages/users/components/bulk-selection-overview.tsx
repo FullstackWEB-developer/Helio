@@ -18,7 +18,7 @@ const BulkSelectionOverview = () => {
         .filter((v, i, a) => a.indexOf(v) === i) || [];
 
     return (
-        <div className='flex flex-col subtitle2'>
+        <div className='flex flex-col subtitle2 pt-7'>
             <div>
                 <span className='body2 bulk-review-labels'>{t('users.bulk_section.users')}</span>
                 <span>{` ${selectedExternalUsers?.length}`}</span>

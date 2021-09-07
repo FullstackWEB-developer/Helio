@@ -1138,6 +1138,7 @@
   },
   "users": {
     "not_found": "User not found",
+    "search": "Search users",
     "filters": {
       "title": "Filters",
       "apply": "Apply",

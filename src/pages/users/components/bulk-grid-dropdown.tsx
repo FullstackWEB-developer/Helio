@@ -8,7 +8,7 @@ import {useMemo} from 'react';
 import utils from '@shared/utils/utils';
 import SvgIcon, {Icon} from '@components/svg-icon';
 import {BulkGridDropdownType} from '../models/bulk-grid-dropdown-type.enum';
-import {setSelectedUserProviderMapping, setSelectedUserRole} from '../store/users.slice';
+import {clearSelectedUserProviderMapping, setSelectedUserProviderMapping, setSelectedUserRole} from '../store/users.slice';
 
 const BulkGridDropdown = ({userId, purpose, storedRole, storedProviderMapping}: {
     userId: string, purpose: BulkGridDropdownType,
@@ -79,6 +79,12 @@ const BulkGridDropdown = ({userId, purpose, storedRole, storedProviderMapping}: 
         return selectedProvider ? providerOptions.find(o => o.value === selectedProvider)?.label : '';
     }
 
+    const clearProviderMapping = (e: React.MouseEvent) => {
+        e.stopPropagation();
+        setSelectedProvider('');
+        dispatch(clearSelectedUserProviderMapping(userId));
+    }
+
     return (
         <div ref={elementRef} onClick={(e) => {e.stopPropagation(); setIsVisible(!isVisible)}}
             className='cursor-pointer relative col-span-1'>
@@ -89,7 +95,10 @@ const BulkGridDropdown = ({userId, purpose, storedRole, storedProviderMapping}: 
                         <div className='bulk-user-grid-ehr-value'>{displayProviderName() || t('users.bulk_section.undefined_mapping')}</div>
                 }
                 <div className='pl-3' ref={chevronPosition} >
-                    <SvgIcon type={!isVisible ? Icon.ArrowDown : Icon.ArrowUp} className='cursor-pointer' fillClass='active-item-icon' />
+                    {
+                        displayProviderName() ? <SvgIcon type={Icon.Clear} className='cursor-pointer' fillClass='active-item-icon' onClick={clearProviderMapping} /> :
+                            <SvgIcon type={!isVisible ? Icon.ArrowDown : Icon.ArrowUp} className='cursor-pointer' fillClass='active-item-icon' />
+                    }
                 </div>
             </div>
 

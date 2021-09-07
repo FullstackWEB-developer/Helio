@@ -162,6 +162,14 @@ const usersSlice = createSlice({
                 }
                 return u;
             });
+        },
+        clearSelectedUserProviderMapping(state, {payload}: PayloadAction<string>){
+            state.selectedExternalUsers = state.selectedExternalUsers.map(u => {
+                if (u.id === payload) {
+                    delete u.inviteUserModel.providerId;
+                }
+                return u;
+            });
         }
     }
 });
@@ -189,7 +197,8 @@ export const {
     setRoleToAllSelectedUsers,
     setLocalBulkFilters,
     setIsLocalBulkFilterOpen,
-    setSelectedUserProviderMapping
+    setSelectedUserProviderMapping,
+    clearSelectedUserProviderMapping
 } = usersSlice.actions;
 
 export default usersSlice.reducer;

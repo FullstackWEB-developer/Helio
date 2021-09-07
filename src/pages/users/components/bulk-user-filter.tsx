@@ -11,6 +11,7 @@ import Collapsible from '@components/collapsible/collapsible';
 import utils from '@shared/utils/utils';
 import {UserQueryFilter} from '../models/user-filter-query.model';
 import {setBulkUserFilters} from '../store/users.slice';
+import {isNavigationExpandedSelector} from '@shared/layout/store/layout.selectors';
 
 const BulkUserFilter = () => {
     const {t} = useTranslation();
@@ -23,6 +24,7 @@ const BulkUserFilter = () => {
     const [collapsibleState, setCollapsibleState] = useState<{[key: string]: boolean}>({});
     const allKey = '0';
     const {control, handleSubmit, reset, getValues, setValue} = useForm({});
+    const isNavigationExpanded = useSelector(isNavigationExpandedSelector);
 
     useEffect(() => {
         dispatch(getExternalDepartmentListWithState);
@@ -31,7 +33,8 @@ const BulkUserFilter = () => {
 
     const getClassNames = () => classNames({
         'w-72 transition-width transition-slowest ease top-0 bg-secondary-100 overflow-y-auto relative': isBulkUserFilterOpen,
-        'hidden': !isBulkUserFilterOpen
+        'hidden': !isBulkUserFilterOpen,
+        'bulk-filter-width': isNavigationExpanded
     });
 
     const GetCollapsibleCheckboxControl = (title: string, name: string, items: TicketOptionsBase[]) => {

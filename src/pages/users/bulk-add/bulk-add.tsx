@@ -181,7 +181,9 @@ const BulkAddUser = () => {
                     paginationProperties?.totalCount > 0 && currentStep === BulkAddStep.Selection &&
                     <div className='flex justify-end items-baseline pb-3 h-14'>
                         <UserBulkPageCountSelect currentStep={currentStep} pageSize={paginationProperties.pageSize} />
-                        <Pagination value={paginationProperties} onChange={handlePageChange} />
+                        <div className='w-72'>
+                            <Pagination value={paginationProperties} onChange={handlePageChange} />
+                        </div>
                     </div>
                 }
                 {

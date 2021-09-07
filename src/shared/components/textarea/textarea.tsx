@@ -128,8 +128,8 @@ const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(({
         'pr-14': !!props.icon
     });
 
-    const textAreaWrapperClass = classnames(`${textareaContainerClasses} relative bg-white p-4`,{
-        'flex flex-row w-full h-full items-center': !overwriteDefaultContainerClasses,
+    const textAreaWrapperClass = classnames(`${textareaContainerClasses} relative bg-white`,{
+        'flex flex-row w-full h-full items-center p-4': !overwriteDefaultContainerClasses,
         'border-b': !hasBorder,
         'border': hasBorder,
         'textarea-wrapper': props.disabled        

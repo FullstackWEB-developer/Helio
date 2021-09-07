@@ -108,6 +108,7 @@ const UserBulkActionStripe = ({currentStep}: {currentStep: BulkAddStep}) => {
                 <SearchInputField
                     wrapperClassNames='relative h-full w-1/6'
                     hasBorderBottom={false}
+                    placeholder={'users.search'}
                     onChange={(value: string) => {setSearchText(value)}}
                     onClear={() => {setSearchText(''); search(true)}}
                     value={searchText}

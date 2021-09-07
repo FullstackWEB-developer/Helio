@@ -12,7 +12,7 @@ export interface SnackbarProps {
 
 const Snackbar = ({position}: SnackbarProps) => {
     const messages = useSelector((state) => selectSnackbarMessagesByPosition(state, position));
-    return <div className={`fixed z-50 space-y-4 snackbar-position-${position} w-full md:w-auto`}>
+    return <div className={`fixed z-50 space-y-4 snackbar-position-${position} w-full md:w-auto whitespace-pre-line`}>
         {
             messages?.map((message: SnackbarMessageModel) =>
                 <SnackbarMessage key={message.id} position={position} message={message}/>
