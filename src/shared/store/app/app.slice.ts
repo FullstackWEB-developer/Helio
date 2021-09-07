@@ -13,9 +13,6 @@ const appSlice = createSlice({
         },
         setSmsTemplates(state, {payload}: PayloadAction<NotificationTemplate[]>) {
             state.smsTemplates = payload;
-        },
-        setNavigationChanged(state, {payload}: PayloadAction<boolean>) {
-            state.isNavigationChanging = payload;
         }
     }
 });
@@ -23,8 +20,7 @@ const appSlice = createSlice({
 export const {
     setGlobalLoading,
     setEmailTemplates,
-    setSmsTemplates,
-    setNavigationChanged
+    setSmsTemplates
 } = appSlice.actions
 
 export default appSlice.reducer

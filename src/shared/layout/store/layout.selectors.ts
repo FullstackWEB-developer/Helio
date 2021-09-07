@@ -32,3 +32,8 @@ export const selectLatestUsersStatusUpdateTime = createSelector(
     layoutState,
     state => state.latestUsersStatusUpdateTime as Date
 )
+
+export const selectLastNavigationDate = createSelector(
+    layoutState,
+    state => state.lastNavigationDate
+)

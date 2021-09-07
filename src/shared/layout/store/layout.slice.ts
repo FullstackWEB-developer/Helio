@@ -30,6 +30,9 @@ const layoutSlice = createSlice({
             state.isCcpVisible = false;
             state.isNavigationExpanded = false;
             state.isProfileMenuExpanded = false;
+        },
+        setLastNavigationDate(state) {
+            state.lastNavigationDate = new Date();
         }
     }
 });
@@ -42,7 +45,8 @@ export const {
     resetState,
     toggleHotspots,
     toggleStatusBar,
-    updateLatestUsersStatusUpdateTime
+    updateLatestUsersStatusUpdateTime,
+    setLastNavigationDate
 } = layoutSlice.actions
 
 export default layoutSlice.reducer

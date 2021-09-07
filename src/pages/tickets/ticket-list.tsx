@@ -21,6 +21,7 @@ import {TicketListQueryType} from './models/ticket-list-type';
 import {TicketQuery} from '@pages/tickets/models/ticket-query';
 import {useHistory} from 'react-router-dom';
 import queryString from 'query-string';
+import {selectLastNavigationDate} from '@shared/layout/store/layout.selectors';
 
 const TicketList = () => {
     const dispatch = useDispatch();
@@ -32,6 +33,7 @@ const TicketList = () => {
     const ticketListQueryType = useSelector(selectTicketQueryType);
     const history = useHistory();
     const [lastAppliedFilter, setLastAppliedFilter] = useState<string>(JSON.stringify(currentFilter));
+    const lastNavigationDate = useSelector(selectLastNavigationDate);
 
     useEffect(() => {
         if (lastAppliedFilter !== JSON.stringify(currentFilter)) {
@@ -56,7 +58,7 @@ const TicketList = () => {
                 assignedTo: ticketListQueryType === TicketListQueryType.MyTicket ? currentFilter.assignedTo : []
             }));
         }
-    },[]);
+    }, [lastNavigationDate]);
 
     useEffect(() => {
         dispatch(getUserList());
@@ -72,7 +74,7 @@ const TicketList = () => {
                 <TicketsHeader />
                 <TicketsSearch />
                 {ticketsLoading ?
-                    <div/>:
+                    <div /> :
                     <TicketListContainer dataSource={items} />
                 }
             </div>

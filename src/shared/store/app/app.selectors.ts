@@ -17,8 +17,3 @@ export const selectSmsTemplates = createSelector(
     appState,
     state => state.smsTemplates as NotificationTemplate[]
 )
-
-export const selectIsNavigationChanging = createSelector(
-    appState,
-    state => state.isNavigationChanging as boolean
-);

@@ -4,13 +4,11 @@ export interface AppState {
     isGlobalLoading: boolean;
     smsTemplates: NotificationTemplate[];
     emailTemplates: NotificationTemplate[];
-    isNavigationChanging: boolean;
 }
 const initialAppState: AppState = {
     isGlobalLoading : false,
     emailTemplates: [],
-    smsTemplates: [],
-    isNavigationChanging: false
+    smsTemplates: []
 }
 
 export default initialAppState;

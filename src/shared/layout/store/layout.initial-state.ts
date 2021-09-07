@@ -5,6 +5,7 @@ export interface LayoutState {
     isHotspotsVisible: boolean;
     isStatusBarVisible: boolean;
     latestUsersStatusUpdateTime?: Date;
+    lastNavigationDate?: Date;
 }
 
 const initialState: LayoutState = {

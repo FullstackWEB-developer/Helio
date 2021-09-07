@@ -6,8 +6,8 @@ import withErrorLogging from '../../HOC/with-error-logging';
 import React, {useState} from 'react';
 import './navigation-item.scss';
 import {BadgeNumber} from '@icons/BadgeNumber';
-import {toggleTicketListFilter} from '@pages/tickets/store/tickets.slice';
-import {setNavigationChanged} from '@shared/store/app/app.slice';
+import {clearTicketFilters, toggleTicketListFilter} from '@pages/tickets/store/tickets.slice';
+import {setLastNavigationDate} from '../store/layout.slice';
 
 interface NavigationItemProps {
     title: string,
@@ -21,33 +21,33 @@ const NavigationItem = ({title, link, icon, isSelected}: NavigationItemProps) =>
     const isNavigationExpanded = useSelector(isNavigationExpandedSelector);
     const [displayBadge, setDisplayBadge] = useState<boolean>(false);
     const dispatch = useDispatch();
-    const navigate = () => {
+    const navigate = (link: string) => {
+        dispatch(setLastNavigationDate());
+        if (link.includes('tickets')) {
+            dispatch(clearTicketFilters());
+        }
         dispatch(toggleTicketListFilter(false));
-        dispatch(setNavigationChanged(true));
-        setTimeout(() => {
-            dispatch(setNavigationChanged(false));
-        }, 0);
     }
 
     return (<div className='flex flex-row'>
-        {<div className={'w-1.5 ' + (isSelected ? 'bg-green-400' : '')}/>}
-        <Link to={link} onClick={navigate}>
-        <div className={(isSelected ? 'subtitle2' : 'body2-medium')}>
-            <div
-                className={'items-center flex h-14  navigation-item-active cursor-pointer ' + (isNavigationExpanded ? 'w-62' : 'w-20')}>
-                <div>{icon}</div>
-                {isNavigationExpanded &&
-                <div className='pl-4 w-full flex flex-row items-center justify-between'>
-                    <div className=''>
-                        {t(title)}
-                    </div>
-                    <div className='w-16 justify-end'>
-                        {displayBadge && <BadgeNumber type='yellow'/>}
-                    </div>
+        {<div className={'w-1.5 ' + (isSelected ? 'bg-green-400' : '')} />}
+        <Link to={link} onClick={() => navigate(link)}>
+            <div className={(isSelected ? 'subtitle2' : 'body2-medium')}>
+                <div
+                    className={'items-center flex h-14  navigation-item-active cursor-pointer ' + (isNavigationExpanded ? 'w-62' : 'w-20')}>
+                    <div>{icon}</div>
+                    {isNavigationExpanded &&
+                        <div className='pl-4 w-full flex flex-row items-center justify-between'>
+                            <div className=''>
+                                {t(title)}
+                            </div>
+                            <div className='w-16 justify-end'>
+                                {displayBadge && <BadgeNumber type='yellow' />}
+                            </div>
+                        </div>
+                    }
                 </div>
-                }
             </div>
-        </div>
         </Link>
     </div>);
 }

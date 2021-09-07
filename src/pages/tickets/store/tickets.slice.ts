@@ -2,7 +2,7 @@ import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {Ticket} from "../models/ticket";
 import initialTicketState from "./tickets.initial-state";
 import {LookupValue} from "../models/lookup-value";
-import {Paging} from "@shared/models/paging.model";
+import {DefaultPagination, Paging} from "@shared/models/paging.model";
 import {TicketEnum} from "../models/ticket-enum.model";
 import {TicketQuery} from "../models/ticket-query";
 import {TicketListQueryType} from "../models/ticket-list-type";
@@ -108,6 +108,11 @@ const ticketsSlice = createSlice({
     setTicketFilter(state, { payload }: PayloadAction<TicketQuery>) {
       state.ticketFilter = payload;
     },
+    clearTicketFilters(state){
+      state.ticketFilter = {
+        ...DefaultPagination
+      }
+    },
     toggleChatTranscriptWindowVisible(state) {
       state.isChatTranscriptModalVisible = !state.isChatTranscriptModalVisible;
     },
@@ -145,7 +150,8 @@ export const {
   setTicketUpdateModel,
   setTicketUpdateHash,
   toggleChatTranscriptWindowVisible,
-  toggleCallLogPlayerVisible
+  toggleCallLogPlayerVisible,
+  clearTicketFilters
 } = ticketsSlice.actions;
 
 export default ticketsSlice.reducer;
