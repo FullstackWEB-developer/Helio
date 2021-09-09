@@ -31,7 +31,7 @@ const PatientChart = () => {
     const patient = useSelector(selectPatient);
 
     useEffect(() => {
-        dispatch(getPatientById(patientId));
+        dispatch(getPatientById(patientId, {includeInsuranceInfo: true}));
     }, [dispatch, patientId]);
 
     useEffect(() => {
@@ -61,7 +61,7 @@ const PatientChart = () => {
     );
 
     const refreshPatient = () => {
-        dispatch(getPatientById(patientId));
+        dispatch(getPatientById(patientId, {includeInsuranceInfo: true}));
         refetch();
     }
 

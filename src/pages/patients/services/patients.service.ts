@@ -2,7 +2,7 @@ import Api from '../../../shared/services/api';
 import {Note} from '@pages/patients/models/note';
 import Logger from '../../../shared/services/logger';
 import {Dispatch} from '@reduxjs/toolkit';
-import {clearPatient, setError as setPatientError, setLoading, setPatient,} from '@pages/patients/store/patients.slice';
+import {clearPatient, setError as setPatientError, setLoading, setPatient, } from '@pages/patients/store/patients.slice';
 import {PatientUpdateModel} from '@pages/patients/models/patient-update-model';
 import {AsyncJobInfo} from '@pages/patients/models/async-job-info.model';
 import {ExtendedPatient} from '@pages/patients/models/extended-patient';
@@ -12,7 +12,7 @@ import {PatientExistsRequest} from '@pages/external-access/models/patient-exists
 import {PatientExistsResponse} from '@pages/external-access/models/patient-exists-response.model';
 import {SendVerificationCodeRequest} from '@pages/external-access/models/send-verification-code-request.model';
 import {CheckVerificationCodeRequest} from '@pages/external-access/models/check-verification-code-request.model';
-
+import {GetPatientInfoRequest} from '../../../shared/models/get-patient-info-request.model';
 export interface AddNoteProps {
      patientId: number;
      note: Note;
@@ -71,9 +71,9 @@ export const getPatientInsurance = async (patientId: number) => {
      return result.data;
 }
 
-export const getPatientByIdWithQuery = async (patientId: number) : Promise<ExtendedPatient> => {
+export const getPatientByIdWithQuery = async (patientId: number, queryParams?: GetPatientInfoRequest): Promise<ExtendedPatient> => {
      const url = `${patientsUrl}/${patientId}`;
-     const response = await Api.get(url);
+     const response = await Api.get(url, {params: queryParams});
      return response.data;
 }
 
@@ -90,16 +90,16 @@ export interface DownloadMedicalRecordsProps {
 }
 
 export const prepareAndDownloadMedicalRecords = async ({
-                                                            patientId,
-                                                            departmentId,
-                                                            downloadLink,
-                                                            isDownload,
-                                                            emailAddress,
-                                                            startDate,
-                                                            endDate,
-                                                            asHtml,
-                                                            note
-                                                       }: DownloadMedicalRecordsProps) : Promise<AsyncJobInfo> => {
+     patientId,
+     departmentId,
+     downloadLink,
+     isDownload,
+     emailAddress,
+     startDate,
+     endDate,
+     asHtml,
+     note
+}: DownloadMedicalRecordsProps): Promise<AsyncJobInfo> => {
      const url = `${patientsUrl}/documents/medical-records`;
      let data = {
           'departmentId': departmentId,
@@ -110,19 +110,19 @@ export const prepareAndDownloadMedicalRecords = async ({
           'endDate': endDate,
           'asHtml': asHtml,
           'patientId': patientId,
-          'note':note
+          'note': note
      };
      const response = await Api.post(url, data);
      return response.data;
 }
 
-export const checkMedicalRecordJobStatus = async (messageId: string) : Promise<AsyncJobInfo> => {
+export const checkMedicalRecordJobStatus = async (messageId: string): Promise<AsyncJobInfo> => {
      const url = `${patientsUrl}/documents/medical-records/${messageId}`;
      const result = await Api.get(url);
      return result.data;
 }
 
-export const downloadMedicalRecords = async ({linkId} : { linkId: string }) => {
+export const downloadMedicalRecords = async ({linkId}: {linkId: string}) => {
      const url = `${patientsUrl}/documents/medical-records/${linkId}`;
      const response = await Api.get(url, {
           responseType: 'arraybuffer'
@@ -131,33 +131,33 @@ export const downloadMedicalRecords = async ({linkId} : { linkId: string }) => {
      return response.data;
 }
 
-export const getMedicalRecordsAsHtml = async ({linkId} : { linkId: string }) => {
+export const getMedicalRecordsAsHtml = async ({linkId}: {linkId: string}) => {
      const url = `${patientsUrl}/documents/medical-records/${linkId}/html`;
      const response = await Api.get(url);
      return response.data;
 }
 
-export const getPatientById = (patientId: string) => {
+export const getPatientById = (patientId: string, queryParams?: GetPatientInfoRequest) => {
      const url = `${patientsUrl}/${patientId}`;
      return async (dispatch: Dispatch) => {
           dispatch(setPatientError(false));
           dispatch(setLoading(true));
-          await Api.get(url)
-              .then(response => {
-                   dispatch(setPatient(response.data))
-              })
-              .catch(error => {
-                   if (error.response?.status === 404) {
-                        dispatch(clearPatient());
-                   } else {
-                        logger.error('Failed searching for patients', error);
-                        dispatch(setPatientError(true));
-                        dispatch(clearPatient());
-                   }
-              })
-              .finally(() => {
-                   dispatch(setLoading(false));
-              })
+          await Api.get(url, {params: queryParams})
+               .then(response => {
+                    dispatch(setPatient(response.data))
+               })
+               .catch(error => {
+                    if (error.response?.status === 404) {
+                         dispatch(clearPatient());
+                    } else {
+                         logger.error('Failed searching for patients', error);
+                         dispatch(setPatientError(true));
+                         dispatch(clearPatient());
+                    }
+               })
+               .finally(() => {
+                    dispatch(setLoading(false));
+               })
      }
 }
 
@@ -167,13 +167,13 @@ export const getAppointments = async (patientId: number) => {
      return result.data;
 }
 
-export const checkPatientVerification = async (request: CheckPatientVerification) : Promise<PatientVerificationResponse> => {
+export const checkPatientVerification = async (request: CheckPatientVerification): Promise<PatientVerificationResponse> => {
      const url = `${patientsUrl}/verification/CheckPatientVerification`;
      const result = await Api.post(url, request);
      return result.data;
 }
 
-export const checkIfPatientExists = async (request: PatientExistsRequest) : Promise<PatientExistsResponse> => {
+export const checkIfPatientExists = async (request: PatientExistsRequest): Promise<PatientExistsResponse> => {
      const url = `${patientsUrl}/verification/CheckIfPatientExist`;
      const result = await Api.post(url, request);
      return result.data;
@@ -185,7 +185,7 @@ export const sendVerificationCode = async (request: SendVerificationCodeRequest)
      return result.data;
 }
 
-export const checkVerificationCode = async (request: CheckVerificationCodeRequest) : Promise<PatientVerificationResponse> => {
+export const checkVerificationCode = async (request: CheckVerificationCodeRequest): Promise<PatientVerificationResponse> => {
      const url = `${patientsUrl}/verification/CheckVerificationCode`;
      const result = await Api.post(url, request);
      return result.data;
