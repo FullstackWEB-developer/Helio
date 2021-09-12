@@ -31,7 +31,7 @@ const InitializeApp = () => {
     }
 
     if (isLoading) {
-        return <div className='h-full w-full'>
+        return <div className='w-full h-full'>
             <Spinner fullScreen title='app.loading_parameters'/>
         </div>
     }

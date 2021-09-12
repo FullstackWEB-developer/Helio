@@ -14,7 +14,7 @@ const Api = axios.create({
 
 Api.interceptors.request.use(async (config) => {
     config.headers['x-api-challenge'] = localStorage.getItem('challenge') || 'no-key-found';
-    config.headers['X-Api-Key'] = utils.getAppParameter('AwsApiKey');
+    config.headers['X-Api-Key'] = utils.getAppParameter('AmazonApiPublicKey');
     const token = await refreshAccessToken();
     if (token) {
         config.headers.Authorization = token;
