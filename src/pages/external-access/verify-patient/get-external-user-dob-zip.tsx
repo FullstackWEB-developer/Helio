@@ -30,12 +30,13 @@ const GetExternalUserDobZip = () => {
     const request = useSelector(selectRedirectLink);
     const [displayNotFoundError, setDisplayNotFoundError] = useState<boolean>(false);
     const [failCount, setFailCount] = useState<number>(0);
+    const [errorMessage, setErrorMessage] = useState<string>('');
     const {handleSubmit, control, formState, watch} =
         useForm({
         mode: 'onBlur'
     });
 
-    const {isLoading: checkIfPatientExistsLoading, error: checkIfPatientExistsError, refetch: checkIfPatientExistsRefetch} =
+    const {isLoading: checkIfPatientExistsLoading, refetch: checkIfPatientExistsRefetch} =
         useQuery([CheckPatientIsExist, phoneNumber, watch('zip'), watch('dob')],() =>
         {
             const date = utils.toShortISOLocalString(watch("dob"));
@@ -67,12 +68,21 @@ const GetExternalUserDobZip = () => {
             onError:(error: AxiosError) => {
                 if (error.response?.status === 404) {
                     setFailCount(failCount => failCount +1);
+                    setErrorMessage('external_access.patient_verification_failed');
+                    dispatch(addSnackbarMessage({
+                        type: SnackbarType.Error,
+                        message: 'external_access.patient_verification_failed',
+                        position: SnackbarPosition.TopCenter
+                    }));
+                } else {
+                    setErrorMessage('common.error');
                 }
             }
         });
 
     const onSubmit = () => {
-       checkIfPatientExistsRefetch();
+        setErrorMessage('');
+        checkIfPatientExistsRefetch();
     }
 
     if (failCount > Number(process.env.REACT_APP_HIPAA_VERIFICATION_RETRY_NUMBER)) {
@@ -127,7 +137,7 @@ const GetExternalUserDobZip = () => {
                     </div>
                 </form>
             </div>
-        {checkIfPatientExistsError && <div className='text-danger'>{t('common.error')}</div>}
+        {errorMessage && <div className='text-danger'>{t(errorMessage)}</div>}
         <ExternalUserEmergencyNote type={request.requestType}/>
     </div>
 }
