@@ -13,7 +13,12 @@ import utils from '@shared/utils/utils';
 const InitializeApp = () => {
     const {t} = useTranslation();
     const dispatch = useDispatch();
-    const {isLoading, isError} = useQuery(FetchAppParameters, () => axios.get(`${process.env.REACT_APP_API_ENDPOINT}/parameters`), {
+    const {isLoading, isError} = useQuery(FetchAppParameters, () => axios.get(`${process.env.REACT_APP_API_ENDPOINT}/parameters`,{
+            headers: {
+            'X-Api-Key': process.env.REACT_APP_AWS_API_KEY
+            }
+        }
+    ), {
         enabled:!utils.getAppParameter('AwsRegion'),
         onSuccess: (response: AxiosResponse) => {
             dispatch(setAppParameters(response.data));
