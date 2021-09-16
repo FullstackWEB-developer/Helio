@@ -29,16 +29,16 @@ const SearchBoxResultItem = ({patient, ...props}: SearchBoxResultItemProps) => {
     return (
         <div key={patient.patientId} className='flex flex-row w-full auto-cols-max body2 border-b relative cursor-pointer hover:bg-gray-100 px-7 items-center h-10 py-3.5'>
             <div className='uppercase flex items-center w-2/12 pr-0.5'>{utils.stringJoin(', ', patient.lastName, patient.firstName)}</div>
-            <div className='flex items-center w-1/12 uppercase'>{patient.patientId}</div>
-            <div className='flex items-center w-1/12 uppercase'>{dayjs(patient.dateOfBirth).format('MM/DD/YYYY')}</div>
-            <div className='flex items-center justify-center w-1/12 uppercase'>
+            <div className='flex items-center w-2/12 uppercase lx:w-1/12'>{patient.patientId}</div>
+            <div className='flex items-center w-2/12 uppercase lx:w-1/12'>{dayjs(patient.dateOfBirth).format('MM/DD/YYYY')}</div>
+            <div className='flex items-center justify-center w-2/12 uppercase lx:w-1/12'>
                 {patient.isEmailExists &&
                     <SvgIcon
                         type={Icon.CheckMark}
                         fillClass="default-toolbar-icon"
                     />}
             </div>
-            <div className='flex items-center justify-center w-1/12 uppercase'>
+            <div className='flex items-center justify-center w-2/12 uppercase lx:w-1/12'>
                 {patient.hasMobile &&
                     <SvgIcon
                         type={Icon.CheckMark}
@@ -46,7 +46,7 @@ const SearchBoxResultItem = ({patient, ...props}: SearchBoxResultItemProps) => {
                     />
                 }
             </div>
-            <div className='flex items-center justify-center w-1/12 uppercase'>{patient.consentToText ? t('common.yes') : t('common.no')}</div>
+            <div className='flex items-center justify-center w-2/12 uppercase lx:w-1/12'>{patient.consentToText ? t('common.yes') : t('common.no')}</div>
             <div className='flex items-center justify-center w-1/12 '>
                 <div ref={addIconRef}>
                     <SvgIcon

@@ -24,11 +24,11 @@ const SearchBoxResults = ({items, onSelect}: SearchBoxResultsProps) => {
                 <div>
                     <div className='flex flex-row items-center content-center w-full h-12 py-4 bg-gray-100 auto-cols-min px-7 body2-medium'>
                         <div className='flex items-center w-2/12 uppercase'>{t('searchbox_result.name')}</div>
-                        <div className='flex items-center w-1/12 uppercase'>{t('searchbox_result.id')}</div>
-                        <div className='flex items-center w-1/12 uppercase'>{t('searchbox_result.dob')}</div>
-                        <div className='flex items-center justify-center w-1/12 uppercase'>{t('searchbox_result.email')}</div>
-                        <div className='flex items-center justify-center w-1/12 uppercase'>{t('searchbox_result.phone')}</div>
-                        <div className='flex items-center justify-center w-1/12 uppercase whitespace-nowrap'>{t('searchbox_result.text_consent')}</div>
+                        <div className='flex items-center w-2/12 uppercase lx:w-1/12'>{t('searchbox_result.id')}</div>
+                        <div className='flex items-center w-2/12 uppercase lx:w-1/12'>{t('searchbox_result.dob')}</div>
+                        <div className='flex items-center justify-center w-2/12 uppercase lx:w-1/12'>{t('searchbox_result.email')}</div>
+                        <div className='flex items-center justify-center w-2/12 uppercase lx:w-1/12'>{t('searchbox_result.phone')}</div>
+                        <div className='flex items-center justify-center w-2/12 uppercase lx:w-1/12 whitespace-nowrap'>{t('searchbox_result.text_consent')}</div>
                         <div className='flex items-center justify-center w-1/12 '/>
                     </div>
                     {items?.map(patient => <SearchBoxResultItem key={patient.patientId} patient={patient} onSelect={onSelect} />)}
