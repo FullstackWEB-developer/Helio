@@ -8,6 +8,7 @@ import {TicketOptionsBase} from '@pages/tickets/models/ticket-options-base.model
 import store from '@app/store';
 import {getMsalInstance} from '@pages/login/auth-config';
 import {AppParameter} from '@shared/models/app-parameter.model';
+import {logOut} from '@shared/store/app-user/appuser.slice';
 
 const getWindowCenter = () => {
     const {width, height} = getWindowDimensions();
@@ -225,6 +226,20 @@ const isLoggedIn = (): boolean => {
     return !!(accounts && accounts[0]);
 }
 
+const logout = () => {
+    getMsalInstance()?.logoutRedirect({
+        postLogoutRedirectUri: '/login'
+    }).then().finally(() => store.dispatch(logOut()));
+}
+
+const isSessionExpired = () : boolean => {
+    const auth = store.getState()?.appUserState?.auth;
+    if (auth) {
+        return auth.expiresOn && dayjs(auth.expiresOn).isBefore(dayjs());
+    }
+    return false;
+}
+
 const parseOptions = <T extends any>(data: T[],
     labelExpression: (item: T) => string,
     valueExpression: (item: T) => string,
@@ -334,7 +349,9 @@ const utils = {
     convertStringArrayToOptions,
     formatTime,
     applyPhoneMask,
-    getAppParameter
+    getAppParameter,
+    logout,
+    isSessionExpired
 };
 
 export default utils;

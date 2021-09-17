@@ -60,7 +60,9 @@
   "login": {
     "title": "Run your medical office efficiently.",
     "subtitle": "Cloud based software for medical offices.",
-    "loginButton": "Sign In"
+    "loginButton": "Sign In",
+    "session_timeout": "Session timeout",
+    "session_timeout_description": "Your session timed out. Please login again."
   },
   "user_profile": {
     "statuses": {

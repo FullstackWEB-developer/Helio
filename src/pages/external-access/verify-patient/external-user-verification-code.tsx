@@ -81,7 +81,7 @@ const ExternalUserVerificationCode = () => {
     }
 
     useEffect(() => {
-        if (isVerified || request.requestType === ExternalAccessRequestTypes.SentTicketMessageViaSMS && !request.patientId) {
+        if (request.requestType === ExternalAccessRequestTypes.SentTicketMessageViaSMS && !request.patientId) {
             forwardToRelatedPage();
         } else {
             sendVerification(VerificationType.Sms);

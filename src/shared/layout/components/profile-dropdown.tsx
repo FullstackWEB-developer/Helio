@@ -1,6 +1,6 @@
 import {useTranslation} from 'react-i18next';
 import {useDispatch, useSelector} from 'react-redux';
-import {logOut, updateUserStatus} from '../../store/app-user/appuser.slice';
+import {updateUserStatus} from '../../store/app-user/appuser.slice';
 import {AuthenticationInfo, UserStatus} from '../../store/app-user/app-user.models';
 import {DropdownItemModel, DropdownModel} from '@components/dropdown/dropdown.models';
 import {authenticationSelector, selectAgentStates, selectUserStatus} from '../../store/app-user/appuser.selectors';
@@ -18,7 +18,6 @@ import {UserDetailsPath} from '@app/paths';
 import {selectUserByEmail} from '@shared/store/lookups/lookups.selectors';
 import {useEffect} from 'react';
 import {getUserList} from '@shared/services/lookups.service';
-import {getMsalInstance} from '@pages/login/auth-config';
 import utils from '@shared/utils/utils';
 import {clearAppParameters} from '@shared/store/app/app.slice';
 
@@ -44,13 +43,7 @@ const ProfileDropdown = () => {
     const signOut = () => {
         signOutFromCcp();
         dispatch(clearAppParameters());
-        getMsalInstance()?.logoutRedirect({
-            postLogoutRedirectUri: '/login'
-        })
-            .then()
-            .catch((reason: any) => {
-                logger.error('Error logging out ' + JSON.stringify(reason));
-            }).finally(() => dispatch(logOut()));
+        utils.logout();
     }
 
     const signOutFromCcp = () => {

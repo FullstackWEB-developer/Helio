@@ -26,6 +26,7 @@ import {useSelector} from 'react-redux';
 import {selectAccessToken} from '@shared/store/app-user/appuser.selectors';
 import {SMS_INCOMING_NAME} from '@shared/constants/signalr-provider-constants';
 import utils from '@shared/utils/utils';
+import Confirmation from '@components/confirmation/confirmation';
 const SearchResults = React.lazy(() => import('../shared/components/search-bar/components/search-results'));
 const PatientChart = React.lazy(() => import('@pages/patients/patient-chart'));
 const VerifyRedirectLink = React.lazy(() => import('@pages/external-access/verify-patient/verify-redirect-link'));
@@ -145,6 +146,15 @@ function App() {
                             <GuardedRoute exact path={BlackListsPath} component={withSuspense(BlackList)} />
                             <GuardedRoute exact path={UsersBulkPath} component={withSuspense(BulkAddUser)} />
                             <GuardedRoute exact path={CallsLogPath} component={withSuspense(CallsLogList)} />
+                            <Confirmation
+                                className='shadow-md'
+                                hasOverlay={true}
+                                displayCancel={false}
+                                isCloseButtonDisabled={true}
+                                onOk={() => utils.logout()}
+                                title={'login.session_timeout'}
+                                message={'login.session_timeout_description'}
+                                isOpen={utils.isSessionExpired()}/>
                         </Layout>
                     </SignalRProvider>
                 </Switch>

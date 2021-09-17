@@ -146,6 +146,9 @@ const Ccp: React.FC<BoxProps> = ({
     }, [ccpConnectionState]);
 
     const initCCP = useCallback((isRetry: boolean = false) => {
+        if (utils.isSessionExpired()) {
+            return;
+        }
 
         const removeCPPIframeScroll = () => {
             const iframeEle = document.querySelector('#ccp-container iframe');
