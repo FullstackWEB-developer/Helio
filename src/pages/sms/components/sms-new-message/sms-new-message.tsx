@@ -15,6 +15,7 @@ import {getPatientByIdWithQuery} from '@pages/patients/services/patients.service
 import {ExtendedPatient} from '@pages/patients/models/extended-patient';
 import {aggregateQueries} from '@pages/sms/utils';
 import {useTranslation} from 'react-i18next';
+import {searchType} from '@components/searchbox/constants/search-type';
 
 interface SmsNewMessageProps {
     onTicketSelect?: (ticket: TicketBase) => void;
@@ -35,13 +36,17 @@ const SmsNewMessage = ({...props}: SmsNewMessageProps) => {
 
     const [step, setStep] = useState<SmsNewMessageSteps>(SmsNewMessageSteps.Search);
 
-    const {refetch, isLoading: patientsIsLoading, isFetching: patientsIsFetching, isError, data: patientsData = []} = useQuery([SearchPatient, searchParams.type, searchParams.value],
-        () => {
-            setPatients([]);
-            return getPatients(searchParams.type, searchParams.value);
-        }, {
-        enabled: false
-    });
+    const {refetch, isLoading: patientsIsLoading, isFetching: patientsIsFetching, isError, data: patientsData = []} =
+        useQuery([SearchPatient, searchParams.type, searchParams.value],
+            async () => {
+                setPatients([]);
+                if (searchParams.type === searchType.patientId) {
+                    return [await getPatientByIdWithQuery(Number(searchParams.value))]
+                }
+                return await getPatients(searchParams.type, searchParams.value);
+            }, {
+            enabled: false
+        });
 
     const {refetch: ticketRefetch, isFetching: ticketIsFetching} = useQuery([QueryPatientTickets, ticketQueryParams],
         () => getPatientTicketsPaged(ticketQueryParams), {
@@ -56,7 +61,7 @@ const SmsNewMessage = ({...props}: SmsNewMessageProps) => {
         }
     });
 
-    const {isSuccess: patientsDetailIsSuccess, data: patientsDetail, isFetching: patientDetailIsFetching} = aggregateQueries<ExtendedPatient>(
+    const {isSuccess: patientsDetailIsSuccess, data: patientsDetail, isError: isPatientDetailError, isFetching: patientDetailIsFetching} = aggregateQueries<ExtendedPatient>(
         useQueries(
             patientsData.map(patient => ({
                 enabled: patientsData.length > 0,
@@ -126,6 +131,9 @@ const SmsNewMessage = ({...props}: SmsNewMessageProps) => {
                 }
                 {isError && !isLoading &&
                     <div className="pt-8 pl-6 body2">{t('search.search_results.empty', {searchTerm: searchParams.value})}</div>
+                }
+                {isPatientDetailError &&
+                    <div className="pt-8 pl-6 body2">{t('common.error')}</div>
                 }
                 {!isLoading && step === SmsNewMessageSteps.ExistingTicket &&
                     <SmsNewMessageExistingTicket

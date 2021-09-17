@@ -75,10 +75,11 @@ export const aggregateQueries = <T extends unknown>(queries: UseQueryResult[]) =
     }
 
     const error = queries.find(q => q.error)?.error;
+    const isError = queries.some(q => q.isError);
     const isFetching = queries.some(q => q.isFetching);
     const data = !error && !isFetching ? queries.map(q => q.data) as T[] : [];
     const isSuccess = queries.every(p => p.isFetched && !p.isFetching && p.isSuccess)
 
-    return {data: data, error: error, isFetching: isFetching, isSuccess};
+    return {data: data, error: error, isError: isError, isFetching: isFetching, isSuccess};
 }
 

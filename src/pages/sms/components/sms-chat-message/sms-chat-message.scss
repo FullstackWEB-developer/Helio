@@ -8,6 +8,7 @@
     max-width: 34.5rem;
     border-radius: 1.25rem;
     line-height: 1.25rem;
+    word-break: break-word;
 
     .out-going & {
       background-color: var(--message-outgoing-background-color);

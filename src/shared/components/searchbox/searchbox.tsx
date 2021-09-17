@@ -11,6 +11,8 @@ import SearchInputField from '@components/search-input-field/search-input-field'
 import {searchTypes} from './constants/search-type-const';
 import classnames from 'classnames';
 import './searchbox.scss';
+import {SearchCategory} from '@components/search-bar/constants/search-type-const';
+import {searchType} from './constants/search-type';
 
 interface SearchBoxProps {
     className?: string;
@@ -86,7 +88,9 @@ const SearchBox = ({className, dropdownClassName, ...props}: SearchBoxProps) => 
         displayDropdown(false);
     }
 
-    const searchTypesDropDownModel = searchTypeFiltered.map((typeItem: SearchType) => {
+    const searchTypesDropDownModel = searchTypeFiltered
+        .filter((typeItem: SearchType) => typeItem.type === searchType.patientId || typeItem.type === searchType.patientName)
+        .map((typeItem: SearchType) => {
         return {
             onClick: (key) => search(parseInt(key)),
             value: typeItem.type.toString(),
@@ -94,32 +98,21 @@ const SearchBox = ({className, dropdownClassName, ...props}: SearchBoxProps) => 
         } as DropdownItemModel;
     });
 
+    const initialPatientSearchType = [
+        {label: 'search.search_type.patient_id', value: 'item-1-1'},
+        {label: 'search.search_type.patient_name', value: 'item-1-2'}
+    ];
+
     const getCategorizedItems = (): CategoryItemModel[] => {
         const items: CategoryItemModel[] = [];
-        if (searchTypesDropDownModel.length > 0) {
-            items.push({
-                itemsCssClass: 'w-72',
-                category: {
-                    text: t('search.categories.patients'),
-                    icon: <SvgIcon type={Icon.Placeholder} className='icon-small' fillClass='' />,
-                    key: '1'
-                },
-                items: searchTypesDropDownModel
-            });
-        }
         items.push({
             itemsCssClass: 'w-72',
             category: {
-                text: t('search.categories.contacts'),
+                text: 'search.categories.patients',
                 icon: <SvgIcon type={Icon.Placeholder} className='icon-small' fillClass='' />,
-                key: '2'
+                key: SearchCategory.Patient
             },
-            items: [
-                {
-                    label: t('search.search_type.contact_name'),
-                    value: 'item-2-1'
-                }
-            ]
+            items: searchTypesDropDownModel.length > 0 ? searchTypesDropDownModel : initialPatientSearchType
         });
         return items;
     };
