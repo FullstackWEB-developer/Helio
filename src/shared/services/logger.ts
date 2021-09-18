@@ -23,37 +23,37 @@ interface Log {
 
 class Logger {
     private static instance: Logger;
-    private log: CloudWatchLogsClient | undefined;
-    private logGroup: string = '';
+    private static logGroup: string = '';
     private readonly LogStreamNameDateFormat = 'YYYY-MM-DDTHH-mm-ss';
-    private static isStreamCreationInProgress: boolean;
-    private isReady: boolean = false;
-    private isInitializing: boolean = false;
+    private static isInitializing: boolean;
+    private static isReady: boolean;
+    private static log: CloudWatchLogsClient | undefined;
 
-    private setup() {
-        if (!utils.getAppParameter('AwsRegion') || this.isInitializing) {
-            return;
+    private constructor() {
+        try{
+            const region = utils.getAppParameter('AwsRegion');
+            if (!region || Logger.isInitializing) {
+                return;
+            }
+            Logger.isInitializing = true;
+            const identityClient = new CognitoIdentityClient({region});
+            const credentials = fromCognitoIdentityPool({identityPoolId: utils.getAppParameter('IdentityPoolId'), client: identityClient});
+            Logger.log = new CloudWatchLogsClient({credentials, region});
+            Logger.logGroup = utils.getAppParameter('DefaultLogGroup');
+            if (!this.isLoginLoading()) {
+                this.setupLogStream();
+            }
+            Logger.isReady = true;
+            Logger.isInitializing = false;
+        } catch (error: any) {
+
         }
-        this.isInitializing = true;
-        const region = utils.getAppParameter('AwsRegion');
-        const identityClient = new CognitoIdentityClient({region});
-        const credentials = fromCognitoIdentityPool({identityPoolId: utils.getAppParameter('IdentityPoolId'), client: identityClient});
-        this.log = new CloudWatchLogsClient({credentials, region});
-        this.logGroup = utils.getAppParameter('DefaultLogGroup');
-        if (!this.isLoginLoading()) {
-            this.setupLogStream();
-        }
-        this.isReady = true;
-        this.isInitializing = false;
+
     }
 
     public static getInstance = (): Logger => {
-        if ((!Logger.instance || !Logger.instance.isLogStreamValid()) && !Logger.isStreamCreationInProgress) {
+        if (!Logger.instance || !Logger.instance.isLogStreamValid() || !Logger.isReady) {
             Logger.instance = new Logger();
-        }
-
-        if (!Logger.instance.isReady) {
-            Logger.instance.setup();
         }
         return Logger.instance;
     }
@@ -83,29 +83,26 @@ class Logger {
 
     private readonly createStream = async (streamName: string) => {
         const params = new CreateLogStreamCommand({
-            logGroupName: this.logGroup,
+            logGroupName: Logger.logGroup,
             logStreamName: streamName
         });
-        Logger.isStreamCreationInProgress = true;
         try {
-            const data = await this.log?.send(params);
-            Logger.isStreamCreationInProgress = false;
+            const data = await Logger.log?.send(params);
             return data?.$metadata.httpStatusCode;
         }
         catch (error: any) {
-            Logger.isStreamCreationInProgress = false;
             console.log(error);
         }
     }
 
     private readonly getStream = async (streamName: string) => {
         const params = new DescribeLogStreamsCommand({
-            logGroupName: this.logGroup,
+            logGroupName: Logger.logGroup,
             logStreamNamePrefix: streamName
         });
 
         try {
-            const data = await this.log?.send(params);
+            const data = await Logger.log?.send(params);
             return data?.logStreams?.find((stream: LogStream) => stream.logStreamName === streamName);
         }
         catch (error: any) {
@@ -114,9 +111,6 @@ class Logger {
     }
 
     private readonly putEvent = async (payload: Log) => {
-        if (!this.isReady) {
-            return;
-        }
         const storedLogStream: LogStream = this.getStoredLogStream();
         if (storedLogStream && storedLogStream?.logStreamName) {
             payload.userName = this.getUserName();
@@ -127,13 +121,13 @@ class Logger {
                         timestamp: Date.now()
                     },
                 ],
-                logGroupName: this.logGroup,
+                logGroupName: Logger.logGroup,
                 logStreamName: storedLogStream.logStreamName,
                 ...(storedLogStream.uploadSequenceToken && {sequenceToken: storedLogStream.uploadSequenceToken})
             });
 
             try {
-                const data = await this.log?.send(params);
+                const data = await Logger.log?.send(params);
                 if (data?.nextSequenceToken) {
                     this.storeLogStream({...storedLogStream, uploadSequenceToken: data.nextSequenceToken});
                 }
@@ -153,8 +147,9 @@ class Logger {
     isLogStreamValid = () => {
         const storedLogStream: LogStream = this.getStoredLogStream();
         if (!storedLogStream || !storedLogStream.creationTime) return false;
-        return new Date().getTime() - storedLogStream.creationTime < Number(utils.getAppParameter('LogStreamDuration')) &&
-            storedLogStream.logStreamName?.slice(storedLogStream.logStreamName.lastIndexOf('-') + 1) === this.getUserName();
+        const diff = dayjs().diff(dayjs(storedLogStream.creationTime), 'second')
+        const configuredDuration = Number(utils.getAppParameter('LogStreamDuration'));
+        return diff < configuredDuration && storedLogStream.logStreamName?.startsWith(this.getUserName());
     }
 
     getUserName = () => {
