@@ -1,15 +1,15 @@
 import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {useMutation} from 'react-query';
+import {useMutation, useQuery} from 'react-query';
 import {AxiosError} from 'axios';
 import {getLocations, getProviders} from '@shared/services/lookups.service';
 import Button from '@components/button/button';
 import {
+    getAppointmentTypesForPatient,
     scheduleAppointment
 } from '@pages/appointments/services/appointments.service';
 import {useHistory} from 'react-router-dom';
 import {
-    selectAppointmentTypes,
     selectSelectedAppointmentSlot
 } from '@pages/external-access/appointment/store/appointments.selectors';
 import {useDispatch, useSelector} from 'react-redux';
@@ -22,6 +22,9 @@ import {Appointment} from '@pages/external-access/appointment/models/appointment
 
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
+import {AppointmentType} from '@pages/external-access/appointment/models';
+import {GetAppointmentTypesForPatient} from '@constants/react-query-constants';
+import Spinner from '@components/spinner/Spinner';
 
 
 const AppointmentScheduleConfirm = () => {
@@ -32,14 +35,18 @@ const AppointmentScheduleConfirm = () => {
     const providers = useSelector(selectProviderList);
     const verifiedPatient = useSelector(selectVerifiedPatent);
     const appointmentSlot = useSelector(selectSelectedAppointmentSlot);
-    const appointmentTypes = useSelector(selectAppointmentTypes);
     const departments = useSelector(selectLocationList);
 
     const [errorMessage, setErrorMessage] = useState('');
 
-    const appointmentType = appointmentTypes.find(a => a.id === Number(appointmentSlot?.appointmentType));
     const provider = providers?.find(a => a.id === appointmentSlot?.providerId);
     const department = departments?.find(a => a.id === appointmentSlot?.departmentId);
+
+    const {isLoading: appointmentTypesLoading, data: appointmentTypes} = useQuery<AppointmentType[], AxiosError>([GetAppointmentTypesForPatient],
+        () => getAppointmentTypesForPatient(verifiedPatient.patientId, verifiedPatient.primaryProviderId || verifiedPatient.defaultProviderId),
+        {
+            enabled: !!verifiedPatient
+        });
 
     const display = (value?: string) => {
         if (value) {
@@ -83,9 +90,16 @@ const AppointmentScheduleConfirm = () => {
         });
     }
 
+    const getAppointmentTypeName = (appointmentTypeId: number) => {
+        return appointmentTypes?.find(a => a.id === appointmentTypeId)?.name;
+    }
 
     if (!verifiedPatient) {
         return <div>{t('external_access.not_verified_patient')}</div>;
+    }
+
+    if (appointmentTypesLoading) {
+        return <Spinner fullScreen />
     }
 
     return (
@@ -99,7 +113,7 @@ const AppointmentScheduleConfirm = () => {
                 {dayjs(appointmentSlot.startTime, 'HH:mm').format('h:mm A')}
             </h5>
             <h6 className='my-1'>
-                {appointmentType?.name ?? appointmentSlot.appointmentType}
+                {getAppointmentTypeName(appointmentSlot.appointmentTypeId)}
             </h6>
             {provider &&
                 <div className='pb-2 body1'>

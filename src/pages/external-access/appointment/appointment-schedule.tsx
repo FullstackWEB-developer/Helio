@@ -122,6 +122,7 @@ const AppointmentSchedule = () => {
                     options={appointmentTypeOptions}
                     truncateAssistiveText={true}
                     control={control}
+                    required={true}
                 />
                 <ControlledSelect
                     name='provider'

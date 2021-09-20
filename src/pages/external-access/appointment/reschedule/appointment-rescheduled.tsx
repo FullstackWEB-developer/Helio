@@ -16,10 +16,12 @@ import {selectLocationList, selectProviderList} from '@shared/store/lookups/look
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import Spinner from '@components/spinner/Spinner';
+import {useHistory} from 'react-router-dom';
 
 const AppointmentRescheduled = () => {
     dayjs.extend(customParseFormat);
     const {t} = useTranslation();
+    const history = useHistory();
     const dispatch = useDispatch();
     const appointment = useSelector(selectSelectedAppointment);
     const departments = useSelector(selectLocationList);
@@ -29,6 +31,12 @@ const AppointmentRescheduled = () => {
         dispatch(getProviders());
         dispatch(getLocations());
     }, [dispatch]);
+
+    history.listen((newLocation, action) => {
+        if (action === "POP") {
+            history.go(1);
+        }
+    });
 
     const {isLoading: isAppointmentTypesLoading, data: appointmentType} = useQuery<AppointmentType, AxiosError>([GetAppointmentType, appointment.appointmentTypeId], () =>
         getAppointmentTypeById(appointment.appointmentTypeId),
