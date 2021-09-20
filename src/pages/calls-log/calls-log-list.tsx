@@ -33,6 +33,8 @@ import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
 import Logger from '@shared/services/logger';
 import {useHistory} from 'react-router';
 import {ContactsPath, TicketsPath} from '@app/paths';
+import {SortDirection} from '@shared/models/sort-direction';
+import {getSortDirection, getSortOrder, updateSort} from '@shared/utils/sort-utils';
 
 dayjs.extend(utc);
 
@@ -116,7 +118,17 @@ const CallsLogList = () => {
         return <SvgIcon type={Icon.CallMissedOutgoing} fillClass='danger-icon ' />
     }
 
-    const tableModelInit: TableModel = {
+    const applySort = (field: string | undefined, direction: SortDirection) => {
+        if (!field) {
+            return;
+        }
+
+        const sorts = updateSort([...callsLogFilter.sorts || []], field, direction);
+        const query = {...callsLogFilter, sorts: [...sorts]};
+        setCallsLogFilter(query);
+    }
+
+    const getTableModel = (): TableModel => ({
         columns: [
             {
                 title: '',
@@ -143,7 +155,13 @@ const CallsLogList = () => {
             {
                 title: 'calls_log.date_and_time',
                 field: 'createdOn',
+                isSortable: true,
                 widthClass: 'w-2/12',
+                sortDirection: getSortDirection(callsLogFilter.sorts, 'createdOn'),
+                sortOrder: getSortOrder(callsLogFilter.sorts, 'createdOn'),
+                onClick: (field: string | undefined, direction: SortDirection) => {
+                    applySort(field, direction);
+                },
                 render: (value: string) => {
                     const dateValue = dayjs.utc(value).local();
                     return (
@@ -269,15 +287,15 @@ const CallsLogList = () => {
         hasRowsBottomBorder: true,
         headerClassName: 'h-12',
         rowClass: 'h-20 items-center hover:bg-gray-100 cursor-pointer call-log-row',
-    };
-    const [tableModel, setTableModel] = useState(tableModelInit);
+    });
+    const [tableModel, setTableModel] = useState(getTableModel());
 
     const {isLoading, isFetching} = useQuery([GetCallLogs, callsLogFilter], () => getCallsLog(callsLogFilter), {
         enabled: true,
         onSuccess: (response) => {
             const {results, ...paging} = response;
             setPagingResult({...paging});
-            setTableModel({...tableModel, rows: response.results});
+            setTableModel({...getTableModel(), rows: response.results});
         }
     });
 
@@ -333,7 +351,7 @@ const CallsLogList = () => {
                         onPressEnter={(inputValue) => setCallsLogFilter({...callsLogFilter, searchTerm: inputValue})}
                     />
                 </div>
-                <div className='overflow-y-auto'>
+                <div className='h-full overflow-y-auto'>
                     {(isLoading || isFetching) &&
                         <Spinner fullScreen />
                     }

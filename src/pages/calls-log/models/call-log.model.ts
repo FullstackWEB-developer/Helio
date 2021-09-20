@@ -29,6 +29,7 @@ export interface CallLogRequestModel extends PagedRequest {
     assignedTo?: string;
     reason?: string;
     contactStatus?: number[];
-    communicationDirections?: number[]
+    communicationDirections?: number[];
+    sorts?: string[];
 }
 

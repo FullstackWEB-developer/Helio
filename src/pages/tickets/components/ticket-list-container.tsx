@@ -1,12 +1,13 @@
 import React from 'react';
 import {Ticket} from '../models/ticket';
-import {SortDirection} from '../models/sort-direction';
+import {SortDirection} from '../../../shared/models/sort-direction';
 import TicketListItem from './ticket-list-item';
 import {useDispatch, useSelector} from 'react-redux';
 import {selectTicketFilter} from '../store/tickets.selectors';
 import {TicketQuery} from '../models/ticket-query';
 import {getList} from '../services/tickets.service';
-import TicketListHeaderCell, {getSortDirection, getSortOrder, updateSort} from './ticket-list-header-cell';
+import TicketListHeaderCell from './ticket-list-header-cell';
+import {getSortDirection, getSortOrder, updateSort} from '@shared/utils/sort-utils';
 import {useTranslation} from 'react-i18next';
 
 export interface TicketListContainerProps {
@@ -29,7 +30,7 @@ const TicketListContainer = ({dataSource}: TicketListContainerProps) => {
 
     return (
         <div className="">
-            <div className='flex flex-row w-full auto-cols-min bg-gray-100 px-7 py-4 h-12 items-center body2-medium content-center'>
+            <div className='flex flex-row items-center content-center w-full h-12 py-4 bg-gray-100 auto-cols-min px-7 body2-medium'>
                 <TicketListHeaderCell className='w-24'>{t('tickets.channel')}</TicketListHeaderCell>
                 <TicketListHeaderCell
                     className='w-1/12'

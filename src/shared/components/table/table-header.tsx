@@ -1,34 +1,75 @@
 import {TableColumnModel} from './table.models';
 import {useTranslation} from 'react-i18next';
+import React, {useState} from 'react';
+import SvgIcon from '@components/svg-icon';
+import classnames from 'classnames';
+import {SortDirection} from '@shared/models/sort-direction';
+import {SortIconMap} from '@shared/utils/sort-utils';
 import './table-header.scss';
-import React from 'react';
 
 export interface TableHeaderProps {
     headers?: TableColumnModel[],
     className?: string
 }
 
-const TableHeader = ({headers, className}: TableHeaderProps) => {
+const TableHeaderColumn = ({header}: {header: TableColumnModel}) => {
     const {t} = useTranslation();
+    const [currentSortDirection, setSortDirection] = useState(header.sortDirection ?? SortDirection.None);
 
+    const {headerClassName, field, widthClass, alignment = 'start', title, isSortable} = header;
+    const className = classnames('flex', `justify-${alignment}`, headerClassName, widthClass, {'cursor-pointer': isSortable});
+
+    const onClicked = () => {
+        if (!isSortable) {
+            return;
+        }
+        const maxValue = Object.values(SortDirection).filter(v => isNaN(Number(v))).length;
+        let newSortDirection: SortDirection = currentSortDirection + 1;
+
+        if (newSortDirection >= maxValue) {
+            newSortDirection = SortDirection.None;
+        }
+        setSortDirection(newSortDirection);
+
+        if (header.onClick) {
+            header.onClick(field, newSortDirection);
+        }
+    }
+
+
+    if (typeof title === 'string') {
+        return (
+            <div key={field} className={className} onClick={onClicked}>{t(title)}
+                {isSortable && currentSortDirection !== SortDirection.None &&
+                    <SvgIcon type={SortIconMap[currentSortDirection]}
+                        className='pl-2 icon-medium'
+                        fillClass='active-item-icon' />
+                }
+                {isSortable && currentSortDirection !== SortDirection.None && header.sortOrder &&
+                    <span className='pl-0.5 body3-medium'>{header.sortOrder}</span>
+                }
+            </div>
+        );
+    } else if (React.isValidElement(title)) {
+        return <div key={field} className={className}>{title}</div>;
+    } else {
+        return null;
+    }
+};
+
+const TableHeader = ({headers, className}: TableHeaderProps) => {
     if (!headers) {
         return null;
     }
-    const content = headers.map((header) => {
-        const {headerClassName, field, widthClass, alignment = 'start', title} = header;
-        const className = `flex ${headerClassName ? headerClassName : ''} ${widthClass} justify-${alignment}`;
-        if (typeof title === 'string') {
-            return <div key={field} className={className}>{t(title)}</div>;
-        } else if (React.isValidElement(title)) {
-            return <div key={field} className={className}>{title}</div>;
-        }
-        return null;
-    });
 
-    return <div
-        className={`flex flex-row caption-caps table-header px-4 h-8 items-center ${className ? className : ''}`}>
-        {content}
-    </div>;
+    const content = headers.map(header => <TableHeaderColumn header={header} />);
+    return (
+        <div
+            className={classnames('flex flex-row caption-caps table-header px-4 h-8 items-center', className)}
+        >
+            {content}
+        </div>
+    );
 }
 
 export default TableHeader;

@@ -1,3 +1,4 @@
+import {SortDirection} from '@shared/models/sort-direction';
 import {ReactNode} from 'react';
 
 export interface TableModel {
@@ -23,7 +24,11 @@ export interface TableColumnModel {
     rowClassname?: string;
     widthClass: string;
     field: string;
-    alignment?: 'start' | 'end' | 'center',
+    isSortable?: boolean;
+    sortOrder?: number;
+    sortDirection?: SortDirection;
+    alignment?: 'start' | 'end' | 'center';
+    onClick?: (field: string | undefined, sortDirection: SortDirection) => void
     render?: (field: any, row: any) => ReactNode;
 }
 

@@ -15,12 +15,13 @@ import {useQuery} from 'react-query';
 import {QueryContactTickets} from '@constants/react-query-constants';
 import {getContactTickets} from '@pages/tickets/services/tickets.service';
 import utc from 'dayjs/plugin/utc';
-import TicketListHeaderCell, {
+import TicketListHeaderCell from '@pages/tickets/components/ticket-list-header-cell';
+import {
     getSortDirection,
     getSortOrder,
     updateSort
-} from '@pages/tickets/components/ticket-list-header-cell';
-import {SortDirection} from '@pages/tickets/models/sort-direction';
+} from '@shared/utils/sort-utils';
+import {SortDirection} from '@shared/models/sort-direction';
 import {TicketQuery} from '@pages/tickets/models/ticket-query';
 import TicketChannelIcon from '@pages/tickets/components/ticket-channel-icon';
 import TicketStatus from '@pages/tickets/components/ticket-status';
@@ -95,7 +96,7 @@ const ContactTickets = ({contactId}: ContactTicketsProps) => {
     }
 
     const getTicket = (ticket: TicketBase) => {
-        return <div className='flex flex-row w-full auto-cols-max body2 border-b relative cursor-pointer hover:bg-gray-100 px-6 items-center h-18 py-3'
+        return <div className='relative flex flex-row items-center w-full px-6 py-3 border-b cursor-pointer auto-cols-max body2 hover:bg-gray-100 h-18'
             key={ticket.id}
             onClick={() => history.push(`${TicketsPath}/${ticket.ticketNumber}`)}>
             <div className='w-24'>
@@ -104,7 +105,7 @@ const ContactTickets = ({contactId}: ContactTicketsProps) => {
             <div className='w-2/12'>
                 {ticket.ticketNumber}
             </div>
-            <div className='w-3/12 subtitle2 max-w-xs truncate'>
+            <div className='w-3/12 max-w-xs truncate subtitle2'>
                 <span>{ticket.subject ? ticket.subject : '-'}</span>
             </div>
             <div className='w-3/12 body3'>
@@ -122,16 +123,16 @@ const ContactTickets = ({contactId}: ContactTicketsProps) => {
         <div className={'flex items-center justify-between py-3 border-b'}>
             <div className='flex items-center body2' onClick={() => history.push(`${TicketsPath}/new?contactId=${contactId}`)}>
                 <SvgIcon type={Icon.Add}
-                    className='icon-large pl-1 cursor-pointer'
+                    className='pl-1 cursor-pointer icon-large'
                     fillClass='active-item-icon' />
-                <span className='pl-2 contact-accent-color cursor-pointer hover:underline'>{`${t('contacts.contact_details.create_ticket')}`}</span>
+                <span className='pl-2 cursor-pointer contact-accent-color hover:underline'>{`${t('contacts.contact_details.create_ticket')}`}</span>
             </div>
             {
                 paginationProperties?.totalCount !== 0 &&
                 <Pagination value={paginationProperties} onChange={handlePageChange} />
             }
         </div>
-        <div className='flex flex-row w-full auto-cols-min bg-gray-100 px-6 py-4 h-12 items-center body2-medium content-center'>
+        <div className='flex flex-row items-center content-center w-full h-12 px-6 py-4 bg-gray-100 auto-cols-min body2-medium'>
             <TicketListHeaderCell className='w-24'>{t('tickets.channel')}</TicketListHeaderCell>
             <TicketListHeaderCell
                 className='w-2/12'
@@ -170,7 +171,7 @@ const ContactTickets = ({contactId}: ContactTicketsProps) => {
                 (
                     data && data.results.length > 0 ? data.results.map((ticket: TicketBase) => {
                         return getTicket(ticket)
-                    }) : <div className='subtitle3-small w-full text-center mt-5'>{t('contacts.contact_details.no_tickets')}</div>
+                    }) : <div className='w-full mt-5 text-center subtitle3-small'>{t('contacts.contact_details.no_tickets')}</div>
                 )
         }
     </Fragment>
