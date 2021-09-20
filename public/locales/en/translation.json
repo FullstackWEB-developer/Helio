@@ -319,7 +319,7 @@
       "no_last_appointment": "There is no last appointment",
       "upcoming_appointment": "UPCOMING APPOINTMENT",
       "upcoming_appointments": "UPCOMING APPOINTMENTS",
-      "recent_patient_cases": "Recent Patient Cases",
+      "recent_patient_cases": "Patient Cases",
       "no_patient_cases": "There is no case for this patient.",
       "apt_number": "Apt. #",
       "city": "City",
@@ -362,23 +362,34 @@
       "eligible": "Eligible"
     },
     "clinical": {
-      "recent_patient_cases": "Recent Patient Cases",
-      "date": "DATE",
+      "recent_patient_cases": "Patient Cases",
+      "date": "date",
       "case_description": "CASE DESCRIPTION",
       "originated_by": "ORIGINATED BY",
       "error": "Error fetching clinical data, please try again",
       "no_upcoming_appointments": "There is no upcoming appointments",
       "no_last_appointment": "There is no last appointment",
       "lab_results": {
-        "title": "Lab results",
+        "title": "Recent Test Results",
         "date": "Collected",
-        "description": "Test"
+        "description": "Test",
+        "ordered_by": "Ordered By",
+        "portal_status": "Portal Status",
+        "published": "Published",
+        "not_published": "Not Published"
       },
       "medications": {
-        "title": "Medications",
-        "medication": "Medication",
+        "title": "Recent Medications",
+        "medication": "Name",
+        "ordered_by": "Ordered By",
         "prescribed": "Prescribed",
         "description": "Description"
+      },
+      "cases": {
+        "title": "Patient Cases",
+        "date": "Date",
+        "description": "Description",
+        "source": "Source"
       }
     },
     "not_found": "Patient with this ID is not found",

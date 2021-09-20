@@ -20,18 +20,24 @@ const ClinicalMedications = ({clinical} : ClinicalLabResults) => {
         columns: [
              {
                 title:'patient.clinical.medications.medication',
-                widthClass:'w-2/3',
+                widthClass:'w-5/12',
                 field:'medicationName'
+            },{
+                title:'patient.clinical.medications.ordered_by',
+                widthClass:'w-3/12',
+                field:'enteredBy',
+                alignment:'start',
+                rowClassname:'items-start h-full'
             },
             {
                 title:'patient.clinical.medications.prescribed',
-                widthClass:'w-1/3',
+                widthClass:'w-3/12',
                 field:'prescribed',
                 render:(field) => <div className='body2 h-full flex'>{dayjs(field).format('MMM DD, YYYY')}</div>
             }
         ]
     }
-    return <div className='pt-8'>
+    return <div className='pt-9'>
         <Table model={tableModel} />
     </div>
 }

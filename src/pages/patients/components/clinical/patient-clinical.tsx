@@ -34,11 +34,11 @@ const PatientClinical = ({patientId} : PatientClinicalProps) => {
     return (<>
             <Appointments clinical={data} />
             <RecentPatientCases clinical={data} />
-            <div className='flex flex-col space-y-8 xl:space-y-0 xl:flex-row xl:space-x-8'>
-                <div className='w-full xl:w-1/2'>
+            <div className='flex flex-col'>
+                <div className='w-full'>
                     <ClinicalLabResults clinical={data} />
                 </div>
-                <div className='w-full xl:w-1/2'>
+                <div className='w-full'>
                     <ClinicalMedications clinical={data}/>
                 </div>
             </div>

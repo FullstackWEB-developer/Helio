@@ -1,16 +1,18 @@
 import {TableModel} from './table.models';
 import TableHeader from './table-header';
 import TableRow from './table-row';
-import React from 'react';
+import React, {useState} from 'react';
 import TableTitle from './table-title';
 import classnames from 'classnames';
 import {useTranslation} from 'react-i18next';
+import Pagination from '@components/pagination';
+import {Paging} from '@shared/models';
 
-export interface Table2Props {
+export interface TableProps {
     model: TableModel
 }
 
-const Table = ({model}: Table2Props) => {
+const Table = ({model}: TableProps) => {
     const {
         columns,
         rows,
@@ -19,15 +21,29 @@ const Table = ({model}: Table2Props) => {
         title,
         isCompact = false,
         wrapperClassName = '',
-        rowClass
+        rowClass,
+        pageSize = 10
     } = model;
     const {t} = useTranslation();
+    const [currentPage, setCurrentPage] = useState<number>(1);
 
-    const rowContent = () => React.Children.toArray(rows.map(row => {
-        return <div className={hasRowsBottomBorder ? 'border-b' : ''}>
-            <TableRow rowClass={classnames(rowClass, {'bg-gray-100': model.isSelected?.(row)})} isCompact={isCompact} columns={columns} data={row}/>
-        </div>
-    }));
+    const paginate = (data: any[], pageSize: number, currentPage: number) => {
+        return data.slice((currentPage - 1) * pageSize, currentPage * pageSize);
+    }
+
+    const rowContent = () => {
+        let data: any[];
+        if (model.pageable) {
+            data = paginate(rows, pageSize, currentPage);
+        } else {
+            data = rows;
+        }
+        return React.Children.toArray(data.map(row => {
+            return <div className={hasRowsBottomBorder ? 'border-b' : ''}>
+                <TableRow rowClass={classnames(rowClass, {'bg-gray-100': model.isSelected?.(row)})} isCompact={isCompact} columns={columns} data={row}/>
+            </div>
+        }));
+    }
 
     const getContent = () => {
         if (rows && rows.length > 0) {
@@ -40,10 +56,21 @@ const Table = ({model}: Table2Props) => {
             </div>
         }
     }
+
+    let pagination: Paging = {
+        page: currentPage,
+        totalPages: Math.ceil(rows.length/ pageSize),
+        totalCount: rows.length,
+        pageSize: pageSize
+    }
+
     return <div className={`flex flex-col ${wrapperClassName}`}>
         {title && <TableTitle model={title} isCompact={isCompact} />}
         {!hideHeader && <TableHeader className={model.headerClassName} headers={columns} />}
         {getContent()}
+        {model.pageable && rows.length > pageSize && <div className='pt-4 flex justify-end'>
+            <Pagination value={pagination} onChange={(data) => setCurrentPage(data.page)} />
+        </div>}
     </div>;
 }
 

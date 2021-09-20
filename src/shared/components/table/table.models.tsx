@@ -3,6 +3,8 @@ import {ReactNode} from 'react';
 export interface TableModel {
     columns: TableColumnModel[];
     rows: any[];
+    pageSize?: number;
+    pageable?: boolean;
     hideHeader?: boolean;
     hasRowsBottomBorder?: boolean;
     isCompact?: boolean;

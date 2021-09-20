@@ -15,9 +15,9 @@ const TableTitle = ({model, isCompact}: TableTitleProps) => {
             return 'pb-2.5 h8';
         }
         if (isCompact) {
-            return 'default pb-3';
+            return 'subtitle pb-3';
         }
-        return 'default pb-5';
+        return 'subtitle pb-5';
     }
 
 

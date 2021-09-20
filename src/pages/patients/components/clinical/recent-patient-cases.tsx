@@ -1,9 +1,9 @@
 import {useTranslation} from 'react-i18next';
-import PatientChartList, {Row} from '@pages/patients/components/patient-chart-list';
-import utils from '../../../../shared/utils/utils';
-import withErrorLogging from '../../../../shared/HOC/with-error-logging';
+import withErrorLogging from '@shared/HOC/with-error-logging';
 import {ClinicalDetails} from '@pages/patients/models/clinical-details';
-import {PatientCase} from '@pages/patients/models/patient-case';
+import Table from '@components/table/table';
+import {TableModel} from '@components/table/table.models';
+import dayjs from 'dayjs';
 
 export interface RecentPatientCasesProps {
     clinical : ClinicalDetails;
@@ -12,32 +12,34 @@ export interface RecentPatientCasesProps {
 const RecentPatientCases = ({clinical}: RecentPatientCasesProps) => {
     const {t} = useTranslation();
 
-    const recentPatientsCases: Row[] = [];
-
-    if (clinical?.patientCases) {
-        clinical.patientCases.forEach((patientCase: PatientCase) => {
-                recentPatientsCases.push(
-                    {
-                        label: utils.formatDateShortMonth(patientCase.createdDate),
-                        values: [patientCase.subject, patientCase.patientCaseType]
-                    }
-                )
+    const tableModel: TableModel = {
+        rows: clinical.patientCases,
+        title: {
+            title:t('patient.clinical.recent_patient_cases')
+        },
+        showEmptyMessage:true,
+        hasRowsBottomBorder:true,
+        columns: [
+            {
+                title:'patient.clinical.cases.date',
+                widthClass:'w-1/6',
+                field:'createdDate',
+                alignment:'start',
+                render:(field) => <div className='body2 h-full flex items-center justify-start'>{dayjs(field).format('MMM DD, YYYY')}</div>
+            },
+            {
+                title:'patient.clinical.cases.description',
+                widthClass:'w-5/6',
+                field:'description',
+                alignment:'start',
+                rowClassname:'items-start h-full'
             }
-        );
+        ]
     }
 
-    return (
-        <div>
-            <div className='grid grid-cols-1 border-b pb-1 pt-8'>
-                <div>{t('patient.clinical.recent_patient_cases')} </div>
-            </div>
-            <div className='pt-3'>
-                {(!recentPatientsCases || recentPatientsCases.length === 0) &&
-                <div className='pt-2'>{t('patient.summary.no_patient_cases')}</div>}
-                <PatientChartList rows={recentPatientsCases} dividerLine={true}/>
-            </div>
-        </div>
-    );
+    return <div className='pt-9' >
+        <Table model={tableModel} />
+    </div>
 };
 
 export default withErrorLogging(RecentPatientCases);
