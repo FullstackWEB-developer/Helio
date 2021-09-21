@@ -2,6 +2,7 @@ import SmsChatSummary from './sms-chat-summary';
 import classnames from 'classnames';
 import {TicketMessageSummary} from '@shared/models';
 import Spinner from '@components/spinner/Spinner';
+import utils from '@shared/utils/utils';
 
 interface SmsSummaryListProps {
     className?: string;
@@ -25,7 +26,8 @@ const SmsSummaryList = ({data, className, isLoading, selectedTicketId, ...props}
                     contactId={p.contactId}
                     messageSummary={p.messageSummary}
                     unreadCount={p.unreadCount}
-                    messageSendName={p.createdForName ?? ''}
+                    createdForName={p.createdForName}
+                    createdForMobileNumber={utils.applyPhoneMask(p.createdForMobileNumber)}
                     messageSendAt={p.messageCreatedOn}
                     messageSendBy={p.messageCreatedByName}
                     ticketId={p.ticketId}

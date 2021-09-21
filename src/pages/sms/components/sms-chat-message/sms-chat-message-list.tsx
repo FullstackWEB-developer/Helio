@@ -37,17 +37,19 @@ const SmsChatMessageList = ({messages}: MessageListProps) => {
             const isTop = indexGrouped === 0;
             indexGrouped = indexGrouped + 1;
             const agent = getAgentInfo(item.createdBy);
-            return (<SmsChatMessage
-                isTheTop={isTop}
-                agent={agent}
-                isNameVisible
-                isPhotoVisible
-                photoProfileUrl={agent?.profilePicture}
-                name={item.createdName ?? ''}
-                body={item.body}
-                date={item.createdOn}
-                isOutGoing={item.direction === TicketMessagesDirection.Outgoing}
-            />);
+            return (
+                <SmsChatMessage
+                    isTheTop={isTop}
+                    agent={agent}
+                    isNameVisible
+                    isPhotoVisible
+                    photoProfileUrl={agent?.profilePicture}
+                    name={item.createdName ?? ''}
+                    body={item.body}
+                    date={item.createdOn}
+                    isOutGoing={item.direction === TicketMessagesDirection.Outgoing}
+                />
+            );
 
         });
 

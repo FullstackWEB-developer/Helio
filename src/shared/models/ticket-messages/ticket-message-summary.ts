@@ -12,5 +12,6 @@ export interface TicketMessageSummary {
     messageCreatedOn: Date;
     messageCreatedByName: string;
     createdForName: string;
+    createdForMobileNumber: string
     assignedTo?: string;
 }

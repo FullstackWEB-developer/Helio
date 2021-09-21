@@ -51,7 +51,8 @@
     "step_x_of_x": "Step {{current}} of {{total}}",
     "user": "User",
     "statuses": "Statuses",
-    "unknown": "Unknown"
+    "unknown": "Unknown",
+    "default_avatar": "#"
   },
   "app" : {
     "error_loading_parameters": "Error loading parameters, please try again later",

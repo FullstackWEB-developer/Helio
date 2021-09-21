@@ -277,7 +277,8 @@ const Sms = () => {
             contactId: ticket.contactId,
             createdForName: ticket.createdForName,
             ticketType: Number(ticket.type),
-            messageCreatedByName: userFullName
+            messageCreatedByName: userFullName,
+            createdForMobileNumber: ''
         };
 
         setMessages([]);

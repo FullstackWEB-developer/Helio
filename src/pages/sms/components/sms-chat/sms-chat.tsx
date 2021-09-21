@@ -67,7 +67,7 @@ const SmsChat = ({info, isLoading, isSending, isBottomFocus, messages = [], ...p
     }, [dispatch]);
 
     const {isLoading: isProcessing} = useQuery([ProcessTemplate, selectedMessageTemplate?.id!], () =>
-            processTemplate(selectedMessageTemplate?.id!, ticket, patient),
+        processTemplate(selectedMessageTemplate?.id!, ticket, patient),
         {
             enabled: !!selectedMessageTemplate?.requirePreProcessing,
             onSuccess: (data) => {
@@ -99,6 +99,13 @@ const SmsChat = ({info, isLoading, isSending, isBottomFocus, messages = [], ...p
 
     const getTicketType = () => {
         return ticketTypes.find((lookupValue) => lookupValue.key === info?.ticketType)?.value ?? '-'
+    }
+
+    const getPatientId = () => {
+        if (!!info.patientId) {
+            return <Link className='body2-primary' to={`${PatientsPath}/${info.patientId}`}>{info.patientId}</Link>
+        }
+        return '-';
     }
 
     const goToPatientChart = () => {
@@ -140,7 +147,7 @@ const SmsChat = ({info, isLoading, isSending, isBottomFocus, messages = [], ...p
         </div>);
     }
 
-    const onSend = ( ) =>  {
+    const onSend = () => {
         if (smsText && patient?.mobilePhone) {
             props.onSendClick(patient.mobilePhone, smsText);
             setSmsText('');
@@ -149,10 +156,10 @@ const SmsChat = ({info, isLoading, isSending, isBottomFocus, messages = [], ...p
 
     return (<div className="flex flex-col justify-between flex-auto h-full sms-chat">
         <div className="flex flex-row border-b sms-chat-header">
-            <div className="pt-4 pl-6"><Avatar userFullName={info.createdForName ?? ''}/></div>
+            <div className="pt-4 pl-6"><Avatar userFullName={info.createdForName} /></div>
             <div className="flex flex-col flex-auto pl-4 pr-6 pt-7">
                 <div className="flex flex-row justify-between">
-                    <div><h6>{info.createdForName}</h6></div>
+                    <div><h6>{info.createdForName ?? utils.applyPhoneMask(info.createdForMobileNumber)}</h6></div>
                     <div>
                         <MoreMenu
                             iconClassName='default-toolbar-icon'
@@ -166,7 +173,8 @@ const SmsChat = ({info, isLoading, isSending, isBottomFocus, messages = [], ...p
                 <div className="flex flex-row pt-2.5">
                     <div className="mr-6">
                         <span className="body2-medium mr-1.5">{t('sms.chat.header.patient_id')}</span>
-                        <Link className='body2-primary' to={`${PatientsPath}/${info.patientId}`}>{info.patientId}</Link>
+                        {getPatientId()}
+
                     </div>
                     <div className="mr-6">
                         <span className="body2-medium mr-1.5">{t('sms.chat.header.ticket_id')}</span>
@@ -185,36 +193,36 @@ const SmsChat = ({info, isLoading, isSending, isBottomFocus, messages = [], ...p
         </div>
         <div className="flex flex-col flex-1 px-6 overflow-y-auto">
             {messages && messages.length > 0 &&
-            <>
-                <div className={classnames('flex flex-row justify-center', {'hidden': !isLoading})}>
-                    <Spinner/>
-                </div>
-                <div ref={messageListContainerRef} className='flex flex-col h-full overflow-y-auto' onScroll={onScroll}>
-                    <SmsChatMessageList messages={messages}/>
-                    <AlwaysScrollToBottom enabled={!isBottomFocus}/>
-                </div>
-            </>
+                <>
+                    <div className={classnames('flex flex-row justify-center', {'hidden': !isLoading})}>
+                        <Spinner />
+                    </div>
+                    <div ref={messageListContainerRef} className='flex flex-col h-full overflow-y-auto' onScroll={onScroll}>
+                        <SmsChatMessageList messages={messages} />
+                        <AlwaysScrollToBottom enabled={!isBottomFocus} />
+                    </div>
+                </>
             }
             {(!messages || messages.length < 1) &&
-            <EmptyMessage/>
+                <EmptyMessage />
             }
         </div>
-        <div className="flex flex-col justify-center pl-6 pt-4 pr-16 pb-4 sms-chat-footer">
+        <div className="flex flex-col justify-center pt-4 pb-4 pl-6 pr-16 sms-chat-footer">
             <div className='flex flex-row items-end'>
-                <div className='mr-3 pb-6'>
+                <div className='pb-6 mr-3'>
                     <NotificationTemplateSelect
                         channel={NotificationTemplateChannel.Sms}
                         onSelect={(template) => onTemplateSelect(template)}
                     />
                 </div>
-                <div className='w-full flex flex-col py-5'>
-                    <SelectedTemplateInfo selectedMessageTemplate={selectedMessageTemplate}/>
+                <div className='flex flex-col w-full py-5'>
+                    <SelectedTemplateInfo selectedMessageTemplate={selectedMessageTemplate} />
                     {selectedMessageTemplate && <div>
-                        <ParentExtraTemplate logicKey={selectedMessageTemplate?.logicKey} patient={patient} parentType='sms'/>
+                        <ParentExtraTemplate logicKey={selectedMessageTemplate?.logicKey} patient={patient} parentType='sms' />
                     </div>}
-                    {selectedMessageTemplate && <div className='pb-5'/>}
+                    {selectedMessageTemplate && <div className='pb-5' />}
                     <TextArea
-                        className='pl-6 pr-0 body2 w-full'
+                        className='w-full pl-6 pr-0 body2'
                         data-test-id='ticket-send-email'
                         placeHolder={t('ticket_detail.add_note')}
                         rows={2}

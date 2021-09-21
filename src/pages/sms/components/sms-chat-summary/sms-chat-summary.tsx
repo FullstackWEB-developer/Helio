@@ -12,7 +12,8 @@ interface SmsSummaryProps {
     unreadCount: number;
     patientId?: number;
     contactId?: string;
-    messageSendName: string;
+    createdForName: string;
+    createdForMobileNumber: string;
     messageSendBy: string;
     messageSendAt: Date;
     isSelected?: boolean;
@@ -23,7 +24,8 @@ const SmsChatSummary = ({
     ticketId,
     messageSummary,
     unreadCount,
-    messageSendName,
+    createdForName,
+    createdForMobileNumber,
     messageSendAt,
     messageSendBy,
     isSelected,
@@ -32,10 +34,10 @@ const SmsChatSummary = ({
     const isRead = unreadCount === 0;
     return (<div className={classnames('border-b sms-summary cursor-pointer', {'sms-summary-selected': isSelected})} onClick={() => props.onClick && props.onClick(ticketId)}>
         <div className='flex flex-row pl-5 pt-2.5 pb-1.5 pr-4'>
-            <div className="pr-4"><Avatar userFullName={messageSendName} /></div>
+            <div className="pr-4"><Avatar userFullName={createdForName} /></div>
             <div className="flex flex-col w-full">
                 <div className="flex justify-between">
-                    <span className='body1'>{messageSendName}</span>
+                    <span className='body1'>{createdForName ?? createdForMobileNumber}</span>
                     <span className='body3-small'>{dayjs.utc(messageSendAt).local().format('hh:mm A')}</span>
                 </div>
                 <div className="flex flex-row justify-between">
