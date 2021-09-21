@@ -1,6 +1,6 @@
 import ControlledInput from '@shared/components/controllers/ControlledInput';
 import Button from '@components/button/button';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {useForm} from 'react-hook-form';
 import {useQuery} from 'react-query';
@@ -15,21 +15,39 @@ import {useDispatch, useSelector} from 'react-redux';
 import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
 import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
 import {ExternalAccessRequestTypes} from '@pages/external-access/models/external-updates-request-types.enum';
-import {selectRedirectLink} from '@pages/external-access/verify-patient/store/verify-patient.selectors';
+import {
+    selectRedirectLink,
+    selectVerifiedLink
+} from '@pages/external-access/verify-patient/store/verify-patient.selectors';
 import {
     setExternalUserEmail,
     setExternalUserPhoneNumber
 } from '@pages/external-access/verify-patient/store/verify-patient.slice';
+import Spinner from '@components/spinner/Spinner';
 
 const GetExternalUserMobileNumber = () => {
     const {t} = useTranslation();
     const history = useHistory();
     const request = useSelector(selectRedirectLink);
+    const verifiedLink = useSelector(selectVerifiedLink);
     const dispatch = useDispatch();
+    const [isLoading, setLoading] = useState<boolean>(true);
     const fingerPrintCode = useFingerPrint();
     const {handleSubmit, control, formState, watch} = useForm({
         mode: 'onBlur'
     });
+
+    useEffect(() => {
+        if (request.sentAddress ||
+            (request.requestType === ExternalAccessRequestTypes.SentTicketMessageViaSMS && !request.patientId)) {
+            setExternalUserPhoneNumber(request.sentAddress);
+            history.push('/o/verify-patient-code');
+        }
+        if (verifiedLink && verifiedLink === request.linkId) {
+            history.push('/o/verify-patient-code');
+        }
+        setLoading(false);
+    }, [request, verifiedLink]);
 
     const {isLoading: checkPatientVerificationLoading, error: checkPatientVerificationError, refetch: checkPatientVerificationRefetch} =
         useQuery([CheckPatientVerification, watch('phone')],() => checkPatientVerification({
@@ -59,9 +77,8 @@ const GetExternalUserMobileNumber = () => {
         checkPatientVerificationRefetch();
     }
 
-    if (request.sentAddress || (request.requestType === ExternalAccessRequestTypes.SentTicketMessageViaSMS && !request.patientId)) {
-        setExternalUserPhoneNumber(request.sentAddress);
-        history.push('/o/verify-patient-code');
+    if (isLoading) {
+        return <Spinner fullScreen={true} />
     }
 
     return <div className='md:px-48 without-default-padding pt-4 xl:pt-16'>

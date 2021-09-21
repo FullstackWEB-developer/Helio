@@ -82,7 +82,7 @@ const ContactSearchResults = () => {
                         <div className="truncate">{t('search.search_results.position')}</div>
                         <div className="truncate">{t('search.search_results.address')}</div>
                         <div className="truncate">{t('search.search_results.phone')}</div>
-                        <div className="truncate"></div>
+                        <div className="truncate"/>
                     </div>
                     {
                         data.results.map((c: ContactExtended) => (
@@ -91,7 +91,7 @@ const ContactSearchResults = () => {
                                 <div className="truncate">{c.firstName || ''}</div>
                                 <div className="truncate">{c.companyName || ''}</div>
                                 <div className="truncate">{c.jobTitle || ''}</div>
-                                <div className="truncate">{c.addresses && c.addresses.length > 0 && displayAddress(c.addresses) || ''}</div>
+                                <div className="truncate">{c.addresses && c.addresses.length > 0 && (displayAddress(c.addresses) || '')}</div>
                                 <div className="truncate">{c.mobilePhone && utils.formatPhone(c.mobilePhone)}</div>
                                 <div className="truncate">
                                     <SvgIcon type={Icon.View} className="cursor-pointer" fillClass="search-results-icon-fill"

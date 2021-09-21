@@ -4,16 +4,15 @@ export interface VerifyPatientState {
     redirectLink?: RedirectLink;
     phoneNumber: string;
     email: string;
-    isVerified: boolean;
     preventRetryUntil: Date | undefined;
     retryPrevented: boolean;
+    verifiedLink?: string;
 }
 
 const initialVerifyPatientState: VerifyPatientState = {
     redirectLink: undefined,
     phoneNumber: '',
     email: '',
-    isVerified: false,
     preventRetryUntil: undefined,
     retryPrevented: false
 }

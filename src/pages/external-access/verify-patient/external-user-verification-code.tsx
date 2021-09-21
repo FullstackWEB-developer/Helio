@@ -26,10 +26,11 @@ import {ResendTimeout} from '@pages/external-access/verify-patient/resend-timeou
 import {
     selectExternalUserEmail,
     selectExternalUserPhoneNumber,
-    selectIsVerified,
-    selectRedirectLink
+    selectRedirectLink,
+    selectVerifiedLink
 } from '@pages/external-access/verify-patient/store/verify-patient.selectors';
-import {setIsVerified} from '@pages/external-access/verify-patient/store/verify-patient.slice';
+import {setVerifiedLink} from '@pages/external-access/verify-patient/store/verify-patient.slice';
+import Spinner from '@components/spinner/Spinner';
 
 const ExternalUserVerificationCode = () => {
     const {t} = useTranslation();
@@ -37,11 +38,12 @@ const ExternalUserVerificationCode = () => {
     const phoneNumber = useSelector(selectExternalUserPhoneNumber);
     const request = useSelector(selectRedirectLink);
     const history = useHistory();
+    const [isPageLoading, setPageLoading] = useState<boolean>(true);
     const [verificationFailed, setVerificationFailed] = useState<boolean>(false);
     const [sendViaEmail, setSendViaEmail] = useState<boolean>(false);
     const [isResendDisabled, setResendDisabled] = useState<boolean>(false);
     const [emailSentBefore, setEmailSentBefore] = useState<boolean>(false);
-    const isVerified = useSelector(selectIsVerified);
+    const verifiedLink = useSelector(selectVerifiedLink);
     const fingerPrintCode = useFingerPrint();
     const dispatch = useDispatch();
     const {handleSubmit, control, formState: {isValid, isDirty}, watch} =
@@ -81,11 +83,16 @@ const ExternalUserVerificationCode = () => {
     }
 
     useEffect(() => {
+        if (verifiedLink && verifiedLink.length > 0 && request.linkId === verifiedLink) {
+            forwardToRelatedPage();
+            return;
+        }
         if (request.requestType === ExternalAccessRequestTypes.SentTicketMessageViaSMS && !request.patientId) {
             forwardToRelatedPage();
         } else {
             sendVerification(VerificationType.Sms);
         }
+        setPageLoading(false);
     }, []);
 
     const sendVerificationCodeMutation = useMutation(sendVerificationCode, {
@@ -110,7 +117,7 @@ const ExternalUserVerificationCode = () => {
                 enabled: false,
                 onSuccess: (data) => {
                     if (data.isVerified) {
-                        dispatch(setIsVerified(true));
+                        dispatch(setVerifiedLink(request.linkId));
                         dispatch(setAuthentication({
                             name: `${data.verifiedPatient.firstName} ${data.verifiedPatient.lastName}`,
                             isLoggedIn: true,
@@ -142,7 +149,7 @@ const ExternalUserVerificationCode = () => {
             onSuccess: () => {
                 dispatch(addSnackbarMessage({
                     type: SnackbarType.Success,
-                    message: sendViaEmail ? 'external_access.six_digit_code_resent_to_email' : 'external_access.six_digit_code_resent_to_mobile',
+                    message: type === VerificationType.Email ? 'external_access.six_digit_code_resent_to_email' : 'external_access.six_digit_code_resent_to_mobile',
                     position: SnackbarPosition.TopCenter
                 }));
                 setResendDisabled(true);
@@ -151,7 +158,7 @@ const ExternalUserVerificationCode = () => {
     }
 
     const resendVerification = (type: VerificationType) => {
-        if (isVerified) {
+        if (verifiedLink && verifiedLink.length > 0) {
             return;
         }
         sendVerification(type);
@@ -187,6 +194,10 @@ const ExternalUserVerificationCode = () => {
                 'phone': utils.maskPhone(phoneNumber)
             });
         }
+    }
+
+    if (isPageLoading) {
+        return <Spinner fullScreen={true} />
     }
 
     return <div className='md:px-48'>

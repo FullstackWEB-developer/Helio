@@ -19,9 +19,9 @@ export const selectExternalUserEmail = createSelector(
 )
 
 
-export const selectIsVerified = createSelector(
+export const selectVerifiedLink = createSelector(
     verifyPatientState,
-    items => items.isVerified as boolean
+    items => items.verifiedLink
 )
 
 export const selectPreventRetryUntil = createSelector(

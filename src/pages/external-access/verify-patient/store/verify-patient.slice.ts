@@ -18,14 +18,21 @@ const verifyPatientSlice = createSlice({
         setExternalUserEmail(state, { payload }: PayloadAction<string>) {
             state.email = payload;
         },
-        setIsVerified(state, { payload }: PayloadAction<boolean>) {
-            state.isVerified = payload;
+        setVerifiedLink(state, { payload }: PayloadAction<string>) {
+            state.verifiedLink = payload;
         },
         setPreventRetryUntil(state, { payload }: PayloadAction<Date| undefined>) {
             state.preventRetryUntil = payload;
         },
         setRetryPrevented(state, { payload }: PayloadAction<boolean>) {
             state.retryPrevented = payload;
+        },
+        clearState(state) {
+            state.retryPrevented = false;
+            state.preventRetryUntil = undefined;
+            state.verifiedLink = undefined;
+            state.email = '';
+            state.phoneNumber = '';
         }
     }
 });
@@ -34,9 +41,10 @@ export const {
     setRedirectLink,
     setExternalUserPhoneNumber,
     setExternalUserEmail,
-    setIsVerified,
+    setVerifiedLink,
     setPreventRetryUntil,
-    setRetryPrevented
+    setRetryPrevented,
+    clearState
 } = verifyPatientSlice.actions;
 
 export default verifyPatientSlice.reducer;

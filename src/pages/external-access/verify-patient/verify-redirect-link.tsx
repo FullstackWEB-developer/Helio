@@ -6,9 +6,13 @@ import {RedirectLink} from '@pages/external-access/verify-patient/models/redirec
 import Spinner from '@components/spinner/Spinner';
 import {AxiosError} from 'axios';
 import {getRedirectLink} from '@shared/services/notifications.service';
-import {useDispatch} from 'react-redux';
-import {setRedirectLink} from '@pages/external-access/verify-patient/store/verify-patient.slice';
+import {useDispatch, useSelector} from 'react-redux';
+import {
+    setRedirectLink,
+    clearState
+} from '@pages/external-access/verify-patient/store/verify-patient.slice';
 import {useHistory} from 'react-router';
+import {selectVerifiedLink} from '@pages/external-access/verify-patient/store/verify-patient.selectors';
 
 interface RedirectLinkParams {
     linkId: string
@@ -19,11 +23,15 @@ const VerifyRedirectLink = () => {
     const { linkId } = useParams<RedirectLinkParams>();
     const dispatch = useDispatch();
     const history = useHistory();
+    const verifiedLink = useSelector(selectVerifiedLink);
     const {isLoading, isError, error} = useQuery<RedirectLink, AxiosError>([GetRedirectLink, linkId], () =>
             getRedirectLink(linkId),
         {
             enabled:!!linkId,
             onSuccess: (data) => {
+                if (verifiedLink !== linkId) {
+                    dispatch(clearState());
+                }
                 dispatch(setRedirectLink(data));
                 history.push('/o/verify-patient-get-mobile');
             }
