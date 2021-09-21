@@ -335,18 +335,19 @@ const CallsLogList = () => {
                     </div>
                 </div>
                 <div className='flex flex-row border-b h-14'>
-                    <div className='flex flex-row items-center pl-6 border-r'>
+                    <div className='flex flex-row items-center pl-6'>
                         <SvgIcon
                             type={Icon.FilterList}
                             className='icon-medium'
-                            wrapperClassName='mr-8 cursor-pointer icon-medium'
+                            wrapperClassName='mr-6 cursor-pointer icon-medium'
                             fillClass='filter-icon'
                             onClick={() => setFilterOpen(!isFilterOpen)}
                         />
                     </div>
                     <SearchInputField
-                        wrapperClassNames='relative w-full h-full'
+                        wrapperClassNames='relative w-full h-full border-l'
                         inputClassNames='border-b-0'
+                        hasBorderBottom={false}
                         placeholder='calls_log.search_calls_placeholder'
                         onPressEnter={(inputValue) => setCallsLogFilter({...callsLogFilter, searchTerm: inputValue})}
                     />

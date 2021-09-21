@@ -523,7 +523,7 @@
       "close": "Close",
       "solve": "Solve",
       "rating": "Rating",
-      "call_mobile": "Call Mobile",
+      "call_mobile": "Call",
       "call_home": "Call Home",
       "call_work": "Call Work",
       "send_sms": "Send SMS",
@@ -1298,7 +1298,7 @@
     "search_calls_placeholder": "Search calls"
   },
   "blacklist": {
-    "title": "Manager Blacklist",
+    "title": "Blocked Access",
     "tabs_title": {
       "email": "Email",
       "phone": "Phone",
@@ -1320,14 +1320,18 @@
     "add_new_block": "Add New Block",
     "add_new_block_form": {
       "title": "Add New Block",
-      "description": "Blocking contact will block this contact’s communication with your organization.",
+      "email_description": "All incoming messages will be blocked from that email.",
+      "phone_description": "All incoming calls & SMS messages will be blocked from that number.",
+      "ip_description": "All incoming chat requests will be blocked from that IP Address.",
       "note_placeholder": "Enter Note",
       "block_user": "Block User"
     },
     "unblock_contact_modal": {
-      "title":"Unblock Contact?",
-      "message": "Are you sure you want to unblock this contact? Unblocking contact will automatically remove contact from the blacklist.",
-      "ok_button_text": "Unblock User"
-    }
+      "title": "Unblock Contact?",
+      "message": "Are you sure you want to unblock this contact?",
+      "ok_button_text": "Unblock Contact"
+    },
+    "unblock_success": "Contact unblocked successfully.",
+    "unblock_fail": "Contact unblocking failed."
   }
 }

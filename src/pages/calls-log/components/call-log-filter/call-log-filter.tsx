@@ -257,7 +257,7 @@ const CallsLogFilter = ({isOpen, value: propsValue, ...props}: CallsLogFilterPro
 
     return (
         <div className={getClassNames}>
-            <div className='min-h-full pb-20 pl-6 pr-4 bg-secondary-100'>
+            <div className='min-h-full pb-20 pl-6 pr-6 bg-secondary-100'>
                 <div className='flex flex-row justify-between py-8'>
                     <div className='mr-10 subtitle h7'>{t('common.filters')}</div>
                     <div className='mr-6 cursor-pointer' onClick={() => handleSubmit(onSubmit)()}>{t('common.apply')}</div>

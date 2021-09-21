@@ -466,23 +466,11 @@ const Ccp: React.FC<BoxProps> = ({
                                             fillClass={applyProperIconClass(contextPanels.note)} />
                                     </span>
                             }
-                            <span className={`h-10 flex items-center justify-center w-12 ${applyProperIconClass(contextPanels.tickets, 'background')}`}>
-                                <SvgIcon type={Icon.Tickets}
-                                    className='cursor-pointer icon-medium'
-                                    fillClass={applyProperIconClass(contextPanels.tickets)}
-                                    onClick={() => dispatch(setContextPanel(contextPanels.tickets))} />
-                            </span>
                             <span className={`h-10 flex items-center justify-center w-12 ${applyProperIconClass(contextPanels.sms, 'background')}`}>
                                 <SvgIcon type={Icon.Sms}
                                     className='cursor-pointer icon-medium'
                                     fillClass={applyProperIconClass(contextPanels.sms)}
                                     onClick={() => dispatch(setContextPanel(contextPanels.sms))} />
-                            </span>
-                            <span className={`h-10 flex items-center justify-center w-12 ${applyProperIconClass(contextPanels.email, 'background')}`}>
-                                <SvgIcon type={Icon.Email}
-                                    className='cursor-pointer icon-medium'
-                                    fillClass={applyProperIconClass(contextPanels.email)}
-                                    onClick={() => dispatch(setContextPanel(contextPanels.email))} />
                             </span>
                             <span className={`h-10 flex items-center justify-center w-12 ${applyProperIconClass(contextPanels.scripts, 'background')}`}>
                                 <SvgIcon type={Icon.Scripts}

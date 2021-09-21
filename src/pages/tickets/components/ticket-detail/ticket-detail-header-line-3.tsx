@@ -21,6 +21,7 @@ import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
 import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
 import {TicketStatuses} from '@pages/tickets/models/ticket.status.enum';
 import {Contact} from '@shared/models/contact.model';
+import './ticket-detail-header.scss';
 
 export interface TicketDetailHeaderLine3Props {
     ticket: Ticket,
@@ -245,8 +246,9 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
                     displayCall() && <div>
                         <div ref={phoneDropdownRef} className='relative flex flex-row items-center cursor-pointer'>
                             <SvgIcon type={Icon.ChannelPhone} className='icon-x-large'
-                                     fillClass='header-active-item-icon'
-                                     strokeClass='channel-icon-stroke'/>
+                                     fillClass='header-active-item-call-icon'
+                                     strokeClass='channel-call-icon-stroke'
+                                     onClick={() => callRelated(selectedPhoneToCall)}/>
                             <div onClick={() => callRelated(selectedPhoneToCall)}
                                  className='pl-3 pr-2'>{t(`ticket_detail.header.call_${displayCall()}`)}</div>
                             {dropdownModel.items && dropdownModel.items.length > 0 &&

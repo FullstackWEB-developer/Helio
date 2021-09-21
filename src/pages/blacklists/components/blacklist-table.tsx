@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react';
+import {useState, useEffect, Fragment} from 'react';
 import Pagination from '@components/pagination/pagination';
 import SvgIcon, {Icon} from '@components/svg-icon';
 import Table from '@components/table/table';
@@ -22,6 +22,10 @@ import Button from '@components/button/button';
 import {useTranslation} from 'react-i18next';
 import Spinner from '@components/spinner/Spinner';
 import utils from '@shared/utils/utils';
+import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
+import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
+import {SnackbarPosition} from '@components/snackbar/snackbar-position.enum';
+import {useDispatch} from 'react-redux';
 
 const DEFAULT_PAGING = {
     page: 1,
@@ -36,6 +40,7 @@ interface BlacklistsTableProps {
 const BlacklistsTable = ({type, ...props}: BlacklistsTableProps) => {
     dayjs.extend(utc);
     const {t} = useTranslation();
+    const dispatch = useDispatch();
     const [isConfirmationDisplayed, setIsConfirmationDisplayed] = useState(false);
     const [isAddNewModalDisplayed, setAddNewModelDisplayed] = useState(false);
     const [rowIdSelected, setRowIdSelected] = useState<string>();
@@ -175,8 +180,20 @@ const BlacklistsTable = ({type, ...props}: BlacklistsTableProps) => {
 
     const unblockAccessMutation = useMutation(unblockAccess, {
         onSuccess: () => {
+            dispatch(addSnackbarMessage({
+                type: SnackbarType.Success,
+                message: 'blacklist.unblock_success',
+                position: SnackbarPosition.TopCenter
+            }));
             setIsConfirmationDisplayed(false);
             refetch();
+        },
+        onError: () => {
+            dispatch(addSnackbarMessage({
+                type: SnackbarType.Error,
+                message: 'blacklist.unblock_fail',
+                position: SnackbarPosition.TopCenter
+            }));
         }
     });
 
@@ -225,37 +242,44 @@ const BlacklistsTable = ({type, ...props}: BlacklistsTableProps) => {
                     onClose={() => setAddNewModelDisplayed(false)}
                 >
                     <div className='flex flex-col pb-6'>
-                        <p className='mb-2 body2'>{t('blacklist.add_new_block_form.description')}</p>
-
                         {blacklistRequest.accessType === BlockAccessType.Email &&
-                            <ControlledInput
-                                control={control}
-                                name='value'
-                                type='email'
-                                label='blacklist.block_access_type.email'
-                                containerClassName='w-72'
-                                required
-                            />
+                            <Fragment>
+                                <p className='mb-2 body2'>{t('blacklist.add_new_block_form.email_description')}</p>
+                                <ControlledInput
+                                    control={control}
+                                    name='value'
+                                    type='email'
+                                    label='blacklist.block_access_type.email'
+                                    containerClassName='w-72'
+                                    required
+                                />
+                            </Fragment>
                         }
                         {blacklistRequest.accessType === BlockAccessType.Phone &&
-                            <ControlledInput
-                                control={control}
-                                name='value'
-                                type='tel'
-                                label='blacklist.block_access_type.phone'
-                                containerClassName='w-72'
-                                required
-                            />
+                            <Fragment>
+                                <p className='mb-2 body2'>{t('blacklist.add_new_block_form.phone_description')}</p>
+                                <ControlledInput
+                                    control={control}
+                                    name='value'
+                                    type='tel'
+                                    label='blacklist.block_access_type.phone'
+                                    containerClassName='w-72'
+                                    required
+                                />
+                            </Fragment>
                         }
                         {blacklistRequest.accessType === BlockAccessType.IPAddress &&
-                            <ControlledInput
-                                control={control}
-                                name='value'
-                                type='ip'
-                                label='blacklist.block_access_type.ip'
-                                containerClassName='w-72'
-                                required
-                            />
+                            <Fragment>
+                                <p className='mb-2 body2'>{t('blacklist.add_new_block_form.ip_description')}</p>
+                                <ControlledInput
+                                    control={control}
+                                    name='value'
+                                    type='ip'
+                                    label='blacklist.block_access_type.ip'
+                                    containerClassName='w-72'
+                                    required
+                                />
+                            </Fragment>
                         }
                         <ControlledTextArea
                             control={control}
