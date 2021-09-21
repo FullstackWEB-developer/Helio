@@ -1,0 +1,12 @@
+.chats-log {
+  &-header {
+    height: 4.5rem;
+  }
+  .chat-log-row .more-menu {
+    display: none;
+  }
+
+  .chat-log-row:hover .more-menu {
+    display: flex;
+  }
+}

@@ -1,6 +1,8 @@
+import {Icon} from '@components/svg-icon/icon';
 import Avatar from '@shared/components/avatar';
 import utils from '@shared/utils/utils';
 import classnames from 'classnames';
+import {useTranslation} from 'react-i18next';
 
 interface AvatarLabelProps {
     firstName: string;
@@ -9,6 +11,7 @@ interface AvatarLabelProps {
     avatarClassName?: string;
     avatarPlaceholderClassName?: string
     labelClassName?: string;
+    icon?: Icon;
 }
 const AvatarLabel = ({
     firstName,
@@ -16,9 +19,12 @@ const AvatarLabel = ({
     picture,
     avatarClassName,
     avatarPlaceholderClassName,
-    labelClassName
+    labelClassName,
+    icon
 }: AvatarLabelProps) => {
-    const fullName = utils.stringJoin(' ', firstName, lastName);
+    const {t} = useTranslation();
+
+    const fullName = utils.stringJoin(' ', t(firstName), t(lastName));
     return (
         <div className='flex flex-row items-center'>
             <Avatar
@@ -26,6 +32,7 @@ const AvatarLabel = ({
                 userPicture={picture}
                 className={avatarClassName}
                 labelClassName={avatarPlaceholderClassName}
+                icon={icon}
             />
             <span className={classnames('ml-4', labelClassName)}>{fullName}</span>
         </div>

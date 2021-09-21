@@ -40,7 +40,7 @@ const Navigation = () => {
             icon: <SvgIcon type={Icon.Phone} fillClass='active-item-icon' />
         }, {
             title: t('navigation.chat'),
-            link: '/chat',
+            link: '/chats',
             id: 'navigation-chat',
             icon: <SvgIcon type={Icon.Chat} fillClass='active-item-icon' />
         }, {

@@ -9,6 +9,7 @@ import store from '@app/store';
 import {getMsalInstance} from '@pages/login/auth-config';
 import {AppParameter} from '@shared/models/app-parameter.model';
 import {logOut} from '@shared/store/app-user/appuser.slice';
+import duration from 'dayjs/plugin/duration';
 
 const getWindowCenter = () => {
     const {width, height} = getWindowDimensions();
@@ -131,7 +132,7 @@ const getRelativeTime = (date?: Date): RelativeTime => {
     return [totalDays, totalHours, totalMinutes]
 }
 
-const getAppParameter = (key: string) : any => {
+const getAppParameter = (key: string): any => {
     if (store?.getState()?.appState?.appParameters) {
         const keyValue = store.getState().appState.appParameters.find((a: AppParameter) => a.Key === key);
         if (keyValue) {
@@ -232,7 +233,7 @@ const logout = () => {
     }).then().finally(() => store.dispatch(logOut()));
 }
 
-const isSessionExpired = () : boolean => {
+const isSessionExpired = (): boolean => {
     const auth = store.getState()?.appUserState?.auth;
     if (auth) {
         return auth.expiresOn && dayjs(auth.expiresOn).isBefore(dayjs());
@@ -302,8 +303,12 @@ const formatTime = (sec: number): string => {
     if (sec < 0) {
         return '--:--:--'
     }
-    const seconds = Math.floor(sec % 60) <= 9 ? '0' + Math.floor(sec % 60) : Math.floor(sec % 60)
-    return `${Math.floor(sec / 120) || '00'}:${Math.floor(sec / 60) || '00'}:${seconds || '00'}`
+
+    const seconds = (Math.floor(sec % 60) || '00').toString().padStart(2, '0');
+    const minutes = (Math.floor(sec / 60) || '00').toString().padStart(2, '0');
+    const hours = (Math.floor(sec / 120) || '00').toString().padStart(2, '0');
+    
+    return `${hours}:${minutes}:${seconds}`
 }
 
 const applyPhoneMask = (phone: string) => {
@@ -317,7 +322,17 @@ const maskPhone = (phone: string) => {
     if (!phone) {
         return '';
     }
-    return `(XXX) XXX-${phone.slice(6,10)}`
+    return `(XXX) XXX-${phone.slice(6, 10)}`
+}
+
+const getTimeDiffInFormattedSeconds = (endDate?: string, startDate?: string): string => {
+    dayjs.extend(duration);
+
+    if (!endDate || !startDate) {
+        return '';
+    }
+    const diff = dayjs(endDate).diff(dayjs(startDate), 'second');
+    return dayjs.duration(diff, 'seconds').format('HH:mm:ss');
 }
 
 const utils = {
@@ -350,6 +365,7 @@ const utils = {
     formatTime,
     applyPhoneMask,
     getAppParameter,
+    getTimeDiffInFormattedSeconds,
     logout,
     isSessionExpired
 };

@@ -13,19 +13,21 @@ import {useDispatch, useSelector} from 'react-redux';
 import {getLookupValues} from '@pages/tickets/services/tickets.service';
 import {selectLookupValues} from '@pages/tickets/store/tickets.selectors';
 import utils from '@shared/utils/utils';
-import {CallLogRequestModel} from '../../models/call-log.model';
+import {TicketLogRequestModel} from '../../../../shared/models/ticket-log.model';
 import {CommunicationDirection} from '@shared/models';
 
 const TIME_PERIOD_DATE_RANGE_OPTION = '3';
 const DEFAULT_ALL_OPTION = {key: 'all', value: undefined};
-const DEFAULT_ANY_KEY = '0';
+const DEFAULT_ANY_KEY = '';
 
 interface CallsLogFilterProps {
     value?: any;
     isOpen: boolean;
-    onSubmit?: (filter: CallLogRequestModel) => void;
+    logType: 'Chat' | 'Call';
+    isCallTypeHide?: boolean;
+    onSubmit?: (filter: TicketLogRequestModel) => void;
 }
-const CallsLogFilter = ({isOpen, value: propsValue, ...props}: CallsLogFilterProps) => {
+const CallsLogFilter = ({isOpen, value: propsValue, logType, ...props}: CallsLogFilterProps) => {
     dayjs.extend(utc);
     const dispatch = useDispatch();
     const {control, handleSubmit, watch, getValues, reset} = useForm({});
@@ -57,12 +59,14 @@ const CallsLogFilter = ({isOpen, value: propsValue, ...props}: CallsLogFilterPro
     }), [isOpen]);
 
 
-    const enumToArray = <T extends any>(enumValue: {[s: string]: T}) => Object.entries(enumValue)
-        .filter(([_, value]) => !isNaN(Number(value)))
+    const enumToArray = <T extends any>(enumValue: {[s: string]: T}, exludes: number[] = []) => Object.entries(enumValue)
+        .filter(([_, value]) => !isNaN(Number(value)) && !exludes.includes(Number(value)))
         .map(([key, value]) => ({key, value}));
 
+    const contactStatusItem = useMemo(() => {
+        return [DEFAULT_ALL_OPTION, ...enumToArray(ContactStatus, logType === 'Chat' ? [2, 3] : [])]
+    }, [logType]);
 
-    const contactStatusItem = useMemo(() => [DEFAULT_ALL_OPTION, ...enumToArray(ContactStatus)], []);
     const callLogDirectionItem = useMemo(() => [DEFAULT_ALL_OPTION, ...enumToArray(CommunicationDirection)], []);
 
     const getTimePeriodOptions = (): Option[] => (
@@ -134,15 +138,12 @@ const CallsLogFilter = ({isOpen, value: propsValue, ...props}: CallsLogFilterPro
     }
 
     const onSubmit = (formData: any) => {
-        const filter: CallLogRequestModel = {};
+        const filter: TicketLogRequestModel = {};
 
         const formDate = getFormDate(formData);
         filter.toDate = formDate.toDate;
         filter.fromDate = formDate.fromDate;
-
-        if (!!formData.reason) {
-            filter.reason = formData.reason;
-        }
+        filter.reason = formData.reason;
 
         if (formData.status) {
             const statuses: number[] = [];
@@ -185,7 +186,7 @@ const CallsLogFilter = ({isOpen, value: propsValue, ...props}: CallsLogFilterPro
                         key={item.key}
                         name={`${name}[${item.key}]`}
                         labelClassName='body2'
-                        label={t(`calls_log.${item.key.toLowerCase()}`)}
+                        label={`ticket_log.${item.key.toLowerCase()}`}
                         value={item.value?.toString()}
                     />
                 )
@@ -230,28 +231,30 @@ const CallsLogFilter = ({isOpen, value: propsValue, ...props}: CallsLogFilterPro
                     )
                 }}
             />
-            <div className={classnames({'hidden': watchTimePeriod !== TIME_PERIOD_DATE_RANGE_OPTION})}>
-                <ControlledDateInput
-                    control={control}
-                    type='date'
-                    label='tickets.filter.from_date'
-                    name='fromDate'
-                    min={dayjs().subtract(6, 'month').toDate()}
-                    dataTestId='filter-from-date'
-                    isCalendarPositionComputed
-                    onChange={setFromDateField}
-                />
-                <ControlledDateInput
-                    control={control}
-                    type='date'
-                    isCalendarPositionComputed
-                    min={fromDateField}
-                    disabled={!fromDateField}
-                    label='tickets.filter.to_date'
-                    name='toDate'
-                    dataTestId='filter-to-date'
-                />
-            </div>
+            {watchTimePeriod === TIME_PERIOD_DATE_RANGE_OPTION &&
+                <div>
+                    <ControlledDateInput
+                        control={control}
+                        type='date'
+                        label='tickets.filter.from_date'
+                        name='fromDate'
+                        min={dayjs().subtract(6, 'month').toDate()}
+                        dataTestId='filter-from-date'
+                        isCalendarPositionComputed
+                        onChange={setFromDateField}
+                    />
+                    <ControlledDateInput
+                        control={control}
+                        type='date'
+                        isCalendarPositionComputed
+                        min={fromDateField}
+                        disabled={!fromDateField}
+                        label='tickets.filter.to_date'
+                        name='toDate'
+                        dataTestId='filter-to-date'
+                    />
+                </div>
+            }
         </Collapsible>
     )
 
@@ -265,7 +268,7 @@ const CallsLogFilter = ({isOpen, value: propsValue, ...props}: CallsLogFilterPro
                 </div>
                 <form>
                     {GetCollapsibleCheckboxControl('common.statuses', 'status', contactStatusItem)}
-                    {GetCollapsibleCheckboxControl('calls_log.call_type', 'callType', callLogDirectionItem)}
+                    {logType === 'Call' && GetCollapsibleCheckboxControl('ticket_log.call_type', 'callType', callLogDirectionItem)}
                     {GetCollapsibleDateTime('common.time_period', 'timePeriod')}
                     {GetCollapsibleReason('ticket_new.reason', 'reason', reasonOptions)}
                 </form>

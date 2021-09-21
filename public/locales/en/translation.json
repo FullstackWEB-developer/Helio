@@ -52,9 +52,12 @@
     "user": "User",
     "statuses": "Statuses",
     "unknown": "Unknown",
-    "default_avatar": "#"
+    "default_avatar": "#",
+    "voice": "Voice",
+    "chat": "Chat",
+    "bot": "Bot"
   },
-  "app" : {
+  "app": {
     "error_loading_parameters": "Error loading parameters, please try again later",
     "loading_parameters": "Loading application parameters, please wait..."
   },
@@ -655,7 +658,7 @@
     "enter_mobile_number": "Please enter your mobile number to proceed. We will send a six-digit code to verify your identity.",
     "hipaa_verify_description": "For security purposes, we ask you to re-verify your data every {{day}} days. Please verify your information.",
     "emergency_note": "If you have an emergency, please contact 911 or your local emergency center.",
-    "mobile_verification_failed" : "We were not able to find the matching phone number in our records. Please log into the Patient Portal and update your information or give us a call at {{phone}}.",
+    "mobile_verification_failed": "We were not able to find the matching phone number in our records. Please log into the Patient Portal and update your information or give us a call at {{phone}}.",
     "zip_code": "Zip Code",
     "dob": "Date of birth",
     "mobile_phone_number": "Mobile Phone",
@@ -671,8 +674,8 @@
     "resend_verification_message": "You haven’t received an SMS with verification code?",
     "resend_verification_cta": "Resend Code",
     "send_via_email": "Send me verification code via e-mail",
-    "six_digit_code_resent_to_email" : "Code is sent to your email address",
-    "six_digit_code_resent_to_mobile" : "Code is sent to your mobile number",
+    "six_digit_code_resent_to_email": "Code is sent to your email address",
+    "six_digit_code_resent_to_mobile": "Code is sent to your mobile number",
     "not_verified_patient": "Please use the link that is provided to you.",
     "could_not_verify_header": "Sorry, we were not able to verify you.",
     "could_not_verify_description_1": "The data you entered does not match our records. Your account has been locked for {{minutes}} minutes for security reasons.",
@@ -875,7 +878,7 @@
       "thank_you": "Thank you. Your appointment is scheduled.",
       "error_scheduling": "Scheduling appointment failed. Please try again later",
       "time_of_day": {
-        "title":"Time of Day",
+        "title": "Time of Day",
         "afternoon": "Afternoon",
         "afternoon_info": "(12:00 pm - 5:00 pm)",
         "morning": "Morning",
@@ -889,16 +892,16 @@
         "male": "Male"
       }
     },
-    "ticket_sms" : {
+    "ticket_sms": {
       "no_messages": "You have no messages",
       "conversation_history": "Conversation History",
       "me": "Me",
       "cwc_name": "CWC - {{name}}",
       "type": "Type your message",
-      "today" : "Today",
+      "today": "Today",
       "yesterday": "Yesterday",
       "sms_sent_failed": "Sending message failed",
-      "no_empty_message" : "Please type your message before sending"
+      "no_empty_message": "Please type your message before sending"
     }
   },
   "contacts": {
@@ -1276,7 +1279,7 @@
     "user_update_error": "Error updating user",
     "provider_tooltip": "<0>Please match that user if s/he is a provider in the EHR/EMR system.</0><1>We will use this to show the right information about the provider to the patients.</1>"
   },
-  "calls_log": {
+  "ticket_log": {
     "answered": "Answered",
     "missed": "Missed",
     "abandoned": "Abandoned",
@@ -1286,9 +1289,12 @@
     "all": "All",
     "my_call_log": "My Calls Log",
     "team_call_log": "Team Calls Log",
+    "my_chat_log": "My Chat Log",
+    "team_chat_log": "Team Chat Log",
     "call": "Call",
     "ticket_details": "Ticket Details",
     "contact_details": "Contact Details",
+    "patient_details": "Patient Details",
     "from": "From",
     "to": "To",
     "date_and_time": "Date and Time",
@@ -1296,7 +1302,9 @@
     "status": "Status",
     "recording": "Recording",
     "rating": "Rating",
-    "search_calls_placeholder": "Search calls"
+    "search_calls_placeholder": "Search calls",
+    "search_chats_placeholder": "Search chats",
+    "transcript": "Transcript"
   },
   "blacklist": {
     "title": "Blocked Access",

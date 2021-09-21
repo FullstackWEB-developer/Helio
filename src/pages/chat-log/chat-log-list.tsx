@@ -2,74 +2,56 @@ import {useState} from 'react';
 import DropdownLabel from '@components/dropdown-label';
 import {DropdownItemModel} from '@components/dropdown';
 import Pagination from '@components/pagination';
-import {CommunicationDirection} from '@shared/models';
 import SearchInputField from '@components/search-input-field/search-input-field';
 import SvgIcon, {Icon} from '@components/svg-icon';
 import Table from '@components/table/table';
 import {TableModel} from '@components/table/table.models';
 import {useQuery} from 'react-query';
-import {getCallsLog} from './services/call-log.service';
-import {TicketLogModel, TicketLogRequestModel, TicketLogContactStatus} from '../../shared/models/ticket-log.model';
-import {CallLogQueryType} from './models/call-log-query';
-import {GetCallLogs} from '@constants/react-query-constants';
-import {CallContactInfo} from './components/call-contact-info/call-contact-info';
-import dayjs from 'dayjs';
-import utc from 'dayjs/plugin/utc';
-import {DATE_FORMAT, TIME_FORMAT} from '@constants/form-constants';
-import {useTranslation} from 'react-i18next';
-import MoreMenu from '@components/more-menu';
-import CallsLogFilter from './components/call-log-filter/call-log-filter';
-import CallLogPlayer from './components/call-log-player/call-log-player';
-import utils from '@shared/utils/utils';
-import classnames from 'classnames';
-import {DEFAULT_PAGING} from '@shared/constants/table-constants';
-import Spinner from '@components/spinner/Spinner';
+import {ChatLogQueryType} from './models/chat-log-query';
+import {useSelector} from 'react-redux';
 import {authenticationSelector} from '@shared/store/app-user/appuser.selectors';
-import {useDispatch, useSelector} from 'react-redux';
-import {showCcp} from '@shared/layout/store/layout.slice';
-import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
-import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
-import Logger from '@shared/services/logger';
 import {useHistory} from 'react-router';
+import {TicketLogModel, TicketLogRequestModel} from '../../shared/models/ticket-log.model';
+import {DEFAULT_PAGING} from '@shared/constants/table-constants';
+import {GetCallLogs, QueryGetPatientById, QueryTickets} from '@constants/react-query-constants';
+import {getChatsLog} from './services/chats-log.services';
+import Spinner from '@components/spinner/Spinner';
+import {DATE_FORMAT, TIME_FORMAT} from '@constants/form-constants';
+import dayjs from 'dayjs';
+import utils from '@shared/utils/utils';
+import {useTranslation} from 'react-i18next';
+import './chat-log-list.scss';
+import CallContactAgentInfo from '@pages/calls-log/components/call-contact-info/call-contact-agent-info';
+import Modal from '@components/modal/modal';
+import ChatTranscript from '@pages/tickets/components/ticket-detail/chat-transcript';
+import {getPatientByIdWithQuery} from '@pages/patients/services/patients.service';
+import {ExtendedPatient} from '@pages/patients/models/extended-patient';
+import {getTicketByNumber} from '@pages/tickets/services/tickets.service';
+import {Ticket} from '@pages/tickets/models/ticket';
 import {ContactsPath, PatientsPath, TicketsPath} from '@app/paths';
-import {SortDirection} from '@shared/models/sort-direction';
+import MoreMenu from '@components/more-menu';
+import CallsLogFilter from '@pages/calls-log/components/call-log-filter/call-log-filter';
+import AvatarLabel from '@components/avatar-label';
 import {getSortDirection, getSortOrder, updateSort} from '@shared/utils/sort-utils';
-import './calls-log-list.scss';
+import {SortDirection} from '@shared/models/sort-direction';
 
-dayjs.extend(utc);
-
-const CallsLogList = () => {
-
+const ChatsLogList = () => {
     const {t} = useTranslation();
     const {username} = useSelector(authenticationSelector);
     const history = useHistory();
-
-    const dispatch = useDispatch();
-    const [isFilterOpen, setFilterOpen] = useState(false);
-    const [isPlayerOpen, setPlayerOpen] = useState(false);
-    const [rowSelected, setRowSelected] = useState<TicketLogModel>();
     const [pagingResult, setPagingResult] = useState({...DEFAULT_PAGING});
-    const [callsLogFilter, setCallsLogFilter] = useState<TicketLogRequestModel>({
+    const [isFilterOpen, setFilterOpen] = useState(false);
+    const [isChatTranscriptOpen, setChatTranscriptOpen] = useState(false);
+    const [ticketNumber, setTicketNumber] = useState<string>();
+
+    const dropdownItem: DropdownItemModel[] = [
+        {label: 'ticket_log.my_chat_log', value: ChatLogQueryType.MyChatLog},
+        {label: 'ticket_log.team_chat_log', value: ChatLogQueryType.TeamChatLog}
+    ];
+    const [chatsLogFilter, setChatsLogFilter] = useState<TicketLogRequestModel>({
         ...DEFAULT_PAGING,
         assignedTo: username
     });
-    const logger = Logger.getInstance();
-
-    const initiateACall = (phoneToDial?: string) => {
-        dispatch(showCcp());
-        if (window.CCP.agent && phoneToDial) {
-            const endpoint = connect.Endpoint.byPhoneNumber(phoneToDial);
-            window.CCP.agent.connect(endpoint, {
-                failure: (e: any) => {
-                    dispatch(addSnackbarMessage({
-                        type: SnackbarType.Error,
-                        message: 'contacts.contact_details.error_dialing_phone'
-                    }));
-                    logger.error(t('contacts.contact_details.error_dialing_phone'), e);
-                }
-            })
-        }
-    }
 
     const navigateToTicketDetail = (ticketNumber: string) => {
         history.push(`${TicketsPath}/${ticketNumber}`);
@@ -83,18 +65,18 @@ const CallsLogList = () => {
         history.push(`${PatientsPath}/${patientId}`);
     }
 
-    const dropdownItem: DropdownItemModel[] = [
-        {label: 'ticket_log.my_call_log', value: CallLogQueryType.MyCallLog},
-        {label: 'ticket_log.team_call_log', value: CallLogQueryType.TeamCallLog}
-    ];
+    const applySort = (field: string | undefined, direction: SortDirection) => {
+        if (!field) {
+            return;
+        }
+
+        const sorts = updateSort([...chatsLogFilter.sorts || []], field, direction);
+        const query = {...chatsLogFilter, sorts: [...sorts]};
+        setChatsLogFilter(query);
+    }
 
     const getMoreMenuOption = (data: TicketLogModel) => {
         const options: DropdownItemModel[] = [
-            {
-                label: 'ticket_log.call',
-                value: '1',
-                icon: <SvgIcon type={Icon.Phone} fillClass='rgba-05-fill' />
-            },
             {
                 label: 'ticket_log.ticket_details',
                 value: '2',
@@ -121,64 +103,66 @@ const CallsLogList = () => {
         return options;
     }
 
-
-    const getDirectionIcon = (direction: CommunicationDirection, contactStatus?: TicketLogContactStatus) => {
-
-        if (contactStatus === undefined || contactStatus === null) {
-            return null;
+    const onDropdownClick = (item: DropdownItemModel) => {
+        const context = item.value as ChatLogQueryType;
+        if (context === ChatLogQueryType.MyChatLog) {
+            setChatsLogFilter({...chatsLogFilter, assignedTo: username});
+        } else {
+            setChatsLogFilter({...chatsLogFilter, assignedTo: ''});
         }
-
-        if (contactStatus === TicketLogContactStatus.Answered) {
-            if (direction === CommunicationDirection.Inbound) {
-                return <SvgIcon type={Icon.CallInbound} fillClass='rgba-038-fill' />
-            } else {
-                return <SvgIcon type={Icon.CallOutbound} fillClass='rgba-038-fill' />
-            }
-        }
-        return <SvgIcon type={Icon.CallMissedOutgoing} fillClass='danger-icon ' />
     }
 
-    const applySort = (field: string | undefined, direction: SortDirection) => {
-        if (!field) {
-            return;
+    const {
+        isLoading: isTicketLoading,
+        isFetching: isTicketFetching,
+        data: ticket
+    } = useQuery<Ticket, Error>([QueryTickets, ticketNumber], () =>
+        getTicketByNumber(Number(ticketNumber)),
+        {
+            enabled: !!ticketNumber,
         }
+    );
 
-        const sorts = updateSort([...callsLogFilter.sorts || []], field, direction);
-        const query = {...callsLogFilter, sorts: [...sorts]};
-        setCallsLogFilter(query);
-    }
+    const {
+        isLoading: isPatientLoading,
+        isFetching: isPatientFetching,
+        data: patient
+    } = useQuery<ExtendedPatient, Error>([QueryGetPatientById, ticket?.patientId], () =>
+        getPatientByIdWithQuery(ticket?.patientId as number),
+        {
+            enabled: !!ticket
+        }
+    );
 
     const getTableModel = (): TableModel => ({
         columns: [
-            {
-                title: '',
-                field: 'id',
-                widthClass: 'w-24',
-                render: (_, data: TicketLogModel) => getDirectionIcon(data.communicationDirection, data.contactStatus)
-            },
             {
                 title: 'ticket_log.from',
                 field: 'from',
                 widthClass: 'w-2/12',
                 render: (_, data: TicketLogModel) => (
-                    <CallContactInfo type='from' value={data} />
+                    <span className='body2'>
+                        {data.createdForName}
+                    </span>
                 )
             },
             {
                 title: 'ticket_log.to',
-                field: 'to',
+                field: 'assigneeUser',
                 widthClass: 'w-2/12',
-                render: (_, data: TicketLogModel) => (
-                    <CallContactInfo type='to' value={data} />
+                render: (assigneeUser: string) => (
+                    <CallContactAgentInfo
+                        agentId={assigneeUser}
+                    />
                 )
             },
             {
                 title: 'ticket_log.date_and_time',
                 field: 'createdOn',
-                isSortable: true,
                 widthClass: 'w-2/12',
-                sortDirection: getSortDirection(callsLogFilter.sorts, 'createdOn'),
-                sortOrder: getSortOrder(callsLogFilter.sorts, 'createdOn'),
+                isSortable: true,
+                sortDirection: getSortDirection(chatsLogFilter.sorts, 'createdOn'),
+                sortOrder: getSortOrder(chatsLogFilter.sorts, 'createdOn'),
                 onClick: (field: string | undefined, direction: SortDirection) => {
                     applySort(field, direction);
                 },
@@ -196,9 +180,9 @@ const CallsLogList = () => {
                 title: 'ticket_log.duration',
                 field: 'agentInteractionDuration',
                 widthClass: 'w-1/12',
-                render: (field: number) => {
+                render: (_: number, data: TicketLogModel) => {
                     return (
-                        <span className='body2'>{utils.formatTime(field)}</span>
+                        <span className='body2'>{utils.getTimeDiffInFormattedSeconds(data.contactDisconnectTimestamp, data.contactInitiationTimestamp)}</span>
                     )
                 }
             },
@@ -206,37 +190,29 @@ const CallsLogList = () => {
                 title: 'ticket_log.status',
                 field: 'contactStatus',
                 widthClass: 'w-1/12',
-                render: (value?: TicketLogContactStatus) => {
-                    if (!value) {
-                        return (<></>);
-                    }
+                render: (_: any, data: TicketLogModel) => {
                     return (
-                        <span className={classnames('body2', {'text-danger': value === TicketLogContactStatus.Missed})}>
-                            {t(`ticket_log.${TicketLogContactStatus[value].toString().toLowerCase()}`)}
+                        <span className='body2'>
+                            {data.agentInteractionDuration && data.agentInteractionDuration > 0 &&
+                                t('ticket_log.answered')
+                            }
                         </span>
                     );
                 }
             },
             {
-                title: 'ticket_log.call_type',
-                field: 'communicationDirection',
-                widthClass: 'w-1/12',
-                render: (value: CommunicationDirection) =>
-                    (<span className='body2'>{t(`ticket_log.${CommunicationDirection[value].toString().toLowerCase()}`)}</span>)
-            },
-            {
-                title: 'ticket_log.recording',
+                title: 'ticket_log.transcript',
                 field: 'recordedConversationLink',
                 widthClass: 'w-24 flex items-center justify-center',
                 render: (value: string, data: TicketLogModel) => (
                     <>
                         {!!value &&
                             <SvgIcon
-                                type={Icon.Play}
+                                type={Icon.View}
                                 fillClass='rgba-05-fill'
                                 onClick={() => {
-                                    setRowSelected(data);
-                                    setPlayerOpen(true);
+                                    setTicketNumber(data.ticketNumber);
+                                    setChatTranscriptOpen(true);
                                 }}
                             />
                         }
@@ -283,11 +259,7 @@ const CallsLogList = () => {
                             menuClassName='w-48 top-14 more-menu-list'
                             containerClassName='h-full flex items-center justify-center more-menu'
                             onClick={(item: DropdownItemModel) => {
-                                setRowSelected(data);
                                 switch (item.value) {
-                                    case '1':
-                                        initiateACall(data.originationNumber);
-                                        break;
                                     case '2':
                                         navigateToTicketDetail(data.ticketNumber);
                                         break;
@@ -312,12 +284,13 @@ const CallsLogList = () => {
         ],
         rows: [],
         hasRowsBottomBorder: true,
-        headerClassName: 'h-12',
-        rowClass: 'h-20 items-center hover:bg-gray-100 cursor-pointer call-log-row',
+        headerClassName: 'h-12 px-7',
+        rowClass: 'h-20 items-center hover:bg-gray-100 cursor-pointer chat-log-row px-7',
     });
-    const [tableModel, setTableModel] = useState(getTableModel());
 
-    const {isLoading, isFetching} = useQuery([GetCallLogs, callsLogFilter], () => getCallsLog(callsLogFilter), {
+    const [tableModel, setTableModel] = useState<TableModel>(getTableModel());
+
+    const {isLoading, isFetching} = useQuery([GetCallLogs, chatsLogFilter], () => getChatsLog(chatsLogFilter), {
         enabled: true,
         onSuccess: (response) => {
             const {results, ...paging} = response;
@@ -328,27 +301,18 @@ const CallsLogList = () => {
 
     const onFilterSubmit = (filter: TicketLogRequestModel) => {
         const {page, pageSize, searchTerm, ...filterParameters} = filter;
-        setCallsLogFilter({...callsLogFilter, ...filterParameters, ...DEFAULT_PAGING});
-    }
-
-    const onDropdownClick = (item: DropdownItemModel) => {
-        const context = item.value as CallLogQueryType;
-        if (context === CallLogQueryType.MyCallLog) {
-            setCallsLogFilter({...callsLogFilter, assignedTo: username});
-        } else {
-            setCallsLogFilter({...callsLogFilter, assignedTo: ''});
-        }
+        setChatsLogFilter({...chatsLogFilter, ...filterParameters, ...DEFAULT_PAGING});
     }
 
     return (
-        <div className='flex flex-row flex-auto calls-log'>
-            <CallsLogFilter isOpen={isFilterOpen} onSubmit={onFilterSubmit} logType='Call' />
+        <div className='flex flex-row flex-auto chats-log'>
+            <CallsLogFilter isOpen={isFilterOpen} isCallTypeHide logType='Chat' onSubmit={onFilterSubmit} />
             <div className='flex flex-col flex-1 w-full'>
-                <div className='flex flex-row items-center justify-between w-full px-6 border-b calls-log-header'>
+                <div className='flex flex-row items-center justify-between w-full px-6 border-b chats-log-header'>
                     <div>
                         <DropdownLabel
                             items={dropdownItem}
-                            value={CallLogQueryType.MyCallLog}
+                            value={ChatLogQueryType.MyChatLog}
                             onClick={onDropdownClick}
                         />
                     </div>
@@ -356,50 +320,54 @@ const CallsLogList = () => {
                         <Pagination
                             value={pagingResult}
                             onChange={(p) => {
-                                setCallsLogFilter({...callsLogFilter, page: p.page, pageSize: p.pageSize});
+                                setChatsLogFilter({...chatsLogFilter, page: p.page, pageSize: p.pageSize});
                             }}
                         />
                     </div>
                 </div>
                 <div className='flex flex-row border-b h-14'>
-                    <div className='flex flex-row items-center pl-6'>
+                    <div className='flex flex-row items-center pl-6 border-r'>
                         <SvgIcon
                             type={Icon.FilterList}
                             className='icon-medium'
-                            wrapperClassName='mr-6 cursor-pointer icon-medium'
+                            wrapperClassName='mr-8 cursor-pointer icon-medium'
                             fillClass='filter-icon'
                             onClick={() => setFilterOpen(!isFilterOpen)}
                         />
                     </div>
                     <SearchInputField
-                        wrapperClassNames='relative w-full h-full border-l'
-                        hasBorderBottom={false}
+                        wrapperClassNames='relative w-full h-full'
                         inputClassNames='border-b-0'
-                        placeholder='ticket_log.search_calls_placeholder'
-                        onPressEnter={(inputValue) => setCallsLogFilter({...callsLogFilter, searchTerm: inputValue})}
+                        hasBorderBottom={false}
+                        placeholder='ticket_log.search_chats_placeholder'
+                        onPressEnter={(inputValue) => setChatsLogFilter({...chatsLogFilter, searchTerm: inputValue})}
                     />
                 </div>
-                <div className='h-full overflow-y-auto'>
+                <div className='overflow-y-auto'>
                     {(isLoading || isFetching) &&
                         <Spinner fullScreen />
                     }
                     {(!isLoading && !isFetching) &&
                         <Table model={tableModel} />
                     }
-                    {rowSelected && !!rowSelected.recordedConversationLink &&
-                        <CallLogPlayer
-                            ticketId={rowSelected.id}
-                            title={rowSelected.createdForName ?? utils.applyPhoneMask(rowSelected.originationNumber)}
-                            isOpen={isPlayerOpen}
-                            agentId={rowSelected.assigneeUser}
-                            subTitle={t(`ticket_log.${CommunicationDirection[rowSelected.communicationDirection].toString().toLowerCase()}`)}
-                            onClose={() => setPlayerOpen(false)}
-                        />
-                    }
                 </div>
             </div>
+            <div className='flex items-center justify-center'>
+                <Modal isOpen={isChatTranscriptOpen}
+                    title='ticket_detail.chat_transcript.title'
+                    isClosable={true}
+                    isDraggable={true}
+                    onClose={() => setChatTranscriptOpen(false)}>
+                    {(isPatientLoading || isPatientFetching || isTicketFetching || isTicketLoading) &&
+                        <Spinner />
+                    }
+                    {(ticket && !isPatientLoading && !isPatientFetching && !isTicketFetching && !isTicketLoading) &&
+                        <ChatTranscript ticket={ticket} patient={patient} />
+                    }
+                </Modal>
+            </div>
         </div>
-    )
+    );
 }
 
-export default CallsLogList;
+export default ChatsLogList;

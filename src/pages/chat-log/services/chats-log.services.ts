@@ -5,7 +5,7 @@ import {TicketLogRequestModel, TicketLogModel} from "../../../shared/models/tick
 
 const TicketUrl = '/tickets';
 
-export const getCallsLog = async (request: TicketLogRequestModel): Promise<PagedList<TicketLogModel>> => {
-    const {data} = await Api.get(`${TicketUrl}/call-logs?${utils.serialize(request)}`);
+export const getChatsLog = async (request: TicketLogRequestModel): Promise<PagedList<TicketLogModel>> => {
+    const {data} = await Api.get(`${TicketUrl}/chat-logs?${utils.serialize(request)}`);
     return data;
 }

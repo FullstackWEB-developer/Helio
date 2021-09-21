@@ -15,7 +15,8 @@ import {
     UsersBulkPath,
     BlackListsPath,
     TicketSmsPath,
-    CallsLogPath
+    CallsLogPath,
+    ChatsLogPath
 } from './paths';
 import RealTimeUserStatusUpdate from '@shared/websockets/real-time-user-status-update';
 import ExternalAccessLayout from '@pages/external-access/layout/external-access-layout';
@@ -57,6 +58,7 @@ const UserDetails = React.lazy(() => import('@pages/users/details'));
 const UserAdd = React.lazy(() => import('@pages/users/add/user-add'));
 const UserList = React.lazy(() => import('@pages/users/list/user-list'));
 const CallsLogList = React.lazy(() => import('@pages/calls-log/calls-log-list'));
+const ChatsLogList = React.lazy(() => import('@pages/chat-log/chat-log-list'));
 const BlackList = React.lazy(() => import('@pages/blacklists/blacklists'));
 const BulkAddUser = React.lazy(() => import('@pages/users/bulk-add/bulk-add'));
 const GetExternalUserDobZip = React.lazy(() => import('@pages/external-access/verify-patient/get-external-user-dob-zip'));
@@ -77,88 +79,89 @@ function App() {
     }, []);
 
     return (<BrowserRouter>
-                <Switch>
-                    <Route path='/o/'>
-                        <ExternalAccessLayout>
-                            <Switch>
-                                <Route path={TicketSmsPath} component={withSuspense(TicketSms)} />
-                                <Route path='/o/appointment-list' component={withSuspense(AppointmentList)} />
-                                <Route path='/o/verify-patient' component={withSuspense(GetExternalUserDobZip)} />
-                                <Route path='/o/verify-patient-code' component={withSuspense(ExternalUserVerificationCode)} />
-                                <Route path='/o/verify-patient-get-mobile' component={withSuspense(ExternalUserMobileNumber)} />
-                                <Route path='/o/callback-ticket' component={withSuspense(ExternalUserCreateCallbackTicket)} />
-                                <Route path='/o/appointment-detail' component={withSuspense(AppointmentDetail)} />
-                                <Route path='/o/request-refill' component={withSuspense(RequestRefill)} />
-                                <Route path='/o/view-medications' component={withSuspense(ViewMedications)} />
-                                <Route path='/o/request-refill-confirmation' component={withSuspense(RequestRefillConfirmation)} />
-                                <Route path='/o/request-medical-records'
-                                    component={withSuspense(RequestMedicalRecords)} />
-                                <Route exact path='/o/lab-results' component={withSuspense(LabResults)} />
-                                <Route path='/o/lab-results/:labResultId' component={withSuspense(LabResultsDetailed)} />
-                                <Route exact path='/o/appointment-schedule' component={withSuspense(AppointmentSchedule)} />
-                                <Route exact path='/o/appointment-schedule/select' component={withSuspense(AppointmentScheduleSelect)} />
-                                <Route exact path='/o/appointment-schedule/confirm' component={withSuspense(AppointmentScheduleConfirm)} />
-                                <Route path='/o/appointment-scheduled' component={withSuspense(AppointmentRescheduled)} />
-                                <Route path='/o/appointment-cancelation'
-                                    component={withSuspense(AppointmentCancellation)} />
-                                <Route path='/o/appointment-canceled' component={withSuspense(AppointmentCanceled)} />
-                                <Route path='/o/appointment-reschedule'
-                                    component={withSuspense(AppointmentReschedule)} />
-                                <Route path='/o/appointment-reschedule-confirm'
-                                    component={withSuspense(AppointmentRescheduleConfirm)} />
-                                <Route path='/o/appointment-rescheduled'
-                                    component={withSuspense(AppointmentRescheduled)} />
-                                <Route path='/o/dmr/:linkId' component={withSuspense(DownloadMedicalRecords)} />
-                                <Route path='/o/:linkId' component={withSuspense(VerifyRedirectLink)} />
-                            </Switch>
-                        </ExternalAccessLayout>
-                    </Route>
-                    <Route exact={true} path='/medical-records-preview'
-                        component={withSuspense(MedicalRecordsPreview)} />
-                    <Route path='/login'>
-                        <Login />
-                    </Route>
-                    <SignalRProvider name={SMS_INCOMING_NAME} createConnection={() => createSmsConnectionHub(accessToken)}>
-                        <Layout>
-                            <RealTimeUserStatusUpdate />
-                            <GuardedRoute exact path='/dashboard' component={Dashboard} />
-                            <GuardedRoute exact path={TicketsPath} component={withSuspense(TicketList)} />
-                            <GuardedRoute exact path={`${TicketsPath}/new`} component={withSuspense(TicketNew)} />
-                            <GuardedRoute exact path={`${TicketsPath}/results`} component={withSuspense(SearchResults)} />
-                            <GuardedRoute
-                                exact
-                                path={`${TicketsPath}/:ticketNumber(\\d+)`}
-                                component={withSuspense(TicketDetail)}
-                            />
-                            <Switch>
-                                <GuardedRoute exact path='/patients/results' component={withSuspense(SearchResults)} />
-                                <GuardedRoute exact path='/patients/:patientId' component={withSuspense(PatientChart)} />
-                            </Switch>
-                            <Switch>
-                                <GuardedRoute exact path={`${ContactsPath}/results`} component={withSuspense(SearchResults)} />
-                                <GuardedRoute exact path={`${ContactsPath}/:contactId?`} component={withSuspense(Contacts)} />
-                            </Switch>
+        <Switch>
+            <Route path='/o/'>
+                <ExternalAccessLayout>
+                    <Switch>
+                        <Route path={TicketSmsPath} component={withSuspense(TicketSms)} />
+                        <Route path='/o/appointment-list' component={withSuspense(AppointmentList)} />
+                        <Route path='/o/verify-patient' component={withSuspense(GetExternalUserDobZip)} />
+                        <Route path='/o/verify-patient-code' component={withSuspense(ExternalUserVerificationCode)} />
+                        <Route path='/o/verify-patient-get-mobile' component={withSuspense(ExternalUserMobileNumber)} />
+                        <Route path='/o/callback-ticket' component={withSuspense(ExternalUserCreateCallbackTicket)} />
+                        <Route path='/o/appointment-detail' component={withSuspense(AppointmentDetail)} />
+                        <Route path='/o/request-refill' component={withSuspense(RequestRefill)} />
+                        <Route path='/o/view-medications' component={withSuspense(ViewMedications)} />
+                        <Route path='/o/request-refill-confirmation' component={withSuspense(RequestRefillConfirmation)} />
+                        <Route path='/o/request-medical-records'
+                            component={withSuspense(RequestMedicalRecords)} />
+                        <Route exact path='/o/lab-results' component={withSuspense(LabResults)} />
+                        <Route path='/o/lab-results/:labResultId' component={withSuspense(LabResultsDetailed)} />
+                        <Route exact path='/o/appointment-schedule' component={withSuspense(AppointmentSchedule)} />
+                        <Route exact path='/o/appointment-schedule/select' component={withSuspense(AppointmentScheduleSelect)} />
+                        <Route exact path='/o/appointment-schedule/confirm' component={withSuspense(AppointmentScheduleConfirm)} />
+                        <Route path='/o/appointment-scheduled' component={withSuspense(AppointmentRescheduled)} />
+                        <Route path='/o/appointment-cancelation'
+                            component={withSuspense(AppointmentCancellation)} />
+                        <Route path='/o/appointment-canceled' component={withSuspense(AppointmentCanceled)} />
+                        <Route path='/o/appointment-reschedule'
+                            component={withSuspense(AppointmentReschedule)} />
+                        <Route path='/o/appointment-reschedule-confirm'
+                            component={withSuspense(AppointmentRescheduleConfirm)} />
+                        <Route path='/o/appointment-rescheduled'
+                            component={withSuspense(AppointmentRescheduled)} />
+                        <Route path='/o/dmr/:linkId' component={withSuspense(DownloadMedicalRecords)} />
+                        <Route path='/o/:linkId' component={withSuspense(VerifyRedirectLink)} />
+                    </Switch>
+                </ExternalAccessLayout>
+            </Route>
+            <Route exact={true} path='/medical-records-preview'
+                component={withSuspense(MedicalRecordsPreview)} />
+            <Route path='/login'>
+                <Login />
+            </Route>
+            <SignalRProvider name={SMS_INCOMING_NAME} createConnection={() => createSmsConnectionHub(accessToken)}>
+                <Layout>
+                    <RealTimeUserStatusUpdate />
+                    <GuardedRoute exact path='/dashboard' component={Dashboard} />
+                    <GuardedRoute exact path={TicketsPath} component={withSuspense(TicketList)} />
+                    <GuardedRoute exact path={`${TicketsPath}/new`} component={withSuspense(TicketNew)} />
+                    <GuardedRoute exact path={`${TicketsPath}/results`} component={withSuspense(SearchResults)} />
+                    <GuardedRoute
+                        exact
+                        path={`${TicketsPath}/:ticketNumber(\\d+)`}
+                        component={withSuspense(TicketDetail)}
+                    />
+                    <Switch>
+                        <GuardedRoute exact path='/patients/results' component={withSuspense(SearchResults)} />
+                        <GuardedRoute exact path='/patients/:patientId' component={withSuspense(PatientChart)} />
+                    </Switch>
+                    <Switch>
+                        <GuardedRoute exact path={`${ContactsPath}/results`} component={withSuspense(SearchResults)} />
+                        <GuardedRoute exact path={`${ContactsPath}/:contactId?`} component={withSuspense(Contacts)} />
+                    </Switch>
 
-                            <GuardedRoute exact path={`${SmsPath}/:ticketId?`} component={withSuspense(Sms)} />
-                            <GuardedRoute exact path={`${UsersPath}`} component={withSuspense(UserList)} />
-                            <GuardedRoute exact path={`${UsersPath}/new`} component={withSuspense(UserAdd)} />
-                            <GuardedRoute exact path={`${UserDetailsPath}/:userId`} component={withSuspense(UserDetails)} />
-                            <GuardedRoute exact path={BlackListsPath} component={withSuspense(BlackList)} />
-                            <GuardedRoute exact path={UsersBulkPath} component={withSuspense(BulkAddUser)} />
-                            <GuardedRoute exact path={CallsLogPath} component={withSuspense(CallsLogList)} />
-                            <Confirmation
-                                className='shadow-md'
-                                hasOverlay={true}
-                                displayCancel={false}
-                                isCloseButtonDisabled={true}
-                                onOk={() => utils.logout()}
-                                title={'login.session_timeout'}
-                                message={'login.session_timeout_description'}
-                                isOpen={utils.isSessionExpired()}/>
-                        </Layout>
-                    </SignalRProvider>
-                </Switch>
-            </BrowserRouter>
+                    <GuardedRoute exact path={`${SmsPath}/:ticketId?`} component={withSuspense(Sms)} />
+                    <GuardedRoute exact path={`${UsersPath}`} component={withSuspense(UserList)} />
+                    <GuardedRoute exact path={`${UsersPath}/new`} component={withSuspense(UserAdd)} />
+                    <GuardedRoute exact path={`${UserDetailsPath}/:userId`} component={withSuspense(UserDetails)} />
+                    <GuardedRoute exact path={BlackListsPath} component={withSuspense(BlackList)} />
+                    <GuardedRoute exact path={UsersBulkPath} component={withSuspense(BulkAddUser)} />
+                    <GuardedRoute exact path={CallsLogPath} component={withSuspense(CallsLogList)} />
+                    <GuardedRoute exact path={ChatsLogPath} component={withSuspense(ChatsLogList)} />
+                    <Confirmation
+                        className='shadow-md'
+                        hasOverlay={true}
+                        displayCancel={false}
+                        isCloseButtonDisabled={true}
+                        onOk={() => utils.logout()}
+                        title={'login.session_timeout'}
+                        message={'login.session_timeout_description'}
+                        isOpen={utils.isSessionExpired()} />
+                </Layout>
+            </SignalRProvider>
+        </Switch>
+    </BrowserRouter>
     );
 }
 

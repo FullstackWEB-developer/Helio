@@ -59,5 +59,6 @@ export const CheckPatientVerification ='check-patient-verification';
 export const CheckPatientIsExist ='check-patient-exist';
 export const CheckVerificationCode ='check-verification-code';
 export const GetCallLogs = 'get-calls-logs';
+export const GetChatsLogs = 'get-chats-logs';
 export const GetRecordedConversationLink = 'get-recorded-conversation-link';
 export const GetRecordedConversationContent = 'get-recorded-conversation-content';

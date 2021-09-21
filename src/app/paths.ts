@@ -7,5 +7,6 @@ export const UsersPath = '/users';
 export const UsersBulkPath = `${UsersPath}/bulk`
 export const UserDetailsPath = `${UsersPath}/details`;
 export const CallsLogPath = '/calls';
+export const ChatsLogPath = '/chats';
 export const BlackListsPath = '/blacklists';
 export const TicketSmsPath = '/o/ticket-sms';

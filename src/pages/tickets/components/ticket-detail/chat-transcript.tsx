@@ -64,13 +64,7 @@ const ChatTranscript = ({ticket, patient}: ChatTranscriptProps) => {
         </div>
     }
 
-    const GetTimeDiff = (endDate?: string, startDate?: string): string => {
-        if (!endDate || !startDate) {
-            return '';
-        }
-        const diff = dayjs(endDate).diff(dayjs(startDate), 'second');
-        return dayjs.duration(diff, 'seconds').format('HH:mm:ss');
-    }
+
 
     return <div className='flex flex-col pt-1 chat-transcript-modal'>
         <div className='flex flex-row items-center justify-between h-10 border-b'>
@@ -115,7 +109,7 @@ const ChatTranscript = ({ticket, patient}: ChatTranscriptProps) => {
                 <LabelledInfo label='ticket_detail.chat_transcript.wait_time'
                     value={dayjs.duration(ticket.contactWaitDuration ? ticket.contactWaitDuration : 0, 'seconds').format('HH:mm:ss')} />
                 <LabelledInfo label='ticket_detail.chat_transcript.duration'
-                    value={GetTimeDiff(ticket.contactDisconnectTimestamp, ticket.contactInitiationTimestamp)} />
+                    value={utils.getTimeDiffInFormattedSeconds(ticket.contactDisconnectTimestamp, ticket.contactInitiationTimestamp)} />
             </div>
         </div>
 

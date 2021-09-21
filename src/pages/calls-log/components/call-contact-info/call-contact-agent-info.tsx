@@ -3,9 +3,10 @@ import {useEffect, useMemo} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {selectUserList} from '@shared/store/lookups/lookups.selectors';
 import {getUserList} from '@shared/services/lookups.service';
+import {Icon} from '@components/svg-icon';
 
 interface CallContactAgentInfoProps {
-    agentId: string;
+    agentId?: string;
 }
 
 const CallContactAgentInfo = ({agentId}: CallContactAgentInfoProps) => {
@@ -16,6 +17,21 @@ const CallContactAgentInfo = ({agentId}: CallContactAgentInfoProps) => {
     useEffect(() => {
         dispatch(getUserList());
     }, [dispatch]);
+
+    if (!agentId) {
+        return (
+            <AvatarLabel
+                firstName='common.voice'
+                lastName='common.bot'
+                labelClassName='body2'
+                icon={Icon.Bot}
+            />
+        )
+    }
+
+    if (!user) {
+        return null;
+    }
 
     return (
         <AvatarLabel

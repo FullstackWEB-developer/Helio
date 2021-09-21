@@ -4,6 +4,7 @@ import utils from '@shared/utils/utils';
 import {useState} from 'react';
 import classnames from 'classnames';
 import './avatar.scss';
+import SvgIcon, {Icon} from '@components/svg-icon';
 import {useTranslation} from 'react-i18next';
 
 export interface AvatarProps {
@@ -11,16 +12,17 @@ export interface AvatarProps {
     className?: string;
     labelClassName?: string;
     userPicture?: string;
+    icon?: Icon;
     status?: UserStatus;
 }
 
-const Avatar = ({userFullName, labelClassName, userPicture, status, className = 'w-10 h-10'}: AvatarProps) => {
+const Avatar = ({userFullName, labelClassName, userPicture, status, icon, className = 'w-10 h-10'}: AvatarProps) => {
     const {t} = useTranslation();
 
     const [isErrorPhoto, setErrorPhoto] = useState(false);
 
     return (<div className={classnames('avatar rounded-full flex items-center justify-center relative', className)}>
-        {(!userPicture || isErrorPhoto) &&
+        {(!userPicture || isErrorPhoto) && !icon &&
             <div className={classnames('avatar-initial', labelClassName)}>
             {!!userFullName ? utils.getInitialsFromFullName(userFullName): t('common.default_avatar')}
             </div>
@@ -28,6 +30,10 @@ const Avatar = ({userFullName, labelClassName, userPicture, status, className = 
 
         {userPicture && !isErrorPhoto &&
             <img src={userPicture} className='w-full h-full rounded-full' alt='user' onError={() => setErrorPhoto(true)} />
+        }
+
+        {!!icon && (!userPicture || isErrorPhoto) &&
+            <SvgIcon type={icon} fillClass='white-icon'/>
         }
 
         {status &&

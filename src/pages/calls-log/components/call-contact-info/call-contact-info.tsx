@@ -1,10 +1,12 @@
+import AvatarLabel from '@components/avatar-label';
+import SvgIcon, {Icon} from '@components/svg-icon';
 import {CommunicationDirection} from '@shared/models';
 import utils from '@shared/utils/utils';
-import {CallLogModel} from '../../models/call-log.model';
+import {TicketLogModel} from '../../../../shared/models/ticket-log.model';
 import CallContactAgentInfo from './call-contact-agent-info';
 
 interface CallContactInfoProps {
-    value: CallLogModel;
+    value: TicketLogModel;
     type: 'from' | 'to'
 }
 
