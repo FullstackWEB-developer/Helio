@@ -29,7 +29,7 @@ const TicketDetailHeaderLine2 = ({ticket, patientOrContactName}: { ticket: Ticke
         </div>
         <div>
             {patientOrContactName &&
-            <SmallLabel text='ticket_detail.header.requested_by' value={`${patientOrContactName}`}/>}
+            <SmallLabel text='ticket_detail.header.created_for' value={`${patientOrContactName}`}/>}
         </div>
         <div>
             {ticket.dueDate &&

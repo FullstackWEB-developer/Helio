@@ -1,7 +1,6 @@
 import {useQuery} from 'react-query';
 import {QueueMetric} from '@shared/models/queue-metric.model';
 import { QueryQueueMetrics} from '@constants/react-query-constants';
-import {getQueueStatus} from '@shared/services/lookups.service';
 import {MetricGrouping} from '@shared/models/metric-grouping.enum';
 import SvgIcon, {Icon} from '@components/svg-icon';
 import Card from '@components/card/card';
@@ -13,6 +12,7 @@ import {RealTimeStatusSummaryData} from '@pages/dashboard/models/real-time-statu
 import utils from '@shared/utils/utils';
 import classnames from 'classnames';
 import dayjs from 'dayjs';
+import {getQueueStatus} from '@pages/tickets/services/tickets.service';
 
 export interface RealtimeStatusSummaryProps {
     lastUpdateTime: Date;

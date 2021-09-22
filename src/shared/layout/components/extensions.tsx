@@ -1,5 +1,4 @@
 import React from 'react';
-import { getQuickConnects } from 'src/shared/services/lookups.service';
 import List, { ListOption } from '@components/list/list';
 import { useQuery } from 'react-query';
 import { useTranslation } from 'react-i18next';
@@ -7,6 +6,7 @@ import { UserStatus } from 'src/shared/store/app-user/app-user.models';
 import { QuickConnectExtension } from 'src/shared/models/quick-connect-extension';
 import {QueryQuickConnects} from '@constants/react-query-constants';
 import Spinner from '@components/spinner/Spinner';
+import {getQuickConnects} from '@pages/tickets/services/tickets.service';
 
 const Extensions = () => {
   const { t: translate } = useTranslation();

@@ -13,6 +13,8 @@ import TicketDetailHeaderLine2 from '@pages/tickets/components/ticket-detail/tic
 import TicketDetailHeaderLine3 from '@pages/tickets/components/ticket-detail/ticket-detail-header-line-3';
 import {ExtendedPatient} from '@pages/patients/models/extended-patient';
 import {Contact} from '@shared/models/contact.model';
+import {ContactType} from '@pages/contacts/models/ContactType';
+import utils from '@shared/utils/utils';
 
 export interface TicketDetailHeaderProps {
     ticket: Ticket,
@@ -32,7 +34,7 @@ const TicketDetailHeader = ({ticket, patient, contact}: TicketDetailHeaderProps)
 
     useEffect(() => {
         if (contact) {
-            setPatientOrContactName(contact.companyName);
+            setPatientOrContactName(contact.type === ContactType.Company ? contact.companyName : utils.stringJoin(' ', contact.firstName, contact.lastName));
         } else if (patient) {
             setPatientOrContactName(`${patient.firstName} ${patient.lastName}`);
         }

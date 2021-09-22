@@ -1,7 +1,6 @@
 import {useQuery} from 'react-query';
 import {QueueMetric} from '@shared/models/queue-metric.model';
 import {QueryQueueMetrics} from '@constants/react-query-constants';
-import {getQueueStatus} from '@shared/services/lookups.service';
 import Tab from '@components/tab/Tab';
 import Tabs from '@components/tab/Tabs';
 import React, {useEffect, useState} from 'react';
@@ -14,6 +13,7 @@ import dayjs from 'dayjs';
 import {MetricGrouping} from '@shared/models/metric-grouping.enum';
 import classnames from 'classnames';
 import utils from '@shared/utils/utils';
+import {getQueueStatus} from '@pages/tickets/services/tickets.service';
 
 export interface RealTimeStatusTableProps {
     lastUpdateTime: Date;

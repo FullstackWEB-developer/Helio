@@ -519,7 +519,7 @@
     },
     "header": {
       "id": "ID",
-      "requested_by": "Requested by",
+      "created_for": "Created for",
       "due_in": "Due In",
       "last_activity": "Last activity",
       "archive": "Archive",

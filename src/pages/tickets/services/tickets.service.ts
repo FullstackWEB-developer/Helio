@@ -30,11 +30,18 @@ import utils from '@shared/utils/utils';
 import {setGlobalLoading} from '@shared/store/app/app.slice';
 import {ChatTranscript} from '@pages/tickets/models/chat-transcript.model';
 import {TicketBase} from '../models/ticket-base';
-import {PagedList} from '@shared/models';
+import {
+    AgentStatus,
+    PagedList,
+    QueueCurrentMetricQuery,
+    QueueMetric,
+    QuickConnectExtension
+} from '@shared/models';
 import {CallbackTicket} from '@pages/tickets/models/callback-ticket.model';
+import {PerformanceMetric} from '@pages/dashboard/models/performance-metric.model';
 
 const logger = Logger.getInstance();
-const ticketsBaseUrl = "/tickets";
+const ticketsBaseUrl = "https://localhost:44339/tickets";
 
 export function getList(ticketQuery: TicketQuery, resetPagination?: boolean) {
     return async (dispatch: Dispatch) => {
@@ -279,3 +286,33 @@ export const getDashboardData = async (type: DashboardTypes, timeFrame: Dashboar
     const response = await Api.get(url);
     return response.data;
 }
+
+
+export const getQueueStatus = async (query?: QueueCurrentMetricQuery) : Promise<QueueMetric[]> => {
+    let url = `${ticketsBaseUrl}/dashboard/queue-metrics`;
+    const response = await Api.get(url, {
+        params: {
+            agentUsername: query?.agentUsername,
+            grouping: query?.grouping
+        }
+    });
+    return response.data;
+};
+
+export const getAgentsStatus = async () : Promise<AgentStatus[]> => {
+    let url = `${ticketsBaseUrl}/dashboard/agents-status`;
+    const response = await Api.get(url);
+    return response.data;
+};
+
+export const GetTodaysPerformanceMetrics = async () : Promise<PerformanceMetric[]> => {
+    let url = `${ticketsBaseUrl}/dashboard/queue-history`;
+    const response = await Api.get(url);
+    return response.data as PerformanceMetric[];
+};
+
+export const getQuickConnects = async () => {
+    const url = `${ticketsBaseUrl}/dashboard/quick-connects`;
+    const response = await Api.get(url);
+    return response.data as QuickConnectExtension[];
+};

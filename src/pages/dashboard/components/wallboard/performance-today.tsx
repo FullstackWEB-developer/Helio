@@ -6,10 +6,10 @@ import {useTranslation} from 'react-i18next';
 import classnames from 'classnames';
 import {useQuery} from 'react-query';
 import {GetTodaysPerformanceMetricsRequest} from '@constants/react-query-constants';
-import {GetTodaysPerformanceMetrics} from '@shared/services/lookups.service';
 import Card from '@components/card/card';
 import './performance-today.scss';
 import WallboardBasicStatistic from '@pages/dashboard/components/wallboard/wallboard-basic-statistic';
+import {GetTodaysPerformanceMetrics} from '@pages/tickets/services/tickets.service';
 
 export interface PerformanceTodayProps {
     data? : PerformanceMetric[]

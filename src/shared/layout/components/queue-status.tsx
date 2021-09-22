@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {getMetricOptions, getQueueStatus,} from '../../services/lookups.service';
+import {getMetricOptions} from '../../services/lookups.service';
 import {selectMetricOptions} from '../../store/lookups/lookups.selectors';
-import {QueueMetric} from '../../models/queue-metric.model';
+import {QueueMetric} from '@shared/models';
 import Dropdown from '../../components/dropdown/dropdown';
 import {DropdownModel} from '@components/dropdown/dropdown.models';
 import {TableModel} from '@components/table/table.models';
@@ -17,6 +17,7 @@ import {authenticationSelector} from "@shared/store/app-user/appuser.selectors";
 import {selectLatestUsersStatusUpdateTime} from '@shared/layout/store/layout.selectors';
 import {QueueStatusType} from "@shared/layout/enums/queue-status-type";
 import Spinner from '@components/spinner/Spinner';
+import {getQueueStatus} from '@pages/tickets/services/tickets.service';
 
 interface QueueStatusProps {
     queueType: QueueStatusType
