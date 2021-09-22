@@ -675,6 +675,15 @@ const SvgIcon = ({type, wrapperClassName = '', className = 'icon-medium', fillCl
         </svg>
     }
 
+    const getIconSpam = () => {
+        return <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" className={mainClass}>
+            <rect width="32" height="32" fill="none" opacity="0.7" />
+            <path
+                d="M-6737.563-2711h0a19.144,19.144,0,0,1-8.629-7.17,21.184,21.184,0,0,1-3.29-7.508,23.863,23.863,0,0,1,.051-10.1l.333-.017c2.621-.133,8.759-.443,11.535-3.2,2.781,2.761,8.918,3.072,11.539,3.2l.16.009.173.009a23.831,23.831,0,0,1,.05,10.1,21.2,21.2,0,0,1-3.289,7.508,19.14,19.14,0,0,1-8.631,7.17Zm.162-12.419h0l4.021,4.018,1.579-1.578-4.021-4.021,4.021-4.021-1.579-1.58-4.021,4.021-4.019-4.021-1.58,1.58,4.021,4.021-4.021,4.021,1.58,1.578,4.018-4.018Z"
+                transform="translate(6753.999 2741)" className={fillClass} />
+        </svg>
+    }
+
     const getIconStar = () => {
         return <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className={mainClass}>
             <g transform="translate(-941 -212)">
@@ -980,6 +989,7 @@ const SvgIcon = ({type, wrapperClassName = '', className = 'icon-medium', fillCl
         [Icon.Send]: getIconSend,
         [Icon.SignOut]: getIconSignOut,
         [Icon.Sms]: getIconSms,
+        [Icon.Spam]: getIconSpam,
         [Icon.Star]: getIconStar,
         [Icon.StarOutlined]: getIconStarOutlined,
         [Icon.Tickets]: getIconTickets,

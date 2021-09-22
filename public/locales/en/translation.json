@@ -536,7 +536,24 @@
       "archive_confirmation_title": "Archive ticket?",
       "archive_confirmation_message": "Archived tickets can be accessed by checking “Show Archived” filter in tickets.",
       "archived_successfully": "Ticket archived successfully",
-      "archive_fail": "Ticket archive failed"
+      "archive_fail": "Ticket archive failed",
+      "spam": "Spam",
+      "block_user": {
+        "title": "Block User",
+        "description": "Blocking contact will block this contact’s communication with your organization.",
+        "block_all": "Block All",
+        "block_email": "Block Email",
+        "block_phones": "Block Phones",
+        "block_ip": "Block IP",
+        "note": "Note",
+        "block_user_btn": "Block User",
+        "mobile_phone": "Mobile Phone",
+        "work_phone": "Work Phone",
+        "cell_phone": "Cell Phone",
+        "home_phone": "Home Phone",
+        "success": "Blocked",
+        "failed": "Failed to block"
+      }
     },
     "info_panel": {
       "ticket_info": "Ticket Info",

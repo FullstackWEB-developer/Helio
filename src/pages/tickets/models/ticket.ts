@@ -46,4 +46,5 @@ export interface Ticket {
     connectedToAgentTimestamp?: string;
     contactWaitDuration?: number;
     communicationDirection?: CommunicationDirection;
+    ipAddress?: string;
 }

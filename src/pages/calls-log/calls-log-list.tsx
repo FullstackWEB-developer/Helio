@@ -9,7 +9,7 @@ import Table from '@components/table/table';
 import {TableModel} from '@components/table/table.models';
 import {useQuery} from 'react-query';
 import {getCallsLog} from './services/call-log.service';
-import {TicketLogModel, TicketLogRequestModel, TicketLogContactStatus} from '../../shared/models/ticket-log.model';
+import {TicketLogModel, TicketLogRequestModel, TicketLogContactStatus} from '@shared/models/ticket-log.model';
 import {CallLogQueryType} from './models/call-log-query';
 import {GetCallLogs} from '@constants/react-query-constants';
 import {CallContactInfo} from './components/call-contact-info/call-contact-info';
@@ -35,6 +35,8 @@ import {ContactsPath, PatientsPath, TicketsPath} from '@app/paths';
 import {SortDirection} from '@shared/models/sort-direction';
 import {getSortDirection, getSortOrder, updateSort} from '@shared/utils/sort-utils';
 import './calls-log-list.scss';
+import FilterDot from '@components/filter-dot/filter-dot';
+import {selectIsCallsLogFiltered} from '@pages/calls-log/store/calls-log.selectors';
 
 dayjs.extend(utc);
 
@@ -42,6 +44,7 @@ const CallsLogList = () => {
 
     const {t} = useTranslation();
     const {username} = useSelector(authenticationSelector);
+    const isFiltered = useSelector(selectIsCallsLogFiltered);
     const history = useHistory();
 
     const dispatch = useDispatch();
@@ -362,7 +365,7 @@ const CallsLogList = () => {
                     </div>
                 </div>
                 <div className='flex flex-row border-b h-14'>
-                    <div className='flex flex-row items-center pl-6'>
+                    <div className='flex flex-row items-center pl-6 relative'>
                         <SvgIcon
                             type={Icon.FilterList}
                             className='icon-medium'
@@ -370,6 +373,9 @@ const CallsLogList = () => {
                             fillClass='filter-icon'
                             onClick={() => setFilterOpen(!isFilterOpen)}
                         />
+                        {isFiltered && <div className='absolute bottom-3.5 right-6'>
+                            <FilterDot />
+                        </div>}
                     </div>
                     <SearchInputField
                         wrapperClassNames='relative w-full h-full border-l'

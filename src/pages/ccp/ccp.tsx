@@ -79,6 +79,7 @@ const Ccp: React.FC<BoxProps> = ({
     const user = useSelector(authenticationSelector);
     const [isHover, setHover] = useState(false);
     const [isBottomBarVisible, setIsBottomBarVisible] = useState(false);
+    const [isInboundCall, setIsInboundCall] = useState(false);
     const [ticketId, setTicketId] = useState('');
     const [patientId, setPatientId] = useState<number>();
     const botContext = useSelector(selectBotContext);
@@ -238,7 +239,13 @@ const Ccp: React.FC<BoxProps> = ({
                     dispatch(setNoteContext({ticketId: ticketId, username: user.username}));
                 }
 
-                dispatch(setContextPanel(contextPanels.bot));
+                if(contact.isInbound()) {
+                    setIsInboundCall(true);
+                    dispatch(setContextPanel(contextPanels.bot));
+                }else {
+                    setIsInboundCall(false);
+                    dispatch(setContextPanel(contextPanels.note));
+                }
 
                 if (attributeMap.CallerMainIntent) {
                     const reason = attributeMap.CallerMainIntent.value;
@@ -447,12 +454,15 @@ const Ccp: React.FC<BoxProps> = ({
                     <div className={'flex flex-col h-full min-ccp-width'}>
                         <div data-test-id='ccp-container' id='ccp-container' className={`h-full overflow-hidden ccp-drag-background`}> </div>
                         <div className={`flex justify-center items-center w-full p-0 box-content shadow-md border-t footer-ff ccp-bottom-bar ${isBottomBarVisible ? 'block' : 'hidden'}`}>
-                            <span className={`h-10 flex items-center justify-center w-12 ${applyProperIconClass(contextPanels.bot, 'background')}`}>
-                                <SvgIcon type={Icon.Bot}
-                                    className='cursor-pointer icon-medium'
-                                    onClick={() => dispatch(setContextPanel(contextPanels.bot))}
-                                    fillClass={applyProperIconClass(contextPanels.bot)} />
-                            </span>
+                            {
+                                isInboundCall &&
+                                    <span className={`h-10 flex items-center justify-center w-12 ${applyProperIconClass(contextPanels.bot, 'background')}`}>
+                                    <SvgIcon type={Icon.Bot}
+                                             className='cursor-pointer icon-medium'
+                                             onClick={() => dispatch(setContextPanel(contextPanels.bot))}
+                                             fillClass={applyProperIconClass(contextPanels.bot)} />
+                                    </span>
+                            }
                             {
                                 ticketId ?
                                     <span className={`h-10 flex items-center justify-center w-12 ${applyProperIconClass(contextPanels.note, 'background')}`}>
@@ -472,13 +482,15 @@ const Ccp: React.FC<BoxProps> = ({
                                     fillClass={applyProperIconClass(contextPanels.sms)}
                                     onClick={() => dispatch(setContextPanel(contextPanels.sms))} />
                             </span>
-                            <span className={`h-10 flex items-center justify-center w-12 ${applyProperIconClass(contextPanels.scripts, 'background')}`}>
-                                <SvgIcon type={Icon.Scripts}
-                                    className='cursor-pointer icon-medium'
-                                    fillClass={applyProperIconClass(contextPanels.scripts)}
-                                    onClick={() => dispatch(setContextPanel(contextPanels.scripts))} />
+                            {
+                                isInboundCall &&
+                                    <span className={`h-10 flex items-center justify-center w-12 ${applyProperIconClass(contextPanels.scripts, 'background')}`}>
+                                    <SvgIcon type={Icon.Scripts}
+                                             className='cursor-pointer icon-medium'
+                                             fillClass={applyProperIconClass(contextPanels.scripts)}
+                                             onClick={() => dispatch(setContextPanel(contextPanels.scripts))} />
                             </span>
-
+                            }
                         </div>
                     </div>
                     <CcpContext />

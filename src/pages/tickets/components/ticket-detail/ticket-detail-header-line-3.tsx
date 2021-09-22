@@ -1,5 +1,7 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {Fragment, useCallback, useEffect, useRef, useState} from 'react';
 import {useTranslation} from 'react-i18next';
+import {ControlledCheckbox, ControlledTextArea} from '@components/controllers';
+import {useForm} from 'react-hook-form';
 import {Ticket} from '@pages/tickets/models/ticket';
 import {ExtendedPatient} from '@pages/patients/models/extended-patient';
 import SvgIcon from '@components/svg-icon/svg-icon';
@@ -21,7 +23,12 @@ import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
 import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
 import {TicketStatuses} from '@pages/tickets/models/ticket.status.enum';
 import {Contact} from '@shared/models/contact.model';
+import Modal from '@components/modal/modal';
 import './ticket-detail-header.scss';
+import {createBlockAccess} from '@pages/blacklists/services/blacklists.service';
+import {BlockAccessModel, BlockAccessType} from '@pages/blacklists/models/blacklist.model';
+import utils from '@shared/utils/utils';
+import {SnackbarPosition} from '@components/snackbar/snackbar-position.enum';
 
 export interface TicketDetailHeaderLine3Props {
     ticket: Ticket,
@@ -47,9 +54,12 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
     const [phoneDropdownList, setPhoneDropdownList] = useState<DropdownItemModel[]>([]);
     const [confirmationOkButtonLabel, setConfirmationOkButtonLabel] = useState<string>('');
     const [selectedPhoneToCall, setSelectedPhoneToCall] = useState<PhoneType>(PhoneType.None);
-    const ticketStatuses = useSelector((state => selectEnumValues(state, 'TicketStatus')));
+    const [isBlockUserOpen, setIsBlockUserOpen] = useState(false);
+        const ticketStatuses = useSelector((state => selectEnumValues(state, 'TicketStatus')));
     const phoneDropdownRef = useRef<HTMLDivElement>(null);
     const ticketUpdateModel = useSelector(selectTicketUpdateModel);
+
+    const {control, handleSubmit, getValues, setValue} = useForm({});
 
     customHooks.useOutsideClick([phoneDropdownRef], () => {
         setDisplayPhoneDropdown(false);
@@ -239,6 +249,111 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
         items: phoneDropdownList
     }
 
+    const getEmails = () => {
+        if (patient) {
+            return [patient.emailAddress];
+        } else {
+            return [contact?.primaryEmailAddress, contact?.secondaryEmailAddress]
+        }
+    }
+
+    const getPhones = () => {
+        if (patient) {
+            return [
+                {
+                    phoneType: t('ticket_detail.header.block_user.mobile_phone'),
+                    phoneNumber: patient.mobilePhone
+                },
+                {
+                    phoneType: t('ticket_detail.header.block_user.home_phone'),
+                    phoneNumber: patient.homePhone
+                }
+            ];
+        } else {
+            return [
+                {
+                    phoneType: t('ticket_detail.header.block_user.mobile_phone'),
+                    phoneNumber: contact?.mobilePhone
+                },
+                {
+                    phoneType: t('ticket_detail.header.block_user.work_phone'),
+                    phoneNumber: contact?.workMainPhone
+                },
+                {
+                    phoneType: t('ticket_detail.header.block_user.cell_phone'),
+                    phoneNumber: contact?.cellPhoneNumber
+                }
+            ]
+        }
+    }
+
+    const onBlockAllChanged = () => {
+        if(getValues('block_all').checked){
+            setValue('block_email', {value: undefined, checked: true});
+            setValue('block_phones', {value: undefined, checked: true});
+            setValue('block_ip', {value: undefined, checked: true});
+        } else {
+            setValue('block_email', {value: undefined, checked: false});
+            setValue('block_phones', {value: undefined, checked: false});
+            setValue('block_ip', {value: undefined, checked: false});
+        }
+    }
+
+    const createBlockUserMutation = useMutation(createBlockAccess, {
+        onSuccess: () => {
+            dispatch(addSnackbarMessage({
+                type: SnackbarType.Success,
+                message: 'ticket_detail.header.block_user.success',
+                position: SnackbarPosition.TopCenter
+            }));
+            setIsBlockUserOpen(false);
+        },
+        onError: () => {
+            dispatch(addSnackbarMessage({
+                type: SnackbarType.Error,
+                message: 'ticket_detail.header.block_user.failed',
+                position: SnackbarPosition.TopCenter
+            }));
+        }
+    })
+
+    const onBlockUser = (formData: any) => {
+        if(formData.block_email?.checked){
+            getEmails().forEach(email => {
+                if (email) {
+                    createBlockUserMutation.mutate({
+                        isActive: true,
+                        accessType: BlockAccessType.Email,
+                        value: email,
+                        comment: formData.note
+                    } as BlockAccessModel);
+                }
+            });
+        }
+
+        if(formData.block_phones?.checked) {
+            getPhones().forEach(phone => {
+               if (phone && phone.phoneNumber) {
+                   createBlockUserMutation.mutate({
+                       isActive: true,
+                       accessType: BlockAccessType.Phone,
+                       value: phone.phoneNumber,
+                       comment: formData.note
+                   } as BlockAccessModel);
+               }
+            });
+        }
+
+        if(ticket.ipAddress && formData.block_ip?.checked) {
+            createBlockUserMutation.mutate({
+                isActive: true,
+                accessType: BlockAccessType.IPAddress,
+                value: ticket.ipAddress,
+                comment: formData.note
+            });
+        }
+    }
+
     return <>
         <div className='flex flex-row items-center justify-between pl-8 border-t border-b h-14'>
             <div className='flex flex-row items-center'>
@@ -278,6 +393,14 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
                 }
             </div>
             <div className='flex flex-row'>
+                <div className='flex flex-row items-center pr-6 cursor-pointer'>
+                    <SvgIcon type={Icon.Spam} className='icon-medium'
+                             fillClass='header-spam-icon'
+                             onClick={() => setIsBlockUserOpen(true)}/>
+                    <div className='pl-3 pr-2' onClick={() => setIsBlockUserOpen(true)}>
+                        {t('ticket_detail.header.spam')}
+                    </div>
+                </div>
                 <div className='pr-6'>
                     <Button data-test-id='ticket-detail-header-delete-button'
                             buttonType='secondary'
@@ -312,6 +435,92 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
             title={confirmationTitle}
             message={confirmationMessage}
             isOpen={displayConfirmation}/>
+
+        <div className='flex items-center justify-center'>
+            <Modal isOpen={isBlockUserOpen}
+                   title={t('ticket_detail.header.block_user.title')}
+                   className='block-user-modal'
+                   onClose={() => {setIsBlockUserOpen(false)}}
+                   isClosable>
+                <div className='pt-1'>
+                    <span className='subtitle2'>{t('ticket_detail.header.block_user.description')}</span>
+                    <div className='mt-5'>
+                        <ControlledCheckbox
+                            control={control}
+                            label='ticket_detail.header.block_user.block_all'
+                            name='block_all'
+                            className='body2'
+                            labelClassName=''
+                            onChange={onBlockAllChanged}
+                        />
+                        <div className='grid grid-cols-3'>
+                            <ControlledCheckbox
+                                control={control}
+                                label='ticket_detail.header.block_user.block_email'
+                                name='block_email'
+                                className='body2'
+                            />
+                            <div className='body2 col-span-2'>
+                                {
+                                    getEmails().map(email => {
+                                        return <div className='pb-2.5'>{
+                                            email
+                                        }</div>
+                                    })
+                                }
+                            </div>
+                        </div>
+                        <div className='grid grid-cols-3'>
+                            <ControlledCheckbox
+                                control={control}
+                                label='ticket_detail.header.block_user.block_phones'
+                                name='block_phones'
+                                className='body2'
+                            />
+                            <div className='body2 col-span-2'>
+                                {
+                                    getPhones().map(phone => {
+                                        return <div className='pb-2.5'>{
+                                            phone && phone.phoneNumber &&
+                                                `${phone.phoneType} ${utils.formatPhone(phone.phoneNumber)}`
+                                        }</div>
+                                    })
+                                }
+                            </div>
+                        </div>
+                        <div className='grid grid-cols-3'>
+                            <ControlledCheckbox
+                                control={control}
+                                label='ticket_detail.header.block_user.block_ip'
+                                name='block_ip'
+                                className='body2 pb-16'
+                            />
+                            <div className='body2 col-span-2'>
+                                {ticket.ipAddress}
+                            </div>
+                        </div>
+                        <ControlledTextArea
+                            control={control}
+                            name='note'
+                            placeholder='ticket_detail.header.block_user.note'
+                            resizable={false}
+                            className='w-full body2'
+                            rows={2}
+                        />
+                        <div className="flex items-center justify-end h-20 full-w pt-4">
+                            <Button buttonType='secondary' label={t('common.cancel')} onClick={() => setIsBlockUserOpen(false)} />
+                            <Button
+                                type='submit'
+                                buttonType='small'
+                                label={t('ticket_detail.header.block_user.block_user_btn')}
+                                className='ml-6 mr-2'
+                                onClick={() => handleSubmit(onBlockUser)()}
+                                />
+                        </div>
+                    </div>
+                </div>
+            </Modal>
+        </div>
     </>
 }
 

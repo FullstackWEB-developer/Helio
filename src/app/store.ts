@@ -10,6 +10,7 @@ import externalAccessState from '../pages/external-access/store/external-access-
 import lookupsReducer from '../shared/store/lookups/lookups.slice';
 import contactsReducer from '../shared/store/contacts/contacts.slice';
 import snackbarReducer from '../shared/store/snackbar/snackbar.slice';
+import callsLogReducer from '../pages/calls-log/store/calls-log.slice';
 import {useDispatch} from 'react-redux';
 import storage from 'redux-persist/lib/storage'
 import {persistReducer} from 'redux-persist'
@@ -29,7 +30,8 @@ const reducers = combineReducers({
     contactState: contactsReducer,
     snackbarState: snackbarReducer,
     appState: appReducer,
-    usersState: usersReducer
+    usersState: usersReducer,
+    callsLogState: callsLogReducer,
 })
 
 const rootReducer: Reducer = (state: RootState, action: AnyAction) => {
