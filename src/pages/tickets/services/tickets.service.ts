@@ -41,7 +41,7 @@ import {CallbackTicket} from '@pages/tickets/models/callback-ticket.model';
 import {PerformanceMetric} from '@pages/dashboard/models/performance-metric.model';
 
 const logger = Logger.getInstance();
-const ticketsBaseUrl = "https://localhost:44339/tickets";
+const ticketsBaseUrl = "/tickets";
 
 export function getList(ticketQuery: TicketQuery, resetPagination?: boolean) {
     return async (dispatch: Dispatch) => {
