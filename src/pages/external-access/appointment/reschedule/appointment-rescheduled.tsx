@@ -77,7 +77,7 @@ const AppointmentRescheduled = () => {
             </h5>
         </div>
         <h6 className='pb-2 appointment-type'>
-            {appointment.appointmentType}
+            {appointmentType?.name}
         </h6>
         {provider && <div className='pb-6'>
             {t('external_access.appointments.withDoctor', {

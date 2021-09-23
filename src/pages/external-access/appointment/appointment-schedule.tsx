@@ -26,13 +26,16 @@ import isoWeek from 'dayjs/plugin/isoWeek';
 const AppointmentSchedule = () => {
     dayjs.extend(utc);
     dayjs.extend(isoWeek);
-
+    const {t} = useTranslation();
+    const DEFAULT_OPTION_ANY: Option = useMemo(() => ({
+        label: t('common.any'),
+        value: '0'
+    }), [t]);
     enum TimePreference {
         FirstAvailable = 1,
         PreferredDate
     }
 
-    const {t} = useTranslation();
     const dispatch = useDispatch();
     const history = useHistory();
 
@@ -67,10 +70,13 @@ const AppointmentSchedule = () => {
         item => item.description || ''
     ), [appointmentTypes]);
 
-    const providerOptions = useMemo(() => utils.parseOptions(providers,
-        item => utils.stringJoin(' ', item.firstName, item.lastName),
-        item => item.id.toString()
-    ), [providers]);
+    const providerOptions = useMemo(() => [
+        DEFAULT_OPTION_ANY,
+        ...utils.parseOptions(providers,
+            item => utils.stringJoin(' ', item.firstName, item.lastName),
+            item => item.id.toString()
+        )
+    ], [DEFAULT_OPTION_ANY, providers]);
 
     if (!verifiedPatient) {
         return <div>{t('external_access.not_verified_patient')}</div>;

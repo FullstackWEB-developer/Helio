@@ -58,7 +58,7 @@ const AppointmentScheduleSelect = () => {
 
     const DEFAULT_OPTION_ANY: Option = useMemo(() => ({
         label: t('common.any'),
-        value: ''
+        value: '0'
     }), [t]);
 
     useEffect(() => {
@@ -350,7 +350,7 @@ const AppointmentScheduleSelect = () => {
                                         <div className="grid justify-between w-full grid-flow-col pt-4 overflow-y-auto border-t auto-cols-max md:auto-cols-min slot-full-container">
                                             {appointmentSlots &&
                                                 React.Children.toArray(
-                                                    getWorkDates().map((date, index) => {
+                                                    getWorkDates().map((date) => {
                                                         const column = mappedSlots.get(date);
                                                         return <div className='flex justify-center pt-1'>
                                                             {!isFetching &&

@@ -57,7 +57,7 @@ export const getAppointmentSlots = async (params: AppointmentSlotRequest, limitI
           urlParams.append("patientId", params.patientId.toString());
      }
      if (params.providerId && params.providerId.length > 0) {
-          params.providerId.forEach(p => urlParams.append("providerId", p.toString()));
+          params.providerId.filter(a => a > 0).forEach(p => urlParams.append("providerId", p.toString()));
      }
      if (params.allowMultipleDepartment) {
           urlParams.append("allowMultipleDepartment", "true");
