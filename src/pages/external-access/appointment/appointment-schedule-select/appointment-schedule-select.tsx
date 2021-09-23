@@ -307,6 +307,7 @@ const AppointmentScheduleSelect = () => {
                             control={control}
                             name='provider'
                             className='lg:mr-8'
+                            defaultValue={DEFAULT_OPTION_ANY}
                             label='external_access.schedule_appointment.provider'
                             options={providerOptions}
                             onSelect={changeProvider}
