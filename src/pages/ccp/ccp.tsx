@@ -14,7 +14,7 @@ import {
     setVoiceCounter
 } from './store/ccp.slice';
 import {getTicketById, setAssignee} from '../tickets/services/tickets.service';
-import {authenticationSelector, selectAgentStates} from '@shared/store/app-user/appuser.selectors';
+import {authenticationSelector, selectAgentStates, selectUserStatus} from '@shared/store/app-user/appuser.selectors';
 import {DragPreviewImage, useDrag} from 'react-dnd';
 import {DndItemTypes} from '@shared/layout/dragndrop/dnd-item-types';
 import './ccp.scss';
@@ -77,6 +77,7 @@ const Ccp: React.FC<BoxProps> = ({
     const history = useHistory();
     const logger = Logger.getInstance();
     const user = useSelector(authenticationSelector);
+    const currentUserStatus = useSelector(selectUserStatus);
     const [isHover, setHover] = useState(false);
     const [isBottomBarVisible, setIsBottomBarVisible] = useState(false);
     const [isInboundCall, setIsInboundCall] = useState(false);
@@ -193,7 +194,7 @@ const Ccp: React.FC<BoxProps> = ({
         });
 
         const beforeUnload = () => {
-            setLatestStatus(window.CCP.agent.getState());
+            setLatestStatus(currentUserStatus);
             updateAgentStatus(UserStatus.Offline, agentStates);
         };
 
