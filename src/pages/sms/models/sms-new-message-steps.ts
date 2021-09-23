@@ -1,6 +1,7 @@
 export enum SmsNewMessageSteps {
     Search = 0,
     SearchResult = 1,
-    ExistingTicket = 2,
-    NoExistingTicket = 3
+    SearchContactResult = 2,
+    ExistingTicket = 3,
+    NoExistingTicket = 4
 }

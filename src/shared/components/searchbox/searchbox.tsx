@@ -91,29 +91,84 @@ const SearchBox = ({className, dropdownClassName, ...props}: SearchBoxProps) => 
     const searchTypesDropDownModel = searchTypeFiltered
         .filter((typeItem: SearchType) => typeItem.type === searchType.patientId || typeItem.type === searchType.patientName)
         .map((typeItem: SearchType) => {
-        return {
-            onClick: (key) => search(parseInt(key)),
-            value: typeItem.type.toString(),
-            label: t(typeItem.label)
-        } as DropdownItemModel;
-    });
+            return {
+                onClick: (key) => search(parseInt(key)),
+                value: typeItem.type.toString(),
+                label: t(typeItem.label)
+            } as DropdownItemModel;
+        });
 
-    const initialPatientSearchType = [
-        {label: 'search.search_type.patient_id', value: 'item-1-1'},
-        {label: 'search.search_type.patient_name', value: 'item-1-2'}
-    ];
+    const contactSearchTypes: DropdownItemModel[] = searchTypeFiltered
+        .filter((typeItem: SearchType) => typeItem.type === searchType.contactName)
+        .map((typeItem: SearchType) => {
+            return {
+                onClick: (key) => search(parseInt(key)),
+                value: typeItem.type.toString(),
+                label: t(typeItem.label)
+            } as DropdownItemModel
+        });
+
+    const initialFocusRender = (): CategoryItemModel[] => {
+        return [
+            {
+                itemsCssClass: 'w-72',
+                category: {
+                    text: 'search.categories.patients',
+                    icon: <SvgIcon type={Icon.Placeholder} className='icon-small' fillClass='' />,
+                    key: SearchCategory.Patient
+                },
+                items: [
+                    {label: 'search.search_type.patient_id', value: 'item-1-1'},
+                    {label: 'search.search_type.patient_name', value: 'item-1-2'}
+                ]
+            },
+            {
+                itemsCssClass: 'w-72',
+                category: {
+                    text: 'search.categories.contacts',
+                    icon: <SvgIcon type={Icon.Placeholder} className='icon-small' fillClass='' />,
+                    key: SearchCategory.Contact
+                },
+                items: [
+                    {
+                        label: 'search.search_type.contact_name',
+                        value: 'item-2-1'
+                    }
+                ]
+            }
+        ];
+    }
 
     const getCategorizedItems = (): CategoryItemModel[] => {
+        if (contactSearchTypes.length === 0 && searchTypesDropDownModel.length === 0) {
+            return initialFocusRender();
+        }
+
         const items: CategoryItemModel[] = [];
-        items.push({
-            itemsCssClass: 'w-72',
-            category: {
-                text: 'search.categories.patients',
-                icon: <SvgIcon type={Icon.Placeholder} className='icon-small' fillClass='' />,
-                key: SearchCategory.Patient
-            },
-            items: searchTypesDropDownModel.length > 0 ? searchTypesDropDownModel : initialPatientSearchType
-        });
+        if (searchTypesDropDownModel.length > 0) {
+            items.push({
+                itemsCssClass: 'w-72',
+                category: {
+                    text: 'search.categories.patients',
+                    icon: <SvgIcon type={Icon.Placeholder} className='icon-small' fillClass='' />,
+                    key: SearchCategory.Patient
+                },
+                items: searchTypesDropDownModel
+            });
+        }
+
+
+        if (contactSearchTypes.length > 0) {
+            items.push({
+                itemsCssClass: 'w-72',
+                category: {
+                    text: 'search.categories.contacts',
+                    icon: <SvgIcon type={Icon.Placeholder} className='icon-small' fillClass='' />,
+                    key: SearchCategory.Contact
+                },
+                items: contactSearchTypes
+            });
+        }
         return items;
     };
 

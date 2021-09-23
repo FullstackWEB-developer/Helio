@@ -1228,6 +1228,7 @@
     },
     "chat": {
       "view_patient": "View Helio Patient Chart",
+      "view_contact": "View Contact",
       "view_ticket": "View Ticket Details",
       "empty": {
         "title": "Start your new SMS conversation.",

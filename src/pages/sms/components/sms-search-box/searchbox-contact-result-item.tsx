@@ -1,25 +1,24 @@
-import {ExtendedPatient} from '@pages/patients/models/extended-patient';
 import SvgIcon, {Icon} from '@components/svg-icon';
 import utils from '@shared/utils/utils';
-import dayjs from 'dayjs';
 import classnames from 'classnames';
 import {useRef, useState} from 'react';
 import Tooltip from '@components/tooltip/tooltip';
 import {useTranslation} from 'react-i18next';
+import {ContactExtended} from '@shared/models';
 
-interface SearchBoxResultItemProps {
-    onSelect?: (patient: ExtendedPatient) => void;
-    patient: ExtendedPatient;
+interface SearchBoxContactResultItemProps {
+    onSelect?: (patient: ContactExtended) => void;
+    contact: ContactExtended;
 }
-const SearchBoxResultItem = ({patient, ...props}: SearchBoxResultItemProps) => {
+const SearchBoxContactResultItem = ({contact, ...props}: SearchBoxContactResultItemProps) => {
     const addIconRef = useRef(null);
     const [isToolTipVisible, setToolTipVisible] = useState(false);
     const {t} = useTranslation();
 
     const onAddIconClick = () => {
-        if (patient.hasMobile && !!patient.consentToText ) {
+        if (!!contact.mobilePhone) {
             if (props.onSelect) {
-                props.onSelect(patient);
+                props.onSelect(contact);
             }
         } else {
             setToolTipVisible(!isToolTipVisible);
@@ -27,30 +26,35 @@ const SearchBoxResultItem = ({patient, ...props}: SearchBoxResultItemProps) => {
     }
 
     return (
-        <div key={patient.patientId} className='flex flex-row w-full auto-cols-max body2 border-b relative cursor-pointer hover:bg-gray-100 px-7 items-center h-10 py-3.5'>
-            <div className='uppercase flex items-center w-2/12 pr-0.5'>{utils.stringJoin(', ', patient.lastName, patient.firstName)}</div>
-            <div className='flex items-center w-2/12 uppercase lx:w-1/12'>{patient.patientId}</div>
-            <div className='flex items-center w-2/12 uppercase lx:w-1/12'>{dayjs(patient.dateOfBirth).format('MM/DD/YYYY')}</div>
+        <div key={contact.id} className='flex flex-row w-full auto-cols-max body2 border-b relative cursor-pointer hover:bg-gray-100 px-7 items-center h-10 py-3.5'>
+            <div className='uppercase flex items-center w-2/12 pr-0.5'>
+                {!!contact.lastName && !!contact.firstName &&
+                    utils.stringJoin(', ', contact.lastName, contact.firstName)
+                }
+                {(!contact.lastName || !contact.firstName) &&
+                    t('common.not_available')
+                }
+            </div>
+            <div className='flex items-center w-2/12 uppercase lx:w-1/12'>{contact.companyName}</div>
             <div className='flex items-center justify-center w-2/12 uppercase lx:w-1/12'>
-                {patient.isEmailExists &&
+                {!!contact.emailAddress &&
                     <SvgIcon
                         type={Icon.CheckMark}
                         fillClass="default-toolbar-icon"
                     />}
             </div>
             <div className='flex items-center justify-center w-2/12 uppercase lx:w-1/12'>
-                {patient.hasMobile &&
+                {!!contact.mobilePhone &&
                     <SvgIcon
                         type={Icon.CheckMark}
                         fillClass="default-toolbar-icon"
                     />
                 }
             </div>
-            <div className='flex items-center justify-center w-2/12 uppercase lx:w-1/12'>{patient.consentToText ? t('common.yes') : t('common.no')}</div>
             <div className='flex items-center justify-center w-1/12 '>
                 <div ref={addIconRef}>
                     <SvgIcon
-                        fillClass={classnames({"rgba-025-fill": !patient.hasMobile ||!patient.consentToText , "default-toolbar-icon": patient.hasMobile && !!patient.consentToText })}
+                        fillClass={classnames({"rgba-025-fill": !contact.mobilePhone, "default-toolbar-icon": !!contact.mobilePhone})}
                         type={Icon.AddContact}
                         onClick={onAddIconClick}
                     />
@@ -66,4 +70,4 @@ const SearchBoxResultItem = ({patient, ...props}: SearchBoxResultItemProps) => {
     )
 }
 
-export default SearchBoxResultItem;
+export default SearchBoxContactResultItem;

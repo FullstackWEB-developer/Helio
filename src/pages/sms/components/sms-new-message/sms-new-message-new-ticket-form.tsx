@@ -41,7 +41,6 @@ const SmsNewMessageNewTicketForm = ({disabled, ...props}: SmsNewMessageNewTicket
     useEffect(() => {
         if (!props.onValidate) {
             return;
-
         }
         if (selectedTicketType) {
             if (reasonOptions.length > 0) {

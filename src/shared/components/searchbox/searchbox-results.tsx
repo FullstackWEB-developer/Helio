@@ -8,18 +8,11 @@ interface SearchBoxResultsProps {
 const SearchBoxResults = ({items, onSelect}: SearchBoxResultsProps) => {
     const {t} = useTranslation();
 
-    if (items?.length === 0) {
-        return null;
-    }
-
-    const heading = (items !== undefined && items.length > 0)
-        ? t('patient.search_heading_result')
-        : t('search.search_results.heading_empty');
     return (
         <div>
             <div className='px-6 pb-7'>
                 <div className='flex flex-row justify-between my-7'>
-                    <h5>{heading}</h5>
+                    <h5>{t('patient.search_heading_result')}</h5>
                 </div>
                 <div>
                     <div className='flex flex-row items-center content-center w-full h-12 py-4 bg-gray-100 auto-cols-min px-7 body2-medium'>

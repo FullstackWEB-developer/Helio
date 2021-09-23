@@ -6,7 +6,7 @@ import {Patient} from '@pages/patients/models/patient';
 import {Ticket} from '@pages/tickets/models/ticket';
 import {TicketBase} from '@pages/tickets/models/ticket-base';
 import {createTicket} from '@pages/tickets/services/tickets.service';
-import {ChannelTypes, PagedList, Paging} from '@shared/models';
+import {ChannelTypes, ContactExtended, ContactType, PagedList, Paging} from '@shared/models';
 import {authenticationSelector} from '@shared/store/app-user/appuser.selectors';
 import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
 import utils from '@shared/utils/utils';
@@ -23,11 +23,12 @@ interface SmsNewMessageExistingTicketProps {
     tickets: PagedList<TicketBase>,
     onTicketsPageChange?: (paging: Paging) => void;
     patient?: Patient;
+    contact?: ContactExtended;
     onClick?: (ticket: TicketBase) => void;
     onCancelClick?: () => void;
 }
 
-const SmsNewMessageExistingTicket = ({tickets, patient, ...props}: SmsNewMessageExistingTicketProps) => {
+const SmsNewMessageExistingTicket = ({tickets, patient, contact, ...props}: SmsNewMessageExistingTicketProps) => {
     const {t} = useTranslation();
     const dispatch = useDispatch();
     const {username} = useSelector(authenticationSelector);
@@ -88,12 +89,24 @@ const SmsNewMessageExistingTicket = ({tickets, patient, ...props}: SmsNewMessage
             const newTicket: Ticket = {
                 type: ticketTypeSelected,
                 reason: ticketReasonSelected,
-                patientId: patient?.patientId,
-                createdForName: patient ? utils.stringJoin(' ', patient.firstName, patient.lastName) : undefined,
                 channel: ChannelTypes.SMS,
-                assignee: username,
-                originationNumber: patient?.mobilePhone
+                assignee: username
             };
+
+            if (!!patient) {
+                newTicket.patientId = patient.patientId;
+                newTicket.createdForName = utils.stringJoin(' ', patient.firstName, patient.lastName);
+                newTicket.originationNumber = patient.mobilePhone
+            }
+
+            if (!!contact) {
+                newTicket.contactId = contact.id;
+                newTicket.createdForName = contact.type === ContactType.Individual ?
+                    utils.stringJoin(' ', contact.firstName, contact.lastName) :
+                    contact.companyName;
+                newTicket.originationNumber = contact.mobilePhone
+            }
+
             createTicketMutation.mutate(newTicket);
         }
     }

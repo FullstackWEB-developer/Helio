@@ -3,18 +3,18 @@ import Avatar from '@components/avatar';
 import AlwaysScrollToBottom from '@components/scroll-to-bottom';
 import MoreMenu from '@components/more-menu';
 import SmsChatMessageList from '../sms-chat-message/sms-chat-message-list';
-import {TicketMessage, TicketMessageSummary} from '@shared/models';
+import {ContactExtended, TicketMessage, TicketMessageSummary} from '@shared/models';
 import {useDispatch, useSelector} from 'react-redux';
 import {selectEnumValues, selectLookupValues} from '@pages/tickets/store/tickets.selectors';
 import {useHistory} from 'react-router';
 import classnames from 'classnames';
-import {PatientsPath, TicketsPath} from 'src/app/paths';
+import {ContactsPath, PatientsPath, TicketsPath} from 'src/app/paths';
 import {DropdownItemModel} from '@components/dropdown';
 import utils from '@shared/utils/utils';
 import Spinner from '@components/spinner/Spinner';
 import {useTranslation} from 'react-i18next';
 import './sms-chat.scss';
-import {MORE_MENU_OPTION_PATIENT, MORE_MENU_OPTION_TICKET} from '@pages/sms/constants';
+import {MORE_MENU_OPTION_CONTACT, MORE_MENU_OPTION_PATIENT, MORE_MENU_OPTION_TICKET} from '@pages/sms/constants';
 import {getEnumByType, getLookupValues, getTicketById} from '@pages/tickets/services/tickets.service';
 import {Icon} from '@components/svg-icon';
 import TextArea from '@components/textarea/textarea';
@@ -23,10 +23,11 @@ import ParentExtraTemplate from '@components/notification-template-select/compon
 import {NotificationTemplate, NotificationTemplateChannel} from '@shared/models/notification-template.model';
 import NotificationTemplateSelect from '@components/notification-template-select/notification-template-select';
 import {useQuery} from 'react-query';
-import {ProcessTemplate, QueryGetPatientById, QueryTickets} from '@constants/react-query-constants';
+import {ProcessTemplate, QueryContactsInfinite, QueryGetPatientById, QueryTickets} from '@constants/react-query-constants';
 import {getPatientByIdWithQuery} from '@pages/patients/services/patients.service';
 import {processTemplate} from '@shared/services/notifications.service';
 import {Link} from 'react-router-dom';
+import {getContactById} from '@shared/services/contacts.service';
 
 interface SmsChatProps {
     info: TicketMessageSummary;
@@ -48,14 +49,30 @@ const SmsChat = ({info, isLoading, isSending, isBottomFocus, messages = [], ...p
     const [smsText, setSmsText] = useState<string>();
     const topMessagePosition = useRef<number>();
     const [selectedMessageTemplate, setSelectedMessageTemplate] = useState<NotificationTemplate>();
-    const moreMenuOptions: DropdownItemModel[] = [
-        {label: t('sms.chat.view_patient'), value: MORE_MENU_OPTION_PATIENT, className: 'body2 py-1.5'},
-        {label: t('sms.chat.view_ticket'), value: MORE_MENU_OPTION_TICKET, className: 'body2 py-1.5'}
-    ];
+
+    const getMoreMenuOption = (): DropdownItemModel[] => {
+        const options: DropdownItemModel[] = [];
+        const commonClassName = 'body2 py-1.5';
+
+        if (!!info.patientId) {
+            options.push({label: t('sms.chat.view_patient'), value: MORE_MENU_OPTION_PATIENT, className: commonClassName});
+        }
+
+        if (!!info.contactId) {
+            options.push({label: t('sms.chat.view_contact'), value: MORE_MENU_OPTION_CONTACT, className: commonClassName});
+        }
+
+        options.push({label: t('sms.chat.view_ticket'), value: MORE_MENU_OPTION_TICKET, className: commonClassName});
+        return options;
+    }
 
     const {data: patient} = useQuery([QueryGetPatientById, info.patientId], () => getPatientByIdWithQuery(info.patientId!), {
         enabled: !!info.patientId
     });
+
+    const {data: contact} = useQuery<ContactExtended>([QueryContactsInfinite, info.contactId], () => getContactById(info.contactId!), {
+        enabled: !!info.contactId
+    })
 
     const {data: ticket} = useQuery([QueryTickets, info.ticketId], () => getTicketById(info.ticketId!), {
         enabled: !!info.ticketId
@@ -116,6 +133,10 @@ const SmsChat = ({info, isLoading, isSending, isBottomFocus, messages = [], ...p
         history.push(`${TicketsPath}/${info.ticketNumber}`);
     }
 
+    const goToContactDetail = () => {
+        history.push(`${ContactsPath}/${info.contactId}`);
+    }
+
     const onScroll = ({currentTarget}: React.UIEvent<HTMLDivElement, UIEvent>) => {
         if (props.onFetchMore && currentTarget.scrollTop <= 0) {
             props.onFetchMore();
@@ -129,6 +150,9 @@ const SmsChat = ({info, isLoading, isSending, isBottomFocus, messages = [], ...p
                 break;
             case MORE_MENU_OPTION_TICKET:
                 goToTicketDetail();
+                break;
+            case MORE_MENU_OPTION_CONTACT:
+                goToContactDetail();
                 break;
         }
     }
@@ -148,8 +172,14 @@ const SmsChat = ({info, isLoading, isSending, isBottomFocus, messages = [], ...p
     }
 
     const onSend = () => {
-        if (smsText && patient?.mobilePhone) {
-            props.onSendClick(patient.mobilePhone, smsText);
+        if (!smsText) {
+            return;
+        }
+
+        const mobilePhone = patient?.mobilePhone ?? contact?.mobilePhone;
+
+        if (mobilePhone) {
+            props.onSendClick(mobilePhone, smsText);
             setSmsText('');
         }
     }
@@ -165,7 +195,7 @@ const SmsChat = ({info, isLoading, isSending, isBottomFocus, messages = [], ...p
                             iconClassName='default-toolbar-icon'
                             iconFillClassname='cursor-pointer icon-medium'
                             menuClassName='w-52'
-                            items={moreMenuOptions}
+                            items={getMoreMenuOption()}
                             onClick={onMoreMenuClick}
                         />
                     </div>

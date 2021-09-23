@@ -11,16 +11,18 @@ import {createTicket} from '@pages/tickets/services/tickets.service';
 import {useMutation} from 'react-query';
 import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
 import {Ticket} from '@pages/tickets/models/ticket';
-import {ChannelTypes} from '@shared/models';
+import {ChannelTypes, ContactExtended} from '@shared/models';
 import utils from "@shared/utils/utils";
+import {ContactType} from "@pages/contacts/models/ContactType";
 
 interface SmsNewMessageNewTicketProps {
     patient?: Patient;
+    contact?: ContactExtended;
     onClick?: (ticket: TicketBase) => void;
     onCancelClick?: () => void;
 }
 
-const SmsNewMessageNewTicket = ({patient, ...props}: SmsNewMessageNewTicketProps) => {
+const SmsNewMessageNewTicket = ({patient, contact, ...props}: SmsNewMessageNewTicketProps) => {
     const {t} = useTranslation();
     const dispatch = useDispatch();
     const {username} = useSelector(authenticationSelector);
@@ -50,12 +52,24 @@ const SmsNewMessageNewTicket = ({patient, ...props}: SmsNewMessageNewTicketProps
             const newTicket: Ticket = {
                 type: ticketTypeSelected,
                 reason: ticketReasonSelected,
-                patientId: patient?.patientId,
-                createdForName: patient ? utils.stringJoin(' ', patient.firstName, patient.lastName) : undefined,
                 channel: ChannelTypes.SMS,
                 assignee: username,
-                originationNumber: patient?.mobilePhone
             };
+
+            if (!!patient) {
+                newTicket.patientId = patient.patientId;
+                newTicket.createdForName = utils.stringJoin(' ', patient.firstName, patient.lastName);
+                newTicket.originationNumber = patient.mobilePhone
+            }
+
+            if (!!contact) {
+                newTicket.contactId = contact.id;
+                newTicket.createdForName = contact.type === ContactType.Individual ?
+                    utils.stringJoin(' ', contact.firstName, contact.lastName) :
+                    contact.companyName;
+                newTicket.originationNumber = contact.mobilePhone
+            }
+
             createTicketMutation.mutate(newTicket);
         }
     }
