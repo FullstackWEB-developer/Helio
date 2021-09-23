@@ -27,7 +27,7 @@ const SnackbarMessage = ({message, position}: SnackbarMessageProps) => {
         if (message.autoClose === undefined || message.autoClose) {
             setTimeout(() => {
                 deleteToast()
-            }, 3000);
+            }, message.durationInSeconds ? (message.durationInSeconds*1000) : 3000);
         }
     });
 

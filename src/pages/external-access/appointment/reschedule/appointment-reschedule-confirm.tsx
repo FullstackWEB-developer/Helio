@@ -25,6 +25,7 @@ import {
 import {Appointment} from '@pages/external-access/appointment/models/appointment.model';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
+import ProviderPicture from '../components/provider-picture';
 
 const AppointmentRescheduleConfirm = () => {
     dayjs.extend(customParseFormat);
@@ -47,9 +48,9 @@ const AppointmentRescheduleConfirm = () => {
     }, [dispatch]);
 
     const provider = providers?.find(a => a.id === appointmentSlot.providerId);
-    const department = departments?.find(a => a.id === appointmentSlot.departmentId);
+    const department = departments?.find(a => a.id === appointmentSlot.departmentId);    
 
-    const display = (value?:string) => {
+    const display = (value?: string) => {
         if (value) {
             return value;
         }
@@ -67,7 +68,7 @@ const AppointmentRescheduleConfirm = () => {
         onError: (error: AxiosError) => {
             const prefix = 'Error Message: ';
             let errMsg = error.response?.data.message;
-            errMsg = errMsg.slice(errMsg.indexOf( prefix ) + prefix.length);
+            errMsg = errMsg.slice(errMsg.indexOf(prefix) + prefix.length);
             setErrorMessage(errMsg);
         }
     });
@@ -80,7 +81,7 @@ const AppointmentRescheduleConfirm = () => {
         });
     }
 
-    return  <div className='px-6'>
+    return <div className='px-6'>
         <div className='2xl:whitespace-pre 2xl:h-12 2xl:my-3 flex w-full items-center'>
             <h4>
                 {t('external_access.appointments.reschedule_appointment_title')}
@@ -97,28 +98,34 @@ const AppointmentRescheduleConfirm = () => {
                 {t('external_access.appointments.appointment_details')}
             </div>
         </div>
-        <div>
-            {t('external_access.appointments.appointment_date', {
-                date: dayjs(appointment.startDateTime).format('dddd, MMM DD, YYYY'),
-                time: dayjs(appointment.startTime, 'hh:mm').format('hh:mm A')
-            })}
-        </div>
-        <div>
-            {appointmentType?.name ?? appointment.appointmentType}
-        </div>
-        {provider && <div className='pb-2'>
-            {t('external_access.appointments.withDoctor', {
-                name: provider.displayName
-            })}
-        </div>}
-        <div className='subtitle'>
-            {display(department?.name)}
-        </div>
-        <div>
-            {display(department?.address)}
-        </div>
-        <div>
-            {`${display(department?.address2)} ${display(department?.city)} ${display(department?.state)}, ${display(department?.zip)}`}
+
+        <div className='flex'>                
+            <ProviderPicture providerId={provider?.id} />            
+            <div>
+                <div>
+                    {t('external_access.appointments.appointment_date', {
+                        date: dayjs(appointment.startDateTime).format('dddd, MMM DD, YYYY'),
+                        time: dayjs(appointment.startTime, 'hh:mm').format('hh:mm A')
+                    })}
+                </div>
+                <div>
+                    {appointmentType?.name ?? appointment.appointmentType}
+                </div>
+                {provider && <div className='pb-2'>
+                    {t('external_access.appointments.withDoctor', {
+                        name: provider.displayName
+                    })}
+                </div>}
+                <div className='subtitle'>
+                    {display(department?.name)}
+                </div>
+                <div>
+                    {display(department?.address)}
+                </div>
+                <div>
+                    {`${display(department?.address2)} ${display(department?.city)} ${display(department?.state)}, ${display(department?.zip)}`}
+                </div>
+            </div>
         </div>
         {rescheduleAppointmentMutation.isError && <div className='text-danger pt-12'>
             {t('external_access.appointments.reschedule_appointment_error')} {errorMessage}
@@ -127,10 +134,10 @@ const AppointmentRescheduleConfirm = () => {
             <Button onClick={() => history.goBack()} buttonType='secondary-big' label='common.back' />
 
             <Button onClick={() => confirmAppointment()}
-                    buttonType='big'
-                    isLoading={rescheduleAppointmentMutation.isLoading}
-                    disabled={isAppointmentRescheduled}
-                    label='external_access.appointments.confirm_reschedule_appointment' />
+                buttonType='big'
+                isLoading={rescheduleAppointmentMutation.isLoading}
+                disabled={isAppointmentRescheduled}
+                label='external_access.appointments.confirm_reschedule_appointment' />
         </div>
     </div>
 }

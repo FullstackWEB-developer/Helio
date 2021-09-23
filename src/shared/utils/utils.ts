@@ -325,6 +325,19 @@ const maskPhone = (phone: string) => {
     return `(XXX) XXX-${phone.slice(6, 10)}`
 }
 
+const isMinor = (date: Date) => {
+    return dayjs().diff(date, 'year') < 12;
+}
+
+const convertBlobToBase64 = (file: Blob) => {
+    return new Promise<string | ArrayBuffer | null>(function (resolve, reject) {
+        const reader = new FileReader();
+        reader.onload = function () {resolve(reader.result);};
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+    });
+}
+
 const getTimeDiffInFormattedSeconds = (endDate?: string, startDate?: string): string => {
     dayjs.extend(duration);
 
@@ -365,6 +378,8 @@ const utils = {
     formatTime,
     applyPhoneMask,
     getAppParameter,
+    isMinor,
+    convertBlobToBase64,
     getTimeDiffInFormattedSeconds,
     logout,
     isSessionExpired

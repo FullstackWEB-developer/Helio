@@ -15,7 +15,7 @@ const Snackbar = ({position}: SnackbarProps) => {
     return <div className={`fixed z-50 space-y-4 snackbar-position-${position} w-full md:w-auto whitespace-pre-line`}>
         {
             messages?.map((message: SnackbarMessageModel) =>
-                <SnackbarMessage key={message.id} position={position} message={message}/>
+                <SnackbarMessage key={message.id} position={position} message={message} />
             )
         }
     </div>

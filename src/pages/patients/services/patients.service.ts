@@ -13,6 +13,7 @@ import {PatientExistsResponse} from '@pages/external-access/models/patient-exist
 import {SendVerificationCodeRequest} from '@pages/external-access/models/send-verification-code-request.model';
 import {CheckVerificationCodeRequest} from '@pages/external-access/models/check-verification-code-request.model';
 import {GetPatientInfoRequest} from '../../../shared/models/get-patient-info-request.model';
+import {CreatePatientRequest} from '@pages/external-access/models/create-patient-request.model';
 export interface AddNoteProps {
      patientId: number;
      note: Note;
@@ -191,6 +192,11 @@ export const checkVerificationCode = async (request: CheckVerificationCodeReques
      return result.data;
 }
 
+export const createPatient = async (request: CreatePatientRequest) => {
+     const url = `${patientsUrl}/registration`;
+     const {data} = await Api.post(url, request);
+     return data;
+}
 
 const downloadFileFromData = (data: any, fileName: string) => {
      const blob = new Blob([data], {type: 'application/zip'});

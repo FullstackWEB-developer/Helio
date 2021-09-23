@@ -339,6 +339,9 @@
   --pagination-active-item: rgba(0, 0, 0, 0.5);
   --pagination-inactive-item: rgba(0, 0, 0, 0.38);
 
+  --stepper-inactive-color: rgba(219, 219, 219, 1);
+  --stepper-passed-color: rgba(120,120,120,1);
+
   a {
     color: var(--color-primary-800);
   }

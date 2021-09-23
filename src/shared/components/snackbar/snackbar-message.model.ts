@@ -9,4 +9,5 @@ export interface SnackbarMessageModel {
     buttonTitle?: string;
     autoClose?: boolean;
     position?: SnackbarPosition;
+    durationInSeconds?: number;
 }

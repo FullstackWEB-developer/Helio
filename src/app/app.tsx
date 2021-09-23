@@ -65,9 +65,10 @@ const GetExternalUserDobZip = React.lazy(() => import('@pages/external-access/ve
 const ExternalUserVerificationCode = React.lazy(() => import('@pages/external-access/verify-patient/external-user-verification-code'));
 const ExternalUserMobileNumber = React.lazy(() => import('@pages/external-access/verify-patient/get-external-user-mobile-number'));
 const ExternalUserCreateCallbackTicket = React.lazy(() => import('@pages/external-access/verify-patient/external-user-create-callback-ticket'));
+const Registration = React.lazy(() => import('@pages/external-access/registration/registration'));
+
 function App() {
     const accessToken = useSelector(selectAccessToken);
-
 
     useEffect(() => {
         const logStreamInterval = setInterval(() => {
@@ -111,6 +112,7 @@ function App() {
                         <Route path='/o/appointment-rescheduled'
                             component={withSuspense(AppointmentRescheduled)} />
                         <Route path='/o/dmr/:linkId' component={withSuspense(DownloadMedicalRecords)} />
+                        <Route path='/o/registration' component={withSuspense(Registration)} />
                         <Route path='/o/:linkId' component={withSuspense(VerifyRedirectLink)} />
                     </Switch>
                 </ExternalAccessLayout>

@@ -12,6 +12,10 @@ const verifyPatientSlice = createSlice({
                 state.phoneNumber = payload.sentAddress;
             }
         },
+        clearRedirectLink(state){
+            state.redirectLink = undefined
+            state.verifiedLink = ''
+        },
         setExternalUserPhoneNumber(state, { payload }: PayloadAction<string>) {
             state.phoneNumber = payload;
         },
@@ -44,7 +48,8 @@ export const {
     setVerifiedLink,
     setPreventRetryUntil,
     setRetryPrevented,
-    clearState
+    clearState,
+    clearRedirectLink
 } = verifyPatientSlice.actions;
 
 export default verifyPatientSlice.reducer;

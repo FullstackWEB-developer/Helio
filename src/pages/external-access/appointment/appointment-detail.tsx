@@ -12,6 +12,7 @@ import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import classnames from 'classnames';
 import utils from '@shared/utils/utils';
+import ProviderPicture from './components/provider-picture';
 
 const AppointmentDetail = () => {
     dayjs.extend(customParseFormat);
@@ -37,7 +38,9 @@ const AppointmentDetail = () => {
         dispatch(setRescheduleTimeFrame(appointmentType?.rescheduleTimeFrame || defaultTimeFrame));
     }, [appointmentType?.rescheduleTimeFrame, dispatch]);
 
-    const display = (value?:string) => {
+
+
+    const display = (value?: string) => {
         if (value) {
             return value;
         }
@@ -55,7 +58,7 @@ const AppointmentDetail = () => {
         history.push(`/o/appointment-cancelation`);
     }
 
-    return  <div>
+    return <div>
         <div className='2xl:whitespace-pre 2xl:h-12 2xl:my-3 flex w-full items-center'>
             <h4>
                 {t('external_access.appointments.appointment_details')}
@@ -80,42 +83,48 @@ const AppointmentDetail = () => {
                 })}
             </h5>
         </div>
-        <h6 className='pb-2'>
-            {appointmentType?.name ?? appointment.appointmentType}
-        </h6>
-        {provider && <div className='pb-6'>
-            {t('external_access.appointments.withDoctor', {
-                name: provider.displayName
-            })}
-        </div>}
-        <div className='subtitle'>
-            {display(department?.name)}
+        <div className='flex'>
+            <ProviderPicture providerId={provider?.id} />
+            <div>
+                <h6 className='pb-2'>
+                    {appointmentType?.name ?? appointment.appointmentType}
+                </h6>
+                {provider && <div className='pb-6'>
+                    {t('external_access.appointments.withDoctor', {
+                        name: provider.displayName
+                    })}
+                </div>}
+                <div className='subtitle'>
+                    {display(department?.name)}
+                </div>
+                <div>
+                    {display(department?.address)}
+                </div>
+                <div>
+                    {`${display(department?.address2)} ${display(department?.city)} ${display(department?.state)}, ${display(department?.zip)}`}
+                </div>
+            </div>
         </div>
-        <div>
-            {display(department?.address)}
-        </div>
-        <div>
-            {`${display(department?.address2)} ${display(department?.city)} ${display(department?.state)}, ${display(department?.zip)}`}
-        </div>
+
         <div className='pt-12 flex flex-col xl:flex-row xl:space-x-6 space-x-0 space-y-6 xl:space-y-0'>
             {(appointmentType ? appointmentType?.reschedulable : true) && <Button onClick={() => redirectToReschedule()} buttonType='big' label='external_access.appointments.reschedule' />}
             <Button disabled={!displayCancel()} onClick={() => redirectToCancel()} buttonType='secondary-big' label='common.cancel' />
         </div>
-        
-        { appointmentType?.instructions && <>
+
+        {appointmentType?.instructions && <>
             <div className='pt-20'>
                 {t('external_access.appointments.instructions')}
             </div>
-            <div className='border-b pt-2'/>
-                <div className='pt-4 body2' dangerouslySetInnerHTML={{__html: appointmentType?.instructions}} />
+            <div className='border-b pt-2' />
+            <div className='pt-4 body2' dangerouslySetInnerHTML={{__html: appointmentType?.instructions}} />
         </>
         }
 
-        { department?.parkingInformation && <>
+        {department?.parkingInformation && <>
             <div className={classnames({'pt-8': appointmentType?.instructions, 'pt-20': !appointmentType?.instructions})}>
                 {t('external_access.appointments.parking_information')}
             </div>
-            <div className='border-b pt-2'/>
+            <div className='border-b pt-2' />
             <div className='pt-4 body2'>
                 {department?.parkingInformation}
             </div>
@@ -124,7 +133,7 @@ const AppointmentDetail = () => {
         <div className={classnames({'pt-8': department?.parkingInformation, 'pt-20': !department?.parkingInformation})}>
             {t('external_access.appointments.directions')}
         </div>
-        <div className='border-b pt-2'/>
+        <div className='border-b pt-2' />
         <div className='pt-4 body2'>
             <Trans i18nKey="external_access.appointments.get_directions">
                 <a rel='noreferrer' target='_blank' href={`https://maps.google.com/?q=${department?.latitude},${department?.longitude}`}>Get directions</a> to your appointment location.

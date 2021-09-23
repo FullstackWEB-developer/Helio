@@ -62,3 +62,4 @@ export const GetCallLogs = 'get-calls-logs';
 export const GetChatsLogs = 'get-chats-logs';
 export const GetRecordedConversationLink = 'get-recorded-conversation-link';
 export const GetRecordedConversationContent = 'get-recorded-conversation-content';
+export const GetProviderPicture = 'get-provider-picture';

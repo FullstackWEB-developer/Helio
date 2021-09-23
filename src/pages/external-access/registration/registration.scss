@@ -1,0 +1,37 @@
+.registration-step {
+    height: 0.25rem;    
+
+    &.active {    
+        background-color: var(--color-primary-default);
+    }
+
+    &.inactive {
+        &-right {
+            background-color: var(--stepper-inactive-color);
+        }
+
+        &-left {
+            background-color: var(--stepper-passed-color);
+        }
+    }
+}
+
+.step-description {
+    &-active {
+        color: var(--color-primary-default);
+    }
+    &-inactive {
+        &-right {
+            color: var(--rgba-color-06);
+        }
+
+        &-left {
+            color: var(--stepper-passed-color);
+        }
+        
+    }
+}
+
+.review-label {
+    color: var(--grayed-out);
+}

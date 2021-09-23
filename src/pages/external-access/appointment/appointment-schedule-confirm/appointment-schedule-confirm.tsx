@@ -19,13 +19,12 @@ import {
     setSelectedAppointment
 } from '@pages/external-access/appointment/store/appointments.slice';
 import {Appointment} from '@pages/external-access/appointment/models/appointment.model';
-
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import {AppointmentType} from '@pages/external-access/appointment/models';
 import {GetAppointmentTypesForPatient} from '@constants/react-query-constants';
 import Spinner from '@components/spinner/Spinner';
-
+import ProviderPicture from '../components/provider-picture';
 
 const AppointmentScheduleConfirm = () => {
     dayjs.extend(customParseFormat);
@@ -54,7 +53,7 @@ const AppointmentScheduleConfirm = () => {
         }
         return '';
     }
-    
+
     useEffect(() => {
         if (!appointmentSlot) {
             history.push('/o/appointment-schedule/select');
@@ -112,24 +111,29 @@ const AppointmentScheduleConfirm = () => {
             <h5 className='pt-7'>
                 {dayjs(appointmentSlot.startTime, 'HH:mm').format('h:mm A')}
             </h5>
-            <h6 className='my-1'>
-                {getAppointmentTypeName(appointmentSlot.appointmentTypeId)}
-            </h6>
-            {provider &&
-                <div className='pb-2 body1'>
-                    {t('external_access.appointments.withDoctor', {
-                        name: provider.displayName
-                    })}
-                </div>}
-            <div className='mt-7'>
-                <div className='subtitle'>
-                    {display(department?.name)}
-                </div>
+            <div className='flex pt-6'>
+                <ProviderPicture providerId={provider?.id} />
                 <div>
-                    {display(department?.address)}
-                </div>
-                <div>
-                    {`${display(department?.address2)} ${display(department?.city)} ${display(department?.state)}, ${display(department?.zip)}`}
+                    <h6 className='my-1'>
+                        {getAppointmentTypeName(appointmentSlot.appointmentTypeId)}
+                    </h6>
+                    {provider &&
+                        <div className='pb-2 body1'>
+                            {t('external_access.appointments.withDoctor', {
+                                name: provider.displayName
+                            })}
+                        </div>}
+                    <div className='mt-7'>
+                        <div className='subtitle'>
+                            {display(department?.name)}
+                        </div>
+                        <div>
+                            {display(department?.address)}
+                        </div>
+                        <div>
+                            {`${display(department?.address2)} ${display(department?.city)} ${display(department?.state)}, ${display(department?.zip)}`}
+                        </div>
+                    </div>
                 </div>
             </div>
             {scheduleAppointmentMutation.isError && <div className='pt-12 text-danger'>
