@@ -215,7 +215,12 @@ const CallsLogList = () => {
                     }
                     return (
                         <span className={classnames('body2', {'text-danger': value === TicketLogContactStatus.Missed})}>
-                            {t(`ticket_log.${TicketLogContactStatus[value].toString().toLowerCase()}`)}
+                            {
+                                t(`ticket_log.${TicketLogContactStatus[value]
+                                    .toString()
+                                    .replace(/[A-Z]/g, (match, offset) => (offset > 0 ? '_' + match : match))
+                                    .toLowerCase()}`)
+                            }
                         </span>
                     );
                 }

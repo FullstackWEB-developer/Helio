@@ -1301,6 +1301,8 @@
     "answered": "Answered",
     "missed": "Missed",
     "abandoned": "Abandoned",
+    "agent_disconnected": "Agent disconnected",
+    "contact_disconnected": "Contact disconnected",
     "inbound": "Inbound",
     "outbound": "Outbound",
     "call_type": "Call Type",
