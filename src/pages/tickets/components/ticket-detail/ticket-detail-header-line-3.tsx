@@ -1,4 +1,4 @@
-import React, {Fragment, useCallback, useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {ControlledCheckbox, ControlledTextArea} from '@components/controllers';
 import {useForm} from 'react-hook-form';
@@ -253,38 +253,68 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
         if (patient) {
             return [patient.emailAddress];
         } else {
-            return [contact?.primaryEmailAddress, contact?.secondaryEmailAddress]
+            const emails = [];
+            if (contact?.primaryEmailAddress) {
+                emails.push(contact?.primaryEmailAddress)
+            }
+            if (contact?.secondaryEmailAddress) {
+                emails.push(contact?.secondaryEmailAddress)
+            }
+            return emails;
         }
     }
 
     const getPhones = () => {
-        if (patient) {
-            return [
+        const phones = [];
+        if (patient?.mobilePhone) {
+            phones.push(
                 {
                     phoneType: t('ticket_detail.header.block_user.mobile_phone'),
                     phoneNumber: patient.mobilePhone
-                },
+                }
+            );
+        }
+        if (patient?.homePhone) {
+            phones.push(
                 {
                     phoneType: t('ticket_detail.header.block_user.home_phone'),
                     phoneNumber: patient.homePhone
                 }
-            ];
-        } else {
-            return [
+            );
+        }
+        if (contact?.mobilePhone) {
+            phones.push(
                 {
                     phoneType: t('ticket_detail.header.block_user.mobile_phone'),
-                    phoneNumber: contact?.mobilePhone
-                },
+                    phoneNumber: contact.mobilePhone
+                }
+            );
+        }
+        if (contact?.workMainPhone) {
+            phones.push(
                 {
                     phoneType: t('ticket_detail.header.block_user.work_phone'),
-                    phoneNumber: contact?.workMainPhone
-                },
+                    phoneNumber: contact.workMainPhone
+                }
+            );
+        }
+        if (contact?.cellPhoneNumber) {
+            phones.push(
                 {
                     phoneType: t('ticket_detail.header.block_user.cell_phone'),
-                    phoneNumber: contact?.cellPhoneNumber
+                    phoneNumber: contact.cellPhoneNumber
                 }
-            ]
+            );
         }
+        if (!patient && !contact && ticket.originationNumber){
+            phones.push(
+                {
+                    phoneType: t('ticket_detail.header.block_user.other_phone'),
+                    phoneNumber: ticket.originationNumber
+                }
+            );
+        }
+        return phones;
     }
 
     const onBlockAllChanged = () => {
@@ -352,6 +382,24 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
                 comment: formData.note
             });
         }
+    }
+
+    const isBlockAllVisible = () => {
+        let checkBoxCounter = 0;
+        if (getEmails().length > 0) {
+            checkBoxCounter++;
+        }
+        if (getPhones().length > 0) {
+            checkBoxCounter++;
+        }
+        if (ticket.ipAddress) {
+            checkBoxCounter++;
+        }
+        return checkBoxCounter > 1;
+    }
+
+    const isBlockUserDisabled = () => {
+        return !ticket.ipAddress && !contact && !patient;
     }
 
     return <>
@@ -445,60 +493,72 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
                 <div className='pt-1'>
                     <span className='subtitle2'>{t('ticket_detail.header.block_user.description')}</span>
                     <div className='mt-5'>
-                        <ControlledCheckbox
-                            control={control}
-                            label='ticket_detail.header.block_user.block_all'
-                            name='block_all'
-                            className='body2'
-                            labelClassName=''
-                            onChange={onBlockAllChanged}
-                        />
-                        <div className='grid grid-cols-3'>
-                            <ControlledCheckbox
-                                control={control}
-                                label='ticket_detail.header.block_user.block_email'
-                                name='block_email'
-                                className='body2'
-                            />
-                            <div className='body2 col-span-2'>
-                                {
-                                    getEmails().map(email => {
-                                        return <div className='pb-2.5'>{
-                                            email
-                                        }</div>
-                                    })
-                                }
-                            </div>
-                        </div>
-                        <div className='grid grid-cols-3'>
-                            <ControlledCheckbox
-                                control={control}
-                                label='ticket_detail.header.block_user.block_phones'
-                                name='block_phones'
-                                className='body2'
-                            />
-                            <div className='body2 col-span-2'>
-                                {
-                                    getPhones().map(phone => {
-                                        return <div className='pb-2.5'>{
-                                            phone && phone.phoneNumber &&
-                                                `${phone.phoneType} ${utils.formatPhone(phone.phoneNumber)}`
-                                        }</div>
-                                    })
-                                }
-                            </div>
-                        </div>
-                        <div className='grid grid-cols-3'>
-                            <ControlledCheckbox
-                                control={control}
-                                label='ticket_detail.header.block_user.block_ip'
-                                name='block_ip'
-                                className='body2 pb-16'
-                            />
-                            <div className='body2 col-span-2'>
-                                {ticket.ipAddress}
-                            </div>
-                        </div>
+                        {
+                            isBlockAllVisible() &&
+                                <ControlledCheckbox
+                                    control={control}
+                                    label='ticket_detail.header.block_user.block_all'
+                                    name='block_all'
+                                    className='body2'
+                                    labelClassName=''
+                                    onChange={onBlockAllChanged}
+                                />
+                        }
+                        {
+                            getEmails().length > 0 &&
+                                <div className='grid grid-cols-3'>
+                                    <ControlledCheckbox
+                                        control={control}
+                                        label='ticket_detail.header.block_user.block_email'
+                                        name='block_email'
+                                        className='body2'
+                                    />
+                                    <div className='body2 col-span-2'>
+                                        {
+                                            getEmails().map(email => {
+                                                return <div className='pb-2.5'>{
+                                                    email
+                                                }</div>
+                                            })
+                                        }
+                                    </div>
+                                </div>
+                        }
+                        {
+                            getPhones().length > 0 &&
+                                <div className='grid grid-cols-3'>
+                                    <ControlledCheckbox
+                                        control={control}
+                                        label='ticket_detail.header.block_user.block_phones'
+                                        name='block_phones'
+                                        className='body2'
+                                    />
+                                    <div className='body2 col-span-2'>
+                                        {
+                                            getPhones().map(phone => {
+                                                return <div className='pb-2.5'>{
+                                                    phone && phone.phoneNumber && `${phone.phoneType} ${utils.formatPhone(phone.phoneNumber)}`
+                                                }</div>
+                                            })
+                                        }
+                                    </div>
+                                </div>
+                        }
+                        {
+                            ticket.ipAddress &&
+                                <div className='grid grid-cols-3'>
+                                    <ControlledCheckbox
+                                        control={control}
+                                        label='ticket_detail.header.block_user.block_ip'
+                                        name='block_ip'
+                                        className='body2 pb-16'
+
+                                    />
+                                    <div className='body2 col-span-2'>
+                                        {ticket.ipAddress}
+                                    </div>
+                                </div>
+                        }
                         <ControlledTextArea
                             control={control}
                             name='note'
@@ -514,6 +574,7 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
                                 buttonType='small'
                                 label={t('ticket_detail.header.block_user.block_user_btn')}
                                 className='ml-6 mr-2'
+                                disabled={isBlockUserDisabled()}
                                 onClick={() => handleSubmit(onBlockUser)()}
                                 />
                         </div>
