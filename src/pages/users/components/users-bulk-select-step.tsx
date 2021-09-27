@@ -12,7 +12,9 @@ const UserBulkSelectStep = ({externalUsers}: {externalUsers: ExternalUser[]}) =>
     const handleCheckboxChange = (e: CheckboxCheckEvent, user: ExternalUser) => {
         if (user?.mail && user?.azureId) {
             const inviteModel: InviteUserModel = {
-                email: user?.mail
+                email: user?.mail,
+                ...(user?.givenName && {firstName: user?.givenName}),
+                ...(user?.surname && {lastName: user?.surname})
             }
             e.checked ?
                 dispatch(addExternalUserToSelection({id: user.azureId, inviteUserModel: inviteModel, info: user})) :

@@ -37,7 +37,9 @@ const UserBulkActionStripe = ({currentStep}: {currentStep: BulkAddStep}) => {
                 if (payload.length > 0) {
                     dispatch(selectAllExternalUsersOnCurrentPage(payload.map((u: ExternalUser) => {
                         const inviteModel: InviteUserModel = {
-                            email: u.mail
+                            email: u.mail,
+                            ...(u?.givenName && {firstName: u?.givenName}),
+                            ...(u?.surname && {lastName: u?.surname})
                         }
                         return {
                             id: u.azureId,
