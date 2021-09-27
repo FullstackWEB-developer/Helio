@@ -74,12 +74,12 @@ export const aggregateQueries = <T extends unknown>(queries: UseQueryResult[]) =
         return {data: [], error: undefined, isFetching: false, isSuccess: false};
     }
 
-    const error = queries.find(q => q.error)?.error;
-    const isError = queries.some(q => q.isError);
+    const isError = queries.every(q => q.isError);
+    const hasError = queries.some(q => q.isError);
     const isFetching = queries.some(q => q.isFetching);
-    const data = !error && !isFetching ? queries.map(q => q.data) as T[] : [];
-    const isSuccess = queries.every(p => p.isFetched && !p.isFetching && p.isSuccess)
+    const data = !isFetching ? queries.filter(q => !q.isError).map(q => q.data) as T[] : [];
+    const isSuccess = queries.some(p => p.isSuccess)
 
-    return {data: data, error: error, isError: isError, isFetching: isFetching, isSuccess};
+    return {data: data, isError: isError, hasError: hasError, isFetching: isFetching, isSuccess};
 }
 

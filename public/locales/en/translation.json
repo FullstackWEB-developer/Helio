@@ -1216,6 +1216,7 @@
     "tooltip_unavailable_sms_message": "SMS not available. SMS message can not be sent to this contact."
   },
   "sms": {
+    "has_error": "*Currently, we cannot display all patients due to a technical issue. Please try again later.",
     "you": "You",
     "query_type": {
       "my_sms": "My SMS",

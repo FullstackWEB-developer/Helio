@@ -3,9 +3,10 @@ import {ExtendedPatient} from '@pages/patients/models/extended-patient';
 import SearchBoxResultItem from './searchbox-result-item';
 interface SearchBoxResultsProps {
     items?: ExtendedPatient[];
+    error?: string;
     onSelect?: (patient: ExtendedPatient) => void;
 }
-const SearchBoxResults = ({items, onSelect}: SearchBoxResultsProps) => {
+const SearchBoxResults = ({items, error, onSelect}: SearchBoxResultsProps) => {
     const {t} = useTranslation();
 
     return (
@@ -26,6 +27,9 @@ const SearchBoxResults = ({items, onSelect}: SearchBoxResultsProps) => {
                     </div>
                     {items?.map(patient => <SearchBoxResultItem key={patient.patientId} patient={patient} onSelect={onSelect} />)}
                 </div>
+                {!!error &&
+                    <div className='flex justify-end body3'><span>{t(error)}</span></div>
+                }
             </div>
         </div>
     );

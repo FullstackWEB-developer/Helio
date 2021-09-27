@@ -11,7 +11,6 @@ interface SearchBoxContactResultsProps {
 }
 const SearchBoxContactResults = ({items, paging, onSelect, onPageChange}: SearchBoxContactResultsProps) => {
     const {t} = useTranslation();
-
     return (
         <div>
             <div className='px-6 pb-7'>
@@ -30,7 +29,7 @@ const SearchBoxContactResults = ({items, paging, onSelect, onPageChange}: Search
                         <div className='flex items-center w-2/12 uppercase lx:w-1/12'>{t('search.search_results.company')}</div>
                         <div className='flex items-center justify-center w-2/12 uppercase lx:w-1/12'>{t('searchbox_result.email')}</div>
                         <div className='flex items-center justify-center w-2/12 uppercase lx:w-1/12'>{t('searchbox_result.phone')}</div>
-                        <div className='flex items-center justify-center w-1/12 '/>
+                        <div className='flex items-center justify-center w-1/12 ' />
                     </div>
                     {items?.map(contact => <SearchBoxContactResultItem key={contact.id} contact={contact} onSelect={onSelect} />)}
                 </div>

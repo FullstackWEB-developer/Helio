@@ -97,7 +97,13 @@ const SmsNewMessage = ({...props}: SmsNewMessageProps) => {
         }
     );
 
-    const {isSuccess: patientsDetailIsSuccess, data: patientsDetail, isError: isPatientDetailError, isFetching: patientDetailIsFetching} = aggregateQueries<ExtendedPatient>(
+    const {
+        isSuccess: patientsDetailIsSuccess,
+        data: patientsDetail,
+        isError: isPatientDetailError,
+        hasError: hasPatientDetailError,
+        isFetching: patientDetailIsFetching
+    } = aggregateQueries<ExtendedPatient>(
         useQueries(
             patientsData.map(patient => ({
                 enabled: patientsData.length > 0,
@@ -108,11 +114,11 @@ const SmsNewMessage = ({...props}: SmsNewMessageProps) => {
     );
 
     useEffect(() => {
-        if (patientsDetailIsSuccess) {
+        if (patientsDetailIsSuccess && !patientDetailIsFetching) {
             setPatients(patientsDetail);
             setStep(SmsNewMessageSteps.SearchResult);
         }
-    }, [patientsDetailIsSuccess])
+    }, [patientsDetailIsSuccess, patientDetailIsFetching])
 
 
     const NoSearchResult = () => (
@@ -189,6 +195,7 @@ const SmsNewMessage = ({...props}: SmsNewMessageProps) => {
                 {!isLoading && step === SmsNewMessageSteps.SearchResult && patients.length > 0 &&
                     <SearchBoxResults
                         items={patients}
+                        error={hasPatientDetailError ? 'sms.has_error' : undefined}
                         onSelect={onSearchBoxResultSelect}
                     />
                 }
