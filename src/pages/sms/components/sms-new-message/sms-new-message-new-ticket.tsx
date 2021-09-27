@@ -25,7 +25,7 @@ interface SmsNewMessageNewTicketProps {
 const SmsNewMessageNewTicket = ({patient, contact, ...props}: SmsNewMessageNewTicketProps) => {
     const {t} = useTranslation();
     const dispatch = useDispatch();
-    const {username} = useSelector(authenticationSelector);
+    const auth = useSelector(authenticationSelector);
     const [ticketTypeSelected, setTicketTypeSelected] = useState<string>();
     const [ticketReasonSelected, setTicketReasonSelected] = useState<string>();
     const [isValid, setValid] = useState(false);
@@ -53,7 +53,7 @@ const SmsNewMessageNewTicket = ({patient, contact, ...props}: SmsNewMessageNewTi
                 type: ticketTypeSelected,
                 reason: ticketReasonSelected,
                 channel: ChannelTypes.SMS,
-                assignee: username,
+                assignee: auth.id,
             };
 
             if (!!patient) {
