@@ -54,7 +54,7 @@ const CallLogPlayer = (
                         <h6>{title}</h6>
                         <span className='mt-1 body3-medium'>{subTitle}</span>
                     </div>
-                    <CallContactAgentInfo agentId={agentId} />
+                    <CallContactAgentInfo agentId={agentId} type='VOICE' />
                 </div>
                 <div className='mb-10'>
                     {(isLoading || isFetching) &&

@@ -11,7 +11,7 @@ import {ChatLogQueryType} from './models/chat-log-query';
 import {useSelector} from 'react-redux';
 import {authenticationSelector} from '@shared/store/app-user/appuser.selectors';
 import {useHistory} from 'react-router';
-import {TicketLogModel, TicketLogRequestModel} from '../../shared/models/ticket-log.model';
+import {TicketLogModel, TicketLogRequestModel} from '@shared/models/ticket-log.model';
 import {DEFAULT_PAGING} from '@shared/constants/table-constants';
 import {GetCallLogs, QueryGetPatientById, QueryTickets} from '@constants/react-query-constants';
 import {getChatsLog} from './services/chats-log.services';
@@ -31,13 +31,12 @@ import {Ticket} from '@pages/tickets/models/ticket';
 import {ContactsPath, PatientsPath, TicketsPath} from '@app/paths';
 import MoreMenu from '@components/more-menu';
 import CallsLogFilter from '@pages/calls-log/components/call-log-filter/call-log-filter';
-import AvatarLabel from '@components/avatar-label';
 import {getSortDirection, getSortOrder, updateSort} from '@shared/utils/sort-utils';
 import {SortDirection} from '@shared/models/sort-direction';
 
 const ChatsLogList = () => {
     const {t} = useTranslation();
-    const {username} = useSelector(authenticationSelector);
+    const auth = useSelector(authenticationSelector);
     const history = useHistory();
     const [pagingResult, setPagingResult] = useState({...DEFAULT_PAGING});
     const [isFilterOpen, setFilterOpen] = useState(false);
@@ -50,7 +49,7 @@ const ChatsLogList = () => {
     ];
     const [chatsLogFilter, setChatsLogFilter] = useState<TicketLogRequestModel>({
         ...DEFAULT_PAGING,
-        assignedTo: username
+        assignedTo: auth.id
     });
 
     const navigateToTicketDetail = (ticketNumber: string) => {
@@ -106,7 +105,7 @@ const ChatsLogList = () => {
     const onDropdownClick = (item: DropdownItemModel) => {
         const context = item.value as ChatLogQueryType;
         if (context === ChatLogQueryType.MyChatLog) {
-            setChatsLogFilter({...chatsLogFilter, assignedTo: username});
+            setChatsLogFilter({...chatsLogFilter, assignedTo: auth.id});
         } else {
             setChatsLogFilter({...chatsLogFilter, assignedTo: ''});
         }
@@ -152,6 +151,7 @@ const ChatsLogList = () => {
                 widthClass: 'w-2/12',
                 render: (assigneeUser: string) => (
                     <CallContactAgentInfo
+                        type='CHAT'
                         agentId={assigneeUser}
                     />
                 )

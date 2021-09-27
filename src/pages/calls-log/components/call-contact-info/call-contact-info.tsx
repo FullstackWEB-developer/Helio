@@ -1,8 +1,6 @@
-import AvatarLabel from '@components/avatar-label';
-import SvgIcon, {Icon} from '@components/svg-icon';
 import {CommunicationDirection} from '@shared/models';
 import utils from '@shared/utils/utils';
-import {TicketLogModel} from '../../../../shared/models/ticket-log.model';
+import {TicketLogModel} from '@shared/models/ticket-log.model';
 import CallContactAgentInfo from './call-contact-agent-info';
 
 interface CallContactInfoProps {
@@ -27,6 +25,7 @@ export const CallContactInfo = ({value, type}: CallContactInfoProps) => {
                 ) &&
                 <span>
                     <CallContactAgentInfo
+                        type='VOICE'
                         agentId={value.assigneeUser}
                     />
                 </span>

@@ -7,9 +7,10 @@ import {Icon} from '@components/svg-icon';
 
 interface CallContactAgentInfoProps {
     agentId?: string;
+    type: 'CHAT' | 'VOICE';
 }
 
-const CallContactAgentInfo = ({agentId}: CallContactAgentInfoProps) => {
+const CallContactAgentInfo = ({agentId, type}: CallContactAgentInfoProps) => {
     const dispatch = useDispatch();
     const users = useSelector(selectUserList);
     const user = useMemo(() => users.find(u => u.id === agentId), [agentId, users]);
@@ -21,7 +22,7 @@ const CallContactAgentInfo = ({agentId}: CallContactAgentInfoProps) => {
     if (!agentId) {
         return (
             <AvatarLabel
-                firstName='common.voice'
+                firstName={type === 'VOICE' ? 'common.voice' : 'common.chat'}
                 lastName='common.bot'
                 labelClassName='body2'
                 icon={Icon.Bot}

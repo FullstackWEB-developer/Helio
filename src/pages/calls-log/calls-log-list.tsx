@@ -43,7 +43,7 @@ dayjs.extend(utc);
 const CallsLogList = () => {
 
     const {t} = useTranslation();
-    const {username} = useSelector(authenticationSelector);
+    const auth = useSelector(authenticationSelector);
     const isFiltered = useSelector(selectIsCallsLogFiltered);
     const history = useHistory();
 
@@ -54,7 +54,7 @@ const CallsLogList = () => {
     const [pagingResult, setPagingResult] = useState({...DEFAULT_PAGING});
     const [callsLogFilter, setCallsLogFilter] = useState<TicketLogRequestModel>({
         ...DEFAULT_PAGING,
-        assignedTo: username
+        assignedTo: auth.id
     });
     const logger = Logger.getInstance();
 
@@ -342,7 +342,7 @@ const CallsLogList = () => {
     const onDropdownClick = (item: DropdownItemModel) => {
         const context = item.value as CallLogQueryType;
         if (context === CallLogQueryType.MyCallLog) {
-            setCallsLogFilter({...callsLogFilter, assignedTo: username});
+            setCallsLogFilter({...callsLogFilter, assignedTo: auth.id});
         } else {
             setCallsLogFilter({...callsLogFilter, assignedTo: ''});
         }
