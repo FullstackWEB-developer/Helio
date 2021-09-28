@@ -517,6 +517,7 @@
       "reason": "Reason",
       "date_time": "Date & Time",
       "agent": "Agent",
+      "file_uploaded": "File uploaded : {{fileName}}",
       "transcript": "Transcript",
       "started": "{{name}} Started chat",
       "joined": "{{name}} joined chat.",

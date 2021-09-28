@@ -7,6 +7,7 @@ export const ParticipantAgent = "AGENT";
 export const ParticipantCustomer = "CUSTOMER";
 export const MessageTypeEvent = "EVENT";
 export const MessageTypeMessage = "MESSAGE";
+export const MessageTypeAttachment = "ATTACHMENT";
 export interface ChatMessage {
     ContentType: string;
     Content?: string;
@@ -16,12 +17,20 @@ export interface ChatMessage {
     ParticipantRole?: string;
     AbsoluteTime: Date;
     ParticipantId?:string;
+    Attachments: Attachment[];
 }
 
 export interface ChatInteractiveMessage {
     data: ChatInteractiveMessageData,
     templateType: string;
     version: string;
+}
+
+export interface Attachment {
+    attachmentId: string;
+    AttachmentName: string;
+    contentType: string;
+    status: string;
 }
 
 export interface ChatInteractiveMessageData {

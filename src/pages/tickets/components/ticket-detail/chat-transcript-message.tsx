@@ -1,8 +1,14 @@
 import {
     ChatInteractiveMessage,
-    ChatMessage, ContentTypeChatEnded,
+    ChatMessage,
+    ContentTypeChatEnded,
     ContentTypeInteractive,
-    ContentTypeJoined, ContentTypeLeft, ContentTypePlainText
+    ContentTypeJoined,
+    ContentTypeLeft,
+    ContentTypePlainText,
+    MessageTypeAttachment,
+    MessageTypeEvent,
+    MessageTypeMessage
 } from '@pages/tickets/models/chat-transcript.model';
 import dayjs from 'dayjs';
 import {useTranslation} from 'react-i18next';
@@ -33,6 +39,7 @@ const ChatTranscriptMessage = ({message, previousMessageDisplayName= '', previou
     const showDisplayName = () => {
         if (message.ContentType === ContentTypeChatEnded ||
             message.ContentType === ContentTypeLeft ||
+            message.Type !== MessageTypeAttachment ||
             message.ContentType === ContentTypeJoined) {
             return false;
         }
@@ -47,10 +54,19 @@ const ChatTranscriptMessage = ({message, previousMessageDisplayName= '', previou
     const messageClass = classNames( {
         'body2-medium' : message.ContentType === ContentTypeChatEnded ||
             message.ContentType === ContentTypeLeft ||
+            message.Type === MessageTypeAttachment ||
             message.ContentType === ContentTypeJoined,
         'body2' : message.ContentType === ContentTypePlainText ||
             message.ContentType === ContentTypeInteractive
-    })
+    });
+
+    const getMessageText = () => {
+        if (message.Type === MessageTypeMessage || message.Type === MessageTypeEvent) {
+            return messageText;
+        } else if (message.Type === MessageTypeAttachment) {
+            return t('ticket_detail.chat_transcript.file_uploaded', { 'fileName': message.Attachments[0].AttachmentName});
+        }
+    }
 
     return  <div className='grid grid-cols-8 gap-2'>
         <div className='body2-medium'>
@@ -60,7 +76,7 @@ const ChatTranscriptMessage = ({message, previousMessageDisplayName= '', previou
             {showDisplayName() && <span className='subtitle2'>
                 {`${message.DisplayName}:`}
             </span>}
-            <span className={messageClass}>{` ${messageText}`}</span>
+            <span className={messageClass}>{getMessageText()}</span>
         </span>
     </div>;
 }
