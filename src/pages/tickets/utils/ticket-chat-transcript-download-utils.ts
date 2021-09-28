@@ -61,7 +61,7 @@ const printTranscriptMessage = (transcript: ChatMessage, nextTranscript?: ChatMe
     let shouldIgnoreNextMessage = false;
     if (transcript.Type === MessageTypeMessage && (transcript.ContentType === ContentTypePlainText || transcript.ContentType === ContentTypeInteractive)) {
 
-        output += `(${utils.formatUtcDate(transcript.AbsoluteTime, 'MMM D, YYYY h:mm A')}) ${transcript.DisplayName}:`;
+        output += `(${utils.formatUtcDate(transcript.AbsoluteTime, 'MMM D, YYYY h:mm:ss A')}) ${transcript.DisplayName}:`;
         output += newLine;
         output += `- ${GetMessageContent(transcript)}`;
 

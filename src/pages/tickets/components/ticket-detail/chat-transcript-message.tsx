@@ -70,7 +70,7 @@ const ChatTranscriptMessage = ({message, previousMessageDisplayName= '', previou
 
     return  <div className='grid grid-cols-8 gap-2'>
         <div className='body2-medium'>
-            {`(${dayjs.utc(message.AbsoluteTime).format('HH:mm:ss')})`}
+            {`(${dayjs(message.AbsoluteTime).local().format('HH:mm:ss')})`}
         </div>
         <span className='col-span-7 pl-5 pr-1'>
             {showDisplayName() && <span className='subtitle2'>
