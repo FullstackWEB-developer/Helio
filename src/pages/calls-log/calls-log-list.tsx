@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import DropdownLabel from '@components/dropdown-label';
 import {DropdownItemModel} from '@components/dropdown';
 import Pagination from '@components/pagination';
@@ -37,6 +37,7 @@ import {getSortDirection, getSortOrder, updateSort} from '@shared/utils/sort-uti
 import './calls-log-list.scss';
 import FilterDot from '@components/filter-dot/filter-dot';
 import {selectIsCallsLogFiltered} from '@pages/calls-log/store/calls-log.selectors';
+import {setIsCallsLogFiltered} from '@pages/calls-log/store/calls-log.slice';
 
 dayjs.extend(utc);
 
@@ -54,9 +55,16 @@ const CallsLogList = () => {
     const [pagingResult, setPagingResult] = useState({...DEFAULT_PAGING});
     const [callsLogFilter, setCallsLogFilter] = useState<TicketLogRequestModel>({
         ...DEFAULT_PAGING,
-        assignedTo: auth.id
+        assignedTo: auth.id,
+        sorts:['createdOn Desc']
     });
     const logger = Logger.getInstance();
+
+    useEffect(() => {
+        return () => {
+            dispatch(setIsCallsLogFiltered(false));
+        }
+    }, [dispatch]);
 
     const initiateACall = (phoneToDial?: string) => {
         dispatch(showCcp());

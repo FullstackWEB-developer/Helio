@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import DropdownLabel from '@components/dropdown-label';
 import {DropdownItemModel} from '@components/dropdown';
 import Pagination from '@components/pagination';
@@ -8,7 +8,7 @@ import Table from '@components/table/table';
 import {TableModel} from '@components/table/table.models';
 import {useQuery} from 'react-query';
 import {ChatLogQueryType} from './models/chat-log-query';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {authenticationSelector} from '@shared/store/app-user/appuser.selectors';
 import {useHistory} from 'react-router';
 import {TicketLogModel, TicketLogRequestModel} from '@shared/models/ticket-log.model';
@@ -33,6 +33,9 @@ import MoreMenu from '@components/more-menu';
 import CallsLogFilter from '@pages/calls-log/components/call-log-filter/call-log-filter';
 import {getSortDirection, getSortOrder, updateSort} from '@shared/utils/sort-utils';
 import {SortDirection} from '@shared/models/sort-direction';
+import FilterDot from '@components/filter-dot/filter-dot';
+import {selectIsChatLogFiltered} from '@pages/chat-log/store/chat-log.selectors';
+import {setIsChatLogFiltered} from '@pages/chat-log/store/chat-log.slice';
 
 const ChatsLogList = () => {
     const {t} = useTranslation();
@@ -42,15 +45,23 @@ const ChatsLogList = () => {
     const [isFilterOpen, setFilterOpen] = useState(false);
     const [isChatTranscriptOpen, setChatTranscriptOpen] = useState(false);
     const [ticketNumber, setTicketNumber] = useState<string>();
-
+    const isFiltered = useSelector(selectIsChatLogFiltered);
+    const dispatch = useDispatch();
     const dropdownItem: DropdownItemModel[] = [
         {label: 'ticket_log.my_chat_log', value: ChatLogQueryType.MyChatLog},
         {label: 'ticket_log.team_chat_log', value: ChatLogQueryType.TeamChatLog}
     ];
     const [chatsLogFilter, setChatsLogFilter] = useState<TicketLogRequestModel>({
         ...DEFAULT_PAGING,
-        assignedTo: auth.id
+        assignedTo: auth.id,
+        sorts:['createdOn Desc']
     });
+
+    useEffect(() => {
+        return () => {
+            dispatch(setIsChatLogFiltered(false));
+        }
+    }, [dispatch]);
 
     const navigateToTicketDetail = (ticketNumber: string) => {
         history.push(`${TicketsPath}/${ticketNumber}`);
@@ -326,14 +337,17 @@ const ChatsLogList = () => {
                     </div>
                 </div>
                 <div className='flex flex-row border-b h-14'>
-                    <div className='flex flex-row items-center pl-6 border-r'>
+                    <div className='flex flex-row items-center pl-6 border-r relative'>
                         <SvgIcon
                             type={Icon.FilterList}
                             className='icon-medium'
-                            wrapperClassName='mr-8 cursor-pointer icon-medium'
+                            wrapperClassName='mr-6 cursor-pointer icon-medium'
                             fillClass='filter-icon'
                             onClick={() => setFilterOpen(!isFilterOpen)}
                         />
+                        {isFiltered && <div className='absolute bottom-3.5 right-6'>
+                            <FilterDot />
+                        </div>}
                     </div>
                     <SearchInputField
                         wrapperClassNames='relative w-full h-full'

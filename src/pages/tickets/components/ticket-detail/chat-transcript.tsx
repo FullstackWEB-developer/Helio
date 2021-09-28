@@ -1,6 +1,6 @@
-import {getRecordedConversation, getRecordedConversationLink} from '@pages/tickets/services/tickets.service';
+import {getRecordedConversation} from '@pages/tickets/services/tickets.service';
 import {useQuery} from 'react-query';
-import {GetRecordedConversationContent, GetRecordedConversationLink} from '@constants/react-query-constants';
+import {GetRecordedConversationContent} from '@constants/react-query-constants';
 import Spinner from '@components/spinner/Spinner';
 import {useTranslation} from 'react-i18next';
 import SvgIcon, {Icon} from '@components/svg-icon';
@@ -16,7 +16,7 @@ import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 import {useEffect, useState} from 'react';
 import {getUserList} from '@shared/services/lookups.service';
-import {downloadRecordedConversation, getChannel} from '@pages/tickets/utils/ticket-chat-transcript-download-utils';
+import {downloadRecordedConversation} from '@pages/tickets/utils/ticket-chat-transcript-download-utils';
 import {ChatTranscript as ChatTranscriptModel} from '@pages/tickets/models/chat-transcript.model';
 
 export interface ChatTranscriptProps {
@@ -105,7 +105,7 @@ const ChatTranscript = ({ticket, patient}: ChatTranscriptProps) => {
                     </div>
                 </div> : <>{patient ? <div className='pt-1 pb-16' /> : <span />}</>}
                 <LabelledInfo label='ticket_detail.chat_transcript.date_time'
-                    value={ticket.contactInitiationTimestamp ? dayjs(ticket.contactInitiationTimestamp).format('MMM DD, YYYY h:mm A') : t('common.not_available')} />
+                    value={ticket.contactInitiationTimestamp ? dayjs.utc(ticket.contactInitiationTimestamp).local().format('MMM DD, YYYY h:mm A') : t('common.not_available')} />
                 <LabelledInfo label='ticket_detail.chat_transcript.wait_time'
                     value={dayjs.duration(ticket.contactWaitDuration ? ticket.contactWaitDuration : 0, 'seconds').format('HH:mm:ss')} />
                 <LabelledInfo label='ticket_detail.chat_transcript.duration'

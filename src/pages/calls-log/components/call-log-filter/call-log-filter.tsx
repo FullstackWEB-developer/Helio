@@ -16,6 +16,7 @@ import utils from '@shared/utils/utils';
 import {TicketLogRequestModel} from '@shared/models/ticket-log.model';
 import {CommunicationDirection} from '@shared/models';
 import {setIsCallsLogFiltered} from '@pages/calls-log/store/calls-log.slice';
+import {setIsChatLogFiltered} from '@pages/chat-log/store/chat-log.slice';
 
 const TIME_PERIOD_DATE_RANGE_OPTION = '3';
 const DEFAULT_ALL_OPTION = {key: 'all', value: undefined};
@@ -171,10 +172,18 @@ const CallsLogFilter = ({isOpen, value: propsValue, logType, ...props}: CallsLog
             filter.communicationDirections = callTypes;
         }
 
-        if (filter.fromDate || filter.toDate || filter.reason || filter.communicationDirections?.length || filter.contactStatus?.length ) {
-            dispatch(setIsCallsLogFiltered(true));
-        } else {
-            dispatch(setIsCallsLogFiltered(false));
+        if (logType === 'Call') {
+            if (filter.fromDate || filter.toDate || filter.reason || filter.communicationDirections?.length || filter.contactStatus?.length) {
+                dispatch(setIsCallsLogFiltered(true));
+            } else {
+                dispatch(setIsCallsLogFiltered(false));
+            }
+        } else if (logType === 'Chat') {
+            if (filter.fromDate || filter.toDate || filter.reason || filter.communicationDirections?.length || filter.contactStatus?.length) {
+                dispatch(setIsChatLogFiltered(true));
+            } else {
+                dispatch(setIsChatLogFiltered(false));
+            }
         }
 
         props.onSubmit?.(filter);
