@@ -6,7 +6,6 @@ import {CommunicationDirection} from '@shared/models';
 import SearchInputField from '@components/search-input-field/search-input-field';
 import SvgIcon, {Icon} from '@components/svg-icon';
 import Table from '@components/table/table';
-import {TableModel} from '@components/table/table.models';
 import {useQuery} from 'react-query';
 import {getCallsLog} from './services/call-log.service';
 import {TicketLogModel, TicketLogRequestModel, TicketLogContactStatus} from '@shared/models/ticket-log.model';
@@ -53,6 +52,7 @@ const CallsLogList = () => {
     const [isPlayerOpen, setPlayerOpen] = useState(false);
     const [rowSelected, setRowSelected] = useState<TicketLogModel>();
     const [pagingResult, setPagingResult] = useState({...DEFAULT_PAGING});
+    const [rows, setRows] = useState<TicketLogModel[]>([]);
     const [callsLogFilter, setCallsLogFilter] = useState<TicketLogRequestModel>({
         ...DEFAULT_PAGING,
         assignedTo: auth.id,
@@ -159,19 +159,19 @@ const CallsLogList = () => {
         setCallsLogFilter(query);
     }
 
-    const getTableModel = (): TableModel => ({
+    let tableModel = {
         columns: [
             {
                 title: '',
                 field: 'id',
                 widthClass: 'w-24',
-                render: (_, data: TicketLogModel) => getDirectionIcon(data.communicationDirection, data.contactStatus)
+                render: (_: string, data: TicketLogModel) => getDirectionIcon(data.communicationDirection, data.contactStatus)
             },
             {
                 title: 'ticket_log.from',
                 field: 'from',
                 widthClass: 'w-2/12',
-                render: (_, data: TicketLogModel) => (
+                render: (_ : string, data: TicketLogModel) => (
                     <CallContactInfo type='from' value={data} />
                 )
             },
@@ -179,7 +179,7 @@ const CallsLogList = () => {
                 title: 'ticket_log.to',
                 field: 'to',
                 widthClass: 'w-2/12',
-                render: (_, data: TicketLogModel) => (
+                render: (_ : string, data: TicketLogModel) => (
                     <CallContactInfo type='to' value={data} />
                 )
             },
@@ -290,7 +290,7 @@ const CallsLogList = () => {
                 title: '',
                 field: '',
                 widthClass: 'w-8 h-full items-center justify-center',
-                render: (_, data: TicketLogModel) => {
+                render: (_: any, data: TicketLogModel) => {
                     return (<>
                         <MoreMenu
                             items={getMoreMenuOption(data)}
@@ -326,19 +326,18 @@ const CallsLogList = () => {
                 }
             }
         ],
-        rows: [],
+        rows : rows,
         hasRowsBottomBorder: true,
         headerClassName: 'h-12',
         rowClass: 'h-20 items-center hover:bg-gray-100 cursor-pointer call-log-row',
-    });
-    const [tableModel, setTableModel] = useState(getTableModel());
+    };
 
     const {isLoading, isFetching} = useQuery([GetCallLogs, callsLogFilter], () => getCallsLog(callsLogFilter), {
         enabled: true,
         onSuccess: (response) => {
             const {results, ...paging} = response;
             setPagingResult({...paging});
-            setTableModel({...getTableModel(), rows: response.results});
+            setRows(response.results);
         }
     });
 
