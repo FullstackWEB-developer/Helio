@@ -5,7 +5,6 @@ import Pagination from '@components/pagination';
 import SearchInputField from '@components/search-input-field/search-input-field';
 import SvgIcon, {Icon} from '@components/svg-icon';
 import Table from '@components/table/table';
-import {TableModel} from '@components/table/table.models';
 import {useQuery} from 'react-query';
 import {ChatLogQueryType} from './models/chat-log-query';
 import {useDispatch, useSelector} from 'react-redux';
@@ -46,6 +45,7 @@ const ChatsLogList = () => {
     const [isChatTranscriptOpen, setChatTranscriptOpen] = useState(false);
     const [ticketNumber, setTicketNumber] = useState<string>();
     const isFiltered = useSelector(selectIsChatLogFiltered);
+    const [rows, setRows] = useState<TicketLogModel[]>([]);
     const dispatch = useDispatch();
     const dropdownItem: DropdownItemModel[] = [
         {label: 'ticket_log.my_chat_log', value: ChatLogQueryType.MyChatLog},
@@ -144,13 +144,13 @@ const ChatsLogList = () => {
         }
     );
 
-    const getTableModel = (): TableModel => ({
+    let mainTableModel = {
         columns: [
             {
                 title: 'ticket_log.from',
                 field: 'from',
                 widthClass: 'w-2/12',
-                render: (_, data: TicketLogModel) => (
+                render: (_ : string, data: TicketLogModel) => (
                     <span className='body2'>
                         {data.createdForName}
                     </span>
@@ -201,7 +201,7 @@ const ChatsLogList = () => {
                 title: 'ticket_log.status',
                 field: 'contactStatus',
                 widthClass: 'w-1/12',
-                render: (_: any, data: TicketLogModel) => {
+                render: (_: string, data: TicketLogModel) => {
                     return (
                         <span className='body2'>
                             {data.agentInteractionDuration && data.agentInteractionDuration > 0 &&
@@ -261,7 +261,7 @@ const ChatsLogList = () => {
                 title: '',
                 field: '',
                 widthClass: 'w-8 h-full items-center justify-center',
-                render: (_, data: TicketLogModel) => {
+                render: (_ : any, data: TicketLogModel) => {
                     return (<>
                         <MoreMenu
                             items={getMoreMenuOption(data)}
@@ -293,20 +293,19 @@ const ChatsLogList = () => {
                 }
             }
         ],
-        rows: [],
+        rows,
         hasRowsBottomBorder: true,
         headerClassName: 'h-12 px-7',
         rowClass: 'h-20 items-center hover:bg-gray-100 cursor-pointer chat-log-row px-7',
-    });
+    };
 
-    const [tableModel, setTableModel] = useState<TableModel>(getTableModel());
 
     const {isLoading, isFetching} = useQuery([GetCallLogs, chatsLogFilter], () => getChatsLog(chatsLogFilter), {
         enabled: true,
         onSuccess: (response) => {
             const {results, ...paging} = response;
             setPagingResult({...paging});
-            setTableModel({...getTableModel(), rows: response.results});
+            setRows(response.results);
         }
     });
 
@@ -362,7 +361,7 @@ const ChatsLogList = () => {
                         <Spinner fullScreen />
                     }
                     {(!isLoading && !isFetching) &&
-                        <Table model={tableModel} />
+                        <Table model={mainTableModel} />
                     }
                 </div>
             </div>
