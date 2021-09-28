@@ -7,7 +7,7 @@ import classnames from 'classnames';
 
 export interface CountdownTimerProps {
     onTimerEnd: () => void;
-    type: DashboardTypes
+    type: DashboardTypes | 'sms'
 }
 
 const CountdownTimer = ({onTimerEnd, type}: CountdownTimerProps) => {
@@ -45,10 +45,20 @@ const CountdownTimer = ({onTimerEnd, type}: CountdownTimerProps) => {
         return duration.format('mm:ss')
     }
 
+    const displayMessage = () => {
+        switch (type) {
+            case DashboardTypes.wallboard:
+                return 'wallboard.refresh_after';
+            case 'sms':
+                return 'sms.refresh_after';
+            default:
+                return 'dashboard.refresh_after';
+        }
+    }
     const messageClass = classnames('body2-medium', {
         'pt-8': type === DashboardTypes.wallboard
     });
-    return <div className={messageClass}>{t(`${type === DashboardTypes.wallboard ? 'wallboard' : 'dashboard'}.refresh_after`, {time: getTimeLeft()})}</div>
+    return <div className={messageClass}>{t(`${displayMessage()}`, {time: getTimeLeft()})}</div>
 }
 
 export default CountdownTimer;

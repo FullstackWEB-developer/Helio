@@ -70,7 +70,11 @@ const RegistrationReviewStep = ({getValues, insuranceOption}: {getValues: any, i
                         <div className='body2'><span className='review-label'>{`${t('external_access.registration.policy_holder_dob')}: `}</span>{utils.formatDate(getValues('policyHolderDob'))}</div>
                         <div className='body2'><span className='review-label'>{`${t('external_access.registration.policy_holder_relationship')}: `}</span>{getValues('insuranceRelation')}</div>
                         <div className='body2'><span className='review-label'>{`${t('external_access.registration.insurance_member_id')}: `}</span>{getValues('insuranceMemberId')}</div>
-                        <div className='body2'><span className='review-label'>{`${t('external_access.registration.group_number')}: `}</span>{getValues('groupNumber')}</div>
+                        {
+                            getValues('groupNumber') ?
+                                <div className='body2'><span className='review-label'>{`${t('external_access.registration.group_number')}: `}</span>{getValues('groupNumber')}</div> :
+                                null
+                        }
                     </> : <div className='body2'><span className='review-label'>{`${t('external_access.registration.insurance_info')}: `}</span>{t(`${insuranceOption?.label}`)}</div>
             }
 

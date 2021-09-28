@@ -145,7 +145,7 @@ const InsuranceInformationRegistrationStep = ({control, getValues, setValue, ins
                             control={control}
                             name='groupNumber'
                             defaultValue=''
-                            required={true}
+                            required={false}
                             containerClassName='md:w-1/2'
                             label='external_access.registration.group_number'
                         />

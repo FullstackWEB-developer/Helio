@@ -178,13 +178,14 @@ const RegistrationForm = ({step, goStepForward, goBack}: {step: RegistrationStep
         switch (step) {
             case RegistrationStep.PersonalInformation:
                 return getValues('firstName') && getValues('lastName') && getValues('dob') && getValues('mobilePhone')
-                    && getValues('zip') && getValues('address') && getValues('city') && getValues('referralSource');
+                    && getValues('zip') && getValues('address') && getValues('city') && getValues('referralSource') 
+                    && !errors.dob && !errors.email;
             case RegistrationStep.CommunicationPreferences:
                 return !!getValues('preferredCommunication');
             case RegistrationStep.InsuranceInformation:
                 return uploadDocumentsRequired ? getValues('insuranceType') && getValues('insuranceName')
                     && getValues('policyHolderName') && getValues('policyHolderDob') && getValues('insuranceRelation')
-                    && getValues('insuranceMemberId') && getValues('groupNumber') : true;
+                    && getValues('insuranceMemberId') && !errors.policyHolderDob : true;
             case RegistrationStep.Documents:
                 return imageUploadTag !== '';
         }

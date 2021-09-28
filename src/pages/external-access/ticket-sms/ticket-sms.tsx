@@ -18,6 +18,7 @@ import TicketSmsSendMessage from '@pages/external-access/ticket-sms/ticket-sms-s
 import utils from '@shared/utils/utils';
 import {getUserBaseData} from '@shared/services/user.service';
 import {selectRedirectLink} from '@pages/external-access/verify-patient/store/verify-patient.selectors';
+import CountdownTimer from '@pages/dashboard/components/countdown-timer';
 
 
 const TicketSms = () => {
@@ -38,40 +39,44 @@ const TicketSms = () => {
         }
     }, [])
 
-    const {isLoading} = useQuery([QueryTicketMessagesInfinite, ChannelTypes.SMS, request.ticketId, page],
+    const {isLoading, refetch} = useQuery([QueryTicketMessagesInfinite, ChannelTypes.SMS, request.ticketId, page],
         () => getMessages(request.ticketId, ChannelTypes.SMS, {
             page,
             pageSize: 50,
         }), {
-            enabled: !!request.ticketId,
-            onSuccess:(data: PagedList<TicketMessage>) => {
-                setBottomFocus(true);
-                setMessages([...messages].concat(data.results));
-                if (page < data.totalPages) {
-                    setPage(page+1);
-                } else {
-                    let userIds = messages.map(message => message.createdBy);
-                    userIds = userIds.filter(function(v,i) { return userIds.indexOf(v) == i; });
-                    setUserIds(userIds);
-                }
-            }
-        });
+        enabled: !!request.ticketId,
+        onSuccess: (data: PagedList<TicketMessage>) => {
+            setBottomFocus(true);
+            let allMessages = [...messages].concat(data.results);
 
-    const {data: users } = useQuery([UserListBaseData, userIds],
+            setMessages(allMessages);
+            if (page < data.totalPages) {
+                setPage(page + 1);
+            } else {
+                let userIds = allMessages.map(message => message.createdBy);
+                userIds = userIds
+                    .filter(function (v, i) {return userIds.indexOf(v) == i;})
+                    .filter(a => utils.isGuid(a));
+                setUserIds(userIds);
+            }
+        }
+    });
+
+    const {data: users} = useQuery([UserListBaseData, userIds],
         () => {
             return getUserBaseData(userIds!, {
                 page: 1,
                 pageSize: 100,
             })
         }, {
-            enabled: !!userIds && userIds.length > 0
-        });
+        enabled: !!userIds && userIds.length > 0
+    });
 
 
 
-    const onMessageSend= (text: string) => {
+    const onMessageSend = (text: string) => {
         const message: TicketMessage = {
-            ticketId:request.ticketId,
+            ticketId: request.ticketId,
             channel: ChannelTypes.SMS,
             body: text,
             createdOn: new Date(),
@@ -79,7 +84,7 @@ const TicketSms = () => {
             createdBy: verifiedPatient.patientId.toString(),
             createdName: utils.stringJoin(' ', verifiedPatient.firstName, verifiedPatient.lastName),
             direction: TicketMessagesDirection.Incoming,
-            fromAddress:''
+            fromAddress: ''
         };
         setMessages([...messages, message]);
         setFocus();
@@ -88,7 +93,7 @@ const TicketSms = () => {
     const setFocus = () => {
         setBottomFocus(false);
         setTimeout(() => {
-         setBottomFocus(true);
+            setBottomFocus(true);
         })
     }
 
@@ -116,38 +121,46 @@ const TicketSms = () => {
         return dayjs.utc(date).local().format('MMMM DD, YYYY');
     }
 
-    const shouldPrintDate = (message: TicketMessage, previousMessage: TicketMessage | undefined) : boolean => {
+    const shouldPrintDate = (message: TicketMessage, previousMessage: TicketMessage | undefined): boolean => {
         if (!previousMessage) {
             return true;
         }
         return !dayjs.utc(message.createdOn).local().isSame(dayjs.utc(previousMessage.createdOn).local(), 'day');
     }
 
-    const sortedMessages = messages.sort((a,b) => new Date(a.createdOn).getTime() - new Date(b.createdOn).getTime());
+    const onTimerEnd = () => {
+        setBottomFocus(false);
+        setMessages([]);
+        refetch().then();
+    }
+    const sortedMessages = messages.sort((a, b) => new Date(a.createdOn).getTime() - new Date(b.createdOn).getTime());
 
-return <div className='flex flex-col min-h-screen'>
-    <div className='h7 border-b w-ful flex items-center justify-center h-14 flex-none'>
-        {t('external_access.ticket_sms.conversation_history')}
+    return <div className='flex flex-col min-h-screen'>
+        <div className='h7 border-b w-ful flex items-center justify-center h-14 flex-none'>
+            {t('external_access.ticket_sms.conversation_history')}
+        </div>
+        <div className='overflow-y-auto flex-grow space-y-4 pb-6'>
+            {(!messages || messages.length === 0) && <div className='pt-4 body2-medium flex justify-center'>{t('external_access.ticket_sms.no_messages')}</div>}
+            {React.Children.toArray(sortedMessages.map((message, index) => {
+                const previousMessage = sortedMessages[index - 1];
+                if (shouldPrintDate(message, previousMessage)) {
+                    return <>
+                        <div className='body3-small pt-2 flex justify-center'>
+                            {getDate(message.createdOn)}
+                        </div>
+                        <DisplayMessage message={message} />
+                    </>
+                } else {
+                    return <DisplayMessage message={message} />
+                }
+            }))}
+            <AlwaysScrollToBottom enabled={isBottomFocus} />
+        </div>
+        <div className='px-2'>
+            <CountdownTimer type='sms' onTimerEnd={onTimerEnd} />
+        </div>
+        <TicketSmsSendMessage ticketId={request.ticketId} onMessageSend={(text) => onMessageSend(text)} />
     </div>
-    <div className='overflow-y-auto flex-grow space-y-4 pb-6'>
-        {(!messages || messages.length === 0) && <div className='pt-4 body2-medium flex justify-center'>{t('external_access.ticket_sms.no_messages')}</div>}
-        {React.Children.toArray(sortedMessages.map((message, index) => {
-            const previousMessage = sortedMessages[index-1];
-            if (shouldPrintDate(message, previousMessage)) {
-                return <>
-                    <div className='body3-small pt-2 flex justify-center'>
-                        {getDate(message.createdOn)}
-                    </div>
-                    <DisplayMessage message={message} />
-                </>
-            } else {
-                return <DisplayMessage message={message} />
-            }
-        }))}
-        <AlwaysScrollToBottom enabled={isBottomFocus}/>
-    </div>
-    <TicketSmsSendMessage ticketId={request.ticketId} onMessageSend={(text) => onMessageSend(text)} />
-</div>
 }
 
 export default TicketSms;

@@ -15,6 +15,16 @@ interface SmsSummaryListProps {
 
 const SmsSummaryList = ({data, className, isLoading, selectedTicketId, ...props}: SmsSummaryListProps) => {
 
+    const determineDisplayName = (createdForName: string) => {
+        if(createdForName){
+            if(createdForName.startsWith('+') || /\d/.test(createdForName))
+            {
+                return utils.applyPhoneMask(createdForName);
+            }
+            return createdForName;
+        }        
+        return '';
+    }
     return (<div
         className={classnames('overflow-y-auto', className)}
         onScroll={props.onScroll}
@@ -26,7 +36,7 @@ const SmsSummaryList = ({data, className, isLoading, selectedTicketId, ...props}
                     contactId={p.contactId}
                     messageSummary={p.messageSummary}
                     unreadCount={p.unreadCount}
-                    createdForName={p.createdForName}
+                    createdForName={determineDisplayName(p.createdForName)}
                     createdForMobileNumber={utils.applyPhoneMask(p.createdForMobileNumber)}
                     messageSendAt={p.messageCreatedOn}
                     messageSendBy={p.messageCreatedByName}

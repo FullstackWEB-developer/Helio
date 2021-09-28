@@ -3,11 +3,12 @@ import {useTranslation} from 'react-i18next';
 import {useLocation} from 'react-router-dom';
 import {toggleNavigation} from './store/layout.slice';
 import React from 'react';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {BlackListsPath, TicketsPath, UsersPath} from '../../app/paths';
 import SvgIcon from '@components/svg-icon/svg-icon';
 import {Icon} from '@components/svg-icon/icon';
 import './navigation.scss';
+import {selectUnreadSMSList} from '@shared/store/app-user/appuser.selectors';
 
 const Navigation = () => {
     const {t} = useTranslation();
@@ -17,6 +18,7 @@ const Navigation = () => {
         return (location && location.pathname === link)
     };
 
+    const unreadSMSList = useSelector(selectUnreadSMSList);
     const menuItems = [
         {
             title: t('navigation.dashboard'),
@@ -47,7 +49,9 @@ const Navigation = () => {
             title: t('navigation.sms'),
             link: '/sms',
             id: 'navigation-sms',
-            icon: <SvgIcon type={Icon.Sms} fillClass='active-item-icon' />
+            icon: <SvgIcon type={Icon.Sms} fillClass='active-item-icon' />,
+            displayBadge: true,
+            badgeValue: unreadSMSList?.length
         },
         // PLEASE DON'T DELETE THIS
         // {
@@ -74,7 +78,7 @@ const Navigation = () => {
         const icon = React.cloneElement(item.icon, {pathClass: (isSelected ? 'navigation-active-icon-color' : 'navigation-inactive-icon-color')})
         return <div key={index}
             className={`hover:bg-secondary-50 border-r ${isSelected ? ' bg-secondary-50 ' : ''}`}>
-            <NavigationItem isSelected={isSelected} key={index} icon={icon} link={item.link} title={item.title} />
+            <NavigationItem isSelected={isSelected} key={index} icon={icon} link={item.link} title={item.title} displayBadge={item.displayBadge} badgeValue={item.badgeValue} />
         </div>
     });
 

@@ -13,13 +13,14 @@ interface NavigationItemProps {
     title: string,
     link: string,
     icon: React.ReactNode,
-    isSelected: boolean
+    isSelected: boolean,
+    displayBadge?: boolean,
+    badgeValue?: number
 }
 
-const NavigationItem = ({title, link, icon, isSelected}: NavigationItemProps) => {
+const NavigationItem = ({title, link, icon, isSelected, displayBadge, badgeValue}: NavigationItemProps) => {
     const {t} = useTranslation();
     const isNavigationExpanded = useSelector(isNavigationExpandedSelector);
-    const [displayBadge, setDisplayBadge] = useState<boolean>(false);
     const dispatch = useDispatch();
     const navigate = (link: string) => {
         dispatch(setLastNavigationDate());
@@ -36,13 +37,14 @@ const NavigationItem = ({title, link, icon, isSelected}: NavigationItemProps) =>
                 <div
                     className={'items-center flex h-14  navigation-item-active cursor-pointer ' + (isNavigationExpanded ? 'w-62' : 'w-20')}>
                     <div>{icon}</div>
+                    {!isNavigationExpanded && displayBadge && <BadgeNumber type='red' number={badgeValue}  hideIfZero={true} circleBadge={true} />}
                     {isNavigationExpanded &&
                         <div className='pl-4 w-full flex flex-row items-center justify-between'>
                             <div className=''>
                                 {t(title)}
                             </div>
                             <div className='w-16 justify-end'>
-                                {displayBadge && <BadgeNumber type='yellow' />}
+                                {displayBadge && <BadgeNumber type='red' number={badgeValue} hideIfZero={true} circleBadge={true}  />}
                             </div>
                         </div>
                     }

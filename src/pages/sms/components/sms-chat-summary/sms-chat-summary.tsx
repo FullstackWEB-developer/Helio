@@ -37,7 +37,7 @@ const SmsChatSummary = ({
             <div className="pr-4"><Avatar userFullName={createdForName} /></div>
             <div className="flex flex-col w-full">
                 <div className="flex justify-between">
-                    <span className='body1'>{createdForName ?? createdForMobileNumber}</span>
+                    <span className='body1'>{createdForName ? createdForName : createdForMobileNumber}</span>
                     <span className='body3-small'>{dayjs.utc(messageSendAt).local().format('hh:mm A')}</span>
                 </div>
                 <div className="flex flex-row justify-between">

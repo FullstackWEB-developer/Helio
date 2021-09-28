@@ -69,6 +69,9 @@ const formatDateShortMonth = (date: string) => {
 }
 
 const getInitialsFromFullName = (username: string): string => {
+    if(username.startsWith('+') || /\d/.test(username)){
+        return '#';
+    }
     const names = username.split(' ');
     let initials = names[0].substring(0, 1).toUpperCase();
 
@@ -348,6 +351,11 @@ const getTimeDiffInFormattedSeconds = (endDate?: string, startDate?: string): st
     return dayjs.duration(diff, 'seconds').format('HH:mm:ss');
 }
 
+const isGuid = (value: string) : boolean => {
+    const guidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+    return guidRegex.test(value);
+}
+
 const utils = {
     getWindowCenter,
     maskPhone,
@@ -382,7 +390,8 @@ const utils = {
     convertBlobToBase64,
     getTimeDiffInFormattedSeconds,
     logout,
-    isSessionExpired
+    isSessionExpired,
+    isGuid
 };
 
 export default utils;

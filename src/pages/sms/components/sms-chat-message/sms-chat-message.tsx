@@ -4,6 +4,9 @@ import utc from 'dayjs/plugin/utc';
 import classnames from 'classnames';
 import './sms-chat-message.scss';
 import {User} from '@shared/models/user';
+import utils from '@shared/utils/utils';
+import {useTranslation} from 'react-i18next';
+import {TFunction} from 'i18next';
 dayjs.extend(utc);
 
 interface SmsChatMessageProps {
@@ -18,14 +21,17 @@ interface SmsChatMessageProps {
     isPhotoVisible?: boolean;
 }
 
-const getName = (props: SmsChatMessageProps) => {
+const getName = (props: SmsChatMessageProps, t: TFunction) => {
     if (!props.isNameVisible) {
         return '';
     }
 
     if (props.agent) {
-        return `${props.agent.firstName} - Agent`
-    } else {
+        return t('sms.agent_label', {name: `${props.agent.firstName} ${props.agent.lastName}`});
+    } else if (props.name.startsWith('+') || /\d/.test(props.name)) {
+        return utils.applyPhoneMask(props.name);
+    }
+    else {
         return props.name;
     }
 }
@@ -33,7 +39,7 @@ const getName = (props: SmsChatMessageProps) => {
 const SmsChatMessageAvatar = ({name, photoUrl}: {name: string, photoUrl?: string}) => (
     <div className="flex flex-col">
         <div><Avatar userFullName={name} userPicture={photoUrl} /></div>
-        <div/>
+        <div />
     </div>
 );
 
@@ -47,29 +53,33 @@ const SmsChatMessageBody = ({body}: {body: string}) => (
 
 
 const SmsChatMessageOut = (props: SmsChatMessageProps) => {
+    const {t} = useTranslation();
+    const name = props.name && (props.name.startsWith('+') || /\d/.test(props.name)) ? t('common.default_avatar') : props.name;
     return (<div className={classnames("flex flex-col mt-2 sms-chat-message out-going pr-2", {'is-top': props.isTheTop})}>
         <div className='flex flex-row'>
-            <div className="sms-chat-message-time body3-small"/>
-            <div className="px-4 mx-2 body2 sms-chat-message-sender">{getName(props)}</div>
-            <div className='w-10'/>
+            <div className="sms-chat-message-time body3-small" />
+            <div className="px-4 mx-2 body2 sms-chat-message-sender">{getName(props, t)}</div>
+            <div className='w-10' />
         </div>
         <div className="flex flex-row justify-end">
             <SmsChatMessageTime date={props.date} />
             <SmsChatMessageBody body={props.body} />
-            {props.isPhotoVisible && <SmsChatMessageAvatar name={props.name} photoUrl={props.photoProfileUrl} />}
+            {props.isPhotoVisible && <SmsChatMessageAvatar name={name} photoUrl={props.photoProfileUrl} />}
         </div>
     </div>);
 }
 
 const SmsChatMessageIn = (props: SmsChatMessageProps) => {
+    const {t} = useTranslation();
+    const name = props.name && (props.name.startsWith('+') || /\d/.test(props.name)) ? t('common.default_avatar') : props.name;
     return (<div className={classnames("flex flex-col mt-2 sms-chat-message in-going", {'is-top': props.isTheTop})}>
         <div className='flex flex-row'>
-            <div className='w-10'/>
-            <div className="px-4 mx-2 body2 sms-chat-message-sender">{getName(props)}</div>
-            <div className="sms-chat-message-time body3-small"/>
+            <div className='w-10' />
+            <div className="px-4 mx-2 body2 sms-chat-message-sender">{getName(props, t)}</div>
+            <div className="sms-chat-message-time body3-small" />
         </div>
         <div className="flex flex-row justify-start">
-            {props.isPhotoVisible && <SmsChatMessageAvatar name={props.name} photoUrl={props.photoProfileUrl} />}
+            {props.isPhotoVisible && <SmsChatMessageAvatar name={name} photoUrl={props.photoProfileUrl} />}
             <SmsChatMessageBody body={props.body} />
             <SmsChatMessageTime date={props.date} />
         </div>

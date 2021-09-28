@@ -28,6 +28,7 @@ import {selectAccessToken} from '@shared/store/app-user/appuser.selectors';
 import {SMS_INCOMING_NAME} from '@shared/constants/signalr-provider-constants';
 import utils from '@shared/utils/utils';
 import Confirmation from '@components/confirmation/confirmation';
+import IncomingSmsUpdate from '@shared/websockets/incoming-sms-update';
 const SearchResults = React.lazy(() => import('../shared/components/search-bar/components/search-results'));
 const PatientChart = React.lazy(() => import('@pages/patients/patient-chart'));
 const VerifyRedirectLink = React.lazy(() => import('@pages/external-access/verify-patient/verify-redirect-link'));
@@ -125,6 +126,7 @@ function App() {
             <SignalRProvider name={SMS_INCOMING_NAME} createConnection={() => createSmsConnectionHub(accessToken)}>
                 <Layout>
                     <RealTimeUserStatusUpdate />
+                    <IncomingSmsUpdate />
                     <GuardedRoute exact path='/dashboard' component={Dashboard} />
                     <GuardedRoute exact path={TicketsPath} component={withSuspense(TicketList)} />
                     <GuardedRoute exact path={`${TicketsPath}/new`} component={withSuspense(TicketNew)} />

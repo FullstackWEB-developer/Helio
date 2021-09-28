@@ -1,7 +1,7 @@
 import {useEffect, useState, useCallback} from 'react';
 import classnames from 'classnames';
 import {useInfiniteQuery, useMutation, useQuery} from 'react-query';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {useTranslation} from 'react-i18next';
 import dayjs from 'dayjs';
 import {DropdownItemModel} from '@components/dropdown';
@@ -14,7 +14,7 @@ import {ChannelTypes, TicketMessage, TicketMessageBase, TicketMessageSummary, Ti
 import {getChats, getMessage, getMessages, markRead, sendMessage} from './services/ticket-messages.service';
 import {DATE_INPUT_LONG_FORMAT, DEBOUNCE_SEARCH_DELAY_MS} from '@constants/form-constants';
 import useDebounce from '@shared/hooks/useDebounce';
-import {authenticationSelector} from '@shared/store/app-user/appuser.selectors';
+import {authenticationSelector, selectUnreadSMSList} from '@shared/store/app-user/appuser.selectors';
 import {SmsFilterParamModel} from './components/sms-filter/sms-filter.model';
 import utils from '@shared/utils/utils';
 import {setAssignee} from '@pages/tickets/services/tickets.service';
@@ -26,6 +26,7 @@ import Spinner from '@components/spinner/Spinner';
 import {useSignalRConnectionContext} from '@shared/contexts/signalRContext';
 import {SmsNotificationData} from '@pages/sms/models';
 import './sms.scss';
+import {removeUnreadSMSMessageForList} from '@shared/store/app-user/appuser.slice';
 
 const Sms = () => {
     const {t} = useTranslation();
@@ -46,6 +47,7 @@ const Sms = () => {
     const [smsQueryType, setSmsQueryType] = useState(SmsQueryType.MySms);
     const [newMessageId, setNewMessageId] = useState('');
     const {smsIncoming} = useSignalRConnectionContext();
+    const dispatch = useDispatch();
 
     const dropdownItem: DropdownItemModel[] = [
         {label: 'sms.query_type.my_sms', value: SmsQueryType.MySms},
@@ -209,6 +211,7 @@ const Sms = () => {
             if (summary.unreadCount > 0) {
                 markReadMutation.mutate({ticketId: summary.ticketId, channel: ChannelTypes.SMS});
             }
+            dispatch(removeUnreadSMSMessageForList(summary.ticketId));
         }
     }
 
@@ -334,6 +337,16 @@ const Sms = () => {
             />
         </>);
     }
+
+    const unreadSMSList = useSelector(selectUnreadSMSList);
+    useEffect(() => {
+        if (selectedTicketSummary) {
+            if (unreadSMSList.includes(selectedTicketSummary?.ticketId)) {
+                dispatch(removeUnreadSMSMessageForList(selectedTicketSummary?.ticketId));
+                markReadMutation.mutate({ticketId: selectedTicketSummary.ticketId, channel: ChannelTypes.SMS});
+            }
+        }
+    }, [unreadSMSList, unreadSMSList.length])
 
     return (
         <div className='flex flex-row w-full sms'>

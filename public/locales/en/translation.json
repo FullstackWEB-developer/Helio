@@ -1212,11 +1212,13 @@
     "name": "Name",
     "dob": "DOB",
     "email": "Email",
-    "phone": "Phone",
+    "phone": "Mobile",
     "text_consent": "Text consent",
     "tooltip_unavailable_sms_message": "SMS not available. SMS message can not be sent to this contact."
   },
   "sms": {
+    "agent_label": "{{name}} - Agent",
+    "refresh_after": "Conversation will be refreshed in {{time}}",
     "has_error": "*Currently, we cannot display all patients due to a technical issue. Please try again later.",
     "you": "You",
     "query_type": {
@@ -1238,6 +1240,7 @@
       },
       "header": {
         "patient_id": "Patient ID",
+        "contact": "Contact",
         "ticket_id": "Ticket ID",
         "ticket_type": "Ticket Type",
         "reason": "Reason"

@@ -16,7 +16,7 @@ const OutgoingSms = ({message, users} : {message: TicketMessage, users?: UserBas
         <div className='flex flex-col w-60'>
         <div className='flex flex-row pb-1 items-center pl-2'>
             <div className='body2 pr-4'>{t('external_access.ticket_sms.cwc_name', {
-                'name': user?.firstName
+                'name': `${user?.firstName || ''} ${user?.lastName || ''}`
             })}</div>
             <div className='body3-small'>{dayjs.utc(message.createdOn).local().format('HH:mm A')}</div>
         </div>
