@@ -42,7 +42,7 @@ const ExternalUserCreateCallbackTicket = () => {
         onSuccess: () => {
             setTicketSubmitted(true);
             dispatch(setRetryPrevented(true));
-            dispatch(setPreventRetryUntil(dayjs().add(Number(process.env.REACT_APP_VERIFICATION_FAIL_WAIT_IN_SECONDS), 'seconds').toDate()));
+            dispatch(setPreventRetryUntil(dayjs().add(Number(utils.getAppParameter('VerificationFailWaitInSeconds')), 'seconds').toDate()));
             dispatch(addSnackbarMessage({
                 type: SnackbarType.Success,
                 message: 'external_access.callback_ticket_created'
@@ -80,7 +80,7 @@ const ExternalUserCreateCallbackTicket = () => {
             </div>
             <div className='pt-10 xl:pt-2'>
                 {t('external_access.could_not_verify_description_1', {
-                    'minutes': (Number(process.env.REACT_APP_VERIFICATION_FAIL_WAIT_IN_SECONDS) /60)
+                    'minutes': (Number(utils.getAppParameter('VerificationFailWaitInSeconds')) /60)
                 })}
             </div>
             <div>

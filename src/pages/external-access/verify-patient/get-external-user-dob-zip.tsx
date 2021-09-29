@@ -85,14 +85,14 @@ const GetExternalUserDobZip = () => {
         checkIfPatientExistsRefetch();
     }
 
-    if (failCount > Number(process.env.REACT_APP_HIPAA_VERIFICATION_RETRY_NUMBER)) {
+    if (failCount > Number(utils.getAppParameter('HipaaVerificationRetryNumber'))) {
         history.push('/o/callback-ticket');
     }
 
     return <div className='md:px-48 without-default-padding pt-4 xl:pt-16'>
         <GetExternalUserHeader
             title={`external_access.title_${request.requestType}`}
-            description={t('external_access.hipaa_verify_description', {day: process.env.REACT_APP_VERIFIED_PATIENT_EXPIRE_IN_DAY})} />
+            description={t('external_access.hipaa_verify_description', {day: utils.getAppParameter('VerifiedPatientExpiresInDays')})} />
         {displayNotFoundError && <div className='body2 text-danger pb-6'>
             {t('external_access.mobile_verification_failed', { "phone": utils.getAppParameter('CallUsPhone')})}
         </div>}
