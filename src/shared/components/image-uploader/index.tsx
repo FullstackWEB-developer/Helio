@@ -9,9 +9,10 @@ interface ImageUploaderProps {
     buttonText?: string;
     uploadedImage: (image: File | undefined, type: RegistrationImageType) => void,
     maxFileSizeInMegabytes?: number,
-    imageType: RegistrationImageType
+    imageType: RegistrationImageType,
+    required: boolean
 }
-const ImageUploader = ({title, buttonText = 'common.choose_file', uploadedImage, maxFileSizeInMegabytes = 5.0, imageType}: ImageUploaderProps) => {
+const ImageUploader = ({title, buttonText = 'common.choose_file', uploadedImage, maxFileSizeInMegabytes = 5.0, imageType, required}: ImageUploaderProps) => {
 
     const {t} = useTranslation();
     const [image, setImage] = useState<File>();
@@ -43,7 +44,11 @@ const ImageUploader = ({title, buttonText = 'common.choose_file', uploadedImage,
 
     return (
         <div className='flex flex-col pb-6'>
-            <div className='pb-5'>{t(title)}</div>
+            <div className='pb-5'>{t(title)}
+            {
+                required && <span className='text-danger'>*</span>
+            }
+            </div>
             {
                 image ?
                     <div className='flex flex-col'>

@@ -179,7 +179,7 @@ const RegistrationForm = ({step, goStepForward, goBack}: {step: RegistrationStep
             case RegistrationStep.PersonalInformation:
                 return getValues('firstName') && getValues('lastName') && getValues('dob') && getValues('mobilePhone')
                     && getValues('zip') && getValues('address') && getValues('city') && getValues('referralSource') 
-                    && !errors.dob && !errors.email;
+                    && !errors.dob && !errors.email && !errors.zip && !errors.mobilePhone;
             case RegistrationStep.CommunicationPreferences:
                 return !!getValues('preferredCommunication');
             case RegistrationStep.InsuranceInformation:

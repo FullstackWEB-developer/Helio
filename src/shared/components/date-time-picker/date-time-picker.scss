@@ -12,9 +12,11 @@
     &[type="date"]::-webkit-clear-button {
       display: none;
     }
-    &[type="date"] {
-      clip-path: inset(0 17px 0 0);
-    }
+    @supports (-moz-appearance:none) {
+      &[type="date"] {
+        clip-path: inset(0 17px 0 0);
+      }
+    }   
 
     &[value=""]::-webkit-datetime-edit {
       color: transparent;
@@ -51,6 +53,10 @@
     }
   }
 
+  & input.error:focus ~ .input-addon, & input.error.open ~ .input-addon {
+    background-color: var(--color-white);    
+  }
+  
   & label {
     pointer-events: none;
     top: 1rem;
@@ -97,6 +103,10 @@
 
     &:not(.open) input:hover:not(:focus):not(:disabled):not(.error) {
       border-bottom-color: var(--light-text-disabled);
+    }
+
+    &.open.error {      
+        background-color: transparent;  
     }
   }
 

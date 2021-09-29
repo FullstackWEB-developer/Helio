@@ -16,11 +16,11 @@ const UploadDocumentsRegistrationStep = ({
     return (
         <div className='flex flex-col'>
             <ImageUploader title='external_access.registration.drivers_license'
-                uploadedImage={handleDriversLicenseUpload} imageType={RegistrationImageType.DriversLicense} />
+                uploadedImage={handleDriversLicenseUpload} imageType={RegistrationImageType.DriversLicense} required={true}/>
             <ImageUploader title='external_access.registration.insurance_card_front'
-                uploadedImage={handleInsuranceCardFrontUpload} imageType={RegistrationImageType.InsuranceCardFrontSide} />
+                uploadedImage={handleInsuranceCardFrontUpload} imageType={RegistrationImageType.InsuranceCardFrontSide} required={true} />
             <ImageUploader title='external_access.registration.insurance_card_back'
-                uploadedImage={handleInsuranceBackCardUpload} imageType={RegistrationImageType.InsuranceCardBackSide} />
+                uploadedImage={handleInsuranceBackCardUpload} imageType={RegistrationImageType.InsuranceCardBackSide} required={true} />
         </div>
     );
 }

@@ -279,7 +279,7 @@ const DateTimePicker = React.forwardRef<HTMLInputElement, DateTimePickerProps>((
 
     return (
         <div ref={calendarWrapperRef} className={getCalendarWrapper()}>
-            <div className={classNames('date-time-picker-container flex flex-wrap relative', {'open': isCalendarOpen})}>
+            <div className={classNames('date-time-picker-container flex flex-wrap relative', {'open': isCalendarOpen}, {'error': !!props.error})}>
                 <input
                     ref={ref}
                     name={name}
