@@ -5,7 +5,7 @@ export interface TicketMessage extends TicketMessageBase {
     direction: TicketMessagesDirection;
     fromAddress: string;
     isRead: boolean;
-    createdName: string;
+    createdName?: string;
     createdBy: string;
     createdByName?: string;
     createdOn: Date;

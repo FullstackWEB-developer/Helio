@@ -44,7 +44,7 @@ const SmsChatMessageList = ({messages}: MessageListProps) => {
                     isNameVisible
                     isPhotoVisible
                     photoProfileUrl={agent?.profilePicture}
-                    name={item.createdName ?? ''}
+                    name={(item.createdName || item.createdBy) ?? ''}
                     body={item.body}
                     date={item.createdOn}
                     isOutGoing={item.direction === TicketMessagesDirection.Outgoing}

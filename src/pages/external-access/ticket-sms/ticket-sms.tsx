@@ -81,8 +81,8 @@ const TicketSms = () => {
             body: text,
             createdOn: new Date(),
             isRead: false,
-            createdBy: verifiedPatient.patientId.toString(),
-            createdName: utils.stringJoin(' ', verifiedPatient.firstName, verifiedPatient.lastName),
+            createdBy: verifiedPatient?.patientId ? String(verifiedPatient.patientId) : 'Anonymous',
+            createdByName: verifiedPatient ? utils.stringJoin(' ', verifiedPatient.firstName, verifiedPatient.lastName): 'Anonymous',
             direction: TicketMessagesDirection.Incoming,
             fromAddress: ''
         };

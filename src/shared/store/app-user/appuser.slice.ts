@@ -45,7 +45,9 @@ const appUserSlice = createSlice({
             state.logStream = payload;
         },
         appendUnreadSMSList(state, {payload}: PayloadAction<string>) {
-            state.unreadSMSList = [...state.unreadSMSList, payload];
+            if (!state.unreadSMSList.includes(payload)) {
+                state.unreadSMSList = [...state.unreadSMSList, payload];
+            }
         },
         removeUnreadSMSMessageForList(state, {payload}: PayloadAction<string>) {
             state.unreadSMSList = state.unreadSMSList.filter(m => m !== payload);
