@@ -29,6 +29,9 @@ const appointmentsSlice = createSlice({
         },
         setAppointmentSlotRequest(state, {payload}: PayloadAction<AppointmentSlotRequest>) {
             state.appointmentSlotRequest = payload;
+        },
+        setPatientUpcomingAppointment(state, {payload}: PayloadAction<Appointment>) {
+            state.patientUpcomingAppointment = payload;
         }
     }
 });
@@ -39,7 +42,8 @@ export const {
     setSelectedAppointment,
     setSelectedAppointmentSlot,
     setAppointmentTypes,
-    setAppointmentSlotRequest
+    setAppointmentSlotRequest,
+    setPatientUpcomingAppointment
 } = appointmentsSlice.actions
 
 export default appointmentsSlice.reducer

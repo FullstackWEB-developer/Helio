@@ -261,6 +261,7 @@ const parseOptions = <T extends any>(data: T[],
     }));
 }
 
+
 const openWebSite = (url: string) => {
     if (!url.match(/^https?:\/\//i)) {
         url = 'http://' + url;
@@ -351,6 +352,10 @@ const getTimeDiffInFormattedSeconds = (endDate?: string, startDate?: string): st
     return dayjs.duration(diff, 'seconds').format('HH:mm:ss');
 }
 
+const sortBy = <T extends any, TV extends number>(data: T[], property: (item: T) => TV): T[] => {
+    return data.sort((a, b) => property(a) - property(b));
+}
+
 const isGuid = (value: string) : boolean => {
     const guidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
     return guidRegex.test(value);
@@ -391,6 +396,7 @@ const utils = {
     getTimeDiffInFormattedSeconds,
     logout,
     isSessionExpired,
+    sortBy,
     isGuid
 };
 

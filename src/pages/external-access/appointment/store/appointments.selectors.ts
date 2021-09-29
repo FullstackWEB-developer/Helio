@@ -19,10 +19,16 @@ export const selectRescheduleTimeFrame = createSelector(
     state => state.rescheduleTimeFrame as number
 )
 
+export const selectPatientUpcomingAppointment = createSelector(
+    appointmentsState,
+    items => items.patientUpcomingAppointment as Appointment
+);
+
 export const selectSelectedAppointment = createSelector(
     appointmentsState,
     items => items.selectedAppointment as Appointment
-)
+);
+
 export const selectAppointmentTypes = createSelector(
     appointmentsState,
     items => items.appointmentTypes as AppointmentType[]

@@ -15,9 +15,9 @@ const ProviderPicture = ({providerId}: {providerId?: number}) => {
     );
 
     if(isFetching){
-        return <Spinner className='mr-6 h-24 w-24' />
+        return <Spinner className='w-24 h-24 mr-6' />
     }
-    return providerPicture ? <img src={providerPicture} className='mr-6 h-24 w-24 rounded-full' alt='provider' /> : null;
+    return providerPicture ? <img src={providerPicture} className='w-24 h-24 mr-6 rounded-full' alt='provider' /> : null;
 }
 
 export default ProviderPicture;

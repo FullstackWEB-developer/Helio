@@ -10,3 +10,6 @@ export const CallsLogPath = '/calls';
 export const ChatsLogPath = '/chats';
 export const BlackListsPath = '/blacklists';
 export const TicketSmsPath = '/o/ticket-sms';
+export const AppointmentFoundPath = '/o/appointment-found';
+export const AppointmentReschedulePath = '/o/appointment-reschedule';
+export const AppointmentSchedulePath = '/o/appointment-schedule';

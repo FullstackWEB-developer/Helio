@@ -5,6 +5,7 @@ import {AppointmentSlotRequest} from '../models';
 
 export interface AppointmentsState {
     selectedAppointment?: Appointment;
+    patientUpcomingAppointment?: Appointment;
     selectedAppointmentSlot?: AppointmentSlot;
     isAppointmentRescheduled: boolean;
     rescheduleTimeFrame: number;
@@ -14,6 +15,7 @@ export interface AppointmentsState {
 
 const initialAppointmentState: AppointmentsState = {
     selectedAppointment: undefined,
+    patientUpcomingAppointment: undefined,
     selectedAppointmentSlot: undefined,
     isAppointmentRescheduled: false,
     rescheduleTimeFrame: 0,

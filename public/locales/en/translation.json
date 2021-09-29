@@ -711,6 +711,7 @@
     "retry_in_seconds": "You can retry in {{timeLeft}} seconds.",
     "go_back_and_retry_in_seconds": "You can go back & retry in {{timeLeft}} seconds.",
     "patient_verification_failed": "We could not verified your information. Please try again.",
+    "schedule_new_appointment": "Schedule New Appointment",
     "appointments": {
       "appointment_list": {
         "appointment_date": "Appointment date",
@@ -916,7 +917,9 @@
         "title": "Gender",
         "female": "Female",
         "male": "Male"
-      }
+      },
+      "appointment_found":"Existing Appointments Found.",
+      "appointment_found_desc":"It looks like you already have existing appointments. Please confirm if you are trying to reschedule existing appointment or you would like to create a new appointment."
     },
     "ticket_sms": {
       "no_messages": "You have no messages",
