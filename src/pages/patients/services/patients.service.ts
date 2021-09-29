@@ -13,6 +13,7 @@ import {PatientExistsResponse} from '@pages/external-access/models/patient-exist
 import {SendVerificationCodeRequest} from '@pages/external-access/models/send-verification-code-request.model';
 import {CheckVerificationCodeRequest} from '@pages/external-access/models/check-verification-code-request.model';
 import {GetPatientInfoRequest} from '../../../shared/models/get-patient-info-request.model';
+import {Appointment} from '@pages/external-access/appointment/models';
 import {CreatePatientRequest} from '@pages/external-access/models/create-patient-request.model';
 export interface AddNoteProps {
      patientId: number;
@@ -20,6 +21,7 @@ export interface AddNoteProps {
 }
 
 const patientsUrl = '/patients';
+
 export const addNote = async ({patientId, note}: AddNoteProps) => {
      const result = await Api.put(`${patientsUrl}/${patientId}/notes`, {
           date: note.date,

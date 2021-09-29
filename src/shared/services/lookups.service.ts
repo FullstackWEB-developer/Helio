@@ -17,6 +17,7 @@ import {User} from '../models/user';
 const logger = Logger.getInstance();
 
 const lookupsUrl = '/lookups';
+
 export const getProviders = () => {
     const url = `${lookupsUrl}/providers`;
 

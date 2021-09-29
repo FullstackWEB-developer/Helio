@@ -4,9 +4,9 @@ import {useDispatch, useSelector} from 'react-redux';
 import {selectVerifiedPatent} from '@pages/patients/store/patients.selectors';
 import {selectLocationList, selectProviderList} from '@shared/store/lookups/lookups.selectors';
 import {useQuery} from 'react-query';
-import {AppointmentSlotRequest, AppointmentType} from '@pages/external-access/appointment/models';
+import {Appointment, AppointmentSlotRequest, AppointmentType} from '@pages/external-access/appointment/models';
 import {AxiosError} from 'axios';
-import {GetAppointmentTypesForPatient} from '@constants/react-query-constants';
+import {GetAppointmentTypesForPatient, GetPatientAppointments} from '@constants/react-query-constants';
 import {getAppointmentTypesForPatient} from '@pages/appointments/services/appointments.service';
 import {getLocations, getProviders} from '@shared/services/lookups.service';
 import Spinner from '@components/spinner/Spinner';
@@ -18,10 +18,12 @@ import Radio from '@components/radio/radio';
 import {Option} from '@components/option/option';
 import {ControlledDateInput} from '@components/controllers';
 import {useHistory} from 'react-router-dom';
-import {setAppointmentSlotRequest} from './store/appointments.slice';
+import {setAppointmentSlotRequest, setPatientUpcomingAppointment} from './store/appointments.slice';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import isoWeek from 'dayjs/plugin/isoWeek';
+import {getAppointments} from '@pages/patients/services/patients.service';
+import {AppointmentFoundPath} from '@app/paths';
 
 const AppointmentSchedule = () => {
     dayjs.extend(utc);
@@ -47,12 +49,34 @@ const AppointmentSchedule = () => {
 
     const {handleSubmit, control, formState} = useForm({mode: 'all'});
     const {isValid} = formState;
+    const hasUpcomingAppointment = (history.location.state as any)?.hasUpcomingAppointment ?? false
 
     const {isLoading: appointmentTypesLoading, data: appointmentTypes} = useQuery<AppointmentType[], AxiosError>([GetAppointmentTypesForPatient],
         () => getAppointmentTypesForPatient(verifiedPatient.patientId, verifiedPatient.primaryProviderId || verifiedPatient.defaultProviderId),
         {
             enabled: !!verifiedPatient
         });
+
+    const {isLoading: isUpcommingAppointmentLoading} = useQuery<Appointment[], AxiosError>([GetPatientAppointments, verifiedPatient?.patientId], () =>
+        getAppointments(verifiedPatient.patientId),
+        {
+            enabled: !!verifiedPatient && !!appointmentTypes && !hasUpcomingAppointment,
+            onSuccess: (data) => {
+                if (!data || data.length === 0) {
+                    return;
+                }
+
+                const upcoming = utils.sortBy(
+                    data.filter(a => a.appointmentStatus === 'Future' || a.appointmentStatus === 'Open'),
+                    i => new Date(i.startDateTime).getTime())[0];
+
+                if (!!appointmentTypes && appointmentTypes.some(p => p.id.toString() === upcoming.appointmentTypeId.toString() && p.reschedulable)) {
+                    dispatch(setPatientUpcomingAppointment(upcoming));
+                    history.replace(AppointmentFoundPath);
+                }
+            }
+        }
+    );
 
     useEffect(() => {
         dispatch(getProviders());
@@ -82,7 +106,7 @@ const AppointmentSchedule = () => {
         return <div>{t('external_access.not_verified_patient')}</div>;
     }
 
-    if (appointmentTypesLoading || !appointmentTypes || !providers || providers.length === 0 || !locations || locations.length === 0) {
+    if (isUpcommingAppointmentLoading || appointmentTypesLoading || !appointmentTypes || !providers || providers.length === 0 || !locations || locations.length === 0) {
         return <Spinner fullScreen />
     }
 
