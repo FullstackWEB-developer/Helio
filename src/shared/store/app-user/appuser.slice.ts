@@ -50,7 +50,7 @@ const appUserSlice = createSlice({
             }
         },
         removeUnreadSMSMessageForList(state, {payload}: PayloadAction<string>) {
-            state.unreadSMSList = state.unreadSMSList.filter(m => m !== payload);
+            state.unreadSMSList = state.unreadSMSList?.filter(m => m !== payload);
         }
     }
 });

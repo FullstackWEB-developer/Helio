@@ -47,6 +47,8 @@ const Sms = () => {
     const [smsQueryType, setSmsQueryType] = useState(SmsQueryType.MySms);
     const [newMessageId, setNewMessageId] = useState('');
     const {smsIncoming} = useSignalRConnectionContext();
+    const unreadSMSList = useSelector(selectUnreadSMSList) ?? [];
+
     const dispatch = useDispatch();
 
     const dropdownItem: DropdownItemModel[] = [
@@ -338,7 +340,6 @@ const Sms = () => {
         </>);
     }
 
-    const unreadSMSList = useSelector(selectUnreadSMSList);
     useEffect(() => {
         if (selectedTicketSummary) {
             if (unreadSMSList.includes(selectedTicketSummary?.ticketId)) {

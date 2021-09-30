@@ -19,15 +19,16 @@ import {searchType} from '@components/searchbox/constants/search-type';
 import SearchBoxContactResults from '../sms-search-box/searchbox-contact-results';
 import SmsHeader from '../sms-header/sms-header';
 import {TicketType} from '@pages/tickets/models/ticket-type.enum';
+import {Patient} from '@pages/patients/models/patient';
 
 interface SmsNewMessageProps {
     onTicketSelect?: (ticket: TicketBase) => void;
 }
 const SmsNewMessage = ({...props}: SmsNewMessageProps) => {
     const {t} = useTranslation();
-    const [patients, setPatients] = useState<ExtendedPatient[]>([]);
+    const [patients, setPatients] = useState<Patient[]>([]);
     const [contacts, setContacts] = useState<ContactExtended[]>([]);
-    const [patientSelected, setPatientSelected] = useState<ExtendedPatient>();
+    const [patientSelected, setPatientSelected] = useState<Patient>();
     const [contactSelected, setContactSelected] = useState<ContactExtended>();
     const [searchParams, setSearchParams] = useState<{type: number, value: string}>({type: -1, value: ''})
     const [tickets, setTickets] = useState<PagedList<TicketBase>>({...DefaultPagination, results: []});
@@ -44,7 +45,7 @@ const SmsNewMessage = ({...props}: SmsNewMessageProps) => {
     const getPatientQueryEnabled = () => !!searchParams.value && (searchParams.type === searchType.patientId || searchParams.type === searchType.patientName);
     const getContactQueryEnabled = () => !!searchParams.value && searchParams.type === searchType.contactName;
 
-    const {isLoading: patientsIsLoading, isFetching: patientsIsFetching, isError, data: patientsData = []} =
+    const {isLoading: patientsIsLoading, isFetching: patientsIsFetching, isError: patientIsError} =
         useQuery([SearchPatient, searchParams.type, searchParams.value],
             async () => {
                 clearSearchResults();
@@ -53,11 +54,16 @@ const SmsNewMessage = ({...props}: SmsNewMessageProps) => {
                 }
 
                 if (searchParams.type === searchType.patientName) {
-                    return await getPatients(searchParams.type, searchParams.value);
+                    return await getPatients(searchParams.type, searchParams.value, true);
                 }
             }, {
-            enabled: getPatientQueryEnabled()
-        });
+            enabled: getPatientQueryEnabled(),
+            onSuccess: (response) => {
+                setPatients(response ?? []);
+                setStep(SmsNewMessageSteps.SearchResult);
+            }
+        }
+        );
 
 
     const {isFetching: contactIsFetching, isLoading: contactIsLoading, isError: isContactError} =
@@ -99,30 +105,6 @@ const SmsNewMessage = ({...props}: SmsNewMessageProps) => {
         }
     );
 
-    const {
-        isSuccess: patientsDetailIsSuccess,
-        data: patientsDetail,
-        isError: isPatientDetailError,
-        hasError: hasPatientDetailError,
-        isFetching: patientDetailIsFetching
-    } = aggregateQueries<ExtendedPatient>(
-        useQueries(
-            patientsData.map(patient => ({
-                enabled: patientsData.length > 0,
-                queryKey: [GetPatient, patient.patientId],
-                queryFn: () => getPatientByIdWithQuery(patient.patientId),
-            }))
-        )
-    );
-
-    useEffect(() => {
-        if (patientsDetailIsSuccess && !patientDetailIsFetching) {
-            setPatients(patientsDetail);
-            setStep(SmsNewMessageSteps.SearchResult);
-        }
-    }, [patientsDetailIsSuccess, patientDetailIsFetching])
-
-
     const NoSearchResult = () => (
         <div className="pt-8 pl-6 body2">{t('search.search_results.empty', {searchTerm: searchParams.value})}</div>
     )
@@ -144,11 +126,10 @@ const SmsNewMessage = ({...props}: SmsNewMessageProps) => {
         contactIsFetching ||
         contactIsLoading ||
         ticketIsFetching ||
-        patientDetailIsFetching ||
         isTicketContactLoading ||
         isTicketContactFetching;
 
-    const onSearchBoxResultSelect = (patient: ExtendedPatient) => {
+    const onSearchBoxResultSelect = (patient: Patient) => {
         setPatientSelected(patient);
         setTicketQueryParams({...ticketQueryParams, patientId: patient.patientId});
     }
@@ -206,14 +187,12 @@ const SmsNewMessage = ({...props}: SmsNewMessageProps) => {
     }
 
     const clearSearchResults = () => {
-        setContacts([]); 
+        setContacts([]);
         setPatients([]);
     }
 
     return (
         <div className='flex flex-col h-full'>
-
-
             <div className={`flex flex-row items-center w-full px-4 border-b ${shouldSearchInputBeVisible() ? 'block' : 'hidden'}`}>
                 <div className='pr-1 body2'>{t('sms.chat.new.to')}</div>
                 <SearchBox
@@ -222,7 +201,6 @@ const SmsNewMessage = ({...props}: SmsNewMessageProps) => {
                     onSearch={(type, value) => onSearchHandler(type, value)}
                 />
             </div>
-
             {
                 !shouldSearchInputBeVisible() && <SmsHeader info={ticketMessageSummary} forNewTicketMessagePurpose={true} />
             }
@@ -231,13 +209,12 @@ const SmsNewMessage = ({...props}: SmsNewMessageProps) => {
                 {isLoading &&
                     <Spinner fullScreen />
                 }
-                {!isLoading && step === SmsNewMessageSteps.SearchResult && (patients.length === 0 || isError) &&
+                {!isLoading && step === SmsNewMessageSteps.SearchResult && (patients.length === 0 || patientIsError) &&
                     <NoSearchResult />
                 }
                 {!isLoading && step === SmsNewMessageSteps.SearchResult && patients.length > 0 &&
                     <SearchBoxResults
                         items={patients}
-                        error={hasPatientDetailError ? 'sms.has_error' : undefined}
                         onSelect={onSearchBoxResultSelect}
                     />
                 }
@@ -252,9 +229,6 @@ const SmsNewMessage = ({...props}: SmsNewMessageProps) => {
                 {!contactIsLoading && step === SmsNewMessageSteps.SearchContactResult && (contacts.length === 0 || isContactError) &&
                     <NoSearchResult />
                 }
-                {isPatientDetailError &&
-                    <div className="pt-8 pl-6 body2">{t('common.error')}</div>
-                }
                 {!isLoading && step === SmsNewMessageSteps.ExistingTicket &&
                     <SmsNewMessageExistingTicket
                         tickets={tickets}
@@ -265,7 +239,6 @@ const SmsNewMessage = ({...props}: SmsNewMessageProps) => {
                         onCancelClick={onCancelClick}
                     />
                 }
-
                 {!isLoading && step === SmsNewMessageSteps.NoExistingTicket &&
                     <SmsNewMessageNewTicket
                         patient={patientSelected}

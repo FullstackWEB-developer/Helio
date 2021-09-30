@@ -7,6 +7,8 @@ export interface Patient {
     lastName: string,
     localPatientId: number,
     mobilePhone: string,
+    emailAddress: string,
+    consentToText: boolean,
     patientId: number,
     providerGroupId: number,
     ssn: string,

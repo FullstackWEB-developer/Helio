@@ -1,4 +1,3 @@
-import {ExtendedPatient} from '@pages/patients/models/extended-patient';
 import SvgIcon, {Icon} from '@components/svg-icon';
 import utils from '@shared/utils/utils';
 import dayjs from 'dayjs';
@@ -6,10 +5,11 @@ import classnames from 'classnames';
 import {useRef, useState} from 'react';
 import Tooltip from '@components/tooltip/tooltip';
 import {useTranslation} from 'react-i18next';
+import {Patient} from '@pages/patients/models/patient';
 
 interface SearchBoxResultItemProps {
-    onSelect?: (patient: ExtendedPatient) => void;
-    patient: ExtendedPatient;
+    onSelect?: (patient: Patient) => void;
+    patient: Patient;
 }
 const SearchBoxResultItem = ({patient, ...props}: SearchBoxResultItemProps) => {
     const addIconRef = useRef(null);
@@ -17,7 +17,7 @@ const SearchBoxResultItem = ({patient, ...props}: SearchBoxResultItemProps) => {
     const {t} = useTranslation();
 
     const onAddIconClick = () => {
-        if (patient.hasMobile && !!patient.consentToText ) {
+        if (!!patient.mobilePhone && !!patient.consentToText ) {
             if (props.onSelect) {
                 props.onSelect(patient);
             }
@@ -32,14 +32,14 @@ const SearchBoxResultItem = ({patient, ...props}: SearchBoxResultItemProps) => {
             <div className='flex items-center w-2/12 uppercase lx:w-1/12'>{patient.patientId}</div>
             <div className='flex items-center w-2/12 uppercase lx:w-1/12'>{dayjs(patient.dateOfBirth).format('MM/DD/YYYY')}</div>
             <div className='flex items-center justify-center w-2/12 uppercase lx:w-1/12'>
-                {patient.isEmailExists &&
+                {!!patient.emailAddress &&
                     <SvgIcon
                         type={Icon.CheckMark}
                         fillClass="default-toolbar-icon"
                     />}
             </div>
             <div className='flex items-center justify-center w-2/12 uppercase lx:w-1/12'>
-                {patient.hasMobile &&
+                {!!patient.mobilePhone &&
                     <SvgIcon
                         type={Icon.CheckMark}
                         fillClass="default-toolbar-icon"
@@ -50,7 +50,7 @@ const SearchBoxResultItem = ({patient, ...props}: SearchBoxResultItemProps) => {
             <div className='flex items-center justify-center w-1/12 '>
                 <div ref={addIconRef}>
                     <SvgIcon
-                        fillClass={classnames({"rgba-025-fill": !patient.hasMobile ||!patient.consentToText , "default-toolbar-icon": patient.hasMobile && !!patient.consentToText })}
+                        fillClass={classnames({"rgba-025-fill": !patient.mobilePhone || !patient.consentToText, "default-toolbar-icon": !!patient.mobilePhone && !!patient.consentToText })}
                         type={Icon.AddContact}
                         onClick={onAddIconClick}
                     />

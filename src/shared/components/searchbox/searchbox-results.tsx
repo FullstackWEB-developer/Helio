@@ -1,10 +1,10 @@
 import {useTranslation} from 'react-i18next';
-import {ExtendedPatient} from '@pages/patients/models/extended-patient';
 import SearchBoxResultItem from './searchbox-result-item';
+import {Patient} from '@pages/patients/models/patient';
 interface SearchBoxResultsProps {
-    items?: ExtendedPatient[];
+    items?: Patient[];
     error?: string;
-    onSelect?: (patient: ExtendedPatient) => void;
+    onSelect?: (patient: Patient) => void;
 }
 const SearchBoxResults = ({items, error, onSelect}: SearchBoxResultsProps) => {
     const {t} = useTranslation();

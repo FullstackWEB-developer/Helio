@@ -5,12 +5,13 @@ const patientsUrl = '/patients';
 const contactsUrl = '/contacts';
 const ticketsUrl = '/tickets';
 
-export const getPatients = async (type: number, term: string) => {
+export const getPatients = async (type: number, term: string, includePatientDetails: boolean = false) => {
     const response = await Api.get<Patient[]>(patientsUrl, {
         params: {
             searchType: type,
             searchTerm: term,
-            forceSingleReturn: false
+            forceSingleReturn: false,
+            includePatientDetails: includePatientDetails
         }
     });
     return response.data;
