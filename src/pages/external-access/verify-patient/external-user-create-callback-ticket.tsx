@@ -59,6 +59,7 @@ const ExternalUserCreateCallbackTicket = () => {
     const onSubmit = (data: CallbackTicket) => {
         data = {
             ...data,
+            dateOfBirth: dayjs(data.dateOfBirth).utc(true).toDate(),
             note : 'User could not verify during hipaa verification.'
         };
         dispatch(setPreventRetryUntil(undefined));
@@ -112,7 +113,7 @@ const ExternalUserCreateCallbackTicket = () => {
                     label='external_access.dob'
                     assistiveText={utils.getBrowserDatePattern()}
                     control={control}
-                    name='dob'
+                    name='dateOfBirth'
                     className='w-full md:w-88'
                     max={new Date(new Date().toDateString())}
                     dataTestId='hipaa-dob'/>
