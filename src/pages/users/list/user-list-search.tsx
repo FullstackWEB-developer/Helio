@@ -33,8 +33,8 @@ const UserListSearch = ({handleAllCheck, allChecked, displayActions,
     const {t} = useTranslation();
     const dispatch = useDispatch();
     const isOpen = useSelector(selectIsUsersFilterOpen);
-    const [searchText, setSearchText] = useState('');
     const filters = useSelector(selectUserFilters);
+    const [searchText, setSearchText] = useState(filters?.searchText);
     const search = (searchOnClear = false) => {
         dispatch(setUserFilters({filters: {...filters, searchText: searchOnClear ? '' : searchText}, resetPagination: true}))
     }
@@ -67,19 +67,19 @@ const UserListSearch = ({handleAllCheck, allChecked, displayActions,
         </>
     }
     return (
-        <div className='flex h-14 w-full mt-4 border-t border-b'>
+        <div className='flex w-full mt-4 border-t border-b h-14'>
             <div className={`flex flex-row items-center ${!displayActions ? 'border-r' : ''}`}>
-                <Checkbox checked={allChecked} name='select-all-users' label='' className='w-5 mx-6 pt-2' onChange={handleAllCheck} />
+                <Checkbox checked={allChecked} name='select-all-users' label='' className='w-5 pt-2 mx-6' onChange={handleAllCheck} />
                 {
                     displayActions ? displayApplicableActions() :
                         (
                             <>
                                 <SvgIcon type={Icon.FilterList}
-                                    className='icon-medium cursor-pointer mr-6'
+                                    className='mr-6 cursor-pointer icon-medium'
                                     onClick={() => dispatch(setIsFilterOpen(!isOpen))}
                                     fillClass='filter-icon' />
                                 <SvgIcon type={Icon.Add} onClick={() => history.push(`${UsersPath}/new`)}
-                                    className='icon-medium cursor-pointer mr-6'
+                                    className='mr-6 cursor-pointer icon-medium'
                                     fillClass='add-icon' />
                             </>
                         )
@@ -92,12 +92,12 @@ const UserListSearch = ({handleAllCheck, allChecked, displayActions,
                     hasBorderBottom={false}
                     onChange={(value: string) => {setSearchText(value)}}
                     onClear={() => {setSearchText(''); search(true)}}
-                    value={searchText && searchText.length > 0 ? searchText : filters?.searchText}
+                    value={searchText}
                     onKeyDown={(e) => {if (e.key === keyboardKeys.enter) {search()} }}
                     iconOnClick={() => search()}
                 />
             }
-            <div className='absolute w-1/3 left-1/3 top-0'>
+            <div className='absolute top-0 w-1/3 left-1/3'>
                 <Confirmation title={disableConfirmationTitle()}
                     message={disableConfirmationDescription()}
                     hasOverlay={true}
