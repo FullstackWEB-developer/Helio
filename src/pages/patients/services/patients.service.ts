@@ -12,9 +12,9 @@ import {PatientExistsRequest} from '@pages/external-access/models/patient-exists
 import {PatientExistsResponse} from '@pages/external-access/models/patient-exists-response.model';
 import {SendVerificationCodeRequest} from '@pages/external-access/models/send-verification-code-request.model';
 import {CheckVerificationCodeRequest} from '@pages/external-access/models/check-verification-code-request.model';
-import {GetPatientInfoRequest} from '../../../shared/models/get-patient-info-request.model';
-import {Appointment} from '@pages/external-access/appointment/models';
+import {GetPatientInfoRequest} from '@shared/models/get-patient-info-request.model';
 import {CreatePatientRequest} from '@pages/external-access/models/create-patient-request.model';
+import {VerifiedPatient} from '@pages/patients/models/verified-patient';
 export interface AddNoteProps {
      patientId: number;
      note: Note;
@@ -197,6 +197,19 @@ export const checkVerificationCode = async (request: CheckVerificationCodeReques
 export const createPatient = async (request: CreatePatientRequest) => {
      const url = `${patientsUrl}/registration`;
      const {data} = await Api.post(url, request);
+     return data;
+}
+
+export const verifyPatient = async (dob:string, mobilePhoneNumber:string, zip:string) : Promise<VerifiedPatient> => {
+     const url = `${patientsUrl}/verify`;
+     const {data} = await Api.get(url, {
+          params: {
+               "dateOfBirth": dob,
+               "phoneNumber": mobilePhoneNumber,
+               "zipCode": zip,
+               "forceSingleReturn": "true"
+          }
+     });
      return data;
 }
 

@@ -55,15 +55,12 @@ const ExternalUserVerificationCode = () => {
     const forwardToRelatedPage = () => {
         if (request !== undefined) {
             switch (request.requestType) {
-                case ExternalAccessRequestTypes.GetAppointmentDetail:
-                case ExternalAccessRequestTypes.CancelAppointment:
-                case ExternalAccessRequestTypes.BookAppointment:
-                    history.push('/o/appointment-list');
-                    break;
                 case ExternalAccessRequestTypes.RequestRefill:
                     history.push('/o/view-medications');
                     break;
                 case ExternalAccessRequestTypes.RescheduleAppointment:
+                case ExternalAccessRequestTypes.GetAppointmentDetail:
+                case ExternalAccessRequestTypes.CancelAppointment:
                     history.push('/o/appointment-list');
                     break;
                 case ExternalAccessRequestTypes.RequestMedicalRecords:

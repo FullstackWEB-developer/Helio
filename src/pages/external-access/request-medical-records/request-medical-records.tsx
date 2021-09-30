@@ -221,7 +221,13 @@ const RequestMedicalRecords = () => {
             <Tabs>
                 <Tab title={t('external_access.medical_records_request.download_tab_header')}>
                     <div className='pt-8'>
-                        <div className='body2'>
+                        <div className='body2-medium'>
+                            {t('external_access.medical_records_request.download_disclaimer')}
+                        </div>
+                        <div className='body2-medium pt-4'>
+                            {t('external_access.medical_records_request.download_warning')}
+                        </div>
+                        <div className='body2-medium py-4'>
                             {t('external_access.medical_records_request.download_info')}
                         </div>
                         <div className='flex flex-row pt-6 space-x-6'>
@@ -243,8 +249,8 @@ const RequestMedicalRecords = () => {
                         <div className='body2'>
                             {t('external_access.medical_records_request.email_info')}
                         </div>
-                        <div className='pt-2 md:w-3/5'>
                             <form>
+                                <div className='pt-2 md:w-3/5'>
                                 <ControlledInput
                                     control={control}
                                     name='email'
@@ -280,6 +286,11 @@ const RequestMedicalRecords = () => {
                                         />
                                     )}
                                 />
+                                </div>
+                                <div className='body2-medium py-4'>
+                                    {t('external_access.medical_records_request.email_disclaimer')}
+                                </div>
+                                <div className='pt-2 md:w-3/5'>
                                 <Button
                                     className='mt-6'
                                     buttonType='big'
@@ -288,8 +299,9 @@ const RequestMedicalRecords = () => {
                                     disabled={!isDirty || email !== emailConfirm || isLoading || !isValid}
                                     label={t('external_access.medical_records_request.share_button_title')}
                                     type='submit'/>
+
+                                </div>
                             </form>
-                        </div>
                     </div>
                 </Tab>
             </Tabs>

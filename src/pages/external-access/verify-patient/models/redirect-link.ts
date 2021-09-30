@@ -2,7 +2,7 @@ import {ExternalAccessRequestTypes} from '@pages/external-access/models/external
 import {RequestChannel} from '@pages/external-access/verify-patient/models/request-channel.enum';
 
 export interface RedirectLink {
-    attributes: object;
+    attributes: any;
     fullUrl: string;
     linkCreationDate: Date;
     linkId: string;

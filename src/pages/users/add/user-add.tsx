@@ -71,7 +71,7 @@ const UserAdd = () => {
                     overwriteDefaultContainerClasses
                     rows={3}
                     className='invitation-message-text-area'
-                    textareaContainerClasses='body2'
+                    textareaContainerClasses='body2 pl-4 pt-2'
                     resizable={false}
                     value={invitationMessage}
                     onChange={(message) => setInvitationMessage(message)}

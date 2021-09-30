@@ -314,7 +314,7 @@ const UserDetails = () => {
                             type='button'
                             buttonType='secondary-medium'
                             isLoading={changeUserStatusMutation.isLoading}
-                            label={currentUserStatus === UserDetailStatus.Active ? 'common.deactivate' : 'common.activate'}
+                            label={currentUserStatus === UserDetailStatus.Active ? 'common.disable' : 'common.enable'}
                             onClick={changeStatus}
                         />
                     </div>

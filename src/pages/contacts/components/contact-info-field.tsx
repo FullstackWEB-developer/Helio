@@ -29,15 +29,18 @@ const ContactInfoField = ({label, value, icon, appendix, appendixLabel, appendix
         }
     }
 
-    const valueClassName = classNames('pl-10 flex', {
-        'text-success cursor-pointer': !!onValueClick && value !== t('common.not_available'),
+    const valueWrapperClassName = classNames('pl-10 flex', {
+        'text-success': !!onValueClick && value !== t('common.not_available'),
         'col-span-7': !(!!valueClass),
+    })
+    const valueClassName = classNames({
+        'text-success cursor-pointer': !!onValueClick && value !== t('common.not_available'),
         'hover:underline': isLink && !!onValueClick && value !== t('common.not_available'),
     })
     return (
         <>
             <div className={`contact-light ${labelClass ? `${labelClass}` : ''}`}>{label}</div>
-            <div className={valueClassName}>
+            <div className={valueWrapperClassName}>
                 {icon &&
                     <div className='pr-1'>
                         <SvgIcon disabled={isIconDisabled}
@@ -46,10 +49,9 @@ const ContactInfoField = ({label, value, icon, appendix, appendixLabel, appendix
                             type={icon}
                             onClick={handleClick} />
                     </div>}
-                <div onClick={() => {if (isValueClickDisabled) return; if (onValueClick) {onValueClick();} }}>{value}</div>
+                <div onClick={() => {if (isValueClickDisabled) return; if (onValueClick) {onValueClick();} }} className={valueClassName}>{value}</div>
                 {
                     appendix && appendixLabel && appendixValue && <span className='contact-light pl-4'>{appendixLabel}</span>
-
                 }
                 {
                     appendix && appendixValue && <span className='pl-2'>{appendixValue}</span>

@@ -1,5 +1,5 @@
-import { useParams } from 'react-router';
-import { useTranslation } from 'react-i18next';
+import {useHistory, useParams} from 'react-router';
+import {useTranslation} from 'react-i18next';
 import {useQuery} from 'react-query';
 import {GetRedirectLink} from '@constants/react-query-constants';
 import {RedirectLink} from '@pages/external-access/verify-patient/models/redirect-link';
@@ -7,12 +7,9 @@ import Spinner from '@components/spinner/Spinner';
 import {AxiosError} from 'axios';
 import {getRedirectLink} from '@shared/services/notifications.service';
 import {useDispatch, useSelector} from 'react-redux';
-import {
-    setRedirectLink,
-    clearState
-} from '@pages/external-access/verify-patient/store/verify-patient.slice';
-import {useHistory} from 'react-router';
+import {clearState, setRedirectLink} from '@pages/external-access/verify-patient/store/verify-patient.slice';
 import {selectVerifiedLink} from '@pages/external-access/verify-patient/store/verify-patient.selectors';
+import {ExternalAccessRequestTypes} from '@pages/external-access/models/external-updates-request-types.enum';
 
 interface RedirectLinkParams {
     linkId: string
@@ -28,12 +25,16 @@ const VerifyRedirectLink = () => {
             getRedirectLink(linkId),
         {
             enabled:!!linkId,
-            onSuccess: (data) => {
+            onSuccess: (data: RedirectLink) => {
                 if (verifiedLink !== linkId) {
                     dispatch(clearState());
                 }
                 dispatch(setRedirectLink(data));
-                history.push('/o/verify-patient-get-mobile');
+                if (data.requestType === ExternalAccessRequestTypes.DownloadMedicalRecords) {
+                    history.push('/o/download-medical-records');
+                } else {
+                    history.push('/o/verify-patient-get-mobile');
+                }
             }
         }
     );

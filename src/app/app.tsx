@@ -54,7 +54,7 @@ const LabResultsDetailed = React.lazy(() => import('@pages/external-access/lab-r
 const TicketNew = React.lazy(() => import('@pages/tickets/ticket-new'));
 const TicketDetail = React.lazy(() => import('@pages/tickets/ticket-detail'));
 const Contacts = React.lazy(() => import('../pages/contacts/contacts'));
-const DownloadMedicalRecords = React.lazy(() => import('@pages/external-access/request-medical-records/download-medical-record'));
+const DownloadMedicalRecords = React.lazy(() => import('@pages/external-access/request-medical-records/download-medical-records'));
 const MedicalRecordsPreview = React.lazy(() => import('@pages/external-access/request-medical-records/medical-records-preview'));
 const TicketSms = React.lazy(() => import('@pages/external-access/ticket-sms/ticket-sms'));
 const Sms = React.lazy(() => import('@pages/sms'));
@@ -115,6 +115,7 @@ function App() {
                             component={withSuspense(AppointmentRescheduleConfirm)} />
                         <Route path='/o/appointment-rescheduled'
                             component={withSuspense(AppointmentRescheduled)} />
+                        <Route path='/o/download-medical-records' component={withSuspense(DownloadMedicalRecords)} />
                         <Route path={AppointmentFoundPath} component={withSuspense(ExternalAppointmentFound)} />
                         <Route path='/o/dmr/:linkId' component={withSuspense(DownloadMedicalRecords)} />
                         <Route path='/o/registration' component={withSuspense(Registration)} />

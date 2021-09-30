@@ -9,8 +9,7 @@ const ExternalUserEmergencyNote = ({type} : {type: ExternalAccessRequestTypes}) 
         ExternalAccessRequestTypes.RequestRefill,
         ExternalAccessRequestTypes.GetLabResults,
         ExternalAccessRequestTypes.RequestMedicalRecords,
-        ExternalAccessRequestTypes.GetAppointmentDetail,
-        ExternalAccessRequestTypes.BookAppointment
+        ExternalAccessRequestTypes.GetAppointmentDetail
     ]
     if (nonDisplayedTypes.some(a => a === type)) {
         return null;
