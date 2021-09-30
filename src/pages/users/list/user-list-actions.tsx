@@ -2,11 +2,13 @@ import {UsersPath} from '@app/paths';
 import Confirmation from '@components/confirmation/confirmation';
 import Dropdown, {DropdownItemModel, DropdownModel} from '@components/dropdown';
 import SvgIcon, {Icon} from '@components/svg-icon';
-import {customHooks} from '@shared/hooks';
+import {customHooks, useSmartPosition} from '@shared/hooks';
 import {ChangeUserStatusRequest, InviteUserRequest, UserDetail, UserDetailStatus, UserInvitationStatus} from '@shared/models';
 import React, {useRef, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {useHistory} from 'react-router';
+import classnames from 'classnames';
+import MoreMenu from '@components/more-menu';
 
 const UserListActions = ({user, handleStatusChange, handleResendInvite}:
     {user: UserDetail, handleStatusChange: (statuses: ChangeUserStatusRequest[]) => void, handleResendInvite: (resendInviteRequest: InviteUserRequest) => void}) => {
@@ -14,8 +16,10 @@ const UserListActions = ({user, handleStatusChange, handleResendInvite}:
     const history = useHistory();
     const [actionDropdownOpen, setActionDropdownOpen] = useState(false);
     const [disableConfirmationOpen, setDisableConfirmationOpen] = useState(false);
-    const dropdownRef = useRef<HTMLDivElement>(null);
+    const dropdownContainerRef = useRef<HTMLDivElement>(null);
     const iconRef = useRef<HTMLDivElement>(null);
+    const dropdownRef = useRef<HTMLDivElement>(null);
+
 
     const generateDropdownModelOptions = (): DropdownModel => {
         let items: DropdownItemModel[] = [
@@ -58,24 +62,9 @@ const UserListActions = ({user, handleStatusChange, handleResendInvite}:
         }
     }
 
-    customHooks.useOutsideClick([dropdownRef], () => {
+    customHooks.useOutsideClick([dropdownContainerRef], () => {
         setActionDropdownOpen(false);
     });
-
-    const calculateDropdownPosition = () => {
-        let right = 0;
-        if (dropdownRef && dropdownRef?.current) {
-            const rightmostPoint = dropdownRef.current?.getBoundingClientRect()?.right;
-            const iconRightPoint = iconRef.current?.getBoundingClientRect()?.right;
-            if (rightmostPoint && iconRightPoint) {
-                right = rightmostPoint - iconRightPoint;
-            }
-        }
-        return {
-            right: `${right}px`,
-            top: 40
-        }
-    }
 
     const onDisableCancel = () => {
         setDisableConfirmationOpen(false);
@@ -92,22 +81,16 @@ const UserListActions = ({user, handleStatusChange, handleResendInvite}:
 
     return (
         <>
-            <div ref={dropdownRef} className={`opacity-0 group-hover:opacity-100 ${actionDropdownOpen ? 'opacity-100' : ''} relative`}>
-                <div ref={iconRef} className='w-6'>
-                    <SvgIcon type={Icon.MoreVert} fillClass='user-list-icon-fill' onClick={() => setActionDropdownOpen(!actionDropdownOpen)} />
-                </div>
-                {
-                    actionDropdownOpen &&
-                    <div className='absolute z-20' style={calculateDropdownPosition()}>
-                        <Dropdown model={generateDropdownModelOptions()} />
-                    </div>
-                }
-            </div>
-            <div className='absolute w-1/3 left-1/3 top-0'>
+            <MoreMenu
+                items={generateDropdownModelOptions().items}
+                iconClassName='opacity-0 group-hover:opacity-100'
+                onClick={(item) => handleDropdownClick(item.value)}
+            />
+            <div className='absolute top-0 w-1/3 left-1/3'>
                 <Confirmation title={t('users.list_section.disable_modal_title_identity', {
                     name: user.firstName || user.lastName ?
                         `${user.firstName || ''} ${user.lastName || ''}` : t('common.user')
-                    })}
+                })}
                     message={t('users.list_section.disable_modal_description_identity', {
                         name: user.firstName || user.lastName ? `${user.firstName || ''} ${user.lastName || ''}` : t('common.user')
                     })}
@@ -115,7 +98,6 @@ const UserListActions = ({user, handleStatusChange, handleResendInvite}:
                     okButtonLabel={t('users.list_section.disable')} isOpen={disableConfirmationOpen}
                     onOk={onDisableConfirm} onCancel={onDisableCancel} onClose={onDisableCancel} />
             </div>
-
         </>
     );
 }

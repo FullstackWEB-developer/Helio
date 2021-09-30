@@ -1,27 +1,30 @@
 import Dropdown, {DropdownModel} from '@components/dropdown';
-import {useComponentVisibility} from '@shared/hooks';
-import React, {useEffect, useRef, useState} from 'react';
+import {useComponentVisibility, useSmartPosition} from '@shared/hooks';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {useDispatch, useSelector} from 'react-redux';
 import {selectProviderList, selectRoleList} from '@shared/store/lookups/lookups.selectors';
-import {useMemo} from 'react';
 import utils from '@shared/utils/utils';
 import SvgIcon, {Icon} from '@components/svg-icon';
 import {BulkGridDropdownType} from '../models/bulk-grid-dropdown-type.enum';
 import {clearSelectedUserProviderMapping, setSelectedUserProviderMapping, setSelectedUserRole} from '../store/users.slice';
+import classnames from 'classnames';
 
 const BulkGridDropdown = ({userId, purpose, storedRole, storedProviderMapping}: {
     userId: string, purpose: BulkGridDropdownType,
     storedRole: string[], storedProviderMapping?: string
 }) => {
-
     const [isVisible, setIsVisible, elementRef] = useComponentVisibility<HTMLDivElement>(false);
+    const dropdownSelectedItemRef = useRef<HTMLDivElement>(null);
+    const dropdownRef = useRef<HTMLDivElement>(null);
+
     const dispatch = useDispatch();
     const chevronPosition = useRef<HTMLDivElement>(null);
     const userRoleList = useSelector(selectRoleList);
     const [selectedRole, setSelectedRole] = useState<string>();
     const [selectedProvider, setSelectedProvider] = useState<string>();
     const {t} = useTranslation();
+    const position = useSmartPosition(dropdownRef, dropdownSelectedItemRef, isVisible);
 
     const roleOptions = useMemo(() => utils.parseOptions(userRoleList,
         item => item.name,
@@ -43,6 +46,7 @@ const BulkGridDropdown = ({userId, purpose, storedRole, storedProviderMapping}: 
         }
     }, []);
 
+
     const determineDropdownPosition = () => {
         let right = 0;
         const rightmostPoint = elementRef.current?.getBoundingClientRect()?.right;
@@ -50,10 +54,26 @@ const BulkGridDropdown = ({userId, purpose, storedRole, storedProviderMapping}: 
         if (rightmostPoint && chevronRightPoint) {
             right = rightmostPoint - chevronRightPoint;
         }
+
         return {
-            right: `${right}px`
+            right: right
         }
     }
+
+    const hideDropdown = useCallback(() => {
+        setIsVisible(false);
+    }, [setIsVisible]);
+
+    useEffect(() => {
+        const parent = utils.getScrollParent(dropdownSelectedItemRef.current);
+
+        parent?.addEventListener?.('scroll', hideDropdown);
+
+        return () => {
+            parent?.removeEventListener?.('scroll', hideDropdown);
+        }
+
+    }, [hideDropdown]);
 
     const roleDropdownModel: DropdownModel = {
         isSearchable: false,
@@ -87,8 +107,8 @@ const BulkGridDropdown = ({userId, purpose, storedRole, storedProviderMapping}: 
 
     return (
         <div ref={elementRef} onClick={(e) => {e.stopPropagation(); setIsVisible(!isVisible)}}
-            className='cursor-pointer relative col-span-1'>
-            <div className='flex flex-row'>
+            className='col-span-1 cursor-pointer'>
+            <div ref={dropdownSelectedItemRef} className='flex flex-row'>
                 {
                     purpose === BulkGridDropdownType.Role ?
                         <div className='bulk-user-grid-role-value'>{selectedRole || t('users.bulk_section.pick_a_role')}</div> :
@@ -103,10 +123,11 @@ const BulkGridDropdown = ({userId, purpose, storedRole, storedProviderMapping}: 
             </div>
 
             {
-                isVisible &&
                 <div onClick={e => e.stopPropagation()}
-                    className='absolute w-48 z-10 top-10'
-                    style={determineDropdownPosition()}>
+                    className={classnames('absolute z-10 w-48', {'hidden': !isVisible})}
+                    style={{...position, ...determineDropdownPosition()}}
+                    ref={dropdownRef}
+                >
                     <Dropdown model={purpose === BulkGridDropdownType.Role ? roleDropdownModel : providerMappingDropdownModel} />
                 </div>
             }

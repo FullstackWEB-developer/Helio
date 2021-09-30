@@ -311,7 +311,7 @@ const formatTime = (sec: number): string => {
     const seconds = (Math.floor(sec % 60) || '00').toString().padStart(2, '0');
     const minutes = (Math.floor(sec / 60) || '00').toString().padStart(2, '0');
     const hours = (Math.floor(sec / 120) || '00').toString().padStart(2, '0');
-    
+
     return `${hours}:${minutes}:${seconds}`
 }
 
@@ -361,6 +361,40 @@ const isGuid = (value: string) : boolean => {
     return guidRegex.test(value);
 }
 
+const isScrollable = (element: HTMLElement) => {
+    return (element === document.scrollingElement && element.scrollHeight > element.clientHeight) ||
+        (element.scrollHeight > element.clientHeight && ["scroll", "auto"].indexOf(getComputedStyle(element).overflowY) >= 0);
+
+}
+
+const getScrollParent = (node: Node & ParentNode | null): Node & ParentNode | null => {
+    if (node == null) {
+        return null;
+    }
+    const htmlElement = node as HTMLElement;
+
+    if (isScrollable(htmlElement)) {
+        return node;
+    } else {
+        return getScrollParent(node.parentNode);
+    }
+}
+
+const isInBounds = (top: number, left: number, bottom: number, right: number, mode: 'vertically' | 'horizontally' | 'both' = 'both'): boolean => {
+    const vertically = top >= 0 && bottom <= (window.innerHeight || document.documentElement.clientHeight);
+    const horizontally = left >= 0 && right <= (window.innerWidth || document.documentElement.clientWidth);
+
+    switch (mode) {
+        case 'horizontally':
+            return horizontally;
+        case 'vertically':
+            return vertically;
+        default:
+            return vertically && horizontally;
+    }
+}
+
+
 const utils = {
     getWindowCenter,
     maskPhone,
@@ -397,7 +431,10 @@ const utils = {
     logout,
     isSessionExpired,
     sortBy,
-    isGuid
+    isGuid,
+    isScrollable,
+    getScrollParent,
+    isInBounds
 };
 
 export default utils;

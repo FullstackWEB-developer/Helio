@@ -260,14 +260,14 @@ const ChatsLogList = () => {
             {
                 title: '',
                 field: '',
-                widthClass: 'w-8 h-full items-center justify-center',
+                widthClass: 'w-48 h-full items-center justify-center',
                 render: (_ : any, data: TicketLogModel) => {
                     return (<>
                         <MoreMenu
                             items={getMoreMenuOption(data)}
                             iconClassName='default-toolbar-icon'
                             iconFillClassname='cursor-pointer icon-medium'
-                            menuClassName='w-48 top-14 more-menu-list'
+                            menuClassName='more-menu-list'
                             containerClassName='h-full flex items-center justify-center more-menu'
                             onClick={(item: DropdownItemModel) => {
                                 switch (item.value) {

@@ -39,8 +39,8 @@ const UserBulkProviderStep = () => {
     const usersToDisplay = displayList();
 
     return (
-        <div className='w-full overflow-y-auto relative'>
-            <div className='bulk-user-grid col-template-step-2 head-row caption-caps h-12 px-4'>
+        <div className='w-full overflow-y-auto'>
+            <div className='h-12 px-4 bulk-user-grid col-template-step-2 head-row caption-caps'>
                 <div className='truncate'>{t('users.bulk_section.name')}</div>
                 <div className='truncate'>{t('users.bulk_section.department')}</div>
                 <div className='truncate'>{t('users.bulk_section.job_title')}</div>
@@ -49,7 +49,7 @@ const UserBulkProviderStep = () => {
             {
                 usersToDisplay.length > 0 ?
                     usersToDisplay?.slice(usersSlice[0], usersSlice[1]).map((u: SelectExternalUser) => (
-                        <div key={u.id} className='bulk-user-grid data-row col-template-step-2 h-14 px-4 body2'>
+                        <div key={u.id} className='px-4 bulk-user-grid data-row col-template-step-2 h-14 body2'>
                             <div className='flex flex-col truncate'>
                                 <span>{u.info?.displayName || ''}</span>
                                 {u.info?.mail && <span className='body3-medium'>{u.info.mail}</span>}
@@ -61,7 +61,7 @@ const UserBulkProviderStep = () => {
                                     purpose={BulkGridDropdownType.ProviderMapping} />
                             </div>
                         </div>
-                    )) : <div className='subtitle3-small w-full text-center mt-5'>{t('users.bulk_section.no_filter_results')}</div>
+                    )) : <div className='w-full mt-5 text-center subtitle3-small'>{t('users.bulk_section.no_filter_results')}</div>
             }
         </div>
     )

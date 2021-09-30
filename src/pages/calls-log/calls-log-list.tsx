@@ -296,7 +296,7 @@ const CallsLogList = () => {
                             items={getMoreMenuOption(data)}
                             iconClassName='default-toolbar-icon'
                             iconFillClassname='cursor-pointer icon-medium'
-                            menuClassName='w-48 top-14 more-menu-list'
+                            menuClassName='more-menu-list'
                             containerClassName='h-full flex items-center justify-center more-menu'
                             onClick={(item: DropdownItemModel) => {
                                 setRowSelected(data);
@@ -377,7 +377,7 @@ const CallsLogList = () => {
                     </div>
                 </div>
                 <div className='flex flex-row border-b h-14'>
-                    <div className='flex flex-row items-center pl-6 relative'>
+                    <div className='relative flex flex-row items-center pl-6'>
                         <SvgIcon
                             type={Icon.FilterList}
                             className='icon-medium'

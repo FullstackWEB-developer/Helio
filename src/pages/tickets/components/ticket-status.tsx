@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import {useTranslation} from 'react-i18next';
 import {useDispatch} from 'react-redux';
 import {setStatus} from '../services/tickets.service';
@@ -16,7 +16,8 @@ import {changeStatus, setTicket} from '@pages/tickets/store/tickets.slice';
 import TicketStatusDot from '@pages/tickets/components/ticket-status-dot';
 import {Ticket} from '@pages/tickets/models/ticket';
 import {setGlobalLoading} from '@shared/store/app/app.slice';
-
+import classnames from 'classnames';
+import {useSmartPosition} from '@shared/hooks';
 interface TicketStatusProps {
     ticket: Ticket,
     isExpired?: boolean,
@@ -26,6 +27,8 @@ const TicketStatus = ({ticket, isArrow = true}: TicketStatusProps) => {
     const {t} = useTranslation();
     const dispatch = useDispatch();
     const [isVisible, setIsVisible, elementRef] = useComponentVisibility<HTMLDivElement>(false);
+    const dropdownRef = useRef<HTMLDivElement>(null);
+    const {top} = useSmartPosition(dropdownRef, elementRef, isVisible);
 
     const updateStatusMutation = useMutation(setStatus, {
         onSuccess: (data) => {
@@ -76,8 +79,8 @@ const TicketStatus = ({ticket, isArrow = true}: TicketStatusProps) => {
         }
     };
 
-    return <div className='col-span-2 h-full flex items-center'>
-        <div ref={elementRef} className='flex flex-row items-center relative cursor-pointer' onClick={openStatus}>
+    return <div className='flex items-center h-full col-span-2'>
+        <div ref={elementRef} className='flex flex-row items-center cursor-pointer' onClick={openStatus}>
             <div>
                 <TicketStatusDot ticket={ticket} />
             </div>
@@ -91,11 +94,13 @@ const TicketStatus = ({ticket, isArrow = true}: TicketStatusProps) => {
                 </div>
             }
         </div>
-        {isVisible &&
-            <div className='absolute top-16 w-48 z-10'>
-                <Dropdown model={statusesDropdownModel} />
-            </div>
-        }
+        <div
+            className={classnames('absolute w-48 z-10', {'hidden': !isVisible})}
+            style={{top: top}}
+            ref={dropdownRef}
+        >
+            <Dropdown model={statusesDropdownModel} />
+        </div>
     </div>
 }
 

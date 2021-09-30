@@ -5,7 +5,7 @@ import DropdownTitle from './dropdown-title';
 import './dropdown.scss';
 import DropdownSelect from '@components/dropdown/dropdown-select';
 import SearchInputField from '@components/search-input-field/search-input-field';
-import {useEffect, useState} from 'react';
+import {useEffect, useLayoutEffect, useState} from 'react';
 
 export interface DropdownProps {
     model: DropdownModel
@@ -107,6 +107,7 @@ const Dropdown = ({model}: DropdownProps) => {
         return <DropdownSelect defaultValue={selectedValue ? selectedValue : undefined}
             onClick={(value, item) => itemSelected(value, item)} items={items} />
     }
+
 
     return <div className='py-2 bg-white dropdown-body' data-test-id={'dropdown-' + title}>
         <DropdownTitle hasDivider={false} content={header} title={title} />

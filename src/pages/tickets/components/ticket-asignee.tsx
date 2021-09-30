@@ -21,7 +21,8 @@ import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
 import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
 import {changeAssignee, setTicket} from '@pages/tickets/store/tickets.slice';
 import {setGlobalLoading} from '@shared/store/app/app.slice';
-
+import {useSmartPosition} from '@shared/hooks';
+import classnames from 'classnames';
 interface TicketAssigneeProps {
     ticketId: string,
     assignee?: string,
@@ -38,6 +39,9 @@ const TicketAssignee = ({ticketId, assignee, dropdownHorizontalPosition}: Ticket
     const [selectedUser, setSelectedUser] = useState({} as User);
     const [isVisible, setIsVisible, elementRef] = useComponentVisibility<HTMLDivElement>(false)
     const chevronPosition = useRef<HTMLDivElement>(null);
+    const dropdownRef = useRef<HTMLDivElement>(null);
+
+    const {top} = useSmartPosition(dropdownRef, assigneeDisplayRef, isVisible);
 
     const userDropdownModel: DropdownModel = {
         isSearchable: true,
@@ -75,7 +79,7 @@ const TicketAssignee = ({ticketId, assignee, dropdownHorizontalPosition}: Ticket
             value: user.id
         } as DropdownItemModel));
         if (assignee) {
-            results = results.filter(a =>a.value !== assignee);
+            results = results.filter(a => a.value !== assignee);
         }
         setUserDropdownItems(results);
     }, [users, assignee]);
@@ -97,7 +101,7 @@ const TicketAssignee = ({ticketId, assignee, dropdownHorizontalPosition}: Ticket
                     assigneeId: assig.id
                 }));
             },
-            onSettled:() => {
+            onSettled: () => {
                 dispatch(setGlobalLoading(false));
             }
         });
@@ -120,7 +124,7 @@ const TicketAssignee = ({ticketId, assignee, dropdownHorizontalPosition}: Ticket
                     right = rightmostPoint - chevronRightPoint;
                 }
                 return {
-                    right: `${right}px`
+                    right: right
                 }
             }
             case DropdownAlignmentHorizontalPosition.Left:
@@ -130,10 +134,10 @@ const TicketAssignee = ({ticketId, assignee, dropdownHorizontalPosition}: Ticket
         }
     }
 
-    return <div ref={elementRef} className='col-span-2 relative'>
-        <div ref={assigneeDisplayRef} className='flex items-center h-full'>
+    return <div ref={elementRef} className='col-span-2'>
+        <div ref={assigneeDisplayRef} className='flex items-center'>
             {selectedUser?.id ?
-                <div className='inline-flex flex-row flex-none items-center cursor-pointer' onClick={openSearchAssignee}>
+                <div className='inline-flex flex-row items-center flex-none cursor-pointer' onClick={openSearchAssignee}>
                     <div className='mr-4'>
                         <Avatar userFullName={utils.stringJoin(' ', selectedUser.firstName, selectedUser.lastName)} userPicture={selectedUser.profilePicture} />
                     </div>
@@ -143,7 +147,7 @@ const TicketAssignee = ({ticketId, assignee, dropdownHorizontalPosition}: Ticket
                     <SvgIcon type={isVisible ? Icon.ArrowUp : Icon.ArrowDown} fillClass={'select-arrow-fill'} />
                 </div>
                 :
-                <div className='flex flex-row cursor-pointer w-min items-center' onClick={openSearchAssignee}>
+                <div className='flex flex-row items-center cursor-pointer w-min' onClick={openSearchAssignee}>
                     <div>{t('tickets.unassigned')}</div>
                     <div className='pl-3' ref={chevronPosition} >
                         <SvgIcon type={!isVisible ? Icon.ArrowDown : Icon.ArrowUp} className='cursor-pointer' fillClass='active-item-icon' />
@@ -151,14 +155,13 @@ const TicketAssignee = ({ticketId, assignee, dropdownHorizontalPosition}: Ticket
                 </div>
             }
         </div>
-        {isVisible &&
-            <div onClick={e => e.stopPropagation()}
-                className='absolute w-48 z-10 top-12'
-                style={determineDropdownPosition()}>
-                <Dropdown model={userDropdownModel} />
-            </div>
-        }
-
+        <div onClick={e => e.stopPropagation()}
+            className={classnames('absolute z-10 w-48', {'hidden': !isVisible})}
+            style={{top: top, right: determineDropdownPosition().right}}
+            ref={dropdownRef}
+        >
+            <Dropdown model={userDropdownModel} />
+        </div>
     </div>
 }
 

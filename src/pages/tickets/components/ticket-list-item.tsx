@@ -76,7 +76,7 @@ const TicketListItem = ({item}: TicketListItemProps) => {
     ]);
     const getRelativeTime = utils.getRelativeTime(item.dueDate);
 
-    return <div className='flex flex-row w-full auto-cols-max body2 border-b relative hover:bg-gray-100 px-7 items-center h-20 py-3.5' >
+    return <div className='flex flex-row w-full auto-cols-max body2 border-b hover:bg-gray-100 px-7 items-center h-20 py-3.5' >
         <div className='w-24'>
             <Link to={getTicketPath()}>
                 <TicketChannelIcon channel={item.channel} />
