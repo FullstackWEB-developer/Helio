@@ -37,6 +37,7 @@ const TicketSms = () => {
         if (bodyEl.classList.contains('default')) {
             bodyEl.classList.replace('default', 'cwc-theme');
         }
+        setBottomFocus(false);
     }, [])
 
     const {isLoading, refetch} = useQuery([QueryTicketMessagesInfinite, ChannelTypes.SMS, request.ticketId, page],
