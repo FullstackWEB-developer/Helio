@@ -83,7 +83,7 @@ const SmsNewMessageNewTicket = ({patient, contact, ...props}: SmsNewMessageNewTi
                 onValidate={v => setValid(v)}
             />
 
-            <div className='mt-11'>
+            <div className='mt-11 flex flex-row'>
                 <Button
                     data-test-id='new-message-cancel-ticket-button'
                     type='button'

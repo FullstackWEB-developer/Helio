@@ -81,7 +81,7 @@ const TicketDetailPatientInfo = ({ticket, patient, control, isPatientCaseNumberL
                                 label={'ticket_detail.info_panel.patient_case_number'}
                                 data-test-id={'ticket-detail-info_panel-patient-case-number'}
                                 isLoading={isPatientCaseNumberLoading}
-                                value={updateModel.patientCaseNumber ? String(updateModel.patientCaseNumber) : ''}
+                                value={updateModel?.patientCaseNumber ? String(updateModel.patientCaseNumber) : ''}
                                 error={errorMessage}
                                 onChange={((e) => handleCaseNumberChange(e))}
                                 onBlur={validatePatientCaseNumber}

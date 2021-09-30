@@ -1239,7 +1239,7 @@
       "view_ticket": "View Ticket Details",
       "empty": {
         "title": "Start your new SMS conversation.",
-        "description": "Enter you message bellow."
+        "description": "Enter you message below."
       },
       "header": {
         "patient_id": "Patient ID",

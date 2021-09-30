@@ -30,11 +30,11 @@ import {removeUnreadSMSMessageForList} from '@shared/store/app-user/appuser.slic
 
 const Sms = () => {
     const {t} = useTranslation();
-    const {username, name: userFullName} = useSelector(authenticationSelector);
+    const {id, name: userFullName} = useSelector(authenticationSelector);
     const [isFilterVisible, setFilterVisible] = useState(false);
     const [queryParams, setQueryParams] = useState<TicketMessageSummaryRequest>({
         channel: ChannelTypes.SMS,
-        assignedTo: username,
+        assignedTo: id,
         ...DEFAULT_MESSAGE_QUERY_PARAMS
     });
     const [searchTerm, setSearchTerm] = useState('');
@@ -42,7 +42,7 @@ const Sms = () => {
     const [selectedTicketSummary, setSelectedTicketSummary] = useState<TicketMessageSummary>();
     const [messages, setMessages] = useState<TicketMessage[]>([]);
     const [isNewSmsChat, setIsNewSmsChat] = useState(false);
-    const [filterParam, setFilterParam] = useState<SmsFilterParamModel>({...DEFAULT_FILTER_VALUE, assignedTo: username});
+    const [filterParam, setFilterParam] = useState<SmsFilterParamModel>({...DEFAULT_FILTER_VALUE, assignedTo: id});
     const [summaryMessages, setSummaryMessages] = useState<TicketMessageSummary[]>([])
     const [smsQueryType, setSmsQueryType] = useState(SmsQueryType.MySms);
     const [newMessageId, setNewMessageId] = useState('');
@@ -191,8 +191,8 @@ const Sms = () => {
             setQueryParams({...queryParams, assignedTo: undefined});
             setFilterParam({...filterParam, assignedTo: undefined});
         } else {
-            setQueryParams({...queryParams, assignedTo: username});
-            setFilterParam({...filterParam, assignedTo: username});
+            setQueryParams({...queryParams, assignedTo: id});
+            setFilterParam({...filterParam, assignedTo: id});
 
         }
         setSmsQueryType(context);
@@ -228,8 +228,8 @@ const Sms = () => {
         if (selectedTicketSummary.patientId) {
             message.patientId = selectedTicketSummary.patientId
         }
-        if (!selectedTicketSummary.assignedTo || selectedTicketSummary.assignedTo !== username) {
-            changeAssigneeMutation.mutate({assignee: username, ticketId: selectedTicketSummary.ticketId});
+        if (!selectedTicketSummary.assignedTo || selectedTicketSummary.assignedTo !== id) {
+            changeAssigneeMutation.mutate({assignee: id, ticketId: selectedTicketSummary.ticketId});
         }
         sendMessageMutation.mutate(message);
     }
