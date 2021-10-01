@@ -27,7 +27,7 @@ interface InputProps extends React.HTMLAttributes<HTMLInputElement> {
     shouldDisplayAutocomplete?: boolean,
     required?: boolean;
     dropdownIcon?: Icon,
-    dropdownIconFill? : string,
+    dropdownIconFill?: string,
     autoSuggestDropdown?: boolean;
     autoSuggestOptions?: Option[];
     forceAutoSuggestSelect?: boolean;
@@ -186,8 +186,8 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({
                         <Spinner size='small' />
                     </span>
                 }
-                {autoSuggestDropdown &&
-                    <div className={`options ${dropdownOpen ? 'options-visible' : ''} absolute block py-2`}>
+                {autoSuggestDropdown && isFocused &&
+                    <div className={`input-options ${dropdownOpen ? 'options-visible' : 'hidden'} absolute block py-2`}>
                         {(!autoSuggestOptions || autoSuggestOptions.length <= 0) && !isFetchingSuggestions &&
                             <div className="w-full pt-2 text-center subtitle3-small">
                                 {t(fetchingSuggestionsPlaceholder || 'common.autocomplete_search')}
