@@ -21,12 +21,12 @@ const queryClient = new QueryClient({
             refetchOnWindowFocus: false,
             retry: false,
             onError: (error: any) => {
-                logger.error("Query Error ", error.toJSON());
+                logger.error("Query Error ", error.isAxiosError ? error.toJSON() : error);
             }
         },
         mutations: {
             onError: (error: any) => {
-                logger.error("Mutation Error ", error.toJSON());
+                logger.error("Mutation Error ", error.isAxiosError ? error.toJSON() : error);
             }
         }
     }

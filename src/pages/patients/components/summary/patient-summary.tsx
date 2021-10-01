@@ -9,8 +9,8 @@ export interface PatientSummaryProps {
 
 const PatientSummary = ({patientChartSummary} : PatientSummaryProps) => {
     return (<>
-            <ContactInformation/>
-            <OutstandingBalances patientChartSummary={patientChartSummary}/>
+                <ContactInformation/>
+                <OutstandingBalances patientChartSummary={patientChartSummary}/>
                 <Appointments patientChartSummary={patientChartSummary} />
             </>
     );

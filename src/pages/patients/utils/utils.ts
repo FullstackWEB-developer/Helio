@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
 import {Insurance} from '@pages/patients/models/insurance';
 import {ChartInsurance} from '@pages/patients/models/chart-insurance';
+import {SelfPayInsuranceTypeName} from '@pages/patients/patient-constants';
 
 const getAge = (dob: string) => {
     const timeDiff = Math.abs(Date.now() - new Date(dob).getTime());
@@ -13,6 +14,9 @@ const formatDob = (dob: string) => {
 }
 
 const getInsuranceHeader = (primaryInsurance: Insurance | ChartInsurance, message: string) => {
+    if (primaryInsurance.insuranceType === SelfPayInsuranceTypeName ) {
+        return '';
+    }
     let primaryInsuranceHeader = message;
     if (primaryInsurance.insurancePackageId || primaryInsurance.insurancePackageAddress1 ||
         primaryInsurance.insurancePackageCity || primaryInsurance.insurancePackageState ||

@@ -7,10 +7,12 @@ export interface ChartInsurance {
     insurancePackageState: string;
     insurancePackageZip: string;
     insurancePhone: string;
+    insurancePlanName: string;
     sequenceNumber: number;
     eligibilityStatus: string;
     copays: Copay[];
     insurancePlanDisplayName: string;
+    insuranceType: string;
 }
 
 export interface Copay {
