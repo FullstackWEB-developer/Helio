@@ -5,6 +5,7 @@ import {AgentState} from '@shared/models/agent-state';
 import {LogStream} from '@aws-sdk/client-cloudwatch-logs';
 import {UserStatusUpdate} from '@shared/models/user-status-update.model';
 import {LiveAgentStatusInfo} from '@shared/models/live-agent-status-info.model';
+import {UserDetail} from '@shared/models';
 
 const appUserSlice = createSlice({
     name: 'appuser',
@@ -12,6 +13,9 @@ const appUserSlice = createSlice({
     reducers: {
         setAuthentication(state, {payload}: PayloadAction<AuthenticationInfo>) {
             state.auth = payload
+        },
+        setAppUserDetails(state, {payload}: PayloadAction<UserDetail>) {
+            state.appUserDetails = payload
         },
         logOut(state) {
             state.auth = initialState.auth
@@ -88,6 +92,7 @@ const convertUserStatusUpdateToLiveAgentStatus = (payload: UserStatusUpdate): Li
 
 export const {
     setAuthentication,
+    setAppUserDetails,
     logOut,
     loginInitiated,
     setLoginLoading,

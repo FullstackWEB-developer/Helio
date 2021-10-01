@@ -2,7 +2,7 @@ import Button from '@components/button/button';
 import {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {AuthenticationInfo} from '@shared/store/app-user/app-user.models';
-import {setAuthentication, setLoginLoading} from '@shared/store/app-user/appuser.slice';
+import {setAuthentication, setLoginLoading, setAppUserDetails} from '@shared/store/app-user/appuser.slice';
 import {Redirect, useHistory} from 'react-router-dom';
 import {AuthenticationResult} from '@azure/msal-browser';
 import {Dispatch} from '@reduxjs/toolkit';
@@ -19,6 +19,7 @@ import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc'
 import './login.scss';
 import {getMsalInstance} from '@pages/login/auth-config';
+import {getUserDetail} from '@shared/services/user.service';
 dayjs.extend(utc);
 
 const Login = () => {
@@ -87,7 +88,7 @@ const Login = () => {
 
 export default Login;
 
-function SetAuthenticationInfo(info: AuthenticationResult | null, dispatch: Dispatch<any>, history: string[] | History<unknown>) {
+async function SetAuthenticationInfo(info: AuthenticationResult | null, dispatch: Dispatch<any>, history: string[] | History<unknown>) {
     if (info !== null) {
         const s = info;
         const auth: AuthenticationInfo = {
@@ -98,6 +99,12 @@ function SetAuthenticationInfo(info: AuthenticationResult | null, dispatch: Disp
             isLoggedIn: true
         };
         dispatch(setAuthentication(auth));
+
+        const userDetails = await getUserDetail();
+        if (userDetails) {
+            dispatch(setAppUserDetails(userDetails));
+        }
+
         history.push('/dashboard');
     }
 }

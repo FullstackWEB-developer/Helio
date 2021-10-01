@@ -39,6 +39,13 @@ export interface UserDetail {
     providerId?: number;
     latestConnectStatus?: string;
     invitationStatus?: UserInvitationStatus;
+    permissions?: string[];
+}
+
+export interface CallForwardingDetail {
+    callForwardingEnabled: boolean;
+    callForwardingType?: CallForwardingType;
+    callForwardingValue?: string;
 }
 
 export interface UserDetailExtended {

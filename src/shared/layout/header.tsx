@@ -3,7 +3,7 @@ import Avatar from '@components/avatar/avatar';
 import SearchBar from '../components/search-bar/search-bar';
 import {useDispatch, useSelector} from 'react-redux';
 import {toggleCcp, toggleUserProfileMenu} from './store/layout.slice';
-import {authenticationSelector, selectUserStatus} from '../store/app-user/appuser.selectors';
+import {authenticationSelector, selectAppUserDetails, selectUserStatus} from '../store/app-user/appuser.selectors';
 import {isCcpVisibleSelector, isProfileMenuExpandedSelector} from './store/layout.selectors';
 import HelioLogo from '@icons/helio-logo';
 import ProfileDropdown from './components/profile-dropdown';
@@ -14,7 +14,6 @@ import {Link} from 'react-router-dom';
 import SvgIcon from '@components/svg-icon/svg-icon';
 import {Icon} from '@components/svg-icon/icon';
 import {CCP_ANIMATION_DURATION} from '@constants/form-constants';
-import {getUserByEmail} from '@shared/services/user.service';
 import {useQuery} from 'react-query';
 import {QueryUserById} from '@constants/react-query-constants';
 import {setAuthentication} from '@shared/store/app-user/appuser.slice';
@@ -28,6 +27,7 @@ import utils from '@shared/utils/utils';
 const Header = ({headsetIconRef}: {headsetIconRef: React.RefObject<HTMLDivElement>}) => {
     const {t} = useTranslation();
     const dispatch = useDispatch();
+    const appUserDetails = useSelector(selectAppUserDetails);
     const auth: AuthenticationInfo = useSelector(authenticationSelector);
     const username = auth.name as string;
     const isProfileMenuOpen = useSelector(isProfileMenuExpandedSelector);
@@ -45,19 +45,13 @@ const Header = ({headsetIconRef}: {headsetIconRef: React.RefObject<HTMLDivElemen
             return '';
         }
 
-        const users = await getUserByEmail(auth.username);
-        if (!users?.results || users?.results.length < 1) {
-            return '';
-        }
-        const user = users.results[0];
-
         const enriched = {
             ...auth,
-            profilePicture: user.profilePicture,
-            id: user.id
+            profilePicture: appUserDetails.profilePicture,
+            id: appUserDetails.id
         };
         dispatch(setAuthentication(enriched));
-        return user.profilePicture;
+        return appUserDetails.profilePicture;
     }
 
     const {data: profilePicture} = useQuery<string | undefined, Error>([QueryUserById, auth.username], () => setUserPicture(),

@@ -1,4 +1,5 @@
 import {
+    CallForwardingDetail,
     ChangeUserStatusRequest,
     ConnectUser,
     InviteUserRequest,
@@ -210,3 +211,13 @@ export const getUserBaseData = async (userIds: string[], pagedRequest: PagedRequ
     const response = await Api.get(url);
     return response.data;
 };
+
+export const getUserDetail = async () => {
+    const {data} = await Api.get(`${userBaseUrl}/me`);
+    return data;
+}
+
+export const updateCallForwarding = async (callForwardingDetail: CallForwardingDetail): Promise<CallForwardingDetail> => {
+    const {data} = await Api.put(`${userBaseUrl}/call-forwarding`, callForwardingDetail);
+    return data;
+}

@@ -3,6 +3,7 @@ import {createSelector} from '@reduxjs/toolkit';
 import {UserStatus} from './app-user.models';
 import {AgentState} from '@shared/models/agent-state';
 import {LiveAgentStatusInfo} from '@shared/models/live-agent-status-info.model';
+import {UserDetail} from '@shared/models';
 
 export const appUserState = (state: RootState) => state.appUserState
 
@@ -42,4 +43,8 @@ export const selectLiveAgentStatuses = createSelector(
 export const selectUnreadSMSList = createSelector(
     appUserState,
     state => state.unreadSMSList as string[]
+)
+export const selectAppUserDetails = createSelector(
+    appUserState,
+    state => state.appUserDetails as UserDetail
 )

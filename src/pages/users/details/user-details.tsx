@@ -15,7 +15,7 @@ import {
     getConnectUser,
     getRoleWithState,
     getUserDetailExtended,
-    getUserMobilePhone,
+    getUserMobilePhone, updateCallForwarding,
     updateUser
 } from "@shared/services/user.service";
 import {useParams} from 'react-router';
@@ -23,10 +23,17 @@ import {useMutation, useQuery} from "react-query";
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import {GetMobilePhone, GetUserConnect, GetUserExtended} from "@constants/react-query-constants";
-import {CallForwardingType, ConnectUser, UserDetailExtended, UserDetailStatus, UserRole} from "@shared/models";
+import {
+    CallForwardingDetail,
+    CallForwardingType,
+    ConnectUser,
+    UserDetailExtended,
+    UserDetailStatus,
+    UserRole
+} from "@shared/models";
 import Spinner from '@components/spinner/Spinner';
 import {DATE_LONG_FORMAT} from "@constants/form-constants";
-import {selectLiveAgentStatuses} from "@shared/store/app-user/appuser.selectors";
+import {selectLiveAgentStatuses, selectAppUserDetails} from "@shared/store/app-user/appuser.selectors";
 import {addSnackbarMessage} from "@shared/store/snackbar/snackbar.slice";
 import {SnackbarType} from "@components/snackbar/snackbar-type.enum";
 import {useTranslation} from "react-i18next";
@@ -46,6 +53,7 @@ const UserDetails = () => {
     const {isValid, isDirty} = formState;
 
     const dispatch = useDispatch();
+    const appUserDetails = useSelector(selectAppUserDetails);
     const providers = useSelector(selectProviderList);
     const forwardToTypes = useSelector(selectForwardToOptions);
     const rolesList = useSelector(selectRoleList);
@@ -58,6 +66,8 @@ const UserDetails = () => {
     const forwardValuePhone = watch('forward_to_value_phone') as string;
     const [connectUserList, setConnectUserList] = useState<ConnectUser[]>([]);
     const currentUserStatus = userDetailExtended?.user.status;
+    const isEditAccess = appUserDetails?.permissions?.includes('Users.EditUserDetail');
+    const [userProvider, setUserProvider] = useState('');
 
     const rolesSorted = useMemo(() => {
         if (!rolesList || rolesList.length < 1) {
@@ -101,7 +111,6 @@ const UserDetails = () => {
             }
         });
 
-
     useEffect(() => {
         dispatch(getProviders());
         dispatch(getCallForwardingTypeWithState);
@@ -121,6 +130,12 @@ const UserDetails = () => {
 
         if (user.providerId) {
             setValue('provider', user.providerId.toString());
+            if (!isEditAccess) {
+                const currentProvider = providers?.find(p => p.id === user.providerId)?.displayName;
+                if (currentProvider) {
+                    setUserProvider(currentProvider);
+                }
+            }
         }
 
         if (statusResult) {
@@ -177,10 +192,19 @@ const UserDetails = () => {
             setUserDetailExtended(updatedUserDetail);
             reset();
             loadUserData(updatedUserDetail);
-            showMessage(SnackbarType.Success, t('users.user_update_success'));
+            showMessage(SnackbarType.Success, 'users.user_update_success');
         },
         onError: () => {
-            showMessage(SnackbarType.Error, t('users.user_update_error'));
+            showMessage(SnackbarType.Error, 'users.user_update_error');
+        }
+    });
+
+    const updateCallForwardingMutation = useMutation(updateCallForwarding, {
+        onSuccess: (data) => {
+            showMessage(SnackbarType.Success, 'users.user_update_success');
+        },
+        onError: () => {
+            showMessage(SnackbarType.Error, 'users.user_update_error');
         }
     });
 
@@ -247,6 +271,31 @@ const UserDetails = () => {
         updateMutation.mutate(user);
     }
 
+    const saveCallForwarding = (formData: any) => {
+        if (!userId) {
+            return;
+        }
+
+        const callForwardingDetail: CallForwardingDetail = {
+            callForwardingEnabled: false
+        }
+
+        if (formData.enable_forward) {
+            callForwardingDetail.callForwardingEnabled = formData.enable_forward.checked;
+        }
+
+        if (formData.forward_to) {
+            callForwardingDetail.callForwardingType = formData.forward_to;
+            if (formData.forward_to === CallForwardingType.Agent.toString()) {
+                callForwardingDetail.callForwardingValue = formData.forward_to_value_agent;
+            } else {
+                callForwardingDetail.callForwardingValue = formData.forward_to_value_phone;
+            }
+        }
+
+        updateCallForwardingMutation.mutate(callForwardingDetail);
+    }
+
     if (isError) {
         return (
             <div className="px-6 py-8">
@@ -275,24 +324,27 @@ const UserDetails = () => {
                     className='mt-4'
                 />
 
-                <div className='flex flex-col self-start mt-5 body3-medium'>
-                    <span className='mb-1'>
-                        <span>{t('users.info_section.created_by')}</span>
-                        <span className='pl-0.5'>{userDetailExtended?.user.createdByName ?? '-'}</span>
-                    </span>
-                    <span className='mb-1'>
-                        <span>{t('users.info_section.created_on')}</span>
-                        <span className='pl-0.5'>{dayjs.utc(userDetailExtended?.user.createdOn).local().format(DATE_LONG_FORMAT)}</span>
-                    </span>
-                    <span className='mb-1'>
-                        <span>{t('users.info_section.modified_by')}</span>
-                        <span className='pl-0.5'>{userDetailExtended?.user.modifiedByName ?? '-'} </span>
-                    </span>
-                    <span className='mb-1'>
-                        <span>{t('users.info_section.modified_on')}</span>
-                        <span className='pl-0.5'>{dayjs.utc(userDetailExtended?.user.modifiedOn).local().format(DATE_LONG_FORMAT)}</span>
-                    </span>
-                </div>
+                {
+                    isEditAccess &&
+                    <div className='flex flex-col self-start mt-5 body3-medium'>
+                        <span className='mb-1'>
+                            <span>{t('users.info_section.created_by')}</span>
+                            <span className='pl-0.5'>{userDetailExtended?.user.createdByName ?? '-'}</span>
+                        </span>
+                            <span className='mb-1'>
+                            <span>{t('users.info_section.created_on')}</span>
+                            <span className='pl-0.5'>{dayjs.utc(userDetailExtended?.user.createdOn).local().format(DATE_LONG_FORMAT)}</span>
+                        </span>
+                            <span className='mb-1'>
+                            <span>{t('users.info_section.modified_by')}</span>
+                            <span className='pl-0.5'>{userDetailExtended?.user.modifiedByName ?? '-'} </span>
+                        </span>
+                            <span className='mb-1'>
+                            <span>{t('users.info_section.modified_on')}</span>
+                            <span className='pl-0.5'>{dayjs.utc(userDetailExtended?.user.modifiedOn).local().format(DATE_LONG_FORMAT)}</span>
+                        </span>
+                    </div>
+                }
             </div>
             <div className='flex flex-col w-full'>
                 <div className='flex flex-row items-center justify-between pb-5 border-b'>
@@ -308,15 +360,18 @@ const UserDetails = () => {
                             className='mr-5'
                             disabled={!isDirty || !isValid}
                             isLoading={updateMutation.isLoading}
-                            onClick={() => handleSubmit(saveUser)()}
+                            onClick={() => isEditAccess ? handleSubmit(saveUser) : handleSubmit(saveCallForwarding)()}
                         />
-                        <Button
-                            type='button'
-                            buttonType='secondary-medium'
-                            isLoading={changeUserStatusMutation.isLoading}
-                            label={currentUserStatus === UserDetailStatus.Active ? 'common.disable' : 'common.enable'}
-                            onClick={changeStatus}
-                        />
+                        {
+                            isEditAccess &&
+                            <Button
+                                type='button'
+                                buttonType='secondary-medium'
+                                isLoading={changeUserStatusMutation.isLoading}
+                                label={currentUserStatus === UserDetailStatus.Active ? 'common.disable' : 'common.enable'}
+                                onClick={changeStatus}
+                            />
+                        }
                     </div>
                 </div>
                 <div className='flex flex-col pt-5'>
@@ -342,12 +397,18 @@ const UserDetails = () => {
                                 {
                                     React.Children.toArray(
                                         rolesSorted.map(role =>
-                                            <ControlledCheckbox
-                                                control={control}
-                                                label={t(`users.role_${role.name.toLowerCase()}`)}
-                                                name={`userrole_${role.name}`}
-                                                value={role.name}
-                                            />
+                                            {
+                                                return isEditAccess ?
+                                                    <ControlledCheckbox
+                                                        control={control}
+                                                        label={t(`users.role_${role.name.toLowerCase()}`)}
+                                                        name={`userrole_${role.name}`}
+                                                        value={role.name}
+                                                    /> :
+                                                    <div className='body2'>
+                                                        {t(`users.role_${role.name.toLowerCase()}`)}
+                                                    </div>
+                                            }
                                         )
                                     )
                                 }
@@ -355,18 +416,24 @@ const UserDetails = () => {
                         </div>
                         <div className='flex-1 pl-4'>
                             <label className='subtitle'>{t('users.ehr_settings')}</label>
-                            <div className="flex flex-row items-center">
-                                <ControlledSelect
-                                    label='users.ehr_provider_mapping'
-                                    name='provider'
-                                    control={control}
-                                    defaultValue=''
-                                    options={providerOptions}
-                                />
-                                <div className='pb-6 ml-2'>
-                                    <ProviderMappingToolTip />
-                                </div>
-                            </div>
+                            {
+                                isEditAccess ?
+                                    <div className="flex flex-row items-center">
+                                        <ControlledSelect
+                                            label='users.ehr_provider_mapping'
+                                            name='provider'
+                                            control={control}
+                                            defaultValue=''
+                                            options={providerOptions}
+                                        />
+                                        <div className='pb-6 ml-2'>
+                                            <ProviderMappingToolTip />
+                                        </div>
+                                    </div> :
+                                    <div className='body2 mt-6'>
+                                        { userProvider }
+                                    </div>
+                            }
                         </div>
                     </div>
 
@@ -375,13 +442,15 @@ const UserDetails = () => {
                             {!!userDetailExtended?.contactQueues && <>
                                 <div className='flex flex-row items-center justify-between pr-7'>
                                     <label className='subtitle'>{t('users.active_queues')}</label>
-                                    <a rel='noreferrer' target='_blank' className="body2 link"
-                                       href={userDetailExtended?.contactProfileLink}>{t('common.change')}</a>
+                                    {
+                                        isEditAccess && <a rel='noreferrer' target='_blank' className="body2 link"
+                                            href={userDetailExtended?.contactProfileLink}>{t('common.change')}</a>
+                                    }
                                 </div>
                                 <div className='flex flex-col mt-4 body2'>
-                            {
-                                React.Children.toArray(userDetailExtended?.contactQueues?.map(queue => <label>{queue}</label>))
-                            }
+                                    {
+                                        React.Children.toArray(userDetailExtended?.contactQueues?.map(queue => <label>{queue}</label>))
+                                    }
                                 </div>
                             </>}
                         </div>
