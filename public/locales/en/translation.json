@@ -406,6 +406,7 @@
     "activity_panel_header": "Activity",
     "notes_tab_label": "Notes",
     "tickets_tab_label": "Tickets",
+    "create_ticket": "Create Ticket",
     "activity": {
       "title": "Activity",
       "notes": {

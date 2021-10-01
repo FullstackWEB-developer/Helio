@@ -18,6 +18,7 @@ import {Icon} from '@components/svg-icon/icon';
 import TicketStatusDot from '@pages/tickets/components/ticket-status-dot';
 import Spinner from '@components/spinner/Spinner';
 import { Link } from 'react-router-dom';
+import './patient-tickets.scss';
 
 interface PatientTicketProps {
     patientId: number;
@@ -48,17 +49,20 @@ const PatientTickets: React.FC<PatientTicketProps> = ({patientId}) => {
             isLoading ? <Spinner fullScreen/>
                 : (
                     <Fragment>
-                        <Link to={`${TicketsPath}/new?patientId=${patientId}`}>
-                            <div className={'py-3 cursor-pointer align-middle border-b'}>
-                                <SvgIcon type={Icon.AddBlack}
-                                     className='icon-medium h-8 w-8 pl-2 cursor-pointer'
-                                     fillClass='active-item-icon'/>
+
+                            <div className={'py-3 align-middle border-b flex items-center'}>
+                                <Link to={`${TicketsPath}/new?patientId=${patientId}`} className='inline-flex cursor-pointer block items-center'>
+                                <SvgIcon type={Icon.Add}
+                                         className='icon-medium'
+                                         fillClass='active-item-icon'/>
+                                    <div className='pl-2 body2'>{t('patient.create_ticket')}</div>
+                                </Link>
                             </div>
-                        </Link>
                         {
                             error && <div className={'pt-4 text-red-500'}>{t('common.error')}</div>
                         }
-                        {
+
+                        <div className='patient-tickets-container overflow-y-auto'>{
                             items && items?.map(item => {
                                 return (
                                     <Link to={`${TicketsPath}/${item.ticketNumber}`}>
@@ -96,6 +100,7 @@ const PatientTickets: React.FC<PatientTicketProps> = ({patientId}) => {
                                 )
                             })
                         }
+                        </div>
                     </Fragment>
                 )
         }
