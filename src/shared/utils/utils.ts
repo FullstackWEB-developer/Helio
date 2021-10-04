@@ -394,6 +394,18 @@ const isInBounds = (top: number, left: number, bottom: number, right: number, mo
     }
 }
 
+const downloadFileFromData = (data: any, fileName: string, dataType: string) => {
+    const blob = new Blob([data], {type: dataType});
+    const objectUrl: string = URL.createObjectURL(blob);
+    const a: HTMLAnchorElement = document.createElement('a') as HTMLAnchorElement;
+    a.href = objectUrl;
+    a.download = fileName;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(objectUrl);
+}
+
 
 const utils = {
     getWindowCenter,
@@ -434,7 +446,8 @@ const utils = {
     isGuid,
     isScrollable,
     getScrollParent,
-    isInBounds
+    isInBounds,
+    downloadFileFromData
 };
 
 export default utils;

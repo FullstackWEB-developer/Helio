@@ -15,6 +15,7 @@ import {CheckVerificationCodeRequest} from '@pages/external-access/models/check-
 import {GetPatientInfoRequest} from '@shared/models/get-patient-info-request.model';
 import {CreatePatientRequest} from '@pages/external-access/models/create-patient-request.model';
 import {VerifiedPatient} from '@pages/patients/models/verified-patient';
+import utils from '@shared/utils/utils';
 export interface AddNoteProps {
      patientId: number;
      note: Note;
@@ -130,7 +131,7 @@ export const downloadMedicalRecords = async ({linkId}: {linkId: string}) => {
      const response = await Api.get(url, {
           responseType: 'arraybuffer'
      });
-     downloadFileFromData(response.data, "medical_records.zip");
+     utils.downloadFileFromData(response.data, 'medical_records.zip', 'application/zip');
      return response.data;
 }
 
@@ -211,16 +212,4 @@ export const verifyPatient = async (dob:string, mobilePhoneNumber:string, zip:st
           }
      });
      return data;
-}
-
-const downloadFileFromData = (data: any, fileName: string) => {
-     const blob = new Blob([data], {type: 'application/zip'});
-     const objectUrl: string = URL.createObjectURL(blob);
-     const a: HTMLAnchorElement = document.createElement('a') as HTMLAnchorElement;
-     a.href = objectUrl;
-     a.download = fileName;
-     document.body.appendChild(a);
-     a.click();
-     document.body.removeChild(a);
-     URL.revokeObjectURL(objectUrl);
 }

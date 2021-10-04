@@ -13,6 +13,7 @@ import {getFileAsBlob, getRecordedConversationLink} from '@pages/tickets/service
 import {ChannelTypes} from '@shared/models';
 import Spinner from '@components/spinner/Spinner';
 import i18n from 'i18next';
+import utils from '@shared/utils/utils';
 
 interface TicketDetailAttachmentsProps {
     ticket: Ticket
@@ -32,15 +33,9 @@ const TicketDetailAttachments = ({ticket}: TicketDetailAttachmentsProps) => {
     });
     const downloadFileName = async () => {
         const blob = await getFileAsBlob(downloadUrl);
-        const objectUrl = window.URL.createObjectURL(new Blob([blob], {type: "audio/wav"}));
-        const link = document.createElement('a');
-        link.href = objectUrl;
         const tKey = `ticket_detail.info_panel.recorded_conversation.file_name_${getChannel(ticket)}`;
-        link.download = `${i18n.t(tKey)}-${ticket.ticketNumber}.wav`;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        URL.revokeObjectURL(objectUrl);
+        const fileName = `${i18n.t(tKey)}-${ticket.ticketNumber}.wav`;
+        utils.downloadFileFromData(blob, fileName, 'audio/wav');
     }
 
     const getDownloadElement = () => {

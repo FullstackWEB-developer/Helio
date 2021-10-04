@@ -103,7 +103,7 @@ const TicketDetail = () => {
         if (!ticket.communicationDirection) {
             return '-';
         }
-        return t(`calls_log.${CommunicationDirection[ticket.communicationDirection].toString().toLowerCase()}`)
+        return t(`ticket_log.${CommunicationDirection[ticket.communicationDirection].toString().toLowerCase()}`)
     }
     return (
         <>

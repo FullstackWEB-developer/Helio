@@ -319,6 +319,8 @@ export const getQuickConnects = async () => {
 };
 
 export const getFileAsBlob = async (url: string) => {
-    const response = await axios.get(url);
+    const response = await axios.get(url, {
+        responseType: 'blob'
+    });
     return response.data as Blob;
 }
