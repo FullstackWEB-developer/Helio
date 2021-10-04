@@ -10,7 +10,14 @@ import SearchInputField from '@components/search-input-field/search-input-field'
 import SvgIcon, {Icon} from '@components/svg-icon';
 import {SmsChat, SmsSummaryList, SmsFilter, SmsNewMessage} from './components';
 import {GetTicketMessage, QueryTicketMessagesInfinite, QueryTicketMessageSummaryInfinite} from '@constants/react-query-constants';
-import {ChannelTypes, TicketMessage, TicketMessageBase, TicketMessageSummary, TicketMessageSummaryRequest} from '@shared/models';
+import {
+    ChannelTypes,
+    ContactExtended,
+    TicketMessage,
+    TicketMessageBase,
+    TicketMessageSummary,
+    TicketMessageSummaryRequest
+} from '@shared/models';
 import {getChats, getMessage, getMessages, markRead, sendMessage} from './services/ticket-messages.service';
 import {DATE_INPUT_LONG_FORMAT, DEBOUNCE_SEARCH_DELAY_MS} from '@constants/form-constants';
 import useDebounce from '@shared/hooks/useDebounce';
@@ -27,7 +34,11 @@ import {useSignalRConnectionContext} from '@shared/contexts/signalRContext';
 import {SmsNotificationData} from '@pages/sms/models';
 import './sms.scss';
 import {removeUnreadSMSMessageForList} from '@shared/store/app-user/appuser.slice';
+import {useLocation} from 'react-router';
 
+interface SmsLocationState {
+    contact?: ContactExtended
+}
 const Sms = () => {
     const {t} = useTranslation();
     const {id, name: userFullName} = useSelector(authenticationSelector);
@@ -48,6 +59,7 @@ const Sms = () => {
     const [newMessageId, setNewMessageId] = useState('');
     const {smsIncoming} = useSignalRConnectionContext();
     const unreadSMSList = useSelector(selectUnreadSMSList) ?? [];
+    const {state} = useLocation<SmsLocationState>();
 
     const dispatch = useDispatch();
 
@@ -60,9 +72,15 @@ const Sms = () => {
         ({pageParam = 1}) => getChats({...queryParams, page: pageParam}), {
         getNextPageParam: (lastPage) => getNextPage(lastPage),
         onSuccess: (result) => {
-            setSummaryMessages(utils.accumulateInfiniteData(result))
+            setSummaryMessages(utils.accumulateInfiniteData(result));
         }
     });
+
+    useEffect(() => {
+        if (!!state?.contact) {
+            setIsNewSmsChat(true);
+        }
+    }, [state]);
 
     const {
         refetch: messageQueryRefetch,
@@ -394,6 +412,7 @@ const Sms = () => {
                 {isNewSmsChat &&
                     <SmsNewMessage
                         onTicketSelect={onOpenNewChat}
+                        selectedContact={state?.contact}
                     />
                 }
                 {!isNewSmsChat && getSmsChatSection()}

@@ -13,6 +13,8 @@ import {useDispatch, useSelector} from 'react-redux';
 import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
 import Logger from '@shared/services/logger';
 import {selectVoiceCounter} from '@pages/ccp/store/ccp.selectors';
+import { Link } from 'react-router-dom';
+import {SmsPath} from '@app/paths';
 
 interface ContactHeaderQuickActionsProps {
     editMode?: boolean;
@@ -140,11 +142,21 @@ const ContactSubheaderQuickActions = ({editMode, editIconClickHandler, contact, 
             </div>
 
             <span className={'pl-10 pr-8'} >
-                <SvgIcon type={Icon.ChannelSms}
-                    disabled={true}
-                    className='icon-x-large'
-                    strokeClass='contact-stroke-color'
-                />
+                <Link
+                    className={contact?.mobilePhone ? '' : 'disabled-link'}
+                    to={{
+                    pathname:contact?.mobilePhone ? `${SmsPath}` : '#',
+                    state: {
+                        contact
+                    }
+                }}>
+                    <SvgIcon type={Icon.ChannelSms}
+                        disabled={!contact?.mobilePhone}
+                        fillClass={contact?.mobilePhone ? 'contact-subheader-quick-action-color' : ''}
+                        className='icon-x-large'
+                        strokeClass='contact-stroke-color'
+                    />
+                </Link>
             </span>
             {
                 // PLEASE DON'T DELETE THIS

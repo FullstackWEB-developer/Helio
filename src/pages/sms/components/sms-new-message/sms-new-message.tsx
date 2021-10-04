@@ -1,28 +1,28 @@
-import {useEffect, useState} from 'react';
-import {useQueries, useQuery} from 'react-query';
+import {useEffect, useMemo, useState} from 'react';
+import {useQuery} from 'react-query';
 import SearchBox, {SearchBoxResults} from '@components/searchbox';
-import {GetPatient, QueryContactTickets, QueryPatientTickets, SearchContactResults, SearchPatient} from '@constants/react-query-constants';
+import {QueryContactTickets, QueryPatientTickets, SearchContactResults, SearchPatient} from '@constants/react-query-constants';
 import {getPatients, queryContacts} from '@shared/services/search.service';
 import SmsNewMessageExistingTicket from './sms-new-message-existing-ticket';
 import {ContactTicketsRequest, PatientTicketsRequest} from '@pages/tickets/models/patient-tickets-request';
-import {ContactExtended, DefaultPagination, PagedList, Paging, TicketMessage, TicketMessageBase, TicketMessageSummary} from '@shared/models';
+import {ContactExtended, DefaultPagination, PagedList, Paging, TicketMessageSummary} from '@shared/models';
 import {getContactTickets, getPatientTicketsPaged} from '@pages/tickets/services/tickets.service';
 import {TicketBase} from '@pages/tickets/models/ticket-base';
 import {SmsNewMessageSteps} from '@pages/sms/models';
 import Spinner from '@components/spinner/Spinner';
 import SmsNewMessageNewTicket from './sms-new-message-new-ticket';
 import {getPatientByIdWithQuery} from '@pages/patients/services/patients.service';
-import {ExtendedPatient} from '@pages/patients/models/extended-patient';
-import {aggregateQueries} from '@pages/sms/utils';
 import {useTranslation} from 'react-i18next';
 import {searchType} from '@components/searchbox/constants/search-type';
 import SearchBoxContactResults from '../sms-search-box/searchbox-contact-results';
 import SmsHeader from '../sms-header/sms-header';
 import {TicketType} from '@pages/tickets/models/ticket-type.enum';
 import {Patient} from '@pages/patients/models/patient';
+import {ContactType} from '@pages/contacts/models/ContactType';
 
 interface SmsNewMessageProps {
     onTicketSelect?: (ticket: TicketBase) => void;
+    selectedContact?: ContactExtended
 }
 const SmsNewMessage = ({...props}: SmsNewMessageProps) => {
     const {t} = useTranslation();
@@ -121,6 +121,12 @@ const SmsNewMessage = ({...props}: SmsNewMessageProps) => {
         }
     }, [ticketsContactParams, ticketContactRefetch]);
 
+    useEffect(() => {
+        if (!!props.selectedContact) {
+            onSearchBoxContactResultSelect(props.selectedContact);
+        }
+    }, [props.selectedContact]);
+
     const isLoading = patientsIsLoading ||
         patientsIsFetching ||
         contactIsFetching ||
@@ -165,12 +171,21 @@ const SmsNewMessage = ({...props}: SmsNewMessageProps) => {
             !patientSelected && !contactSelected;
     }
 
+     const createdForName = useMemo(() => {
+         if (patientSelected) {
+             return `${patientSelected.firstName || ''} ${patientSelected.lastName || ''}`;
+         }
+         if(contactSelected) {
+             return contactSelected.type === ContactType.Company ? contactSelected.companyName : `${contactSelected.firstName || ''} ${contactSelected.lastName || ''}`
+         }
+
+     }, [contactSelected, patientSelected]);
+
     const ticketMessageSummary: TicketMessageSummary = {
         // Object just for satisfying typescript and types, fields used in SmsHeader component below are patientId and contactId, createdForName
         ...(contactSelected?.id && {contactId: contactSelected.id}),
         ...(patientSelected?.patientId && {patientId: patientSelected.patientId}),
-        createdForName: contactSelected ? `${contactSelected.firstName || ''} ${contactSelected.lastName || ''}` :
-            patientSelected ? `${patientSelected.firstName || ''} ${patientSelected.lastName || ''}` : '',
+        createdForName: createdForName || '',
         ticketId: '',
         ticketNumber: 0,
         ticketType: TicketType.Default,

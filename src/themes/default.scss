@@ -449,3 +449,7 @@ select:focus {
   outline: none;
 }
 
+.disabled-link {
+  pointer-events: none;
+}
+
