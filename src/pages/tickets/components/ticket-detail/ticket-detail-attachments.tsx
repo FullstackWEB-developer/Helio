@@ -9,9 +9,10 @@ import {downloadRecordedConversation, getChannel} from '@pages/tickets/utils/tic
 import {Ticket} from '@pages/tickets/models/ticket';
 import {useQuery} from 'react-query';
 import {GetRecordedConversationLink} from '@constants/react-query-constants';
-import {getRecordedConversationLink} from '@pages/tickets/services/tickets.service';
+import {getFileAsBlob, getRecordedConversationLink} from '@pages/tickets/services/tickets.service';
 import {ChannelTypes} from '@shared/models';
 import Spinner from '@components/spinner/Spinner';
+import i18n from 'i18next';
 
 interface TicketDetailAttachmentsProps {
     ticket: Ticket
@@ -29,17 +30,25 @@ const TicketDetailAttachments = ({ticket}: TicketDetailAttachmentsProps) => {
             setDownloadUrl(data);
         }
     });
-    const donwloadFileName = () => {
-        const extension = ticket.channel === ChannelTypes.PhoneCall ? '.wav' : '.json';
-        return `ticket_detail.info_panel.recorded_conversation.file_name_${getChannel(ticket)}-${ticket.ticketNumber}${extension}`;
+    const downloadFileName = async () => {
+        const blob = await getFileAsBlob(downloadUrl);
+        const objectUrl = window.URL.createObjectURL(new Blob([blob], {type: "audio/wav"}));
+        const link = document.createElement('a');
+        link.href = objectUrl;
+        const tKey = `ticket_detail.info_panel.recorded_conversation.file_name_${getChannel(ticket)}`;
+        link.download = `${i18n.t(tKey)}-${ticket.ticketNumber}.wav`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(objectUrl);
     }
 
     const getDownloadElement = () => {
         if (ticket.channel === ChannelTypes.PhoneCall) {
             return (
-                <a href={downloadUrl} download={donwloadFileName()}>
+                <div onClick={() => downloadFileName()} className='cursor-pointer'>
                     <SvgIcon type={Icon.Download} fillClass='select-arrow-fill' />
-                </a>
+                </div>
             )
         }
         return (

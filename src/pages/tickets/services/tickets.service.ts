@@ -39,6 +39,7 @@ import {
 } from '@shared/models';
 import {CallbackTicket} from '@pages/tickets/models/callback-ticket.model';
 import {PerformanceMetric} from '@pages/dashboard/models/performance-metric.model';
+import axios from 'axios';
 
 const logger = Logger.getInstance();
 const ticketsBaseUrl = "/tickets";
@@ -316,3 +317,8 @@ export const getQuickConnects = async () => {
     const response = await Api.get(url);
     return response.data as QuickConnectExtension[];
 };
+
+export const getFileAsBlob = async (url: string) => {
+    const response = await axios.get(url);
+    return response.data as Blob;
+}
