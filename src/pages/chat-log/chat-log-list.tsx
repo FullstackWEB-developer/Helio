@@ -8,7 +8,7 @@ import Table from '@components/table/table';
 import {useQuery} from 'react-query';
 import {ChatLogQueryType} from './models/chat-log-query';
 import {useDispatch, useSelector} from 'react-redux';
-import {authenticationSelector} from '@shared/store/app-user/appuser.selectors';
+import {selectAppUserDetails} from '@shared/store/app-user/appuser.selectors';
 import {useHistory} from 'react-router';
 import {TicketLogModel, TicketLogRequestModel} from '@shared/models/ticket-log.model';
 import {DEFAULT_PAGING} from '@shared/constants/table-constants';
@@ -38,7 +38,7 @@ import {setIsChatLogFiltered} from '@pages/chat-log/store/chat-log.slice';
 
 const ChatsLogList = () => {
     const {t} = useTranslation();
-    const auth = useSelector(authenticationSelector);
+    const appUser = useSelector(selectAppUserDetails);
     const history = useHistory();
     const [pagingResult, setPagingResult] = useState({...DEFAULT_PAGING});
     const [isFilterOpen, setFilterOpen] = useState(false);
@@ -53,7 +53,7 @@ const ChatsLogList = () => {
     ];
     const [chatsLogFilter, setChatsLogFilter] = useState<TicketLogRequestModel>({
         ...DEFAULT_PAGING,
-        assignedTo: auth.id,
+        assignedTo: appUser.id,
         sorts:['createdOn Desc']
     });
 
@@ -116,7 +116,7 @@ const ChatsLogList = () => {
     const onDropdownClick = (item: DropdownItemModel) => {
         const context = item.value as ChatLogQueryType;
         if (context === ChatLogQueryType.MyChatLog) {
-            setChatsLogFilter({...chatsLogFilter, assignedTo: auth.id});
+            setChatsLogFilter({...chatsLogFilter, assignedTo: appUser.id});
         } else {
             setChatsLogFilter({...chatsLogFilter, assignedTo: ''});
         }

@@ -23,7 +23,7 @@ import utils from '@shared/utils/utils';
 import classnames from 'classnames';
 import {DEFAULT_PAGING} from '@shared/constants/table-constants';
 import Spinner from '@components/spinner/Spinner';
-import {authenticationSelector} from '@shared/store/app-user/appuser.selectors';
+import {selectAppUserDetails} from '@shared/store/app-user/appuser.selectors';
 import {useDispatch, useSelector} from 'react-redux';
 import {showCcp} from '@shared/layout/store/layout.slice';
 import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
@@ -43,7 +43,7 @@ dayjs.extend(utc);
 const CallsLogList = () => {
 
     const {t} = useTranslation();
-    const auth = useSelector(authenticationSelector);
+    const appUser = useSelector(selectAppUserDetails);
     const isFiltered = useSelector(selectIsCallsLogFiltered);
     const history = useHistory();
 
@@ -55,7 +55,7 @@ const CallsLogList = () => {
     const [rows, setRows] = useState<TicketLogModel[]>([]);
     const [callsLogFilter, setCallsLogFilter] = useState<TicketLogRequestModel>({
         ...DEFAULT_PAGING,
-        assignedTo: auth.id,
+        assignedTo: appUser.id,
         sorts:['createdOn Desc']
     });
     const logger = Logger.getInstance();
@@ -349,7 +349,7 @@ const CallsLogList = () => {
     const onDropdownClick = (item: DropdownItemModel) => {
         const context = item.value as CallLogQueryType;
         if (context === CallLogQueryType.MyCallLog) {
-            setCallsLogFilter({...callsLogFilter, assignedTo: auth.id});
+            setCallsLogFilter({...callsLogFilter, assignedTo: appUser.id});
         } else {
             setCallsLogFilter({...callsLogFilter, assignedTo: ''});
         }
