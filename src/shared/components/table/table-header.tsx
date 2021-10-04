@@ -27,7 +27,7 @@ const TableHeaderColumn = ({header}: {header: TableColumnModel}) => {
         let newSortDirection: SortDirection = currentSortDirection + 1;
 
         if (newSortDirection >= maxValue) {
-            newSortDirection = SortDirection.None;
+            newSortDirection = header.disableNoneSort ? SortDirection.Asc : SortDirection.None;
         }
         setSortDirection(newSortDirection);
 

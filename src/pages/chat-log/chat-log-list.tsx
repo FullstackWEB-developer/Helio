@@ -173,6 +173,7 @@ const ChatsLogList = () => {
                 widthClass: 'w-2/12',
                 isSortable: true,
                 sortDirection: getSortDirection(chatsLogFilter.sorts, 'createdOn'),
+                disableNoneSort: true,
                 sortOrder: getSortOrder(chatsLogFilter.sorts, 'createdOn'),
                 onClick: (field: string | undefined, direction: SortDirection) => {
                     applySort(field, direction);

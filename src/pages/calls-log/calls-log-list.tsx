@@ -190,6 +190,7 @@ const CallsLogList = () => {
                 widthClass: 'w-2/12',
                 sortDirection: getSortDirection(callsLogFilter.sorts, 'createdOn'),
                 sortOrder: getSortOrder(callsLogFilter.sorts, 'createdOn'),
+                disableNoneSort: true,
                 onClick: (field: string | undefined, direction: SortDirection) => {
                     applySort(field, direction);
                 },

@@ -30,6 +30,7 @@ export interface TableColumnModel {
     alignment?: 'start' | 'end' | 'center';
     onClick?: (field: string | undefined, sortDirection: SortDirection) => void
     render?: (field: any, row: any) => ReactNode;
+    disableNoneSort?: boolean;
 }
 
 export interface TableTitleModel {
