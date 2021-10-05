@@ -10,7 +10,7 @@
 }
 
 .search-input-field {
-  .options {
+  &-options {
     top: 100%;
     left: 0;
     right: 0;
@@ -22,7 +22,7 @@
     overflow-y: auto;
     max-height: 29rem;
   }
-  .options-visible {
+  &-options-visible {
     opacity: 1;
     visibility: visible;
     pointer-events: all;

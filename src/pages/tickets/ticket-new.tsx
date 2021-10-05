@@ -106,22 +106,22 @@ const TicketNew = () => {
         () => {
             return searchContactsByName(debounceContactSearchTerm)
         }, {
-            enabled: false,
-            onSuccess: (data) => {
-                const contactOptionResult = data.map(item => ({
-                    label: item.type === ContactType.Company ? item.companyName : `${item.firstName} ${item.lastName}`,
-                    value: item.id
-                }) as Option);
+        enabled: false,
+        onSuccess: (data) => {
+            const contactOptionResult = data.map(item => ({
+                label: item.type === ContactType.Company ? item.companyName : `${item.firstName} ${item.lastName}`,
+                value: item.id
+            }) as Option);
 
-                setContactOptions(contactOptionResult);
-                if (contactOptionResult && contactOptionResult[0]) {
-                    setValue('contactId', contactOptionResult[0]);
-                }
-            },
-            onError: () => {
-                setError('contactId', {type: 'notFound', message: t('ticket_new.error_getting_contacts')});
+            setContactOptions(contactOptionResult);
+            if (contactOptionResult && contactOptionResult[0]) {
+                setValue('contactId', contactOptionResult[0]);
             }
-        });
+        },
+        onError: () => {
+            setError('contactId', {type: 'notFound', message: t('ticket_new.error_getting_contacts')});
+        }
+    });
 
     const createTicketMutation = useMutation(createTicket, {
         onSuccess: (data) => {
@@ -142,7 +142,7 @@ const TicketNew = () => {
         data: contact,
         refetch: refetchContact
     } = useQuery<Contact, AxiosError>([GetContactById, queryContactId], () =>
-            getContactById(queryContactId!),
+        getContactById(queryContactId!),
         {
             enabled: false,
             onSuccess: ((data) => {
@@ -186,15 +186,15 @@ const TicketNew = () => {
         const type = Number(formData.type);
         let patient = patientId;
         if (type === TicketType.BusinessOffice ||
-            type === TicketType.Facility  ||
-            type === TicketType.Lab  ||
-            type === TicketType.Pharmacy ) {
+            type === TicketType.Facility ||
+            type === TicketType.Lab ||
+            type === TicketType.Pharmacy) {
             patient = '';
         }
 
         let contactId = formData.contactId;
         if (type === TicketType.EstablishedPatient ||
-        type === TicketType.NewPatient) {
+            type === TicketType.NewPatient) {
             contactId = '';
         }
 
@@ -280,7 +280,7 @@ const TicketNew = () => {
     const onPatientIdChanged = (value: string) => {
         patientIdRef.current = '';
         setPatientId(value);
-        if(!value) {
+        if (!value) {
             setPatientName('');
         }
         clearErrors('patientId');
@@ -292,7 +292,7 @@ const TicketNew = () => {
         }
     }, [queryPatientId]);
 
-    const handlePageClose = () =>{
+    const handlePageClose = () => {
         if (isDirty) {
             setClosingPromptOpen(true);
         } else {
@@ -358,7 +358,7 @@ const TicketNew = () => {
     };
 
     if (isDepartmentListLoading || isLookupValuesLoading || isTicketEnumValuesLoading) {
-        return <Spinner fullScreen/>;
+        return <Spinner fullScreen />;
     }
 
     if (contacts === undefined
@@ -387,7 +387,7 @@ const TicketNew = () => {
             }
             case 'patientId':
             case 'patientCaseNumber': {
-                return !( type === TicketType.BusinessOffice ||
+                return !(type === TicketType.BusinessOffice ||
                     type === TicketType.Facility ||
                     type === TicketType.Lab ||
                     type === TicketType.Pharmacy);
@@ -429,16 +429,16 @@ const TicketNew = () => {
                     />
                     <div>
                         {shouldDisplayField('reason') &&
-                        <ControlledSelect
-                            name='reason'
-                            label={'ticket_new.reason'}
-                            options={reasonOptions}
-                            control={control}
-                            allowClear={true}
-                        />
+                            <ControlledSelect
+                                name='reason'
+                                label={'ticket_new.reason'}
+                                options={reasonOptions}
+                                control={control}
+                                allowClear={true}
+                            />
                         }
                     </div>
-                    <div/>
+                    <div />
                     <div>
                         {
                             subjectOptions && subjectOptions.length > 1
@@ -470,7 +470,7 @@ const TicketNew = () => {
                         allowClear={true}
                         required={true}
                     />
-                    <div/>
+                    <div />
                     <ControlledSelect
                         name='status'
                         label={'ticket_new.status'}
@@ -488,7 +488,7 @@ const TicketNew = () => {
                         allowClear={true}
                         required={true}
                     />
-                    <div/>
+                    <div />
                     <div className="flex">
                         <ControlledDateInput
                             name='dueDate'
@@ -518,7 +518,7 @@ const TicketNew = () => {
                         control={control}
                         required={true}
                     />
-                    <div/>
+                    <div />
                     <ControlledSelect
                         name='department'
                         label={'ticket_new.department'}
@@ -533,19 +533,19 @@ const TicketNew = () => {
                         allowClear={true}
                         control={control}
                     />
-                    <div/>
+                    <div />
                     <div>
                         {shouldDisplayField('patientId') &&
-                        <ControlledInput
-                            name='patientId'
-                            control={control}
-                            defaultValue={queryPatientId}
-                            type='number'
-                            placeholder={t('ticket_new.patient_id')}
-                            isLoading={isPatientIdLoading}
-                            disabled={!!queryPatientId}
-                            onBlur={({target}: ChangeEvent<HTMLInputElement>) => onPatientIdChanged(target.value)}
-                        />
+                            <ControlledInput
+                                name='patientId'
+                                control={control}
+                                defaultValue={queryPatientId}
+                                type='number'
+                                placeholder={t('ticket_new.patient_id')}
+                                isLoading={isPatientIdLoading}
+                                disabled={!!queryPatientId}
+                                onBlur={({target}: ChangeEvent<HTMLInputElement>) => onPatientIdChanged(target.value)}
+                            />
                         }</div>
                     <div>
                         {
@@ -561,15 +561,15 @@ const TicketNew = () => {
                                 onBlur={validatePatientCaseId}
                             />
                         }</div>
-                    <div/>
+                    <div />
                     {shouldDisplayField('patientId') && patientName && <>
                         <div
-                            className='mb-6 new-ticket-patient-background w-full h-12 rounded-md flex flex-row items-center px-6'>
-                            <div className='body2-medium whitespace-pre'>{`${t('ticket_new.patient_label')} `}</div>
+                            className='flex flex-row items-center w-full h-12 px-6 mb-6 rounded-md new-ticket-patient-background'>
+                            <div className='whitespace-pre body2-medium'>{`${t('ticket_new.patient_label')} `}</div>
                             <div className='body2'>{patientName}</div>
                         </div>
-                        <div/>
-                        <div/>
+                        <div />
+                        <div />
                     </>}
                     <div>
                         {<div hidden={!shouldDisplayField('contactId')}><Controller
@@ -593,8 +593,8 @@ const TicketNew = () => {
                             )}
                         /></div>}
                     </div>
-                    <div/>
-                    <div/>
+                    <div />
+                    <div />
                     <div className='col-span-2'>
                         <ControlledInput
                             name='note'
@@ -604,7 +604,7 @@ const TicketNew = () => {
                             onChange={(e: ChangeEvent<HTMLInputElement>) => setNoteText(e.target.value)}
                         />
                     </div>
-                    <div/>
+                    <div />
                     <div className='flex flex-col '>
                         <Controller
                             name='tagsInput'
@@ -622,27 +622,27 @@ const TicketNew = () => {
                             )}
                         />
                     </div>
-                    <div/>
-                    <div/>
+                    <div />
+                    <div />
                     <div className='pt-8'>
                         <Button data-test-id='ticket-new-cancel-button' type={'button'}
-                                buttonType='secondary-medium'
-                                label={'common.cancel'}
-                                onClick={() => handlePageClose()}
+                            buttonType='secondary-medium'
+                            label={'common.cancel'}
+                            onClick={() => handlePageClose()}
                         />
                     </div>
                     <div className='flex justify-end pt-8'>
                         <Button isLoading={createTicketMutation.isLoading} disabled={!isValid || !stateError}
-                                data-test-id='ticket-new-create-button' type={'submit'}
-                                label={'ticket_new.create'}/>
+                            data-test-id='ticket-new-create-button' type={'submit'}
+                            label={'ticket_new.create'} />
                     </div>
                 </div>
 
-                <div/>
+                <div />
             </form>
             <Confirmation title={t('common.confirm_close')}
-                          okButtonLabel={t('common.yes')} isOpen={closingPromptOpen}
-                          onOk={onCloseConfirm} onCancel={() => setClosingPromptOpen(false)} onClose={() => setClosingPromptOpen(false)} closeableOnEscapeKeyPress={true} />
+                okButtonLabel={t('common.yes')} isOpen={closingPromptOpen}
+                onOk={onCloseConfirm} onCancel={() => setClosingPromptOpen(false)} onClose={() => setClosingPromptOpen(false)} closeableOnEscapeKeyPress={true} />
             <Prompt
                 when={isDirty && !closingPromptOpen && !isSubmitted}
                 message={t('common.confirm_close')}

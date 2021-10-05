@@ -145,7 +145,7 @@ const SearchInputField = React.forwardRef<HTMLInputElement, SearchInputProps>(({
                 )
             }
             {autosuggestDropdown &&
-                <div className={`options ${dropdownOpen ? 'options-visible' : ''} absolute block py-2 mt-0.5`}>
+                <div className={`search-input-field-options mb-2 ${dropdownOpen ? 'search-input-field-options-visible' : 'hidden'} absolute block py-2 mt-0.5`}>
                     {(!autosuggestOptions || autosuggestOptions.length <= 0) &&
                         <div className="w-full pt-2 text-center subtitle3-small">
                             {t(suggestionsEmptyPlaceholder || 'common.empty_search_result')}
