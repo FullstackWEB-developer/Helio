@@ -5,6 +5,7 @@ import {useTranslation} from 'react-i18next';
 import {useDispatch, useSelector} from 'react-redux';
 import {selectExternalUsersSelection} from '../store/users.selectors';
 import {addExternalUserToSelection, removeExternalUserFromSelection} from "../store/users.slice";
+import classnames from 'classnames';
 const UserBulkSelectStep = ({externalUsers}: {externalUsers: ExternalUser[]}) => {
     const {t} = useTranslation();
     const dispatch = useDispatch();
@@ -42,7 +43,7 @@ const UserBulkSelectStep = ({externalUsers}: {externalUsers: ExternalUser[]}) =>
                         </div>
                         <div className='flex flex-col truncate'>
                             <span>{u.displayName || ''}</span>
-                            {u.mail && <span className='body3-medium'>{u.mail}</span>}
+                            <span className={classnames('body3-medium', {'text-danger': !u.mail})}>{u.mail ?? t('users.bulk_section.invite_no_email')}</span>
                         </div>
                         <div className='truncate'>{u.department || ''}</div>
                         <div className='truncate'>{u.jobTitle || ''}</div>

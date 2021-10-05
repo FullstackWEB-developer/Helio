@@ -1393,7 +1393,8 @@
       "department_selected": "Departments Selected:",
       "roles_applied": "Roles applied to all users:",
       "add_users": "Add Users",
-      "personalized_message": "Personalize Invitation Message"
+      "personalized_message": "Personalize Invitation Message",
+      "invite_no_email": "Email address is missing for the user"
     },
     "role": "User Role",
     "role_manager": "Manager",
