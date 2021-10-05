@@ -5,4 +5,5 @@ export interface UserQueryFilter {
     roles?: string;
     invitationStatuses?: string;
     statuses?: string;
+    rolesUnassigned?: string;
 }

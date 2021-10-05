@@ -46,6 +46,7 @@ const BulkUserLocalFilter = ({currentStep}: {currentStep: BulkAddStep}) => {
     const userRoleList = useSelector(selectRoleList);
     const roleOptions = utils.convertStringArrayToOptions(userRoleList.map(r => r.name));
 
+    const unassignedRoleFilterOptions = utils.convertStringArrayToOptions(['users.filters.unassigned_role']);
     const addAllOption = (list: any[]): TicketOptionsBase[] => {
         return [{
             key: allKey,
@@ -120,6 +121,13 @@ const BulkUserLocalFilter = ({currentStep}: {currentStep: BulkAddStep}) => {
                     filters.roles = selectedRoles.map(r => roleOptions.find(role => role.key === r)?.value).join(";");
                 }
             }
+
+            if (formValues.rolesUnassigned && formValues.rolesUnassigned.length > 0) {
+                const selectedUnassignedRole = getSelectedFromCheckbox(formValues.rolesUnassigned);
+                if (selectedUnassignedRole && selectedUnassignedRole.length > 0) {
+                    filters.rolesUnassigned = selectedUnassignedRole.map(r => unassignedRoleFilterOptions.find(role => role.key === r)?.value).join(";");
+                }
+            }
         }
 
         if (storedFilters?.searchText && storedFilters.searchText.length > 0) {
@@ -158,11 +166,16 @@ const BulkUserLocalFilter = ({currentStep}: {currentStep: BulkAddStep}) => {
 
         const roleFilters = storedFilters?.roles?.split(";")
             ?.map(role => roleOptions.find(r => r.value === role))
-            ?.map(option => option?.key)
+            ?.map(option => option?.key);
+
+        const roleUnassignedFilters = storedFilters?.rolesUnassigned?.split(";")
+            ?.map(role => unassignedRoleFilterOptions.find(r => r.value === role))
+            ?.map(option => option?.key);
 
         setCheckBoxControl('departments', departmentFilters);
         setCheckBoxControl('titles', jobTitleFilters);
         setCheckBoxControl('roles', roleFilters);
+        setCheckBoxControl('rolesUnassigned', roleUnassignedFilters);
     }, [setValue, storedFilters]);
 
     const resetForm = () => {
@@ -171,7 +184,8 @@ const BulkUserLocalFilter = ({currentStep}: {currentStep: BulkAddStep}) => {
         reset({
             roles: clearArray(fieldsValue.roles),
             departments: clearArray(fieldsValue.departments),
-            titles: clearArray(fieldsValue.titles)
+            titles: clearArray(fieldsValue.titles),
+            rolesUnassigned: clearArray(fieldsValue.rolesUnassigned)
         });
     }
 
@@ -189,6 +203,10 @@ const BulkUserLocalFilter = ({currentStep}: {currentStep: BulkAddStep}) => {
                     {
                         currentStep > BulkAddStep.RolePicking &&
                         GetCollapsibleCheckboxControl('users.filters.role', 'roles', addAllOption(roleOptions))
+                    }
+                    {
+                        currentStep === BulkAddStep.RolePicking &&
+                        GetCollapsibleCheckboxControl('users.filters.role', 'rolesUnassigned', unassignedRoleFilterOptions)
                     }
                 </form>
             </div>

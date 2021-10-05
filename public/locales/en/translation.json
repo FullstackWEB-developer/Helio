@@ -1300,7 +1300,8 @@
       "invites": "Invites",
       "role": "Role",
       "department": "Department",
-      "job_title": "Job Title"
+      "job_title": "Job Title",
+      "unassigned_role": "Users without role"
     },
     "list_section": {
       "title": "Manage Users",
@@ -1394,7 +1395,8 @@
       "roles_applied": "Roles applied to all users:",
       "add_users": "Add Users",
       "personalized_message": "Personalize Invitation Message",
-      "invite_no_email": "Email address is missing for the user"
+      "invite_no_email": "Email address is missing for the user",
+      "selected_users_no_roles": "Some of the selected users have not been assigned a role yet, please choose a suitable role."
     },
     "role": "User Role",
     "role_manager": "Manager",

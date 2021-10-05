@@ -7,7 +7,7 @@ import BulkAddStepDescription from '../components/user-bulk-step-description';
 import {useMutation, useQuery} from "react-query";
 import {GetExternalUserList} from "@constants/react-query-constants";
 import {getExternalUsersList, sendUserInvitation} from "@shared/services/user.service";
-import {clearAllSelectedUsers, setBulkUsersPagination} from "../store/users.slice";
+import {clearAllSelectedUsers, setBulkUsersPagination, setIsLocalBulkFilterOpen} from "../store/users.slice";
 import {useDispatch, useSelector} from "react-redux";
 import {
     selectAllSelectedUsersAssignedRole, selectBulkFilters,
@@ -49,7 +49,15 @@ const BulkAddUser = () => {
     }
     const goStepForward = () => {
         if (currentStep < numberOfSteps) {
-            setCurrentStep(currentStep + 1);
+            if(currentStep === BulkAddStep.RolePicking && !allSelectedUsersAssignedARole){
+                dispatch(addSnackbarMessage({type: SnackbarType.Info, message: 'users.bulk_section.selected_users_no_roles', durationInSeconds: 5}));
+                setRolePickerBehavior(BulkRolePicker.Individual);
+                dispatch(setIsLocalBulkFilterOpen(true));
+            }
+            else{
+                setCurrentStep(currentStep + 1);
+            }
+            
         }
     }
 
@@ -103,7 +111,7 @@ const BulkAddUser = () => {
             case BulkAddStep.Selection:
                 return !deselectButtonAvailable;
             case BulkAddStep.RolePicking:
-                return !allSelectedUsersAssignedARole;
+                return false;
             case BulkAddStep.ProviderMapping:
                 return false;
             case BulkAddStep.Review:
@@ -175,6 +183,7 @@ const BulkAddUser = () => {
                     currentStep === BulkAddStep.RolePicking &&
                     <Radio name='user-role-picking' className='flex flex-col pt-8'
                         defaultValue={String(rolePickerBehavior)}
+                        value={String(rolePickerBehavior)}
                         items={roleRadioOptions} onChange={onRolePickerChange} />
                 }
                 {

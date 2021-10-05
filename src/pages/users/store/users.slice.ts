@@ -113,8 +113,8 @@ const usersSlice = createSlice({
                 }
             }
             if (payload?.filters && Object.keys(payload.filters).length > 0) {
-                const {departments, jobTitle, roles, searchText} = payload.filters;
-                if (departments || jobTitle || roles || searchText) {
+                const {departments, jobTitle, roles, searchText, rolesUnassigned} = payload.filters;
+                if (departments || jobTitle || roles || searchText || rolesUnassigned) {
                     let filteredSelection = [...state.selectedExternalUsers];
                     if (departments) {
                         filteredSelection = filteredSelection.filter((u: SelectExternalUser) => departments.split(';')?.includes(u?.info?.department || ''));
@@ -128,6 +128,9 @@ const usersSlice = createSlice({
                                 return roles.split(';').includes(u.inviteUserModel?.roles[0]);
                             }
                         })
+                    }
+                    if(rolesUnassigned){
+                        filteredSelection = filteredSelection.filter((u: SelectExternalUser) => !u.inviteUserModel?.roles)
                     }
                     if (searchText !== '') {
                         const searchTermLower = searchText?.toLowerCase();

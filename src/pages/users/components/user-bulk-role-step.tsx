@@ -64,7 +64,7 @@ const UserBulkRoleStep = ({rolePickerBehavior}: {rolePickerBehavior: BulkRolePic
                 </div>
             </div> :
             (
-                <div className='w-full overflow-y-auto relative'>
+                <div className='w-full overflow-y-auto'>
 
                     <div className='bulk-user-grid col-template-step-2 head-row caption-caps h-12 px-4'>
                         <div className='truncate'>{t('users.bulk_section.name')}</div>
