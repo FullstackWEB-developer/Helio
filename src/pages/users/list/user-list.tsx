@@ -1,7 +1,7 @@
 import Checkbox, {CheckboxCheckEvent} from '@components/checkbox/checkbox';
 import Pagination from '@components/pagination/pagination';
 import {GetUserList} from '@constants/react-query-constants';
-import {ChangeUserStatusRequest, InviteUserRequest, Paging, UserDetail, UserDetailStatus, UserInvitationStatus} from '@shared/models';
+import {ChangeUserStatusRequest, Dictionary, InviteUserRequest, PagedList, Paging, UserDetail, UserDetailStatus, UserInvitationStatus} from '@shared/models';
 import {changeUserStatus, getUsers, resendInvite} from '@shared/services/user.service';
 import {setGlobalLoading} from '@shared/store/app/app.slice';
 import {useEffect, useState} from 'react';
@@ -29,8 +29,10 @@ const UserList = () => {
     const filters = useSelector(selectUserFilters);
     const history = useHistory();
     const queryClient = useQueryClient();
+    const [userSelected, setUserSelected] = useState<Dictionary<UserListCheckedState>>({});
+    const [checkAll, setCheckAll] = useState(false);
 
-    const {data, isFetching, refetch} = useQuery([GetUserList, filters],
+    const {data, isFetching, refetch} = useQuery<PagedList<UserDetail>>([GetUserList, filters],
         () => getUsers(filters, paginationProperties.page, paginationProperties.pageSize),
         {
             onSuccess: (data) => {
@@ -117,7 +119,6 @@ const UserList = () => {
                 }
             },
             onSettled: () => {
-                populateUserCheckboxArray();
                 setCheckAll(false);
                 dispatch(setGlobalLoading(false));
             }
@@ -180,7 +181,6 @@ const UserList = () => {
                 }
             },
             onSettled: () => {
-                populateUserCheckboxArray();
                 setCheckAll(false);
                 dispatch(setGlobalLoading(false));
             }
@@ -197,107 +197,129 @@ const UserList = () => {
         }
     }, [changeUserStatusMutation.isLoading, resendInviteMutation.isLoading]);
 
-    const populateUserCheckboxArray = (checked = false) => {
-        let checkedUserState: UserListCheckedState[] = [];
-        if (data && data.results && data.results.length) {
-            data.results.map((u: UserDetail) => checkedUserState.push(
-                {
-                    checkboxCheckEvent: {value: u.id, checked: checked},
-                    userInvitationStatus: u.invitationStatus,
-                    userStatus: u.status,
-                    userEmail: u.email
-                }));
-        }
-        setCheckedUserState(checkedUserState);
-    }
-    const [checkedUserState, setCheckedUserState] = useState<UserListCheckedState[]>();
-    const [checkAll, setCheckAll] = useState(false);
-
     useEffect(() => {
-        populateUserCheckboxArray();
-        setCheckAll(false);
+        if (!data) {
+            return;
+        }
+
+        const a = getUserSelected();
+        setCheckAll(data.results.every(x => a.findIndex(i => i.checkboxCheckEvent.value === x.id && i.checkboxCheckEvent.checked) > -1));
+
     }, [data, data?.results]);
 
     const handleCheckboxChange = (e: CheckboxCheckEvent) => {
-        if (checkedUserState && checkedUserState.length > 0) {
-            const index = checkedUserState?.findIndex(c => c.checkboxCheckEvent.value === e.value);
-            if (index !== -1) {
-                const newCheckedUserState: UserListCheckedState[] = [...checkedUserState];
-                newCheckedUserState[index] = {
-                    ...newCheckedUserState[index],
-                    checkboxCheckEvent: {
-                        ...newCheckedUserState[index].checkboxCheckEvent,
-                        checked: e.checked
-                    }
-                }
+        if (!data) {
+            return;
+        }
+        const user = data.results.find(p => p.id === e.value);
+        if (!!user) {
+            const checkedState = {
+                checkboxCheckEvent: {value: user.id, checked: e.checked},
+                userInvitationStatus: user.invitationStatus,
+                userStatus: user.status,
+                userEmail: user.email
+            } as UserListCheckedState;
+            const copy = {...userSelected, [e.value]: checkedState};
+            setUserSelected(copy);
+            const a = Object.values(copy);
 
-                setCheckedUserState(newCheckedUserState);
-                setCheckAll(newCheckedUserState.every(c => c.checkboxCheckEvent.checked))
-            }
+            setCheckAll(data.results.every(x => a.findIndex(i => i.checkboxCheckEvent.value === x.id && i.checkboxCheckEvent.checked) > -1));
         }
     }
 
     const handleAllCheck = (e: CheckboxCheckEvent) => {
-        populateUserCheckboxArray(e.checked);
+        const copy = {...userSelected};
+        data?.results.forEach(user => {
+            const userChecked = {
+                checkboxCheckEvent: {value: user.id, checked: e.checked},
+                userInvitationStatus: user.invitationStatus,
+                userStatus: user.status,
+                userEmail: user.email
+            }
+            copy[user.id] = userChecked;
+        });
+        setUserSelected(copy);
         setCheckAll(e.checked);
     }
 
-    const atLeastOneChecked = checkedUserState && checkedUserState.length > 0 ?
-        checkedUserState?.some(c => c.checkboxCheckEvent.checked) : false;
+    const getUserSelected = () => Object.values(userSelected);
+    const getUserChecked = () => getUserSelected().filter(c => c.checkboxCheckEvent.checked).length;
+    const atLeastOneChecked = getUserSelected().length > 0 ?
+        getUserSelected()?.some(c => c.checkboxCheckEvent.checked) : false;
 
     const allCheckedUsersDisabled = atLeastOneChecked &&
-        checkedUserState?.filter(c => c.checkboxCheckEvent.checked)?.every(c => c.userStatus === UserDetailStatus.Inactive);
+        Object.values(userSelected)
+            .filter((value) => value.checkboxCheckEvent.checked)
+            .every((value) => value.userStatus === UserDetailStatus.Inactive);
+
     const allCheckedUsersEnabled = atLeastOneChecked &&
-        checkedUserState?.filter(c => c.checkboxCheckEvent.checked)?.every(c => c.userStatus === UserDetailStatus.Active);
+        Object.values(userSelected)
+            .filter((value) => value.checkboxCheckEvent.checked)
+            .every((value) => value.userStatus === UserDetailStatus.Active);
+
     const allCheckedUsersPending = atLeastOneChecked &&
-        checkedUserState?.filter(c => c.checkboxCheckEvent.checked)?.every(c => c.userInvitationStatus === UserInvitationStatus.Sent);
+        Object.values(userSelected)
+            .filter((value) => value.checkboxCheckEvent.checked)
+            .every((value) => value.userInvitationStatus === UserInvitationStatus.Sent);
 
     const handleMultiselectionStatusChange = (status: UserDetailStatus) => {
-        const payload: ChangeUserStatusRequest[] = checkedUserState && checkedUserState.length > 0 ?
-            checkedUserState.filter(c => c.checkboxCheckEvent.checked).map(c => ({id: c.checkboxCheckEvent.value, userStatus: status})) : [];
+        const checkedUserValue = getUserSelected();
+
+        const payload: ChangeUserStatusRequest[] = checkedUserValue && checkedUserValue.length > 0 ?
+            checkedUserValue.filter(c => c.checkboxCheckEvent.checked).map(c => ({id: c.checkboxCheckEvent.value, userStatus: status})) : [];
         if (payload.length > 0) {
             changeUserStatusMutation.mutate(payload);
         }
     }
 
     const handleMultiselectionInvite = () => {
+        const checkedUserValue = getUserSelected();
+
         const payload: InviteUserRequest = {
-            users: checkedUserState && checkedUserState.length > 0 ?
-                checkedUserState.filter(c => c.checkboxCheckEvent.checked).map(c => ({email: c.userEmail})) : [],
+            users: checkedUserValue && checkedUserValue.length > 0 ?
+                checkedUserValue.filter(c => c.checkboxCheckEvent.checked).map(c => ({email: c.userEmail})) : [],
             invitationMessage: ''
         }
         resendInviteMutation.mutate(payload);
     }
 
     const determineDisablePopupTitleTranslation = () => {
-        if (checkedUserState && checkedUserState.length > 0) {
-            const checkedCount = checkedUserState.filter(c => c.checkboxCheckEvent.checked);
+        const checkedUserValue = getUserSelected();
+
+        if (checkedUserValue && checkedUserValue.length > 0) {
+            const checkedCount = checkedUserValue.filter(c => c.checkboxCheckEvent.checked);
             if (checkedCount && checkedCount.length === 1) {
                 const userName = findUserName(checkedCount[0].checkboxCheckEvent.value);
                 return t('users.list_section.disable_modal_title_identity', {name: userName ?? t('common.user')});
             }
-            else return t('users.list_section.disable_modal_title');
+            return t('users.list_section.disable_modal_title');
         }
         return '';
     }
 
     const determineDisablePopupDescriptionTranslation = () => {
-        if (checkedUserState && checkedUserState.length > 0) {
-            const checkedCount = checkedUserState.filter(c => c.checkboxCheckEvent.checked);
+        const checkedUserValue = getUserSelected();
+        if (checkedUserValue && checkedUserValue.length > 0) {
+            const checkedCount = checkedUserValue.filter(c => c.checkboxCheckEvent.checked);
             if (checkedCount && checkedCount.length === 1) {
                 const userName = findUserName(checkedCount[0].checkboxCheckEvent.value);
                 return t('users.list_section.disable_modal_description_identity', {name: userName ?? t('common.user')});
             }
-            else return t('users.list_section.disable_modal_description');
+            else {
+                return t('users.list_section.disable_modal_description');
+            }
         }
         return '';
     }
 
+    const isRowChecked = (userId: string): boolean => {
+        return !!userSelected[userId] && (userSelected[userId].checkboxCheckEvent?.checked ?? false);
+    }
 
     return (
         <div className='flex flex-auto h-full'>
             <UserFilter isOpen={isUserFilterOpen} />
-            <div className='flex flex-col w-full py-6 overflow-y-auto overflow-x-hidden'>
+            <div className='flex flex-col w-full py-6 overflow-x-hidden overflow-y-auto'>
                 <div className='flex justify-between px-6'>
                     <h5>{t('users.list_section.title')}</h5>
                     {
@@ -312,15 +334,18 @@ const UserList = () => {
                                 <UserListSearch
                                     handleAllCheck={handleAllCheck}
                                     allChecked={checkAll}
+                                    isFiltered={!!filters && Object.keys(filters).length > 0}
                                     displayActions={allCheckedUsersDisabled || allCheckedUsersEnabled || allCheckedUsersPending || false}
                                     displayDisableAction={allCheckedUsersEnabled || false}
                                     displayEnableAction={allCheckedUsersDisabled || false}
                                     displayResendInviteAction={allCheckedUsersPending || false}
+                                    totalItemCount={paginationProperties.totalCount}
+                                    itemSelectedCount={getUserChecked()}
                                     handleMultiselectionStatusChange={handleMultiselectionStatusChange}
                                     handleMultiselectionInvite={handleMultiselectionInvite}
                                     disableConfirmationTitle={determineDisablePopupTitleTranslation}
                                     disableConfirmationDescription={determineDisablePopupDescriptionTranslation} />
-                                <div className="user-list-grid head-row caption-caps h-12 px-4">
+                                <div className="h-12 px-4 user-list-grid head-row caption-caps">
                                     <div></div>
                                     <div className='truncate'>{t('users.list_section.name')}</div>
                                     <div className='truncate'>{t('users.list_section.department')}</div>
@@ -333,10 +358,16 @@ const UserList = () => {
                                 {
                                     data && data.results?.map((u: UserDetail, index: number) => (
                                         <div key={u.id}
-                                            className={`user-list-grid data-row h-14 px-4 body2 group ${checkedUserState && checkedUserState[index]?.checkboxCheckEvent?.checked ? 'checked' : ''}`}>
+                                            className={`user-list-grid data-row h-14 px-6 body2 group ${isRowChecked(u.id) ? 'checked' : ''}`}>
                                             <div>
-                                                <Checkbox checked={checkedUserState && checkedUserState[index]?.checkboxCheckEvent?.checked}
-                                                    label='' value={u.id} className='pt-2' name={`${u.id}-check`} onChange={handleCheckboxChange} />
+                                                <Checkbox
+                                                    checked={isRowChecked(u.id)}
+                                                    label=''
+                                                    value={u.id}
+                                                    className='pt-2'
+                                                    name={`${u.id}-check`}
+                                                    onChange={handleCheckboxChange}
+                                                />
                                             </div>
                                             <div className='flex flex-col truncate'>
                                                 <span>{`${u.firstName || ''} ${u.lastName || ''}${u.department ? ` | ${u.department}` : ''}`}</span>
