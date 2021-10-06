@@ -32,6 +32,7 @@ import BulkSelectionOverview from '../components/bulk-selection-overview';
 import {addSnackbarMessage} from "@shared/store/snackbar/snackbar.slice";
 import {SnackbarType} from "@components/snackbar/snackbar-type.enum";
 import {BulkAddStep} from '../models/bulk-add-step.enum';
+import {useHistory} from "react-router";
 const BulkAddUser = () => {
 
     const {t} = useTranslation();
@@ -42,6 +43,7 @@ const BulkAddUser = () => {
     const filters = useSelector(selectBulkFilters);
     const [currentStep, setCurrentStep] = useState(BulkAddStep.Selection);
     const numberOfSteps = 4;
+    const history = useHistory();
     const goStepBack = () => {
         if (currentStep > 1) {
             setCurrentStep(currentStep - 1);
@@ -49,15 +51,15 @@ const BulkAddUser = () => {
     }
     const goStepForward = () => {
         if (currentStep < numberOfSteps) {
-            if(currentStep === BulkAddStep.RolePicking && !allSelectedUsersAssignedARole){
+            if (currentStep === BulkAddStep.RolePicking && !allSelectedUsersAssignedARole) {
                 dispatch(addSnackbarMessage({type: SnackbarType.Info, message: 'users.bulk_section.selected_users_no_roles', durationInSeconds: 5}));
                 setRolePickerBehavior(BulkRolePicker.Individual);
                 dispatch(setIsLocalBulkFilterOpen(true));
             }
-            else{
+            else {
                 setCurrentStep(currentStep + 1);
             }
-            
+
         }
     }
 
@@ -145,13 +147,21 @@ const BulkAddUser = () => {
         }
     }
 
+    const [inviteSuccess, setInviteSuccess] = useState(false);
+    const successToastMessageDuration = 5;
     const sendUserInvitationsMutation = useMutation(sendUserInvitation,
         {
             onSuccess: () => {
+                setInviteSuccess(true);
+                dispatch(clearAllSelectedUsers());
                 dispatch(addSnackbarMessage({
                     type: SnackbarType.Success,
-                    message: 'users.add_section.invitation_sent_success'
+                    message: 'users.add_section.invitation_sent_success',
+                    durationInSeconds: successToastMessageDuration
                 }));
+                setTimeout(() => {
+                    history.replace('/users');
+                }, successToastMessageDuration * 1000);
             },
             onError: (error: any) => {
                 const errorMessage = error.response && error.response.status === 400 ?
@@ -205,10 +215,10 @@ const BulkAddUser = () => {
                 }
                 <div className='flex pt-7'>
                     {deselectButtonAvailable && <Button className='mr-8' label={'users.bulk_section.deselect_all'} buttonType='secondary-medium' onClick={() => {dispatch(clearAllSelectedUsers())}} />}
-                    {currentStep > 1 && <Button buttonType='secondary-medium' label={'common.back'} onClick={goStepBack} className='mr-8' />}
-                    <Button buttonType='medium' label={currentStep !== BulkAddStep.Review ? 'common.continue' : 'users.bulk_section.add_users'}
+                    {currentStep > 1 && !inviteSuccess && <Button buttonType='secondary-medium' label={'common.back'} onClick={goStepBack} className='mr-8' />}
+                    {!inviteSuccess && <Button buttonType='medium' label={currentStep !== BulkAddStep.Review ? 'common.continue' : 'users.bulk_section.add_users'}
                         onClick={currentStep !== BulkAddStep.Review ? goStepForward : inviteUsers} disabled={determineDisabledNextButtonState()}
-                        isLoading={sendUserInvitationsMutation.isLoading} />
+                        isLoading={sendUserInvitationsMutation.isLoading} />}
                 </div>
             </div>
         </div>

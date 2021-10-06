@@ -1360,7 +1360,7 @@
       "add_button": "Add Users",
       "name_or_email": "Name or Email",
       "role": "Role",
-      "invitation_sent_success": "Invitations have been sent successfully",
+      "invitation_sent_success": "Invitations have been sent successfully.\nIn a few seconds you'll be redirected to Manage users screen where you can verify the invites.",
       "invitation_sent_error": "The sending of the invitation has failed"
     },
     "bulk_section": {
