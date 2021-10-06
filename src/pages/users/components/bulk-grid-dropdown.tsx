@@ -112,7 +112,7 @@ const BulkGridDropdown = ({userId, purpose, storedRole, storedProviderMapping}: 
                 {
                     purpose === BulkGridDropdownType.Role ?
                         <div className='bulk-user-grid-role-value'>{selectedRole || t('users.bulk_section.pick_a_role')}</div> :
-                        <div className='bulk-user-grid-ehr-value'>{displayProviderName() || t('users.bulk_section.undefined_mapping')}</div>
+                        <div className='bulk-user-grid-ehr-value'>{displayProviderName() || t('users.bulk_section.select_mapping')}</div>
                 }
                 <div className='pl-3' ref={chevronPosition} >
                     {

@@ -12,7 +12,6 @@ import {SelectExternalUser} from '@shared/models';
 import {UserQueryFilter} from '../models/user-filter-query.model';
 import {setLocalBulkFilters} from '../store/users.slice';
 import {getRoleWithState} from '@shared/services/user.service';
-import {selectRoleList} from '@shared/store/lookups/lookups.selectors';
 import {BulkAddStep} from '../models/bulk-add-step.enum';
 
 const BulkUserLocalFilter = ({currentStep}: {currentStep: BulkAddStep}) => {
@@ -43,8 +42,11 @@ const BulkUserLocalFilter = ({currentStep}: {currentStep: BulkAddStep}) => {
     const departmentOptions = utils.convertStringArrayToOptions(availableDepartments);
     const jobTitleOptions = utils.convertStringArrayToOptions(availableJobTitles);
 
-    const userRoleList = useSelector(selectRoleList);
-    const roleOptions = utils.convertStringArrayToOptions(userRoleList.map(r => r.name));
+    const availableRoles = selectedUsers
+        .map((u: SelectExternalUser) => u.inviteUserModel?.roles && u.inviteUserModel.roles.length > 0 ? u.inviteUserModel.roles[0] : '')
+        .filter(r => !!r)
+        .filter((v, i, a) => a.indexOf(v) === i) || [];
+    const roleOptions = utils.convertStringArrayToOptions(availableRoles.map(r => r));
 
     const unassignedRoleFilterOptions = utils.convertStringArrayToOptions(['users.filters.unassigned_role']);
     const addAllOption = (list: any[]): TicketOptionsBase[] => {
