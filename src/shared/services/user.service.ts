@@ -102,10 +102,13 @@ export const getUserMobilePhone = async (userId: string): Promise<PhoneNumber> =
     const {data} = await Api.get(url);
     return data;
 }
-export const searchUserInDirectory = async (filter: UserDirectoryFilter): Promise<PagedList<UserActiveDirectory>> => {
+export const searchUserInDirectory = async (filter: UserDirectoryFilter, excludeExistingApplicationUsers = true): Promise<PagedList<UserActiveDirectory>> => {
     const url = `${userBaseUrl}/external-users`;
     const {data} = await Api.get(url, {
-        params: filter
+        params: {
+            excludeExistingApplicationUsers,
+            ...filter            
+        }
     });
     return data;
 }
@@ -171,9 +174,9 @@ export const resendInvite = async (inviteUsersBody: InviteUserRequest) => {
     await Api.post(`${userBaseUrl}/invite`, inviteUsersBody);
 }
 
-export const getExternalUsersList = async (queryParams: UserQueryFilter, page = 1, pageSize = 10) => {
+export const getExternalUsersList = async (queryParams: UserQueryFilter, page = 1, pageSize = 10, excludeExistingApplicationUsers = true) => {
     const serializedQueryParams = utils.serialize(queryParams);
-    const {data} = await Api.get(`${userBaseUrl}/external-users?page=${page}&pageSize=${pageSize}${serializedQueryParams ? `&${serializedQueryParams}` : ''}`);
+    const {data} = await Api.get(`${userBaseUrl}/external-users?excludeExistingApplicationUsers=${excludeExistingApplicationUsers}&page=${page}&pageSize=${pageSize}${serializedQueryParams ? `&${serializedQueryParams}` : ''}`);
     return data;
 }
 
