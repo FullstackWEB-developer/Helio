@@ -152,8 +152,7 @@ const BulkAddUser = () => {
     const sendUserInvitationsMutation = useMutation(sendUserInvitation,
         {
             onSuccess: () => {
-                setInviteSuccess(true);
-                dispatch(clearAllSelectedUsers());
+                setInviteSuccess(true);                
                 dispatch(addSnackbarMessage({
                     type: SnackbarType.Success,
                     message: 'users.add_section.invitation_sent_success',
@@ -161,6 +160,7 @@ const BulkAddUser = () => {
                 }));
                 setTimeout(() => {
                     history.replace('/users');
+                    dispatch(clearAllSelectedUsers());
                 }, successToastMessageDuration * 1000);
             },
             onError: (error: any) => {
