@@ -26,7 +26,7 @@ import {GetMobilePhone, GetUserConnect, GetUserExtended} from "@constants/react-
 import {
     CallForwardingDetail,
     CallForwardingType,
-    ConnectUser,
+    ConnectUser, RoleBase,
     UserDetailExtended,
     UserDetailStatus,
     UserRole
@@ -184,6 +184,24 @@ const UserDetails = () => {
             type: type,
             message: message
         }));
+    }
+
+    const getUserRole = (role: RoleBase) => {
+        if (isEditAccess) {
+            return <ControlledCheckbox
+                control={control}
+                label={t(`users.role_${role.name.toLowerCase()}`)}
+                name={`userrole_${role.name}`}
+                value={role.name}
+            />
+        } else {
+            const userRole = getValues(`userrole_${role.name}`);
+            if (userRole && userRole.checked) {
+                return <div className='body2'>
+                    {t(`users.role_${role.name.toLowerCase()}`)}
+                </div>
+            }
+        }
     }
 
     const updateMutation = useMutation(updateUser, {
@@ -360,7 +378,7 @@ const UserDetails = () => {
                             className='mr-5'
                             disabled={!isDirty || !isValid}
                             isLoading={updateMutation.isLoading}
-                            onClick={() => isEditAccess ? handleSubmit(saveUser) : handleSubmit(saveCallForwarding)()}
+                            onClick={() => isEditAccess ? handleSubmit(saveUser)() : handleSubmit(saveCallForwarding)()}
                         />
                         {
                             isEditAccess &&
@@ -396,19 +414,7 @@ const UserDetails = () => {
                             <div className='mt-6'>
                                 {
                                     React.Children.toArray(
-                                        rolesSorted.map(role =>
-                                            {
-                                                return isEditAccess ?
-                                                    <ControlledCheckbox
-                                                        control={control}
-                                                        label={t(`users.role_${role.name.toLowerCase()}`)}
-                                                        name={`userrole_${role.name}`}
-                                                        value={role.name}
-                                                    /> :
-                                                    <div className='body2'>
-                                                        {t(`users.role_${role.name.toLowerCase()}`)}
-                                                    </div>
-                                            }
+                                            rolesSorted.map(role => getUserRole(role)
                                         )
                                     )
                                 }
@@ -420,7 +426,6 @@ const UserDetails = () => {
                                 isEditAccess ?
                                     <div className="flex flex-row items-center">
                                         <ControlledSelect
-                                            label='users.ehr_provider_mapping'
                                             name='provider'
                                             control={control}
                                             defaultValue=''
