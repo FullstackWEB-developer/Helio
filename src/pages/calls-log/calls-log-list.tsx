@@ -25,10 +25,6 @@ import {DEFAULT_PAGING} from '@shared/constants/table-constants';
 import Spinner from '@components/spinner/Spinner';
 import {selectAppUserDetails} from '@shared/store/app-user/appuser.selectors';
 import {useDispatch, useSelector} from 'react-redux';
-import {showCcp} from '@shared/layout/store/layout.slice';
-import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
-import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
-import Logger from '@shared/services/logger';
 import {useHistory} from 'react-router';
 import {ContactsPath, PatientsPath, TicketsPath} from '@app/paths';
 import {SortDirection} from '@shared/models/sort-direction';
@@ -58,29 +54,12 @@ const CallsLogList = () => {
         assignedTo: appUser.id,
         sorts:['createdOn Desc']
     });
-    const logger = Logger.getInstance();
 
     useEffect(() => {
         return () => {
             dispatch(setIsCallsLogFiltered(false));
         }
     }, [dispatch]);
-
-    const initiateACall = (phoneToDial?: string) => {
-        dispatch(showCcp());
-        if (window.CCP.agent && phoneToDial) {
-            const endpoint = connect.Endpoint.byPhoneNumber(phoneToDial);
-            window.CCP.agent.connect(endpoint, {
-                failure: (e: any) => {
-                    dispatch(addSnackbarMessage({
-                        type: SnackbarType.Error,
-                        message: 'contacts.contact_details.error_dialing_phone'
-                    }));
-                    logger.error(t('contacts.contact_details.error_dialing_phone'), e);
-                }
-            })
-        }
-    }
 
     const navigateToTicketDetail = (ticketNumber: string) => {
         history.push(`${TicketsPath}/${ticketNumber}`);
@@ -303,7 +282,7 @@ const CallsLogList = () => {
                                 setRowSelected(data);
                                 switch (item.value) {
                                     case '1':
-                                        initiateACall(data.originationNumber);
+                                        utils.initiateACall(data.originationNumber);
                                         break;
                                     case '2':
                                         navigateToTicketDetail(data.ticketNumber);

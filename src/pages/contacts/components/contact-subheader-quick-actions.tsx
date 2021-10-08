@@ -7,14 +7,11 @@ import {useTranslation} from 'react-i18next';
 import customHooks from '@shared/hooks/customHooks';
 import {DropdownItemModel, DropdownModel} from '@components/dropdown/dropdown.models';
 import {ContactPhoneType} from '@pages/contacts/enums/contact-phone-type.enum';
-import {showCcp} from '@shared/layout/store/layout.slice';
-import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
-import {useDispatch, useSelector} from 'react-redux';
-import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
-import Logger from '@shared/services/logger';
+import {useSelector} from 'react-redux';
 import {selectVoiceCounter} from '@pages/ccp/store/ccp.selectors';
 import { Link } from 'react-router-dom';
 import {SmsPath} from '@app/paths';
+import utils from '@shared/utils/utils';
 
 interface ContactHeaderQuickActionsProps {
     editMode?: boolean;
@@ -26,9 +23,7 @@ interface ContactHeaderQuickActionsProps {
 
 const ContactSubheaderQuickActions = ({editMode, editIconClickHandler, contact, isLoading, deleteIconClickHandler}: ContactHeaderQuickActionsProps) => {
     const {t} = useTranslation();
-    const dispatch = useDispatch();
     const voiceCounter = useSelector(selectVoiceCounter);
-    const logger = Logger.getInstance();
 
     const [displayPhoneTypeDropdown, setDisplayPhoneTypeDropdown] = useState<boolean>(false);
     const typeDropdownRef = useRef<HTMLDivElement>(null);
@@ -70,38 +65,21 @@ const ContactSubheaderQuickActions = ({editMode, editIconClickHandler, contact, 
         switch (selectedPhoneType) {
             case ContactPhoneType.mobile:
                 if (contact?.mobilePhone) {
-                    initiateACall(contact.mobilePhone);
+                    utils.initiateACall(contact.mobilePhone);
                 }
                 break;
             case ContactPhoneType.workMain:
                 if (contact?.workMainPhone) {
-                    initiateACall(contact.workMainPhone);
+                    utils.initiateACall(contact.workMainPhone);
                 }
                 break;
             case ContactPhoneType.workDirect:
                 if (contact?.workDirectPhone) {
-                    initiateACall(contact.workDirectPhone);
+                    utils.initiateACall(contact.workDirectPhone);
                 }
                 break;
             default:
                 break;
-        }
-    }
-
-    const initiateACall = (phoneToDial?: string) => {
-        dispatch(showCcp());
-        if (window.CCP.agent && phoneToDial) {
-            const endpoint = connect.Endpoint.byPhoneNumber(phoneToDial);
-            window.CCP.agent.connect(endpoint, {
-                failure: (e: any) => {
-                    dispatch(addSnackbarMessage({
-                        type: SnackbarType.Error,
-                        message: 'contacts.contact_details.error_dialing_phone'
-                    }));
-
-                    logger.error(t('contacts.contact_details.error_dialing_phone'), e);
-                }
-            })
         }
     }
 

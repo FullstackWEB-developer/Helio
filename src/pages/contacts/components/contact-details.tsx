@@ -9,19 +9,16 @@ import CompanyContactDetails from './company-contact-details';
 import ContactNotes from './contact-notes';
 import TextArea from '@components/textarea/textarea';
 import {ContactNote} from '../models/contact-note.model';
-import {useDispatch, useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
 import {userFullNameSelector} from '@shared/store/app-user/appuser.selectors';
-import {showCcp} from '@shared/layout/store/layout.slice';
 import ContactTickets from './contact-tickets';
-import Logger from '@shared/services/logger';
 import {ContactType} from '@shared/models/contact-type.enum';
 import {useMutation, useQueryClient} from 'react-query';
 import {addContactNote, deleteContact, toggleFavoriteContact} from '@shared/services/contacts.service';
 import Confirmation from '@components/confirmation/confirmation';
 import {QueryContactNotes} from '@constants/react-query-constants';
-import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
-import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
 import {Icon} from '@components/svg-icon/icon';
+import utils from '@shared/utils/utils';
 
 interface ContactDetailsProps {
     contact: ContactExtended;
@@ -51,9 +48,6 @@ const ContactDetails = ({contact,
 
     const noteSectionStart = useRef<HTMLDivElement>(null);
     const userFullName = useSelector(userFullNameSelector);
-    const dispatch = useDispatch();
-
-    const logger = Logger.getInstance();
     const isCompany = contact.type === ContactType.Company;
     const queryClient = useQueryClient();
 
@@ -74,21 +68,6 @@ const ContactDetails = ({contact,
         }
         if (contact.id && !addNoteMutation.isLoading) {
             addNoteMutation.mutate({contactId: contact.id, contactNoteDto: newNote});
-        }
-    }
-    const initiateACall = (phoneToDial?: string) => {
-        dispatch(showCcp());
-        if (window.CCP.agent && phoneToDial) {
-            const endpoint = connect.Endpoint.byPhoneNumber(phoneToDial);
-            window.CCP.agent.connect(endpoint, {
-                failure: (e: any) => {
-                    dispatch(addSnackbarMessage({
-                        type: SnackbarType.Error,
-                        message: 'contacts.contact_details.error_dialing_phone'
-                    }));
-                    logger.error(t('contacts.contact_details.error_dialing_phone'), e);
-                }
-            })
         }
     }
 
@@ -131,7 +110,7 @@ const ContactDetails = ({contact,
             return (<IndividualContactDetails
                 contact={contact}
                 editMode={editMode}
-                initiateACall={initiateACall}
+                initiateACall={utils.initiateACall}
                 closeEditMode={editIconClickHandler}
                 onUpdateSuccess={onUpdateSuccess}
                 onUpdateError={onUpdateError} />);
@@ -139,7 +118,7 @@ const ContactDetails = ({contact,
         return (<CompanyContactDetails
             contact={contact}
             editMode={editMode}
-            initiateACall={initiateACall}
+            initiateACall={utils.initiateACall}
             addNewContactHandler={() => addNewContactHandler(contact)}
             closeEditMode={editIconClickHandler}
             onUpdateSuccess={onUpdateSuccess}

@@ -7,6 +7,7 @@ import {
 import patientUtils from '@pages/patients/utils/utils';
 import utils from '../../../../shared/utils/utils';
 import {Insurance} from '@pages/patients/models/insurance';
+import {SelfPayInsuranceTypeName} from '@pages/patients/patient-constants';
 
 const PatientInsurance = () => {
     const { t } = useTranslation();
@@ -60,14 +61,15 @@ const PatientInsurance = () => {
                     {
                         insurance?.insurancePhone && <span>{`${t('patient.insurance.phone')}: ${insurance.insurancePhone}`}</span>
                     }
-                    <span className='ml-3'>{t('patient.insurance.copay')}</span>
-                    <span className='subtitle2'>{insurance.copayAmount}</span>
+                    {insurance?.insuranceType !== SelfPayInsuranceTypeName && <><span className='ml-3'>{t('patient.insurance.copay')}</span>
+                        <span className='subtitle2'>{insurance.copayAmount}</span>
+                    </>}
                 </span>
             </div>
-            <div className='grid grid-cols-2 pt-4'>
+            {insurance?.insuranceType !== SelfPayInsuranceTypeName &&<div className='grid grid-cols-2 pt-4'>
                 <PatientChartList headings={[t('patient.insurance.policy_info')]} rows={getPolicyInfoRows(insurance)}/>
                 <PatientChartList headings={[t('patient.insurance.eligibility_info')]} rows={getEligibilityInfoRows(insurance)}/>
-            </div>
+            </div>}
         </div>
     }
 

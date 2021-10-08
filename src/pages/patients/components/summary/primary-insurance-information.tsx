@@ -27,6 +27,7 @@ const PrimaryInsuranceInformation = ({patientChartSummary} : PrimaryInsuranceInf
             primaryInsurance ? <div className='pt-3.5'>
                     <div className='body1'>{primaryInsurance.insuranceType === SelfPayInsuranceTypeName ? primaryInsurance.insurancePlanName : primaryInsurance.insurancePlanDisplayName}</div>
                     {primaryInsuranceHeader}
+                {primaryInsurance.insuranceType !== SelfPayInsuranceTypeName && <>
                     <div className='subtitle2'> {t('patient.summary.copay')}
                         <span>
                             {copayAmount ?? 0}
@@ -37,6 +38,7 @@ const PrimaryInsuranceInformation = ({patientChartSummary} : PrimaryInsuranceInf
                             {primaryInsurance.eligibilityStatus}
                         </span>
                     </div>
+                </>}
                 </div> : <div>{t('patient.insurance.no_insurance')}</div>
         }
     </div>)

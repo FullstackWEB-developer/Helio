@@ -10,6 +10,11 @@ import {getMsalInstance} from '@pages/login/auth-config';
 import {AppParameter} from '@shared/models/app-parameter.model';
 import {logOut} from '@shared/store/app-user/appuser.slice';
 import duration from 'dayjs/plugin/duration';
+import {showCcp} from '@shared/layout/store/layout.slice';
+import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
+import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
+import Logger from '@shared/services/logger';
+import i18n from 'i18next';
 
 const getWindowCenter = () => {
     const {width, height} = getWindowDimensions();
@@ -45,6 +50,26 @@ const clearFormatPhone = (phone: string) => {
         return '';
     }
     return phone.replace(/[^\d]/g, '')
+}
+
+const initiateACall = (phoneToDial?: string) => {
+    store.dispatch(showCcp());
+    if (window.CCP.agent && phoneToDial) {
+        if (!phoneToDial.startsWith("+1")) {
+            phoneToDial = `+1${phoneToDial}`
+        }
+        const endpoint = connect.Endpoint.byPhoneNumber(phoneToDial);
+        window.CCP.agent.connect(endpoint, {
+            failure: (e: any) => {
+                store.dispatch(addSnackbarMessage({
+                    type: SnackbarType.Error,
+                    message: 'contacts.contact_details.error_dialing_phone'
+                }));
+
+                Logger.getInstance().error(i18n.t('contacts.contact_details.error_dialing_phone'), e);
+            }
+        })
+    }
 }
 
 const formatDate = (datetime?: string) => {
@@ -447,7 +472,8 @@ const utils = {
     isScrollable,
     getScrollParent,
     isInBounds,
-    downloadFileFromData
+    downloadFileFromData,
+    initiateACall
 };
 
 export default utils;

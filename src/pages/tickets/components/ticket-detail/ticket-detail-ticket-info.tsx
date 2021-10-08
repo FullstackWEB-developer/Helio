@@ -11,13 +11,8 @@ import {Option} from '@components/option/option';
 import {Control, Controller} from 'react-hook-form';
 import {setTicketUpdateModel} from '@pages/tickets/store/tickets.slice';
 import {selectLocationsAsOptions} from '@shared/store/lookups/lookups.selectors';
-import {useTranslation} from 'react-i18next';
-import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
-import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
 import TagInput from '@components/tag-input/tag-input';
 import {Icon} from '@components/svg-icon';
-import {showCcp} from '@shared/layout/store/layout.slice';
-import Logger from '@shared/services/logger';
 import Spinner from '@components/spinner/Spinner';
 import ControlledInput from '@components/controllers/ControlledInput';
 import {TicketUpdateModel} from '@pages/tickets/models/ticket-update.model';
@@ -33,9 +28,7 @@ interface TicketInfoProps {
 const TicketDetailTicketInfo = ({ticket, control, watch}: TicketInfoProps) => {
 
     const updateModel = useSelector(selectTicketUpdateModel);
-    const logger = Logger.getInstance();
     const dispatch = useDispatch();
-    const {t} = useTranslation();
     const statusOptions = useSelector((state => selectEnumValuesAsOptions(state, 'TicketStatus')));
     const locationOptions = useSelector(selectLocationsAsOptions);
     const priorityOptions = useSelector((state => selectEnumValuesAsOptions(state, 'TicketPriority')));
@@ -86,22 +79,7 @@ const TicketDetailTicketInfo = ({ticket, control, watch}: TicketInfoProps) => {
         return <Spinner size='medium' />
     }
 
-    const initiateACall = (phoneToDial?: string) => {
-        dispatch(showCcp());
-        if (window.CCP.agent && phoneToDial) {
-            const endpoint = connect.Endpoint.byPhoneNumber(phoneToDial);
-            window.CCP.agent.connect(endpoint, {
-                failure: (e: any) => {
-                    dispatch(addSnackbarMessage({
-                        type: SnackbarType.Error,
-                        message: 'contacts.contact_details.error_dialing_phone'
-                    }));
 
-                    logger.error(t('contacts.contact_details.error_dialing_phone'), e);
-                }
-            })
-        }
-    }
 
     return (
         <div className='pt-2'>
@@ -135,7 +113,7 @@ const TicketDetailTicketInfo = ({ticket, control, watch}: TicketInfoProps) => {
                     control={control}
                     onChange={(e) => handleCallbackNumberChange(e.target.value)}
                     dropdownIcon={Icon.Phone} label={'ticket_detail.info_panel.callback_number'}
-                    dropdownIconClickHandler={() => {initiateACall(updateModel.callbackPhoneNumber)}} />
+                    dropdownIconClickHandler={() => {utils.initiateACall(updateModel.callbackPhoneNumber)}} />
             }
             {(reasonFilteredOptions && reasonFilteredOptions.length > 0) &&
                 <ControlledSelect
