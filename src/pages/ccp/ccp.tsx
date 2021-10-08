@@ -250,9 +250,14 @@ const Ccp: React.FC<BoxProps> = ({
 
                 if (attributeMap.CallerMainIntent) {
                     const reason = attributeMap.CallerMainIntent.value;
+                    let isPregnant = false;
+                    if (attributeMap.IsUserPregnant && attributeMap.IsUserPregnant.value.toLowerCase() === "yes") {
+                        isPregnant = true;
+                    }
                     dispatch(setBotContext({
                         ...botContext,
                         queue: queueName,
+                        isPregnant,
                         reason
                     })
                     );

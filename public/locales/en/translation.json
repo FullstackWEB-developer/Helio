@@ -205,7 +205,9 @@
       "header": "Bot Context",
       "queue": "Queue",
       "reason": "Reason",
-      "patient_in_collections": "Patient is in collections."
+      "patient_in_collections": "Patient is in collections.",
+      "patient_is_pregnant": "Patient is pregnant!",
+      "pregnancy": "Pregnancy"
     },
     "note_context": {
       "header": "Add Note",

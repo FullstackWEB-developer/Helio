@@ -15,14 +15,18 @@ const BotContext = () => {
     return (
         <div className='py-3.5 pl-6 h7'>
             <div>{t('ccp.bot_context.header')}</div>
-            <div className='grid grid-cols-8 pt-5'>
-                <div className='body2-medium'>{t('ccp.bot_context.queue')}</div>
-                <div className='col-span-7 subtitle2'>{botContext?.queue}</div>
+            <div className='grid grid-cols-12 pt-5'>
+                <div className='body2-medium col-span-2'>{t('ccp.bot_context.queue')}</div>
+                <div className='col-span-6 subtitle2'>{botContext?.queue}</div>
             </div>
-            <div className='grid grid-cols-8'>
-                <div className='body2-medium'>{t('ccp.bot_context.reason')}</div>
-                <div className='col-span-7 subtitle2'>{botContext?.reason}</div>
+            <div className='grid grid-cols-12'>
+                <div className='body2-medium col-span-2'>{t('ccp.bot_context.reason')}</div>
+                <div className='col-span-6 subtitle2'>{botContext?.reason}</div>
             </div>
+            {botContext?.isPregnant && <div className='grid grid-cols-12'>
+                <div className='body2-medium col-span-2'>{t('ccp.bot_context.pregnancy')}</div>
+                <div className='col-span-6 subtitle2'>{t('ccp.bot_context.patient_is_pregnant')}</div>
+            </div>}
             {
                 patientInCollectionsBalance > 0 &&
                 <div className={'pt-4 flex items-center'}>
