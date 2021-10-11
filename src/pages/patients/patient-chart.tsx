@@ -66,7 +66,7 @@ const PatientChart = () => {
     }
 
 
-    if (isSummaryLoading) {
+    if (isSummaryLoading || loading) {
         return <Spinner fullScreen />
     }
     if (error) {

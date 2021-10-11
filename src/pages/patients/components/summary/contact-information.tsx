@@ -1,8 +1,8 @@
 import {useSelector} from 'react-redux';
-import {selectPatient} from '../../store/patients.selectors';
+import {selectPatient, selectPatientLoading} from '../../store/patients.selectors';
 import {useTranslation} from 'react-i18next';
 import PatientChartList from '@pages/patients/components/patient-chart-list';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import ContactInformationUpdate from '@pages/patients/components/summary/patient-contact-info-update';
 import withErrorLogging from '@shared/HOC/with-error-logging';
 import SvgIcon from '@components/svg-icon/svg-icon';
@@ -17,9 +17,13 @@ const ContactInformation = () => {
         return booleanValue ? 'common.yes' : 'common.no';
     };
 
-
     const patient = useSelector(selectPatient);
+    const patientLoading = useSelector(selectPatientLoading);
 
+    useEffect(() => {
+        setEditMode(false);        
+    }, [patientLoading])
+    
     const contactRows = [
         { label: t('patient.summary.address'), values: [patient.address] },
         { label: '', values: [patient.address2] },
