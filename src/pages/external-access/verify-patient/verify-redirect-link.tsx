@@ -32,6 +32,8 @@ const VerifyRedirectLink = () => {
                 dispatch(setRedirectLink(data));
                 if (data.requestType === ExternalAccessRequestTypes.DownloadMedicalRecords) {
                     history.push('/o/download-medical-records');
+                } else if (data.requestType === ExternalAccessRequestTypes.RegisterNewPatient) {
+                    history.push('/o/registration');
                 } else {
                     history.push('/o/verify-patient-get-mobile');
                 }
