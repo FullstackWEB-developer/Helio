@@ -1,6 +1,6 @@
 import {RootState} from "@app/store";
 import {TicketEnumValue} from "@pages/tickets/models/ticket-enum-value.model";
-import {InviteUserModel, Paging, SelectExternalUser} from "@shared/models";
+import {Paging, SelectExternalUser} from "@shared/models";
 import {UserQueryFilter} from "../models/user-filter-query.model";
 
 export const selectUsersPaging = (state: RootState) => state.usersState.paging as Paging;
@@ -22,4 +22,5 @@ export const selectAllSelectedUsersAssignedRole = (state: RootState) => {
 }
 export const selectLocalBulkFilters = (state: RootState) => state.usersState.bulkLocalFilters as UserQueryFilter;
 export const selectIsLocalBulkFilterOpen = (state: RootState) => state.usersState.isBulkLocalFilterOpen as boolean;
+export const selectIsBulkUsersFiltered = (state: RootState) => state.usersState.isBulkUsersFiltered as boolean;
 export const selectFilteredExternalUsersSelection = (state: RootState) => state.usersState.filteredSelectedExternalUsers as SelectExternalUser[];

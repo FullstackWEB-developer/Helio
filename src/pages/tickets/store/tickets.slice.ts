@@ -51,6 +51,9 @@ const ticketsSlice = createSlice({
     setFailure: (state, {payload}: PayloadAction<string>) => {
       state.errors = payload;
     },
+    setTicketsFiltered: (state, {payload}: PayloadAction<boolean>) => {
+      state.isTicketsFiltered = payload;
+    },
     setFeedLastMessageOn(state, {payload}: PayloadAction<Date | undefined>) {
       state.feedLastMessageOn = payload;
     },
@@ -151,7 +154,8 @@ export const {
   setTicketUpdateHash,
   toggleChatTranscriptWindowVisible,
   toggleCallLogPlayerVisible,
-  clearTicketFilters
+  clearTicketFilters,
+  setTicketsFiltered
 } = ticketsSlice.actions;
 
 export default ticketsSlice.reducer;

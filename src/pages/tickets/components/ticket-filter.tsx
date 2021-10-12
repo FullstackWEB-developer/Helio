@@ -25,7 +25,7 @@ import dayjs from 'dayjs';
 import {TicketEnumValue} from '../models/ticket-enum-value.model';
 import utc from 'dayjs/plugin/utc';
 import TagInput from '@components/tag-input/tag-input';
-import {setTicketListQueryType} from '../store/tickets.slice';
+import {setTicketListQueryType, setTicketsFiltered} from '../store/tickets.slice';
 import {authenticationSelector} from '@shared/store/app-user/appuser.selectors';
 import {TicketListQueryType} from '../models/ticket-list-type';
 import ControlledDateInput from '@components/controllers/ControlledDateInput';
@@ -173,21 +173,32 @@ const TicketFilter = ({isOpen}: {isOpen: boolean}) => {
         query.fromDate = undefined;
         query.toDate = undefined;
         query.assignedTo = [];
-
+        let hasFilter = false;
+        if ((query.statuses && query.statuses.length > 0) ||
+            (query.channels && query.channels.length > 0) ||
+            (query.ticketTypes && query.ticketTypes.length > 0) ||
+            (query.locations && query.locations.length > 0) ||
+            (query.states && query.states.length > 0)) {
+            hasFilter = true;
+        }
         if (values.priority) {
             query.priority = values.priority;
+            hasFilter = true;
         }
-        if (values.tags) {
+        if (values.tags && values.tags.length > 0) {
             query.tags = values.tags;
+            hasFilter = true;
         }
 
         if (values.department) {
             query.departments = [];
+            hasFilter = true;
             if (values.department !== allKey) {
                 query.departments.push(values.department);
             }
         }
         if (values.reasons) {
+            hasFilter = true;
             query.reasons = [];
             if (values.reasons !== allKey) {
                 query.reasons.push(values.reasons);
@@ -195,6 +206,7 @@ const TicketFilter = ({isOpen}: {isOpen: boolean}) => {
         }
 
         if (values.timePeriod) {
+            hasFilter = true;
             if (values.timePeriod === timePeriod_DateRange) {
                 const {fromDate: fromDateValue, toDate}: {fromDate: Date | undefined, toDate: Date | undefined} = values;
                 if (fromDateValue) {
@@ -224,13 +236,15 @@ const TicketFilter = ({isOpen}: {isOpen: boolean}) => {
         }
 
         if (!!values.assignedTo) {
+            hasFilter = true;
             query.assignedTo.push(values.assignedTo);
         }
 
         if (searchTerm) {
+            hasFilter = true;
             query.searchTerm = searchTerm;
         }
-
+        dispatch(setTicketsFiltered(hasFilter));
         dispatch(getList(query, true));
 
         if (query.assignedTo && query.assignedTo.length === 1 && query.assignedTo[0] === username) {
@@ -398,7 +412,7 @@ const TicketFilter = ({isOpen}: {isOpen: boolean}) => {
     const resetForm = () => {
         const fieldsValue = getValues();
         const clearArray = (values: any) => Array.isArray(values) ? Array(values.length).fill('') : values;
-
+        dispatch(setTicketsFiltered(false));
         reset({
             statuses: clearArray(fieldsValue.statuses),
             channels: clearArray(fieldsValue.channels),

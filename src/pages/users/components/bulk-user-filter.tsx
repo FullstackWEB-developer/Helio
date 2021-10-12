@@ -10,7 +10,7 @@ import Checkbox, {CheckboxCheckEvent} from '@components/checkbox/checkbox';
 import Collapsible from '@components/collapsible/collapsible';
 import utils from '@shared/utils/utils';
 import {UserQueryFilter} from '../models/user-filter-query.model';
-import {setBulkUserFilters} from '../store/users.slice';
+import {setBulkUserFilters, setBulkUsersFiltered} from '../store/users.slice';
 import {isNavigationExpandedSelector} from '@shared/layout/store/layout.selectors';
 
 const BulkUserFilter = () => {
@@ -122,6 +122,11 @@ const BulkUserFilter = () => {
 
         if (storedFilters?.searchText && storedFilters.searchText.length > 0) {
             filters.searchText = storedFilters.searchText;
+        }
+        if (filters.searchText || filters.jobTitle || filters.departments) {
+            dispatch(setBulkUsersFiltered(true));
+        } else {
+            dispatch(setBulkUsersFiltered(false));
         }
         
         dispatch(setBulkUserFilters({filters, resetPagination: true}));

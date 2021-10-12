@@ -1,6 +1,6 @@
 import {TicketEnumValue} from "@pages/tickets/models/ticket-enum-value.model";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {InviteUserModel, Paging, SelectExternalUser} from "@shared/models";
+import {Paging, SelectExternalUser} from "@shared/models";
 import {UserQueryFilter} from "../models/user-filter-query.model";
 import initialUsersState from "./users.initial-state";
 
@@ -37,6 +37,9 @@ const usersSlice = createSlice({
         },
         setBulkUsersPagination(state, {payload}: PayloadAction<Paging>) {
             state.bulkPaging = payload;
+        },
+        setBulkUsersFiltered(state, {payload}: PayloadAction<boolean>) {
+            state.isBulkUsersFiltered = payload;
         },
         setIsBulkFilterOpen(state, {payload}: PayloadAction<boolean>) {
             state.isBulkFilterOpen = payload
@@ -201,7 +204,8 @@ export const {
     setLocalBulkFilters,
     setIsLocalBulkFilterOpen,
     setSelectedUserProviderMapping,
-    clearSelectedUserProviderMapping
+    clearSelectedUserProviderMapping,
+    setBulkUsersFiltered
 } = usersSlice.actions;
 
 export default usersSlice.reducer;

@@ -24,6 +24,7 @@ export interface TicketState {
     lookupValues: LookupValue[];
     isFilterOpen: boolean;
     ticketFilter: TicketQuery;
+    isTicketsFiltered: boolean;
     ticketListQueryType: TicketListQueryType;
     feedLastMessageOn?: Date;
     ticketUpdate?: TicketUpdateModel;
@@ -61,7 +62,8 @@ const initialTicketState: TicketState = {
     ticketListQueryType: TicketListQueryType.AllTicket,
     ticketUpdate: undefined,
     ticketUpdateHash: undefined,
-    isCallLogPlayerVisible: false
+    isCallLogPlayerVisible: false,
+    isTicketsFiltered: false
 }
 
 export default initialTicketState;

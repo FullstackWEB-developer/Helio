@@ -9,8 +9,17 @@ import {useTranslation} from 'react-i18next';
 import {useQueryClient} from 'react-query';
 import {useSelector, useDispatch} from 'react-redux';
 import {BulkAddStep} from '../models/bulk-add-step.enum';
-import {selectBulkFilters, selectExternalUsersSelection, selectIsBulkUsersFilterOpen, selectIsLocalBulkFilterOpen, selectLocalBulkFilters} from '../store/users.selectors';
+import {
+    selectBulkFilters,
+    selectExternalUsersSelection,
+    selectIsBulkUsersFiltered,
+    selectIsBulkUsersFilterOpen,
+    selectIsLocalBulkFilterOpen,
+    selectLocalBulkFilters
+} from '../store/users.selectors';
 import {clearAllExternalUsersSelectionOnCurrentPage, selectAllExternalUsersOnCurrentPage, setBulkUserFilters, setIsBulkFilterOpen, setIsLocalBulkFilterOpen, setLocalBulkFilters} from '../store/users.slice';
+import FilterDot from '@components/filter-dot/filter-dot';
+import {setIsCallsLogFiltered} from '@pages/calls-log/store/calls-log.slice';
 
 const UserBulkActionStripe = ({currentStep}: {currentStep: BulkAddStep}) => {
     const {t} = useTranslation();
@@ -20,6 +29,7 @@ const UserBulkActionStripe = ({currentStep}: {currentStep: BulkAddStep}) => {
     const selectedExternalUsers = useSelector(selectExternalUsersSelection);
     const filters = useSelector(currentStep > BulkAddStep.Selection ? selectLocalBulkFilters : selectBulkFilters);
     const queryClient = useQueryClient();
+    const isFiltered = useSelector(selectIsBulkUsersFiltered);
     const [searchText, setSearchText] = useState('');
     const currentPageUsers: any = queryClient.getQueryData([GetExternalUserList, filters]);
     const handleSelectAllCheckboxChange = (e: CheckboxCheckEvent) => {
@@ -91,7 +101,10 @@ const UserBulkActionStripe = ({currentStep}: {currentStep: BulkAddStep}) => {
         if (filters?.searchText) {
             setSearchText(filters.searchText);
         }
-    }, []);
+        return () => {
+            dispatch(setIsCallsLogFiltered(false));
+        }
+    }, [dispatch]);
 
     return (
         <div className='flex h-14 px-4 border-t border-b'>
@@ -124,14 +137,17 @@ const UserBulkActionStripe = ({currentStep}: {currentStep: BulkAddStep}) => {
                 />
             </div>
             <div className='flex items-center pl-6 body2'>
-                <SvgIcon type={Icon.FilterList}
-                    className='icon-medium cursor-pointer mr-4'
-                    onClick={() => dispatch(currentStep !== BulkAddStep.Selection ? setIsLocalBulkFilterOpen(!isLocalBulkFilterOpen) : setIsBulkFilterOpen(!isBulkFilterOpen))}
-                    fillClass='filter-icon' />
+                <div className='relative'>
+                    <SvgIcon type={Icon.FilterList}
+                             className='icon-medium cursor-pointer mr-4'
+                             onClick={() => dispatch(currentStep !== BulkAddStep.Selection ? setIsLocalBulkFilterOpen(!isLocalBulkFilterOpen) : setIsBulkFilterOpen(!isBulkFilterOpen))}
+                             fillClass='filter-icon' />
+                            {isFiltered && <div className='absolute bottom-0.5 right-5'>
+                        <FilterDot />
+                    </div>}
+                </div>
                 {t('common.filters')}
             </div>
-
-
         </div>
     )
 }

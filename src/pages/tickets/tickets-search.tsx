@@ -3,8 +3,8 @@ import {useHistory} from 'react-router-dom';
 import {keyboardKeys} from '@components/search-bar/constants/keyboard-keys';
 import {useDispatch, useSelector} from 'react-redux';
 import {getList} from './services/tickets.service';
-import {selectTicketFilter, selectTicketsPaging} from './store/tickets.selectors';
-import {toggleTicketListFilter} from './store/tickets.slice';
+import {selectIsTicketsFiltered, selectTicketFilter, selectTicketsPaging} from './store/tickets.selectors';
+import {setTicketsFiltered, toggleTicketListFilter} from './store/tickets.slice';
 import {Paging} from '@shared/models/paging.model';
 import {TicketQuery} from './models/ticket-query';
 import {TicketsPath} from '@app/paths';
@@ -13,13 +13,14 @@ import SvgIcon from '@components/svg-icon/svg-icon';
 import {Icon} from '@components/svg-icon/icon';
 import SearchInputField from '@components/search-input-field/search-input-field';
 import * as queryString from 'querystring';
+import FilterDot from '@components/filter-dot/filter-dot';
 
 const TicketsSearch = () => {
     const dispatch = useDispatch();
     const history = useHistory();
     const ticketFilter: TicketQuery = useSelector(selectTicketFilter);
     const paging: Paging = useSelector(selectTicketsPaging);
-
+    const isFiltered = useSelector(selectIsTicketsFiltered);
     const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
@@ -28,6 +29,12 @@ const TicketsSearch = () => {
             setSearchTerm(queries.searchTerm.toString());
         }
     }, [history.location.search]);
+
+    useEffect(() => {
+        return () => {
+            dispatch(setTicketsFiltered(false));
+        }
+    }, [dispatch]);
 
     const searchList = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === keyboardKeys.enter) {
@@ -51,10 +58,15 @@ const TicketsSearch = () => {
 
     return <div className='flex flex-row border-b h-14'>
         <div className='pr-6 pl-5 border-r flex flex-row items-center'>
-            <SvgIcon type={Icon.FilterList} onClick={() => dispatch(toggleTicketListFilter())}
+            <div className='relative'>
+                <SvgIcon type={Icon.FilterList} onClick={() => dispatch(toggleTicketListFilter())}
                 className='icon-medium'
                 wrapperClassName='mr-6 cursor-pointer icon-medium'
                 fillClass='filter-icon' />
+                {isFiltered && <div className='absolute bottom-1 right-6'>
+                    <FilterDot />
+                </div>}
+            </div>
             <SvgIcon type={Icon.Add} onClick={() => history.push(`${TicketsPath}/new`)}
                 className='icon-medium'
                 wrapperClassName='cursor-pointer icon-medium'

@@ -20,7 +20,8 @@ export interface UsersState {
     selectedUsersLocalPagination: Paging;
     bulkLocalFilters: UserQueryFilter | undefined;
     isBulkLocalFilterOpen: boolean;
-    filteredSelectedExternalUsers: SelectExternalUser[]
+    filteredSelectedExternalUsers: SelectExternalUser[],
+    isBulkUsersFiltered: boolean
 }
 
 const initialUsersState: UsersState = {
@@ -40,7 +41,8 @@ const initialUsersState: UsersState = {
     selectedUsersLocalPagination: {...DefaultPagination},
     bulkLocalFilters: undefined,
     isBulkLocalFilterOpen: false,
-    filteredSelectedExternalUsers: []
+    filteredSelectedExternalUsers: [],
+    isBulkUsersFiltered: false
 }
 
 export default initialUsersState;

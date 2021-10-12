@@ -106,3 +106,8 @@ export const selectTicketUpdateHash = createSelector(
     ticketState,
     state => state.ticketUpdateHash
 )
+
+export const selectIsTicketsFiltered = createSelector(
+    ticketState,
+    state => state.isTicketsFiltered  as boolean
+)
