@@ -68,6 +68,7 @@ const UserDetails = () => {
     const currentUserStatus = userDetailExtended?.user.status;
     const isEditAccess = appUserDetails?.permissions?.includes('Users.EditUserDetail');
     const [userProvider, setUserProvider] = useState('');
+    const [isSomeUserRoleChecked, setIsSomeUserRoleChecked] = useState(false);
 
     const rolesSorted = useMemo(() => {
         if (!rolesList || rolesList.length < 1) {
@@ -186,6 +187,17 @@ const UserDetails = () => {
         }));
     }
 
+    const getIsSomeUserRoleChecked = () => {
+        return rolesList.some(userRole => {
+            const role = getValues(`userrole_${userRole.name}`);
+            return role && role.checked;
+        });
+    }
+
+    const onUserRoleChanged = () => {
+        setIsSomeUserRoleChecked(getIsSomeUserRoleChecked);
+    }
+
     const getUserRole = (role: RoleBase) => {
         if (isEditAccess) {
             return <ControlledCheckbox
@@ -193,6 +205,7 @@ const UserDetails = () => {
                 label={t(`users.role_${role.name.toLowerCase()}`)}
                 name={`userrole_${role.name}`}
                 value={role.name}
+                onChange={onUserRoleChanged}
             />
         } else {
             const userRole = getValues(`userrole_${role.name}`);
@@ -376,7 +389,7 @@ const UserDetails = () => {
                             buttonType='medium'
                             label='common.save'
                             className='mr-5'
-                            disabled={!isDirty || !isValid}
+                            disabled={!isDirty || !isValid || !isSomeUserRoleChecked}
                             isLoading={updateMutation.isLoading}
                             onClick={() => isEditAccess ? handleSubmit(saveUser)() : handleSubmit(saveCallForwarding)()}
                         />
@@ -486,6 +499,7 @@ const UserDetails = () => {
                                         control={control}
                                         disabled={!enableForward || isMobilePhoneLoading || isMobilePhoneFetching}
                                         label='users.call_forwarding_value_phone'
+                                        required={enableForward}
                                     />
                                 }
 
@@ -497,6 +511,7 @@ const UserDetails = () => {
                                         label='users.call_forwarding_value_agent'
                                         defaultValue=''
                                         options={connectUserOptions}
+                                        required={enableForward}
                                     />
                                 }
                             </div>
