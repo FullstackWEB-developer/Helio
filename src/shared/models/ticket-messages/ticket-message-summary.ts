@@ -1,5 +1,10 @@
 import {TicketType} from "../ticket-type.model";
 
+export enum TicketMessageFilterMatch {
+    MessageBody = 1,
+    TicketNumber = 2,
+    Phone = 3
+}
 export interface TicketMessageSummary {
     ticketId: string;
     ticketNumber: number;
@@ -14,4 +19,5 @@ export interface TicketMessageSummary {
     createdForName: string;
     createdForMobileNumber: string
     assignedTo?: string;
+    filterMatches?: TicketMessageFilterMatch[];
 }

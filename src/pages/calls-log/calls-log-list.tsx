@@ -47,6 +47,7 @@ const CallsLogList = () => {
     const [isFilterOpen, setFilterOpen] = useState(false);
     const [isPlayerOpen, setPlayerOpen] = useState(false);
     const [rowSelected, setRowSelected] = useState<TicketLogModel>();
+    const [currentQueryType, setCurrentQueryType] = useState<CallLogQueryType>(CallLogQueryType.MyCallLog);
     const [pagingResult, setPagingResult] = useState({...DEFAULT_PAGING});
     const [rows, setRows] = useState<TicketLogModel[]>([]);
     const [callsLogFilter, setCallsLogFilter] = useState<TicketLogRequestModel>({
@@ -328,6 +329,7 @@ const CallsLogList = () => {
 
     const onDropdownClick = (item: DropdownItemModel) => {
         const context = item.value as CallLogQueryType;
+        setCurrentQueryType(context);
         if (context === CallLogQueryType.MyCallLog) {
             setCallsLogFilter({...callsLogFilter, assignedTo: appUser.id});
         } else {
@@ -343,7 +345,7 @@ const CallsLogList = () => {
                     <div>
                         <DropdownLabel
                             items={dropdownItem}
-                            value={CallLogQueryType.MyCallLog}
+                            value={currentQueryType}
                             onClick={onDropdownClick}
                         />
                     </div>

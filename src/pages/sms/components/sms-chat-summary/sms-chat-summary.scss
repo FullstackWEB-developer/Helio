@@ -1,7 +1,8 @@
 @import "./../../../../themes/base/typography";
 
 .sms-summary {
-  height: 5.5rem;
+  min-height: 5.5rem;
+  max-height: 7.5rem;
   &:hover, &-selected {
     background-color: var(--message-ticket-table-row-selected-color);
   }

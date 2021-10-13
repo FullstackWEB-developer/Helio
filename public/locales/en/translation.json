@@ -1289,7 +1289,11 @@
           "form_title": "Enter Ticket Information"
         }
       }
-    }
+    },
+    "found_in": "Found in:",
+    "ticket_number": "Ticket Id",
+    "phone": "Phone",
+    "messages": "Messages"
   },
   "users": {
     "not_found": "User not found",

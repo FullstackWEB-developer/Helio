@@ -195,13 +195,13 @@ const SvgIcon = ({type, wrapperClassName = '', className = 'icon-medium', fillCl
 
     const getIconChannelUser = () => {
         return <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" className={mainClass}>
-            <rect width="48" height="48" fill="none"/>
+            <rect width="48" height="48" fill="none" />
             <g transform="translate(4 4)" fill="none" className={strokeClass}>
-                <circle cx="20" cy="20" r="20" stroke="none"/>
-                <circle cx="20" cy="20" r="19.5" fill="none"/>
+                <circle cx="20" cy="20" r="20" stroke="none" />
+                <circle cx="20" cy="20" r="19.5" fill="none" />
             </g>
             <g transform="translate(-660 -955)">
-            <path d="M17,14a5,5,0,1,0-5-5A5,5,0,0,0,17,14Zm0,2.5c-3.337,0-10,1.675-10,5V24H27V21.5C27,18.175,20.337,16.5,17,16.5Z" transform="translate(667 965)" className={fillClass}/>
+                <path d="M17,14a5,5,0,1,0-5-5A5,5,0,0,0,17,14Zm0,2.5c-3.337,0-10,1.675-10,5V24H27V21.5C27,18.175,20.337,16.5,17,16.5Z" transform="translate(667 965)" className={fillClass} />
             </g>
         </svg>
     }
@@ -402,7 +402,7 @@ const SvgIcon = ({type, wrapperClassName = '', className = 'icon-medium', fillCl
 
     const getIconEmergency = () => {
         return <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" className={mainClass}>
-            <rect width="48" height="48" fill="none"/>
+            <rect width="48" height="48" fill="none" />
             <path d="M38,6H10a3.982,3.982,0,0,0-3.98,4L6,38a4,4,0,0,0,4,4H38a4,4,0,0,0,4-4V10A4,4,0,0,0,38,6ZM36,28H28v8H20V28H12V20h8V12h8v8h8Z" className={fillClass} />
         </svg>
     }
@@ -893,7 +893,7 @@ const SvgIcon = ({type, wrapperClassName = '', className = 'icon-medium', fillCl
         return (
             <svg xmlns="https://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className={mainClass}>
                 <rect width="24" height="24" fill="none" />
-                <path d="M12,2A10,10,0,1,0,22,12,10,10,0,0,0,12,2ZM11,16H9V8h2Zm4,0H13V8h2Z" className={fillClass}/>
+                <path d="M12,2A10,10,0,1,0,22,12,10,10,0,0,0,12,2ZM11,16H9V8h2Zm4,0H13V8h2Z" className={fillClass} />
             </svg>
         );
     }
@@ -902,7 +902,7 @@ const SvgIcon = ({type, wrapperClassName = '', className = 'icon-medium', fillCl
         return (
             <svg xmlns="https://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className={mainClass}>
                 <rect width="24" height="24" fill="none" />
-                <path d="M9,5V7h6.59L4,18.59,5.41,20,17,8.41V15h2V5Z" transform="translate(1)" className={fillClass}/>
+                <path d="M9,5V7h6.59L4,18.59,5.41,20,17,8.41V15h2V5Z" transform="translate(1)" className={fillClass} />
             </svg>
         )
     }
@@ -920,9 +920,28 @@ const SvgIcon = ({type, wrapperClassName = '', className = 'icon-medium', fillCl
         return (
             <svg xmlns="https://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className={mainClass}>
                 <rect width="24" height="24" fill="none" />
-                <path d="M3,8.41l9,9,7-7V15h2V7H13V9h4.59L12,14.59,4.41,7Z" className={fillClass}/>
+                <path d="M3,8.41l9,9,7-7V15h2V7H13V9h4.59L12,14.59,4.41,7Z" className={fillClass} />
             </svg>
         );
+    }
+
+    const getIconUserUnknown = () => {
+        return (
+            <svg xmlns="https://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className={mainClass}>
+                <rect width="24" height="24" fill="none" />
+                <g transform="translate(-0.164 -0.535)">
+                    <path
+                        d="M16.857,11.722a5.307,5.307,0,1,0,5.308,5.307A5.307,5.307,0,0,0,16.857,11.722Zm.575,8.684h-1.1V19.261h1.1Zm1.375-4.077a5.851,5.851,0,0,1-.8.882,2.4,2.4,0,0,0-.533.654,1.982,1.982,0,0,0-.119.786v.117h-1.01v-.117A2.957,2.957,0,0,1,16.5,17.6a2.747,2.747,0,0,1,.7-.922l.357-.346a1.374,1.374,0,0,0,.234-.287.975.975,0,0,0,.164-.531,1.009,1.009,0,0,0-.234-.671.964.964,0,0,0-.776-.273.946.946,0,0,0-.935.481,1.963,1.963,0,0,0-.171.823l0,.1h-1.01v-.116a2.253,2.253,0,0,1,.58-1.6,2.055,2.055,0,0,1,1.571-.612,2.077,2.077,0,0,1,1.47.512,1.77,1.77,0,0,1,.564,1.344A1.471,1.471,0,0,1,18.807,16.329Z"
+                        className={fillClass}
+                    />
+                    <circle cx="4.222" cy="4.222" r="4.222" transform="translate(6.99 3.535)" className={fillClass} />
+                    <path
+                        d="M10.608,13.861c-.22-.01-.434-.019-.658-.019a12.537,12.537,0,0,0-6.432,1.77,2.845,2.845,0,0,0-1.353,2.463v2.579h9.012A6.783,6.783,0,0,1,9.95,16.762,6.9,6.9,0,0,1,10.608,13.861Z"
+                        className={fillClass}
+                    />
+                </g>
+            </svg>
+        )
     }
 
     const icons = {
@@ -1017,7 +1036,8 @@ const SvgIcon = ({type, wrapperClassName = '', className = 'icon-medium', fillCl
         [Icon.CallOutbound]: getIconCallOutbound,
         [Icon.CallInbound]: getIconCallInbound,
         [Icon.CallMissedOutgoing]: getIconCallMissedOutgoing,
-        [Icon.Emergency]: getIconEmergency
+        [Icon.Emergency]: getIconEmergency,
+        [Icon.UserUnknown]: getIconUserUnknown
     }
 
     const iconClicked = (e: React.MouseEvent<HTMLDivElement>) => {

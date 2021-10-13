@@ -7,6 +7,7 @@ import {User} from '@shared/models/user';
 import utils from '@shared/utils/utils';
 import {useTranslation} from 'react-i18next';
 import {TFunction} from 'i18next';
+import {Icon} from '@components/svg-icon';
 dayjs.extend(utc);
 
 interface SmsChatMessageProps {
@@ -38,7 +39,17 @@ const getName = (props: SmsChatMessageProps, t: TFunction) => {
 
 const SmsChatMessageAvatar = ({name, photoUrl}: {name: string, photoUrl?: string}) => (
     <div className="flex flex-col">
-        <div><Avatar userFullName={name} userPicture={photoUrl} /></div>
+        <div>
+            {!name && !photoUrl &&
+                <Avatar icon={Icon.UserUnknown} />
+            }
+            {(!!name || !!photoUrl) &&
+                <Avatar
+                    userFullName={name}
+                    userPicture={photoUrl}
+                />
+            }
+        </div>
         <div />
     </div>
 );
@@ -71,7 +82,7 @@ const SmsChatMessageOut = (props: SmsChatMessageProps) => {
 
 const SmsChatMessageIn = (props: SmsChatMessageProps) => {
     const {t} = useTranslation();
-    const name = props.name && (props.name.startsWith('+') || /\d/.test(props.name)) ? t('common.default_avatar') : props.name;
+    const name = props.name && (props.name.startsWith('+') || /\d/.test(props.name)) ? '' : props.name;
     return (<div className={classnames("flex flex-col mt-2 sms-chat-message in-going", {'is-top': props.isTheTop})}>
         <div className='flex flex-row'>
             <div className='w-10' />

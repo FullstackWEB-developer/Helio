@@ -8,7 +8,7 @@ import SvgIcon, {Icon} from '@components/svg-icon';
 import {useTranslation} from 'react-i18next';
 
 export interface AvatarProps {
-    userFullName: string;
+    userFullName?: string;
     className?: string;
     labelClassName?: string;
     userPicture?: string;

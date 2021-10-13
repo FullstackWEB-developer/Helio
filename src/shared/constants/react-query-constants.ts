@@ -40,6 +40,7 @@ export const GetTodaysPerformanceMetricsRequest = 'get-today-performance-metric'
 export const GetAgentStatus = 'get-agents-status';
 export const GetChatTranscript = 'get-chat-transcript';
 export const QueryTicketMessageSummaryInfinite = 'ticket-message-summary';
+export const QueryTicketMessageSummaryByTicketId = 'ticket-message-summary-ticket-id';
 export const QueryTicketMessagesInfinite = 'ticket-messages';
 export const GetTicketMessage = 'get-ticket-message';
 export const SearchPatient = 'search-patient';

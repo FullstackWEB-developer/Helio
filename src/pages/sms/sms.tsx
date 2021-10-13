@@ -9,7 +9,7 @@ import DropdownLabel from '@components/dropdown-label';
 import SearchInputField from '@components/search-input-field/search-input-field';
 import SvgIcon, {Icon} from '@components/svg-icon';
 import {SmsChat, SmsSummaryList, SmsFilter, SmsNewMessage} from './components';
-import {GetTicketMessage, QueryTicketMessagesInfinite, QueryTicketMessageSummaryInfinite} from '@constants/react-query-constants';
+import {GetTicketMessage, QueryTicketMessagesInfinite, QueryTicketMessageSummaryByTicketId, QueryTicketMessageSummaryInfinite} from '@constants/react-query-constants';
 import {
     ChannelTypes,
     ContactExtended,
@@ -34,7 +34,8 @@ import {useSignalRConnectionContext} from '@shared/contexts/signalRContext';
 import {SmsNotificationData} from '@pages/sms/models';
 import './sms.scss';
 import {removeUnreadSMSMessageForList} from '@shared/store/app-user/appuser.slice';
-import {useLocation} from 'react-router';
+import {useHistory, useLocation, useParams} from 'react-router';
+import {SmsPath} from '@app/paths';
 
 interface SmsLocationState {
     contact?: ContactExtended
@@ -55,12 +56,13 @@ const Sms = () => {
     const [isNewSmsChat, setIsNewSmsChat] = useState(false);
     const [filterParam, setFilterParam] = useState<SmsFilterParamModel>({...DEFAULT_FILTER_VALUE, assignedTo: id});
     const [summaryMessages, setSummaryMessages] = useState<TicketMessageSummary[]>([])
-    const [smsQueryType, setSmsQueryType] = useState(SmsQueryType.MySms);
+    const [smsQueryType, setSmsQueryType] = useState<SmsQueryType>();
     const [newMessageId, setNewMessageId] = useState('');
     const {smsIncoming} = useSignalRConnectionContext();
     const unreadSMSList = useSelector(selectUnreadSMSList) ?? [];
     const {state} = useLocation<SmsLocationState>();
-
+    const {ticketNumber} = useParams<{ticketNumber?: string}>();
+    const history = useHistory();
     const dispatch = useDispatch();
 
     const dropdownItem: DropdownItemModel[] = [
@@ -70,11 +72,38 @@ const Sms = () => {
 
     const {fetchNextPage, hasNextPage, isFetchingNextPage, isFetching, refetch} = useInfiniteQuery([QueryTicketMessageSummaryInfinite],
         ({pageParam = 1}) => getChats({...queryParams, page: pageParam}), {
+        enabled: !!smsQueryType,
         getNextPageParam: (lastPage) => getNextPage(lastPage),
         onSuccess: (result) => {
             setSummaryMessages(utils.accumulateInfiniteData(result));
         }
     });
+
+    const {refetch: ticketSummaryRefetch, isFetching: isTicketSummaryFetching} = useQuery([QueryTicketMessageSummaryByTicketId],
+        () => getChats({ticketNumber: Number(ticketNumber), channel: ChannelTypes.SMS}), {
+        enabled: false,
+        onSuccess: (response) => {
+            if (response.results.length > 0) {
+                const summary = {...response.results[0]};
+                if (summary.assignedTo === id) {
+                    changeQueryType(SmsQueryType.MySms);
+                } else {
+                    changeQueryType(SmsQueryType.MyTeam);
+                }
+                setSelectedTicketSummary(summary);
+                removeUnreadCount(summary);
+            }
+        }
+    });
+
+    useEffect(() => {
+        if (!ticketNumber) {
+            setSmsQueryType(SmsQueryType.MySms);
+            return;
+        }
+
+        ticketSummaryRefetch();
+    }, [ticketSummaryRefetch, ticketNumber]);
 
     useEffect(() => {
         if (!!state?.contact) {
@@ -106,6 +135,13 @@ const Sms = () => {
         if (messagePages && messagePages.pages.length > 0) {
             messagePages.pages[0].results = messagesHistory;
         }
+    }
+
+    const removeUnreadCount = (summary: TicketMessageSummary) => {
+        if (summary.unreadCount > 0) {
+            markReadMutation.mutate({ticketId: summary.ticketId, channel: ChannelTypes.SMS});
+        }
+        dispatch(removeUnreadSMSMessageForList(summary.ticketId));
     }
 
     const modifySummaryMessage = (ticketId: string, unreadCountIncrease?: number, messageSummaryBody?: string) => {
@@ -206,6 +242,13 @@ const Sms = () => {
 
     const onDropdownClick = (item: DropdownItemModel) => {
         const context = item.value as SmsQueryType;
+        changeQueryType(context);
+    }
+
+    const changeQueryType = (context: SmsQueryType) => {
+        if (smsQueryType === context) {
+            return;
+         }
 
         if (context === SmsQueryType.MyTeam) {
             setQueryParams({...queryParams, assignedTo: undefined});
@@ -213,7 +256,6 @@ const Sms = () => {
         } else {
             setQueryParams({...queryParams, assignedTo: id});
             setFilterParam({...filterParam, assignedTo: id});
-
         }
         setSmsQueryType(context);
     }
@@ -226,14 +268,11 @@ const Sms = () => {
 
     const onMessageListClick = (summary: TicketMessageSummary) => {
         if (summary.ticketId !== selectedTicketSummary?.ticketId) {
-            setSelectedTicketSummary(summary);
             setIsNewSmsChat(false);
-            if (summary.unreadCount > 0) {
-                markReadMutation.mutate({ticketId: summary.ticketId, channel: ChannelTypes.SMS});
-            }
-            dispatch(removeUnreadSMSMessageForList(summary.ticketId));
+            history.replace(`${SmsPath}/${summary.ticketNumber}`)
         }
     }
+
 
     const onSendMessage = (toAddress: string, text: string) => {
         if (!selectedTicketSummary) {
@@ -343,6 +382,7 @@ const Sms = () => {
                 className={classnames({'hidden': isFilterVisible})}
                 data={summaryMessages}
                 selectedTicketId={selectedTicketSummary?.ticketId}
+                searchTerm={searchTerm}
                 onScroll={onMessageListScroll}
                 onClick={onMessageListClick}
                 isLoading={isFetchingNextPage}

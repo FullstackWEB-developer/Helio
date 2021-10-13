@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import Dropdown, {DropdownItemModel, DropdownModel} from "../dropdown";
 import SvgIcon, {Icon} from "../svg-icon";
 import useComponentVisibility from "../../hooks/useComponentVisibility";
@@ -20,6 +20,10 @@ const DropdownLabel = ({value, items, excludeSelectedItem, labelClassName, arrow
     const [valueSelected, setValueSelected] = useState(value);
     const [itemSelected, setItemSelected] = useState<DropdownItemModel | null>(items?.find(p => p.value === value) ?? null);
 
+    useEffect(() => {
+        setValueSelected(value);
+        setItemSelected(items?.find(p => p.value === value) ?? null);
+    }, [items, value])
 
     const dropdownModel: DropdownModel = {
         defaultValue: valueSelected,

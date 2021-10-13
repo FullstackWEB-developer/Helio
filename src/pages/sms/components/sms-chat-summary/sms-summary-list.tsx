@@ -9,20 +9,20 @@ interface SmsSummaryListProps {
     data: TicketMessageSummary[],
     selectedTicketId?: string;
     isLoading?: boolean;
+    searchTerm?: string;
     onScroll?: (event: React.UIEvent<HTMLDivElement, UIEvent>) => void;
     onClick?: (ticketMessageSummary: TicketMessageSummary) => void;
 }
 
-const SmsSummaryList = ({data, className, isLoading, selectedTicketId, ...props}: SmsSummaryListProps) => {
+const SmsSummaryList = ({data, className, isLoading, selectedTicketId, searchTerm, ...props}: SmsSummaryListProps) => {
 
     const determineDisplayName = (createdForName: string) => {
-        if(createdForName){
-            if(createdForName.startsWith('+') || /\d/.test(createdForName))
-            {
+        if (createdForName) {
+            if (createdForName.startsWith('+') || /\d/.test(createdForName)) {
                 return utils.applyPhoneMask(createdForName);
             }
             return createdForName;
-        }        
+        }
         return '';
     }
     return (<div
@@ -31,20 +31,24 @@ const SmsSummaryList = ({data, className, isLoading, selectedTicketId, ...props}
     >
         <>
             {
-                data.map(p => <SmsChatSummary
-                    patientId={p.patientId}
-                    contactId={p.contactId}
-                    messageSummary={p.messageSummary}
-                    unreadCount={p.unreadCount}
-                    createdForName={determineDisplayName(p.createdForName)}
-                    createdForMobileNumber={utils.applyPhoneMask(p.createdForMobileNumber)}
-                    messageSendAt={p.messageCreatedOn}
-                    messageSendBy={p.messageCreatedByName}
-                    ticketId={p.ticketId}
-                    isSelected={!!selectedTicketId && selectedTicketId === p.ticketId}
-                    key={p.ticketId}
-                    onClick={() => props.onClick && props.onClick(p)}
-                />)
+                data.map(p =>
+                    <SmsChatSummary
+                        patientId={p.patientId}
+                        contactId={p.contactId}
+                        messageSummary={p.messageSummary}
+                        unreadCount={p.unreadCount}
+                        createdForName={determineDisplayName(p.createdForName)}
+                        createdForMobileNumber={utils.applyPhoneMask(p.createdForMobileNumber)}
+                        messageSendAt={p.messageCreatedOn}
+                        messageSendBy={p.messageCreatedByName}
+                        searchFilterMatch={p.filterMatches}
+                        ticketId={p.ticketId}
+                        isSelected={!!selectedTicketId && selectedTicketId === p.ticketId}
+                        key={p.ticketId}
+                        searchTerm={searchTerm}
+                        onClick={() => props.onClick && props.onClick(p)}
+                    />
+                )
             }
             <div className={classnames('flex flex-row justify-center', {'hidden': !isLoading})}>
                 <Spinner />

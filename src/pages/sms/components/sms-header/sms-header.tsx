@@ -11,6 +11,7 @@ import {DropdownItemModel} from '@components/dropdown';
 import {MORE_MENU_OPTION_CONTACT, MORE_MENU_OPTION_PATIENT, MORE_MENU_OPTION_TICKET} from '@pages/sms/constants';
 import {ContactsPath, PatientsPath, TicketsPath} from '@app/paths';
 import {Link, useHistory} from 'react-router-dom';
+import {Icon} from '@components/svg-icon';
 
 const SmsHeader = ({info, forNewTicketMessagePurpose}: {info: TicketMessageSummary, forNewTicketMessagePurpose: boolean}) => {
     const {t} = useTranslation();
@@ -35,10 +36,10 @@ const SmsHeader = ({info, forNewTicketMessagePurpose}: {info: TicketMessageSumma
             options.push({label: t('sms.chat.view_contact'), value: MORE_MENU_OPTION_CONTACT, className: commonClassName});
         }
 
-        if(!forNewTicketMessagePurpose){
+        if (!forNewTicketMessagePurpose) {
             options.push({label: t('sms.chat.view_ticket'), value: MORE_MENU_OPTION_TICKET, className: commonClassName});
         }
-        
+
         return options;
     }
     const onMoreMenuClick = (item: DropdownItemModel) => {
@@ -82,9 +83,8 @@ const SmsHeader = ({info, forNewTicketMessagePurpose}: {info: TicketMessageSumma
     }
 
     const displayName = () => {
-        if(info.createdForName){
-            if(info.createdForName.startsWith('+') || /\d/.test(info.createdForName))
-            {
+        if (info.createdForName) {
+            if (info.createdForName.startsWith('+') || /\d/.test(info.createdForName)) {
                 return utils.applyPhoneMask(info.createdForName);
             }
             return info.createdForName;
@@ -93,7 +93,14 @@ const SmsHeader = ({info, forNewTicketMessagePurpose}: {info: TicketMessageSumma
     }
     return (
         <div className="flex flex-row border-b sms-chat-header">
-            <div className="pt-4 pl-6"><Avatar userFullName={info.createdForName} /></div>
+            <div className="pt-4 pl-6">
+                {!!info.createdForName &&
+                    <Avatar userFullName={info.createdForName} />
+                }
+                {!info.createdForName &&
+                    <Avatar icon={Icon.UserUnknown} />
+                }
+            </div>
             <div className="flex flex-col flex-auto pl-4 pr-6 pt-7">
                 <div className="flex flex-row justify-between">
                     <div><h6>{displayName()}</h6></div>

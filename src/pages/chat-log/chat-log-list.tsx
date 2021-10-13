@@ -46,6 +46,7 @@ const ChatsLogList = () => {
     const [ticketNumber, setTicketNumber] = useState<string>();
     const isFiltered = useSelector(selectIsChatLogFiltered);
     const [rows, setRows] = useState<TicketLogModel[]>([]);
+    const [currentQueryType, setCurrentQueryType] = useState<ChatLogQueryType>(ChatLogQueryType.MyChatLog);
     const dispatch = useDispatch();
     const dropdownItem: DropdownItemModel[] = [
         {label: 'ticket_log.my_chat_log', value: ChatLogQueryType.MyChatLog},
@@ -115,6 +116,7 @@ const ChatsLogList = () => {
 
     const onDropdownClick = (item: DropdownItemModel) => {
         const context = item.value as ChatLogQueryType;
+        setCurrentQueryType(context);
         if (context === ChatLogQueryType.MyChatLog) {
             setChatsLogFilter({...chatsLogFilter, assignedTo: appUser.id});
         } else {
@@ -323,7 +325,7 @@ const ChatsLogList = () => {
                     <div>
                         <DropdownLabel
                             items={dropdownItem}
-                            value={ChatLogQueryType.MyChatLog}
+                            value={currentQueryType}
                             onClick={onDropdownClick}
                         />
                     </div>
@@ -337,7 +339,7 @@ const ChatsLogList = () => {
                     </div>
                 </div>
                 <div className='flex flex-row border-b h-14'>
-                    <div className='flex flex-row items-center pl-6 border-r relative'>
+                    <div className='relative flex flex-row items-center pl-6 border-r'>
                         <SvgIcon
                             type={Icon.FilterList}
                             className='icon-medium'

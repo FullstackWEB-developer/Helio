@@ -6,4 +6,5 @@ export interface TicketMessageSummaryRequest extends PagedRequest {
     fromDate?: string;
     toDate?: string;
     assignedTo?: string;
+    ticketNumber?: number;
 }
