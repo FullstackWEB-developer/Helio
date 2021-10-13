@@ -349,7 +349,7 @@
       "mobilephone": "Mobile Phone",
       "homephone": "Home Phone",
       "workphone": "Work Phone",
-      "mail": "Mail",
+      "mail": "Email",
       "portal": "Portal"
     },
     "insurance": {
@@ -960,7 +960,8 @@
       "documents": "ID and Insurance Card",
       "review": "Review & Confirm",
       "complete_registration": "Complete new patient registration.",
-      "personal_information_step": "To schedule your first appointment, please provide us with your personal information.",
+      "personal_information_step_image_note": "Please note, you will need drivers license and your insurance card during the registration process. Please make sure you have these documents ready before you start.",
+      "personal_information_step": "To start with your patient registration, please provide us with your personal information.",
       "communication_preference_step": "Please select your communication preferences.",
       "insurance_information_step": "Help us keep your information secure by completing your patient profile prior to your office visit.",
       "insurance_information_step_2": "Please enter your insurance information. This will help us verify your eligibility for services prior to your visit.",

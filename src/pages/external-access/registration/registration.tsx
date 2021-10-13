@@ -15,43 +15,15 @@ const Registration = () => {
     const dispatch = useDispatch();
     const [currentStep, setCurrentStep] = useState(RegistrationStep.PersonalInformation);
     const {t} = useTranslation();
-    const goStepForward = (uploadingDocumentsRequired: boolean) => {
+    const goStepForward = () => {
         if (currentStep < RegistrationStep.Review) {
-            setCurrentStep(currentStep + determineStepIncrement(uploadingDocumentsRequired));
+            setCurrentStep(currentStep + 1);
         }
     }
 
-    const goBack = (uploadingDocumentsRequired: boolean) => {
+    const goBack = () => {
         if (currentStep > RegistrationStep.PersonalInformation) {
-            setCurrentStep(currentStep - determineStepDecrement(uploadingDocumentsRequired));
-        }
-    }
-
-    const determineStepIncrement = (uploadingDocumentsRequired: boolean) => {
-        switch (currentStep) {
-            case RegistrationStep.PersonalInformation:
-            case RegistrationStep.CommunicationPreferences:
-            case RegistrationStep.Documents:
-                return 1;
-            case RegistrationStep.InsuranceInformation:
-                return uploadingDocumentsRequired ? 1 : 2;
-            case RegistrationStep.Review:
-            default:
-                return 0;
-        }
-    }
-
-    const determineStepDecrement = (uploadingDocumentsRequired: boolean) => {
-        switch (currentStep) {
-            case RegistrationStep.CommunicationPreferences:
-            case RegistrationStep.InsuranceInformation:
-            case RegistrationStep.Documents:
-                return 1;
-            case RegistrationStep.Review:
-                return uploadingDocumentsRequired ? 1 : 2;
-            case RegistrationStep.PersonalInformation:
-            default:
-                return 0;
+            setCurrentStep(currentStep - 1);
         }
     }
 
@@ -67,7 +39,7 @@ const Registration = () => {
     const displayStepDescription = () => {
         switch (currentStep) {
             case RegistrationStep.PersonalInformation:
-                return t('external_access.registration.personal_information_step');
+                return `${t('external_access.registration.personal_information_step_image_note')}\n${t('external_access.registration.personal_information_step')}`;
             case RegistrationStep.CommunicationPreferences:
                 return t('external_access.registration.communication_preference_step');
             case RegistrationStep.InsuranceInformation:

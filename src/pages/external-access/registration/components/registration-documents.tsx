@@ -5,22 +5,29 @@ import React from 'react';
 interface UploadDocumentsRegistrationStepProps {
     handleDriversLicenseUpload: (image: File | undefined, type: RegistrationImageType) => void,
     handleInsuranceCardFrontUpload: (image: File | undefined, type: RegistrationImageType) => void,
-    handleInsuranceBackCardUpload: (image: File | undefined, type: RegistrationImageType) => void
+    handleInsuranceBackCardUpload: (image: File | undefined, type: RegistrationImageType) => void,
+    uploadInsuranceDocumentsRequired: boolean;
 }
 const UploadDocumentsRegistrationStep = ({
     handleDriversLicenseUpload,
     handleInsuranceCardFrontUpload,
-    handleInsuranceBackCardUpload
+    handleInsuranceBackCardUpload,
+    uploadInsuranceDocumentsRequired
 }: UploadDocumentsRegistrationStepProps) => {
 
     return (
         <div className='flex flex-col'>
             <ImageUploader title='external_access.registration.drivers_license'
-                uploadedImage={handleDriversLicenseUpload} imageType={RegistrationImageType.DriversLicense} required={true}/>
-            <ImageUploader title='external_access.registration.insurance_card_front'
-                uploadedImage={handleInsuranceCardFrontUpload} imageType={RegistrationImageType.InsuranceCardFrontSide} required={true} />
-            <ImageUploader title='external_access.registration.insurance_card_back'
-                uploadedImage={handleInsuranceBackCardUpload} imageType={RegistrationImageType.InsuranceCardBackSide} required={true} />
+                uploadedImage={handleDriversLicenseUpload} imageType={RegistrationImageType.DriversLicense} required={true} />
+            {
+                uploadInsuranceDocumentsRequired &&
+                <>
+                    <ImageUploader title='external_access.registration.insurance_card_front'
+                        uploadedImage={handleInsuranceCardFrontUpload} imageType={RegistrationImageType.InsuranceCardFrontSide} required={true} />
+                    <ImageUploader title='external_access.registration.insurance_card_back'
+                        uploadedImage={handleInsuranceBackCardUpload} imageType={RegistrationImageType.InsuranceCardBackSide} required={true} />
+                </>
+            }
         </div>
     );
 }

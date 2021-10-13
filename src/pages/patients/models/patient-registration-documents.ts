@@ -1,5 +1,5 @@
 export interface PatientRegistrationDocuments {
     driversLicenseImage: File;
-    insuranceBackImage: File;
-    insuranceFrontImage: File;
+    insuranceBackImage?: File;
+    insuranceFrontImage?: File;
 }

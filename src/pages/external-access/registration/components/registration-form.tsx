@@ -26,7 +26,7 @@ import {ExternalAccessRequestTypes} from '@pages/external-access/models/external
 import {useHistory} from 'react-router';
 
 
-const RegistrationForm = ({step, goStepForward, goBack}: {step: RegistrationStep, goStepForward: (uploadingDocumentsRequired: boolean) => void, goBack: (uploadingDocumentsRequired: boolean) => void}) => {
+const RegistrationForm = ({step, goStepForward, goBack}: {step: RegistrationStep, goStepForward: () => void, goBack: () => void}) => {
     const {control, formState: {isValid, errors}, handleSubmit, watch, setError, getValues, setValue} = useForm({mode: 'onChange'});
     const {t} = useTranslation();
     const dispatch = useDispatch();
@@ -51,8 +51,8 @@ const RegistrationForm = ({step, goStepForward, goBack}: {step: RegistrationStep
         }
         const createPatientRequest: CreatePatientRequest = {
             patient,
-            ...(uploadDocumentsRequired && {insuranceNote: {noteText: buildInsuranceNoteText(), departmentId}}),
-            ...(uploadDocumentsRequired && {imageUploadTag})
+            ...(uploadInsuranceDocumentsRequired && {insuranceNote: {noteText: buildInsuranceNoteText(), departmentId}}),
+            ...(!!imageUploadTag && {imageUploadTag})
         }
         createPatientMutation.mutate(createPatientRequest);
     }
@@ -149,13 +149,14 @@ const RegistrationForm = ({step, goStepForward, goBack}: {step: RegistrationStep
 
     useEffect(() => {
         if (imageUploadTag) {
-            goStepForward(uploadDocumentsRequired);
+            goStepForward();
         }
     }, [imageUploadTag]);
 
     const uploadDocuments = () => {
-        if (driversLicense && insuranceCardFront && insuranceCardBack) {
-            uploadDocumentsMutation.mutate({driversLicenseImage: driversLicense, insuranceFrontImage: insuranceCardFront, insuranceBackImage: insuranceCardBack});
+        const triggerUploadValidity = uploadInsuranceDocumentsRequired ? !!driversLicense && !!insuranceCardFront && !!insuranceCardBack : !!driversLicense;
+        if (triggerUploadValidity) {
+            uploadDocumentsMutation.mutate({driversLicenseImage: driversLicense!, insuranceFrontImage: insuranceCardFront, insuranceBackImage: insuranceCardBack});
         }
     }
 
@@ -172,22 +173,34 @@ const RegistrationForm = ({step, goStepForward, goBack}: {step: RegistrationStep
         return note;
     }
 
-    const uploadDocumentsRequired = insuranceOption?.value === 'insurance_plan';
+    const uploadInsuranceDocumentsRequired = insuranceOption?.value === 'insurance_plan';
+    useEffect(() => {
+        if (!uploadInsuranceDocumentsRequired) {
+            if (!!insuranceCardFront) {
+                setInsuranceCardFront(undefined);
+            }
+            if (!!insuranceCardBack) {
+                setInsuranceCardBack(undefined);
+            }
+        }
+        setImageUploadTag('');
+
+    }, [uploadInsuranceDocumentsRequired]);
 
     const continueButtonEnabled = () => {
         switch (step) {
             case RegistrationStep.PersonalInformation:
                 return getValues('firstName') && getValues('lastName') && getValues('dob') && getValues('mobilePhone')
-                    && getValues('zip') && getValues('address') && getValues('city') && getValues('referralSource') 
+                    && getValues('zip') && getValues('address') && getValues('city') && getValues('referralSource')
                     && !errors.dob && !errors.email && !errors.zip && !errors.mobilePhone;
             case RegistrationStep.CommunicationPreferences:
                 return !!getValues('preferredCommunication');
             case RegistrationStep.InsuranceInformation:
-                return uploadDocumentsRequired ? getValues('insuranceType') && getValues('insuranceName')
+                return uploadInsuranceDocumentsRequired ? getValues('insuranceType') && getValues('insuranceName')
                     && getValues('policyHolderName') && getValues('policyHolderDob') && getValues('insuranceRelation')
                     && getValues('insuranceMemberId') && !errors.policyHolderDob : true;
             case RegistrationStep.Documents:
-                return imageUploadTag !== '';
+                return uploadInsuranceDocumentsRequired ? (insuranceCardFront && insuranceCardBack && imageUploadTag) : imageUploadTag !== '';
         }
     }
 
@@ -195,6 +208,13 @@ const RegistrationForm = ({step, goStepForward, goBack}: {step: RegistrationStep
         return currentStep === step ? 'block' : 'hidden';
     }
 
+    const uploadButtonEnabled = () => {
+        const sharedConditions = !!driversLicense && !uploadDocumentsMutation.isLoading;
+        if (uploadInsuranceDocumentsRequired) {
+            return sharedConditions && !!insuranceCardFront && !!insuranceCardBack;
+        }
+        return sharedConditions;
+    }
     return (
         <>
             {
@@ -220,6 +240,7 @@ const RegistrationForm = ({step, goStepForward, goBack}: {step: RegistrationStep
 
                     <div className={getDisplayClass(RegistrationStep.Documents)}>
                         <UploadDocumentsRegistrationStep
+                            uploadInsuranceDocumentsRequired={uploadInsuranceDocumentsRequired}
                             handleDriversLicenseUpload={handleImageUpload}
                             handleInsuranceBackCardUpload={handleImageUpload}
                             handleInsuranceCardFrontUpload={handleImageUpload} />
@@ -231,15 +252,15 @@ const RegistrationForm = ({step, goStepForward, goBack}: {step: RegistrationStep
 
                     {
                         !newlyCreatedPatientId && <div className='flex pt-6'>
-                            {step > RegistrationStep.PersonalInformation && <Button label='common.back' buttonType='secondary-big' className='mr-8 w-36' onClick={() => goBack(uploadDocumentsRequired)} />}
+                            {step > RegistrationStep.PersonalInformation && <Button label='common.back' buttonType='secondary-big' className='mr-8 w-36' onClick={() => goBack()} />}
                             {(step < RegistrationStep.Documents || (step === RegistrationStep.Documents && imageUploadTag)) &&
                                 <Button label='common.continue' buttonType='big' className='mr-8 w-36'
-                                    disabled={!continueButtonEnabled()} onClick={() => goStepForward(uploadDocumentsRequired)} />}
+                                    disabled={!continueButtonEnabled()} onClick={() => goStepForward()} />}
                             {
                                 step === RegistrationStep.Documents && !imageUploadTag &&
                                 <Button label='common.upload' buttonType='big'
                                     isLoading={uploadDocumentsMutation.isLoading}
-                                    disabled={!driversLicense || !insuranceCardFront || !insuranceCardBack || uploadDocumentsMutation.isLoading}
+                                    disabled={!uploadButtonEnabled()}
                                     onClick={uploadDocuments} />
                             }
                             {

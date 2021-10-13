@@ -25,8 +25,11 @@ export const uploadPatientRegistrationImages = async (files: PatientRegistration
   const url = `${documentUrl}/documents/registration/upload-patient-files`;
   let formData = new FormData();
   formData.append('DriversLicense', files.driversLicenseImage);
-  formData.append('InsuranceCardFront', files.insuranceFrontImage);
-  formData.append('InsuranceCardBack', files.insuranceBackImage);
+  formData.append('InsuranceCardRequired', files.insuranceFrontImage && files.insuranceBackImage ? "true" : "false");
+  if (files.insuranceFrontImage && files.insuranceBackImage) {
+    formData.append('InsuranceCardFront', files.insuranceFrontImage);
+    formData.append('InsuranceCardBack', files.insuranceBackImage);
+  }
   const {data} = await Api.post(url, formData, {
     headers: {
       'Content-Type': 'multipart/form-data'
