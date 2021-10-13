@@ -128,7 +128,8 @@ const SearchInputField = React.forwardRef<HTMLInputElement, SearchInputProps>(({
                 <SvgIcon type={Icon.Search} className="cursor-pointer icon-small" fillClass="search-icon-fill" onClick={props?.iconOnClick} />
             </div>}
             <input ref={innerRef} type='text'
-                className={classnames('py-2.5 h-full w-full search-input-field body2', props.inputClassNames, {'pl-12': !props.disableSearchIcon, 'border-b': hasBorderBottom})}
+                className={classnames('py-2.5 h-full w-full search-input-field body2', props.inputClassNames, 
+                {'pl-12': !props.disableSearchIcon, 'border-b': hasBorderBottom, 'pr-11': isFocused && value})}
                 placeholder={!props.placeholder ? t('common.search') : t(props.placeholder)}
                 value={value}
                 onChange={onChange}
