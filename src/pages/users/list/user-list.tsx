@@ -20,6 +20,7 @@ import {useHistory} from 'react-router';
 import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
 import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
 import {UserListCheckedState} from '../models/user-list-checked-state.model';
+import utils from '@shared/utils/utils';
 
 const UserList = () => {
     const {t} = useTranslation();
@@ -31,6 +32,7 @@ const UserList = () => {
     const queryClient = useQueryClient();
     const [userSelected, setUserSelected] = useState<Dictionary<UserListCheckedState>>({});
     const [checkAll, setCheckAll] = useState(false);
+    const isEditAccess = utils.hasPermission('Users.EditUserDetail');
 
     const {data, isFetching, refetch} = useQuery<PagedList<UserDetail>>([GetUserList, filters],
         () => getUsers(filters, paginationProperties.page, paginationProperties.pageSize),
@@ -391,7 +393,9 @@ const UserList = () => {
                                                 {u.invitationStatus ? displayInvitationStatus(u.invitationStatus) : ''}
                                             </div>
                                             <div>
-                                                <UserListActions user={u} handleStatusChange={handleStatusChange} handleResendInvite={handleResendInvite} />
+                                                {
+                                                    isEditAccess && <UserListActions user={u} handleStatusChange={handleStatusChange} handleResendInvite={handleResendInvite} />
+                                                }
                                             </div>
                                         </div>
                                     ))

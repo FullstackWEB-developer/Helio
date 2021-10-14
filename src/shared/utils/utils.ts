@@ -430,6 +430,10 @@ const downloadFileFromData = (data: any, fileName: string, dataType: string) => 
     document.body.removeChild(a);
     URL.revokeObjectURL(objectUrl);
 }
+const hasPermission = (permission: string) => {
+    const appUserDetails = store.getState().appUserState.appUserDetails;
+    return appUserDetails?.permissions?.includes('Users.EditUserDetail');
+}
 
 
 const utils = {
@@ -473,7 +477,8 @@ const utils = {
     getScrollParent,
     isInBounds,
     downloadFileFromData,
-    initiateACall
+    initiateACall,
+    hasPermission
 };
 
 export default utils;

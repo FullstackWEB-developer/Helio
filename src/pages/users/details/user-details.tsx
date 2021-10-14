@@ -33,12 +33,13 @@ import {
 } from "@shared/models";
 import Spinner from '@components/spinner/Spinner';
 import {DATE_LONG_FORMAT} from "@constants/form-constants";
-import {selectLiveAgentStatuses, selectAppUserDetails} from "@shared/store/app-user/appuser.selectors";
+import {selectLiveAgentStatuses} from "@shared/store/app-user/appuser.selectors";
 import {addSnackbarMessage} from "@shared/store/snackbar/snackbar.slice";
 import {SnackbarType} from "@components/snackbar/snackbar-type.enum";
 import {useTranslation} from "react-i18next";
 import ProviderMappingToolTip from "../components/provider-tool-tip";
 import './user-details.scss';
+import {CheckboxCheckEvent} from '@components/checkbox/checkbox';
 
 dayjs.extend(utc);
 
@@ -53,7 +54,6 @@ const UserDetails = () => {
     const {isValid, isDirty} = formState;
 
     const dispatch = useDispatch();
-    const appUserDetails = useSelector(selectAppUserDetails);
     const providers = useSelector(selectProviderList);
     const forwardToTypes = useSelector(selectForwardToOptions);
     const rolesList = useSelector(selectRoleList);
@@ -62,11 +62,11 @@ const UserDetails = () => {
     const {userId} = useParams<{userId: string}>();
     const [userDetailExtended, setUserDetailExtended] = useState<UserDetailExtended>();
     const forwardToSelected = Number(watch('forward_to')) as CallForwardingType;
-    const enableForward = watch('enable_forward')?.checked as boolean;
+    const [isForwardEnabled, setIsForwardEnabled] = useState(false);
     const forwardValuePhone = watch('forward_to_value_phone') as string;
     const [connectUserList, setConnectUserList] = useState<ConnectUser[]>([]);
     const currentUserStatus = userDetailExtended?.user.status;
-    const isEditAccess = appUserDetails?.permissions?.includes('Users.EditUserDetail');
+    const isEditAccess = utils.hasPermission('Users.EditUserDetail');
     const [userProvider, setUserProvider] = useState('');
     const [isSomeUserRoleChecked, setIsSomeUserRoleChecked] = useState(false);
 
@@ -144,22 +144,23 @@ const UserDetails = () => {
         }
         if (user.callForwardingEnabled) {
             setValue('enable_forward', {value: undefined, checked: true});
+            setIsForwardEnabled(true);
         }
 
         if (user.callForwardingType) {
             setValue('forward_to', user.callForwardingType.toString());
-            if (user.callForwardingType === CallForwardingType.Agent) {
+            if (parseInt(user.callForwardingType.toString()) === CallForwardingType.Agent) {
                 setValue('forward_to_value_agent', user.callForwardingValue);
             } else {
                 setValue('forward_to_value_phone', user.callForwardingValue);
             }
         }
 
-
         for (const role of user.roles) {
             setValue(`userrole_${role}`, {value: role, checked: true}, {shouldDirty: false, shouldValidate: false});
         }
 
+        setIsSomeUserRoleChecked(getIsSomeUserRoleChecked);
     }
     const {isLoading, isFetching, isError} = useQuery([GetUserExtended, userId],
         () => getUserDetailExtended(userId),
@@ -232,6 +233,23 @@ const UserDetails = () => {
 
     const updateCallForwardingMutation = useMutation(updateCallForwarding, {
         onSuccess: (data) => {
+            if (userDetailExtended) {
+                userDetailExtended.user.callForwardingEnabled = getValues('enable_forward').checked;
+                const userCallForwardingType = getValues('forward_to');
+                userDetailExtended.user.callForwardingType = userCallForwardingType;
+
+                if (parseInt(userCallForwardingType) === CallForwardingType.Agent) {
+                    userDetailExtended.user.callForwardingValue = getValues('forward_to_value_agent');
+                } else {
+                    userDetailExtended.user.callForwardingValue = getValues('forward_to_value_phone');
+                }
+
+                setUserDetailExtended(userDetailExtended);
+                reset({
+                    enable_forward: undefined
+                });
+                loadUserData(userDetailExtended);
+            }
             showMessage(SnackbarType.Success, 'users.user_update_success');
         },
         onError: () => {
@@ -266,6 +284,10 @@ const UserDetails = () => {
         const user = userDetailExtended.user;
         const newStatus = getNextStatus();
         changeUserStatusMutation.mutate({userId: user.id, userStatus: newStatus});
+    }
+
+    const onChangeEnableForward = (event: CheckboxCheckEvent) => {
+        setIsForwardEnabled(event.checked);
     }
 
     const saveUser = (formData: any) => {
@@ -480,38 +502,38 @@ const UserDetails = () => {
                                     className='mt-6'
                                     label={t('users.call_forwarding_enabled')}
                                     name='enable_forward'
+                                    onChange={onChangeEnableForward}
                                 />
-
                                 <ControlledSelect
                                     name='forward_to'
                                     label='users.call_forwarding_type'
                                     control={control}
                                     className='mt-6'
-                                    disabled={!enableForward}
+                                    disabled={!isForwardEnabled}
                                     defaultValue=''
                                     options={forwardToOptions}
                                 />
 
-                                {forwardToSelected === CallForwardingType.Phone &&
+                                {isForwardEnabled && forwardToSelected === CallForwardingType.Phone &&
                                     <ControlledInput
                                         name="forward_to_value_phone"
                                         type="tel"
                                         control={control}
-                                        disabled={!enableForward || isMobilePhoneLoading || isMobilePhoneFetching}
+                                        disabled={!isForwardEnabled || isMobilePhoneLoading || isMobilePhoneFetching}
                                         label='users.call_forwarding_value_phone'
-                                        required={enableForward}
+                                        required={isForwardEnabled}
                                     />
                                 }
 
-                                {forwardToSelected === CallForwardingType.Agent &&
+                                {isForwardEnabled && forwardToSelected === CallForwardingType.Agent &&
                                     <ControlledSelect
                                         control={control}
                                         name='forward_to_value_agent'
-                                        disabled={!enableForward}
+                                        disabled={!isForwardEnabled}
                                         label='users.call_forwarding_value_agent'
                                         defaultValue=''
                                         options={connectUserOptions}
-                                        required={enableForward}
+                                        required={isForwardEnabled}
                                     />
                                 }
                             </div>
