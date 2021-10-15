@@ -113,7 +113,8 @@ const UserAddRow = ({
                 const options = utils.parseOptions(data.results,
                     item => item.displayName,
                     item => item.mail,
-                    item => item.mail
+                    item => item.mail,
+                    item => item
                 );
                 setEmailOption(options);
             }
@@ -128,6 +129,8 @@ const UserAddRow = ({
         return {
             email: emailOptionSelected?.value ?? '',
             name: emailOptionSelected?.label ?? '',
+            firstName: emailOptionSelected?.object.givenName,
+            lastName: emailOptionSelected?.object.surname,
             providerId: formData.providerId,
             roles: [formData.role]
         }

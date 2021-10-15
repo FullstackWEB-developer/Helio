@@ -55,6 +55,7 @@ const clearFormatPhone = (phone: string) => {
 const initiateACall = (phoneToDial?: string) => {
     store.dispatch(showCcp());
     if (window.CCP.agent && phoneToDial) {
+        phoneToDial = phoneToDial.replaceAll('-','');
         if (!phoneToDial.startsWith("+1")) {
             phoneToDial = `+1${phoneToDial}`
         }
