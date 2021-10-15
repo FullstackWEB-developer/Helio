@@ -1,6 +1,6 @@
 import Button from '@components/button/button';
 import TextArea from '@components/textarea/textarea';
-import {InviteUserModel} from '@shared/models';
+import {DefaultPagination, InviteUserModel} from '@shared/models';
 import {sendUserInvitation} from '@shared/services/user.service';
 import {useState} from 'react';
 import {Trans, useTranslation} from 'react-i18next';
@@ -12,6 +12,7 @@ import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
 import {useDispatch} from 'react-redux';
 import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
 import './user-add.scss';
+import {setUsersPagination} from '@pages/users/store/users.slice';
 
 const UserAdd = () => {
     const {t} = useTranslation();
@@ -28,6 +29,7 @@ const UserAdd = () => {
                     type: SnackbarType.Success,
                     message: 'users.add_section.invitation_sent_success'
                 }));
+                dispatch(setUsersPagination( {...DefaultPagination, pageSize: 10}));
                 history.push(UsersPath);
             },
             onError: (error: any) => {
