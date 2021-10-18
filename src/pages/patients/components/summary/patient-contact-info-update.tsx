@@ -232,7 +232,7 @@ const PatientContactInfoUpdate = ({onUpdateComplete} : PatientInformationUpdateP
                             </div>
                         </div>
                     </div>
-                    {watchContactPreference === 'MOBILEPHONE' && <div className='col-span-12 lg:col-span-6 pt-4'>
+                    <div className='col-span-12 lg:col-span-6 pt-4'>
                         <Controller
                             name='consentToText'
                             control={control}
@@ -258,7 +258,7 @@ const PatientContactInfoUpdate = ({onUpdateComplete} : PatientInformationUpdateP
                                 </div>
                             )}
                         />
-                    </div>}
+                    </div>
                 </div>
 
 
