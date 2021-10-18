@@ -1,10 +1,11 @@
-import {Controller, ControllerRenderProps} from 'react-hook-form';
-import {Control} from 'react-hook-form/dist/types/form';
-import Input, {InputType, InputTypes} from '@components/input';
-import {useTranslation} from 'react-i18next';
+import { Controller, ControllerRenderProps } from 'react-hook-form';
+import { Control } from 'react-hook-form/dist/types/form';
+import Input, { InputType, InputTypes } from '@components/input';
+import { useTranslation } from 'react-i18next';
 import React from 'react';
-import {Option} from '@components/option/option';
-import {Icon} from '@components/svg-icon/icon';
+import { Option } from '@components/option/option';
+import { Icon } from '@components/svg-icon/icon';
+import {INPUT_DATE_FORMAT} from '@constants/form-constants';
 
 
 export interface ControlledInputProps {
@@ -59,7 +60,7 @@ const ControlledInput = ({
     ...props
 }: ControlledInputProps) => {
 
-    const {t} = useTranslation();
+    const { t } = useTranslation();
     const requiredText = t('common.required');
     let inputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>): void => undefined;
     let pattern = undefined;
@@ -90,6 +91,14 @@ const ControlledInput = ({
                 value: InputTypes.Ip,
                 message: t(invalidErrorMessage ?? 'components.input.invalid_ip')
             }
+            break;
+        }
+        case 'date': {
+            pattern = {
+                value: InputTypes.Date,
+                message: t(invalidErrorMessage ?? 'components.input.invalid_date')
+            }
+            break;
         }
     }
 
@@ -100,9 +109,17 @@ const ControlledInput = ({
         return value;
     }
 
-    const onInputChanged = (event: React.ChangeEvent<HTMLInputElement>, controllerProps: ControllerRenderProps<Record<string, any>>) => {
-        const value = cleanMask(event.target.value);
+    const onInputDateChanged = (value: string, controllerProps: ControllerRenderProps<Record<string,any>>) => {
+        if (value === INPUT_DATE_FORMAT) {
+            value = '';
+        }
+        controllerProps.onChange(value);
+        control.setValue(name, value, {shouldValidate: true});
+        console.log("vale", value);
 
+    }
+    const onInputChanged = (event: React.ChangeEvent<HTMLInputElement>, controllerProps: ControllerRenderProps<Record<string, any>>) => {
+        const value = cleanMask(event.target?.value);
         controllerProps.onChange(type === 'tel' ? value : event);
 
         if (props.onChange) {
@@ -140,6 +157,7 @@ const ControlledInput = ({
                 onKeyDown={inputKeyDown}
                 onBlur={props.onBlur || controllerProps.onBlur}
                 onChange={(event) => onInputChanged(event, controllerProps)}
+                onChangeDate={event => onInputDateChanged(event, controllerProps)}
                 autoSuggestDropdown={props.autosuggestDropdown}
                 autoSuggestOptions={props.autosuggestOptions}
                 dropdownIconClickHandler={props.dropdownIconClickHandler}

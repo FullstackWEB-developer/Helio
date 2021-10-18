@@ -1,16 +1,18 @@
 import customHooks from '@shared/hooks/customHooks';
-import React, {useEffect, useState} from 'react';
-import {useTranslation} from 'react-i18next';
+import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import './input.scss';
 // @ts-ignore
 import InputMask from 'react-input-mask';
 import SvgIcon from '@components/svg-icon/svg-icon';
-import {Icon} from '@components/svg-icon/icon';
-import {Option} from '@components/option/option';
+import { Icon } from '@components/svg-icon/icon';
+import { Option } from '@components/option/option';
 import SelectCell from '@components/select/select-cell';
 import Spinner from '@components/spinner/Spinner';
-import {InputType, InputTypes} from './InputTypes';
+import { InputType, InputTypes } from './InputTypes';
 import classnames from 'classnames';
+import ReactInputDateMask from '@components/react-input-date-mask/ReactInputDateMask';
+import {INPUT_DATE_FORMAT} from '@constants/form-constants';
 interface InputProps extends React.HTMLAttributes<HTMLInputElement> {
     id?: string,
     name?: string,
@@ -24,6 +26,7 @@ interface InputProps extends React.HTMLAttributes<HTMLInputElement> {
     disabled?: boolean,
     isLoading?: boolean,
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void,
+    onChangeDate?: (value: string) => void,
     shouldDisplayAutocomplete?: boolean,
     required?: boolean;
     dropdownIcon?: Icon,
@@ -60,9 +63,10 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({
     shouldDisplayAutocomplete,
     containerClassName,
     onDropdownSuggestionClick,
+    onChangeDate,
     ...props
 }: InputProps, ref) => {
-    const {t} = useTranslation();
+    const { t } = useTranslation();
     const [isFocused, setIsFocused] = useState(false);
     const innerRef = customHooks.useCombinedForwardAndInnerRef(ref);
     const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -119,6 +123,8 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({
         }
     }
 
+
+
     const clearValue = (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
         if (type === 'tel') {
             // @ts-ignore
@@ -146,21 +152,35 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({
             setDropdownOpen(true);
         }
     }
+    let component = <InputMask ref={innerRef} inputRef={innerRef} {...props}
+        mask={mask}
+        type={type}
+        onFocus={onInputFocus}
+        onBlur={onBlur}
+        onChange={onChange}
+        className={`pl-4 pt-6 body2 h-14 flex-shrink flex-grow flex-auto leading-normal w-px flex-1 input-date-mask`}
+        placeholder=''
+        value={props.value}
+        disabled={props.disabled || isLoading}
+        autoComplete={shouldDisplayAutocomplete ? 'on' : 'off'} />;
+    if (type === 'date') {
+        component = <ReactInputDateMask {...props}
+            mask={INPUT_DATE_FORMAT}
+            type={type}
+            showMaskOnFocus={true}
+            onFocus={onInputFocus}
+            onBlur={onBlur}
+            onChange={onChangeDate}
+            className='flex-1 flex-auto flex-grow flex-shrink w-px pt-6 pl-4 leading-normal body2 h-14 input-date-mask'
+            value={props.value}
+            disabled={props.disabled || isLoading}
+        />
+    }
 
     return (
         <div className={classnames("flex flex-col h-20 input-group", containerClassName)}>
             <div className={`input-group-container flex flex-wrap items=stretch w-full relative ${props.error ? 'input-error' : ''} ` + props.className}>
-                <InputMask ref={innerRef} inputRef={innerRef} {...props}
-                    mask={mask}
-                    type={type}
-                    onFocus={onInputFocus}
-                    onBlur={onBlur}
-                    onChange={onChange}
-                    className={`pl-4 pt-6 body2 h-14 flex-shrink flex-grow flex-auto leading-normal w-px flex-1`}
-                    placeholder=''
-                    value={props.value}
-                    disabled={props.disabled || isLoading}
-                    autoComplete={shouldDisplayAutocomplete ? 'on' : 'off'} />
+                {component}
                 <label htmlFor={htmlFor}
                     className={`absolute truncate ${props.required ? 'required' : ''} ${isFocused || props.value ? 'body3 label-small' : `body2${props.disabled ? '-medium' : ''}`} ${props.error ? 'text-danger' : ''}`}>
                     {t(label || placeholder || '')}
