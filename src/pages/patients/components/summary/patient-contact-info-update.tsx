@@ -64,7 +64,6 @@ const PatientContactInfoUpdate = ({onUpdateComplete} : PatientInformationUpdateP
             state: patient.state,
             zip: patient.zip,
             consentToText: patient.consentToText.toString(),
-            portalAccessGiven: patient.isPortalAccessGiven.toString(),
             email: patient.emailAddress
         } as PatientUpdateModel
     });
@@ -273,35 +272,6 @@ const PatientContactInfoUpdate = ({onUpdateComplete} : PatientInformationUpdateP
                             label='patient.summary.email'
                             type='email'
                         />
-                    </div>
-                    <div className='col-span-12 lg:col-span-5 lg:col-start-7 pt-4'>
-                        <div className='col-span-12 lg:col-span-6'>
-                            <Controller
-                                name='portalAccessGiven'
-                                control={control}
-                                render={(props) => (
-                                    <div>
-                                        <div>
-                                            {t('patient.summary.portal_access')}
-                                        </div>
-                                        <div className='pt-3'>
-                                            <Radio
-                                                name={props.name}
-                                                truncate={true}
-                                                defaultValue={patient.isPortalAccessGiven.toString()}
-                                                ref={props.ref}
-                                                data-test-id='portal-access-given'
-                                                className='flex flex-row space-x-8'
-                                                items={YesNoOptions}
-                                                onChange={(e: string) => {
-                                                    props.onChange(e);
-                                                }}
-                                            />
-                                        </div>
-                                    </div>
-                                )}
-                            />
-                        </div>
                     </div>
                 </div>
                 <div className='pt-4'>

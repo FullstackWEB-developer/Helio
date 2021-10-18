@@ -24,6 +24,7 @@ import {
     setRetryPrevented
 } from '@pages/external-access/verify-patient/store/verify-patient.slice';
 import dayjs from 'dayjs';
+import {ChannelTypes} from '@shared/models';
 
 const ExternalUserCreateCallbackTicket = () => {
     const {t} = useTranslation();
@@ -60,7 +61,9 @@ const ExternalUserCreateCallbackTicket = () => {
         data = {
             ...data,
             dateOfBirth: dayjs(data.dateOfBirth).utc(true).toDate(),
-            note : 'User could not verify during hipaa verification.'
+            note : t('external_access.patient_verification_failed_callback_note'),
+            subject: t('external_access.patient_verification_failed_callback_subject'),
+            channel: ChannelTypes.WebSite
         };
         dispatch(setPreventRetryUntil(undefined));
         createCallbackTicketMutation.mutate(data);

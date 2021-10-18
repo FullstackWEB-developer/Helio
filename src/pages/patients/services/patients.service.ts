@@ -48,7 +48,6 @@ export const updatePatientContactInformation = async ({patientId, data}: UpdateP
           state: data.state,
           zip: data.zip,
           consentToText: data.consentToText === 'true',
-          portalAccessGiven: data.portalAccessGiven === 'true',
           email: data.email
      });
      return result.data;

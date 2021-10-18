@@ -1,3 +1,5 @@
+import {ChannelTypes} from "@shared/models";
+
 export interface CallbackTicket {
     firstName: string;
     lastName: string;
@@ -5,4 +7,6 @@ export interface CallbackTicket {
     mobileNumber: string;
     zip: string;
     note: string;
+    subject: string;
+    channel: ChannelTypes;
 }
