@@ -10,6 +10,9 @@ import {useRouteMatch} from 'react-router';
 import classNames from 'classnames';
 import {useLocation} from 'react-router-dom';
 import {TicketSmsPath} from '@app/paths';
+import utils from '@shared/utils/utils';
+import {useDispatch} from 'react-redux';
+import {logOut} from '@shared/store/app-user/appuser.slice';
 export interface ExternalAccessLayoutProps {
     children: ReactNode;
 }
@@ -17,12 +20,18 @@ export interface ExternalAccessLayoutProps {
 const ExternalAccessLayout = ({children}: ExternalAccessLayoutProps) => {
     const {t} = useTranslation();
     const year = dayjs().year();
-
+    const dispatch = useDispatch();
     const webFormsLabResult = useRouteMatch({
         path: '/o/lab-results/:labResultId',
         strict: true,
         sensitive: true
     });
+
+    useEffect(() => {
+        if (utils.isSessionExpired()) {
+            dispatch(logOut());
+        }
+    }, [dispatch, logOut])
 
     const location = useLocation();
 
