@@ -71,7 +71,7 @@ const ReactInputDateMask = ({
 
     const onFocus = (e: any) => {
         if (showMaskOnFocus && !maskOnFocus) {
-            // setMaskOnFocus(true)
+            setMaskOnFocus(true)
             setStatePlaceholder('')
         }
         props.onFocus?.(e);

@@ -115,7 +115,6 @@ const ControlledInput = ({
         }
         controllerProps.onChange(value);
         control.setValue(name, value, {shouldValidate: true});
-        console.log("vale", value);
 
     }
     const onInputChanged = (event: React.ChangeEvent<HTMLInputElement>, controllerProps: ControllerRenderProps<Record<string, any>>) => {
