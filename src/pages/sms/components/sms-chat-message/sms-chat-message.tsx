@@ -22,9 +22,14 @@ interface SmsChatMessageProps {
     isPhotoVisible?: boolean;
 }
 
+const systemUser = "System User";
 const getName = (props: SmsChatMessageProps, t: TFunction) => {
     if (!props.isNameVisible) {
         return '';
+    }
+
+    if(props.isOutGoing && props.name === systemUser){
+        return t('external_access.ticket_sms.cwc_only');
     }
 
     if (props.agent) {
@@ -75,7 +80,7 @@ const SmsChatMessageOut = (props: SmsChatMessageProps) => {
         <div className="flex flex-row justify-end">
             <SmsChatMessageTime date={props.date} />
             <SmsChatMessageBody body={props.body} />
-            {props.isPhotoVisible && <SmsChatMessageAvatar name={name} photoUrl={props.photoProfileUrl} />}
+            {props.isPhotoVisible && props.name !== systemUser && <SmsChatMessageAvatar name={name} photoUrl={props.photoProfileUrl} />}
         </div>
     </div>);
 }

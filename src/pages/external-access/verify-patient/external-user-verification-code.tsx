@@ -126,7 +126,6 @@ const ExternalUserVerificationCode = () => {
                         forwardToRelatedPage();
                     } else {
                         setVerificationFailed(true);
-                        setResendDisabled(false);
                         dispatch(addSnackbarMessage({
                             message: 'external_access.verification_failed',
                             type: SnackbarType.Error,

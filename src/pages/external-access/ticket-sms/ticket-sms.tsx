@@ -40,12 +40,12 @@ const TicketSms = () => {
         setBottomFocus(false);
     }, [])
 
-    const {isLoading, refetch} = useQuery([QueryTicketMessagesInfinite, ChannelTypes.SMS, request.ticketId, page],
+    const {isLoading, refetch} = useQuery([QueryTicketMessagesInfinite, ChannelTypes.SMS, request?.ticketId, page],
         () => getMessages(request.ticketId, ChannelTypes.SMS, {
             page,
             pageSize: 50,
         }), {
-        enabled: !!request.ticketId,
+        enabled: !!request?.ticketId,
         onSuccess: (data: PagedList<TicketMessage>) => {
             setBottomFocus(true);
             let allMessages = [...messages].concat(data.results);
@@ -98,7 +98,7 @@ const TicketSms = () => {
         })
     }
 
-    if (request.patientId && !verifiedPatient) {
+    if (request?.patientId && !verifiedPatient) {
         return <div>{t('external_access.not_verified_patient')}</div>;
     }
 
@@ -160,7 +160,7 @@ const TicketSms = () => {
         <div className='px-2'>
             <CountdownTimer type='sms' onTimerEnd={onTimerEnd} />
         </div>
-        <TicketSmsSendMessage ticketId={request.ticketId} onMessageSend={(text) => onMessageSend(text)} />
+        <TicketSmsSendMessage ticketId={request?.ticketId} onMessageSend={(text) => onMessageSend(text)} />
     </div>
 }
 
