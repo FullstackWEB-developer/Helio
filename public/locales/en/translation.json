@@ -1368,7 +1368,7 @@
       "personalize_message_title": "Personalize Invitation Message",
       "personalize_message_placeholder": "Invitation Message",
       "add_button": "Add Users",
-      "name_or_email": "Name or Email",
+      "name_or_email": "Name, Email or more...",
       "role": "Role",
       "invitation_sent_success": "Invitations have been sent successfully.\nIn a few seconds you'll be redirected to Manage users screen where you can verify the invites.",
       "invitation_sent_error": "The sending of the invitation has failed"
