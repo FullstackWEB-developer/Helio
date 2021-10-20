@@ -18,4 +18,5 @@ export interface TicketMessageBase {
     subject?: string;
     body: string;
     patientId?: number;
+    contactId?: string;
 }

@@ -287,6 +287,9 @@ const Sms = () => {
         if (selectedTicketSummary.patientId) {
             message.patientId = selectedTicketSummary.patientId
         }
+        if (selectedTicketSummary.contactId) {
+            message.contactId = selectedTicketSummary.contactId
+        }
         if (!selectedTicketSummary.assignedTo || selectedTicketSummary.assignedTo !== id) {
             changeAssigneeMutation.mutate({assignee: id, ticketId: selectedTicketSummary.ticketId});
         }
