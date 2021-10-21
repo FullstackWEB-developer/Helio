@@ -61,7 +61,7 @@ const Sms = () => {
     const {smsIncoming} = useSignalRConnectionContext();
     const unreadSMSList = useSelector(selectUnreadSMSList) ?? [];
     const {state} = useLocation<SmsLocationState>();
-    const {ticketNumber} = useParams<{ticketNumber?: string}>();
+    const {ticketId} = useParams<{ticketId?: string}>();
     const history = useHistory();
     const dispatch = useDispatch();
 
@@ -80,7 +80,7 @@ const Sms = () => {
     });
 
     const {refetch: ticketSummaryRefetch, isFetching: isTicketSummaryFetching} = useQuery([QueryTicketMessageSummaryByTicketId],
-        () => getChats({ticketNumber: Number(ticketNumber), channel: ChannelTypes.SMS}), {
+        () => getChats({ticketId: ticketId, channel: ChannelTypes.SMS}), {
         enabled: false,
         onSuccess: (response) => {
             if (response.results.length > 0) {
@@ -97,13 +97,13 @@ const Sms = () => {
     });
 
     useEffect(() => {
-        if (!ticketNumber) {
+        if (!ticketId && !smsQueryType) {
             setSmsQueryType(SmsQueryType.MySms);
             return;
         }
 
         ticketSummaryRefetch();
-    }, [ticketSummaryRefetch, ticketNumber]);
+    }, [ticketSummaryRefetch, ticketId]);
 
     useEffect(() => {
         if (!!state?.contact) {
@@ -269,7 +269,7 @@ const Sms = () => {
     const onMessageListClick = (summary: TicketMessageSummary) => {
         if (summary.ticketId !== selectedTicketSummary?.ticketId) {
             setIsNewSmsChat(false);
-            history.replace(`${SmsPath}/${summary.ticketNumber}`)
+            history.replace(`${SmsPath}/${summary.ticketId}`)
         }
     }
 
@@ -355,6 +355,7 @@ const Sms = () => {
     const onNewChatClick = () => {
         setIsNewSmsChat(true);
         setSelectedTicketSummary(undefined);
+        history.replace({pathname: SmsPath });
     }
     const getSmsChatSection = () => {
         if (messageQueryIsFetching && !isMessageQueryFetchingNextPage) {

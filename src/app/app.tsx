@@ -150,7 +150,7 @@ function App() {
                         <GuardedRoute exact path={`${ContactsPath}/:contactId?`} component={withSuspense(Contacts)} />
                     </Switch>
 
-                    <GuardedRoute exact path={`${SmsPath}/:ticketNumber?`} component={withSuspense(Sms)} />
+                    <GuardedRoute exact path={`${SmsPath}/:ticketId?`} component={withSuspense(Sms)} />
                     <GuardedRoute exact path={`${UsersPath}`} component={withSuspense(UserList)} />
                     <GuardedRoute exact path={`${UsersPath}/new`} component={withSuspense(UserAdd)} />
                     <GuardedRoute exact path={`${UserDetailsPath}/:userId`} component={withSuspense(UserDetails)} />
