@@ -18,6 +18,8 @@ const Navigation = () => {
         return (location && location.pathname === link)
     };
 
+
+
     const unreadSMSList = useSelector(selectUnreadSMSList);
     const menuItems = [
         {
@@ -64,23 +66,32 @@ const Navigation = () => {
             title: t('navigation.users'),
             link: UsersPath,
             id: 'navigation-users',
-            icon: <SvgIcon type={Icon.Users} fillClass='active-item-icon' />
+            icon: <SvgIcon type={Icon.Users} fillClass='active-item-icon' />,
+            permission: 'Users.Access'
         }, {
             title: t('navigation.blacklists'),
             link: BlackListsPath,
             id: 'navigation-blacklists',
-            icon: <SvgIcon type={Icon.Blacklist} fillClass='active-item-icon' />
+            icon: <SvgIcon type={Icon.Blacklist} fillClass='active-item-icon' />,
+            permission: 'BlockedAccess.Access'
         }
     ];
 
-    const items = menuItems.map((item, index) => {
+    const items = React.Children.toArray(menuItems.map((item) => {
         const isSelected = isActive(item.link);
         const icon = React.cloneElement(item.icon, {pathClass: (isSelected ? 'navigation-active-icon-color' : 'navigation-inactive-icon-color')})
-        return <div key={index}
-            className={`hover:bg-secondary-50 border-r ${isSelected ? ' bg-secondary-50 ' : ''}`}>
-            <NavigationItem isSelected={isSelected} key={index} icon={icon} link={item.link} title={item.title} displayBadge={item.displayBadge} badgeValue={item.badgeValue} />
-        </div>
-    });
+        return (
+            <NavigationItem
+                isSelected={isSelected}
+                icon={icon}
+                link={item.link}
+                title={item.title}
+                displayBadge={item.displayBadge}
+                badgeValue={item.badgeValue}
+                permission={item.permission}
+            />
+        );
+    }));
 
     return (
         <nav className='flex flex-col h-full'>

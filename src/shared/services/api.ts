@@ -6,6 +6,9 @@ import Logger from './logger';
 import store from '../../app/store';
 import {AuthenticationInfo} from '../store/app-user/app-user.models';
 import utils from '@shared/utils/utils';
+import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
+import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
+import i18n from "i18next";
 
 const logger = Logger.getInstance();
 const Api = axios.create({
@@ -81,9 +84,16 @@ export const refreshAccessToken = async () => {
 Api.interceptors.response.use(
     response => response,
     error => {
+        if (error.response.status === 403) {
+            store.dispatch(addSnackbarMessage({
+                type: SnackbarType.Error,
+                message: i18n.t('security.not_authorized')
+            }));
+        }
         if (error.response.status !== 401) {
             return Promise.reject(error);
         }
+
 
         if (store.getState().appUserState.auth.authenticationLink) {
             window.location.replace(store.getState().appUserState.auth.authenticationLink);

@@ -33,27 +33,31 @@ import './calls-log-list.scss';
 import FilterDot from '@components/filter-dot/filter-dot';
 import {selectIsCallsLogFiltered} from '@pages/calls-log/store/calls-log.selectors';
 import {setIsCallsLogFiltered} from '@pages/calls-log/store/calls-log.slice';
+import useCheckPermission from '@shared/hooks/useCheckPermission';
 
 dayjs.extend(utc);
 
 const CallsLogList = () => {
 
     const {t} = useTranslation();
+    const canListenAnyRecording = useCheckPermission('Tickets.ListenAnyRecording');
+    const isDefaultTeam = useCheckPermission('Calls.DefaultToTeamView');
+
     const appUser = useSelector(selectAppUserDetails);
     const isFiltered = useSelector(selectIsCallsLogFiltered);
     const history = useHistory();
-
     const dispatch = useDispatch();
     const [isFilterOpen, setFilterOpen] = useState(false);
     const [isPlayerOpen, setPlayerOpen] = useState(false);
     const [rowSelected, setRowSelected] = useState<TicketLogModel>();
-    const [currentQueryType, setCurrentQueryType] = useState<CallLogQueryType>(CallLogQueryType.MyCallLog);
+
+    const [currentQueryType, setCurrentQueryType] = useState<CallLogQueryType>(!isDefaultTeam ? CallLogQueryType.MyCallLog : CallLogQueryType.TeamCallLog);
     const [pagingResult, setPagingResult] = useState({...DEFAULT_PAGING});
     const [rows, setRows] = useState<TicketLogModel[]>([]);
     const [callsLogFilter, setCallsLogFilter] = useState<TicketLogRequestModel>({
         ...DEFAULT_PAGING,
-        assignedTo: appUser.id,
-        sorts:['createdOn Desc']
+        assignedTo: !isDefaultTeam ? appUser.id : '',
+        sorts: ['createdOn Desc']
     });
 
     useEffect(() => {
@@ -139,6 +143,11 @@ const CallsLogList = () => {
         setCallsLogFilter(query);
     }
 
+    const onPlayButtonClick = (data: TicketLogModel) => {
+        setRowSelected(data);
+        setPlayerOpen(true);
+    }
+
     let tableModel = {
         columns: [
             {
@@ -151,7 +160,7 @@ const CallsLogList = () => {
                 title: 'ticket_log.from',
                 field: 'from',
                 widthClass: 'w-2/12',
-                render: (_ : string, data: TicketLogModel) => (
+                render: (_: string, data: TicketLogModel) => (
                     <CallContactInfo type='from' value={data} />
                 )
             },
@@ -159,7 +168,7 @@ const CallsLogList = () => {
                 title: 'ticket_log.to',
                 field: 'to',
                 widthClass: 'w-2/12',
-                render: (_ : string, data: TicketLogModel) => (
+                render: (_: string, data: TicketLogModel) => (
                     <CallContactInfo type='to' value={data} />
                 )
             },
@@ -231,9 +240,9 @@ const CallsLogList = () => {
                             <SvgIcon
                                 type={Icon.Play}
                                 fillClass='rgba-05-fill'
+                                disabled={data.contactAgent !== appUser.email && !canListenAnyRecording}
                                 onClick={() => {
-                                    setRowSelected(data);
-                                    setPlayerOpen(true);
+                                    onPlayButtonClick(data);
                                 }}
                             />
                         }
@@ -307,7 +316,7 @@ const CallsLogList = () => {
                 }
             }
         ],
-        rows : rows,
+        rows: rows,
         hasRowsBottomBorder: true,
         headerClassName: 'h-12',
         rowClass: 'h-20 items-center hover:bg-gray-100 cursor-pointer call-log-row',

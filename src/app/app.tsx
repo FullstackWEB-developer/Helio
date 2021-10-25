@@ -32,6 +32,7 @@ import {SMS_INCOMING_NAME} from '@shared/constants/signalr-provider-constants';
 import utils from '@shared/utils/utils';
 import Confirmation from '@components/confirmation/confirmation';
 import IncomingSmsUpdate from '@shared/websockets/incoming-sms-update';
+import ComponentPermissionGuard from "@components/component-permission-guard";
 const SearchResults = React.lazy(() => import('../shared/components/search-bar/components/search-results'));
 const PatientChart = React.lazy(() => import('@pages/patients/patient-chart'));
 const VerifyRedirectLink = React.lazy(() => import('@pages/external-access/verify-patient/verify-redirect-link'));
@@ -151,10 +152,10 @@ function App() {
                     </Switch>
 
                     <GuardedRoute exact path={`${SmsPath}/:ticketId?`} component={withSuspense(Sms)} />
-                    <GuardedRoute exact path={`${UsersPath}`} component={withSuspense(UserList)} />
-                    <GuardedRoute exact path={`${UsersPath}/new`} component={withSuspense(UserAdd)} />
+                    <GuardedRoute exact path={`${UsersPath}`} component={withSuspense(UserList)} permission='Users.Access' />
+                    <GuardedRoute exact path={`${UsersPath}/new`} component={withSuspense(UserAdd)} permission='Users.Access' />
                     <GuardedRoute exact path={`${UserDetailsPath}/:userId`} component={withSuspense(UserDetails)} />
-                    <GuardedRoute exact path={BlackListsPath} component={withSuspense(BlackList)} />
+                    <GuardedRoute exact path={BlackListsPath} component={withSuspense(BlackList)} permission='BlockedAccess.Access' />
                     <GuardedRoute exact path={UsersBulkPath} component={withSuspense(BulkAddUser)} />
                     <GuardedRoute exact path={CallsLogPath} component={withSuspense(CallsLogList)} />
                     <GuardedRoute exact path={ChatsLogPath} component={withSuspense(ChatsLogList)} />

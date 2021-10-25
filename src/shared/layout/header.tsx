@@ -22,6 +22,7 @@ import {CCPConnectionStatus} from '@pages/ccp/models/connection-status.enum';
 import Tooltip from '@components/tooltip/tooltip';
 import {Trans, useTranslation} from 'react-i18next';
 import utils from '@shared/utils/utils';
+import ComponentPermissionGuard from "@components/component-permission-guard";
 
 
 const Header = ({headsetIconRef}: {headsetIconRef: React.RefObject<HTMLDivElement>}) => {
@@ -100,9 +101,9 @@ const Header = ({headsetIconRef}: {headsetIconRef: React.RefObject<HTMLDivElemen
                     <div className='flex items-center w-full h-16 md:w-auto'>
                         <div className='pl-7 md:pl-0 pr-36'>
                             <Link to='/dashboard' className='cursor-pointer'>
-                            <div>
-                                <HelioLogo className='fill-current text-primary-600' />
-                            </div>
+                                <div>
+                                    <HelioLogo className='fill-current text-primary-600' />
+                                </div>
                             </Link>
                         </div>
                     </div>
@@ -160,13 +161,17 @@ const Header = ({headsetIconRef}: {headsetIconRef: React.RefObject<HTMLDivElemen
                         </div>
                     </div>
                     <div className='flex flex-row items-center'>
-                        <div className='hidden pr-6 md:block'>
-                            <SvgIcon type={Icon.AwsConnect}
-                                     className='cursor-pointer header-icon'
-                                     onClick={() => openUrl(`${utils.getAppParameter('ConnectBaseUrl')}connect/home`)} />
-                        </div>
+                        <ComponentPermissionGuard permission='Home.AWSConnectButton'>
+                            <div className='hidden pr-6 md:block'>
+                                <SvgIcon
+                                    type={Icon.AwsConnect}
+                                    className='cursor-pointer header-icon'
+                                    onClick={() => openUrl(`${utils.getAppParameter('ConnectBaseUrl')}connect/home`)}
+                                />
+                            </div>
+                        </ComponentPermissionGuard>
                         <div data-test-id='athena-icon' className='hidden pr-10 md:block'>
-                            <SvgIcon type={Icon.Athena} className='cursor-pointer header-icon' onClick={() => openUrl(utils.getAppParameter('AthenaHealthUrl'))}/>
+                            <SvgIcon type={Icon.Athena} className='cursor-pointer header-icon' onClick={() => openUrl(utils.getAppParameter('AthenaHealthUrl'))} />
                         </div>
                         <div>
                             <div ref={dropdownRef} className='relative hidden h-full md:block'>

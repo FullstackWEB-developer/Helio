@@ -18,6 +18,8 @@ export interface TicketLogModel {
     connectedToSystemTimestamp?: string;
     contactDisconnectTimestamp?: string;
     contactInitiationTimestamp?: string;
+    contactAgent?: string;
+
 }
 
 export enum TicketLogContactStatus {

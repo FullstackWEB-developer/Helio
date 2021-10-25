@@ -35,18 +35,23 @@ import {SortDirection} from '@shared/models/sort-direction';
 import FilterDot from '@components/filter-dot/filter-dot';
 import {selectIsChatLogFiltered} from '@pages/chat-log/store/chat-log.selectors';
 import {setIsChatLogFiltered} from '@pages/chat-log/store/chat-log.slice';
+import useCheckPermission from '@shared/hooks/useCheckPermission';
 
 const ChatsLogList = () => {
     const {t} = useTranslation();
     const appUser = useSelector(selectAppUserDetails);
     const history = useHistory();
+    const canViewAnyTranscript = useCheckPermission('Tickets.ViewAnyChatTranscript');
+    const isDefaultTeam = useCheckPermission('Chat.DefaultToTeamView');
+
     const [pagingResult, setPagingResult] = useState({...DEFAULT_PAGING});
     const [isFilterOpen, setFilterOpen] = useState(false);
     const [isChatTranscriptOpen, setChatTranscriptOpen] = useState(false);
     const [ticketNumber, setTicketNumber] = useState<string>();
     const isFiltered = useSelector(selectIsChatLogFiltered);
     const [rows, setRows] = useState<TicketLogModel[]>([]);
-    const [currentQueryType, setCurrentQueryType] = useState<ChatLogQueryType>(ChatLogQueryType.MyChatLog);
+
+    const [currentQueryType, setCurrentQueryType] = useState<ChatLogQueryType>(!isDefaultTeam ? ChatLogQueryType.MyChatLog : ChatLogQueryType.TeamChatLog);
     const dispatch = useDispatch();
     const dropdownItem: DropdownItemModel[] = [
         {label: 'ticket_log.my_chat_log', value: ChatLogQueryType.MyChatLog},
@@ -54,8 +59,8 @@ const ChatsLogList = () => {
     ];
     const [chatsLogFilter, setChatsLogFilter] = useState<TicketLogRequestModel>({
         ...DEFAULT_PAGING,
-        assignedTo: appUser.id,
-        sorts:['createdOn Desc']
+        assignedTo: !isDefaultTeam ? appUser.id : '',
+        sorts: ['createdOn Desc']
     });
 
     useEffect(() => {
@@ -135,6 +140,11 @@ const ChatsLogList = () => {
         }
     );
 
+    const onViewTranscriptClick = (data: TicketLogModel) => {
+        setTicketNumber(data.ticketNumber);
+        setChatTranscriptOpen(true);
+    }
+
     const {
         isLoading: isPatientLoading,
         isFetching: isPatientFetching,
@@ -152,7 +162,7 @@ const ChatsLogList = () => {
                 title: 'ticket_log.from',
                 field: 'from',
                 widthClass: 'w-2/12',
-                render: (_ : string, data: TicketLogModel) => (
+                render: (_: string, data: TicketLogModel) => (
                     <span className='body2'>
                         {data.createdForName}
                     </span>
@@ -224,9 +234,9 @@ const ChatsLogList = () => {
                             <SvgIcon
                                 type={Icon.View}
                                 fillClass='rgba-05-fill'
+                                disabled={data.contactAgent !== appUser.email && !canViewAnyTranscript}
                                 onClick={() => {
-                                    setTicketNumber(data.ticketNumber);
-                                    setChatTranscriptOpen(true);
+                                    onViewTranscriptClick(data);
                                 }}
                             />
                         }
@@ -264,7 +274,7 @@ const ChatsLogList = () => {
                 title: '',
                 field: '',
                 widthClass: 'w-48 h-full items-center justify-center',
-                render: (_ : any, data: TicketLogModel) => {
+                render: (_: any, data: TicketLogModel) => {
                     return (<>
                         <MoreMenu
                             items={getMoreMenuOption(data)}

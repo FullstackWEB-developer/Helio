@@ -19,6 +19,7 @@ import useComponentVisibility from '@shared/hooks/useComponentVisibility';
 import {authenticationSelector} from '@shared/store/app-user/appuser.selectors';
 import {TicketListQueryType} from './models/ticket-list-type';
 import {setTicketListQueryType} from './store/tickets.slice'
+import useCheckPermission from '@shared/hooks/useCheckPermission';
 
 const TicketsHeader = () => {
     const {t} = useTranslation();
@@ -26,9 +27,10 @@ const TicketsHeader = () => {
     const ticketFilter: TicketQuery = useSelector(selectTicketFilter);
     const ticketListQueryType = useSelector(selectTicketQueryType);
     const searchTerm: string = useSelector(selectSearchTerm);
+    const isDefaultTeam = useCheckPermission('Tickets.DefaultToTeamView');
     const dispatch = useDispatch();
     const [currentPage, setCurrentPage] = useState(paging.page.toString());
-    const [currentListQueryType, setCurrentListQueryType] = useState<string>(ticketListQueryType.toString());
+    const [currentListQueryType, setCurrentListQueryType] = useState<string>(!isDefaultTeam ? ticketListQueryType.toString() : TicketListQueryType.AllTicket.toString());
     const [isVisible, setIsVisible, elementRef] = useComponentVisibility<HTMLDivElement>(false);
     const {username} = useSelector(authenticationSelector);
 
@@ -127,30 +129,30 @@ const TicketsHeader = () => {
     }
 
 
-    return <div className='flex flex-row justify-between border-b p-6'>
+    return <div className='flex flex-row justify-between p-6 border-b'>
         <div ref={elementRef} className='relative pr-4'>
-            <div className='flex flex-row flex-nowrap items-center text-2xl font-bold relative cursor-pointer' onClick={() => setIsVisible(!isVisible)}>
-                <span className="whitespace-nowrap select-none">{getTicketTitle(currentListQueryType)} - {paging.totalCount}</span>
+            <div className='relative flex flex-row items-center text-2xl font-bold cursor-pointer flex-nowrap' onClick={() => setIsVisible(!isVisible)}>
+                <span className="select-none whitespace-nowrap">{getTicketTitle(currentListQueryType)} - {paging.totalCount}</span>
                 <span className='px-4'>
                     <SvgIcon type={isVisible ? Icon.ArrowUp : Icon.ArrowDown} className='cursor-pointer' fillClass='active-item-icon' />
                 </span>
             </div>
             <div >
                 {isVisible &&
-                    <div className="absolute w-full z-10 top-full right-4 mt-6">
+                    <div className="absolute z-10 w-full mt-6 top-full right-4">
                         <Dropdown model={ticketListTypeDropdownModel} />
                     </div>
                 }
             </div>
         </div>
         <div className='flex flex-row'>
-            <div className='text-gray-400 pr-8 pt-2 text-sm'>
+            <div className='pt-2 pr-8 text-sm text-gray-400'>
                 <span>{t('tickets.pagination', {numOfItemsFrom: numOfItemsFrom, numOfItemsTo: numOfItemsTo, totalCount: paging.totalCount})}</span>
             </div>
-            <SvgIcon type={Icon.ArrowLeft} className='cursor-pointer mt-1' fillClass='active-item-icon' onClick={() => previousPage()} />
-            <input type='text' className='border rounded-md w-11 text-center ml-6 mr-6' value={currentPage}
+            <SvgIcon type={Icon.ArrowLeft} className='mt-1 cursor-pointer' fillClass='active-item-icon' onClick={() => previousPage()} />
+            <input type='text' className='ml-6 mr-6 text-center border rounded-md w-11' value={currentPage}
                 onChange={(e) => changePage(e)} onKeyDown={(e) => handleKey(e)} />
-            <SvgIcon type={Icon.ArrowRight} className='cursor-pointer mt-1' fillClass='active-item-icon' onClick={() => nextPage()} />
+            <SvgIcon type={Icon.ArrowRight} className='mt-1 cursor-pointer' fillClass='active-item-icon' onClick={() => nextPage()} />
         </div>
     </div>
 };

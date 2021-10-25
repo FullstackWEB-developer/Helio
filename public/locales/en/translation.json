@@ -800,7 +800,7 @@
       "close_window_description": "Your Medical History was succesfully dowloaded. If you have completed your request, please close this form."
     },
     "download_medical_records": {
-      "title" : "Download medical records",
+      "title": "Download medical records",
       "verify_desc": "Please verify medical record owner identity to proceed",
       "date_of_birth": "Date of birth",
       "mobile_phone_number": "Mobile Phone Number",
@@ -943,8 +943,8 @@
         "female": "Female",
         "male": "Male"
       },
-      "appointment_found":"Existing Appointments Found.",
-      "appointment_found_desc":"It looks like you already have existing appointments. Please confirm if you are trying to reschedule existing appointment or you would like to create a new appointment."
+      "appointment_found": "Existing Appointments Found.",
+      "appointment_found_desc": "It looks like you already have existing appointments. Please confirm if you are trying to reschedule existing appointment or you would like to create a new appointment."
     },
     "ticket_sms": {
       "no_messages": "You have no messages",
@@ -1425,6 +1425,7 @@
     "call_forwarding_value_agent": "Agent",
     "call_forwarding_type": "Forward To",
     "user_update_success": "User has been updated",
+    "user_update_role": "Role changes will take effect from the user's next login.",
     "user_update_error": "Error updating user",
     "provider_tooltip": "<0>Please match that user if s/he is a provider in the EHR/EMR system.</0><1>We will use this to show the right information about the provider to the patients.</1>"
   },
@@ -1493,5 +1494,8 @@
     },
     "unblock_success": "Contact unblocked successfully.",
     "unblock_fail": "Contact unblocking failed."
+  },
+  "security": {
+    "not_authorized": "It seems that you are not authorized to perform this operation,\nplease try again by re-logging into the system."
   }
 }

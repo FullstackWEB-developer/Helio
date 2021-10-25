@@ -36,17 +36,19 @@ import './sms.scss';
 import {removeUnreadSMSMessageForList} from '@shared/store/app-user/appuser.slice';
 import {useHistory, useLocation, useParams} from 'react-router';
 import {SmsPath} from '@app/paths';
+import useCheckPermission from '@shared/hooks/useCheckPermission';
 
 interface SmsLocationState {
     contact?: ContactExtended
 }
 const Sms = () => {
     const {t} = useTranslation();
+    const isDefaultTeamView = useCheckPermission('SMS.DefaultToTeamView');
     const {id, name: userFullName} = useSelector(authenticationSelector);
     const [isFilterVisible, setFilterVisible] = useState(false);
     const [queryParams, setQueryParams] = useState<TicketMessageSummaryRequest>({
         channel: ChannelTypes.SMS,
-        assignedTo: id,
+        assignedTo: !isDefaultTeamView ? id : '',
         ...DEFAULT_MESSAGE_QUERY_PARAMS
     });
     const [searchTerm, setSearchTerm] = useState('');
@@ -98,7 +100,7 @@ const Sms = () => {
 
     useEffect(() => {
         if (!ticketId && !smsQueryType) {
-            setSmsQueryType(SmsQueryType.MySms);
+            setSmsQueryType(!isDefaultTeamView ? SmsQueryType.MySms : SmsQueryType.MyTeam);
             return;
         }
 
@@ -248,7 +250,7 @@ const Sms = () => {
     const changeQueryType = (context: SmsQueryType) => {
         if (smsQueryType === context) {
             return;
-         }
+        }
 
         if (context === SmsQueryType.MyTeam) {
             setQueryParams({...queryParams, assignedTo: undefined});
@@ -355,7 +357,7 @@ const Sms = () => {
     const onNewChatClick = () => {
         setIsNewSmsChat(true);
         setSelectedTicketSummary(undefined);
-        history.replace({pathname: SmsPath });
+        history.replace({pathname: SmsPath});
     }
     const getSmsChatSection = () => {
         if (messageQueryIsFetching && !isMessageQueryFetchingNextPage) {
