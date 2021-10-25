@@ -795,7 +795,9 @@
       "email_sent_failed": "Sorry, could not send email.",
       "download_disclaimer": "You are about to download HIPAA Protect Sensitive Patient Health Information outside of our secure system. Once document(s) are downloaded the action can not be canceled. By downloading this document(s), you understand and acknowledge that you are solely responsible for the confidentiality and security of information you are downloading out of our secure network.",
       "download_warning": "Warning: Do not download this file if you are using a public computer.",
-      "email_disclaimer": "You are about to transmit HIPAA Protect Sensitive Patient Health Information outside of our secure system. Please ensure the recipient's email address is accurate before sending. Once sent, the email cannot be recovered or cancelled. By sending this email, you understand and acknowledge that you are solely responsible for the confidentiality and security of information you transmit out of our secure system. \nYour health information will be sent via standard, unencrypted email."
+      "email_disclaimer": "You are about to transmit HIPAA Protect Sensitive Patient Health Information outside of our secure system. Please ensure the recipient's email address is accurate before sending. Once sent, the email cannot be recovered or cancelled. By sending this email, you understand and acknowledge that you are solely responsible for the confidentiality and security of information you transmit out of our secure system. \nYour health information will be sent via standard, unencrypted email.",
+      "close_window_title": "Close window",
+      "close_window_description": "Your Medical History was succesfully dowloaded. If you have completed your request, please close this form."
     },
     "download_medical_records": {
       "title" : "Download medical records",

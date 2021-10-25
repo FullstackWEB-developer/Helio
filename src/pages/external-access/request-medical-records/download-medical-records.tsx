@@ -121,7 +121,7 @@ const DownloadMedicalRecords = () => {
                     </div>
                     <div className='pb-2 flex justify-start'>
                         <div>
-                            <div className='body2-medium pb-4'>
+                            <div className='body2 pb-4'>
                                 <div>{t('external_access.download_medical_records.disclaimer')}</div>
                                 <ul className='pl-4 py-2 list-disc'>
                                     <li>{t('external_access.download_medical_records.disclaimer_bullet_1')}</li>

@@ -27,6 +27,7 @@ import {AsyncJobStatus} from '@pages/patients/models/async-job-status.enum';
 import {CheckMedicalRecordStatus} from '@constants/react-query-constants';
 import TextArea from '@components/textarea/textarea';
 import {selectRedirectLink} from '@pages/external-access/verify-patient/store/verify-patient.selectors';
+import Confirmation from '@components/confirmation/confirmation';
 const RequestMedicalRecords = () => {
     enum DateOptions {
         AllTime = 1,
@@ -47,6 +48,7 @@ const RequestMedicalRecords = () => {
     const [request, setRequest] = useState<DownloadMedicalRecordsProps>();
     const [jobInformation, setJobInformation] = useState<AsyncJobInfo>();
     const [isLoading, setLoading] = useState<boolean>(false);
+    const [displayConfirmation, setDisplayConfirmation] = useState<boolean>(false);
     const verifyLink = useSelector(selectRedirectLink);
     const dispatch = useDispatch();
     const {control, formState, getValues, watch} = useForm({
@@ -184,6 +186,7 @@ const RequestMedicalRecords = () => {
                 message: 'external_access.medical_records_request.file_downloaded',
                 type: SnackbarType.Success
             }));
+            setDisplayConfirmation(true);
         }
         if (requestType === RequestType.Share) {
             dispatch(addSnackbarMessage({
@@ -221,13 +224,13 @@ const RequestMedicalRecords = () => {
             <Tabs>
                 <Tab title={t('external_access.medical_records_request.download_tab_header')}>
                     <div className='pt-8'>
-                        <div className='body2-medium'>
+                        <div className='body2'>
                             {t('external_access.medical_records_request.download_disclaimer')}
                         </div>
-                        <div className='body2-medium pt-4'>
+                        <div className='body2 pt-4'>
                             {t('external_access.medical_records_request.download_warning')}
                         </div>
-                        <div className='body2-medium py-4'>
+                        <div className='body2 py-4'>
                             {t('external_access.medical_records_request.download_info')}
                         </div>
                         <div className='flex flex-row pt-6 space-x-6'>
@@ -270,6 +273,7 @@ const RequestMedicalRecords = () => {
                                     defaultValue=''
                                     label='external_access.medical_records_request.email_confirm_input_header'
                                 />
+                                </div>
                                 <Controller
                                     name='note'
                                     control={control}
@@ -280,14 +284,14 @@ const RequestMedicalRecords = () => {
                                             placeHolder='external_access.medical_records_request.note'
                                             className='w-full h-full pb-0 pr-0 body2'
                                             data-test-id='medical-records-notes'
-                                            minRows={2}
+                                            rows={3}
+                                            maxRows={5}
                                             resizable={false}
                                             hasBorder={true}
                                         />
                                     )}
                                 />
-                                </div>
-                                <div className='body2-medium py-4'>
+                                <div className='body2 py-4'>
                                     {t('external_access.medical_records_request.email_disclaimer')}
                                 </div>
                                 <div className='pt-2 md:w-3/5'>
@@ -306,6 +310,13 @@ const RequestMedicalRecords = () => {
                 </Tab>
             </Tabs>
         </div>
+        <Confirmation title='external_access.medical_records_request.close_window_title'
+                      onOk={() => setDisplayConfirmation(false)}
+                      onClose={() => setDisplayConfirmation(false)}
+                      isOpen={displayConfirmation}
+                      displayCancel={false}
+                      message='external_access.medical_records_request.close_window_description'
+        />
     </div>
 }
 
