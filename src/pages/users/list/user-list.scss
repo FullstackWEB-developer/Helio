@@ -4,13 +4,14 @@
         column-gap: 2rem;
         align-items: center;
         grid-template-columns: 2% 30% 14% 14% 7% 7% 7% 3%;
-
         &.head-row{
             background-color: var(--color-secondary-100);
-            text-transform: uppercase
+            text-transform: uppercase;
+            min-height: 3rem;
         }
         &.data-row{
             border-bottom: 1px solid var(--light-divider-7);
+            grid-auto-rows: minmax(3.5rem, min-content);
             &:hover{
                 background-color: var(--dashboard-background);
                 cursor: pointer;
@@ -24,4 +25,8 @@
     &-icon-fill {
         fill: var(--grayed-out);
     }
+}
+
+.user-list-search-stripe {
+    min-height: 3.5rem;
 }

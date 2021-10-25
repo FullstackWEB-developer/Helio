@@ -89,7 +89,7 @@ const UserListSearch = ({handleAllCheck,
         </div>
     }
     return (
-        <div className='flex w-full mt-4 border-t border-b h-14'>
+        <div className='flex w-full mt-4 border-t border-b h-14 user-list-search-stripe'>
             <div className='flex flex-row items-center border-r'>
                 <Checkbox checked={allChecked} name='select-all-users' label='' className='w-5 pt-2 mx-6' onChange={handleAllCheck} />
                 {itemSelectedCount > 0 &&

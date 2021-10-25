@@ -360,7 +360,7 @@ const UserList = () => {
                                 {
                                     data && data.results?.map((u: UserDetail, index: number) => (
                                         <div key={u.id}
-                                            className={`user-list-grid data-row h-14 px-6 body2 group ${isRowChecked(u.id) ? 'checked' : ''}`}>
+                                            className={`user-list-grid data-row px-6 body2 group ${isRowChecked(u.id) ? 'checked' : ''}`}>
                                             <div>
                                                 <Checkbox
                                                     checked={isRowChecked(u.id)}

@@ -463,7 +463,7 @@ const UserDetails = () => {
                                         <ControlledSelect
                                             name='provider'
                                             control={control}
-                                            defaultValue=''
+                                            defaultValue={{label: 'common.not_available', value:'common.not_available'}}
                                             options={providerOptions}
                                         />
                                         <div className='pb-6 ml-2'>
@@ -480,8 +480,8 @@ const UserDetails = () => {
                     <div className='flex flex-row mt-8 pr-28'>
                         <div className='flex-1 pr-4'>
                             {!!userDetailExtended?.contactQueues && <>
-                                <div className='flex flex-row items-center justify-between pr-7'>
-                                    <label className='subtitle'>{t('users.active_queues')}</label>
+                                <div className='flex flex-row items-center pr-7'>
+                                    <label className='subtitle pr-4'>{t('users.active_queues')}</label>
                                     {
                                         isEditAccess && <a rel='noreferrer' target='_blank' className="body2 link"
                                             href={userDetailExtended?.contactProfileLink}>{t('common.change')}</a>
