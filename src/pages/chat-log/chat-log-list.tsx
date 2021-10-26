@@ -59,7 +59,7 @@ const ChatsLogList = () => {
     ];
     const [chatsLogFilter, setChatsLogFilter] = useState<TicketLogRequestModel>({
         ...DEFAULT_PAGING,
-        assignedTo: !isDefaultTeam ? appUser.id : '',
+        assignedTo: !isDefaultTeam ? appUser?.id : '',
         sorts: ['createdOn Desc']
     });
 
@@ -123,7 +123,7 @@ const ChatsLogList = () => {
         const context = item.value as ChatLogQueryType;
         setCurrentQueryType(context);
         if (context === ChatLogQueryType.MyChatLog) {
-            setChatsLogFilter({...chatsLogFilter, assignedTo: appUser.id});
+            setChatsLogFilter({...chatsLogFilter, assignedTo: appUser?.id});
         } else {
             setChatsLogFilter({...chatsLogFilter, assignedTo: ''});
         }

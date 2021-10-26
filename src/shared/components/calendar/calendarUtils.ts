@@ -43,7 +43,7 @@ export const getMonthDetails = (date: dayjs.Dayjs): DateDetail[] => {
     const month = date.month();
     const firstDay = (new Date(year, month)).getDay();
     const numberOfDays = date.daysInMonth();
-    const monthArray = [];
+    const monthArray : DateDetail[] = [];
     const rows = 6;
     const cols = 7;
 

@@ -63,7 +63,7 @@ const ControlledInput = ({
     const { t } = useTranslation();
     const requiredText = t('common.required');
     let inputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>): void => undefined;
-    let pattern = undefined;
+    let pattern : any = undefined;
 
     switch (type) {
         case 'tel':

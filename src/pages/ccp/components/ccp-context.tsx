@@ -53,7 +53,7 @@ const CcpContext = () => {
     return (context ?
         <div className={'ccp-context flex flex-col'}>
             <div className={'ccp-header'} />
-            <div className={'ccp-main-content flex-grow bg-white border-l'}>
+            <div className={'ccp-main-content flex-grow bg-white border-l overflow-y-auto'}>
                 {renderContext()}
             </div>
             <div className={'ccp-footer h-10 flex shadow-md border-t border-l box-content p-0 items-center'}>

@@ -38,7 +38,7 @@ const CcpScripts = () => {
         </div>
     }
 
-    return <div className='space-y-4 px-6 pt-4'>
+    return <div className='sms-container space-y-4 px-6 pt-4'>
         <div>{t('ccp.scripts.title')}</div>
         {suggestedTexts.map(text => {
            return <Message key={text.value} text={text.label}/>

@@ -69,7 +69,7 @@ const AgentStatusTable = () => {
             return [];
         }
         let data: LiveAgentStatusInfo[] = [];
-        liveAgentStatuses.forEach(a => {
+        liveAgentStatuses.forEach((a: LiveAgentStatusInfo) => {
             const user = users.find(u => u.id === a.userId);
             if (selectedStatus.value === AllStatuses.value || selectedStatus.value === a.status) {
                 if (user) {
@@ -144,8 +144,8 @@ const AgentStatusTable = () => {
             statusOptions.push(AllStatuses);
         }
         if (liveAgentStatuses && liveAgentStatuses.length > 0) {
-            const statuses = new Set(liveAgentStatuses.filter(a => a.status !== selectedStatus.value).map(a => a.status));
-            statuses.forEach(item => {
+            const statuses = [... new Set(liveAgentStatuses.filter((a: LiveAgentStatusInfo) => a.status !== selectedStatus.value).map((a: LiveAgentStatusInfo) => a.status.toString()))] as string[];
+            statuses.forEach((item:string) => {
                 statusOptions.push({
                     value: item,
                     label: item,

@@ -5,7 +5,7 @@ import DropdownTitle from './dropdown-title';
 import './dropdown.scss';
 import DropdownSelect from '@components/dropdown/dropdown-select';
 import SearchInputField from '@components/search-input-field/search-input-field';
-import {useEffect, useLayoutEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 
 export interface DropdownProps {
     model: DropdownModel
@@ -100,7 +100,7 @@ const Dropdown = ({model}: DropdownProps) => {
     }
 
     if (asSelect) {
-        let selectedValue = null;
+        let selectedValue: DropdownItemModel | undefined = undefined;
         if (defaultValue) {
             selectedValue = dropDownItems.find(a => a.value === defaultValue);
         }

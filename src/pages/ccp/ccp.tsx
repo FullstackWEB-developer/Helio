@@ -304,11 +304,11 @@ const Ccp: React.FC<BoxProps> = ({
         return () => {
             window.removeEventListener('beforeunload', () => beforeUnload());
         }
-    }, [dispatch, history, logger, user.username])
+    }, [])
 
     useEffect(() => {
         return initCCP();
-    }, [dispatch, history, logger, user.username]);
+    }, []);
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [{opacity}, drag, preview] = useDrag({

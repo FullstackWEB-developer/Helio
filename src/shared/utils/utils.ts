@@ -296,7 +296,7 @@ const openWebSite = (url: string) => {
 }
 
 const serialize = (obj: any) => {
-    const str = [];
+    const str: string[] = [];
     for (const p in obj) {
         if (obj.hasOwnProperty(p)) {
             if (Array.isArray(obj[p])) {
@@ -433,7 +433,7 @@ const downloadFileFromData = (data: any, fileName: string, dataType: string) => 
 }
 const hasPermission = (permission: string) => {
     const appUserDetails = store.getState().appUserState.appUserDetails;
-    return appUserDetails?.permissions?.includes('Users.EditUserDetail');
+    return appUserDetails?.permissions?.includes(permission);
 }
 
 

@@ -29,6 +29,7 @@ import {createBlockAccess} from '@pages/blacklists/services/blacklists.service';
 import {BlockAccessModel, BlockAccessType} from '@pages/blacklists/models/blacklist.model';
 import utils from '@shared/utils/utils';
 import {SnackbarPosition} from '@components/snackbar/snackbar-position.enum';
+import {Phone} from '@pages/tickets/models/phone.model';
 
 export interface TicketDetailHeaderLine3Props {
     ticket: Ticket,
@@ -253,19 +254,19 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
         if (patient) {
             return [patient.emailAddress];
         } else {
-            const emails = [];
+            const emails: string[] = [];
             if (contact?.primaryEmailAddress) {
-                emails.push(contact?.primaryEmailAddress)
+                emails.push(contact.primaryEmailAddress)
             }
             if (contact?.secondaryEmailAddress) {
-                emails.push(contact?.secondaryEmailAddress)
+                emails.push(contact.secondaryEmailAddress)
             }
             return emails;
         }
     }
 
     const getPhones = () => {
-        const phones = [];
+        const phones : Phone[] = [];
         if (patient?.mobilePhone) {
             phones.push(
                 {

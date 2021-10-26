@@ -56,7 +56,7 @@ const CallsLogList = () => {
     const [rows, setRows] = useState<TicketLogModel[]>([]);
     const [callsLogFilter, setCallsLogFilter] = useState<TicketLogRequestModel>({
         ...DEFAULT_PAGING,
-        assignedTo: !isDefaultTeam ? appUser.id : '',
+        assignedTo: !isDefaultTeam ? appUser?.id : '',
         sorts: ['createdOn Desc']
     });
 
@@ -340,7 +340,7 @@ const CallsLogList = () => {
         const context = item.value as CallLogQueryType;
         setCurrentQueryType(context);
         if (context === CallLogQueryType.MyCallLog) {
-            setCallsLogFilter({...callsLogFilter, assignedTo: appUser.id});
+            setCallsLogFilter({...callsLogFilter, assignedTo: appUser?.id});
         } else {
             setCallsLogFilter({...callsLogFilter, assignedTo: ''});
         }

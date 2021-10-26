@@ -21,7 +21,7 @@ export const downloadRecordedConversation = async (ticket: Ticket, data?: ChatTr
             let humanReadableContent = '';
             for(let i = 0; i < data.Transcript.length; i++)
             {
-                let nextTranscript = undefined;
+                let nextTranscript : any = undefined;
                 if(i < data.Transcript.length -1){
                     nextTranscript = data.Transcript[i+1];
                 }

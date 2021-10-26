@@ -182,7 +182,7 @@ export interface updateTicketProps {
 
 export const updateTicket = async ({id, ticketData}: updateTicketProps) => {
     const url = `${ticketsBaseUrl}/${id}`;
-    let patchData = [];
+    let patchData: unknown[] = [];
     for (let [key, value] of Object.entries(ticketData)) {
         patchData.push({
             op: 'replace',
