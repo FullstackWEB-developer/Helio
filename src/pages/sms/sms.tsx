@@ -87,11 +87,6 @@ const Sms = () => {
         onSuccess: (response) => {
             if (response.results.length > 0) {
                 const summary = {...response.results[0]};
-                if (summary.assignedTo === id) {
-                    changeQueryType(SmsQueryType.MySms);
-                } else {
-                    changeQueryType(SmsQueryType.MyTeam);
-                }
                 setSelectedTicketSummary(summary);
                 removeUnreadCount(summary);
             }
@@ -103,9 +98,10 @@ const Sms = () => {
             setSmsQueryType(!isDefaultTeamView ? SmsQueryType.MySms : SmsQueryType.MyTeam);
             return;
         }
-
-        ticketSummaryRefetch();
-    }, [ticketSummaryRefetch, ticketId]);
+        if(!isNewSmsChat) {
+            ticketSummaryRefetch();
+        }
+    }, [ticketSummaryRefetch, ticketId, isNewSmsChat]);
 
     useEffect(() => {
         if (!!state?.contact) {
@@ -361,6 +357,9 @@ const Sms = () => {
     }
     const getSmsChatSection = () => {
         if (messageQueryIsFetching && !isMessageQueryFetchingNextPage) {
+            return (<Spinner fullScreen />);
+        }
+        if (isTicketSummaryFetching) {
             return (<Spinner fullScreen />);
         }
         if (selectedTicketSummary) {
