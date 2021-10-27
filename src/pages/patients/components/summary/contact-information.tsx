@@ -33,8 +33,8 @@ const ContactInformation = () => {
     ];
 
     const contactSecondRows = [
-        {label: t('patient.summary.home_phone'), values: [utils.formatPhone(patient.homePhone)]},
-        {label: t('patient.summary.mobile_phone'), values: [utils.formatPhone(patient.mobilePhone)]},
+        {label: t('patient.summary.home_phone'), values: [utils.formatPhone(patient.homePhone)], callable: !!patient.homePhone},
+        {label: t('patient.summary.mobile_phone'), values: [utils.formatPhone(patient.mobilePhone)], callable: !!patient.mobilePhone},
         {
             label: t('patient.summary.contact_preference'),
             values: [patient.contactPreference ? t(`patient.contact_preference.${patient.contactPreference.toLowerCase()}`) : t('common.not_available')]

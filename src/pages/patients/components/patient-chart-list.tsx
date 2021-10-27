@@ -1,6 +1,8 @@
 import React from 'react';
 import withErrorLogging from '../../../shared/HOC/with-error-logging';
 import {useTranslation} from 'react-i18next';
+import utils from '@shared/utils/utils';
+import SvgIcon, {Icon} from '@components/svg-icon';
 
 interface PatientChartListProps {
     headings?: string[],
@@ -13,7 +15,8 @@ export interface Row {
     label: string,
     values: string[],
     comment?: any,
-    isStatus?: boolean
+    isStatus?: boolean,
+    callable?: boolean
 }
 
 const PatientChartList = ({headings, rows, dividerLine, isLongValue}: PatientChartListProps) => {
@@ -72,9 +75,12 @@ const PatientChartList = ({headings, rows, dividerLine, isLongValue}: PatientCha
 
                             </span> :
                             row.values.map((value, i) => {
-                                return <div key={i}
-                                            className={`col-span-${spanSize} body2 pl-4`}>
-                                    {value || t('common.not_available')}
+                                return <div key={i} onClick={() => row.callable ? utils.initiateACall(value) : undefined}
+                                            className={`col-span-${spanSize} body2 pl-4 ${row.callable ? 'text-success cursor-pointer' : ''}`}>
+                                    <div className='flex flex row px-2'>
+                                        {row.callable && <SvgIcon type={Icon.Phone} fillClass='success-icon' />}
+                                        {value || t('common.not_available')}
+                                    </div>
                                 </div>
                             })}
                         {row.comment}
