@@ -83,7 +83,7 @@ const NotificationTemplateSelect = ({channel, category, onSelect, asSelect, sele
                     object: a,
                     label: `${a.category} - ${a.logicKey} - ${a.id}`,
                     content: <div className='flex flex-row w-96 justify-between pl-4 pr-3'>
-                        <div className='body2 template-item flex items-center'>{a.category} - {a.logicKey}</div>
+                        <div className='body2 template-item flex items-center'>{a.displayText}</div>
                         <div className='body3-medium template-item flex items-center'>{a.id}</div>
                     </div>
                 } as DropdownItemModel

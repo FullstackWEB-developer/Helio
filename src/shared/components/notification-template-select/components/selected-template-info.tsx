@@ -11,7 +11,7 @@ const SelectedTemplateInfo = ({selectedMessageTemplate} : SelectedTemplateInfoPr
         return <div className='flex flex-row'>
             <div className='body2-medium whitespace-pre'>{t('ticket_detail.template')}</div>
             <div
-                className='body2'>{` ${selectedMessageTemplate.category} - ${selectedMessageTemplate.logicKey}`}</div>
+                className='body2'>{` ${selectedMessageTemplate.displayText}`}</div>
         </div>
     }
     return <></>
