@@ -257,6 +257,7 @@ const Sms = () => {
         setSmsQueryType(context);
     }
 
+
     const onMessageListScroll = ({currentTarget}: React.UIEvent<HTMLDivElement, UIEvent>) => {
         if (currentTarget.scrollHeight - currentTarget.scrollTop === currentTarget.clientHeight) {
             fetchMore();
