@@ -1493,7 +1493,8 @@
       "ok_button_text": "Unblock Contact"
     },
     "unblock_success": "Contact unblocked successfully.",
-    "unblock_fail": "Contact unblocking failed."
+    "unblock_fail": "Contact unblocking failed.",
+    "already_blocked": "This record was already blocked"
   },
   "security": {
     "not_authorized": "It seems that you are not authorized to perform this operation,\nplease try again by re-logging into the system."

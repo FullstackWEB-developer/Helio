@@ -2,6 +2,14 @@
   background-color: var(--light-divider-7);
 }
 
+.incoming_sms a {
+  color:var(--color-white-06);
+}
+
+.outgoing_sms a {
+    color:var(--color-white-06);
+}
+
 .outgoing_sms {
   background-color: var(--color-primary-800);
 }

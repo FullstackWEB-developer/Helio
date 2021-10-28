@@ -98,7 +98,7 @@ const Sms = () => {
             setSmsQueryType(!isDefaultTeamView ? SmsQueryType.MySms : SmsQueryType.MyTeam);
             return;
         }
-        if(!isNewSmsChat) {
+        if(!isNewSmsChat && !!ticketId) {
             ticketSummaryRefetch();
         }
     }, [ticketSummaryRefetch, ticketId, isNewSmsChat]);
@@ -344,6 +344,7 @@ const Sms = () => {
         };
 
         setMessages([]);
+
         setSummaryMessages([summary, ...summaryMessages]);
         setIsNewSmsChat(false);
         setSelectedTicketSummary(summary);

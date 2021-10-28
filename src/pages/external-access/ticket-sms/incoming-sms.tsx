@@ -2,6 +2,8 @@ import {TicketMessage, TicketMessagesDirection} from '@shared/models';
 import {useTranslation} from 'react-i18next';
 import dayjs from 'dayjs';
 import classNames from 'classnames';
+import React from 'react';
+import Linkify from 'react-linkify';
 
 const IncomingSms = ({message} : {message: TicketMessage}) => {
     const {t} = useTranslation();
@@ -17,7 +19,13 @@ const IncomingSms = ({message} : {message: TicketMessage}) => {
                 <div className='body3-small'>{dayjs.utc(message.createdOn).local().format('HH:mm A')}</div>
             </div>
             <div className='incoming_sms pl-4 pr-4 pt-3 pb-4 body2 rounded-b-md rounded-tl-md'>
-                {message.body}
+                <Linkify
+                    componentDecorator={(decoratedHref, decoratedText, key) => (
+                        <a target="blank" href={decoratedHref} key={key}>
+                            {decoratedText}
+                        </a>
+                    )}
+                >{message.body}</Linkify>
             </div>
         </div>
     </div>

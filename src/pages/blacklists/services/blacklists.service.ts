@@ -9,7 +9,7 @@ export const getBlacklist = async (request: BlacklistRequest): Promise<PagedList
     return data;
 }
 
-export const createBlockAccess = async (model: BlockAccessModel) => {
+export const createBlockAccess = async (model: BlockAccessModel) : Promise<BlacklistModel> => {
     const {data} = await Api.post(blackListUrl, model);
     return data;
 }

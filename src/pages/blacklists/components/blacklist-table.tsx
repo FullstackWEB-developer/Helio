@@ -198,9 +198,20 @@ const BlacklistsTable = ({type, ...props}: BlacklistsTableProps) => {
     });
 
     const createBlockAccessMutation = useMutation(createBlockAccess, {
-        onSuccess: () => {
+        onSuccess: (data) => {
             setAddNewModelDisplayed(false);
-            refetch();
+            if (tableModel.rows && tableModel.rows.length > 0) {
+                const hasBlockedBefore = tableModel.rows.find((a: any) => a.id === data.id);
+                if (hasBlockedBefore) {
+                    dispatch(addSnackbarMessage({
+                        type: SnackbarType.Info,
+                        message: 'blacklist.already_blocked',
+                        position: SnackbarPosition.TopCenter
+                    }));
+                } else {
+                    refetch();
+                }
+            }
         }
     })
 
@@ -264,7 +275,7 @@ const BlacklistsTable = ({type, ...props}: BlacklistsTableProps) => {
                                     type='tel'
                                     label='blacklist.block_access_type.phone'
                                     containerClassName='w-72'
-                                    required
+                                    required={true}
                                 />
                             </Fragment>
                         }

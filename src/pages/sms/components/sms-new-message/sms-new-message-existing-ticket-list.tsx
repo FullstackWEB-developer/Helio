@@ -8,7 +8,6 @@ import {ticketListRelativeTimeFormat} from '@pages/sms/utils';
 import {useTranslation} from 'react-i18next';
 import './sms-new-message-existing-ticket-list.scss';
 import SvgIcon, {Icon} from '@components/svg-icon';
-import {useHistory} from 'react-router';
 import {TicketsPath} from '@app/paths';
 import {Link} from 'react-router-dom';
 
@@ -20,7 +19,6 @@ interface SmsNewMessageExistingTicketListProps {
 
 const SmsNewMessageExistingTicketList = ({items, ...props}: SmsNewMessageExistingTicketListProps) => {
     const dispatch = useDispatch();
-    const history = useHistory()
     const {t} = useTranslation();
     const ticketTypes = useSelector((state => selectEnumValues(state, 'TicketType')));
     const ticketReasons = useSelector((state) => selectLookupValues(state, 'TicketReason'));
@@ -75,7 +73,7 @@ const SmsNewMessageExistingTicketList = ({items, ...props}: SmsNewMessageExistin
                     <span className='body2'>{getTicketReasons(ticket.reason)}</span>
                 </div>
                 <div className='flex items-center justify-end w-2/12 mr-8'>
-                    <Link to={`${TicketsPath}/${ticket.ticketNumber}`}>
+                    <Link to={`${TicketsPath}/${ticket.ticketNumber}`} target="_blank" rel="noopener noreferrer">
                         <SvgIcon
                             type={Icon.View}
                             fillClass='rgba-05-fill'

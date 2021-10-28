@@ -72,7 +72,7 @@ const NotificationTemplateSelect = ({channel, category, onSelect, asSelect, sele
                 return {
                     value: a.id,
                     object: a,
-                    label: `${a.category} - ${a.logicKey}`
+                    label: `${a.displayText}`
                 } as Option
             })
             setOptions(opts);
@@ -81,7 +81,7 @@ const NotificationTemplateSelect = ({channel, category, onSelect, asSelect, sele
                 return {
                     value: a.id,
                     object: a,
-                    label: `${a.category} - ${a.logicKey} - ${a.id}`,
+                    label: `${a.displayText} - ${a.id}`,
                     content: <div className='flex flex-row w-96 justify-between pl-4 pr-3'>
                         <div className='body2 template-item flex items-center'>{a.displayText}</div>
                         <div className='body3-medium template-item flex items-center'>{a.id}</div>
