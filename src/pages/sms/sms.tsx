@@ -21,7 +21,10 @@ import {
 import {getChats, getMessage, getMessages, markRead, sendMessage} from './services/ticket-messages.service';
 import {DATE_INPUT_LONG_FORMAT, DEBOUNCE_SEARCH_DELAY_MS} from '@constants/form-constants';
 import useDebounce from '@shared/hooks/useDebounce';
-import {authenticationSelector, selectUnreadSMSList} from '@shared/store/app-user/appuser.selectors';
+import {
+    selectAppUserDetails,
+    selectUnreadSMSList
+} from '@shared/store/app-user/appuser.selectors';
 import {SmsFilterParamModel} from './components/sms-filter/sms-filter.model';
 import utils from '@shared/utils/utils';
 import {setAssignee} from '@pages/tickets/services/tickets.service';
@@ -44,7 +47,7 @@ interface SmsLocationState {
 const Sms = () => {
     const {t} = useTranslation();
     const isDefaultTeamView = useCheckPermission('SMS.DefaultToTeamView');
-    const {id, name: userFullName} = useSelector(authenticationSelector);
+    const {id, fullName} = useSelector(selectAppUserDetails);
     const [isFilterVisible, setFilterVisible] = useState(false);
     const [queryParams, setQueryParams] = useState<TicketMessageSummaryRequest>({
         channel: ChannelTypes.SMS,
@@ -340,7 +343,7 @@ const Sms = () => {
             contactId: ticket.contactId,
             createdForName: ticket.createdForName,
             ticketType: Number(ticket.type),
-            messageCreatedByName: userFullName,
+            messageCreatedByName: fullName,
             createdForMobileNumber: ''
         };
 

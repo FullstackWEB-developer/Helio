@@ -102,7 +102,10 @@ async function SetAuthenticationInfo(info: AuthenticationResult | null, dispatch
 
         const userDetails = await getUserDetail();
         if (userDetails) {
-            dispatch(setAppUserDetails(userDetails));
+            dispatch(setAppUserDetails({
+                ...userDetails,
+                fullName: `${userDetails.firstName} ${userDetails.lastName}`
+            }));
         }
 
         history.push('/dashboard');

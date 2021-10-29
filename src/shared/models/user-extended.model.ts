@@ -40,6 +40,7 @@ export interface UserDetail {
     latestConnectStatus?: string;
     invitationStatus?: UserInvitationStatus;
     permissions?: string[];
+    fullName: string;
 }
 
 export interface CallForwardingDetail {

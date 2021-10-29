@@ -215,7 +215,7 @@ export const getUserBaseData = async (userIds: string[], pagedRequest: PagedRequ
     return response.data;
 };
 
-export const getUserDetail = async () => {
+export const getUserDetail = async () : Promise<UserDetail> => {
     const {data} = await Api.get(`${userBaseUrl}/me`);
     return data;
 }

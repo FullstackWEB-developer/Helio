@@ -1,9 +1,13 @@
 import {useTranslation} from 'react-i18next';
 import {useDispatch, useSelector} from 'react-redux';
 import {updateUserStatus} from '../../store/app-user/appuser.slice';
-import {AuthenticationInfo, UserStatus} from '../../store/app-user/app-user.models';
+import {UserStatus} from '../../store/app-user/app-user.models';
 import {DropdownItemModel, DropdownModel} from '@components/dropdown/dropdown.models';
-import {authenticationSelector, selectAgentStates, selectUserStatus} from '../../store/app-user/appuser.selectors';
+import {
+    selectAgentStates,
+    selectAppUserDetails,
+    selectUserStatus
+} from '../../store/app-user/appuser.selectors';
 import Logger from '../../services/logger';
 import Dropdown from '../../components/dropdown/dropdown';
 import StatusDot from '@components/status-dot/status-dot';
@@ -15,7 +19,6 @@ import axios from "axios";
 import {toggleUserProfileMenu} from '@shared/layout/store/layout.slice';
 import {useHistory} from 'react-router-dom';
 import {UserDetailsPath} from '@app/paths';
-import {selectUserByEmail} from '@shared/store/lookups/lookups.selectors';
 import {useEffect} from 'react';
 import {getUserList} from '@shared/services/lookups.service';
 import utils from '@shared/utils/utils';
@@ -29,12 +32,11 @@ interface UserStatuses {
 const ProfileDropdown = () => {
     const {t} = useTranslation();
     const dispatch = useDispatch();
-    const auth: AuthenticationInfo = useSelector(authenticationSelector);
     const agentStates = useSelector(selectAgentStates);
     const currentUserStatus = useSelector(selectUserStatus);
     const logger = Logger.getInstance();
     const history = useHistory();
-    const currentUserDetails = useSelector((state) => selectUserByEmail(state, auth.username));
+    const currentUserDetails = useSelector(selectAppUserDetails);
 
     useEffect(() => {
         dispatch(getUserList());
