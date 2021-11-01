@@ -33,8 +33,8 @@ const ContactInformation = () => {
     ];
 
     const contactSecondRows = [
-        {label: t('patient.summary.home_phone'), values: [utils.formatPhone(patient.homePhone)], callable: !!patient.homePhone},
-        {label: t('patient.summary.mobile_phone'), values: [utils.formatPhone(patient.mobilePhone)], callable: !!patient.mobilePhone},
+        {label: t('patient.summary.home_phone'), values: [utils.formatPhone(patient.homePhone)], canCall: !!patient.homePhone},
+        {label: t('patient.summary.mobile_phone'), values: [utils.formatPhone(patient.mobilePhone)], canCall: !!patient.mobilePhone, canSendSms: !!patient.mobilePhone},
         {
             label: t('patient.summary.contact_preference'),
             values: [patient.contactPreference ? t(`patient.contact_preference.${patient.contactPreference.toLowerCase()}`) : t('common.not_available')]
@@ -53,7 +53,7 @@ const ContactInformation = () => {
             {editMode ? <ContactInformationUpdate
                 onUpdateComplete={() => setEditMode(false)}/> : <div className='border-t grid grid-cols-2 gap-12'>
                 <PatientChartList headings={[]} rows={contactRows}/>
-                <PatientChartList headings={[]} rows={contactSecondRows}/>
+                <PatientChartList headings={[]} rows={contactSecondRows} patient={patient}/>
             </div>
             }
         </div>

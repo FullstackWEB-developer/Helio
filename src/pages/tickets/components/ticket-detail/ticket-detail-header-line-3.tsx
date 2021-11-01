@@ -400,7 +400,7 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
     }
 
     const isBlockUserDisabled = () => {
-        return !ticket.ipAddress && !contact && !patient;
+        return !ticket.ipAddress && !contact && !patient && !ticket.originationNumber;
     }
 
     return <>

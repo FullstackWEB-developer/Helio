@@ -19,10 +19,12 @@ import SmsHeader from '../sms-header/sms-header';
 import {TicketType} from '@pages/tickets/models/ticket-type.enum';
 import {Patient} from '@pages/patients/models/patient';
 import {ContactType} from '@pages/contacts/models/ContactType';
+import {ExtendedPatient} from '@pages/patients/models/extended-patient';
 
 interface SmsNewMessageProps {
     onTicketSelect?: (ticket: TicketBase) => void;
-    selectedContact?: ContactExtended
+    selectedContact?: ContactExtended,
+    selectedPatient?: ExtendedPatient,
 }
 const SmsNewMessage = ({...props}: SmsNewMessageProps) => {
     const {t} = useTranslation();
@@ -126,6 +128,12 @@ const SmsNewMessage = ({...props}: SmsNewMessageProps) => {
             onSearchBoxContactResultSelect(props.selectedContact);
         }
     }, [props.selectedContact]);
+
+    useEffect(() => {
+        if (!!props.selectedPatient) {
+            onSearchBoxResultSelect(props.selectedPatient);
+        }
+    }, [props.selectedPatient]);
 
     const isLoading = patientsIsLoading ||
         patientsIsFetching ||

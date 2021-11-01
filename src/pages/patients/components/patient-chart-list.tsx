@@ -3,12 +3,17 @@ import withErrorLogging from '../../../shared/HOC/with-error-logging';
 import {useTranslation} from 'react-i18next';
 import utils from '@shared/utils/utils';
 import SvgIcon, {Icon} from '@components/svg-icon';
+import { Link } from 'react-router-dom';
+import {SmsPath} from '@app/paths';
+import {ExtendedPatient} from '@pages/patients/models/extended-patient';
+import classNames from 'classnames';
 
 interface PatientChartListProps {
     headings?: string[],
     rows: Row[],
     dividerLine?: boolean,
-    isLongValue?: boolean
+    isLongValue?: boolean,
+    patient?: ExtendedPatient
 }
 
 export interface Row {
@@ -16,10 +21,11 @@ export interface Row {
     values: string[],
     comment?: any,
     isStatus?: boolean,
-    callable?: boolean
+    canCall?: boolean,
+    canSendSms?: boolean
 }
 
-const PatientChartList = ({headings, rows, dividerLine, isLongValue}: PatientChartListProps) => {
+const PatientChartList = ({headings, rows, dividerLine, isLongValue, patient}: PatientChartListProps) => {
     const { t } = useTranslation();
 
     let colSize = 7;
@@ -48,6 +54,12 @@ const PatientChartList = ({headings, rows, dividerLine, isLongValue}: PatientCha
         return `${row.values[0] === t('patient.insurance.eligible') ? 'text-success' : 'text-danger'} pl-4`;
     }
 
+    const rowClassName = (row: Row) => classNames(`col-span-${spanSize} body2 pl-4`, {
+        'text-success cursor-pointer': row.canCall,
+        'col-span-2' : row.canSendSms,
+        'hover:underline' : row.canCall || row.canSendSms
+    })
+
     return <div>
         {headings && <div className={`grid grid-cols-${headingColSize} py-2`}>
             <div className='h8'>{headings[0]}</div>
@@ -75,11 +87,28 @@ const PatientChartList = ({headings, rows, dividerLine, isLongValue}: PatientCha
 
                             </span> :
                             row.values.map((value, i) => {
-                                return <div key={i} onClick={() => row.callable ? utils.initiateACall(value) : undefined}
-                                            className={`col-span-${spanSize} body2 pl-4 ${row.callable ? 'text-success cursor-pointer' : ''}`}>
+                                return <div key={i} className={rowClassName(row)}>
                                     <div className='flex flex row px-2'>
-                                        {row.callable && <SvgIcon type={Icon.Phone} fillClass='success-icon' />}
-                                        {value || t('common.not_available')}
+                                        {row.canSendSms && <Link
+                                            to={{
+                                                pathname:SmsPath,
+                                                state: {
+                                                    patient
+                                                }
+                                            }}>
+                                            <SvgIcon type={Icon.Sms}
+                                                     fillClass='success-icon'
+                                                     strokeClass='contact-stroke-color'
+                                            />
+                                        </Link>}
+                                        <div className='flex flex row px-2'  onClick={() => row.canCall ? utils.initiateACall(value) : undefined}>
+                                            <div>
+                                                {row.canCall && <SvgIcon type={Icon.Phone} fillClass='success-icon' />}
+                                            </div>
+                                            <div>
+                                                {value || t('common.not_available')}
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             })}

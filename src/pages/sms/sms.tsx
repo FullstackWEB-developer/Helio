@@ -40,9 +40,11 @@ import {removeUnreadSMSMessageForList} from '@shared/store/app-user/appuser.slic
 import {useHistory, useLocation, useParams} from 'react-router';
 import {SmsPath} from '@app/paths';
 import useCheckPermission from '@shared/hooks/useCheckPermission';
+import {ExtendedPatient} from '@pages/patients/models/extended-patient';
 
 interface SmsLocationState {
-    contact?: ContactExtended
+    contact?: ContactExtended,
+    patient?: ExtendedPatient
 }
 const Sms = () => {
     const {t} = useTranslation();
@@ -75,7 +77,7 @@ const Sms = () => {
         {label: 'sms.query_type.team_sms', value: SmsQueryType.MyTeam}
     ];
 
-    const {fetchNextPage, hasNextPage, isFetchingNextPage, isFetching, refetch} = useInfiniteQuery([QueryTicketMessageSummaryInfinite],
+    const {fetchNextPage, hasNextPage, isFetchingNextPage, isFetching, refetch} = useInfiniteQuery([QueryTicketMessageSummaryInfinite, queryParams],
         ({pageParam = 1}) => getChats({...queryParams, page: pageParam}), {
         enabled: !!smsQueryType,
         getNextPageParam: (lastPage) => getNextPage(lastPage),
@@ -84,7 +86,7 @@ const Sms = () => {
         }
     });
 
-    const {refetch: ticketSummaryRefetch, isFetching: isTicketSummaryFetching} = useQuery([QueryTicketMessageSummaryByTicketId],
+    const {refetch: ticketSummaryRefetch, isFetching: isTicketSummaryFetching} = useQuery([QueryTicketMessageSummaryByTicketId, ticketId],
         () => getChats({ticketId: ticketId, channel: ChannelTypes.SMS}), {
         enabled: false,
         onSuccess: (response) => {
@@ -107,7 +109,7 @@ const Sms = () => {
     }, [ticketSummaryRefetch, ticketId, isNewSmsChat]);
 
     useEffect(() => {
-        if (!!state?.contact) {
+        if (!!state?.contact || !!state?.patient) {
             setIsNewSmsChat(true);
         }
     }, [state]);
@@ -316,7 +318,6 @@ const Sms = () => {
     }
 
     const onSearchChanged = (value: string) => {
-        setQueryParams({...queryParams, searchTerm: value});
         setSearchTerm(value);
     }
     const onFilterClick = (value: SmsFilterParamModel) => {
@@ -462,6 +463,7 @@ const Sms = () => {
                     <SmsNewMessage
                         onTicketSelect={onOpenNewChat}
                         selectedContact={state?.contact}
+                        selectedPatient={state?.patient}
                     />
                 }
                 {!isNewSmsChat && getSmsChatSection()}
