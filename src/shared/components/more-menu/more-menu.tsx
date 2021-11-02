@@ -36,16 +36,16 @@ const MoreMenu = ({value, items, menuClassName, iconClassName, iconFillClassname
         }
     };
 
-    const calculateRightPosition = () => {
-        let right = 0;
-        if (elementRef && elementRef?.current) {
-            const rightmostPoint = elementRef.current?.getBoundingClientRect()?.right;
-            const iconRightPoint = iconContainerRef.current?.getBoundingClientRect()?.right;
-            if (rightmostPoint && iconRightPoint) {
-                right = rightmostPoint - iconRightPoint + elementRef.current.offsetWidth;
+    const calculateLeftPosition = () => {
+        if (!!iconContainerRef?.current && !!dropdownRef?.current) {
+            const rectIcon = iconContainerRef.current.getBoundingClientRect();
+            if (!!rectIcon) {
+                const iconOffSetWidth = (iconContainerRef.current.offsetWidth || 0) / 2;
+                return rectIcon.left + window.scrollY - dropdownRef.current.offsetWidth  + iconOffSetWidth;
             }
+          
         }
-        return right;
+        return 0;
     }
 
     const hideDropdown = useCallback(() => {
@@ -71,7 +71,7 @@ const MoreMenu = ({value, items, menuClassName, iconClassName, iconFillClassname
         </div>
         <div
             className={classnames('absolute z-10', {'hidden': !isVisible}, menuClassName)}
-            style={{top: top, right: calculateRightPosition()}}
+            style={{top: top, left: calculateLeftPosition()}}
             ref={dropdownRef}
         >
             <Dropdown model={dropdownModel} />

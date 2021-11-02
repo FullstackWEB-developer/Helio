@@ -18,7 +18,7 @@ import {
     getUserMobilePhone, updateCallForwarding,
     updateUser
 } from "@shared/services/user.service";
-import {useParams} from 'react-router';
+import {useHistory, useParams} from 'react-router';
 import {useMutation, useQuery} from "react-query";
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
@@ -33,7 +33,7 @@ import {
 } from "@shared/models";
 import Spinner from '@components/spinner/Spinner';
 import {DATE_LONG_FORMAT} from "@constants/form-constants";
-import {selectLiveAgentStatuses} from "@shared/store/app-user/appuser.selectors";
+import {authenticationSelector, selectLiveAgentStatuses} from "@shared/store/app-user/appuser.selectors";
 import {addSnackbarMessage} from "@shared/store/snackbar/snackbar.slice";
 import {SnackbarType} from "@components/snackbar/snackbar-type.enum";
 import {useTranslation} from "react-i18next";
@@ -41,6 +41,7 @@ import ProviderMappingToolTip from "../components/provider-tool-tip";
 import './user-details.scss';
 import {CheckboxCheckEvent} from '@components/checkbox/checkbox';
 import useCheckPermission from "@shared/hooks/useCheckPermission";
+import { NotAuthorizedPath } from "@app/paths";
 
 dayjs.extend(utc);
 
@@ -70,6 +71,8 @@ const UserDetails = () => {
     const canEditUser = useCheckPermission('Users.EditUserDetail');
     const [userProvider, setUserProvider] = useState('');
     const [isSomeUserRoleChecked, setIsSomeUserRoleChecked] = useState(false);
+    const user = useSelector(authenticationSelector);
+    const history = useHistory();
 
     const rolesSorted = useMemo(() => {
         if (!rolesList || rolesList.length < 1) {
@@ -108,10 +111,15 @@ const UserDetails = () => {
         {
             enabled: false,
             onSuccess: (data) => {
-
-                setValue('forward_to_value_phone', data.mobilePhoneNumber);
+                setValue('forward_to_value_phone', data.mobilePhoneNumber, { shouldDirty: true, shouldValidate: true});
             }
         });
+
+    useEffect(() => {
+        if (!!user.id && !canEditUser && userId !== user.id) {
+            history.replace(NotAuthorizedPath);
+        }
+    }, [canEditUser, history, user, userId]);
 
     useEffect(() => {
         dispatch(getProviders());
@@ -493,7 +501,7 @@ const UserDetails = () => {
                         <div className='flex-1 pr-4'>
                             {!!userDetailExtended?.contactQueues && <>
                                 <div className='flex flex-row items-center pr-7'>
-                                    <label className='subtitle pr-4'>{t('users.active_queues')}</label>
+                                    <label className='pr-4 subtitle'>{t('users.active_queues')}</label>
                                     {
                                         canEditUser && <a rel='noreferrer' target='_blank' className="body2 link"
                                             href={userDetailExtended?.contactProfileLink}>{t('common.change')}</a>
@@ -543,7 +551,6 @@ const UserDetails = () => {
                                         name='forward_to_value_agent'
                                         disabled={!isForwardEnabled}
                                         label='users.call_forwarding_value_agent'
-                                        defaultValue=''
                                         options={connectUserOptions}
                                         required={isForwardEnabled}
                                     />

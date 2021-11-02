@@ -34,6 +34,7 @@ export const Dashboard = () => {
     const [selectedEndDate, setSelectedEndDate] = useState<Date>(new Date());
     const [lastUpdateTime, setLastUpdateTime] = useState<Date>(new Date());
     const isWallboard: boolean = selectedDashboardType === DashboardTypes.wallboard;
+
     customHooks.useOutsideClick([typeDropdownRef], () => {
         setDisplayTypeDropdown(false);
     });
@@ -41,6 +42,10 @@ export const Dashboard = () => {
     customHooks.useOutsideClick([timeframeDropdownRef], () => {
         setDisplayTimeFrameDropdown(false);
     });
+    
+    useEffect(() => {
+        setSelectedDashboardType(!isDefaultTeam ? DashboardTypes.my : DashboardTypes.team)
+    }, [isDefaultTeam]);
 
     useEffect(() => {
         let params = new URLSearchParams(history.location.search);

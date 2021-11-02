@@ -7,7 +7,7 @@ import {
     selectTicketFilter,
     selectTicketQueryType
 } from './store/tickets.selectors';
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {getList, getLookupValues} from './services/tickets.service';
 import withErrorLogging from '../../shared/HOC/with-error-logging';
 import {Ticket} from './models/ticket';
@@ -22,6 +22,8 @@ import {TicketQuery} from '@pages/tickets/models/ticket-query';
 import {useHistory} from 'react-router-dom';
 import queryString from 'query-string';
 import {selectLastNavigationDate} from '@shared/layout/store/layout.selectors';
+import useCheckPermission from '@shared/hooks/useCheckPermission';
+import { authenticationSelector } from '@shared/store/app-user/appuser.selectors';
 
 const TicketList = () => {
     const dispatch = useDispatch();
@@ -34,10 +36,12 @@ const TicketList = () => {
     const history = useHistory();
     const [lastAppliedFilter, setLastAppliedFilter] = useState<string>(JSON.stringify(currentFilter));
     const lastNavigationDate = useSelector(selectLastNavigationDate);
+    const isDefaultTeam = useCheckPermission('Tickets.DefaultToTeamView');
+    const { id } = useSelector(authenticationSelector);
 
     useEffect(() => {
         if (lastAppliedFilter !== JSON.stringify(currentFilter)) {
-            const {totalCount, totalPages, pageSize, ...filter} = currentFilter;
+            const { totalCount, totalPages, pageSize, ...filter } = currentFilter;
             history.replace({
                 pathname: history.location.pathname,
                 search: queryString.stringify(filter)
@@ -46,19 +50,26 @@ const TicketList = () => {
         }
     }, [currentFilter, history, history.location.search]);
 
+    const getAssignedTo = useCallback(() => {
+        if (!ticketListQueryType && !isDefaultTeam) {
+            return !currentFilter.assignedTo && !!id ? [id] : currentFilter.assignedTo;
+        } else {
+            return ticketListQueryType === TicketListQueryType.MyTicket ? currentFilter.assignedTo ?? [id] : [];
+        }
+    }, [id]);
 
     useEffect(() => {
-        const query: any = queryString.parse(history.location.search, {parseNumbers: true});
-        const newQuery: TicketQuery = {...query};
-        if (newQuery) {
-            dispatch(getList(newQuery));
+        const query: any = queryString.parse(history.location.search, { parseNumbers: true });
+        const newQuery: TicketQuery = { ...query };
+        if (!!newQuery && !!history.location.search) {
+            dispatch(getList({ ...newQuery, assignedTo: newQuery.assignedTo ?? getAssignedTo() }));
         } else {
             dispatch(getList({
                 ...paging,
-                assignedTo: ticketListQueryType === TicketListQueryType.MyTicket ? currentFilter.assignedTo : []
+                assignedTo: getAssignedTo()
             }));
         }
-    }, [lastNavigationDate]);
+    }, [lastNavigationDate, getAssignedTo]);
 
     useEffect(() => {
         dispatch(getUserList());
@@ -70,7 +81,7 @@ const TicketList = () => {
     return (
         <div className="flex flex-auto h-full">
             <TicketFilter isOpen={isFilterOpen} />
-            <div className='flex flex-col h-full w-full overflow-auto'>
+            <div className='flex flex-col w-full h-full overflow-auto'>
                 <TicketsHeader />
                 <TicketsSearch />
                 {ticketsLoading ?

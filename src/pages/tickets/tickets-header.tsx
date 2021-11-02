@@ -30,12 +30,12 @@ const TicketsHeader = () => {
     const isDefaultTeam = useCheckPermission('Tickets.DefaultToTeamView');
     const dispatch = useDispatch();
     const [currentPage, setCurrentPage] = useState(paging.page.toString());
-    const [currentListQueryType, setCurrentListQueryType] = useState<string>(!isDefaultTeam ? ticketListQueryType.toString() : TicketListQueryType.AllTicket.toString());
+    const [currentListQueryType, setCurrentListQueryType] = useState<string>(!isDefaultTeam ? TicketListQueryType.MyTicket.toString(): TicketListQueryType.AllTicket.toString());
     const [isVisible, setIsVisible, elementRef] = useComponentVisibility<HTMLDivElement>(false);
-    const {username} = useSelector(authenticationSelector);
+    const {id} = useSelector(authenticationSelector);
 
     const ticketListTypeDropdownModel: DropdownModel = {
-        defaultValue: currentListQueryType,
+        defaultValue: ticketListQueryType ?? currentListQueryType,
         items: [
             {label: t('tickets.my_tickets'), value: TicketListQueryType.MyTicket, className: 'text-xl py-1.5'},
             {label: t('tickets.all_tickets'), value: TicketListQueryType.AllTicket, className: 'text-xl py-1.5'}
@@ -46,7 +46,7 @@ const TicketsHeader = () => {
             if (value === TicketListQueryType.AllTicket) {
                 dispatch(getList({...ticketFilter, page: 1, assignedTo: []}));
             } else {
-                dispatch(getList({...ticketFilter, page: 1, assignedTo: [username]}));
+                dispatch(getList({ ...ticketFilter, page: 1, assignedTo: [id]}));
             }
 
             dispatch(setTicketListQueryType(value as TicketListQueryType));
@@ -65,6 +65,9 @@ const TicketsHeader = () => {
     }, [paging.page]);
 
     useEffect(() => {
+        if (!ticketListQueryType) {
+            return;
+        }
         setCurrentListQueryType(ticketListQueryType.toString());
     }, [ticketListQueryType]);
 

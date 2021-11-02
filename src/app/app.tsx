@@ -19,7 +19,8 @@ import {
     ChatsLogPath,
     AppointmentFoundPath,
     AppointmentReschedulePath,
-    AppointmentSchedulePath
+    AppointmentSchedulePath,
+    NotAuthorizedPath
 } from './paths';
 import RealTimeUserStatusUpdate from '@shared/websockets/real-time-user-status-update';
 import ExternalAccessLayout from '@pages/external-access/layout/external-access-layout';
@@ -72,6 +73,7 @@ const ExternalUserMobileNumber = React.lazy(() => import('@pages/external-access
 const ExternalUserCreateCallbackTicket = React.lazy(() => import('@pages/external-access/verify-patient/external-user-create-callback-ticket'));
 const Registration = React.lazy(() => import('@pages/external-access/registration/registration'));
 const ExternalAppointmentFound = React.lazy(() => import('@pages/external-access/appointment/appointment-found'));
+const NotAuthorized = React.lazy(() => import('@pages/not-authorized/not-authorized'));
 
 function App() {
     const accessToken = useSelector(selectAccessToken);
@@ -159,6 +161,7 @@ function App() {
                     <GuardedRoute exact path={UsersBulkPath} component={withSuspense(BulkAddUser)} />
                     <GuardedRoute exact path={CallsLogPath} component={withSuspense(CallsLogList)} />
                     <GuardedRoute exact path={ChatsLogPath} component={withSuspense(ChatsLogList)} />
+                    <GuardedRoute exact path={NotAuthorizedPath} component={withSuspense(NotAuthorized)} />
                     <Confirmation
                         className='shadow-md'
                         hasOverlay={true}
