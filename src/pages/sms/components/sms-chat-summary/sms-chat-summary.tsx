@@ -10,7 +10,9 @@ import utils from '@shared/utils/utils';
 import {useMemo} from 'react';
 import {Icon} from '@components/svg-icon';
 import {useTranslation} from 'react-i18next';
+import isToday from 'dayjs/plugin/isToday';
 dayjs.extend(utc);
+dayjs.extend(isToday)
 
 interface SmsSummaryProps {
     ticketId: string;
@@ -56,6 +58,14 @@ const SmsChatSummary = ({
 
     const searchFilter = useMemo(() => searchFilterMatch?.map(getFilterMatchName) ?? [], [searchFilterMatch]);
 
+    const getDate = () => {
+        if (dayjs(messageSendAt).isToday()) {
+            return dayjs.utc(messageSendAt).local().format('hh:mm A');
+        } else {
+            return dayjs.utc(messageSendAt).local().format('MMM D');
+        }
+    }
+
     return (<div className={classnames('border-b sms-summary cursor-pointer', {'sms-summary-selected': isSelected})} onClick={() => props.onClick && props.onClick(ticketId)}>
         <div className='flex flex-row pl-5 pt-2.5 pb-1.5 pr-4'>
             <div className="pr-4">
@@ -71,7 +81,7 @@ const SmsChatSummary = ({
                     <span className='body1'>
                         <HighlighterText text={createdForName ? createdForName : createdForMobileNumber} highlighterText={searchTerm} />
                     </span>
-                    <span className='body3-small'>{dayjs.utc(messageSendAt).local().format('hh:mm A')}</span>
+                    <span className='body3-small'>{getDate()}</span>
                 </div>
                 <div className="flex flex-row justify-between">
                     <div className='w-full'>
