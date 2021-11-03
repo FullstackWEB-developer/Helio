@@ -19,7 +19,7 @@ import {
     selectExternalUserPhoneNumber,
     selectRedirectLink
 } from '@pages/external-access/verify-patient/store/verify-patient.selectors';
-import { setExternalUserEmail } from '@pages/external-access/verify-patient/store/verify-patient.slice';
+import {setExternalUserEmail, setRedirectLink} from '@pages/external-access/verify-patient/store/verify-patient.slice';
 import {INPUT_DATE_FORMAT} from '@constants/form-constants';
 
 const GetExternalUserDobZip = () => {
@@ -51,10 +51,16 @@ const GetExternalUserDobZip = () => {
                     setFailCount((failCount) => failCount + 1);
                     setDisplayNotFoundError(true);
                 } else {
-                    if (data.patientId.toString() === request.patientId) {
+                    if (!request.patientId) {
+                        dispatch(setRedirectLink({
+                            ...request,
+                            patientId:data.patientId.toString()
+                        }));
+                    }
+                    if (!request.patientId || data.patientId.toString() === request.patientId) {
                         dispatch(setExternalUserEmail(data.email));
                         history.push('/o/verify-patient-code');
-                    } else {
+                    } else if (!!request.patientId) {
                         dispatch(addSnackbarMessage({
                             type: SnackbarType.Error,
                             message: 'external_access.not_verified_patient',

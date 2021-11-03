@@ -1,12 +1,16 @@
 import React, {useEffect, useState} from 'react';
 import {Trans, useTranslation} from 'react-i18next';
 import {useDispatch, useSelector} from 'react-redux';
-import {selectSelectedAppointment} from '@pages/external-access/appointment/store/appointments.selectors';
 import {selectLocationList, selectProviderList} from '@shared/store/lookups/lookups.selectors';
 import {getLocations, getProviders} from '@shared/services/lookups.service';
 import {useMutation, useQuery} from 'react-query';
 import {AxiosError} from 'axios';
-import {GetAppointmentSlots, GetAppointmentType, GetCancellationReasons} from '@constants/react-query-constants';
+import {
+    GetAppointmentSlots,
+    GetAppointmentType,
+    GetCancellationReasons,
+    GetPatientAppointments
+} from '@constants/react-query-constants';
 import {
     getAppointmentSlots,
     getCancellationReasons,
@@ -21,25 +25,38 @@ import {AppointmentCancelReason} from '@pages/external-access/appointment/models
 import {Option} from '@components/option/option';
 import {Controller, useForm} from 'react-hook-form';
 import {AppointmentCancellationModel} from '@pages/external-access/appointment/models/appointment-cancellation.model';
-import {useHistory} from 'react-router-dom';
+import {useHistory, useParams} from 'react-router-dom';
 import {selectVerifiedPatent} from '@pages/patients/store/patients.selectors';
 import {AppointmentType} from '@pages/external-access/appointment/models/appointment-type.model';
 import './appointment.scss';
-import {setSelectedAppointmentSlot} from '@pages/external-access/appointment/store/appointments.slice';
+import {
+    setSelectedAppointment,
+    setSelectedAppointmentSlot
+} from '@pages/external-access/appointment/store/appointments.slice';
 import {CancellationReasonTypes} from '@pages/external-access/models/cancellation-reason-types.enum';
 import AppointmentTable from '@pages/external-access/appointment/components/appointment-table';
 import Spinner from '@components/spinner/Spinner';
+import {Appointment} from '@pages/external-access/appointment/models';
+import {Location, Provider} from '@shared/models';
+import {getAppointments} from '@pages/patients/services/patients.service';
+import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
+import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
+import {SnackbarPosition} from '@components/snackbar/snackbar-position.enum';
 
-const AppointmentCancelation = () => {
+const AppointmentCancel = () => {
     dayjs.extend(utc);
     const {t} = useTranslation();
     const history = useHistory();
     const requiredText = t('common.required');
     const dispatch = useDispatch();
     const verifiedPatient = useSelector(selectVerifiedPatent);
-    const appointment = useSelector(selectSelectedAppointment);
-    const departments = useSelector(selectLocationList);
+    const [appointment, setAppointment] = useState<Appointment>();
+    const locations = useSelector(selectLocationList);
+    const {appointmentId} = useParams<{appointmentId: string}>();
     const providers = useSelector(selectProviderList);
+    const [provider, setProvider] = useState<Provider>();
+    const [appointmentTypeId, setAppointmentTypeId] = useState<number>(0);
+    const [location, setLocation] = useState<Location>();
     const maxSlots = 3;
     const [errorMessage, setErrorMessage] = useState('');
 
@@ -48,23 +65,43 @@ const AppointmentCancelation = () => {
         dispatch(getLocations());
     }, [dispatch]);
 
-    const provider = providers?.find(a => a.id === appointment.providerId);
-    const department = departments?.find(a => a.id === appointment.departmentId);
+    const {isLoading: isAppointmentsLoading, error, isFetchedAfterMount} = useQuery<Appointment[], AxiosError>([GetPatientAppointments, verifiedPatient?.patientId], () =>
+            getAppointments(verifiedPatient.patientId),
+        {
+            onSuccess: (data) => {
+                const appointment = data.find(a => a.appointmentId === appointmentId);
+                if (!appointment) {
+                    dispatch(addSnackbarMessage({
+                        type: SnackbarType.Error,
+                        position: SnackbarPosition.TopCenter,
+                        message:  t('external_access.appointments.no_single_appointment_with_id', {id: appointmentId})
+                    }));
+                    return;
+                }
+                setAppointment(appointment);
+                setAppointmentTypeId(appointment.appointmentTypeId);
+                dispatch(setSelectedAppointment(appointment));
+                setProvider(providers?.find(a => a.id === appointment.providerId));
+                setLocation(locations?.find(a => a.id === appointment.departmentId));
+            }
+        }
+    );
     const startDate = dayjs().utc().toDate();
     const endDate = dayjs().utc().add(7, 'day').toDate();
 
-    const {isLoading: isAppointmentTypesLoading, data: appointmentType} = useQuery<AppointmentType, AxiosError>([GetAppointmentType, appointment.appointmentTypeId], () =>
-        getAppointmentTypeById(appointment.appointmentTypeId),
+    const {isLoading: isAppointmentTypesLoading, data: appointmentType} = useQuery<AppointmentType, AxiosError>([GetAppointmentType, appointmentTypeId], () =>
+        getAppointmentTypeById(appointmentTypeId),
         {
-            enabled: !!appointment
+            enabled: appointmentTypeId > 0
         }
     );
 
-    const {isLoading: isAppointmentSlotsLoading, data: appointmentSlots, refetch} = useQuery<AppointmentSlot[], AxiosError>([GetAppointmentSlots, provider?.id, department?.id, appointment.appointmentTypeId], () =>
+    const {isLoading: isAppointmentSlotsLoading, data: appointmentSlots, refetch} =
+        useQuery<AppointmentSlot[], AxiosError>([GetAppointmentSlots, provider?.id, location?.id, appointmentTypeId], () =>
         getAppointmentSlots({
             providerId: [provider?.id as number],
-            departmentId: department?.id as number,
-            appointmentTypeId: appointment.appointmentTypeId,
+            departmentId: location?.id as number,
+            appointmentTypeId: appointmentTypeId,
             startDate: startDate,
             endDate: endDate
         }),
@@ -78,10 +115,10 @@ const AppointmentCancelation = () => {
     );
 
     useEffect(() => {
-        if (provider?.id && department?.id) {
+        if (provider?.id && location?.id) {
             refetch();
         }
-    }, [department?.id, provider?.id, refetch]);
+    }, [location?.id, provider?.id, refetch]);
 
     const display = (value?: string) => {
         if (value) {
@@ -122,7 +159,7 @@ const AppointmentCancelation = () => {
             .find(r => r.value === values.appointmentCancelReasonId.toString())?.label || '';
 
         cancelAppointmentMutation.mutate({
-            appointmentId: parseInt(appointment.appointmentId),
+            appointmentId: parseInt(appointment!.appointmentId),
             data: values
         });
     }
@@ -136,12 +173,16 @@ const AppointmentCancelation = () => {
         history.push(`/o/appointment-reschedule`);
     }
 
-    if (isAppointmentTypesLoading || isAppointmentSlotsLoading || isGetCancellationReasonsLoading) {
+    if (!isFetchedAfterMount || isAppointmentTypesLoading || isAppointmentSlotsLoading || isGetCancellationReasonsLoading || isAppointmentsLoading) {
         return <Spinner fullScreen />
     }
 
-    if (!verifiedPatient) {
-        return <div>{t('common.error')}</div>
+    if (error) {
+        return <div>{t('external_access.appointments.fetch_failed')}</div>
+    }
+
+    if (!appointment) {
+        return <div>{t('external_access.appointments.no_single_appointment_with_id', {id : appointmentId})}</div>
     }
 
     return <div>
@@ -153,7 +194,7 @@ const AppointmentCancelation = () => {
         {appointmentType?.cancelable &&
             appointmentType?.cancelationFee &&
             (appointmentType?.cancelationTimeFrame &&
-                dayjs.utc(appointment.startDateTime).diff(dayjs.utc(), 'hour') < appointmentType?.cancelationTimeFrame) &&
+                dayjs.utc(appointment!.startDateTime).diff(dayjs.utc(), 'hour') < appointmentType?.cancelationTimeFrame) &&
             <div className='pt-9 xl:pt-8'>
                 <div className='p-4 warning-message body2'>
                     <Trans i18nKey="external_access.appointments.will_be_charged">
@@ -177,7 +218,7 @@ const AppointmentCancelation = () => {
                 <div className='pt-4'>
                     <Trans i18nKey="external_access.appointments.appointment_slots">
                         {display(provider?.displayName)}
-                        {display(department?.name)}
+                        {display(location?.name)}
                     </Trans>
                 </div>
                 <div className='pt-12 pb-12'>
@@ -242,4 +283,4 @@ const AppointmentCancelation = () => {
     </div>
 }
 
-export default AppointmentCancelation;
+export default AppointmentCancel;

@@ -1,7 +1,7 @@
 import {useQuery} from 'react-query';
 import {AppointmentSlot} from '@pages/external-access/appointment/models/appointment-slot.model';
 import {AxiosError} from 'axios';
-import {GetAppointmentSlots} from '@constants/react-query-constants';
+import {GetAppointmentSlots, GetPatientAppointments} from '@constants/react-query-constants';
 import {getAppointmentSlots} from '@pages/appointments/services/appointments.service';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
@@ -11,7 +11,6 @@ import {useDispatch, useSelector} from 'react-redux';
 import {selectVerifiedPatent} from '@pages/patients/store/patients.selectors';
 import {
     selectRescheduleTimeFrame,
-    selectSelectedAppointment
 } from '@pages/external-access/appointment/store/appointments.selectors';
 import {selectLocationList, selectProviderList} from '@shared/store/lookups/lookups.selectors';
 import React, {useEffect, useMemo, useState} from 'react';
@@ -23,10 +22,19 @@ import {Icon} from '@components/svg-icon/icon';
 import utils from '@shared/utils/utils';
 import DaySlots from '@pages/external-access/appointment/components/day-slot';
 import './appointment-reschedule.scss';
-import {setIsAppointmentRescheduled} from '@pages/external-access/appointment/store/appointments.slice';
+import {
+    setIsAppointmentRescheduled, setSelectedAppointment
+} from '@pages/external-access/appointment/store/appointments.slice';
 import businessDays from '@shared/utils/business-days';
 import classnames from 'classnames';
 import Spinner from '@components/spinner/Spinner';
+import {Appointment} from '@pages/external-access/appointment/models';
+import {Location, Provider} from '@shared/models';
+import {getAppointments} from '@pages/patients/services/patients.service';
+import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
+import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
+import {SnackbarPosition} from '@components/snackbar/snackbar-position.enum';
+import {useParams} from 'react-router-dom';
 
 const AppointmentReschedule = () => {
     dayjs.extend(utc);
@@ -34,19 +42,44 @@ const AppointmentReschedule = () => {
     const {t} = useTranslation();
     const dispatch = useDispatch();
     const verifiedPatient = useSelector(selectVerifiedPatent);
-    const appointment = useSelector(selectSelectedAppointment);
-    const departments = useSelector(selectLocationList);
+    const [appointment, setAppointment] = useState<Appointment>();
+    const locations = useSelector(selectLocationList);
     const providers = useSelector(selectProviderList);
+    const [provider, setProvider] = useState<Provider>();
+    const [location, setLocation] = useState<Location>();
     const numberOfDays = 14;
     const numberOfWorkDays = 5;
+    const {appointmentId} = useParams<{appointmentId: string}>();
+    const [minStartDate, setMinStartDate] = useState<Date>();
     const rescheduleTimeFrame = useSelector(selectRescheduleTimeFrame);
-    const minStartDate = rescheduleTimeFrame ? businessDays.add(dayjs(appointment.startDateTime).utc().toDate(), rescheduleTimeFrame) : dayjs(appointment.startDateTime).utc().toDate();
     const {control, setValue} = useForm({
         mode: 'onBlur',
         defaultValues: {
             selectedDate: dayjs().toDate()
         }
     });
+
+    const {isLoading: isAppointmentsLoading, error, isFetchedAfterMount} = useQuery<Appointment[], AxiosError>([GetPatientAppointments, verifiedPatient?.patientId], () =>
+            getAppointments(verifiedPatient.patientId),
+        {
+            onSuccess: (data) => {
+                const appointment = data.find(a => a.appointmentId === appointmentId);
+                if (!appointment) {
+                    dispatch(addSnackbarMessage({
+                        type: SnackbarType.Error,
+                        position: SnackbarPosition.TopCenter,
+                        message:  t('external_access.appointments.no_single_appointment_with_id', {id: appointmentId})
+                    }));
+                    return;
+                }
+                setAppointment(appointment);
+                dispatch(setSelectedAppointment(appointment));
+                setMinStartDate(rescheduleTimeFrame ? businessDays.add(dayjs(appointment.startDateTime).utc().toDate(), rescheduleTimeFrame) : dayjs(appointment.startDateTime).utc().toDate());
+                setProvider(providers?.find(a => a.id === appointment.providerId));
+                setLocation(locations?.find(a => a.id === appointment.departmentId));
+            }
+        }
+    );
 
     const [startDate, setStartDate] = useState(minStartDate);
     const [isWeekendSelected, setIsWeekendSelected] = useState(false);
@@ -55,19 +88,17 @@ const AppointmentReschedule = () => {
         dispatch(getProviders());
         dispatch(getLocations());
         dispatch(setIsAppointmentRescheduled(false));
-    }, [dispatch]);
+    }, [dispatch, verifiedPatient]);
 
-    const provider = providers?.find(a => a.id === appointment.providerId);
-    const department = departments?.find(a => a.id === appointment.departmentId);
 
     const {isLoading: isAppointmentSlotsLoading, data: appointmentSlots, refetch, isFetching} =
-        useQuery<AppointmentSlot[], AxiosError>([GetAppointmentSlots, provider?.id, department?.id, appointment.appointmentTypeId], () => {
+        useQuery<AppointmentSlot[], AxiosError>([GetAppointmentSlots, provider?.id, location?.id, appointment?.appointmentTypeId], () => {
             let beginDate = dayjs(getWorkDates()[0]).toDate();
-            beginDate = dayjs(beginDate).isBefore(minStartDate) ? minStartDate : beginDate;
+            beginDate = dayjs(beginDate).isBefore(minStartDate!) ? minStartDate! : beginDate;
             return getAppointmentSlots({
                 providerId: [provider?.id as number],
-                departmentId: department?.id as number,
-                appointmentTypeId: appointment.appointmentTypeId,
+                departmentId: location?.id as number,
+                appointmentTypeId: appointment!.appointmentTypeId,
                 startDate: beginDate,
                 endDate: dayjs(beginDate).utc().add(numberOfDays, 'day').toDate()
             });
@@ -78,7 +109,7 @@ const AppointmentReschedule = () => {
         );
 
     useEffect(() => {
-        if (provider?.id && department?.id && !appointmentSlots) {
+        if (provider?.id && location?.id && !appointmentSlots) {
             refetch();
         }
 
@@ -86,7 +117,7 @@ const AppointmentReschedule = () => {
             setValue('selectedDate', new Date(appointmentSlots[0].date));
             setStartDate(new Date(appointmentSlots[0].date));
         }
-    }, [appointmentSlots, department?.id, provider?.id, refetch, setValue]);
+    }, [appointmentSlots, location?.id, provider?.id, refetch, setValue]);
 
     const getWorkDates = () => {
         let workDates = [] as string[];
@@ -163,16 +194,28 @@ const AppointmentReschedule = () => {
         }
         refreshCalendar(prevStartDate);
     };
+    if (!isFetchedAfterMount || isAppointmentsLoading) {
+        return <Spinner fullScreen />
+    }
+
+    if (!appointment) {
+        return <div>{t('external_access.appointments.no_single_appointment_with_id', {id : appointmentId})}</div>
+    }
 
     if (isAppointmentSlotsLoading) {
         return <Spinner fullScreen />
     }
 
-    if (!verifiedPatient) {
-        return <div>{t('common.error')}</div>
+    if (error) {
+        return <div>{t('external_access.appointments.fetch_failed')}</div>
     }
+
     const isBordered = (slotsDate: string) => {
         return dayjs(slotsDate).isSame(startDate);
+    }
+
+    if (!appointment) {
+        return <div>{t('external_access.appointments.no_single_appointment_with_id', {id: appointmentId})}</div>
     }
     return <div>
         <div className='flex items-center 2xl:whitespace-pre 2xl:h-12 2xl:my-3'>

@@ -31,9 +31,6 @@ const LabResultDetailed = () => {
         }
     );
 
-    if (!verifiedPatient) {
-        return <div>{t('hipaa_validation_form.hipaa_verification_failed')}</div>;
-    }
     if (isError) {
         return <h6 className='text-danger'>{t('external_access.lab_results.error')}</h6>;
     }
@@ -125,5 +122,4 @@ const LabResultDetailed = () => {
             </div> : null
     )
 }
-
 export default withErrorLogging(LabResultDetailed);

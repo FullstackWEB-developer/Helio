@@ -1,33 +1,48 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Trans, useTranslation} from 'react-i18next';
 import {getLocations, getProviders} from '@shared/services/lookups.service';
 import Button from '@components/button/button';
-import {useHistory} from 'react-router-dom';
-import {selectAppointmentTypes, selectSelectedAppointment} from '@pages/external-access/appointment/store/appointments.selectors';
+import {useHistory, useParams} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import {selectLocationList, selectProviderList} from '@shared/store/lookups/lookups.selectors';
 import './appointment.scss';
-import {setRescheduleTimeFrame} from '@pages/external-access/appointment/store/appointments.slice';
+import {
+    setRescheduleTimeFrame,
+    setSelectedAppointment
+} from '@pages/external-access/appointment/store/appointments.slice';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import classnames from 'classnames';
 import utils from '@shared/utils/utils';
 import ProviderPicture from './components/provider-picture';
+import {Appointment, AppointmentType} from '@pages/external-access/appointment/models';
+import {Location, Provider} from '@shared/models';
+import {useQuery} from 'react-query';
+import {AxiosError} from 'axios';
+import {GetAppointmentTypes, GetPatientAppointments} from '@constants/react-query-constants';
+import {getAppointments} from '@pages/patients/services/patients.service';
+import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
+import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
+import {SnackbarPosition} from '@components/snackbar/snackbar-position.enum';
+import {selectVerifiedPatent} from '@pages/patients/store/patients.selectors';
+import Spinner from '@components/spinner/Spinner';
+import {getAppointmentTypes} from '@pages/appointments/services/appointments.service';
 
 const AppointmentDetail = () => {
     dayjs.extend(customParseFormat);
     const {t} = useTranslation();
+    const verifiedPatient = useSelector(selectVerifiedPatent);
     const history = useHistory();
     const dispatch = useDispatch();
+    const {appointmentId} = useParams<{appointmentId: string}>();
     const defaultTimeFrame = 7;
-    const appointment = useSelector(selectSelectedAppointment);
-    const appointmentTypes = useSelector(selectAppointmentTypes);
-    const appointmentType = appointmentTypes.find(a => a.id === Number(appointment.appointmentTypeId));
-    const departments = useSelector(selectLocationList);
-    const department = departments?.find(a => a.id === appointment.departmentId);
+    const [appointment, setAppointment] = useState<Appointment>();
+    const [appointmentType, setAppointmentType] = useState<AppointmentType>();
+    const locations = useSelector(selectLocationList);
     const providers = useSelector(selectProviderList);
-    const provider = providers?.find(a => a.id === appointment.providerId);
-
+    const [provider, setProvider] = useState<Provider>();
+    const [appointmentTypeId, setAppointmentTypeId] = useState<number>(0);
+    const [location, setLocation] = useState<Location>();
     useEffect(() => {
         dispatch(getProviders());
         dispatch(getLocations());
@@ -38,7 +53,37 @@ const AppointmentDetail = () => {
         dispatch(setRescheduleTimeFrame(appointmentType?.rescheduleTimeFrame || defaultTimeFrame));
     }, [appointmentType?.rescheduleTimeFrame, dispatch]);
 
+    const {isLoading: appointmentTypesLoading} = useQuery<AppointmentType[], AxiosError>([GetAppointmentTypes], () => getAppointmentTypes(), {
+        enabled: true,
+        onSuccess: (data) => {
+            if (data.length < 1) {
+                return;
+            }
+            setAppointmentType(data.find(a => a.id === appointmentTypeId));
+        }
+    });
 
+    const {isLoading: isAppointmentsLoading, error, isFetchedAfterMount} = useQuery<Appointment[], AxiosError>([GetPatientAppointments, verifiedPatient?.patientId], () =>
+            getAppointments(verifiedPatient.patientId),
+        {
+            onSuccess: (data) => {
+                const appointment = data.find(a => a.appointmentId === appointmentId);
+                if (!appointment) {
+                    dispatch(addSnackbarMessage({
+                        type: SnackbarType.Error,
+                        position: SnackbarPosition.TopCenter,
+                        message:  t('external_access.appointments.no_single_appointment_with_id', {id: appointmentId})
+                    }));
+                    return;
+                }
+                setAppointment(appointment);
+                setAppointmentTypeId(appointment.appointmentTypeId);
+                dispatch(setSelectedAppointment(appointment));
+                setProvider(providers?.find(a => a.id === appointment.providerId));
+                setLocation(locations?.find(a => a.id === appointment.departmentId));
+            }
+        }
+    );
 
     const display = (value?: string) => {
         if (value) {
@@ -52,10 +97,22 @@ const AppointmentDetail = () => {
     }
 
     const redirectToReschedule = () => {
-        history.push(`/o/appointment-reschedule`);
+        history.push(`/o/appointment-reschedule/${appointment?.appointmentId}`);
     }
     const redirectToCancel = () => {
-        history.push(`/o/appointment-cancelation`);
+        history.push(`/o/appointment-cancel/${appointment?.appointmentId}`);
+    }
+
+    if (isAppointmentsLoading || !isFetchedAfterMount || appointmentTypesLoading) {
+        return <Spinner />
+    }
+
+    if (error) {
+        return <div>{t('external_access.appointments.fetch_failed')}</div>
+    }
+
+    if (!appointment) {
+        return <div>{t('external_access.appointments.no_single_appointment_with_id', {id : appointmentId})}</div>
     }
 
     return <div>
@@ -78,8 +135,8 @@ const AppointmentDetail = () => {
         <div className='pb-2'>
             <h5>
                 {t('external_access.appointments.appointment_date', {
-                    date: dayjs(appointment.startDateTime).format('dddd, MMM DD, YYYY'),
-                    time: dayjs(appointment.startTime, 'hh:mm').format('hh:mm A')
+                    date: dayjs(appointment?.startDateTime).format('dddd, MMM DD, YYYY'),
+                    time: dayjs(appointment?.startTime, 'hh:mm').format('hh:mm A')
                 })}
             </h5>
         </div>
@@ -87,7 +144,7 @@ const AppointmentDetail = () => {
             <ProviderPicture providerId={provider?.id} />
             <div>
                 <h6 className='pb-2'>
-                    {appointmentType?.name ?? appointment.appointmentType}
+                    {appointmentType?.name ?? appointment?.appointmentType}
                 </h6>
                 {provider && <div className='pb-6'>
                     {t('external_access.appointments.withDoctor', {
@@ -95,13 +152,13 @@ const AppointmentDetail = () => {
                     })}
                 </div>}
                 <div className='subtitle'>
-                    {display(department?.name)}
+                    {display(location?.name)}
                 </div>
                 <div>
-                    {display(department?.address)}
+                    {display(location?.address)}
                 </div>
                 <div>
-                    {`${display(department?.address2)} ${display(department?.city)} ${display(department?.state)}, ${display(department?.zip)}`}
+                    {`${display(location?.address2)} ${display(location?.city)} ${display(location?.state)}, ${display(location?.zip)}`}
                 </div>
             </div>
         </div>
@@ -120,23 +177,23 @@ const AppointmentDetail = () => {
         </>
         }
 
-        {department?.parkingInformation && <>
+        {location?.parkingInformation && <>
             <div className={classnames({'pt-8': appointmentType?.instructions, 'pt-20': !appointmentType?.instructions})}>
                 {t('external_access.appointments.parking_information')}
             </div>
             <div className='border-b pt-2' />
             <div className='pt-4 body2'>
-                {department?.parkingInformation}
+                {location?.parkingInformation}
             </div>
         </>
         }
-        <div className={classnames({'pt-8': department?.parkingInformation, 'pt-20': !department?.parkingInformation})}>
+        <div className={classnames({'pt-8': location?.parkingInformation, 'pt-20': !location?.parkingInformation})}>
             {t('external_access.appointments.directions')}
         </div>
         <div className='border-b pt-2' />
         <div className='pt-4 body2'>
             <Trans i18nKey="external_access.appointments.get_directions">
-                <a rel='noreferrer' target='_blank' href={`https://maps.google.com/?q=${department?.latitude},${department?.longitude}`}>Get directions</a> to your appointment location.
+                <a rel='noreferrer' target='_blank' href={`https://maps.google.com/?q=${location?.latitude},${location?.longitude}`}>Get directions</a> to your appointment location.
             </Trans>
         </div>
     </div>

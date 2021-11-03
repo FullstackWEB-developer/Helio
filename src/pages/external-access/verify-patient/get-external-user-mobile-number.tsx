@@ -21,7 +21,7 @@ import {
 } from '@pages/external-access/verify-patient/store/verify-patient.selectors';
 import {
     setExternalUserEmail,
-    setExternalUserPhoneNumber
+    setExternalUserPhoneNumber, setRedirectLink
 } from '@pages/external-access/verify-patient/store/verify-patient.slice';
 import Spinner from '@components/spinner/Spinner';
 
@@ -60,6 +60,10 @@ const GetExternalUserMobileNumber = () => {
             onSuccess: (data) => {
                 dispatch(setExternalUserPhoneNumber(watch('phone')));
                 if (data.isVerified) {
+                    dispatch(setRedirectLink({
+                        ...request,
+                        patientId:data.verifiedPatient.patientId.toString()
+                    }));
                     dispatch(setExternalUserEmail(data.email));
                     history.push('/o/verify-patient-code');
                 } else {

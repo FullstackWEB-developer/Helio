@@ -28,6 +28,7 @@ import {CheckMedicalRecordStatus} from '@constants/react-query-constants';
 import TextArea from '@components/textarea/textarea';
 import {selectRedirectLink} from '@pages/external-access/verify-patient/store/verify-patient.selectors';
 import Confirmation from '@components/confirmation/confirmation';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
 const RequestMedicalRecords = () => {
     enum DateOptions {
         AllTime = 1,
@@ -40,6 +41,7 @@ const RequestMedicalRecords = () => {
         Preview
     }
 
+    dayjs.extend(customParseFormat);
     const patient = useSelector(selectVerifiedPatent);
     const [selectedDateOption, setSelectedDateOption] = useState<DateOptions>(DateOptions.AllTime);
     const [selectedStartDate, setSelectedStartDate] = useState<Date>(dayjs().add(-1, 'month').toDate());
@@ -48,6 +50,7 @@ const RequestMedicalRecords = () => {
     const [request, setRequest] = useState<DownloadMedicalRecordsProps>();
     const [jobInformation, setJobInformation] = useState<AsyncJobInfo>();
     const [isLoading, setLoading] = useState<boolean>(false);
+    const [downloadRequestId, setDownloadRequestId] = useState<string>('');
     const [displayConfirmation, setDisplayConfirmation] = useState<boolean>(false);
     const verifyLink = useSelector(selectRedirectLink);
     const dispatch = useDispatch();
@@ -98,7 +101,7 @@ const RequestMedicalRecords = () => {
                 if (data.status.toString() === AsyncJobStatus[AsyncJobStatus.Completed]) {
                     switch (requestType) {
                         case RequestType.Download:
-                            downloadMedicalRecordsMutation.mutate({linkId: verifyLink.linkId});
+                            downloadMedicalRecordsMutation.mutate({linkId: downloadRequestId});
                             break;
                         case RequestType.Share:
                             displaySuccessSnackbars();
@@ -134,10 +137,12 @@ const RequestMedicalRecords = () => {
         e.preventDefault();
         setLoading(true);
         setRequestType(type);
+        const requestId = !!verifyLink.redirectAfterVerification ? dayjs().format('YYYYMMDD-HHmmss') :  verifyLink.linkId;
+        setDownloadRequestId(requestId);
         let request: DownloadMedicalRecordsProps = {
             patientId: patient.patientId,
             departmentId: patient.departmentId,
-            downloadLink: verifyLink.linkId,
+            downloadLink: requestId,
             isDownload: type === RequestType.Download,
             emailAddress: getValues('email'),
             note: getValues('note')?.replaceAll('\n','<br/>'),

@@ -14,6 +14,7 @@ import {useQueryClient} from 'react-query';
 import {GetLabResultDetailImage, GetLabResultsProviderPicture} from '@constants/react-query-constants';
 import {selectVerifiedPatent} from '@pages/patients/store/patients.selectors';
 import {LabResultDetailPage} from '../models/lab-result-detail-page.model';
+import {LabResultsPath} from '@app/paths';
 
 const LabResultDetailHeader = ({labResultDetail}: {labResultDetail: LabResultDetail}) => {
     const {t} = useTranslation();
@@ -51,7 +52,7 @@ const LabResultDetailHeader = ({labResultDetail}: {labResultDetail: LabResultDet
     return (
         <div className="flex flex-col mb-6">
             <div className="flex justify-between items-center mb-4">
-                <div className="flex items-center cursor-pointer" onClick={() => history.goBack()}>
+                <div className="flex items-center cursor-pointer" onClick={() => history.push(LabResultsPath)}>
                     <SvgIcon type={Icon.ArrowBack} fillClass='lab-result-icons-fill' />
                     <span className='body2 pl-2'>{t('external_access.lab_results.back_to_tests')}</span>
                 </div>

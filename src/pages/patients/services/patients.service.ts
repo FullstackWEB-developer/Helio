@@ -16,6 +16,7 @@ import {GetPatientInfoRequest} from '@shared/models/get-patient-info-request.mod
 import {CreatePatientRequest} from '@pages/external-access/models/create-patient-request.model';
 import {VerifiedPatient} from '@pages/patients/models/verified-patient';
 import utils from '@shared/utils/utils';
+import {Appointment} from '@pages/external-access/appointment/models';
 export interface AddNoteProps {
      patientId: number;
      note: Note;
@@ -164,7 +165,7 @@ export const getPatientById = (patientId: string, queryParams?: GetPatientInfoRe
      }
 }
 
-export const getAppointments = async (patientId: number) => {
+export const getAppointments = async (patientId: number) : Promise<Appointment[]> => {
      const url = `${patientsUrl}/${patientId}/appointments`;
      const result = await Api.get(url);
      return result.data;

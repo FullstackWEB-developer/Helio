@@ -1,4 +1,5 @@
 export enum ExternalAccessRequestTypes {
+    None,
     GetAppointmentDetail = 1,
     RescheduleAppointment,
     GetLabResults,
@@ -8,5 +9,6 @@ export enum ExternalAccessRequestTypes {
     DownloadMedicalRecords,
     ScheduleAppointment,
     SentTicketMessageViaSMS,
-    RegisterNewPatient
+    RegisterNewPatient,
+    AppointmentList
 }

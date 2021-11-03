@@ -54,6 +54,10 @@ const ExternalUserVerificationCode = () => {
 
     const forwardToRelatedPage = () => {
         if (request !== undefined) {
+            if(request.redirectAfterVerification) {
+                history.push(request.redirectAfterVerification);
+                return;
+            }
             switch (request.requestType) {
                 case ExternalAccessRequestTypes.RequestRefill:
                     history.push('/o/view-medications');

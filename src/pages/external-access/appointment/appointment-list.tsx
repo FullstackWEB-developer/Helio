@@ -15,6 +15,7 @@ import AppointmentTable from './components/appointment-table';
 import {getAppointmentTypes} from '@pages/appointments/services/appointments.service';
 import {AppointmentType} from './models/appointment-type.model';
 import Spinner from '@components/spinner/Spinner';
+import {AppointmentDetailPath} from '@app/paths';
 
 const AppointmentList = () => {
     const {t} = useTranslation();
@@ -36,12 +37,7 @@ const AppointmentList = () => {
     const {isLoading, error, data: appointments} = useQuery<Appointment[], AxiosError>([GetPatientAppointments, verifiedPatient?.patientId], () =>
         getAppointments(verifiedPatient.patientId),
         {
-            enabled: !!verifiedPatient,
-            onSuccess: (data) => {
-                if (data.length === 1) {
-                    selectAppointment(data[0]);
-                }
-            }
+            enabled: !!verifiedPatient
         }
     );
 
@@ -58,7 +54,7 @@ const AppointmentList = () => {
 
     const selectAppointment = (appointment: Appointment) => {
         dispatch(setSelectedAppointment(appointment));
-        history.push('/o/appointment-detail');
+        history.push(`${AppointmentDetailPath}/${appointment.appointmentId}`);
     }
 
     if (isLoading || isAppointmentTypeLoading) {

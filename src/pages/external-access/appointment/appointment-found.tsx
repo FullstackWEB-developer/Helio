@@ -31,7 +31,7 @@ const AppointmentFound = () => {
 
     const navigateToReschedule = () => {
         dispatch(setSelectedAppointment(appointment));
-        history.push(AppointmentReschedulePath);
+        history.push(`${AppointmentReschedulePath}/${appointment.appointmentId}`);
     }
 
     const navigateToSchedule = () => {

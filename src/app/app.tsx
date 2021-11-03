@@ -19,6 +19,23 @@ import {
     ChatsLogPath,
     AppointmentFoundPath,
     AppointmentReschedulePath,
+    AppointmentCancelPath,
+    AppointmentDetailPath,
+    LabResultsPath,
+    RequestRefillPath,
+    RequestMedicalRecordsPath,
+    AppointmentListPath,
+    AppointmentRescheduledPath,
+    AppointmentRescheduleConfirmPath,
+    AppointmentScheduledPath,
+    RegistrationPath,
+    RegistrationShortPath,
+    LabResultsShortPath,
+    AppointmentDetailShortPath,
+    AppointmentCancelShortPath,
+    AppointmentRescheduleShortPath,
+    AppointmentScheduleShortPath,
+    ViewMedicationsPath,
     AppointmentSchedulePath,
     NotAuthorizedPath
 } from './paths';
@@ -33,14 +50,14 @@ import {SMS_INCOMING_NAME} from '@shared/constants/signalr-provider-constants';
 import utils from '@shared/utils/utils';
 import Confirmation from '@components/confirmation/confirmation';
 import IncomingSmsUpdate from '@shared/websockets/incoming-sms-update';
-import ComponentPermissionGuard from "@components/component-permission-guard";
+import VerifiedPatientGuard from '@components/verified-patient-guard/verified-patient-guard';
 const SearchResults = React.lazy(() => import('../shared/components/search-bar/components/search-results'));
 const PatientChart = React.lazy(() => import('@pages/patients/patient-chart'));
 const VerifyRedirectLink = React.lazy(() => import('@pages/external-access/verify-patient/verify-redirect-link'));
 const AppointmentSchedule = React.lazy(() => import('@pages/external-access/appointment/appointment-schedule'));
 const AppointmentScheduleSelect = React.lazy(() => import('@pages/external-access/appointment/appointment-schedule-select/appointment-schedule-select'));
 const AppointmentScheduleConfirm = React.lazy(() => import('@pages/external-access/appointment/appointment-schedule-confirm/appointment-schedule-confirm'));
-const AppointmentCancellation = React.lazy(() => import('@pages/external-access/appointment/appointment-cancelation'));
+const AppointmentCancel = React.lazy(() => import('@pages/external-access/appointment/appointment-cancel'));
 const AppointmentCanceled = React.lazy(() => import('@pages/external-access/appointment/appointment-canceled'));
 const AppointmentReschedule = React.lazy(() => import('@pages/external-access/appointment/reschedule/appointment-reschedule'));
 const AppointmentRescheduleConfirm = React.lazy(() => import('@pages/external-access/appointment/reschedule/appointment-reschedule-confirm'));
@@ -87,42 +104,48 @@ function App() {
         }
     }, []);
 
-    return (<BrowserRouter>
+    return <BrowserRouter>
         <Switch>
             <Route path='/o/'>
                 <ExternalAccessLayout>
                     <Switch>
                         <Route path={TicketSmsPath} component={withSuspense(TicketSms)} />
-                        <Route path='/o/appointment-list' component={withSuspense(AppointmentList)} />
                         <Route path='/o/verify-patient' component={withSuspense(GetExternalUserDobZip)} />
                         <Route path='/o/verify-patient-code' component={withSuspense(ExternalUserVerificationCode)} />
                         <Route path='/o/verify-patient-get-mobile' component={withSuspense(ExternalUserMobileNumber)} />
                         <Route path='/o/callback-ticket' component={withSuspense(ExternalUserCreateCallbackTicket)} />
-                        <Route path='/o/appointment-detail' component={withSuspense(AppointmentDetail)} />
-                        <Route path='/o/request-refill' component={withSuspense(RequestRefill)} />
-                        <Route path='/o/view-medications' component={withSuspense(ViewMedications)} />
-                        <Route path='/o/request-refill-confirmation' component={withSuspense(RequestRefillConfirmation)} />
-                        <Route path='/o/request-medical-records'
-                            component={withSuspense(RequestMedicalRecords)} />
-                        <Route exact path='/o/lab-results' component={withSuspense(LabResults)} />
-                        <Route path='/o/lab-results/:labResultId' component={withSuspense(LabResultsDetailed)} />
-                        <Route exact path={AppointmentSchedulePath} component={withSuspense(AppointmentSchedule)} />
-                        <Route exact path='/o/appointment-schedule/select' component={withSuspense(AppointmentScheduleSelect)} />
-                        <Route exact path='/o/appointment-schedule/confirm' component={withSuspense(AppointmentScheduleConfirm)} />
-                        <Route path='/o/appointment-scheduled' component={withSuspense(AppointmentRescheduled)} />
-                        <Route path='/o/appointment-cancelation'
-                            component={withSuspense(AppointmentCancellation)} />
-                        <Route path='/o/appointment-canceled' component={withSuspense(AppointmentCanceled)} />
-                        <Route path={AppointmentReschedulePath} component={withSuspense(AppointmentReschedule)} />
-                        <Route path='/o/appointment-reschedule-confirm'
-                            component={withSuspense(AppointmentRescheduleConfirm)} />
-                        <Route path='/o/appointment-rescheduled'
-                            component={withSuspense(AppointmentRescheduled)} />
-                        <Route path='/o/download-medical-records' component={withSuspense(DownloadMedicalRecords)} />
-                        <Route path={AppointmentFoundPath} component={withSuspense(ExternalAppointmentFound)} />
-                        <Route path='/o/dmr/:linkId' component={withSuspense(DownloadMedicalRecords)} />
-                        <Route path='/o/registration' component={withSuspense(Registration)} />
-                        <Route path='/o/:linkId' component={withSuspense(VerifyRedirectLink)} />
+                        <Route path={RegistrationPath} component={withSuspense(Registration)} />
+                        <Route path={RegistrationShortPath} component={withSuspense(Registration)} />
+                        <VerifiedPatientGuard>
+                            <Switch>
+                                <Route path={AppointmentListPath} component={withSuspense(AppointmentList)} />
+                                <Route path={`${AppointmentDetailPath}/:appointmentId`} component={withSuspense(AppointmentDetail)} />
+                                <Route path={`${AppointmentDetailShortPath}/:appointmentId`} component={withSuspense(AppointmentDetail)} />
+                                <Route path={RequestRefillPath} component={withSuspense(RequestRefill)} />
+                                <Route path={ViewMedicationsPath} component={withSuspense(ViewMedications)} />
+                                <Route path='/o/request-refill-confirmation' component={withSuspense(RequestRefillConfirmation)} />
+                                <Route path={RequestMedicalRecordsPath} component={withSuspense(RequestMedicalRecords)} />
+                                <Route exact path={LabResultsPath} component={withSuspense(LabResults)} />
+                                <Route path={`${LabResultsPath}/:labResultId`} component={withSuspense(LabResultsDetailed)} />
+                                <Route path={`${LabResultsShortPath}/:labResultId`} component={withSuspense(LabResultsDetailed)} />
+                                <Route exact path={AppointmentSchedulePath} component={withSuspense(AppointmentSchedule)} />
+                                <Route exact path={AppointmentScheduleShortPath} component={withSuspense(AppointmentSchedule)} />
+                                <Route exact path={`${AppointmentSchedulePath}/select`} component={withSuspense(AppointmentScheduleSelect)} />
+                                <Route exact path={`${AppointmentSchedulePath}/confirm`} component={withSuspense(AppointmentScheduleConfirm)} />
+                                <Route path={AppointmentScheduledPath} component={withSuspense(AppointmentRescheduled)} />
+                                <Route path={`${AppointmentCancelPath}/:appointmentId`} component={withSuspense(AppointmentCancel)} />
+                                <Route path={`${AppointmentCancelShortPath}/:appointmentId`} component={withSuspense(AppointmentCancel)} />
+                                <Route path='/o/appointment-canceled' component={withSuspense(AppointmentCanceled)} />
+                                <Route path={`${AppointmentReschedulePath}/:appointmentId`} component={withSuspense(AppointmentReschedule)} />
+                                <Route path={`${AppointmentRescheduleShortPath}/:appointmentId`} component={withSuspense(AppointmentReschedule)} />
+                                <Route path={AppointmentRescheduleConfirmPath} component={withSuspense(AppointmentRescheduleConfirm)} />
+                                <Route path={AppointmentRescheduledPath} component={withSuspense(AppointmentRescheduled)} />
+                                <Route path='/o/download-medical-records' component={withSuspense(DownloadMedicalRecords)} />
+                                <Route path={AppointmentFoundPath} component={withSuspense(ExternalAppointmentFound)} />
+                                <Route path='/o/dmr/:linkId' component={withSuspense(DownloadMedicalRecords)} />
+                                <Route exact path='/o/:linkId' component={withSuspense(VerifyRedirectLink)} />
+                            </Switch>
+                        </VerifiedPatientGuard>
                     </Switch>
                 </ExternalAccessLayout>
             </Route>
@@ -174,8 +197,7 @@ function App() {
                 </Layout>
             </SignalRProvider>
         </Switch>
-    </BrowserRouter>
-    );
+    </BrowserRouter>;
 }
 
 export default App;

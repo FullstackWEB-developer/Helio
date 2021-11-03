@@ -23,6 +23,7 @@ import {getUserDetail} from '@shared/services/user.service';
 dayjs.extend(utc);
 
 const Login = () => {
+
     const {t} = useTranslation();
     const dispatch = useDispatch();
     const history = useHistory();
@@ -39,8 +40,8 @@ const Login = () => {
             dispatch(resetState());
             dispatch(setLoginLoading(true));
             getMsalInstance()?.handleRedirectPromise()
-                .then((info) => {
-                    SetAuthenticationInfo(info, dispatch, history);
+                .then(async (info) => {
+                    await SetAuthenticationInfo(info, dispatch, history);
                 }).catch((err: any) => {
                     Logger.getInstance().error('Error logging in', err);
                 }).finally(() => dispatch(setLoginLoading(false)))

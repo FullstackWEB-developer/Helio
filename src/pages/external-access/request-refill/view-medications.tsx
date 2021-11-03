@@ -6,10 +6,10 @@ import {
     getPatientMedications
 } from '@pages/external-access/request-refill/services/request-refill.service';
 import {useTranslation} from 'react-i18next';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {selectVerifiedPatent} from '@pages/patients/store/patients.selectors';
 import {Medication} from '@pages/external-access/request-refill/models/medication.model';
-import React, {Fragment} from 'react';
+import React, {Fragment, useEffect} from 'react';
 import {Icon} from '@components/svg-icon/icon';
 import SvgIcon from '@components/svg-icon/svg-icon';
 import './view-medications.scss';
@@ -18,10 +18,15 @@ import {Pharmacy} from '@pages/external-access/request-refill/models/pharmacy.mo
 import utils from '@shared/utils/utils';
 import SendUsMessage from '@pages/external-access/request-refill/components/send-us-message';
 import Spinner from '@components/spinner/Spinner';
+import {getProviders} from '@shared/services/lookups.service';
 
 const ViewMedications = () => {
     const {t} = useTranslation();
     const verifiedPatient = useSelector(selectVerifiedPatent);
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(getProviders());
+    }, []);
 
     const {isLoading: isMedicationLoading, data: medications} = useQuery<Medication[], AxiosError>([QueryPatientMedication, verifiedPatient?.patientId], () =>
             getPatientMedications(verifiedPatient?.patientId),

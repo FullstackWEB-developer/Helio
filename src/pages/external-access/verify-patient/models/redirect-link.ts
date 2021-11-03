@@ -11,4 +11,5 @@ export interface RedirectLink {
     requestType: ExternalAccessRequestTypes;
     ticketId: string;
     sentAddress: string;
+    redirectAfterVerification?: string;
 }
