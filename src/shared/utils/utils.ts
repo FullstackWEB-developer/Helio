@@ -359,6 +359,10 @@ const isMinor = (date: Date) => {
     return dayjs().diff(date, 'year') < 12;
 }
 
+const isValidDobByAthenaMaxAgeConstraint = (date: Date) => {
+    return dayjs().diff(date, 'year') > 125;
+}
+
 const convertBlobToBase64 = (file: Blob) => {
     return new Promise<string | ArrayBuffer | null>(function (resolve, reject) {
         const reader = new FileReader();
@@ -468,6 +472,7 @@ const utils = {
     applyPhoneMask,
     getAppParameter,
     isMinor,
+    isValidDobByAthenaMaxAgeConstraint,
     convertBlobToBase64,
     getTimeDiffInFormattedSeconds,
     logout,

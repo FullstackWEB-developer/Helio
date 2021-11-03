@@ -979,6 +979,7 @@
       "dob": "Date of Birth",
       "email": "Email",
       "minor_dob": "If you are a minor, please call our office.",
+      "max_age": "Date of birth cannot be more than 125 years ago.",
       "minor_dob_detail": "Your date of birth indicates that you are a minor.  Please call our office at {{number}} to complete patient registration and schedule your appointment.",
       "mobile_phone": "Mobile Phone",
       "gender": "Your sex",
