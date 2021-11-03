@@ -62,6 +62,7 @@ const AppointmentReschedule = () => {
     const {isLoading: isAppointmentsLoading, error, isFetchedAfterMount} = useQuery<Appointment[], AxiosError>([GetPatientAppointments, verifiedPatient?.patientId], () =>
             getAppointments(verifiedPatient.patientId),
         {
+            enabled: !!providers && !!locations,
             onSuccess: (data) => {
                 const appointment = data.find(a => a.appointmentId === appointmentId);
                 if (!appointment) {
