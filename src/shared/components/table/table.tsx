@@ -19,7 +19,7 @@ const Table = ({model}: TableProps) => {
         hideHeader = false,
         hasRowsBottomBorder,
         title,
-        isCompact = false,
+        size = 'normal',
         wrapperClassName = '',
         rowClass,
         pageSize = 10
@@ -40,7 +40,7 @@ const Table = ({model}: TableProps) => {
         }
         return React.Children.toArray(data.map(row => {
             return <div className={hasRowsBottomBorder ? 'border-b' : ''}>
-                <TableRow rowClass={classnames(rowClass, {'bg-gray-100': model.isSelected?.(row)})} isCompact={isCompact} columns={columns} data={row}/>
+                <TableRow rowClass={classnames(rowClass, {'bg-gray-100': model.isSelected?.(row)})} size={size} columns={columns} data={row}/>
             </div>
         }));
     }
@@ -65,8 +65,8 @@ const Table = ({model}: TableProps) => {
     }
 
     return <div className={`flex flex-col ${wrapperClassName}`}>
-        {title && <TableTitle model={title} isCompact={isCompact} />}
-        {!hideHeader && <TableHeader className={model.headerClassName} headers={columns} />}
+        {title && <TableTitle model={title} size={size} />}
+        {!hideHeader && <TableHeader size={size} className={model.headerClassName} headers={columns} />}
         {getContent()}
         {model.pageable && rows.length > pageSize && <div className='pt-4 flex justify-end'>
             <Pagination value={pagination} onChange={(data) => setCurrentPage(data.page)} />

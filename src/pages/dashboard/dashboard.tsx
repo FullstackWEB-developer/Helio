@@ -2,7 +2,6 @@ import React, {useEffect, useRef, useState} from 'react';
 import {useQuery} from 'react-query';
 import {GetDashboard} from '@constants/react-query-constants';
 import {getDashboardData} from '@pages/tickets/services/tickets.service';
-import {DashboardResponse} from '@pages/dashboard/models/dashboardResponse';
 import {useTranslation} from 'react-i18next';
 import './dashboard.scss';
 import {DropdownModel} from '@components/dropdown/dropdown.models';
@@ -19,6 +18,7 @@ import Wallboard from '@pages/dashboard/wallboard';
 import * as queryString from 'querystring';
 import {useHistory} from 'react-router-dom';
 import useCheckPermission from '@shared/hooks/useCheckPermission';
+import {DashboardResponse} from '@pages/dashboard/models/dashboard-response';
 
 export const Dashboard = () => {
     const {t} = useTranslation();

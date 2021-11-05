@@ -18,12 +18,11 @@ import React from 'react';
 import axios from "axios";
 import {toggleUserProfileMenu} from '@shared/layout/store/layout.slice';
 import {useHistory} from 'react-router-dom';
-import {UserDetailsPath} from '@app/paths';
+import {MyStatsPath, UserDetailsPath} from '@app/paths';
 import {useEffect} from 'react';
 import {getUserList} from '@shared/services/lookups.service';
 import utils from '@shared/utils/utils';
 import {clearAppParameters} from '@shared/store/app/app.slice';
-
 interface UserStatuses {
     label: string;
     value: string;
@@ -58,6 +57,10 @@ const ProfileDropdown = () => {
 
     const onMyProfileClick = () => {
         history.push(`${UserDetailsPath}/${currentUserDetails?.id}`);
+    }
+
+    const onMyStatsClick = () => {
+        history.push(MyStatsPath);
     }
 
     const statusList: UserStatuses[] = [];
@@ -114,6 +117,12 @@ const ProfileDropdown = () => {
         onClick: () => onMyProfileClick(),
         value: 'my_profile',
         hasDivider: true,
+        icon: <SvgIcon type={Icon.Placeholder} className='icon-small' fillClass='' />
+    });
+    items.push({
+        label: t('user_profile.my_stats'),
+        onClick: () => onMyStatsClick(),
+        value: 'my_stats',
         icon: <SvgIcon type={Icon.Placeholder} className='icon-small' fillClass='' />
     });
     items.push({

@@ -37,7 +37,7 @@ import {
     AppointmentScheduleShortPath,
     ViewMedicationsPath,
     AppointmentSchedulePath,
-    NotAuthorizedPath
+    NotAuthorizedPath, MyStatsPath
 } from './paths';
 import RealTimeUserStatusUpdate from '@shared/websockets/real-time-user-status-update';
 import ExternalAccessLayout from '@pages/external-access/layout/external-access-layout';
@@ -91,6 +91,7 @@ const ExternalUserCreateCallbackTicket = React.lazy(() => import('@pages/externa
 const Registration = React.lazy(() => import('@pages/external-access/registration/registration'));
 const ExternalAppointmentFound = React.lazy(() => import('@pages/external-access/appointment/appointment-found'));
 const NotAuthorized = React.lazy(() => import('@pages/not-authorized/not-authorized'));
+const MyStats = React.lazy(() => import('@pages/application/my-stats'));
 
 function App() {
     const accessToken = useSelector(selectAccessToken);
@@ -177,9 +178,10 @@ function App() {
                     </Switch>
 
                     <GuardedRoute exact path={`${SmsPath}/:ticketId?`} component={withSuspense(Sms)} />
-                    <GuardedRoute exact path={`${UsersPath}`} component={withSuspense(UserList)} permission='Users.Access' />
+                    <GuardedRoute exact path={UsersPath} component={withSuspense(UserList)} permission='Users.Access' />
                     <GuardedRoute exact path={`${UsersPath}/new`} component={withSuspense(UserAdd)} permission='Users.Access' />
                     <GuardedRoute exact path={`${UserDetailsPath}/:userId`} component={withSuspense(UserDetails)} />
+                    <GuardedRoute exact path={MyStatsPath} component={withSuspense(MyStats)}/>
                     <GuardedRoute exact path={BlackListsPath} component={withSuspense(BlackList)} permission='BlockedAccess.Access' />
                     <GuardedRoute exact path={UsersBulkPath} component={withSuspense(BulkAddUser)} />
                     <GuardedRoute exact path={CallsLogPath} component={withSuspense(CallsLogList)} />

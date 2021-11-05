@@ -46,7 +46,7 @@ const TicketAssignee = ({ticketId, assignee, dropdownHorizontalPosition}: Ticket
     const userDropdownModel: DropdownModel = {
         isSearchable: true,
         defaultValue: selectedUser.id,
-        items: userDropdownItems,
+        items: userDropdownItems.sort((a:DropdownItemModel,b:DropdownItemModel) => a.label.localeCompare(b.label)),
         onClick: (id) => {
             const result = users.find(user => user.id === id);
             if (!result) {

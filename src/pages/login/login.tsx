@@ -2,7 +2,7 @@ import Button from '@components/button/button';
 import {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {AuthenticationInfo} from '@shared/store/app-user/app-user.models';
-import {setAuthentication, setLoginLoading, setAppUserDetails} from '@shared/store/app-user/appuser.slice';
+import {setAuthentication, setLoginLoading, setAppUserDetails, logOut} from '@shared/store/app-user/appuser.slice';
 import {Redirect, useHistory} from 'react-router-dom';
 import {AuthenticationResult} from '@azure/msal-browser';
 import {Dispatch} from '@reduxjs/toolkit';
@@ -35,7 +35,11 @@ const Login = () => {
         getMsalInstance()?.loginRedirect();
     }
 
+
     useEffect(() => {
+        if (utils.isSessionExpired()) {
+            dispatch(logOut());
+        }
         if (!utils.isLoggedIn()) {
             dispatch(resetState());
             dispatch(setLoginLoading(true));

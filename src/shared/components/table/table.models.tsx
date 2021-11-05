@@ -1,6 +1,8 @@
 import {SortDirection} from '@shared/models/sort-direction';
 import {ReactNode} from 'react';
 
+export type TableSize = 'compact' | 'normal' | 'large';
+
 export interface TableModel {
     columns: TableColumnModel[];
     rows: any[];
@@ -8,7 +10,6 @@ export interface TableModel {
     pageable?: boolean;
     hideHeader?: boolean;
     hasRowsBottomBorder?: boolean;
-    isCompact?: boolean;
     title?: TableTitleModel;
     headerClassName?: string,
     wrapperClassName?: string;
@@ -16,6 +17,7 @@ export interface TableModel {
     isSelected?: (row: any) => boolean;
     emptyMessage?: string;
     showEmptyMessage?: boolean;
+    size?: TableSize;
 }
 
 export interface TableColumnModel {
@@ -30,7 +32,7 @@ export interface TableColumnModel {
     alignment?: 'start' | 'end' | 'center';
     onClick?: (field: string | undefined, sortDirection: SortDirection) => void
     render?: (field: any, row: any) => ReactNode;
-    disableNoneSort?: boolean;
+    disableNoneSort?: boolean
 }
 
 export interface TableTitleModel {

@@ -64,3 +64,5 @@ export const GetChatsLogs = 'get-chats-logs';
 export const GetRecordedConversationLink = 'get-recorded-conversation-link';
 export const GetRecordedConversationContent = 'get-recorded-conversation-content';
 export const GetProviderPicture = 'get-provider-picture';
+export const GetTicketsPerformanceForUser = 'get-tickets-performance-for-user';
+export const GetContactPerformanceForUser = 'get-contact-performance-for-user';

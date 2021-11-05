@@ -1,4 +1,4 @@
-import {TableColumnModel} from './table.models';
+import {TableColumnModel, TableSize} from './table.models';
 import {useTranslation} from 'react-i18next';
 import React, {useState} from 'react';
 import SvgIcon from '@components/svg-icon';
@@ -8,8 +8,9 @@ import {SortIconMap} from '@shared/utils/sort-utils';
 import './table-header.scss';
 
 export interface TableHeaderProps {
-    headers?: TableColumnModel[],
-    className?: string
+    headers?: TableColumnModel[];
+    className?: string;
+    size: TableSize;
 }
 
 const TableHeaderColumn = ({header}: {header: TableColumnModel}) => {
@@ -57,15 +58,18 @@ const TableHeaderColumn = ({header}: {header: TableColumnModel}) => {
     }
 };
 
-const TableHeader = ({headers, className}: TableHeaderProps) => {
+const TableHeader = ({headers, className, size}: TableHeaderProps) => {
     if (!headers) {
         return null;
     }
 
-    const content = headers.map(header => <TableHeaderColumn header={header} />);
+    const content = headers.map(header => <TableHeaderColumn header={header} size={size} />);
+    const headerClassName = classnames('flex flex-row caption-caps table-header px-4 h-8 items-center', className, {
+        'h-12': size === 'large'
+    });
     return (
         <div
-            className={classnames('flex flex-row caption-caps table-header px-4 h-8 items-center', className)}
+            className={headerClassName}
         >
             {content}
         </div>

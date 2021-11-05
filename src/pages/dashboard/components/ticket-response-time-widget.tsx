@@ -6,6 +6,7 @@ import duration from 'dayjs/plugin/duration';
 import './ticket-response-time-widget.scss';
 import SvgIcon from '@components/svg-icon/svg-icon';
 import {Icon} from '@components/svg-icon/icon';
+import utils from '@shared/utils/utils';
 
 export interface TicketResponseTimeWidgetProps {
     data: HandleAndResponseTimes;
@@ -14,11 +15,6 @@ export interface TicketResponseTimeWidgetProps {
 const TicketResponseTimeWidget = ({data}: TicketResponseTimeWidgetProps) => {
     dayjs.extend(duration);
     const {t} = useTranslation();
-
-    const convertSeconds = (seconds: number) => {
-        const duration = dayjs.duration(seconds, 'seconds');
-        return duration.format('HH:mm:ss')
-    }
 
     const calculatePercentage = (currentSeconds: number, previousSeconds: number) => {
         if (previousSeconds === 0 || currentSeconds === 0) {
@@ -37,7 +33,7 @@ const TicketResponseTimeWidget = ({data}: TicketResponseTimeWidgetProps) => {
 
         return <div className='ticket-response-times-inner-widget flex flex-col items-center'>
             <div className='body3-medium pb-2.5'>{t(label)}</div>
-            <div><h5>{convertSeconds(time)}</h5></div>
+            <div><h5>{utils.formatSeconds(time)}</h5></div>
             <div className='flex flex-row items-center'>
                 <div>
                     <SvgIcon type={previousTime > time ? Icon.ArrowTrendUp : Icon.ArrowTrendDown}

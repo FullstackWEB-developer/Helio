@@ -124,7 +124,7 @@ const QueueStatus = ({queueType}: QueueStatusProps) => {
         return {
             hasRowsBottomBorder: true,
             headerClassName: 'mb-2',
-            isCompact: true,
+            size: 'compact',
             columns: [
                 {
                     field: 'queueName',

@@ -378,6 +378,13 @@ const getTimeDiffInFormattedSeconds = (endDate?: string, startDate?: string): st
     return dayjs.duration(diff, 'seconds').format('HH:mm:ss');
 }
 
+const formatSeconds = (seconds: number) => {
+    dayjs.extend(duration);
+
+    const beforeFormat = dayjs.duration(seconds, 'seconds');
+    return beforeFormat.format('HH:mm:ss');
+}
+
 const sortBy = <T extends any, TV extends number>(data: T[], property: (item: T) => TV): T[] => {
     return data.sort((a, b) => property(a) - property(b));
 }
@@ -479,7 +486,8 @@ const utils = {
     isInBounds,
     downloadFileFromData,
     initiateACall,
-    hasPermission
+    hasPermission,
+    formatSeconds
 };
 
 export default utils;

@@ -3,7 +3,6 @@ import Dropdown, {DropdownItemModel, DropdownModel} from "../dropdown";
 import SvgIcon, {Icon} from "../svg-icon";
 import useComponentVisibility from "../../hooks/useComponentVisibility";
 import {useTranslation} from 'react-i18next';
-import {isReturnStatement} from 'typescript';
 interface DropdownLabelProps {
     value?: string;
     excludeSelectedItem?: boolean,

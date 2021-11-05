@@ -1,5 +1,4 @@
 import Card from '@components/card/card';
-import BasicStatistic from '@pages/dashboard/components/basic-statistic';
 import {Icon} from '@components/svg-icon';
 import TicketsVolumeChart from '@pages/dashboard/components/charts/tickets-volume.chart';
 import TicketsPriorityChart from '@pages/dashboard/components/charts/tickets-priority.chart';
@@ -8,7 +7,8 @@ import RatingsWidget from '@pages/dashboard/components/ratings-widget';
 import TicketResponseTimeWidget from '@pages/dashboard/components/ticket-response-time-widget';
 import TicketsByChannelsWidget from '@pages/dashboard/components/tickets-by-channels-widget';
 import React from 'react';
-import {DashboardResponse} from '@pages/dashboard/models/dashboardResponse';
+import {DashboardResponse} from '@pages/dashboard/models/dashboard-response';
+import {BasicStatistic} from '@components/dashboard';
 
 export interface DashboardContentProps {
     data: DashboardResponse
@@ -25,27 +25,27 @@ const DashboardContent = (dataInput: DashboardContentProps) => {
                             <BasicStatistic
                                 icon={data.statusStats.overdue > 0 ? Icon.Alert : undefined}
                                 title='dashboard.ticket_stats.overdue'
-                                count={data.statusStats.overdue}/>
+                                value={data.statusStats.overdue}/>
                         </div>
                         <div>
                             <BasicStatistic title='dashboard.ticket_stats.due_today'
-                                            count={data.statusStats.due}/>
+                                            value={data.statusStats.due}/>
                         </div>
                         <div>
                             <BasicStatistic title='dashboard.ticket_stats.open'
-                                            count={data.statusStats.open}/>
+                                            value={data.statusStats.open}/>
                         </div>
                         <div>
                             <BasicStatistic title='dashboard.ticket_stats.on_hold'
-                                            count={data.statusStats.onHold}/>
+                                            value={data.statusStats.onHold}/>
                         </div>
                         <div>
                             <BasicStatistic title='dashboard.ticket_stats.closed'
-                                            count={data.statusStats.closed}/>
+                                            value={data.statusStats.closed}/>
                         </div>
                         <div>
                             <BasicStatistic title='dashboard.ticket_stats.total'
-                                            count={data.statusStats.total}/>
+                                            value={data.statusStats.total}/>
                         </div>
                     </div>
                     <div className='border-t'>

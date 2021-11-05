@@ -6,17 +6,18 @@ import React from 'react';
 
 export interface BasicStatisticProps {
     title: string;
-    count: number;
     icon?: Icon;
+    isPercentage?: boolean;
+    value: string | number;
 }
 
-const BasicStatistic = ({title, count = 0, icon}: BasicStatisticProps) => {
+const BasicStatistic = ({title, value = "0", icon, isPercentage}: BasicStatisticProps) => {
     const {t} = useTranslation();
     return <div className='basic-statistic flex justify-center flex-col items-center'>
         <div className='body3-medium pt-2.5 pb-3'>{t(title)}</div>
         <div className='flex flex-row'>
             <div>
-                <h4>{count}</h4>
+                <h4>{value}{isPercentage ? '%' : ''}</h4>
             </div>
             {icon &&
             <div className='pl-2 pt-1'><SvgIcon className='icon-small' fillClass='danger-icon' type={icon}/>

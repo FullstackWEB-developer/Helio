@@ -1,8 +1,8 @@
-import {BasicStatistic} from '@pages/dashboard/models/basic-statistic.model';
 import {useTranslation} from 'react-i18next';
 import DashboardPieChart from '@pages/dashboard/components/charts/dashboard-pie-chart';
 import './tickets-priority.chart.scss';
 import {getPieChartColor} from '@pages/dashboard/utils/dashboard-utils';
+import {BasicStatistic} from '@pages/dashboard/models/basic-statistic.model';
 
 export interface TicketsPriorityChartProps {
     data: BasicStatistic[]

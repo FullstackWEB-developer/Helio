@@ -40,6 +40,9 @@ import {
 import {CallbackTicket} from '@pages/tickets/models/callback-ticket.model';
 import {PerformanceMetric} from '@pages/dashboard/models/performance-metric.model';
 import axios from 'axios';
+import {AgentPerformanceRequest} from '@pages/application/models/agent-performance-request';
+import {AgentPerformanceResponse} from '@pages/application/models/agent-performance-response';
+import {AgentContactPerformanceResponse} from '@pages/application/models/agent-contact-performance-response';
 
 const logger = Logger.getInstance();
 const ticketsBaseUrl = "/tickets";
@@ -316,6 +319,24 @@ export const getQuickConnects = async () => {
     const url = `${ticketsBaseUrl}/dashboard/quick-connects`;
     const response = await Api.get(url);
     return response.data as QuickConnectExtension[];
+};
+
+export const getTicketPerformanceForUser = async (request?: AgentPerformanceRequest) : Promise<AgentPerformanceResponse> => {
+    const url = `${ticketsBaseUrl}/dashboard/agent-ticket-performance`;
+    const response = await Api.get(url, {
+        params: request
+    });
+    return response.data;
+};
+
+export const getContactPerformanceForUser = async (userId?: string) : Promise<AgentContactPerformanceResponse> => {
+    const url = `${ticketsBaseUrl}/dashboard/agent-contact-performance`;
+    const response = await Api.get(url, {
+        params: {
+            userId: userId
+        }
+    });
+    return response.data;
 };
 
 export const getFileAsBlob = async (url: string) => {

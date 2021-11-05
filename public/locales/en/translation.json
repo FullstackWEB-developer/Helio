@@ -80,6 +80,7 @@
       "offline": "Offline"
     },
     "my_profile": "My Profile",
+    "my_stats": "My Stats",
     "my_status": "My Status",
     "sign_out": "Sign Out"
   },
@@ -1163,8 +1164,8 @@
       "title": "Tickets Volume",
       "open": "Open",
       "closed": "Closed",
-      "Open_tickets": "Open Tickets:",
-      "Closed_tickets": "Closed Tickets:"
+      "open_tickets": "Open Tickets:",
+      "closed_tickets": "Closed Tickets:"
     },
     "by_priority": {
       "title": "Open Tickets By Priority",
@@ -1189,6 +1190,53 @@
       "very_satisfied": "Very satisfied",
       "neutral": "Neutral",
       "unsatisfied": "Unsatisfied"
+    }
+  },
+  "my_stats": {
+    "title": "My Stats",
+    "last_7_days": "Last 7 Days",
+    "tickets_performance": {
+      "title": "Tickets Performance",
+      "closed": "Closed",
+      "received": "Received",
+      "resolution_rate": "Resolution Rate",
+      "received_tickets": "Received tickets",
+      "closed_tickets": "Closed tickets",
+      "received_and_closed_tickets": "Received and Closed Tickets",
+      "could_not_fetch_ticket_performance": "Could not fetch ticket performance statistics"
+    },
+    "calls_chats" : {
+      "title": "Calls and Chats Performance",
+      "calls_and_chats_volume": "Calls and Chats Volume",
+      "total_calls_and_chats": "Total Calls and Chats",
+      "occupancy": "Occupancy",
+      "answer_rate": "Answer Rate",
+      "on_contact_time": "On Contact Time",
+      "idle_time": "Idle Time",
+      "calls": "Calls",
+      "chats": "Chats",
+      "non_productive_time": "Non-Productive Time",
+      "category": "Category",
+      "contacts_handled": "Contacts Handled",
+      "avg_handle_time": "Avg. Handle Time",
+      "avg_hold_time": "Avg. Hold Time",
+      "avg_interaction_time": "Avg. Interaction Time",
+      "avg_after_contact_work": "Avg. After Contact Work",
+      "could_not_fetch_contact_performance": "Could not fetch contact performance statistics"
+    },
+    "manager_ratings" : {
+      "title": "Manager Ratings",
+      "header": "overall_ratings",
+      "star": "{{start}} star"
+    },
+    "recent_manager_reviews" : {
+      "title": "Recent Manager Reviews",
+      "date": "Date",
+      "category": "Category",
+      "ticket_id": "Ticket Id",
+      "review": "Review",
+      "rating": "Rating",
+      "manager": "Manager"
     }
   },
   "wallboard": {
