@@ -10,7 +10,7 @@ export interface RatingProps {
     data: RatingStats;
 }
 
-const RatingsWidget = ({data}: RatingProps) => {
+const DashboardRatingsWidget = ({data}: RatingProps) => {
 
     const {t} = useTranslation();
 
@@ -60,4 +60,4 @@ const RatingsWidget = ({data}: RatingProps) => {
         </div>
     </div>
 }
-export default RatingsWidget;
+export default DashboardRatingsWidget;

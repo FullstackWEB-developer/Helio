@@ -3,7 +3,7 @@ import {Icon} from '@components/svg-icon';
 import TicketsVolumeChart from '@pages/dashboard/components/charts/tickets-volume.chart';
 import TicketsPriorityChart from '@pages/dashboard/components/charts/tickets-priority.chart';
 import TicketsReasonChart from '@pages/dashboard/components/charts/tickets-reason.chart';
-import RatingsWidget from '@pages/dashboard/components/ratings-widget';
+import DashboardRatingsWidget from '@pages/dashboard/components/dashboard-ratings-widget';
 import TicketResponseTimeWidget from '@pages/dashboard/components/ticket-response-time-widget';
 import TicketsByChannelsWidget from '@pages/dashboard/components/tickets-by-channels-widget';
 import React from 'react';
@@ -77,7 +77,7 @@ const DashboardContent = (dataInput: DashboardContentProps) => {
             <div>
                 <Card hasBorderRadius title='dashboard.ratings.title'>
                     <div className='h-64'>
-                        <RatingsWidget data={data.ratingStats}/>
+                        <DashboardRatingsWidget data={data.ratingStats}/>
                     </div>
                 </Card>
             </div>

@@ -1,0 +1,13 @@
+.manager-rating-line {
+  background-color: var(--dashboard-tickets-by-channel-row);
+  top: 50%;
+  transform: translate(0, -50%);
+}
+
+.manager-rating-line-bg {
+  background-color: var(--dashboard-tickets-by-channel-row-bg);
+  position: relative;
+  bottom: 0.5rem;
+  top: 50%;
+  transform: translate(0, -50%);
+}

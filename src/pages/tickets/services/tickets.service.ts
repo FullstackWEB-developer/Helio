@@ -43,6 +43,8 @@ import axios from 'axios';
 import {AgentPerformanceRequest} from '@pages/application/models/agent-performance-request';
 import {AgentPerformanceResponse} from '@pages/application/models/agent-performance-response';
 import {AgentContactPerformanceResponse} from '@pages/application/models/agent-contact-performance-response';
+import {TicketManagerReview} from '@pages/application/models/ticket-manager-review';
+import {ManagerRatingsMetricResponse} from '@pages/application/models/manager-ratings-metric-response';
 
 const logger = Logger.getInstance();
 const ticketsBaseUrl = "/tickets";
@@ -334,6 +336,27 @@ export const getContactPerformanceForUser = async (userId?: string) : Promise<Ag
     const response = await Api.get(url, {
         params: {
             userId: userId
+        }
+    });
+    return response.data;
+};
+
+export const getRecentManagerReviewsForUser = async (userId?: string, limit?: number) : Promise<TicketManagerReview[]> => {
+    const url = `${ticketsBaseUrl}/review/latest-manager-reviews`;
+    const response = await Api.get(url, {
+        params: {
+            userId,
+            limit
+        }
+    });
+    return response.data;
+};
+
+export const getOverallManagerRatingsForUser = async (userId?: string) : Promise<ManagerRatingsMetricResponse> => {
+    const url = `${ticketsBaseUrl}/review/overall-manager-reviews`;
+    const response = await Api.get(url, {
+        params: {
+            userId
         }
     });
     return response.data;

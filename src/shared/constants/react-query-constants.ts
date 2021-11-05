@@ -66,3 +66,5 @@ export const GetRecordedConversationContent = 'get-recorded-conversation-content
 export const GetProviderPicture = 'get-provider-picture';
 export const GetTicketsPerformanceForUser = 'get-tickets-performance-for-user';
 export const GetContactPerformanceForUser = 'get-contact-performance-for-user';
+export const GetLatestManagerReviews = 'get-latest-manager-reviews';
+export const GetOverallManagerRatingsForUser = 'get-overall-manager-ratings-for-user';

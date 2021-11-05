@@ -90,11 +90,11 @@ const TicketsPerformance = ({userId, date}: TicketsPerformanceProps) => {
     }
 
     if (isLoading) {
-        return <div className='h-80'><Spinner /></div>;
+        return <div className='h-80'><Spinner fullScreen={true}/></div>;
     }
 
     if (isError) {
-        return <div className='h-80'>
+        return <div className='h-80 text-danger flex justify-center items-center'>
             {t('my_stats.tickets_performance.could_not_fetch_ticket_performance')}
         </div>
     }

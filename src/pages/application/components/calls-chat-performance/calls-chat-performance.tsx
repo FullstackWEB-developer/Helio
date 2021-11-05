@@ -85,11 +85,11 @@ const CallsChatPerformance = ({userId}: CallsChatPerformanceProps) => {
 
 
     if (isLoading) {
-        return <div className='h-80'><Spinner /></div>;
+        return <div className='h-80'><Spinner fullScreen={true} /></div>;
     }
 
     if (isError) {
-        return <div className='h-80'>
+        return <div className='h-80 text-danger flex justify-center items-center'>
             {t('my_stats.could_not_fetch_contact_performance')}
         </div>
     }

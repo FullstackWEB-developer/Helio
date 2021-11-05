@@ -1226,8 +1226,9 @@
     },
     "manager_ratings" : {
       "title": "Manager Ratings",
-      "header": "overall_ratings",
-      "star": "{{start}} star"
+      "header": "Overall Ratings",
+      "star": "{{star}} star",
+      "could_not_fetch_overall_ratings": "Could not fetch manager ratings"
     },
     "recent_manager_reviews" : {
       "title": "Recent Manager Reviews",
@@ -1236,7 +1237,8 @@
       "ticket_id": "Ticket Id",
       "review": "Review",
       "rating": "Rating",
-      "manager": "Manager"
+      "manager": "Manager",
+      "could_not_fetch_latest_manager_reviews": "Could not fetch manager reviews"
     }
   },
   "wallboard": {
