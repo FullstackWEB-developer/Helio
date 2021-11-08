@@ -37,11 +37,11 @@ import {
     AppointmentScheduleShortPath,
     ViewMedicationsPath,
     AppointmentSchedulePath,
-    AppointmentListShortPath,
-    RequestMedicalRecordsShortPath,
-    ViewMedicationsShortPath,
     NotAuthorizedPath,
-    MyStatsPath
+    MyStatsPath,
+    ViewMedicationsShortPath,
+    RequestMedicalRecordsShortPath,
+    AppointmentListShortPath
 } from './paths';
 import RealTimeUserStatusUpdate from '@shared/websockets/real-time-user-status-update';
 import ExternalAccessLayout from '@pages/external-access/layout/external-access-layout';
