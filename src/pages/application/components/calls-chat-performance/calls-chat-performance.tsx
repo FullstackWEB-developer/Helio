@@ -151,11 +151,14 @@ const CallsChatPerformance = ({userId}: CallsChatPerformanceProps) => {
                             isPercentage={true}
                             value={response?.agentPerformance[0]?.agentAnswerRate || 0}/>
                 <BasicStatistic title='my_stats.calls_chats.on_contact_time'
-                            value={response?.agentPerformance[0]?.agentOnContactTime || 0}/>
+                                valueClass='h6'
+                                value={utils.formatSeconds(response?.agentPerformance[0]?.agentOnContactTime)}/>
                 <BasicStatistic title='my_stats.calls_chats.idle_time'
-                            value={response?.agentPerformance[0]?.agentIdleTime || 0}/>
+                                valueClass='h6'
+                                value={utils.formatSeconds(response?.agentPerformance[0]?.agentIdleTime)}/>
                 <BasicStatistic title='my_stats.calls_chats.non_productive_time'
-                            value={response?.agentPerformance[0]?.nonProductiveTime || 0}/>
+                                valueClass='h6'
+                                value={utils.formatSeconds(response?.agentPerformance[0]?.nonProductiveTime)}/>
         </div>
         <div className='w-full px-6 pb-12'>
             <Table model={tableModel} />

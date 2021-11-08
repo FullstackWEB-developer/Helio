@@ -378,7 +378,7 @@ const getTimeDiffInFormattedSeconds = (endDate?: string, startDate?: string): st
     return dayjs.duration(diff, 'seconds').format('HH:mm:ss');
 }
 
-const formatSeconds = (seconds: number) => {
+const formatSeconds = (seconds: number = 0) => {
     dayjs.extend(duration);
 
     const beforeFormat = dayjs.duration(seconds, 'seconds');

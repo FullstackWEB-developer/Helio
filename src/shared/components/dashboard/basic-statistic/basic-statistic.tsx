@@ -9,15 +9,17 @@ export interface BasicStatisticProps {
     icon?: Icon;
     isPercentage?: boolean;
     value: string | number;
+    valueClass?: string
 }
 
-const BasicStatistic = ({title, value = "0", icon, isPercentage}: BasicStatisticProps) => {
+const BasicStatistic = ({title, value = "0", icon, isPercentage, valueClass}: BasicStatisticProps) => {
     const {t} = useTranslation();
     return <div className='basic-statistic flex justify-center flex-col items-center'>
         <div className='body3-medium pt-2.5 pb-3'>{t(title)}</div>
         <div className='flex flex-row'>
             <div>
-                <h4>{value}{isPercentage ? '%' : ''}</h4>
+                {valueClass ? <div className={valueClass}>{value}{isPercentage ? '%' : ''}</div> :
+                    <h4>{value}{isPercentage ? '%' : ''}</h4>}
             </div>
             {icon &&
             <div className='pl-2 pt-1'><SvgIcon className='icon-small' fillClass='danger-icon' type={icon}/>
