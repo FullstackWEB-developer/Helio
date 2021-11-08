@@ -37,7 +37,11 @@ import {
     AppointmentScheduleShortPath,
     ViewMedicationsPath,
     AppointmentSchedulePath,
-    NotAuthorizedPath, MyStatsPath
+    AppointmentListShortPath,
+    RequestMedicalRecordsShortPath,
+    ViewMedicationsShortPath,
+    NotAuthorizedPath,
+    MyStatsPath
 } from './paths';
 import RealTimeUserStatusUpdate from '@shared/websockets/real-time-user-status-update';
 import ExternalAccessLayout from '@pages/external-access/layout/external-access-layout';
@@ -120,13 +124,17 @@ function App() {
                         <VerifiedPatientGuard>
                             <Switch>
                                 <Route path={AppointmentListPath} component={withSuspense(AppointmentList)} />
+                                <Route path={AppointmentListShortPath} component={withSuspense(AppointmentList)} />
                                 <Route path={`${AppointmentDetailPath}/:appointmentId`} component={withSuspense(AppointmentDetail)} />
                                 <Route path={`${AppointmentDetailShortPath}/:appointmentId`} component={withSuspense(AppointmentDetail)} />
                                 <Route path={RequestRefillPath} component={withSuspense(RequestRefill)} />
+                                <Route path={ViewMedicationsShortPath} component={withSuspense(ViewMedications)} />
                                 <Route path={ViewMedicationsPath} component={withSuspense(ViewMedications)} />
                                 <Route path='/o/request-refill-confirmation' component={withSuspense(RequestRefillConfirmation)} />
                                 <Route path={RequestMedicalRecordsPath} component={withSuspense(RequestMedicalRecords)} />
+                                <Route path={RequestMedicalRecordsShortPath} component={withSuspense(RequestMedicalRecords)} />
                                 <Route exact path={LabResultsPath} component={withSuspense(LabResults)} />
+                                <Route exact path={LabResultsShortPath} component={withSuspense(LabResults)} />
                                 <Route path={`${LabResultsPath}/:labResultId`} component={withSuspense(LabResultsDetailed)} />
                                 <Route path={`${LabResultsShortPath}/:labResultId`} component={withSuspense(LabResultsDetailed)} />
                                 <Route exact path={AppointmentSchedulePath} component={withSuspense(AppointmentSchedule)} />

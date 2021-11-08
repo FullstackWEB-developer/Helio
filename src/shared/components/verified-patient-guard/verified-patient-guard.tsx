@@ -6,7 +6,7 @@ import {
     AppointmentCancelShortPath,
     AppointmentDetailPath,
     AppointmentDetailShortPath,
-    AppointmentListPath,
+    AppointmentListPath, AppointmentListShortPath,
     AppointmentRescheduleConfirmPath,
     AppointmentRescheduledPath,
     AppointmentReschedulePath,
@@ -17,8 +17,8 @@ import {
     InitialVerificationPath,
     LabResultsPath,
     LabResultsShortPath,
-    RequestMedicalRecordsPath,
-    ViewMedicationsPath
+    RequestMedicalRecordsPath, RequestMedicalRecordsShortPath,
+    ViewMedicationsPath, ViewMedicationsShortPath
 } from '@app/paths';
 import {RedirectLink} from '@pages/external-access/verify-patient/models/redirect-link';
 import {ExternalAccessRequestTypes} from '@pages/external-access/models/external-updates-request-types.enum';
@@ -95,6 +95,12 @@ const VerifiedPatientGuard = ({children}: VerifiedPatientGuardProps) => {
         strict: false
     });
 
+    const appointmentListShortMatch = matchPath(history.location.pathname, {
+        path: `${AppointmentListShortPath}`,
+        exact: true,
+        strict: false
+    });
+
     const appointmentRescheduledMatch = matchPath(history.location.pathname, {
         path: AppointmentRescheduledPath,
         exact: true,
@@ -109,6 +115,12 @@ const VerifiedPatientGuard = ({children}: VerifiedPatientGuardProps) => {
 
     const labResultsMatch = matchPath(history.location.pathname, {
         path: LabResultsPath,
+        exact: true,
+        strict: false
+    });
+
+    const labResultsShortMatch = matchPath(history.location.pathname, {
+        path: LabResultsShortPath,
         exact: true,
         strict: false
     });
@@ -131,8 +143,20 @@ const VerifiedPatientGuard = ({children}: VerifiedPatientGuardProps) => {
         strict: false
     });
 
+    const requestMedicalRecordsShortMatch = matchPath(history.location.pathname, {
+        path: RequestMedicalRecordsShortPath,
+        exact: true,
+        strict: false
+    });
+
     const viewMedicationsMatch = matchPath(history.location.pathname, {
         path: ViewMedicationsPath,
+        exact: true,
+        strict: false
+    });
+
+    const viewMedicationsShortMatch = matchPath(history.location.pathname, {
+        path: ViewMedicationsShortPath,
         exact: true,
         strict: false
     });
@@ -144,15 +168,15 @@ const VerifiedPatientGuard = ({children}: VerifiedPatientGuardProps) => {
         requestType = ExternalAccessRequestTypes.CancelAppointment;
     } else if (viewAppointmentMatch || viewAppointmentShortMatch) {
         requestType = ExternalAccessRequestTypes.GetAppointmentDetail;
-    } else if (appointmentListMatch) {
+    } else if (appointmentListMatch || appointmentListShortMatch) {
         requestType = ExternalAccessRequestTypes.AppointmentList;
     } else if (scheduleAppointmentMatch || appointmentScheduledMatch || scheduleAppointmentShortMatch) {
         requestType = ExternalAccessRequestTypes.ScheduleAppointment;
-    } else if (labResultsMatch || singleLabResultMatch || singleLabResultShortMatch) {
+    } else if (labResultsMatch || singleLabResultMatch || singleLabResultShortMatch || labResultsShortMatch) {
         requestType = ExternalAccessRequestTypes.GetLabResults;
-    } else if (viewMedicationsMatch) {
+    } else if (viewMedicationsMatch || viewMedicationsShortMatch) {
         requestType = ExternalAccessRequestTypes.RequestRefill
-    } else if (requestMedicalRecordsMatch) {
+    } else if (requestMedicalRecordsMatch || requestMedicalRecordsShortMatch) {
         requestType = ExternalAccessRequestTypes.RequestMedicalRecords
     }
 

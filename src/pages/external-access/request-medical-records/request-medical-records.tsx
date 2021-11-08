@@ -137,7 +137,7 @@ const RequestMedicalRecords = () => {
         e.preventDefault();
         setLoading(true);
         setRequestType(type);
-        const requestId = !!verifyLink.redirectAfterVerification ? dayjs().format('YYYYMMDD-HHmmss') :  verifyLink.linkId;
+        const requestId = !!verifyLink.redirectAfterVerification ? (dayjs().format('YYYYMMDD-HHmmss') +  (Math.random() + 1).toString(36).substring(7)) :  verifyLink.linkId;
         setDownloadRequestId(requestId);
         let request: DownloadMedicalRecordsProps = {
             patientId: patient.patientId,

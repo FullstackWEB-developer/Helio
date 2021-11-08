@@ -61,6 +61,9 @@ const RegistrationForm = ({step, goStepForward, goBack}: {step: RegistrationStep
     if (utils.isMinor(dobValue) && !errors.dob) {
         setError('dob', {type: 'min', message: 'external_access.registration.minor_dob'});
     }
+    if(utils.isValidDobByAthenaMaxAgeConstraint(dobValue) && !errors.dob){
+        setError('dob', {type: 'max', message: 'external_access.registration.max_age'})
+    }
 
     const insuranceOptions: Option[] = [
         {

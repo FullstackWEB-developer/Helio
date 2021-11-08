@@ -18,6 +18,8 @@ const PersonalInformationRegistrationStep = ({control, errors}: {control: Contro
                     return t('external_access.invalid_dob', {'format': utils.getBrowserDatePattern()});
                 case "min":
                     return t('external_access.registration.minor_dob');
+                case "max":
+                    return t('external_access.registration.max_age');
             }
         }
     }
