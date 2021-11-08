@@ -183,6 +183,7 @@ const Sms = () => {
     const sendMessageMutation = useMutation(sendMessage, {
         onSuccess: (response) => {
             response.createdOn = dayjs().utc().local().toDate();
+            pushMessage(response);
             modifySummaryMessage(response.ticketId, undefined, response.body);
         }
     });

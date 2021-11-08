@@ -64,8 +64,10 @@ const TableHeader = ({headers, className, size}: TableHeaderProps) => {
     }
 
     const content = headers.map(header => <TableHeaderColumn header={header}/>);
-    const headerClassName = classnames('flex flex-row caption-caps table-header px-4 h-8 items-center', className, {
-        'h-12': size === 'large'
+    const headerClassName = classnames('flex flex-row caption-caps table-header h-8 items-center', className, {
+        'h-12': size === 'large',
+        'px-4': size !== 'large',
+        'px-6': size === 'large'
     });
     return (
         <div
