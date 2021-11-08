@@ -81,9 +81,6 @@ const CallsChatPerformance = ({userId}: CallsChatPerformanceProps) => {
         ]);
     }
 
-
-
-
     if (isLoading) {
         return <div className='h-80'><Spinner fullScreen={true} /></div>;
     }
