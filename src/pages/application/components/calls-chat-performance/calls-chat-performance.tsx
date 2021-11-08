@@ -143,19 +143,19 @@ const CallsChatPerformance = ({userId}: CallsChatPerformanceProps) => {
         </div>
         <div className='flex flex-row h-full justify-between px-12 pb-12'>
                 <BasicStatistic title='my_stats.calls_chats.total_calls_and_chats'
-                            value={response?.agentPerformance[0].contactsHandled || 0}/>
+                            value={response?.agentPerformance[0]?.contactsHandled || 0}/>
                 <BasicStatistic title='my_stats.calls_chats.occupancy'
                             isPercentage={true}
-                            value={response?.agentPerformance[0].occupancy || 0}/>
+                            value={response?.agentPerformance[0]?.occupancy || 0}/>
                 <BasicStatistic title='my_stats.calls_chats.answer_rate'
                             isPercentage={true}
-                            value={response?.agentPerformance[0].agentAnswerRate || 0}/>
+                            value={response?.agentPerformance[0]?.agentAnswerRate || 0}/>
                 <BasicStatistic title='my_stats.calls_chats.on_contact_time'
-                            value={response?.agentPerformance[0].agentOnContactTime || 0}/>
+                            value={response?.agentPerformance[0]?.agentOnContactTime || 0}/>
                 <BasicStatistic title='my_stats.calls_chats.idle_time'
-                            value={response?.agentPerformance[0].agentIdleTime || 0}/>
+                            value={response?.agentPerformance[0]?.agentIdleTime || 0}/>
                 <BasicStatistic title='my_stats.calls_chats.non_productive_time'
-                            value={response?.agentPerformance[0].nonProductiveTime || 0}/>
+                            value={response?.agentPerformance[0]?.nonProductiveTime || 0}/>
         </div>
         <div className='w-full px-6 pb-12'>
             <Table model={tableModel} />

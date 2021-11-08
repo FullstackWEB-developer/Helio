@@ -70,6 +70,7 @@ const RecentManagerReviews = ({userId, limit}: RecentManagerReviewsProps) => {
     const tableModel = useMemo(() => {
         return {
             size:'large',
+            emptyMessage:'my_stats.recent_manager_reviews.no_review',
             hasRowsBottomBorder: true,
             rowClass:'h-10',
             columns: [{

@@ -12,7 +12,7 @@ import Rating from '@components/rating/rating';
 import {ManagerRatingsMetric} from '@pages/application/models/manager-ratings-metric';
 import ManagerRatingLine from '@pages/application/components/manager-ratings/manager-rating-line';
 export interface ManagerRatingsProps {
-    userId: string;
+    userId?: string;
 }
 const ManagerRatings = ({userId} : ManagerRatingsProps) => {
 
