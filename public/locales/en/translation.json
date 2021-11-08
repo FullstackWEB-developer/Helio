@@ -769,7 +769,13 @@
       "appointment_scheduled": "Thank you. Your appointment is scheduled.",
       "select_business_day": "Select business day, please.",
       "new_appointment_date_time": "New Appointment date and time",
-      "reschedule_appointment_title": "Reschedule Appointment"
+      "reschedule_appointment_title": "Reschedule Appointment",
+      "new_appointment": {
+        "title": "Schedule your appointment online.",
+        "patient_status_question": "Are you existing or new patient?",
+        "new_patient": "I am a new patient",
+        "existing_patient": "I am an existing patient"
+      }
     },
     "medical_records_request": {
       "title": "Your Medical Record",

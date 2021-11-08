@@ -40,7 +40,8 @@ import {
     NotAuthorizedPath,
     AppointmentListShortPath,
     RequestMedicalRecordsShortPath,
-    ViewMedicationsShortPath
+    ViewMedicationsShortPath,
+    AppointmentSchedulePatientStatusPathRouter
 } from './paths';
 import RealTimeUserStatusUpdate from '@shared/websockets/real-time-user-status-update';
 import ExternalAccessLayout from '@pages/external-access/layout/external-access-layout';
@@ -94,6 +95,7 @@ const ExternalUserCreateCallbackTicket = React.lazy(() => import('@pages/externa
 const Registration = React.lazy(() => import('@pages/external-access/registration/registration'));
 const ExternalAppointmentFound = React.lazy(() => import('@pages/external-access/appointment/appointment-found'));
 const NotAuthorized = React.lazy(() => import('@pages/not-authorized/not-authorized'));
+const NewAppointmentRouter = React.lazy(() => import('@pages/external-access/appointment/new-appointment-router/new-appointment-router'));
 
 function App() {
     const accessToken = useSelector(selectAccessToken);
@@ -118,6 +120,7 @@ function App() {
                         <Route path='/o/callback-ticket' component={withSuspense(ExternalUserCreateCallbackTicket)} />
                         <Route path={RegistrationPath} component={withSuspense(Registration)} />
                         <Route path={RegistrationShortPath} component={withSuspense(Registration)} />
+                        <Route path={AppointmentSchedulePatientStatusPathRouter} component={withSuspense(NewAppointmentRouter)} />
                         <VerifiedPatientGuard>
                             <Switch>
                                 <Route path={AppointmentListPath} component={withSuspense(AppointmentList)} />
