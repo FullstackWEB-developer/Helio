@@ -11,7 +11,7 @@ export interface TableRowProps {
 
 const TableRow = ({data, columns, size, rowClass=''}: TableRowProps) => {
 
-    const rowClassName = classNames('flex flex-row', {
+    const calculatedRowClass = classNames('flex flex-row', {
         rowClass,
         'px-4': size !== 'large',
         'px-6': size === 'large'
@@ -28,7 +28,7 @@ const TableRow = ({data, columns, size, rowClass=''}: TableRowProps) => {
             <div className={`${rowClassname ? rowClassname : ''}`}>{data[field as any]}</div>
         </div>
     })
-    return <div className={rowClassName}>{content}</div>;
+    return <div className={calculatedRowClass}>{content}</div>;
 }
 
 export default TableRow;
