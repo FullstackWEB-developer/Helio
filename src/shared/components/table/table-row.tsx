@@ -11,8 +11,7 @@ export interface TableRowProps {
 
 const TableRow = ({data, columns, size, rowClass=''}: TableRowProps) => {
 
-    const calculatedRowClass = classNames('flex flex-row', {
-        rowClass,
+    const calculatedRowClass = classNames(`flex flex-row ${rowClass}`, {
         'px-4': size !== 'large',
         'px-6': size === 'large'
     });
