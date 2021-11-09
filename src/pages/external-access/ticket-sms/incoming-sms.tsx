@@ -18,11 +18,11 @@ const IncomingSms = ({message} : {message: TicketMessage}) => {
                 <div className='body2 pr-1'>{t('external_access.ticket_sms.me')}</div>
                 <div className='body3-small'>{dayjs.utc(message.createdOn).local().format('HH:mm A')}</div>
             </div>
-            <div className='incoming_sms pl-4 pr-4 pt-3 pb-4 body2 rounded-b-md rounded-tl-md'>
+            <div className='incoming_sms pl-4 pr-4 pt-3 pb-4 body2 rounded-b-md rounded-tl-md break-words'>
                 <Linkify
                     componentDecorator={(decoratedHref, decoratedText, key) => (
                         <a target="blank" href={decoratedHref} key={key}>
-                            {decoratedText}
+                            <span className='break-all'>{decoratedText}</span>
                         </a>
                     )}
                 >{message.body}</Linkify>

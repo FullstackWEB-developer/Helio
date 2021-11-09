@@ -30,11 +30,11 @@ const OutgoingSms = ({message, users}: {message: TicketMessage, users?: UserBase
                 </div>
                 <div className='body3-small'>{dayjs.utc(message.createdOn).local().format('HH:mm A')}</div>
             </div>
-            <div className='outgoing_sms pl-4 pr-2 pt-3 pb-4 rounded-b-md rounded-tr-md body2-white break-word'>
+            <div className='outgoing_sms pl-4 pr-2 pt-3 pb-4 rounded-b-md rounded-tr-md body2-white break-words'>
                 <Linkify
                     componentDecorator={(decoratedHref, decoratedText, key) => (
                         <a target="blank" href={decoratedHref} key={key}>
-                            {decoratedText}
+                            <span className='break-all'>{decoratedText}</span>
                         </a>
                     )}
                 >{message.body}</Linkify>
