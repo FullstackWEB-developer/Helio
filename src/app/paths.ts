@@ -37,3 +37,5 @@ export const RequestMedicalRecordsShortPath = '/o/rm';
 export const AppointmentRescheduleConfirmPath = '/o/appointment-reschedule-confirm';
 export const AppointmentRescheduledPath = '/o/appointment-rescheduled';
 export const AppointmentSchedulePatientStatusPathRouter = '/o/new-appointment';
+export const AppointmentConfirmationPath = '/o/appointment-confirmation';
+export const AppointmentConfirmationShortPath = '/o/aco';

@@ -42,7 +42,9 @@ import {
     ViewMedicationsShortPath,
     RequestMedicalRecordsShortPath,
     AppointmentListShortPath,
-    AppointmentSchedulePatientStatusPathRouter
+    AppointmentSchedulePatientStatusPathRouter,
+    AppointmentConfirmationPath,
+    AppointmentConfirmationShortPath
 } from './paths';
 import RealTimeUserStatusUpdate from '@shared/websockets/real-time-user-status-update';
 import ExternalAccessLayout from '@pages/external-access/layout/external-access-layout';
@@ -98,6 +100,8 @@ const ExternalAppointmentFound = React.lazy(() => import('@pages/external-access
 const NotAuthorized = React.lazy(() => import('@pages/not-authorized/not-authorized'));
 const MyStats = React.lazy(() => import('@pages/application/my-stats'));
 const NewAppointmentRouter = React.lazy(() => import('@pages/external-access/appointment/new-appointment-router/new-appointment-router'));
+const AppointmentConfirmation = React.lazy(() => import('@pages/external-access/appointment/appointment-confirmation/appointment-confirmation'));
+const AppointmentConfirmed = React.lazy(()=> import('@pages/external-access/appointment/appointment-confirmed'));
 
 function App() {
     const accessToken = useSelector(selectAccessToken);
@@ -145,6 +149,9 @@ function App() {
                                 <Route exact path={`${AppointmentSchedulePath}/select`} component={withSuspense(AppointmentScheduleSelect)} />
                                 <Route exact path={`${AppointmentSchedulePath}/confirm`} component={withSuspense(AppointmentScheduleConfirm)} />
                                 <Route path={AppointmentScheduledPath} component={withSuspense(AppointmentRescheduled)} />
+                                <Route path={`${AppointmentConfirmationPath}/:appointmentId`} component={withSuspense(AppointmentConfirmation)} />
+                                <Route path={`${AppointmentConfirmationShortPath}/:appointmentId`} component={withSuspense(AppointmentConfirmation)} />
+                                <Route path='/o/appointment-confirmed' component={withSuspense(AppointmentConfirmed)} />
                                 <Route path={`${AppointmentCancelPath}/:appointmentId`} component={withSuspense(AppointmentCancel)} />
                                 <Route path={`${AppointmentCancelShortPath}/:appointmentId`} component={withSuspense(AppointmentCancel)} />
                                 <Route path='/o/appointment-canceled' component={withSuspense(AppointmentCanceled)} />

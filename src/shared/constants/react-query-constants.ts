@@ -68,3 +68,5 @@ export const GetTicketsPerformanceForUser = 'get-tickets-performance-for-user';
 export const GetContactPerformanceForUser = 'get-contact-performance-for-user';
 export const GetLatestManagerReviews = 'get-latest-manager-reviews';
 export const GetOverallManagerRatingsForUser = 'get-overall-manager-ratings-for-user';
+export const GetAppointmentById = 'get-appointment-by-id';
+export const GetAppointmentNotes = 'get-appointment-notes';

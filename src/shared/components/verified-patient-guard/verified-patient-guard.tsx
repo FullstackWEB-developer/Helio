@@ -4,6 +4,8 @@ import {useHistory} from 'react-router-dom';
 import {
     AppointmentCancelPath,
     AppointmentCancelShortPath,
+    AppointmentConfirmationPath,
+    AppointmentConfirmationShortPath,
     AppointmentDetailPath,
     AppointmentDetailShortPath,
     AppointmentListPath, AppointmentListShortPath,
@@ -161,6 +163,18 @@ const VerifiedPatientGuard = ({children}: VerifiedPatientGuardProps) => {
         strict: false
     });
 
+    const confirmAppointmentMatch = matchPath(history.location.pathname, {
+        path: `${AppointmentConfirmationPath}/:appointmentId`,
+        exact: true,
+        strict: false
+    });
+
+    const confirmAppointmentShortMatch = matchPath(history.location.pathname, {
+        path: `${AppointmentConfirmationShortPath}/:appointmentId`,
+        exact: true,
+        strict: false
+    });
+
     let requestType = ExternalAccessRequestTypes.None;
     if (rescheduleAppointmentMatch || rescheduleAppointmentShortMatch || appointmentRescheduleConfirmMatch || appointmentRescheduledMatch) {
         requestType = ExternalAccessRequestTypes.RescheduleAppointment;
@@ -178,6 +192,8 @@ const VerifiedPatientGuard = ({children}: VerifiedPatientGuardProps) => {
         requestType = ExternalAccessRequestTypes.RequestRefill
     } else if (requestMedicalRecordsMatch || requestMedicalRecordsShortMatch) {
         requestType = ExternalAccessRequestTypes.RequestMedicalRecords
+    } else if(confirmAppointmentMatch || confirmAppointmentShortMatch){
+        requestType = ExternalAccessRequestTypes.AppointmentConfirmation
     }
 
     const dispatch = useDispatch();

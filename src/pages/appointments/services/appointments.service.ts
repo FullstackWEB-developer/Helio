@@ -1,11 +1,17 @@
 import Api from '../../../shared/services/api';
 import {Appointment} from '@pages/external-access/appointment/models/appointment.model';
+import {ConfirmationStatus} from '@pages/external-access/appointment/models/appointment-confirmation-status.enum';
 import utils from '@shared/utils/utils';
 import {AppointmentCancellationModel} from '@pages/external-access/appointment/models/appointment-cancellation.model';
 import {AppointmentSlotRequest, AppointmentType} from '@pages/external-access/appointment/models';
 import {CreateAppointmentRequest} from '../models/create-appointment-request';
 const itemCount = 100;
 const appointmentsBaseUrl = '/appointments';
+
+export const getAppointmentById = async (appointmentId: string) => {
+     const {data} = await Api.get(`${appointmentsBaseUrl}/${appointmentId}`);
+     return data;
+}
 
 export const getHotSpots = async () => {
      const url = `${appointmentsBaseUrl}/hotspots`;
@@ -123,4 +129,14 @@ export const cancelAppointment = async ({appointmentId, data}: CancelAppointment
           cancellationReason: data.cancellationReason
      });
      return result.data;
+}
+
+export const confirmAppointment = async({appointmentId, confirmationStatus}:{appointmentId: string, confirmationStatus: ConfirmationStatus}) => {
+     const url = `${appointmentsBaseUrl}/${appointmentId}/confirm`;
+     const {data} = await Api.put(url, undefined, {
+          params: {
+               confirmationStatus
+          }
+     });
+     return data;
 }

@@ -119,7 +119,7 @@ const AppointmentScheduleConfirm = () => {
                     </h6>
                     {provider &&
                         <div className='pb-2 body1'>
-                            {t('external_access.appointments.withDoctor', {
+                            {t('external_access.appointments.with_doctor', {
                                 name: provider.displayName
                             })}
                         </div>}

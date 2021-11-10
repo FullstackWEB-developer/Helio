@@ -447,6 +447,14 @@ const hasPermission = (permission: string) => {
     return appUserDetails?.permissions?.includes(permission);
 }
 
+const isDateInNextSevenDays = (date: Date) => {    
+    return Math.abs(dayjs().diff(date, 'day')) <= 7 && (dayjs().isBefore(date) || dayjs().isSame(date, 'day'));    
+}
+
+const isDateTimeInPast = (date: Date) => {
+    return dayjs(date).isBefore(dayjs(), 'milliseconds');
+}
+
 
 const utils = {
     getWindowCenter,
@@ -492,7 +500,9 @@ const utils = {
     downloadFileFromData,
     initiateACall,
     hasPermission,
-    formatSeconds
+    formatSeconds,
+    isDateInNextSevenDays,
+    isDateTimeInPast
 };
 
 export default utils;

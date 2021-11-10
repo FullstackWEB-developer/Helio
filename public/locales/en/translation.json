@@ -681,6 +681,7 @@
     "title_8": "Schedule appointment online.",
     "title_9": "You have a new message.",
     "title_11": "Manage your appointments online.",
+    "title_12": "Confirm your appointment.",
     "send_us_message": "Send us a message",
     "message_sent": "This message has been sent",
     "message_send_failed": "This message could not be sent",
@@ -735,7 +736,7 @@
       "appointment_schedule": "Schedule Appointment",
       "see_appointment_details": "Please see your appointment details below.",
       "appointment_date": "{{date}} at {{time}}",
-      "withDoctor": "With {{name}}",
+      "with_doctor": "With {{name}}",
       "online_checkin": "Online Check In",
       "reschedule": "Reschedule",
       "instructions": "Instructions",
@@ -776,6 +777,17 @@
         "patient_status_question": "Are you existing or new patient?",
         "new_patient": "I am a new patient",
         "existing_patient": "I am an existing patient"
+      },
+      "confirmation": {
+        "title": "Confirm Appointment",
+        "subtitle": "Please confirm your upcoming appointment below.",
+        "subtitle_past": "This appointment is in the past.",
+        "error_fetching": "The appointment {{appointmentId}} is not available.",
+        "confirm": "Confirm",
+        "confirm_error": "Appointment confirmation failed. Please try again.",
+        "not_in_next_seven_days": "You may only confirm upcoming appointments scheduled within next 7 days.",
+        "confirmed_title": "Thank you. Your Appointment has been confirmed.",
+        "confirmed_desc": "We look forward to seeing you at your next appointment.\nIf you have any questions <0>chat</0> with us or call us <1>callUsPhone</1>. We will be happy to assist you."
       }
     },
     "medical_records_request": {

@@ -51,3 +51,4 @@ export const selectProviderById = (state: RootState, providerId: number) => {
 export const selectIsDepartmentListLoading = (state: RootState) => state.lookupsState.isLoading as boolean;
 export const selectMetricOptions = (state: RootState) => state.lookupsState.metricOptions as KeyValuePair[];
 export const selectForwardToOptions = (state: RootState) => state.lookupsState.forwardToOptions as TicketEnumValue[];
+export const selectIsLoadingLookupValues = (state: RootState) => state.lookupsState.isLoading as boolean;
