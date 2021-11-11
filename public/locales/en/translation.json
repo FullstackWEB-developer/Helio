@@ -246,7 +246,7 @@
   "search": {
     "search_type": {
       "patient_id": "Patient ID (XXXXX)",
-      "patient_name": "Patient Name (Last, First)",
+      "patient_name": "Patient Name (First, Last)",
       "dob": "Date of birth (02/02/2020)",
       "phone": "Phone number (310-000-0000)",
       "contact_name": "Contact Name",
@@ -731,7 +731,7 @@
       "select_appointment": "Please select appointment to view details.",
       "fetch_failed": "Could not retrieve appointments from server. Please try again later",
       "no_appointment_with_id": "We could not find your appointment with Id {{id}}, You can see your appointments below",
-      "no_single_appointment_with_id" : "We could not find your appointment with Id {{id}}",
+      "no_single_appointment_with_id": "We could not find your appointment with Id {{id}}",
       "appointment_details": "Appointment Details",
       "appointment_schedule": "Schedule Appointment",
       "see_appointment_details": "Please see your appointment details below.",
@@ -1224,7 +1224,7 @@
       "received_and_closed_tickets": "Received and Closed Tickets",
       "could_not_fetch_ticket_performance": "Could not fetch ticket performance statistics"
     },
-    "calls_chats" : {
+    "calls_chats": {
       "title": "Calls and Chats Performance",
       "calls_and_chats_volume": "Calls and Chats Volume",
       "total_calls_and_chats": "Total Calls and Chats",
@@ -1243,13 +1243,13 @@
       "avg_after_contact_work": "Avg. After Contact Work",
       "could_not_fetch_contact_performance": "Could not fetch contact performance statistics"
     },
-    "manager_ratings" : {
+    "manager_ratings": {
       "title": "Manager Ratings",
       "header": "Overall Ratings",
       "star": "{{star}} star",
       "could_not_fetch_overall_ratings": "Could not fetch manager ratings"
     },
-    "recent_manager_reviews" : {
+    "recent_manager_reviews": {
       "title": "Recent Manager Reviews",
       "date": "Date",
       "category": "Category",
@@ -1340,7 +1340,7 @@
       "view_ticket": "View Ticket Details",
       "empty": {
         "title": "Start your new SMS conversation.",
-        "description": "Enter you message below."
+        "description": "Enter your message below."
       },
       "header": {
         "patient_id": "Patient ID",

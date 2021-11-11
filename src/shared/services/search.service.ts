@@ -1,21 +1,30 @@
-import Api from './api';
-import utils from '@shared/utils/utils';
-import {Patient} from '@pages/patients/models/patient';
-const patientsUrl = '/patients';
-const contactsUrl = '/contacts';
-const ticketsUrl = '/tickets';
+import Api from "./api";
+import utils from "@shared/utils/utils";
+import { Patient } from "@pages/patients/models/patient";
+import { searchTypePatient } from "@components/search-bar/constants/search-type";
+const patientsUrl = "/patients";
+const contactsUrl = "/contacts";
+const ticketsUrl = "/tickets";
 
-export const getPatients = async (type: number, term: string, includePatientDetails: boolean = false) => {
-    const response = await Api.get<Patient[]>(patientsUrl, {
-        params: {
-            searchType: type,
-            searchTerm: term,
-            forceSingleReturn: false,
-            includePatientDetails: includePatientDetails
-        }
-    });
-    return response.data;
-}
+export const getPatients = async (
+  type: number,
+  term: string,
+  includePatientDetails: boolean = false
+) => {
+  if (type === searchTypePatient.patientName) {
+    term = term.replace(/(\w+)(,)?(\s)?(\w+)?/, "$4, $1");
+  }
+
+  const response = await Api.get<Patient[]>(patientsUrl, {
+    params: {
+      searchType: type,
+      searchTerm: term,
+      forceSingleReturn: false,
+      includePatientDetails: includePatientDetails,
+    },
+  });
+  return response.data;
+};
 
 export const queryContacts = async (searchTerm: string, page = 1) => {
     const {data} = await Api.get(`${contactsUrl}?searchTerm=${searchTerm}&page=${page}`);
