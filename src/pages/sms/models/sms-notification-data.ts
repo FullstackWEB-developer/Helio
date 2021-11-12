@@ -1,3 +1,5 @@
+import {TicketMessagesDirection} from '@shared/models';
+
 export interface SmsNotificationData {
     ticketId: string;
     channelId: string;
@@ -5,4 +7,5 @@ export interface SmsNotificationData {
     assignedToUserId: string;
     createdOn: Date;
     persist: boolean;
+    messageDirection: TicketMessagesDirection;
 }

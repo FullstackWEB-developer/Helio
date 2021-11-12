@@ -116,7 +116,7 @@ const CallsLogList = () => {
             });
         }
 
-        if (canAddTicketReview) {
+        if (canAddTicketReview && !!data.assigneeUser) {
             options.push({
                 label: 'ticket_log.add_review',
                 value: '5',

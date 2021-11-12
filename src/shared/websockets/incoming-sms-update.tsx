@@ -3,6 +3,7 @@ import {appendUnreadSMSList} from '@shared/store/app-user/appuser.slice';
 import {useEffect} from 'react';
 import {useDispatch} from 'react-redux';
 import {useSignalRConnectionContext} from '../contexts/signalRContext';
+import {TicketMessagesDirection} from '@shared/models';
 
 const IncomingSmsUpdate = () => {
 
@@ -21,7 +22,9 @@ const IncomingSmsUpdate = () => {
     }, [smsIncoming]);
 
     const onSMSReceived = (data: SmsNotificationData) => {
-        dispatch(appendUnreadSMSList(data.ticketId));
+        if (data.messageDirection === TicketMessagesDirection.Incoming) {
+            dispatch(appendUnreadSMSList(data.ticketId));
+        }
     }
     return null;
 }

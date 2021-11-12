@@ -9,7 +9,7 @@ import DropdownLabel from '@components/dropdown-label';
 import SearchInputField from '@components/search-input-field/search-input-field';
 import SvgIcon, {Icon} from '@components/svg-icon';
 import {SmsChat, SmsSummaryList, SmsFilter, SmsNewMessage} from './components';
-import {GetTicketMessage, QueryTicketMessagesInfinite, QueryTicketMessageSummaryByTicketId, QueryTicketMessageSummaryInfinite} from '@constants/react-query-constants';
+import {QueryTicketMessagesInfinite, QueryTicketMessageSummaryByTicketId, QueryTicketMessageSummaryInfinite} from '@constants/react-query-constants';
 import {
     ChannelTypes,
     ContactExtended,
@@ -18,7 +18,7 @@ import {
     TicketMessageSummary,
     TicketMessageSummaryRequest
 } from '@shared/models';
-import {getChats, getMessage, getMessages, markRead, sendMessage} from './services/ticket-messages.service';
+import {getChats, getMessages, markRead, sendMessage} from './services/ticket-messages.service';
 import {DATE_INPUT_LONG_FORMAT, DEBOUNCE_SEARCH_DELAY_MS} from '@constants/form-constants';
 import useDebounce from '@shared/hooks/useDebounce';
 import {
@@ -64,11 +64,11 @@ const Sms = () => {
     const [filterParam, setFilterParam] = useState<SmsFilterParamModel>({...DEFAULT_FILTER_VALUE, assignedTo: id});
     const [summaryMessages, setSummaryMessages] = useState<TicketMessageSummary[]>([])
     const [smsQueryType, setSmsQueryType] = useState<SmsQueryType>();
-    const [newMessageId, setNewMessageId] = useState('');
     const {smsIncoming} = useSignalRConnectionContext();
     const unreadSMSList = useSelector(selectUnreadSMSList) ?? [];
     const {state} = useLocation<SmsLocationState>();
     const {ticketId} = useParams<{ticketId?: string}>();
+    const [lastMessageSendTime, setLastMessageSendTime] = useState<Date>();
     const history = useHistory();
     const dispatch = useDispatch();
 
@@ -165,25 +165,12 @@ const Sms = () => {
         setSummaryMessages(currentSummaryMessagesClone);
     }
 
-    const getNewMessageQuery = useQuery([GetTicketMessage, newMessageId], () => getMessage(newMessageId),
-        {
-            enabled: !!newMessageId,
-            onSuccess: (result) => {
-                const isTicketSummarySelected = summaryMessages && selectedTicketSummary?.ticketId === result.ticketId;
-                modifySummaryMessage(result.ticketId, !isTicketSummarySelected ? 1 : undefined, result.body);
-                if (isTicketSummarySelected) {
-                    pushMessage(result);
-                }
-            },
-            onSettled: () => {
-                setNewMessageId('');
-            }
-        });
-
     const sendMessageMutation = useMutation(sendMessage, {
         onSuccess: (response) => {
             response.createdOn = dayjs().utc().local().toDate();
+            pushMessage(response);
             modifySummaryMessage(response.ticketId, undefined, response.body);
+            setLastMessageSendTime(response.createdOn);
         }
     });
 
@@ -200,7 +187,6 @@ const Sms = () => {
         if (messageIndex < 0) {
             refetch();
         }
-        setNewMessageId(data.messageId);
     }, [refetch, summaryMessages]);
 
     useEffect(() => {
@@ -374,9 +360,10 @@ const Sms = () => {
                     messages={messages}
                     isLoading={isMessageQueryFetchingNextPage}
                     isSending={sendMessageMutation.isLoading}
-                    isBottomFocus={sendMessageMutation.isLoading || getNewMessageQuery.isLoading}
+                    isBottomFocus={sendMessageMutation.isLoading}
                     onSendClick={onSendMessage}
                     onFetchMore={messageFetchMore}
+                    lastMessageSendTime = {lastMessageSendTime}
                 />
             );
         }

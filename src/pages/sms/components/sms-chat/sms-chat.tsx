@@ -30,9 +30,10 @@ interface SmsChatProps {
     isBottomFocus?: boolean;
     onSendClick: (toAddress: string, text: string) => void;
     onFetchMore?: () => void;
+    lastMessageSendTime?: Date;
 }
 
-const SmsChat = ({info, isLoading, isSending, isBottomFocus, messages = [], ...props}: SmsChatProps) => {
+const SmsChat = ({info, isLoading, isSending, isBottomFocus, messages = [], lastMessageSendTime,...props}: SmsChatProps) => {
     const dispatch = useDispatch();
     const {t} = useTranslation();
     const messageListContainerRef = useRef<HTMLDivElement>(null);
@@ -56,6 +57,10 @@ const SmsChat = ({info, isLoading, isSending, isBottomFocus, messages = [], ...p
         dispatch(getLookupValues('TicketReason'));
         dispatch(getEnumByType('TicketType'));
     }, [dispatch]);
+
+    useEffect(() => {
+        setSmsText('');
+    }, [lastMessageSendTime]);
 
     const {isLoading: isProcessing} = useQuery([ProcessTemplate, selectedMessageTemplate?.id!], () =>
         processTemplate(selectedMessageTemplate?.id!, ticket, patient),
@@ -116,7 +121,6 @@ const SmsChat = ({info, isLoading, isSending, isBottomFocus, messages = [], ...p
 
         if (mobilePhone) {
             props.onSendClick(mobilePhone, smsText);
-            setSmsText('');
         }
     }
 
@@ -128,7 +132,7 @@ const SmsChat = ({info, isLoading, isSending, isBottomFocus, messages = [], ...p
                     <div className={classnames('flex flex-row justify-center', {'hidden': !isLoading})}>
                         <Spinner />
                     </div>
-                    <div ref={messageListContainerRef} className='flex flex-col h-full overflow-y-auto' onScroll={onScroll}>
+                    <div ref={messageListContainerRef} className='flex flex-col h-full overflow-y-auto pb-6' onScroll={onScroll}>
                         <SmsChatMessageList messages={messages} />
                         <AlwaysScrollToBottom enabled={!isBottomFocus} />
                     </div>

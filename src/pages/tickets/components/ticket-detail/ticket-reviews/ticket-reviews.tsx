@@ -52,7 +52,7 @@ const TicketReviews = ({ticket}: TicketReviewsProps) => {
         <div>{
             reviews?.map((review: TicketManagerReview, index) => <TicketReviewItem review={review} ticket={ticket} key={review.id} isFirst={index === 0} />)
         }</div>
-        {canAddReview && <div className='pt-4.5'>
+        {canAddReview && !!ticket.assignee && <div className='pt-4.5'>
             <Button label='ticket_detail.info_panel.reviews.add_review' buttonType='secondary'
                 onClick={() => setAddReviewForTicket(ticket.id)} />
         </div>}
