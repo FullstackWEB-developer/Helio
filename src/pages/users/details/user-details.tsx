@@ -42,13 +42,14 @@ import './user-details.scss';
 import {CheckboxCheckEvent} from '@components/checkbox/checkbox';
 import useCheckPermission from "@shared/hooks/useCheckPermission";
 import { NotAuthorizedPath } from "@app/paths";
+import {Option} from '@components/option/option';
 
 dayjs.extend(utc);
 
 const UserDetails = () => {
 
     const {t} = useTranslation();
-    const {control, handleSubmit, watch, formState, setValue, getValues, reset} = useForm({
+    const {control, handleSubmit, watch, formState, setValue, getValues, reset, register, unregister, clearErrors} = useForm({
         shouldUnregister: false,
         mode: "all"
     });
@@ -241,7 +242,7 @@ const UserDetails = () => {
     });
 
     const updateCallForwardingMutation = useMutation(updateCallForwarding, {
-        onSuccess: (data) => {
+        onSuccess: () => {
             if (userDetailExtended) {
                 userDetailExtended.user.callForwardingEnabled = getValues('enable_forward').checked;
                 const userCallForwardingType = getValues('forward_to');
@@ -381,6 +382,24 @@ const UserDetails = () => {
         return <Spinner fullScreen />;
     }
 
+    const onForwardToChanged = (option?: Option) => {
+        if (!option) {
+            return;
+        }
+
+        const value = parseInt(option.value) as CallForwardingType;
+        if (value === CallForwardingType.Agent) {
+            clearErrors('forward_to_value_phone');
+            unregister('forward_to_value_phone');
+            register('forward_to_value_agent');
+        } else if (value === CallForwardingType.Phone) {
+            clearErrors('forward_to_value_agent');
+            register('forward_to_value_phone');
+            unregister('forward_to_value_agent');
+        }
+
+    }
+
     return (
         <div className='flex flex-row w-full px-6 py-8 overflow-y-auto user-details'>
             <div className='flex flex-col items-center pr-10 user-details-sidebar'>
@@ -431,7 +450,7 @@ const UserDetails = () => {
                             buttonType='medium'
                             label='common.save'
                             className='mr-5'
-                            disabled={!isDirty || !isValid || !isSomeUserRoleChecked}
+                            disabled={!isDirty || !isValid || !isSomeUserRoleChecked ||  isMobilePhoneLoading || isMobilePhoneFetching}
                             isLoading={updateMutation.isLoading}
                             onClick={() => canEditUser ? handleSubmit(saveUser)() : handleSubmit(saveCallForwarding)()}
                         />
@@ -532,6 +551,7 @@ const UserDetails = () => {
                                     disabled={!isForwardEnabled}
                                     defaultValue=''
                                     options={forwardToOptions}
+                                    onSelect={(option) => onForwardToChanged(option)}
                                 />
 
                                 {isForwardEnabled && forwardToSelected === CallForwardingType.Phone &&
