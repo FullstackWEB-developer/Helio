@@ -529,6 +529,15 @@ const SvgIcon = ({type, wrapperClassName = '', className = 'icon-medium', fillCl
         </svg>
     }
 
+    const getIconPatientChartV2 = () => {
+        return <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" className={mainClass}>
+            <rect width="16" height="16" fill="none" />
+            <g transform="translate(-2 -2)"><path d="M7.2,2V3.6H4V18H16.8V3.6H13.6V2ZM8.8,3.6H12V5.2H8.8Zm6.4,1.6V16.4H5.6V5.2H7.2V6.8h6.4V5.2Z" className={fillClass} />
+                <path d="M12.2,11H10.6v1.6H9v1.6h1.6v1.6h1.6V14.2h1.6V12.6H12.2Z" transform="translate(-1 -1.8)" className={fillClass} />
+            </g>
+        </svg>
+    }
+
     const getIconPatients = () => {
         return <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" className={mainClass}>
             <g transform="translate(0 -4)">
@@ -992,6 +1001,7 @@ const SvgIcon = ({type, wrapperClassName = '', className = 'icon-medium', fillCl
         [Icon.Note]: getIconNote,
         [Icon.Office365]: getIconOffice365,
         [Icon.PatientChart]: getIconPatientChart,
+        [Icon.PatientChartV2]: getIconPatientChartV2,
         [Icon.Patients]: getIconPatients,
         [Icon.Placeholder]: getIconPlaceholder,
         [Icon.Play]: getIconPlay,

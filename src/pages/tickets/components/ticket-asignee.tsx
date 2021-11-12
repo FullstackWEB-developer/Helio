@@ -25,11 +25,10 @@ import {useSmartPosition} from '@shared/hooks';
 import classnames from 'classnames';
 interface TicketAssigneeProps {
     ticketId: string,
-    assignee?: string,
-    dropdownHorizontalPosition?: DropdownAlignmentHorizontalPosition
+    assignee?: string
 }
 
-const TicketAssignee = ({ticketId, assignee, dropdownHorizontalPosition}: TicketAssigneeProps) => {
+const TicketAssignee = ({ticketId, assignee}: TicketAssigneeProps) => {
     const {t} = useTranslation();
     const users = useSelector(selectUserList);
     const dispatch = useDispatch();
@@ -41,7 +40,7 @@ const TicketAssignee = ({ticketId, assignee, dropdownHorizontalPosition}: Ticket
     const chevronPosition = useRef<HTMLDivElement>(null);
     const dropdownRef = useRef<HTMLDivElement>(null);
 
-    const {top} = useSmartPosition(dropdownRef, assigneeDisplayRef, isVisible);
+    const {top, left} = useSmartPosition(dropdownRef, assigneeDisplayRef, isVisible);
 
     const userDropdownModel: DropdownModel = {
         isSearchable: true,
@@ -114,26 +113,6 @@ const TicketAssignee = ({ticketId, assignee, dropdownHorizontalPosition}: Ticket
         setTimeout(() => setSearchAssigneeToggle(!searchAssigneeToggle), 100);
     }
 
-    const determineDropdownPosition = () => {
-        switch (dropdownHorizontalPosition) {
-            case DropdownAlignmentHorizontalPosition.Right: {
-                let right = 0;
-                const rightmostPoint = assigneeDisplayRef.current?.getBoundingClientRect()?.right;
-                const chevronRightPoint = chevronPosition.current?.getBoundingClientRect()?.right;
-                if (rightmostPoint && chevronRightPoint) {
-                    right = rightmostPoint - chevronRightPoint;
-                }
-                return {
-                    right: right
-                }
-            }
-            case DropdownAlignmentHorizontalPosition.Left:
-            default: {
-                return {}
-            }
-        }
-    }
-
     return <div ref={elementRef} className='col-span-2'>
         <div ref={assigneeDisplayRef} className='flex items-center'>
             {selectedUser?.id ?
@@ -157,7 +136,7 @@ const TicketAssignee = ({ticketId, assignee, dropdownHorizontalPosition}: Ticket
         </div>
         <div onClick={e => e.stopPropagation()}
             className={classnames('absolute z-10 w-48', {'hidden': !isVisible})}
-            style={{top: top, right: determineDropdownPosition().right}}
+            style={{top: top, left: left}}
             ref={dropdownRef}
         >
             <Dropdown model={userDropdownModel} />

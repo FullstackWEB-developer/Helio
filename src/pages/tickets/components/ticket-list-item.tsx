@@ -12,11 +12,12 @@ import {TicketEnumValue} from '../models/ticket-enum-value.model';
 import {TicketOptionsBase} from '../models/ticket-options-base.model';
 import {TicketLookupValue} from '../models/ticket-lookup-values.model';
 import {TicketsPath} from '@app/paths';
-import {DropdownAlignmentHorizontalPosition} from '@components/dropdown/dropdown.models';
 import DueInRelativeTime from './ticket-due-in-relative-time';
 import utils from '@shared/utils/utils';
 import {useTranslation} from 'react-i18next';
 import classnames from 'classnames';
+import TicketDetailRating from './ticket-detail/ticket-detail-rating';
+import TicketListItemActions from './ticket-list-item-actions';
 
 interface TicketListItemProps {
     item: Ticket
@@ -42,7 +43,7 @@ const TicketListItem = ({item}: TicketListItemProps) => {
         return [];
     }
 
-    const getTicketPath =() => {
+    const getTicketPath = () => {
         return `${TicketsPath}/${item.ticketNumber}`;
     }
 
@@ -76,14 +77,14 @@ const TicketListItem = ({item}: TicketListItemProps) => {
     ]);
     const getRelativeTime = utils.getRelativeTime(item.dueDate);
 
-    return <div className='flex flex-row w-full auto-cols-max body2 border-b hover:bg-gray-100 px-7 items-center h-20 py-3.5' >
+    return <div className='flex flex-row w-full auto-cols-max body2 border-b hover:bg-gray-100 px-7 items-center h-20 py-3.5 group' >
         <div className='w-24'>
             <Link to={getTicketPath()}>
                 <TicketChannelIcon channel={item.channel} />
             </Link>
         </div>
 
-        <div className='w-1/12'>
+        <div className='w-1/12 flex justify-center'>
             <Link to={getTicketPath()}>
                 {item.ticketNumber}
             </Link>
@@ -116,9 +117,16 @@ const TicketListItem = ({item}: TicketListItemProps) => {
                 {item.reason ? selectedReason?.label : ''}
             </Link>
         </div>
-        <div className='w-2/12'>
-            <TicketAssignee ticketId={ticketId} assignee={item.assignee}
-                dropdownHorizontalPosition={DropdownAlignmentHorizontalPosition.Right} />
+        <div className='w-3/12'>
+            <TicketAssignee ticketId={ticketId} assignee={item.assignee} />
+        </div>
+        <div className='w-1/12 flex justify-center'>
+            <TicketDetailRating rating={item.ratingScore} />
+        </div>
+        <div className='w-1/12'>
+            <div className='flex justify-center'>
+                <TicketListItemActions ticketInfo={item} />
+            </div>
         </div>
     </div>
 };

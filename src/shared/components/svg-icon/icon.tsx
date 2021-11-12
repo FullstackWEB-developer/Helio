@@ -47,6 +47,7 @@ export enum Icon {
     Note = 'Note',
     Office365 = 'Office365',
     PatientChart = 'PatientChart',
+    PatientChartV2 = 'PatientChartV2',
     Patients = 'Patients',
     Placeholder = 'Placeholder',
     Play = 'Play',

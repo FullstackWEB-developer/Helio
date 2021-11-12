@@ -11,10 +11,12 @@ const TicketDetailRating = ({rating}: { rating?: number }) => {
             return <SvgIcon
                 fillClass='icon-medium rating-widget-satisfied'
                 type={Icon.RatingVerySatisfied}/>;
-        default:
+        case 0:
             return <SvgIcon
-                fillClass='icon-medium'
+                fillClass='icon-medium rating-widget-neutral'
                 type={Icon.RatingSatisfied}/>;
+        default:
+            return null;
     }
 
 }

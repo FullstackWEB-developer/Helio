@@ -191,7 +191,15 @@
     "unassigned": "Unassigned",
     "due": "Due",
     "overdue": "Overdue",
-    "pagination": "{{numOfItemsFrom}} - {{numOfItemsTo}} of {{totalCount}}"
+    "pagination": "{{numOfItemsFrom}} - {{numOfItemsTo}} of {{totalCount}}",
+    "rating": "Rating",
+    "ticket_list_actions":{
+      "call": "Call",
+      "ticket_details": "Ticket Details",
+      "patient_details": "Patient Details",
+      "contact_details":"Contact Details",
+      "add_review": "Add review"
+    }
   },
   "ccp": {
     "title": "Contact Control Panel",

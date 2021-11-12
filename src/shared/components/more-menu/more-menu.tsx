@@ -41,9 +41,9 @@ const MoreMenu = ({value, items, menuClassName, iconClassName, iconFillClassname
             const rectIcon = iconContainerRef.current.getBoundingClientRect();
             if (!!rectIcon) {
                 const iconOffSetWidth = (iconContainerRef.current.offsetWidth || 0) / 2;
-                return rectIcon.left + window.scrollY - dropdownRef.current.offsetWidth  + iconOffSetWidth;
+                return rectIcon.left + window.scrollY - dropdownRef.current.offsetWidth + iconOffSetWidth;
             }
-          
+
         }
         return 0;
     }

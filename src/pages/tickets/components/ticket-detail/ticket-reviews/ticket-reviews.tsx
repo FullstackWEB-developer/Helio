@@ -17,7 +17,7 @@ export interface TicketReviewsProps {
     ticket: Ticket
 }
 
-const TicketReviews = ({ticket} : TicketReviewsProps) => {
+const TicketReviews = ({ticket}: TicketReviewsProps) => {
     const {t} = useTranslation();
     const [addReviewForTicket, setAddReviewForTicket] = useState<string | undefined>();
     const {isLoading: isReviewsLoading, data: reviews, refetch} = useQuery([GetReviewsByTicketId, ticket.id], () => getTicketReviews(ticket.id!));
@@ -25,36 +25,36 @@ const TicketReviews = ({ticket} : TicketReviewsProps) => {
 
     const getRatingIcon = useMemo(() => {
         switch (ticket.ratingScore) {
-            case -1 :
+            case -1:
                 return <SvgIcon
                     fillClass='icon-medium rating-widget-unsatisfied'
-                    type={Icon.RatingDissatisfied}/>;
-            case 1 :
+                    type={Icon.RatingDissatisfied} />;
+            case 1:
                 return <SvgIcon
                     fillClass='icon-medium rating-widget-satisfied'
-                    type={Icon.RatingVerySatisfied}/>;
+                    type={Icon.RatingVerySatisfied} />;
             case 0:
                 return <SvgIcon
                     fillClass='icon-medium rating-widget-neutral'
-                    type={Icon.RatingSatisfied}/>;
+                    type={Icon.RatingSatisfied} />;
             default:
                 return null;
         }
     }, [ticket]);
 
     if (isReviewsLoading) {
-        return <div className='h-40'><Spinner fullScreen={true}/></div>
+        return <div className='h-40'><Spinner fullScreen={true} /></div>
     }
 
 
     return <div className='flex flex-col pb-8'>
         <div className='h8 pb-4'>{t('ticket_detail.info_panel.reviews.manager_ratings_reviews')}</div>
         <div>{
-            reviews?.map((review: TicketManagerReview, index) => <TicketReviewItem review={review} ticket={ticket} key={review.id} isFirst={index === 0}/>)
+            reviews?.map((review: TicketManagerReview, index) => <TicketReviewItem review={review} ticket={ticket} key={review.id} isFirst={index === 0} />)
         }</div>
         {canAddReview && <div className='pt-4.5'>
             <Button label='ticket_detail.info_panel.reviews.add_review' buttonType='secondary'
-                    onClick={() => setAddReviewForTicket(ticket.id)}/>
+                onClick={() => setAddReviewForTicket(ticket.id)} />
         </div>}
         {getRatingIcon && <>
             <div className='h8 pt-4.5 pb-3.5'>{t('ticket_detail.info_panel.reviews.patient_ratings')}</div>
@@ -71,9 +71,7 @@ const TicketReviews = ({ticket} : TicketReviewsProps) => {
             ticketId={addReviewForTicket}
             isOpen={!!addReviewForTicket}
             onAdded={() => refetch()}
-            onClose={() => setAddReviewForTicket(undefined)}/>}
-
-
+            onClose={() => setAddReviewForTicket(undefined)} />}
     </div>
 }
 
