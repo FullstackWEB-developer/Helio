@@ -4,4 +4,5 @@ export interface TicketNote {
     isVisibleToPatient?: boolean;
     createdOn?: Date;
     createdBy?: string;
+    createdByName?: string;
 }

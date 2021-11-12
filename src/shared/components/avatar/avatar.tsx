@@ -6,6 +6,8 @@ import classnames from 'classnames';
 import './avatar.scss';
 import SvgIcon, {Icon} from '@components/svg-icon';
 import {useTranslation} from 'react-i18next';
+import {useSelector} from 'react-redux';
+import {selectLiveAgentStatuses} from '@shared/store/app-user/appuser.selectors';
 
 export interface AvatarProps {
     userFullName?: string;
@@ -13,14 +15,21 @@ export interface AvatarProps {
     labelClassName?: string;
     userPicture?: string;
     icon?: Icon;
+    userId?: string;
+    displayStatus?:boolean;
     status?: UserStatus;
 }
 
-const Avatar = ({userFullName, labelClassName, userPicture, status, icon, className = 'w-10 h-10'}: AvatarProps) => {
+const Avatar = ({userFullName, labelClassName, userPicture, icon, className = 'w-10 h-10', displayStatus, userId, status}: AvatarProps) => {
     const {t} = useTranslation();
-
+    const liveAgentStatuses = useSelector(selectLiveAgentStatuses);
     const [isErrorPhoto, setErrorPhoto] = useState(false);
-
+    if (!status) {
+        const liveAgentStatus = liveAgentStatuses.find(a => a.userId === userId);
+        if (liveAgentStatus) {
+            status = liveAgentStatus.status as UserStatus
+        }
+    }
     return (<div className={classnames('avatar rounded-full flex items-center justify-center relative', className)}>
         {(!userPicture || isErrorPhoto) && !icon &&
             <div className={classnames('avatar-initial', labelClassName)}>
@@ -36,7 +45,7 @@ const Avatar = ({userFullName, labelClassName, userPicture, status, icon, classN
             <SvgIcon type={icon} fillClass='white-icon'/>
         }
 
-        {status &&
+        {displayStatus && status &&
             <div className='absolute bottom-0 right-0'>
                 <StatusDot status={status} isBorderAround={true} />
             </div>

@@ -52,18 +52,7 @@ const AgentStatusTable = () => {
 
 
 
-    useQuery<AgentStatus[], Error>([GetAgentStatus], () => getAgentsStatus(), {
-        onSuccess: (data: AgentStatus[]) => {
-            data.forEach(item => {
-               dispatch(addLiveAgentStatus({
-                   status: item.latestConnectStatus,
-                   userId: item.id,
-                   activities: item.activities,
-                   timestamp: item.timestamp
-               }))
-            });
-        }
-    });
+
     const prepareData = () => {
         if (!liveAgentStatuses || liveAgentStatuses.length === 0) {
             return [];
@@ -86,7 +75,7 @@ const AgentStatusTable = () => {
 
     const getAvatarAndName =(record: LiveAgentStatusInfo) => {
         return <div className='flex flex-row items-center space-x-4'>
-            <Avatar userFullName={record.name!} status={record.status as UserStatus} userPicture={record.profilePicture} />
+            <Avatar userFullName={record.name!} userId={record.userId} displayStatus={true} userPicture={record.profilePicture} />
             <div className='body2'>{record.name}</div>
         </div>
     }
@@ -144,7 +133,7 @@ const AgentStatusTable = () => {
             statusOptions.push(AllStatuses);
         }
         if (liveAgentStatuses && liveAgentStatuses.length > 0) {
-            const statuses = [... new Set(liveAgentStatuses.filter((a: LiveAgentStatusInfo) => a.status !== selectedStatus.value).map((a: LiveAgentStatusInfo) => a.status.toString()))] as string[];
+            const statuses = [...new Set(liveAgentStatuses.filter((a: LiveAgentStatusInfo) => a.status !== selectedStatus.value).map((a: LiveAgentStatusInfo) => a.status.toString()))] as string[];
             statuses.forEach((item:string) => {
                 statusOptions.push({
                     value: item,

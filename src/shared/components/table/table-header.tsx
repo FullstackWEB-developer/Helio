@@ -63,7 +63,7 @@ const TableHeader = ({headers, className, size}: TableHeaderProps) => {
         return null;
     }
 
-    const content = headers.map(header => <TableHeaderColumn header={header}/>);
+    const content = React.Children.toArray(headers.map(header => <TableHeaderColumn header={header}/>));
     const headerClassName = classnames('flex flex-row caption-caps table-header h-8 items-center', className, {
         'h-12': size === 'large',
         'px-4': size !== 'large',

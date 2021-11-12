@@ -14,7 +14,7 @@ const NoteDetailItem = ({item, displayBottomBorder}: NoteDetailProps) => {
                     {item.createdOn ? utils.formatUtcDate(item.createdOn, 'MMM DD, YYYY h:mm a') : ''}
                 </span>
                 <span className='body3 note-detail-created-by'>
-                    {item.createdBy ? item.createdBy : ''}
+                    {item.createdByName ? item.createdByName : ''}
                 </span>
             </div>
             <p className='body2'>

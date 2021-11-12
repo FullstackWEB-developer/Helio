@@ -1,5 +1,5 @@
 import withErrorLogging from '../../../shared/HOC/with-error-logging';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import classnames from 'classnames';
 import {Icon} from '@components/svg-icon/icon';
@@ -17,11 +17,7 @@ interface AccordionProps {
 
 const Collapsible = ({title, children, className, headerClassName = 'h-12', isOpen = false, ...props}: AccordionProps) => {
     const {t} = useTranslation();
-    const [open, setOpen] = useState(false);
-
-    useEffect(() => {
-        setOpen(isOpen);
-    }, [isOpen]);
+    const [open, setOpen] = useState(isOpen);
 
     const toggle = () => {
         setOpen(!open);

@@ -10,6 +10,9 @@ module.exports = {
   darkMode: 'class', // or 'media' or 'class'
   theme: {
     extend: {
+      screens: {
+        'print': {'raw': 'print'}
+      },
       spacing: {
         '4.5':'1.125rem',
         '8.5':'2.125rem',

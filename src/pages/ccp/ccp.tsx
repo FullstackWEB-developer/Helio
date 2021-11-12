@@ -10,11 +10,11 @@ import {
     setChatCounter,
     setConnectionStatus,
     setContextPanel, setCurrentContactId,
-    setNoteContext,
+    setNoteContext, setNotes,
     setVoiceCounter
 } from './store/ccp.slice';
 import {getTicketById, setAssignee} from '../tickets/services/tickets.service';
-import {authenticationSelector, selectAgentStates, selectUserStatus} from '@shared/store/app-user/appuser.selectors';
+import {selectAgentStates, selectUserStatus, selectAppUserDetails} from '@shared/store/app-user/appuser.selectors';
 import {DragPreviewImage, useDrag} from 'react-dnd';
 import {DndItemTypes} from '@shared/layout/dragndrop/dnd-item-types';
 import './ccp.scss';
@@ -23,7 +23,7 @@ import {Trans, useTranslation} from 'react-i18next';
 import CcpContext from './components/ccp-context';
 import contextPanels from './models/context-panels';
 import {ccpImage} from './ccpImage';
-import {setAgentStates, updateUserStatus} from '@shared/store/app-user/appuser.slice';
+import {addLiveAgentStatus, setAgentStates, updateUserStatus} from '@shared/store/app-user/appuser.slice';
 import {UserStatus} from '@shared/store/app-user/app-user.models';
 import Logger from '@shared/services/logger';
 import {AgentState} from '@shared/models/agent-state';
@@ -76,7 +76,7 @@ const Ccp: React.FC<BoxProps> = ({
     const dispatch = useDispatch();
     const history = useHistory();
     const logger = Logger.getInstance();
-    const user = useSelector(authenticationSelector);
+    const user = useSelector(selectAppUserDetails);
     const currentUserStatus = useSelector(selectUserStatus);
     const [isHover, setHover] = useState(false);
     const [isBottomBarVisible, setIsBottomBarVisible] = useState(false);
@@ -237,7 +237,7 @@ const Ccp: React.FC<BoxProps> = ({
                     }
 
                     setTicketId(ticketId);
-                    dispatch(setNoteContext({ticketId: ticketId, username: user.username}));
+                    dispatch(setNoteContext({ticketId: ticketId, user}));
                 }
 
                 if(contact.isInbound()) {
@@ -267,6 +267,7 @@ const Ccp: React.FC<BoxProps> = ({
             contact.onDestroy(() => {
                 dispatch(setBotContext(undefined));
                 dispatch(setContextPanel(''));
+                dispatch(setNotes([]));
             })
         });
         connect.agent((agent) => {
@@ -284,6 +285,11 @@ const Ccp: React.FC<BoxProps> = ({
 
             agent.onStateChange(agentStateChange => {
                 dispatch(updateUserStatus(agentStateChange.newState));
+                dispatch(addLiveAgentStatus({
+                    status:agentStateChange.newState,
+                    userId: user.id,
+                    timestamp: new Date()
+                }));
             });
 
             agent.onAfterCallWork(() => {

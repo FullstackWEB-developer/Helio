@@ -6,7 +6,7 @@ import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
 import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
 import {useDispatch} from 'react-redux';
 import Spinner from '@components/spinner/Spinner';
-import React, {useMemo} from 'react';
+import React, {useMemo, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {TableModel} from '@components/table/table.models';
 import Table from '@components/table/table';
@@ -16,6 +16,8 @@ import {TicketsPath} from '@app/paths';
 import SvgIcon, {Icon} from '@components/svg-icon';
 import {ChannelTypes} from '@shared/models';
 import Rating from '@components/rating/rating';
+import {ViewTicketRatings} from '@components/ticket-rating';
+import {TicketManagerReview} from '@pages/application/models/ticket-manager-review';
 
 export interface RecentManagerReviewsProps {
     userId?: string,
@@ -25,6 +27,7 @@ const RecentManagerReviews = ({userId, limit}: RecentManagerReviewsProps) => {
 
     const dispatch = useDispatch();
     const {t} = useTranslation();
+    const [displayRatingsForTicket, setDisplayRatingsForTicket] = useState<number | undefined>(undefined);
 
     const {isLoading, isError, data} = useQuery([GetLatestManagerReviews, userId], () => getRecentManagerReviewsForUser(userId, limit),
         {
@@ -92,7 +95,9 @@ const RecentManagerReviews = ({userId, limit}: RecentManagerReviewsProps) => {
                 field: 'feedback',
                 title:'my_stats.recent_manager_reviews.review',
                 widthClass:'w-1/6',
-                render: () => <div className='body2-primary flex items-center h-full pl-2'><SvgIcon type={Icon.Comment} className='cursor-pointer' fillClass='rgba-038-fill'/></div>
+                render: (_, record: TicketManagerReview) => <div className='body2-primary flex items-center h-full pl-2'>
+                    <SvgIcon onClick={() => setDisplayRatingsForTicket(record.ticketNumber)} type={Icon.Comment} className='cursor-pointer' fillClass='rgba-038-fill'/>
+                </div>
             },{
                 field: 'rating',
                 title:'my_stats.recent_manager_reviews.rating',
@@ -123,6 +128,10 @@ const RecentManagerReviews = ({userId, limit}: RecentManagerReviewsProps) => {
 
     return <div className='recent-manager-reviews-wrapper'>
             <Table model={tableModel} />
+        {displayRatingsForTicket && <ViewTicketRatings
+            onClose={() => setDisplayRatingsForTicket(undefined)}
+            isOpen={!!displayRatingsForTicket}
+            ticketNumber={displayRatingsForTicket}/>}
     </div>
 }
 

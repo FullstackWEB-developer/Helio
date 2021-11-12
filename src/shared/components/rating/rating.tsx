@@ -7,11 +7,18 @@ export interface RatingProps {
     value: number;
     size?: 'small' | 'medium' | 'large',
     scale?:number;
+    onClick?:(value: number) => void;
 }
-const Rating = ({value, scale = 5, size = 'small'} : RatingProps) => {
+const Rating = ({value, scale = 5, size = 'small', onClick} : RatingProps) => {
 
     if (value > scale) {
         value = scale;
+    }
+
+    const onStarClick = (val: number) => {
+        if(onClick) {
+            onClick(val);
+        }
     }
 
     const activeStars = value;
@@ -21,12 +28,13 @@ const Rating = ({value, scale = 5, size = 'small'} : RatingProps) => {
         return classname({
             'icon-small': size === 'small',
             'icon-medium': size === 'medium',
-            'icon-large': size === 'large'
+            'icon-large': size === 'large',
+            'cursor-pointer': !!onClick
         });
-    }, [size]);
+    }, [onClick, size]);
 
-    const active = activeStars > 0 ? [...Array(activeStars)].map(() => <SvgIcon type={Icon.Star} className={starClasses} fillClass='rating-fill-color'/>) : <></>
-    const disabled = disabledStars > 0 ? [...Array(disabledStars)].map(() => <SvgIcon type={Icon.StarOutlined} className={starClasses} fillClass='rating-fill-color'/>) : <></>
+    const active = activeStars > 0 ? [...Array(activeStars)].map((_, index) => <SvgIcon key={index} type={Icon.Star} onClick={() => onStarClick(index + 1)} className={starClasses} fillClass='rating-fill-color'/>) : <></>
+    const disabled = disabledStars > 0 ? [...Array(disabledStars)].map((_, index) => <SvgIcon key={index + activeStars} type={Icon.StarOutlined} onClick={() => onStarClick(index + activeStars + 1)} className={starClasses} fillClass='rating-fill-color'/>) : <></>
 
     return <div className='flex flex-row space-x-0.5'>{active} {disabled}</div>
 }

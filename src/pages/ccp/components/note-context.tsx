@@ -21,7 +21,7 @@ const NoteContext = () => {
     const {t} = useTranslation();
     const dispatch = useDispatch();
     const ticketId = useSelector(selectNoteContext).ticketId;
-    const username = useSelector(selectNoteContext).username;
+    const user = useSelector(selectNoteContext).user;
     const notes: TicketNote[] = useSelector(selectNotes) || [];
     const [noteText, setNoteText] = useState('');
     const notesBottom = useRef<HTMLDivElement>(null);
@@ -41,7 +41,8 @@ const NoteContext = () => {
         if (ticketId) {
             addNoteMutation.mutate({ticketId, note});
             note.createdOn = dayjs().utc().toDate();
-            note.createdBy = username;
+            note.createdBy = user.id;
+            note.createdByName = user.fullName
             dispatch(setNotes([...notes, note]));
             setNoteText('');
             notesBottom.current?.scrollIntoView({behavior: 'smooth'});

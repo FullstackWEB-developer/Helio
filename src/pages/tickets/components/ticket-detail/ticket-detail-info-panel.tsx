@@ -31,6 +31,7 @@ import hash from 'object-hash';
 import './ticket-detail-info-panel.scss';
 import {usePrevious} from '@shared/hooks/usePrevious';
 import dayjs from 'dayjs';
+import TicketReviews from '@pages/tickets/components/ticket-detail/ticket-reviews/ticket-reviews';
 interface TicketDetailInfoPanelProps {
     ticket: Ticket,
     patient?: Patient,
@@ -90,7 +91,7 @@ const TicketDetailInfoPanel = ({ticket, patient, contact}: TicketDetailInfoPanel
     }, [ticket]);
 
     const ticketUpdateMutation = useMutation(updateTicket, {
-        onSuccess: (data, variables) => {
+        onSuccess: (data) => {
             dispatch(setTicket(data));
             if (data.id && previousTicket?.status !== data.status) {
                 const feedData: TicketFeed = {
@@ -204,6 +205,10 @@ const TicketDetailInfoPanel = ({ticket, patient, contact}: TicketDetailInfoPanel
                                                  errorMessage={errors.patientCaseNumber?.message}
                                                  validatePatientCaseNumber={validatePatientCaseNumber}/>
                     </Collapsible>}
+
+                    <Collapsible title={'ticket_detail.info_panel.reviews.title'} isOpen={true}>
+                        <TicketReviews ticket={ticket} />
+                    </Collapsible>
                     {patient && <Collapsible title={'ticket_detail.info_panel.appointments'} isOpen={true}>
                         <TicketDetailAppointments ticket={ticket}/>
                     </Collapsible>}

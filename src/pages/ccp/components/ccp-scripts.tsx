@@ -14,7 +14,7 @@ const CcpScripts = () => {
 
     useEffect(() => {
         dispatch(getLookupValues('SuggestedText'));
-    }, []);
+    }, [dispatch]);
 
     if (!suggestedTexts || suggestedTexts.length < 1) {
         return <Spinner fullScreen/>

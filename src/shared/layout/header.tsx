@@ -3,7 +3,7 @@ import Avatar from '@components/avatar/avatar';
 import SearchBar from '../components/search-bar/search-bar';
 import {useDispatch, useSelector} from 'react-redux';
 import {toggleCcp, toggleUserProfileMenu} from './store/layout.slice';
-import {authenticationSelector, selectAppUserDetails, selectUserStatus} from '../store/app-user/appuser.selectors';
+import {authenticationSelector, selectAppUserDetails} from '../store/app-user/appuser.selectors';
 import {isCcpVisibleSelector, isProfileMenuExpandedSelector} from './store/layout.selectors';
 import HelioLogo from '@icons/helio-logo';
 import ProfileDropdown from './components/profile-dropdown';
@@ -14,9 +14,6 @@ import {Link} from 'react-router-dom';
 import SvgIcon from '@components/svg-icon/svg-icon';
 import {Icon} from '@components/svg-icon/icon';
 import {CCP_ANIMATION_DURATION} from '@constants/form-constants';
-import {useQuery} from 'react-query';
-import {QueryUserById} from '@constants/react-query-constants';
-import {setAuthentication} from '@shared/store/app-user/appuser.slice';
 import {AuthenticationInfo} from '@shared/store/app-user/app-user.models';
 import {CCPConnectionStatus} from '@pages/ccp/models/connection-status.enum';
 import Tooltip from '@components/tooltip/tooltip';
@@ -30,36 +27,15 @@ const Header = ({headsetIconRef}: {headsetIconRef: React.RefObject<HTMLDivElemen
     const dispatch = useDispatch();
     const appUserDetails = useSelector(selectAppUserDetails);
     const auth: AuthenticationInfo = useSelector(authenticationSelector);
-    const username = auth.name as string;
     const isProfileMenuOpen = useSelector(isProfileMenuExpandedSelector);
     const avatarRef = useRef(null);
     const dropdownRef = useRef<HTMLDivElement>(null);
     const numberOfAgentChats = useSelector(selectChatCounter);
     const numberOfAgentVoices = useSelector(selectVoiceCounter);
-    const currentUserStatus = useSelector(selectUserStatus);
     const isCcpVisible = useSelector(isCcpVisibleSelector);
     const ccpConnectionState = useSelector(selectConnectionStatus);
     const iconContainerRef = useRef(null);
     const [isErrorToolTipVisible, setErrorToolTipVisible] = useState(true);
-    const setUserPicture = async () => {
-        if (!auth || !auth.username) {
-            return '';
-        }
-
-        const enriched = {
-            ...auth,
-            profilePicture: appUserDetails.profilePicture,
-            id: appUserDetails.id
-        };
-        dispatch(setAuthentication(enriched));
-        return appUserDetails.profilePicture;
-    }
-
-    const {data: profilePicture} = useQuery<string | undefined, Error>([QueryUserById, auth.username], () => setUserPicture(),
-        {
-            enabled: !!auth?.username && !auth.profilePicture
-        });
-
     const [animate, setAnimate] = useState(false);
     const [ccpOpened, setCcpOpened] = useState(false);
 
@@ -177,7 +153,10 @@ const Header = ({headsetIconRef}: {headsetIconRef: React.RefObject<HTMLDivElemen
                             <div ref={dropdownRef} className='relative hidden h-full md:block'>
                                 <div ref={avatarRef} data-test-id='letter-avatar' className='pr-6 cursor-pointer'
                                     onClick={() => displayProfileMenu()}>
-                                    <Avatar userFullName={auth.isLoggedIn ? username : ''} status={currentUserStatus} userPicture={auth.profilePicture ?? profilePicture} />
+                                    <Avatar userFullName={auth.isLoggedIn ? appUserDetails.fullName : ''}
+                                            userId={appUserDetails?.id}
+                                            displayStatus={true}
+                                            userPicture={appUserDetails?.profilePicture} />
                                 </div>
                                 <div>
                                     {isProfileMenuOpen &&

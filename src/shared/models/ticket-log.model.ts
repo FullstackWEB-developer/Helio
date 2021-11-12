@@ -2,7 +2,7 @@ import {CommunicationDirection, PagedRequest} from "@shared/models";
 
 export interface TicketLogModel {
     id: string;
-    ticketNumber: string;
+    ticketNumber: number;
     contactId?: string;
     patientId?: string;
     createdForName?: string;
@@ -19,6 +19,7 @@ export interface TicketLogModel {
     contactDisconnectTimestamp?: string;
     contactInitiationTimestamp?: string;
     contactAgent?: string;
+    hasManagerReview: boolean
 
 }
 

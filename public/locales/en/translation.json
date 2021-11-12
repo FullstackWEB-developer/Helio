@@ -608,6 +608,14 @@
         "mobile_phone": "Mobile Phone",
         "address": "Address"
       },
+      "reviews": {
+        "title": "Ratings and Reviews",
+        "manager_ratings_reviews": "Manager Ratings & Reviews",
+        "by": "By",
+        "review": "Review",
+        "add_review": "Add Review",
+        "patient_ratings": "Patient Ratings"
+      },
       "recorded_conversation": {
         "title_chat": "Chat Transcript",
         "title_voice": "Call Recording",
@@ -1530,7 +1538,27 @@
     "rating": "Rating",
     "search_calls_placeholder": "Search calls",
     "search_chats_placeholder": "Search chats",
-    "transcript": "Transcript"
+    "transcript": "Transcript",
+    "review": "Review",
+    "add_review": "Add Review",
+    "add_rating_review": "Add Rating and Review",
+    "overall_rating": "Overall Rating",
+    "add_rating_comment": "Add Comment",
+    "add_rating_comment_placeholder": "Enter Comment",
+    "manager_ratings_reviews": "Manager Ratings and Reviews",
+    "call_info": "Call Info",
+    "chat_info": "Chat Info",
+    "manager_review": "Manager Review",
+    "manager": "Manager",
+    "reviewed_on": "Reviewed On",
+    "error_loading_data": "Ticket or Patient information could not be loaded. Please try again later",
+    "error_adding_feedback": "Feedback creation failed. Please try again later.",
+    "success_adding_feedback": "Feedback created successfully",
+    "no_review_to_download": "There is no review to download",
+    "download_review_created_line": "Reviewed by {{reviewed_by}} on {{date}}",
+    "download_review_feedback_line": "Feedback: {{feedback}}",
+    "download_review_rating_line": "Rating: {{rating}}",
+    "reviews_print_title": "Reviews of Ticket #{{ticketNumber}}"
   },
   "blacklist": {
     "title": "Blocked Access",

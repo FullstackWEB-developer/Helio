@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {useQuery} from 'react-query';
-import {GetDashboard} from '@constants/react-query-constants';
-import {getDashboardData} from '@pages/tickets/services/tickets.service';
+import {GetAgentStatus, GetDashboard} from '@constants/react-query-constants';
+import {getAgentsStatus, getDashboardData} from '@pages/tickets/services/tickets.service';
 import {useTranslation} from 'react-i18next';
 import './dashboard.scss';
 import {DropdownModel} from '@components/dropdown/dropdown.models';
@@ -19,6 +19,9 @@ import * as queryString from 'querystring';
 import {useHistory} from 'react-router-dom';
 import useCheckPermission from '@shared/hooks/useCheckPermission';
 import {DashboardResponse} from '@pages/dashboard/models/dashboard-response';
+import {AgentStatus} from '@shared/models';
+import {addLiveAgentStatus} from '@shared/store/app-user/appuser.slice';
+import {useDispatch} from 'react-redux';
 
 export const Dashboard = () => {
     const {t} = useTranslation();
@@ -34,6 +37,20 @@ export const Dashboard = () => {
     const [selectedEndDate, setSelectedEndDate] = useState<Date>(new Date());
     const [lastUpdateTime, setLastUpdateTime] = useState<Date>(new Date());
     const isWallboard: boolean = selectedDashboardType === DashboardTypes.wallboard;
+    const dispatch = useDispatch();
+
+    useQuery<AgentStatus[], Error>([GetAgentStatus], () => getAgentsStatus(), {
+        onSuccess: (data: AgentStatus[]) => {
+            data.forEach(item => {
+                dispatch(addLiveAgentStatus({
+                    status: item.latestConnectStatus,
+                    userId: item.id,
+                    activities: item.activities,
+                    timestamp: item.timestamp
+                }))
+            });
+        }
+    });
 
     customHooks.useOutsideClick([typeDropdownRef], () => {
         setDisplayTypeDropdown(false);
@@ -65,8 +82,9 @@ export const Dashboard = () => {
         getDashboardData(selectedDashboardType, selectedDashboardTime, selectedStartDate, selectedEndDate), {
         retry: 3,
         enabled: false
-    }
-    );
+    });
+
+
 
     const datesSelected = (startDate: Date, endDate: Date) => {
         setSelectedStartDate(startDate);

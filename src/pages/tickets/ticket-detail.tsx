@@ -112,10 +112,11 @@ const TicketDetail = () => {
                     <TicketDetailHeader ticket={ticket} contact={contact} patient={patient} />
                     <div className='flex items-center justify-center justify-self-center' data-test-id='chat-transcript-modal'>
                         <Modal isOpen={displayChatTranscript}
-                            title='ticket_detail.chat_transcript.title'
-                            isClosable={true}
-                            isDraggable={true}
-                            onClose={() => (dispatch(toggleChatTranscriptWindowVisible()))}>
+                               title='ticket_detail.chat_transcript.title'
+                               isClosable={true}
+                               closeableOnEscapeKeyPress={true}
+                               isDraggable={true}
+                               onClose={() => (dispatch(toggleChatTranscriptWindowVisible()))}>
                             <ChatTranscript ticket={ticket} patient={patient} />
                         </Modal>
 

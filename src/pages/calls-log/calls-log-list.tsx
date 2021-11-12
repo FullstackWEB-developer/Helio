@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import DropdownLabel from '@components/dropdown-label';
 import {DropdownItemModel} from '@components/dropdown';
 import Pagination from '@components/pagination';
@@ -34,6 +34,7 @@ import FilterDot from '@components/filter-dot/filter-dot';
 import {selectIsCallsLogFiltered} from '@pages/calls-log/store/calls-log.selectors';
 import {setIsCallsLogFiltered} from '@pages/calls-log/store/calls-log.slice';
 import useCheckPermission from '@shared/hooks/useCheckPermission';
+import {AddTicketReview, ViewTicketRatings} from '@components/ticket-rating';
 
 dayjs.extend(utc);
 
@@ -42,7 +43,8 @@ const CallsLogList = () => {
     const {t} = useTranslation();
     const canListenAnyRecording = useCheckPermission('Tickets.ListenAnyRecording');
     const isDefaultTeam = useCheckPermission('Calls.DefaultToTeamView');
-
+    const canAddTicketReview = useCheckPermission('Tickets.AddReview');
+    const canViewAnyReview = useCheckPermission('Tickets.ViewAnyReview');
     const appUser = useSelector(selectAppUserDetails);
     const isFiltered = useSelector(selectIsCallsLogFiltered);
     const history = useHistory();
@@ -50,10 +52,11 @@ const CallsLogList = () => {
     const [isFilterOpen, setFilterOpen] = useState(false);
     const [isPlayerOpen, setPlayerOpen] = useState(false);
     const [rowSelected, setRowSelected] = useState<TicketLogModel>();
-
+    const [addReviewForTicket, setAddReviewForTicket] = useState<string | undefined>();
     const [currentQueryType, setCurrentQueryType] = useState<CallLogQueryType>(!isDefaultTeam ? CallLogQueryType.MyCallLog : CallLogQueryType.TeamCallLog);
     const [pagingResult, setPagingResult] = useState({...DEFAULT_PAGING});
     const [rows, setRows] = useState<TicketLogModel[]>([]);
+    const [displayRatingsForTicket, setDisplayRatingsForTicket] = useState<number | undefined>(undefined);
     const [callsLogFilter, setCallsLogFilter] = useState<TicketLogRequestModel>({
         ...DEFAULT_PAGING,
         assignedTo: !isDefaultTeam ? appUser?.id : '',
@@ -66,7 +69,7 @@ const CallsLogList = () => {
         }
     }, [dispatch]);
 
-    const navigateToTicketDetail = (ticketNumber: string) => {
+    const navigateToTicketDetail = (ticketNumber: number) => {
         history.push(`${TicketsPath}/${ticketNumber}`);
     }
 
@@ -110,6 +113,14 @@ const CallsLogList = () => {
                 label: 'ticket_log.patient_details',
                 value: '4',
                 icon: <SvgIcon type={Icon.Contacts} fillClass='rgba-05-fill' />
+            });
+        }
+
+        if (canAddTicketReview) {
+            options.push({
+                label: 'ticket_log.add_review',
+                value: '5',
+                icon: <SvgIcon type={Icon.Comment} fillClass='rgba-062-fill'/>
             });
         }
 
@@ -233,7 +244,7 @@ const CallsLogList = () => {
             {
                 title: 'ticket_log.recording',
                 field: 'recordedConversationLink',
-                widthClass: 'w-24 flex items-center justify-center',
+                widthClass: 'w-1/12 flex items-center justify-center',
                 render: (value: string, data: TicketLogModel) => (
                     <>
                         {!!value &&
@@ -252,29 +263,34 @@ const CallsLogList = () => {
             {
                 title: 'ticket_log.rating',
                 field: 'ratingScore',
-                widthClass: 'w-24 flex items-center justify-center',
+                widthClass: 'w-1/12 flex items-center justify-center',
                 render: (value?: number) => (
                     <>
                         {value === undefined &&
-                            null
+                        null
                         }
                         {value === -1 &&
-                            <SvgIcon type={Icon.RatingDissatisfied}
-                                fillClass='danger-icon'
-                            />
+                        <SvgIcon type={Icon.RatingDissatisfied}
+                                 fillClass='danger-icon'
+                        />
                         }
                         {value === 0 &&
-                            <SvgIcon type={Icon.RatingSatisfied}
-                                fillClass='warning-icon'
-                            />
+                        <SvgIcon type={Icon.RatingSatisfied}
+                                 fillClass='warning-icon'
+                        />
                         }
                         {value === 1 &&
-                            <SvgIcon type={Icon.RatingVerySatisfied}
-                                fillClass='success-icon'
-                            />
+                        <SvgIcon type={Icon.RatingVerySatisfied}
+                                 fillClass='success-icon'
+                        />
                         }
                     </>
                 )
+            },{
+                title: 'ticket_log.review',
+                field: 'hasManagerReview',
+                widthClass: 'w-1/12 flex items-center justify-center',
+                render: (value: boolean, record: TicketLogModel) => (value && canViewAnyReview) ? <SvgIcon  onClick={() => setDisplayRatingsForTicket(record.ticketNumber)} type={Icon.Comment} className='cursor-pointer' fillClass='rgba-062-fill'/> : null
             },
             {
                 title: '',
@@ -308,6 +324,9 @@ const CallsLogList = () => {
                                             break;
                                         }
                                         navigateToPatientDetail(data.patientId)
+                                        break;
+                                    case '5':
+                                        setAddReviewForTicket(data.id)
                                         break;
                                 }
                             }}
@@ -405,6 +424,16 @@ const CallsLogList = () => {
                             onClose={() => setPlayerOpen(false)}
                         />
                     }
+
+                    {addReviewForTicket && <AddTicketReview
+                        ticketId={addReviewForTicket}
+                        isOpen={!!addReviewForTicket}
+                        onClose={() => setAddReviewForTicket(undefined)}/>}
+
+                    {displayRatingsForTicket && <ViewTicketRatings
+                        onClose={() => setDisplayRatingsForTicket(undefined)}
+                        isOpen={!!displayRatingsForTicket}
+                        ticketNumber={displayRatingsForTicket}/>}
                 </div>
             </div>
         </div>

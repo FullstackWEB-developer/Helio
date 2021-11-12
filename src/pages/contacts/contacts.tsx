@@ -78,7 +78,7 @@ const Contacts: React.FC<ContactProps> = () => {
 
     useEffect(() => {
         dispatch(getLookupValues('ContactCategory'));
-    }, []);
+    }, [dispatch]);
 
     useEffect(() => {
         setQueryParams(handleCategoryChange(selectedCategory));

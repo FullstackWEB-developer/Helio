@@ -13,6 +13,7 @@ export interface Ticket {
     closedOn?: Date;
     createdByName?: string;
     createdOn?: Date;
+    ratingScoreCreatedOn?: Date;
     modifiedOn?: Date;
     contactId?: string;
     patientId?: number;

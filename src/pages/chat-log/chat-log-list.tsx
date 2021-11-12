@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import DropdownLabel from '@components/dropdown-label';
 import {DropdownItemModel} from '@components/dropdown';
 import Pagination from '@components/pagination';
@@ -36,6 +36,7 @@ import FilterDot from '@components/filter-dot/filter-dot';
 import {selectIsChatLogFiltered} from '@pages/chat-log/store/chat-log.selectors';
 import {setIsChatLogFiltered} from '@pages/chat-log/store/chat-log.slice';
 import useCheckPermission from '@shared/hooks/useCheckPermission';
+import {AddTicketReview, ViewTicketRatings} from '@components/ticket-rating';
 
 const ChatsLogList = () => {
     const {t} = useTranslation();
@@ -43,13 +44,16 @@ const ChatsLogList = () => {
     const history = useHistory();
     const canViewAnyTranscript = useCheckPermission('Tickets.ViewAnyChatTranscript');
     const isDefaultTeam = useCheckPermission('Chat.DefaultToTeamView');
-
+    const [addReviewForTicket, setAddReviewForTicket] = useState<string | undefined>();
     const [pagingResult, setPagingResult] = useState({...DEFAULT_PAGING});
     const [isFilterOpen, setFilterOpen] = useState(false);
     const [isChatTranscriptOpen, setChatTranscriptOpen] = useState(false);
-    const [ticketNumber, setTicketNumber] = useState<string>();
+    const [ticketNumber, setTicketNumber] = useState<number>();
     const isFiltered = useSelector(selectIsChatLogFiltered);
+    const canAddTicketReview = useCheckPermission('Tickets.AddReview');
+    const canViewAnyReview = useCheckPermission('Tickets.ViewAnyReview');
     const [rows, setRows] = useState<TicketLogModel[]>([]);
+    const [displayRatingsForTicket, setDisplayRatingsForTicket] = useState<number | undefined>(undefined);
 
     const [currentQueryType, setCurrentQueryType] = useState<ChatLogQueryType>(!isDefaultTeam ? ChatLogQueryType.MyChatLog : ChatLogQueryType.TeamChatLog);
     const dispatch = useDispatch();
@@ -69,7 +73,7 @@ const ChatsLogList = () => {
         }
     }, [dispatch]);
 
-    const navigateToTicketDetail = (ticketNumber: string) => {
+    const navigateToTicketDetail = (ticketNumber: number) => {
         history.push(`${TicketsPath}/${ticketNumber}`);
     }
 
@@ -113,6 +117,14 @@ const ChatsLogList = () => {
                 label: 'ticket_log.patient_details',
                 value: '4',
                 icon: <SvgIcon type={Icon.Contacts} fillClass='rgba-05-fill' />
+            });
+        }
+
+        if (canAddTicketReview) {
+            options.push({
+                label: 'ticket_log.add_review',
+                value: '5',
+                icon: <SvgIcon type={Icon.Comment} fillClass='rgba-062-fill'/>
             });
         }
 
@@ -227,7 +239,7 @@ const ChatsLogList = () => {
             {
                 title: 'ticket_log.transcript',
                 field: 'recordedConversationLink',
-                widthClass: 'w-24 flex items-center justify-center',
+                widthClass: 'w-1/12 flex items-center justify-center',
                 render: (value: string, data: TicketLogModel) => (
                     <>
                         {!!value &&
@@ -246,7 +258,7 @@ const ChatsLogList = () => {
             {
                 title: 'ticket_log.rating',
                 field: 'ratingScore',
-                widthClass: 'w-24 flex items-center justify-center',
+                widthClass: 'w-1/12 flex items-center justify-center',
                 render: (value?: number) => (
                     <>
                         {value === undefined &&
@@ -269,6 +281,11 @@ const ChatsLogList = () => {
                         }
                     </>
                 )
+            },{
+                title: 'ticket_log.review',
+                field: 'hasManagerReview',
+                widthClass: 'w-1/12 flex items-center justify-center',
+                render: (value: boolean, record: TicketLogModel) => (value && canViewAnyReview) ? <SvgIcon onClick={() => setDisplayRatingsForTicket(record.ticketNumber)} type={Icon.Comment} className='cursor-pointer' fillClass='rgba-062-fill'/> : null
             },
             {
                 title: '',
@@ -298,6 +315,9 @@ const ChatsLogList = () => {
                                             break;
                                         }
                                         navigateToPatientDetail(data.patientId)
+                                        break;
+                                    case '5':
+                                        setAddReviewForTicket(data.id)
                                         break;
                                 }
                             }}
@@ -380,6 +400,7 @@ const ChatsLogList = () => {
             </div>
             <div className='flex items-center justify-center'>
                 <Modal isOpen={isChatTranscriptOpen}
+                       closeableOnEscapeKeyPress={true}
                     title='ticket_detail.chat_transcript.title'
                     isClosable={true}
                     isDraggable={true}
@@ -391,6 +412,16 @@ const ChatsLogList = () => {
                         <ChatTranscript ticket={ticket} patient={patient} />
                     }
                 </Modal>
+
+                {addReviewForTicket && <AddTicketReview
+                    ticketId={addReviewForTicket}
+                    isOpen={!!addReviewForTicket}
+                    onClose={() => setAddReviewForTicket(undefined)}/>}
+
+                {displayRatingsForTicket && <ViewTicketRatings
+                    onClose={() => setDisplayRatingsForTicket(undefined)}
+                    isOpen={!!displayRatingsForTicket}
+                    ticketNumber={displayRatingsForTicket}/>}
             </div>
         </div>
     );

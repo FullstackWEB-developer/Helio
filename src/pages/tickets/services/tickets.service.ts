@@ -45,6 +45,7 @@ import {AgentPerformanceResponse} from '@pages/application/models/agent-performa
 import {AgentContactPerformanceResponse} from '@pages/application/models/agent-contact-performance-response';
 import {TicketManagerReview} from '@pages/application/models/ticket-manager-review';
 import {ManagerRatingsMetricResponse} from '@pages/application/models/manager-ratings-metric-response';
+import {CreateTicketFeedbackRequest} from '@pages/tickets/models/create-ticket-feedback-request';
 
 const logger = Logger.getInstance();
 const ticketsBaseUrl = "/tickets";
@@ -272,7 +273,7 @@ export const setDelete = async ({id, undoDelete = false}: setDeleteProps) => {
     })
 }
 
-export const getTicketByNumber = async (ticketNumber: number) => {
+export const getTicketByNumber = async (ticketNumber: number) : Promise<Ticket> => {
     const url = `${ticketsBaseUrl}/${ticketNumber}`;
     const response = await Api.get(url);
     return response.data;
@@ -351,6 +352,20 @@ export const getRecentManagerReviewsForUser = async (userId?: string, limit?: nu
     });
     return response.data;
 };
+
+export const getTicketReviews = async (ticketId?: string) : Promise<TicketManagerReview[]> => {
+    const url = `${ticketsBaseUrl}/review/${ticketId}`;
+    const response = await Api.get(url);
+    return response.data;
+};
+
+export const creteTicketFeedback = async (request: CreateTicketFeedbackRequest) : Promise<TicketManagerReview> => {
+    const url = `${ticketsBaseUrl}/review`;
+    const response = await Api.post(url, request);
+    return response.data;
+};
+
+
 
 export const getOverallManagerRatingsForUser = async (userId?: string) : Promise<ManagerRatingsMetricResponse> => {
     const url = `${ticketsBaseUrl}/review/overall-manager-reviews`;

@@ -50,6 +50,7 @@
   --color-text-primary: --color-secondary-900;
   --light-text-high-emphasis: rgba(0, 0, 0, 0.87);
   --light-text-medium-emphasis: rgba(0, 0, 0, 0.5);
+  --light-text-medium-062: rgba(0, 0, 0, 0.62);
   --light-text-disabled: rgba(0, 0, 0, 0.38);
   --light-divider-12: rgba(0, 0, 0, 0.12);
   --light-divider-7: rgba(0, 0, 0, 0.07);
@@ -217,7 +218,7 @@
   --body2-medium-font-style: normal;
   --body2-medium-line-height: 1.5rem;
   --body2-medium-letter-spacing: normal;
-  --body2-medium-color: var(--light-text-medium-emphasis);
+  --body2-medium-color: var(--light-text-medium-062);
 
   --body2-white-font-family: var(--font-regular);
   --body2-white-font-size: 0.875rem;
@@ -324,6 +325,7 @@
   --rgba-color-038: rgba(0, 0, 0, 0.38);
   --rgba-color-05: rgba(0, 0, 0, 0.5);
   --rgba-color-06: rgba(0, 0, 0, 0.6);
+  --rgba-color-062: rgba(0, 0, 0, 0.62);
   --profile-dropdown-shadow: 0 0.25rem 0.125rem 0 rgba(0, 0, 0, 0.15);
   --ccp-header-color: #4a4a4a;
 

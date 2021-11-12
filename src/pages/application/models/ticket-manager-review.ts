@@ -8,6 +8,7 @@ export interface TicketManagerReview {
     rating: number;
     feedback: string;
     createdByName: string;
+    createdBy: string;
     createdOn: Date;
 
 }
