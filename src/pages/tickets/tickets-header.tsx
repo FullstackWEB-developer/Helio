@@ -16,7 +16,7 @@ import SvgIcon from '@components/svg-icon/svg-icon';
 import Dropdown from '@components/dropdown/dropdown';
 import {DropdownModel} from '@components/dropdown/dropdown.models';
 import useComponentVisibility from '@shared/hooks/useComponentVisibility';
-import {authenticationSelector} from '@shared/store/app-user/appuser.selectors';
+import {selectAppUserDetails} from '@shared/store/app-user/appuser.selectors';
 import {TicketListQueryType} from './models/ticket-list-type';
 import {setTicketListQueryType} from './store/tickets.slice'
 import useCheckPermission from '@shared/hooks/useCheckPermission';
@@ -32,7 +32,7 @@ const TicketsHeader = () => {
     const [currentPage, setCurrentPage] = useState(paging.page.toString());
     const [currentListQueryType, setCurrentListQueryType] = useState<string>(!isDefaultTeam ? TicketListQueryType.MyTicket.toString(): TicketListQueryType.AllTicket.toString());
     const [isVisible, setIsVisible, elementRef] = useComponentVisibility<HTMLDivElement>(false);
-    const {id} = useSelector(authenticationSelector);
+    const {id} = useSelector(selectAppUserDetails);
 
     const ticketListTypeDropdownModel: DropdownModel = {
         defaultValue: ticketListQueryType ?? currentListQueryType,

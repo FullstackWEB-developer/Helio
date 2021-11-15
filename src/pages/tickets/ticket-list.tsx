@@ -23,7 +23,7 @@ import {useHistory} from 'react-router-dom';
 import queryString from 'query-string';
 import {selectLastNavigationDate} from '@shared/layout/store/layout.selectors';
 import useCheckPermission from '@shared/hooks/useCheckPermission';
-import { authenticationSelector } from '@shared/store/app-user/appuser.selectors';
+import {selectAppUserDetails} from '@shared/store/app-user/appuser.selectors';
 
 const TicketList = () => {
     const dispatch = useDispatch();
@@ -37,7 +37,7 @@ const TicketList = () => {
     const [lastAppliedFilter, setLastAppliedFilter] = useState<string>(JSON.stringify(currentFilter));
     const lastNavigationDate = useSelector(selectLastNavigationDate);
     const isDefaultTeam = useCheckPermission('Tickets.DefaultToTeamView');
-    const { id } = useSelector(authenticationSelector);
+    const { id } = useSelector(selectAppUserDetails);
 
     useEffect(() => {
         if (lastAppliedFilter !== JSON.stringify(currentFilter)) {
