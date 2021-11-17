@@ -29,12 +29,12 @@ const TicketDetailFeed = ({ticket}: TicketDetailFeedProps) => {
     const [feeds, setFeeds] = useState<FeedDetailDisplayItem[]>([]);
     const [scrollToBottom, setScrollToBottom] = useState<boolean>(true);
     const getTime = (date?: Date) => {
-        return date != null ? new Date(date).getTime() : 0;
+        return date ? new Date(date).getTime() : 0;
     }
 
     useEffect(() => {
         dispatch(getUserList());
-    }, []);
+    }, [dispatch]);
 
     const {
         data: smsMessages,

@@ -82,7 +82,7 @@ const TicketDetail = React.lazy(() => import('@pages/tickets/ticket-detail'));
 const Contacts = React.lazy(() => import('../pages/contacts/contacts'));
 const DownloadMedicalRecords = React.lazy(() => import('@pages/external-access/request-medical-records/download-medical-records'));
 const MedicalRecordsPreview = React.lazy(() => import('@pages/external-access/request-medical-records/medical-records-preview'));
-const TicketSms = React.lazy(() => import('@pages/external-access/ticket-sms/ticket-sms'));
+const RealtimeTicketSms = React.lazy(() => import('@pages/external-access/ticket-sms/realtime-ticket-sms'));
 const Sms = React.lazy(() => import('@pages/sms'));
 const UserDetails = React.lazy(() => import('@pages/users/details'));
 const UserAdd = React.lazy(() => import('@pages/users/add/user-add'));
@@ -120,7 +120,7 @@ function App() {
             <Route path='/o/'>
                 <ExternalAccessLayout>
                     <Switch>
-                        <Route path={TicketSmsPath} component={withSuspense(TicketSms)} />
+                        <Route path={TicketSmsPath} component={withSuspense(RealtimeTicketSms)} />
                         <Route path='/o/verify-patient' component={withSuspense(GetExternalUserDobZip)} />
                         <Route path='/o/verify-patient-code' component={withSuspense(ExternalUserVerificationCode)} />
                         <Route path='/o/verify-patient-get-mobile' component={withSuspense(ExternalUserMobileNumber)} />

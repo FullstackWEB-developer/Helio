@@ -9,7 +9,12 @@ import DropdownLabel from '@components/dropdown-label';
 import SearchInputField from '@components/search-input-field/search-input-field';
 import SvgIcon, {Icon} from '@components/svg-icon';
 import {SmsChat, SmsSummaryList, SmsFilter, SmsNewMessage} from './components';
-import {QueryTicketMessagesInfinite, QueryTicketMessageSummaryByTicketId, QueryTicketMessageSummaryInfinite} from '@constants/react-query-constants';
+import {
+    GetTicketMessage,
+    QueryTicketMessagesInfinite,
+    QueryTicketMessageSummaryByTicketId,
+    QueryTicketMessageSummaryInfinite
+} from '@constants/react-query-constants';
 import {
     ChannelTypes,
     ContactExtended,
@@ -18,7 +23,7 @@ import {
     TicketMessageSummary,
     TicketMessageSummaryRequest
 } from '@shared/models';
-import {getChats, getMessages, markRead, sendMessage} from './services/ticket-messages.service';
+import {getChats, getMessage, getMessages, markRead, sendMessage} from './services/ticket-messages.service';
 import {DATE_INPUT_LONG_FORMAT, DEBOUNCE_SEARCH_DELAY_MS} from '@constants/form-constants';
 import useDebounce from '@shared/hooks/useDebounce';
 import {
@@ -67,6 +72,7 @@ const Sms = () => {
     const {smsIncoming} = useSignalRConnectionContext();
     const unreadSMSList = useSelector(selectUnreadSMSList) ?? [];
     const {state} = useLocation<SmsLocationState>();
+    const [newMessageId, setNewMessageId] = useState('');
     const {ticketId} = useParams<{ticketId?: string}>();
     const [lastMessageSendTime, setLastMessageSendTime] = useState<Date>();
     const history = useHistory();
@@ -187,6 +193,7 @@ const Sms = () => {
         if (messageIndex < 0) {
             refetch();
         }
+        setNewMessageId(data.messageId);
     }, [refetch, summaryMessages]);
 
     useEffect(() => {
@@ -360,7 +367,7 @@ const Sms = () => {
                     messages={messages}
                     isLoading={isMessageQueryFetchingNextPage}
                     isSending={sendMessageMutation.isLoading}
-                    isBottomFocus={sendMessageMutation.isLoading}
+                    isBottomFocus={sendMessageMutation.isLoading || !!newMessageId}
                     onSendClick={onSendMessage}
                     onFetchMore={messageFetchMore}
                     lastMessageSendTime = {lastMessageSendTime}

@@ -153,7 +153,7 @@ const Header = ({headsetIconRef}: {headsetIconRef: React.RefObject<HTMLDivElemen
                             <div ref={dropdownRef} className='relative hidden h-full md:block'>
                                 <div ref={avatarRef} data-test-id='letter-avatar' className='pr-6 cursor-pointer'
                                     onClick={() => displayProfileMenu()}>
-                                    <Avatar userFullName={auth.isLoggedIn ? appUserDetails.fullName : ''}
+                                    <Avatar userFullName={auth.isLoggedIn && appUserDetails ? appUserDetails.fullName : ''}
                                             userId={appUserDetails?.id}
                                             displayStatus={true}
                                             userPicture={appUserDetails?.profilePicture} />

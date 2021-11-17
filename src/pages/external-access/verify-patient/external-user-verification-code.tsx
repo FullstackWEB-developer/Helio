@@ -10,7 +10,14 @@ import {CheckVerificationCode} from '@constants/react-query-constants';
 import {checkVerificationCode, sendVerificationCode} from '@pages/patients/services/patients.service';
 import {VerificationChannel} from '@pages/external-access/models/verification-channel.enum';
 import {ExternalAccessRequestTypes} from '@pages/external-access/models/external-updates-request-types.enum';
-import {TicketSmsPath} from '@app/paths';
+import {
+    AppointmentListPath,
+    AppointmentSchedulePath,
+    LabResultsPath,
+    RequestMedicalRecordsPath,
+    TicketSmsPath,
+    ViewMedicationsPath
+} from '@app/paths';
 import useFingerPrint from '@shared/hooks/useFingerPrint';
 import utils from '@shared/utils/utils';
 import {useDispatch, useSelector} from 'react-redux';
@@ -60,21 +67,21 @@ const ExternalUserVerificationCode = () => {
             }
             switch (request.requestType) {
                 case ExternalAccessRequestTypes.RequestRefill:
-                    history.push('/o/view-medications');
+                    history.push(ViewMedicationsPath);
                     break;
                 case ExternalAccessRequestTypes.RescheduleAppointment:
                 case ExternalAccessRequestTypes.GetAppointmentDetail:
                 case ExternalAccessRequestTypes.CancelAppointment:
-                    history.push('/o/appointment-list');
+                    history.push(AppointmentListPath);
                     break;
                 case ExternalAccessRequestTypes.RequestMedicalRecords:
-                    history.push('/o/request-medical-records');
+                    history.push(RequestMedicalRecordsPath);
                     break;
                 case ExternalAccessRequestTypes.GetLabResults:
-                    history.push('/o/lab-results');
+                    history.push(LabResultsPath);
                     break;
                 case ExternalAccessRequestTypes.ScheduleAppointment:
-                    history.push('/o/appointment-schedule');
+                    history.push(AppointmentSchedulePath);
                     break;
                 case ExternalAccessRequestTypes.SentTicketMessageViaSMS:
                     history.push(TicketSmsPath);
@@ -181,7 +188,7 @@ const ExternalUserVerificationCode = () => {
     }
 
     const isButtonDisabled = () => {
-        return !isDirty || !isValid || watch('code') && watch('code').length !== 6;
+        return !isDirty || !isValid || (watch('code') && watch('code').length !== 6);
     };
 
     const headerDescription = () => {
