@@ -41,7 +41,7 @@ const usePageVisibility = () =>  {
             document.removeEventListener(visibilityChange, onVisibilityChange)
         }
     })
-    return isVisible
+    return isVisible;
 }
 
 export default usePageVisibility;

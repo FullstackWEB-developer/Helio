@@ -120,8 +120,6 @@ const TicketSms = () => {
         return <Spinner fullScreen />
     }
 
-
-
     const DisplayMessage = ({message}: {message: TicketMessage}) => {
         return message.direction === TicketMessagesDirection.Incoming ? <IncomingSms message={message} /> : <OutgoingSms users={users?.results} message={message} />
     }

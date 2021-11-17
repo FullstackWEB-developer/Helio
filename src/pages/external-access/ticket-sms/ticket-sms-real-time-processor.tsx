@@ -33,23 +33,24 @@ const TicketSmsRealTimeProcessor = () => {
 
     const markReadMutation = useMutation(({ticketId, channel}: {ticketId: string, channel: ChannelTypes}) => markRead(ticketId, channel));
 
-    const setReadIfOpen = () => {
-        console.log("Isvis:" + isPageVisible);
-        if (isPageVisible) {
-            markReadMutation.mutate({
-                ticketId: request.ticketId,
-                channel: ChannelTypes.SMS
-            });
-        }
-    }
+
 
     useEffect(() => {
+        const setReadIfOpen = (isPageVisible: boolean) => {
+            if (isPageVisible) {
+                markReadMutation.mutate({
+                    ticketId: request.ticketId,
+                    channel: ChannelTypes.SMS
+                });
+            }
+        }
+
         if (connection && connection.state === HubConnectionState.Disconnected) {
             connection.start()
                 .then(_ => {
                     connection.on('TicketSmsReceived', (message: TicketMessage) => {
                         dispatch(pushTicketSmsMessage(message));
-                        setReadIfOpen();
+                        setReadIfOpen(isPageVisible);
                     });
                 })
                 .catch(error => realtimeConnectionLogger.log(LogLevel.Error, `Connection to TicketSms Hub failed: ${error}.`))
@@ -59,7 +60,7 @@ const TicketSmsRealTimeProcessor = () => {
             connection?.stop();
         }
 
-    }, [connection, realtimeConnectionLogger]);
+    }, [connection, realtimeConnectionLogger, isPageVisible, dispatch]);
     return <TicketSms />;
 }
 
