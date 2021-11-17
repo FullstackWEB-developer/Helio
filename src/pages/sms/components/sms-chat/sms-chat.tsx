@@ -16,8 +16,14 @@ import ParentExtraTemplate from '@components/notification-template-select/compon
 import {NotificationTemplate, NotificationTemplateChannel} from '@shared/models/notification-template.model';
 import NotificationTemplateSelect from '@components/notification-template-select/notification-template-select';
 import {useQuery} from 'react-query';
-import {ProcessTemplate, QueryContactsInfinite, QueryGetPatientById, QueryTickets} from '@constants/react-query-constants';
-import {getPatientByIdWithQuery} from '@pages/patients/services/patients.service';
+import {
+    GetPatientPhoto,
+    ProcessTemplate,
+    QueryContactsInfinite,
+    QueryGetPatientById,
+    QueryTickets
+} from '@constants/react-query-constants';
+import {getPatientByIdWithQuery, getPatientPhoto} from '@pages/patients/services/patients.service';
 import {processTemplate} from '@shared/services/notifications.service';
 import {getContactById} from '@shared/services/contacts.service';
 import SmsHeader from '../sms-header/sms-header';
@@ -39,9 +45,13 @@ const SmsChat = ({info, isLoading, isSending, isBottomFocus, messages = [], last
     const messageListContainerRef = useRef<HTMLDivElement>(null);
     const [smsText, setSmsText] = useState<string>();
     const topMessagePosition = useRef<number>();
-    const [selectedMessageTemplate, setSelectedMessageTemplate] = useState<NotificationTemplate>();   
+    const [selectedMessageTemplate, setSelectedMessageTemplate] = useState<NotificationTemplate>();
 
     const {data: patient} = useQuery([QueryGetPatientById, info.patientId], () => getPatientByIdWithQuery(info.patientId!), {
+        enabled: !!info.patientId
+    });
+
+    const {data: patientPhoto} = useQuery([GetPatientPhoto, info.patientId], () => getPatientPhoto(info.patientId!), {
         enabled: !!info.patientId
     });
 
@@ -125,7 +135,7 @@ const SmsChat = ({info, isLoading, isSending, isBottomFocus, messages = [], last
     }
 
     return (<div className="flex flex-col justify-between flex-auto h-full sms-chat">
-        <SmsHeader info={info} forNewTicketMessagePurpose={false} />
+        <SmsHeader info={info} forNewTicketMessagePurpose={false} patientPhoto={patientPhoto} />
         <div className="flex flex-col flex-1 px-6 overflow-y-auto">
             {messages && messages.length > 0 &&
                 <>
@@ -133,7 +143,7 @@ const SmsChat = ({info, isLoading, isSending, isBottomFocus, messages = [], last
                         <Spinner />
                     </div>
                     <div ref={messageListContainerRef} className='flex flex-col h-full overflow-y-auto pb-6' onScroll={onScroll}>
-                        <SmsChatMessageList messages={messages} />
+                        <SmsChatMessageList messages={messages} patientPhoto={patientPhoto} />
                         <AlwaysScrollToBottom enabled={!isBottomFocus} />
                     </div>
                 </>

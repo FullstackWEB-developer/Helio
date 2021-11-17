@@ -12,7 +12,7 @@ import {selectAppUserDetails} from '@shared/store/app-user/appuser.selectors';
 import {useHistory} from 'react-router';
 import {TicketLogModel, TicketLogRequestModel} from '@shared/models/ticket-log.model';
 import {DEFAULT_PAGING} from '@shared/constants/table-constants';
-import {GetCallLogs, QueryGetPatientById, QueryTickets} from '@constants/react-query-constants';
+import {GetChatsLogs, QueryGetPatientById, QueryTickets} from '@constants/react-query-constants';
 import {getChatsLog} from './services/chats-log.services';
 import Spinner from '@components/spinner/Spinner';
 import {DATE_FORMAT, TIME_FORMAT} from '@constants/form-constants';
@@ -333,7 +333,7 @@ const ChatsLogList = () => {
     };
 
 
-    const {isLoading, isFetching} = useQuery([GetCallLogs, chatsLogFilter], () => getChatsLog(chatsLogFilter), {
+    const {isLoading, isFetching} = useQuery([GetChatsLogs, chatsLogFilter], () => getChatsLog(chatsLogFilter), {
         enabled: true,
         onSuccess: (response) => {
             const {results, ...paging} = response;

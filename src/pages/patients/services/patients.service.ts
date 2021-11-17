@@ -81,6 +81,12 @@ export const getPatientByIdWithQuery = async (patientId: number, queryParams?: G
      return response.data;
 }
 
+export const getPatientPhoto = async (patientId: number): Promise<string> => {
+     const url = `${patientsUrl}/${patientId}/photo`;
+     const response = await Api.get(url);
+     return response.data;
+}
+
 export interface DownloadMedicalRecordsProps {
      patientId: number;
      departmentId: number;

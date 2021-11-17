@@ -11,6 +11,9 @@ import {useMemo} from 'react';
 import {Icon} from '@components/svg-icon';
 import {useTranslation} from 'react-i18next';
 import isToday from 'dayjs/plugin/isToday';
+import {useQuery} from 'react-query';
+import {GetPatientPhoto} from '@constants/react-query-constants';
+import {getPatientPhoto} from '@pages/patients/services/patients.service';
 dayjs.extend(utc);
 dayjs.extend(isToday)
 
@@ -58,6 +61,10 @@ const SmsChatSummary = ({
 
     const searchFilter = useMemo(() => searchFilterMatch?.map(getFilterMatchName) ?? [], [searchFilterMatch]);
 
+    const {data: patientPhoto} = useQuery([GetPatientPhoto, props.patientId], () => getPatientPhoto(props.patientId!), {
+        enabled: !!props.patientId
+    });
+
     const getDate = () => {
         if (dayjs(messageSendAt).isToday()) {
             return dayjs.utc(messageSendAt).local().format('hh:mm A');
@@ -66,12 +73,19 @@ const SmsChatSummary = ({
         }
     }
 
+    const getImage = () => {
+        if (patientPhoto && patientPhoto.length > 0) {
+            return <img alt={t('patient.summary.profile_pic_alt_text')} className='w-10 h-10 rounded-full'
+                        src={`data:image/jpeg;base64,${patientPhoto}`} />
+        }
+
+        return <Avatar userFullName={createdForName} />
+    }
+
     return (<div className={classnames('border-b sms-summary cursor-pointer', {'sms-summary-selected': isSelected})} onClick={() => props.onClick && props.onClick(ticketId)}>
         <div className='flex flex-row pl-5 pt-2.5 pb-1.5 pr-4'>
             <div className="pr-4">
-                {!!createdForName &&
-                    <Avatar userFullName={createdForName} />
-                }
+                {!!createdForName && getImage()}
                 {!createdForName &&
                     <Avatar icon={Icon.UserUnknown} />
                 }

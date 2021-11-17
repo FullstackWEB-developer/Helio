@@ -171,6 +171,21 @@ const Sms = () => {
         setSummaryMessages(currentSummaryMessagesClone);
     }
 
+    useQuery([GetTicketMessage, newMessageId], () => getMessage(newMessageId),
+        {
+            enabled: !!newMessageId,
+            onSuccess: (result) => {
+                const isTicketSummarySelected = summaryMessages && selectedTicketSummary?.ticketId === result.ticketId;
+                modifySummaryMessage(result.ticketId, !isTicketSummarySelected ? 1 : undefined, result.body);
+                if (isTicketSummarySelected) {
+                    pushMessage(result);
+                }
+            },
+            onSettled: () => {
+                setNewMessageId('');
+            }
+        });
+
     const sendMessageMutation = useMutation(sendMessage, {
         onSuccess: (response) => {
             response.createdOn = dayjs().utc().local().toDate();

@@ -20,6 +20,7 @@ interface SmsChatMessageProps {
     date: Date;
     isNameVisible?: boolean;
     isPhotoVisible?: boolean;
+    patientPhoto?: string;
 }
 
 const systemUser = "System User";
@@ -42,22 +43,32 @@ const getName = (props: SmsChatMessageProps, t: TFunction) => {
     }
 }
 
-const SmsChatMessageAvatar = ({name, photoUrl}: {name: string, photoUrl?: string}) => (
-    <div className="flex flex-col">
+
+
+const SmsChatMessageAvatar = ({name, photoUrl, patientPhoto}: {name: string, photoUrl?: string, patientPhoto?: string}) => {
+    const {t} = useTranslation();
+    const getImage = () => {
+        if (patientPhoto && patientPhoto.length > 0) {
+            return <img alt={t('patient.summary.profile_pic_alt_text')} className='w-10 h-10 rounded-full'
+                        src={`data:image/jpeg;base64,${patientPhoto}`} />
+        }
+
+        return <Avatar
+            userFullName={name}
+            userPicture={photoUrl}
+        />
+    }
+
+    return (    <div className="flex flex-col">
         <div>
             {!name && !photoUrl &&
                 <Avatar icon={Icon.UserUnknown} />
             }
-            {(!!name || !!photoUrl) &&
-                <Avatar
-                    userFullName={name}
-                    userPicture={photoUrl}
-                />
-            }
+            {(!!name || (!!photoUrl || patientPhoto)) && getImage()}
         </div>
         <div />
     </div>
-);
+)};
 
 const SmsChatMessageTime = ({date}: {date: Date}) => (
     <div className="flex items-center sms-chat-message-time body3-small">{dayjs.utc(date).local().format('hh:mm A')}</div>
@@ -95,7 +106,7 @@ const SmsChatMessageIn = (props: SmsChatMessageProps) => {
             <div className="sms-chat-message-time body3-small" />
         </div>
         <div className="flex flex-row justify-start">
-            {props.isPhotoVisible && <SmsChatMessageAvatar name={name} photoUrl={props.photoProfileUrl} />}
+            {props.isPhotoVisible && <SmsChatMessageAvatar name={name} photoUrl={props.photoProfileUrl} patientPhoto={props.patientPhoto} />}
             <SmsChatMessageBody body={props.body} />
             <SmsChatMessageTime date={props.date} />
         </div>

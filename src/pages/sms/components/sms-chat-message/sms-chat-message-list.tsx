@@ -12,9 +12,10 @@ dayjs.extend(utc);
 
 interface MessageListProps {
     messages: TicketMessage[];
+    patientPhoto?: string;
 }
 
-const SmsChatMessageList = ({messages}: MessageListProps) => {
+const SmsChatMessageList = ({messages, patientPhoto}: MessageListProps) => {
     const users = useSelector(selectUserList);
 
     const getAgentInfo = (userId: string) => {
@@ -47,6 +48,7 @@ const SmsChatMessageList = ({messages}: MessageListProps) => {
                     name={(item.createdName || item.createdBy) ?? ''}
                     body={item.body}
                     date={item.createdOn}
+                    patientPhoto={patientPhoto}
                     isOutGoing={item.direction === TicketMessagesDirection.Outgoing}
                 />
             );

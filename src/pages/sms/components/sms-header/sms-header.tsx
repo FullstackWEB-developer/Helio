@@ -13,7 +13,7 @@ import {ContactsPath, PatientsPath, TicketsPath} from '@app/paths';
 import {Link, useHistory} from 'react-router-dom';
 import {Icon} from '@components/svg-icon';
 
-const SmsHeader = ({info, forNewTicketMessagePurpose}: {info: TicketMessageSummary, forNewTicketMessagePurpose: boolean}) => {
+const SmsHeader = ({info, forNewTicketMessagePurpose, patientPhoto}: {info: TicketMessageSummary, forNewTicketMessagePurpose: boolean, patientPhoto?: string}) => {
     const {t} = useTranslation();
     const history = useHistory();
     const ticketReasons = useSelector((state) => selectLookupValues(state, 'TicketReason'));
@@ -91,14 +91,23 @@ const SmsHeader = ({info, forNewTicketMessagePurpose}: {info: TicketMessageSumma
         }
         return utils.applyPhoneMask(info.createdForMobileNumber);
     }
+
+    const getImage = () => {
+        if (patientPhoto && patientPhoto.length > 0) {
+            return <img alt={t('patient.summary.profile_pic_alt_text')} className='w-10 h-10 rounded-full'
+                        src={`data:image/jpeg;base64,${patientPhoto}`} />
+        }
+
+        return <Avatar userFullName={info.createdForName} />
+    }
+
+
     return (
         <div className="flex flex-row border-b sms-chat-header">
             <div className="pt-4 pl-6">
-                {!!info.createdForName &&
-                    <Avatar userFullName={info.createdForName} />
-                }
+                {!!info.createdForName && getImage()}
                 {!info.createdForName &&
-                    <Avatar icon={Icon.UserUnknown} />
+                    <Avatar icon={Icon.UserUnknown} userPicture={patientPhoto} />
                 }
             </div>
             <div className="flex flex-col flex-auto pl-4 pr-6 pt-7">
