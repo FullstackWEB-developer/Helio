@@ -12,7 +12,9 @@ export const getPatients = async (
   includePatientDetails: boolean = false
 ) => {
   if (type === searchTypePatient.patientName) {
-    term = term.replace(/(\w+)(,)?(\s)?(\w+)?/, "$4, $1");
+      if (term.includes(' ') && !term.includes(',')) {
+        term = term.replace(/(\w+)(,)?(\s)?(\w+)?/, "$4, $1");
+    }
   }
 
   const response = await Api.get<Patient[]>(patientsUrl, {
