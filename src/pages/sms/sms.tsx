@@ -19,7 +19,7 @@ import {
     ChannelTypes,
     ContactExtended,
     TicketMessage,
-    TicketMessageBase,
+    TicketMessageBase, TicketMessagesDirection,
     TicketMessageSummary,
     TicketMessageSummaryRequest
 } from '@shared/models';
@@ -177,7 +177,7 @@ const Sms = () => {
             onSuccess: (result) => {
                 const isTicketSummarySelected = summaryMessages && selectedTicketSummary?.ticketId === result.ticketId;
                 modifySummaryMessage(result.ticketId, !isTicketSummarySelected ? 1 : undefined, result.body);
-                if (isTicketSummarySelected) {
+                if (isTicketSummarySelected && result.direction === TicketMessagesDirection.Incoming) {
                     pushMessage(result);
                 }
             },
