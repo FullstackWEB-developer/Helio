@@ -7,3 +7,9 @@ export const selectTicketSmsMessages = createSelector(
     ticketSmsState,
     items => items.messages as TicketMessage[]
 )
+
+
+export const selectTicketSmsMarkAsRead = createSelector(
+    ticketSmsState,
+    items => items.markAsRead as boolean
+)

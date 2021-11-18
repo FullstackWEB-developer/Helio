@@ -11,13 +11,18 @@ const ticketSmsSlice = createSlice({
         },
         pushTicketSmsMessage(state, { payload }: PayloadAction<TicketMessage>) {
             state.messages.push(payload);
+            state.markAsRead = true;
+        },
+        setMarkAsRead(state, {payload}: PayloadAction<boolean>) {
+            state.markAsRead = payload;
         }
     }
 });
 
 export const {
     setTicketSmsMessages,
-    pushTicketSmsMessage
+    pushTicketSmsMessage,
+    setMarkAsRead
 } = ticketSmsSlice.actions;
 
 export default ticketSmsSlice.reducer;
