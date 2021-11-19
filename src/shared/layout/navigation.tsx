@@ -4,7 +4,7 @@ import {useLocation} from 'react-router-dom';
 import {toggleNavigation} from './store/layout.slice';
 import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {BlackListsPath, TicketsPath, UsersPath} from '../../app/paths';
+import {BlackListsPath, TicketsPath, UsersPath} from '@app/paths';
 import SvgIcon from '@components/svg-icon/svg-icon';
 import {Icon} from '@components/svg-icon/icon';
 import './navigation.scss';
@@ -17,8 +17,6 @@ const Navigation = () => {
     const isActive = (link: string): boolean => {
         return (location && location.pathname === link)
     };
-
-
 
     const unreadSMSList = useSelector(selectUnreadSMSList);
     const menuItems = [

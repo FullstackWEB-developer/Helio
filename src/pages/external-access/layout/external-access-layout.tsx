@@ -31,7 +31,7 @@ const ExternalAccessLayout = ({children}: ExternalAccessLayoutProps) => {
         if (utils.isSessionExpired()) {
             dispatch(logOut());
         }
-    }, [dispatch, logOut])
+    }, [dispatch])
 
     const location = useLocation();
 
@@ -72,7 +72,7 @@ const ExternalAccessLayout = ({children}: ExternalAccessLayoutProps) => {
     return <>
         <div className={externalAccessLayoutClassnames}>
             {<div className={iconWrapperClass}>
-                <div className='flex items-center justify-center h-full md:px-6 md:justify-start'>
+                <div className='flex items-center justify-center h-full md:justify-start'>
                     <SvgIcon type={Icon.CwcLogo}/>
                 </div>
             </div>}

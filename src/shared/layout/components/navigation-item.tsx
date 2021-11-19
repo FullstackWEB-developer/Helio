@@ -3,13 +3,14 @@ import {useTranslation} from 'react-i18next';
 import {useDispatch, useSelector} from 'react-redux';
 import {isNavigationExpandedSelector} from '../store/layout.selectors';
 import withErrorLogging from '../../HOC/with-error-logging';
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import './navigation-item.scss';
 import {BadgeNumber} from '@icons/BadgeNumber';
 import {clearTicketFilters, toggleTicketListFilter} from '@pages/tickets/store/tickets.slice';
 import {setLastNavigationDate} from '../store/layout.slice';
 import useCheckPermission from '@shared/hooks/useCheckPermission';
 import classnames from 'classnames';
+import Tooltip from '@components/tooltip/tooltip';
 
 interface NavigationItemProps {
     title: string,
@@ -23,7 +24,9 @@ interface NavigationItemProps {
 
 const NavigationItem = ({title, link, icon, isSelected, displayBadge, badgeValue, permission}: NavigationItemProps) => {
     const {t} = useTranslation();
+    const menuItem = useRef<HTMLDivElement>(null);
     const hasPermission = useCheckPermission(permission);
+    const [tooltipVisible, setTooltipVisible] = useState(false);
     const isNavigationExpanded = useSelector(isNavigationExpandedSelector);
     const dispatch = useDispatch();
     const navigate = (link: string) => {
@@ -38,7 +41,7 @@ const NavigationItem = ({title, link, icon, isSelected, displayBadge, badgeValue
         return <></>;
     }
     return (
-        <div className={classnames('hover:bg-secondary-50 border-r', {'bg-secondary-50': isSelected})}>
+        <><div ref={menuItem} onMouseEnter={() => setTooltipVisible(true)} onMouseLeave={() => setTooltipVisible(false)} className={classnames('hover:bg-secondary-50 border-r', {'bg-secondary-50': isSelected})}>
             <div className='flex flex-row'>
                 {<div className={'w-1.5 ' + (isSelected ? 'bg-green-400' : '')} />}
                 <Link to={link} onClick={() => navigate(link)}>
@@ -61,7 +64,10 @@ const NavigationItem = ({title, link, icon, isSelected, displayBadge, badgeValue
                     </div>
                 </Link>
             </div>
-        </div>);
+        </div>
+        <Tooltip targetRef={menuItem} isVisible={tooltipVisible && !isNavigationExpanded} placement='right'>
+            <div className='p-3'>{t(title)}</div>
+        </Tooltip></>);
 }
 
 export default withErrorLogging(NavigationItem);

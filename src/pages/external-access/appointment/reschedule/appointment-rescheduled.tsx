@@ -60,7 +60,7 @@ const AppointmentRescheduled = () => {
         return <Spinner fullScreen />
     }
 
-    return <div className='2xl:px-48'>
+    return <div>
         <div className='flex items-center w-full 2xl:whitespace-pre 2xl:h-12 2xl:my-3'>
             <h4>
                 {t('external_access.appointments.appointment_scheduled')}
@@ -114,9 +114,7 @@ const AppointmentRescheduled = () => {
                 {t('external_access.appointments.parking_information')}
             </div>
             <div className='pt-2 border-b' />
-            <div className='pt-4 body2'>
-                {department?.parkingInformation}
-            </div>
+            <div className='pt-4 body2' dangerouslySetInnerHTML={{__html: department?.parkingInformation}} />
         </>
         }
         <div className='pt-6'>

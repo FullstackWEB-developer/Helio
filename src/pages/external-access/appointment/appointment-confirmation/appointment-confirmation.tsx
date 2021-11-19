@@ -56,7 +56,7 @@ const AppointmentConfirmation = () => {
             <h4 className='pt-16'>
                 {t('external_access.appointments.confirmation.title')}
             </h4>
-            <div className='pt-12 pb-7'>{
+            <div className='pt-9 pb-8'>{
                 appointment?.startDateTime && utils.isDateTimeInPast(appointment.startDateTime) ?
                     t('external_access.appointments.confirmation.subtitle_past') :
                     t('external_access.appointments.confirmation.subtitle')

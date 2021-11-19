@@ -182,9 +182,7 @@ const AppointmentDetail = () => {
                 {t('external_access.appointments.parking_information')}
             </div>
             <div className='border-b pt-2' />
-            <div className='pt-4 body2'>
-                {location?.parkingInformation}
-            </div>
+            <div className='pt-4 body2' dangerouslySetInnerHTML={{__html: location?.parkingInformation}} />
         </>
         }
         <div className={classnames({'pt-8': location?.parkingInformation, 'pt-20': !location?.parkingInformation})}>

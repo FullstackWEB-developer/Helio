@@ -6,7 +6,6 @@ import customParseFormat from 'dayjs/plugin/customParseFormat';
 import ProviderPicture from './provider-picture';
 import {useDispatch, useSelector} from 'react-redux';
 import {selectLocationList, selectProviderList} from '@shared/store/lookups/lookups.selectors';
-import classnames from 'classnames';
 import Button from '@components/button/button';
 import utils from '@shared/utils/utils';
 import {useMutation} from 'react-query';
@@ -152,16 +151,14 @@ const AppointmentDetailConfirmation = ({appointment, appointmentType}: {appointm
             {
                 location?.parkingInformation &&
                 <>
-                    <div className={classnames({'pt-8': appointmentType?.instructions, 'pt-20': !appointmentType?.instructions})}>
+                    <div className='pt-8'>
                         {t('external_access.appointments.parking_information')}
                     </div>
                     <div className='border-b pt-2' />
-                    <div className='pt-4 body2'>
-                        {location?.parkingInformation}
-                    </div>
+                    <div className='pt-4 body2' dangerouslySetInnerHTML={{__html: location?.parkingInformation}} />
                 </>
             }
-            <div className={classnames({'pt-8': location?.parkingInformation, 'pt-20': !location?.parkingInformation})}>
+            <div className='pt-8'>
                 {t('external_access.appointments.directions')}
             </div>
             <div className='border-b pt-2' />
