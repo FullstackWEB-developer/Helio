@@ -963,6 +963,7 @@
         "female": "Female",
         "male": "Male"
       },
+      "view_in_map": "View in map",
       "with_doctor": "with {{providerName}}",
       "back": "Back",
       "schedule_appointment": "Schedule Appointment",

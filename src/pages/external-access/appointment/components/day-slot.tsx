@@ -92,8 +92,8 @@ const DaySlots = ({column, hideShowMore, showAllSlot, ...props}: DaySlotsProps) 
     return <div className='pt-1'>
         {column &&
             <div className='grid grid-flow-row p-2 auto-rows-max md:auto-rows-min'>
-                {column.slots.slice(0, countToDisplay).map((slot: AppointmentSlot, index: number) =>
-                    <SlotContainer key={index} slot={slot} index={index} />)
+                {column.slots.sort((a, b) => new Date(a.startDateTime).getTime() - new Date(b.startDateTime).getTime()).slice(0, countToDisplay).map((slot: AppointmentSlot, index: number) =>
+                    <SlotContainer key={index} slot={slot} index={slot.appointmentId} />)
                 }
             </div>
         }

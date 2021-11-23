@@ -21,8 +21,6 @@ import {AxiosError} from 'axios';
 import Spinner from '@components/spinner/Spinner';
 import businessDays from '@shared/utils/business-days';
 import {Option} from '@components/option/option';
-import MapViewer from '@components/map-viewer';
-import {Marker, Popup} from 'react-leaflet';
 import Button from '@components/button/button';
 import {setSelectedAppointmentSlot} from '../store/appointments.slice';
 import {useHistory} from 'react-router';
@@ -33,6 +31,8 @@ import {GenderFilterOption} from '../models/appointment-gender-filter-option.mod
 import './appointment-schedule-select.scss';
 import {selectVerifiedPatent} from '@pages/patients/store/patients.selectors';
 import {AppointmentDepartmentModel} from '@pages/external-access/appointment/models/appointment-department.model';
+import AppointmentScheduleMap from './appointment-schedule-map';
+import FilterDot from '@components/filter-dot/filter-dot';
 
 const numberOfWorkDays = 5;
 
@@ -48,11 +48,11 @@ const AppointmentScheduleSelect = () => {
     const providers = useSelector(selectProviderList);
     const locations = useSelector(selectLocationList);
     const appointmentSlotRequest = useSelector(selectAppointmentSlotRequest);
-
+    const [currentFilterCount, setCurrentFilterCount] = useState<number>(0);
     const [isWeekendSelected, setIsWeekendSelected] = useState(false);
     const [showAllSlot, setShowAllSlot] = useState(false);
     const [slotRequest, setSlotRequest] = useState(appointmentSlotRequest);
-    const [departmentLatLng, setDepartmentLatLng] = useState<AppointmentDepartmentModel[]>();
+    const [departmentLatLng, setDepartmentLatLng] = useState<AppointmentDepartmentModel[]>([]);
     const [isFilterOpen, setFilterOpen] = useState(false);
     const [startDate, setStartDate] = useState(appointmentSlotRequest?.startDate ?? dayjs().utc().local().toDate());
 
@@ -128,7 +128,7 @@ const AppointmentScheduleSelect = () => {
                 enabled: !!slotRequest,
                 onSuccess: (data: AppointmentSlot[]) => {
                     if (!data || data.length < 1) {
-                        setDepartmentLatLng(undefined);
+                        setDepartmentLatLng([]);
                         return;
                     }
                     const latLong = locations.filter(p => data.findIndex(d => p.id === d.departmentId) > -1)
@@ -258,9 +258,11 @@ const AppointmentScheduleSelect = () => {
         const pro = providers.filter(p => p.sex === sex).map(p => p.id);
         if (event.checked) {
             setSlotRequest({...slotRequest, providerId: pro});
+            setCurrentFilterCount((count) => count + 1);
         } else {
             const b = slotRequest.providerId?.filter(p => !pro.includes(p));
             setSlotRequest({...slotRequest, providerId: b});
+            setCurrentFilterCount((count) => count - 1);
         }
     }
 
@@ -269,10 +271,12 @@ const AppointmentScheduleSelect = () => {
         const slotRequestTimeOfDayCopy = [...slotRequest.timeOfDays ?? []];
         if (event.checked) {
             slotRequestTimeOfDayCopy.push(timeOfDay);
+            setCurrentFilterCount((count) => count + 1);
             setSlotRequest({...slotRequest, timeOfDays: slotRequestTimeOfDayCopy});
         } else {
             slotRequestTimeOfDayCopy.splice(slotRequestTimeOfDayCopy.findIndex(p => p === timeOfDay), 1);
             setSlotRequest({...slotRequest, timeOfDays: slotRequestTimeOfDayCopy});
+            setCurrentFilterCount((count) => count - 1);
         }
     }
 
@@ -319,12 +323,22 @@ const AppointmentScheduleSelect = () => {
                             options={locationOptions}
                             onSelect={changeLocation}
                         />
-                        <SvgIcon
-                            type={Icon.FilterList}
-                            wrapperClassName='pb-6 lg:ml-7 cursor-pointer'
-                            fillClass='rgba-05-fill'
-                            onClick={() => setFilterOpen(!isFilterOpen)}
-                        />
+                        <div className='flex flex-col lg:ml-7 items-center'>
+                            <div className='body2-medium'>
+                                {t('external_access.schedule_appointment.filters.title')}
+                            </div>
+                            <div className='relative flex flex-row items-center'>
+                                <SvgIcon
+                                    type={Icon.FilterList}
+                                    wrapperClassName='pb-6 cursor-pointer flex justify-center'
+                                    fillClass='rgba-05-fill'
+                                    onClick={() => setFilterOpen(!isFilterOpen)}
+                                />
+                                {currentFilterCount > 0 && <div className='absolute bottom-6 right-1'>
+                                    <FilterDot />
+                                </div>}
+                            </div>
+                        </div>
                     </div>
                     <div>
                         {(isAppointmentSlotsLoading || isFetching) &&
@@ -495,26 +509,7 @@ const AppointmentScheduleSelect = () => {
                 </Modal>
             </div>
             <div className='flex-1 hidden h-full lg:block'>
-                {!isAppointmentSlotsLoading && !isFetching &&
-                    <MapViewer
-                        className='map-viewer'
-                        wrapperClassName='map-viewer-wrapper'
-                        zoomControl
-                        scrollWheelZoom
-                        bounds={departmentLatLng?.map(d => d.latLong)}
-                    >
-                        {departmentLatLng &&
-                            React.Children.toArray(departmentLatLng.map(l => (
-                                <Marker position={[l.latLong[0], l.latLong[1]]} >
-                                    <Popup className='w-52'>
-                                        <b>{l.name}</b>
-                                        <p>{l.address}{l.address2 ? ', ' + l.address2: ''}, {l.city}, {l.state} {l.zip}</p>
-                                    </Popup>
-                                </Marker>
-                            )))
-                        }
-                    </MapViewer>
-                }
+                    <AppointmentScheduleMap departmentLatLng={departmentLatLng} />
             </div>
 
         </div>
