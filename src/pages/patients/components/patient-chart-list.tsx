@@ -22,7 +22,8 @@ export interface Row {
     comment?: any,
     isStatus?: boolean,
     canCall?: boolean,
-    canSendSms?: boolean
+    canSendSms?: boolean,
+    rowClass?: string;
 }
 
 const PatientChartList = ({headings, rows, dividerLine, isLongValue, patient}: PatientChartListProps) => {
@@ -54,10 +55,9 @@ const PatientChartList = ({headings, rows, dividerLine, isLongValue, patient}: P
         return `${row.values[0] === t('patient.insurance.eligible') ? 'text-success' : 'text-danger'} pl-4`;
     }
 
-    const rowClassName = (row: Row) => classNames(`col-span-${spanSize} body2 pl-4`, {
-        'text-success cursor-pointer': row.canCall,
-        'col-span-2' : row.canSendSms,
-        'hover:underline' : row.canCall || row.canSendSms
+    const rowClassName = (row: Row) => classNames(`col-span-${spanSize} body2 pl-4 ${row.rowClass}`, {
+        'text-success': row.canCall,
+        'col-span-2' : row.canSendSms
     })
 
     return <div>
@@ -98,10 +98,11 @@ const PatientChartList = ({headings, rows, dividerLine, isLongValue, patient}: P
                                             }}>
                                             <SvgIcon type={Icon.Sms}
                                                      fillClass='success-icon'
+                                                     className='cursor-pointer hover:underline'
                                                      strokeClass='contact-stroke-color'
                                             />
                                         </Link>}
-                                        <div className='flex flex row px-2'  onClick={() => row.canCall ? utils.initiateACall(value) : undefined}>
+                                        <div className={`flex flex row px-2 ${row.canCall ? ' cursor-pointer hover:underline' : ''}`}  onClick={() => row.canCall ? utils.initiateACall(value) : undefined}>
                                             <div>
                                                 {row.canCall && <SvgIcon type={Icon.Phone} fillClass='success-icon' />}
                                             </div>
