@@ -17,6 +17,7 @@ import {CreatePatientRequest} from '@pages/external-access/models/create-patient
 import {VerifiedPatient} from '@pages/patients/models/verified-patient';
 import utils from '@shared/utils/utils';
 import {Appointment} from '@pages/external-access/appointment/models';
+import {CreatePatientResponseModel} from '@pages/external-access/layout/create-patient-response.model';
 export interface AddNoteProps {
      patientId: number;
      note: Note;
@@ -201,7 +202,7 @@ export const checkVerificationCode = async (request: CheckVerificationCodeReques
      return result.data;
 }
 
-export const createPatient = async (request: CreatePatientRequest) => {
+export const upsertPatient = async (request: CreatePatientRequest): Promise<CreatePatientResponseModel> => {
      const url = `${patientsUrl}/registration`;
      const {data} = await Api.post(url, request);
      return data;

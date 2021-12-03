@@ -28,7 +28,7 @@ export const getAppointmentNotes = async (appointments: Appointment[]) => {
      return result.data;
 }
 
-export const getAppointmentTypeById = async (appointmentTypeId: number) => {
+export const getAppointmentTypeById = async (appointmentTypeId: number): Promise<AppointmentType> => {
      const url = `${appointmentsBaseUrl}/appointmenttypes/${appointmentTypeId}`;
      const result = await Api.get(url);
      return result.data;

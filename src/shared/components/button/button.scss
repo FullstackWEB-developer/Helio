@@ -79,7 +79,7 @@ button.big-button {
   @extend .button-common;
   min-width: 7.5rem;
   min-height: 3rem;
-  border-radius: 1.5rem;
+  border-radius: 10rem;
   padding: var(--button-primary-big-padding);
   @extend .subtitle2-white;
   font-family: var(--button-primary-big-font-family);
@@ -90,7 +90,7 @@ button.medium-button {
   @extend .button-common;
   min-width: 6.5rem;
   min-height: 2.5rem;
-  border-radius: 1.25rem;
+  border-radius: 10rem;
   padding: var(--button-primary-medium-padding);
   @extend .subtitle2-white;
   font-size: var(--button-primary-medium-font-size);
@@ -100,7 +100,7 @@ button.small-button {
   @extend .button-common;
   min-width: 6rem;
   min-height: 2rem;
-  border-radius: 1rem;
+  border-radius: 10rem;
   padding: 0 1.3rem;
   @extend .subtitle3-white;
 }
@@ -109,7 +109,7 @@ button.secondary-button {
   @extend .button-common;
   min-width: 6rem;
   min-height: 2rem;
-  border-radius: 1rem;
+  border-radius: 10rem;
   padding: var(--button-secondary-small-padding);
   border: var(--button-secondary-border-color) 1px solid;
   @extend .subtitle3-white;
@@ -127,7 +127,7 @@ button.link-button {
   @extend .button-common;
   min-width: 6rem;
   min-height: 2rem;
-  border-radius: 1rem;
+  border-radius: 10rem;
   padding: var(--button-secondary-small-padding);
   @extend .subtitle3-white;
   color: var(--color-primary-800);
@@ -148,7 +148,7 @@ button.secondary-big-button {
   @extend .button-common;
   min-width: 7.5rem;
   min-height: 3rem;
-  border-radius: 1.5rem;
+  border-radius: 10rem;
   padding: var(--button-secondary-big-padding);
   border: var(--button-secondary-border-color) 1px solid;
   @extend .subtitle3-white;
@@ -161,7 +161,7 @@ button.secondary-medium-button {
   @extend .button-common;
   min-width: 6.5rem;
   min-height: 2.5rem;
-  border-radius: 1.25rem;
+  border-radius: 10rem;
   padding: var(--button-secondary-medium-padding);
   border: var(--button-secondary-border-color) 1px solid;
   @extend .subtitle3-white;

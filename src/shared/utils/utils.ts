@@ -73,7 +73,7 @@ const initiateACall = (phoneToDial?: string) => {
     }
 }
 
-const formatDate = (datetime?: string) => {
+const formatDate = (datetime?: string | Date) => {
     if (!datetime) {
         return '';
     }

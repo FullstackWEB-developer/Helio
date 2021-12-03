@@ -1,17 +1,35 @@
 import utils from '@shared/utils/utils';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
-import {Option} from '@components/option/option';
-
-const RegistrationReviewStep = ({getValues, insuranceOption}: {getValues: any, insuranceOption: Option | undefined}) => {
-
+import {useDispatch, useSelector} from 'react-redux';
+import {
+    selectRegisteredPatient, selectRegisteredPatientInsurance
+} from '@pages/external-access/registration/store/registration.selectors';
+import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
+import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
+import {RedirectLink} from '@pages/external-access/verify-patient/models/redirect-link';
+import {RequestChannel} from '@pages/external-access/verify-patient/models/request-channel.enum';
+import {ExternalAccessRequestTypes} from '@pages/external-access/models/external-updates-request-types.enum';
+import {setRedirectLink} from '@pages/external-access/verify-patient/store/verify-patient.slice';
+import {useHistory} from 'react-router';
+import {INSURANCE_PLAN} from '@pages/external-access/registration/components/registration-insurance-information';
+import Button from '@components/button/button';
+export interface RegistrationReviewStepProps {
+    goBack: () => void;
+}
+const RegistrationReviewStep = ({goBack}: RegistrationReviewStepProps) => {
+    const patientData = useSelector(selectRegisteredPatient);
+    const insuranceData = useSelector(selectRegisteredPatientInsurance);
     const {t} = useTranslation();
+    const toastMessageDuration = 12;
+    const dispatch = useDispatch();
+    const history = useHistory();
 
     const displayAddressField = () => {
-        const city = getValues('city');
-        const address = getValues('address');
-        const zip = getValues('zip');
-        const apt = getValues('apt');
+        const city = patientData?.patient?.city;
+        const address = patientData?.patient?.address;
+        const zip = patientData?.patient?.zip;
+        const apt = patientData?.patient?.address2;
         let addressField = `${address}, ${city}, ${zip}`;
         if (apt) {
             addressField = `${apt}, ${addressField}`;
@@ -19,14 +37,9 @@ const RegistrationReviewStep = ({getValues, insuranceOption}: {getValues: any, i
         return addressField;
     }
 
-    const displayGender = () => {
-        const gender = getValues('gender');
-        return utils.isString(gender) ? gender : gender?.value;
-    }
-
     const displayConsents = (method: 'call' | 'text') => {
-        const consent = getValues(`${method}Consent`);
-        return utils.isString(consent) ? (consent === 'true' ? t('common.yes') : t('common.no')) : t(`${consent?.label}`);
+        const consent = method === 'call' ? patientData?.patient?.consentToCall : patientData?.patient?.consentToText;
+        return consent ? t('common.yes') : t('common.no');
     }
 
     const displayPreferredCommunication = (value: string) => {
@@ -42,42 +55,75 @@ const RegistrationReviewStep = ({getValues, insuranceOption}: {getValues: any, i
         return `external_access.registration.referral_sources.${value}`;
     }
 
+    if (!patientData?.patient){
+        return <></>;
+    }
+
+    const confirm =()=> {
+        dispatch(addSnackbarMessage({
+            type: SnackbarType.Success,
+            message: 'external_access.registration.patient_creation_success',
+            durationInSeconds: toastMessageDuration
+        }));
+
+        const redirectLink: RedirectLink = {
+            requestChannel: RequestChannel.Web,
+            patientId: patientData?.patient?.patientId.toString(),
+            requestType: ExternalAccessRequestTypes.ScheduleAppointment,
+            linkCreationDate: new Date(),
+            fullUrl: '',
+            linkId: '/o/schedule-appointment',
+            attributes: [],
+            sentAddress: patientData.patient.mobilePhone,
+            ticketId: ''
+        }
+        setTimeout(() => {
+            dispatch(setRedirectLink(redirectLink));
+            history.replace('/o/verify-patient-get-mobile');
+        }, toastMessageDuration * 1000);
+    }
+
     return (
         <div className='flex flex-col'>
-            <div className='body2'><span className='review-label'>{`${t('external_access.first_name')}: `}</span>{getValues('firstName')}</div>
-            <div className='body2'><span className='review-label'>{`${t('external_access.last_name')}: `}</span>{getValues('lastName')}</div>
-            <div className='body2'><span className='review-label'>{`${t('external_access.registration.dob')}: `}</span>{utils.formatDate(getValues('dob'))}</div>
-            <div className='body2'><span className='review-label'>{`${t('external_access.registration.mobile_phone')}: `}</span>{utils.formatPhone(getValues('mobilePhone'))}</div>
+            <div className='body2'><span className='review-label'>{`${t('external_access.first_name')}: `}</span>{patientData?.patient?.firstName}</div>
+            <div className='body2'><span className='review-label'>{`${t('external_access.last_name')}: `}</span>{patientData?.patient?.lastName}</div>
+            <div className='body2'><span className='review-label'>{`${t('external_access.registration.dob')}: `}</span>{utils.formatDate(patientData?.patient?.dateOfBirth)}</div>
+            <div className='body2'><span className='review-label'>{`${t('external_access.registration.mobile_phone')}: `}</span>{utils.formatPhone(patientData?.patient?.mobilePhone)}</div>
             {
-                getValues('email') ?
-                    <div className='body2'><span className='review-label'>{`${t('external_access.registration.email')}: `}</span>{getValues('email')}</div>
+                patientData.patient.email ?
+                    <div className='body2'><span className='review-label'>{`${t('external_access.registration.email')}: `}</span>{patientData?.patient?.email}</div>
                     : null
             }
             <div className='body2'><span className='review-label'>{`${t('external_access.registration.address')}: `}</span>{displayAddressField()}</div>
-            <div className='body2'><span className='review-label'>{`${t('external_access.registration.sex')}: `}</span>{displayGender()}</div>
-            <div className='pt-10'></div>
+            <div className='body2'><span className='review-label'>{`${t('external_access.registration.sex')}: `}</span>{patientData?.patient?.sex}</div>
+            <div className='pt-10'/>
             <div className='body2'><span className='review-label'>{`${t('external_access.registration.text_consent_short')}: `}</span>{displayConsents('text')}</div>
             <div className='body2'><span className='review-label'>{`${t('external_access.registration.call_consent_short')}: `}</span>{displayConsents('call')}</div>
-            <div className='body2'><span className='review-label'>{`${t('external_access.registration.preferred_communication_short')}: `}</span>{t(`${displayPreferredCommunication(getValues('preferredCommunication'))}`)}</div>
-            <div className='body2'><span className='review-label'>{`${t('external_access.registration.referral_source')}: `}</span>{t(`${displayReferralSource(getValues('referralSource'))}`)}</div>
-            <div className='pt-10'></div>
+            <div className='body2'><span className='review-label'>{`${t('external_access.registration.preferred_communication_short')}: `}</span>{t(`${displayPreferredCommunication(patientData?.patient?.contactPreference)}`)}</div>
+            <div className='body2'><span className='review-label'>{`${t('external_access.registration.referral_source')}: `}</span>{t(`${displayReferralSource(patientData?.patient?.referralSourceId)}`)}</div>
+            <div className='pt-10'/>
             {
-                insuranceOption?.value === 'insurance_plan' ?
+                insuranceData?.insuranceOption?.value === INSURANCE_PLAN ?
                     <>
-                        <div className='body2'><span className='review-label'>{`${t('external_access.registration.insurance_type')}: `}</span>{getValues('insuranceType')}</div>
-                        <div className='body2'><span className='review-label'>{`${t('external_access.registration.insurance_name')}: `}</span>{getValues('insuranceName')}</div>
-                        <div className='body2'><span className='review-label'>{`${t('external_access.registration.policy_holder_name')}: `}</span>{getValues('policyHolderName')}</div>
-                        <div className='body2'><span className='review-label'>{`${t('external_access.registration.policy_holder_dob')}: `}</span>{utils.formatDate(getValues('policyHolderDob'))}</div>
-                        <div className='body2'><span className='review-label'>{`${t('external_access.registration.policy_holder_relationship')}: `}</span>{getValues('insuranceRelation')}</div>
-                        <div className='body2'><span className='review-label'>{`${t('external_access.registration.insurance_member_id')}: `}</span>{getValues('insuranceMemberId')}</div>
+                        <div className='body2'><span className='review-label'>{`${t('external_access.registration.insurance_type')}: `}</span>{insuranceData?.insuranceType}</div>
+                        <div className='body2'><span className='review-label'>{`${t('external_access.registration.insurance_name')}: `}</span>{insuranceData?.insuranceName}</div>
+                        <div className='body2'><span className='review-label'>{`${t('external_access.registration.policy_holder_name')}: `}</span>{insuranceData?.policyHolderName}</div>
+                        <div className='body2'><span className='review-label'>{`${t('external_access.registration.policy_holder_dob')}: `}</span>{utils.formatDate(insuranceData?.policyHolderDob)}</div>
+                        <div className='body2'><span className='review-label'>{`${t('external_access.registration.policy_holder_relationship')}: `}</span>{insuranceData?.insuranceRelation}</div>
+                        <div className='body2'><span className='review-label'>{`${t('external_access.registration.insurance_member_id')}: `}</span>{insuranceData?.insuranceMemberId}</div>
                         {
-                            getValues('groupNumber') ?
-                                <div className='body2'><span className='review-label'>{`${t('external_access.registration.group_number')}: `}</span>{getValues('groupNumber')}</div> :
+                            insuranceData?.groupNumber ?
+                                <div className='body2'><span className='review-label'>{`${t('external_access.registration.group_number')}: `}</span>{insuranceData?.groupNumber}</div> :
                                 null
                         }
-                    </> : <div className='body2'><span className='review-label'>{`${t('external_access.registration.insurance_info')}: `}</span>{t(`${insuranceOption?.label}`)}</div>
+                    </> : <div className='body2'><span className='review-label'>{`${t('external_access.registration.insurance_info')}: `}</span>{t(`${insuranceData?.insuranceOption?.label}`)}</div>
             }
-
+            <div className='flex pt-6'>
+                <Button label='common.back' buttonType='secondary-big' className='mr-8 w-36' onClick={() => goBack()} />
+                <Button type='submit' label='common.submit'
+                        onClick={() => confirm()}
+                        className='w-36' />
+            </div>
         </div>
     );
 }

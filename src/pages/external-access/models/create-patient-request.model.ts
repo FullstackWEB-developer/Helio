@@ -1,10 +1,12 @@
 import {ChartAlertAppendInsuranceData} from "@pages/patients/models/append-insurance-data.model";
+import {Option} from '@components/option/option';
 
 
 export interface CreatePatientRequest {
     patient: CreatePatientModel;
     insuranceNote?: ChartAlertAppendInsuranceData;
     imageUploadTag?: string;
+    registrationSessionKey?: string;
 }
 export interface CreatePatientModel {
     address: string;
@@ -20,5 +22,20 @@ export interface CreatePatientModel {
     sex: string;
     zip: string;
     referralSourceId: string;
-    contactPreference: string;    
+    contactPreference: string;
+    state: string;
+    address2: string;
+    patientId: number;
+}
+
+export interface CreatePatientInsuranceModel {
+    insuranceType: string;
+    insuranceName: string;
+    policyHolderName: string;
+    insuranceMemberId: string;
+    policyHolderDob: Date;
+    groupNumber: string;
+    insuranceRelation: string;
+    insuranceOption?: Option
+
 }

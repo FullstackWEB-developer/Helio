@@ -1027,6 +1027,7 @@
       "male": "Male",
       "zip": "Zip Code",
       "city": "City",
+      "state": "State",
       "address": "Address",
       "apt": "Unit/Apt",
       "referral_source": "How did you hear about us?",

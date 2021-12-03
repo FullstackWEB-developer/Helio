@@ -9,12 +9,33 @@ import {getLookupValues} from '@pages/tickets/services/tickets.service';
 import {clearVerifiedPatient} from '@pages/patients/store/patients.slice';
 import {clearRedirectLink} from '../verify-patient/store/verify-patient.slice';
 import {logOut} from '@shared/store/app-user/appuser.slice';
+import {useQuery} from 'react-query';
+import {QueryStates} from '@constants/react-query-constants';
+import {getStates} from '@shared/services/lookups.service';
+import {Option} from '@components/option/option';
+import {setStates} from '@shared/store/lookups/lookups.slice';
+import {cleanRegistrationState} from '@pages/external-access/registration/store/registration.slice';
 
 const Registration = () => {
 
     const dispatch = useDispatch();
     const [currentStep, setCurrentStep] = useState(RegistrationStep.PersonalInformation);
     const {t} = useTranslation();
+
+    useQuery(QueryStates, () => getStates(),
+        {
+            onSuccess:(data: any)=> {
+                const managedStates = data.map((item: any) => {
+                    return {
+                        value: item.stateCode,
+                        label: item.name
+                    } as Option;
+                })
+                dispatch(setStates(managedStates));
+            }
+        }
+    );
+
     const goStepForward = () => {
         if (currentStep < RegistrationStep.Review) {
             setCurrentStep(currentStep + 1);
@@ -27,7 +48,8 @@ const Registration = () => {
         }
     }
 
-    useEffect(() => {        
+    useEffect(() => {
+        dispatch(cleanRegistrationState());
         dispatch(getLookupValues('ReferralSource'));
         dispatch(getLookupValues('InsuranceType'));
         dispatch(getLookupValues('InsuranceHolderRelation'));
