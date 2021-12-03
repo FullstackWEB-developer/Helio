@@ -79,7 +79,7 @@ const printTranscriptMessage = (transcript: ChatMessage, nextTranscript?: ChatMe
         let eventAction = '';
         output += `(${utils.formatUtcDate(transcript.AbsoluteTime, 'MMM D, YYYY h:mm A')}) ${transcript.DisplayName}`;
 
-        if (transcript.ContentType == ContentTypeJoined) {
+        if (transcript.ContentType === ContentTypeJoined) {
             eventAction = i18n.t('chat_transcripts.joined_chat');
         }
         else if (transcript.ContentType === ContentTypeLeft) {

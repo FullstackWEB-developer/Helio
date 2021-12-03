@@ -10,6 +10,9 @@ import {useDispatch, useSelector} from 'react-redux';
 import {clearState, setRedirectLink} from '@pages/external-access/verify-patient/store/verify-patient.slice';
 import {selectVerifiedLink} from '@pages/external-access/verify-patient/store/verify-patient.selectors';
 import {ExternalAccessRequestTypes} from '@pages/external-access/models/external-updates-request-types.enum';
+import {selectVerifiedPatent} from '@pages/patients/store/patients.selectors';
+import {logOut} from '@shared/store/app-user/appuser.slice';
+import {clearVerifiedPatient} from '@pages/patients/store/patients.slice';
 
 interface RedirectLinkParams {
     linkId: string
@@ -20,6 +23,7 @@ const VerifyRedirectLink = () => {
     const { linkId } = useParams<RedirectLinkParams>();
     const dispatch = useDispatch();
     const history = useHistory();
+    const verifiedPatient = useSelector(selectVerifiedPatent);
     const verifiedLink = useSelector(selectVerifiedLink);
     const {isLoading, isError, error} = useQuery<RedirectLink, AxiosError>([GetRedirectLink, linkId], () =>
             getRedirectLink(linkId),
@@ -28,6 +32,10 @@ const VerifyRedirectLink = () => {
             onSuccess: (data: RedirectLink) => {
                 if (verifiedLink !== linkId) {
                     dispatch(clearState());
+                }
+                if (verifiedPatient?.patientId !== data.patientId) {
+                    dispatch(clearVerifiedPatient());
+                    dispatch(logOut());
                 }
                 dispatch(setRedirectLink(data));
                 if (data.requestType === ExternalAccessRequestTypes.DownloadMedicalRecords) {
