@@ -33,6 +33,10 @@ const formatPhone = (phone: string) => {
     if (!phone) {
         return '';
     }
+    const hasCharacterTest = /.*[a-zA-Z].*/;
+    if (hasCharacterTest.test(phone)) {
+        return phone;
+    }
     phone = phone.replaceAll('-', '');
     if (phone && phone.startsWith('+1')) {
         phone = phone.substring(2);
