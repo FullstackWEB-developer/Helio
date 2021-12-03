@@ -33,7 +33,7 @@ const VerifyRedirectLink = () => {
                 if (verifiedLink !== linkId) {
                     dispatch(clearState());
                 }
-                if (verifiedPatient?.patientId !== data.patientId) {
+                if (verifiedPatient?.patientId.toString() !== data.patientId) {
                     dispatch(clearVerifiedPatient());
                     dispatch(logOut());
                 }
