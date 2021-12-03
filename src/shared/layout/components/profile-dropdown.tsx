@@ -107,7 +107,8 @@ const ProfileDropdown = () => {
                 onClick: () => updateStatus(status.value),
                 value: status.value,
                 hasDivider: items.length === 0,
-                icon: GetIconByStatus(status.value)
+                icon: GetIconByStatus(status.value),
+                className: status.value ===  UserStatus.AfterWork ? 'cursor-not-allowed' : ''
             });
         }
     });

@@ -9,7 +9,6 @@ import utils from '@shared/utils/utils';
 import {Icon} from '@components/svg-icon/icon';
 import SvgIcon from '@components/svg-icon/svg-icon';
 import {
-    DropdownAlignmentHorizontalPosition,
     DropdownItemModel,
     DropdownModel
 } from '@components/dropdown/dropdown.models';
@@ -118,7 +117,7 @@ const TicketAssignee = ({ticketId, assignee}: TicketAssigneeProps) => {
             {selectedUser?.id ?
                 <div className='inline-flex flex-row items-center flex-none cursor-pointer' onClick={openSearchAssignee}>
                     <div className='mr-4'>
-                        <Avatar userFullName={utils.stringJoin(' ', selectedUser.firstName, selectedUser.lastName)} userPicture={selectedUser.profilePicture} />
+                        <Avatar displayStatus={true} userId={selectedUser.id} userFullName={utils.stringJoin(' ', selectedUser.firstName, selectedUser.lastName)} userPicture={selectedUser.profilePicture} />
                     </div>
                     <div ref={chevronPosition} className='pr-2'>
                         <div>{selectedUser.firstName} {selectedUser.lastName}</div>

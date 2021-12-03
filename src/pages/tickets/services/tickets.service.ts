@@ -97,6 +97,21 @@ export function getList(ticketQuery: TicketQuery, resetPagination?: boolean) {
     }
 }
 
+export const exportTickets = async () => {
+    const query = store.getState().ticketState.ticketFilter;
+    let queryParams = utils.serialize(query);
+    const exportUrl = `${ticketsBaseUrl}/export?${queryParams}`;
+    const response = await Api.get(exportUrl, {
+        responseType: 'blob'
+    });
+    const url = window.URL.createObjectURL(new Blob([response.data]));
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', response.headers["content-disposition"].split("filename=")[1]);
+    document.body.appendChild(link);
+    link.click();
+}
+
 export const setStatus = async ({id, status}: {id: string, status: number}): Promise<Ticket> => {
     const url = `${ticketsBaseUrl}/${id}/status`;
     const result = await Api.put(url, {

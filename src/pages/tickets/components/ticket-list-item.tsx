@@ -94,9 +94,14 @@ const TicketListItem = ({item}: TicketListItemProps) => {
                 <span>{item.subject ? item.subject : t('tickets.no_subject')}</span>
             </Link>
         </div>
-        <div className='w-2/12 body3'>
+        <div className='w-1/12 body3'>
             <Link to={getTicketPath()}>
                 <DueInRelativeTime value={getRelativeTime} isOverdue={item.isOverdue} />
+            </Link>
+        </div>
+        <div className='w-2/12 h-full flex items-center'>
+            <Link to={getTicketPath()}>
+                <div className='body3-small'>{dayjs(item.createdOn).format('MMM DD, YYYY h:mm A')}</div>
             </Link>
         </div>
         <div className='w-2/12 h-full'>

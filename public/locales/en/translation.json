@@ -103,10 +103,13 @@
   },
   "tickets": {
     "title": "Tickets",
+    "new": "New",
+    "export": "Export",
     "channel": "Channel",
     "subject": "Subject",
     "id": "Id",
     "due_in": "Due In",
+    "created_on": "Created",
     "status": "Status",
     "priority_label": "Priority",
     "ticket_type": "Ticket Type",
@@ -126,6 +129,7 @@
     "ticket_creation_failed": "Ticket creation failed.",
     "search_tag": "Search Tags",
     "tag_suggestion_placeholder": "Type to filter",
+    "export_failed": "Export operation failed. Please try again later",
     "priority": {
       "low": "Low",
       "medium": "Medium",

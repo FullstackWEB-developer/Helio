@@ -43,20 +43,23 @@ const Button = ({label, type = 'button', disabled = false, buttonType = 'medium'
     }
 
     const getIcon = () => {
-        if (icon) {
-            return <div className={`h-6 w-6 inline-flex absolute${determineIconPosition()}left-4`}>
-                <SvgIcon type={icon} fillClass={determineIconFill()}/>
-            </div>
-        }
         if (isLoading) {
             return <Spinner size={isButtonSmall() ? 'large' : 'large-40'}/>
         }
+        if (icon) {
+            return <div className={`h-6 w-6 inline-flex ${determineIconPosition()}`}>
+                <SvgIcon type={icon} fillClass={determineIconFill()}/>
+            </div>
+        }
+
     }
     return (<><button disabled={disabled || isLoading} {...props} className={`${constructButtonClassString()}`} type={type}>
-        {
-            getIcon()
-        }
-        <span className={`${icon ? 'pl-3.5' : ''}`}>{isLoading ? '' :  t(label)}</span>
+            <div className='flex flex-row space-x-2 justify-center items-center'>
+                {
+                    getIcon()
+                }
+                <div>{isLoading ? '' :  t(label)}</div>
+            </div>
     </button></>
     );
 }

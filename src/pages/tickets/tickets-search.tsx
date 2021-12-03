@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {useHistory} from 'react-router-dom';
 import {keyboardKeys} from '@components/search-bar/constants/keyboard-keys';
 import {useDispatch, useSelector} from 'react-redux';
-import {getList} from './services/tickets.service';
+import {exportTickets, getList} from './services/tickets.service';
 import {selectIsTicketsFiltered, selectTicketFilter, selectTicketsPaging} from './store/tickets.selectors';
 import {setTicketsFiltered, toggleTicketListFilter} from './store/tickets.slice';
 import {Paging} from '@shared/models/paging.model';
@@ -14,6 +14,12 @@ import {Icon} from '@components/svg-icon/icon';
 import SearchInputField from '@components/search-input-field/search-input-field';
 import * as queryString from 'querystring';
 import FilterDot from '@components/filter-dot/filter-dot';
+import Button from '@components/button/button';
+import './ticket-search.scss'
+import {useQuery} from 'react-query';
+import {ExportTicketList} from '@constants/react-query-constants';
+import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
+import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
 
 const TicketsSearch = () => {
     const dispatch = useDispatch();
@@ -22,7 +28,6 @@ const TicketsSearch = () => {
     const paging: Paging = useSelector(selectTicketsPaging);
     const isFiltered = useSelector(selectIsTicketsFiltered);
     const [searchTerm, setSearchTerm] = useState('');
-
     useEffect(() => {
         let queries = queryString.parse(history.location.search);
         if (queries.searchTerm) {
@@ -56,7 +61,17 @@ const TicketsSearch = () => {
         dispatch(getList(query, true));
     }
 
-    return <div className='flex flex-row border-b h-14'>
+     const {isLoading: isExportingTicketList, refetch: exportList} = useQuery([ExportTicketList, ticketFilter], () => exportTickets(), {
+         enabled:false,
+         onError: () => {
+             dispatch(addSnackbarMessage({
+                 type: SnackbarType.Error,
+                 message:'tickets.export_failed'
+             }));
+         }
+     })
+
+    return <div className='flex flex-row border-b ticket-search-bar box-content'>
         <div className='pr-6 pl-5 border-r flex flex-row items-center'>
             <div className='relative'>
                 <SvgIcon type={Icon.FilterList} onClick={() => dispatch(toggleTicketListFilter())}
@@ -67,10 +82,10 @@ const TicketsSearch = () => {
                     <FilterDot />
                 </div>}
             </div>
-            <SvgIcon type={Icon.Add} onClick={() => history.push(`${TicketsPath}/new`)}
-                className='icon-medium'
-                wrapperClassName='cursor-pointer icon-medium'
-                fillClass='add-icon' />
+            <div className='flex flex-row space-x-4'>
+                <Button isLoading={isExportingTicketList} label='tickets.new' buttonType='small' onClick={() => history.push(`${TicketsPath}/new`)} icon={Icon.Add}/>
+                <Button isLoading={isExportingTicketList} label='tickets.export' buttonType='small' onClick={() => exportList()} icon={Icon.Download}/>
+            </div>
         </div>
         <SearchInputField
             wrapperClassNames='relative w-full h-full'

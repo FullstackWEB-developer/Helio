@@ -1,6 +1,6 @@
 import React from 'react';
 import {Ticket} from '../models/ticket';
-import {SortDirection} from '../../../shared/models/sort-direction';
+import {SortDirection} from '@shared/models/sort-direction';
 import TicketListItem from './ticket-list-item';
 import {useDispatch, useSelector} from 'react-redux';
 import {selectTicketFilter} from '../store/tickets.selectors';
@@ -44,7 +44,7 @@ const TicketListContainer = ({dataSource}: TicketListContainerProps) => {
                 </TicketListHeaderCell>
                 <TicketListHeaderCell className='w-2/12'>{t('tickets.subject')}</TicketListHeaderCell>
                 <TicketListHeaderCell
-                    className='w-2/12'
+                    className='w-1/12'
                     field={'DueDate'}
                     isSortable
                     sortDirection={getSortDirection(ticketFilter.sorts, 'DueDate')}
@@ -52,6 +52,16 @@ const TicketListContainer = ({dataSource}: TicketListContainerProps) => {
                     onClick={applySort}
                 >
                     {t('tickets.due_in')}
+                </TicketListHeaderCell>
+                <TicketListHeaderCell
+                    className='w-2/12'
+                    field={'CreatedOn'}
+                    isSortable
+                    sortDirection={getSortDirection(ticketFilter.sorts, 'CreatedOn')}
+                    sortOrder={getSortOrder(ticketFilter.sorts, 'CreatedOn')}
+                    onClick={applySort}
+                >
+                    {t('tickets.created_on')}
                 </TicketListHeaderCell>
                 <TicketListHeaderCell
                     className='w-2/12'
@@ -68,7 +78,7 @@ const TicketListContainer = ({dataSource}: TicketListContainerProps) => {
                 <TicketListHeaderCell className='w-2/12'>{t('tickets.reason')}</TicketListHeaderCell>
                 <TicketListHeaderCell className='w-3/12'>{t('tickets.assigned_to')}</TicketListHeaderCell>
                 <TicketListHeaderCell className='w-1/12 flex justify-center'>{t('tickets.rating')}</TicketListHeaderCell>
-                <TicketListHeaderCell className='w-1/12'></TicketListHeaderCell>
+                <TicketListHeaderCell className='w-1/12'/>
             </div>
             { dataSource.map(item => <TicketListItem key={item.id} item={item} />)}
         </div>
