@@ -6,12 +6,12 @@ import 'amazon-connect-chatjs';
 import withErrorLogging from '@shared/HOC/with-error-logging';
 import {isCcpVisibleSelector} from '@shared/layout/store/layout.selectors';
 import {
-    setBotContext,
+    clearCCPContext, removeCurrentBotContext,
     setChatCounter,
     setConnectionStatus,
     setContextPanel, setCurrentContactId,
     setNoteContext, setNotes,
-    setVoiceCounter
+    setVoiceCounter, upsertCurrentBotContext
 } from './store/ccp.slice';
 import {getTicketById, setAssignee} from '../tickets/services/tickets.service';
 import {selectAgentStates, selectUserStatus, selectAppUserDetails} from '@shared/store/app-user/appuser.selectors';
@@ -106,7 +106,7 @@ const Ccp: React.FC<BoxProps> = ({
     useQuery([QueryGetPatientById, patientId], () => getPatientByIdWithQuery(patientId!), {
         enabled: !!patientId,
         onSuccess: (data) => {
-            dispatch(setBotContext({
+            dispatch(upsertCurrentBotContext({
                 ...botContext,
                 patient: data
             }));
@@ -116,7 +116,7 @@ const Ccp: React.FC<BoxProps> = ({
     useQuery([QueryTickets, ticketId], () => getTicketById(ticketId), {
         enabled: !!ticketId,
         onSuccess: (data) => {
-            dispatch(setBotContext({
+            dispatch(upsertCurrentBotContext({
                 ...botContext,
                 ticket: data
             }));
@@ -196,6 +196,7 @@ const Ccp: React.FC<BoxProps> = ({
         const beforeUnload = () => {
             setLatestStatus(currentUserStatus);
             updateAgentStatus(UserStatus.Offline, agentStates);
+            dispatch(clearCCPContext());
         };
 
         const updateAgentStatus = (status: string, states: AgentState[]) => {
@@ -254,7 +255,7 @@ const Ccp: React.FC<BoxProps> = ({
                     if (attributeMap.IsUserPregnant && attributeMap.IsUserPregnant.value.toLowerCase() === "yes") {
                         isPregnant = true;
                     }
-                    dispatch(setBotContext({
+                    dispatch(upsertCurrentBotContext({
                         ...botContext,
                         queue: queueName,
                         isPregnant,
@@ -264,17 +265,14 @@ const Ccp: React.FC<BoxProps> = ({
                 }
             });
 
-            contact.onDestroy(() => {
-                dispatch(setBotContext(undefined));
-                dispatch(setContextPanel(''));
+            contact.onDestroy((contact) => {
+                dispatch(removeCurrentBotContext(contact.getContactId()));
                 dispatch(setNotes([]));
             })
         });
         connect.agent((agent) => {
             window.CCP.agent = agent;
-
             const agentStates = agent.getAgentStates() as AgentState[];
-
             if (latestStatus?.name) {
                 updateAgentStatus(latestStatus.name, agentStates);
             }

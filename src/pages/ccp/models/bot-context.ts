@@ -7,4 +7,5 @@ export interface BotContext {
     patient?: ExtendedPatient;
     ticket?: Ticket;
     isPregnant: boolean;
+    id: string;
 }
