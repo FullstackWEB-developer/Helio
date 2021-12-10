@@ -46,8 +46,8 @@ const CompanyContactDetails = ({editMode, contact, initiateACall, addNewContactH
     }
     const updateContactMutation = useMutation(updateContact,
         {
-            onSuccess: (_, contactUpdatedFields) => {
-                onUpdateSuccess({...contact, ...contactUpdatedFields});
+            onSuccess: (contact) => {
+                onUpdateSuccess({...contact, contact});
             },
             onError: () => onUpdateError && onUpdateError()
         });
