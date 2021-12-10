@@ -6,15 +6,19 @@ import 'amazon-connect-chatjs';
 import withErrorLogging from '@shared/HOC/with-error-logging';
 import {isCcpVisibleSelector} from '@shared/layout/store/layout.selectors';
 import {
-    clearCCPContext, removeCurrentBotContext,
+    clearCCPContext,
+    removeCurrentBotContext,
     setChatCounter,
     setConnectionStatus,
-    setContextPanel, setCurrentContactId,
-    setNoteContext, setNotes,
-    setVoiceCounter, upsertCurrentBotContext
+    setContextPanel,
+    setCurrentContactId,
+    setNoteContext,
+    setNotes,
+    setVoiceCounter,
+    upsertCurrentBotContext
 } from './store/ccp.slice';
 import {getTicketById, setAssignee} from '../tickets/services/tickets.service';
-import {selectAgentStates, selectUserStatus, selectAppUserDetails} from '@shared/store/app-user/appuser.selectors';
+import {selectAgentStates, selectAppUserDetails, selectUserStatus} from '@shared/store/app-user/appuser.selectors';
 import {DragPreviewImage, useDrag} from 'react-dnd';
 import {DndItemTypes} from '@shared/layout/dragndrop/dnd-item-types';
 import './ccp.scss';
@@ -39,6 +43,8 @@ import {QueryGetPatientById, QueryTickets} from '@constants/react-query-constant
 import {getPatientByIdWithQuery} from '@pages/patients/services/patients.service';
 import useLocalStorage from '@shared/hooks/useLocalStorage';
 import utils from '@shared/utils/utils';
+import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
+import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
 
 const ccpConfig = {
     region: utils.getAppParameter('AwsRegion'),
@@ -289,6 +295,12 @@ const Ccp: React.FC<BoxProps> = ({
             }
 
             agent.onStateChange(agentStateChange => {
+                if (agentStateChange.oldState.toLowerCase() !== connect.AgentStateType.INIT && agentStateChange.newState.toLowerCase() === connect.AgentStateType.OFFLINE) {
+                    dispatch(addSnackbarMessage({
+                        type: SnackbarType.Error,
+                        message: 'ccp.went_offline'
+                    }));
+                }
                 dispatch(updateUserStatus(agentStateChange.newState));
                 dispatch(addLiveAgentStatus({
                     status:agentStateChange.newState,

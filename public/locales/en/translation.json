@@ -208,6 +208,7 @@
   "ccp": {
     "title": "Contact Control Panel",
     "suggested_steps": "Suggested steps",
+    "went_offline": "Because you changed your status to offline or you logged out \n you will not be able to receive any calls/chats\nTo continue getting calls/chats, please change your status\n or refresh if you logged out.",
     "suggestions": {
       "create_patient_record": "Create Patient Record",
       "schedule_appointment": "Schedule Appointment",
