@@ -230,6 +230,13 @@ const Ccp: React.FC<BoxProps> = ({
                     }
                 }
 
+                if (attributeMap.HelioContactId) {
+                    const contactId = attributeMap.HelioContactId.value;
+                    if (contactId) {
+                        history.push('/contacts/' + contactId);
+                    }
+                }
+
                 if (attributeMap.TicketId) {
                     if (attributeMap.TicketId.value) {
                         ticketId = attributeMap.TicketId.value;
