@@ -61,7 +61,7 @@ const TicketsSearch = () => {
         dispatch(getList(query, true));
     }
 
-     const {isLoading: isExportingTicketList, refetch: exportList} = useQuery([ExportTicketList, ticketFilter], () => exportTickets(), {
+     const {isLoading: isExportingTicketList, isFetching: isFetchingExportingTicketList, refetch: exportList} = useQuery([ExportTicketList, ticketFilter], () => exportTickets(), {
          enabled:false,
          onError: () => {
              dispatch(addSnackbarMessage({
@@ -83,8 +83,8 @@ const TicketsSearch = () => {
                 </div>}
             </div>
             <div className='flex flex-row space-x-4'>
-                <Button isLoading={isExportingTicketList} label='tickets.new' buttonType='small' onClick={() => history.push(`${TicketsPath}/new`)} icon={Icon.Add}/>
-                <Button isLoading={isExportingTicketList} label='tickets.export' buttonType='small' onClick={() => exportList()} icon={Icon.Download}/>
+                <Button disabled= {isExportingTicketList || isFetchingExportingTicketList} label='tickets.new' buttonType='small' onClick={() => history.push(`${TicketsPath}/new`)} icon={Icon.Add}/>
+                <Button isLoading={isExportingTicketList || isFetchingExportingTicketList} label='tickets.export' buttonType='small' onClick={() => exportList()} icon={Icon.Download}/>
             </div>
         </div>
         <SearchInputField

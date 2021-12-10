@@ -110,7 +110,7 @@ const Ccp: React.FC<BoxProps> = ({
     }
 
     useQuery([QueryGetPatientById, patientId], () => getPatientByIdWithQuery(patientId!), {
-        enabled: !!patientId,
+        enabled: !!patientId && !!botContext?.queue && !!botContext?.ticket,
         onSuccess: (data) => {
             dispatch(upsertCurrentBotContext({
                 ...botContext,
@@ -120,7 +120,7 @@ const Ccp: React.FC<BoxProps> = ({
     });
 
     useQuery([QueryTickets, ticketId], () => getTicketById(ticketId), {
-        enabled: !!ticketId,
+        enabled: !!ticketId && !!botContext?.queue,
         onSuccess: (data) => {
             dispatch(upsertCurrentBotContext({
                 ...botContext,
@@ -275,6 +275,19 @@ const Ccp: React.FC<BoxProps> = ({
                         reason
                     })
                     );
+                } else {
+                    let reason = '';
+                    if (attributeMap.HasAppointmentInLast3Years) {
+                        const hasAppointmentInLast3Years = attributeMap.HasAppointmentInLast3Years.value;
+                        if (hasAppointmentInLast3Years === "false") {
+                            reason = t('ccp.bot_context.patient_with_no_late_appointment');
+                        }
+                    }
+                    dispatch(upsertCurrentBotContext({
+                        ...botContext,
+                        queue: queueName,
+                        reason
+                    }));
                 }
             });
 

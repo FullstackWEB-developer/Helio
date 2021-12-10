@@ -21,7 +21,7 @@ const BotContext = () => {
             </div>
             <div className='grid grid-cols-12'>
                 <div className='body2-medium col-span-2'>{t('ccp.bot_context.reason')}</div>
-                <div className='col-span-6 subtitle2'>{botContext?.reason}</div>
+                <div className='col-span-10 subtitle2'>{botContext?.reason}</div>
             </div>
             {botContext?.isPregnant && <div className='grid grid-cols-12'>
                 <div className='body2-medium col-span-2'>{t('ccp.bot_context.pregnancy')}</div>
