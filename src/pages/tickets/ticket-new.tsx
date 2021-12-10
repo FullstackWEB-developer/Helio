@@ -205,6 +205,7 @@ const TicketNew = () => {
             dueDate: dueDateTime ? dueDateTime.utc().local().toDate() : undefined,
             assignedOn: formData.assignee !== '' ? new Date() : undefined,
             patientId: patient ? Number(patient) : undefined,
+            assigneeFullName: formData.assignee !== '' ? users.find(a => a.value === formData.assignee)?.label : undefined,
             patientCaseNumber: patientCaseId ? Number(patientCaseId) : undefined,
             tags: tags,
             notes: notes,
