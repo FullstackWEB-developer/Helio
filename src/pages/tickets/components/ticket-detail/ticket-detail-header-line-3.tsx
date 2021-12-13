@@ -239,7 +239,7 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
         } else if (ticket.originationNumber && ticket.originationNumber.length > 0) {
             setSelectedPhoneToCall(PhoneType.Mobile);
         }
-    }, [PhoneType.Home, PhoneType.Mobile, PhoneType.Work, callRelated, patient, contact, selectedPhoneToCall]);
+    }, [PhoneType.Home, PhoneType.Mobile, PhoneType.Work, callRelated, patient, contact, selectedPhoneToCall, ticket.originationNumber]);
 
     useEffect(() => {
         getCallablePhoneListCallback();
@@ -517,7 +517,7 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
                                     <div className='body2 col-span-2'>
                                         {
                                             getEmails().map(email => {
-                                                return <div className='pb-2.5'>{
+                                                return <div className='pb-2.5' key={email}>{
                                                     email
                                                 }</div>
                                             })
@@ -537,7 +537,7 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
                                     <div className='body2 col-span-2'>
                                         {
                                             getPhones().map(phone => {
-                                                return <div className='pb-2.5'>{
+                                                return <div className='pb-2.5' key={phone.phoneNumber}>{
                                                     phone && phone.phoneNumber && `${phone.phoneType} ${utils.formatPhone(phone.phoneNumber)}`
                                                 }</div>
                                             })
