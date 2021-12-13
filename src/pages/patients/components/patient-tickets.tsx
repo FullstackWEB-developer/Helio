@@ -65,8 +65,8 @@ const PatientTickets: React.FC<PatientTicketProps> = ({patientId}) => {
                         <div className='patient-tickets-container overflow-y-auto'>{
                             items && items?.map(item => {
                                 return (
-                                    <Link to={`${TicketsPath}/${item.ticketNumber}`}>
-                                        <div className={'py-4 border-b cursor-pointer'} key={item.id}>
+                                    <Link to={`${TicketsPath}/${item.ticketNumber}`} key={item.id}>
+                                        <div className={'py-4 border-b cursor-pointer'}>
                                             <div className='flex flex-row body2'>
                                                 <TicketChannelTypeIcon channel={item.channel} fillClass='rgba-03-fill' />
                                                 <span className="mx-2">{item.ticketNumber}</span>

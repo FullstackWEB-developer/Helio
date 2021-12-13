@@ -8,12 +8,12 @@ import {isCcpVisibleSelector} from '@shared/layout/store/layout.selectors';
 import {
     clearCCPContext,
     removeCurrentBotContext,
+    setBotContextPatient,
+    setBotContextTicket,
     setChatCounter,
     setConnectionStatus,
     setContextPanel,
     setCurrentContactId,
-    setNoteContext,
-    setNotes,
     setVoiceCounter,
     upsertCurrentBotContext
 } from './store/ccp.slice';
@@ -45,7 +45,7 @@ import useLocalStorage from '@shared/hooks/useLocalStorage';
 import utils from '@shared/utils/utils';
 import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
 import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
-
+import {ContextKeyValuePair} from '@pages/ccp/models/context-key-value-pair';
 const ccpConfig = {
     region: utils.getAppParameter('AwsRegion'),
     connectBaseUrl: utils.getAppParameter('ConnectBaseUrl'),
@@ -110,20 +110,19 @@ const Ccp: React.FC<BoxProps> = ({
     }
 
     useQuery([QueryGetPatientById, patientId], () => getPatientByIdWithQuery(patientId!), {
-        enabled: !!patientId && !!botContext?.queue && !!botContext?.ticket,
+        enabled: !!botContext?.ticket?.patientId,
         onSuccess: (data) => {
-            dispatch(upsertCurrentBotContext({
-                ...botContext,
-                patient: data
+            dispatch(setBotContextPatient({
+                patient: data,
+                contactId: ticketId
             }));
         }
     });
 
     useQuery([QueryTickets, ticketId], () => getTicketById(ticketId), {
-        enabled: !!ticketId && !!botContext?.queue,
+        enabled: !!ticketId,
         onSuccess: (data) => {
-            dispatch(upsertCurrentBotContext({
-                ...botContext,
+            dispatch(setBotContextTicket({
                 ticket: data
             }));
         }
@@ -134,6 +133,14 @@ const Ccp: React.FC<BoxProps> = ({
             updateAssigneeMutation.mutate({ticketId: ticketId, assignee: user.id});
         }
     }, [ticketId]);
+
+    useEffect(() => {
+        if (!!botContext?.ticket?.patientId){
+            setPatientId(botContext?.ticket?.patientId);
+            history.push('/patients/' + botContext?.ticket?.patientId);
+        }
+    }, [botContext?.ticket?.patientId]);
+
 
     useEffect(() => {
         if (ccpConnectionState === CCPConnectionStatus.Success) {
@@ -214,6 +221,10 @@ const Ccp: React.FC<BoxProps> = ({
             });
         }
 
+        const getInitialContactId = (contact : any) => {
+            return contact.getInitialContactId() || contact.getContactId()
+        }
+
         connect.contact((contact) => {
             window.CCP.contact = contact;
             contact.onConnecting(() => {
@@ -222,22 +233,26 @@ const Ccp: React.FC<BoxProps> = ({
                 }
             });
 
-            contact.onConnected(() => {
+            contact.onConnected((contact) => {
                 const attributeMap = contact.getAttributes();
+                const botAttributes: ContextKeyValuePair[] = [];
+                for (const [_, value] of Object.entries(attributeMap)) {
+                    botAttributes.push({
+                        label: value.name,
+                        value: value.value
+                    })
+                }
                 const queue = contact.getQueue();
                 const queueName = queue.name;
                 let ticketId = '';
-
+                let contactId = '';
                 if (attributeMap.PatientId) {
                     const patientId = attributeMap.PatientId.value;
                     setPatientId(Number(patientId));
-                    if (patientId) {
-                        history.push('/patients/' + patientId);
-                    }
                 }
 
                 if (attributeMap.HelioContactId) {
-                    const contactId = attributeMap.HelioContactId.value;
+                    contactId = attributeMap.HelioContactId.value;
                     if (contactId) {
                         history.push('/contacts/' + contactId);
                     }
@@ -247,11 +262,9 @@ const Ccp: React.FC<BoxProps> = ({
                     if (attributeMap.TicketId.value) {
                         ticketId = attributeMap.TicketId.value;
                     } else {
-                        ticketId = contact.getContactId();
+                        ticketId = getInitialContactId(contact);
                     }
-
                     setTicketId(ticketId);
-                    dispatch(setNoteContext({ticketId: ticketId, user}));
                 }
 
                 if(contact.isInbound()) {
@@ -272,7 +285,11 @@ const Ccp: React.FC<BoxProps> = ({
                         ...botContext,
                         queue: queueName,
                         isPregnant,
-                        reason
+                        reason,
+                        initialContactId: getInitialContactId(contact),
+                        attributes: botAttributes,
+                        currentContactId: contact.getContactId(),
+                        contactId
                     })
                     );
                 } else {
@@ -286,14 +303,17 @@ const Ccp: React.FC<BoxProps> = ({
                     dispatch(upsertCurrentBotContext({
                         ...botContext,
                         queue: queueName,
-                        reason
+                        reason,
+                        initialContactId: getInitialContactId(contact),
+                        attributes: botAttributes,
+                        currentContactId: contact.getContactId(),
+                        contactId
                     }));
                 }
             });
 
             contact.onDestroy((contact) => {
-                dispatch(removeCurrentBotContext(contact.getContactId()));
-                dispatch(setNotes([]));
+                dispatch(removeCurrentBotContext(contact.contactId));
             })
         });
         connect.agent((agent) => {
@@ -535,7 +555,7 @@ const Ccp: React.FC<BoxProps> = ({
                             }
                         </div>
                     </div>
-                    <CcpContext />
+                    <CcpContext ticketId={ticketId} />
                 </div>
             </div>
         </>

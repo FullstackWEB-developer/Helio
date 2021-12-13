@@ -152,7 +152,7 @@ const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(({
                                                    onClick={onClick}
                                                    disabled={props.disabled}
                                                    isLoading={isLoading}/>}
-            {!isFormatEnabled &&<div className='w-full'>
+            {!isFormatEnabled &&<div className='w-full h-full'>
                 <div className={textAreaWrapperClass}>
                     <textarea ref={mergeRefs([textAreaRef, ref])}
                               {...props}

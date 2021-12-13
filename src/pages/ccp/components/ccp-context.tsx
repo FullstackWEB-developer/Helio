@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import withErrorLogging from '../../../shared/HOC/with-error-logging';
@@ -6,26 +6,57 @@ import BotContext from './bot-context';
 import NoteContext from './note-context';
 import contextPanels from '../models/context-panels';
 import { Suggestions } from '../models/suggestions';
-import { selectContextPanel } from '../store/ccp.selectors';
+import {selectBotContext, selectContextPanel} from '../store/ccp.selectors';
 import SmsContext from '@pages/ccp/components/sms-context';
 import CcpScripts from '@pages/ccp/components/ccp-scripts';
+import {selectPatientInCollectionsBalance} from '@pages/patients/store/patients.selectors';
+import {ContextKeyValuePair} from '@pages/ccp/models/context-key-value-pair';
+import SvgIcon, {Icon} from '@components/svg-icon';
 
-
-const CcpContext = () => {
+export interface CcpContextProps {
+    ticketId: string;
+}
+const CcpContext = ({ticketId} : CcpContextProps) => {
     const context = useSelector(selectContextPanel);
     const { t } = useTranslation();
+    const patientInCollectionsBalance = useSelector(selectPatientInCollectionsBalance);
+    const botContext = useSelector(selectBotContext);
+
+    const botContextMessages: ContextKeyValuePair[] = useMemo(() => {
+        const items =  [
+            {
+                label : 'ccp.bot_context.queue',
+                value: botContext?.queue
+            },
+            {
+                label: 'ccp.bot_context.reason',
+                value: botContext?.reason
+            }
+        ] as ContextKeyValuePair[];
+        if (botContext?.isPregnant) {
+            items.push({
+                label: 'ccp.bot_context.pregnancy',
+                value: 'ccp.bot_context.patient_is_pregnant'
+            });
+        }
+        if (patientInCollectionsBalance) {
+            items.push({
+                value: 'ccp.bot_context.patient_in_collections',
+                containerClass: 'pt-4 flex items-center',
+                label: <SvgIcon type={Icon.Warning} className='icon-medium' fillClass='warning-icon' />
+            });
+        }
+        return items;
+    }, [patientInCollectionsBalance, botContext]);
+
     const renderContext = () => {
         switch (context) {
             case contextPanels.bot:
-                return <BotContext />
+                return <BotContext items={botContextMessages}/>
             case contextPanels.note:
                 return <NoteContext />
-            case contextPanels.tickets:
-                return <BotContext />
             case contextPanels.sms:
                 return <SmsContext />
-            case contextPanels.email:
-                return <BotContext />
             case contextPanels.scripts:
                 return <CcpScripts />
             default:

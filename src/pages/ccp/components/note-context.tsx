@@ -5,8 +5,6 @@ import {Controller, useForm} from 'react-hook-form';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc'
 import withErrorLogging from '../../../shared/HOC/with-error-logging';
-import {selectNoteContext, selectNotes} from '../store/ccp.selectors';
-import {setNotes} from '../store/ccp.slice';
 import TextArea from '../../../shared/components/textarea/textarea';
 import {addNote} from '../../tickets/services/tickets.service';
 import {TicketNote} from '../../tickets/models/ticket-note';
@@ -15,18 +13,20 @@ import './note-context.scss';
 import {Icon} from '@components/svg-icon/icon';
 import {useMutation} from 'react-query';
 import {setTicket} from '@pages/tickets/store/tickets.slice';
+import {selectBotContext} from '@pages/ccp/store/ccp.selectors';
+import {selectAppUserDetails} from '@shared/store/app-user/appuser.selectors';
+import {addNoteToTicket} from '@pages/ccp/store/ccp.slice';
+import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
+import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
 
 const NoteContext = () => {
     dayjs.extend(utc);
     const {t} = useTranslation();
     const dispatch = useDispatch();
-    const ticketId = useSelector(selectNoteContext).ticketId;
-    const user = useSelector(selectNoteContext).user;
-    const notes: TicketNote[] = useSelector(selectNotes) || [];
     const [noteText, setNoteText] = useState('');
     const notesBottom = useRef<HTMLDivElement>(null);
-
-
+    const botContext = useSelector(selectBotContext);
+    const user = useSelector(selectAppUserDetails);
     const addNoteMutation = useMutation(addNote, {
         onSuccess: (data) => {
             setTicket(data);
@@ -38,22 +38,28 @@ const NoteContext = () => {
             noteText: noteText,
             isVisibleToPatient: false
         };
-        if (ticketId) {
-            addNoteMutation.mutate({ticketId, note});
-            note.createdOn = dayjs().utc().toDate();
-            note.createdBy = user.id;
-            note.createdByName = user.fullName
-            dispatch(setNotes([...notes, note]));
-            setNoteText('');
-            notesBottom.current?.scrollIntoView({behavior: 'smooth'});
+        if (!!botContext?.ticket?.id) {
+            const ticketId = botContext?.ticket?.id;
+            addNoteMutation.mutate({ticketId, note}, {
+                onSuccess: () => {
+                    note.createdOn = dayjs().utc().toDate();
+                    note.createdBy = user.id;
+                    note.createdByName = user.fullName
+                    setNoteText('');
+                    dispatch(addNoteToTicket({ticketId, note}));
+                    notesBottom.current?.scrollIntoView({behavior: 'smooth'});
+                },
+                onError: () => {
+                    dispatch(addSnackbarMessage({
+                        type: SnackbarType.Error,
+                        message: 'ccp.note_context.note_add_error'
+                    }));
+                }
+            });
         }
     }
 
     const {handleSubmit, control, errors} = useForm();
-
-    if (!ticketId) {
-        return <div>{t('ccp.note_context.no_ticket_id')}</div>;
-    }
 
     return (
         <div className="flex flex-col">
@@ -61,7 +67,7 @@ const NoteContext = () => {
                 <div className={'h7 h-9'}>{t('ccp.note_context.header')}</div>
                 <div className='grid grid-flow-row auto-rows-max md:auto-rows-min overflow-y-auto overflow-x-hidden notes-container pr-3'>
                     {
-                        notes.map((item, key) => <NoteDetailItem key={key} item={item} displayBottomBorder={key < notes.length - 1} />)
+                        (botContext?.ticket?.notes || []).map((item, key) => <NoteDetailItem key={key} item={item} displayBottomBorder={key < (botContext.ticket?.notes || []).length - 1} />)
                     }
                     <div ref={notesBottom} />
                 </div>
@@ -75,11 +81,13 @@ const NoteContext = () => {
                         render={() => (
                             <TextArea
                                 error={errors.note?.message}
-                                className='h-full pb-0 pr-0 body2 w-full'
+                                className='h-full pb-0 pr-0 body2 w-full h-full'
+                                textareaContainerClasses='pl-4 h-full w-full'
                                 data-test-id='note-context-notes'
                                 placeHolder={t('ccp.note_context.enter_your_note')}
                                 value={noteText}
                                 required={true}
+                                overwriteDefaultContainerClasses={true}
                                 minRows={2}
                                 isLoading={addNoteMutation.isLoading}
                                 resizable={false}

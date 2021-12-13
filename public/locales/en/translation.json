@@ -227,9 +227,10 @@
     "note_context": {
       "header": "Add Note",
       "error": "Failed to add Note",
-      "no_ticket_id": "There are no ticketId",
+      "no_ticket_id": "There is no ticket",
       "copy_note": "Copy Note",
-      "enter_your_note": "Enter note"
+      "enter_your_note": "Enter note",
+      "note_add_error": "Could not add note, please try again"
     },
     "modal": {
       "aws_connect": "Amazon Connect",
