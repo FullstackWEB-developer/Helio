@@ -5,7 +5,7 @@ import {useRef, useState} from 'react';
 import Tooltip from '@components/tooltip/tooltip';
 import {useTranslation} from 'react-i18next';
 import {ContactExtended} from '@shared/models';
-
+import './searchbox-contact-result-item.scss';
 interface SearchBoxContactResultItemProps {
     onSelect?: (patient: ContactExtended) => void;
     contact: ContactExtended;
@@ -26,7 +26,7 @@ const SearchBoxContactResultItem = ({contact, ...props}: SearchBoxContactResultI
     }
 
     return (
-        <div key={contact.id} className='flex flex-row w-full auto-cols-max body2 border-b relative cursor-pointer hover:bg-gray-100 px-7 items-center h-10 py-3.5'>
+        <div key={contact.id} className='flex flex-row w-full auto-cols-max body2 border-b relative cursor-pointer hover:bg-gray-100 px-7 items-center searchbox-contact-result-item-line py-2'>
             <div className='uppercase flex items-center w-2/12 pr-0.5'>
                 {!!contact.lastName && !!contact.firstName &&
                     utils.stringJoin(', ', contact.lastName, contact.firstName)
