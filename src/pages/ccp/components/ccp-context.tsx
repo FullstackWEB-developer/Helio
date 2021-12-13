@@ -13,10 +13,7 @@ import {selectPatientInCollectionsBalance} from '@pages/patients/store/patients.
 import {ContextKeyValuePair} from '@pages/ccp/models/context-key-value-pair';
 import SvgIcon, {Icon} from '@components/svg-icon';
 
-export interface CcpContextProps {
-    ticketId: string;
-}
-const CcpContext = ({ticketId} : CcpContextProps) => {
+const CcpContext = () => {
     const context = useSelector(selectContextPanel);
     const { t } = useTranslation();
     const patientInCollectionsBalance = useSelector(selectPatientInCollectionsBalance);

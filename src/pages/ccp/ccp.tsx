@@ -46,6 +46,8 @@ import utils from '@shared/utils/utils';
 import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
 import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
 import {ContextKeyValuePair} from '@pages/ccp/models/context-key-value-pair';
+import {getUserList} from '@shared/services/lookups.service';
+
 const ccpConfig = {
     region: utils.getAppParameter('AwsRegion'),
     connectBaseUrl: utils.getAppParameter('ConnectBaseUrl'),
@@ -119,7 +121,7 @@ const Ccp: React.FC<BoxProps> = ({
         }
     });
 
-    useQuery([QueryTickets, ticketId], () => getTicketById(ticketId), {
+    const {refetch: refetchTicket} = useQuery([QueryTickets, ticketId], () => getTicketById(ticketId), {
         enabled: !!ticketId,
         onSuccess: (data) => {
             dispatch(setBotContextTicket({
@@ -129,17 +131,34 @@ const Ccp: React.FC<BoxProps> = ({
     });
 
     useEffect(() => {
+        dispatch(getUserList());
+    }, [dispatch]);
+
+    useEffect(() => {
         if (!!ticketId) {
-            updateAssigneeMutation.mutate({ticketId: ticketId, assignee: user.id});
+            let shouldUpdate = true;
+            if (!!botContext?.ticket?.assignee && user.id === botContext?.ticket?.assignee) {
+                shouldUpdate = false;
+            }
+            if (shouldUpdate) {
+                updateAssigneeMutation.mutate({ticketId: ticketId, assignee: user.id});
+            }
         }
-    }, [ticketId]);
+    }, [botContext?.ticket?.assignee, ticketId, updateAssigneeMutation, user.id]);
 
     useEffect(() => {
         if (!!botContext?.ticket?.patientId){
             setPatientId(botContext?.ticket?.patientId);
             history.push('/patients/' + botContext?.ticket?.patientId);
         }
-    }, [botContext?.ticket?.patientId]);
+    }, [botContext?.ticket?.patientId, history]);
+
+    useEffect(() => {
+        if (!botContext?.ticket && !!botContext?.initialContactId){
+            setTicketId(botContext?.initialContactId);
+            refetchTicket()
+        }
+    }, [botContext, refetchTicket]);
 
 
     useEffect(() => {
@@ -555,7 +574,7 @@ const Ccp: React.FC<BoxProps> = ({
                             }
                         </div>
                     </div>
-                    <CcpContext ticketId={ticketId} />
+                    <CcpContext />
                 </div>
             </div>
         </>
