@@ -137,6 +137,7 @@ const Ccp: React.FC<BoxProps> = ({
     useEffect(() => {
         if (!!ticketId) {
             updateAssigneeMutation.mutate({ticketId: ticketId, assignee: user.id});
+            refetchTicket();
         }
     }, [ticketId]);
 
