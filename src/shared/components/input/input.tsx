@@ -179,7 +179,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({
 
     return (
         <div className={classnames("flex flex-col h-20 input-group", containerClassName)}>
-            <div className={`input-group-container flex flex-wrap items=stretch w-full relative ${props.error ? 'input-error' : ''} ` + props.className}>
+            <div className={`input-group-container flex flex-wrap items-stretch w-full relative ${props.error ? 'input-error' : ''} ` + props.className}>
                 {component}
                 <label htmlFor={htmlFor}
                     className={`absolute truncate ${props.required ? 'required' : ''} ${isFocused || props.value ? 'body3 label-small' : `body2${props.disabled ? '-medium' : ''}`} ${props.error ? 'text-danger' : ''}`}>

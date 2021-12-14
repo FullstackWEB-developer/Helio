@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import RemoveCTA from '@components/remove-cta/remove-cta';
 import Checkbox, {CheckboxCheckEvent} from '@components/checkbox/checkbox';
-import {Control, FieldValues} from 'react-hook-form';
+import {Control} from 'react-hook-form';
 import ControlledInput from '@components/controllers/ControlledInput';
 import {Address, AddressType} from '@shared/models/address.model';
 import {useSelector} from 'react-redux';
@@ -13,7 +13,7 @@ interface ContactAddressProps {
     title: string,
     removeCTAClickHandler?: () => void,
     addressType: AddressType
-    control: Control<FieldValues>
+    control: Control
     defaultValue?: Address
 }
 const ContactAddress = ({title, addressType, control, removeCTAClickHandler, defaultValue}: ContactAddressProps) => {
@@ -43,15 +43,21 @@ const ContactAddress = ({title, addressType, control, removeCTAClickHandler, def
 
     const onAsPrimaryCheckChange = (event: CheckboxCheckEvent) => {
         setDisabledField(event.checked);
+        const prefix = determineFormNamePrefix();
         if (!event.checked) {
-            return;
+            control.setValue(`${prefix}AddressLine`, '');
+            control.setValue(`${prefix}Apt`, '');
+            control.setValue(`${prefix}City`, '');
+            control.setValue(`${prefix}State`, '');
+            control.setValue(`${prefix}ZipCode`, '');
+        } else {
+            const primaryName = 'primary';
+            control.setValue(`${prefix}AddressLine`, control.getValues(`${primaryName}AddressLine`));
+            control.setValue(`${prefix}Apt`, control.getValues(`${primaryName}Apt`));
+            control.setValue(`${prefix}City`, control.getValues(`${primaryName}City`));
+            control.setValue(`${prefix}State`, control.getValues(`${primaryName}State`));
+            control.setValue(`${prefix}ZipCode`, control.getValues(`${primaryName}ZipCode`));
         }
-        const primaryName = 'primary';
-        control.setValue(`${determineFormNamePrefix()}AddressLine`, control.getValues(`${primaryName}AddressLine`));
-        control.setValue(`${determineFormNamePrefix()}Apt`, control.getValues(`${primaryName}Apt`));
-        control.setValue(`${determineFormNamePrefix()}City`, control.getValues(`${primaryName}City`));
-        control.setValue(`${determineFormNamePrefix()}State`, control.getValues(`${primaryName}State`));
-        control.setValue(`${determineFormNamePrefix()}ZipCode`, control.getValues(`${primaryName}ZipCode`));
     }
 
     return (
@@ -124,6 +130,11 @@ const ContactAddress = ({title, addressType, control, removeCTAClickHandler, def
                 <div className="col-span-12 lg:col-span-2">
                     <ControlledInput
                         name={`${determineFormNamePrefix()}ZipCode`}
+                        pattern={{
+                            value: /^[+ 0-9]{5}$/,
+                            message: t('contacts.contact_details.individual.zip_code_validation')
+                        }}
+                        maxLength={5}
                         disabled={disabledFields}
                         control={control}
                         defaultValue={defaultValue?.zipCode || ''}

@@ -6,6 +6,7 @@ import React from 'react';
 import { Option } from '@components/option/option';
 import { Icon } from '@components/svg-icon/icon';
 import {INPUT_DATE_FORMAT} from '@constants/form-constants';
+import {ValidationRule} from 'react-hook-form/dist/types/validator';
 
 
 export interface ControlledInputProps {
@@ -40,6 +41,7 @@ export interface ControlledInputProps {
     fetchingSuggestionsPlaceholder?: string;
     containerClassName?: string;
     maxLength?: number;
+    pattern?: ValidationRule<RegExp>
 }
 
 const ControlledInput = ({
@@ -57,13 +59,13 @@ const ControlledInput = ({
     placeholder,
     containerClassName,
     maxLength,
+    pattern,
     ...props
 }: ControlledInputProps) => {
 
     const { t } = useTranslation();
     const requiredText = t('common.required');
-    let inputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>): void => undefined;
-    let pattern : any = undefined;
+    let inputKeyDown = (): void => undefined;
 
     switch (type) {
         case 'tel':

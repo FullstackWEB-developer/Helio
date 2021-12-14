@@ -1153,6 +1153,7 @@
         "state": "State",
         "zip_code": "Zip Code",
         "same_as_primary": "Same as primary address",
+        "zip_code_validation": "Zip Code should be 5 digits",
         "phone_types": {
           "1": "Mobile Phone",
           "2": "Work Main Phone",
