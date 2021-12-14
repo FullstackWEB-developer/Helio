@@ -136,15 +136,9 @@ const Ccp: React.FC<BoxProps> = ({
 
     useEffect(() => {
         if (!!ticketId) {
-            let shouldUpdate = true;
-            if (!!botContext?.ticket?.assignee && user.id === botContext?.ticket?.assignee) {
-                shouldUpdate = false;
-            }
-            if (shouldUpdate) {
-                updateAssigneeMutation.mutate({ticketId: ticketId, assignee: user.id});
-            }
+            updateAssigneeMutation.mutate({ticketId: ticketId, assignee: user.id});
         }
-    }, [botContext?.ticket?.assignee, ticketId, updateAssigneeMutation, user.id]);
+    }, [ticketId]);
 
     useEffect(() => {
         if (!!botContext?.ticket?.patientId){

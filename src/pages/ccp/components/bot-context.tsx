@@ -19,7 +19,7 @@ const BotContext = ({items} : BotContextProps) => {
                 const containerClass = classnames(item.containerClass, {
                     'grid grid-cols-12' : !item.containerClass
                 })
-                return <div className={containerClass}>
+                return <div className={containerClass} key={item.value}>
                     {isStringLabel && <div className='body2-medium col-span-2'>{t(item.label as string)}</div>}
                     {!isStringLabel && item.label}
                     <div className='col-span-6 subtitle2'>{t(item.value)}</div>
