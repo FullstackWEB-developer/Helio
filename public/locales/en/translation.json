@@ -262,7 +262,7 @@
     "search_type": {
       "patient_id": "Patient ID (XXXXX)",
       "patient_name": "Patient Name Surname or Surname",
-      "dob": "Date of birth (02/02/2020)",
+      "dob": "Date of birth (MM/DD/YYYY)",
       "phone": "Phone number (310-000-0000)",
       "contact_name": "Contact Name",
       "ticket_id": "Ticket ID",
