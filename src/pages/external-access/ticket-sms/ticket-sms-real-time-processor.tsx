@@ -2,9 +2,9 @@ import React, {useEffect, useMemo, useState} from 'react';
 import {HubConnection, HubConnectionBuilder, HubConnectionState, LogLevel} from '@microsoft/signalr';
 import RealTimeConnectionLogger from '@shared/websockets/real-time-connection-logger';
 import {useDispatch, useSelector} from 'react-redux';
-import {ChannelTypes, TicketMessage} from '@shared/models';
+import {ChannelTypes} from '@shared/models';
 import TicketSms from '@pages/external-access/ticket-sms/ticket-sms';
-import {pushTicketSmsMessage, setMarkAsRead} from '@pages/external-access/ticket-sms/store/ticket-sms.slice';
+import {setMarkAsRead} from '@pages/external-access/ticket-sms/store/ticket-sms.slice';
 import {selectRedirectLink} from '@pages/external-access/verify-patient/store/verify-patient.selectors';
 import utils from '@shared/utils/utils';
 import {useMutation} from 'react-query';
@@ -18,6 +18,7 @@ const TicketSmsRealTimeProcessor = () => {
     const markAsRead = useSelector(selectTicketSmsMarkAsRead);
     const dispatch = useDispatch();
     const isPageVisible = usePageVisibility();
+    const [lastMessageTime, setLastMessageTime] = useState<Date>();
     const realtimeConnectionLogger = useMemo(() => {
         return new RealTimeConnectionLogger();
     }, []);
@@ -49,8 +50,8 @@ const TicketSmsRealTimeProcessor = () => {
         if (connection && connection.state === HubConnectionState.Disconnected) {
             connection.start()
                 .then(_ => {
-                    connection.on('TicketSmsReceived', (message: TicketMessage) => {
-                        dispatch(pushTicketSmsMessage(message));
+                    connection.on('TicketSmsReceived', () => {
+                        setLastMessageTime(new Date());
                     });
                 })
                 .catch(error => realtimeConnectionLogger.log(LogLevel.Error, `Connection to TicketSms Hub failed: ${error}.`))
@@ -61,7 +62,7 @@ const TicketSmsRealTimeProcessor = () => {
         }
 
     }, [connection, realtimeConnectionLogger, dispatch]);
-    return <TicketSms />;
+    return <TicketSms lastMessageTime={lastMessageTime}/>;
 }
 
 export default TicketSmsRealTimeProcessor;

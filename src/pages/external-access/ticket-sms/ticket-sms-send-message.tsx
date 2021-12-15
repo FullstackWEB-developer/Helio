@@ -55,7 +55,7 @@ const TicketSmsSendMessage = ({ticketId, onMessageSend}: TicketSmsSendMessagePro
 
     return <div className='border-t flex flex-none'>
         <TextArea
-            className='body2 w-full'
+            className='body2 w-full overflow-y-hidden'
             placeHolder={t('external_access.ticket_sms.type')}
             value={smsText}
             required={true}

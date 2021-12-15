@@ -21,7 +21,10 @@ import {selectRedirectLink} from '@pages/external-access/verify-patient/store/ve
 import {selectTicketSmsMessages} from '@pages/external-access/ticket-sms/store/ticket-sms.selectors';
 import {setTicketSmsMessages} from '@pages/external-access/ticket-sms/store/ticket-sms.slice';
 
-const TicketSms = () => {
+export interface TicketSmsProps {
+    lastMessageTime?: Date;
+}
+const TicketSms = ({lastMessageTime} : TicketSmsProps) => {
     dayjs.extend(isToday);
     dayjs.extend(isYesterday);
     const {t} = useTranslation();
@@ -38,23 +41,25 @@ const TicketSms = () => {
             bodyEl.classList.replace('default', 'cwc-theme');
         }
         setBottomFocus(false);
-    }, [])
+    }, []);
+    
+    useEffect(() => {
+        refetch().then();
+    }, [lastMessageTime]);
 
-    const {isLoading} = useQuery([QueryTicketMessagesInfinite, ChannelTypes.SMS, request?.ticketId, page],
+    const {isLoading, refetch} = useQuery([QueryTicketMessagesInfinite, ChannelTypes.SMS, request?.ticketId, page],
         () => getMessages(request.ticketId, ChannelTypes.SMS, {
             page,
-            pageSize: 50,
+            pageSize: 100,
         }), {
         enabled: !!request?.ticketId,
         onSuccess: (data: PagedList<TicketMessage>) => {
             setBottomFocus(true);
-            let allMessages = [...messages].concat(data.results);
-
-            dispatch(setTicketSmsMessages(allMessages));
+            dispatch(setTicketSmsMessages(data.results));
             if (page < data.totalPages) {
                 setPage(page + 1);
             } else {
-                let userIds = allMessages.map(message => message.createdBy);
+                let userIds = data.results.map(message => message.createdBy);
                 userIds = userIds
                     .filter(function (v, i) {return userIds.indexOf(v) === i;})
                     .filter(a => utils.isGuid(a));

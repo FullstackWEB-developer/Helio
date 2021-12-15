@@ -9,10 +9,6 @@ const ticketSmsSlice = createSlice({
         setTicketSmsMessages(state, { payload }: PayloadAction<TicketMessage[]>) {
             state.messages = payload;
         },
-        pushTicketSmsMessage(state, { payload }: PayloadAction<TicketMessage>) {
-            state.messages.push(payload);
-            state.markAsRead = true;
-        },
         setMarkAsRead(state, {payload}: PayloadAction<boolean>) {
             state.markAsRead = payload;
         }
@@ -21,7 +17,6 @@ const ticketSmsSlice = createSlice({
 
 export const {
     setTicketSmsMessages,
-    pushTicketSmsMessage,
     setMarkAsRead
 } = ticketSmsSlice.actions;
 
