@@ -303,7 +303,12 @@
     "yearsOld": "yo",
     "placeholder": " Search",
     "search_title": "Search For",
-    "recent_searches": "Recent Searches"
+    "recent_searches": "Recent Searches",
+    "no_matching_filter": "No pattern matches to your input.",
+    "search_date_format_not_correct" : "Date format is not correct, please use MM/DD/YYYY format",
+    "search_by_phone_no_result": "Please use following format: 310-000-0000",
+    "search_by_patient_id_no_result": "Please use following format: XXXXX",
+    "search_by_patient_name_no_result": "Please use one of following formats: \nFirstname LastName\nLastName, Firstname\nLastName"
   },
   "patient": {
     "header": {

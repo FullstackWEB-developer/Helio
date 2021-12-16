@@ -205,6 +205,7 @@ function App() {
                     <GuardedRoute exact path={CallsLogPath} component={withSuspense(CallsLogList)} />
                     <GuardedRoute exact path={ChatsLogPath} component={withSuspense(ChatsLogList)} />
                     <GuardedRoute exact path={NotAuthorizedPath} component={withSuspense(NotAuthorized)} />
+                    <GuardedRoute exact path='/' component={Dashboard} />
                     <Confirmation
                         className='shadow-md'
                         hasOverlay={true}

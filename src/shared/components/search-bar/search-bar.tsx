@@ -1,32 +1,43 @@
-import React, {useRef, useState} from 'react';
+import React, {useMemo, useRef, useState} from 'react';
 import {SearchType} from './models/search-type';
-import {selectRecentPatients, selectSearchTermDisplayValue, selectSearchTypeFiltered, selectSelectedType} from './store/search-bar.selectors';
+import {
+    selectRecentPatients,
+    selectSearchTermDisplayValue,
+    selectSearchTypeFiltered,
+    selectSelectedType
+} from './store/search-bar.selectors';
 import {
     changeFilteredTypes,
     changeTypeDown,
     changeTypeUp,
     clearRecentPatients,
-    setType,
+    resetFilteredTypes,
     setSearchTerm,
-    setSearchTermDisplayValue, resetFilteredTypes
+    setSearchTermDisplayValue,
+    setType
 } from './store/search-bar.slice';
 import {useDispatch, useSelector} from 'react-redux';
 import {useTranslation} from 'react-i18next';
 import {useHistory} from 'react-router-dom';
 import {RecentPatient} from './models/recent-patient';
 import RecentPatientDetails from './components/recent-patient-details';
-import {searchTypePatient, searchTypeContact, searchTypeTicket} from './constants/search-type';
+import {searchTypeContact, searchTypePatient, searchTypeTicket} from './constants/search-type';
 import {keyboardKeys} from './constants/keyboard-keys';
 import Dropdown from '../dropdown/dropdown';
-import {CategoryItemModel, DropdownItemModel, DropdownModel} from '../dropdown/dropdown.models';
+import {CategoryItemModel, DropdownItemModel, DropdownModel} from '@components/dropdown';
 import './search-bar.scss';
 import customHooks from '../../hooks/customHooks';
 import SvgIcon from '@components/svg-icon/svg-icon';
 import {Icon} from '@components/svg-icon/icon';
 import SearchInputField from '@components/search-input-field/search-input-field';
 import {SearchCategory} from './constants/search-type-const';
+import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
+import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
 
 const SearchBar = () => {
+    dayjs.extend(customParseFormat);
     const {t} = useTranslation();
     const dispatch = useDispatch();
     const history = useHistory();
@@ -96,13 +107,30 @@ const SearchBar = () => {
         }
     }
 
+    const isValidInput = (type: number) : boolean => {
+        if (type === searchTypePatient.dateOfBirth) {
+            if (dayjs(searchTermDisplayValue, 'MM/DD/YYYY', true).isValid()) {
+                return true;
+            } else {
+                dispatch(addSnackbarMessage({
+                    type: SnackbarType.Info,
+                    message:'search.search_date_format_not_correct'
+                }));
+                return false;
+            }
+        }
+        return true;
+    }
+
     const commonSearchHandler = (type?: number) => {
         const chosenType = type || selectedType;
-        dispatch(setType(chosenType));
-        dispatch(setSearchTerm(searchTermDisplayValue));
-        dispatch(resetFilteredTypes());
-        displayDropdown(false);
-        return chosenType;
+        if (isValidInput(chosenType)) {
+            dispatch(setType(chosenType));
+            dispatch(setSearchTerm(searchTermDisplayValue));
+            dispatch(resetFilteredTypes());
+            displayDropdown(false);
+            return chosenType;
+        }
     }
 
     const searchTicketHandler = (type?: number) => {
@@ -159,11 +187,12 @@ const SearchBar = () => {
             } as DropdownItemModel
         });
 
+    const emptySearchTypes = useMemo(() => {
+        return patientSearchTypes.length === 0 && contactSearchTypes.length === 0 && ticketSearchTypes.length === 0;
+    }, [patientSearchTypes.length, contactSearchTypes.length, ticketSearchTypes.length]);
 
     const getCategorizedItems = (): CategoryItemModel[] => {
-        const emptySearchTypes = patientSearchTypes.length === 0 &&
-            contactSearchTypes.length === 0 && ticketSearchTypes.length === 0;
-        if (emptySearchTypes) {
+        if (emptySearchTypes && !searchTermDisplayValue) {
             return initialFocusRender();
         }
         const items: CategoryItemModel[] = [];
@@ -286,6 +315,7 @@ const SearchBar = () => {
 
     const searchDropdownModel: DropdownModel = {
         title: t('search.search_title'),
+        header: (emptySearchTypes && searchTermDisplayValue) ? <div className='px-4 h-14 flex items-center body3'>{t('search.no_matching_filter')}</div> : undefined,
         defaultValue: selectedType.toString(),
         categorizedItems: getCategorizedItems(),
         items: getItems()
@@ -294,6 +324,10 @@ const SearchBar = () => {
     customHooks.useOutsideClick([dropdownRef], () => {
         displayDropdown(false);
     });
+
+    const onFocus = () => {
+        textChange(searchTermDisplayValue);
+    }
 
     return (
         <div className='relative z-10' ref={dropdownRef}>
@@ -304,14 +338,14 @@ const SearchBar = () => {
                         inputClassNames={'border-none'}
                         iconOnClick={() => {handleSearch()}}
                         value={searchTermDisplayValue}
-                        onFocus={() => displayDropdown(true)}
-                        inputOnClick={() => displayDropdown(true)}
+                        onFocus={() => onFocus()}
+                        inputOnClick={() => onFocus()}
                         onChange={textChange}
                         onKeyDown={(e) => handleKey(e)}
                     />
                 </div>
             </div>
-            {dropdownDisplayed && <div className='absolute'>
+            {dropdownDisplayed && <div className='absolute w-full'>
                 <Dropdown model={searchDropdownModel} />
             </div>}
         </div>
