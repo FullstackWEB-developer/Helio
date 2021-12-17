@@ -62,20 +62,29 @@ export const refreshAccessToken = async () => {
                     if (auth?.accessToken !== currentToken) {
                         store.dispatch(setAuthentication(auth));
                     }
+                    console.log("Auth Token Response");
+                    console.dir(response);
                     return response.idToken;
                 }
             } catch (error: any) {
-                logger.error('Error getMsalInstance ' + JSON.stringify(error));
+                debugger;
+                console.error('Error getMsalInstance ' + JSON.stringify(error));
+                console.log("Error getMsalInstance");
+                console.dir(error);
                 if (error instanceof InteractionRequiredAuthError) {
                     if (getMsalInstance() !== undefined) {
-                        return await getMsalInstance()!
+                        let errResponse =  await getMsalInstance()!
                             .acquireTokenPopup(loginRequest)
                             .catch((error) => {
                                 logger.error('Error logging in popup ' + JSON.stringify(error));
                                 return null;
                             });
+                        console.error('Refresh Token Response ' + JSON.stringify(errResponse));
+                        console.dir(errResponse);
+                        return errResponse?.idToken;
                     }
                 } else {
+                    console.error('Error refreshing token ' + JSON.stringify(error));
                     logger.error('Error refreshing token.', error);
                 }
             }
@@ -112,14 +121,15 @@ const isCustomToken = (): boolean => {
 }
 
 const signOut = () => {
+    console.error("---- LOGGING OUT ----")
     store.dispatch(logOut());
-    getMsalInstance()?.logoutRedirect()
-        .then(() => {
-            logger.info('Logged out successfully!');
-        })
-        .catch((reason: any) => {
-            logger.error('Error logging out ' + JSON.stringify(reason));
-        });
+    /*  getMsalInstance()?.logoutRedirect()
+          .then(() => {
+              logger.info('Logged out successfully!');
+          })
+          .catch((reason: any) => {
+              logger.error('Error logging out ' + JSON.stringify(reason));
+          });*/
 }
 
 export default Api;
