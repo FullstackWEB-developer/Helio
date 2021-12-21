@@ -572,6 +572,7 @@
       "unarchive_confirmation_title": "Unarchive ticket?",
       "unarchived_successfully": "Ticket unarchived successfully",
       "archive_fail": "Ticket archive failed",
+      "unarchive_fail": "Ticket unarchive failed",
       "spam": "Spam",
       "block_user": {
         "title": "Block User",
