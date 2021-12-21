@@ -268,9 +268,6 @@ const logout = () => {
 
 const isSessionExpired = (): boolean => {
     const auth = store.getState()?.appUserState?.auth;
-    if (auth && !auth.isLoggedIn) {
-        return true;
-    }
     if (auth) {
         return auth.expiresOn && dayjs(auth.expiresOn).isBefore(dayjs());
     }

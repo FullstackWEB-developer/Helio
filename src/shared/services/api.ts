@@ -123,13 +123,13 @@ const isCustomToken = (): boolean => {
 const signOut = () => {
     console.error("---- LOGGING OUT ----")
     store.dispatch(logOut());
-    /*  getMsalInstance()?.logoutRedirect()
+      getMsalInstance()?.logoutRedirect()
           .then(() => {
               logger.info('Logged out successfully!');
           })
           .catch((reason: any) => {
               logger.error('Error logging out ' + JSON.stringify(reason));
-          });*/
+          });
 }
 
 export default Api;
