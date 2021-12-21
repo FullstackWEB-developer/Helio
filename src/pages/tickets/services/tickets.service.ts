@@ -281,11 +281,16 @@ export interface setDeleteProps {
     undoDelete?: boolean;
 }
 
-export const setDelete = async ({id, undoDelete = false}: setDeleteProps) => {
+export const setDelete = async ({id, undoDelete = false}: setDeleteProps) : Promise<Ticket> => {
     const url = `${ticketsBaseUrl}/${id}/delete`;
-    await Api.put(url, {
-        undoDelete: undoDelete
-    })
+    const response = await Api.put(url, null, {
+            params: {
+                undoDelete: undoDelete
+            }
+        }
+    );
+
+    return response.data;
 }
 
 export const getTicketByNumber = async (ticketNumber: number) : Promise<Ticket> => {

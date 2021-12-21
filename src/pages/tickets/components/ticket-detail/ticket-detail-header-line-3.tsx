@@ -66,10 +66,17 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
         setDisplayPhoneDropdown(false);
     });
 
-    const confirmProcess = () => {
+    const confirmArchive = () => {
         setConfirmationTitle('ticket_detail.header.archive_confirmation_title');
         setConfirmationMessage('ticket_detail.header.archive_confirmation_message');
         setConfirmationOkButtonLabel('ticket_detail.header.archive');
+        setDisplayConfirmation(true);
+    }
+
+    const confirmUnarchive = () => {
+        setConfirmationTitle('ticket_detail.header.unarchive_confirmation_title');
+        setConfirmationMessage('ticket_detail.header.unarchive_confirmation_message');
+        setConfirmationOkButtonLabel('ticket_detail.header.unarchive');
         setDisplayConfirmation(true);
     }
 
@@ -124,27 +131,31 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
     }, [patient, dispatch, contact, PhoneType.Mobile, logger])
 
     const archiveTicketMutation = useMutation(setDelete, {
-        onSuccess: () => {
+        onSuccess: (data) => {
             dispatch(addSnackbarMessage({
                 type: SnackbarType.Success,
-                message: t('ticket_detail.header.archived_successfully')
+                message: t(data.isDeleted ? 'ticket_detail.header.archived_successfully' : 'ticket_detail.header.unarchived_successfully')
             }));
             dispatch(setTicketUpdateModel({
                 ...ticketUpdateModel,
                 isDeleted:true
             }))
         },
-        onError: () => {
+        onError: (_, variables) => {
             dispatch(addSnackbarMessage({
                 type: SnackbarType.Error,
-                message: t('ticket_detail.header.archive_fail')
+                message: t(variables.undoDelete ? 'ticket_detail.header.unarchive_fail' : 'ticket_detail.header.archive_fail')
             }));
         }
     });
 
     const handleMarkAsArchived = () => {
         if (ticket && ticket.id) {
-            archiveTicketMutation.mutate({id: ticket.id});
+            archiveTicketMutation.mutate({id: ticket.id, undoDelete: ticket.isDeleted}, {
+                onSuccess: data => {
+                    dispatch(setTicket(data));
+                }
+            });
         }
     }
 
@@ -451,12 +462,18 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
                     </div>
                 </div>
                 <div className='pr-6'>
-                    <Button data-test-id='ticket-detail-header-delete-button'
-                            buttonType='secondary'
-                            isLoading={archiveTicketMutation.isLoading}
-                            disabled={archiveTicketMutation.isLoading || ticketUpdateModel?.isDeleted}
-                            onClick={() => confirmProcess()}
-                            label={'ticket_detail.header.archive'}/>
+                    {ticket.isDeleted ? <Button data-test-id='ticket-detail-header-unarchive-button'
+                                                buttonType='secondary'
+                                                isLoading={archiveTicketMutation.isLoading}
+                                                disabled={archiveTicketMutation.isLoading}
+                                                onClick={() => confirmUnarchive()}
+                                                label={'ticket_detail.header.unarchive'}/>
+                    : <Button data-test-id='ticket-detail-header-delete-button'
+                              buttonType='secondary'
+                              isLoading={archiveTicketMutation.isLoading}
+                              disabled={archiveTicketMutation.isLoading}
+                              onClick={() => confirmArchive()}
+                              label={'ticket_detail.header.archive'}/>}
                 </div>
                 <div className='pr-6'>
                     <Button disabled={ticket.status === TicketStatuses.Solved || updateStatusMutation.isLoading}

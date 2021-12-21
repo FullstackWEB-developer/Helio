@@ -554,6 +554,7 @@
       "due_in": "Due In",
       "last_activity": "Last activity",
       "archive": "Archive",
+      "unarchive": "Unarchive",
       "solved": "Solved",
       "close": "Close",
       "solve": "Solve",
@@ -566,7 +567,10 @@
       "send_email": "Email",
       "archive_confirmation_title": "Archive ticket?",
       "archive_confirmation_message": "Archived tickets can be accessed by checking “Show Archived” filter in tickets.",
+      "unarchive_confirmation_message": "Are you sure you want to unarchive ticket?",
       "archived_successfully": "Ticket archived successfully",
+      "unarchive_confirmation_title": "Unarchive ticket?",
+      "unarchived_successfully": "Ticket unarchived successfully",
       "archive_fail": "Ticket archive failed",
       "spam": "Spam",
       "block_user": {
