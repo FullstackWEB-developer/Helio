@@ -42,13 +42,15 @@ const ProfileDropdown = () => {
     }, [dispatch])
 
     const signOut = () => {
-        signOutFromCcp();
-        dispatch(clearAppParameters());
-        utils.logout();
+        signOutFromCcp().then(_ => {
+            dispatch(clearAppParameters());
+            utils.logout();
+        });
+
     }
 
-    const signOutFromCcp = () => {
-        axios.get(utils.getAppParameter('ConnectBaseUrl') + utils.getAppParameter('CcpLogoutUrl'), {withCredentials: true})
+    const signOutFromCcp = async () => {
+        await axios.get(utils.getAppParameter('ConnectBaseUrl') + utils.getAppParameter('CcpLogoutUrl'), {withCredentials: true})
             .catch(() => {
                 // Note: This will result in 'CORS policy' error but it will still logout the user which is our goal.
                 // We will ignore the error received since we do not care about the response.
