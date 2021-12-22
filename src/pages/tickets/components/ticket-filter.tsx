@@ -26,7 +26,7 @@ import {TicketEnumValue} from '../models/ticket-enum-value.model';
 import utc from 'dayjs/plugin/utc';
 import TagInput from '@components/tag-input/tag-input';
 import {setTicketListQueryType, setTicketsFiltered} from '../store/tickets.slice';
-import {authenticationSelector} from '@shared/store/app-user/appuser.selectors';
+import {userNameSelector} from '@shared/store/app-user/appuser.selectors';
 import {TicketListQueryType} from '../models/ticket-list-type';
 import ControlledDateInput from '@components/controllers/ControlledDateInput';
 import classNames from 'classnames';
@@ -54,7 +54,7 @@ const TicketFilter = ({isOpen}: {isOpen: boolean}) => {
     const statesFilter = useSelector((state => selectEnumValues(state, 'TicketStateFilter')));
     const ticketTypes = useSelector((state => selectEnumValues(state, 'TicketType')));
     const offices = useSelector(selectLocationList);
-    const {username} = useSelector(authenticationSelector);
+    const username = useSelector(userNameSelector);
     const searchTerm: string = useSelector(selectSearchTerm);
     const {control, handleSubmit, watch, setValue, getValues, reset} = useForm({});
     const [fromDate, setFromDate] = useState<Date | undefined>();

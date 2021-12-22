@@ -13,7 +13,7 @@ import {useQuery} from 'react-query';
 import {QueryQueueMetrics} from '@constants/react-query-constants';
 import SvgIcon from '@components/svg-icon/svg-icon';
 import {Icon} from '@components/svg-icon/icon';
-import {authenticationSelector} from "@shared/store/app-user/appuser.selectors";
+import {userNameSelector} from "@shared/store/app-user/appuser.selectors";
 import {selectLatestUsersStatusUpdateTime} from '@shared/layout/store/layout.selectors';
 import {QueueStatusType} from "@shared/layout/enums/queue-status-type";
 import Spinner from '@components/spinner/Spinner';
@@ -30,7 +30,7 @@ const QueueStatus = ({queueType}: QueueStatusProps) => {
     const {t: translate} = useTranslation();
     const metricOptions = useSelector(selectMetricOptions);
     const [activeMetric, setMetric] = useState<QueueMetric[]>([]);
-    const {username} = useSelector(authenticationSelector);
+    const username = useSelector(userNameSelector);
     const latestUserUpdateTime = useSelector(selectLatestUsersStatusUpdateTime);
     const [selectedOption, setSelectedOption] = useState<KeyValuePair | undefined>();
 

@@ -3,7 +3,7 @@ import Avatar from '@components/avatar/avatar';
 import SearchBar from '../components/search-bar/search-bar';
 import {useDispatch, useSelector} from 'react-redux';
 import {toggleCcp, toggleUserProfileMenu} from './store/layout.slice';
-import {authenticationSelector, selectAppUserDetails} from '../store/app-user/appuser.selectors';
+import {authenticationSelector, selectAppUserDetails, selectUserStatus} from '../store/app-user/appuser.selectors';
 import {isCcpVisibleSelector, isProfileMenuExpandedSelector} from './store/layout.selectors';
 import HelioLogo from '@icons/helio-logo';
 import ProfileDropdown from './components/profile-dropdown';
@@ -34,6 +34,7 @@ const Header = ({headsetIconRef}: {headsetIconRef: React.RefObject<HTMLDivElemen
     const numberOfAgentVoices = useSelector(selectVoiceCounter);
     const isCcpVisible = useSelector(isCcpVisibleSelector);
     const ccpConnectionState = useSelector(selectConnectionStatus);
+    const userStatus = useSelector(selectUserStatus);
     const iconContainerRef = useRef(null);
     const [isErrorToolTipVisible, setErrorToolTipVisible] = useState(true);
     const [animate, setAnimate] = useState(false);
@@ -156,6 +157,7 @@ const Header = ({headsetIconRef}: {headsetIconRef: React.RefObject<HTMLDivElemen
                                     <Avatar userFullName={auth.isLoggedIn && appUserDetails ? appUserDetails.fullName : ''}
                                             userId={appUserDetails?.id}
                                             displayStatus={true}
+                                            status={userStatus}
                                             userPicture={appUserDetails?.profilePicture} />
                                 </div>
                                 <div>

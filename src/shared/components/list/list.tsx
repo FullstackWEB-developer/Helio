@@ -77,7 +77,7 @@ const List = ({options, title, onKeyDown, isSearchable = true, onSelect}: ListPr
           value={filter} placeholder={t('search.placeholder')}
           onChange={(value) => setFilter(value)} />
       )}
-      <div className='pt-1 list-items overflow-y-auto'>
+      <div className='pt-1 list-items'>
         {filteredOptionsContent}
       </div>
     </div>
