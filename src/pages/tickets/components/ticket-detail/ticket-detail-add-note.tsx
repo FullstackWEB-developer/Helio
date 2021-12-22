@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime'
 import {useTranslation} from 'react-i18next';
@@ -27,6 +27,7 @@ import {processTemplate} from '@shared/services/notifications.service';
 import {SnackbarPosition} from '@components/snackbar/snackbar-position.enum';
 import ParentExtraTemplate from '@components/notification-template-select/components/parent-extra-template';
 import SelectedTemplateInfo from '@components/notification-template-select/components/selected-template-info';
+import {TicketStatuses} from '@pages/tickets/models/ticket.status.enum';
 
 interface TicketDetailAddNoteProps {
     ticket: Ticket,
@@ -78,6 +79,17 @@ const TicketDetailAddNote = ({ticket, patient, contact}: TicketDetailAddNoteProp
             clear();
         }
     });
+
+    const isTicketDisabled = useMemo(() => {
+        return ticket && (ticket.status === TicketStatuses.Solved || ticket.status === TicketStatuses.Closed || ticket.isDeleted);
+    }, [ticket])
+
+    useEffect(() => {
+            if (isTicketDisabled) {
+                setSmsText('');
+                setEmailText('');
+            }
+    }, [isTicketDisabled]);
 
     useEffect(() => {
         if (!!patient) {
@@ -215,6 +227,12 @@ const TicketDetailAddNote = ({ticket, patient, contact}: TicketDetailAddNoteProp
         setNoteText('');
         setEmailText('');
     }
+
+    const isSendSmsDisabled = useMemo(() => {
+        return !mobileNumber || isTicketDisabled;
+    }, [isTicketDisabled, mobileNumber]);
+
+
     return <>
         <div className='pb-6 pr-16 ticket-add-message-body'>
             <div className='flex flex-row items-end'>
@@ -269,7 +287,7 @@ const TicketDetailAddNote = ({ticket, patient, contact}: TicketDetailAddNoteProp
                                 resizable={false}
                                 isLoading={sendSmsMutation.isLoading || isProcessing}
                                 value={smsText}
-                                disabled={!mobileNumber}
+                                disabled={isSendSmsDisabled}
                                 hasBorder={false}
                                 showFormatting={false}
                                 onChange={(message) => setSmsText(message)}
