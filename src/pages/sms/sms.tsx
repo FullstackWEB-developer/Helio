@@ -1,4 +1,4 @@
-import {useEffect, useState, useCallback} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import classnames from 'classnames';
 import {useInfiniteQuery, useMutation, useQuery} from 'react-query';
 import {useDispatch, useSelector} from 'react-redux';
@@ -8,7 +8,7 @@ import {DropdownItemModel} from '@components/dropdown';
 import DropdownLabel from '@components/dropdown-label';
 import SearchInputField from '@components/search-input-field/search-input-field';
 import SvgIcon, {Icon} from '@components/svg-icon';
-import {SmsChat, SmsSummaryList, SmsFilter, SmsNewMessage} from './components';
+import {SmsChat, SmsFilter, SmsNewMessage, SmsSummaryList} from './components';
 import {
     GetTicketMessage,
     QueryTicketMessagesInfinite,
@@ -19,27 +19,24 @@ import {
     ChannelTypes,
     ContactExtended,
     TicketMessage,
-    TicketMessageBase, TicketMessagesDirection,
+    TicketMessageBase,
+    TicketMessagesDirection,
     TicketMessageSummary,
     TicketMessageSummaryRequest
 } from '@shared/models';
 import {getChats, getMessage, getMessages, markRead, sendMessage} from './services/ticket-messages.service';
 import {DATE_INPUT_LONG_FORMAT, DEBOUNCE_SEARCH_DELAY_MS} from '@constants/form-constants';
 import useDebounce from '@shared/hooks/useDebounce';
-import {
-    selectAppUserDetails,
-    selectUnreadSMSList
-} from '@shared/store/app-user/appuser.selectors';
+import {selectAppUserDetails, selectUnreadSMSList} from '@shared/store/app-user/appuser.selectors';
 import {SmsFilterParamModel} from './components/sms-filter/sms-filter.model';
 import utils from '@shared/utils/utils';
 import {setAssignee} from '@pages/tickets/services/tickets.service';
 import {TicketBase} from '@pages/tickets/models/ticket-base';
-import {SmsQueryType} from '@pages/sms/models';
+import {SmsNotificationData, SmsQueryType} from '@pages/sms/models';
 import {DEFAULT_FILTER_VALUE, DEFAULT_MESSAGE_QUERY_PARAMS} from './constants';
 import {getNextPage, messageSummaryTruncate} from './utils';
 import Spinner from '@components/spinner/Spinner';
 import {useSignalRConnectionContext} from '@shared/contexts/signalRContext';
-import {SmsNotificationData} from '@pages/sms/models';
 import './sms.scss';
 import {removeUnreadSMSMessageForList} from '@shared/store/app-user/appuser.slice';
 import {useHistory, useLocation, useParams} from 'react-router';
@@ -293,7 +290,8 @@ const Sms = () => {
             channel: ChannelTypes.SMS,
             body: text,
             toAddress,
-            ticketId: selectedTicketSummary.ticketId
+            ticketId: selectedTicketSummary.ticketId,
+            direction: TicketMessagesDirection.Outgoing
         }
         if (selectedTicketSummary.patientId) {
             message.patientId = selectedTicketSummary.patientId

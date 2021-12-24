@@ -6,7 +6,7 @@ import {createTicketMessage} from '@pages/sms/services/ticket-messages.service';
 import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
 import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
 import {SnackbarPosition} from '@components/snackbar/snackbar-position.enum';
-import {TicketMessagesDirection} from '@shared/models';
+import {ChannelTypes, TicketMessagesDirection} from '@shared/models';
 import {useDispatch} from 'react-redux';
 import {useTranslation} from 'react-i18next';
 
@@ -36,13 +36,10 @@ const TicketSmsSendMessage = ({ticketId, onMessageSend}: TicketSmsSendMessagePro
     const sendSms = () => {
         if (!!smsText) {
             createTicketSmsMutation.mutate({
-                smsMessage: {
-                    messageBody: smsText
-                },
-                ticket: {
-                    id: ticketId
-                },
-                direction: TicketMessagesDirection.Incoming
+                body: smsText,
+                ticketId,
+                direction: TicketMessagesDirection.Incoming,
+                channel: ChannelTypes.SMS
             });
         } else {
             dispatch(addSnackbarMessage({

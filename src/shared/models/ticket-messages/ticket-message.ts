@@ -2,7 +2,6 @@ import {TicketMessagesDirection} from "@shared/models";
 import {ChannelTypes} from "@shared/models/ticket-channel";
 
 export interface TicketMessage extends TicketMessageBase {
-    direction: TicketMessagesDirection;
     fromAddress: string;
     isRead: boolean;
     createdName?: string;
@@ -19,4 +18,5 @@ export interface TicketMessageBase {
     body: string;
     patientId?: number;
     contactId?: string;
+    direction: TicketMessagesDirection;
 }

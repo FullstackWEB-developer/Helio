@@ -1,13 +1,8 @@
-import {Ticket} from '@pages/tickets/models/ticket';
-import {TicketMessagesDirection} from '@shared/models';
+import {ChannelTypes, TicketMessagesDirection} from '@shared/models';
 
 export interface CreateTicketMessageRequest {
-    ticket: Ticket,
+    body: string;
     direction: TicketMessagesDirection;
-    smsMessage : SmsMessage
-
-}
-
-export interface SmsMessage {
-    messageBody: string;
+    ticketId: string;
+    channel: ChannelTypes
 }

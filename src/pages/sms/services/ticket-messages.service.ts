@@ -28,7 +28,7 @@ export const sendMessage = async (message: TicketMessageBase) => {
 }
 
 export const createTicketMessage = async (request: CreateTicketMessageRequest) => {
-    const response = await Api.post<TicketMessage>(`${ticketMessageUrl}/create-from-sms`, request);
+    const response = await Api.post<TicketMessage>(ticketMessageUrl, request);
     return response.data;
 }
 

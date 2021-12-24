@@ -9,7 +9,7 @@ import {sendMessage} from '@pages/sms/services/ticket-messages.service';
 import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
 import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
 import {useDispatch, useSelector} from 'react-redux';
-import {ChannelTypes} from '@shared/models';
+import {ChannelTypes, TicketMessagesDirection} from '@shared/models';
 import Button from '@components/button/button';
 import './sms-context.scss';
 import {selectBotContext} from '@pages/ccp/store/ccp.selectors';
@@ -17,6 +17,7 @@ import ParentExtraTemplate from '@components/notification-template-select/compon
 import {ProcessTemplate} from '@constants/react-query-constants';
 import utils from '@shared/utils/utils';
 import {processTemplate} from '@shared/services/notifications.service';
+
 const SmsContext = () => {
     const {t} = useTranslation();
     const dispatch = useDispatch();
@@ -70,7 +71,8 @@ const SmsContext = () => {
                 ticketId: botContext.ticket?.id,
                 channel: ChannelTypes.SMS,
                 toAddress: botContext.patient.mobilePhone,
-                recipientName: patientName
+                recipientName: patientName,
+                direction: TicketMessagesDirection.Outgoing
             });
         }
     }
