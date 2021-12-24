@@ -174,6 +174,15 @@ const Ccp: React.FC<BoxProps> = ({
         return () => { };
     }, [ccpConnectionState]);
 
+    const updateAgentStatus = (status: string, states: AgentState[]) => {
+        const state = states.find((agentState) => agentState.name === status);
+        window.CCP.agent.setState(state, {
+            failure: (e: any) => {
+                logger.error('Cannot set state for agent ', e);
+            }
+        });
+    }
+
     const initCCP = useCallback((isRetry: boolean = false) => {
         if (utils.isSessionExpired()) {
             return;
@@ -219,21 +228,6 @@ const Ccp: React.FC<BoxProps> = ({
         connect.core.onViewContact((contactEvent) => {
             dispatch(setCurrentContactId(contactEvent.contactId));
         });
-
-        const beforeUnload = () => {
-            setLatestStatus(currentUserStatus);
-            updateAgentStatus(UserStatus.Offline, agentStates);
-            dispatch(clearCCPContext());
-        };
-
-        const updateAgentStatus = (status: string, states: AgentState[]) => {
-            const state = states.find((agentState) => agentState.name === status);
-            window.CCP.agent.setState(state, {
-                failure: (e: any) => {
-                    logger.error('Cannot set state for agent ', e);
-                }
-            });
-        }
 
         const getInitialContactId = (contact : any) => {
             return contact.getInitialContactId() || contact.getContactId()
@@ -332,14 +326,15 @@ const Ccp: React.FC<BoxProps> = ({
         });
         connect.agent((agent) => {
             window.CCP.agent = agent;
-            const agentStates = agent.getAgentStates() as AgentState[];
-            if (latestStatus?.name) {
-                updateAgentStatus(latestStatus.name, agentStates);
+            let agentStateList = agentStates;
+            if (!agentStateList || agentStateList.length === 0) {
+                const newAgentStates = agent.getAgentStates() as AgentState[];
+                agentStateList = newAgentStates;
+                if (newAgentStates?.length > 0) {
+                    dispatch(setAgentStates(newAgentStates));
+                }
             }
 
-            if (agentStates?.length > 0) {
-                dispatch(setAgentStates(agentStates));
-            }
 
             agent.onStateChange(agentStateChange => {
                 if (agentStateChange.oldState.toLowerCase() !== connect.AgentStateType.INIT && agentStateChange.newState.toLowerCase() === connect.AgentStateType.OFFLINE) {
@@ -348,9 +343,14 @@ const Ccp: React.FC<BoxProps> = ({
                         message: 'ccp.went_offline'
                     }));
                 }
-                dispatch(updateUserStatus(agentStateChange.newState));
+                let stateToSet = agentStateChange.newState;
+                if (agentStateChange.oldState.toLowerCase() === connect.AgentStateType.INIT && !!latestStatus) {
+                    stateToSet = latestStatus;
+                }
+                updateAgentStatus(stateToSet, agentStateList);
+                dispatch(updateUserStatus(stateToSet));
                 dispatch(addLiveAgentStatus({
-                    status:agentStateChange.newState,
+                    status: stateToSet,
                     userId: user.id,
                     timestamp: new Date()
                 }));
@@ -368,13 +368,20 @@ const Ccp: React.FC<BoxProps> = ({
 
                 setIsBottomBarVisible(numberOfChats > 0 || numberOfVoices > 0);
             });
-            window.addEventListener('beforeunload', () => beforeUnload());
         });
+    }, []);
 
+    useEffect(() => {
+        const beforeUnload = () => {
+            setLatestStatus(currentUserStatus);
+            updateAgentStatus(UserStatus.Offline, agentStates);
+            dispatch(clearCCPContext());
+        };
+        window.addEventListener('beforeunload', () => beforeUnload());
         return () => {
             window.removeEventListener('beforeunload', () => beforeUnload());
         }
-    }, [])
+    }, [currentUserStatus]);
 
     useEffect(() => {
         return initCCP();

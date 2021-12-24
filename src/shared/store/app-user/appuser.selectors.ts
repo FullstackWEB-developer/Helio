@@ -4,13 +4,17 @@ import {UserStatus} from './app-user.models';
 import {AgentState} from '@shared/models/agent-state';
 import {LiveAgentStatusInfo} from '@shared/models/live-agent-status-info.model';
 import {UserDetail} from '@shared/models';
-import StatusDotLabel from '@components/status-dot-label';
 
 export const appUserState = (state: RootState) => state.appUserState
 
 export const authenticationSelector = createSelector(
     appUserState,
     state => state.auth
+)
+
+export const userNameSelector = createSelector(
+    appUserState,
+    state => state.auth?.username as string
 )
 
 export const userFullNameSelector = createSelector(

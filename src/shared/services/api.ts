@@ -9,6 +9,7 @@ import utils from '@shared/utils/utils';
 import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
 import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
 import i18n from "i18next";
+import dayjs from 'dayjs';
 
 const logger = Logger.getInstance();
 const Api = axios.create({
@@ -45,9 +46,15 @@ export const refreshAccessToken = async () => {
         if (account) {
 
             try {
+                let forceRefresh = false;
+                const auth = store.getState()?.appUserState?.auth;
+                if(auth && auth.expiresOn && dayjs(auth.expiresOn) < dayjs().add(30, 'minutes')) {
+                    forceRefresh = true;
+                }
                 const response = await getMsalInstance()?.acquireTokenSilent({
                     ...loginRequest,
-                    account: account
+                    account: account,
+                    forceRefresh
                 });
 
                 if (response) {

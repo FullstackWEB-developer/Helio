@@ -7,7 +7,7 @@ import {Ticket} from '@pages/tickets/models/ticket';
 import {TicketBase} from '@pages/tickets/models/ticket-base';
 import {createTicket} from '@pages/tickets/services/tickets.service';
 import {ChannelTypes, ContactExtended, ContactType, PagedList, Paging} from '@shared/models';
-import {authenticationSelector} from '@shared/store/app-user/appuser.selectors';
+import {userNameSelector} from '@shared/store/app-user/appuser.selectors';
 import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
 import utils from '@shared/utils/utils';
 import {useState} from 'react';
@@ -31,7 +31,7 @@ interface SmsNewMessageExistingTicketProps {
 const SmsNewMessageExistingTicket = ({tickets, patient, contact, ...props}: SmsNewMessageExistingTicketProps) => {
     const {t} = useTranslation();
     const dispatch = useDispatch();
-    const {username} = useSelector(authenticationSelector);
+    const username = useSelector(userNameSelector);
 
     const [isTicketListVisible, setTicketListVisible] = useState(true);
     const [ticketTypeSelected, setTicketTypeSelected] = useState<string>();
