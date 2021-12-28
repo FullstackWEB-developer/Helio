@@ -6,7 +6,11 @@ import BotContext from './bot-context';
 import NoteContext from './note-context';
 import contextPanels from '../models/context-panels';
 import { Suggestions } from '../models/suggestions';
-import {selectBotContext, selectContextPanel} from '../store/ccp.selectors';
+import {
+    selectBotContext,
+    selectContextPanel,
+    selectHasActiveContact,
+} from '../store/ccp.selectors';
 import SmsContext from '@pages/ccp/components/sms-context';
 import CcpScripts from '@pages/ccp/components/ccp-scripts';
 import {selectPatientInCollectionsBalance} from '@pages/patients/store/patients.selectors';
@@ -15,6 +19,7 @@ import SvgIcon, {Icon} from '@components/svg-icon';
 
 const CcpContext = () => {
     const context = useSelector(selectContextPanel);
+    const hasActiveContact = useSelector(selectHasActiveContact);
     const { t } = useTranslation();
     const patientInCollectionsBalance = useSelector(selectPatientInCollectionsBalance);
     const botContext = useSelector(selectBotContext);
@@ -72,13 +77,16 @@ const CcpContext = () => {
 
     const renderFooter = () => {
         const suggestion = suggestions[context as keyof Suggestions]
+        if (!suggestion) {
+            return null;
+        }
         return <>
             {
                 suggestion.map((s, index) => <span key={index} className={'body2 pl-6'}>{s}</span>)
             }
         </>
     }
-    return (context ?
+    return ((context && hasActiveContact) ?
         <div className={'ccp-context flex flex-col'}>
             <div className={'ccp-header'} />
             <div className={'ccp-main-content flex-grow bg-white border-l overflow-y-auto'}>
