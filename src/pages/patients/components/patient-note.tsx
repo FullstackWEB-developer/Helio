@@ -16,7 +16,7 @@ const PatientNote: React.FC<PatientNoteProps> = ({ note, id }) => {
             <div data-test-id={'patient-note-date-' + id}
                  className='body3-medium'>{dayjs(note.date).format(format)}</div>
             <div data-test-id={'patient-note-username-' + id}
-                 className='w-36 justify-end flex truncate  body3-medium'>{note.userDisplayName}</div>
+                 className='justify-end flex truncate  body3-medium'>{note.userDisplayName}</div>
         </div>
         <div data-test-id={'patient-note-text-' + id} className='py-2 body2 whitespace-pre-wrap'>{note.text}</div>
     </div>;
