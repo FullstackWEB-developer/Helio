@@ -33,7 +33,7 @@ const ClinicalMedications = ({clinical} : ClinicalLabResults) => {
                 title:'patient.clinical.medications.prescribed',
                 widthClass:'w-3/12',
                 field:'prescribed',
-                render:(field) => <div className='body2 h-full flex'>{dayjs(field).format('MMM DD, YYYY')}</div>
+                render:(field) => <div className='body2 h-full flex'>{!!field ? dayjs(field).format('MMM DD, YYYY') : t('common.not_available')}</div>
             }
         ]
     }

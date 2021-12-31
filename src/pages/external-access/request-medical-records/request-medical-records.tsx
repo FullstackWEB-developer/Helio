@@ -51,7 +51,7 @@ const RequestMedicalRecords = () => {
     const [jobInformation, setJobInformation] = useState<AsyncJobInfo>();
     const [isLoading, setLoading] = useState<boolean>(false);
     const [downloadRequestId, setDownloadRequestId] = useState<string>('');
-    const [displayConfirmation, setDisplayConfirmation] = useState<boolean>(false);
+    const [displayConfirmationMessage, setDisplayConfirmationMessage] = useState<string>();
     const verifyLink = useSelector(selectRedirectLink);
     const dispatch = useDispatch();
     const {control, formState, getValues, watch} = useForm({
@@ -191,13 +191,14 @@ const RequestMedicalRecords = () => {
                 message: 'external_access.medical_records_request.file_downloaded',
                 type: SnackbarType.Success
             }));
-            setDisplayConfirmation(true);
+            setDisplayConfirmationMessage("external_access.medical_records_request.close_window_description");
         }
         if (requestType === RequestType.Share) {
             dispatch(addSnackbarMessage({
                 message: 'external_access.medical_records_request.email_sent_successfully',
                 type: SnackbarType.Success
             }));
+            setDisplayConfirmationMessage("external_access.medical_records_request.close_window_after_sent_description");
         }
     }
 
@@ -316,11 +317,11 @@ const RequestMedicalRecords = () => {
             </Tabs>
         </div>
         <Confirmation title='external_access.medical_records_request.close_window_title'
-                      onOk={() => setDisplayConfirmation(false)}
-                      onClose={() => setDisplayConfirmation(false)}
-                      isOpen={displayConfirmation}
+                      onOk={() => setDisplayConfirmationMessage('')}
+                      onClose={() => setDisplayConfirmationMessage('')}
+                      isOpen={!!displayConfirmationMessage}
                       displayCancel={false}
-                      message='external_access.medical_records_request.close_window_description'
+                      message={displayConfirmationMessage}
         />
     </div>
 }

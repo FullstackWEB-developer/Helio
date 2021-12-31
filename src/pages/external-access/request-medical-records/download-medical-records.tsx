@@ -17,6 +17,7 @@ import {
 } from '@pages/external-access/verify-patient/store/verify-patient.selectors';
 import {VerifiedPatient} from '@pages/patients/models/verified-patient';
 import GetExternalUserHeader from '@pages/external-access/verify-patient/get-external-user-header';
+import {INPUT_DATE_FORMAT} from '@constants/form-constants';
 
 const DownloadMedicalRecords = () => {
     const {t} = useTranslation();
@@ -87,20 +88,18 @@ const DownloadMedicalRecords = () => {
             <div>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className='pb-6'>
-                       <ControlledDateInput
-                                type='date'
-                                longDateFormat={false}
-                                isCalendarDisabled
-                                required={true}
-                                errorMessage={formState.errors?.dob && formState.errors?.dob?.type === "required" &&
-                                    t('external_access.invalid_dob', {'format' : utils.getBrowserDatePattern()})}
-                                label='external_access.download_medical_records.date_of_birth'
-                                assistiveText={utils.getBrowserDatePattern()}
-                                control={control}
-                                name='dob'
-                                className='w-full md:w-88'
-                                max={new Date(new Date().toDateString())}
-                                dataTestId='hipaa-dob'/>
+                        <ControlledInput
+                            type='date'
+                            required={true}
+                            errorMessage={formState.errors?.dob && formState.errors?.dob?.type === "required" &&
+                                t('external_access.invalid_dob', {'format': INPUT_DATE_FORMAT })}
+                            invalidErrorMessage={t('external_access.invalid_dob', {'format': INPUT_DATE_FORMAT })}
+                            label='external_access.download_medical_records.date_of_birth'
+                            assistiveText={INPUT_DATE_FORMAT}
+                            control={control}
+                            name='dob'
+                            className='w-full md:w-88'
+                            dataTestId='hipaa-dob' />
                             <ControlledInput
                                 type='tel'
                                 defaultValue=''
