@@ -11,6 +11,8 @@ import {selectPatient} from '@pages/patients/store/patients.selectors';
 import {useTranslation} from 'react-i18next';
 import {Icon} from '@components/svg-icon/icon';
 import utc from 'dayjs/plugin/utc'
+import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
+import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
 
 const PatientAddNote = () => {
     dayjs.extend(utc);
@@ -27,6 +29,12 @@ const PatientAddNote = () => {
                 notes: [variables.note, ...patient.notes]
             }
             dispatch(setPatient(newPatient));
+        },
+        onError:()=> {
+            dispatch(addSnackbarMessage({
+                type: SnackbarType.Error,
+                message: 'patient.activity.notes.note_add_error'
+            }));
         }
     });
 
@@ -44,7 +52,6 @@ const PatientAddNote = () => {
         }
     }
     return <>
-        {mutation.isError && <div>{t('patient.activity.notes.note_add_error')}</div>}
         <div className='flex flex-row border-t w-full'>
             <TextArea
                 className='body2 w-full'

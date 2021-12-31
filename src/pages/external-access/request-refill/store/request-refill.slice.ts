@@ -39,6 +39,12 @@ const requestRefillSlice = createSlice({
             state.isRequestRefillRequestCompleted = true;
             state.error = payload;
         },
+        addRefillRequestedMedication(state, {payload}: PayloadAction<string>) {
+            if (!state.refillRequestedMedicationNames) {
+                state.refillRequestedMedicationNames = [];
+            }
+            state.refillRequestedMedicationNames.push(payload);
+        }
     }
 });
 
@@ -49,7 +55,8 @@ export const {
     setMedications,
     startRequestRefillRequest,
     endRequestRefillRequest,
-    clearRequestRefillState
+    clearRequestRefillState,
+    addRefillRequestedMedication
 } = requestRefillSlice.actions;
 
 export default requestRefillSlice.reducer;

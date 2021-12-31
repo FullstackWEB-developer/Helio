@@ -43,6 +43,9 @@ import {DEBOUNCE_SEARCH_DELAY_MS} from '@constants/form-constants';
 import {Facility} from '@pages/external-access/request-refill/models/facility.model';
 import Spinner from '@components/spinner/Spinner';
 import Checkbox, {CheckboxCheckEvent} from '@components/checkbox/checkbox';
+import {addRefillRequestedMedication} from './store/request-refill.slice';
+import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
+import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
 
 const RequestRefill = () => {
     const {t} = useTranslation();
@@ -224,6 +227,13 @@ const RequestRefill = () => {
         onSuccess: () => {
             setMessageText('');
             history.push('/o/request-refill-confirmation');
+        },
+        onError: (err: any) => {
+            console.log(err);
+            dispatch(addSnackbarMessage({
+                type: SnackbarType.Error,
+                message: 'external_access.message_send_failed'
+            }))
         }
     });
 
@@ -299,6 +309,10 @@ const RequestRefill = () => {
                 ignoreNotification: false,
                 documentSubClass: PatientCaseDocumentSubClass.Refill,
                 documentSource: PatientCaseDocumentSource.Patient
+            }
+        }, {
+            onSuccess: () => {
+                dispatch(addRefillRequestedMedication(data.medication));
             }
         });
     }
@@ -485,11 +499,6 @@ const RequestRefill = () => {
                 <div className={`flex justify-start items-center full-w mt-8 ${getMarginBottom()}`}>
                     <Button type='submit' isLoading={isLoading} buttonType='big' label={t('common.send')} disabled={isLoading} />
                 </div>
-                {
-                    isError && <div className='text-danger'>
-                        {t('external_access.message_send_failed')}
-                    </div>
-                }
             </form>
         </div>
 

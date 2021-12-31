@@ -7,6 +7,7 @@ export interface RequestRefillState {
     medication?: Medication;
     medications: Medication[];
     error?: string;
+    refillRequestedMedicationNames: string[];
 }
 
 const initialRequestRefillState: RequestRefillState = {
@@ -16,6 +17,7 @@ const initialRequestRefillState: RequestRefillState = {
     isRequestRefillLoading: false,
     error: '',
     isRequestRefillRequestCompleted: false,
+    refillRequestedMedicationNames: []
 }
 
 export default initialRequestRefillState;

@@ -885,6 +885,7 @@
         "stop_date": "Stop Date",
         "request_refill": "Request Refill",
         "refill_not_available": "Refill Not Available",
+        "refill_requested": "Refill Request Submitted",
         "new_prescription_needed": "New Prescription Needed",
         "you_ran_out": "You ran out of refills and need to see a provider for new prescription.",
         "schedule_appointment_online": "Schedule appointment online",
