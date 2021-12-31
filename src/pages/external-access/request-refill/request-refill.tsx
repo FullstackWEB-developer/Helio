@@ -395,7 +395,7 @@ const RequestRefill = () => {
                             className='pl-4 pt-2 pb-11 pr-8 body2 w-full h-full rounded'
                             data-test-id='send-us-message-text'
                             placeHolder={t('common.enter_message')}
-                            required={true}
+                            required={false}
                             rows={2}
                             resizable={false}
                             value={messageText}
@@ -483,7 +483,7 @@ const RequestRefill = () => {
                     </div>}
                 </div>
                 <div className={`flex justify-start items-center full-w mt-8 ${getMarginBottom()}`}>
-                    <Button type='submit' isLoading={isLoading} buttonType='big' label={t('common.send')} disabled={!messageText || isLoading} />
+                    <Button type='submit' isLoading={isLoading} buttonType='big' label={t('common.send')} disabled={isLoading} />
                 </div>
                 {
                     isError && <div className='text-danger'>
