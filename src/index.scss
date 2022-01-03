@@ -60,3 +60,7 @@
 ::-webkit-scrollbar-thumb:hover {
     background: var(--color-secondary-500);
 }
+
+body {
+    touch-action: pan-y;
+}
