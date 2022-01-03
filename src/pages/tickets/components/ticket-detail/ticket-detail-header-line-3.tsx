@@ -437,13 +437,6 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
                     </div>
                 }
                 {
-                    canSendSms() && <div className='flex flex-row items-center pl-6 cursor-pointer'>
-                        <SvgIcon type={Icon.ChannelSms} className='icon-x-large' fillClass='header-active-item-icon'
-                                 strokeClass='channel-icon-stroke'/>
-                        <div className='pl-3 pr-2'>{t('ticket_detail.header.send_sms')}</div>
-                    </div>
-                }
-                {
                     // PLEASE DON'T DELETE THIS
                     // (patient?.emailAddress) && <div className='flex flex-row items-center pl-6 cursor-pointer'>
                     //     <SvgIcon type={Icon.ChannelEmail} className='icon-x-large' fillClass='header-active-item-icon'

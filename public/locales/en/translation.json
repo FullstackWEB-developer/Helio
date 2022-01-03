@@ -364,6 +364,7 @@
       "status": "Status: ",
       "error": "Error fetching summary data, please try again",
       "update_error": "Patient contact information could not be updated. Please try again later.",
+      "update_success": "Patient contact information updated successfully",
       "profile_pic_alt_text": "Picture of patient"
     },
     "contact_preference": {

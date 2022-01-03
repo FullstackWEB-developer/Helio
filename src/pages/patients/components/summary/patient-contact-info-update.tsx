@@ -17,6 +17,8 @@ import {selectStates} from '@shared/store/lookups/lookups.selectors';
 import {updatePatientContactInformation} from '@pages/patients/services/patients.service';
 import {setPatient} from '@pages/patients/store/patients.slice';
 import ControlledInput from '@components/controllers/ControlledInput';
+import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
+import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
 
 export interface PatientInformationUpdateProps
 {
@@ -64,7 +66,7 @@ const PatientContactInfoUpdate = ({onUpdateComplete} : PatientInformationUpdateP
             state: patient.state,
             zip: patient.zip,
             consentToText: patient.consentToText.toString(),
-            email: patient.emailAddress
+            email: patient.emailAddress.toLowerCase()
         } as PatientUpdateModel
     });
 
@@ -72,7 +74,23 @@ const PatientContactInfoUpdate = ({onUpdateComplete} : PatientInformationUpdateP
     const watchContactPreference: string = watch('contactPreference');
 
     const onSubmit = (values: PatientUpdateModel) => {
-        updatePatientContactInfoMutation.mutate({patientId: patient.patientId, data: values});
+        updatePatientContactInfoMutation.mutate({patientId: patient.patientId, data: {
+            ...values,
+            email: values.email.toLowerCase()
+            }}, {
+            onSuccess: () => {
+                dispatch(addSnackbarMessage({
+                    type:SnackbarType.Success,
+                    message: 'patient.summary.update_success'
+                }));
+            },
+            onError: () => {
+                dispatch(addSnackbarMessage(({
+                    type: SnackbarType.Error,
+                    message: 'patient.summary.update_error'
+                })));
+            }
+        });
     }
 
     const getStatesOptions = () : Option[] => {
@@ -110,9 +128,6 @@ const PatientContactInfoUpdate = ({onUpdateComplete} : PatientInformationUpdateP
 
     return (
         <div>
-            {updatePatientContactInfoMutation.isError && <div className='text-danger'>
-                {t('patient.summary.update_error')}
-            </div>}
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className='grid grid-cols-1 lg:grid-cols-12'>
                     <div className='col-span-12 lg:col-span-5 pt-4'>
