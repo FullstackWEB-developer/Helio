@@ -90,9 +90,11 @@ const TicketListItem = ({item}: TicketListItemProps) => {
             </Link>
         </div>
         <div className={classnames('w-2/12 max-w-xs truncate', {'subtitle2': !!item.subject, 'body2': !item.subject})}>
+            <div className='ml-2'>
             <Link to={getTicketPath()}>
                 <span>{item.subject ? item.subject : t('tickets.no_subject')}</span>
             </Link>
+            </div>
         </div>
         <div className='w-1/12 body3'>
             <Link to={getTicketPath()}>

@@ -54,6 +54,7 @@ const PatientContactInfoUpdate = ({onUpdateComplete} : PatientInformationUpdateP
     });
 
     const {handleSubmit, control, errors, watch,
+        clearErrors,
         formState: { isDirty },} = useForm({
         mode: 'onBlur',
         defaultValues: {
@@ -125,6 +126,19 @@ const PatientContactInfoUpdate = ({onUpdateComplete} : PatientInformationUpdateP
             label: 'patient.contact_preference.portal'
         }
     ];
+
+    const contactPreferenceUpdated = (option: Option) => {
+        if (option) {
+            if (option.value === "MOBILEPHONE") {
+                clearErrors('homePhone');
+            } else if (option.value === "HOMEPHONE") {
+                clearErrors('mobilePhone');
+            } else {
+                clearErrors('mobilePhone');
+                clearErrors('homePhone');
+            }
+        }
+    }
 
     return (
         <div>
@@ -202,7 +216,8 @@ const PatientContactInfoUpdate = ({onUpdateComplete} : PatientInformationUpdateP
                                     onSelect={(option?: Option)=>{
                                         if(option){
                                             props.onChange(option.value);
-                                        }                                    
+                                            contactPreferenceUpdated(option);
+                                        }
                                     }}
                                 />
                             )}

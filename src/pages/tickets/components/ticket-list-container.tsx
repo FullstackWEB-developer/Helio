@@ -42,7 +42,7 @@ const TicketListContainer = ({dataSource}: TicketListContainerProps) => {
                 >
                     {t('tickets.id')}
                 </TicketListHeaderCell>
-                <TicketListHeaderCell className='w-2/12'>{t('tickets.subject')}</TicketListHeaderCell>
+                <TicketListHeaderCell className='w-2/12'><div className='ml-2'>{t('tickets.subject')}</div></TicketListHeaderCell>
                 <TicketListHeaderCell
                     className='w-1/12'
                     field={'DueDate'}

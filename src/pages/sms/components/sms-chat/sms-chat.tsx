@@ -136,7 +136,7 @@ const SmsChat = ({info, isLoading, isSending, isBottomFocus, messages = [], last
 
     return (<div className="flex flex-col justify-between flex-auto h-full sms-chat">
         <SmsHeader info={info} forNewTicketMessagePurpose={false} patientPhoto={patientPhoto} />
-        <div className="flex flex-col flex-1 px-6 overflow-y-auto">
+        <div className="flex flex-col flex-1 pl-6 overflow-y-auto">
             {messages && messages.length > 0 &&
                 <>
                     <div className={classnames('flex flex-row justify-center', {'hidden': !isLoading})}>

@@ -60,11 +60,11 @@ const TicketDetailPatientInfo = ({ticket, patient, control, isPatientCaseNumberL
                                 {t('ticket_detail.info_panel.patient_id')}
                             </dt>
                             <dd className='body2 flex flex-row'>
-                                <span className='py-1'>{ticket?.patientId}</span>
+                                <span className='py-1 pr-2'>{ticket?.patientId}</span>
                                 <Link to={'/patients/' + ticket.patientId}>
                                 <SvgIcon type={Icon.PatientChart}
-                                    className='icon-medium h-8 w-8 pl-2 cursor-pointer'
-                                    fillClass='active-item-icon'/>
+                                    className='icon-medium'
+                                    fillClass='success-icon'/>
                                 </Link>
                             </dd>
                         </div>

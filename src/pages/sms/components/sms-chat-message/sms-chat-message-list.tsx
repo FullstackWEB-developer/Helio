@@ -31,7 +31,7 @@ const SmsChatMessageList = ({messages, patientPhoto}: MessageListProps) => {
         const line = (
             <HorizontalLine
                 text={messageRelativeTimeFormat(dayjs.utc(key).local())}
-                wrapperClassName="py-6"
+                wrapperClassName="py-6 pr-6"
             />
         );
         const messagesComp = value.map((item) => {
