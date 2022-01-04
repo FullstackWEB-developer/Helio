@@ -39,10 +39,20 @@ const getName = (props: SmsChatMessageProps, t: TFunction) => {
         return utils.applyPhoneMask(props.name);
     }
     else {
-        return props.name;
+        return TitleCase(props.name);
     }
 }
 
+const TitleCase = (input: string) => {
+    if (!input) {
+        return '';
+    }
+    let str = input.toLowerCase().split(' ');
+    for (let i = 0; i < str.length; i++) {
+        str[i] = str[i].charAt(0).toUpperCase() + str[i].slice(1);
+    }
+    return str.join(' ');
+}
 
 
 const SmsChatMessageAvatar = ({name, photoUrl, patientPhoto}: {name: string, photoUrl?: string, patientPhoto?: string}) => {
