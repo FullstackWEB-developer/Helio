@@ -3,6 +3,7 @@ import classnames from 'classnames';
 import {TicketMessageSummary} from '@shared/models';
 import Spinner from '@components/spinner/Spinner';
 import utils from '@shared/utils/utils';
+import dayjs from 'dayjs';
 
 interface SmsSummaryListProps {
     className?: string;
@@ -31,7 +32,7 @@ const SmsSummaryList = ({data, className, isLoading, selectedTicketId, searchTer
     >
         <>
             {
-                data.map(p =>
+                data.sort((a, b) => dayjs.utc(b.messageCreatedOn).valueOf() - dayjs.utc(a.messageCreatedOn).valueOf()).map(p =>
                     <SmsChatSummary
                         patientId={p.patientId}
                         contactId={p.contactId}

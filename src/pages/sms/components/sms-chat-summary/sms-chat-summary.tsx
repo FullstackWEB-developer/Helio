@@ -92,7 +92,7 @@ const SmsChatSummary = ({
             </div>
             <div className="flex flex-col w-full">
                 <div className="flex justify-between">
-                    <span className='body1'>
+                    <span className='body1 w-4/6'>
                         <HighlighterText text={createdForName ? createdForName : createdForMobileNumber} highlighterText={searchTerm} />
                     </span>
                     <span className='body3-small'>{getDate()}</span>

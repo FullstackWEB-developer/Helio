@@ -30,7 +30,7 @@ import useDebounce from '@shared/hooks/useDebounce';
 import {selectAppUserDetails, selectUnreadSMSList} from '@shared/store/app-user/appuser.selectors';
 import {SmsFilterParamModel} from './components/sms-filter/sms-filter.model';
 import utils from '@shared/utils/utils';
-import {setAssignee} from '@pages/tickets/services/tickets.service';
+import {getTicketById, setAssignee} from '@pages/tickets/services/tickets.service';
 import {TicketBase} from '@pages/tickets/models/ticket-base';
 import {SmsNotificationData, SmsQueryType} from '@pages/sms/models';
 import {DEFAULT_FILTER_VALUE, DEFAULT_MESSAGE_QUERY_PARAMS} from './constants';
@@ -43,7 +43,6 @@ import {useHistory, useLocation, useParams} from 'react-router';
 import {SmsPath} from '@app/paths';
 import useCheckPermission from '@shared/hooks/useCheckPermission';
 import {ExtendedPatient} from '@pages/patients/models/extended-patient';
-
 interface SmsLocationState {
     contact?: ContactExtended,
     patient?: ExtendedPatient
@@ -89,17 +88,40 @@ const Sms = () => {
         }
     });
 
+    const {refetch: fetchTicket, isFetching: isTicketFetching} = useQuery(["Query", ticketId], () => getTicketById(ticketId!), {
+        enabled: false,
+        onSuccess: (ticket) => {
+            const summary = createSummaryFromTicket(ticket);
+            setSelectedTicketSummary(summary);
+        }
+    });
+
     const {refetch: ticketSummaryRefetch, isFetching: isTicketSummaryFetching} = useQuery([QueryTicketMessageSummaryByTicketId, ticketId],
         () => getChats({ticketId: ticketId, channel: ChannelTypes.SMS}), {
         enabled: false,
-        onSuccess: (response) => {
+        onSuccess: async (response) => {
             if (response.results.length > 0) {
                 const summary = {...response.results[0]};
                 setSelectedTicketSummary(summary);
                 removeUnreadCount(summary);
+            } else if (response.results.length === 0) {
+                //Switching to new message, need to fetch ticket again
+                fetchTicket().then()
             }
         }
     });
+
+    useEffect(() =>{
+        if (!summaryMessages || summaryMessages.length === 0 || !unreadSMSList || unreadSMSList.length === 0) {
+            return;
+        }
+        unreadSMSList.forEach(unreadId => {
+            const unreadSummary = summaryMessages.find(a => a.ticketId === unreadId);
+            if (unreadSummary && unreadSummary.unreadCount === 0) {
+                dispatch(removeUnreadSMSMessageForList(unreadId));
+            }
+        })
+    }, [summaryMessages]);
 
     useEffect(() => {
         if (!ticketId && !smsQueryType) {
@@ -150,7 +172,7 @@ const Sms = () => {
         dispatch(removeUnreadSMSMessageForList(summary.ticketId));
     }
 
-    const modifySummaryMessage = (ticketId: string, unreadCountIncrease?: number, messageSummaryBody?: string) => {
+    const modifySummaryMessage = (ticketId: string, unreadCountIncrease?: number, messageSummaryBody?: string, messageCreatedOn?: Date, unreadCount?: number) => {
         const messageIndex = summaryMessages.findIndex(p => p.ticketId === ticketId);
         if (messageIndex < 0) {
             return;
@@ -162,8 +184,15 @@ const Sms = () => {
             currentSummaryMessage.unreadCount = unreadCountIncrease > 0 ? currentSummaryMessage.unreadCount + unreadCountIncrease : unreadCountIncrease;
         }
 
+        if (unreadCount) {
+            currentSummaryMessage.unreadCount = unreadCount;
+        }
+
         if (messageSummaryBody) {
             currentSummaryMessage.messageSummary = messageSummaryTruncate(messageSummaryBody);
+        }
+        if (messageCreatedOn) {
+            currentSummaryMessage.messageCreatedOn = messageCreatedOn
         }
         setSummaryMessages(currentSummaryMessagesClone);
     }
@@ -187,7 +216,7 @@ const Sms = () => {
         onSuccess: (response) => {
             response.createdOn = dayjs().utc().local().toDate();
             pushMessage(response);
-            modifySummaryMessage(response.ticketId, undefined, response.body);
+            modifySummaryMessage(response.ticketId, undefined, response.body, response.createdOn);
             setLastMessageSendTime(response.createdOn);
         }
     });
@@ -276,6 +305,7 @@ const Sms = () => {
 
     const onMessageListClick = (summary: TicketMessageSummary) => {
         if (summary.ticketId !== selectedTicketSummary?.ticketId) {
+            modifySummaryMessage(summary.ticketId, undefined, undefined, undefined, 0);
             setIsNewSmsChat(false);
             history.replace(`${SmsPath}/${summary.ticketId}`)
         }
@@ -337,7 +367,7 @@ const Sms = () => {
         setFilterParam(value);
     }
 
-    const onOpenNewChat = (ticket: TicketBase) => {
+    const createSummaryFromTicket = (ticket: TicketBase) => {
         const summary: TicketMessageSummary = {
             ticketId: ticket.id,
             ticketNumber: ticket.ticketNumber,
@@ -353,7 +383,11 @@ const Sms = () => {
             messageCreatedByName: fullName,
             createdForMobileNumber: ''
         };
+        return summary;
+    }
 
+    const onOpenNewChat = (ticket: TicketBase) => {
+        const summary = createSummaryFromTicket(ticket);
         setMessages([]);
 
         setSummaryMessages([summary, ...summaryMessages]);
@@ -373,12 +407,15 @@ const Sms = () => {
         if (isTicketSummaryFetching) {
             return (<Spinner fullScreen />);
         }
+        if (isTicketFetching) {
+            return (<Spinner fullScreen />);
+        }
         if (selectedTicketSummary) {
             return (
                 <SmsChat
                     info={selectedTicketSummary}
                     messages={messages}
-                    isLoading={isMessageQueryFetchingNextPage}
+                    isLoading={isMessageQueryFetchingNextPage || isTicketFetching}
                     isSending={sendMessageMutation.isLoading}
                     isBottomFocus={sendMessageMutation.isLoading || !!newMessageId}
                     onSendClick={onSendMessage}
