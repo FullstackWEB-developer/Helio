@@ -12,7 +12,7 @@ export interface CountdownTimerProps {
 
 const CountdownTimer = ({onTimerEnd, type}: CountdownTimerProps) => {
     dayjs.extend(duration);
-    const WallboardRefreshIntervalInMinutes = 1;
+    const WallboardRefreshIntervalInSeconds = 1;
     const DashboardRefreshIntervalInMinutes = 3;
     const {t} = useTranslation();
     const [interval, setInterval] = useState<number>(DashboardRefreshIntervalInMinutes * 60);
@@ -35,7 +35,7 @@ const CountdownTimer = ({onTimerEnd, type}: CountdownTimerProps) => {
     });
 
     useEffect(() => {
-        const newInterval = type === DashboardTypes.wallboard ? WallboardRefreshIntervalInMinutes * 60 : DashboardRefreshIntervalInMinutes * 60;
+        const newInterval = type === DashboardTypes.wallboard ? WallboardRefreshIntervalInSeconds : DashboardRefreshIntervalInMinutes * 60;
         setInterval(newInterval);
         setLeftSeconds(newInterval);
     }, [type]);
@@ -58,6 +58,9 @@ const CountdownTimer = ({onTimerEnd, type}: CountdownTimerProps) => {
     const messageClass = classnames('body2-medium', {
         'pt-8': type === DashboardTypes.wallboard
     });
+    if (type === DashboardTypes.wallboard) {
+        return <div/>;
+    }
     return <div className={messageClass}>{t(`${displayMessage()}`, {time: getTimeLeft()})}</div>
 }
 

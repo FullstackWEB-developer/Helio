@@ -57,17 +57,14 @@ export interface PerformanceTodayProps {
 const PerformanceToday = ({lastUpdateTime}: PerformanceTodayProps) => {
     const {t} = useTranslation();
 
-    const {data, isLoading, refetch, isFetching} = useQuery<PerformanceMetric[], Error>([GetTodaysPerformanceMetricsRequest], () => GetTodaysPerformanceMetrics());
+    const {data, refetch} = useQuery<PerformanceMetric[], Error>([GetTodaysPerformanceMetricsRequest], () => GetTodaysPerformanceMetrics());
 
     useEffect(() => {
         refetch().then();
     }, [lastUpdateTime, refetch]);
 
-    const mainWrapperClassName =classnames({
-        'opacity-40' : isFetching || isLoading
-    });
 
-    return <div className={mainWrapperClassName}>
+    return <div>
         <Card>
             <Tabs asCard titleClass='pl-6' title={t('wallboard.performance_today.title')}>
                 <Tab title={t('wallboard.performance_today.call_tab_title')}>

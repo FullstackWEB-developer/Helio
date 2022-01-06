@@ -11,7 +11,6 @@ import Table from '@components/table/table';
 import Card from '@components/card/card';
 import dayjs from 'dayjs';
 import {MetricGrouping} from '@shared/models/metric-grouping.enum';
-import classnames from 'classnames';
 import utils from '@shared/utils/utils';
 import {getQueueStatus} from '@pages/tickets/services/tickets.service';
 
@@ -27,7 +26,7 @@ const RealTimeStatusTable = ({lastUpdateTime}:RealTimeStatusTableProps) => {
 
     const {t} = useTranslation();
     const [selectedMetricType, setSelectedMetricType] = useState(MetricType.Chat);
-    const {data, isLoading, refetch, isFetching} = useQuery<QueueMetric[], Error>([QueryQueueMetrics, selectedMetricType], () => getQueueStatus(
+    const {data, refetch, isFetching} = useQuery<QueueMetric[], Error>([QueryQueueMetrics, selectedMetricType], () => getQueueStatus(
         {
             grouping: selectedMetricType === MetricType.All ? MetricGrouping.Summary : MetricGrouping.ChannelAndQueue
         }
@@ -141,11 +140,7 @@ const RealTimeStatusTable = ({lastUpdateTime}:RealTimeStatusTableProps) => {
         headerClassName:'h-12',
     }
 
-    const mainWrapperClassName =classnames('pt-8', {
-        'opacity-40' : isFetching || isLoading
-    });
-
-    return <div className={mainWrapperClassName}>
+    return <div>
 
         <Card>
             <Tabs asCard titleClass='pl-6'  onSelect={(index)=> selectedMetricTypeChanged(index)} title={t('wallboard.realtime_status.title')}>
