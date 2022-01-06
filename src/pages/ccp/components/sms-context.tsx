@@ -117,8 +117,8 @@ const SmsContext = () => {
                         </div>
                         <div>
                             <Button buttonType='small' label='ccp.sms_context.send' onClick={sendSms}
-                                    disabled={!(!!botContext?.patient?.mobilePhone)}
-                                    isLoading={sendSmsMutation.isLoading || isProcessing}/>
+                                    disabled={(!(!!botContext?.patient?.mobilePhone)) || isProcessing}
+                                    isLoading={sendSmsMutation.isLoading}/>
                         </div>
                     </div>
                 </div>

@@ -135,14 +135,16 @@ const AgentStatusTable = () => {
         if (liveAgentStatuses && liveAgentStatuses.length > 0) {
             const statuses = [...new Set(liveAgentStatuses.filter((a: LiveAgentStatusInfo) => a.status !== selectedStatus.value).map((a: LiveAgentStatusInfo) => a.status?.toString()))] as string[];
             statuses.forEach((item:string) => {
-                statusOptions.push({
-                    value: item,
-                    label: item,
-                    object: {
+                if (!!item) {
+                    statusOptions.push({
                         value: item,
-                        label: item
-                    }
-                });
+                        label: item,
+                        object: {
+                            value: item,
+                            label: item
+                        }
+                    });
+                }
             })
         }
 

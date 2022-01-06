@@ -127,6 +127,9 @@ const Ccp: React.FC<BoxProps> = ({
             dispatch(setBotContextTicket({
                 ticket: data
             }));
+            if(data?.notes && data.notes.length > 0){
+                dispatch(setContextPanel(contextPanels.note));
+            }
         }
     });
 

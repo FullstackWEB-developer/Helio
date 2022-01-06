@@ -36,6 +36,9 @@ const ccpSlice = createSlice({
                 const currentBotContextIndex = state.botContexts.findIndex(a => a.initialContactId === payload.initialContactId);
                 const index = currentBotContextIndex > -1 ? currentBotContextIndex : state.botContexts.length;
                 state.botContexts[index] = payload;
+                if (currentBotContextIndex === -1 && !state.currentContactId) {
+                    state.currentContactId = payload.initialContactId;
+                }
             }
         },
         addNoteToTicket: (state, {payload}: PayloadAction<{ ticketId: string, note: TicketNote }>) => {
