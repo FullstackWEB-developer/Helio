@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import patientUtils from '../../../../pages/patients/utils/utils';
 import SvgIcon, {Icon} from '@components/svg-icon';
@@ -15,7 +15,6 @@ import {Patient} from '@pages/patients/models/patient';
 import Pagination from '@components/pagination/pagination';
 import {setSearchTermDisplayValue} from '../store/search-bar.slice';
 import {searchTypePatient} from '@components/search-bar/constants/search-type';
-
 
 const PatientSearchResults = () => {
     const {t} = useTranslation();
@@ -68,6 +67,18 @@ const PatientSearchResults = () => {
         }
     }
 
+    const shouldDisplayPhoneHint = useMemo(() =>
+    {
+        if (searchTypePatient.phone !== selectedType) {
+            return false;
+        }
+        const term = searchTerm.replace('(','')
+            .replace(')','')
+            .replace(' ','')
+            .replace('-','');
+        return term.length !== 10;
+    },[searchTerm, selectedType])
+
     return (
         <>
             <div className="p-6 flex justify-between items-center">
@@ -107,7 +118,7 @@ const PatientSearchResults = () => {
             {
                 isError && <>
                     <NoSearchResults />
-                    {searchTypePatient.phone === selectedType && <div className='pl-6 pt-8 body2-medium'>{t('search.search_by_phone_no_result')}</div>}
+                    {shouldDisplayPhoneHint && <div className='pl-6 pt-8 body2-medium whitespace-pre-line'>{t('search.search_by_phone_no_result')}</div>}
                     {searchTypePatient.dateOfBirth === selectedType && <div className='pl-6 pt-8 body2-medium'>{t('search.search_date_format_not_correct')}</div>}
                     {searchTypePatient.patientId === selectedType && <div className='pl-6 pt-8 body2-medium'>{t('search.search_by_patient_id_no_result')}</div>}
                     {searchTypePatient.patientName === selectedType && <div className='pl-6 pt-8 body2-medium whitespace-pre-line'>{t('search.search_by_patient_name_no_result')}</div>}

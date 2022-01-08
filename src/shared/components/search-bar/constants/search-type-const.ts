@@ -18,7 +18,7 @@ export const searchTypes: SearchType[] = [
     },
     {
         label: 'search.search_type.patient_id',
-        regex: '^\\d+$',
+        regex: '^[0-9]{1,8}$',
         type: searchTypePatient.patientId,
         priority: 2,
         category: SearchCategory.Patient

@@ -10,7 +10,6 @@ import WallboardBasicStatistic from '@pages/dashboard/components/wallboard/wallb
 import React, {useEffect, useState} from 'react';
 import {RealTimeStatusSummaryData} from '@pages/dashboard/models/real-time-status-summary-data.model';
 import utils from '@shared/utils/utils';
-import classnames from 'classnames';
 import dayjs from 'dayjs';
 import {getQueueStatus} from '@pages/tickets/services/tickets.service';
 
@@ -24,7 +23,7 @@ const RealtimeStatusSummary = ({lastUpdateTime}: RealtimeStatusSummaryProps) => 
     const [callStatistics, setCallStatistics] = useState<RealTimeStatusSummaryData>();
     const [chatStatistics, setChatStatistics] = useState<RealTimeStatusSummaryData>();
 
-    const {isLoading, refetch, isFetching} = useQuery<QueueMetric[], Error>([QueryQueueMetrics], () => getQueueStatus({
+    const {refetch} = useQuery<QueueMetric[], Error>([QueryQueueMetrics], () => getQueueStatus({
         grouping: MetricGrouping.Channel
     }), {
         enabled: false,
@@ -59,15 +58,12 @@ const RealtimeStatusSummary = ({lastUpdateTime}: RealtimeStatusSummaryProps) => 
         }
         return 0;
     }
-    const mainWrapperClassName =classnames({
-        'opacity-40' : isFetching || isLoading
-    });
 
     const formatTime = (time: number) => {
         return dayjs.duration(time, 'seconds').format('mm:ss');
     }
 
-    return <div className={mainWrapperClassName}>
+    return <div>
         <Card title={t('wallboard.realtime_status_summary.title')}>
                 <div className='flex flex-col'>
                     <div className='flex flex-col md:flex-row border-t'>
