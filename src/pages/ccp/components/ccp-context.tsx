@@ -16,6 +16,7 @@ import CcpScripts from '@pages/ccp/components/ccp-scripts';
 import {selectPatientInCollectionsBalance} from '@pages/patients/store/patients.selectors';
 import {ContextKeyValuePair} from '@pages/ccp/models/context-key-value-pair';
 import SvgIcon, {Icon} from '@components/svg-icon';
+import utils from '@shared/utils/utils';
 
 const CcpContext = () => {
     const context = useSelector(selectContextPanel);
@@ -35,6 +36,14 @@ const CcpContext = () => {
                 value: botContext?.reason
             }
         ] as ContextKeyValuePair[];
+
+        if (botContext?.patient) {
+            items.push({
+                label: 'ccp.bot_context.patient_name',
+                value: utils.stringJoin(' ', botContext.patient.firstName, botContext.patient.lastName)
+            });
+        }
+
         if (botContext?.isPregnant) {
             items.push({
                 label: 'ccp.bot_context.pregnancy',

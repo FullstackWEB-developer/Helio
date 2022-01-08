@@ -222,7 +222,8 @@
       "patient_in_collections": "Patient is in collections.",
       "patient_is_pregnant": "Patient is pregnant!",
       "pregnancy": "Pregnancy",
-      "patient_with_no_late_appointment": "No appointment in last 3 years"
+      "patient_with_no_late_appointment": "No appointment in last 3 years",
+      "patient_name": "Patient"
     },
     "note_context": {
       "header": "Add Note",
