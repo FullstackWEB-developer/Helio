@@ -9,7 +9,7 @@ const StatusBar = () => {
     const displayStatusBar = useSelector(selectIsStatusBarVisible);
 
     const content = <div className="flex flex-col w-72 border-l h-full">
-        <div>
+        <div className='queue-status-div overflow-y-auto'>
             <QueueStatusTabs/>
         </div>
         <div className='overflow-y-auto'>
