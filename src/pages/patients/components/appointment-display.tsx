@@ -28,7 +28,7 @@ const AppointmentDisplay = ({ appointment, border, isLast, isDetailed }: Appoint
     const department = useSelector((state: RootState) => selectDepartmentById(state, appointment.departmentId));
     const provider = useSelector((state: RootState) => selectProviderById(state, appointment.providerId));
     const [appointmentTypeName, setAppointmentTypeName] = useState<string>('');
-    useQuery<AppointmentType, AxiosError>([GetAppointmentType], () => getAppointmentTypeById(appointment.appointmentTypeId), {
+    useQuery<AppointmentType, AxiosError>([GetAppointmentType, appointment.appointmentTypeId], () => getAppointmentTypeById(appointment.appointmentTypeId), {
         enabled: !!appointment?.appointmentTypeId,
         cacheTime: 5 * OneMinute,
         staleTime: 0,

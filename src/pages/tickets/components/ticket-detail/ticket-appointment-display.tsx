@@ -26,7 +26,7 @@ const TicketAppointmentDisplay = ({appointment}: AppointmentDisplayProps) => {
                 {utils.formatUtcDate(appointment.date, 'MMM, DD, YYYY')}
             </div>
             <div className='body2'>
-                {utils.formatUtcDate(appointment.startDateTime, '[at] h:mm A')}
+                {dayjs.utc(appointment.startTime, 'HH:mm').format('[at] h:mm A')}
             </div>
         </div>
         <div className='subtitle2'>{appointment.patientAppointmentTypeName}</div>
