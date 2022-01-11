@@ -73,9 +73,9 @@ const PatientSearchResults = () => {
             return false;
         }
         const term = searchTerm.replace('(','')
-            .replace(')','')
-            .replace(' ','')
-            .replace('-','');
+            .replaceAll(')','')
+            .replaceAll(' ','')
+            .replaceAll('-','');
         return term.length !== 10;
     },[searchTerm, selectedType])
 
