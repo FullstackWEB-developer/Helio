@@ -1,16 +1,17 @@
 import {useDispatch, useSelector} from 'react-redux';
-import {useEffect, useRef} from 'react';
+import {useEffect} from 'react';
 import {getLookupValues} from '@pages/tickets/services/tickets.service';
 import {selectLookupValues} from '@pages/tickets/store/tickets.selectors';
 import Spinner from '@components/spinner/Spinner';
 import {useTranslation} from 'react-i18next';
 import './ccp-scripts.scss';
+import {selectCurrentContactId} from '@pages/ccp/store/ccp.selectors';
 const CcpScripts = () => {
 
     const dispatch = useDispatch();
     const suggestedTexts = useSelector(state => selectLookupValues(state, 'SuggestedText'));
+    const currentContactId = useSelector(selectCurrentContactId);
     const {t} = useTranslation();
-    const controllerRef = useRef();
 
     useEffect(() => {
         dispatch(getLookupValues('SuggestedText'));
@@ -21,14 +22,18 @@ const CcpScripts = () => {
     }
 
     const onMessageClick = async (message: string) => {
-        const contact = window.CCP.contact as connect.Contact;
-        const connection = contact.getAgentConnection();
-        if (connection instanceof connect.ChatConnection) {
-            if (!controllerRef?.current) {
-                controllerRef.current = await connection.getMediaController();
+        const agent = window.CCP.agent;
+        const agentContacts = agent.getContacts();
+        if (!agentContacts) {
+            return;
+        }
+        const currentContact = agentContacts.find(a => a.contactId === currentContactId);
+        if (currentContact) {
+            const connection = currentContact.getAgentConnection();
+            if (connection instanceof connect.ChatConnection) {
+                const controller = await connection.getMediaController();
+                controller.sendMessage({message, contentType: "text/plain"});
             }
-            // @ts-ignore
-            controllerRef.current.sendMessage({message, contentType: "text/plain"});
         }
     }
 
