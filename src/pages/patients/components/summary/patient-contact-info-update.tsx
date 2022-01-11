@@ -67,11 +67,13 @@ const PatientContactInfoUpdate = ({onUpdateComplete} : PatientInformationUpdateP
             state: patient.state,
             zip: patient.zip,
             consentToText: patient.consentToText.toString(),
-            email: patient.emailAddress.toLowerCase()
+            email: patient.emailAddress?.toLowerCase()
         } as PatientUpdateModel
     });
 
     const watchMobilePhone = watch('mobilePhone');
+    const watchHomePhone = watch('homePhone');
+    const watchEmail = watch('email');
     const watchContactPreference: string = watch('contactPreference');
 
     const onSubmit = (values: PatientUpdateModel) => {
@@ -114,13 +116,15 @@ const PatientContactInfoUpdate = ({onUpdateComplete} : PatientInformationUpdateP
             disabled: !(watchMobilePhone && watchMobilePhone.length > 0)
         },{
             value:'HOMEPHONE',
-            label: 'patient.contact_preference.homephone'
+            label: 'patient.contact_preference.homephone',
+            disabled: !(watchHomePhone && watchHomePhone.length > 0)
         },{
             value:'WORKPHONE',
             label: 'patient.contact_preference.workphone'
         },{
             value:'MAIL',
-            label: 'patient.contact_preference.mail'
+            label: 'patient.contact_preference.mail',
+            disabled: !(watchEmail && watchEmail.length > 0)
         },{
             value:'PORTAL',
             label: 'patient.contact_preference.portal'
@@ -131,11 +135,17 @@ const PatientContactInfoUpdate = ({onUpdateComplete} : PatientInformationUpdateP
         if (option) {
             if (option.value === "MOBILEPHONE") {
                 clearErrors('homePhone');
+                clearErrors('email');
             } else if (option.value === "HOMEPHONE") {
                 clearErrors('mobilePhone');
+                clearErrors('email');
+            }  else if (option.value === "MAIL") {
+                clearErrors('mobilePhone');
+                clearErrors('homePhone');
             } else {
                 clearErrors('mobilePhone');
                 clearErrors('homePhone');
+                clearErrors('email');
             }
         }
     }
@@ -298,6 +308,7 @@ const PatientContactInfoUpdate = ({onUpdateComplete} : PatientInformationUpdateP
                             control={control}
                             name='email'
                             dataTestId='patient-update-email'
+                            required={watchContactPreference === 'MAIL'}
                             className='w-full'
                             label='patient.summary.email'
                             type='email'
