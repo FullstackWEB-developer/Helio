@@ -103,7 +103,10 @@ const ContactSearchResults = () => {
                 </>
             }
             {
-                (isError || data?.results?.length === 0) && <NoSearchResults />
+                (isError || data?.results?.length === 0) && <div>
+                    <NoSearchResults />
+                    <div className='pl-6 pt-8 body2-medium whitespace-pre-line'>{t('search.search_by_contact_name_no_result')}</div>
+                </div>
             }
         </>
     )
