@@ -25,7 +25,7 @@ const SearchBoxResults = ({items, error, onSelect}: SearchBoxResultsProps) => {
                         <div className='flex items-center justify-center w-2/12 uppercase lx:w-1/12 whitespace-nowrap'>{t('searchbox_result.text_consent')}</div>
                         <div className='flex items-center justify-center w-1/12 '/>
                     </div>
-                    {items?.map(patient => <SearchBoxResultItem key={patient.patientId} patient={patient} onSelect={onSelect} />)}
+                    {items?.map(patient => <SearchBoxResultItem key={patient?.patientId} patient={patient} onSelect={onSelect} />)}
                 </div>
                 {!!error &&
                     <div className='flex justify-end body3'><span>{t(error)}</span></div>
