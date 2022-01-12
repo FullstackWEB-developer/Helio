@@ -71,6 +71,7 @@ const SmsContext = () => {
                 ticketId: botContext.ticket?.id,
                 channel: ChannelTypes.SMS,
                 toAddress: botContext.patient.mobilePhone,
+                patientId: botContext.patient.patientId,
                 recipientName: patientName,
                 direction: TicketMessagesDirection.Outgoing
             });
