@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useMemo, useRef, useState} from 'react';
 import SvgIcon from '@components/svg-icon/svg-icon';
 import {Icon} from '@components/svg-icon/icon';
 import {ContactExtended} from '@shared/models/contact.model';
@@ -27,7 +27,8 @@ const ContactSubheaderQuickActions = ({editMode, editIconClickHandler, contact, 
 
     const [displayPhoneTypeDropdown, setDisplayPhoneTypeDropdown] = useState<boolean>(false);
     const typeDropdownRef = useRef<HTMLDivElement>(null);
-
+    const [phoneTypeOptions, setPhoneTypeOptions] = useState<DropdownItemModel[]>([]);
+    const [selectedPhoneType, setSelectedPhoneType] = useState<ContactPhoneType>(phoneTypeOptions?.length > 0 ? Number(phoneTypeOptions[0].value) : ContactPhoneType.mobile);
     customHooks.useOutsideClick([typeDropdownRef], () => {
         setDisplayPhoneTypeDropdown(false);
     });
@@ -37,24 +38,30 @@ const ContactSubheaderQuickActions = ({editMode, editIconClickHandler, contact, 
         setSelectedPhoneType(type);
     }
 
-    const generatePhoneTypeDropdownOptions = (): DropdownItemModel[] => {
-        let options: DropdownItemModel[] = [];
-        const {mobilePhone, workDirectPhone, workMainPhone} = contact;
-        if (mobilePhone) {
-            options.push({label: t('contacts.contact_details.individual.phone_types.1'), value: String(ContactPhoneType.mobile)});
-        }
-        if (workMainPhone) {
-            options.push({label: t('contacts.contact_details.individual.phone_types.2'), value: String(ContactPhoneType.workMain)});
-        }
-        if (workDirectPhone) {
-            options.push({label: t('contacts.contact_details.individual.phone_types.3'), value: String(ContactPhoneType.workDirect)});
-        }
-        return options;
-    }
-
     const contactHasAnyPhoneOption = contact?.mobilePhone || contact?.workDirectPhone || contact?.workMainPhone;
-    const phoneTypeOptions = generatePhoneTypeDropdownOptions();
-    const [selectedPhoneType, setSelectedPhoneType] = useState<ContactPhoneType>(phoneTypeOptions?.length > 0 ? Number(phoneTypeOptions[0].value) : ContactPhoneType.mobile);
+    useMemo(() => {
+        const generatePhoneTypeDropdownOptions = (): DropdownItemModel[] => {
+            let options: DropdownItemModel[] = [];
+            const {mobilePhone, workDirectPhone, workMainPhone} = contact;
+            if (mobilePhone) {
+                options.push({label: t('contacts.contact_details.individual.phone_types.1'), value: String(ContactPhoneType.mobile)});
+            }
+            if (workMainPhone) {
+                options.push({label: t('contacts.contact_details.individual.phone_types.2'), value: String(ContactPhoneType.workMain)});
+            }
+            if (workDirectPhone) {
+                options.push({label: t('contacts.contact_details.individual.phone_types.3'), value: String(ContactPhoneType.workDirect)});
+            }
+            return options;
+        }
+
+        const options = generatePhoneTypeDropdownOptions();
+        setPhoneTypeOptions(options);
+        if (!options.find(a => a.value=== selectedPhoneType.toString()) && options[0]) {
+            setSelectedPhoneType(Number(options[0].value))
+        }
+    }, [contact, t]);
+
     const phoneTypeDropdownModel: DropdownModel = {
         defaultValue: selectedPhoneType?.toString(),
         onClick: (id) => phoneTypeSelected(Number(id)),
