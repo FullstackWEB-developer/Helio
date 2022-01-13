@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {useDispatch} from 'react-redux';
 import {setStatus} from '../services/tickets.service';
@@ -17,7 +17,7 @@ import TicketStatusDot from '@pages/tickets/components/ticket-status-dot';
 import {Ticket} from '@pages/tickets/models/ticket';
 import {setGlobalLoading} from '@shared/store/app/app.slice';
 import classnames from 'classnames';
-import {useSmartPosition} from '@shared/hooks';
+import {usePopper} from 'react-popper';
 interface TicketStatusProps {
     ticket: Ticket,
     isExpired?: boolean,
@@ -27,8 +27,24 @@ const TicketStatus = ({ticket, isArrow = true}: TicketStatusProps) => {
     const {t} = useTranslation();
     const dispatch = useDispatch();
     const [isVisible, setIsVisible, elementRef] = useComponentVisibility<HTMLDivElement>(false);
-    const dropdownRef = useRef<HTMLDivElement>(null);
-    const {top} = useSmartPosition(dropdownRef, elementRef, isVisible);
+
+    const [popper, setPopper] = useState<HTMLDivElement | null>(null);
+    const { styles, attributes, update } = usePopper(elementRef.current, popper, {
+        placement: 'bottom',
+        strategy: 'fixed',
+        modifiers: [{
+            name: 'offset',
+            options: {
+                offset: [0, 8],
+            },
+        }]
+    });
+
+    useEffect(() => {
+        if (isVisible && update) {
+            update().then();
+        }
+    }, [update, isVisible]);
 
     const updateStatusMutation = useMutation(setStatus, {
         onSuccess: (data) => {
@@ -95,9 +111,10 @@ const TicketStatus = ({ticket, isArrow = true}: TicketStatusProps) => {
             }
         </div>
         <div
-            className={classnames('absolute w-48 z-10', {'hidden': !isVisible})}
-            style={{top: top}}
-            ref={dropdownRef}
+            className={classnames('z-10', {'hidden': !isVisible})}
+            style={styles.popper}
+            ref={setPopper}
+            {...attributes.popper}
         >
             <Dropdown model={statusesDropdownModel} />
         </div>
