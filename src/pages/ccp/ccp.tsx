@@ -47,6 +47,7 @@ import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
 import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
 import {ContextKeyValuePair} from '@pages/ccp/models/context-key-value-pair';
 import {getUserList} from '@shared/services/lookups.service';
+import {clearAppParameters} from '@shared/store/app/app.slice';
 
 const ccpConfig = {
     region: utils.getAppParameter('AwsRegion'),
@@ -196,6 +197,15 @@ const Ccp: React.FC<BoxProps> = ({
             iframeEle?.setAttribute('scrolling', 'no');
         }
 
+        const handleLogOut= () => {
+            // @ts-ignore
+            const eventBus = connect.core.getEventBus();
+            eventBus.subscribe(connect.EventType.TERMINATED, () => {
+                dispatch(clearAppParameters());
+                utils.logout();
+            });
+        }
+
         const ccpContainer = document.getElementById('ccp-container');
         connect.core.initCCP(ccpContainer as HTMLDivElement, {
             ccpUrl: ccpConfig.connectBaseUrl! + ccpConfig.ccpUrl,
@@ -218,6 +228,7 @@ const Ccp: React.FC<BoxProps> = ({
             setCcpConnectionState(CCPConnectionStatus.Success);
             dispatch(setConnectionStatus(CCPConnectionStatus.Success));
             removeCPPIframeScroll();
+            handleLogOut();
         });
 
         connect.core.onAuthFail(() => {

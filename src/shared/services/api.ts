@@ -69,8 +69,6 @@ export const refreshAccessToken = async () => {
                     if (auth?.accessToken !== currentToken) {
                         store.dispatch(setAuthentication(auth));
                     }
-                    console.log("Auth Token Response");
-                    console.dir(response);
                     return response.idToken;
                 }
             } catch (error: any) {
