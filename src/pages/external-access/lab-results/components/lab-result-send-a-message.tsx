@@ -133,14 +133,19 @@ const LabResultSendAMessage = ({labResult}: {labResult?: LabResultDetail}) => {
                     </div>
                     <div className='flex flex-col w-full xl:w-7/12 h-28'>
                         <TextArea
+                            className='h-full w-full'
+                            textareaContainerClasses='flex flex-row w-full h-full items-center pl-4'
+                            placeHolder='external_access.lab_results.text_area_placeholder'
                             value={message}
-                            onChange={(m) => setMessage(m)}
-                            placeHolder={t('external_access.lab_results.text_area_placeholder')}
-                            className='w-full h-full'
+                            rows={3}
+                            overwriteDefaultContainerClasses={true}
+                            maxRows={3}
                             resizable={false}
-                            maxLength={maxMessageLength}
+                            onChange={(message) => setMessage(message)}
                             error={errors.messageText?.message}
-                            maxLengthClassName={'subtitle3-small'} />
+                            maxLengthClassName={'subtitle3-small'}
+                            maxLength={maxMessageLength}
+                        />
                     </div>
                     <div className="flex pt-6 pb-10">
                         <>

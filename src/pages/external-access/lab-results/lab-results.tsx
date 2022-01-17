@@ -54,7 +54,7 @@ const LabResults = () => {
                 {
                     data && data?.length > 0 && !isLoading &&
                     data.map(labResult =>
-                        <div className="px-6 lab-results-grid data-row">
+                        <div className="px-6 lab-results-grid data-row" key={labResult.labResultId}>
                             <LabResultListItem labResult={labResult} key={labResult.labResultId} />
                         </div>
                     )
