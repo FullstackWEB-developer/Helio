@@ -197,11 +197,11 @@
     "overdue": "Overdue",
     "pagination": "{{numOfItemsFrom}} - {{numOfItemsTo}} of {{totalCount}}",
     "rating": "Rating",
-    "ticket_list_actions":{
+    "ticket_list_actions": {
       "call": "Call",
       "ticket_details": "Ticket Details",
       "patient_details": "Patient Details",
-      "contact_details":"Contact Details",
+      "contact_details": "Contact Details",
       "add_review": "Add review"
     }
   },
@@ -210,7 +210,7 @@
     "suggested_steps": "Suggested steps",
     "went_offline": "Because you changed your status to offline or you logged out \n you will not be able to receive any calls/chats\nTo continue getting calls/chats, please change your status\n or refresh if you logged out.",
     "suggestions": {
-      "create_patient_record": "Create Patient Record",
+      "create_patient_record": "Create Patient Chart",
       "schedule_appointment": "Schedule Appointment",
       "discuss_lab_results": "Discuss Lab Results",
       "send_lab_results": "Send Lab Results"
@@ -306,7 +306,7 @@
     "search_title": "Search For",
     "recent_searches": "Recent Searches",
     "no_matching_filter": "No pattern matches to your input.",
-    "search_date_format_not_correct" : "Date format is not correct, please use MM/DD/YYYY format",
+    "search_date_format_not_correct": "Date format is not correct, please use MM/DD/YYYY format",
     "search_by_phone_no_result": "Please use one of following name formats: \n • 310-000-0000\n • 3101112222",
     "search_by_patient_id_no_result": "Please use following format: XXXXX",
     "search_by_patient_name_no_result": "Please use one of following name formats: \n• First Last (Jane Doe)\n• Last, First (Doe, Jane)\n• Last (Doe)",
