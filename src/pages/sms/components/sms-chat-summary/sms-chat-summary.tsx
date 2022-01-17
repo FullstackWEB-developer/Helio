@@ -15,7 +15,7 @@ import {useQuery} from 'react-query';
 import {GetPatientPhoto} from '@constants/react-query-constants';
 import {getPatientPhoto} from '@pages/patients/services/patients.service';
 dayjs.extend(utc);
-dayjs.extend(isToday)
+dayjs.extend(isToday);
 
 interface SmsSummaryProps {
     ticketId: string;
@@ -48,18 +48,24 @@ const SmsChatSummary = ({
 
     const isRead = unreadCount === 0;
     const {t} = useTranslation();
-    const getFilterMatchName = (filter: TicketMessageFilterMatch): string => {
-        switch (filter) {
-            case TicketMessageFilterMatch.MessageBody:
-                return t('sms.messages');
-            case TicketMessageFilterMatch.Phone:
-                return t('sms.phone');
-            case TicketMessageFilterMatch.TicketNumber:
-                return t('sms.ticket_number');
-        }
-    }
+    
 
-    const searchFilter = useMemo(() => searchFilterMatch?.map(getFilterMatchName) ?? [], [searchFilterMatch]);
+    const searchFilter = useMemo(() => {
+        const getFilterMatchName = (filter: TicketMessageFilterMatch): string => {
+            switch (filter) {
+                case TicketMessageFilterMatch.MessageBody:
+                    return t('sms.messages');
+                case TicketMessageFilterMatch.Address:
+                    return t('sms.phone');
+                case TicketMessageFilterMatch.TicketNumber:
+                    return t('sms.ticket_number');
+                default:
+                    return '';
+            }
+        }
+        
+        return searchFilterMatch?.map(getFilterMatchName) ?? []
+    }, [searchFilterMatch, t]);
 
     const {data: patientPhoto} = useQuery([GetPatientPhoto, props.patientId], () => getPatientPhoto(props.patientId!), {
         enabled: !!props.patientId

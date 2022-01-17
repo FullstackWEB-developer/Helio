@@ -1,12 +1,13 @@
 export interface AuthenticationInfo {
-    accessToken?: string,
-    name?: string,
-    username?: string,
-    expiresOn?: Date,
-    isLoggedIn: boolean,
-    profilePicture?: string,
-    authenticationLink?: string,
+    accessToken?: string;
+    name?: string;
+    username?: string;
+    expiresOn?: Date;
+    isLoggedIn: boolean;
+    profilePicture?: string;
+    authenticationLink?: string;
     id?: string;
+    isGuestLogin: boolean;
 }
 
 export enum UserStatus {

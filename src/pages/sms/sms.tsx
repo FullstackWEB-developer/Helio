@@ -381,7 +381,7 @@ const Sms = () => {
             createdForName: ticket.createdForName,
             ticketType: Number(ticket.type),
             messageCreatedByName: fullName,
-            createdForMobileNumber: ''
+            createdForEndpoint: ''
         };
         return summary;
     }

@@ -72,7 +72,8 @@
     "subtitle": "Cloud based software for medical offices.",
     "loginButton": "Sign In",
     "session_timeout": "Session timeout",
-    "session_timeout_description": "Your session timed out. Please login again."
+    "session_timeout_description": "Your session timed out. Please login again.",
+    "session_timeout_guest": "You session timed out. Please enter your information again!"
   },
   "user_profile": {
     "statuses": {
@@ -1360,6 +1361,20 @@
     "phone": "Mobile",
     "text_consent": "Text consent",
     "tooltip_unavailable_sms_message": "SMS not available. SMS message can not be sent to this contact."
+  },
+  "email": {
+    "query_type" : {
+      "my_email": "My Email",
+      "team_email": "Team Email"
+    },
+    "filter": {
+      "search_placeholder":"Search emails"
+    },
+    "found_in": "Found in:",
+    "ticket_number": "Ticket Id",
+    "email": "Email",
+    "messages": "Messages",
+    "subject": "Subject"
   },
   "sms": {
     "agent_label": "{{name}} - Agent",

@@ -53,13 +53,12 @@ const Navigation = () => {
             displayBadge: true,
             badgeValue: unreadSMSList?.length
         },
-        // PLEASE DON'T DELETE THIS
-        // {
-        //     title: t('navigation.email'),
-        //     link: '/email',
-        //     id: 'navigation-email',
-        //     icon: <SvgIcon type={Icon.Email} fillClass='active-item-icon' />
-        // },
+        {
+             title: t('navigation.email'),
+             link: '/email',
+             id: 'navigation-email',
+             icon: <SvgIcon type={Icon.Email} fillClass='active-item-icon' />
+        },
         {
             title: t('navigation.users'),
             link: UsersPath,

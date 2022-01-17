@@ -10,6 +10,7 @@ import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
 import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
 import i18n from "i18next";
 import dayjs from 'dayjs';
+import {SnackbarPosition} from '@components/snackbar/snackbar-position.enum';
 
 const logger = Logger.getInstance();
 const Api = axios.create({
@@ -58,16 +59,17 @@ export const refreshAccessToken = async () => {
                 });
 
                 if (response) {
-                    const auth: AuthenticationInfo = {
+                    const newAuth: AuthenticationInfo = {
                         name: response.account?.name as string,
                         accessToken: response.idToken,
                         expiresOn: response.expiresOn as Date,
                         username: response.account?.username as string,
-                        isLoggedIn: true
+                        isLoggedIn: true,
+                        isGuestLogin: auth.isGuestLogin
                     };
-                    const currentToken = store.getState().appUserState?.auth?.accessToken;
-                    if (auth?.accessToken !== currentToken) {
-                        store.dispatch(setAuthentication(auth));
+                    const currentToken = auth?.accessToken;
+                    if (newAuth?.accessToken !== currentToken) {
+                        store.dispatch(setAuthentication(newAuth));
                     }
                     return response.idToken;
                 }
@@ -111,12 +113,18 @@ Api.interceptors.response.use(
         }
 
 
-        if (store.getState().appUserState.auth.authenticationLink) {
+        if (store.getState().appUserState.auth.isGuestLogin) {
+            store.dispatch(addSnackbarMessage({
+                type: SnackbarType.Error,
+                message: 'login.session_timeout_guest',
+                position: SnackbarPosition.TopCenter
+            }));
+            store.dispatch(logOut());
             window.location.replace(store.getState().appUserState.auth.authenticationLink);
             return;
+        } else {
+            signOut();
         }
-
-        signOut();
     }
 )
 

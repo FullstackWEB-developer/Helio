@@ -101,7 +101,8 @@ async function SetAuthenticationInfo(info: AuthenticationResult | null, dispatch
             accessToken: s.idToken,
             expiresOn: s.expiresOn as Date,
             username: s.account?.username as string,
-            isLoggedIn: true
+            isLoggedIn: true,
+            isGuestLogin: false
         };
         dispatch(setAuthentication(auth));
 

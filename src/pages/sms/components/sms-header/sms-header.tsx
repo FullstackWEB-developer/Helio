@@ -89,7 +89,7 @@ const SmsHeader = ({info, forNewTicketMessagePurpose, patientPhoto}: {info: Tick
             }
             return info.createdForName;
         }
-        return utils.applyPhoneMask(info.createdForMobileNumber);
+        return utils.applyPhoneMask(info.createdForEndpoint);
     }
 
     const getImage = () => {

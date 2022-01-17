@@ -131,7 +131,8 @@ const ExternalUserVerificationCode = () => {
                             isLoggedIn: true,
                             accessToken: data.authenticationResponse.token,
                             expiresOn: data.authenticationResponse.expiresAt,
-                            authenticationLink: request.fullUrl
+                            authenticationLink: request.fullUrl,
+                            isGuestLogin: true
                         }));
                         dispatch(setVerifiedPatient(data.verifiedPatient));
                         forwardToRelatedPage();

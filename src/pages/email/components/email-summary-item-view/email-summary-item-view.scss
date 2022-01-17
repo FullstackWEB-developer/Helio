@@ -1,0 +1,22 @@
+.email-summary {
+  min-height: 5.5rem;
+  max-height: 7.5rem;
+  width:22.5rem;
+  &:hover, &-selected {
+    background-color: var(--message-ticket-table-row-selected-color);
+  }
+  &-display{
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
+.avatar-patient {
+  background-color: var(--avatar-patient-color);
+}
+
+.avatar-contact {
+  background-color: var(--avatar-contact-color);
+}

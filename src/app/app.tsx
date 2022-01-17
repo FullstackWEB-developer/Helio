@@ -44,7 +44,8 @@ import {
     AppointmentListShortPath,
     AppointmentSchedulePatientStatusPathRouter,
     AppointmentConfirmationPath,
-    AppointmentConfirmationShortPath
+    AppointmentConfirmationShortPath,
+    EmailPath
 } from './paths';
 import RealTimeUserStatusUpdate from '@shared/websockets/real-time-user-status-update';
 import ExternalAccessLayout from '@pages/external-access/layout/external-access-layout';
@@ -84,6 +85,7 @@ const DownloadMedicalRecords = React.lazy(() => import('@pages/external-access/r
 const MedicalRecordsPreview = React.lazy(() => import('@pages/external-access/request-medical-records/medical-records-preview'));
 const RealtimeTicketSms = React.lazy(() => import('@pages/external-access/ticket-sms/realtime-ticket-sms'));
 const Sms = React.lazy(() => import('@pages/sms'));
+const Email = React.lazy(() => import('@pages/email'));
 const UserDetails = React.lazy(() => import('@pages/users/details'));
 const UserAdd = React.lazy(() => import('@pages/users/add/user-add'));
 const UserList = React.lazy(() => import('@pages/users/list/user-list'));
@@ -196,6 +198,7 @@ function App() {
                     </Switch>
 
                     <GuardedRoute exact path={`${SmsPath}/:ticketId?`} component={withSuspense(Sms)} />
+                    <GuardedRoute exact path={`${EmailPath}/:ticketId?`} component={withSuspense(Email)} />
                     <GuardedRoute exact path={UsersPath} component={withSuspense(UserList)} permission='Users.Access' />
                     <GuardedRoute exact path={`${UsersPath}/new`} component={withSuspense(UserAdd)} permission='Users.Access' />
                     <GuardedRoute exact path={`${UserDetailsPath}/:userId`} component={withSuspense(UserDetails)} />

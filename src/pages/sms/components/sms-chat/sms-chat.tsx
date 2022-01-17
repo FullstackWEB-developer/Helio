@@ -126,7 +126,7 @@ const SmsChat = ({info, isLoading, isSending, isBottomFocus, messages = [], last
 
         let mobilePhone = patient?.mobilePhone ?? contact?.mobilePhone;
         if(!mobilePhone){
-            mobilePhone = info.createdForMobileNumber;
+            mobilePhone = info.createdForEndpoint;
         }
 
         if (mobilePhone) {

@@ -1,6 +1,7 @@
 export const TicketsPath = '/tickets';
 export const ContactsPath = '/contacts';
 export const SmsPath = '/sms';
+export const EmailPath = '/email';
 export const PatientPath = '/patient';
 export const PatientsPath = '/patients';
 export const UsersPath = '/users';

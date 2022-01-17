@@ -173,7 +173,7 @@
   --subtitle3-small-font-style: normal;
   --subtitle3-small-line-height: 1rem;
   --subtitle3-small-letter-spacing: normal;
-  --subtitle3-small-color: var(--light-text-medium-emphasis);
+  --subtitle3-small-color: var(--light-text-medium-062);
 
   --body1-font-family: var(--font-regular);
   --body1-font-size: 1rem;
@@ -191,7 +191,7 @@
   --body1-medium-font-style: normal;
   --body1-medium-line-height: 1.5rem;
   --body1-medium-letter-spacing: normal;
-  --body1-medium-color: var(--light-text-medium-emphasis);
+  --body1-medium-color: var(--light-text-medium-062);
 
   --body2-font-family: var(--font-regular);
   --body2-font-size: 0.875rem;
@@ -245,7 +245,7 @@
   --body3-medium-font-style: normal;
   --body3-medium-line-height: 1rem;
   --body3-medium-letter-spacing: normal;
-  --body3-medium-color: var(--light-text-medium-emphasis);
+  --body3-medium-color: var(--light-text-medium-062);
 
   --body3-big-font-family: var(--font-regular);
   --body3-big-font-size: 0.8125rem;
@@ -263,7 +263,7 @@
   --body3-small-font-style: normal;
   --body3-small-line-height: 1rem;
   --body3-small-letter-spacing: normal;
-  --body3-small-color: var(--light-text-medium-emphasis);
+  --body3-small-color: var(--light-text-medium-062);
 
   --caption-caps-font-family: var(--font-medium);
   --caption-caps-font-size: 0.75rem;
@@ -272,7 +272,7 @@
   --caption-caps-font-style: normal;
   --caption-caps-line-height: 1.5rem;
   --caption-caps-letter-spacing: normal;
-  --caption-caps-color: var(--light-text-medium-emphasis);
+  --caption-caps-color: var(--light-text-medium-062);
 
   --light-badge-font-family: var(--font-light);
   --light-badge-font-size: 0.625rem;
@@ -320,7 +320,7 @@
   --channel-icon: rgba(0, 0, 0, 0.2);
   --ccp-bottom-bar-icon: rgba(0, 0, 0, 0.6);
   --grayed-out: rgba(0, 0, 0, 0.6);
-  --default-toolbar-icon: rgba(0, 0, 0, 0.5);
+  --default-toolbar-icon: rgba(0, 0, 0, 0.62);
   --rgba-color-03: rgba(0, 0, 0, 0.3);
   --rgba-color-038: rgba(0, 0, 0, 0.38);
   --rgba-color-05: rgba(0, 0, 0, 0.5);
@@ -413,6 +413,10 @@
   --slider-traveled-track: var(--color-primary-default);
 
   --highlighter-color: rgb(169, 235, 211);
+
+  --avatar-patient-color: var(--color-primary-800);
+
+  --avatar-contact-color: #734dea;
 
   ::-webkit-scrollbar {
     width: 0.750rem;

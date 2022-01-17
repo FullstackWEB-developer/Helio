@@ -16,7 +16,8 @@ export interface AppUserState {
 
 const initialState: AppUserState = {
     auth: {
-        isLoggedIn: false
+        isLoggedIn: false,
+        isGuestLogin: false
     },
     appUserDetails: undefined,
     isLoading: false,

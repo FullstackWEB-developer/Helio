@@ -198,7 +198,7 @@ const SmsNewMessage = ({...props}: SmsNewMessageProps) => {
         ticketNumber: 0,
         ticketType: TicketType.Default,
         unreadCount: 0,
-        createdForMobileNumber: '',
+        createdForEndpoint: '',
         messageCreatedByName: '',
         messageCreatedOn: new Date(),
         messageSummary: '',
