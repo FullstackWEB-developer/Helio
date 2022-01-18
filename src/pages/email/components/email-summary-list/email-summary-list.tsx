@@ -23,7 +23,7 @@ const EmailSummaryList = ({data, selectedTicketId, searchTerm, onScroll, isFetch
         <>
             {
                 sortedMessages.map((p: TicketMessageSummary) =>
-                    <EmailSummaryItemView emailInfo={p} key={p.ticketId} isSelected={selectedTicketId === p.ticketId} searchTerm={searchTerm} onClick={() => {}} />
+                    <EmailSummaryItemView emailInfo={p} key={p.ticketId} isSelected={selectedTicketId === p.ticketId} searchTerm={searchTerm} />
                 )
             }
             {isFetchingNextPage && <Spinner/> }

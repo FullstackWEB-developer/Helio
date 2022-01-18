@@ -1368,7 +1368,9 @@
       "team_email": "Team Email"
     },
     "filter": {
-      "search_placeholder":"Search emails"
+      "search_placeholder":"Search emails",
+      "team_section": "Team Member",
+      "time_section": "Time Period"
     },
     "found_in": "Found in:",
     "ticket_number": "Ticket Id",

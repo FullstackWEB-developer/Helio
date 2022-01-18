@@ -12,21 +12,24 @@ import {useSelector} from 'react-redux';
 import {selectAppUserDetails} from '@shared/store/app-user/appuser.selectors';
 import useCheckPermission from '@shared/hooks/useCheckPermission';
 import DropdownLabel from '@components/dropdown-label';
-import {EmailFilterParamModel} from '@pages/email/components/email-filter/email-filter.model';
-import EmailFilter from '@pages/email/components/email-filter/email-filter';
+import {EmailFilterModel} from '@pages/email/components/email-filter/email-filter.model';
+import EmailFilterBar from '@pages/email/components/email-filter/email-filter-bar';
 import EmailSummaryList from '@pages/email/components/email-summary-list/email-summary-list';
 import Spinner from '@components/spinner/Spinner';
+import dayjs from 'dayjs';
 
 const EmailLeftMenu = () => {
     const {id} = useSelector(selectAppUserDetails);
-    const [filterParams, setFilterParams] = useState<EmailFilterParamModel>({...DEFAULT_FILTER_VALUE, assignedTo: id});
+    const [filterParams, setFilterParams] = useState<EmailFilterModel>({...DEFAULT_FILTER_VALUE, assignedTo: id});
     const [emailQueryType, setEmailQueryType] = useState<EmailQueryType>();
     const [searchTerm, setSearchTerm] = useState<string>();
     const [messageSummaries, setMessageSummaries] = useState<TicketMessageSummary[]>([]);
     const isDefaultTeamView = useCheckPermission('EMAIL.DefaultToTeamView');
+    const [isFilterVisible, setFilterVisible] = useState<boolean>(false);
     const [queryParams, setQueryParams] = useState<TicketMessageSummaryRequest>({
         channel: ChannelTypes.Email,
         assignedTo: !isDefaultTeamView ? id : '',
+        fromDate: utils.toShortISOLocalString(dayjs().utc().subtract(7, 'day').toDate()),
         ...DEFAULT_MESSAGE_QUERY_PARAMS
     });
     const {fetchNextPage, isFetchingNextPage, isFetching, isLoading} = useInfiniteQuery([QueryTicketMessageSummaryInfinite, queryParams],
@@ -77,6 +80,17 @@ const EmailLeftMenu = () => {
         return (isLoading || isFetching) && !isFetchingNextPage
     }, [isFetching, isFetchingNextPage, isLoading])
 
+    const onFilterClick = (value: EmailFilterModel) => {
+        setQueryParams({
+            ...queryParams,
+            fromDate: utils.toShortISOLocalString(value.fromDate),
+            toDate: utils.toShortISOLocalString(value.toDate),
+            assignedTo: value.assignedTo
+        });
+        setFilterVisible(false);
+        setFilterParams(value);
+    }
+
     return <div className='flex flex-row email'>
             <div className='flex flex-col pt-6 border-r email-sidebar'>
                 <div className='pb-2 pl-5 border-b'>
@@ -89,7 +103,14 @@ const EmailLeftMenu = () => {
                         onClick={(item) => onDropdownClick(item)}
                     />
                 </div>
-                <EmailFilter filter={filterParams} onSearchTermChanged={(value) => setSearchTerm(value)} onNewEmailClick={() => onNewEmail()} />
+                <EmailFilterBar
+                    isFilterVisible={isFilterVisible}
+                    setFilterVisible={setFilterVisible}
+                    emailQueryType={emailQueryType}
+                    filter={filterParams}
+                    onSearchTermChanged={(value) => setSearchTerm(value)}
+                    onFilterClick={(data) => onFilterClick(data)}
+                    onNewEmailClick={() => onNewEmail()} />
                 {
                     loading &&
                     <div className='h-full'>
@@ -97,7 +118,7 @@ const EmailLeftMenu = () => {
                     </div>
                 }
                 {
-                    !loading && <EmailSummaryList searchTerm={searchTerm} onScroll={handleScroll} data={messageSummaries} isFetchingNextPage={isFetchingNextPage} />
+                    !loading && !isFilterVisible && <EmailSummaryList searchTerm={searchTerm} onScroll={handleScroll} data={messageSummaries} isFetchingNextPage={isFetchingNextPage} />
                 }
             </div>
         </div>
