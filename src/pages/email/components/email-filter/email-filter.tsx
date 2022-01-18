@@ -21,25 +21,26 @@ import {
     TimePeriodOptions,
     TimePeriodToday
 } from '@shared/models/email-sms-time-period-options';
+import useCheckPermission from '@shared/hooks/useCheckPermission';
+import {selectAppUserDetails} from '@shared/store/app-user/appuser.selectors';
 
 interface EmailFilterProps {
     className?: string;
-    defaultValue?: EmailFilterModel;
     value?: EmailFilterModel;
     onCloseClick?: () => void;
     onFilterClick?: (param: EmailFilterModel) => void;
     isUserFilterEnabled?: boolean;
 }
-const EmailFilter = ({className, isUserFilterEnabled, value, defaultValue, ...props}: EmailFilterProps) => {
+const EmailFilter = ({className, isUserFilterEnabled, value, ...props}: EmailFilterProps) => {
 
     dayjs.extend(utc);
     const dispatch = useDispatch();
+    const isDefaultTeamView = useCheckPermission('EMAIL.DefaultToTeamView');
+    const {id} = useSelector(selectAppUserDetails);
     const {t} = useTranslation();
     const userList = useSelector(selectUserOptions);
     const [fromDateField, setFromDateField] = useState<Date | undefined>(value?.fromDate ? dayjs(value.fromDate).utc().toDate() : undefined);
-    const {control, handleSubmit, watch, setValue, reset} = useForm<EmailFilterModel>({
-        defaultValues: defaultValue
-    });
+    const {control, handleSubmit, watch, setValue, reset} = useForm<EmailFilterModel>();
     const watchTimePeriod = watch('timePeriod');
 
     useEffect(() => {
@@ -126,7 +127,12 @@ const EmailFilter = ({className, isUserFilterEnabled, value, defaultValue, ...pr
     }
 
     const onClearFilter = () => {
-        reset();
+        const defaults = {
+            timePeriod: TimePeriodLast7Days,
+            assignedTo: isDefaultTeamView ? '': id
+        }
+        reset(defaults);
+        onFilterClick(defaults)
     }
 
     return (<div className={className}>

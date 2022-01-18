@@ -1,6 +1,6 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import {ChannelTypes, TicketMessageSummary, TicketMessageSummaryRequest} from '@shared/models';
-import {DEFAULT_FILTER_VALUE, DEFAULT_MESSAGE_QUERY_PARAMS} from '@pages/sms/constants';
+import {DEFAULT_FILTER_VALUE, DEFAULT_MESSAGE_QUERY_PARAMS} from '../constants';
 import {DropdownItemModel} from '@components/dropdown';
 import {EmailQueryType} from '@pages/email/models/email-query-type';
 import {useInfiniteQuery} from 'react-query';
@@ -17,21 +17,26 @@ import EmailFilterBar from '@pages/email/components/email-filter/email-filter-ba
 import EmailSummaryList from '@pages/email/components/email-summary-list/email-summary-list';
 import Spinner from '@components/spinner/Spinner';
 import dayjs from 'dayjs';
+import useDebounce from '../../../shared/hooks/useDebounce';
+import {DEBOUNCE_SEARCH_DELAY_MS} from '@constants/form-constants';
 
 const EmailLeftMenu = () => {
     const {id} = useSelector(selectAppUserDetails);
-    const [filterParams, setFilterParams] = useState<EmailFilterModel>({...DEFAULT_FILTER_VALUE, assignedTo: id});
     const [emailQueryType, setEmailQueryType] = useState<EmailQueryType>();
     const [searchTerm, setSearchTerm] = useState<string>();
     const [messageSummaries, setMessageSummaries] = useState<TicketMessageSummary[]>([]);
-    const isDefaultTeamView = useCheckPermission('EMAIL.DefaultToTeamView');
+    const isDefaultTeamView = useCheckPermission('Email.DefaultToTeamView');
+    const [filterParams, setFilterParams] = useState<EmailFilterModel>({...DEFAULT_FILTER_VALUE, assignedTo: isDefaultTeamView ? '' : id});
     const [isFilterVisible, setFilterVisible] = useState<boolean>(false);
+    const [debounceSearchTerm] = useDebounce(searchTerm, DEBOUNCE_SEARCH_DELAY_MS);
+
     const [queryParams, setQueryParams] = useState<TicketMessageSummaryRequest>({
         channel: ChannelTypes.Email,
         assignedTo: !isDefaultTeamView ? id : '',
         fromDate: utils.toShortISOLocalString(dayjs().utc().subtract(7, 'day').toDate()),
         ...DEFAULT_MESSAGE_QUERY_PARAMS
     });
+
     const {fetchNextPage, isFetchingNextPage, isFetching, isLoading} = useInfiniteQuery([QueryTicketMessageSummaryInfinite, queryParams],
         ({pageParam = 1}) => getChats({...queryParams, page: pageParam}), {
             enabled: !!emailQueryType,
@@ -42,8 +47,23 @@ const EmailLeftMenu = () => {
         });
 
     useEffect(() => {
-        setEmailQueryType(!isDefaultTeamView ? EmailQueryType.MyEmail : EmailQueryType.TeamEmail);
+        setQueryParams({...queryParams, searchTerm: debounceSearchTerm, page: 1});
+    }, [debounceSearchTerm]);
+
+    useEffect(() => {
+        setEmailQueryType(isDefaultTeamView ? EmailQueryType.TeamEmail : EmailQueryType.MyEmail);
     }, [isDefaultTeamView]);
+
+    useEffect(() => {
+        if (!filterParams) {
+            return;
+        }
+        if (filterParams.assignedTo === id){
+            setEmailQueryType(EmailQueryType.MyEmail)
+        } else if (filterParams.assignedTo === '') {
+            setEmailQueryType(EmailQueryType.TeamEmail)
+        }
+    }, [filterParams, id])
 
     const onDropdownClick = (item: DropdownItemModel) => {
         const context = item.value as EmailQueryType;
@@ -64,11 +84,6 @@ const EmailLeftMenu = () => {
         }
         setEmailQueryType(context);
     }
-
-    const onNewEmail =() => {
-
-    }
-
     const handleScroll = (event: any) => {
         const target = event.target;
         if (target.scrollHeight - target.scrollTop === target.clientHeight) {
@@ -108,9 +123,8 @@ const EmailLeftMenu = () => {
                     setFilterVisible={setFilterVisible}
                     emailQueryType={emailQueryType}
                     filter={filterParams}
-                    onSearchTermChanged={(value) => setSearchTerm(value)}
-                    onFilterClick={(data) => onFilterClick(data)}
-                    onNewEmailClick={() => onNewEmail()} />
+                    onSearchTermChanged={setSearchTerm}
+                    onFilterClick={onFilterClick}/>
                 {
                     loading &&
                     <div className='h-full'>
@@ -118,7 +132,11 @@ const EmailLeftMenu = () => {
                     </div>
                 }
                 {
-                    !loading && !isFilterVisible && <EmailSummaryList searchTerm={searchTerm} onScroll={handleScroll} data={messageSummaries} isFetchingNextPage={isFetchingNextPage} />
+                    !loading && !isFilterVisible && <EmailSummaryList
+                        searchTerm={searchTerm}
+                        onScroll={handleScroll}
+                        data={messageSummaries}
+                        isFetchingNextPage={isFetchingNextPage} />
                 }
             </div>
         </div>

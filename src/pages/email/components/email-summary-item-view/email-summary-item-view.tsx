@@ -14,11 +14,10 @@ import isToday from 'dayjs/plugin/isToday';
 import utc from 'dayjs/plugin/utc';
 import './email-summary-item-view.scss';
 import {EmailPath} from '@app/paths';
-import {useHistory} from 'react-router';
+import {useHistory, useParams} from 'react-router';
 export interface EmailSummaryItemViewProps {
     emailInfo : TicketMessageSummary,
     searchTerm? : string;
-    isSelected : boolean;
 }
 dayjs.extend(utc);
 dayjs.extend(isToday);
@@ -26,6 +25,7 @@ const EmailSummaryItemView = ({emailInfo, searchTerm} : EmailSummaryItemViewProp
     const {createdForName, patientId, messageCreatedOn, messageSummary, unreadCount, createdForEndpoint, ticketId} = emailInfo;
     const isRead = unreadCount === 0;
     const {t} = useTranslation();
+    const urlParams = useParams<{ticketId?: string}>();
     const history = useHistory();
     const {data: patientPhoto} = useQuery([GetPatientPhoto, patientId], () => getPatientPhoto(patientId!), {
         enabled: !!patientId
@@ -61,7 +61,7 @@ const EmailSummaryItemView = ({emailInfo, searchTerm} : EmailSummaryItemViewProp
         history.replace(`${EmailPath}/${ticketId}`)
     }
 
-    return (<div className='border-b email-summary cursor-pointer pl-6 pt-4 pb-1.5 pr-0 flex' onClick={() => itemClicked()} >
+    return (<div className={classnames('border-b email-summary cursor-pointer pl-6 pt-4 pb-1.5 pr-0 flex', {'email-summary-selected': urlParams?.ticketId === ticketId})} onClick={() => itemClicked()} >
         <div className='flex flex-row w-full'>
             <div className='pr-4'>
                 {userImage}
