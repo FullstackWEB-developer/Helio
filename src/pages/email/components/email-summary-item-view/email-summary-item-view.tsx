@@ -21,7 +21,7 @@ export interface EmailSummaryItemViewProps {
 }
 dayjs.extend(utc);
 dayjs.extend(isToday);
-const EmailSummaryItemView = ({emailInfo, searchTerm} : EmailSummaryItemViewProps) => {
+const EmailSummaryItemView = ({emailInfo, searchTerm}: EmailSummaryItemViewProps) => {
     const {createdForName, patientId, messageCreatedOn, messageSummary, unreadCount, createdForEndpoint, ticketId} = emailInfo;
     const isRead = unreadCount === 0;
     const {t} = useTranslation();
@@ -32,24 +32,24 @@ const EmailSummaryItemView = ({emailInfo, searchTerm} : EmailSummaryItemViewProp
     });
 
     const getDate = useMemo(() => {
-            const messageSendAt = messageCreatedOn;
-            if (dayjs(messageSendAt).isToday()) {
-                return dayjs.utc(messageSendAt).local().format('hh:mm A');
-            } else {
-                return dayjs.utc(messageSendAt).local().format('MMM D');
-            }
-        }, [messageCreatedOn]);
+        const messageSendAt = messageCreatedOn;
+        if (dayjs(messageSendAt).isToday()) {
+            return dayjs.utc(messageSendAt).local().format('hh:mm A');
+        } else {
+            return dayjs.utc(messageSendAt).local().format('MMM D');
+        }
+    }, [messageCreatedOn]);
 
-    
-    const userImage = useMemo(() =>{
+
+    const userImage = useMemo(() => {
         if (createdForName) {
             if (patientPhoto && patientPhoto.length > 0) {
                 return <img alt={t('patient.summary.profile_pic_alt_text')} className='w-10 h-10 rounded-full'
-                            src={`data:image/jpeg;base64,${patientPhoto}`} />
+                    src={`data:image/jpeg;base64,${patientPhoto}`} />
             }
             const avatarClassName = classnames('w-10 h-10', {
-                'avatar-patient' : !!emailInfo.patientId,
-                'avatar-contact' : !!emailInfo.contactId,
+                'avatar-patient': !!emailInfo.patientId,
+                'avatar-contact': !!emailInfo.contactId,
             });
             return <Avatar className={avatarClassName} userFullName={createdForName} />
         } else {

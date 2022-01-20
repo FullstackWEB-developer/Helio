@@ -1377,7 +1377,15 @@
     "ticket_number": "Ticket Id",
     "email": "Email",
     "messages": "Messages",
-    "subject": "Subject"
+    "subject": "Subject",
+    "inbox": {
+      "date": "{{relative}} ({{date}} at {{time}})",
+      "to": "To {{recipient}}",
+      "to_multiple": "To {{recipient}} and {{x}} other",
+      "from_label": "From:",
+      "to_label": "To:",
+      "cc_label": "Cc:"
+    }
   },
   "sms": {
     "agent_label": "{{name}} - Agent",

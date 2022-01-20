@@ -1,12 +1,12 @@
-import {ChannelTypes, PagedList, TicketMessageSummary, TicketMessage, TicketMessageSummaryRequest, PagedRequest, TicketMessageBase} from "@shared/models";
+import {ChannelTypes, PagedList, TicketMessageSummary, TicketMessage, TicketMessageSummaryRequest, PagedRequest, TicketMessageBase, EmailMessageDto} from "@shared/models";
 import Api from "@shared/services/api";
 import {CreateTicketMessageRequest} from '@pages/sms/models/create-ticket-message-request.model';
 
 const ticketMessageUrl = '/tickets/messages';
 
-export const getMessages = async (ticketId: string, channel: ChannelTypes, pagedRequest: PagedRequest) : Promise<PagedList<TicketMessage>> => {
+export const getMessages = async (ticketId: string, channel: ChannelTypes, pagedRequest: PagedRequest) : Promise<PagedList<TicketMessage | EmailMessageDto>> => {
     const url = `${ticketMessageUrl}/${ticketId}/${channel}`;
-    const response = await Api.get<PagedList<TicketMessage>>(url, {params: pagedRequest});
+    const response = await Api.get<PagedList<TicketMessage | EmailMessageDto>>(url, {params: pagedRequest});
     return response.data;
 }
 
