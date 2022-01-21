@@ -76,7 +76,6 @@ export const refreshAccessToken = async () => {
             } catch (error: any) {
                 debugger;
                 console.error('Error getMsalInstance ' + JSON.stringify(error));
-                console.log("Error getMsalInstance");
                 console.dir(error);
                 if (error instanceof InteractionRequiredAuthError) {
                     if (getMsalInstance() !== undefined) {
@@ -123,7 +122,9 @@ Api.interceptors.response.use(
             window.location.replace(store.getState().appUserState.auth.authenticationLink);
             return;
         } else {
-            signOut();
+            if (store.getState().appUserState.auth) {
+                signOut();
+            }
         }
     }
 )
@@ -134,7 +135,6 @@ const isCustomToken = (): boolean => {
 }
 
 const signOut = () => {
-    console.error("---- LOGGING OUT ----")
     store.dispatch(logOut());
       getMsalInstance()?.logoutRedirect()
           .then(() => {

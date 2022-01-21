@@ -17,6 +17,9 @@ import {useSelector} from 'react-redux';
 import {selectVoiceCounter} from '@pages/ccp/store/ccp.selectors';
 import {selectLookupValues} from '@pages/tickets/store/tickets.selectors';
 import {Option} from '@components/option/option';
+import {EmailPath} from '@app/paths';
+import {EMPTY_GUID} from '@pages/email/constants';
+import {useHistory} from 'react-router-dom';
 
 interface CompanyContactDetailsProps {
     contact: ContactExtended,
@@ -31,6 +34,7 @@ const CompanyContactDetails = ({editMode, contact, initiateACall, addNewContactH
     const {t} = useTranslation();
     const facilityTypes = useSelector(state => selectLookupValues(state, 'ContactCategory'));
     const voiceCounter = useSelector(selectVoiceCounter);
+    const history = useHistory();
     const displayValue = (value: string | undefined, isPhone = false) => {
         return value ? isPhone ? utils.formatPhone(value) : value : t('common.not_available');
     }
@@ -73,6 +77,16 @@ const CompanyContactDetails = ({editMode, contact, initiateACall, addNewContactH
         return facilityTypes.filter(a => a.value === calculated).length > 0 ? facilityTypes.filter(a => a.value === calculated)[0].label : '';
     };
 
+    const emailOnClick = () => {
+        const pathName = `${EmailPath}/${EMPTY_GUID}`;
+        history.push({
+            pathname: pathName,
+            state: {
+                contact
+            }
+        });
+    }
+
     return (
         <>
             {updateContactMutation.isError && <h6 className='text-danger mt-2 mb-5'>{t('contacts.contact_details.error_updating_contact')}</h6>}
@@ -87,7 +101,9 @@ const CompanyContactDetails = ({editMode, contact, initiateACall, addNewContactH
                                     iconFillClass={getIconFillClass(contact.emailAddress)}
                                     value={displayValue(contact.emailAddress)}
                                     icon={Icon.Email}
-                                    isIconDisabled={true} />
+                                    onValueClick={emailOnClick}
+                                    iconOnClick={emailOnClick}
+                                    isIconDisabled={!contact.emailAddress} />
                                 <ContactInfoField label={`${t('contacts.contact_details.company.work_main_phone')}`}
                                     iconFillClass={getIconFillClass(contact.workMainPhone)}
                                     value={displayValue(contact.workMainPhone, true)}

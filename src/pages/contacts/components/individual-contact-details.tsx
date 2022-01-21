@@ -11,11 +11,12 @@ import {mapContactFormModelToDto} from '../contact-helpers/helpers';
 import {useMutation} from 'react-query';
 import {updateContact} from '@shared/services/contacts.service';
 import {useHistory} from 'react-router-dom';
-import {ContactsPath} from '@app/paths';
+import {ContactsPath, EmailPath} from '@app/paths';
 import {useSelector} from 'react-redux';
 import {selectVoiceCounter} from '@pages/ccp/store/ccp.selectors';
 import {selectLookupValues} from '@pages/tickets/store/tickets.selectors';
 import {Option} from '@components/option/option';
+import {EMPTY_GUID} from '@pages/email/constants';
 interface IndividualContactDetailsProps {
     contact: ContactExtended;
     editMode?: boolean;
@@ -74,6 +75,16 @@ const IndividualContactDetails = ({contact, editMode, initiateACall, closeEditMo
         return facilityTypes.filter(a => a.value === calculated).length > 0 ? facilityTypes.filter(a => a.value === calculated)[0].label : '';
     };
 
+    const emailOnClick = () => {
+        const pathName = `${EmailPath}/${EMPTY_GUID}`;
+        history.push({
+           pathname: pathName,
+           state: {
+               contact
+           }
+        });
+    }
+
     return (
         <>
             {updateContactMutation.isError && <h6 className='text-danger mt-2 mb-5'>{t('contacts.contact_details.error_updating_contact')}</h6>}
@@ -92,8 +103,10 @@ const IndividualContactDetails = ({contact, editMode, initiateACall, closeEditMo
                         <ContactInfoField label={`${t('contacts.contact_details.individual.email')}`}
                                           value={displayValue(contact.emailAddress)}
                                           icon={Icon.Email}
+                                          onValueClick={() => emailOnClick()}
+                                          iconOnClick={() => emailOnClick()}
                                           iconFillClass={getIconFillClass(contact.emailAddress)}
-                                          isIconDisabled={true} />
+                                          isIconDisabled={!contact.emailAddress} />
                         <ContactInfoField label={`${t('contacts.contact_details.individual.work_main_phone')}`}
                                           value={displayValue(contact.workMainPhone, true)}
                                           icon={Icon.Phone}

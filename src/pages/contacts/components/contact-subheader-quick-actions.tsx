@@ -10,8 +10,9 @@ import {ContactPhoneType} from '@pages/contacts/enums/contact-phone-type.enum';
 import {useSelector} from 'react-redux';
 import {selectVoiceCounter} from '@pages/ccp/store/ccp.selectors';
 import { Link } from 'react-router-dom';
-import {SmsPath} from '@app/paths';
+import {EmailPath, SmsPath} from '@app/paths';
 import utils from '@shared/utils/utils';
+import {EMPTY_GUID} from '@pages/email/constants';
 
 interface ContactHeaderQuickActionsProps {
     editMode?: boolean;
@@ -144,14 +145,22 @@ const ContactSubheaderQuickActions = ({editMode, editIconClickHandler, contact, 
                 </Link>
             </span>
             {
-                // PLEASE DON'T DELETE THIS
-                // <span className="pr-8">
-                //     <SvgIcon type={Icon.ChannelEmail}
-                //         disabled={true}
-                //         className='icon-x-large'
-                //         strokeClass='contact-stroke-color'
-                //     />
-                // </span>
+                 <span className="pr-8">
+                     <Link
+                     className={contact?.emailAddress ? '' : 'disabled-link'}
+                     to={{
+                         pathname:contact?.emailAddress ? `${EmailPath}/${EMPTY_GUID}` : '#',
+                         state: {
+                             contact
+                         }
+                     }}>
+                     <SvgIcon type={Icon.ChannelEmail}
+                         disabled={!contact.emailAddress}
+                         className='icon-x-large'
+                         fillClass={contact?.emailAddress ? 'contact-subheader-quick-action-color' : ''}
+                         strokeClass='contact-stroke-color'
+                     /></Link>
+                 </span>
             }
             {!editMode && <span className="pr-8 cursor-pointer" onClick={editIconClickHandler}>
                 <SvgIcon type={Icon.EditCircled}
