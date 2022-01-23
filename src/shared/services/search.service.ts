@@ -3,7 +3,7 @@ import utils from "@shared/utils/utils";
 import { Patient } from "@pages/patients/models/patient";
 import { searchTypePatient } from "@components/search-bar/constants/search-type";
 const patientsUrl = "/patients";
-const contactsUrl = "https://localhost:44339/contacts";
+const contactsUrl = "/contacts";
 const ticketsUrl = "/tickets";
 
 export const getPatients = async (
