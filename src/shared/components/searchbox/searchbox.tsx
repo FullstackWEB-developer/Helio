@@ -3,7 +3,7 @@ import {SearchType} from './models/search-type';
 import {useTranslation} from 'react-i18next';
 import {keyboardKeys} from './constants/keyboard-keys';
 import Dropdown from '../dropdown/dropdown';
-import {CategoryItemModel, DropdownItemModel, DropdownModel} from '../dropdown/dropdown.models';
+import {CategoryItemModel, DropdownItemModel, DropdownModel} from '@components/dropdown';
 import customHooks from '../../hooks/customHooks';
 import SvgIcon from '@components/svg-icon/svg-icon';
 import {Icon} from '@components/svg-icon/icon';
@@ -19,9 +19,10 @@ interface SearchBoxProps {
     dropdownClassName?: string;
     onTextChange?: (value: string) => void;
     onSearch?: (type: number, value: string) => void;
+    placeholder?: string;
 }
 
-const SearchBox = ({className, dropdownClassName, ...props}: SearchBoxProps) => {
+const SearchBox = ({className, dropdownClassName, placeholder, ...props}: SearchBoxProps) => {
     const {t} = useTranslation();
     const [dropdownDisplayed, displayDropdown] = useState(false);
     const [text, setText] = useState<string>('');
@@ -114,7 +115,7 @@ const SearchBox = ({className, dropdownClassName, ...props}: SearchBoxProps) => 
                 itemsCssClass: 'w-72',
                 category: {
                     text: 'search.categories.patients',
-                    icon: <SvgIcon type={Icon.Placeholder} className='icon-small' fillClass='' />,
+                    icon: <SvgIcon type={Icon.PatientChartV2} className='icon-small' fillClass='rgba-038-fill' />,
                     key: SearchCategory.Patient
                 },
                 items: [
@@ -126,7 +127,7 @@ const SearchBox = ({className, dropdownClassName, ...props}: SearchBoxProps) => 
                 itemsCssClass: 'w-72',
                 category: {
                     text: 'search.categories.contacts',
-                    icon: <SvgIcon type={Icon.Placeholder} className='icon-small' fillClass='' />,
+                    icon: <SvgIcon type={Icon.Contacts} className='icon-small' fillClass='rgba-038-fill' />,
                     key: SearchCategory.Contact
                 },
                 items: [
@@ -150,7 +151,7 @@ const SearchBox = ({className, dropdownClassName, ...props}: SearchBoxProps) => 
                 itemsCssClass: 'w-72',
                 category: {
                     text: 'search.categories.patients',
-                    icon: <SvgIcon type={Icon.Placeholder} className='icon-small' fillClass='' />,
+                    icon: <SvgIcon type={Icon.PatientChartV2} className='icon-small' fillClass='rgba-038-fill' />,
                     key: SearchCategory.Patient
                 },
                 items: searchTypesDropDownModel
@@ -163,7 +164,7 @@ const SearchBox = ({className, dropdownClassName, ...props}: SearchBoxProps) => 
                 itemsCssClass: 'w-72',
                 category: {
                     text: 'search.categories.contacts',
-                    icon: <SvgIcon type={Icon.Placeholder} className='icon-small' fillClass='' />,
+                    icon: <SvgIcon type={Icon.Contacts} className='icon-small' fillClass='rgba-038-fill' />,
                     key: SearchCategory.Contact
                 },
                 items: contactSearchTypes
@@ -189,6 +190,7 @@ const SearchBox = ({className, dropdownClassName, ...props}: SearchBoxProps) => 
                 <div className='flex flex-row h-full'>
                     <SearchInputField
                         wrapperClassNames={'h-16'}
+                        placeholder={placeholder}
                         inputClassNames={'border-none'}
                         iconOnClick={() => {search()}}
                         value={text}

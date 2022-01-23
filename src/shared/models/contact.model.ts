@@ -28,7 +28,7 @@ export interface ContactBase {
     firstName?: string;
     lastName?: string;
     companyName?: string;
-    type?: ContactType
+    type?: ContactType;
 }
 
 export interface ContactExtended extends ContactBase {

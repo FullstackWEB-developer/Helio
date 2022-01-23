@@ -201,7 +201,7 @@ const SearchBar = () => {
                 itemsCssClass: 'w-72',
                 category: {
                     text: t('search.categories.patients'),
-                    icon: <SvgIcon type={Icon.Placeholder} className='icon-small' fillClass='' />,
+                    icon: <SvgIcon type={Icon.PatientChartV2} className='icon-small' fillClass='rgba-038-fill' />,
                     key: SearchCategory.Patient
                 },
                 items: patientSearchTypes
@@ -212,7 +212,7 @@ const SearchBar = () => {
                 itemsCssClass: 'w-72',
                 category: {
                     text: t('search.categories.contacts'),
-                    icon: <SvgIcon type={Icon.Placeholder} className='icon-small' fillClass='' />,
+                    icon: <SvgIcon type={Icon.Contacts} className='icon-small' fillClass='rgba-038-fill' />,
                     key: SearchCategory.Contact
                 },
                 items: contactSearchTypes
@@ -223,7 +223,7 @@ const SearchBar = () => {
                 itemsCssClass: 'w-72',
                 category: {
                     text: t('search.categories.tickets'),
-                    icon: <SvgIcon type={Icon.Placeholder} className='icon-small' fillClass='' />,
+                    icon: <SvgIcon type={Icon.Tickets} className='icon-small' fillClass='rgba-038-fill' />,
                     key: SearchCategory.Ticket
                 },
                 items: ticketSearchTypes
@@ -239,7 +239,7 @@ const SearchBar = () => {
                 itemsCssClass: 'w-72',
                 category: {
                     text: t('search.categories.patients'),
-                    icon: <SvgIcon type={Icon.Placeholder} className='icon-small' fillClass='' />,
+                    icon: <SvgIcon type={Icon.PatientChartV2} className='icon-small' fillClass='rgba-038-fill' />,
                     key: SearchCategory.Patient
                 },
                 items: [
@@ -253,7 +253,7 @@ const SearchBar = () => {
                 itemsCssClass: 'w-72',
                 category: {
                     text: t('search.categories.contacts'),
-                    icon: <SvgIcon type={Icon.Placeholder} className='icon-small' fillClass='' />,
+                    icon: <SvgIcon type={Icon.Contacts} className='icon-small' fillClass='rgba-038-fill' />,
                     key: '2'
                 },
                 items: [
@@ -267,7 +267,7 @@ const SearchBar = () => {
                 itemsCssClass: 'w-72',
                 category: {
                     text: t('search.categories.tickets'),
-                    icon: <SvgIcon type={Icon.Placeholder} className='icon-small' fillClass='' />,
+                    icon: <SvgIcon type={Icon.Tickets} className='icon-small' fillClass='rgba-038-fill' />,
                     key: '3'
                 },
                 items: [

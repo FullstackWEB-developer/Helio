@@ -120,19 +120,19 @@ const ProfileDropdown = () => {
         onClick: () => onMyProfileClick(),
         value: 'my_profile',
         hasDivider: true,
-        icon: <SvgIcon type={Icon.Placeholder} className='icon-small' fillClass='' />
+        icon: <SvgIcon type={Icon.MyProfile} className='icon-small' fillClass='rgba-038-fill' />
     });
     items.push({
         label: t('user_profile.my_stats'),
         onClick: () => onMyStatsClick(),
         value: 'my_stats',
-        icon: <SvgIcon type={Icon.Placeholder} className='icon-small' fillClass='' />
+        icon: <SvgIcon type={Icon.MyStats} className='icon-small' fillClass='rgba-038-fill' />
     });
     items.push({
         label: t('user_profile.sign_out'),
         onClick: () => signOut(),
         value: 'sign_out',
-        icon: <SvgIcon type={Icon.Placeholder} className='icon-small' fillClass='' />
+        icon: <SvgIcon type={Icon.SignOut} className='icon-small' fillClass='rgba-038-fill' />
     });
 
     const dropdownModel: DropdownModel = {

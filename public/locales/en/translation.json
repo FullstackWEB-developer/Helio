@@ -1360,7 +1360,12 @@
     "email": "Email",
     "phone": "Mobile",
     "text_consent": "Text consent",
-    "tooltip_unavailable_sms_message": "SMS not available. SMS message can not be sent to this contact."
+    "email_consent": "Email consent",
+    "tooltip_unavailable_sms_message": "SMS not available. SMS message can not be sent to this contact.",
+    "tooltip_unavailable_email_message": "Email not available. Email communication can  not be sent to this contact.",
+    "add": "Add",
+    "company": "Company",
+    "position": "Position"
   },
   "email": {
     "query_type" : {
@@ -1385,6 +1390,11 @@
       "from_label": "From:",
       "to_label": "To:",
       "cc_label": "Cc:"
+    },
+    "new_email" : {
+      "title": "New Message",
+      "search_placeholder": "Search Patient or Contact",
+      "to": "To:"
     }
   },
   "sms": {

@@ -12,15 +12,14 @@ import {DEFAULT_MESSAGE_QUERY_PARAMS} from '@pages/sms/constants';
 import {getNextPage} from '@pages/sms/utils';
 import utils from '@shared/utils/utils';
 import EmailMessage from '@pages/email/components/email-message/email-message';
-import {EMPTY_GUID} from '@pages/email/constants';
 
 const EmailConversation = () => {
     const {ticketId} = useParams<{ticketId: string}>();
     const {data: ticket, isFetching} = useQuery([QueryTickets, ticketId], () => getTicketById(ticketId!), {
-        enabled: !!ticketId && ticketId !== EMPTY_GUID
+        enabled: !!ticketId
     });
     const {data: patientPhoto} = useQuery([GetPatientPhoto, ticket?.patientId], () => getPatientPhoto(ticket?.patientId!), {
-        enabled: !!ticket?.patientId && ticketId !== EMPTY_GUID
+        enabled: !!ticket?.patientId
     });
     const [messages, setMessages] = useState<EmailMessageDto[]>([]);
     const messageListContainerRef = useRef<HTMLDivElement>(null);
@@ -33,7 +32,7 @@ const EmailConversation = () => {
     } = useInfiniteQuery([QueryTicketMessagesInfinite],
         ({pageParam = 1}) => getMessages(ticketId || '', ChannelTypes.Email, {...DEFAULT_MESSAGE_QUERY_PARAMS, page: pageParam}),
         {
-            enabled: !!ticketId && ticketId !== EMPTY_GUID,
+            enabled: !!ticketId,
             getNextPageParam: (lastPage) => getNextPage(lastPage),
             onSuccess: (result) => {
                 setMessages(utils.accumulateInfiniteData(result) as EmailMessageDto[]);
@@ -42,7 +41,7 @@ const EmailConversation = () => {
 
     const fetchMoreEmailMessages = () => {
         if (emailMessageHasNextPage && !isFetchingEmaiMessagesNextPage) {
-            fetchEmailMessagesNextPage();
+            fetchEmailMessagesNextPage().then();
         }
     }
 
@@ -53,8 +52,8 @@ const EmailConversation = () => {
     }
 
     useEffect(() => {
-        if (ticketId && ticketId !== EMPTY_GUID) {
-            emailMessagesQueryRefetch();
+        if (ticketId) {
+            emailMessagesQueryRefetch().then();
         }
     }, [ticketId, emailMessagesQueryRefetch]);
 

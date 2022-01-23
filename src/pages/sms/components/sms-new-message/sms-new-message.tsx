@@ -1,6 +1,6 @@
 import {useEffect, useMemo, useState} from 'react';
 import {useQuery} from 'react-query';
-import SearchBox, {SearchBoxResults} from '@components/searchbox';
+import SearchBox from '@components/searchbox';
 import {QueryContactTickets, QueryPatientTickets, SearchContactResults, SearchPatient} from '@constants/react-query-constants';
 import {getPatients, queryContacts} from '@shared/services/search.service';
 import SmsNewMessageExistingTicket from './sms-new-message-existing-ticket';
@@ -14,12 +14,13 @@ import SmsNewMessageNewTicket from './sms-new-message-new-ticket';
 import {getPatientByIdWithQuery} from '@pages/patients/services/patients.service';
 import {useTranslation} from 'react-i18next';
 import {searchType} from '@components/searchbox/constants/search-type';
-import SearchBoxContactResults from '../sms-search-box/searchbox-contact-results';
 import SmsHeader from '../sms-header/sms-header';
 import {TicketType} from '@pages/tickets/models/ticket-type.enum';
 import {Patient} from '@pages/patients/models/patient';
 import {ContactType} from '@pages/contacts/models/ContactType';
 import {ExtendedPatient} from '@pages/patients/models/extended-patient';
+import SearchboxContactsResults from '@components/searchbox/searchbox-contacts-results';
+import SearchboxPatientsResults from '@components/searchbox/searchbox-patients-results';
 
 interface SmsNewMessageProps {
     onTicketSelect?: (ticket: TicketBase) => void;
@@ -236,17 +237,19 @@ const SmsNewMessage = ({...props}: SmsNewMessageProps) => {
                     <NoSearchResult />
                 }
                 {!isLoading && step === SmsNewMessageSteps.SearchResult && patients.length > 0 &&
-                    <SearchBoxResults
+                    <SearchboxPatientsResults
+                        type='sms'
                         items={patients}
                         onSelect={onSearchBoxResultSelect}
                     />
                 }
                 {!contactIsLoading && step === SmsNewMessageSteps.SearchContactResult && contacts.length > 0 &&
-                    <SearchBoxContactResults
+                    <SearchboxContactsResults
                         items={contacts}
                         paging={contactPagination ?? DefaultPagination}
                         onSelect={onSearchBoxContactResultSelect}
                         onPageChange={onContactPaginationChanged}
+                        type='sms'
                     />
                 }
                 {!contactIsLoading && step === SmsNewMessageSteps.SearchContactResult && (contacts.length === 0 || isContactError) &&
