@@ -6,18 +6,29 @@ import React from "react";
 import {useTranslation} from "react-i18next";
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import {useMutation} from "react-query";
+import {downloadAttachments} from "@pages/sms/services/ticket-messages.service";
+import {SnackbarType} from "@components/snackbar/snackbar-type.enum";
+import {useDispatch} from "react-redux";
+import {addSnackbarMessage} from "@shared/store/snackbar/snackbar.slice";
+import Spinner from "@components/spinner/Spinner";
+import {EmailAttachmentHeader} from "@shared/models";
+import {MimeTypes} from "@shared/models/mime-types.enum";
 
 interface EmailMessageHeaderProps {
+    messageId: string;
     subject: string;
-    /* attachmentsCount: number; */
     date: Date;
     from: string;
     fromPhoto: string;
     collapseHandler: () => void,
-    collapsedBody: boolean
+    collapsedBody: boolean,
+    attachments: EmailAttachmentHeader[]
 }
-const EmailMessageHeader = ({subject, date, from, fromPhoto, collapsedBody, collapseHandler}: EmailMessageHeaderProps) => {
+const EmailMessageHeader = ({messageId, subject, date, from, fromPhoto, collapsedBody, collapseHandler, attachments}: EmailMessageHeaderProps) => {
 
+    const dispatch = useDispatch();
+    const attachmentsCount = attachments?.length ?? 0;
     dayjs.extend(relativeTime);
     const {t} = useTranslation();
     const getImage = () => {
@@ -40,12 +51,29 @@ const EmailMessageHeader = ({subject, date, from, fromPhoto, collapsedBody, coll
         /* TODO IN ANOTHER PBI */
     }
 
-
     const parsedDate = t('email.inbox.date', {
         relative: dayjs.utc(date).local().fromNow(),
         date: dayjs.utc(date).local().format('ddd, MMM DD, YYYY'),
         time: dayjs.utc(date).local().format('h:mm A')
     })
+
+    const downloadAttachmentsMutation = useMutation(downloadAttachments, {
+        onError: (_) => {
+            dispatch(addSnackbarMessage({
+                type: SnackbarType.Error,
+                message: 'email.inbox.attachments_download_failure'
+            }));
+        },
+        onSuccess: () => {
+            dispatch(addSnackbarMessage({
+                type: SnackbarType.Success,
+                message: 'email.inbox.attachments_download_success'
+            }));
+        }
+    })
+    const downloadAllAttachments = () => {
+        downloadAttachmentsMutation.mutate({messageId, mimeTypeToDownloadIn: attachmentsCount === 1 ? attachments[0].mimeType : MimeTypes.Zip});
+    }
 
     return (
         <div className='flex items-center py-4'>
@@ -55,6 +83,18 @@ const EmailMessageHeader = ({subject, date, from, fromPhoto, collapsedBody, coll
                 <span>{subject}</span>
             </div>
             <div className="ml-auto flex justify-center items-center">
+                {
+                    attachmentsCount > 0 &&
+                    <div className="flex mb-auto body3-medium">
+                        {
+                            downloadAttachmentsMutation.isLoading ? <Spinner size="small" className="px-2" /> :
+                                <span className="attachments-label hover:underline cursor-pointer" onClick={downloadAllAttachments}>{t('email.inbox.download_all')}</span>
+                        }
+                        &nbsp;
+                        {attachmentsCount}
+                        <SvgIcon type={Icon.Attachment} className="icon-small" fillClass="rgba-062-fill" wrapperClassName="pl-1.5 pr-2" />
+                    </div>
+                }
                 <div className="mb-auto body3-medium">{parsedDate}</div>
                 <div className="px-7">
                     <MoreMenu

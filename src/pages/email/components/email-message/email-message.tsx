@@ -6,6 +6,7 @@ import utils from '@shared/utils/utils';
 import React, {useRef, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import EmailMessageHeader from './email-message-header';
+import EmailAttachment from './email-attachment';
 
 const EmailMessage = ({message, ticketCreatedForName, ticketHeaderPhoto}: {message: EmailMessageDto, ticketCreatedForName: string, ticketHeaderPhoto: string}) => {
 
@@ -42,6 +43,8 @@ const EmailMessage = ({message, ticketCreatedForName, ticketHeaderPhoto}: {messa
                 collapseHandler={() => setCollapsed(!collapsed)}
                 collapsedBody={collapsed}
                 date={message.createdOn}
+                messageId={message.id}
+                attachments={message.attachments}
             />
             {
                 !collapsed &&
@@ -55,8 +58,19 @@ const EmailMessage = ({message, ticketCreatedForName, ticketHeaderPhoto}: {messa
                     <div dangerouslySetInnerHTML={{__html: message.body}}>
 
                     </div>
+                    {
+                        message.attachments?.length > 0 &&
+                        <div className='mt-4 pt-7 border-t flex'>
+                            {
+                                message.attachments.map(a =>
+                                    <EmailAttachment key={a.fileName} attachment={a} messageId={message.id} />
+                                )
+                            }
+                        </div>
+                    }
                 </div>
             }
+
             <div className='ml-10 pl-4 pb-7 border-b'></div>
 
             <Tooltip targetRef={recipientChevronIcon} isVisible={displayRecipientsTooltip}

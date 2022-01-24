@@ -92,5 +92,10 @@ export enum Icon {
     CallInbound = "CallInbound ",
     CallMissedOutgoing = "CallMissedOutgoing",
     Emergency = "Emergency",
-    UserUnknown = "UserUnknown"
+    UserUnknown = "UserUnknown",
+    JpgMime = "Jpg",
+    PdfMime = "Pdf",
+    PngMime = "Png",
+    TxtMime = "Txt",
+    FallbackMime = "ImagePlaceholder"
 }

@@ -1370,15 +1370,15 @@
     "position": "Position"
   },
   "email": {
-    "query_type" : {
+    "query_type": {
       "my_email": "My Email",
       "team_email": "Team Email"
     },
     "filter": {
-      "search_placeholder":"Search emails",
+      "search_placeholder": "Search emails",
       "team_section": "Team Member",
       "time_section": "Time Period",
-      "no_emails":  "There are no emails matching your criteria. Please update your search criteria."
+      "no_emails": "There are no emails matching your criteria. Please update your search criteria."
     },
     "found_in": "Found in:",
     "ticket_number": "Ticket Id",
@@ -1391,7 +1391,12 @@
       "to_multiple": "To {{recipient}} and {{x}} other",
       "from_label": "From:",
       "to_label": "To:",
-      "cc_label": "Cc:"
+      "cc_label": "Cc:",
+      "download_all": "Download All",
+      "attachments_download_success": "File(s) downloaded successfully",
+      "attachments_download_failure": "There was an issue downloading attachments. Please try again.",
+      "attachment_download_success": "{{filename}} downloaded successfully",
+      "attachment_download_failure": "{{filename}} failed to download. Please try again."
     },
     "new_email" : {
       "title": "New Message",

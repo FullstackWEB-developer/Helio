@@ -2,8 +2,22 @@
   &-sidebar {
     width: 22.5rem;
   }
+  &-attachment-thumbnail {
+    background-color: var(--table-header-background);
+    &:hover {
+      background-color: var(--light-divider-7);
+    }
+  }
 }
 
 .collapsible-button {
   border: 1px solid var(--rounded-border-color);
+}
+
+.attachments-label {
+  color: var(--color-primary-800);
+}
+
+.attachment-file-name {
+  color: var(--light-text-high-emphasis);
 }
