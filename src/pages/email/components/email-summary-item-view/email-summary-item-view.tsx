@@ -7,7 +7,7 @@ import {getPatientPhoto} from '@pages/patients/services/patients.service';
 import dayjs from 'dayjs';
 import Avatar from '@components/avatar';
 import classnames from 'classnames';
-import {Icon} from '@components/svg-icon';
+import SvgIcon, {Icon} from '@components/svg-icon';
 import HighlighterText from '@components/highlighter-text/highlighter-text';
 import Badge from '@components/badge';
 import isToday from 'dayjs/plugin/isToday';
@@ -22,7 +22,7 @@ export interface EmailSummaryItemViewProps {
 dayjs.extend(utc);
 dayjs.extend(isToday);
 const EmailSummaryItemView = ({emailInfo, searchTerm}: EmailSummaryItemViewProps) => {
-    const {createdForName, patientId, messageCreatedOn, messageSummary, unreadCount, createdForEndpoint, ticketId} = emailInfo;
+    const {createdForName, patientId, messageCreatedOn, messageSummary, unreadCount, createdForEndpoint, ticketId, hasAttachment} = emailInfo;
     const isRead = unreadCount === 0;
     const {t} = useTranslation();
     const urlParams = useParams<{ticketId?: string}>();
@@ -61,24 +61,24 @@ const EmailSummaryItemView = ({emailInfo, searchTerm}: EmailSummaryItemViewProps
         history.replace(`${EmailPath}/${ticketId}`)
     }
 
-    return (<div className={classnames('border-b email-summary cursor-pointer pl-6 pt-4 pb-1.5 pr-0 flex', {'email-summary-selected': urlParams?.ticketId === ticketId})} onClick={() => itemClicked()} >
+    return (<div className={classnames('border-b email-summary cursor-pointer pl-6 pt-4 pb-1.5 flex', {'email-summary-selected': urlParams?.ticketId === ticketId})} onClick={() => itemClicked()} >
         <div className='flex flex-row w-full'>
             <div className='pr-4'>
                 {userImage}
             </div>
-            <div className='flex flex-col'>
+            <div className='flex flex-col pr-6'>
                 <div className='flex flex-row items-center'>
-                    <div className='body1 truncate w-48'>
+                    <div className='body1 truncate w-44'>
                         <HighlighterText text={createdForName ? createdForName : createdForEndpoint} highlighterText={searchTerm} />
                     </div>
-                    <div className='body3-small w-16 justify-end flex flex-row'>{getDate}</div>
+                    <div className='body3-small w-20 justify-end flex flex-row'>{hasAttachment && <div className='pr-2'><SvgIcon type={Icon.Attachment} className='icon-small' fillClass='rgba-06-fill' /></div>}<div>{getDate}</div></div>
                 </div>
                 <div className='flex flex-row'>
-                    <div className={classnames('w-48 email-summary-display', {'body3-medium': isRead, 'body3-big': !isRead})}>
+                    <div className={classnames('w-44 email-summary-display', {'body3-medium': isRead, 'body3-big': !isRead})}>
                         <HighlighterText text={messageSummary} highlighterText={searchTerm} />
                     </div>
                     {!isRead &&
-                        <div className='justify-end flex flex-row w-full'>
+                        <div className='justify-end flex flex-row w-20'>
                             <div className='w-min pt-1'>
                                 <Badge text={unreadCount?.toString()} />
                             </div>

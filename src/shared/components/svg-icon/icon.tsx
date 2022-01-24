@@ -13,6 +13,7 @@ export enum Icon {
     ArrowUp = 'ArrowUp',
     ArrowUpward = 'ArrowUpward',
     Athena = 'Athena',
+    Attachment = 'Attachment',
     Bot = 'Bot',
     Calendar = 'Calendar',
     Ccp = 'Ccp',

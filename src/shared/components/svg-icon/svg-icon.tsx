@@ -144,6 +144,13 @@ const SvgIcon = ({type, wrapperClassName = '', className = 'icon-medium', fillCl
         </svg>
     }
 
+    const getIconAttachment = () => {
+        return <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className={mainClass}>
+            <rect width="24" height="24" fill="none"/>
+            <path d="M2,12.5A5.5,5.5,0,0,1,7.5,7H18a4,4,0,0,1,0,8H9.5a2.5,2.5,0,0,1,0-5H17v2H9.41c-.55,0-.55,1,0,1H18a2,2,0,0,0,0-4H7.5a3.5,3.5,0,0,0,0,7H17v2H7.5A5.5,5.5,0,0,1,2,12.5Z"  className={fillClass}/>
+        </svg>
+    }
+
     const getIconBot = () => {
         return <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className={mainClass}>
             <path d="M0,0H24V24H0Z" fill="none" />
@@ -968,6 +975,7 @@ const SvgIcon = ({type, wrapperClassName = '', className = 'icon-medium', fillCl
         [Icon.ArrowUp]: getIconArrowUp,
         [Icon.ArrowUpward]: getIconArrowUpward,
         [Icon.Athena]: getIconAthena,
+        [Icon.Attachment]: getIconAttachment,
         [Icon.Bot]: getIconBot,
         [Icon.Calendar]: getIconCalendar,
         [Icon.Ccp]: getIconCcp,
