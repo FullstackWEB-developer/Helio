@@ -73,6 +73,7 @@ const SearchBar = () => {
         dispatch(setType(selectedType));
         switch (Number(selectedType)) {
             case searchTypeContact.contactName:
+            case searchTypeContact.phone:
                 searchContactHandler();
                 break;
             case searchTypeTicket.ticketId:
@@ -260,6 +261,10 @@ const SearchBar = () => {
                     {
                         label: t('search.search_type.contact_name'),
                         value: 'item-2-1'
+                    },
+                    {
+                        label: t('search.search_type.contact_phone'),
+                        value: 'item-2-2'
                     }
                 ]
             },

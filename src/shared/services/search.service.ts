@@ -33,6 +33,11 @@ export const queryContacts = async (searchTerm: string, page = 1) => {
     return data;
 }
 
+export const queryContactsByPhone = async (phoneNumber: string, page = 1) => {
+    const {data} = await Api.get(`${contactsUrl}?anyPhoneNumber=${phoneNumber}&page=${page}`);
+    return data;
+}
+
 export const queryTickets = async (searchTerm: string, page = 1) => {
     const {data} = await Api.get(`${ticketsUrl}?searchTerm=${searchTerm}&page=${page}`);
     return data;

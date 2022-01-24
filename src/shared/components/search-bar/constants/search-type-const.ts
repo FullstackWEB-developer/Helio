@@ -57,5 +57,12 @@ export const searchTypes: SearchType[] = [
         type: searchTypeTicket.patientOrContactName,
         priority: 8,
         category: SearchCategory.Ticket
-    }
+    },
+    {
+        label: 'search.search_type.contact_phone',
+        regex: '(^\\d+$|^(\\d)(?:\\d|$)(?:\\d|$)(?:\\-|$)(?:\\d|$)(?:\\d|$)(?:\\d|$)(?:\\-|$)(?:\\d|$)(?:\\d|$)(?:\\d|$)(?:\\d|$)$)',
+        type: searchTypeContact.phone,
+        priority: 9,
+        category: SearchCategory.Contact
+    },
 ];

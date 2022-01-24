@@ -1,11 +1,11 @@
 import {SearchContactResults} from '@constants/react-query-constants';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {useQuery} from 'react-query';
 import {useDispatch, useSelector} from 'react-redux';
 import {setGlobalLoading} from '@shared/store/app/app.slice';
-import {queryContacts} from '@shared/services/search.service';
+import {queryContacts, queryContactsByPhone} from '@shared/services/search.service';
 import {useHistory} from 'react-router';
-import {selectSearchTerm} from '../store/search-bar.selectors';
+import {selectSearchTerm, selectSelectedType} from '../store/search-bar.selectors';
 import {useTranslation} from 'react-i18next';
 import {Address, AddressType} from '@shared/models/address.model';
 import utils from '@shared/utils/utils';
@@ -14,15 +14,17 @@ import SvgIcon, {Icon} from '@components/svg-icon';
 import Pagination from '@components/pagination/pagination';
 import NoSearchResults from '../components/no-search-results';
 import {setSearchTermDisplayValue} from '../store/search-bar.slice';
+import {searchTypeContact} from '@components/search-bar/constants/search-type';
 
 const ContactSearchResults = () => {
 
     const dispatch = useDispatch();
     const {t} = useTranslation();
     const searchTerm = useSelector(selectSearchTerm);
+    const selectedType = useSelector(selectSelectedType);
     const [paginationProperties, setPaginationProperties] = useState<Paging>(DefaultPagination);
-    const {data, isFetching, isError} = useQuery([SearchContactResults, searchTerm, paginationProperties.page],
-        () => queryContacts(searchTerm, paginationProperties.page), {
+    const {data, isFetching, isError} = useQuery([SearchContactResults, searchTerm, selectedType, paginationProperties.page],
+        () => selectedType === searchTypeContact.phone ? queryContactsByPhone(searchTerm, paginationProperties.page) : queryContacts(searchTerm, paginationProperties.page), {
         onSuccess: (data) => {
             setPaginationProperties({
                 page: data.page,
@@ -63,6 +65,18 @@ const ContactSearchResults = () => {
     const handlePageChange = (p: Paging) => {
         setPaginationProperties(p);
     }
+
+    const shouldDisplayPhoneHint = useMemo(() =>
+    {
+        if (searchTypeContact.phone !== selectedType) {
+            return false;
+        }
+        const term = searchTerm.replace('(','')
+            .replaceAll(')','')
+            .replaceAll(' ','')
+            .replaceAll('-','');
+        return term.length !== 10;
+    },[searchTerm, selectedType])
 
     return (
         <>
@@ -105,7 +119,8 @@ const ContactSearchResults = () => {
             {
                 (isError || data?.results?.length === 0) && <div>
                     <NoSearchResults />
-                    <div className='pl-6 pt-8 body2-medium whitespace-pre-line'>{t('search.search_by_contact_name_no_result')}</div>
+                    {searchTypeContact.contactName === selectedType && <div className='pl-6 pt-8 body2-medium whitespace-pre-line'>{t('search.search_by_contact_name_no_result')}</div> }
+                    {shouldDisplayPhoneHint && <div className='pl-6 pt-8 body2-medium whitespace-pre-line'>{t('search.search_by_phone_no_result')}</div>}
                 </div>
             }
         </>

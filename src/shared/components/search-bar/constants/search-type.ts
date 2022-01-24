@@ -6,7 +6,8 @@ export const searchTypePatient = {
 }
 
 export const searchTypeContact = {
-    contactName: 2
+    contactName: 2,
+    phone: 9
 }
 
 export const searchTypeTicket = {
