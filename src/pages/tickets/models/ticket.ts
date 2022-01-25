@@ -1,4 +1,4 @@
-import {CommunicationDirection} from '@shared/models';
+import {CommunicationDirection, TicketType} from '@shared/models';
 import {TicketFeed} from './ticket-feed';
 import {TicketNote} from './ticket-note';
 import {TicketStatuses} from './ticket.status.enum';
@@ -30,7 +30,7 @@ export interface Ticket {
     location?: string;
     patientChartNumber?: number;
     patientCaseNumber?: number;
-    type?: string;
+    type?: TicketType;
     feeds?: TicketFeed[];
     recordedConversationLink?: string;
     isDeleted?: boolean;

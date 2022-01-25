@@ -6,10 +6,11 @@ import {getEnumByType, getLookupValues} from '@pages/tickets/services/tickets.se
 import Select from '@components/select/select';
 import {getOptions, getReasonOption} from '@pages/sms/utils';
 import {useTranslation} from 'react-i18next';
+import {TicketType} from '@shared/models';
 
 interface SmsNewMessageNewTicketFormProps {
     disabled?: boolean;
-    onTicketTypeChange?: (value: string) => void;
+    onTicketTypeChange?: (value: TicketType) => void;
     onTicketReasonChange?: (value: string) => void;
     onValidate?: (isValid: boolean) => void;
 }
@@ -28,7 +29,7 @@ const SmsNewMessageNewTicketForm = ({disabled, ...props}: SmsNewMessageNewTicket
     const onTicketTypeSelected = (option?: Option) => {
         setSelectedTicketType(option);
         if (option && props.onTicketTypeChange) {
-            props.onTicketTypeChange(option.value)
+            props.onTicketTypeChange(Number(option.value))
         }
     }
     const onTicketReasonSelected = (option?: Option) => {
@@ -60,8 +61,9 @@ const SmsNewMessageNewTicketForm = ({disabled, ...props}: SmsNewMessageNewTicket
     }, [dispatch]);
 
     return (<div className='flex flex-col'>
-        <span className='mb-4 body1 mt-7'>{t('sms.chat.new.new_ticket.form_title')}</span>
-        <div className='w-80'>
+        <span className='mb-4 subtitle mt-7 pb-4'>{t('sms.chat.new.new_ticket.form_title')}</span>
+        <div className='body2'>{t('sms.chat.new.new_ticket.description')}</div>
+        <div className='w-80 pt-6'>
 
             <Select
                 disabled={disabled}

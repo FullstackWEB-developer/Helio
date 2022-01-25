@@ -1,10 +1,11 @@
 import {ChannelTypes} from "@shared/models/ticket-channel";
+import {TicketType} from '@shared/models';
 
 export interface TicketBase {
     id: string;
     ticketNumber: number;
     status?: number;
-    type?: string;
+    type: TicketType;
     priority?: number
     channel: ChannelTypes;
     subject: string;
@@ -17,4 +18,5 @@ export interface TicketBase {
     reason: string;
     assignee?: string;
     createdForName: string;
+    createdBy: string;
 }

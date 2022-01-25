@@ -89,7 +89,6 @@ const CompanyContactDetails = ({editMode, contact, initiateACall, addNewContactH
 
     return (
         <>
-            {updateContactMutation.isError && <h6 className='text-danger mt-2 mb-5'>{t('contacts.contact_details.error_updating_contact')}</h6>}
             {
                 !editMode ?
                     (

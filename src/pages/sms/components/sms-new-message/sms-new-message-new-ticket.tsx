@@ -11,7 +11,7 @@ import {createTicket} from '@pages/tickets/services/tickets.service';
 import {useMutation} from 'react-query';
 import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
 import {Ticket} from '@pages/tickets/models/ticket';
-import {ChannelTypes, ContactExtended} from '@shared/models';
+import {ChannelTypes, ContactExtended, TicketType} from '@shared/models';
 import utils from "@shared/utils/utils";
 import {ContactType} from "@pages/contacts/models/ContactType";
 
@@ -20,13 +20,14 @@ interface SmsNewMessageNewTicketProps {
     contact?: ContactExtended;
     onClick?: (ticket: TicketBase) => void;
     onCancelClick?: () => void;
+    type: ChannelTypes.SMS | ChannelTypes.Email;
 }
 
-const SmsNewMessageNewTicket = ({patient, contact, ...props}: SmsNewMessageNewTicketProps) => {
+const SmsNewMessageNewTicket = ({patient, contact, type, ...props}: SmsNewMessageNewTicketProps) => {
     const {t} = useTranslation();
     const dispatch = useDispatch();
     const auth = useSelector(authenticationSelector);
-    const [ticketTypeSelected, setTicketTypeSelected] = useState<string>();
+    const [ticketTypeSelected, setTicketTypeSelected] = useState<TicketType>();
     const [ticketReasonSelected, setTicketReasonSelected] = useState<string>();
     const [isValid, setValid] = useState(false);
 
@@ -75,7 +76,7 @@ const SmsNewMessageNewTicket = ({patient, contact, ...props}: SmsNewMessageNewTi
     }
     return (
         <div className='px-6 pb-7'>
-            <h5 className='my-7'>{t('sms.chat.new.new_ticket.title')}</h5>
+            <h6 className='my-7'>{t(type === ChannelTypes.SMS ? 'sms.chat.new.new_ticket.title' : 'email.new_email.new_ticket.title')}</h6>
             <SmsNewMessageNewTicketForm
                 disabled={createTicketMutation.isLoading}
                 onTicketReasonChange={value => setTicketReasonSelected(value)}

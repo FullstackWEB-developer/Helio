@@ -114,7 +114,7 @@ const Contacts: React.FC<ContactProps> = () => {
     }
 
     const fetchMore = () => {
-        if (hasNextPage) {
+        if (hasNextPage && !isFetching) {
             fetchNextPage().then();
         }
     }

@@ -1367,7 +1367,7 @@
     "tooltip_unavailable_email_message": "Email not available. Email communication can  not be sent to this contact.",
     "add": "Add",
     "company": "Company",
-    "position": "Position"
+    "job_title": "Job Title"
   },
   "email": {
     "query_type": {
@@ -1401,7 +1401,11 @@
     "new_email" : {
       "title": "New Message",
       "search_placeholder": "Search Patient or Contact",
-      "to": "To:"
+      "to": "To:",
+      "draft": "Draft",
+      "new_ticket": {
+        "title": "You are starting a new email conversation."
+      }
     }
   },
   "sms": {
@@ -1437,7 +1441,7 @@
         "to": "To",
         "draft": "Draft",
         "existing_ticket": {
-          "title": "Existing open Tickets found.",
+          "title": "Existing open tickets found.",
           "description": "We have found existing open tickets for this patient. Please select ticket you would like this communication to be associated with or select create new ticket below.",
           "select_ticket": "Select Existing Ticket",
           "create_ticket": "Create a New Ticket",
@@ -1450,7 +1454,8 @@
         },
         "new_ticket": {
           "title": "You are starting a new SMS conversation.",
-          "form_title": "Enter Ticket Information"
+          "form_title": "Enter Ticket Information",
+          "description": "Your new conversation will be associated with this ticket."
         }
       }
     },

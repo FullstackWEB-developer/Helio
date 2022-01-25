@@ -1,6 +1,6 @@
 import {useTranslation} from 'react-i18next';
 import {Patient} from '@pages/patients/models/patient';
-import {DefaultPagination, Paging} from '@shared/models';
+import {ChannelTypes, DefaultPagination, Paging} from '@shared/models';
 import Pagination from '@components/pagination';
 import {useMemo, useState} from 'react';
 import Table from '@components/table/table';
@@ -9,11 +9,12 @@ import utils from '@shared/utils/utils';
 import dayjs from 'dayjs';
 import SvgIcon, {Icon} from '@components/svg-icon';
 import SearchboxAddIcon from '@components/searchbox/components/searchbox-add-icon';
+
 interface SearchBoxResultsProps {
     items?: Patient[];
     error?: string;
     onSelect: (patient: Patient) => void;
-    type: 'sms' | 'email',
+    type: ChannelTypes.SMS | ChannelTypes.Email,
     paginate?: boolean;
 }
 const SearchboxPatientsResults = ({items, error, onSelect, type, paginate}: SearchBoxResultsProps) => {
@@ -69,7 +70,7 @@ const SearchboxPatientsResults = ({items, error, onSelect, type, paginate}: Sear
             },{
                 title: 'searchbox_result.text_consent',
                 widthClass: 'w-1/6',
-                field: 'mobilePhone',
+                field: 'consentToText',
                 render:(_, record) => record.consentToText ? t('common.yes') : t('common.no')
             },{
                 title: 'searchbox_result.add',
@@ -112,7 +113,7 @@ const SearchboxPatientsResults = ({items, error, onSelect, type, paginate}: Sear
             headerClassName:'h-12',
             size: 'large'
         }
-        return type === 'sms' ? smsTableModel : emailTableModel;
+        return type === ChannelTypes.SMS ? smsTableModel : emailTableModel;
     }, [type, itemsToDisplay])
 
     return (

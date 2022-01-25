@@ -1,12 +1,12 @@
 import './new-email.scss';
-import {useMemo, useState} from 'react';
+import {useEffect, useMemo, useState} from 'react';
 import {useQuery} from 'react-query';
-import {SearchContactResults, SearchPatient} from '@constants/react-query-constants';
+import {QueryContactTickets, QueryTickets, SearchContactResults, SearchPatient} from '@constants/react-query-constants';
 import {searchType} from '@components/searchbox/constants/search-type';
 import {getPatientByIdWithQuery} from '@pages/patients/services/patients.service';
 import {getPatients, queryContacts} from '@shared/services/search.service';
 import {Patient} from '@pages/patients/models/patient';
-import {ContactExtended, DefaultPagination, PagedList, Paging} from '@shared/models';
+import {ChannelTypes, ContactExtended, DefaultPagination, PagedList, Paging} from '@shared/models';
 import {NewEmailSteps} from '@pages/email/components/new-email/new-email-steps';
 import Spinner from '@components/spinner/Spinner';
 import NewEmailSearch from '@pages/email/components/new-email/components/new-email-search';
@@ -14,15 +14,32 @@ import NewEmailHeader from '@pages/email/components/new-email/components/new-ema
 import NewEmailNoSearchResult from '@pages/email/components/new-email/components/new-email-no-search-result';
 import SearchboxPatientsResults from '@components/searchbox/searchbox-patients-results';
 import SearchboxContactsResults from '@components/searchbox/searchbox-contacts-results';
+import {getContactTickets, getPatientTicketsPaged} from '@pages/tickets/services/tickets.service';
+import {ContactTicketsRequest, PatientTicketsRequest} from '@pages/tickets/models/patient-tickets-request';
+import {TicketBase} from '@pages/tickets/models/ticket-base';
+import SmsNewMessageExistingTicket from '@pages/sms/components/sms-new-message/sms-new-message-existing-ticket';
+import {useHistory} from 'react-router-dom';
+import {EmailPath} from '@app/paths';
+import utils from '@shared/utils/utils';
+import {ContactType} from '@pages/contacts/models/ContactType';
+import SmsNewMessageNewTicket from '@pages/sms/components/sms-new-message/sms-new-message-new-ticket';
 
-const NewEmail = () => {
+export interface NewEmailProps {
+    newEmailCreated: (ticket: TicketBase) => void;
+}
+const NewEmail = ({newEmailCreated} : NewEmailProps) => {
     const [step, setStep] = useState<NewEmailSteps>(NewEmailSteps.Search);
     const [patients, setPatients] = useState<Patient[]>([]);
     const [contacts, setContacts] = useState<ContactExtended[]>([]);
     const [patientSelected, setPatientSelected] = useState<Patient>();
+    const [tickets, setTickets] = useState<PagedList<TicketBase>>({...DefaultPagination, results: []});
     const [contactSelected, setContactSelected] = useState<ContactExtended>();
     const [contactPagination, setContactPagination] = useState<Paging>();
+    const [toName, setToName] = useState<string>();
     const [searchParams, setSearchParams] = useState<{type: number, value: string}>({type: -1, value: ''});
+    const [ticketQueryParams, setTicketQueryParams] = useState<PatientTicketsRequest>({...DefaultPagination, pageSize: 5, status: 1});
+    const [ticketsContactParams, setTicketContactParams] = useState<ContactTicketsRequest>({...DefaultPagination, contactId: ''});
+    const history = useHistory();
     const onSearchHandler = (type: number, value: string) => {
         setSearchParams({type, value});
     }
@@ -64,6 +81,45 @@ const NewEmail = () => {
                 }
             });
 
+    const {refetch: refetchPatientTickets, isFetching: patientTicketsFetching} = useQuery([QueryTickets, ticketQueryParams],
+        () => getPatientTicketsPaged(ticketQueryParams), {
+            enabled: false,
+            onSuccess: (response) => {
+                if (response.totalCount > 0) {
+                    setStep(NewEmailSteps.ExistingTicket);
+                    setTickets(response);
+                } else {
+                    setStep(NewEmailSteps.NoExistingTicket);
+                }
+            }
+        });
+
+    const {refetch: refetchContactTickets, isFetching: contactTicketsFetching, isLoading: contactTicketsLoading} = useQuery([QueryContactTickets, ticketsContactParams], () =>
+            getContactTickets(ticketsContactParams),
+        {
+            enabled: false,
+            onSuccess: (response) => {
+                if (response.totalCount > 0) {
+                    setStep(NewEmailSteps.ExistingTicket);
+                    setTickets(response);
+                } else {
+                    setStep(NewEmailSteps.NoExistingTicket);
+                }
+            }
+        }
+    );
+    useEffect(() => {
+        if (!!ticketQueryParams.patientId) {
+            refetchPatientTickets().then();
+        }
+    }, [ticketQueryParams, refetchPatientTickets]);
+
+    useEffect(() => {
+        if (!!ticketsContactParams.contactId) {
+            refetchContactTickets().then();
+        }
+    }, [ticketsContactParams, refetchContactTickets]);
+
     const clearSearchResults = () => {
         setContacts([]);
         setPatients([]);
@@ -73,58 +129,90 @@ const NewEmail = () => {
         return  patientsIsLoading ||
             patientsIsFetching ||
             contactIsFetching ||
-            contactIsLoading
-    }, [contactIsFetching, contactIsLoading, patientsIsFetching, patientsIsLoading]);
+            contactIsLoading ||
+            patientTicketsFetching ||
+            contactTicketsFetching ||
+            contactTicketsLoading
+    }, [contactTicketsFetching, patientTicketsFetching, contactIsFetching, contactIsLoading, patientsIsFetching, patientsIsLoading, contactTicketsLoading]);
 
-    const onSearchBoxResultSelect = (patient: Patient) => {
+    const onPatientSelect = (patient: Patient) => {
         setPatientSelected(patient);
+        setToName(utils.stringJoin(' ', patient.firstName, patient.lastName));
+        setTicketQueryParams({...ticketQueryParams, patientId: patient.patientId});
     }
 
-    const displaySearchBox = useMemo(() => {
-        return (step === NewEmailSteps.Search || step === NewEmailSteps.ContactSearchResult || step === NewEmailSteps.PatientSearchResult) &&
-            !patientSelected && !contactSelected;
-    }, [contactSelected, patientSelected, step]);
-
-
-    if (isLoading) {
-        return <div className='w-full'>
-            <NewEmailHeader/>
-            {displaySearchBox && <NewEmailSearch  onSearchHandler={onSearchHandler}/>}
-            <Spinner fullScreen={true}/>
-        </div>;
-    }
-
-    const onSearchBoxContactResultSelect = (contact: ContactExtended) => {
+    const onContactSelect = (contact: ContactExtended) => {
         setContactSelected(contact);
+        setToName(contact.type === ContactType.Company ? contact.companyName : utils.stringJoin(' ', contact.firstName, contact.lastName));
+        setTicketContactParams({...ticketsContactParams, contactId: contact.id ?? ''});
     }
+    const onTicketsPageChanged = (paging: Paging) => {
+        setTicketQueryParams({...ticketQueryParams, ...paging});
+    }
+
+    const onTicketSelectionCancelClick = () => {
+        if (patients && patients.length > 0) {
+            setStep(NewEmailSteps.PatientSearchResult);
+        } else if (contacts && contacts.length > 0) {
+            setStep(NewEmailSteps.ContactSearchResult);
+        }
+        else {
+            setStep(NewEmailSteps.Search);
+        }
+        setContactSelected(undefined);
+        setPatientSelected(undefined);
+    }
+
+    const onTicketSelect = (ticket: TicketBase) => {
+        history.replace(`${EmailPath}/${ticket.id}`)
+        newEmailCreated(ticket);
+    }
+
+    const content = useMemo(() =>{
+        if (step === NewEmailSteps.PatientSearchResult && patients.length > 0) {
+            return <SearchboxPatientsResults
+                items={patients}
+                type= {ChannelTypes.Email}
+                onSelect={onPatientSelect}
+                paginate={true}
+            />;
+        } else if (step === NewEmailSteps.ContactSearchResult && contacts.length > 0) {
+            return <SearchboxContactsResults
+                items={contacts}
+                paging={contactPagination ?? DefaultPagination}
+                onSelect={onContactSelect}
+                onPageChange={setContactPagination}
+                type={ChannelTypes.Email}
+            />;
+        } else if (step === NewEmailSteps.PatientSearchResult && (patients.length === 0 || patientIsError)) {
+            return <NewEmailNoSearchResult searchTerm={searchParams.value} />;
+        } else if (step === NewEmailSteps.ContactSearchResult && (contacts.length === 0 || contactIsError)) {
+            return <NewEmailNoSearchResult searchTerm={searchParams.value} />
+        } else if (step === NewEmailSteps.ExistingTicket) {
+            return <SmsNewMessageExistingTicket
+                tickets={tickets}
+                onTicketsPageChange={onTicketsPageChanged}
+                patient={patientSelected}
+                contact={contactSelected}
+                onClick={(ticket) => onTicketSelect(ticket)}
+                onCancelClick={onTicketSelectionCancelClick}
+            />;
+        } else if (step === NewEmailSteps.NoExistingTicket) {
+            return <SmsNewMessageNewTicket
+                patient={patientSelected}
+                type={ChannelTypes.Email}
+                contact={contactSelected}
+                onClick={(ticket) => onTicketSelect && onTicketSelect(ticket)}
+                onCancelClick={onTicketSelectionCancelClick}
+            />
+        }
+    }, [step]);
+
 
     return <div className='w-full h-full overflow-y-auto'>
                 <NewEmailHeader/>
-                {displaySearchBox && <NewEmailSearch  onSearchHandler={onSearchHandler}/>}
-                {step === NewEmailSteps.PatientSearchResult && patients.length > 0 &&
-                    <SearchboxPatientsResults
-                        items={patients}
-                        type='email'
-                        onSelect={onSearchBoxResultSelect}
-                        paginate={true}
-                    />
-                }
-                {step === NewEmailSteps.ContactSearchResult && contacts.length > 0 &&
-                    <SearchboxContactsResults
-                        items={contacts}
-                        paging={contactPagination ?? DefaultPagination}
-                        onSelect={onSearchBoxContactResultSelect}
-                        onPageChange={setContactPagination}
-                        type='email'
-                    />
-                }
-
-            {step === NewEmailSteps.PatientSearchResult && (patients.length === 0 || patientIsError) &&
-                <NewEmailNoSearchResult searchTerm={searchParams.value} />
-            }
-            {step === NewEmailSteps.ContactSearchResult && (contacts.length === 0 || contactIsError) &&
-                <NewEmailNoSearchResult searchTerm={searchParams.value} />
-            }
+                <NewEmailSearch value={toName}  onSearchHandler={onSearchHandler}/>
+                {isLoading ? <Spinner fullScreen={true}/> : content}
         </div>
 }
 

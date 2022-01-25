@@ -1,5 +1,5 @@
 import {useTranslation} from 'react-i18next';
-import {ContactExtended, Paging} from '@shared/models';
+import {ChannelTypes, ContactExtended, Paging} from '@shared/models';
 import Pagination from '@components/pagination';
 import {useMemo} from 'react';
 import Table from '@components/table/table';
@@ -13,7 +13,7 @@ interface SearchBoxResultsProps {
     items?: ContactExtended[];
     error?: string;
     onSelect: (contact: ContactExtended) => void;
-    type: 'sms' | 'email',
+    type: ChannelTypes.SMS | ChannelTypes.Email,
     paging: Paging
     onPageChange: (paging: Paging) => void;
 }
@@ -68,9 +68,9 @@ const SearchboxContactsResults = ({items, error, onSelect, type, paging, onPageC
                 widthClass: 'w-3/12',
                 field: 'companyName'
             },{
-                title: 'searchbox_result.position',
+                title: 'searchbox_result.job_title',
                 widthClass: 'w-3/12',
-                field: 'position'
+                field: 'jobTitle'
             },{
                 title: 'searchbox_result.add',
                 widthClass: 'w-2/6',
@@ -84,7 +84,7 @@ const SearchboxContactsResults = ({items, error, onSelect, type, paging, onPageC
             headerClassName:'h-12',
             size: 'large',
         }
-        return type === 'sms' ? smsTableModel : emailTableModel;
+        return type === ChannelTypes.SMS ? smsTableModel : emailTableModel;
     }, [type, items])
 
     return (

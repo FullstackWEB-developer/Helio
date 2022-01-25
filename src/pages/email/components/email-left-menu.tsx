@@ -19,12 +19,14 @@ import Spinner from '@components/spinner/Spinner';
 import dayjs from 'dayjs';
 import useDebounce from '../../../shared/hooks/useDebounce';
 import {DEBOUNCE_SEARCH_DELAY_MS} from '@constants/form-constants';
-
-const EmailLeftMenu = () => {
+export interface EmailLeftMenuProps {
+    messageSummaries: TicketMessageSummary[],
+    setMessageSummaries:(messageSummaries: TicketMessageSummary[]) => void;
+}
+const EmailLeftMenu = ({messageSummaries, setMessageSummaries}: EmailLeftMenuProps) => {
     const {id} = useSelector(selectAppUserDetails);
     const [emailQueryType, setEmailQueryType] = useState<EmailQueryType>();
     const [searchTerm, setSearchTerm] = useState<string>();
-    const [messageSummaries, setMessageSummaries] = useState<TicketMessageSummary[]>([]);
     const isDefaultTeamView = useCheckPermission('Email.DefaultToTeamView');
     const [filterParams, setFilterParams] = useState<EmailFilterModel>({...DEFAULT_FILTER_VALUE, assignedTo: isDefaultTeamView ? '' : id});
     const [isFilterVisible, setFilterVisible] = useState<boolean>(false);

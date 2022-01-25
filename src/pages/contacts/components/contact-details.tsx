@@ -9,7 +9,7 @@ import CompanyContactDetails from './company-contact-details';
 import ContactNotes from './contact-notes';
 import TextArea from '@components/textarea/textarea';
 import {ContactNote} from '../models/contact-note.model';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {userFullNameSelector} from '@shared/store/app-user/appuser.selectors';
 import ContactTickets from './contact-tickets';
 import {ContactType} from '@shared/models/contact-type.enum';
@@ -19,6 +19,8 @@ import Confirmation from '@components/confirmation/confirmation';
 import {QueryContactNotes} from '@constants/react-query-constants';
 import {Icon} from '@components/svg-icon/icon';
 import utils from '@shared/utils/utils';
+import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
+import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
 
 interface ContactDetailsProps {
     contact: ContactExtended;
@@ -45,7 +47,7 @@ const ContactDetails = ({contact,
     const [selectedTab, setSelectedTab] = useState(-1);
     const [note, setNote] = useState('');
     const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
-
+    const dispatch = useDispatch();
     const noteSectionStart = useRef<HTMLDivElement>(null);
     const userFullName = useSelector(userFullNameSelector);
     const isCompany = contact.type === ContactType.Company;
@@ -74,6 +76,12 @@ const ContactDetails = ({contact,
     const toggleFavoriteMutation = useMutation(toggleFavoriteContact, {
         onSuccess: () => {
             onToggleFavoriteSuccess();
+        },
+        onError:() => {
+            dispatch(addSnackbarMessage({
+                type: SnackbarType.Error,
+                message: 'contacts.contact_details.error_favorite_contact'
+            }))
         }
     })
     const starIconClickHandler = () => {
@@ -127,8 +135,6 @@ const ContactDetails = ({contact,
 
     return (
         <div className={`flex flex-grow flex-col overflow-y-${selectedTab === 1 ? 'hidden' : 'auto'} relative`}>
-            {toggleFavoriteMutation.isError && <h6 className='text-danger mt-2 mb-5'>{t('contacts.contact_details.error_favorite_contact')}</h6>}
-            {deleteContactMutation.isError && <h6 className='text-danger mt-2 mb-5'>{t('contacts.contact_details.error_deleting_contact')}</h6>}
             <ContactHeader contact={contact}
                 editMode={editMode}
                 editIconClickHandler={editIconClickHandler}

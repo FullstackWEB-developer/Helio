@@ -5,11 +5,11 @@ import {useMemo, useRef, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import customHooks from '../../../hooks/customHooks';
 import {Patient} from '@pages/patients/models/patient';
-import {ContactExtended} from '@shared/models';
+import {ChannelTypes, ContactExtended} from '@shared/models';
 
 export interface SearchboxAddIconProps{
     onClick: () => void;
-    type: 'sms' | 'email',
+    type: ChannelTypes.SMS | ChannelTypes.Email,
     patient?: Patient,
     contact?: ContactExtended
 }
@@ -23,12 +23,12 @@ const SearchboxAddIcon = ({onClick, type, patient, contact}: SearchboxAddIconPro
 
     const canSend = useMemo(() => {
         if (patient) {
-            if (type === 'sms') {
+            if (type === ChannelTypes.SMS) {
                 return !!patient.mobilePhone && patient.consentToText;
             }
             return !!patient.emailAddress
         } else if (contact) {
-            if (type === 'sms') {
+            if (type === ChannelTypes.SMS) {
                 return !!contact.mobilePhone
             }
             return !!contact.emailAddress
@@ -57,7 +57,7 @@ const SearchboxAddIcon = ({onClick, type, patient, contact}: SearchboxAddIconPro
         </div>
         <Tooltip targetRef={addIconRef} isVisible={isToolTipVisible} placement='bottom-end'>
             <div className="flex p-6 body2 w-80">
-                {t(type === 'sms' ? 'searchbox_result.tooltip_unavailable_sms_message' : 'searchbox_result.tooltip_unavailable_email_message')}
+                {t(type === ChannelTypes.SMS ? 'searchbox_result.tooltip_unavailable_sms_message' : 'searchbox_result.tooltip_unavailable_email_message')}
             </div>
         </Tooltip>
 

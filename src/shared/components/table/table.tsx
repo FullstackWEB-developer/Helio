@@ -38,7 +38,7 @@ const Table = ({model}: TableProps) => {
         } else {
             data = rows;
         }
-        return React.Children.toArray(data.map(row => {
+        return React.Children.toArray(data.filter(row => !!row).map(row => {
             return <div className={hasRowsBottomBorder ? 'border-b' : ''}>
                 <TableRow rowClass={classnames(rowClass, {'bg-gray-100': model.isSelected?.(row)})} size={size} columns={columns} data={row}/>
             </div>

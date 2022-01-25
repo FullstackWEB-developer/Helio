@@ -10,6 +10,7 @@ import './sms-new-message-existing-ticket-list.scss';
 import SvgIcon, {Icon} from '@components/svg-icon';
 import {TicketsPath} from '@app/paths';
 import {Link} from 'react-router-dom';
+import {TicketType} from '@shared/models';
 
 interface SmsNewMessageExistingTicketListProps {
     items: TicketBase[];
@@ -36,12 +37,12 @@ const SmsNewMessageExistingTicketList = ({items, ...props}: SmsNewMessageExistin
 
         return ticketReasons.find((lookupValue) => lookupValue.value === value)?.label ?? ''
     }
-    const getTicketType = (value?: string) => {
-        if (!value) {
+    const getTicketType = (type?: TicketType) => {
+        if (!type) {
             return '';
         }
 
-        return ticketTypes.find((lookupValue) => lookupValue.key === Number(value))?.value ?? ''
+        return ticketTypes.find((lookupValue) => lookupValue.key === type)?.value ?? ''
     }
     const onRowClick = (ticket: TicketBase) => {
         setTicketSelected(ticket.id);

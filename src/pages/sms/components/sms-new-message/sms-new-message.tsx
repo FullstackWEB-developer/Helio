@@ -5,7 +5,14 @@ import {QueryContactTickets, QueryPatientTickets, SearchContactResults, SearchPa
 import {getPatients, queryContacts} from '@shared/services/search.service';
 import SmsNewMessageExistingTicket from './sms-new-message-existing-ticket';
 import {ContactTicketsRequest, PatientTicketsRequest} from '@pages/tickets/models/patient-tickets-request';
-import {ContactExtended, DefaultPagination, PagedList, Paging, TicketMessageSummary} from '@shared/models';
+import {
+    ChannelTypes,
+    ContactExtended,
+    DefaultPagination,
+    PagedList,
+    Paging,
+    TicketMessageSummary
+} from '@shared/models';
 import {getContactTickets, getPatientTicketsPaged} from '@pages/tickets/services/tickets.service';
 import {TicketBase} from '@pages/tickets/models/ticket-base';
 import {SmsNewMessageSteps} from '@pages/sms/models';
@@ -238,7 +245,7 @@ const SmsNewMessage = ({...props}: SmsNewMessageProps) => {
                 }
                 {!isLoading && step === SmsNewMessageSteps.SearchResult && patients.length > 0 &&
                     <SearchboxPatientsResults
-                        type='sms'
+                        type={ChannelTypes.SMS}
                         items={patients}
                         onSelect={onSearchBoxResultSelect}
                     />
@@ -249,7 +256,7 @@ const SmsNewMessage = ({...props}: SmsNewMessageProps) => {
                         paging={contactPagination ?? DefaultPagination}
                         onSelect={onSearchBoxContactResultSelect}
                         onPageChange={onContactPaginationChanged}
-                        type='sms'
+                        type={ChannelTypes.SMS}
                     />
                 }
                 {!contactIsLoading && step === SmsNewMessageSteps.SearchContactResult && (contacts.length === 0 || isContactError) &&
@@ -267,6 +274,7 @@ const SmsNewMessage = ({...props}: SmsNewMessageProps) => {
                 }
                 {!isLoading && step === SmsNewMessageSteps.NoExistingTicket &&
                     <SmsNewMessageNewTicket
+                        type={ChannelTypes.SMS}
                         patient={patientSelected}
                         contact={contactSelected}
                         onClick={(ticket) => props.onTicketSelect && props.onTicketSelect(ticket)}

@@ -154,7 +154,7 @@ const TicketDetailInfoPanel = ({ticket, patient, contact}: TicketDetailInfoPanel
                 priority: Number(updateModel.priority?.value),
                 reason: updateModel.reason?.value,
                 location: updateModel.location?.value,
-                type: updateModel.type?.value,
+                type: Number(updateModel.type?.value),
                 tags: updateModel.tags,
                 callbackPhoneNumber: updateModel.callbackPhoneNumber,
                 patientCaseNumber: updateModel.patientCaseNumber,

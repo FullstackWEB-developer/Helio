@@ -6,7 +6,7 @@ import {Patient} from '@pages/patients/models/patient';
 import {Ticket} from '@pages/tickets/models/ticket';
 import {TicketBase} from '@pages/tickets/models/ticket-base';
 import {createTicket} from '@pages/tickets/services/tickets.service';
-import {ChannelTypes, ContactExtended, ContactType, PagedList, Paging} from '@shared/models';
+import {ChannelTypes, ContactExtended, ContactType, PagedList, Paging, TicketType} from '@shared/models';
 import {userNameSelector} from '@shared/store/app-user/appuser.selectors';
 import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
 import utils from '@shared/utils/utils';
@@ -34,7 +34,7 @@ const SmsNewMessageExistingTicket = ({tickets, patient, contact, ...props}: SmsN
     const username = useSelector(userNameSelector);
 
     const [isTicketListVisible, setTicketListVisible] = useState(true);
-    const [ticketTypeSelected, setTicketTypeSelected] = useState<string>();
+    const [ticketTypeSelected, setTicketTypeSelected] = useState<TicketType>();
     const [ticketReasonSelected, setTicketReasonSelected] = useState<string>();
     const [isValid, setValid] = useState(false);
     const [isNewTicketVisible, setNewTicketVisible] = useState(false);
