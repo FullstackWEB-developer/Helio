@@ -1,7 +1,7 @@
 import React, {useEffect, useLayoutEffect, useRef, useState} from 'react';
 import AlwaysScrollToBottom from '@components/scroll-to-bottom';
 import SmsChatMessageList from '../sms-chat-message/sms-chat-message-list';
-import {ContactExtended, TicketMessage, TicketMessageSummary} from '@shared/models';
+import {ChannelTypes, ContactExtended, TicketMessage, TicketMessageSummary} from '@shared/models';
 import {useDispatch} from 'react-redux';
 import classnames from 'classnames';
 import utils from '@shared/utils/utils';
@@ -26,7 +26,7 @@ import {
 import {getPatientByIdWithQuery, getPatientPhoto} from '@pages/patients/services/patients.service';
 import {processTemplate} from '@shared/services/notifications.service';
 import {getContactById} from '@shared/services/contacts.service';
-import SmsHeader from '../sms-header/sms-header';
+import ConversationHeader from '@components/conversation-header/conversation-header';
 
 interface SmsChatProps {
     info: TicketMessageSummary;
@@ -135,7 +135,7 @@ const SmsChat = ({info, isLoading, isSending, isBottomFocus, messages = [], last
     }
 
     return (<div className="flex flex-col justify-between flex-auto h-full sms-chat">
-        <SmsHeader info={info} forNewTicketMessagePurpose={false} patientPhoto={patientPhoto} />
+        <ConversationHeader info={info} forNewTicketMessagePurpose={false} patientPhoto={patientPhoto} conversationChannel={ChannelTypes.SMS} />
         <div className="flex flex-col flex-1 pl-6 overflow-y-auto">
             {messages && messages.length > 0 &&
                 <>

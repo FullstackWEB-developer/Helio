@@ -48,4 +48,5 @@ export interface Ticket {
     contactWaitDuration?: number;
     communicationDirection?: CommunicationDirection;
     ipAddress?: string;
+    incomingEmailAddress?: string;
 }

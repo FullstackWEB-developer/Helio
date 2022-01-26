@@ -4,7 +4,7 @@ import {useTranslation} from 'react-i18next';
 import ContactCategory from './components/contact-category';
 import ContactList from './components/contact-list';
 import {ContactBase, ContactExtended} from '@shared/models/contact.model';
-import {useHistory, useParams} from 'react-router-dom';
+import {useHistory, useLocation, useParams} from 'react-router-dom';
 import {ContactsPath} from 'src/app/paths';
 import ContactDetails from './components/contact-details';
 import {useInfiniteQuery, useQuery, useQueryClient} from 'react-query';
@@ -31,13 +31,14 @@ import {selectLookupValuesAsOptions} from '@pages/tickets/store/tickets.selector
 interface ContactProps { }
 const Contacts: React.FC<ContactProps> = () => {
     const {t} = useTranslation();
+    const location = useLocation<{email?: string, shouldLinkRelatedCompany?: boolean}>();
     const [selectedCategory, setSelectedCategory] = useState<string>(t('contacts.category.all_contacts'));
     const [selectedContact, setSelectedContact] = useState<ContactExtended>();
     const facilityTypes = useSelector((state) => selectLookupValuesAsOptions(state, 'ContactCategory'), (left, right)=> left.length === right.length)
     const [searchTerm, setSearchTerm] = useState('');
     const [debounceSearchTerm] = useDebounce(searchTerm, DEBOUNCE_SEARCH_DELAY_MS);
-    const [editMode, setEditMode] = useState(false);
-    const [addNewContactMode, setAddNewContactMode] = useState(false);
+    const [editMode, setEditMode] = useState(false);    
+    const [addNewContactMode, setAddNewContactMode] = useState(!!location.state?.email ?? false);
     const isGlobalLoading = useSelector(selectGlobalLoading);
     const [queryParams, setQueryParams] = useState<QueryContactRequest>({pageSize: getPageSize()});
     const history = useHistory();
@@ -296,7 +297,7 @@ const Contacts: React.FC<ContactProps> = () => {
                     onDeleteError={onDeleteError}
                 />
             }
-            {addNewContactMode &&
+            {addNewContactMode && !isFetchingStates && !isFetchingSingleContact && !isGlobalLoading &&
                 <AddNewContact
                     contact={selectedContact}
                     onContactAddSuccess={onContactAddSuccess}

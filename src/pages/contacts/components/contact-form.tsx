@@ -20,7 +20,7 @@ import ControlledSelect from '@components/controllers/controlled-select';
 import Confirmation from '@components/confirmation/confirmation';
 import {useSelector} from 'react-redux';
 import {selectLookupValuesAsOptions} from '@pages/tickets/store/tickets.selectors';
-import {Prompt} from 'react-router';
+import {Prompt, useLocation} from 'react-router';
 
 const SHIPPING_ADDRESS_LABEL_KEY = 'contacts.contact_details.individual.shipping_address'
 const BILLING_ADDRESS_LABEL_KEY = 'contacts.contact_details.individual.billing_address';
@@ -203,6 +203,7 @@ const ContactForm = ({contact, contactType, submitHandler, closeHandler, editMod
         }
     }
 
+    const location = useLocation<{email?: string, shouldLinkRelatedCompany?: boolean}>();
     return (
         <div className={`flex flex-col relative ${editMode ? 'overflow-hidden' : ''}`}>
             <form onSubmit={handleSubmit(onSubmit)} noValidate={true}>
@@ -270,7 +271,7 @@ const ContactForm = ({contact, contactType, submitHandler, closeHandler, editMod
                         )
                     }
                     <div className="col-span-12 lg:col-span-5">
-                        <ControlledInput name='email' control={control} defaultValue={contact?.emailAddress || ''}
+                        <ControlledInput name='email' control={control} defaultValue={contact?.emailAddress || location?.state?.email ||  ''}
                             type='email' label={t('contacts.contact_details.individual.email')} dataTestId='contact-email' />
                     </div>
                     <div className={`col-span-12 lg:col-span-${!isCompanyContact ? '3' : '5'}`}>

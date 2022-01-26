@@ -21,13 +21,13 @@ import SmsNewMessageNewTicket from './sms-new-message-new-ticket';
 import {getPatientByIdWithQuery} from '@pages/patients/services/patients.service';
 import {useTranslation} from 'react-i18next';
 import {searchType} from '@components/searchbox/constants/search-type';
-import SmsHeader from '../sms-header/sms-header';
 import {TicketType} from '@pages/tickets/models/ticket-type.enum';
 import {Patient} from '@pages/patients/models/patient';
 import {ContactType} from '@pages/contacts/models/ContactType';
 import {ExtendedPatient} from '@pages/patients/models/extended-patient';
 import SearchboxContactsResults from '@components/searchbox/searchbox-contacts-results';
 import SearchboxPatientsResults from '@components/searchbox/searchbox-patients-results';
+import ConversationHeader from '@components/conversation-header/conversation-header';
 
 interface SmsNewMessageProps {
     onTicketSelect?: (ticket: TicketBase) => void;
@@ -233,7 +233,7 @@ const SmsNewMessage = ({...props}: SmsNewMessageProps) => {
                 />
             </div>
             {
-                !shouldSearchInputBeVisible() && <SmsHeader info={ticketMessageSummary} forNewTicketMessagePurpose={true} />
+                !shouldSearchInputBeVisible() && <ConversationHeader info={ticketMessageSummary} forNewTicketMessagePurpose={true} conversationChannel={ChannelTypes.SMS} />
             }
 
             <div className='h-full overflow-y-auto'>

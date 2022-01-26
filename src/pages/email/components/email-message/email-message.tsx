@@ -1,6 +1,5 @@
 import SvgIcon, {Icon} from '@components/svg-icon';
 import Tooltip from '@components/tooltip/tooltip';
-import {customHooks} from '@shared/hooks';
 import {EmailMessageDto, TicketMessagesDirection} from '@shared/models';
 import utils from '@shared/utils/utils';
 import React, {useRef, useState} from 'react';
@@ -11,7 +10,7 @@ import EmailAttachment from './email-attachment';
 const EmailMessage = ({message, ticketCreatedForName, ticketHeaderPhoto}: {message: EmailMessageDto, ticketCreatedForName: string, ticketHeaderPhoto: string}) => {
 
     const {t} = useTranslation();
-    const emailFromLabel = message.direction === TicketMessagesDirection.Incoming ? ticketCreatedForName :
+    const emailFromLabel = message.direction === TicketMessagesDirection.Incoming ? ticketCreatedForName || message.fromAddress :
         (message.createdByName ?? message.fromAddress);
 
     const emailFromPhoto = message.direction === TicketMessagesDirection.Incoming ? ticketHeaderPhoto : '';

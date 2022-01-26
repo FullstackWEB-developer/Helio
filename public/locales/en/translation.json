@@ -1396,9 +1396,29 @@
       "attachments_download_success": "File(s) downloaded successfully",
       "attachments_download_failure": "There was an issue downloading attachments. Please try again.",
       "attachment_download_success": "{{filename}} downloaded successfully",
-      "attachment_download_failure": "{{filename}} failed to download. Please try again."
+      "attachment_download_failure": "{{filename}} failed to download. Please try again.",
+      "close_ticket": {
+        "label": "Close Ticket",
+        "success": "Ticked moved to Closed status.",
+        "failure": "Closing ticket failed. Please try again."
+      },
+      "solve_ticket": {
+        "label": "Solve and Close Ticket",
+        "success": "Ticket moved to Solved status.",
+        "failure": "Solving ticket failed. Please try again."
+      },
+      "archive_ticket": {
+        "label": "Archive Ticket",
+        "success": "Archiving ticket completed successfully.",
+        "failure": "Archiving ticket failed. Please try again."
+      },
+      "spam": "Spam",
+      "create_patient_chart": "Create Patient Chart",
+      "add_contact": "Add Contact",
+      "blocked_success": "{{email}} has been blocked succesfully.",
+      "blocked_failure": "Blocking {{email}} failed. Please try again."
     },
-    "new_email" : {
+    "new_email": {
       "title": "New Message",
       "search_placeholder": "Search Patient or Contact",
       "to": "To:",
