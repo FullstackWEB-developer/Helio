@@ -21,9 +21,10 @@ export interface MessageTemplateSelectProps {
     asSelect?: boolean;
     selectLabel?: string;
     disabled?: boolean;
+    isLoading?: boolean;
 }
 
-const NotificationTemplateSelect = ({channel, category, onSelect, asSelect, selectLabel}: MessageTemplateSelectProps) => {
+const NotificationTemplateSelect = ({channel, category, onSelect, asSelect, selectLabel, isLoading}: MessageTemplateSelectProps) => {
     const [items, setItems] = useState<DropdownItemModel[]>([]);
     const [options, setOptions] = useState<Option[]>([]);
     const templateDiv = useRef<HTMLDivElement>(null);
@@ -44,7 +45,7 @@ const NotificationTemplateSelect = ({channel, category, onSelect, asSelect, sele
             :(!emailTemplates || emailTemplates.length < 1);
     }
 
-    const {isLoading, isFetching} = useQuery([GetMessageTemplates, channel, category], () => getTemplates(channel, category), {
+    const {isLoading: isLoadingTemplates, isFetching} = useQuery([GetMessageTemplates, channel, category], () => getTemplates(channel, category), {
         enabled: shouldFetch(),
         onSuccess:(data) => {
             if (channel === NotificationTemplateChannel.Sms) {
@@ -112,7 +113,7 @@ const NotificationTemplateSelect = ({channel, category, onSelect, asSelect, sele
     };
 
     const isLoadingOrFetching = () => {
-        return isLoading || isFetching;
+        return isLoading || isFetching || isLoadingTemplates;
     }
 
     if (asSelect) {

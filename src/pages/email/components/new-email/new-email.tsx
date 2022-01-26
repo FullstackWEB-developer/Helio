@@ -23,6 +23,7 @@ import {EmailPath} from '@app/paths';
 import utils from '@shared/utils/utils';
 import {ContactType} from '@pages/contacts/models/ContactType';
 import SmsNewMessageNewTicket from '@pages/sms/components/sms-new-message/sms-new-message-new-ticket';
+import {useLocation} from 'react-router';
 
 export interface NewEmailProps {
     newEmailCreated: (ticket: TicketBase) => void;
@@ -40,6 +41,7 @@ const NewEmail = ({newEmailCreated} : NewEmailProps) => {
     const [ticketQueryParams, setTicketQueryParams] = useState<PatientTicketsRequest>({...DefaultPagination, pageSize: 5, status: 1});
     const [ticketsContactParams, setTicketContactParams] = useState<ContactTicketsRequest>({...DefaultPagination, contactId: ''});
     const history = useHistory();
+    const location = useLocation<{contact: ContactExtended}>();
     const onSearchHandler = (type: number, value: string) => {
         setSearchParams({type, value});
     }
@@ -68,6 +70,12 @@ const NewEmail = ({newEmailCreated} : NewEmailProps) => {
                 }
             }
         );
+
+    useEffect(() => {
+        if (location?.state?.contact) {
+            onContactSelect(location.state.contact);
+        }
+    }, [location?.state?.contact]);
 
     const {isFetching: contactIsFetching, isLoading: contactIsLoading, isError: contactIsError} =
         useQuery<PagedList<ContactExtended>>([SearchContactResults, searchParams.type, searchParams.value, contactPagination],
