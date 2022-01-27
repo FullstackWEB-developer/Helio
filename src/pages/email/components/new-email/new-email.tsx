@@ -1,12 +1,19 @@
 import './new-email.scss';
-import {useEffect, useMemo, useState} from 'react';
+import {useContext, useEffect, useMemo, useState} from 'react';
 import {useQuery} from 'react-query';
 import {QueryContactTickets, QueryTickets, SearchContactResults, SearchPatient} from '@constants/react-query-constants';
 import {searchType} from '@components/searchbox/constants/search-type';
 import {getPatientByIdWithQuery} from '@pages/patients/services/patients.service';
 import {getPatients, queryContacts} from '@shared/services/search.service';
 import {Patient} from '@pages/patients/models/patient';
-import {ChannelTypes, ContactExtended, DefaultPagination, PagedList, Paging} from '@shared/models';
+import {
+    ChannelTypes,
+    ContactExtended,
+    DefaultPagination,
+    PagedList,
+    Paging,
+    TicketMessageSummary
+} from '@shared/models';
 import {NewEmailSteps} from '@pages/email/components/new-email/new-email-steps';
 import Spinner from '@components/spinner/Spinner';
 import NewEmailSearch from '@pages/email/components/new-email/components/new-email-search';
@@ -24,11 +31,11 @@ import utils from '@shared/utils/utils';
 import {ContactType} from '@pages/contacts/models/ContactType';
 import SmsNewMessageNewTicket from '@pages/sms/components/sms-new-message/sms-new-message-new-ticket';
 import {useLocation} from 'react-router';
+import dayjs from 'dayjs';
+import {EmailContext} from '@pages/email/context/email-context';
+import {useTranslation} from 'react-i18next';
 
-export interface NewEmailProps {
-    newEmailCreated: (ticket: TicketBase) => void;
-}
-const NewEmail = ({newEmailCreated} : NewEmailProps) => {
+const NewEmail = () => {
     const [step, setStep] = useState<NewEmailSteps>(NewEmailSteps.Search);
     const [patients, setPatients] = useState<Patient[]>([]);
     const [contacts, setContacts] = useState<ContactExtended[]>([]);
@@ -41,11 +48,12 @@ const NewEmail = ({newEmailCreated} : NewEmailProps) => {
     const [ticketQueryParams, setTicketQueryParams] = useState<PatientTicketsRequest>({...DefaultPagination, pageSize: 5, status: 1});
     const [ticketsContactParams, setTicketContactParams] = useState<ContactTicketsRequest>({...DefaultPagination, contactId: ''});
     const history = useHistory();
+    const {t} = useTranslation();
     const location = useLocation<{contact: ContactExtended}>();
     const onSearchHandler = (type: number, value: string) => {
         setSearchParams({type, value});
     }
-
+    const {messageSummaries, setMessageSummaries} = useContext(EmailContext)!;
     const getPatientQueryEnabled = () => !!searchParams.value && (searchParams.type === searchType.patientId || searchParams.type === searchType.patientName);
     const getContactQueryEnabled = () => !!searchParams.value && searchParams.type === searchType.contactName;
 
@@ -173,7 +181,35 @@ const NewEmail = ({newEmailCreated} : NewEmailProps) => {
 
     const onTicketSelect = (ticket: TicketBase) => {
         history.replace(`${EmailPath}/${ticket.id}`)
-        newEmailCreated(ticket);
+        onNewTicketCreated(ticket);
+    }
+
+    const onNewTicketCreated = (ticket: TicketBase)=> {
+        const existingMessage = messageSummaries.find(a => a.ticketId === ticket.id);
+        if (existingMessage) {
+            const index = messageSummaries.indexOf(existingMessage);
+            existingMessage.messageCreatedOn = dayjs().local().toDate();
+            const messages = [...messageSummaries.slice(0, index), Object.assign({}, messageSummaries[index], messageSummaries.slice(index + 1))];
+            setMessageSummaries(messages);
+        } else {
+            const message: TicketMessageSummary = {
+                ticketId: ticket.id,
+                patientId: ticket.patientId,
+                contactId: ticket.contactId,
+                createdForName: ticket.createdForName,
+                ticketNumber: ticket.ticketNumber,
+                reason: ticket.reason,
+                messageSummary: t('email.new_email.draft'),
+                unreadCount: 0,
+                messageCreatedOn: dayjs().local().toDate(),
+                messageCreatedByName: '',
+                ticketType: ticket.type,
+                createdForEndpoint: ''
+
+            }
+            const messages = [...messageSummaries, message];
+            setMessageSummaries(messages);
+        }
     }
 
     const content = useMemo(() =>{

@@ -45,7 +45,7 @@ const EmailConversation = () => {
         refetch: emailMessagesQueryRefetch,
         isFetching: emailMessagesQueryIsFetching,
         isLoading: emailMessagesQueryIsLoading,
-        isFetchingNextPage: isFetchingEmaiMessagesNextPage,
+        isFetchingNextPage: isFetchingEmailMessagesNextPage,
         fetchNextPage: fetchEmailMessagesNextPage,
         hasNextPage: emailMessageHasNextPage
     } = useInfiniteQuery([QueryTicketMessagesInfinite],
@@ -59,7 +59,7 @@ const EmailConversation = () => {
         });
 
     const fetchMoreEmailMessages = () => {
-        if (emailMessageHasNextPage && !isFetchingEmaiMessagesNextPage) {
+        if (emailMessageHasNextPage && !isFetchingEmailMessagesNextPage) {
             fetchEmailMessagesNextPage().then();
         }
     }
@@ -91,7 +91,7 @@ const EmailConversation = () => {
                 </div>
                 {messages && messages.length > 0 && <div ref={messageListContainerRef} className='overflow-y-auto' onScroll={onScroll}>
                     {
-                        emailMessagesQueryIsFetching && !isFetchingEmaiMessagesNextPage ? <Spinner /> :
+                        emailMessagesQueryIsFetching && !isFetchingEmailMessagesNextPage ? <Spinner /> :
                             messages?.length ? messages.map((m: EmailMessageDto) =>
                                 <EmailMessage
                                     key={m.id}
@@ -101,7 +101,7 @@ const EmailConversation = () => {
                             ) : null
                     }
                     {
-                        isFetchingEmaiMessagesNextPage && <Spinner />
+                        isFetchingEmailMessagesNextPage && <Spinner />
                     }
                 </div>}
                 {(!messages || messages.length === 0) && <SendFirstEmail onMailSend={() => emailMessagesQueryRefetch()} contact={contact} patient={patient} ticket={ticket}/>}

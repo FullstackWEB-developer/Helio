@@ -2,18 +2,22 @@ import Avatar from "@components/avatar";
 import {DropdownItemModel} from "@components/dropdown";
 import MoreMenu from "@components/more-menu";
 import SvgIcon, {Icon} from "@components/svg-icon";
-import React from "react";
+import React, {useContext} from "react";
 import {useTranslation} from "react-i18next";
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import {useMutation} from "react-query";
-import {downloadAttachments} from "@pages/sms/services/ticket-messages.service";
+import {useMutation, useQuery} from "react-query";
+import {downloadAttachments, splitTicket} from "@pages/sms/services/ticket-messages.service";
 import {SnackbarType} from "@components/snackbar/snackbar-type.enum";
 import {useDispatch} from "react-redux";
 import {addSnackbarMessage} from "@shared/store/snackbar/snackbar.slice";
 import Spinner from "@components/spinner/Spinner";
 import {EmailAttachmentHeader} from "@shared/models";
 import {MimeTypes} from "@shared/models/mime-types.enum";
+import {EmailPath} from '@app/paths';
+import {useHistory} from 'react-router-dom';
+import {MORE_MENU_OPTION_SPLIT_TICKET} from '@pages/sms/constants';
+import {EmailContext} from '@pages/email/context/email-context';
 
 interface EmailMessageHeaderProps {
     messageId: string;
@@ -26,10 +30,11 @@ interface EmailMessageHeaderProps {
     attachments: EmailAttachmentHeader[]
 }
 const EmailMessageHeader = ({messageId, subject, date, from, fromPhoto, collapsedBody, collapseHandler, attachments}: EmailMessageHeaderProps) => {
-
     const dispatch = useDispatch();
     const attachmentsCount = attachments?.length ?? 0;
     dayjs.extend(relativeTime);
+    const {getEmailsQuery} = useContext(EmailContext)!;
+    const history = useHistory();
     const {t} = useTranslation();
     const getImage = () => {
         if (fromPhoto && fromPhoto.length > 0) {
@@ -40,15 +45,37 @@ const EmailMessageHeader = ({messageId, subject, date, from, fromPhoto, collapse
         return <Avatar userFullName={from} />
     }
 
+    const splitTicketQuery = useQuery(["SplitTicket", messageId], () => splitTicket(messageId), {
+        enabled: false,
+        onSuccess:(data) => {
+            dispatch(addSnackbarMessage({
+                type: SnackbarType.Success,
+                message:'email.inbox.split_ticket_success'
+            }));
+            history.replace(`${EmailPath}/${data.id}`);
+            getEmailsQuery.refetch().then();
+        },
+        onError:() => {
+            dispatch(addSnackbarMessage({
+                type: SnackbarType.Error,
+                message:'email.inbox.split_ticket_failed'
+            }));
+        }
+    })
+
     const getMoreMenuOption = (): DropdownItemModel[] => {
-        const options: DropdownItemModel[] = [];
         const commonClassName = 'body2 py-1.5';
-        /* TODO IN ANOTHER PBI */
-        return options;
+        return [{
+            label: 'email.inbox.split_ticket',
+            value: MORE_MENU_OPTION_SPLIT_TICKET,
+            className: commonClassName
+        }] as DropdownItemModel[];
     }
 
     const onMoreMenuClick = (item: DropdownItemModel) => {
-        /* TODO IN ANOTHER PBI */
+        if (item.value === MORE_MENU_OPTION_SPLIT_TICKET){
+            splitTicketQuery.refetch().then();
+        }
     }
 
     const parsedDate = t('email.inbox.date', {
@@ -73,6 +100,10 @@ const EmailMessageHeader = ({messageId, subject, date, from, fromPhoto, collapse
     })
     const downloadAllAttachments = () => {
         downloadAttachmentsMutation.mutate({messageId, mimeTypeToDownloadIn: attachmentsCount === 1 ? attachments[0].mimeType : MimeTypes.Zip});
+    }
+
+    if (splitTicketQuery.isLoading) {
+        return <Spinner fullScreen={true} />
     }
 
     return (

@@ -73,3 +73,4 @@ export const GetOverallManagerRatingsForUser = 'get-overall-manager-ratings-for-
 export const GetAppointmentById = 'get-appointment-by-id';
 export const GetAppointmentNotes = 'get-appointment-notes';
 export const ExportTicketList = 'export-ticket-list'
+export const SplitTicket = 'split-ticket';

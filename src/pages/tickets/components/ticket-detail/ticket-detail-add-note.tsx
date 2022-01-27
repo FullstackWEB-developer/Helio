@@ -281,7 +281,7 @@ const TicketDetailAddNote = ({ticket, patient, contact}: TicketDetailAddNoteProp
                             <TextArea
                                 className='w-full pl-2 pr-0 body2'
                                 data-test-id='ticket-send-sms'
-                                placeHolder={t('ticket_detail.add_note')}
+                                placeHolder={t( isSendSmsDisabled ? 'ticket_detail.reopen_or_create_to_send_sms': 'ticket_detail.add_note')}
                                 required={true}
                                 rows={2}
                                 maxRows={5}

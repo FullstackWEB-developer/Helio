@@ -1,52 +1,26 @@
-import React, {useEffect, useMemo, useState} from 'react';
-import {ChannelTypes, TicketMessageSummary, TicketMessageSummaryRequest} from '@shared/models';
-import {DEFAULT_FILTER_VALUE, DEFAULT_MESSAGE_QUERY_PARAMS} from '../constants';
+import React, {useContext, useEffect, useMemo, useState} from 'react';
+import {DEFAULT_FILTER_VALUE} from '../constants';
 import {DropdownItemModel} from '@components/dropdown';
 import {EmailQueryType} from '@pages/email/models/email-query-type';
-import {useInfiniteQuery} from 'react-query';
-import {QueryTicketMessageSummaryInfinite} from '@constants/react-query-constants';
-import {getChats} from '@pages/sms/services/ticket-messages.service';
-import {getNextPage} from '@pages/sms/utils';
 import utils from '@shared/utils/utils';
-import {useSelector} from 'react-redux';
-import {selectAppUserDetails} from '@shared/store/app-user/appuser.selectors';
-import useCheckPermission from '@shared/hooks/useCheckPermission';
 import DropdownLabel from '@components/dropdown-label';
 import {EmailFilterModel} from '@pages/email/components/email-filter/email-filter.model';
 import EmailFilterBar from '@pages/email/components/email-filter/email-filter-bar';
 import EmailSummaryList from '@pages/email/components/email-summary-list/email-summary-list';
 import Spinner from '@components/spinner/Spinner';
-import dayjs from 'dayjs';
 import useDebounce from '../../../shared/hooks/useDebounce';
 import {DEBOUNCE_SEARCH_DELAY_MS} from '@constants/form-constants';
-export interface EmailLeftMenuProps {
-    messageSummaries: TicketMessageSummary[],
-    setMessageSummaries:(messageSummaries: TicketMessageSummary[]) => void;
-}
-const EmailLeftMenu = ({messageSummaries, setMessageSummaries}: EmailLeftMenuProps) => {
-    const {id} = useSelector(selectAppUserDetails);
-    const [emailQueryType, setEmailQueryType] = useState<EmailQueryType>();
+import { EmailContext } from '../context/email-context';
+import {useSelector} from 'react-redux';
+import {selectAppUserDetails} from '@shared/store/app-user/appuser.selectors';
+
+const EmailLeftMenu = () => {
     const [searchTerm, setSearchTerm] = useState<string>();
-    const isDefaultTeamView = useCheckPermission('Email.DefaultToTeamView');
-    const [filterParams, setFilterParams] = useState<EmailFilterModel>({...DEFAULT_FILTER_VALUE, assignedTo: isDefaultTeamView ? '' : id});
     const [isFilterVisible, setFilterVisible] = useState<boolean>(false);
+    const {id} = useSelector(selectAppUserDetails);
     const [debounceSearchTerm] = useDebounce(searchTerm, DEBOUNCE_SEARCH_DELAY_MS);
-
-    const [queryParams, setQueryParams] = useState<TicketMessageSummaryRequest>({
-        channel: ChannelTypes.Email,
-        assignedTo: !isDefaultTeamView ? id : '',
-        fromDate: utils.toShortISOLocalString(dayjs().utc().subtract(7, 'day').toDate()),
-        ...DEFAULT_MESSAGE_QUERY_PARAMS
-    });
-
-    const {fetchNextPage, isFetchingNextPage, isFetching, isLoading} = useInfiniteQuery([QueryTicketMessageSummaryInfinite, queryParams],
-        ({pageParam = 1}) => getChats({...queryParams, page: pageParam}), {
-            enabled: !!emailQueryType,
-            getNextPageParam: (lastPage) => getNextPage(lastPage),
-            onSuccess: (result) => {
-                setMessageSummaries(utils.accumulateInfiniteData(result))
-            }
-        });
+    const {setEmailQueryType, emailQueryType, queryParams, setQueryParams, getEmailsQuery, messageSummaries, isDefaultTeamView} = useContext(EmailContext)!;
+    const [filterParams, setFilterParams] = useState<EmailFilterModel>({...DEFAULT_FILTER_VALUE, assignedTo: isDefaultTeamView ? '' : id});
 
     useEffect(() => {
         setQueryParams({...queryParams, searchTerm: debounceSearchTerm, page: 1});
@@ -89,13 +63,13 @@ const EmailLeftMenu = ({messageSummaries, setMessageSummaries}: EmailLeftMenuPro
     const handleScroll = (event: any) => {
         const target = event.target;
         if (target.scrollHeight - target.scrollTop === target.clientHeight) {
-            fetchNextPage().then();
+            getEmailsQuery.fetchNextPage().then();
         }
     }
 
     const loading = useMemo(() => {
-        return (isLoading || isFetching) && !isFetchingNextPage
-    }, [isFetching, isFetchingNextPage, isLoading])
+        return (getEmailsQuery.isLoading) && !getEmailsQuery.isFetchingNextPage
+    }, [getEmailsQuery.isFetchingNextPage, getEmailsQuery.isLoading])
 
     const onFilterClick = (value: EmailFilterModel) => {
         setQueryParams({
@@ -138,7 +112,7 @@ const EmailLeftMenu = ({messageSummaries, setMessageSummaries}: EmailLeftMenuPro
                         searchTerm={searchTerm}
                         onScroll={handleScroll}
                         data={messageSummaries}
-                        isFetchingNextPage={isFetchingNextPage} />
+                        isFetchingNextPage={getEmailsQuery.isFetchingNextPage} />
                 }
             </div>
         </div>
