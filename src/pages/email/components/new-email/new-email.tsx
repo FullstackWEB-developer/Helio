@@ -250,7 +250,7 @@ const NewEmail = () => {
                 onCancelClick={onTicketSelectionCancelClick}
             />
         }
-    }, [step]);
+    }, [step, patients, contacts, contactPagination]);
 
 
     return <div className='w-full h-full overflow-y-auto'>
