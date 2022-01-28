@@ -146,8 +146,8 @@ const SvgIcon = ({type, wrapperClassName = '', className = 'icon-medium', fillCl
 
     const getIconAttachment = () => {
         return <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className={mainClass}>
-            <rect width="24" height="24" fill="none"/>
-            <path d="M2,12.5A5.5,5.5,0,0,1,7.5,7H18a4,4,0,0,1,0,8H9.5a2.5,2.5,0,0,1,0-5H17v2H9.41c-.55,0-.55,1,0,1H18a2,2,0,0,0,0-4H7.5a3.5,3.5,0,0,0,0,7H17v2H7.5A5.5,5.5,0,0,1,2,12.5Z"  className={fillClass}/>
+            <rect width="24" height="24" fill="none" />
+            <path d="M2,12.5A5.5,5.5,0,0,1,7.5,7H18a4,4,0,0,1,0,8H9.5a2.5,2.5,0,0,1,0-5H17v2H9.41c-.55,0-.55,1,0,1H18a2,2,0,0,0,0-4H7.5a3.5,3.5,0,0,0,0,7H17v2H7.5A5.5,5.5,0,0,1,2,12.5Z" className={fillClass} />
         </svg>
     }
 
@@ -961,17 +961,220 @@ const SvgIcon = ({type, wrapperClassName = '', className = 'icon-medium', fillCl
     }
 
     const getIconFallbackMime = () => {
-        // TEMP ICON, WAITING FOR ONES PROVIDED BY THE DESIGN
-        return( 
-            <svg enable-background="new 0 0 30 30" height="30px" id="Layer_1" version="1.1" viewBox="0 0 30 30" width="30px" xmlns="http://www.w3.org/2000/svg">
-                <g>
-                    <polyline fill="#5B2D8D" opacity="0.898" points="2.954,20.331 5.867,18.145 7.352,19.229 13.236,14.875 15.422,16.5    16.905,15.417 16.905,20.331 2.954,20.331  "/>
-                    <path d="M5.547,10.939c1.085,0,1.967,0.822,1.967,1.833c0,1.014-0.882,1.833-1.967,1.833   c-1.088,0-1.968-0.819-1.968-1.833C3.579,11.761,4.459,10.939,5.547,10.939" fill="#5B2D8D" opacity="0.898"/>
-                    <path d="M28.676,7.58l-5.454-6.327L22.14,0H9.253C7.522,0,6.121,1.401,6.121,3.132v3.981h1.941L8.061,3.895   c0.004-0.974,0.786-1.761,1.757-1.761l11.024-0.01v5.222c0.002,1.945,1.572,3.52,3.518,3.52h3.816L27.99,25.931   c-0.006,0.969-0.788,1.751-1.759,1.759L9.679,27.682c-0.886,0-1.598-0.87-1.604-1.939v-1.277H6.131v1.901   c0,1.914,1.28,3.465,2.853,3.465l17.812-0.005c1.732,0,3.134-1.406,3.134-3.134V9.038L28.676,7.58" fill="#434440"/>
-                    <path d="M20.201,25.437H0V6.143h20.201V25.437 M1.94,23.494h16.319V8.085H1.94" fill="#5B2D8D"/>
+        return (
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" className={mainClass}>
+                <g id="Layer_2" data-name="Layer 2">
+                    <g id="Attachment_generic_48px">
+                        <rect className={`attachment-1 ${fillClass}`} width="48" height="48" />
+                        <polygon className={`attachment-2 ${fillClass}`} points="26.99 5 10.17 5 10.17 26.96 10.17 43.48 38.27 43.48 38.27 26.96 38.27 16.51 26.99 5" />
+                        <path className={`attachment-2 ${fillClass}`} d="M27,5V16.28H38.26" />
+                    </g>
                 </g>
             </svg>
         );
+    }
+
+    const getIconJpg = () => {
+        return (
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" className={mainClass}>
+                <g id="Layer_2" data-name="Layer 2">
+                    <g id="Attachment_jpg_48px">
+                        <rect className={`attachment-1 ${fillClass}`} width="48" height="48" />
+                        <path className={`attachment-2 ${fillClass}`} d="M38.26,27V16.51L27,5H10.17V27" />
+                        <path className={`attachment-2 ${fillClass}`} d="M10.17,39.24v4.24H38.26V39.24" />
+                        <path className={`attachment-2 ${fillClass}`} d="M27,5V16.28H38.26" />
+                        <rect className={`attachment-3-jpg ${fillClass}`} x="7" y="26.96" width="34.44" height="12.28" />
+                        <path className={`attachment-4 ${fillClass}`} d="M19,30.54h1.37v3.82a1.7,1.7,0,0,1-1.85,1.85,1.8,1.8,0,0,1-2-1.93H18c0,.48.21.71.56.71s.52-.21.52-.63Z" />
+                        <path className={`attachment-4 ${fillClass}`} d="M23.85,34.14H23v2H21.64V30.54h2.21c1.38,0,2.06.78,2.06,1.81A1.8,1.8,0,0,1,23.85,34.14Zm-.1-1.09c.54,0,.77-.27.77-.7s-.23-.7-.77-.7H23v1.4Z" />
+                        <path className={`attachment-4 ${fillClass}`} d="M32,32.32H30.47a1.16,1.16,0,0,0-1.1-.58,1.44,1.44,0,0,0-1.46,1.6A1.48,1.48,0,0,0,29.48,35a1.35,1.35,0,0,0,1.36-1H29.11V33h3v1.27a2.86,2.86,0,1,1-2.71-3.78A2.49,2.49,0,0,1,32,32.32Z" />
+                    </g>
+                </g>
+            </svg>
+        )
+    }
+
+    const getIconPdf = () => {
+        return (
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" className={mainClass}>
+                <g id="Layer_2" data-name="Layer 2"><g id="Attachment_pdf_48px">
+                    <rect className={`attachment-1 ${fillClass}`} width="48" height="48" />
+                    <path className={`attachment-2 ${fillClass}`} d="M38.26,27V16.51L27,5H10.17V27" />
+                    <path className={`attachment-2 ${fillClass}`} d="M10.17,39.24v4.24H38.26V39.24" />
+                    <path className={`attachment-2 ${fillClass}`} d="M27,5V16.28H38.26" />
+                    <rect className={`attachment-3-pdf ${fillClass}`} x="7" y="26.96" width="34.44" height="12.28" />
+                    <path className={`attachment-4 ${fillClass}`} d="M19.11,34.14h-.85v2H16.89V30.54h2.22c1.37,0,2.06.78,2.06,1.81A1.8,1.8,0,0,1,19.11,34.14ZM19,33.05c.55,0,.78-.27.78-.7s-.23-.7-.78-.7h-.74v1.4Z" />
+                    <path className={`attachment-4 ${fillClass}`} d="M27.05,33.35a2.72,2.72,0,0,1-2.94,2.81H22V30.54h2.11A2.71,2.71,0,0,1,27.05,33.35ZM24,35a1.63,1.63,0,1,0,0-3.26h-.65V35Z" />
+                    <path className={`attachment-4 ${fillClass}`} d="M27.94,30.54h3.65v1.1H29.31v1.18H31v1.06H29.31v2.28H27.94Z" />
+                </g>
+                </g>
+            </svg>
+        )
+    }
+
+    const getIconTxt = () => {
+        return (
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" className={mainClass}>
+                <g id="Layer_2" data-name="Layer 2"><g id="Attachment_txt_48px">
+                    <rect className={`attachment-1 ${fillClass}`} width="48" height="48" />
+                    <path className={`attachment-2 ${fillClass}`} d="M38.26,27V16.51L27,5H10.17V27" />
+                    <path className={`attachment-2 ${fillClass}`} d="M10.17,39.24v4.24H38.26V39.24" />
+                    <path className={`attachment-2 ${fillClass}`} d="M27,5V16.28H38.26" />
+                    <rect className={`attachment-3-txt ${fillClass}`} x="7" y="26.96" width="34.44" height="12.28" />
+                    <path className={`attachment-4 ${fillClass}`} d="M16.59,30.54h4.34v1.1H19.44v4.52H18.08V31.64H16.59Z" />
+                    <path className={`attachment-4 ${fillClass}`} d="M24,34.44l-1,1.72H21.48l1.8-2.86-1.84-2.76H23l1.13,1.7,1-1.7H26.7l-1.78,2.83,1.85,2.79H25.18Z" />
+                    <path className={`attachment-4 ${fillClass}`} d="M27.28,30.54h4.34v1.1H30.13v4.52H28.76V31.64H27.28Z" />
+                </g>
+                </g>
+            </svg>
+        )
+    }
+
+    const getIconDoc = () => {
+        return (
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" className={mainClass}>
+                <g id="Layer_2" data-name="Layer 2"><g id="Attachment_doc_48px">
+                    <rect className={`attachment-1 ${fillClass}`} width="48" height="48" />
+                    <path className={`attachment-2 ${fillClass}`} d="M38.26,27V16.51L27,5H10.17V27" />
+                    <path className={`attachment-2 ${fillClass}`} d="M10.17,39.24v4.24H38.26V39.24" />
+                    <path className={`attachment-2 ${fillClass}`} d="M27,5V16.28H38.26" />
+                    <rect className={`attachment-3-doc ${fillClass}`} x="7" y="26.96" width="34.44" height="12.28" />
+                    <path className={`attachment-4 ${fillClass}`} d="M20.94,33.35a2.72,2.72,0,0,1-3,2.81h-2.1V30.54H18A2.72,2.72,0,0,1,20.94,33.35Zm-3,1.62a1.63,1.63,0,1,0,0-3.26h-.65V35Z" />
+                    <path className={`attachment-4 ${fillClass}`} d="M24.48,36.21a2.88,2.88,0,1,1,2.87-2.88A2.82,2.82,0,0,1,24.48,36.21Zm0-1.25A1.46,1.46,0,0,0,26,33.33a1.49,1.49,0,1,0-3,0A1.46,1.46,0,0,0,24.48,35Z" />
+                    <path className={`attachment-4 ${fillClass}`} d="M30.83,30.48a2.61,2.61,0,0,1,2.66,2H32a1.25,1.25,0,0,0-1.18-.72,1.43,1.43,0,0,0-1.42,1.61A1.44,1.44,0,0,0,30.81,35,1.25,1.25,0,0,0,32,34.24h1.5a2.61,2.61,0,0,1-2.66,2,2.86,2.86,0,0,1,0-5.72Z" />
+                </g>
+                </g>
+            </svg>
+        )
+    }
+
+    const getIconDocX = () => {
+        return (
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" className={mainClass}>
+                <g id="Layer_2" data-name="Layer 2"><g id="Attachment_docx_48px">
+                    <rect className={`attachment-1 ${fillClass}`} width="48" height="48" />
+                    <path className={`attachment-2 ${fillClass}`} d="M38.26,27V16.51L27,5H10.17V27" />
+                    <path className={`attachment-2 ${fillClass}`} d="M10.17,39.24v4.24H38.26V39.24" />
+                    <path className={`attachment-2 ${fillClass}`} d="M27,5V16.28H38.26" />
+                    <rect className={`attachment-3-docx ${fillClass}`} x="7" y="26.96" width="34.44" height="12.28" />
+                    <path className={`attachment-4 ${fillClass}`} d="M17.93,33.35A2.72,2.72,0,0,1,15,36.16h-2.1V30.54H15A2.71,2.71,0,0,1,17.93,33.35ZM14.9,35a1.63,1.63,0,1,0,0-3.26h-.64V35Z" />
+                    <path className={`attachment-4 ${fillClass}`} d="M21.48,36.21a2.88,2.88,0,1,1,2.87-2.88A2.83,2.83,0,0,1,21.48,36.21Zm0-1.25A1.46,1.46,0,0,0,23,33.33a1.49,1.49,0,1,0-3,0A1.46,1.46,0,0,0,21.48,35Z" />
+                    <path className={`attachment-4 ${fillClass}`} d="M27.82,30.48a2.61,2.61,0,0,1,2.67,2H29a1.23,1.23,0,0,0-1.17-.72,1.43,1.43,0,0,0-1.42,1.61A1.44,1.44,0,0,0,27.81,35,1.23,1.23,0,0,0,29,34.24h1.51a2.61,2.61,0,0,1-2.67,2,2.86,2.86,0,0,1,0-5.72Z" />
+                    <path className={`attachment-4 ${fillClass}`} d="M33.74,34.44l-1,1.72H31.18L33,33.3l-1.84-2.76h1.6l1.12,1.7,1-1.7h1.55l-1.79,2.83,1.86,2.79H34.89Z" />
+                </g>
+                </g>
+            </svg>
+        )
+    }
+
+    const getIconXls = () => {
+        return (
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" className={mainClass}>
+                <g id="Layer_2" data-name="Layer 2">
+                    <g id="Attachment_xls_48px">
+                        <rect className={`attachment-1 ${fillClass}`} width="48" height="48" />
+                        <path className={`attachment-2 ${fillClass}`} d="M38.26,27V16.51L27,5H10.17V27" />
+                        <path className={`attachment-2 ${fillClass}`} d="M10.17,39.24v4.24H38.26V39.24" />
+                        <path className={`attachment-2 ${fillClass}`} d="M27,5V16.28H38.26" />
+                        <rect className={`attachment-3-xls ${fillClass}`} x="7" y="26.96" width="34.44" height="12.28" />
+                        <path className={`attachment-4 ${fillClass}`} d="M20.19,34.44l-1,1.72H17.63l1.8-2.86-1.84-2.76h1.59l1.13,1.7,1-1.7h1.55l-1.78,2.83,1.85,2.79H21.33Z" />
+                        <path className={`attachment-4 ${fillClass}`} d="M25.1,30.54V35.1h1.79v1.06H23.73V30.54Z" />
+                        <path className={`attachment-4 ${fillClass}`} d="M29.7,36.21c-1.21,0-2.15-.6-2.19-1.73H29a.65.65,0,0,0,.7.64c.4,0,.66-.2.66-.53,0-1-2.81-.48-2.79-2.47,0-1.07.87-1.66,2-1.66s2.05.61,2.11,1.68H30.2a.61.61,0,0,0-.65-.58.5.5,0,0,0-.58.51c0,1,2.78.54,2.78,2.41A1.81,1.81,0,0,1,29.7,36.21Z" />
+                    </g>
+                </g>
+            </svg>
+        )
+    }
+
+    const getIconXlsX = () => {
+        return (
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" className={mainClass}>
+                <g id="Layer_2" data-name="Layer 2"><g id="Attachment_xlsx_48px">
+                    <rect className={`attachment-1 ${fillClass}`} height="48" />
+                    <path className={`attachment-2 ${fillClass}`} d="M38.26,27V16.51L27,5H10.17V27" />
+                    <path className={`attachment-2 ${fillClass}`} d="M10.17,39.24v4.24H38.26V39.24" />
+                    <path className={`attachment-2 ${fillClass}`} d="M27,5V16.28H38.26" />
+                    <rect className={`attachment-3-xlsx ${fillClass}`} x="7" y="26.96" width="34.44" height="12.28" />
+                    <path className={`attachment-4 ${fillClass}`} d="M17.19,34.44l-1,1.72H14.63l1.8-2.86-1.84-2.76h1.59l1.13,1.7,1-1.7h1.55l-1.79,2.83,1.86,2.79H18.33Z" />
+                    <path className={`attachment-4 ${fillClass}`} d="M22.1,30.54V35.1h1.79v1.06H20.73V30.54Z" />
+                    <path className={`attachment-4 ${fillClass}`} d="M26.7,36.21c-1.21,0-2.15-.6-2.19-1.73H26a.65.65,0,0,0,.7.64c.4,0,.65-.2.65-.53,0-1-2.8-.48-2.79-2.47,0-1.07.88-1.66,2.05-1.66s2.05.61,2.1,1.68H27.19a.6.6,0,0,0-.64-.58.5.5,0,0,0-.58.51c0,1,2.78.54,2.78,2.41A1.81,1.81,0,0,1,26.7,36.21Z" />
+                    <path className={`attachment-4 ${fillClass}`} d="M32,34.44l-1,1.72H29.44l1.8-2.86L29.4,30.54H31l1.13,1.7,1-1.7h1.55l-1.78,2.83,1.86,2.79h-1.6Z" />
+                </g>
+                </g>
+            </svg>
+        )
+    }
+
+    const getIconPng = () => {
+        return (
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" className={mainClass}>
+                <g id="Layer_2" data-name="Layer 2"><g id="Attachment_png_48px">
+                    <rect className={`attachment-1 ${fillClass}`} width="48" height="48" />
+                    <path className={`attachment-2 ${fillClass}`} d="M38.26,27V16.51L27,5H10.17V27" />
+                    <path className={`attachment-2 ${fillClass}`} d="M10.17,39.24v4.24H38.26V39.24" />
+                    <path className={`attachment-2 ${fillClass}`} d="M27,5V16.28H38.26" />
+                    <rect className={`attachment-3-png ${fillClass}`} x="7" y="26.96" width="34.44" height="12.28" />
+                    <path className={`attachment-4 ${fillClass}`} d="M19.11,34.14h-.85v2H16.89V30.54h2.22c1.37,0,2.06.78,2.06,1.81A1.8,1.8,0,0,1,19.11,34.14ZM19,33.05c.55,0,.78-.27.78-.7s-.23-.7-.78-.7h-.74v1.4Z" />
+                    <path className={`attachment-4 ${fillClass}`} d="M27,30.54v5.62H25.66l-2.29-3.47v3.47H22V30.54h1.37L25.66,34V30.54Z" />
+                    <path className={`attachment-4 ${fillClass}`} d="M33.38,32.32H31.87a1.19,1.19,0,0,0-1.11-.58,1.44,1.44,0,0,0-1.46,1.6A1.48,1.48,0,0,0,30.88,35a1.34,1.34,0,0,0,1.35-1H30.5V33h3v1.27a2.86,2.86,0,1,1-2.71-3.78A2.5,2.5,0,0,1,33.38,32.32Z" />
+                </g>
+                </g>
+            </svg>
+        )
+    }
+
+    const getIconRar = () => {
+        return (
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" className={mainClass}>
+                <g id="Layer_2" data-name="Layer 2"><g id="Attachment_rar_48px">
+                    <rect className={`attachment-1 ${fillClass}`} width="48" height="48" />
+                    <path className={`attachment-2 ${fillClass}`} d="M38.26,27V16.51L27,5H10.17V27" />
+                    <path className={`attachment-2 ${fillClass}`} d="M10.17,39.24v4.24H38.26V39.24" />
+                    <path className={`attachment-2 ${fillClass}`} d="M27,5V16.28H38.26" />
+                    <rect className={`attachment-3-rar ${fillClass}`} x="7" y="26.96" width="34.44" height="12.28" />
+                    <path className={`attachment-4 ${fillClass}`} d="M19.19,30.54c1.37,0,2.06.79,2.06,1.77A1.62,1.62,0,0,1,20,33.93l1.3,2.23H19.75L18.59,34h-.33v2.12H16.89V30.54Zm-.08,1.14h-.85v1.39h.85a.65.65,0,0,0,.75-.7C19.86,32,19.62,31.68,19.11,31.68Z" />
+                    <path className={`attachment-4 ${fillClass}`} d="M25.72,35.16H23.63l-.34,1H21.86l2-5.62h1.58l2,5.62H26.06Zm-1-3.11L24,34.11h1.38Z" />
+                    <path className={`attachment-4 ${fillClass}`} d="M30.54,30.54c1.37,0,2.06.79,2.06,1.77a1.62,1.62,0,0,1-1.25,1.62l1.3,2.23H31.11L29.94,34h-.33v2.12H28.24V30.54Zm-.08,1.14h-.85v1.39h.85a.65.65,0,0,0,.75-.7C31.21,32,31,31.68,30.46,31.68Z" />
+                </g>
+                </g>
+            </svg>
+        )
+    }
+
+    const getIconZip = () => {
+        return (
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" className={mainClass}>
+                <g id="Layer_2" data-name="Layer 2"><g id="Attachment_zip_48px">
+                    <rect className={`attachment-1 ${fillClass}`} width="48" height="48" />
+                    <path className={`attachment-2 ${fillClass}`} d="M38.26,27V16.51L27,5H10.17V27" />
+                    <path className={`attachment-2 ${fillClass}`} d="M10.17,39.24v4.24H38.26V39.24" />
+                    <path className={`attachment-2 ${fillClass}`} d="M27,5V16.28H38.26" />
+                    <rect className={`attachment-3-zip ${fillClass}`} x="7" y="26.96" width="34.44" height="12.28" />
+                    <path className={`attachment-4 ${fillClass}`} d="M22.76,31.58,20.35,35h2.41v1.12h-4v-1l2.4-3.46H18.8V30.54h4Z" />
+                    <path className={`attachment-4 ${fillClass}`} d="M23.78,30.54h1.37v5.62H23.78Z" />
+                    <path className={`attachment-4 ${fillClass}`} d="M28.48,34.14h-.85v2H26.26V30.54h2.22c1.37,0,2.06.78,2.06,1.81A1.8,1.8,0,0,1,28.48,34.14Zm-.11-1.09c.55,0,.78-.27.78-.7s-.23-.7-.78-.7h-.74v1.4Z" />
+                </g>
+                </g>
+            </svg>
+        )
+    }
+
+    const getIconTiff = () => {
+        return (
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" className={mainClass}>
+                <g id="Layer_2" data-name="Layer 2"><g id="Attachment_tiff_48px">
+                    <rect className={`attachment-1 ${fillClass}`} width="48" height="48" />
+                    <path className={`attachment-2 ${fillClass}`} d="M38.26,27V16.51L27,5H10.17V27" />
+                    <path className={`attachment-2 ${fillClass}`} d="M10.17,39.24v4.24H38.26V39.24" />
+                    <path className={`attachment-2 ${fillClass}`} d="M27,5V16.28H38.26" />
+                    <rect className={`attachment-3-tiff ${fillClass}`} x="7" y="26.96" width="34.44" height="12.28" />
+                    <path className={`attachment-4 ${fillClass}`} d="M16.78,30.54h4.34v1.1H19.64v4.52H18.27V31.64H16.78Z" />
+                    <path className={`attachment-4 ${fillClass}`} d="M21.93,30.54H23.3v5.62H21.93Z" />
+                    <path className={`attachment-4 ${fillClass}`} d="M24.41,30.54h3.66v1.1H25.78v1.18h1.71v1.06H25.78v2.28H24.41Z" />
+                    <path className={`attachment-4 ${fillClass}`} d="M28.91,30.54h3.65v1.1H30.28v1.18H32v1.06H30.28v2.28H28.91Z" />
+                </g>
+                </g>
+            </svg>
+        )
     }
 
     const icons = {
@@ -1070,7 +1273,18 @@ const SvgIcon = ({type, wrapperClassName = '', className = 'icon-medium', fillCl
         [Icon.CallMissedOutgoing]: getIconCallMissedOutgoing,
         [Icon.Emergency]: getIconEmergency,
         [Icon.UserUnknown]: getIconUserUnknown,
-        [Icon.FallbackMime]: getIconFallbackMime
+        [Icon.FallbackMime]: getIconFallbackMime,
+        [Icon.JpgMime]: getIconJpg,
+        [Icon.PdfMime]: getIconPdf,
+        [Icon.TxtMime]: getIconTxt,
+        [Icon.DocMime]: getIconDoc,
+        [Icon.DocXMime]: getIconDocX,
+        [Icon.XlsMime]: getIconXls,
+        [Icon.XlsXMime]: getIconXlsX,
+        [Icon.PngMime]: getIconPng,
+        [Icon.RarMime]: getIconRar,
+        [Icon.ZipMime]: getIconZip,
+        [Icon.TiffMime]: getIconTiff
     }
 
     const iconClicked = (e: React.MouseEvent<HTMLDivElement>) => {

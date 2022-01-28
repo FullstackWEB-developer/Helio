@@ -128,3 +128,35 @@
 .collapsible-arrow-icon {
   fill: var(--color-primary-800);
 }
+
+.attachment-1, .attachment-2 {
+  fill: none;
+}
+.attachment-2 {
+  stroke:var(--mime-archive-color);
+  stroke-miterlimit:10;
+  stroke-width:1.5px;
+}
+.attachment-3 {
+  &-jpg, &-png, &-tiff{
+    fill: var(--mime-image-color);
+  }
+  &-pdf {
+    fill: var(--mime-pdf-color);
+  }
+  &-txt {
+    fill: var(--mime-txt-color);
+  }
+  &-doc, &-docx {
+    fill: var(--mime-word-color);
+  }
+  &-xls, &-xlsx {
+    fill: var(--mime-excel-color);
+  }
+  &-rar, &-zip {
+    fill: var(--mime-archive-color)
+  }  
+}
+.attachment-4{
+  fill: var(--color-white);
+}

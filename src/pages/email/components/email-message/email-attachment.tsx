@@ -7,7 +7,7 @@ import React, {useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {useMutation} from 'react-query';
 import {useDispatch} from 'react-redux';
-import {MimeTypes} from '@shared/models/mime-types.enum';
+import utils from '@shared/utils/utils';
 
 const EmailAttachment = ({attachment, messageId}: {attachment: EmailAttachmentHeader, messageId: string}) => {
 
@@ -33,31 +33,21 @@ const EmailAttachment = ({attachment, messageId}: {attachment: EmailAttachmentHe
         downloadAttachmentMutation.mutate({messageId, contentId: fileName, mimeTypeToDownloadIn: attachment.mimeType});
     }
 
-    const determineMimeTypeIcon = (mimeType: string) => {
-        // Currently all types default to temporary icon
-        switch (mimeType) {
-            case MimeTypes.Jpg:
-            case MimeTypes.Png:
-            case MimeTypes.Pdf:
-            case MimeTypes.Txt:
-            default:
-                return Icon.FallbackMime;
-        }
-    }
-
     return (
         <div
             onMouseOver={() => setHovered(true)}
             onMouseOut={() => setHovered(false)}
             onClick={() => downloadAttachment(attachment.fileName)}
-            className='flex items-center email-attachment-thumbnail h-16 w-60 p-4 ml-4 cursor-pointer body3-medium truncate attachment-file-name'>
+            className='flex items-center email-attachment-thumbnail h-16 w-60 p-4 ml-4 mb-4 cursor-pointer body3-medium attachment-file-name'>
             {
-                <SvgIcon isLoading={downloadAttachmentMutation.isLoading} className='icon-large'
+                <SvgIcon isLoading={downloadAttachmentMutation.isLoading} className='icon-large-40'
                     fillClass={!hovered ? 'fill-default' : 'rgba-062-fill'}
-                    type={!hovered ? determineMimeTypeIcon(attachment.mimeType) : Icon.Download}
+                    type={!hovered ? utils.determineMimeTypeIcon(attachment.mimeType) : Icon.Download}
                     wrapperClassName='pr-2' />
             }
-            {attachment.fileName}
+            <div className='truncate'>
+                {attachment.fileName}
+            </div>
         </div>
     )
 }

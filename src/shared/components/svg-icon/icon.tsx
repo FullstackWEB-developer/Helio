@@ -97,5 +97,12 @@ export enum Icon {
     PdfMime = "Pdf",
     PngMime = "Png",
     TxtMime = "Txt",
+    DocMime = "Doc",
+    DocXMime = "DocX",
+    XlsMime = "Xls",
+    XlsXMime = "XlsX",
+    ZipMime = "Zip",
+    RarMime = "Rar",
+    TiffMime = 'Tiff',
     FallbackMime = "ImagePlaceholder"
 }

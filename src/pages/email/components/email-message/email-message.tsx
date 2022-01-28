@@ -59,7 +59,7 @@ const EmailMessage = ({message, ticketCreatedForName, ticketHeaderPhoto}: {messa
                     </div>
                     {
                         message.attachments?.length > 0 &&
-                        <div className='mt-4 pt-7 border-t flex'>
+                        <div className='mt-4 pt-7 border-t flex flex-wrap'>
                             {
                                 message.attachments.map(a =>
                                     <EmailAttachment key={a.fileName} attachment={a} messageId={message.id} />

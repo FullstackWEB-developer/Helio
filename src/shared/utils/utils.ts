@@ -15,6 +15,8 @@ import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
 import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
 import Logger from '@shared/services/logger';
 import i18n from 'i18next';
+import {MimeTypes} from '@shared/models/mime-types.enum';
+import {Icon} from '@components/svg-icon/icon';
 
 const getWindowCenter = () => {
     const {width, height} = getWindowDimensions();
@@ -59,7 +61,7 @@ const clearFormatPhone = (phone: string) => {
 const initiateACall = (phoneToDial?: string) => {
     store.dispatch(showCcp());
     if (window.CCP.agent && phoneToDial) {
-        phoneToDial = phoneToDial.replaceAll('-','');
+        phoneToDial = phoneToDial.replaceAll('-', '');
         if (!phoneToDial.startsWith("+1")) {
             phoneToDial = `+1${phoneToDial}`
         }
@@ -99,7 +101,7 @@ const formatDateShortMonth = (date: string) => {
 }
 
 const getInitialsFromFullName = (username: string): string => {
-    if(username.startsWith('+') || /\d/.test(username)){
+    if (username.startsWith('+') || /\d/.test(username)) {
         return '#';
     }
     const names = username.split(' ');
@@ -400,7 +402,7 @@ const sortBy = <T extends any, TV extends number>(data: T[], property: (item: T)
     return data.sort((a, b) => property(a) - property(b));
 }
 
-const isGuid = (value: string) : boolean => {
+const isGuid = (value: string): boolean => {
     const guidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
     return guidRegex.test(value);
 }
@@ -454,14 +456,44 @@ const hasPermission = (permission: string) => {
     return appUserDetails?.permissions?.includes(permission);
 }
 
-const isDateInNextSevenDays = (date: Date) => {    
-    return Math.abs(dayjs().diff(date, 'day')) <= 7 && (dayjs().isBefore(date) || dayjs().isSame(date, 'day'));    
+const isDateInNextSevenDays = (date: Date) => {
+    return Math.abs(dayjs().diff(date, 'day')) <= 7 && (dayjs().isBefore(date) || dayjs().isSame(date, 'day'));
 }
 
 const isDateTimeInPast = (date: Date) => {
     return dayjs(date).isBefore(dayjs(), 'milliseconds');
 }
 
+const determineMimeTypeIcon = (mimeType: string) => {
+    switch (mimeType) {
+        case MimeTypes.Jpg:
+        case MimeTypes.Jpeg:
+            return Icon.JpgMime;
+        case MimeTypes.Tiff:
+            return Icon.TiffMime;
+        case MimeTypes.Png:
+            return Icon.PngMime;
+        case MimeTypes.Pdf:
+            return Icon.PdfMime;
+        case MimeTypes.Txt:
+            return Icon.TxtMime;
+        case MimeTypes.Doc:
+            return Icon.DocMime;
+        case MimeTypes.DocX:
+            return Icon.DocXMime;
+        case MimeTypes.Xls:
+            return Icon.XlsMime;
+        case MimeTypes.XlsX:
+            return Icon.XlsXMime;
+        case MimeTypes.Rar:
+            return Icon.RarMime;
+        case MimeTypes.Zip:
+        case MimeTypes.ZipCompressed:
+            return Icon.ZipMime;
+        default:
+            return Icon.FallbackMime;
+    }
+}
 
 const utils = {
     getWindowCenter,
@@ -509,7 +541,8 @@ const utils = {
     hasPermission,
     formatSeconds,
     isDateInNextSevenDays,
-    isDateTimeInPast
+    isDateTimeInPast,
+    determineMimeTypeIcon
 };
 
 export default utils;
