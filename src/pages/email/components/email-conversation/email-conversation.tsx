@@ -20,6 +20,7 @@ import EmailMessage from '@pages/email/components/email-message/email-message';
 import ConversationHeader from '@components/conversation-header/conversation-header';
 import SendFirstEmail from '@pages/email/components/send-first-email/send-first-email';
 import {getContactById} from '@shared/services/contacts.service';
+import EmailReply from '@pages/email/components/email-message/email-reply';
 
 const EmailConversation = () => {
     const {ticketId} = useParams<{ticketId: string}>();
@@ -82,6 +83,11 @@ const EmailConversation = () => {
         return <Spinner fullScreen />
     }
 
+    const onEmailReplySuccess = (newMessage: EmailMessageDto) => {
+        setMessages([newMessage, ...messages]);
+        messageListContainerRef.current?.scrollTo(0, 0);
+    }
+
     return (
         ticket ?
             <div className='w-full flex flex-col'>
@@ -89,24 +95,30 @@ const EmailConversation = () => {
                     <ConversationHeader info={{...ticket, ticketId: ticket.id, createdForEndpoint: ticket.incomingEmailAddress}}
                         forNewTicketMessagePurpose={false} patientPhoto={patientPhoto} conversationChannel={ChannelTypes.Email} />
                 </div>
-                {messages && messages.length > 0 && <div ref={messageListContainerRef} className='overflow-y-auto' onScroll={onScroll}>
-                    {
-                        emailMessagesQueryIsFetching && !isFetchingEmailMessagesNextPage ? <Spinner /> :
-                            messages?.length ? messages.map((m: EmailMessageDto) =>
-                                <EmailMessage
-                                    key={m.id}
-                                    message={m}
-                                    ticketCreatedForName={ticket.createdForName || ''}
-                                    ticketHeaderPhoto={patientPhoto || ''} />
-                            ) : null
-                    }
-                    {
-                        isFetchingEmailMessagesNextPage && <Spinner />
-                    }
-                </div>}
-                {(!messages || messages.length === 0) && <SendFirstEmail onMailSend={() => emailMessagesQueryRefetch()} contact={contact} patient={patient} ticket={ticket}/>}
+                {messages && messages.length > 0 &&
+                    <div className='flex flex-col flex-auto overflow-y-auto'>
+                        <div ref={messageListContainerRef} className='overflow-y-auto' onScroll={onScroll}>
+                            {
+                                emailMessagesQueryIsFetching && !isFetchingEmailMessagesNextPage ? <Spinner /> :
+                                    messages?.length ? messages.map((m: EmailMessageDto) =>
+                                        <EmailMessage
+                                            key={m.id}
+                                            message={m}
+                                            ticketCreatedForName={ticket.createdForName || ''}
+                                            ticketHeaderPhoto={patientPhoto || ''} />
+                                    ) : null
+                            }
+                            {
+                                isFetchingEmailMessagesNextPage && <Spinner />
+                            }
+                        </div>
+                        <div className='mt-auto'>
+                            <EmailReply ticket={ticket} patient={patient} contact={contact} onMailSend={onEmailReplySuccess} />
+                        </div>
+                    </div>
+                }
+                {(!messages || messages.length === 0) && <SendFirstEmail onMailSend={() => emailMessagesQueryRefetch()} contact={contact} patient={patient} ticket={ticket} />}
             </div> : null
-
     )
 }
 

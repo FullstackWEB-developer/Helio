@@ -38,6 +38,7 @@ interface TextAreaProps {
     minRows?: number;
     maxRows?: number;
     rows?: number;
+    showSendIconInRichTextMode?: boolean;
 }
 
 const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(({
@@ -151,7 +152,8 @@ const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(({
                                                    onChange={(message) => props.onChange && props.onChange(message)}
                                                    onClick={onClick}
                                                    disabled={props.disabled}
-                                                   isLoading={isLoading}/>}
+                                                   isLoading={isLoading}
+                                                   showSendIcon={props.showSendIconInRichTextMode}/>}
             {!isFormatEnabled &&<div className='w-full h-full'>
                 <div className={textAreaWrapperClass}>
                     <textarea ref={mergeRefs([textAreaRef, ref])}

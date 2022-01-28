@@ -12,9 +12,10 @@ export interface FormattedTextareaProps {
     value?: string;
     onChange:(message: string) =>void;
     disabled?: boolean;
+    showSendIcon?: boolean;
 }
 
-    const FormattedTextarea = React.forwardRef<ReactQuill, FormattedTextareaProps>(({isLoading, iconFill, onClick, value='', onChange, disabled}: FormattedTextareaProps, ref) => {
+    const FormattedTextarea = React.forwardRef<ReactQuill, FormattedTextareaProps>(({isLoading, iconFill, onClick, value='', onChange, disabled, showSendIcon = true}: FormattedTextareaProps, ref) => {
     const {t} = useTranslation();
     const [content, setContent] = useState(value);
 
@@ -54,7 +55,7 @@ export interface FormattedTextareaProps {
             "underline"
         ]}
             />
-            {content.replace(/<[^>]+>/g, '') && <div
+            {showSendIcon && content.replace(/<[^>]+>/g, '') && <div
                 className={`absolute right-8 cursor-pointer ${isLoading ? 'bottom-2 -mr-2' : 'bottom-4 cursor-pointer'}`}>
                 <SvgIcon
                     isLoading={isLoading}

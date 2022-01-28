@@ -1420,7 +1420,8 @@
       "create_patient_chart": "Create Patient Chart",
       "add_contact": "Add Contact",
       "blocked_success": "{{email}} has been blocked succesfully.",
-      "blocked_failure": "Blocking {{email}} failed. Please try again."
+      "blocked_failure": "Blocking {{email}} failed. Please try again.",
+      "send_reply": "Send Reply"
     },
     "new_email": {
       "title": "New Message",

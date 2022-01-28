@@ -34,6 +34,7 @@ interface ControlledTextAreaProps {
     minRows?: number;
     maxRows?: number;
     rows?: number;
+    showSendIconInRichTextMode?: boolean
 }
 const ControlledTextArea = ({
     control,
@@ -63,6 +64,7 @@ const ControlledTextArea = ({
     rows,
     showFormatting,
     textareaContainerClasses,
+    showSendIconInRichTextMode,
     ...props
 }: ControlledTextAreaProps) => {
     const {t} = useTranslation();
@@ -109,6 +111,7 @@ const ControlledTextArea = ({
                         showFormatting={showFormatting}
                         textareaContainerClasses={textareaContainerClasses}
                         value={controllerProps.value}
+                        showSendIconInRichTextMode={showSendIconInRichTextMode}
                     />
 
                 );
