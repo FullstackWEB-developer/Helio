@@ -22,9 +22,10 @@ export interface MessageTemplateSelectProps {
     selectLabel?: string;
     disabled?: boolean;
     isLoading?: boolean;
+    resetValue?: number
 }
 
-const NotificationTemplateSelect = ({channel, category, onSelect, asSelect, selectLabel, isLoading}: MessageTemplateSelectProps) => {
+const NotificationTemplateSelect = ({channel, category, onSelect, asSelect, selectLabel, isLoading, resetValue}: MessageTemplateSelectProps) => {
     const [items, setItems] = useState<DropdownItemModel[]>([]);
     const [options, setOptions] = useState<Option[]>([]);
     const templateDiv = useRef<HTMLDivElement>(null);
@@ -35,6 +36,14 @@ const NotificationTemplateSelect = ({channel, category, onSelect, asSelect, sele
     const [displayTemplateForTab, setDisplayTemplateForTab] = useState<boolean>(false);
     const smsTemplates = useSelector(selectSmsTemplates);
     const emailTemplates = useSelector(selectEmailTemplates);
+    const [displaySelect, setDisplaySelect] = useState<boolean>(true);
+
+    useEffect(() => {
+        if (resetValue && resetValue > 0) {
+            setDisplaySelect(false);
+            setTimeout(() => setDisplaySelect(true), 0);
+        }
+    }, [resetValue])
 
     customHooks.useOutsideClick([templateDiv], () => {
         setDisplayTemplateForTab(false);
@@ -117,6 +126,9 @@ const NotificationTemplateSelect = ({channel, category, onSelect, asSelect, sele
     }
 
     if (asSelect) {
+        if (!displaySelect) {
+            return <div className='h-20'/>;
+        }
         return <Select onSelect={(option) => onSelect(option?.object)} label={selectLabel} options={options} />;
     }
     return <div ref={templateDiv} className='relative'>

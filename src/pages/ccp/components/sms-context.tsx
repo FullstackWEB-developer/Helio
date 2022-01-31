@@ -25,6 +25,7 @@ const SmsContext = () => {
     const [smsText, setSmsText] = useState<string>('');
     const [selectedTemplate, setSelectedTemplate] = useState<NotificationTemplate>();
     const [patientName, setPatientName] = useState<string>('');
+    const [refreshTemplate, setRefreshTemplate] = useState<number>(0);
 
     useEffect(() => {
         if (botContext?.patient) {
@@ -55,6 +56,7 @@ const SmsContext = () => {
                 message: 'ticket_detail.sms_send_success'
             }));
             setSmsText('');
+            setRefreshTemplate(refreshTemplate + 1);
         },
         onError: () => {
             dispatch(addSnackbarMessage({
@@ -88,6 +90,7 @@ const SmsContext = () => {
                     <div className='w-4/5'>
                         <NotificationTemplateSelect selectLabel='ccp.sms_context.select_template'
                                                     asSelect={true}
+                                                    resetValue={refreshTemplate}
                                                     channel={NotificationTemplateChannel.Sms}
                                                     onSelect={templateSelected}/>
                     </div>
