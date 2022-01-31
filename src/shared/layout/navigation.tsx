@@ -2,13 +2,14 @@ import NavigationItem from './components/navigation-item';
 import {useTranslation} from 'react-i18next';
 import {useLocation} from 'react-router-dom';
 import {toggleNavigation} from './store/layout.slice';
-import React from 'react';
+import React, {useMemo} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {BlackListsPath, TicketsPath, UsersPath} from '@app/paths';
 import SvgIcon from '@components/svg-icon/svg-icon';
 import {Icon} from '@components/svg-icon/icon';
 import './navigation.scss';
 import {selectUnreadSMSList} from '@shared/store/app-user/appuser.selectors';
+import {selectUnreadEmails} from '@pages/email/store/email.selectors';
 
 const Navigation = () => {
     const {t} = useTranslation();
@@ -19,6 +20,12 @@ const Navigation = () => {
     };
 
     const unreadSMSList = useSelector(selectUnreadSMSList);
+    const unreadEmails = useSelector(selectUnreadEmails);
+
+    const unreadEmailCount = useMemo(() => {
+        return unreadEmails.reduce((a, b) => a + b.count, 0);
+    }, [unreadEmails]);
+
     const menuItems = [
         {
             title: t('navigation.dashboard'),
@@ -57,7 +64,9 @@ const Navigation = () => {
              title: t('navigation.email'),
              link: '/email',
              id: 'navigation-email',
-             icon: <SvgIcon type={Icon.Email} fillClass='active-item-icon' />
+             icon: <SvgIcon type={Icon.Email} fillClass='active-item-icon' />,
+             displayBadge: unreadEmailCount > 0,
+             badgeValue: unreadEmailCount
         },
         {
             title: t('navigation.users'),

@@ -11,6 +11,7 @@ import lookupsReducer from '../shared/store/lookups/lookups.slice';
 import contactsReducer from '../shared/store/contacts/contacts.slice';
 import snackbarReducer from '../shared/store/snackbar/snackbar.slice';
 import callsLogReducer from '../pages/calls-log/store/calls-log.slice';
+import emailReducer from '../pages/email/store/email-slice';
 import chatLogReducer from '../pages/chat-log/store/chat-log.slice';
 import {useDispatch} from 'react-redux';
 import storage from 'redux-persist/lib/storage'
@@ -34,6 +35,7 @@ const reducers = combineReducers({
     usersState: usersReducer,
     callsLogState: callsLogReducer,
     chatLogState: chatLogReducer,
+    emailState: emailReducer
 })
 
 const rootReducer: Reducer = (state: RootState, action: AnyAction) => {

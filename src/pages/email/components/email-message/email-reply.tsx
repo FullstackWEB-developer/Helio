@@ -14,6 +14,7 @@ import {ChannelTypes, ContactExtended, EmailMessageDto, TicketMessageBase, Ticke
 import {ExtendedPatient} from '@pages/patients/models/extended-patient';
 import {selectAppUserDetails} from '@shared/store/app-user/appuser.selectors';
 import {setAssignee} from '@pages/tickets/services/tickets.service';
+import {setLastEmailDate} from '@pages/email/store/email-slice';
 
 interface EmailReplyProps {
     ticket: Ticket;
@@ -50,6 +51,7 @@ const EmailReply = ({ticket, patient, contact, onMailSend}: EmailReplyProps) => 
             }));
             setEmailContent('');
             onMailSend(data as EmailMessageDto);
+            dispatch(setLastEmailDate());
         },
         onError: () => {
             dispatch(addSnackbarMessage({

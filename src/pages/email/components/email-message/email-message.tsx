@@ -7,7 +7,7 @@ import {useTranslation} from 'react-i18next';
 import EmailMessageHeader from './email-message-header';
 import EmailAttachment from './email-attachment';
 
-const EmailMessage = ({message, ticketCreatedForName, ticketHeaderPhoto}: {message: EmailMessageDto, ticketCreatedForName: string, ticketHeaderPhoto: string}) => {
+const EmailMessage = ({message, ticketCreatedForName, ticketHeaderPhoto, isCollapsed}: {message: EmailMessageDto, ticketCreatedForName: string, ticketHeaderPhoto: string, isCollapsed: boolean}) => {
 
     const {t} = useTranslation();
     const emailFromLabel = message.direction === TicketMessagesDirection.Incoming ? ticketCreatedForName || message.fromAddress :
@@ -15,7 +15,7 @@ const EmailMessage = ({message, ticketCreatedForName, ticketHeaderPhoto}: {messa
 
     const emailFromPhoto = message.direction === TicketMessagesDirection.Incoming ? ticketHeaderPhoto : '';
 
-    const [collapsed, setCollapsed] = useState(false);
+    const [collapsed, setCollapsed] = useState(isCollapsed);
 
     const constructToField = () => {
         const cwcEmail = utils.getAppParameter('HelioEmailAddress');

@@ -1,4 +1,14 @@
-import {ChannelTypes, PagedList, TicketMessageSummary, TicketMessage, TicketMessageSummaryRequest, PagedRequest, TicketMessageBase, EmailMessageDto} from "@shared/models";
+import {
+    ChannelTypes,
+    PagedList,
+    TicketMessageSummary,
+    TicketMessage,
+    TicketMessageSummaryRequest,
+    PagedRequest,
+    TicketMessageBase,
+    EmailMessageDto,
+    TicketMessagesDirection
+} from "@shared/models";
 import Api from "@shared/services/api";
 import {CreateTicketMessageRequest} from '@pages/sms/models/create-ticket-message-request.model';
 import utils from "@shared/utils/utils";
@@ -35,9 +45,15 @@ export const createTicketMessage = async (request: CreateTicketMessageRequest) =
     return response.data;
 }
 
-export const markRead = async (ticketId: string, channel: ChannelTypes) => {
-    const url = `${ticketMessageUrl}/${ticketId}/${channel}/read`;
-    await Api.put(url);
+export const markRead = async (ticketId: string, channel: ChannelTypes, direction: TicketMessagesDirection) => {
+    const url = `${ticketMessageUrl}/read`;
+    await Api.put(url, null, {
+        params: {
+            ticketId,
+            channel,
+            direction
+        }
+    });
     return {ticketId, channel};
 }
 

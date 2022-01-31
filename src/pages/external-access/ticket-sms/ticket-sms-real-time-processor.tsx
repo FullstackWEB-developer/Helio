@@ -2,7 +2,7 @@ import React, {useEffect, useMemo, useState} from 'react';
 import {HubConnection, HubConnectionBuilder, HubConnectionState, LogLevel} from '@microsoft/signalr';
 import RealTimeConnectionLogger from '@shared/websockets/real-time-connection-logger';
 import {useDispatch, useSelector} from 'react-redux';
-import {ChannelTypes} from '@shared/models';
+import {ChannelTypes, TicketMessagesDirection} from '@shared/models';
 import TicketSms from '@pages/external-access/ticket-sms/ticket-sms';
 import {setMarkAsRead} from '@pages/external-access/ticket-sms/store/ticket-sms.slice';
 import {selectRedirectLink} from '@pages/external-access/verify-patient/store/verify-patient.selectors';
@@ -34,7 +34,7 @@ const TicketSmsRealTimeProcessor = () => {
         setConnection(newConnection);
     }, [request.ticketId, realtimeConnectionLogger]);
 
-    const markReadMutation = useMutation(({ticketId, channel}: {ticketId: string, channel: ChannelTypes}) => markRead(ticketId, channel));
+    const markReadMutation = useMutation(({ticketId, channel}: {ticketId: string, channel: ChannelTypes}) => markRead(ticketId, channel, TicketMessagesDirection.Outgoing));
 
     useEffect(() => {
         if (markAsRead && isPageVisible) {

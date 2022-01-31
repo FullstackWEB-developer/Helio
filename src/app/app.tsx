@@ -51,13 +51,13 @@ import RealTimeUserStatusUpdate from '@shared/websockets/real-time-user-status-u
 import ExternalAccessLayout from '@pages/external-access/layout/external-access-layout';
 import Logger from '@shared/services/logger';
 import {SignalRProvider} from '@shared/contexts/signalRContext';
-import {createSmsConnectionHub} from '@shared/websockets/create-sms-connection-hub';
+import {createTicketMessageConnectionHub} from '@shared/websockets/create-ticket-message-connection-hub';
 import {useSelector} from 'react-redux';
 import {selectAccessToken} from '@shared/store/app-user/appuser.selectors';
-import {SMS_INCOMING_NAME} from '@shared/constants/signalr-provider-constants';
+import {TICKET_MESSAGE_INCOMING_NAME} from '@shared/constants/signalr-provider-constants';
 import utils from '@shared/utils/utils';
 import Confirmation from '@components/confirmation/confirmation';
-import IncomingSmsUpdate from '@shared/websockets/incoming-sms-update';
+import IncomingTicketMessageUpdate from '@shared/websockets/incoming-ticket-message-update';
 import VerifiedPatientGuard from '@components/verified-patient-guard/verified-patient-guard';
 const SearchResults = React.lazy(() => import('../shared/components/search-bar/components/search-results'));
 const PatientChart = React.lazy(() => import('@pages/patients/patient-chart'));
@@ -175,10 +175,10 @@ function App() {
             <Route path='/login'>
                 <Login />
             </Route>
-            <SignalRProvider name={SMS_INCOMING_NAME} createConnection={() => createSmsConnectionHub(accessToken)}>
+            <SignalRProvider name={TICKET_MESSAGE_INCOMING_NAME} createConnection={() => createTicketMessageConnectionHub(accessToken)}>
                 <Layout>
                     <RealTimeUserStatusUpdate />
-                    <IncomingSmsUpdate />
+                    <IncomingTicketMessageUpdate />
                     <GuardedRoute exact path='/dashboard' component={Dashboard} />
                     <GuardedRoute exact path={TicketsPath} component={withSuspense(TicketList)} />
                     <GuardedRoute exact path={`${TicketsPath}/new`} component={withSuspense(TicketNew)} />

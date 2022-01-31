@@ -8,11 +8,11 @@ import {
     QueryTickets
 } from '@constants/react-query-constants';
 import {getTicketById} from '@pages/tickets/services/tickets.service';
-import {useInfiniteQuery, useQuery} from 'react-query';
+import {useInfiniteQuery, useMutation, useQuery} from 'react-query';
 import {useParams} from 'react-router';
 import {getPatientByIdWithQuery, getPatientPhoto} from '@pages/patients/services/patients.service';
-import {getMessages} from '@pages/sms/services/ticket-messages.service';
-import {ChannelTypes, EmailMessageDto} from '@shared/models';
+import {getMessages, markRead} from '@pages/sms/services/ticket-messages.service';
+import {ChannelTypes, EmailMessageDto, TicketMessagesDirection} from '@shared/models';
 import {DEFAULT_MESSAGE_QUERY_PARAMS} from '@pages/sms/constants';
 import {getNextPage} from '@pages/sms/utils';
 import utils from '@shared/utils/utils';
@@ -21,10 +21,15 @@ import ConversationHeader from '@components/conversation-header/conversation-hea
 import SendFirstEmail from '@pages/email/components/send-first-email/send-first-email';
 import {getContactById} from '@shared/services/contacts.service';
 import EmailReply from '@pages/email/components/email-message/email-reply';
+import {removeUnreadEmailTicketId} from '@pages/email/store/email-slice';
+import {useDispatch, useSelector} from 'react-redux';
+import {selectUnreadEmails} from '@pages/email/store/email.selectors';
 
 const EmailConversation = () => {
     const {ticketId} = useParams<{ticketId: string}>();
-    const {data: ticket, isFetching} = useQuery([QueryTickets, ticketId], () => getTicketById(ticketId!), {
+    const dispatch = useDispatch();
+    const unreadEmailIds = useSelector(selectUnreadEmails);
+    const {data: ticket} = useQuery([QueryTickets, ticketId], () => getTicketById(ticketId!), {
         enabled: !!ticketId
     });
 
@@ -42,9 +47,20 @@ const EmailConversation = () => {
 
     const [messages, setMessages] = useState<EmailMessageDto[]>([]);
     const messageListContainerRef = useRef<HTMLDivElement>(null);
+    const markReadMutation = useMutation(({ticketId, channel}: {ticketId: string, channel: ChannelTypes}) => markRead(ticketId, channel, TicketMessagesDirection.Incoming), {
+        onSuccess: () => {
+            dispatch(removeUnreadEmailTicketId(ticketId));
+        }
+    });
+
+    useEffect(() => {
+        if (unreadEmailIds.find(a => a.ticketId === ticketId)) {
+            emailMessagesQueryRefetch().then()
+        }
+    }, [unreadEmailIds])
+
     const {
         refetch: emailMessagesQueryRefetch,
-        isFetching: emailMessagesQueryIsFetching,
         isLoading: emailMessagesQueryIsLoading,
         isFetchingNextPage: isFetchingEmailMessagesNextPage,
         fetchNextPage: fetchEmailMessagesNextPage,
@@ -56,6 +72,11 @@ const EmailConversation = () => {
             getNextPageParam: (lastPage) => getNextPage(lastPage),
             onSuccess: (result) => {
                 setMessages(utils.accumulateInfiniteData(result) as EmailMessageDto[]);
+                markReadMutation.mutate({
+                    ticketId: ticketId,
+                    channel: ChannelTypes.Email
+                });
+
             }
         });
 
@@ -79,7 +100,7 @@ const EmailConversation = () => {
 
 
 
-    if (isFetching || emailMessagesQueryIsLoading) {
+    if (emailMessagesQueryIsLoading) {
         return <Spinner fullScreen />
     }
 
@@ -99,14 +120,14 @@ const EmailConversation = () => {
                     <div className='flex flex-col flex-auto overflow-y-auto'>
                         <div ref={messageListContainerRef} className='overflow-y-auto' onScroll={onScroll}>
                             {
-                                emailMessagesQueryIsFetching && !isFetchingEmailMessagesNextPage ? <Spinner /> :
-                                    messages?.length ? messages.map((m: EmailMessageDto) =>
-                                        <EmailMessage
-                                            key={m.id}
-                                            message={m}
-                                            ticketCreatedForName={ticket.createdForName || ''}
-                                            ticketHeaderPhoto={patientPhoto || ''} />
-                                    ) : null
+                                messages?.length ? messages.map((m: EmailMessageDto, index) =>
+                                    <EmailMessage
+                                        key={m.id}
+                                        isCollapsed={index > 0}
+                                        message={m}
+                                        ticketCreatedForName={ticket.createdForName || ''}
+                                        ticketHeaderPhoto={patientPhoto || ''} />
+                                ) : null
                             }
                             {
                                 isFetchingEmailMessagesNextPage && <Spinner />

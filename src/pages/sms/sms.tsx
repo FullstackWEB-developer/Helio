@@ -43,6 +43,7 @@ import {useHistory, useLocation, useParams} from 'react-router';
 import {SmsPath} from '@app/paths';
 import useCheckPermission from '@shared/hooks/useCheckPermission';
 import {ExtendedPatient} from '@pages/patients/models/extended-patient';
+
 interface SmsLocationState {
     contact?: ContactExtended,
     patient?: ExtendedPatient
@@ -222,7 +223,7 @@ const Sms = () => {
     });
 
     const markReadMutation = useMutation(
-        ({ticketId, channel}: {ticketId: string, channel: ChannelTypes}) => markRead(ticketId, channel),
+        ({ticketId, channel}: {ticketId: string, channel: ChannelTypes}) => markRead(ticketId, channel, TicketMessagesDirection.Incoming),
         {
             onSuccess: (data) => {
                 modifySummaryMessage(data.ticketId, 0);

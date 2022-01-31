@@ -161,7 +161,7 @@ const RequestRefill = () => {
         }
     }, [medicationOptions, providerOptions, formReady])
 
-    const defaultMedication = medicationOptions?.find(m => m.value === medication.medicationName)?.value;
+    const defaultMedication = medicationOptions?.find(m => m.value === medication?.medicationName)?.value;
 
     const determineDefaultProvider = () => {
         const medicationProvider = determineProviderForMedication();
@@ -172,7 +172,7 @@ const RequestRefill = () => {
     }
 
     const determineProviderForMedication = () => {
-        const compareMedication = getValues('medication') ?? medication.medicationName;
+        const compareMedication = getValues('medication') ?? medication?.medicationName;
         const chosenMedication = medicationOptions?.find(m => m.value === compareMedication);
         if (chosenMedication && chosenMedication.object?.defaultProviderId && chosenMedication.object?.enteredBy) {
             const provider = providerOptions.find(p => p.value === chosenMedication.object.defaultProviderId.toString());

@@ -43,8 +43,6 @@ import {QueryGetPatientById, QueryTickets} from '@constants/react-query-constant
 import {getPatientByIdWithQuery} from '@pages/patients/services/patients.service';
 import useLocalStorage from '@shared/hooks/useLocalStorage';
 import utils from '@shared/utils/utils';
-import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
-import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
 import {ContextKeyValuePair} from '@pages/ccp/models/context-key-value-pair';
 import {getUserList} from '@shared/services/lookups.service';
 import {clearAppParameters} from '@shared/store/app/app.slice';
@@ -351,12 +349,6 @@ const Ccp: React.FC<BoxProps> = ({
 
 
             agent.onStateChange(agentStateChange => {
-                if (agentStateChange.oldState.toLowerCase() !== connect.AgentStateType.INIT && agentStateChange.newState.toLowerCase() === connect.AgentStateType.OFFLINE) {
-                    dispatch(addSnackbarMessage({
-                        type: SnackbarType.Error,
-                        message: 'ccp.went_offline'
-                    }));
-                }
                 let stateToSet = agentStateChange.newState;
                 if (agentStateChange.oldState.toLowerCase() === connect.AgentStateType.INIT && !!latestStatus) {
                     stateToSet = latestStatus;

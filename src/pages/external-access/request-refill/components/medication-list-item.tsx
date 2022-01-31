@@ -39,7 +39,7 @@ const MedicationListItem = ({data}: MedicationListItemProps) => {
             return <MedicationRefillNotAllowed/>;
         }
 
-        if (refillRequestedMedications?.find(a => a === data.medicationName)) {
+        if (refillRequestedMedications?.find(a => a === data?.medicationName)) {
             return <div>{t('external_access.medication_refill.medication_list.refill_requested')}</div>
         }
 
@@ -50,7 +50,7 @@ const MedicationListItem = ({data}: MedicationListItemProps) => {
 
     return <div className="px-6 py-4 flex border-b">
         <div className='flex w-11/12 xl:w-4/12 items-center' onClick={() => data.refillsAllowed ? requestRefill() : {}}>
-            {data.medicationName}
+            {data?.medicationName}
         </div>
         <div className='hidden xl:flex flex-none w-8'> </div>
         <div className='xl:hidden ml-6 w-1/12'>

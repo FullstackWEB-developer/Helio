@@ -7,7 +7,7 @@ interface HighlighterTextProps {
 }
 const HighlighterText = ({text, highlighterText}: HighlighterTextProps) => {
     if (!highlighterText) {
-        return <>{text}</>
+        return <div dangerouslySetInnerHTML={{__html: text}}/>
     }
 
     const regExp = new RegExp(`(${highlighterText})`, 'i');

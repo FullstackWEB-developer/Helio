@@ -16,7 +16,7 @@ export interface EmailSummaryListProps {
 const EmailSummaryList = ({data, searchTerm, onScroll, isFetchingNextPage}: EmailSummaryListProps) => {
     const {t} = useTranslation();
     const sortedMessages = useMemo(() =>{
-        return data.sort((a, b) => dayjs.utc(b.messageCreatedOn).valueOf() - dayjs.utc(a.messageCreatedOn).valueOf());
+        return [...data].sort((a, b) => dayjs.utc(b.messageCreatedOn).valueOf() - dayjs.utc(a.messageCreatedOn).valueOf());
     }, [data]);
 
     if (!sortedMessages || sortedMessages.length === 0) {

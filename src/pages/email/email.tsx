@@ -20,10 +20,10 @@ const Email = () => {
     }, [dispatch]);
 
     
-    return <><EmailProvider>
-        <EmailLeftMenu/>
-        {ticketId === EMPTY_GUID ? <NewEmail/>: <EmailConversation/>}
-    </EmailProvider></>
+    return <EmailProvider>
+                <EmailLeftMenu />
+                {ticketId === EMPTY_GUID ? <NewEmail/>: <EmailConversation/>}
+           </EmailProvider>
 }
 
 export default  Email;
