@@ -42,6 +42,7 @@ import {getAppointments} from '@pages/patients/services/patients.service';
 import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
 import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
 import {SnackbarPosition} from '@components/snackbar/snackbar-position.enum';
+import {AppointmentReschedulePath} from '@app/paths';
 import utils from '@shared/utils/utils';
 
 const AppointmentCancel = () => {
@@ -171,7 +172,7 @@ const AppointmentCancel = () => {
     }
 
     const showMoreSlots = () => {
-        history.push(`/o/appointment-reschedule`);
+        history.push(`${AppointmentReschedulePath}/${appointment?.appointmentId}`);
     }
 
     if (!isFetchedAfterMount || isAppointmentTypesLoading || isAppointmentSlotsLoading || isGetCancellationReasonsLoading || isAppointmentsLoading) {
