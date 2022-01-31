@@ -42,6 +42,7 @@ import {getAppointments} from '@pages/patients/services/patients.service';
 import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
 import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
 import {SnackbarPosition} from '@components/snackbar/snackbar-position.enum';
+import utils from '@shared/utils/utils';
 
 const AppointmentCancel = () => {
     dayjs.extend(utc);
@@ -131,7 +132,7 @@ const AppointmentCancel = () => {
         return reasons ? reasons.filter(r => r.type === CancellationReasonTypes.Cancel).map((item: AppointmentCancelReason) => {
             return {
                 value: item.id.toString(),
-                label: item.name
+                label: item.description
             } as Option;
         }) : [];
     }
@@ -272,9 +273,16 @@ const AppointmentCancel = () => {
                         )}
                     />
                 </div>
-                {cancelAppointmentMutation.isError && <div className='text-danger'>
+                {cancelAppointmentMutation.isError && <><div className='text-danger'>
                     {t('external_access.appointments.cancel_appointment_error')} {errorMessage}
-                </div>}
+                </div>
+                <div>
+                    <Trans i18nKey="external_access.appointments.cancel_appointment_reach_us">
+                        {utils.getAppParameter('HelioEmailAddress')}
+                        <a rel='noreferrer' target='_self' href={utils.getAppParameter('ChatLink')}>Chat</a>
+                        {utils.getAppParameter('CallUsPhone')}
+                    </Trans>
+                </div></>}
                 <div className='pt-6'>
                     <Button buttonType='big' isLoading={cancelAppointmentMutation.isLoading} disabled={!isDirty} label='external_access.appointments.cancel_appointment' type='submit' />
                 </div>
