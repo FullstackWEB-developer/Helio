@@ -1,4 +1,4 @@
-import {ReactNode} from "react";
+import {ReactNode, useEffect} from "react";
 import useVerifiedPatient from '@shared/hooks/useVerifiedPatient';
 import {useHistory} from 'react-router-dom';
 import {
@@ -25,9 +25,11 @@ import {
 import {RedirectLink} from '@pages/external-access/verify-patient/models/redirect-link';
 import {ExternalAccessRequestTypes} from '@pages/external-access/models/external-updates-request-types.enum';
 import {RequestChannel} from '@pages/external-access/verify-patient/models/request-channel.enum';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {setRedirectLink} from '@pages/external-access/verify-patient/store/verify-patient.slice';
 import {matchPath} from 'react-router';
+import {authenticationSelector} from '@shared/store/app-user/appuser.selectors';
+import {logOut} from '@shared/store/app-user/appuser.slice';
 
 interface VerifiedPatientGuardProps {
     children?: ReactNode | Element | null;
@@ -35,6 +37,13 @@ interface VerifiedPatientGuardProps {
 const VerifiedPatientGuard = ({children}: VerifiedPatientGuardProps) => {
     const hasVerifiedPatient = useVerifiedPatient();
     const history = useHistory();
+    const {isGuestLogin, accessToken} = useSelector(authenticationSelector);
+
+    useEffect(() => {
+        if (!isGuestLogin && !!accessToken) {
+            dispatch(logOut());
+        }
+    }, [isGuestLogin, accessToken]);
 
     const rescheduleAppointmentMatch = matchPath(history.location.pathname, {
         path: `${AppointmentReschedulePath}/:appointmentId`,

@@ -37,7 +37,7 @@ const Login = () => {
 
 
     useEffect(() => {
-        if (utils.isSessionExpired()) {
+        if (utils.isSessionExpired() || auth.isGuestLogin) {
             dispatch(logOut());
         }
         if (!utils.isLoggedIn()) {
