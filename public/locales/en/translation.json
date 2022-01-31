@@ -263,7 +263,7 @@
   "search": {
     "search_type": {
       "patient_id": "Patient ID (XXXXX)",
-      "patient_name": "Patient Name Surname or Surname",
+      "patient_name": "First Name Last Name or Last Name",
       "dob": "Date of birth (MM/DD/YYYY)",
       "phone": "Phone number (310-000-0000)",
       "contact_name": "Contact Name",
