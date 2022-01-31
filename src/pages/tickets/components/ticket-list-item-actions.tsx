@@ -71,6 +71,11 @@ const TicketListItemActions = ({ticketInfo}: {ticketInfo: Ticket}) => {
             }
             case t('tickets.ticket_list_actions.call'): {
                 utils.initiateACall(ticketInfo.originationNumber);
+                if (!!ticketInfo.patientId) {
+                    history.push(`${PatientsPath}/${ticketInfo.patientId}`);
+                } else if (!!ticketInfo.contactId) {
+                    history.push(`${ContactsPath}/${ticketInfo.contactId}`);
+                }
                 break;
             }
             case t('tickets.ticket_list_actions.patient_details'): {

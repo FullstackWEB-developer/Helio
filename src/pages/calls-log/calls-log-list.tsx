@@ -309,6 +309,11 @@ const CallsLogList = () => {
                                 switch (item.value) {
                                     case '1':
                                         utils.initiateACall(data.originationNumber);
+                                        if (!!data.patientId) {
+                                            navigateToPatientDetail(data.patientId);
+                                        } else if (!!data.contactId) {
+                                            navigateToContactDetail(data.contactId);
+                                        }
                                         break;
                                     case '2':
                                         navigateToTicketDetail(data.ticketNumber);
