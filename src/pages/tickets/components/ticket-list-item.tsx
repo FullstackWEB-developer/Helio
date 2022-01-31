@@ -103,7 +103,7 @@ const TicketListItem = ({item}: TicketListItemProps) => {
         </div>
         <div className='w-2/12 h-full flex items-center'>
             <Link to={getTicketPath()}>
-                <div className='body3-small'>{dayjs(item.createdOn).format('MMM DD, YYYY h:mm A')}</div>
+                <div className='body3-small'>{dayjs.utc(item.createdOn).local().format('MMM DD, YYYY h:mm A')}</div>
             </Link>
         </div>
         <div className='w-2/12 h-full'>
