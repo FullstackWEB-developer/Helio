@@ -8,7 +8,7 @@ import {BlackListsPath, TicketsPath, UsersPath} from '@app/paths';
 import SvgIcon from '@components/svg-icon/svg-icon';
 import {Icon} from '@components/svg-icon/icon';
 import './navigation.scss';
-import {selectUnreadSMSList} from '@shared/store/app-user/appuser.selectors';
+import {selectUnreadSmsMessages} from '@pages/sms/store/sms.selectors';
 import {selectUnreadEmails} from '@pages/email/store/email.selectors';
 
 const Navigation = () => {
@@ -19,12 +19,16 @@ const Navigation = () => {
         return (location && location.pathname === link)
     };
 
-    const unreadSMSList = useSelector(selectUnreadSMSList);
+    const unreadSMSList = useSelector(selectUnreadSmsMessages);
     const unreadEmails = useSelector(selectUnreadEmails);
 
     const unreadEmailCount = useMemo(() => {
         return unreadEmails.reduce((a, b) => a + b.count, 0);
     }, [unreadEmails]);
+
+    const unreadSMSListCount = useMemo(() => {
+        return unreadSMSList.reduce((a, b) => a + b.count, 0);
+    }, [unreadSMSList]);
 
     const menuItems = [
         {
@@ -57,8 +61,8 @@ const Navigation = () => {
             link: '/sms',
             id: 'navigation-sms',
             icon: <SvgIcon type={Icon.Sms} fillClass='active-item-icon' />,
-            displayBadge: true,
-            badgeValue: unreadSMSList?.length
+            displayBadge: unreadSMSListCount > 0,
+            badgeValue: unreadSMSListCount
         },
         {
              title: t('navigation.email'),

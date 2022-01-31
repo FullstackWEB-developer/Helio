@@ -8,16 +8,10 @@ import {Option} from '@components/option/option';
 import {UseQueryResult} from 'react-query';
 dayjs.extend(utc);
 
-export const MAX_MESSAGE_SUMMARY_BODY_LENGTH = 50;
-
-export const messageSummaryTruncate = (value: string) => {
-    return value.length > MAX_MESSAGE_SUMMARY_BODY_LENGTH ? `${value.substr(0, MAX_MESSAGE_SUMMARY_BODY_LENGTH)}...` : value;
-}
-
 export const messageRelativeTimeFormat = (value: dayjs.Dayjs): string => {
     const days = value.diff(dayjs().startOf('d'), 'd');
     if (days >= -1) {
-        var time = new Intl.RelativeTimeFormat('en', {numeric: "auto"});
+        const time = new Intl.RelativeTimeFormat('en', {numeric: "auto"});
         return time.format(days, 'day');
     }
     return value.format('MMM DD YYYY');

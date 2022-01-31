@@ -27,22 +27,23 @@ import {
 import {getChats, getMessage, getMessages, markRead, sendMessage} from './services/ticket-messages.service';
 import {DATE_INPUT_LONG_FORMAT, DEBOUNCE_SEARCH_DELAY_MS} from '@constants/form-constants';
 import useDebounce from '@shared/hooks/useDebounce';
-import {selectAppUserDetails, selectUnreadSMSList} from '@shared/store/app-user/appuser.selectors';
+import {selectAppUserDetails} from '@shared/store/app-user/appuser.selectors';
 import {SmsFilterParamModel} from './components/sms-filter/sms-filter.model';
 import utils from '@shared/utils/utils';
 import {getTicketById, setAssignee} from '@pages/tickets/services/tickets.service';
 import {TicketBase} from '@pages/tickets/models/ticket-base';
 import {SmsNotificationData, SmsQueryType} from '@pages/sms/models';
 import {DEFAULT_FILTER_VALUE, DEFAULT_MESSAGE_QUERY_PARAMS} from './constants';
-import {getNextPage, messageSummaryTruncate} from './utils';
+import {getNextPage} from './utils';
 import Spinner from '@components/spinner/Spinner';
 import {useSignalRConnectionContext} from '@shared/contexts/signalRContext';
 import './sms.scss';
-import {removeUnreadSMSMessageForList} from '@shared/store/app-user/appuser.slice';
 import {useHistory, useLocation, useParams} from 'react-router';
 import {SmsPath} from '@app/paths';
 import useCheckPermission from '@shared/hooks/useCheckPermission';
 import {ExtendedPatient} from '@pages/patients/models/extended-patient';
+import {removeUnreadSmsTicketId, setSmsMessageSummaries} from '@pages/sms/store/sms.slice';
+import {selectLastSmsDate, selectSmsSummaries, selectUnreadSmsMessages} from '@pages/sms/store/sms.selectors';
 
 interface SmsLocationState {
     contact?: ContactExtended,
@@ -59,33 +60,30 @@ const Sms = () => {
         ...DEFAULT_MESSAGE_QUERY_PARAMS
     });
     const [searchTerm, setSearchTerm] = useState('');
+    const lastSmsDate = useSelector(selectLastSmsDate);
+    const unreadSMSList = useSelector(selectUnreadSmsMessages);
     const [debounceSearchTerm] = useDebounce(searchTerm, DEBOUNCE_SEARCH_DELAY_MS);
     const [selectedTicketSummary, setSelectedTicketSummary] = useState<TicketMessageSummary>();
     const [messages, setMessages] = useState<TicketMessage[]>([]);
     const [isNewSmsChat, setIsNewSmsChat] = useState(false);
     const [filterParam, setFilterParam] = useState<SmsFilterParamModel>({...DEFAULT_FILTER_VALUE, assignedTo: id});
-    const [summaryMessages, setSummaryMessages] = useState<TicketMessageSummary[]>([])
     const [smsQueryType, setSmsQueryType] = useState<SmsQueryType>();
     const {smsIncoming} = useSignalRConnectionContext();
-    const unreadSMSList = useSelector(selectUnreadSMSList) ?? [];
     const {state} = useLocation<SmsLocationState>();
     const [newMessageId, setNewMessageId] = useState('');
     const {ticketId} = useParams<{ticketId?: string}>();
     const [lastMessageSendTime, setLastMessageSendTime] = useState<Date>();
     const history = useHistory();
     const dispatch = useDispatch();
+    const summaryMessages = useSelector(selectSmsSummaries);
 
-    const dropdownItem: DropdownItemModel[] = [
-        {label: 'sms.query_type.my_sms', value: SmsQueryType.MySms},
-        {label: 'sms.query_type.team_sms', value: SmsQueryType.MyTeam}
-    ];
 
-    const {fetchNextPage, hasNextPage, isFetchingNextPage, isFetching, refetch} = useInfiniteQuery([QueryTicketMessageSummaryInfinite, queryParams],
+    const {fetchNextPage, hasNextPage, isFetchingNextPage, refetch: refetchTicketSummaries} = useInfiniteQuery([QueryTicketMessageSummaryInfinite, queryParams],
         ({pageParam = 1}) => getChats({...queryParams, page: pageParam}), {
         enabled: !!smsQueryType,
         getNextPageParam: (lastPage) => getNextPage(lastPage),
         onSuccess: (result) => {
-            setSummaryMessages(utils.accumulateInfiniteData(result));
+            dispatch(setSmsMessageSummaries(utils.accumulateInfiniteData(result)));
         }
     });
 
@@ -112,25 +110,17 @@ const Sms = () => {
         }
     });
 
-    useEffect(() =>{
-        if (!summaryMessages || summaryMessages.length === 0 || !unreadSMSList || unreadSMSList.length === 0) {
-            return;
-        }
-        unreadSMSList.forEach(unreadId => {
-            const unreadSummary = summaryMessages.find(a => a.ticketId === unreadId);
-            if (unreadSummary && unreadSummary.unreadCount === 0) {
-                dispatch(removeUnreadSMSMessageForList(unreadId));
-            }
-        })
-    }, [summaryMessages]);
+    useEffect(() => {
+        refetchTicketSummaries().then()
+    }, [lastSmsDate, queryParams])
 
     useEffect(() => {
-        if (!ticketId && !smsQueryType) {
-            setSmsQueryType(!isDefaultTeamView ? SmsQueryType.MySms : SmsQueryType.MyTeam);
-            return;
-        }
+        setSmsQueryType(isDefaultTeamView ? SmsQueryType.MyTeam : SmsQueryType.MySms);
+    }, [isDefaultTeamView]);
+
+    useEffect(() => {
         if(!isNewSmsChat && !!ticketId) {
-            ticketSummaryRefetch();
+            ticketSummaryRefetch().then();
         }
     }, [ticketSummaryRefetch, ticketId, isNewSmsChat]);
 
@@ -168,34 +158,12 @@ const Sms = () => {
 
     const removeUnreadCount = (summary: TicketMessageSummary) => {
         if (summary.unreadCount > 0) {
-            markReadMutation.mutate({ticketId: summary.ticketId, channel: ChannelTypes.SMS});
+            markReadMutation.mutate({ticketId: summary.ticketId, channel: ChannelTypes.SMS}, {
+                onSuccess: () => {
+                    dispatch(removeUnreadSmsTicketId(summary.ticketId));
+                }
+            });
         }
-        dispatch(removeUnreadSMSMessageForList(summary.ticketId));
-    }
-
-    const modifySummaryMessage = (ticketId: string, unreadCountIncrease?: number, messageSummaryBody?: string, messageCreatedOn?: Date, unreadCount?: number) => {
-        const messageIndex = summaryMessages.findIndex(p => p.ticketId === ticketId);
-        if (messageIndex < 0) {
-            return;
-        }
-        const currentSummaryMessagesClone = summaryMessages.slice();
-        const currentSummaryMessage = currentSummaryMessagesClone[messageIndex];
-
-        if (unreadCountIncrease !== undefined) {
-            currentSummaryMessage.unreadCount = unreadCountIncrease > 0 ? currentSummaryMessage.unreadCount + unreadCountIncrease : unreadCountIncrease;
-        }
-
-        if (unreadCount) {
-            currentSummaryMessage.unreadCount = unreadCount;
-        }
-
-        if (messageSummaryBody) {
-            currentSummaryMessage.messageSummary = messageSummaryTruncate(messageSummaryBody);
-        }
-        if (messageCreatedOn) {
-            currentSummaryMessage.messageCreatedOn = messageCreatedOn
-        }
-        setSummaryMessages(currentSummaryMessagesClone);
     }
 
     useQuery([GetTicketMessage, newMessageId], () => getMessage(newMessageId),
@@ -203,7 +171,6 @@ const Sms = () => {
             enabled: !!newMessageId,
             onSuccess: (result) => {
                 const isTicketSummarySelected = summaryMessages && selectedTicketSummary?.ticketId === result.ticketId;
-                modifySummaryMessage(result.ticketId, !isTicketSummarySelected ? 1 : undefined, result.body);
                 if (isTicketSummarySelected && result.direction === TicketMessagesDirection.Incoming) {
                     pushMessage(result);
                 }
@@ -217,26 +184,20 @@ const Sms = () => {
         onSuccess: (response) => {
             response.createdOn = dayjs().utc().local().toDate();
             pushMessage(response);
-            modifySummaryMessage(response.ticketId, undefined, response.body, response.createdOn);
             setLastMessageSendTime(response.createdOn);
+            refetchTicketSummaries().then();
         }
     });
 
-    const markReadMutation = useMutation(
-        ({ticketId, channel}: {ticketId: string, channel: ChannelTypes}) => markRead(ticketId, channel, TicketMessagesDirection.Incoming),
-        {
-            onSuccess: (data) => {
-                modifySummaryMessage(data.ticketId, 0);
-            }
-        });
+    const markReadMutation = useMutation(({ticketId, channel}: {ticketId: string, channel: ChannelTypes}) => markRead(ticketId, channel, TicketMessagesDirection.Incoming));
 
     const receiveSMS = useCallback((data: SmsNotificationData) => {
         const messageIndex = summaryMessages.findIndex(p => p.ticketId === data.ticketId);
         if (messageIndex < 0) {
-            refetch();
+            refetchTicketSummaries().then();
         }
         setNewMessageId(data.messageId);
-    }, [refetch, summaryMessages]);
+    }, [refetchTicketSummaries, summaryMessages]);
 
     useEffect(() => {
         if (!smsIncoming) {
@@ -251,19 +212,16 @@ const Sms = () => {
 
     const messageFetchMore = () => {
         if (messageHasNextPage) {
-            messageNextPage();
+            messageNextPage().then();
         }
     }
 
     const changeAssigneeMutation = useMutation(setAssignee);
 
-    useEffect(() => {
-        refetch();
-    }, [queryParams, refetch]);
 
     useEffect(() => {
         if (selectedTicketSummary) {
-            messageQueryRefetch();
+            messageQueryRefetch().then();
         }
     }, [selectedTicketSummary, messageQueryRefetch]);
 
@@ -306,7 +264,7 @@ const Sms = () => {
 
     const onMessageListClick = (summary: TicketMessageSummary) => {
         if (summary.ticketId !== selectedTicketSummary?.ticketId) {
-            modifySummaryMessage(summary.ticketId, undefined, undefined, undefined, 0);
+
             setIsNewSmsChat(false);
             history.replace(`${SmsPath}/${summary.ticketId}`)
         }
@@ -391,7 +349,7 @@ const Sms = () => {
         const summary = createSummaryFromTicket(ticket);
         setMessages([]);
 
-        setSummaryMessages([summary, ...summaryMessages]);
+        dispatch(setSmsMessageSummaries([summary, ...summaryMessages]));
         setIsNewSmsChat(false);
         setSelectedTicketSummary(summary);
     }
@@ -429,9 +387,6 @@ const Sms = () => {
     }
 
     const getMessageListSection = () => {
-        if (isFetching && !isFetchingNextPage) {
-            return (<Spinner fullScreen />);
-        }
         return (<>
             <SmsSummaryList
                 className={classnames({'hidden': isFilterVisible})}
@@ -455,8 +410,8 @@ const Sms = () => {
 
     useEffect(() => {
         if (selectedTicketSummary) {
-            if (unreadSMSList.includes(selectedTicketSummary?.ticketId)) {
-                dispatch(removeUnreadSMSMessageForList(selectedTicketSummary?.ticketId));
+            if ((unreadSMSList ?? []).map(a => a.ticketId).includes(selectedTicketSummary?.ticketId)) {
+                dispatch(removeUnreadSmsTicketId(selectedTicketSummary?.ticketId));
                 markReadMutation.mutate({ticketId: selectedTicketSummary.ticketId, channel: ChannelTypes.SMS});
             }
         }
@@ -467,7 +422,10 @@ const Sms = () => {
             <div className='flex flex-col pt-6 border-r sms-sidebar'>
                 <div className='pb-2 pl-5 border-b'>
                     <DropdownLabel
-                        items={dropdownItem}
+                        items={[
+                            {label: 'sms.query_type.my_sms', value: SmsQueryType.MySms},
+                            {label: 'sms.query_type.team_sms', value: SmsQueryType.MyTeam}
+                        ]}
                         value={smsQueryType}
                         onClick={(item) => onDropdownClick(item)}
                     />

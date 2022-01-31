@@ -45,10 +45,6 @@ export const selectLiveAgentStatuses = createSelector(
     appUserState,
     state => state.liveAgentStatuses as LiveAgentStatusInfo[]
 )
-export const selectUnreadSMSList = createSelector(
-    appUserState,
-    state => state.unreadSMSList as string[]
-)
 export const selectAppUserDetails = createSelector(
     appUserState,
     state => state.appUserDetails as UserDetail

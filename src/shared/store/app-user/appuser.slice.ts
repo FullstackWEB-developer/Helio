@@ -47,14 +47,6 @@ const appUserSlice = createSlice({
         },
         setLogStream(state, {payload}: PayloadAction<LogStream>) {
             state.logStream = payload;
-        },
-        appendUnreadSMSList(state, {payload}: PayloadAction<string>) {
-            if (!state.unreadSMSList.includes(payload)) {
-                state.unreadSMSList = [...state.unreadSMSList, payload];
-            }
-        },
-        removeUnreadSMSMessageForList(state, {payload}: PayloadAction<string>) {
-            state.unreadSMSList = state.unreadSMSList?.filter(m => m !== payload);
         }
     }
 });
@@ -99,9 +91,7 @@ export const {
     updateUserStatus,
     setAgentStates,
     setLogStream,
-    addLiveAgentStatus,
-    appendUnreadSMSList,
-    removeUnreadSMSMessageForList
+    addLiveAgentStatus
 } = appUserSlice.actions
 
 export default appUserSlice.reducer

@@ -18,6 +18,7 @@ import storage from 'redux-persist/lib/storage'
 import {persistReducer} from 'redux-persist'
 import thunk from 'redux-thunk'
 import usersReducer from '../pages/users/store/users.slice';
+import smsReducer from '../pages/sms/store/sms.slice';
 
 export const PersistenceStoreName =  'helio-ui-store';
 const reducers = combineReducers({
@@ -35,6 +36,7 @@ const reducers = combineReducers({
     usersState: usersReducer,
     callsLogState: callsLogReducer,
     chatLogState: chatLogReducer,
+    smsState: smsReducer,
     emailState: emailReducer
 })
 

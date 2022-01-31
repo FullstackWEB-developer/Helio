@@ -1,10 +1,10 @@
 import {SmsNotificationData} from '@pages/sms/models';
-import {appendUnreadSMSList} from '@shared/store/app-user/appuser.slice';
 import {useEffect} from 'react';
 import {useDispatch} from 'react-redux';
 import {useSignalRConnectionContext} from '../contexts/signalRContext';
 import {ChannelTypes, TicketMessagesDirection} from '@shared/models';
 import {appendUnreadEmailTicketId, setLastEmailDate} from '@pages/email/store/email-slice';
+import {appendUnreadSmsTicketId, setLastSmsDate} from '@pages/sms/store/sms.slice';
 
 const IncomingTicketMessageUpdate = () => {
 
@@ -24,7 +24,8 @@ const IncomingTicketMessageUpdate = () => {
 
     const onTicketMessageReceived = (data: SmsNotificationData) => {
         if (data.messageDirection === TicketMessagesDirection.Incoming && data.channelId === ChannelTypes[ChannelTypes.SMS]) {
-            dispatch(appendUnreadSMSList(data.ticketId));
+            dispatch(appendUnreadSmsTicketId(data.ticketId));
+            dispatch(setLastSmsDate());
         } else if (data.messageDirection === TicketMessagesDirection.Incoming && data.channelId === ChannelTypes[ChannelTypes.Email]) {
             dispatch(appendUnreadEmailTicketId(data.ticketId));
             dispatch(setLastEmailDate());

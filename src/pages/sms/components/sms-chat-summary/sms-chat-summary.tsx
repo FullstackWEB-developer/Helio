@@ -4,7 +4,7 @@ import HighlighterText from '@shared/components/highlighter-text/highlighter-tex
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import classnames from 'classnames';
-import {TicketMessageFilterMatch} from '@shared/models';
+import {TicketMessageFilterMatch, TicketMessageSummary} from '@shared/models';
 import './sms-chat-summary.scss';
 import utils from '@shared/utils/utils';
 import {useMemo} from 'react';
@@ -18,34 +18,21 @@ dayjs.extend(utc);
 dayjs.extend(isToday);
 
 interface SmsSummaryProps {
-    ticketId: string;
-    messageSummary: string;
-    unreadCount: number;
-    patientId?: number;
-    contactId?: string;
-    createdForName: string;
-    createdForMobileNumber: string;
-    messageSendBy: string;
-    messageSendAt: Date;
-    isSelected?: boolean;
+    smsInfo: TicketMessageSummary;
     searchTerm?: string;
     searchFilterMatch?: TicketMessageFilterMatch[];
     onClick?: (ticketId: string) => void;
+    isSelected: boolean;
 }
 
 const SmsChatSummary = ({
-    ticketId,
-    messageSummary,
-    unreadCount,
-    createdForName,
-    createdForMobileNumber,
-    messageSendAt,
-    messageSendBy,
-    isSelected,
+    smsInfo,
     searchTerm,
     searchFilterMatch,
+    isSelected,
     ...props}: SmsSummaryProps) => {
 
+    const {patientId, contactId, unreadCount, messageCreatedOn, messageSummary, ticketId} = smsInfo;
     const isRead = unreadCount === 0;
     const {t} = useTranslation();
     
@@ -67,39 +54,53 @@ const SmsChatSummary = ({
         return searchFilterMatch?.map(getFilterMatchName) ?? []
     }, [searchFilterMatch, t]);
 
-    const {data: patientPhoto} = useQuery([GetPatientPhoto, props.patientId], () => getPatientPhoto(props.patientId!), {
-        enabled: !!props.patientId
+    const {data: patientPhoto} = useQuery([GetPatientPhoto, patientId], () => getPatientPhoto(patientId!), {
+        enabled: !!patientId
     });
 
     const getDate = () => {
-        if (dayjs(messageSendAt).isToday()) {
-            return dayjs.utc(messageSendAt).local().format('hh:mm A');
+        if (dayjs(messageCreatedOn).isToday()) {
+            return dayjs.utc(messageCreatedOn).local().format('hh:mm A');
         } else {
-            return dayjs.utc(messageSendAt).local().format('MMM D');
+            return dayjs.utc(messageCreatedOn).local().format('MMM D');
         }
     }
 
-    const getImage = () => {
-        if (patientPhoto && patientPhoto.length > 0) {
-            return <img alt={t('patient.summary.profile_pic_alt_text')} className='w-10 h-10 rounded-full'
-                        src={`data:image/jpeg;base64,${patientPhoto}`} />
-        }
+    const createdForName = useMemo(() => {
+            if (smsInfo.createdForName) {
+                if (smsInfo.createdForName.startsWith('+') || /\d/.test(smsInfo.createdForName)) {
+                    return utils.applyPhoneMask(smsInfo.createdForName);
+                }
+                return smsInfo.createdForName;
+            }
+            return '';
+    }, [smsInfo.createdForName]);
 
-        return <Avatar userFullName={createdForName} />
-    }
+    const userImage = useMemo(() => {
+        if (createdForName) {
+            if (patientPhoto && patientPhoto.length > 0) {
+                return <img alt={t('patient.summary.profile_pic_alt_text')} className='w-10 h-10 rounded-full'
+                            src={`data:image/jpeg;base64,${patientPhoto}`} />
+            }
+            const avatarClassName = classnames('w-10 h-10', {
+                'avatar-patient': !!patientId,
+                'avatar-contact': !!contactId,
+            });
+            return <Avatar className={avatarClassName} userFullName={createdForName} />
+        } else {
+            return <Avatar icon={Icon.UserUnknown} />
+        }
+    }, [createdForName, contactId, patientId, patientPhoto, t]);
 
     return (<div className={classnames('border-b sms-summary cursor-pointer', {'sms-summary-selected': isSelected})} onClick={() => props.onClick && props.onClick(ticketId)}>
         <div className='flex flex-row pl-5 pt-2.5 pb-1.5 pr-4'>
             <div className="pr-4">
-                {!!createdForName && getImage()}
-                {!createdForName &&
-                    <Avatar icon={Icon.UserUnknown} />
-                }
+                {userImage}
             </div>
             <div className="flex flex-col w-full">
                 <div className="flex justify-between">
                     <span className='body1 w-4/6'>
-                        <HighlighterText text={createdForName ? createdForName : createdForMobileNumber} highlighterText={searchTerm} />
+                        <HighlighterText text={createdForName ? createdForName : utils.applyPhoneMask(smsInfo.createdForEndpoint)} highlighterText={searchTerm} />
                     </span>
                     <span className='body3-small'>{getDate()}</span>
                 </div>

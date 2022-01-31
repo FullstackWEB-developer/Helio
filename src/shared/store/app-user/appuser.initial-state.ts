@@ -10,8 +10,7 @@ export interface AppUserState {
     status: UserStatus | string;
     agentStates: AgentState[];
     liveAgentStatuses: LiveAgentStatusInfo[];
-    logStream?: LogStream,
-    unreadSMSList: string[];
+    logStream?: LogStream
 }
 
 const initialState: AppUserState = {
@@ -24,7 +23,6 @@ const initialState: AppUserState = {
     status: UserStatus.Offline,
     agentStates: [],
     liveAgentStatuses: [],
-    logStream: undefined,
-    unreadSMSList: []
+    logStream: undefined
 }
 export default initialState;
