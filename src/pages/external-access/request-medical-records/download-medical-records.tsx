@@ -5,7 +5,6 @@ import {useTranslation} from 'react-i18next';
 import {useForm} from 'react-hook-form';
 import {useMutation, useQuery} from 'react-query';
 import {downloadMedicalRecords, verifyPatient} from '@pages/patients/services/patients.service';
-import {ControlledDateInput} from '@components/controllers';
 import utils from '@shared/utils/utils';
 import {useDispatch, useSelector} from 'react-redux';
 import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
@@ -18,6 +17,7 @@ import {
 import {VerifiedPatient} from '@pages/patients/models/verified-patient';
 import GetExternalUserHeader from '@pages/external-access/verify-patient/get-external-user-header';
 import {INPUT_DATE_FORMAT} from '@constants/form-constants';
+import Confirmation from '@components/confirmation/confirmation';
 
 const DownloadMedicalRecords = () => {
     const {t} = useTranslation();
@@ -25,6 +25,7 @@ const DownloadMedicalRecords = () => {
     const request = useSelector(selectRedirectLink);
     const [isVerified, setIsVerified] = useState<VerifiedPatient | undefined>();
     const [errorMessage, setErrorMessage] = useState<string>('');
+    const [displayConfirmationMessage, setDisplayConfirmationMessage] = useState<string>();
     const {handleSubmit, control, formState, watch} =
         useForm({
         mode: 'onBlur'
@@ -41,6 +42,7 @@ const DownloadMedicalRecords = () => {
             },
             onSuccess: () => {
                 setErrorMessage('external_access.medical_records_request.file_downloaded');
+                setDisplayConfirmationMessage("external_access.medical_records_request.close_window_description_third_party");
             }
         });
 
@@ -142,6 +144,13 @@ const DownloadMedicalRecords = () => {
                     </div>
                 </form>
             </div>
+        <Confirmation title='external_access.medical_records_request.close_window_title'
+                      onOk={() => setDisplayConfirmationMessage('')}
+                      onClose={() => setDisplayConfirmationMessage('')}
+                      isOpen={!!displayConfirmationMessage}
+                      displayCancel={false}
+                      message={displayConfirmationMessage}
+        />
         {errorMessage && <div className='text-danger'>{t(errorMessage)}</div>}
     </div>
 }
