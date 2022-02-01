@@ -3,11 +3,11 @@ import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
 import SvgIcon, {Icon} from '@components/svg-icon';
 import TextArea from '@components/textarea/textarea';
 import {sendMessage} from '@pages/sms/services/ticket-messages.service';
-import {NotificationTemplateChannel} from '@shared/models/notification-template.model';
+import {NotificationTemplate, NotificationTemplateChannel} from '@shared/models/notification-template.model';
 import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
 import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {useMutation} from 'react-query';
+import {useMutation, useQuery} from 'react-query';
 import {useDispatch, useSelector} from 'react-redux';
 import {Ticket} from '@pages/tickets/models/ticket';
 import {ChannelTypes, ContactExtended, EmailMessageDto, TicketMessageBase, TicketMessagesDirection} from '@shared/models';
@@ -15,6 +15,8 @@ import {ExtendedPatient} from '@pages/patients/models/extended-patient';
 import {selectAppUserDetails} from '@shared/store/app-user/appuser.selectors';
 import {setAssignee} from '@pages/tickets/services/tickets.service';
 import {setLastEmailDate} from '@pages/email/store/email-slice';
+import {ProcessTemplate} from '@constants/react-query-constants';
+import {processTemplate} from '@shared/services/notifications.service';
 
 interface EmailReplyProps {
     ticket: Ticket;
@@ -49,7 +51,7 @@ const EmailReply = ({ticket, patient, contact, onMailSend}: EmailReplyProps) => 
                 type: SnackbarType.Success,
                 message: 'email.new_email.email_sent_successfully'
             }));
-            setEmailContent('');
+            discardReply();
             onMailSend(data as EmailMessageDto);
             dispatch(setLastEmailDate());
         },
@@ -68,7 +70,8 @@ const EmailReply = ({ticket, patient, contact, onMailSend}: EmailReplyProps) => 
             body: emailContent,
             toAddress: recipientEmailAddress,
             ticketId: ticket.id!,
-            direction: TicketMessagesDirection.Outgoing
+            direction: TicketMessagesDirection.Outgoing,
+            ...(emailSubject && {subject: emailSubject})
         }
         if (!ticket.assignee || ticket.assignee !== id) {
             changeAssigneeMutation.mutate({assignee: id, ticketId: ticket.id!});
@@ -77,8 +80,38 @@ const EmailReply = ({ticket, patient, contact, onMailSend}: EmailReplyProps) => 
     }
 
     const discardReply = () => {
+        setRichTextMode(false);
         setEmailContent('');
-        // TODO next PBI - Remove selected template here to
+        setEmailSubject('');
+        setSelectedEmailTemplate(undefined);
+    }
+
+    const [richTextMode, setRichTextMode] = useState(false);
+    const [selectedEmailTemplate, setSelectedEmailTemplate] = useState<NotificationTemplate>();
+    const [emailSubject, setEmailSubject] = useState<string>('');
+    const {isFetching: isProcessingTemplate} = useQuery([ProcessTemplate, selectedEmailTemplate?.id!], () =>
+        processTemplate(selectedEmailTemplate?.id!, ticket, patient, contact),
+        {
+            enabled: !!selectedEmailTemplate && !!selectedEmailTemplate?.requirePreProcessing,
+            onSuccess: (data) => {
+                setEmailContent(data.content);
+                setEmailSubject(data.subject);
+            },
+            onError: () => {
+                dispatch(addSnackbarMessage({
+                    type: SnackbarType.Error,
+                    message: 'email.inbox.template_error'
+                }));
+            }
+        });
+
+    const onTemplateSelect = (template: NotificationTemplate) => {
+        setSelectedEmailTemplate(template);
+        setRichTextMode(true);
+        if (!template.requirePreProcessing) {
+            setEmailContent(template.content);
+            setEmailSubject(template.subject);
+        }
     }
 
     return (
@@ -86,24 +119,22 @@ const EmailReply = ({ticket, patient, contact, onMailSend}: EmailReplyProps) => 
             <div className='flex justify-between items-center h-12 email-reply-stripe px-6'>
                 <h6 className='text-white'>{t('email.inbox.send_reply')}</h6>
                 {
-                    emailContent /* TODO || selectedTemplate */ &&
+                    (emailContent || selectedEmailTemplate) &&
                     <div className='flex body3-medium items-center' onClick={discardReply}>
                         <span className='text-white'>{t('email.new_email.discard')}</span>
                         <SvgIcon wrapperClassName='pl-3 cursor-pointer' type={Icon.Delete} fillClass='white-icon' />
                     </div>
                 }
-
             </div>
-            <div className='flex items-center justify-between overflow-y-auto py-4 w-full'>
+            <div className='flex items-center justify-between py-4 w-full'>
                 <div className='w-16 mt-auto pl-4'>
-                    {/* 
-                        SEPARATE PBI  
-                        <NotificationTemplateSelect isLoading={false} channel={NotificationTemplateChannel.Email}
-                        onSelect={() => { }} /> 
-                    */}
+                    <NotificationTemplateSelect isLoading={isProcessingTemplate} channel={NotificationTemplateChannel.Email}
+                        onSelect={(template) => onTemplateSelect(template)} />
                 </div>
-
-                <div className='w-full'>
+                <div className='w-full flex flex-col'>
+                    {
+                        selectedEmailTemplate && <div className='body2'><span className='body2-medium whitespace-pre'>{t('email.inbox.template')}</span> {selectedEmailTemplate.displayText}</div>
+                    }
                     <TextArea
                         name='comment'
                         placeHolder='email.new_email.body_placeholder'
@@ -115,11 +146,13 @@ const EmailReply = ({ticket, patient, contact, onMailSend}: EmailReplyProps) => 
                         value={emailContent}
                         onChange={(message: string) => setEmailContent(message)}
                         showSendIconInRichTextMode={false}
+                        toggleRichTextMode={richTextMode}
                     />
                 </div>
                 <div className='w-16 mt-auto'>
                     {
-                        emailContent && <SvgIcon wrapperClassName='p-4 cursor-pointer' isLoading={sendEmailMutation.isLoading} type={Icon.Send} onClick={sendReply} />
+                        emailContent &&
+                        <SvgIcon wrapperClassName='p-4 cursor-pointer' isLoading={sendEmailMutation.isLoading || isProcessingTemplate} type={Icon.Send} onClick={sendReply} />
                     }
                 </div>
             </div>

@@ -1,6 +1,6 @@
 import Api from './api';
 import {NotificationTemplate, NotificationTemplateChannel} from '@shared/models/notification-template.model';
-import {Contact} from '@shared/models';
+import {Contact, ContactExtended} from '@shared/models';
 import {Patient} from '@pages/patients/models/patient';
 import {Ticket} from '@pages/tickets/models/ticket';
 
@@ -16,7 +16,7 @@ export const getTemplates = async (channel: NotificationTemplateChannel, categor
     return result.data;
 }
 
-export const processTemplate = async (templateId: string, ticket: Ticket, patient?: Patient, contact?: Contact): Promise<NotificationTemplate> => {
+export const processTemplate = async (templateId: string, ticket: Ticket, patient?: Patient, contact?: Contact | ContactExtended): Promise<NotificationTemplate> => {
     const url = `${notificationsUrl}/templates/${templateId}/process`;
     let data = {
         ticket,

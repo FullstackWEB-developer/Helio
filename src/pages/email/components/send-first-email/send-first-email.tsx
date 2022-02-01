@@ -86,7 +86,7 @@ const SendFirstEmail = ({ticket, patient, contact, onMailSend} : SendFirstEmailP
     }
 
     const{isFetching: isProcessing} = useQuery([ProcessTemplate, selectedTemplate?.id!], () =>
-            processTemplate(selectedTemplate?.id!, ticket, patient),
+            processTemplate(selectedTemplate?.id!, ticket, patient, contact),
         {
             enabled: !!selectedTemplate && !!selectedTemplate?.requirePreProcessing,
             onSuccess: (data) => {

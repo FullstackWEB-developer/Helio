@@ -1423,7 +1423,9 @@
       "add_contact": "Add Contact",
       "blocked_success": "{{email}} has been blocked succesfully.",
       "blocked_failure": "Blocking {{email}} failed. Please try again.",
-      "send_reply": "Send Reply"
+      "send_reply": "Send Reply",
+      "template": "Template: ",
+      "template_error": "Error processing template. Please try again later or use different template."
     },
     "new_email": {
       "title": "New Message",

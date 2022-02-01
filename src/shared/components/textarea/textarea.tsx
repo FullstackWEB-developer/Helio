@@ -39,6 +39,7 @@ interface TextAreaProps {
     maxRows?: number;
     rows?: number;
     showSendIconInRichTextMode?: boolean;
+    toggleRichTextMode?: boolean;
 }
 
 const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(({
@@ -62,6 +63,7 @@ const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(({
     maxRows = 3,
    alwaysDisplayIcon,
    showSendIconInRichTextMode,
+   toggleRichTextMode = false,
     ...props
 }: TextAreaProps, ref) => {
 
@@ -135,7 +137,14 @@ const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(({
         'border-b': !hasBorder,
         'border': hasBorder,
         'textarea-wrapper': props.disabled        
-    } )
+    });
+
+    useEffect(() => {
+        if(showFormatting){
+            setFormatEnabled(toggleRichTextMode);
+        }        
+    }, [toggleRichTextMode]);
+
 
     return (
         <Fragment>
