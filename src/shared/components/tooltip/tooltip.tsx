@@ -8,9 +8,10 @@ type TooltipProps = {
     isVisible: boolean;
     children: ReactNode;
     placement?: Placement;
+    showArrow?: boolean;
 };
 
-const Tooltip = ({targetRef, isVisible, children, placement = 'bottom'}: TooltipProps) => {
+const Tooltip = ({targetRef, isVisible, children, placement = 'bottom', showArrow = true}: TooltipProps) => {
     const popperRef = useRef(null);
     const [arrowRef, setArrowRef] = useState<HTMLDivElement | null>(null);
     const {styles, attributes} = usePopper(
@@ -45,7 +46,7 @@ const Tooltip = ({targetRef, isVisible, children, placement = 'bottom'}: Tooltip
             style={styles.popper}
             {...attributes.popper}
         >
-            <div ref={setArrowRef} style={styles.arrow} className="arrow" data-test-id='tooltip-arrow' />
+            {showArrow && <div ref={setArrowRef} style={styles.arrow} className="arrow" data-test-id='tooltip-arrow' />}
             {children}
         </div>
     );

@@ -28,6 +28,7 @@ import {ControlledInput, ControlledTextArea} from '@components/controllers';
 import {useForm} from 'react-hook-form';
 import Button from '@components/button/button';
 import {createBlockAccess} from '@pages/blacklists/services/blacklists.service';
+import ConversationHeaderPopup from '@components/conversation-header-popup/conversation-header-popup';
 
 const ConversationHeader = ({info, forNewTicketMessagePurpose, patientPhoto, conversationChannel = ChannelTypes.SMS}:
     {info: TicketMessageSummary, forNewTicketMessagePurpose: boolean, patientPhoto?: string, conversationChannel: ChannelTypes.SMS | ChannelTypes.Email}) => {
@@ -222,7 +223,16 @@ const ConversationHeader = ({info, forNewTicketMessagePurpose, patientPhoto, con
             </div>
             <div className="flex flex-col flex-auto pl-4 pr-6 pt-7">
                 <div className="flex flex-row justify-between">
-                    <div><h6>{displayName()}</h6></div>
+                    <div className='flex items-center'>
+                        <h6>{displayName()}</h6>
+                        {
+                            conversationChannel === ChannelTypes.Email &&
+                            <ConversationHeaderPopup
+                                anonymous={!info.patientId && !info.contactId}
+                                name={displayName()}
+                                photo={info?.createdForName ? getImage() : <Avatar icon={Icon.UserUnknown} userPicture={patientPhoto} />} />
+                        }
+                    </div>
                     <div>
                         {
                             isLoading ? <Spinner size='small' /> :

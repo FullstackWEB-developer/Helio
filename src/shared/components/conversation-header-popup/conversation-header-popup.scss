@@ -1,0 +1,11 @@
+.conversation-popup{
+    &-width {
+        width: 30rem;
+    }
+    &-divider {
+        background-color: var(--light-divider-12);
+    }
+    &-actions {
+        background-color: var(--table-header-background);
+    }
+}
