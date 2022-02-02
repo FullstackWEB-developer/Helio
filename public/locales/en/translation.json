@@ -667,7 +667,9 @@
       "not_found": "There are no feed items.",
       "error": "Failed to add Feed.",
       "description_prefix": "Ticket status was changed to",
-      "title": "Recent Activity"
+      "title": "Recent Activity",
+      "all_activity":  "All Activity",
+      "internal_notes": "Internal Notes"
     }
   },
   "statuses": {
@@ -1390,8 +1392,8 @@
     "subject": "Subject",
     "inbox": {
       "date": "{{relative}} ({{date}} at {{time}})",
-      "to": "To {{recipient}}",
-      "to_multiple": "To {{recipient}} and {{x}} other",
+      "to": "To <0> {{recipient}} </0>",
+      "to_multiple": "To <0> {{recipient}} </0> and <1> {{count}} </1> <2>{{others}}</2>",
       "from_label": "From:",
       "to_label": "To:",
       "cc_label": "Cc:",

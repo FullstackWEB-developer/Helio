@@ -7,13 +7,18 @@ import utils from '../../../../shared/utils/utils';
 import {FeedTypes} from '@pages/tickets/models/ticket-feed';
 import SvgIcon, {Icon} from '@components/svg-icon';
 import updateLocale from 'dayjs/plugin/updateLocale';
+import {EmailMessageDto} from '@shared/models';
+import FeedDetailEmailItem from '@pages/tickets/components/ticket-detail/feed-detail-email-item';
+import './feed-detail-item.scss';
 interface FeedDetailItemProps {
-    item: FeedDetailDisplayItem
+    feed: FeedDetailDisplayItem,
+    index: number;
 }
 
-const FeedDetailItem = ({item}: FeedDetailItemProps) => {
+const FeedDetailItem = ({feed, index}: FeedDetailItemProps) => {
     dayjs.extend(updateLocale);
     const formatTemplate = 'ddd, MMM DD, YYYY [at] h:mm a';
+
     dayjs.updateLocale('en', {
         relativeTime: {
             future: "in %s",
@@ -31,9 +36,9 @@ const FeedDetailItem = ({item}: FeedDetailItemProps) => {
             yy: "%d y"
         }
     })
-    const itemDateTime = item.dateTime ? `${dayjs().to(dayjs.utc(item.dateTime).local())} (${utils.formatUtcDate(item.dateTime, formatTemplate)})` : '';
+    const itemDateTime = feed.dateTime ? `${dayjs().to(dayjs.utc(feed.dateTime).local())} (${utils.formatUtcDate(feed.dateTime, formatTemplate)})` : '';
     let icon;
-    switch (item.feedType) {
+    switch (feed.feedType) {
         case FeedTypes.Note:
             icon = Icon.Note;
             break;
@@ -48,15 +53,24 @@ const FeedDetailItem = ({item}: FeedDetailItemProps) => {
             break;
     }
 
+    if (feed.feedType === FeedTypes.Email) {
+        const email = feed.item as EmailMessageDto;
+        return <FeedDetailEmailItem
+            message= {email}
+            key={email.id}
+            isCollapsed={index > 0}
+            feedTime={itemDateTime}
+        />
+    }
 
     return (
         <div className={'flex flex-row pl-6 py-4 border-b'}>
             <div className='w-8 h-8 pt-2'>
-                <Avatar userFullName={item.userFullName ?? ''} userPicture={item.userPicture} />
+                <Avatar userFullName={feed.userFullName ?? ''} userPicture={feed.userPicture} />
             </div>
             <div className='pl-6'>
                 <div className='flex flex-row'>
-                    <div className='subtitle2'>{item.userFullName} {item.title}</div>
+                    <div className='subtitle2'>{feed.userFullName} {feed.title}</div>
                 </div>
                 <div className='pt-1 flex flex-col text-xl'>
                     <div className='flex flex-row space-x-2'>
@@ -67,7 +81,7 @@ const FeedDetailItem = ({item}: FeedDetailItemProps) => {
                             {itemDateTime}
                         </span>
                     </div>
-                    {item.feedText && <p className='pt-3 body2' dangerouslySetInnerHTML={{__html: item.feedText}}/>}
+                    {feed.feedText && <p className='pt-3 body2' dangerouslySetInnerHTML={{__html: feed.feedText}}/>}
                 </div>
             </div>
         </div>

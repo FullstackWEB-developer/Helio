@@ -4,16 +4,22 @@ import {EmailMessageDto, TicketMessagesDirection} from '@shared/models';
 import utils from '@shared/utils/utils';
 import React, {useRef, useState} from 'react';
 import {Trans, useTranslation} from 'react-i18next';
-import EmailMessageHeader from './email-message-header';
-import EmailAttachment from './email-attachment';
+import EmailAttachment from '@pages/email/components/email-message/email-attachment';
+import FeedDetailEmailHeaderItem from '@pages/tickets/components/ticket-detail/feed-detail-email-item-header';
+import {useSelector} from 'react-redux';
+import {selectSelectedTicket} from '@pages/tickets/store/tickets.selectors';
 
-const EmailMessage = ({message, ticketCreatedForName, ticketHeaderPhoto, isCollapsed}: {message: EmailMessageDto, ticketCreatedForName: string, ticketHeaderPhoto: string, isCollapsed: boolean}) => {
-
+interface FeedDetailEmailItemProps {
+    message: EmailMessageDto,
+    isCollapsed: boolean;
+    feedTime: string;
+}
+const FeedDetailEmailItem = ({message, isCollapsed, feedTime}: FeedDetailEmailItemProps) => {
     const {t} = useTranslation();
-    const emailFromLabel = message.direction === TicketMessagesDirection.Incoming ? ticketCreatedForName || message.fromAddress :
+    const ticket=useSelector(selectSelectedTicket);
+    const [hover, setHover] = useState<boolean>(false);
+    const emailFromLabel = message.direction === TicketMessagesDirection.Incoming ? ticket?.createdForName || message.fromAddress :
         (message.createdByName ?? message.fromAddress);
-
-    const emailFromPhoto = message.direction === TicketMessagesDirection.Incoming ? ticketHeaderPhoto : '';
 
     const [collapsed, setCollapsed] = useState(isCollapsed);
 
@@ -32,7 +38,6 @@ const EmailMessage = ({message, ticketCreatedForName, ticketHeaderPhoto, isColla
                 <div className='subtitle2 whitespace-pre'>{recipients!.length + carbonCopyRecipientsNumber - 1 > 1 ? 'others': 'other'}</div>
             </Trans>
         }
-
         return <Trans i18nKey="email.inbox.to" values={{recipient: recipients![0]}}>
             <div className='subtitle2 whitespace-pre'>{recipients![0]}</div>
         </Trans>
@@ -43,16 +48,14 @@ const EmailMessage = ({message, ticketCreatedForName, ticketHeaderPhoto, isColla
 
 
     return (
-        <div className='px-6'>
-            <EmailMessageHeader
-                subject={message.subject || ''}
+        <div className='pl-6 pr-10' onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
+            <FeedDetailEmailHeaderItem
+                message={message}
                 from={emailFromLabel}
-                fromPhoto={emailFromPhoto}
                 collapseHandler={() => setCollapsed(!collapsed)}
-                collapsedBody={collapsed}
-                date={message.createdOn}
-                messageId={message.id}
-                attachments={message.attachments}
+                collapsed={collapsed}
+                isHover={hover}
+                feedTime={feedTime}
             />
             {
                 !collapsed &&
@@ -63,9 +66,7 @@ const EmailMessage = ({message, ticketCreatedForName, ticketHeaderPhoto, isColla
                             <SvgIcon type={Icon.ArrowTrendDown} className='cursor-pointer' />
                         </div>
                     </div>
-                    <div dangerouslySetInnerHTML={{__html: message.body}}>
-
-                    </div>
+                    <div className={collapsed ? '' : 'border-b pb-4'} dangerouslySetInnerHTML={{__html: message.body}}/>
                     {
                         message.attachments?.length > 0 &&
                         <div className='mt-4 pt-7 border-t flex flex-wrap'>
@@ -79,10 +80,8 @@ const EmailMessage = ({message, ticketCreatedForName, ticketHeaderPhoto, isColla
                 </div>
             }
 
-            <div className='ml-10 pl-4 pb-7 border-b'/>
-
             <Tooltip targetRef={recipientChevronIcon} isVisible={displayRecipientsTooltip}
-                placement='bottom-start'>
+                     placement='bottom-start'>
                 <div className='flex flex-col subtitle3 px-4'>
                     <span className='py-4'><b>{t('email.inbox.from_label')}</b> {message?.fromAddress || ''}</span>
                     <span className='pb-4'><b>{t('email.inbox.to_label')}</b> {message?.toAddress || ''}</span>
@@ -97,4 +96,4 @@ const EmailMessage = ({message, ticketCreatedForName, ticketHeaderPhoto, isColla
     )
 }
 
-export default EmailMessage;
+export default FeedDetailEmailItem;

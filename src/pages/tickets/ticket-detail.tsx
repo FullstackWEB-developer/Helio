@@ -11,10 +11,15 @@ import TicketDetailAddNote from './components/ticket-detail/ticket-detail-add-no
 import {Ticket} from './models/ticket';
 import {useQuery} from 'react-query';
 import {getTicketByNumber} from './services/tickets.service';
-import {GetContactById, QueryGetPatientById, QueryTickets} from '@constants/react-query-constants';
-import {setTicket, toggleCallLogPlayerVisible, toggleChatTranscriptWindowVisible} from './store/tickets.slice';
+import {GetContactById, GetPatientPhoto, QueryGetPatientById, QueryTickets} from '@constants/react-query-constants';
+import {
+    setPatientPhoto,
+    setTicket,
+    toggleCallLogPlayerVisible,
+    toggleChatTranscriptWindowVisible
+} from './store/tickets.slice';
 import {selectIsCallLogPlayerVisible, selectIsChatTranscriptModalVisible, selectSelectedTicket} from '@pages/tickets/store/tickets.selectors';
-import {getPatientByIdWithQuery} from '@pages/patients/services/patients.service';
+import {getPatientByIdWithQuery, getPatientPhoto} from '@pages/patients/services/patients.service';
 import {ExtendedPatient} from '@pages/patients/models/extended-patient';
 import {Contact} from '@shared/models/contact.model';
 import {getContactById} from '@shared/services/contacts.service';
@@ -48,34 +53,34 @@ const TicketDetail = () => {
         }
     );
 
+    useEffect(() => {
+        return () => {
+            dispatch(setPatientPhoto(''));
+        }
+    }, []);
+
     const {
-        refetch: patientRefetch,
         data: patient
     } = useQuery<ExtendedPatient, Error>([QueryGetPatientById, ticket?.patientId], () =>
         getPatientByIdWithQuery(ticket.patientId as number),
         {
-            enabled: false
+            enabled: !!ticket?.patientId
         }
     );
 
-    const {refetch: contactRefetch, data: contact} = useQuery<Contact, Error>([GetContactById, ticket?.contactId], () =>
+    useQuery([GetPatientPhoto, ticket?.patientId], () => getPatientPhoto(ticket?.patientId!), {
+        enabled: !!ticket?.patientId,
+        onSuccess:(data) => {
+            dispatch(setPatientPhoto(data));
+        }
+    });
+
+    const {data: contact} = useQuery<Contact, Error>([GetContactById, ticket?.contactId], () =>
         getContactById(ticket.contactId!),
         {
-            enabled: false
+            enabled: !!ticket?.contactId
         }
     );
-
-    useEffect(() => {
-        if (ticket?.patientId) {
-            patientRefetch();
-        }
-    }, [patientRefetch, ticket?.patientId]);
-
-    useEffect(() => {
-        if (ticket?.contactId) {
-            contactRefetch();
-        }
-    }, [contactRefetch, ticket?.contactId]);
 
     if (isLoading || isFetching) {
         return <Spinner fullScreen />;

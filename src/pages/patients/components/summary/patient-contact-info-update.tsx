@@ -152,7 +152,7 @@ const PatientContactInfoUpdate = ({onUpdateComplete} : PatientInformationUpdateP
 
     return (
         <div>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={handleSubmit(onSubmit)} noValidate={true}>
                 <div className='grid grid-cols-1 lg:grid-cols-12'>
                     <div className='col-span-12 lg:col-span-5 pt-4'>
                         <ControlledInput

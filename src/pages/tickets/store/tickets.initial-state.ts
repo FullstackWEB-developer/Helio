@@ -31,6 +31,7 @@ export interface TicketState {
     isChatTranscriptModalVisible: boolean;
     isCallLogPlayerVisible: boolean;
     ticketUpdateHash?: string;
+    patientPhoto?: string;
 }
 
 const initialTicketState: TicketState = {

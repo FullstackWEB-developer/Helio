@@ -3,7 +3,7 @@ import Dropdown, {DropdownItemModel, DropdownModel} from "../dropdown";
 import SvgIcon, {Icon} from "../svg-icon";
 import useComponentVisibility from "../../hooks/useComponentVisibility";
 import classnames from 'classnames';
-import {useSmartPosition} from '@shared/hooks';
+import {usePopper} from 'react-popper';
 import utils from '@shared/utils/utils';
 
 interface MoreMenuProps {
@@ -19,9 +19,18 @@ interface MoreMenuProps {
 const MoreMenu = ({value, items, menuClassName, iconClassName, iconFillClassname, containerClassName, ...props}: MoreMenuProps) => {
     const [isVisible, setIsVisible, elementRef] = useComponentVisibility<HTMLDivElement>(false);
     const [valueSelected, setValueSelected] = useState(value);
-    const dropdownRef = useRef<HTMLDivElement>(null);
     const iconContainerRef = useRef<HTMLDivElement>(null);
-    const {top} = useSmartPosition(dropdownRef, iconContainerRef, isVisible);
+    const [popper, setPopper] = useState<HTMLDivElement | null>(null);
+    const { styles, attributes, update } = usePopper(elementRef.current, popper, {
+        placement: 'bottom',
+        strategy: 'fixed',
+        modifiers: [{
+            name: 'offset',
+            options: {
+                offset: [0, 0],
+            },
+        }]
+    });
 
     const dropdownModel: DropdownModel = {
         defaultValue: valueSelected,
@@ -36,17 +45,11 @@ const MoreMenu = ({value, items, menuClassName, iconClassName, iconFillClassname
         }
     };
 
-    const calculateLeftPosition = () => {
-        if (!!iconContainerRef?.current && !!dropdownRef?.current) {
-            const rectIcon = iconContainerRef.current.getBoundingClientRect();
-            if (!!rectIcon) {
-                const iconOffSetWidth = (iconContainerRef.current.offsetWidth || 0) / 2;
-                return rectIcon.left + window.scrollY - dropdownRef.current.offsetWidth + iconOffSetWidth;
-            }
-
+    useEffect(() => {
+        if (isVisible && update) {
+            update().then();
         }
-        return 0;
-    }
+    }, [update, isVisible]);
 
     const hideDropdown = useCallback(() => {
         setIsVisible(false);
@@ -70,9 +73,10 @@ const MoreMenu = ({value, items, menuClassName, iconClassName, iconFillClassname
             <SvgIcon type={Icon.MoreVert} className={iconClassName} fillClass={iconFillClassname} />
         </div>
         <div
-            className={classnames('absolute z-10', {'hidden': !isVisible}, menuClassName)}
-            style={{top: top, left: calculateLeftPosition()}}
-            ref={dropdownRef}
+            className={classnames('absolute z-10', {'hidden': !isVisible})}
+            style={styles.popper}
+            ref={setPopper}
+            {...attributes.popper}
         >
             <Dropdown model={dropdownModel} />
         </div>

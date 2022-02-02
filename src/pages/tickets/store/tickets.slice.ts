@@ -44,10 +44,10 @@ const ticketsSlice = createSlice({
         ticket.status = status;
       }
     },
-      setTicket(state, {payload}: PayloadAction<Ticket>) {
-        state.selectedTicket = payload;
+    setTicket(state, {payload}: PayloadAction<Ticket>) {
+      state.selectedTicket = payload;
 
-      },
+    },
     setFailure: (state, {payload}: PayloadAction<string>) => {
       state.errors = payload;
     },
@@ -128,6 +128,9 @@ const ticketsSlice = createSlice({
     ) {
         state.ticketListQueryType = payload;
     },
+    setPatientPhoto(state, { payload }: PayloadAction<string>) {
+      state.patientPhoto = payload;
+    },
   },
 });
 
@@ -155,7 +158,8 @@ export const {
   toggleChatTranscriptWindowVisible,
   toggleCallLogPlayerVisible,
   clearTicketFilters,
-  setTicketsFiltered
+  setTicketsFiltered,
+  setPatientPhoto
 } = ticketsSlice.actions;
 
 export default ticketsSlice.reducer;

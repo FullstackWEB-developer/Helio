@@ -1,8 +1,8 @@
 import {TicketMessageSummary} from '@shared/models';
 import {useTranslation} from 'react-i18next';
 import {useMemo} from 'react';
-import {useQuery} from 'react-query';
-import {GetPatientPhoto} from '@constants/react-query-constants';
+import {useQuery, useQueryClient} from 'react-query';
+import {GetPatientPhoto, QueryTicketMessagesInfinite} from '@constants/react-query-constants';
 import {getPatientPhoto} from '@pages/patients/services/patients.service';
 import dayjs from 'dayjs';
 import Avatar from '@components/avatar';
@@ -27,6 +27,7 @@ const EmailSummaryItemView = ({emailInfo, searchTerm}: EmailSummaryItemViewProps
     const {t} = useTranslation();
     const urlParams = useParams<{ticketId?: string}>();
     const history = useHistory();
+    const queryClient = useQueryClient();
     const {data: patientPhoto} = useQuery([GetPatientPhoto, patientId], () => getPatientPhoto(patientId!), {
         enabled: !!patientId
     });
@@ -57,8 +58,12 @@ const EmailSummaryItemView = ({emailInfo, searchTerm}: EmailSummaryItemViewProps
         }
     }, [createdForName, emailInfo.contactId, emailInfo.patientId, patientPhoto, t]);
 
+    const cleanEmailQueryCache = () => {
+        queryClient.removeQueries(QueryTicketMessagesInfinite);
+    }
     const itemClicked = () => {
-        history.replace(`${EmailPath}/${ticketId}`)
+        cleanEmailQueryCache();
+        history.push(`${EmailPath}/${ticketId}`);
     }
 
     return (<div className={classnames('border-b email-summary cursor-pointer pl-6 pt-4 pb-1.5 flex', {'email-summary-selected': urlParams?.ticketId === ticketId})} onClick={() => itemClicked()} >

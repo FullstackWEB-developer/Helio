@@ -111,3 +111,8 @@ export const selectIsTicketsFiltered = createSelector(
     ticketState,
     state => state.isTicketsFiltered  as boolean
 )
+
+export const selectPatientPhoto = createSelector(
+    ticketState,
+    state => state.patientPhoto  as string
+)

@@ -94,21 +94,25 @@ const ContactTickets = ({contactId}: ContactTicketsProps) => {
         setContactTicketFilter({...contactTicketFilter, ...p});
         setQuery({...query, ...p})
     }
+    
+    const onTicketSelect = (ticket: TicketBase) => {
+        history.push(`${TicketsPath}/${ticket.ticketNumber}`)
+    };
 
     const getTicket = (ticket: TicketBase) => {
-        return <div className='relative flex flex-row items-center w-full px-6 py-3 border-b cursor-pointer auto-cols-max body2 hover:bg-gray-100 h-18'
+        return <div className='relative flex flex-row items-center w-full px-6 py-3 border-b auto-cols-max body2 hover:bg-gray-100 h-18'
             key={ticket.id}
-            onClick={() => history.push(`${TicketsPath}/${ticket.ticketNumber}`)}>
-            <div className='w-24'>
+            >
+            <div className='w-24 cursor-pointer' onClick={() => onTicketSelect(ticket)}>
                 <TicketChannelIcon channel={ticket.channel} />
             </div>
-            <div className='w-2/12'>
+            <div className='w-2/12 cursor-pointer' onClick={() => onTicketSelect(ticket)}>
                 {ticket.ticketNumber}
             </div>
-            <div className='w-3/12 max-w-xs truncate subtitle2'>
+            <div className='w-3/12 cursor-pointer max-w-xs truncate subtitle2' onClick={() => onTicketSelect(ticket)}>
                 <span>{ticket.subject ? ticket.subject : '-'}</span>
             </div>
-            <div className='w-3/12 body3'>
+            <div className='w-3/12 body3 cursor-pointer' onClick={() => onTicketSelect(ticket)}>
                 {
                     ticket.dueDate && <Fragment>{getDueDate(ticket.dueDate)}</Fragment>
                 }
