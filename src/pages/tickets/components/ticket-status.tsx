@@ -22,8 +22,9 @@ interface TicketStatusProps {
     ticket: Ticket,
     isExpired?: boolean,
     isArrow?: boolean
+    onUpdated?: () => void;
 }
-const TicketStatus = ({ticket, isArrow = true}: TicketStatusProps) => {
+const TicketStatus = ({ticket, isArrow = true, onUpdated}: TicketStatusProps) => {
     const {t} = useTranslation();
     const dispatch = useDispatch();
     const [isVisible, setIsVisible, elementRef] = useComponentVisibility<HTMLDivElement>(false);
@@ -57,6 +58,9 @@ const TicketStatus = ({ticket, isArrow = true}: TicketStatusProps) => {
                 id: data.id,
                 status: data.status
             }));
+            if (onUpdated) {
+                onUpdated();
+            }
         },
         onError: () => {
             dispatch(addSnackbarMessage({

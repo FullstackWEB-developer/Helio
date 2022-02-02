@@ -48,7 +48,7 @@ const ContactTickets = ({contactId}: ContactTicketsProps) => {
     const [paginationProperties, setPaginationProperties] = useState<Paging>({...DefaultPagination, pageSize})
     const [query, setQuery] = useState<ContactTicketsRequest>({...paginationProperties, contactId});
 
-    const {isFetching, data} = useQuery([QueryContactTickets, contactTicketFilter], () =>
+    const {isLoading, isFetching, data, refetch} = useQuery([QueryContactTickets, contactTicketFilter], () =>
         getContactTickets(query),
         {
             onSuccess: (data) => {
@@ -118,7 +118,7 @@ const ContactTickets = ({contactId}: ContactTicketsProps) => {
                 }
             </div>
             <div className='w-2/12 h-full'>
-                <TicketStatus ticket={ticket} isArrow={false} />
+                <TicketStatus onUpdated={() => refetch().then()} ticket={ticket} isArrow={false} />
             </div>
         </div>
     };
@@ -171,7 +171,7 @@ const ContactTickets = ({contactId}: ContactTicketsProps) => {
             </TicketListHeaderCell>
         </div>
         {
-            isFetching ? <Spinner fullScreen className='pt-4' /> :
+            (isLoading || isFetching) ? <Spinner fullScreen className='pt-4' /> :
                 (
                     data && data.results.length > 0 ? data.results.map((ticket: TicketBase) => {
                         return getTicket(ticket)
