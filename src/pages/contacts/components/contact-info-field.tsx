@@ -29,7 +29,7 @@ const ContactInfoField = ({label, value, icon, appendix, appendixLabel, appendix
         }
     }
 
-    const valueWrapperClassName = classNames('pl-10 flex', {
+    const valueWrapperClassName = classNames(`${valueClass ?? 'pl-10 flex'}`, {
         'text-success': !!onValueClick && value !== t('common.not_available'),
         'col-span-7': !(!!valueClass),
     })

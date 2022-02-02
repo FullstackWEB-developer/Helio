@@ -1159,6 +1159,7 @@
         "work_main_phone": "Work Main Phone",
         "work_direct_phone": "Work Direct Phone",
         "mobile_phone": "Mobile Phone",
+        "home_phone": "Home Phone",
         "fax": "Fax",
         "invalid_fax_format": "Fax number is not valid.",
         "website": "Website",
@@ -1427,7 +1428,15 @@
       "blocked_failure": "Blocking {{email}} failed. Please try again.",
       "send_reply": "Send Reply",
       "template": "Template: ",
-      "template_error": "Error processing template. Please try again later or use different template."
+      "template_error": "Error processing template. Please try again later or use different template.",
+      "view_patient_chart": "View Patient Chart",
+      "phone_types": {
+        "1": "Mobile Phone",
+        "2": "Home Phone",
+        "3": "Mobile Phone",
+        "4": "Work Main Phone",
+        "5": "Work Direct Phone"
+      }
     },
     "new_email": {
       "title": "New Message",

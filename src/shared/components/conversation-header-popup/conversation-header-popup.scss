@@ -1,4 +1,7 @@
 .conversation-popup{
+    background-color: var(--color-white);
+    border-radius: 0.25rem;
+    box-shadow: var(--dropdown-box-shadow);
     &-width {
         width: 30rem;
     }

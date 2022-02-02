@@ -1,28 +1,30 @@
-import React, {useRef, useState} from 'react';
-import {customHooks} from '@shared/hooks';
+import React, {useEffect, useState} from 'react';
+import {useComponentVisibility} from '@shared/hooks';
 import SvgIcon, {Icon} from '@components/svg-icon';
-import Tooltip from '@components/tooltip/tooltip';
 import './conversation-header-popup.scss';
 import Button from '@components/button/button';
 import utils from '@shared/utils/utils';
 import {useHistory} from 'react-router';
-import {ContactsPath} from '@app/paths';
-
+import {ContactsPath, PatientsPath} from '@app/paths';
+import {usePopper} from 'react-popper';
+import classnames from 'classnames';
+import {ContactExtended} from '@shared/models';
+import {ExtendedPatient} from '@pages/patients/models/extended-patient';
+import ConversationHeaderPatientDetails from './conversation-header-patient-details';
+import ConversationHeaderQuickActionsStripe from './conversation-header-quick-actions-stripe';
 interface ConversationHeaderPopup {
     anonymous: boolean;
     name: string;
-    photo: JSX.Element
+    photo: JSX.Element;
+    patient?: ExtendedPatient;
+    contact?: ContactExtended;
 }
-const ConversationHeaderPopup = ({anonymous, name, photo}: ConversationHeaderPopup) => {
-    const [headerPopup, setHeaderPopup] = useState(false);
-    const popupRef = useRef(null);
-    const tooltipDiv = useRef<HTMLDivElement>(null);
-    customHooks.useOutsideClick([tooltipDiv], () => {
-        setHeaderPopup(false);
-    });
+const ConversationHeaderPopup = ({anonymous, name, photo, patient, contact}: ConversationHeaderPopup) => {
     const history = useHistory();
+
     const redirectToAthena = () => {window.open(utils.getAppParameter('AthenaHealthUrl'), '_blank')};
     const redirectToContactScreen = () => {history.push(ContactsPath, {email: name})};
+    const redirectToPatientChart = (id: number) => {history.push(`${PatientsPath}/${id}`)};
     const renderActions = () => {
         if (anonymous) {
             return (
@@ -32,28 +34,51 @@ const ConversationHeaderPopup = ({anonymous, name, photo}: ConversationHeaderPop
                 </>
             );
         }
+        if (patient?.patientId) {
+            return <Button label='email.inbox.view_patient_chart' onClick={() => redirectToPatientChart(patient?.patientId)} />
+        }
     }
+
+    const [isVisible, setIsVisible, elementRef] = useComponentVisibility<HTMLDivElement>(false);
+    const [popper, setPopper] = useState<HTMLDivElement | null>(null);
+    const {styles, attributes, update} = usePopper(elementRef.current, popper, {
+        placement: 'bottom',
+        strategy: 'fixed'
+    });
+
+    useEffect(() => {
+        if (isVisible && update) {
+            update().then();
+        }
+    }, [update, isVisible]);
+
     return (
-        <div ref={tooltipDiv}>
-            <div ref={popupRef} className='cursor-pointer' onClick={() => setHeaderPopup(!headerPopup)}>
-                <SvgIcon type={!headerPopup ? Icon.ArrowDown : Icon.ArrowUp}
+        <div ref={elementRef}>
+            <div className='cursor-pointer' onClick={() => setIsVisible(!isVisible)}>
+                <SvgIcon type={!isVisible ? Icon.ArrowDown : Icon.ArrowUp}
                     fillClass='rgba-062-fill' />
             </div>
-            <Tooltip targetRef={popupRef} isVisible={headerPopup}
-                 showArrow={false}>
+            <div className={classnames('z-10 conversation-popup mt-3', {'hidden': !isVisible})} style={styles.popper}
+                ref={setPopper}{...attributes.popper}>
                 <div className='conversation-popup-width'>
-                    <div className='px-4 py-6 flex items-center'>
+                    <div className={classnames('px-4 flex items-center', {'py-6' : anonymous, 'pt-6': !anonymous})}>
                         {photo}
                         <h6 className='pl-4'>{name}</h6>
                     </div>
+                    {
+                        !anonymous && <div className='pl-16 pb-3'><ConversationHeaderQuickActionsStripe patient={patient} contact={contact} /></div> 
+                    }
                     <div className='conversation-popup-divider h-px'></div>
+                    {
+                        patient && <ConversationHeaderPatientDetails patient={patient} />
+                    }
                     <div className='flex conversation-popup-actions px-4 pt-6 pb-8'>
                         {
                             renderActions()
                         }
                     </div>
                 </div>
-            </Tooltip>
+            </div>
         </div>
     )
 }

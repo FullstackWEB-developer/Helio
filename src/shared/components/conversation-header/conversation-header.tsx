@@ -4,7 +4,7 @@ import Avatar from '@components/avatar';
 import MoreMenu from '@components/more-menu'
 import utils from '@shared/utils/utils';
 import {useDispatch, useSelector} from 'react-redux';
-import {ChannelTypes, TicketMessageSummary} from '@shared/models';
+import {ChannelTypes, ContactExtended, TicketMessageSummary} from '@shared/models';
 import {useTranslation} from 'react-i18next';
 import {selectEnumValues, selectLookupValues} from '@pages/tickets/store/tickets.selectors';
 import {DropdownItemModel} from '@components/dropdown';
@@ -29,9 +29,17 @@ import {useForm} from 'react-hook-form';
 import Button from '@components/button/button';
 import {createBlockAccess} from '@pages/blacklists/services/blacklists.service';
 import ConversationHeaderPopup from '@components/conversation-header-popup/conversation-header-popup';
+import {ExtendedPatient} from '@pages/patients/models/extended-patient';
 
-const ConversationHeader = ({info, forNewTicketMessagePurpose, patientPhoto, conversationChannel = ChannelTypes.SMS}:
-    {info: TicketMessageSummary, forNewTicketMessagePurpose: boolean, patientPhoto?: string, conversationChannel: ChannelTypes.SMS | ChannelTypes.Email}) => {
+interface ConversationHeaderProps {
+    info: TicketMessageSummary;
+    forNewTicketMessagePurpose: boolean;
+    patientPhoto?: string;
+    conversationChannel: ChannelTypes.SMS | ChannelTypes.Email;
+    patient?: ExtendedPatient;
+    contact?: ContactExtended;
+}
+const ConversationHeader = ({info, forNewTicketMessagePurpose, patientPhoto, conversationChannel = ChannelTypes.SMS, patient, contact}: ConversationHeaderProps) => {
     const {t} = useTranslation();
     const history = useHistory();
     const dispatch = useDispatch();
@@ -230,7 +238,10 @@ const ConversationHeader = ({info, forNewTicketMessagePurpose, patientPhoto, con
                             <ConversationHeaderPopup
                                 anonymous={!info.patientId && !info.contactId}
                                 name={displayName()}
-                                photo={info?.createdForName ? getImage() : <Avatar icon={Icon.UserUnknown} userPicture={patientPhoto} />} />
+                                photo={info?.createdForName ? getImage() : <Avatar icon={Icon.UserUnknown} userPicture={patientPhoto} />}
+                                contact={contact}
+                                patient={patient}
+                            />
                         }
                     </div>
                     <div>

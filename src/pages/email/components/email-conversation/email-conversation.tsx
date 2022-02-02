@@ -114,7 +114,8 @@ const EmailConversation = () => {
             <div className='w-full flex flex-col'>
                 <div className='pb-4'>
                     <ConversationHeader info={{...ticket, ticketId: ticket.id, createdForEndpoint: ticket.incomingEmailAddress}}
-                        forNewTicketMessagePurpose={false} patientPhoto={patientPhoto} conversationChannel={ChannelTypes.Email} />
+                        forNewTicketMessagePurpose={false} patientPhoto={patientPhoto} conversationChannel={ChannelTypes.Email}
+                        patient={patient} contact={contact} />
                 </div>
                 {messages && messages.length > 0 &&
                     <div className='flex flex-col flex-auto overflow-y-auto'>

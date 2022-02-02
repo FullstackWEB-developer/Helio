@@ -1,0 +1,25 @@
+.conversation-header-quick-actions {
+    &-stroke {
+        stroke: var(--contact-light-stroke-12);
+    }
+    &-phone-type {
+        font-family: var(--contact-phone-type-fontFamily);
+        font-size: var(--contact-phone-type-fontSize);
+        color: var(--contact-phone-type-color);
+        min-width: 5.5rem;
+        width: 7.5rem;
+        &-disabled {
+            @extend .conversation-header-quick-actions-phone-type;
+            @extend .conversation-header-quick-actions-disabled-section;
+        }
+    }
+
+    &-disabled-section{
+        pointer-events: none;
+        color: var(--svg-Icon-default-disabled-color);
+    }
+
+    &-dropdown-arrows {
+        fill: var(--contact-dropdown-arrows);
+    }
+}
