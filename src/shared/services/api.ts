@@ -11,6 +11,7 @@ import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
 import i18n from "i18next";
 import dayjs from 'dayjs';
 import {SnackbarPosition} from '@components/snackbar/snackbar-position.enum';
+import {clearVerifiedPatient} from '@pages/patients/store/patients.slice';
 
 const logger = Logger.getInstance();
 const Api = axios.create({
@@ -119,6 +120,7 @@ Api.interceptors.response.use(
                 position: SnackbarPosition.TopCenter
             }));
             store.dispatch(logOut());
+            store.dispatch(clearVerifiedPatient());
             window.location.replace(store.getState().appUserState.auth.authenticationLink);
             return;
         } else {
