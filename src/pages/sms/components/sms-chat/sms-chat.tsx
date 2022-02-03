@@ -27,6 +27,7 @@ import {getPatientByIdWithQuery, getPatientPhoto} from '@pages/patients/services
 import {processTemplate} from '@shared/services/notifications.service';
 import {getContactById} from '@shared/services/contacts.service';
 import ConversationHeader from '@components/conversation-header/conversation-header';
+import {TemplateUsedFrom} from '@components/notification-template-select/template-used-from';
 
 interface SmsChatProps {
     info: TicketMessageSummary;
@@ -158,6 +159,7 @@ const SmsChat = ({info, isLoading, isSending, isBottomFocus, messages = [], last
                     <NotificationTemplateSelect
                         channel={NotificationTemplateChannel.Sms}
                         onSelect={(template) => onTemplateSelect(template)}
+                        usedFrom={TemplateUsedFrom.Inbox}
                     />
                 </div>
                 <div className='flex flex-col w-full py-5'>

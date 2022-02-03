@@ -5,6 +5,7 @@ import TextEditor from '@components/text-editor';
 import NotificationTemplateSelect from '@components/notification-template-select/notification-template-select';
 import {NotificationTemplate, NotificationTemplateChannel} from '@shared/models/notification-template.model';
 import customHooks from '../../../../shared/hooks/customHooks';
+import {TemplateUsedFrom} from '@components/notification-template-select/template-used-from';
 
 interface SmsMessageInputProps {
     isLoading?: boolean;
@@ -63,9 +64,9 @@ const SmsMessageInput = ({isLoading, ...props}: SmsMessageInputProps) => {
                     <NotificationTemplateSelect
                         channel={NotificationTemplateChannel.Sms}
                         onSelect={(template) => onTemplateSelect(template)}
+                        usedFrom={TemplateUsedFrom.Inbox}
                     /></div>}
             </div>
-
             <TextEditor
                 className="flex-1"
                 isEmojiEnabled

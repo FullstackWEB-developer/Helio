@@ -19,6 +19,7 @@ import {setAssignee} from '@pages/tickets/services/tickets.service';
 import {EmailPath} from '@app/paths';
 import {EMPTY_GUID} from '@pages/email/constants';
 import {useHistory} from 'react-router-dom';
+import {TemplateUsedFrom} from '@components/notification-template-select/template-used-from';
 
 export interface SendFirstEmailProps {
     ticket: Ticket;
@@ -106,7 +107,9 @@ const SendFirstEmail = ({ticket, patient, contact, onMailSend} : SendFirstEmailP
 
     return <div className='pr-20 pt-6 pb-10 flex flex-row'>
         <div className='w-14 h-14 flex items-center justify-center'>
-            <NotificationTemplateSelect isLoading={isProcessing} channel={NotificationTemplateChannel.Email}
+            <NotificationTemplateSelect isLoading={isProcessing}
+                                        channel={NotificationTemplateChannel.Email}
+                                        usedFrom={TemplateUsedFrom.Inbox}
                                         onSelect={(template) => onTemplateSelect(template)}/>
         </div>
         <div className='w-full'>

@@ -13,6 +13,7 @@ import './notification-template-select.scss';
 import {useDispatch, useSelector} from 'react-redux';
 import {selectEmailTemplates, selectSmsTemplates} from '@shared/store/app/app.selectors';
 import {setEmailTemplates, setSmsTemplates} from '@shared/store/app/app.slice';
+import {TemplateUsedFrom} from '@components/notification-template-select/template-used-from';
 
 export interface MessageTemplateSelectProps {
     channel: NotificationTemplateChannel;
@@ -22,10 +23,11 @@ export interface MessageTemplateSelectProps {
     selectLabel?: string;
     disabled?: boolean;
     isLoading?: boolean;
-    resetValue?: number
+    resetValue?: number;
+    usedFrom: TemplateUsedFrom
 }
 
-const NotificationTemplateSelect = ({channel, category, onSelect, asSelect, selectLabel, isLoading, resetValue}: MessageTemplateSelectProps) => {
+const NotificationTemplateSelect = ({channel, category, onSelect, asSelect, selectLabel, isLoading, resetValue, usedFrom}: MessageTemplateSelectProps) => {
     const [items, setItems] = useState<DropdownItemModel[]>([]);
     const [options, setOptions] = useState<Option[]>([]);
     const templateDiv = useRef<HTMLDivElement>(null);
@@ -54,7 +56,7 @@ const NotificationTemplateSelect = ({channel, category, onSelect, asSelect, sele
             :(!emailTemplates || emailTemplates.length < 1);
     }
 
-    const {isLoading: isLoadingTemplates, isFetching} = useQuery([GetMessageTemplates, channel, category], () => getTemplates(channel, category), {
+    const {isLoading: isLoadingTemplates, isFetching} = useQuery([GetMessageTemplates, channel, category, usedFrom], () => getTemplates(channel, usedFrom, category), {
         enabled: shouldFetch(),
         onSuccess:(data) => {
             if (channel === NotificationTemplateChannel.Sms) {

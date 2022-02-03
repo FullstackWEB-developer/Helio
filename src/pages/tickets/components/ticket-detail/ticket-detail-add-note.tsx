@@ -28,6 +28,7 @@ import {SnackbarPosition} from '@components/snackbar/snackbar-position.enum';
 import ParentExtraTemplate from '@components/notification-template-select/components/parent-extra-template';
 import SelectedTemplateInfo from '@components/notification-template-select/components/selected-template-info';
 import {TicketStatuses} from '@pages/tickets/models/ticket.status.enum';
+import {TemplateUsedFrom} from '@components/notification-template-select/template-used-from';
 
 interface TicketDetailAddNoteProps {
     ticket: Ticket,
@@ -242,6 +243,7 @@ const TicketDetailAddNote = ({ticket, patient, contact}: TicketDetailAddNoteProp
                     {(selectedTab === ChannelTabs.SmsTab || selectedTab === ChannelTabs.EmailTab) &&
                         <NotificationTemplateSelect
                             disabled={!emailAddress && !smsText}
+                            usedFrom={TemplateUsedFrom.TicketDetail}
                             channel={selectedTab === 1 ? NotificationTemplateChannel.Sms : NotificationTemplateChannel.Email}
                             onSelect={(template) => onTemplateSelect(template)}
                         />

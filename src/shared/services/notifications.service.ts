@@ -3,14 +3,16 @@ import {NotificationTemplate, NotificationTemplateChannel} from '@shared/models/
 import {Contact, ContactExtended} from '@shared/models';
 import {Patient} from '@pages/patients/models/patient';
 import {Ticket} from '@pages/tickets/models/ticket';
+import {TemplateUsedFrom} from '@components/notification-template-select/template-used-from';
 
 const notificationsUrl = '/notifications';
 
-export const getTemplates = async (channel: NotificationTemplateChannel, category?: string): Promise<NotificationTemplate[]> => {
+export const getTemplates = async (channel: NotificationTemplateChannel, usedFrom: TemplateUsedFrom, category?: string): Promise<NotificationTemplate[]> => {
     const result = await Api.get(`${notificationsUrl}/templates`, {
         params: {
             channel,
-            category
+            category,
+            usedFrom
         }
     });
     return result.data;

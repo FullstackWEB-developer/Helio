@@ -91,7 +91,7 @@ const TicketSms = ({lastMessageTime} : TicketSmsProps) => {
     });
 
     const sortedMessages = useMemo(() => {
-        return [...messages].sort((a, b) => new Date(a.createdOn).getTime() - new Date(b.createdOn).getTime());
+        return [...messages].sort((a, b) => dayjs.utc(a.createdOn).toDate().getTime() - dayjs.utc(b.createdOn).toDate().getTime());
     }, [messages]);
 
     const onMessageSend = (text: string) => {

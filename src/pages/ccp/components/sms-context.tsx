@@ -17,6 +17,7 @@ import ParentExtraTemplate from '@components/notification-template-select/compon
 import {ProcessTemplate} from '@constants/react-query-constants';
 import utils from '@shared/utils/utils';
 import {processTemplate} from '@shared/services/notifications.service';
+import {TemplateUsedFrom} from '@components/notification-template-select/template-used-from';
 
 const SmsContext = () => {
     const {t} = useTranslation();
@@ -92,6 +93,7 @@ const SmsContext = () => {
                                                     asSelect={true}
                                                     resetValue={refreshTemplate}
                                                     channel={NotificationTemplateChannel.Sms}
+                                                    usedFrom={TemplateUsedFrom.CCP}
                                                     onSelect={templateSelected}/>
                     </div>
                 {

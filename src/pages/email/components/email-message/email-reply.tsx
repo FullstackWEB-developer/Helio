@@ -17,6 +17,7 @@ import {setAssignee} from '@pages/tickets/services/tickets.service';
 import {setLastEmailDate} from '@pages/email/store/email-slice';
 import {ProcessTemplate} from '@constants/react-query-constants';
 import {processTemplate} from '@shared/services/notifications.service';
+import {TemplateUsedFrom} from '@components/notification-template-select/template-used-from';
 
 interface EmailReplyProps {
     ticket: Ticket;
@@ -128,8 +129,10 @@ const EmailReply = ({ticket, patient, contact, onMailSend}: EmailReplyProps) => 
             </div>
             <div className='flex items-center justify-between py-4 w-full'>
                 <div className='w-16 mt-auto pl-4'>
-                    <NotificationTemplateSelect isLoading={isProcessingTemplate} channel={NotificationTemplateChannel.Email}
-                        onSelect={(template) => onTemplateSelect(template)} />
+                    <NotificationTemplateSelect isLoading={isProcessingTemplate}
+                                                channel={NotificationTemplateChannel.Email}
+                                                usedFrom={TemplateUsedFrom.Inbox}
+                                                onSelect={(template) => onTemplateSelect(template)} />
                 </div>
                 <div className='w-full flex flex-col'>
                     {

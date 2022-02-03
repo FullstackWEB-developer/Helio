@@ -119,9 +119,10 @@ Api.interceptors.response.use(
                 message: 'login.session_timeout_guest',
                 position: SnackbarPosition.TopCenter
             }));
+            const link = store.getState().appUserState.auth.authenticationLink;
             store.dispatch(logOut());
             store.dispatch(clearVerifiedPatient());
-            window.location.replace(store.getState().appUserState.auth.authenticationLink);
+            window.location.replace(link);
             return;
         } else {
             if (store.getState().appUserState.auth) {
