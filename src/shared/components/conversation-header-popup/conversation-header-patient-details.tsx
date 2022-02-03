@@ -1,14 +1,18 @@
+import {EmailPath} from '@app/paths';
 import {Icon} from '@components/svg-icon/icon';
 import {selectVoiceCounter} from '@pages/ccp/store/ccp.selectors';
 import ContactInfoField from '@pages/contacts/components/contact-info-field';
+import {EMPTY_GUID} from '@pages/email/constants';
 import {ExtendedPatient} from '@pages/patients/models/extended-patient';
 import utils from '@shared/utils/utils';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {useSelector} from 'react-redux';
+import {useHistory} from 'react-router';
 
 const ConversationHeaderPatientDetails = ({patient, outsideEmailInboxView = false}: {patient: ExtendedPatient, outsideEmailInboxView?: boolean}) => {
     const {t} = useTranslation();
+    const history = useHistory();
     const voiceCounter = useSelector(selectVoiceCounter);
     const displayValue = (value: string | undefined, isPhone = false) => {
         return value ? isPhone ? utils.formatPhone(value) : value : t('common.not_available');
@@ -18,6 +22,18 @@ const ConversationHeaderPatientDetails = ({patient, outsideEmailInboxView = fals
     }
     const getIconFillClass = (value?: string) => {
         return !!value ? 'success-icon' : '';
+    }
+    const emailOnClick = () => {
+        if (!outsideEmailInboxView) {
+            return;
+        }
+        const pathName = `${EmailPath}/${EMPTY_GUID}`;
+        history.push({
+            pathname: pathName,
+            state: {
+                patient
+            }
+        });
     }
     return (
         <div className="px-4 pb-4 pt-6 grid grid-cols-8 gap-1 body2">
@@ -57,7 +73,9 @@ const ConversationHeaderPatientDetails = ({patient, outsideEmailInboxView = fals
                     icon={Icon.Email}
                     isIconDisabled={!patient.emailAddress}
                     isValueClickDisabled={!patient.emailAddress}
-                    isLink={true} />
+                    isLink={true}
+                    onValueClick={() => emailOnClick()}
+                    iconOnClick={() => emailOnClick()} />
             }
         </div>
     )

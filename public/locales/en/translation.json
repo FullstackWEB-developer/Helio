@@ -1429,6 +1429,7 @@
       "template": "Template: ",
       "template_error": "Error processing template. Please try again later or use different template.",
       "view_patient_chart": "View Patient Chart",
+      "view_contact_details": "View Contact Details",
       "phone_types": {
         "1": "Mobile Phone",
         "2": "Home Phone",

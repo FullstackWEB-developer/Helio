@@ -79,6 +79,21 @@ const ConversationHeaderQuickActionsStripe = ({patient, contact}: {patient?: Ext
                     utils.initiateACall(patient.homePhone);
                 }
                 break;
+            case PhoneType.contactMobile:
+                if (contact?.mobilePhone) {
+                    utils.initiateACall(contact.mobilePhone);
+                }
+                break;
+            case PhoneType.contactWorkMain:
+                if (contact?.workMainPhone) {
+                    utils.initiateACall(contact.workMainPhone);
+                }
+                break;
+            case PhoneType.contactWorkDirect:
+                if (contact?.workDirectPhone) {
+                    utils.initiateACall(contact.workDirectPhone);
+                }
+                break;
             default:
                 break;
         }
@@ -116,7 +131,7 @@ const ConversationHeaderQuickActionsStripe = ({patient, contact}: {patient?: Ext
                     </div>
                 </div>
                 {displayPhoneTypeDropdown &&
-                    <div className='absolute mt-20'>
+                    <div className='absolute mt-20 z-30'>
                         <Dropdown model={phoneTypeDropdownModel} />
                     </div>}
             </div>
