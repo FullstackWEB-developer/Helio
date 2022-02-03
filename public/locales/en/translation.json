@@ -249,7 +249,6 @@
       "title": "Send SMS Message",
       "to": "To",
       "select_template": "Select Template",
-      "preview": "Preview",
       "send": "Send",
       "message": "Message"
     },
