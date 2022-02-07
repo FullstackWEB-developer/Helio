@@ -9,7 +9,6 @@ import {selectLiveAgentStatuses} from '@shared/store/app-user/appuser.selectors'
 import {selectUserList} from '@shared/store/lookups/lookups.selectors';
 import {LiveAgentStatusInfo, LiveAgentStatusItemInfo} from '@shared/models/live-agent-status-info.model';
 import {getUserList} from '@shared/services/lookups.service';
-import {UserStatus} from '@shared/store/app-user/app-user.models';
 import './agent-status-table.scss';
 import AgentLiveItem, {AgentLivItemType} from './agent-live-item';
 import AgentStatusDuration from '@pages/dashboard/components/wallboard/agent-status-duration';
@@ -18,11 +17,6 @@ import Dropdown from '@components/dropdown/dropdown';
 import {DropdownItemModel, DropdownModel} from '@components/dropdown/dropdown.models';
 import {Option} from '@components/option/option';
 import customHooks from '@shared/hooks/customHooks';
-import {useQuery} from 'react-query';
-import {GetAgentStatus} from '@constants/react-query-constants';
-import {AgentStatus} from '@shared/models/agent-status.model';
-import {addLiveAgentStatus} from '@shared/store/app-user/appuser.slice';
-import {getAgentsStatus} from '@pages/tickets/services/tickets.service';
 
 const AgentStatusTable = () => {
 

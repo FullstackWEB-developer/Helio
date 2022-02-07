@@ -38,12 +38,15 @@ const GetExternalUserMobileNumber = () => {
     });
 
     useEffect(() => {
-        if (request.sentAddress ||
+        if ((request.requestType === ExternalAccessRequestTypes.SentTicketMessageViaSMS && !!request.sentAddress) ||
             (request.requestType === ExternalAccessRequestTypes.SentTicketMessageViaSMS && !request.patientId)) {
             setExternalUserPhoneNumber(request.sentAddress);
             history.push('/o/verify-patient-code');
         }
         if (verifiedLink && verifiedLink === request.linkId) {
+            history.push('/o/verify-patient-code');
+        }
+        if (request.requestType === ExternalAccessRequestTypes.SentTicketMessageViaEmail && !request.patientId) {
             history.push('/o/verify-patient-code');
         }
         setLoading(false);

@@ -13,6 +13,7 @@ export interface TicketMessage extends TicketMessageBase {
     createdBy: string;
     createdByName?: string;
     createdOn: Date;
+    createdForName?: string;
 }
 export interface TicketMessageBase {
     ticketId: string;

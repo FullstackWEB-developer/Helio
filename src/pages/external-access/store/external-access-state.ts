@@ -5,6 +5,7 @@ import requestMedicalRecordsReducer from '../request-medical-records/store/medic
 import verifyPatientSliceReducer from '../verify-patient/store/verify-patient.slice';
 import ticketSmsSliceReducer from '../ticket-sms/store/ticket-sms.slice';
 import registrationSlice from '../registration/store/registration.slice';
+import externalEmailSlice from '@pages/external-access/external-email/store/external-email.slice';
 
 
 const externalAccessState = combineReducers({
@@ -13,7 +14,8 @@ const externalAccessState = combineReducers({
     requestMedicalRecordState: requestMedicalRecordsReducer,
     verifyPatientState: verifyPatientSliceReducer,
     ticketSmsState: ticketSmsSliceReducer,
-    patientRegistrationState: registrationSlice
+    patientRegistrationState: registrationSlice,
+    externalEmailState: externalEmailSlice
 })
 
 export default externalAccessState;

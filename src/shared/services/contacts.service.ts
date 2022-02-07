@@ -56,7 +56,7 @@ export const queryContactsInfinite = async (pageParam: number, queryParams?: Que
     }
 }
 
-export const getContactById = async (contactId: string) => {
+export const getContactById = async (contactId: string) : Promise<Contact> => {
     const {data} = await Api.get(`${contactsUrl}/${contactId}`);
     return data;
 }

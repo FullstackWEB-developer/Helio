@@ -15,6 +15,7 @@ import {
     AppointmentSchedulePath,
     LabResultsPath,
     RequestMedicalRecordsPath,
+    TicketEmailPath,
     TicketSmsPath,
     ViewMedicationsPath
 } from '@app/paths';
@@ -86,6 +87,9 @@ const ExternalUserVerificationCode = () => {
                 case ExternalAccessRequestTypes.SentTicketMessageViaSMS:
                     history.push(TicketSmsPath);
                     break;
+                case ExternalAccessRequestTypes.SentTicketMessageViaEmail:
+                    history.push(TicketEmailPath);
+                    break;
             }
         }
     }
@@ -95,7 +99,8 @@ const ExternalUserVerificationCode = () => {
             forwardToRelatedPage();
             return;
         }
-        if (request.requestType === ExternalAccessRequestTypes.SentTicketMessageViaSMS && !request.patientId) {
+        if ((request.requestType === ExternalAccessRequestTypes.SentTicketMessageViaSMS ||
+            request.requestType === ExternalAccessRequestTypes.SentTicketMessageViaEmail)&& !request.patientId) {
             forwardToRelatedPage();
         } else {
             sendVerification(VerificationType.Sms);

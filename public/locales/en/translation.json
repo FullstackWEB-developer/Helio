@@ -724,6 +724,7 @@
     "title_9": "You have a new message.",
     "title_11": "Manage your appointments online.",
     "title_12": "Confirm your appointment.",
+    "title_13": "You have a new message.",
     "send_us_message": "Send us a message",
     "message_sent": "This message has been sent",
     "message_send_failed": "This message could not be sent",
@@ -1027,6 +1028,9 @@
       "yesterday": "Yesterday",
       "sms_sent_failed": "Sending message failed",
       "no_empty_message": "Please type your message before sending"
+    },
+    "email": {
+      "title": "Conversation History"
     },
     "registration": {
       "personal_information": "Personal Information",

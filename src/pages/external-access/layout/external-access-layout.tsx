@@ -9,7 +9,7 @@ import SvgIcon, {Icon} from '@shared/components/svg-icon';
 import {useRouteMatch} from 'react-router';
 import classNames from 'classnames';
 import {useLocation} from 'react-router-dom';
-import {TicketSmsPath} from '@app/paths';
+import {TicketEmailPath, TicketSmsPath} from '@app/paths';
 import utils from '@shared/utils/utils';
 import {useDispatch} from 'react-redux';
 import {logOut} from '@shared/store/app-user/appuser.slice';
@@ -36,6 +36,7 @@ const ExternalAccessLayout = ({children}: ExternalAccessLayoutProps) => {
     const location = useLocation();
 
     const isSmsTicketPage = location && location.pathname === TicketSmsPath;
+    const isEmailPage = location && location.pathname === TicketEmailPath;
 
     useEffect(() => {
         const bodyEl = document.getElementsByTagName('body')[0];
@@ -58,15 +59,15 @@ const ExternalAccessLayout = ({children}: ExternalAccessLayoutProps) => {
     });
 
     const iconWrapperClass = classNames('h-20 xl:px-40 external-access-layout-header', {
-        'hidden': isSmsTicketPage
+        'hidden': isSmsTicketPage || isEmailPage
     });
 
     const childrenWrapperClass = classNames('flex-grow xl:px-40 external-access-container', {
-        'px-4 pb-36 padding-top': !isSmsTicketPage,
+        'px-4 pb-36 padding-top': !isSmsTicketPage && !isEmailPage
     });
 
     const footerWrapperClass = classNames('h-16 xl:px-40 external-access-layout-footer body3-medium', {
-        'hidden': isSmsTicketPage
+        'hidden': isSmsTicketPage || isEmailPage
     });
 
     return <>

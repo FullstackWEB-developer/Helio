@@ -45,7 +45,7 @@ import {
     AppointmentSchedulePatientStatusPathRouter,
     AppointmentConfirmationPath,
     AppointmentConfirmationShortPath,
-    EmailPath
+    EmailPath, TicketEmailPath
 } from './paths';
 import RealTimeUserStatusUpdate from '@shared/websockets/real-time-user-status-update';
 import ExternalAccessLayout from '@pages/external-access/layout/external-access-layout';
@@ -84,6 +84,7 @@ const Contacts = React.lazy(() => import('../pages/contacts/contacts'));
 const DownloadMedicalRecords = React.lazy(() => import('@pages/external-access/request-medical-records/download-medical-records'));
 const MedicalRecordsPreview = React.lazy(() => import('@pages/external-access/request-medical-records/medical-records-preview'));
 const RealtimeTicketSms = React.lazy(() => import('@pages/external-access/ticket-sms/realtime-ticket-sms'));
+const ExternalEmail = React.lazy(() => import('@pages/external-access/external-email/external-email'));
 const Sms = React.lazy(() => import('@pages/sms'));
 const Email = React.lazy(() => import('@pages/email'));
 const UserDetails = React.lazy(() => import('@pages/users/details'));
@@ -123,6 +124,7 @@ function App() {
                 <ExternalAccessLayout>
                     <Switch>
                         <Route path={TicketSmsPath} component={withSuspense(RealtimeTicketSms)} />
+                        <Route path={TicketEmailPath} component={withSuspense(ExternalEmail)} />
                         <Route path='/o/verify-patient' component={withSuspense(GetExternalUserDobZip)} />
                         <Route path='/o/verify-patient-code' component={withSuspense(ExternalUserVerificationCode)} />
                         <Route path='/o/verify-patient-get-mobile' component={withSuspense(ExternalUserMobileNumber)} />

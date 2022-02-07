@@ -13,6 +13,7 @@ export const ChatsLogPath = '/chats';
 export const NotAuthorizedPath = '/not-authorized';
 export const BlackListsPath = '/blacklists';
 export const TicketSmsPath = '/o/ticket-sms';
+export const TicketEmailPath = '/o/ticket-email';
 export const AppointmentFoundPath = '/o/appointment-found';
 export const AppointmentReschedulePath = '/o/appointment-reschedule';
 export const AppointmentRescheduleShortPath = '/o/ar';

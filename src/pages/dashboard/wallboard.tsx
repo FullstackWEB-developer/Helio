@@ -17,7 +17,7 @@ const Wallboard = ({lastUpdateTime}: WallboardProps) => {
                     <PerformanceToday lastUpdateTime={lastUpdateTime}/>
                 </div>
             </div>
-            <div>
+            <div className='pt-8'>
                 <RealTimeStatusTable lastUpdateTime={lastUpdateTime}/>
             </div>
 
