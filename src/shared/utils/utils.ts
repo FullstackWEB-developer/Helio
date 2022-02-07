@@ -464,7 +464,7 @@ const isDateTimeInPast = (date: Date) => {
     return dayjs(date).isBefore(dayjs(), 'milliseconds');
 }
 
-const determineMimeTypeIcon = (mimeType: string) => {
+const determineMimeTypeIcon = (mimeType: string, extension?: string) => {
     switch (mimeType) {
         case MimeTypes.Jpg:
         case MimeTypes.Jpeg:
@@ -490,6 +490,15 @@ const determineMimeTypeIcon = (mimeType: string) => {
         case MimeTypes.Zip:
         case MimeTypes.ZipCompressed:
             return Icon.ZipMime;
+        case MimeTypes.Binary:
+            switch (extension) {
+                case 'rar':
+                    return Icon.RarMime;
+                case 'jpeg':
+                    return Icon.JpgMime;
+                default:
+                    return Icon.FallbackMime;
+            }
         default:
             return Icon.FallbackMime;
     }

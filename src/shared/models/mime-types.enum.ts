@@ -12,5 +12,6 @@ export enum MimeTypes  {
     Xls = 'application/vnd.ms-excel',
     XlsX = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
     Rar = 'application/vnd.rar',
-    Tiff = 'image/tiff'
+    Tiff = 'image/tiff',
+    Binary = 'application/octet-stream'
 }

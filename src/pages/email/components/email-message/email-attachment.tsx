@@ -32,7 +32,11 @@ const EmailAttachment = ({attachment, messageId}: {attachment: EmailAttachmentHe
     const downloadAttachment = (fileName: string) => {
         downloadAttachmentMutation.mutate({messageId, contentId: fileName, mimeTypeToDownloadIn: attachment.mimeType});
     }
-
+    const extensionExtractedFromFilename = (fileName: string): string => {
+        const splitted = fileName?.split('.');
+        return splitted && splitted.length > 1 ? splitted[splitted.length - 1] : '';
+    }
+    
     return (
         <div
             onMouseOver={() => setHovered(true)}
@@ -42,7 +46,7 @@ const EmailAttachment = ({attachment, messageId}: {attachment: EmailAttachmentHe
             {
                 <SvgIcon isLoading={downloadAttachmentMutation.isLoading} className='icon-large-40'
                     fillClass={!hovered ? 'fill-default' : 'rgba-062-fill'}
-                    type={!hovered ? utils.determineMimeTypeIcon(attachment.mimeType) : Icon.Download}
+                    type={!hovered ? utils.determineMimeTypeIcon(attachment.mimeType, extensionExtractedFromFilename(attachment.fileName)) : Icon.Download}
                     wrapperClassName='pr-2' />
             }
             <div className='truncate'>
