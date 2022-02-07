@@ -532,10 +532,11 @@
     "sms_send_success": "Your message was sent.",
     "email_subject": "About ticket {{ticketNumber}}",
     "sms_send_fail": "Sms sent failed.",
-    "email_send_success": "Your message was sent.",
+    "email_send_success": "Your email was sent.",
     "email_send_fail": "Email sent failed.",
     "template": "Template: ",
     "reopen_or_create_to_send_sms": "This ticket is closed. To send a SMS reopen this ticket or create a new one.",
+    "reopen_or_create_to_send_email": "This ticket is closed or the recipient email is not known. To send an email reopen this ticket or create a new one.",
     "chat_transcript": {
       "title": "Chat Transcript",
       "chat_info": "Chat Info",

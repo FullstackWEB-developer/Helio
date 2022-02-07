@@ -5,12 +5,12 @@ import {useTranslation} from 'react-i18next';
 import withErrorLogging from '../../../../shared/HOC/with-error-logging';
 import {Ticket} from '../../models/ticket';
 import {TicketNote} from '../../models/ticket-note';
-import {addNote} from '../../services/tickets.service';
+import {addNote, setAssignee} from '../../services/tickets.service';
 import {useMutation, useQuery, useQueryClient} from 'react-query';
 import {setTicket} from '@pages/tickets/store/tickets.slice';
 import {Icon} from '@components/svg-icon/icon';
 import TextArea from '@components/textarea/textarea';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import Tabs from '@components/tab/Tabs';
 import Tab from '@components/tab/Tab';
 import './ticket-detail-add-note.scss';
@@ -29,7 +29,9 @@ import ParentExtraTemplate from '@components/notification-template-select/compon
 import SelectedTemplateInfo from '@components/notification-template-select/components/selected-template-info';
 import {TicketStatuses} from '@pages/tickets/models/ticket.status.enum';
 import {TemplateUsedFrom} from '@components/notification-template-select/template-used-from';
-
+import {selectAppUserDetails} from '@shared/store/app-user/appuser.selectors';
+import {CommonQueryData} from '@shared/models/query-data.model';
+import Input from '@components/input';
 interface TicketDetailAddNoteProps {
     ticket: Ticket,
     patient?: ExtendedPatient;
@@ -57,6 +59,8 @@ const TicketDetailAddNote = ({ticket, patient, contact}: TicketDetailAddNoteProp
     const [selectedTab, setSelectedTab] = useState<ChannelTabs>(ChannelTabs.NotesTab);
     const [selectedMessageTemplate, setSelectedMessageTemplate] = useState<NotificationTemplate>();
     const queryClient = useQueryClient();
+    const [richTextMode, setRichTextMode] = useState(false);
+    const [ticketHasEmailMessages, setTicketHasEmailMessages] = useState(!!queryClient.getQueryData<CommonQueryData>([QueryTicketMessagesInfinite, ChannelTypes.Email, ticket.id])?.results?.length);
     const {isLoading: isProcessing} = useQuery([ProcessTemplate, selectedMessageTemplate?.id!], () =>
         processTemplate(selectedMessageTemplate?.id!, ticket, patient, contact),
         {
@@ -64,6 +68,7 @@ const TicketDetailAddNote = ({ticket, patient, contact}: TicketDetailAddNoteProp
             onSuccess: (data) => {
                 switch (selectedTab) {
                     case ChannelTabs.EmailTab:
+                        setRichTextMode(true);
                         setEmailText(data.content);
                         setEmailSubject(data.subject)
                         break;
@@ -73,6 +78,20 @@ const TicketDetailAddNote = ({ticket, patient, contact}: TicketDetailAddNoteProp
                 }
             }
         });
+
+
+    const determineEmailSubject = () => {
+        if (ticketHasEmailMessages) {
+            const emails = queryClient.getQueryData<CommonQueryData>([QueryTicketMessagesInfinite, ChannelTypes.Email, ticket.id])?.results;
+            return emails && emails[0]?.subject ? emails[0].subject : t('ticket_detail.email_subject', {'ticketNumber': ticket.ticketNumber});
+        }
+        else if (emailSubject && emailSubject !== t('ticket_detail.email_subject', {'ticketNumber': ticket.ticketNumber})) {
+            return emailSubject;
+        }
+        else {
+            return t('ticket_detail.email_subject', {'ticketNumber': ticket.ticketNumber});
+        }
+    }
 
     const addNoteMutation = useMutation(addNote, {
         onSuccess: (data) => {
@@ -86,10 +105,11 @@ const TicketDetailAddNote = ({ticket, patient, contact}: TicketDetailAddNoteProp
     }, [ticket])
 
     useEffect(() => {
-            if (isTicketDisabled) {
-                setSmsText('');
-                setEmailText('');
-            }
+        if (isTicketDisabled) {
+            setSmsText('');
+            setEmailText('');
+            setEmailSubject('');
+        }
     }, [isTicketDisabled]);
 
     useEffect(() => {
@@ -102,15 +122,23 @@ const TicketDetailAddNote = ({ticket, patient, contact}: TicketDetailAddNoteProp
                 setEmailAddress(patient.emailAddress);
             }
         } else if (!!contact) {
-            setRecipientName(contact.companyName);
+            setRecipientName(contact.isCompany ? contact.companyName : utils.stringJoin(' ', contact.firstName, contact.lastName));
             if (!!contact.mobilePhone) {
                 setMobileNumber(contact.mobilePhone);
             }
             if (!!contact.primaryEmailAddress) {
                 setEmailAddress(contact.primaryEmailAddress);
             }
+            if (!!contact.emailAddress) {
+                setEmailAddress(contact.emailAddress);
+            }
         }
-    }, [patient, contact]);
+        else {
+            if (ticket?.incomingEmailAddress) {
+                setEmailAddress(ticket.incomingEmailAddress);
+            }
+        }
+    }, [patient, contact, ticket]);
 
     const sendSmsMutation = useMutation(sendMessage, {
         onSuccess: () => {
@@ -133,7 +161,9 @@ const TicketDetailAddNote = ({ticket, patient, contact}: TicketDetailAddNoteProp
 
     const clear = () => {
         if (emailText) {
+            setRichTextMode(false);
             setEmailText('');
+            setEmailSubject('');
             setSelectedMessageTemplate(undefined);
             queryClient.invalidateQueries([QueryTicketMessagesInfinite, ChannelTypes.Email, ticket.id]).then();
         }
@@ -154,6 +184,7 @@ const TicketDetailAddNote = ({ticket, patient, contact}: TicketDetailAddNoteProp
                 message: 'ticket_detail.email_send_success',
                 position: SnackbarPosition.TopCenter
             }));
+            setTicketHasEmailMessages(true);
             clear();
         },
         onError: () => {
@@ -164,6 +195,9 @@ const TicketDetailAddNote = ({ticket, patient, contact}: TicketDetailAddNoteProp
             }));
         }
     });
+
+    const changeAssigneeMutation = useMutation(setAssignee);
+    const {id} = useSelector(selectAppUserDetails);
 
     const sendNote = async () => {
         const note: TicketNote = {
@@ -179,10 +213,14 @@ const TicketDetailAddNote = ({ticket, patient, contact}: TicketDetailAddNoteProp
     }
 
     const sendEmail = async () => {
-        if (ticket.id) {
+        if (ticket.id && emailAddress) {
+            if (!ticket.assignee || ticket.assignee !== id) {
+                changeAssigneeMutation.mutate({assignee: id, ticketId: ticket.id!});
+            }
+            const subject = determineEmailSubject();
             sendEmailMutation.mutate({
                 body: emailText,
-                subject: emailSubject,
+                subject,
                 ticketId: ticket.id,
                 channel: ChannelTypes.Email,
                 toAddress: emailAddress,
@@ -191,6 +229,7 @@ const TicketDetailAddNote = ({ticket, patient, contact}: TicketDetailAddNoteProp
             });
         }
     }
+
 
     const sendSms = async () => {
         if (ticket.id) {
@@ -214,6 +253,8 @@ const TicketDetailAddNote = ({ticket, patient, contact}: TicketDetailAddNoteProp
         if (!template.requirePreProcessing) {
             switch (selectedTab) {
                 case ChannelTabs.EmailTab:
+                    setRichTextMode(true);
+                    setEmailSubject(template.subject);
                     setEmailText(template.content);
                     break;
                 case ChannelTabs.SmsTab:
@@ -225,15 +266,22 @@ const TicketDetailAddNote = ({ticket, patient, contact}: TicketDetailAddNoteProp
 
     const onTabChange = (tabIndex: number) => {
         setSelectedTab(tabIndex);
+        setTicketHasEmailMessages(!!queryClient.getQueryData<CommonQueryData>([QueryTicketMessagesInfinite, ChannelTypes.Email, ticket.id])?.results?.length);
+        setRichTextMode(false);
         setSelectedMessageTemplate(undefined);
         setSmsText('');
         setNoteText('');
         setEmailText('');
+        setEmailSubject('');
     }
 
     const isSendSmsDisabled = useMemo(() => {
         return !mobileNumber || isTicketDisabled;
     }, [isTicketDisabled, mobileNumber]);
+
+    const isSendEmailDisabled = useMemo(() => {
+        return !emailAddress || isTicketDisabled;
+    }, [isTicketDisabled, emailAddress])
 
 
     return <>
@@ -246,6 +294,7 @@ const TicketDetailAddNote = ({ticket, patient, contact}: TicketDetailAddNoteProp
                             usedFrom={TemplateUsedFrom.TicketDetail}
                             channel={selectedTab === 1 ? NotificationTemplateChannel.Sms : NotificationTemplateChannel.Email}
                             onSelect={(template) => onTemplateSelect(template)}
+                            isLoading={isProcessing}
                         />
                     }
                 </div>
@@ -283,7 +332,7 @@ const TicketDetailAddNote = ({ticket, patient, contact}: TicketDetailAddNoteProp
                             <TextArea
                                 className='w-full pl-2 pr-0 body2'
                                 data-test-id='ticket-send-sms'
-                                placeHolder={t( isSendSmsDisabled ? 'ticket_detail.reopen_or_create_to_send_sms': 'ticket_detail.add_note')}
+                                placeHolder={t(isSendSmsDisabled ? 'ticket_detail.reopen_or_create_to_send_sms' : 'ticket_detail.add_note')}
                                 required={true}
                                 rows={2}
                                 maxRows={5}
@@ -302,40 +351,51 @@ const TicketDetailAddNote = ({ticket, patient, contact}: TicketDetailAddNoteProp
                             />
                         </Tab>
 
-                        {
-                            // PLEASE DON'T DELETE THIS
-                            // <Tab title={t('ticket_detail.send_email_title')}>
-                            //     <div className='pt-2' />
-                            //     {selectedMessageTemplate && <div className='pt-3'>
-                            //         <SelectedTemplateInfo selectedMessageTemplate={selectedMessageTemplate} />
-                            //     </div>}
-                            //     {selectedMessageTemplate && <div>
-                            //         <ParentExtraTemplate logicKey={selectedMessageTemplate?.logicKey}
-                            //             parentType='ticket'
-                            //             patient={patient} />
-                            //     </div>}
-                            //     <TextArea
-                            //         className='w-full pl-2 pr-0 body2'
-                            //         data-test-id='ticket-send-email'
-                            //         placeHolder={t('ticket_detail.add_note')}
-                            //         required={true}
-                            //         rows={2}
-                            //         maxRows={5}
-                            //         key='email'
-                            //         value={emailText}
-                            //         disabled={!emailAddress}
-                            //         onChange={(message) => setEmailText(message)}
-                            //         resizable={false}
-                            //         isLoading={sendEmailMutation.isLoading || isProcessing}
-                            //         hasBorder={false}
-                            //         iconClassNames='icon-medium'
-                            //         showFormatting={true}
-                            //         icon={Icon.Send}
-                            //         iconFill='notes-send'
-                            //         iconOnClick={sendEmail}
-                            //     />
-                            // </Tab>
-                        }
+                        <Tab title={t('ticket_detail.send_email_title')}>
+                            <div className='pt-2' />
+                            {selectedMessageTemplate && <div className='pt-3'>
+                                <SelectedTemplateInfo selectedMessageTemplate={selectedMessageTemplate} />
+                            </div>}
+                            {selectedMessageTemplate && <div>
+                                <ParentExtraTemplate logicKey={selectedMessageTemplate?.logicKey}
+                                    parentType='ticket'
+                                    patient={patient} />
+                            </div>}
+                            {
+                                !ticketHasEmailMessages && !isSendEmailDisabled &&
+                                <Input
+                                    name='subject'
+                                    type='text'
+                                    value={emailSubject}
+                                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmailSubject(e.target.value)}
+                                    label='email.new_email.subject'
+                                    containerClassName='w-full pt-4'
+                                    required={true}
+                                    disabled={isSendEmailDisabled}
+                                />
+                            }
+                            <TextArea
+                                className='w-full pl-2 pr-0 body2'
+                                data-test-id='ticket-send-email'
+                                placeHolder={isSendEmailDisabled ? 'ticket_detail.reopen_or_create_to_send_email' : 'ticket_detail.add_note'}
+                                required={true}
+                                rows={2}
+                                maxRows={5}
+                                key='email'
+                                value={emailText}
+                                disabled={isSendEmailDisabled}
+                                onChange={(message) => setEmailText(message)}
+                                resizable={false}
+                                isLoading={sendEmailMutation.isLoading || isProcessing}
+                                hasBorder={false}
+                                iconClassNames='icon-medium'
+                                showFormatting={true}
+                                icon={Icon.Send}
+                                iconFill='notes-send'
+                                iconOnClick={sendEmail}
+                                toggleRichTextMode={richTextMode}
+                            />
+                        </Tab>
                     </Tabs>
                 </div>
             </div>

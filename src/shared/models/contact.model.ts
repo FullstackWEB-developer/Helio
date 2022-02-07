@@ -21,6 +21,7 @@ export interface Contact {
     addresses?: Address[];
     contactPeople?: ContactPerson[];
     isCompany?: boolean
+    emailAddress?: string;
 }
 
 export interface ContactBase {
