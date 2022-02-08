@@ -63,7 +63,7 @@ const ExternalEmailListItem = ({message, patientPhoto, users, patient} : Externa
         }
         return <Avatar userFullName={'#'} />
 
-    }, [message.createdBy, patientPhoto]);
+    }, [message, patientPhoto, user, patient]);
 
     return <div className='flex flex-row items-center border-b space-x-4 external-email-list-item'>
         <div>

@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {RedirectLink} from '@pages/external-access/verify-patient/models/redirect-link';
 import initialVerifyPatientState from '@pages/external-access/verify-patient/store/verify-patient.initial-state';
+import {ExternalAccessRequestTypes} from '@pages/external-access/models/external-updates-request-types.enum';
 
 const verifyPatientSlice = createSlice({
     name: 'verifyPatientSlice',
@@ -8,7 +9,7 @@ const verifyPatientSlice = createSlice({
     reducers: {
         setRedirectLink(state, { payload }: PayloadAction<RedirectLink>) {
             state.redirectLink = payload;
-            if (payload.sentAddress) {
+            if (payload.sentAddress && payload.requestType !== ExternalAccessRequestTypes.SentTicketMessageViaEmail) {
                 state.phoneNumber = payload.sentAddress;
             }
         },

@@ -1,6 +1,6 @@
 import {useDispatch, useSelector} from 'react-redux';
 import {selectVerifiedPatent} from '@pages/patients/store/patients.selectors';
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useContext, useEffect, useMemo, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {useQuery} from 'react-query';
 import {QueryTicketMessagesInfinite, UserListBaseData} from '@constants/react-query-constants';
@@ -20,14 +20,15 @@ import {getUserBaseData} from '@shared/services/user.service';
 import {selectRedirectLink} from '@pages/external-access/verify-patient/store/verify-patient.selectors';
 import {selectTicketSmsMessages} from '@pages/external-access/ticket-sms/store/ticket-sms.selectors';
 import {setTicketSmsMessages} from '@pages/external-access/ticket-sms/store/ticket-sms.slice';
+import {
+    RealtimeTicketMessageContext
+} from '@pages/external-access/realtime-ticket-message-context/realtime-ticket-message-context';
 
-export interface TicketSmsProps {
-    lastMessageTime?: Date;
-}
-const TicketSms = ({lastMessageTime} : TicketSmsProps) => {
+const TicketSms = () => {
     dayjs.extend(isToday);
     dayjs.extend(isYesterday);
     const {t} = useTranslation();
+    const {lastMessageDate} = useContext(RealtimeTicketMessageContext)!;
     const verifiedPatient = useSelector(selectVerifiedPatent);
     const request = useSelector(selectRedirectLink);
     const [isBottomFocus, setBottomFocus] = useState<boolean>(false);
@@ -45,7 +46,7 @@ const TicketSms = ({lastMessageTime} : TicketSmsProps) => {
     
     useEffect(() => {
         refetch().then();
-    }, [lastMessageTime]);
+    }, [lastMessageDate]);
 
     const {isLoading, refetch} = useQuery([QueryTicketMessagesInfinite, ChannelTypes.SMS, request?.ticketId, page],
         () => getMessages(request.ticketId, ChannelTypes.SMS, {

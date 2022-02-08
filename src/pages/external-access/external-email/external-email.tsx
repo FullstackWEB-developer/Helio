@@ -8,7 +8,7 @@ import {
 import {ChannelTypes, EmailMessageDto, PagedList} from '@shared/models';
 import {getMessages} from '@pages/sms/services/ticket-messages.service';
 import utils from '@shared/utils/utils';
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {selectVerifiedPatent} from '@pages/patients/store/patients.selectors';
 import {selectRedirectLink} from '@pages/external-access/verify-patient/store/verify-patient.selectors';
@@ -21,9 +21,11 @@ import {useTranslation} from 'react-i18next';
 import ExternalEmailListItem from '@pages/external-access/external-email/components/external-email-list-item';
 import {setExternalEmails} from '@pages/external-access/external-email/store/external-email.slice';
 import dayjs from 'dayjs';
+import {
+    RealtimeTicketMessageContext
+} from '@pages/external-access/realtime-ticket-message-context/realtime-ticket-message-context';
 
 const ExternalEmail = () => {
-
     const [page, setPage] = useState<number>(1);
     const dispatch = useDispatch();
     const verifiedPatient = useSelector(selectVerifiedPatent);
@@ -32,6 +34,7 @@ const ExternalEmail = () => {
     const messages = useSelector(selectExternalEmailSummaries);
     const [isBottomFocus, setBottomFocus] = useState<boolean>(false);
     const {t} = useTranslation();
+    const {lastMessageDate} = useContext(RealtimeTicketMessageContext)!;
 
     const getTime = (date?: Date) => {
         return date ? dayjs.utc(date).toDate().getTime() :  0;
@@ -45,7 +48,7 @@ const ExternalEmail = () => {
         enabled: !!verifiedPatient?.patientId
     });
 
-    const {isLoading} = useQuery([QueryTicketMessagesInfinite, ChannelTypes.Email, request?.ticketId, page],
+    const {isLoading, refetch} = useQuery([QueryTicketMessagesInfinite, ChannelTypes.Email, request?.ticketId, page],
         () => getMessages(request?.ticketId, ChannelTypes.Email, {
             page,
             pageSize: 100,
@@ -65,6 +68,10 @@ const ExternalEmail = () => {
                 }
             }
         });
+
+    useEffect(() => {
+        refetch().then();
+    }, [lastMessageDate]);
 
     const {data: users, refetch: refetchUsers} = useQuery([UserListBaseData, userIds],
         () => {
