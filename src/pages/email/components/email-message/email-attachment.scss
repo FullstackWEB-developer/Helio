@@ -1,0 +1,12 @@
+.email {
+    &-attachment-thumbnail {
+        background-color: var(--table-header-background);
+        &:hover {
+          background-color: var(--light-divider-7);
+        }
+      }
+}
+
+.attachment-file-name {
+    color: var(--light-text-high-emphasis);
+}

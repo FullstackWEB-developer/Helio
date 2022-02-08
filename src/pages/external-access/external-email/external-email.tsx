@@ -19,8 +19,10 @@ import {getUserBaseData} from '@shared/services/user.service';
 import AlwaysScrollToBottom from '@components/scroll-to-bottom';
 import {useTranslation} from 'react-i18next';
 import ExternalEmailListItem from '@pages/external-access/external-email/components/external-email-list-item';
+import ExternalEmailMessageDetail from '@pages/external-access/external-email/components/external-email-message-detail';
 import {setExternalEmails} from '@pages/external-access/external-email/store/external-email.slice';
 import dayjs from 'dayjs';
+import SvgIcon, {Icon} from '@components/svg-icon';
 import {
     RealtimeTicketMessageContext
 } from '@pages/external-access/realtime-ticket-message-context/realtime-ticket-message-context';
@@ -37,7 +39,7 @@ const ExternalEmail = () => {
     const {lastMessageDate} = useContext(RealtimeTicketMessageContext)!;
 
     const getTime = (date?: Date) => {
-        return date ? dayjs.utc(date).toDate().getTime() :  0;
+        return date ? dayjs.utc(date).toDate().getTime() : 0;
     }
 
     const {data: patientPhoto} = useQuery([GetPatientPhoto, verifiedPatient?.patientId], () => getPatientPhoto(verifiedPatient.patientId!), {
@@ -53,21 +55,21 @@ const ExternalEmail = () => {
             page,
             pageSize: 100,
         }), {
-            enabled: !!request?.ticketId,
-            onSuccess: (data: PagedList<EmailMessageDto>) => {
-                setBottomFocus(true);
-                dispatch(setExternalEmails(data.results));
-                if (page < data.totalPages) {
-                    setPage(page + 1);
-                } else {
-                    let userIds = data.results.map(message => message.createdBy);
-                    userIds = userIds
-                        .filter(function (v, i) {return userIds.indexOf(v) === i;})
-                        .filter(a => utils.isGuid(a));
-                    setUserIds(userIds);
-                }
+        enabled: !!request?.ticketId,
+        onSuccess: (data: PagedList<EmailMessageDto>) => {
+            setBottomFocus(true);
+            dispatch(setExternalEmails(data.results));
+            if (page < data.totalPages) {
+                setPage(page + 1);
+            } else {
+                let userIds = data.results.map(message => message.createdBy);
+                userIds = userIds
+                    .filter(function (v, i) {return userIds.indexOf(v) === i;})
+                    .filter(a => utils.isGuid(a));
+                setUserIds(userIds);
             }
-        });
+        }
+    });
 
     useEffect(() => {
         refetch().then();
@@ -80,8 +82,8 @@ const ExternalEmail = () => {
                 pageSize: 100,
             })
         }, {
-            enabled: !!userIds && userIds.length > 0
-        });
+        enabled: !!userIds && userIds.length > 0
+    });
 
     useEffect(() => {
         if (messages && messages.length > 0) {
@@ -107,6 +109,8 @@ const ExternalEmail = () => {
         })
     }
 
+    const [selectedMessage, setSelectedMessage] = useState<EmailMessageDto | undefined>();
+
 
     if (isLoading) {
         return <div className='h-full w-full'>
@@ -115,18 +119,30 @@ const ExternalEmail = () => {
     }
     return <div>
         <AlwaysScrollToBottom enabled={isBottomFocus} />
-        <div className='h-14 h7 border-b flex items-center justify-center'>
-            {t('external_access.email.title')}
+        <div className='h-14 border-b flex items-center'>
+            <div className='flex-1'>
+                {
+                    selectedMessage &&
+                    <SvgIcon wrapperClassName='px-2 cursor-pointer flex-1' fillClass='rgba-05-fill' type={Icon.ArrowBack} onClick={() => setSelectedMessage(undefined)} />
+                }
+            </div>
+            <div className='flex-auto text-center'>{t('external_access.email.title')}</div>
+            <div className='flex-1'></div>
         </div>
-        <div className='px-4'>
-            {[...messages].sort((a: EmailMessageDto,b: EmailMessageDto) => getTime(b.createdOn) - getTime(a.createdOn)).map(message => <ExternalEmailListItem
-                patientPhoto={patientPhoto}
-                users= {users?.results}
-                message={message}
-                patient={patient}
-                key={message.ticketId} />)
-            }
-        </div>
+        {
+            selectedMessage ?
+                <ExternalEmailMessageDetail patientPhoto={patientPhoto} message={selectedMessage} patient={patient} users={users?.results} /> :
+                <div className='px-4'>
+                    {[...messages].sort((a: EmailMessageDto, b: EmailMessageDto) => getTime(b.createdOn) - getTime(a.createdOn)).map(message => <ExternalEmailListItem
+                        patientPhoto={patientPhoto}
+                        users={users?.results}
+                        message={message}
+                        patient={patient}
+                        key={message.id}
+                        onClick={setSelectedMessage} />)
+                    }
+                </div>
+        }
     </div>
 }
 

@@ -14,9 +14,10 @@ export interface ExternalEmailListItemProps {
     patientPhoto?: string;
     users?: UserBase[];
     patient?: ExtendedPatient;
+    onClick: (message: EmailMessageDto) => void
 }
 
-const ExternalEmailListItem = ({message, patientPhoto, users, patient} : ExternalEmailListItemProps) => {
+const ExternalEmailListItem = ({message, patientPhoto, users, patient, onClick} : ExternalEmailListItemProps) => {
     dayjs.extend(utc);
     dayjs.extend(isToday);
     const {t} = useTranslation();
@@ -65,7 +66,7 @@ const ExternalEmailListItem = ({message, patientPhoto, users, patient} : Externa
 
     }, [message, patientPhoto, user, patient]);
 
-    return <div className='flex flex-row items-center border-b space-x-4 external-email-list-item'>
+    return <div className='flex flex-row items-center border-b space-x-4 external-email-list-item' onClick={() => onClick(message)}>
         <div>
             {photo}
         </div>

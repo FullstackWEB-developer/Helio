@@ -342,6 +342,14 @@
   --stepper-inactive-color: rgba(219, 219, 219, 1);
   --stepper-passed-color: rgba(120,120,120,1);
 
+  --mime-image-color: #734dea;
+  --mime-txt-color: #0047cc;
+  --mime-pdf-color: #f86854;
+  --mime-word-color: #0047cc;
+  --mime-excel-color: #006c3a;
+  --mime-archive-color: #616161;
+  --rgba-color-062: rgba(0, 0, 0, 0.62);
+
   a {
     color: var(--color-primary-800);
   }

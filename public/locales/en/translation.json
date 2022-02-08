@@ -1457,7 +1457,8 @@
       "send": "Send",
       "discard": "Discard",
       "email_sent_successfully": "Email sent successfully",
-      "email_sent_failed": "Email could not be sent. Please try again"
+      "email_sent_failed": "Email could not be sent. Please try again",
+      "reply": "Reply"
     }
   },
   "sms": {
