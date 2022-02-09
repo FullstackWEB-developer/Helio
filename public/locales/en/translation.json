@@ -926,7 +926,7 @@
       "select_prescription": "Prescription",
       "back_to_medications": "Back to Medications",
       "refill_request_sent": "Thank you. Your medication refill request has been sent.",
-      "refill_request_sent_details": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis."
+      "refill_request_sent_details": "Please allow 24 hours for it to be processed. Your pharmacy will notify you when ready for pickup."
     },
     "lab_results": {
       "title": "Your recent test results.",
