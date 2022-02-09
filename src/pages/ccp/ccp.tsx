@@ -238,7 +238,9 @@ const Ccp: React.FC<BoxProps> = ({
         });
 
         connect.core.onViewContact((contactEvent) => {
-            dispatch(setCurrentContactId(contactEvent.contactId));
+            if (contactEvent.contactId !== '') {
+                dispatch(setCurrentContactId(contactEvent.contactId));
+            }
         });
 
         const getInitialContactId = (contact : any) => {

@@ -88,7 +88,7 @@ const NoteContext = () => {
                                 value={noteText}
                                 required={true}
                                 overwriteDefaultContainerClasses={true}
-                                minRows={2}
+                                rows={4}
                                 isLoading={addNoteMutation.isLoading}
                                 resizable={false}
                                 hasBorder={false}
