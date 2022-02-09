@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo} from 'react';
+import React, {useMemo} from 'react';
 import withErrorLogging from '@shared/HOC/with-error-logging';
 import {useDispatch, useSelector} from 'react-redux';
 import {
@@ -18,8 +18,6 @@ import ControlledInput from '@components/controllers/ControlledInput';
 import {TicketUpdateModel} from '@pages/tickets/models/ticket-update.model';
 import utils from '@shared/utils/utils';
 import {Ticket} from '@pages/tickets/models/ticket';
-import {getLocations} from '@shared/services/lookups.service';
-import {getEnumByType, getLookupValues} from '@pages/tickets/services/tickets.service';
 
 interface TicketInfoProps {
     ticket: Ticket,
@@ -46,16 +44,6 @@ const TicketDetailTicketInfo = ({ticket, control, watch}: TicketInfoProps) => {
             [fieldName]: value
         }));
     }
-
-    useEffect(() => {
-        dispatch(getLocations());
-        dispatch(getEnumByType('TicketPriority'));
-        dispatch(getEnumByType('TicketStatus'));
-        dispatch(getEnumByType('TicketType'));
-        dispatch(getLookupValues('Department'));
-        dispatch(getLookupValues('TicketReason'));
-        dispatch(getLookupValues('TicketTags'));
-    }, [dispatch]);
 
     const ticketType = watch('type');
     const reasonFilteredOptions = useMemo(() => {

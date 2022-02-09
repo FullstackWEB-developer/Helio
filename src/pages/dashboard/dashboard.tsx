@@ -1,7 +1,12 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {useQuery} from 'react-query';
 import {GetAgentStatus, GetDashboard} from '@constants/react-query-constants';
-import {getAgentsStatus, getDashboardData} from '@pages/tickets/services/tickets.service';
+import {
+    getAgentsStatus,
+    getDashboardData,
+    getEnumByType,
+    getLookupValues
+} from '@pages/tickets/services/tickets.service';
 import {useTranslation} from 'react-i18next';
 import './dashboard.scss';
 import {DropdownModel} from '@components/dropdown/dropdown.models';
@@ -22,6 +27,7 @@ import {DashboardResponse} from '@pages/dashboard/models/dashboard-response';
 import {AgentStatus} from '@shared/models';
 import {addLiveAgentStatus} from '@shared/store/app-user/appuser.slice';
 import {useDispatch} from 'react-redux';
+import {getLocations} from '@shared/services/lookups.service';
 
 export const Dashboard = () => {
     const {t} = useTranslation();
@@ -51,6 +57,16 @@ export const Dashboard = () => {
             });
         }
     });
+
+    useEffect(() => {
+        dispatch(getLocations());
+        dispatch(getEnumByType('TicketPriority'));
+        dispatch(getEnumByType('TicketStatus'));
+        dispatch(getEnumByType('TicketType'));
+        dispatch(getLookupValues('Department'));
+        dispatch(getLookupValues('TicketReason'));
+        dispatch(getLookupValues('TicketTags'));
+    }, []);
 
     customHooks.useOutsideClick([typeDropdownRef], () => {
         setDisplayTypeDropdown(false);
