@@ -12,13 +12,12 @@ import {DEFAULT_MESSAGE_QUERY_PARAMS} from '@pages/email/constants';
 import useCheckPermission from '@shared/hooks/useCheckPermission';
 import {useDispatch, useSelector} from 'react-redux';
 import {selectAppUserDetails} from '@shared/store/app-user/appuser.selectors';
-import {selectEmailSummaries, selectLastEmailDate} from '@pages/email/store/email.selectors';
+import {selectLastEmailDate} from '@pages/email/store/email.selectors';
 import {setMessageSummaries} from '@pages/email/store/email-slice';
 
 export const EmailContext = createContext<EmailContextType | null>(null);
 
 const EmailProvider =({children}: {children: ReactNode}) => {
-    const messageSummaries = useSelector(selectEmailSummaries);
     const lastEmailDate = useSelector(selectLastEmailDate);
     const dispatch = useDispatch();
     const {id} = useSelector(selectAppUserDetails);
@@ -44,14 +43,13 @@ const EmailProvider =({children}: {children: ReactNode}) => {
             }
         });
 
-    return (<EmailContext.Provider value={{messageSummaries,
+    return (<EmailContext.Provider value={{
         emailQueryType,
         setEmailQueryType,
         queryParams,
         setQueryParams,
         getEmailsQuery,
-        isDefaultTeamView,
-        setMessageSummaries}}>
+        isDefaultTeamView}}>
                 {children}
     </EmailContext.Provider>)
 

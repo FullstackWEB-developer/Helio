@@ -14,6 +14,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {selectEmailTemplates, selectSmsTemplates} from '@shared/store/app/app.selectors';
 import {setEmailTemplates, setSmsTemplates} from '@shared/store/app/app.slice';
 import {TemplateUsedFrom} from '@components/notification-template-select/template-used-from';
+import classnames from 'classnames';
 
 export interface MessageTemplateSelectProps {
     channel: NotificationTemplateChannel;
@@ -24,10 +25,11 @@ export interface MessageTemplateSelectProps {
     disabled?: boolean;
     isLoading?: boolean;
     resetValue?: number;
-    usedFrom: TemplateUsedFrom
+    usedFrom: TemplateUsedFrom,
+    placement?:'bottom' | 'top'
 }
 
-const NotificationTemplateSelect = ({channel, category, onSelect, asSelect, selectLabel, isLoading, resetValue, usedFrom}: MessageTemplateSelectProps) => {
+const NotificationTemplateSelect = ({channel, category, onSelect, asSelect, selectLabel, isLoading, resetValue, usedFrom, placement = 'top'}: MessageTemplateSelectProps) => {
     const [items, setItems] = useState<DropdownItemModel[]>([]);
     const [options, setOptions] = useState<Option[]>([]);
     const templateDiv = useRef<HTMLDivElement>(null);
@@ -133,6 +135,12 @@ const NotificationTemplateSelect = ({channel, category, onSelect, asSelect, sele
         }
         return <Select onSelect={(option) => onSelect(option?.object)} label={selectLabel} options={options} />;
     }
+
+    const dropdownWrapperClassname = classnames('absolute z-50', {
+        'bottom-0' : placement === 'top',
+        'bottom-50': placement === 'bottom'
+    })
+
     return <div ref={templateDiv} className='relative'>
         <div className='cursor-pointer' onClick={() => {
             setDisplayTemplateForTab(!displayTemplateForTab)
@@ -141,7 +149,7 @@ const NotificationTemplateSelect = ({channel, category, onSelect, asSelect, sele
                 <SvgIcon isLoading={isLoadingOrFetching()} type={Icon.Templates} fillClass='rgba-05-fill' className='icon-medium'/>
             </div>
         </div>
-        <div className='absolute bottom-0 z-50' hidden={!displayTemplateForTab || isLoadingOrFetching() || items.length === 0 }>
+        <div className={dropdownWrapperClassname} hidden={!displayTemplateForTab || isLoadingOrFetching() || items.length === 0 }>
             <div className='w-96'><Dropdown model={dropdownModel}/></div>
         </div>
     </div>

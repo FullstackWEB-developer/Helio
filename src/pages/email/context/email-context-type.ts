@@ -5,8 +5,6 @@ import {UseInfiniteQueryResult} from 'react-query';
 export type EmailContextType = {
     emailQueryType?: EmailQueryType;
     setEmailQueryType:(emailQueryType: EmailQueryType) => void;
-    messageSummaries: TicketMessageSummary[];
-    setMessageSummaries: (summaries: TicketMessageSummary[]) => void;
     queryParams: TicketMessageSummaryRequest;
     setQueryParams: (TicketMessageSummaryRequest) => void;
     getEmailsQuery: UseInfiniteQueryResult<PagedList<TicketMessageSummary>>

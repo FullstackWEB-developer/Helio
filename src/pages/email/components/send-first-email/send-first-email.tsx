@@ -20,6 +20,7 @@ import {EmailPath} from '@app/paths';
 import {EMPTY_GUID} from '@pages/email/constants';
 import {useHistory} from 'react-router-dom';
 import {TemplateUsedFrom} from '@components/notification-template-select/template-used-from';
+import {setLastEmailDate} from '@pages/email/store/email-slice';
 
 export interface SendFirstEmailProps {
     ticket: Ticket;
@@ -51,6 +52,7 @@ const SendFirstEmail = ({ticket, patient, contact, onMailSend} : SendFirstEmailP
                 type: SnackbarType.Success,
                 message:'email.new_email.email_sent_successfully'
             }));
+            dispatch(setLastEmailDate());
             onMailSend();
         },
         onError:() => {
@@ -110,6 +112,7 @@ const SendFirstEmail = ({ticket, patient, contact, onMailSend} : SendFirstEmailP
             <NotificationTemplateSelect isLoading={isProcessing}
                                         channel={NotificationTemplateChannel.Email}
                                         usedFrom={TemplateUsedFrom.Inbox}
+                                        placement='bottom'
                                         onSelect={(template) => onTemplateSelect(template)}/>
         </div>
         <div className='w-full'>

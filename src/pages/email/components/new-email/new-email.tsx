@@ -1,5 +1,5 @@
 import './new-email.scss';
-import {useContext, useEffect, useMemo, useState} from 'react';
+import {useEffect, useMemo, useState} from 'react';
 import {useQuery} from 'react-query';
 import {QueryContactTickets, QueryTickets, SearchContactResults, SearchPatient} from '@constants/react-query-constants';
 import {searchType} from '@components/searchbox/constants/search-type';
@@ -32,14 +32,17 @@ import {ContactType} from '@pages/contacts/models/ContactType';
 import SmsNewMessageNewTicket from '@pages/sms/components/sms-new-message/sms-new-message-new-ticket';
 import {useLocation} from 'react-router';
 import dayjs from 'dayjs';
-import {EmailContext} from '@pages/email/context/email-context';
 import {useTranslation} from 'react-i18next';
+import {useDispatch, useSelector} from 'react-redux';
+import {selectEmailSummaries} from '@pages/email/store/email.selectors';
+import {setMessageSummaries} from '@pages/email/store/email-slice';
 
 const NewEmail = () => {
     const [step, setStep] = useState<NewEmailSteps>(NewEmailSteps.Search);
     const [patients, setPatients] = useState<Patient[]>([]);
     const [contacts, setContacts] = useState<ContactExtended[]>([]);
     const [patientSelected, setPatientSelected] = useState<Patient>();
+    const dispatch = useDispatch();
     const [tickets, setTickets] = useState<PagedList<TicketBase>>({...DefaultPagination, results: []});
     const [contactSelected, setContactSelected] = useState<ContactExtended>();
     const [contactPagination, setContactPagination] = useState<Paging>();
@@ -53,7 +56,8 @@ const NewEmail = () => {
     const onSearchHandler = (type: number, value: string) => {
         setSearchParams({type, value});
     }
-    const {messageSummaries, setMessageSummaries} = useContext(EmailContext)!;
+    const messageSummaries = useSelector(selectEmailSummaries);
+
     const getPatientQueryEnabled = () => !!searchParams.value && (searchParams.type === searchType.patientId || searchParams.type === searchType.patientName);
     const getContactQueryEnabled = () => !!searchParams.value && searchParams.type === searchType.contactName;
 
@@ -190,7 +194,7 @@ const NewEmail = () => {
             const index = messageSummaries.indexOf(existingMessage);
             existingMessage.messageCreatedOn = dayjs().local().toDate();
             const messages = [...messageSummaries.slice(0, index), Object.assign({}, messageSummaries[index], messageSummaries.slice(index + 1))];
-            setMessageSummaries(messages);
+            dispatch(setMessageSummaries(messages));
         } else {
             const message: TicketMessageSummary = {
                 ticketId: ticket.id,
@@ -208,7 +212,7 @@ const NewEmail = () => {
 
             }
             const messages = [...messageSummaries, message];
-            setMessageSummaries(messages);
+            dispatch(setMessageSummaries(messages));
         }
     }
 
