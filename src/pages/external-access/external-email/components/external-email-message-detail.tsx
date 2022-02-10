@@ -18,8 +18,9 @@ interface ExternalEmailMessageDetailProps {
     patientPhoto?: string;
     patient?: ExtendedPatient;
     users?: UserBase[];
+    setReplyMode: (mode: boolean) => void
 }
-const ExternalEmailMessageDetail = ({patientPhoto, message, patient, users}: ExternalEmailMessageDetailProps) => {
+const ExternalEmailMessageDetail = ({patientPhoto, message, patient, users, setReplyMode}: ExternalEmailMessageDetailProps) => {
 
     const {t} = useTranslation();
     dayjs.extend(utc);
@@ -141,7 +142,7 @@ const ExternalEmailMessageDetail = ({patientPhoto, message, patient, users}: Ext
             }
             <div className='pb-5 border-b' />
 
-            <Button className='w-full mt-4' label='email.new_email.reply' />
+            <Button className='w-full mt-4' label='email.new_email.reply' onClick={()=>setReplyMode(true)} />
 
             <Tooltip targetRef={recipientChevronIcon} isVisible={displayRecipientsTooltip}
                 placement='bottom-start'>

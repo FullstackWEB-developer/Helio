@@ -26,6 +26,7 @@ import SvgIcon, {Icon} from '@components/svg-icon';
 import {
     RealtimeTicketMessageContext
 } from '@pages/external-access/realtime-ticket-message-context/realtime-ticket-message-context';
+import ExternalEmailReply from '@pages/external-access/external-email/components/external-email-reply';
 
 const ExternalEmail = () => {
     const [page, setPage] = useState<number>(1);
@@ -110,28 +111,34 @@ const ExternalEmail = () => {
     }
 
     const [selectedMessage, setSelectedMessage] = useState<EmailMessageDto | undefined>();
-
-
+    const [replyMode, setReplyMode] = useState(false);
     if (isLoading) {
         return <div className='h-full w-full'>
             <Spinner fullScreen={true} />
         </div>
     }
-    return <div>
+    return <>
         <AlwaysScrollToBottom enabled={isBottomFocus} />
-        <div className='h-14 border-b flex items-center'>
-            <div className='flex-1'>
-                {
-                    selectedMessage &&
-                    <SvgIcon wrapperClassName='px-2 cursor-pointer flex-1' fillClass='rgba-05-fill' type={Icon.ArrowBack} onClick={() => setSelectedMessage(undefined)} />
-                }
+        {
+            !replyMode &&
+            <div className='h-14 border-b flex items-center'>
+                <div className='flex-1'>
+                    {
+                        selectedMessage &&
+                        <SvgIcon wrapperClassName='px-2 cursor-pointer flex-1' fillClass='rgba-05-fill' type={Icon.ArrowBack} onClick={() => setSelectedMessage(undefined)} />
+                    }
+                </div>
+                <div className='flex-auto text-center'>{t('external_access.email.title')}</div>
+                <div className='flex-1'></div>
             </div>
-            <div className='flex-auto text-center'>{t('external_access.email.title')}</div>
-            <div className='flex-1'></div>
-        </div>
+        }
         {
             selectedMessage ?
-                <ExternalEmailMessageDetail patientPhoto={patientPhoto} message={selectedMessage} patient={patient} users={users?.results} /> :
+                (
+                    replyMode ? <ExternalEmailReply setReplyMode={setReplyMode} setSelectedMessage={setSelectedMessage} message={selectedMessage} /> :    
+                    <ExternalEmailMessageDetail patientPhoto={patientPhoto} message={selectedMessage} patient={patient} users={users?.results} setReplyMode={setReplyMode} /> 
+                )
+                :
                 <div className='px-4'>
                     {[...messages].sort((a: EmailMessageDto, b: EmailMessageDto) => getTime(b.createdOn) - getTime(a.createdOn)).map(message => <ExternalEmailListItem
                         patientPhoto={patientPhoto}
@@ -143,7 +150,7 @@ const ExternalEmail = () => {
                     }
                 </div>
         }
-    </div>
+    </>
 }
 
 export default ExternalEmail;
