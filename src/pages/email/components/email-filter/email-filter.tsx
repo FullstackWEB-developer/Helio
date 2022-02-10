@@ -35,7 +35,7 @@ const EmailFilter = ({className, isUserFilterEnabled, value, ...props}: EmailFil
 
     dayjs.extend(utc);
     const dispatch = useDispatch();
-    const isDefaultTeamView = useCheckPermission('EMAIL.DefaultToTeamView');
+    const isDefaultTeamView = useCheckPermission('Email.DefaultToTeamView');
     const {id} = useSelector(selectAppUserDetails);
     const {t} = useTranslation();
     const userList = useSelector(selectUserOptions);
