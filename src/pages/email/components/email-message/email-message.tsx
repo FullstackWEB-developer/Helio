@@ -7,7 +7,14 @@ import {Trans, useTranslation} from 'react-i18next';
 import EmailMessageHeader from './email-message-header';
 import EmailAttachment from './email-attachment';
 
-const EmailMessage = ({message, ticketCreatedForName, ticketHeaderPhoto, isCollapsed}: {message: EmailMessageDto, ticketCreatedForName: string, ticketHeaderPhoto: string, isCollapsed: boolean}) => {
+export interface EmailMessageProps {
+    message: EmailMessageDto;
+    ticketCreatedForName: string;
+    ticketHeaderPhoto: string;
+    isCollapsed: boolean;
+    emailCount: number;
+}
+const EmailMessage = ({message, ticketCreatedForName, ticketHeaderPhoto, isCollapsed, emailCount}: EmailMessageProps) => {
 
     const {t} = useTranslation();
     const emailFromLabel = message.direction === TicketMessagesDirection.Incoming ? ticketCreatedForName || message.fromAddress :
@@ -47,6 +54,7 @@ const EmailMessage = ({message, ticketCreatedForName, ticketHeaderPhoto, isColla
             <EmailMessageHeader
                 subject={message.subject || ''}
                 from={emailFromLabel}
+                displaySplitMessageMenu={ emailCount > 1 }
                 fromPhoto={emailFromPhoto}
                 collapseHandler={() => setCollapsed(!collapsed)}
                 collapsedBody={collapsed}

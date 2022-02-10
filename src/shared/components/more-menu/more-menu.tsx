@@ -5,6 +5,7 @@ import useComponentVisibility from "../../hooks/useComponentVisibility";
 import classnames from 'classnames';
 import {usePopper} from 'react-popper';
 import utils from '@shared/utils/utils';
+import {Placement} from '@popperjs/core/lib/enums';
 
 interface MoreMenuProps {
     value?: string;
@@ -13,21 +14,23 @@ interface MoreMenuProps {
     iconClassName?: string;
     menuClassName?: string;
     containerClassName?: string;
-    onClick?: (item: DropdownItemModel) => void
+    onClick?: (item: DropdownItemModel) => void,
+    menuPlacement?: Placement;
+    verticalOffset?: number;
 }
 
-const MoreMenu = ({value, items, menuClassName, iconClassName, iconFillClassname, containerClassName, ...props}: MoreMenuProps) => {
+const MoreMenu = ({value, items, menuClassName, iconClassName, iconFillClassname, containerClassName, menuPlacement = 'bottom', verticalOffset=0, ...props}: MoreMenuProps) => {
     const [isVisible, setIsVisible, elementRef] = useComponentVisibility<HTMLDivElement>(false);
     const [valueSelected, setValueSelected] = useState(value);
     const iconContainerRef = useRef<HTMLDivElement>(null);
     const [popper, setPopper] = useState<HTMLDivElement | null>(null);
     const { styles, attributes, update } = usePopper(elementRef.current, popper, {
-        placement: 'bottom',
+        placement: menuPlacement,
         strategy: 'fixed',
         modifiers: [{
             name: 'offset',
             options: {
-                offset: [0, 0],
+                offset: [0, verticalOffset],
             },
         }]
     });

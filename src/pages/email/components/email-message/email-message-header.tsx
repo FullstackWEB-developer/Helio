@@ -25,11 +25,12 @@ interface EmailMessageHeaderProps {
     date: Date;
     from: string;
     fromPhoto: string;
-    collapseHandler: () => void,
-    collapsedBody: boolean,
-    attachments: EmailAttachmentHeader[]
+    collapseHandler: () => void;
+    collapsedBody: boolean;
+    attachments: EmailAttachmentHeader[];
+    displaySplitMessageMenu: boolean;
 }
-const EmailMessageHeader = ({messageId, subject, date, from, fromPhoto, collapsedBody, collapseHandler, attachments}: EmailMessageHeaderProps) => {
+const EmailMessageHeader = ({messageId, subject, date, from, fromPhoto, collapsedBody, collapseHandler, attachments, displaySplitMessageMenu}: EmailMessageHeaderProps) => {
     const dispatch = useDispatch();
     const attachmentsCount = attachments?.length ?? 0;
     dayjs.extend(relativeTime);
@@ -68,7 +69,8 @@ const EmailMessageHeader = ({messageId, subject, date, from, fromPhoto, collapse
         return [{
             label: 'email.inbox.split_ticket',
             value: MORE_MENU_OPTION_SPLIT_TICKET,
-            className: commonClassName
+            className: commonClassName,
+            disabled: !displaySplitMessageMenu
         }] as DropdownItemModel[];
     }
 
@@ -134,6 +136,8 @@ const EmailMessageHeader = ({messageId, subject, date, from, fromPhoto, collapse
                         menuClassName='w-52'
                         items={getMoreMenuOption()}
                         onClick={onMoreMenuClick}
+                        menuPlacement='bottom-start'
+                        verticalOffset={8}
                     />
                 </div>
                 <div className='flex justify-center items-center rounded-full h-10 w-10 leading-10 collapsible-button cursor-pointer' onClick={() => collapseHandler()}>

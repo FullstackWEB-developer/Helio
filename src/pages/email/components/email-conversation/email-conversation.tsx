@@ -121,10 +121,11 @@ const EmailConversation = () => {
                     <div className='flex flex-col flex-auto overflow-y-auto'>
                         <div ref={messageListContainerRef} className='overflow-y-auto' onScroll={onScroll}>
                             {
-                                messages?.length ? messages.map((m: EmailMessageDto, index) =>
+                                messages.length ? messages.map((m: EmailMessageDto, index) =>
                                     <EmailMessage
                                         key={m.id}
                                         isCollapsed={index > 0}
+                                        emailCount={messages.length}
                                         message={m}
                                         ticketCreatedForName={ticket.createdForName || ''}
                                         ticketHeaderPhoto={patientPhoto || ''} />
