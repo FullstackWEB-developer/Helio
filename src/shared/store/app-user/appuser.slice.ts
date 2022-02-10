@@ -6,10 +6,11 @@ import {LogStream} from '@aws-sdk/client-cloudwatch-logs';
 import {UserStatusUpdate} from '@shared/models/user-status-update.model';
 import {LiveAgentStatusInfo} from '@shared/models/live-agent-status-info.model';
 import {UserDetail} from '@shared/models';
+import initialAppUserState from './appuser.initial-state';
 
 const appUserSlice = createSlice({
     name: 'appuser',
-    initialState,
+    initialState: initialAppUserState,
     reducers: {
         setAuthentication(state, {payload}: PayloadAction<AuthenticationInfo>) {
             state.auth = payload

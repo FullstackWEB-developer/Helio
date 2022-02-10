@@ -29,6 +29,17 @@ export const selectAppParameters = createSelector(
     state => state.appParameters as KeyValuePair[]
 );
 
+export const selectDisplayLoginRequired = createSelector(
+    appState,
+    state => state.displayLoginRequired as boolean
+);
+
+export const selectLoginRequiredDismissed = createSelector(
+    appState,
+    state => state.loginRequiredDismissed as boolean
+);
+
+
 export const selectAppParameter = (state: RootState, key: string): KeyValuePair => {
     return state.appState.appParameters.find((a: KeyValuePair) => a.key === key);
 }

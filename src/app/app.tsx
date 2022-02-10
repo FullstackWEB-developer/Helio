@@ -56,7 +56,6 @@ import {useSelector} from 'react-redux';
 import {selectAccessToken} from '@shared/store/app-user/appuser.selectors';
 import {TICKET_MESSAGE_INCOMING_NAME} from '@shared/constants/signalr-provider-constants';
 import utils from '@shared/utils/utils';
-import Confirmation from '@components/confirmation/confirmation';
 import IncomingTicketMessageUpdate from '@shared/websockets/incoming-ticket-message-update';
 import VerifiedPatientGuard from '@components/verified-patient-guard/verified-patient-guard';
 const SearchResults = React.lazy(() => import('../shared/components/search-bar/components/search-results'));
@@ -211,15 +210,6 @@ function App() {
                     <GuardedRoute exact path={ChatsLogPath} component={withSuspense(ChatsLogList)} />
                     <GuardedRoute exact path={NotAuthorizedPath} component={withSuspense(NotAuthorized)} />
                     <GuardedRoute exact path='/' component={Dashboard} />
-                    <Confirmation
-                        className='shadow-md'
-                        hasOverlay={true}
-                        displayCancel={false}
-                        isCloseButtonDisabled={true}
-                        onOk={() => utils.logout()}
-                        title={'login.session_timeout'}
-                        message={'login.session_timeout_description'}
-                        isOpen={utils.isSessionExpired()} />
                 </Layout>
             </SignalRProvider>
         </Switch>

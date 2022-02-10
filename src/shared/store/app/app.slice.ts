@@ -23,7 +23,13 @@ const appSlice = createSlice({
         },
         clearAppParameters(state) {
             state.appParameters = [];
-        }
+        },
+        setDisplayLoginRequired(state, {payload} : PayloadAction<boolean>) {
+            state.displayLoginRequired = payload;
+        },
+        setLoginRequiredDismissed(state, {payload} : PayloadAction<boolean>) {
+            state.loginRequiredDismissed = payload;
+        },
     }
 });
 
@@ -33,7 +39,9 @@ export const {
     setSmsTemplates,
     setNavigationChanged,
     setAppParameters,
-    clearAppParameters
+    clearAppParameters,
+    setDisplayLoginRequired,
+    setLoginRequiredDismissed
 } = appSlice.actions
 
 export default appSlice.reducer

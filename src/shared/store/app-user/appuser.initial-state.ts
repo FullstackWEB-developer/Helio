@@ -13,7 +13,7 @@ export interface AppUserState {
     logStream?: LogStream
 }
 
-const initialState: AppUserState = {
+const initialAppUserState: AppUserState = {
     auth: {
         isLoggedIn: false,
         isGuestLogin: false
@@ -25,4 +25,4 @@ const initialState: AppUserState = {
     liveAgentStatuses: [],
     logStream: undefined
 }
-export default initialState;
+export default initialAppUserState;

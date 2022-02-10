@@ -20,6 +20,7 @@ import Tooltip from '@components/tooltip/tooltip';
 import {Trans, useTranslation} from 'react-i18next';
 import utils from '@shared/utils/utils';
 import ComponentPermissionGuard from "@components/component-permission-guard";
+import ReLoginModal from '@shared/layout/components/relogin-modal';
 
 
 const Header = ({headsetIconRef}: {headsetIconRef: React.RefObject<HTMLDivElement>}) => {
@@ -87,6 +88,7 @@ const Header = ({headsetIconRef}: {headsetIconRef: React.RefObject<HTMLDivElemen
                     <div className='pl-2'>
                         <SearchBar />
                     </div>
+                    <div><ReLoginModal type='header'/></div>
                 </div>
                 <div className='flex flex-row items-center'>
                     <div ref={headsetIconRef} className='relative mr-4 cursor-pointer'>

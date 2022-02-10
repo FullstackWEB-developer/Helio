@@ -228,8 +228,7 @@ const RequestRefill = () => {
             setMessageText('');
             history.push('/o/request-refill-confirmation');
         },
-        onError: (err: any) => {
-            console.log(err);
+        onError: () => {
             dispatch(addSnackbarMessage({
                 type: SnackbarType.Error,
                 message: 'external_access.message_send_failed'

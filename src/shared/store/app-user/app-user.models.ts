@@ -8,6 +8,7 @@ export interface AuthenticationInfo {
     authenticationLink?: string;
     id?: string;
     isGuestLogin: boolean;
+    firstLoginTime?: Date;
 }
 
 export enum UserStatus {

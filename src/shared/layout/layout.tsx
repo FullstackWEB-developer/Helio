@@ -14,6 +14,7 @@ import utils from '@shared/utils/utils';
 import SpinnerOverlay from '@components/spinner-overlay/spinner-overlay';
 import {useSelector} from 'react-redux';
 import {selectGlobalLoading} from '@shared/store/app/app.selectors';
+import ReLoginModal from '@shared/layout/components/relogin-modal';
 
 interface LayoutProps {
     children: React.ReactNode
@@ -38,9 +39,10 @@ const Layout = (props: LayoutProps) => {
                                 <div className='h-full'>
                                     <Navigation />
                                 </div>
-                                <div className='flex flex-col w-screen'>
+                                <div className='flex flex-col w-screen relative'>
                                     <div>
                                         <Header headsetIconRef={headsetIconRef} />
+                                        <ReLoginModal type='modal'/>
                                     </div>
                                     <div className='flex flex-col w-full'>
                                         <div className='flex flex-row layout-content w-full'>

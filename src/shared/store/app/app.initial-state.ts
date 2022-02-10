@@ -7,13 +7,17 @@ export interface AppState {
     emailTemplates: NotificationTemplate[];
     isNavigationChanging: boolean;
     appParameters : AppParameter[];
+    displayLoginRequired: boolean;
+    loginRequiredDismissed: boolean;
 }
 const initialAppState: AppState = {
     isGlobalLoading : false,
     emailTemplates: [],
     smsTemplates: [],
     isNavigationChanging: false,
-    appParameters: []
+    appParameters: [],
+    displayLoginRequired: false,
+    loginRequiredDismissed: false
 }
 
 export default initialAppState;

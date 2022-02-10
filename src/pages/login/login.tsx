@@ -102,7 +102,8 @@ async function SetAuthenticationInfo(info: AuthenticationResult | null, dispatch
             expiresOn: s.expiresOn as Date,
             username: s.account?.username as string,
             isLoggedIn: true,
-            isGuestLogin: false
+            isGuestLogin: false,
+            firstLoginTime: dayjs().toDate()
         };
         dispatch(setAuthentication(auth));
 

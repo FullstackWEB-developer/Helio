@@ -50,7 +50,7 @@ export const refreshAccessToken = async () => {
             try {
                 let forceRefresh = false;
                 const auth = store.getState()?.appUserState?.auth;
-                if(auth && auth.expiresOn && dayjs(auth.expiresOn) < dayjs().add(30, 'minutes')) {
+                if(auth && auth.expiresOn && dayjs(auth.expiresOn) < dayjs().add(45, 'minutes')) {
                     forceRefresh = true;
                 }
                 const response = await getMsalInstance()?.acquireTokenSilent({

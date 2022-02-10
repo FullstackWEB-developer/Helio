@@ -73,7 +73,14 @@
     "loginButton": "Sign In",
     "session_timeout": "Session timeout",
     "session_timeout_description": "Your session timed out. Please login again.",
-    "session_timeout_guest": "You session timed out. Please enter your information again!"
+    "session_timeout_guest": "You session timed out. Please enter your information again!",
+    "re-login_required": "Re-Login Required",
+    "will_be_logged_out_in": "You will be automatically logged out in:",
+    "session_duration": "Maximum session duration is 10 hours. \nYou can logout now and log back in to continue working.",
+    "dismiss_re-login": "Dismiss",
+    "re-login_now": "Re-Login Now",
+    "re-login_required_header": "Re-Login Required",
+    "re-login_required_in": "in {{time}}"
   },
   "user_profile": {
     "statuses": {

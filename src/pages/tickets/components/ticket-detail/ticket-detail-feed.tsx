@@ -126,12 +126,10 @@ const TicketDetailFeed = ({ticket}: TicketDetailFeedProps) => {
         setHasAnyFeed(hasAnyFeed || false);
 
         if (feedItems.length > 0) {
-            console.log("NonSorted" + JSON.stringify(feedItems));
             const sorted = feedItems.sort((a: FeedDetailDisplayItem, b: FeedDetailDisplayItem) => {
                 return getTime(b.dateTime) - getTime(a.dateTime);
             });
             dispatch(setFeedLastMessageOn(sorted[0].dateTime as Date));
-            console.log("Sorted" + JSON.stringify(sorted));
             setFeeds(sorted);
         } else {
             setFeeds([]);

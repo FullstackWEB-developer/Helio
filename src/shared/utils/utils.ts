@@ -17,6 +17,8 @@ import Logger from '@shared/services/logger';
 import i18n from 'i18next';
 import {MimeTypes} from '@shared/models/mime-types.enum';
 import {Icon} from '@components/svg-icon/icon';
+import axios from 'axios';
+import {clearAppParameters} from '@shared/store/app/app.slice';
 
 const getWindowCenter = () => {
     const {width, height} = getWindowDimensions();
@@ -262,10 +264,16 @@ const isLoggedIn = (): boolean => {
     return !!(accounts && accounts[0]);
 }
 
-const logout = () => {
-    getMsalInstance()?.logoutRedirect({
-        postLogoutRedirectUri: '/login'
-    }).then().finally(() => store.dispatch(logOut()));
+const logout = async () => {
+await axios.get(utils.getAppParameter('ConnectBaseUrl') + utils.getAppParameter('CcpLogoutUrl'), {withCredentials: true})
+    .catch(() => {
+    })
+    .finally(() => {
+        store.dispatch(clearAppParameters());
+        getMsalInstance()?.logoutRedirect({
+            postLogoutRedirectUri: '/login'
+        }).then().finally(() => store.dispatch(logOut()));
+    });
 }
 
 const isSessionExpired = (): boolean => {
