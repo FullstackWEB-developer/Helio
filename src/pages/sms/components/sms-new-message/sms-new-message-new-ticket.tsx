@@ -53,7 +53,7 @@ const SmsNewMessageNewTicket = ({patient, contact, type, ...props}: SmsNewMessag
             const newTicket: Ticket = {
                 type: ticketTypeSelected,
                 reason: ticketReasonSelected,
-                channel: ChannelTypes.SMS,
+                channel: type,
                 assignee: auth.id,
             };
 
