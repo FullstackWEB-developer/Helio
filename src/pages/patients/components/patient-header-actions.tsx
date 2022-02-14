@@ -125,7 +125,7 @@ const PatientHeaderActions = ({patient, refreshPatient} : PatientHeaderActionsPr
                         </div>}
                 </div>
 
-                <span className='pl-10 pr-8' >
+                <span className='pl-8 pr-6' >
                             <SvgIcon type={Icon.ChannelSms}
                                      disabled={!patient.mobilePhone}
                                      fillClass={patient.mobilePhone ? 'success-icon' : ''}
@@ -135,7 +135,7 @@ const PatientHeaderActions = ({patient, refreshPatient} : PatientHeaderActionsPr
                             />
                     </span>
                 {
-                    <span className='pr-8'>
+                    <span className='pr-6'>
                              <SvgIcon type={Icon.ChannelEmail}
                                       disabled={!patient.emailAddress}
                                       className={`icon-x-large ${!!patient.emailAddress ? 'cursor-pointer' : ''}`}
