@@ -11,8 +11,13 @@ import {DropdownItemModel} from '@components/dropdown';
 import {
     MORE_MENU_OPTION_ADD_CONTACT,
     MORE_MENU_OPTION_ARCHIVE_TICKET,
-    MORE_MENU_OPTION_CLOSE_TICKET, MORE_MENU_OPTION_CONTACT, MORE_MENU_OPTION_CREATE_PATIENT_CHART, MORE_MENU_OPTION_PATIENT,
-    MORE_MENU_OPTION_SOLVE_TICKET, MORE_MENU_OPTION_SPAM, MORE_MENU_OPTION_TICKET
+    MORE_MENU_OPTION_CLOSE_TICKET,
+    MORE_MENU_OPTION_CONTACT,
+    MORE_MENU_OPTION_CREATE_PATIENT_CHART,
+    MORE_MENU_OPTION_PATIENT,
+    MORE_MENU_OPTION_SOLVE_TICKET,
+    MORE_MENU_OPTION_SPAM,
+    MORE_MENU_OPTION_TICKET
 } from '@pages/sms/constants';
 import {ContactsPath, PatientsPath, TicketsPath} from '@app/paths';
 import {Link, useHistory} from 'react-router-dom';
@@ -30,6 +35,7 @@ import Button from '@components/button/button';
 import {createBlockAccess} from '@pages/blacklists/services/blacklists.service';
 import ConversationHeaderPopup from '@components/conversation-header-popup/conversation-header-popup';
 import {ExtendedPatient} from '@pages/patients/models/extended-patient';
+import {BlockAccessType} from '@pages/blacklists/models/blacklist.model';
 
 interface ConversationHeaderProps {
     info: TicketMessageSummary;
@@ -59,6 +65,17 @@ const ConversationHeader = ({info, forNewTicketMessagePurpose, patientPhoto, con
         const options: DropdownItemModel[] = [];
         const commonClassName = 'body2 py-1.5';
 
+        if (!forNewTicketMessagePurpose) {
+            options.push({label: 'sms.chat.view_ticket', value: MORE_MENU_OPTION_TICKET, className: commonClassName});
+        }
+        if (!info.patientId && !info.contactId) {
+            options.push({label: 'email.inbox.create_patient_chart', value: MORE_MENU_OPTION_CREATE_PATIENT_CHART, className: commonClassName});
+            options.push({label: 'email.inbox.add_contact', value: MORE_MENU_OPTION_ADD_CONTACT, className: commonClassName});
+        }
+
+        options.push({label: 'email.inbox.close_ticket.label', value: MORE_MENU_OPTION_CLOSE_TICKET, className: commonClassName});
+        options.push({label: 'email.inbox.solve_ticket.label', value: MORE_MENU_OPTION_SOLVE_TICKET, className: commonClassName});
+
         if (!!info.patientId) {
             options.push({label: 'sms.chat.view_patient', value: MORE_MENU_OPTION_PATIENT, className: commonClassName});
         }
@@ -67,20 +84,9 @@ const ConversationHeader = ({info, forNewTicketMessagePurpose, patientPhoto, con
             options.push({label: 'sms.chat.view_contact', value: MORE_MENU_OPTION_CONTACT, className: commonClassName});
         }
 
-        if (!forNewTicketMessagePurpose) {
-            options.push({label: 'sms.chat.view_ticket', value: MORE_MENU_OPTION_TICKET, className: commonClassName});
-        }
+        options.push({label: 'email.inbox.archive_ticket.label', value: MORE_MENU_OPTION_ARCHIVE_TICKET, className: commonClassName});
+        options.push({label: 'email.inbox.spam', value: MORE_MENU_OPTION_SPAM, className: commonClassName});
 
-        if (conversationChannel === ChannelTypes.Email) {
-            if (!info.patientId && !info.contactId) {
-                options.push({label: 'email.inbox.create_patient_chart', value: MORE_MENU_OPTION_CREATE_PATIENT_CHART, className: commonClassName});
-                options.push({label: 'email.inbox.add_contact', value: MORE_MENU_OPTION_ADD_CONTACT, className: commonClassName});
-            }
-            options.push({label: 'email.inbox.close_ticket.label', value: MORE_MENU_OPTION_CLOSE_TICKET, className: commonClassName});
-            options.push({label: 'email.inbox.solve_ticket.label', value: MORE_MENU_OPTION_SOLVE_TICKET, className: commonClassName});
-            options.push({label: 'email.inbox.archive_ticket.label', value: MORE_MENU_OPTION_ARCHIVE_TICKET, className: commonClassName});
-            options.push({label: 'email.inbox.spam', value: MORE_MENU_OPTION_SPAM, className: commonClassName});
-        }
 
         return options;
     }
@@ -164,13 +170,13 @@ const ConversationHeader = ({info, forNewTicketMessagePurpose, patientPhoto, con
     }
 
     const updateStatusMutation = useMutation(setStatus, {
-        onSuccess: (_, {id, status}) => {
+        onSuccess: (_, {status}) => {
             dispatch(addSnackbarMessage({
                 type: SnackbarType.Success,
                 message: `email.inbox.${status === TicketStatuses.Closed ? 'close' : 'solve'}_ticket.success`
             }));
         },
-        onError: (_, {id, status}) => {
+        onError: (_, {status}) => {
             dispatch(addSnackbarMessage({
                 message: `email.inbox.${status === TicketStatuses.Closed ? 'close' : 'solve'}_ticket.failure`,
                 type: SnackbarType.Error
@@ -197,26 +203,26 @@ const ConversationHeader = ({info, forNewTicketMessagePurpose, patientPhoto, con
 
     const [blockedAccessModalOpen, setBlockedAccessModalOpen] = useState(false);
     const {control, handleSubmit, formState: {isValid}} = useForm({mode: 'all'});
-    const blockEmailMutation = useMutation(createBlockAccess, {
+    const blockMutation = useMutation(createBlockAccess, {
         onSuccess: () => {
             setBlockedAccessModalOpen(false);
             dispatch(addSnackbarMessage({
                 type: SnackbarType.Success,
-                message: t('email.inbox.blocked_success', {email: info.createdForEndpoint}),
+                message: t('email.inbox.blocked_success', {value: info.createdForEndpoint}),
             }));
         },
         onError: () => {
             dispatch(addSnackbarMessage({
                 type: SnackbarType.Error,
-                message: t('email.inbox.blocked_failure', {email: info.createdForEndpoint})
+                message: t('email.inbox.blocked_failure', {value: info.createdForEndpoint})
             }));
         }
     });
     const performEmailBlock = (formData: any) => {
-        blockEmailMutation.mutate({
+        blockMutation.mutate({
             isActive: true,
-            accessType: 2,
-            value: formData.email,
+            accessType: conversationChannel === ChannelTypes.SMS ? BlockAccessType.Phone : BlockAccessType.Email,
+            value: formData.value,
             comment: formData.note
         });
     }
@@ -287,13 +293,13 @@ const ConversationHeader = ({info, forNewTicketMessagePurpose, patientPhoto, con
                     onClose={() => setBlockedAccessModalOpen(false)}
                     isClosable={true}>
                     <div className='w-full mb-10'>
-                        <p className='mb-2 body2'>{t('blacklist.add_new_block_form.email_description')}</p>
+                        <p className='mb-2 body2'>{t(conversationChannel === ChannelTypes.SMS ? 'blacklist.add_new_block_form.phone_description' : 'blacklist.add_new_block_form.email_description')}</p>
                         <ControlledInput
                             control={control}
-                            name='email'
-                            type='email'
-                            label='blacklist.block_access_type.email'
-                            defaultValue={info.createdForEndpoint}
+                            name='value'
+                            type={conversationChannel === ChannelTypes.SMS ? 'tel' : 'email'}
+                            label={conversationChannel === ChannelTypes.SMS ? 'blacklist.block_access_type.phone' : 'blacklist.block_access_type.email'}
+                            defaultValue={conversationChannel === ChannelTypes.SMS ? info.createdForEndpoint : (info.createdForEndpoint || patient?.emailAddress || contact?.emailAddress)}
                             containerClassName='w-72'
                             required
                         />
@@ -311,7 +317,7 @@ const ConversationHeader = ({info, forNewTicketMessagePurpose, patientPhoto, con
                                 type='submit'
                                 buttonType='small'
                                 disabled={!isValid}
-                                isLoading={blockEmailMutation.isLoading}
+                                isLoading={blockMutation.isLoading}
                                 label='blacklist.add_new_block_form.block_user'
                                 onClick={() => handleSubmit(performEmailBlock)()}
                             />
