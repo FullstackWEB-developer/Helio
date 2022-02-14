@@ -299,7 +299,7 @@ const ConversationHeader = ({info, forNewTicketMessagePurpose, patientPhoto, con
                             name='value'
                             type={conversationChannel === ChannelTypes.SMS ? 'tel' : 'email'}
                             label={conversationChannel === ChannelTypes.SMS ? 'blacklist.block_access_type.phone' : 'blacklist.block_access_type.email'}
-                            defaultValue={info.createdForEndpoint}
+                            defaultValue={conversationChannel === ChannelTypes.SMS ? info.createdForEndpoint : (info.createdForEndpoint || patient?.emailAddress || contact?.emailAddress)}
                             containerClassName='w-72'
                             required
                         />
