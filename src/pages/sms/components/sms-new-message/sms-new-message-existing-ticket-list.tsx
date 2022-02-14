@@ -31,7 +31,7 @@ const SmsNewMessageExistingTicketList = ({items, ...props}: SmsNewMessageExistin
 
     const getTicketReasons = (value?: string) => {
         if (!value) {
-            return '';
+            return t('common.not_available');
         }
 
         return ticketReasons.find((lookupValue) => lookupValue.value === value)?.label ?? ''
