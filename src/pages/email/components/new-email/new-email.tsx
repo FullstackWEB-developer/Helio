@@ -94,7 +94,7 @@ const NewEmail = () => {
         if (location?.state?.patient) {
             onPatientSelect(location.state.patient);
         }
-    }, [location?.state?.contact]);
+    }, [location?.state?.patient]);
 
     const {isFetching: contactIsFetching, isLoading: contactIsLoading, isError: contactIsError} =
         useQuery<PagedList<ContactExtended>>([SearchContactResults, searchParams.type, searchParams.value, contactPagination],
