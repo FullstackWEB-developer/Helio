@@ -330,6 +330,10 @@
       "ssn": "SSN",
       "view_in_athena": "View in Athena"
     },
+    "phone_types" : {
+      "1": "Mobile Phone",
+      "2": "Home Phone"
+    },
     "tabs": {
       "patient_chart": "Patient Chart",
       "summary": "Summary",
@@ -376,7 +380,8 @@
       "error": "Error fetching summary data, please try again",
       "update_error": "Patient contact information could not be updated. Please try again later.",
       "update_success": "Patient contact information updated successfully",
-      "profile_pic_alt_text": "Picture of patient"
+      "profile_pic_alt_text": "Picture of patient",
+      "refresh": "Refresh"
     },
     "contact_preference": {
       "mobilephone": "Mobile Phone",

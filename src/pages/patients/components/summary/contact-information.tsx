@@ -28,13 +28,13 @@ const ContactInformation = () => {
         { label: t('patient.summary.address'), values: [patient.address] },
         { label: '', values: [patient.address2] },
         { label: '', values: [`${patient?.city || ''}${patient?.state ? ', ': ''} ${patient.state || ''} ${patient.zip || ''}`] },
-        { label: t('patient.summary.email'), values: [patient.emailAddress] },
+        { label: t('patient.summary.email'), values: [patient.emailAddress], canEmail: !!patient.emailAddress },
         { label: t('patient.summary.portal_access'), values: [t(booleanToText(patient.isPortalAccessGiven))] }
     ];
 
     const contactSecondRows = [
         {label: t('patient.summary.home_phone'), values: [utils.formatPhone(patient.homePhone)], canCall: !!patient.homePhone, rowClass: 'col-span-2'},
-        {label: t('patient.summary.mobile_phone'), values: [utils.formatPhone(patient.mobilePhone)], canCall: !!patient.mobilePhone, canSendSms: !!patient.mobilePhone},
+        {label: t('patient.summary.mobile_phone'), values: [utils.formatPhone(patient.mobilePhone)], canCall: !!patient.mobilePhone},
         {
             label: t('patient.summary.contact_preference'),
             values: [patient.contactPreference ? t(`patient.contact_preference.${patient.contactPreference.toLowerCase()}`) : t('common.not_available')]
@@ -52,7 +52,7 @@ const ContactInformation = () => {
             </div>
             {editMode ? <ContactInformationUpdate
                 onUpdateComplete={() => setEditMode(false)}/> : <div className='border-t grid grid-cols-2 gap-12'>
-                <PatientChartList headings={[]} rows={contactRows}/>
+                <PatientChartList headings={[]} rows={contactRows} patient={patient}/>
                 <PatientChartList headings={[]} rows={contactSecondRows} patient={patient}/>
             </div>
             }

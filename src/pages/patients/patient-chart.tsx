@@ -82,7 +82,7 @@ const PatientChart = () => {
             <div className='w-2/3 overflow-y-auto'>
                 {patientChartSummary &&
                     <>
-                        <PatientHeader isRefreshing={loading} refreshPatient={refreshPatient} patientChartSummary={patientChartSummary} />
+                        <PatientHeader refreshPatient={refreshPatient} patientChartSummary={patientChartSummary} />
                         <PatientTabs patientChartSummary={patientChartSummary} patientId={patient.patientId} />
                     </>
                 }

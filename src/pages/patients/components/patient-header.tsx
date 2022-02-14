@@ -13,14 +13,14 @@ import utils from "@shared/utils/utils";
 import {Icon} from '@components/svg-icon/icon';
 import SvgIcon from '@components/svg-icon/svg-icon';
 import customHooks from '@shared/hooks/customHooks';
+import PatientHeaderActions from '@pages/patients/components/patient-header-actions';
 
 export interface PatientHeaderProps {
     patientChartSummary: PatientChartSummary;
     refreshPatient: () => void;
-    isRefreshing: boolean;
 }
 
-const PatientHeader = ({patientChartSummary, refreshPatient, isRefreshing}: PatientHeaderProps) => {
+const PatientHeader = ({patientChartSummary, refreshPatient}: PatientHeaderProps) => {
     const {t} = useTranslation();
     const patient: ExtendedPatient = useSelector(selectPatient);
     const chartAlertIcon = useRef(null);
@@ -113,15 +113,8 @@ const PatientHeader = ({patientChartSummary, refreshPatient, isRefreshing}: Pati
                                 SmallLabel(t('patient.header.ssn'), patient.ssn ? patient.ssn.replace(/.{1,5}/, (m) => '*'.repeat(m.length)) : t('common.not_available'), 'pl-6')
                             }
                         </div>
-                        <span className='cursor-pointer'>
-                            <SvgIcon isLoading={isRefreshing}
-                                className={isRefreshing ? 'icon-small' : 'icon-medium'}
-                                type={Icon.Refresh}
-                                onClick={() => refreshPatient()}
-                                fillClass='rgba-05-fill'
-                            />
-                        </span>
                     </div>
+                    <PatientHeaderActions patient={patient} refreshPatient={() => refreshPatient()}/>
                 </div>
             </div>
         </div>

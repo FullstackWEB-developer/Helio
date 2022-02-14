@@ -79,7 +79,7 @@ const PatientContactInfoUpdate = ({onUpdateComplete} : PatientInformationUpdateP
     const onSubmit = (values: PatientUpdateModel) => {
         updatePatientContactInfoMutation.mutate({patientId: patient.patientId, data: {
             ...values,
-            email: values.email.toLowerCase()
+            email: values.email?.toLowerCase()
             }}, {
             onSuccess: () => {
                 dispatch(addSnackbarMessage({

@@ -36,6 +36,7 @@ import {useTranslation} from 'react-i18next';
 import {useDispatch, useSelector} from 'react-redux';
 import {selectEmailSummaries} from '@pages/email/store/email.selectors';
 import {setMessageSummaries} from '@pages/email/store/email-slice';
+import {ExtendedPatient} from '@pages/patients/models/extended-patient';
 
 const NewEmail = () => {
     const [step, setStep] = useState<NewEmailSteps>(NewEmailSteps.Search);
@@ -52,7 +53,7 @@ const NewEmail = () => {
     const [ticketsContactParams, setTicketContactParams] = useState<ContactTicketsRequest>({...DefaultPagination, contactId: ''});
     const history = useHistory();
     const {t} = useTranslation();
-    const location = useLocation<{contact: ContactExtended}>();
+    const location = useLocation<{contact?: ContactExtended, patient?: ExtendedPatient}>();
     const onSearchHandler = (type: number, value: string) => {
         setSearchParams({type, value});
     }
@@ -86,6 +87,12 @@ const NewEmail = () => {
     useEffect(() => {
         if (location?.state?.contact) {
             onContactSelect(location.state.contact);
+        }
+    }, [location?.state?.contact]);
+
+    useEffect(() => {
+        if (location?.state?.patient) {
+            onPatientSelect(location.state.patient);
         }
     }, [location?.state?.contact]);
 

@@ -1,0 +1,22 @@
+.patient-stroke-color {
+  stroke: var(--patient-light-stroke-12);
+}
+.patient-dropdown-arrows {
+  fill: var(--patient-dropdown-arrows);
+}
+.patient-phone-type {
+  font-family: var(--contact-phone-type-fontFamily);
+  font-size: var(--contact-phone-type-fontSize);
+  color: var(--contact-phone-type-color);
+  min-width: 5.5rem;
+  width: 7.5rem;
+  &-disabled {
+    @extend .patient-phone-type;
+    @extend .patient-disabled-section;
+  }
+}
+
+.patient-disabled-section{
+  pointer-events: none;
+  color: var(--svg-Icon-default-disabled-color);
+}

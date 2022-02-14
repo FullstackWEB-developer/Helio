@@ -2,11 +2,11 @@ import React from 'react';
 import withErrorLogging from '../../../shared/HOC/with-error-logging';
 import {useTranslation} from 'react-i18next';
 import utils from '@shared/utils/utils';
-import SvgIcon, {Icon} from '@components/svg-icon';
-import { Link } from 'react-router-dom';
-import {SmsPath} from '@app/paths';
 import {ExtendedPatient} from '@pages/patients/models/extended-patient';
 import classNames from 'classnames';
+import {useHistory} from 'react-router-dom';
+import {EmailPath} from '@app/paths';
+import {EMPTY_GUID} from '@pages/email/constants';
 
 interface PatientChartListProps {
     headings?: string[],
@@ -22,13 +22,13 @@ export interface Row {
     comment?: any,
     isStatus?: boolean,
     canCall?: boolean,
-    canSendSms?: boolean,
     rowClass?: string;
+    canEmail?: boolean;
 }
 
 const PatientChartList = ({headings, rows, dividerLine, isLongValue, patient}: PatientChartListProps) => {
     const { t } = useTranslation();
-
+    const history = useHistory();
     let colSize = 7;
     let spanSize = 3;
 
@@ -56,9 +56,18 @@ const PatientChartList = ({headings, rows, dividerLine, isLongValue, patient}: P
     }
 
     const rowClassName = (row: Row) => classNames(`col-span-${spanSize} body2 pl-4 ${row.rowClass}`, {
-        'text-success': row.canCall,
-        'col-span-2' : row.canSendSms
+        'text-success': row.canCall || row.canEmail
     })
+
+    const rowClicked= (row: Row, value: string) =>{
+        if (row.canCall) {
+            utils.initiateACall(value);
+        } else if (row.canEmail) {
+            history.push(`${EmailPath}/${EMPTY_GUID}`, {
+                patient
+            });
+        }
+    }
 
     return <div>
         {headings && <div className={`grid grid-cols-${headingColSize} py-2`}>
@@ -89,23 +98,7 @@ const PatientChartList = ({headings, rows, dividerLine, isLongValue, patient}: P
                             row.values.map((value, i) => {
                                 return <div key={i} className={rowClassName(row)}>
                                     <div className='flex flex row px-2'>
-                                        {row.canSendSms && <Link
-                                            to={{
-                                                pathname:SmsPath,
-                                                state: {
-                                                    patient
-                                                }
-                                            }}>
-                                            <SvgIcon type={Icon.Sms}
-                                                     fillClass='success-icon'
-                                                     className='cursor-pointer hover:underline'
-                                                     strokeClass='contact-stroke-color'
-                                            />
-                                        </Link>}
-                                        <div className={`flex flex row px-2 ${row.canCall ? ' cursor-pointer hover:underline' : ''}`}  onClick={() => row.canCall ? utils.initiateACall(value) : undefined}>
-                                            <div>
-                                                {row.canCall && <SvgIcon type={Icon.Phone} fillClass='success-icon' />}
-                                            </div>
+                                        <div className={`flex flex row px-2 ${(row.canCall || row.canEmail) ? ' cursor-pointer hover:underline' : ''}`}  onClick={()  => rowClicked(row, value)}>
                                             <div>
                                                 {value || t('common.not_available')}
                                             </div>
