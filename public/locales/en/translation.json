@@ -1513,6 +1513,7 @@
           "list": {
             "ticket_type": "Ticket Type",
             "reason": "Reason",
+            "ticket_no": "Ticket No",
             "created_label": "Created:",
             "relative_time_suffix": "ago"
           }

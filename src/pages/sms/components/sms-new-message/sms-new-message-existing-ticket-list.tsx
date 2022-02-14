@@ -24,7 +24,6 @@ const SmsNewMessageExistingTicketList = ({items, ...props}: SmsNewMessageExistin
     const ticketTypes = useSelector((state => selectEnumValues(state, 'TicketType')));
     const ticketReasons = useSelector((state) => selectLookupValues(state, 'TicketReason'));
     const [ticketSelected, setTicketSelected] = useState<string>();
-
     useEffect(() => {
         dispatch(getLookupValues('TicketReason'));
         dispatch(getEnumByType('TicketType'));
@@ -51,13 +50,25 @@ const SmsNewMessageExistingTicketList = ({items, ...props}: SmsNewMessageExistin
         }
     }
 
+    const TicketLinkWrapper = ({children, ticket}) => {
+        return <div className='w-fit'><Link to={`${TicketsPath}/${ticket.ticketNumber}`} target="_blank" rel="noopener noreferrer">
+            {children}
+        </Link></div>
+    }
+
     const getRow = (ticket: TicketBase) => {
         return (
-            <div key={ticket.id} className={classnames('flex flex-row px-4 py-3 mb-2 cursor-pointer row',
+            <div key={ticket.id} className={classnames('flex flex-row px-4 py-3 mb-2 row',
                 {'selected': !!ticketSelected && ticketSelected === ticket.id})}
                 onClick={() => onRowClick(ticket)}>
-                <div className='flex flex-col w-3/6'>
-                    <span className='subtitle2'>{ticket.subject ?? '-'}</span>
+                <div className='flex flex-col w-2/12'>
+                    <span className='body3-medium'>{t('sms.chat.new.existing_ticket.list.ticket_no')}</span>
+                    <TicketLinkWrapper ticket={ticket}><span className='subtitle2'>{ticket.ticketNumber}</span></TicketLinkWrapper>
+                </div>
+                <div className='flex flex-col w-4/12'>
+                    <TicketLinkWrapper ticket={ticket}>
+                        <span className='subtitle2'>{ticket.subject ?? '-'}</span>
+                    </TicketLinkWrapper>
                     <span className='body3-small'>
                         <span className="mr-0.5">{t('sms.chat.new.existing_ticket.list.created_label')}</span>
                         <span>
@@ -74,12 +85,12 @@ const SmsNewMessageExistingTicketList = ({items, ...props}: SmsNewMessageExistin
                     <span className='body2'>{getTicketReasons(ticket.reason)}</span>
                 </div>
                 <div className='flex items-center justify-end w-2/12 mr-8'>
-                    <Link to={`${TicketsPath}/${ticket.ticketNumber}`} target="_blank" rel="noopener noreferrer">
+                    <TicketLinkWrapper ticket={ticket}>
                         <SvgIcon
                             type={Icon.View}
-                            fillClass='rgba-05-fill'
+                            fillClass='rgba-062-fill'
                         />
-                    </Link>
+                    </TicketLinkWrapper>
                 </div>
             </div>
         );
