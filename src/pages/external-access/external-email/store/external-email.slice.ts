@@ -9,15 +9,20 @@ const externalEmailSlice = createSlice({
         setExternalEmails(state, { payload }: PayloadAction<EmailMessageDto[]>) {
             state.emails = payload;
         },
-        setMarkAsRead(state, {payload}: PayloadAction<boolean>) {
-            state.markAsRead = payload;
+        setEmailMarkAsRead(state, {payload}: PayloadAction<{ id: string }>) {
+            let index = state.emails.findIndex(a => a.id === payload.id);
+            if (index > -1) {
+                let newEmails = [...state.emails];
+                newEmails[index].isRead = true;
+                state.emails = newEmails;
+            }
         }
     }
 });
 
 export const {
     setExternalEmails,
-    setMarkAsRead
+    setEmailMarkAsRead
 } = externalEmailSlice.actions;
 
 export default externalEmailSlice.reducer;

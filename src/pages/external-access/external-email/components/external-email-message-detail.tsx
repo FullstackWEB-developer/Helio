@@ -1,8 +1,8 @@
 import Avatar from '@components/avatar';
 import SvgIcon, {Icon} from '@components/svg-icon';
 import {ExtendedPatient} from '@pages/patients/models/extended-patient';
-import {EmailMessageDto, TicketMessagesDirection, UserBase} from '@shared/models';
-import React, {useMemo, useRef, useState} from 'react';
+import {ChannelTypes, EmailMessageDto, TicketMessagesDirection, UserBase} from '@shared/models';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {Trans, useTranslation} from 'react-i18next';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
@@ -12,6 +12,10 @@ import Tooltip from '@components/tooltip/tooltip';
 import {customHooks} from '@shared/hooks';
 import EmailAttachment from '@pages/email/components/email-message/email-attachment';
 import Button from '@components/button/button';
+import {useMutation} from 'react-query';
+import {markRead} from '@pages/sms/services/ticket-messages.service';
+import {useDispatch} from 'react-redux';
+import {setEmailMarkAsRead} from '@pages/external-access/external-email/store/external-email.slice';
 
 interface ExternalEmailMessageDetailProps {
     message: EmailMessageDto;
@@ -25,6 +29,18 @@ const ExternalEmailMessageDetail = ({patientPhoto, message, patient, users, setR
     const {t} = useTranslation();
     dayjs.extend(utc);
     dayjs.extend(isToday);
+    const dispatch = useDispatch();
+    const markReadMutation = useMutation(({ticketId, channel, id}: {ticketId: string, channel: ChannelTypes, id: string}) =>
+        markRead(ticketId, channel, TicketMessagesDirection.Outgoing, id));
+
+    useEffect(() => {
+        markReadMutation
+            .mutate({ticketId: message.ticketId, channel: ChannelTypes.Email, id: message.id}, {
+                onSettled: () => {
+                    dispatch(setEmailMarkAsRead({id :message.id}));
+                }
+            });
+    }, [])
 
     const user = useMemo(() => {
         if (message.direction === TicketMessagesDirection.Outgoing) {

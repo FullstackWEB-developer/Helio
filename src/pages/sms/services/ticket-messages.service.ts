@@ -45,13 +45,14 @@ export const createTicketMessage = async (request: CreateTicketMessageRequest) =
     return response.data;
 }
 
-export const markRead = async (ticketId: string, channel: ChannelTypes, direction: TicketMessagesDirection) => {
+export const markRead = async (ticketId: string, channel: ChannelTypes, direction: TicketMessagesDirection, id?: string) => {
     const url = `${ticketMessageUrl}/read`;
     await Api.put(url, null, {
         params: {
             ticketId,
             channel,
-            direction
+            direction,
+            id
         }
     });
     return {ticketId, channel};
