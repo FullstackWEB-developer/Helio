@@ -18,6 +18,7 @@ import {ProcessTemplate} from '@constants/react-query-constants';
 import utils from '@shared/utils/utils';
 import {processTemplate} from '@shared/services/notifications.service';
 import {TemplateUsedFrom} from '@components/notification-template-select/template-used-from';
+import Alert from '@components/alert/alert';
 
 const SmsContext = () => {
     const {t} = useTranslation();
@@ -27,6 +28,7 @@ const SmsContext = () => {
     const [selectedTemplate, setSelectedTemplate] = useState<NotificationTemplate>();
     const [patientName, setPatientName] = useState<string>('');
     const [refreshTemplate, setRefreshTemplate] = useState<number>(0);
+    const [noteDisabledText, setNoteDisabledText] = useState<string>();
 
     useEffect(() => {
         if (botContext?.patient) {
@@ -49,6 +51,14 @@ const SmsContext = () => {
             setSmsText(template.content);
         }
     }
+
+    useEffect(() => {
+        if (botContext?.patient) {
+            if (!botContext.patient.consentToText) {
+                setNoteDisabledText('ccp.sms_context.no_consent');
+            }
+        }
+    }, [botContext?.patient]);
 
     const sendSmsMutation = useMutation(sendMessage, {
         onSuccess: () => {
@@ -91,6 +101,7 @@ const SmsContext = () => {
                     <div className='w-4/5'>
                         <NotificationTemplateSelect selectLabel='ccp.sms_context.select_template'
                                                     asSelect={true}
+                                                    disabled={!!noteDisabledText}
                                                     resetValue={refreshTemplate}
                                                     channel={NotificationTemplateChannel.Sms}
                                                     usedFrom={TemplateUsedFrom.CCP}
@@ -102,6 +113,11 @@ const SmsContext = () => {
                     <ParentExtraTemplate parentType='ccp' logicKey={selectedTemplate?.logicKey} patient={botContext?.patient}/>
                 </div>
                 }
+
+                {!!noteDisabledText && <div className='pb-4'>
+                    <Alert message={noteDisabledText} type='error'/>
+                </div>}
+
                     <div>
                         <TextArea
                             className='body2 w-full'
@@ -111,7 +127,7 @@ const SmsContext = () => {
                             rows={3}
                             minRows={6}
                             resizable={false}
-                            disabled={!(!!botContext?.patient?.mobilePhone)}
+                            disabled={!(!!botContext?.patient?.mobilePhone) || !!noteDisabledText}
                             hasBorder={true}
                             label='ccp.sms_context.message'
                             onChange={(message) => setSmsText(message)}
@@ -120,7 +136,7 @@ const SmsContext = () => {
                     <div className='flex flex-row space-x-4 pt-6'>
                         <div>
                             <Button buttonType='small' label='ccp.sms_context.send' onClick={sendSms}
-                                    disabled={(!(!!botContext?.patient?.mobilePhone)) || isProcessing}
+                                    disabled={(!(!!botContext?.patient?.mobilePhone) || !!noteDisabledText) || isProcessing}
                                     isLoading={sendSmsMutation.isLoading}/>
                         </div>
                     </div>

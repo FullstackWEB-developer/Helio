@@ -419,6 +419,9 @@
   --patient-dropdown-arrows: rgb(0, 0, 0, 0.5);
   --avatar-contact-color: #734dea;
 
+  --alert-error-border: var(--color-red);
+  --alert-error-background: #FFF9F8;
+
   ::-webkit-scrollbar {
     width: 0.750rem;
   }

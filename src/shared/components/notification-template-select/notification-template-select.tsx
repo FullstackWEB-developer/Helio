@@ -29,7 +29,7 @@ export interface MessageTemplateSelectProps {
     placement?:'bottom' | 'top'
 }
 
-const NotificationTemplateSelect = ({channel, category, onSelect, asSelect, selectLabel, isLoading, resetValue, usedFrom, placement = 'top'}: MessageTemplateSelectProps) => {
+const NotificationTemplateSelect = ({channel, category, onSelect, asSelect, selectLabel, isLoading, resetValue, usedFrom, placement = 'top', disabled}: MessageTemplateSelectProps) => {
     const [items, setItems] = useState<DropdownItemModel[]>([]);
     const [options, setOptions] = useState<Option[]>([]);
     const templateDiv = useRef<HTMLDivElement>(null);
@@ -133,7 +133,7 @@ const NotificationTemplateSelect = ({channel, category, onSelect, asSelect, sele
         if (!displaySelect) {
             return <div className='h-20'/>;
         }
-        return <Select onSelect={(option) => onSelect(option?.object)} label={selectLabel} options={options} />;
+        return <Select disabled={disabled} onSelect={(option) => onSelect(option?.object)} label={selectLabel} options={options} />;
     }
 
     const dropdownWrapperClassname = classnames('absolute z-50', {
@@ -143,10 +143,10 @@ const NotificationTemplateSelect = ({channel, category, onSelect, asSelect, sele
 
     return <div ref={templateDiv} className='relative'>
         <div className='cursor-pointer' onClick={() => {
-            setDisplayTemplateForTab(!displayTemplateForTab)
+            !disabled && setDisplayTemplateForTab(!displayTemplateForTab)
         }}>
             <div className='w-10 h-10 flex items-center justify-center'>
-                <SvgIcon isLoading={isLoadingOrFetching()} type={Icon.Templates} fillClass='rgba-05-fill' className='icon-medium'/>
+                <SvgIcon isLoading={isLoadingOrFetching()} type={Icon.Templates} disabled={disabled} fillClass='rgba-05-fill' className='icon-medium'/>
             </div>
         </div>
         <div className={dropdownWrapperClassname} hidden={!displayTemplateForTab || isLoadingOrFetching() || items.length === 0 }>

@@ -11,7 +11,13 @@ import TicketDetailAddNote from './components/ticket-detail/ticket-detail-add-no
 import {Ticket} from './models/ticket';
 import {useQuery} from 'react-query';
 import {getTicketByNumber} from './services/tickets.service';
-import {GetContactById, GetPatientPhoto, QueryGetPatientById, QueryTickets} from '@constants/react-query-constants';
+import {
+    GetContactById,
+    GetPatientPhoto,
+    QueryGetPatientById,
+    QueryTicketMessagesInfinite,
+    QueryTickets
+} from '@constants/react-query-constants';
 import {
     setPatientPhoto,
     setTicket,
@@ -30,7 +36,8 @@ import ChatTranscript from '@pages/tickets/components/ticket-detail/chat-transcr
 import CallLogAudioPlayer from '@pages/calls-log/components/call-log-player/call-log-player';
 import {useTranslation} from 'react-i18next';
 import utils from '@shared/utils/utils';
-import {CommunicationDirection} from '@shared/models';
+import {ChannelTypes, CommunicationDirection} from '@shared/models';
+import {getMessages} from '@pages/sms/services/ticket-messages.service';
 interface TicketParams {
     ticketNumber: string
 }
@@ -67,6 +74,15 @@ const TicketDetail = () => {
             enabled: !!ticket?.patientId
         }
     );
+
+
+    const {
+        data: emailMessages,
+        isLoading: emailLoading
+    } = useQuery([QueryTicketMessagesInfinite, ChannelTypes.Email, ticket.id], () => getMessages(ticket.id!, ChannelTypes.Email, {
+        page: 1,
+        pageSize: 50
+    }));
 
     useQuery([GetPatientPhoto, ticket?.patientId], () => getPatientPhoto(ticket?.patientId!), {
         enabled: !!ticket?.patientId,
@@ -136,10 +152,10 @@ const TicketDetail = () => {
                         />
                     </div>
                     <div className='flex-1 mb-auto'>
-                        <TicketDetailFeed ticket={ticket} />
+                        <TicketDetailFeed emailLoading={emailLoading} emailMessages={emailMessages} ticket={ticket} />
                     </div>
                     <div className='absolute bottom-0 w-full'>
-                        <TicketDetailAddNote patient={patient} contact={contact} ticket={ticket} />
+                        <TicketDetailAddNote emailMessages={emailMessages} patient={patient} contact={contact} ticket={ticket} />
                     </div>
                 </div>
                 <div className='w-1/4 overflow-y-auto border-l'>

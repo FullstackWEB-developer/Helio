@@ -24,11 +24,13 @@ import EmailReply from '@pages/email/components/email-message/email-reply';
 import {removeUnreadEmailTicketId} from '@pages/email/store/email-slice';
 import {useDispatch, useSelector} from 'react-redux';
 import {selectUnreadEmails} from '@pages/email/store/email.selectors';
+import Alert from '@components/alert/alert';
 
 const EmailConversation = () => {
     const {ticketId} = useParams<{ticketId: string}>();
     const dispatch = useDispatch();
     const unreadEmailIds = useSelector(selectUnreadEmails);
+    const [emailDisabledText, setEmailDisabledText] = useState<string>();
     const {data: ticket} = useQuery([QueryTickets, ticketId], () => getTicketById(ticketId!), {
         enabled: !!ticketId
     });
@@ -45,6 +47,7 @@ const EmailConversation = () => {
         enabled: !!ticket?.contactId
     });
 
+
     const [messages, setMessages] = useState<EmailMessageDto[]>([]);
     const messageListContainerRef = useRef<HTMLDivElement>(null);
     const markReadMutation = useMutation(({ticketId, channel}: {ticketId: string, channel: ChannelTypes}) => markRead(ticketId, channel, TicketMessagesDirection.Incoming), {
@@ -58,6 +61,27 @@ const EmailConversation = () => {
             emailMessagesQueryRefetch().then()
         }
     }, [unreadEmailIds])
+
+
+    useEffect(() =>{
+        if (!messages || messages.length === 0) {
+            return;
+        }
+        const lastMessage = messages[messages.length - 1];
+        const lastEmailAddress = lastMessage.direction === TicketMessagesDirection.Outgoing ? lastMessage.toAddress : lastMessage.fromAddress;
+        if (patient) {
+            if (patient.emailAddress !== lastEmailAddress) {
+                setEmailDisabledText('email.inbox.email_not_available_patient')
+            }
+        } else if (contact) {
+            if (contact.emailAddress !== lastEmailAddress) {
+                setEmailDisabledText('email.inbox.email_not_available_contact')
+            }
+        } else {
+            setEmailDisabledText(undefined);
+        }
+
+    },[patient, contact, messages]);
 
     const {
         refetch: emailMessagesQueryRefetch,
@@ -135,8 +159,12 @@ const EmailConversation = () => {
                                 isFetchingEmailMessagesNextPage && <Spinner />
                             }
                         </div>
+
                         <div className='mt-auto'>
-                            <EmailReply ticket={ticket} patient={patient} contact={contact} onMailSend={onEmailReplySuccess} />
+                            {!!emailDisabledText && <div className='unavailable-sms pb-4 px-16'>
+                                <Alert message={emailDisabledText} type='error'/>
+                            </div>}
+                            <EmailReply disabled={!!emailDisabledText} ticket={ticket} patient={patient} contact={contact} onMailSend={onEmailReplySuccess} />
                         </div>
                     </div>
                 }

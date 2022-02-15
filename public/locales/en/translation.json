@@ -257,7 +257,8 @@
       "to": "To",
       "select_template": "Select Template",
       "send": "Send",
-      "message": "Message"
+      "message": "Message",
+      "no_consent": "Messaging to this patient is disabled. This patient did not consent to text messaging."
     },
     "scripts": {
       "title": "Suggested Chat Scripts"
@@ -1453,7 +1454,9 @@
         "3": "Mobile Phone",
         "4": "Work Main Phone",
         "5": "Work Direct Phone"
-      }
+      },
+      "email_not_available_patient": "Messaging to this patient is disabled. This patient has changed their email address.",
+      "email_not_available_contact": "Messaging to this contact is disabled. This contact has changed their email address."
     },
     "new_email": {
       "title": "New Message",
@@ -1528,7 +1531,9 @@
     "found_in": "Found in:",
     "ticket_number": "Ticket Id",
     "phone": "Phone",
-    "messages": "Messages"
+    "messages": "Messages",
+    "sms_not_available_patient": "Messaging to this patient is disabled. This patient has either changed their phone number or has changed their SMS texting preferences.",
+    "sms_not_available_contact": "Messaging to this contact is disabled. This contact has changed their phone number."
   },
   "users": {
     "not_found": "User not found",

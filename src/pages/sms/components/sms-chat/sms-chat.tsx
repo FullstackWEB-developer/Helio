@@ -1,4 +1,4 @@
-import React, {useEffect, useLayoutEffect, useRef, useState} from 'react';
+import React, {useEffect, useLayoutEffect, useMemo, useRef, useState} from 'react';
 import AlwaysScrollToBottom from '@components/scroll-to-bottom';
 import SmsChatMessageList from '../sms-chat-message/sms-chat-message-list';
 import {ChannelTypes, ContactExtended, TicketMessage, TicketMessageSummary} from '@shared/models';
@@ -28,6 +28,7 @@ import {processTemplate} from '@shared/services/notifications.service';
 import {getContactById} from '@shared/services/contacts.service';
 import ConversationHeader from '@components/conversation-header/conversation-header';
 import {TemplateUsedFrom} from '@components/notification-template-select/template-used-from';
+import Alert from '@components/alert/alert';
 
 interface SmsChatProps {
     info: TicketMessageSummary;
@@ -43,6 +44,7 @@ interface SmsChatProps {
 const SmsChat = ({info, isLoading, isSending, isBottomFocus, messages = [], lastMessageSendTime,...props}: SmsChatProps) => {
     const dispatch = useDispatch();
     const {t} = useTranslation();
+    const [smsDisabledText, setSmsDisabledText] = useState<string>();
     const messageListContainerRef = useRef<HTMLDivElement>(null);
     const [smsText, setSmsText] = useState<string>();
     const topMessagePosition = useRef<number>();
@@ -63,6 +65,28 @@ const SmsChat = ({info, isLoading, isSending, isBottomFocus, messages = [], last
     const {data: ticket} = useQuery([QueryTickets, info.ticketId], () => getTicketById(info.ticketId!), {
         enabled: !!info.ticketId
     });
+
+    const sendToNumber = useMemo(() => {
+        let mobilePhone = patient?.mobilePhone ?? contact?.mobilePhone;
+        if(!mobilePhone){
+            mobilePhone = info.createdForEndpoint;
+        }
+        return mobilePhone;
+    }, [patient?.mobilePhone, contact?.mobilePhone, info.createdForEndpoint]);
+
+    useEffect(() => {
+        let originalNumber = info?.createdForEndpoint || ticket?.originationNumber;
+        if(originalNumber && originalNumber.startsWith('+1')) {
+            originalNumber = originalNumber.substring(2);
+        }
+        if(patient && (!patient.consentToText || patient.mobilePhone !== originalNumber) ) {
+            setSmsDisabledText('sms.sms_not_available_patient');
+        } else if (contact && contact.mobilePhone !== originalNumber) {
+            setSmsDisabledText('sms.sms_not_available_contact');
+        } else {
+            setSmsDisabledText(undefined)
+        }
+    }, [patient, ticket, contact, info])
 
     useEffect(() => {
         dispatch(getLookupValues('TicketReason'));
@@ -120,18 +144,15 @@ const SmsChat = ({info, isLoading, isSending, isBottomFocus, messages = [], last
         </div>);
     }
 
+
+
     const onSend = () => {
         if (!smsText) {
             return;
         }
 
-        let mobilePhone = patient?.mobilePhone ?? contact?.mobilePhone;
-        if(!mobilePhone){
-            mobilePhone = info.createdForEndpoint;
-        }
-
-        if (mobilePhone) {
-            props.onSendClick(mobilePhone, smsText);
+        if (sendToNumber) {
+            props.onSendClick(sendToNumber, smsText);
         }
     }
 
@@ -153,10 +174,14 @@ const SmsChat = ({info, isLoading, isSending, isBottomFocus, messages = [], last
                 <EmptyMessage />
             }
         </div>
+        {!!smsDisabledText && <div className='unavailable-sms pb-4'>
+            <Alert message={smsDisabledText} type='error'/>
+        </div>}
         <div className="flex flex-col justify-center pt-4 pb-4 pl-6 pr-16 sms-chat-footer">
             <div className='flex flex-row items-end'>
                 <div className='pb-6 mr-3'>
                     <NotificationTemplateSelect
+                        disabled={!!smsDisabledText}
                         channel={NotificationTemplateChannel.Sms}
                         onSelect={(template) => onTemplateSelect(template)}
                         usedFrom={TemplateUsedFrom.Inbox}
@@ -175,6 +200,7 @@ const SmsChat = ({info, isLoading, isSending, isBottomFocus, messages = [], last
                         rows={2}
                         maxRows={5}
                         value={smsText}
+                        disabled={!!smsDisabledText}
                         onChange={(message) => setSmsText(message)}
                         resizable={false}
                         isLoading={isSending || isProcessing}

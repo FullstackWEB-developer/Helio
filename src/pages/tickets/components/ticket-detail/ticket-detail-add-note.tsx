@@ -17,7 +17,14 @@ import './ticket-detail-add-note.scss';
 import {sendMessage} from '@pages/sms/services/ticket-messages.service';
 import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
 import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
-import {ChannelTypes, Contact, TicketMessageBase, TicketMessagesDirection} from '@shared/models';
+import {
+    ChannelTypes,
+    Contact, EmailMessageDto,
+    PagedList,
+    TicketMessage,
+    TicketMessageBase,
+    TicketMessagesDirection
+} from '@shared/models';
 import utils from '@shared/utils/utils';
 import {ExtendedPatient} from '@pages/patients/models/extended-patient';
 import NotificationTemplateSelect from '@components/notification-template-select/notification-template-select';
@@ -32,13 +39,15 @@ import {TemplateUsedFrom} from '@components/notification-template-select/templat
 import {selectAppUserDetails} from '@shared/store/app-user/appuser.selectors';
 import {CommonQueryData} from '@shared/models/query-data.model';
 import Input from '@components/input';
+import Alert from '@components/alert/alert';
 interface TicketDetailAddNoteProps {
     ticket: Ticket,
     patient?: ExtendedPatient;
     contact?: Contact;
+    emailMessages?: PagedList<TicketMessage | EmailMessageDto>
 }
 
-const TicketDetailAddNote = ({ticket, patient, contact}: TicketDetailAddNoteProps) => {
+const TicketDetailAddNote = ({ticket, patient, contact, emailMessages}: TicketDetailAddNoteProps) => {
     dayjs.extend(relativeTime)
 
     enum ChannelTabs {
@@ -59,6 +68,9 @@ const TicketDetailAddNote = ({ticket, patient, contact}: TicketDetailAddNoteProp
     const [selectedTab, setSelectedTab] = useState<ChannelTabs>(ChannelTabs.NotesTab);
     const [selectedMessageTemplate, setSelectedMessageTemplate] = useState<NotificationTemplate>();
     const queryClient = useQueryClient();
+    const [noteDisabledText, setNoteDisabledText] = useState<string>();
+    const [disabledTab, setDisabledTab] = useState<ChannelTabs>();
+    const [emailDisabledText, setEmailDisabledText] = useState<string>();
     const [richTextMode, setRichTextMode] = useState(false);
     const [ticketHasEmailMessages, setTicketHasEmailMessages] = useState(!!queryClient.getQueryData<CommonQueryData>([QueryTicketMessagesInfinite, ChannelTypes.Email, ticket.id])?.results?.length);
     const {isLoading: isProcessing} = useQuery([ProcessTemplate, selectedMessageTemplate?.id!], () =>
@@ -79,6 +91,45 @@ const TicketDetailAddNote = ({ticket, patient, contact}: TicketDetailAddNoteProp
             }
         });
 
+
+    useEffect(() => {
+        if (selectedTab === ChannelTabs.SmsTab) {
+            const originalNumber = ticket?.originationNumber;
+            if (patient && (!patient.consentToText || patient.mobilePhone !== originalNumber)) {
+                setNoteDisabledText('sms.sms_not_available_patient');
+                setDisabledTab(ChannelTabs.SmsTab);
+            } else if (contact && contact.mobilePhone !== originalNumber) {
+                setNoteDisabledText('sms.sms_not_available_contact');
+                setDisabledTab(ChannelTabs.SmsTab);
+            }
+            else {
+                setNoteDisabledText(undefined);
+                setDisabledTab(undefined);
+            }
+        } if (selectedTab === ChannelTabs.EmailTab) {
+            if (!emailMessages?.results || emailMessages.results.length === 0) {
+                setNoteDisabledText(undefined);
+                return;
+            }
+            const lastMessage = emailMessages.results[emailMessages.results.length - 1];
+            const lastEmailAddress = lastMessage.direction === TicketMessagesDirection.Outgoing ? lastMessage.toAddress : lastMessage.fromAddress;
+            if (patient) {
+                if (patient.emailAddress !== lastEmailAddress) {
+                    setNoteDisabledText('email.inbox.email_not_available_patient');
+                    setDisabledTab(ChannelTabs.EmailTab);
+                }
+            } else if (contact) {
+                if (contact.emailAddress !== lastEmailAddress) {
+                    setNoteDisabledText('email.inbox.email_not_available_contact');
+                    setDisabledTab(ChannelTabs.EmailTab);
+                }
+            }
+            else {
+                setNoteDisabledText(undefined);
+                setDisabledTab(undefined);
+            }
+        }
+    }, [patient, ticket, contact, selectedTab, emailMessages])
 
     const determineEmailSubject = () => {
         if (ticketHasEmailMessages) {
@@ -275,22 +326,37 @@ const TicketDetailAddNote = ({ticket, patient, contact}: TicketDetailAddNoteProp
         setEmailSubject('');
     }
 
+    const isTabDisabled = useMemo(() => {
+        return !!noteDisabledText && disabledTab === selectedTab;
+    }, [noteDisabledText, disabledTab, selectedTab]);
+
     const isSendSmsDisabled = useMemo(() => {
         return !mobileNumber || isTicketDisabled;
     }, [isTicketDisabled, mobileNumber]);
 
     const isSendEmailDisabled = useMemo(() => {
-        return !emailAddress || isTicketDisabled;
-    }, [isTicketDisabled, emailAddress])
+        if (selectedTab === ChannelTabs.EmailTab && isTabDisabled) {
+            setEmailDisabledText('');
+            return true;
+        }
+        if (!emailAddress || isTicketDisabled) {
+            setEmailDisabledText('ticket_detail.reopen_or_create_to_send_email');
+            return true;
+        }
+        return
+    }, [isTicketDisabled, emailAddress, selectedTab, noteDisabledText])
 
 
     return <>
+        {isTabDisabled && noteDisabledText && <div className='pb-4 px-16'>
+            <Alert message={noteDisabledText} type='error'/>
+        </div>}
         <div className='pb-6 pr-16 ticket-add-message-body'>
             <div className='flex flex-row items-end'>
                 <div className='flex w-16 h-full pb-4 pl-4 cursor-pointer'>
                     {(selectedTab === ChannelTabs.SmsTab || selectedTab === ChannelTabs.EmailTab) &&
                         <NotificationTemplateSelect
-                            disabled={!emailAddress && !smsText}
+                            disabled={(!emailAddress && !mobileNumber) || isTabDisabled}
                             usedFrom={TemplateUsedFrom.TicketDetail}
                             channel={selectedTab === 1 ? NotificationTemplateChannel.Sms : NotificationTemplateChannel.Email}
                             onSelect={(template) => onTemplateSelect(template)}
@@ -340,7 +406,7 @@ const TicketDetailAddNote = ({ticket, patient, contact}: TicketDetailAddNoteProp
                                 resizable={false}
                                 isLoading={sendSmsMutation.isLoading || isProcessing}
                                 value={smsText}
-                                disabled={isSendSmsDisabled}
+                                disabled={isSendSmsDisabled || isTabDisabled}
                                 hasBorder={false}
                                 showFormatting={false}
                                 onChange={(message) => setSmsText(message)}
@@ -377,7 +443,7 @@ const TicketDetailAddNote = ({ticket, patient, contact}: TicketDetailAddNoteProp
                             <TextArea
                                 className='w-full pl-2 pr-0 body2'
                                 data-test-id='ticket-send-email'
-                                placeHolder={isSendEmailDisabled ? 'ticket_detail.reopen_or_create_to_send_email' : 'ticket_detail.add_note'}
+                                placeHolder={isSendEmailDisabled ? emailDisabledText : 'ticket_detail.add_note'}
                                 required={true}
                                 rows={2}
                                 maxRows={5}

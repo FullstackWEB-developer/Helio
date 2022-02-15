@@ -13,7 +13,7 @@ import utils from '@shared/utils/utils';
 import {useQuery} from 'react-query';
 import {QueryTicketMessagesInfinite} from '@constants/react-query-constants';
 import {getMessages} from '@pages/sms/services/ticket-messages.service';
-import {ChannelTypes, TicketMessagesDirection} from '@shared/models';
+import {ChannelTypes, EmailMessageDto, PagedList, TicketMessage, TicketMessagesDirection} from '@shared/models';
 import AlwaysScrollToBottom from '@components/scroll-to-bottom';
 import Spinner from '@components/spinner/Spinner';
 import {getUserList} from '@shared/services/lookups.service';
@@ -27,10 +27,12 @@ export enum FeedFilter {
 }
 
 interface TicketDetailFeedProps {
-    ticket: Ticket
+    ticket: Ticket,
+    emailLoading: boolean;
+    emailMessages?: PagedList<TicketMessage | EmailMessageDto>
 }
 
-const TicketDetailFeed = ({ticket}: TicketDetailFeedProps) => {
+const TicketDetailFeed = ({ticket, emailLoading, emailMessages}: TicketDetailFeedProps) => {
     const {t} = useTranslation();
     dayjs.extend(utc);
     const dispatch = useDispatch();
@@ -51,13 +53,6 @@ const TicketDetailFeed = ({ticket}: TicketDetailFeedProps) => {
         data: smsMessages,
         isLoading: smsLoading
     } = useQuery([QueryTicketMessagesInfinite, ChannelTypes.SMS, ticket.id], () => getMessages(ticket.id!, ChannelTypes.SMS, {
-        page: 1,
-        pageSize: 50
-    }));
-    const {
-        data: emailMessages,
-        isLoading: emailLoading
-    } = useQuery([QueryTicketMessagesInfinite, ChannelTypes.Email, ticket.id], () => getMessages(ticket.id!, ChannelTypes.Email, {
         page: 1,
         pageSize: 50
     }));

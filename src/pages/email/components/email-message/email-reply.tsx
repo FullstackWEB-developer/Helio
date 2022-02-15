@@ -24,8 +24,9 @@ interface EmailReplyProps {
     patient?: ExtendedPatient;
     contact?: ContactExtended;
     onMailSend: (newMessage: EmailMessageDto) => void;
+    disabled: boolean;
 }
-const EmailReply = ({ticket, patient, contact, onMailSend}: EmailReplyProps) => {
+const EmailReply = ({ticket, patient, contact, onMailSend, disabled}: EmailReplyProps) => {
     const {t} = useTranslation();
     const [emailContent, setEmailContent] = useState('');
     const dispatch = useDispatch();
@@ -132,6 +133,7 @@ const EmailReply = ({ticket, patient, contact, onMailSend}: EmailReplyProps) => 
                     <NotificationTemplateSelect isLoading={isProcessingTemplate}
                                                 channel={NotificationTemplateChannel.Email}
                                                 usedFrom={TemplateUsedFrom.Inbox}
+                                                disabled={disabled}
                                                 onSelect={(template) => onTemplateSelect(template)} />
                 </div>
                 <div className='w-full flex flex-col'>
@@ -144,6 +146,7 @@ const EmailReply = ({ticket, patient, contact, onMailSend}: EmailReplyProps) => 
                         resizable={false}
                         className='body2 w-full'
                         rows={2}
+                        disabled={disabled}
                         maxRows={4}
                         showFormatting={true}
                         value={emailContent}
