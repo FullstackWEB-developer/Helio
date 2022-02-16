@@ -17,7 +17,7 @@ export interface ReLoginModalProps {
 }
 const ReLoginModal = ({type} : ReLoginModalProps) => {
     dayjs.extend(duration);
-    const LOG_OUT_IN_MINUTES = 1 * 60; //10 Hours
+    const LOG_OUT_IN_MINUTES = 10 * 60; //10 Hours
     const DISPLAY_BEFORE_LOGOUT_IN_MINUTES = 30
     const {t} = useTranslation();
     const display = useSelector(selectDisplayLoginRequired);
