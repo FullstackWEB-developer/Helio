@@ -100,7 +100,10 @@ const TicketDetailAddNote = ({ticket, patient, contact, emailMessages, smsMessag
                 return;
             }
             const lastMessage = smsMessages.results[smsMessages.results.length - 1];
-            const lastSmsAddress = lastMessage.direction === TicketMessagesDirection.Outgoing ? lastMessage.toAddress : lastMessage.fromAddress;
+            let lastSmsAddress = lastMessage.direction === TicketMessagesDirection.Outgoing ? lastMessage.toAddress : lastMessage.fromAddress;
+            if(lastSmsAddress && lastSmsAddress.startsWith('+1')) {
+                lastSmsAddress = lastSmsAddress.substring(2);
+            }
             if (patient && (!patient.consentToText || patient.mobilePhone !== lastSmsAddress)) {
                 setNoteDisabledText('sms.sms_not_available_patient');
                 setDisabledTab(ChannelTabs.SmsTab);
