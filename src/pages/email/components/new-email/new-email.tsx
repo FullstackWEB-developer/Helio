@@ -37,6 +37,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {selectEmailSummaries} from '@pages/email/store/email.selectors';
 import {setMessageSummaries} from '@pages/email/store/email-slice';
 import {ExtendedPatient} from '@pages/patients/models/extended-patient';
+import {usePrevious} from '@shared/hooks/usePrevious';
 
 const NewEmail = () => {
     const [step, setStep] = useState<NewEmailSteps>(NewEmailSteps.Search);
@@ -53,6 +54,7 @@ const NewEmail = () => {
     const [ticketsContactParams, setTicketContactParams] = useState<ContactTicketsRequest>({...DefaultPagination, contactId: ''});
     const history = useHistory();
     const {t} = useTranslation();
+    const previousStep = usePrevious(step);
     const location = useLocation<{contact?: ContactExtended, patient?: ExtendedPatient}>();
     const onSearchHandler = (type: number, value: string) => {
         setSearchParams({type, value});
@@ -223,6 +225,11 @@ const NewEmail = () => {
         }
     }
 
+    const selectedValueDeleted =() => {
+        setToName(undefined);
+        setStep(previousStep || NewEmailSteps.Search);
+    }
+
     const content = useMemo(() =>{
         if (step === NewEmailSteps.PatientSearchResult && patients.length > 0) {
             return <SearchboxPatientsResults
@@ -266,7 +273,7 @@ const NewEmail = () => {
 
     return <div className='w-full h-full overflow-y-auto'>
                 <NewEmailHeader/>
-                <NewEmailSearch value={toName}  onSearchHandler={onSearchHandler}/>
+                <NewEmailSearch value={toName} onValueClear={() => selectedValueDeleted()}  onSearchHandler={onSearchHandler}/>
                 {isLoading ? <Spinner fullScreen={true}/> : content}
         </div>
 }
