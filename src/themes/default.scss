@@ -454,6 +454,21 @@
   --mime-archive-color: #616161;
 }
 
+a {
+  color: var(--color-primary-800);
+}
+
+a.disabled {
+  color: var(--color-primary-300);
+  pointer-events: none;
+  cursor: none;
+}
+
+a:hover {
+  color: var(--color-primary-400);
+  cursor: pointer;
+}
+
 .text-success {
   color: var(--color-primary-900) !important;
 }

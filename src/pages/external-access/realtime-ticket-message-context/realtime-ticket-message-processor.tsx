@@ -31,15 +31,17 @@ const RealtimeTicketMessageProcessor = ({type} : RealtimeTicketMessageProcessorP
     }, []);
 
     useEffect(() => {
-        const hubUrl =`${utils.getAppParameter('RealtimeEventsEndpoint')}ticket-message?ticketId=${request.ticketId}`;
-        const newConnection = new HubConnectionBuilder()
-            .withUrl(hubUrl)
-            .withAutomaticReconnect()
-            .configureLogging(realtimeConnectionLogger)
-            .build();
+        if (request?.ticketId) {
+            const hubUrl = `${utils.getAppParameter('RealtimeEventsEndpoint')}ticket-message?ticketId=${request.ticketId}`;
+            const newConnection = new HubConnectionBuilder()
+                .withUrl(hubUrl)
+                .withAutomaticReconnect()
+                .configureLogging(realtimeConnectionLogger)
+                .build();
 
-        setConnection(newConnection);
-    }, [request.ticketId, realtimeConnectionLogger]);
+            setConnection(newConnection);
+        }
+    }, [request?.ticketId, realtimeConnectionLogger]);
 
     const markReadMutation = useMutation(({ticketId, channel}: {ticketId: string, channel: ChannelTypes}) => markRead(ticketId, channel, TicketMessagesDirection.Outgoing));
 

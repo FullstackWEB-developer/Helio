@@ -8,6 +8,7 @@ import EmailAttachment from '@pages/email/components/email-message/email-attachm
 import FeedDetailEmailHeaderItem from '@pages/tickets/components/ticket-detail/feed-detail-email-item-header';
 import {useSelector} from 'react-redux';
 import {selectSelectedTicket} from '@pages/tickets/store/tickets.selectors';
+import linkifyHtml from 'linkifyjs/html';
 
 interface FeedDetailEmailItemProps {
     message: EmailMessageDto,
@@ -66,7 +67,7 @@ const FeedDetailEmailItem = ({message, isCollapsed, feedTime}: FeedDetailEmailIt
                             <SvgIcon type={Icon.ArrowTrendDown} className='cursor-pointer' />
                         </div>
                     </div>
-                    <div className={collapsed ? '' : 'border-b pb-4'} dangerouslySetInnerHTML={{__html: message.body}}/>
+                    <div className={collapsed ? '' : 'border-b pb-4'} dangerouslySetInnerHTML={{__html: linkifyHtml(message.body)}}/>
                     {
                         message.attachments?.length > 0 &&
                         <div className='mt-4 pt-7 border-t flex flex-wrap'>

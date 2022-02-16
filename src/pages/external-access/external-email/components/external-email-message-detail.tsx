@@ -16,6 +16,7 @@ import {useMutation} from 'react-query';
 import {markRead} from '@pages/sms/services/ticket-messages.service';
 import {useDispatch} from 'react-redux';
 import {setEmailMarkAsRead} from '@pages/external-access/external-email/store/external-email.slice';
+import linkifyHtml from 'linkifyjs/html'
 
 interface ExternalEmailMessageDetailProps {
     message: EmailMessageDto;
@@ -145,7 +146,7 @@ const ExternalEmailMessageDetail = ({patientPhoto, message, patient, users, setR
                     <SvgIcon type={Icon.ArrowTrendDown} className='cursor-pointer' />
                 </div>
             </div>
-            <div dangerouslySetInnerHTML={{__html: message.body}}></div>
+            <div dangerouslySetInnerHTML={{__html: linkifyHtml(message.body)}}></div>
             {
                 message.attachments?.length > 0 &&
                 <div className='mt-4 pt-7 border-t flex flex-wrap'>

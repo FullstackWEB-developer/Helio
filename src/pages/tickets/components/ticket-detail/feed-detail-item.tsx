@@ -10,6 +10,7 @@ import updateLocale from 'dayjs/plugin/updateLocale';
 import {EmailMessageDto} from '@shared/models';
 import FeedDetailEmailItem from '@pages/tickets/components/ticket-detail/feed-detail-email-item';
 import './feed-detail-item.scss';
+import linkifyHtml from 'linkifyjs/html'
 interface FeedDetailItemProps {
     feed: FeedDetailDisplayItem,
     index: number;
@@ -81,7 +82,7 @@ const FeedDetailItem = ({feed, index}: FeedDetailItemProps) => {
                             {itemDateTime}
                         </span>
                     </div>
-                    {feed.feedText && <p className='pt-3 body2' dangerouslySetInnerHTML={{__html: feed.feedText}}/>}
+                    {feed.feedText && <p className='pt-3 body2' dangerouslySetInnerHTML={{__html: linkifyHtml(feed.feedText)}}/>}
                 </div>
             </div>
         </div>

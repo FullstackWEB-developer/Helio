@@ -43,6 +43,8 @@
     "i18next-http-backend": "^1.0.21",
     "immutability-helper": "^3.1.1",
     "leaflet": "^1.7.1",
+    "linkify-html": "^3.0.5",
+    "linkifyjs": "^3.0.5",
     "node-sass": "4.14.1",
     "object-hash": "^2.2.0",
     "postcss": "^7.0.36",

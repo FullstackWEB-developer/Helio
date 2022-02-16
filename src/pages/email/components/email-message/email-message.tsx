@@ -6,6 +6,7 @@ import React, {useRef, useState} from 'react';
 import {Trans, useTranslation} from 'react-i18next';
 import EmailMessageHeader from './email-message-header';
 import EmailAttachment from './email-attachment';
+import linkifyHtml from 'linkifyjs/html';
 
 export interface EmailMessageProps {
     message: EmailMessageDto;
@@ -71,7 +72,7 @@ const EmailMessage = ({message, ticketCreatedForName, ticketHeaderPhoto, isColla
                             <SvgIcon type={Icon.ArrowTrendDown} className='cursor-pointer' />
                         </div>
                     </div>
-                    <div dangerouslySetInnerHTML={{__html: message.body}}>
+                    <div dangerouslySetInnerHTML={{__html: linkifyHtml(message.body)}}>
 
                     </div>
                     {
