@@ -79,10 +79,12 @@ const TicketDetail = () => {
     const {
         data: emailMessages,
         isLoading: emailLoading
-    } = useQuery([QueryTicketMessagesInfinite, ChannelTypes.Email, ticket.id], () => getMessages(ticket.id!, ChannelTypes.Email, {
+    } = useQuery([QueryTicketMessagesInfinite, ChannelTypes.Email, ticket?.id], () => getMessages(ticket.id!, ChannelTypes.Email, {
         page: 1,
         pageSize: 50
-    }));
+    }), {
+        enabled: !!ticket?.id
+    });
 
     useQuery([GetPatientPhoto, ticket?.patientId], () => getPatientPhoto(ticket?.patientId!), {
         enabled: !!ticket?.patientId,

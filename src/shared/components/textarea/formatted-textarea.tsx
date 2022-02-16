@@ -15,7 +15,7 @@ export interface FormattedTextareaProps {
     showSendIcon?: boolean;
 }
 
-    const FormattedTextarea = React.forwardRef<ReactQuill, FormattedTextareaProps>(({isLoading, iconFill, onClick, value='', onChange, disabled, showSendIcon = true}: FormattedTextareaProps, ref) => {
+const FormattedTextarea = React.forwardRef<ReactQuill, FormattedTextareaProps>(({isLoading, iconFill, onClick, value='', onChange, disabled, showSendIcon = true}: FormattedTextareaProps, ref) => {
     const {t} = useTranslation();
     const [content, setContent] = useState(value);
 
@@ -32,40 +32,42 @@ export interface FormattedTextareaProps {
         'ql-disabled' : disabled
     })
     return <div className={wrapperClass}>
-            <ReactQuill
-                ref={ref}
-                onChange={(value) => handleChange(value)}
-                defaultValue=''
-                readOnly={disabled}
-                className='bg-white'
-                value={content}
-                placeholder={t('common.enter_text')}
-                modules={{
-                    toolbar: [
-                        [{ 'header': [1, 2, false] }],
-                        ['bold', 'italic', 'underline']
-                    ]
-                }}
-            formats={[
-            "header",
-            "font",
-            "size",
-            "bold",
-            "italic",
-            "underline"
-        ]}
-            />
-            {showSendIcon && content.replace(/<[^>]+>/g, '') && <div
-                className={`absolute right-8 cursor-pointer ${isLoading ? 'bottom-2 -mr-2' : 'bottom-4 cursor-pointer'}`}>
-                <SvgIcon
-                    isLoading={isLoading}
-                    type={Icon.Send}
-                    disabled={disabled}
-                    fillClass={iconFill ? iconFill : ''}
-                    className='icon-medium'
-                    onClick={onClick}/>
-            </div>}
+        <div className='bg-white z-50'>
+            <div id="toolbar">
+                <select className="ql-size">
+                    <option value="huge">{t('email.inbox.formatter.heading')}</option>
+                    <option value="large">{t('email.inbox.formatter.subheading')}</option>
+                    <option selected></option>
+                </select>
+                <button className="ql-bold"></button>
+                <button className="ql-italic" ></button>
+                <button className="ql-underline"></button>
+            </div>
+            <div id="editor"></div>
         </div>
+        <ReactQuill
+            ref={ref}
+            onChange={(value) => handleChange(value)}
+            defaultValue=''
+            readOnly={disabled}
+            className='bg-white'
+            value={content}
+            placeholder={t('common.enter_text')}
+            modules={{
+                toolbar: '#toolbar'
+            }}
+        />
+        {showSendIcon && content.replace(/<[^>]+>/g, '') && <div
+            className={`absolute right-8 cursor-pointer ${isLoading ? 'bottom-2 -mr-2' : 'bottom-4 cursor-pointer'}`}>
+            <SvgIcon
+                isLoading={isLoading}
+                type={Icon.Send}
+                disabled={disabled}
+                fillClass={iconFill ? iconFill : ''}
+                className='icon-medium'
+                onClick={onClick}/>
+        </div>}
+    </div>
 })
 
 

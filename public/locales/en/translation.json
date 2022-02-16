@@ -1455,6 +1455,11 @@
         "4": "Work Main Phone",
         "5": "Work Direct Phone"
       },
+      "formatter": {
+        "heading":"Heading",
+        "subheading": "Subheading",
+        "normal": "Normal"
+      },
       "email_not_available_patient": "Messaging to this patient is disabled. This patient has changed their email address.",
       "email_not_available_contact": "Messaging to this contact is disabled. This contact has changed their email address."
     },
