@@ -28,7 +28,7 @@ const FormattedTextarea = React.forwardRef<ReactQuill, FormattedTextareaProps>((
         onChange(value);
     }
 
-    const wrapperClass = classnames('relative', {
+    const wrapperClass = classnames('relative formatted-text-area', {
         'ql-disabled' : disabled
     })
     return <div className={wrapperClass}>

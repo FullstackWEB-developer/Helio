@@ -38,11 +38,7 @@
   font-style: normal;
   font-size: 0.875rem;
 }
-.ql-toolbar.ql-snow {
-  border: none;
-}
-.ql-container.ql-snow {
-  border-right: none;
-  border-bottom: none;
-  border-left: none;
-}
+
+  .formatted-text-area .ql-toolbar.ql-snow {
+    border-bottom: none;
+  }

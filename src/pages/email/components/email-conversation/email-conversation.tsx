@@ -72,10 +72,14 @@ const EmailConversation = () => {
         if (patient) {
             if (patient.emailAddress !== lastEmailAddress) {
                 setEmailDisabledText('email.inbox.email_not_available_patient')
+            } else {
+                setEmailDisabledText(undefined);
             }
         } else if (contact) {
             if (contact.emailAddress !== lastEmailAddress) {
                 setEmailDisabledText('email.inbox.email_not_available_contact')
+            } else {
+                setEmailDisabledText(undefined);
             }
         } else {
             setEmailDisabledText(undefined);
