@@ -10,10 +10,7 @@ import './ticket-detail-feed.scss';
 import {selectUserList} from '@shared/store/lookups/lookups.selectors';
 import {User} from '@shared/models/user';
 import utils from '@shared/utils/utils';
-import {useQuery} from 'react-query';
-import {QueryTicketMessagesInfinite} from '@constants/react-query-constants';
-import {getMessages} from '@pages/sms/services/ticket-messages.service';
-import {ChannelTypes, EmailMessageDto, PagedList, TicketMessage, TicketMessagesDirection} from '@shared/models';
+import {EmailMessageDto, PagedList, TicketMessage, TicketMessagesDirection} from '@shared/models';
 import AlwaysScrollToBottom from '@components/scroll-to-bottom';
 import Spinner from '@components/spinner/Spinner';
 import {getUserList} from '@shared/services/lookups.service';
@@ -29,10 +26,12 @@ export enum FeedFilter {
 interface TicketDetailFeedProps {
     ticket: Ticket,
     emailLoading: boolean;
-    emailMessages?: PagedList<TicketMessage | EmailMessageDto>
+    emailMessages?: PagedList<TicketMessage | EmailMessageDto>;
+    smsMessages?: PagedList<TicketMessage | EmailMessageDto>;
+    smsLoading: boolean;
 }
 
-const TicketDetailFeed = ({ticket, emailLoading, emailMessages}: TicketDetailFeedProps) => {
+const TicketDetailFeed = ({ticket, emailLoading, emailMessages, smsMessages, smsLoading}: TicketDetailFeedProps) => {
     const {t} = useTranslation();
     dayjs.extend(utc);
     const dispatch = useDispatch();
@@ -49,13 +48,6 @@ const TicketDetailFeed = ({ticket, emailLoading, emailMessages}: TicketDetailFee
         dispatch(getUserList());
     }, [dispatch]);
 
-    const {
-        data: smsMessages,
-        isLoading: smsLoading
-    } = useQuery([QueryTicketMessagesInfinite, ChannelTypes.SMS, ticket.id], () => getMessages(ticket.id!, ChannelTypes.SMS, {
-        page: 1,
-        pageSize: 50
-    }));
 
     const getUser = (id: string | undefined): User | undefined => !!id ? users.find(user => user.id === id) : undefined;
 

@@ -86,6 +86,16 @@ const TicketDetail = () => {
         enabled: !!ticket?.id
     });
 
+    const {
+        data: smsMessages,
+        isLoading: smsLoading
+    } = useQuery([QueryTicketMessagesInfinite, ChannelTypes.SMS, ticket?.id], () => getMessages(ticket.id!, ChannelTypes.SMS, {
+        page: 1,
+        pageSize: 50
+    }),{
+        enabled: !!ticket?.id
+    });
+
     useQuery([GetPatientPhoto, ticket?.patientId], () => getPatientPhoto(ticket?.patientId!), {
         enabled: !!ticket?.patientId,
         onSuccess:(data) => {
@@ -154,10 +164,10 @@ const TicketDetail = () => {
                         />
                     </div>
                     <div className='flex-1 mb-auto'>
-                        <TicketDetailFeed emailLoading={emailLoading} emailMessages={emailMessages} ticket={ticket} />
+                        <TicketDetailFeed smsMessages={smsMessages} smsLoading={smsLoading} emailLoading={emailLoading} emailMessages={emailMessages} ticket={ticket} />
                     </div>
                     <div className='absolute bottom-0 w-full'>
-                        <TicketDetailAddNote emailMessages={emailMessages} patient={patient} contact={contact} ticket={ticket} />
+                        <TicketDetailAddNote smsMessages={smsMessages} emailMessages={emailMessages} patient={patient} contact={contact} ticket={ticket} />
                     </div>
                 </div>
                 <div className='w-1/4 overflow-y-auto border-l'>

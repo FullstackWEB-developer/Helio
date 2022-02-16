@@ -44,10 +44,11 @@ interface TicketDetailAddNoteProps {
     ticket: Ticket,
     patient?: ExtendedPatient;
     contact?: Contact;
-    emailMessages?: PagedList<TicketMessage | EmailMessageDto>
+    emailMessages?: PagedList<TicketMessage | EmailMessageDto>;
+    smsMessages?: PagedList<TicketMessage | EmailMessageDto>;
 }
 
-const TicketDetailAddNote = ({ticket, patient, contact, emailMessages}: TicketDetailAddNoteProps) => {
+const TicketDetailAddNote = ({ticket, patient, contact, emailMessages, smsMessages}: TicketDetailAddNoteProps) => {
     dayjs.extend(relativeTime)
 
     enum ChannelTabs {
@@ -94,11 +95,16 @@ const TicketDetailAddNote = ({ticket, patient, contact, emailMessages}: TicketDe
 
     useEffect(() => {
         if (selectedTab === ChannelTabs.SmsTab) {
-            const originalNumber = ticket?.originationNumber;
-            if (patient && (!patient.consentToText || patient.mobilePhone !== originalNumber)) {
+            if (!smsMessages?.results || smsMessages.results.length === 0) {
+                setNoteDisabledText(undefined);
+                return;
+            }
+            const lastMessage = smsMessages.results[smsMessages.results.length - 1];
+            const lastSmsAddress = lastMessage.direction === TicketMessagesDirection.Outgoing ? lastMessage.toAddress : lastMessage.fromAddress;
+            if (patient && (!patient.consentToText || patient.mobilePhone !== lastSmsAddress)) {
                 setNoteDisabledText('sms.sms_not_available_patient');
                 setDisabledTab(ChannelTabs.SmsTab);
-            } else if (contact && contact.mobilePhone !== originalNumber) {
+            } else if (contact && contact.mobilePhone !== lastSmsAddress) {
                 setNoteDisabledText('sms.sms_not_available_contact');
                 setDisabledTab(ChannelTabs.SmsTab);
             }
