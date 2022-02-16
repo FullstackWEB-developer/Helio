@@ -12,7 +12,7 @@ import Dropdown, {DropdownItemModel, DropdownModel} from '@components/dropdown';
 import utils from '@shared/utils/utils';
 import {Link} from 'react-router-dom';
 import {EmailPath, SmsPath} from '@app/paths';
-import {EMPTY_GUID} from '@pages/email/constants';
+import {NEW_EMAIL} from '@pages/email/constants';
 import classNames from 'classnames';
 
 const ConversationHeaderQuickActionsStripe = ({patient, contact}: {patient?: ExtendedPatient, contact?: ContactExtended}) => {
@@ -157,7 +157,7 @@ const ConversationHeaderQuickActionsStripe = ({patient, contact}: {patient?: Ext
                 <Link
                     className={contact?.emailAddress || patient?.emailAddress ? '' : 'disabled-link'}
                     to={{
-                        pathname: contact?.emailAddress || patient?.emailAddress ? `${EmailPath}/${EMPTY_GUID}` : '#',
+                        pathname: contact?.emailAddress || patient?.emailAddress ? `${EmailPath}/${NEW_EMAIL}` : '#',
                         state: {
                             ...(patient && {patient}),
                             ...(contact && {contact})

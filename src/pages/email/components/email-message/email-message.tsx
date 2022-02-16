@@ -87,7 +87,7 @@ const EmailMessage = ({message, ticketCreatedForName, ticketHeaderPhoto, isColla
                 </div>
             }
 
-            <div className='ml-10 pl-4 pb-7 border-b'/>
+            <div className='ml-14 pl-4 pb-7 border-b'/>
 
             <Tooltip targetRef={recipientChevronIcon} isVisible={displayRecipientsTooltip}
                 placement='bottom-start'>

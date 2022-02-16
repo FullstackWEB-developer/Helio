@@ -12,7 +12,7 @@ import {selectVoiceCounter} from '@pages/ccp/store/ccp.selectors';
 import { Link } from 'react-router-dom';
 import {EmailPath, SmsPath} from '@app/paths';
 import utils from '@shared/utils/utils';
-import {EMPTY_GUID} from '@pages/email/constants';
+import {NEW_EMAIL} from '@pages/email/constants';
 
 interface ContactHeaderQuickActionsProps {
     editMode?: boolean;
@@ -149,7 +149,7 @@ const ContactSubheaderQuickActions = ({editMode, editIconClickHandler, contact, 
                      <Link
                      className={contact?.emailAddress ? '' : 'disabled-link'}
                      to={{
-                         pathname:contact?.emailAddress ? `${EmailPath}/${EMPTY_GUID}` : '#',
+                         pathname:contact?.emailAddress ? `${EmailPath}/${NEW_EMAIL}` : '#',
                          state: {
                              contact
                          }

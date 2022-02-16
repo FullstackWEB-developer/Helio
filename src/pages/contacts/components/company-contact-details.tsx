@@ -18,7 +18,7 @@ import {selectVoiceCounter} from '@pages/ccp/store/ccp.selectors';
 import {selectLookupValues} from '@pages/tickets/store/tickets.selectors';
 import {Option} from '@components/option/option';
 import {EmailPath} from '@app/paths';
-import {EMPTY_GUID} from '@pages/email/constants';
+import {NEW_EMAIL} from '@pages/email/constants';
 import {useHistory} from 'react-router-dom';
 
 interface CompanyContactDetailsProps {
@@ -78,7 +78,7 @@ const CompanyContactDetails = ({editMode, contact, initiateACall, addNewContactH
     };
 
     const emailOnClick = () => {
-        const pathName = `${EmailPath}/${EMPTY_GUID}`;
+        const pathName = `${EmailPath}/${NEW_EMAIL}`;
         history.push({
             pathname: pathName,
             state: {

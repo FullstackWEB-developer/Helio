@@ -1386,8 +1386,8 @@
     "phone": "Mobile",
     "text_consent": "Text consent",
     "email_consent": "Email consent",
-    "tooltip_unavailable_sms_message": "SMS not available. SMS message can not be sent to this contact.",
-    "tooltip_unavailable_email_message": "Email not available. Email communication can  not be sent to this contact.",
+    "tooltip_unavailable_sms_message": "SMS not available. SMS message can not be sent to this patient.",
+    "tooltip_unavailable_email_message": "Email not available. Email communication can  not be sent to this patient.",
     "add": "Add",
     "company": "Company",
     "job_title": "Job Title"
@@ -1511,6 +1511,7 @@
         "existing_ticket": {
           "title": "Existing open tickets found.",
           "description": "We have found existing open tickets for this patient. Please select ticket you would like this communication to be associated with or select create new ticket below.",
+          "description_contact": "We have found existing open tickets for this contact. Please select ticket you would like this communication to be associated with or select create new ticket below.",
           "select_ticket": "Select Existing Ticket",
           "create_ticket": "Create a New Ticket",
           "list": {

@@ -81,6 +81,7 @@ const SmsNewMessageNewTicketForm = ({disabled, ...props}: SmsNewMessageNewTicket
                     onSelect={onTicketReasonSelected}
                     data-test-id='ticket-reason-test-id'
                     options={reasonOptions}
+                    required={true}
                 />
             }
         </div>

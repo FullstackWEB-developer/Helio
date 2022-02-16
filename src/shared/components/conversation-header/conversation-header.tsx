@@ -274,7 +274,7 @@ const ConversationHeader = ({info, forNewTicketMessagePurpose, patientPhoto, con
                         <>
                             <div className="mr-6">
                                 <span className="body2-medium mr-1.5">{t('sms.chat.header.ticket_id')}</span>
-                                <Link className='body2-primary' to={`${TicketsPath}/${info.ticketNumber}`}>{info.ticketNumber}</Link>
+                                <Link className='body2-primary hover:underline' to={`${TicketsPath}/${info.ticketNumber}`}>{info.ticketNumber}</Link>
                             </div>
                             <div className="mr-6">
                                 <span className="body2-medium mr-1.5">{t('sms.chat.header.ticket_type')}</span>

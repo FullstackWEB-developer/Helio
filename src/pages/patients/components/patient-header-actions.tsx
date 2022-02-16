@@ -7,7 +7,7 @@ import SvgIcon, {Icon} from '@components/svg-icon';
 import {selectVoiceCounter} from '@pages/ccp/store/ccp.selectors';
 import {useSelector} from 'react-redux';
 import {EmailPath, SmsPath} from '@app/paths';
-import {EMPTY_GUID} from '@pages/email/constants';
+import {NEW_EMAIL} from '@pages/email/constants';
 import utils from '@shared/utils/utils';
 import { useHistory} from 'react-router-dom';
 import {customHooks} from '@shared/hooks';
@@ -80,7 +80,7 @@ const PatientHeaderActions = ({patient, refreshPatient} : PatientHeaderActionsPr
 
     const sendEmail = () =>{
         if (!!patient.emailAddress) {
-            history.push(`${EmailPath}/${EMPTY_GUID}`, {
+            history.push(`${EmailPath}/${NEW_EMAIL}`, {
                 patient
             });
         }

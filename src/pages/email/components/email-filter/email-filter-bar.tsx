@@ -9,7 +9,7 @@ import EmailFilter from '@pages/email/components/email-filter/email-filter';
 import {EmailQueryType} from '@pages/email/models/email-query-type';
 import {EmailPath} from '@app/paths';
 import {useHistory} from 'react-router';
-import {EMPTY_GUID} from '@pages/email/constants';
+import {NEW_EMAIL} from '@pages/email/constants';
 
 export interface EmailFilterBarProps {
     filter: EmailFilterModel;
@@ -26,7 +26,7 @@ const EmailFilterBar = ({filter, searchTerm, onSearchTermChanged, emailQueryType
     const history = useHistory();
 
     const newEmail = () => {
-        history.replace(`${EmailPath}/${EMPTY_GUID}`)
+        history.push(`${EmailPath}/${NEW_EMAIL}`)
     }
 
     const GetTimeLabel = () => {

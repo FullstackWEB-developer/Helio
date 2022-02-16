@@ -6,7 +6,7 @@ import {ExtendedPatient} from '@pages/patients/models/extended-patient';
 import classNames from 'classnames';
 import {useHistory} from 'react-router-dom';
 import {EmailPath} from '@app/paths';
-import {EMPTY_GUID} from '@pages/email/constants';
+import {NEW_EMAIL} from '@pages/email/constants';
 
 interface PatientChartListProps {
     headings?: string[],
@@ -63,7 +63,7 @@ const PatientChartList = ({headings, rows, dividerLine, isLongValue, patient}: P
         if (row.canCall) {
             utils.initiateACall(value);
         } else if (row.canEmail) {
-            history.push(`${EmailPath}/${EMPTY_GUID}`, {
+            history.push(`${EmailPath}/${NEW_EMAIL}`, {
                 patient
             });
         }

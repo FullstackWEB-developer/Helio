@@ -17,7 +17,7 @@ import {ChannelTypes, ContactExtended, TicketMessageBase, TicketMessagesDirectio
 import {selectAppUserDetails} from '@shared/store/app-user/appuser.selectors';
 import {setAssignee} from '@pages/tickets/services/tickets.service';
 import {EmailPath} from '@app/paths';
-import {EMPTY_GUID} from '@pages/email/constants';
+import {NEW_EMAIL} from '@pages/email/constants';
 import {useHistory} from 'react-router-dom';
 import {TemplateUsedFrom} from '@components/notification-template-select/template-used-from';
 import {setLastEmailDate} from '@pages/email/store/email-slice';
@@ -128,7 +128,7 @@ const SendFirstEmail = ({ticket, patient, contact, onMailSend} : SendFirstEmailP
                 />
                 <EmailEditor content={body} onChange={(content) => {setBody(content)}}  />
                 <div className='flex flex-row space-x-8 pt-10'>
-                    <Button label='email.new_email.discard' buttonType='secondary-big' onClick={() => history.replace(`${EmailPath}/${EMPTY_GUID}`)} />
+                    <Button label='email.new_email.discard' buttonType='secondary-big' onClick={() => history.replace(`${EmailPath}/${NEW_EMAIL}`)} />
                     <Button label='email.new_email.send' isLoading={sendEmailMutation.isLoading} buttonType='big' disabled={!subject || !body} onClick={() => sendEmail()} />
                 </div>
             </div>

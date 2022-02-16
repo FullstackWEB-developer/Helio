@@ -18,6 +18,7 @@ import {setLastEmailDate} from '@pages/email/store/email-slice';
 import {ProcessTemplate} from '@constants/react-query-constants';
 import {processTemplate} from '@shared/services/notifications.service';
 import {TemplateUsedFrom} from '@components/notification-template-select/template-used-from';
+import './email-reply.scss';
 
 interface EmailReplyProps {
     ticket: Ticket;
@@ -123,12 +124,12 @@ const EmailReply = ({ticket, patient, contact, onMailSend, disabled}: EmailReply
                 {
                     (emailContent || selectedEmailTemplate) &&
                     <div className='flex body3-medium items-center' onClick={discardReply}>
-                        <span className='text-white'>{t('email.new_email.discard')}</span>
+                        <span className='text-white cursor-pointer'>{t('email.new_email.discard')}</span>
                         <SvgIcon wrapperClassName='pl-3 cursor-pointer' type={Icon.Delete} fillClass='white-icon' />
                     </div>
                 }
             </div>
-            <div className='flex items-center justify-between py-4 w-full'>
+            <div className='flex items-center justify-between pb-6 pt-2 w-full'>
                 <div className='w-16 mt-auto pl-4'>
                     <NotificationTemplateSelect isLoading={isProcessingTemplate}
                                                 channel={NotificationTemplateChannel.Email}
@@ -150,12 +151,12 @@ const EmailReply = ({ticket, patient, contact, onMailSend, disabled}: EmailReply
                         maxRows={4}
                         showFormatting={true}
                         value={emailContent}
-                        onChange={(message: string) => setEmailContent(message)}
+                        onChange={(message: string) => setEmailContent(message.trim())}
                         showSendIconInRichTextMode={false}
                         toggleRichTextMode={richTextMode}
                     />
                 </div>
-                <div className='w-16 mt-auto'>
+                <div className='send-button-width mt-auto'>
                     {
                         emailContent &&
                         <SvgIcon wrapperClassName='p-4 cursor-pointer' isLoading={sendEmailMutation.isLoading || isProcessingTemplate} type={Icon.Send} onClick={sendReply} />

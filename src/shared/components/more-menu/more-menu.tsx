@@ -3,6 +3,7 @@ import Dropdown, {DropdownItemModel, DropdownModel} from "../dropdown";
 import SvgIcon, {Icon} from "../svg-icon";
 import useComponentVisibility from "../../hooks/useComponentVisibility";
 import classnames from 'classnames';
+import './more-menu.scss';
 import {usePopper} from 'react-popper';
 import utils from '@shared/utils/utils';
 import {Placement} from '@popperjs/core/lib/enums';
@@ -76,7 +77,7 @@ const MoreMenu = ({value, items, menuClassName, iconClassName, iconFillClassname
             <SvgIcon type={Icon.MoreVert} className={iconClassName} fillClass={iconFillClassname} />
         </div>
         <div
-            className={classnames('absolute z-10', {'hidden': !isVisible})}
+            className={classnames('absolute z-10 more-menu-shadow', {'hidden': !isVisible})}
             style={styles.popper}
             ref={setPopper}
             {...attributes.popper}

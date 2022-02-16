@@ -16,7 +16,7 @@ import {useSelector} from 'react-redux';
 import {selectVoiceCounter} from '@pages/ccp/store/ccp.selectors';
 import {selectLookupValues} from '@pages/tickets/store/tickets.selectors';
 import {Option} from '@components/option/option';
-import {EMPTY_GUID} from '@pages/email/constants';
+import {NEW_EMAIL} from '@pages/email/constants';
 interface IndividualContactDetailsProps {
     contact: ContactExtended;
     editMode?: boolean;
@@ -76,7 +76,7 @@ const IndividualContactDetails = ({contact, editMode, initiateACall, closeEditMo
     };
 
     const emailOnClick = () => {
-        const pathName = `${EmailPath}/${EMPTY_GUID}`;
+        const pathName = `${EmailPath}/${NEW_EMAIL}`;
         history.push({
            pathname: pathName,
            state: {

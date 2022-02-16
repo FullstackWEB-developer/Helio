@@ -83,7 +83,7 @@ const ConversationHeaderPopup = ({anonymous, name, photo, patient, contact}: Con
                         <div className='flex flex-col pl-4'>
                             <h6>{name}</h6>
                             {
-                                contact?.jobTitle && <span className='body2 conversation-popup-contact-job-title'>{contact.jobTitle}</span>
+                                contact?.jobTitle && <span className='body2 conversation-popup-contact-job-title'>{contact?.jobTitle}</span>
                             }
                         </div>
                     </div>

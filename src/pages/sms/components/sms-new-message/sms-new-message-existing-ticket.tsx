@@ -117,7 +117,7 @@ const SmsNewMessageExistingTicket = ({tickets, patient, contact, ...props}: SmsN
         <div className='px-6 pb-7'>
             <div className='flex flex-col justify-between my-7'>
                 <h6 className='mb-5'>{t('sms.chat.new.existing_ticket.title')}</h6>
-                <p className='body2'>{t('sms.chat.new.existing_ticket.description')}</p>
+                <p className='body2'>{patient ? t('sms.chat.new.existing_ticket.description') : t('sms.chat.new.existing_ticket.description_contact')}</p>
             </div>
             <div>
                 <RadioSingle

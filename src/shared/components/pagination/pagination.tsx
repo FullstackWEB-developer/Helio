@@ -96,7 +96,7 @@ const Pagination = ({value, ...props}: PaginationProps) => {
             />
 
             <input type='text'
-                className='ml-6 mr-6 text-center border rounded-md w-11'
+                className='ml-4 mr-4 text-center border rounded-md w-11'
                 value={currentPage}
                 onChange={onInputChanged}
                 onFocus={(e)=>{e?.target?.select()}}
