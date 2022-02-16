@@ -97,6 +97,7 @@ const TicketDetailAddNote = ({ticket, patient, contact, emailMessages, smsMessag
         if (selectedTab === ChannelTabs.SmsTab) {
             if (!smsMessages?.results || smsMessages.results.length === 0) {
                 setNoteDisabledText(undefined);
+                setDisabledTab(undefined);
                 return;
             }
             const lastMessage = smsMessages.results[smsMessages.results.length - 1];
@@ -118,6 +119,7 @@ const TicketDetailAddNote = ({ticket, patient, contact, emailMessages, smsMessag
         } if (selectedTab === ChannelTabs.EmailTab) {
             if (!emailMessages?.results || emailMessages.results.length === 0) {
                 setNoteDisabledText(undefined);
+                setDisabledTab(undefined);
                 return;
             }
             const lastMessage = emailMessages.results[emailMessages.results.length - 1];
