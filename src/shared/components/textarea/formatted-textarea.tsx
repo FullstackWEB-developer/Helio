@@ -50,7 +50,7 @@ const FormattedTextarea = React.forwardRef<ReactQuill, FormattedTextareaProps>((
             onChange={(value) => handleChange(value)}
             defaultValue=''
             readOnly={disabled}
-            className='bg-white'
+            className='bg-white links'
             value={content}
             placeholder={t('common.enter_text')}
             modules={{

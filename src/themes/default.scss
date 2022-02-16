@@ -454,17 +454,17 @@
   --mime-archive-color: #616161;
 }
 
-a {
+.links a {
   color: var(--color-primary-800);
 }
 
-a.disabled {
+.links a.disabled {
   color: var(--color-primary-300);
   pointer-events: none;
   cursor: none;
 }
 
-a:hover {
+.links a:hover {
   color: var(--color-primary-400);
   cursor: pointer;
 }

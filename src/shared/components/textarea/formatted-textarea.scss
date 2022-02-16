@@ -39,6 +39,10 @@
   font-size: 0.875rem;
 }
 
-  .formatted-text-area .ql-toolbar.ql-snow {
-    border-bottom: none;
-  }
+.formatted-text-area .ql-toolbar.ql-snow {
+  border-bottom: none;
+}
+.formatted-text-area .ql-snow a {
+  color: var(--color-primary-800);
+  text-decoration: none ;
+}

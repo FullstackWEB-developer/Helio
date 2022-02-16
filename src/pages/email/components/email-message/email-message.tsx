@@ -65,14 +65,14 @@ const EmailMessage = ({message, ticketCreatedForName, ticketHeaderPhoto, isColla
             />
             {
                 !collapsed &&
-                <div className='ml-10 pl-4 flex flex-col'>
+                <div className='ml-10 pl-4 flex flex-col '>
                     <div className='pb-4 body2 flex'>
                         {constructToField()}
                         <div ref={recipientChevronIcon} onMouseOver={() => setDisplayRecipientTooltip(true)} onMouseOut={() => setDisplayRecipientTooltip(false)}>
                             <SvgIcon type={Icon.ArrowTrendDown} className='cursor-pointer' />
                         </div>
                     </div>
-                    <div dangerouslySetInnerHTML={{__html: linkifyHtml(message.body)}}>
+                    <div className='links' dangerouslySetInnerHTML={{__html: linkifyHtml(message.body)}}>
 
                     </div>
                     {

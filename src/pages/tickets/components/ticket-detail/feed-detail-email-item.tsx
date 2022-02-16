@@ -67,7 +67,7 @@ const FeedDetailEmailItem = ({message, isCollapsed, feedTime}: FeedDetailEmailIt
                             <SvgIcon type={Icon.ArrowTrendDown} className='cursor-pointer' />
                         </div>
                     </div>
-                    <div className={collapsed ? '' : 'border-b pb-4'} dangerouslySetInnerHTML={{__html: linkifyHtml(message.body)}}/>
+                    <div className={collapsed ? 'links' : 'links border-b pb-4'} dangerouslySetInnerHTML={{__html: linkifyHtml(message.body)}}/>
                     {
                         message.attachments?.length > 0 &&
                         <div className='mt-4 pt-7 border-t flex flex-wrap'>

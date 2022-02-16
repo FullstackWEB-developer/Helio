@@ -250,13 +250,15 @@ const ConversationHeader = ({info, forNewTicketMessagePurpose, patientPhoto, con
                             />
                         }
                     </div>
-                    <div>
+                    <div className='relative'>
                         {
                             isLoading ? <Spinner size='small' /> :
                                 <MoreMenu
                                     iconClassName='default-toolbar-icon'
                                     iconFillClassname='cursor-pointer icon-medium'
                                     menuClassName='w-52'
+                                    horizontalOffset={-80}
+                                    verticalOffset={5}
                                     items={getMoreMenuOption()}
                                     onClick={onMoreMenuClick}
                                 />

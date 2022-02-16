@@ -146,7 +146,7 @@ const ExternalEmailMessageDetail = ({patientPhoto, message, patient, users, setR
                     <SvgIcon type={Icon.ArrowTrendDown} className='cursor-pointer' />
                 </div>
             </div>
-            <div dangerouslySetInnerHTML={{__html: linkifyHtml(message.body)}}></div>
+            <div className='links' dangerouslySetInnerHTML={{__html: linkifyHtml(message.body)}}></div>
             {
                 message.attachments?.length > 0 &&
                 <div className='mt-4 pt-7 border-t flex flex-wrap'>

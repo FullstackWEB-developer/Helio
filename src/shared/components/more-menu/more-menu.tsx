@@ -18,9 +18,10 @@ interface MoreMenuProps {
     onClick?: (item: DropdownItemModel) => void,
     menuPlacement?: Placement;
     verticalOffset?: number;
+    horizontalOffset?: number
 }
 
-const MoreMenu = ({value, items, menuClassName, iconClassName, iconFillClassname, containerClassName, menuPlacement = 'bottom', verticalOffset=0, ...props}: MoreMenuProps) => {
+const MoreMenu = ({value, items, menuClassName, iconClassName, iconFillClassname, containerClassName, menuPlacement = 'bottom', verticalOffset=0, horizontalOffset =0, ...props}: MoreMenuProps) => {
     const [isVisible, setIsVisible, elementRef] = useComponentVisibility<HTMLDivElement>(false);
     const [valueSelected, setValueSelected] = useState(value);
     const iconContainerRef = useRef<HTMLDivElement>(null);
@@ -31,7 +32,7 @@ const MoreMenu = ({value, items, menuClassName, iconClassName, iconFillClassname
         modifiers: [{
             name: 'offset',
             options: {
-                offset: [0, verticalOffset],
+                offset: [horizontalOffset, verticalOffset],
             },
         }]
     });
