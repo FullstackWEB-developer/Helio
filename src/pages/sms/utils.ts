@@ -27,7 +27,7 @@ export const ticketListRelativeTimeFormat = (suffix: string, value?: Date) => {
     if (days > 0) {
         return valueDayJs.format('MMMM DD[,] YYYY hh:mm A');
     } else {
-        const [day, hours, minute] = utils.getRelativeTime(value);
+        const [day, hours, minute] = utils.getRelativeTime(value, true);
         return `${utils.formatRelativeTime(day, hours, minute, true)} ${suffix}`;
     }
 }

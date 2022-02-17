@@ -153,9 +153,17 @@ const formatRelativeTime = (days?: number, hours?: number, minutes?: number, abs
     return '';
 }
 
-const getRelativeTime = (date?: Date): RelativeTime => {
+const getRelativeTime = (date?: Date, isPast = false): RelativeTime => {
     if (!date) {
         return [];
+    }
+
+    if (isPast) {
+        const now = dayjs().utc();
+        let totalDays = now.diff(dayjs.utc(date), 'days');
+        let totalHours = now.add(-totalDays, 'days').diff(dayjs.utc(date), 'hours');
+        let totalMinutes = now.add(-totalDays, 'days').add(-totalHours, 'hours').diff(dayjs.utc(date), 'minutes');
+        return [totalDays, totalHours, totalMinutes];
     }
 
     let totalMinutes = dayjs.utc(date).diff(dayjs(), 'minute');
