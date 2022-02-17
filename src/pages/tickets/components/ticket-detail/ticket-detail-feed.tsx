@@ -156,7 +156,7 @@ const TicketDetailFeed = ({ticket, emailLoading, emailMessages, smsMessages, sms
             />
         </div>
         <AlwaysScrollToBottom enabled={scrollToBottom}/>
-        <div className={'overflow-y-auto h-full-minus-33'}>
+        <div className={'overflow-y-auto h-full-minus-34'}>
             {
                 feeds.map((feedItem: FeedDetailDisplayItem, index) => <FeedDetailItem key={index}
                                                                                       index={index}

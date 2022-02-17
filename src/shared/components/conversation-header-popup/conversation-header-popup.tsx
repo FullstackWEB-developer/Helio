@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {useComponentVisibility} from '@shared/hooks';
 import SvgIcon, {Icon} from '@components/svg-icon';
 import './conversation-header-popup.scss';
@@ -15,6 +15,9 @@ import ConversationHeaderQuickActionsStripe from './conversation-header-quick-ac
 import ConversationHeaderContactDetails from './conversation-header-contact-details';
 import {useDispatch} from 'react-redux';
 import {getLookupValues} from '@pages/tickets/services/tickets.service';
+import {ContactType} from '@pages/contacts/models/ContactType';
+import {useTranslation} from 'react-i18next';
+
 interface ConversationHeaderPopup {
     anonymous: boolean;
     name: string;
@@ -24,6 +27,7 @@ interface ConversationHeaderPopup {
 }
 const ConversationHeaderPopup = ({anonymous, name, photo, patient, contact}: ConversationHeaderPopup) => {
     const history = useHistory();
+    const {t} = useTranslation();
     const redirectToAthena = () => {window.open(utils.getAppParameter('AthenaHealthUrl'), '_blank')};
     const redirectToContactScreen = () => {history.push(ContactsPath, {email: name})};
     const redirectToPatientChart = (id: number) => {history.push(`${PatientsPath}/${id}`)};
@@ -69,6 +73,21 @@ const ConversationHeaderPopup = ({anonymous, name, photo, patient, contact}: Con
         dispatch(getLookupValues('ContactCategory'));
     }, [dispatch]);
 
+    const description = useMemo(() => {
+        if (contact) {
+            if (contact.type === ContactType.Individual) {
+                if (!!contact.companyName) {
+                    return t('contacts.contact_details.individual.title_at_company', {
+                        title: contact.jobTitle,
+                        company: contact.companyName
+                    });
+                } else {
+                    return contact.jobTitle;
+                }
+            }
+        }
+    }, [contact]);
+
     return (
         <div ref={elementRef}>
             <div className='cursor-pointer' onClick={() => setIsVisible(!isVisible)}>
@@ -83,7 +102,7 @@ const ConversationHeaderPopup = ({anonymous, name, photo, patient, contact}: Con
                         <div className='flex flex-col pl-4'>
                             <h6>{name}</h6>
                             {
-                                contact?.jobTitle && <span className='body2 conversation-popup-contact-job-title'>{contact?.jobTitle}</span>
+                                !!description && <span className='body2 conversation-popup-contact-job-title'>{description}</span>
                             }
                         </div>
                     </div>

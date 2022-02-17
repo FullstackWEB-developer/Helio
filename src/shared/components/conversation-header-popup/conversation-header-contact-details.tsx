@@ -12,7 +12,7 @@ import {NEW_EMAIL} from '@pages/email/constants';
 import {useHistory} from 'react-router';
 import {selectVoiceCounter} from '@pages/ccp/store/ccp.selectors';
 
-const ConversationHeaderContactDetails = ({contact, outsideEmailInboxView = false}: {contact: ContactExtended, outsideEmailInboxView?: boolean}) => {
+const ConversationHeaderContactDetails = ({contact}: {contact: ContactExtended}) => {
     const {t} = useTranslation();
     const history = useHistory();
     const facilityTypes = useSelector(state => selectLookupValues(state, 'ContactCategory'));
@@ -28,9 +28,6 @@ const ConversationHeaderContactDetails = ({contact, outsideEmailInboxView = fals
         return value ? isPhone ? utils.formatPhone(value) : value : t('common.not_available');
     }
     const emailOnClick = () => {
-        if(!outsideEmailInboxView){
-            return;
-        } 
         const pathName = `${EmailPath}/${NEW_EMAIL}`;
         history.push({
             pathname: pathName,
@@ -43,7 +40,7 @@ const ConversationHeaderContactDetails = ({contact, outsideEmailInboxView = fals
         utils.initiateACall(phoneNumber);
     }
     return (
-        <div className="px-4 pb-4 pt-6 grid grid-cols-8 gap-1 body2">
+        <div className="px-4 pb-4 pt-6 grid grid-cols-8 gap-x-1 gap-y-3 body2">
             {contact?.category && <ContactInfoField label={`${t('contacts.contact_details.individual.category')}`}
                 value={getCategoryName(contact.category)} 
                 labelClass='col-span-3' 
@@ -58,6 +55,7 @@ const ConversationHeaderContactDetails = ({contact, outsideEmailInboxView = fals
                 onValueClick={() => emailOnClick()}
                 iconOnClick={() => emailOnClick()}
                 iconFillClass='success-icon'
+                isLink={!!contact.emailAddress}
                 isIconDisabled={!contact.emailAddress}
                 labelClass='col-span-3' 
                 valueClass='col-span-5 flex' />}

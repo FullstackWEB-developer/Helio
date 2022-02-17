@@ -26,6 +26,7 @@ interface SmsNewMessageExistingTicketProps {
     contact?: ContactExtended;
     onClick?: (ticket: TicketBase) => void;
     onCancelClick?: () => void;
+    type: ChannelTypes.SMS | ChannelTypes.Email;
 }
 
 const SmsNewMessageExistingTicket = ({tickets, patient, contact, ...props}: SmsNewMessageExistingTicketProps) => {
@@ -89,7 +90,7 @@ const SmsNewMessageExistingTicket = ({tickets, patient, contact, ...props}: SmsN
             const newTicket: Ticket = {
                 type: ticketTypeSelected,
                 reason: ticketReasonSelected,
-                channel: ChannelTypes.SMS,
+                channel: props.type,
                 assignee: username
             };
 

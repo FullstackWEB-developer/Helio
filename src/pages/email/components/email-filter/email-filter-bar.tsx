@@ -10,6 +10,12 @@ import {EmailQueryType} from '@pages/email/models/email-query-type';
 import {EmailPath} from '@app/paths';
 import {useHistory} from 'react-router';
 import {NEW_EMAIL} from '@pages/email/constants';
+import FilterDot from '@components/filter-dot/filter-dot';
+import React, {useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {selectEmailHasFilter} from '@pages/email/store/email.selectors';
+import {setEmailHasFilter} from '@pages/email/store/email-slice';
+import classnames from 'classnames';
 
 export interface EmailFilterBarProps {
     filter: EmailFilterModel;
@@ -24,10 +30,17 @@ export interface EmailFilterBarProps {
 const EmailFilterBar = ({filter, searchTerm, onSearchTermChanged, emailQueryType, onFilterClick, isFilterVisible, setFilterVisible}: EmailFilterBarProps) => {
     const {t} = useTranslation();
     const history = useHistory();
-
+    const isFiltered = useSelector(selectEmailHasFilter);
+    const dispatch = useDispatch();
     const newEmail = () => {
         history.push(`${EmailPath}/${NEW_EMAIL}`)
     }
+
+    useEffect(()=>{
+        return () => {
+            dispatch(setEmailHasFilter(false));
+        };
+    }, [])
 
     const GetTimeLabel = () => {
         if (filter.timePeriod === TimePeriodDateRange) {
@@ -39,40 +52,50 @@ const EmailFilterBar = ({filter, searchTerm, onSearchTermChanged, emailQueryType
         return GetTimePeriodLabel(filter.timePeriod);
     }
 
-    if (isFilterVisible) {
-        return <EmailFilter
+    return <div>
+        <div className={classnames({'hidden': !isFilterVisible})}>
+            <EmailFilter
             value={filter}
             isUserFilterEnabled={emailQueryType === EmailQueryType.TeamEmail}
             onCloseClick={() => setFilterVisible(false)}
-            onFilterClick={onFilterClick}/>;
-    } else return <div>
-        <div className='flex-none border-b'>
-            <div className='flex flex-row justify-between pt-4 pb-4 pl-5 pr-4'>
-                <div className='subtitle2'>{t(GetTimeLabel())}</div>
-                <div className='flex flex-row'>
-                    <SvgIcon
-                        type={Icon.Note}
-                        className='cursor-pointer icon-medium'
-                        fillClass='default-toolbar-icon'
-                        wrapperClassName='mr-7'
-                        onClick={newEmail}
-                    />
-                    <SvgIcon
-                        type={Icon.FilterList}
-                        fillClass='default-toolbar-icon'
-                        className='cursor-pointer icon-medium'
-                        onClick={() => setFilterVisible(true)}
-                    />
+            onFilterClick={onFilterClick}/>
+        </div>
+
+        <div className={classnames({'hidden': isFilterVisible})}>
+            <div className='flex-none border-b'>
+                <div className='flex flex-row justify-between pt-4 pb-4 pl-5 pr-4'>
+                    <div className='subtitle2'>{t(GetTimeLabel())}</div>
+                    <div className='flex flex-row'>
+                        <SvgIcon
+                            type={Icon.Note}
+                            className='cursor-pointer icon-medium'
+                            fillClass='default-toolbar-icon'
+                            wrapperClassName='mr-7'
+                            onClick={newEmail}
+                        />
+                        <div className='relative'>
+                            <SvgIcon
+                                type={Icon.FilterList}
+                                fillClass='default-toolbar-icon'
+                                className='cursor-pointer icon-medium'
+                                onClick={() => setFilterVisible(true)}
+                            />
+                            {isFiltered && <div className='absolute bottom-1 right-0'>
+                                <FilterDot />
+                            </div>}
+                        </div>
+
+                    </div>
                 </div>
             </div>
+            <SearchInputField
+                wrapperClassNames='h-12 flex-none'
+                iconWrapperClassName='pl-5'
+                placeholder={t('email.filter.search_placeholder')}
+                value={searchTerm}
+                onChange={(value) => onSearchTermChanged(value)}
+            />
         </div>
-        <SearchInputField
-            wrapperClassNames='h-12 flex-none'
-            iconWrapperClassName='pl-5'
-            placeholder={t('email.filter.search_placeholder')}
-            value={searchTerm}
-            onChange={(value) => onSearchTermChanged(value)}
-        />
     </div>
 }
 

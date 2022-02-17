@@ -8,7 +8,6 @@ import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import isToday from 'dayjs/plugin/isToday';
 import utils from '@shared/utils/utils';
-import Tooltip from '@components/tooltip/tooltip';
 import {customHooks} from '@shared/hooks';
 import EmailAttachment from '@pages/email/components/email-message/email-attachment';
 import Button from '@components/button/button';
@@ -88,9 +87,9 @@ const ExternalEmailMessageDetail = ({patientPhoto, message, patient, users, setR
     }, [message.createdOn]);
 
     const recipientChevronIcon = useRef(null);
-    const [displayRecipientsTooltip, setDisplayRecipientTooltip] = useState(false);
+    const [displayRecipients, setDisplayRecipients] = useState(false);
     customHooks.useOutsideClick([recipientChevronIcon], () => {
-        setDisplayRecipientTooltip(false);
+        setDisplayRecipients(false);
     });
 
     const constructToField = () => {
@@ -116,7 +115,8 @@ const ExternalEmailMessageDetail = ({patientPhoto, message, patient, users, setR
     }
 
     return (
-        <div className='flex flex-col flex-1 w-full p-4'>
+        <div className='flex flex-col justify-between md:justify-start external-email-view w-full p-4'>
+            <div>
             <div className='flex items-center space-x-4'>
                 <div>
                     {photo}
@@ -142,10 +142,27 @@ const ExternalEmailMessageDetail = ({patientPhoto, message, patient, users, setR
             </div>
             <div className='body2 flex py-4 items-center'>
                 {constructToField()}
-                <div ref={recipientChevronIcon} onClick={() => setDisplayRecipientTooltip(!displayRecipientsTooltip)}>
+                <div ref={recipientChevronIcon} onClick={() => setDisplayRecipients(!displayRecipients)}>
                     <SvgIcon type={Icon.ArrowTrendDown} className='cursor-pointer' />
                 </div>
             </div>
+            {displayRecipients && <div className='flex flex-col pb-6 whitespace-pre'>
+                <div className='flex flex-row items-center'>
+                    <div className='subtitle3'>{`${t('email.inbox.from_label')} `}</div>
+                    <div className='body3-medium'>{message?.fromAddress || ''}</div>
+                </div>
+                <div className='flex flex-row items-center'>
+                    <div className='subtitle3'>{`${t('email.inbox.to_label')} `}</div>
+                    <div className='body3-medium'>{message?.toAddress || ''}</div>
+                </div>
+                {
+                    message?.ccAddress?.length > 0 &&
+                    <div className='flex flex-row items-center'>
+                        <div className='subtitle3'>{`${t('email.inbox.cc_label')} `}</div>
+                        <div className='body3-medium'> {message?.ccAddress || ''}</div>
+                    </div>
+                }
+            </div>}
             <div className='links' dangerouslySetInnerHTML={{__html: linkifyHtml(message.body)}}></div>
             {
                 message.attachments?.length > 0 &&
@@ -158,20 +175,8 @@ const ExternalEmailMessageDetail = ({patientPhoto, message, patient, users, setR
                 </div>
             }
             <div className='pb-5 border-b' />
-
-            <Button className='w-full mt-4' label='email.new_email.reply' onClick={()=>setReplyMode(true)} />
-
-            <Tooltip targetRef={recipientChevronIcon} isVisible={displayRecipientsTooltip}
-                placement='bottom-start'>
-                <div className='flex flex-col subtitle3 px-4'>
-                    <span className='py-4'><b>{t('email.inbox.from_label')}</b> {message?.fromAddress || ''}</span>
-                    <span className='pb-4'><b>{t('email.inbox.to_label')}</b> {message?.toAddress || ''}</span>
-                    {
-                        message?.ccAddress?.length > 0 &&
-                        <span className='pb-4'><b>{t('email.inbox.cc_label')}</b> {message?.ccAddress || ''}</span>
-                    }
-                </div>
-            </Tooltip>
+            </div>
+            <Button className='w-full md:w-1/12 mt-4' label='email.new_email.reply' onClick={()=>setReplyMode(true)} />
         </div>
     )
 }

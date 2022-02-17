@@ -125,10 +125,10 @@ const ExternalEmail = () => {
                 <div className='flex-1'>
                     {
                         selectedMessage &&
-                        <SvgIcon wrapperClassName='px-2 cursor-pointer flex-1' fillClass='rgba-05-fill' type={Icon.ArrowBack} onClick={() => setSelectedMessage(undefined)} />
+                        <SvgIcon wrapperClassName='px-4 cursor-pointer flex-1' fillClass='rgba-05-fill' type={Icon.ArrowBack} onClick={() => setSelectedMessage(undefined)} />
                     }
                 </div>
-                <div className='flex-auto text-center'>{t('external_access.email.title')}</div>
+                <div className='flex-auto text-center h7'>{t('external_access.email.title')}</div>
                 <div className='flex-1'></div>
             </div>
         }
@@ -139,7 +139,7 @@ const ExternalEmail = () => {
                     <ExternalEmailMessageDetail patientPhoto={patientPhoto} message={selectedMessage} patient={patient} users={users?.results} setReplyMode={setReplyMode} /> 
                 )
                 :
-                <div className='px-4'>
+                <div className='px-4 overflow-y-auto'>
                     {[...messages].sort((a: EmailMessageDto, b: EmailMessageDto) => getTime(b.createdOn) - getTime(a.createdOn)).map(message => <ExternalEmailListItem
                         patientPhoto={patientPhoto}
                         users={users?.results}

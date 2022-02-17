@@ -159,7 +159,7 @@ const EmailReply = ({ticket, patient, contact, onMailSend, disabled}: EmailReply
                 <div className='send-button-width mt-auto'>
                     {
                         emailContent &&
-                        <SvgIcon wrapperClassName='p-4 cursor-pointer' isLoading={sendEmailMutation.isLoading || isProcessingTemplate} type={Icon.Send} onClick={sendReply} />
+                        <SvgIcon wrapperClassName='p-4 cursor-pointer' isLoading={sendEmailMutation.isLoading} disabled={isProcessingTemplate} type={Icon.Send} onClick={sendReply} />
                     }
                 </div>
             </div>

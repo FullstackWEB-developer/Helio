@@ -22,8 +22,8 @@ const ParentExtraTemplate = ({logicKey, patient, parentType }: ParentExtraTempla
     useEffect(() => {
         switch (logicKey) {
             case 'LabResult': {
-                setDropdownLabel('tickets.notifications.lab_results.view_recent_labs');
                 if (patient) {
+                    setDropdownLabel('tickets.notifications.lab_results.view_recent_labs');
                     setElement(<NotificationLabResult patientId={patient?.patientId} departmentId={patient?.departmentId} parentType={parentType} />)
                 }
                 break;
@@ -42,14 +42,14 @@ const ParentExtraTemplate = ({logicKey, patient, parentType }: ParentExtraTempla
         });
 
     return <div className={wrapperClassName}>
-        <div className='flex flex-row cursor-pointer' onClick={() => setOpen(!isOpen)}>
+        {dropdownLabel && <div className='flex flex-row cursor-pointer' onClick={() => setOpen(!isOpen)}>
             <div className='body2'>
                 {t(dropdownLabel)}
             </div>
             <div>
                 <SvgIcon type={isOpen ? Icon.ArrowUp : Icon.ArrowDown} className='icon-medium'/>
             </div>
-        </div>
+        </div>}
         {isOpen && <div className={`pt-4`}>
             {element}
         </div>}

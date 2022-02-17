@@ -156,14 +156,14 @@ const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(({
                         <SvgIcon type={Icon.Format} fillClass={`${isFormatEnabled ? 'success-icon' : 'rgba-05-fill'}`}/>
                     </div>}
             </div>
-            {isFormatEnabled && <FormattedTextarea value={textAreaValue}
+            {isFormatEnabled && <div className='text-area'><FormattedTextarea value={textAreaValue}
                                                    ref={formattedTextAreaRef}
                                                    iconFill='notes-send'
                                                    onChange={(message) => props.onChange && props.onChange(message)}
                                                    onClick={onClick}
                                                    disabled={props.disabled}
                                                    isLoading={isLoading}
-                                                   showSendIcon={showSendIconInRichTextMode}/>}
+                                                        showSendIcon={showSendIconInRichTextMode}/></div>}
             {!isFormatEnabled &&<div className='w-full h-full'>
                 <div className={textAreaWrapperClass}>
                     <textarea ref={mergeRefs([textAreaRef, ref])}

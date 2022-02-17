@@ -13,9 +13,10 @@ export interface FormattedTextareaProps {
     onChange:(message: string) =>void;
     disabled?: boolean;
     showSendIcon?: boolean;
+    placeHolder?: string;
 }
 
-const FormattedTextarea = React.forwardRef<ReactQuill, FormattedTextareaProps>(({isLoading, iconFill, onClick, value='', onChange, disabled, showSendIcon = true}: FormattedTextareaProps, ref) => {
+const FormattedTextarea = React.forwardRef<ReactQuill, FormattedTextareaProps>(({isLoading, iconFill, onClick, value='', onChange, disabled, showSendIcon = true, placeHolder='common.enter_text'}: FormattedTextareaProps, ref) => {
     const {t} = useTranslation();
     const [content, setContent] = useState(value);
 
@@ -28,7 +29,7 @@ const FormattedTextarea = React.forwardRef<ReactQuill, FormattedTextareaProps>((
         onChange(value);
     }
 
-    const wrapperClass = classnames('relative formatted-text-area', {
+    const wrapperClass = classnames('relative formatted-text-area w-full', {
         'ql-disabled' : disabled
     })
     return <div className={wrapperClass}>
@@ -52,7 +53,7 @@ const FormattedTextarea = React.forwardRef<ReactQuill, FormattedTextareaProps>((
             readOnly={disabled}
             className='bg-white links'
             value={content}
-            placeholder={t('common.enter_text')}
+            placeholder={t(placeHolder)}
             modules={{
                 toolbar: '#toolbar'
             }}

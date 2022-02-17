@@ -22,9 +22,12 @@
 }
 
 .ql-editor{
-  min-height:4rem;
+  min-height:5.5rem;
   padding-right: 4rem;
-  max-height: 6rem;
+}
+
+.text-area .ql-editor {
+  max-height: 7rem;
 }
 
 .ql-disabled {

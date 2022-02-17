@@ -265,6 +265,7 @@ const SmsNewMessage = ({...props}: SmsNewMessageProps) => {
                 {!isLoading && step === SmsNewMessageSteps.ExistingTicket &&
                     <SmsNewMessageExistingTicket
                         tickets={tickets}
+                        type={ChannelTypes.SMS}
                         onTicketsPageChange={onTicketsPageChanged}
                         patient={patientSelected}
                         contact={contactSelected}

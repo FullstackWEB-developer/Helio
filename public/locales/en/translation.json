@@ -1043,7 +1043,8 @@
       "no_empty_message": "Please type your message before sending"
     },
     "email": {
-      "title": "Conversation History"
+      "title": "Conversation History",
+      "type_your_message": "Type your message."
     },
     "registration": {
       "personal_information": "Personal Information",
@@ -1199,7 +1200,8 @@
           "1": "Mobile Phone",
           "2": "Work Main Phone",
           "3": "Work Direct Phone"
-        }
+        },
+        "title_at_company": "{{title}} at {{company}}"
       },
       "company": {
         "associated_with": "Contacts associated with {{companyName}}",
@@ -1473,6 +1475,7 @@
       },
       "subject" : "Subject",
       "template": "Template",
+      "template_label": "Template:",
       "body_placeholder": "Enter Text",
       "send": "Send",
       "discard": "Discard",
@@ -1610,7 +1613,7 @@
       "personalize_message_title": "Personalize Invitation Message",
       "personalize_message_placeholder": "Invitation Message",
       "add_button": "Add Users",
-      "name_or_email": "Name, Email or more...",
+      "name_or_email": "Name or Email",
       "role": "Role",
       "invitation_sent_success": "Invitations have been sent successfully.\nIn a few seconds you'll be redirected to Manage users screen where you can verify the invites.",
       "invitation_sent_error": "The sending of the invitation has failed"

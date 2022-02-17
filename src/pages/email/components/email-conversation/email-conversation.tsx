@@ -25,6 +25,7 @@ import {removeUnreadEmailTicketId} from '@pages/email/store/email-slice';
 import {useDispatch, useSelector} from 'react-redux';
 import {selectUnreadEmails} from '@pages/email/store/email.selectors';
 import Alert from '@components/alert/alert';
+import NewEmailHeader from '@pages/email/components/new-email/components/new-email-header';
 
 const EmailConversation = () => {
     const {ticketId} = useParams<{ticketId: string}>();
@@ -51,7 +52,7 @@ const EmailConversation = () => {
     const [messages, setMessages] = useState<EmailMessageDto[]>([]);
     const messageListContainerRef = useRef<HTMLDivElement>(null);
     const markReadMutation = useMutation(({ticketId, channel}: {ticketId: string, channel: ChannelTypes}) => markRead(ticketId, channel, TicketMessagesDirection.Incoming), {
-        onSuccess: () => {
+        onSettled: () => {
             dispatch(removeUnreadEmailTicketId(ticketId));
         }
     });
@@ -140,6 +141,7 @@ const EmailConversation = () => {
     return (
         ticket ?
             <div className='w-full flex flex-col'>
+                {(!messages || messages.length === 0) &&<NewEmailHeader/>}
                 <div className='pb-4'>
                     <ConversationHeader info={{...ticket, ticketId: ticket.id, createdForEndpoint: ticket.incomingEmailAddress}}
                         forNewTicketMessagePurpose={false} patientPhoto={patientPhoto} conversationChannel={ChannelTypes.Email}

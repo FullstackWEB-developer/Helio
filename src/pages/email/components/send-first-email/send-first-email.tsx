@@ -21,6 +21,7 @@ import {NEW_EMAIL} from '@pages/email/constants';
 import {useHistory} from 'react-router-dom';
 import {TemplateUsedFrom} from '@components/notification-template-select/template-used-from';
 import {setLastEmailDate} from '@pages/email/store/email-slice';
+import {useTranslation} from 'react-i18next';
 
 export interface SendFirstEmailProps {
     ticket: Ticket;
@@ -37,6 +38,7 @@ const SendFirstEmail = ({ticket, patient, contact, onMailSend} : SendFirstEmailP
     const dispatch = useDispatch();
     const changeAssigneeMutation = useMutation(setAssignee);
     const history = useHistory();
+    const {t} = useTranslation();
     useEffect(() => {
         if (patient?.emailAddress) {
             setEmailAddress(patient.emailAddress)
@@ -107,7 +109,12 @@ const SendFirstEmail = ({ticket, patient, contact, onMailSend} : SendFirstEmailP
         }
     }
 
-    return <div className='pr-20 pt-6 pb-10 flex flex-row'>
+    return <div className='flex flex-col first-email'>
+        {selectedTemplate &&<div className='flex flex-row pl-16 pt-4'>
+            <div className='body2-medium pr-2'>{t('email.new_email.template_label')}</div>
+            <div className='body2'>{selectedTemplate?.displayText}</div>
+        </div>}
+    <div className='pr-20 pt-4 pb-10 flex flex-row'>
         <div className='w-14 h-14 flex items-center justify-center'>
             <NotificationTemplateSelect isLoading={isProcessing}
                                         channel={NotificationTemplateChannel.Email}
@@ -126,13 +133,14 @@ const SendFirstEmail = ({ticket, patient, contact, onMailSend} : SendFirstEmailP
                     containerClassName='w-full'
                     required={true}
                 />
-                <EmailEditor content={body} onChange={(content) => {setBody(content)}}  />
+                <EmailEditor showSendIcon={false} content={body} onChange={(content) => {setBody(content)}}  />
                 <div className='flex flex-row space-x-8 pt-10'>
                     <Button label='email.new_email.discard' buttonType='secondary-big' onClick={() => history.replace(`${EmailPath}/${NEW_EMAIL}`)} />
                     <Button label='email.new_email.send' isLoading={sendEmailMutation.isLoading} buttonType='big' disabled={!subject || !body} onClick={() => sendEmail()} />
                 </div>
             </div>
         </div>
+    </div>
     </div>
 }
 

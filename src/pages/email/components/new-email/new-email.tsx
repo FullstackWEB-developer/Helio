@@ -256,6 +256,7 @@ const NewEmail = () => {
                 onTicketsPageChange={onTicketsPageChanged}
                 patient={patientSelected}
                 contact={contactSelected}
+                type={ChannelTypes.Email}
                 onClick={(ticket) => onTicketSelect(ticket)}
                 onCancelClick={onTicketSelectionCancelClick}
             />;

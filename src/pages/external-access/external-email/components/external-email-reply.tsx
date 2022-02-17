@@ -27,26 +27,24 @@ const ExternalEmailReply = ({message, setReplyMode, setSelectedMessage}: Externa
     const dispatch = useDispatch();
     const emptyHtml = '<p><br></p>';
     const discardCompose = () => {
-        setEmailSubject('');
         setEmailContent('');
         setReplyMode(false);
     }
     const request = useSelector(selectRedirectLink);
-    const [emailSubject, setEmailSubject] = useState(message?.subject ?? '');
     const [emailContent, setEmailContent] = useState('');
     const {setLastMessageDate} = useContext(RealtimeTicketMessageContext)!;
     const sendEmail = () => {
-        if (!request.ticketId) {return;}
+        if (!request?.ticketId) {return;}
         const cwcEmail = utils.getAppParameter('HelioEmailAddress');
-        const message: TicketMessageBase = {
+        const newMessage: TicketMessageBase = {
             channel: ChannelTypes.Email,
             body: emailContent,
             toAddress: cwcEmail,
             ticketId: request.ticketId,
             direction: TicketMessagesDirection.Incoming,
-            ...(emailSubject && {subject: emailSubject})
+            subject: message?.subject
         }
-        sendEmailMutation.mutate(message);
+        sendEmailMutation.mutate(newMessage);
     }
 
     const sendEmailMutation = useMutation(sendMessage, {
@@ -70,15 +68,16 @@ const ExternalEmailReply = ({message, setReplyMode, setSelectedMessage}: Externa
     });
 
 
+    const displaySendButton = emailContent && emailContent !== emptyHtml;
     return (
         <div className='flex flex-col flex-1 h-full overflow-hidden'>
             <div className='flex h-14 reply-header items-center px-4 subtitle justify-between'>
                 {t('email.inbox.send_reply')}
                 <div className='flex items-center justify-end'>
-                    <SvgIcon wrapperClassName='pr-6 cursor-pointer' type={Icon.Attachment} fillClass='white-icon' />
-                    <SvgIcon wrapperClassName='pr-6 cursor-pointer' type={Icon.Delete} fillClass='white-icon' onClick={discardCompose} />
+                    {/* <SvgIcon wrapperClassName='pr-6 cursor-pointer' type={Icon.Attachment} fillClass='white-icon' />*/}
+                    <SvgIcon wrapperClassName={`cursor-pointer ${displaySendButton ? 'pr-6': 'pr-2'}`} type={Icon.Delete} fillClass='white-icon' onClick={discardCompose} />
                     {
-                        emailContent && emailContent !== emptyHtml &&
+                        displaySendButton &&
                         <Button label='common.send' buttonType='secondary' className='z-10' onClick={sendEmail} isLoading={sendEmailMutation.isLoading} />
                     }
                 </div>
@@ -86,9 +85,9 @@ const ExternalEmailReply = ({message, setReplyMode, setSelectedMessage}: Externa
             <div className='h-12'>
                 <Input name='subject'
                     type='text'
-                    value={emailSubject}
+                    value={message?.subject}
+                    disabled={true}
                     placeholder='email.subject'
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmailSubject(e.target.value)}
                     containerClassName='w-full h-full' />
             </div>
             <ExternalEmailTextArea content={emailContent} handleChange={setEmailContent} />

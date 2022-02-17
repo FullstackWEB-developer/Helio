@@ -116,7 +116,7 @@ const ConversationHeaderQuickActionsStripe = ({patient, contact}: {patient?: Ext
                     disabled={voiceCounter === 1 || (!contactHasAnyPhoneOptions && !patientHasAnyPhoneOptions)}
                 />
             </span>
-            <div className='flex items-center cursor-pointer' ref={typeDropdownRef}>
+            <div className='flex items-center cursor-pointer relative' ref={typeDropdownRef}>
                 <div
                     onClick={() => {if (contactHasAnyPhoneOptions || patientHasAnyPhoneOptions) {setDisplayPhoneTypeDropdown(!displayPhoneTypeDropdown)} }}
                     className='flex flex-row'>
@@ -131,11 +131,11 @@ const ConversationHeaderQuickActionsStripe = ({patient, contact}: {patient?: Ext
                     </div>
                 </div>
                 {displayPhoneTypeDropdown &&
-                    <div className='absolute mt-20 z-30'>
+                    <div className='absolute pt-32 z-30'>
                         <Dropdown model={phoneTypeDropdownModel} />
                     </div>}
             </div>
-            <span className='pl-8 pr-8'>
+            <span className='pl-8 pr-6'>
                 <Link
                     className={contact?.mobilePhone || patient?.mobilePhone ? '' : 'disabled-link'}
                     to={{

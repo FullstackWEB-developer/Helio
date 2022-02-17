@@ -35,6 +35,9 @@ const emailSlice = createSlice({
         },
         setLastEmailDate(state) {
             state.lastEmailDate = new Date();
+        },
+        setEmailHasFilter(state, {payload}: PayloadAction<boolean>) {
+            state.hasFilter = payload;
         }
     }
 });
@@ -43,7 +46,8 @@ export const {
     setMessageSummaries,
     appendUnreadEmailTicketId,
     removeUnreadEmailTicketId,
-    setLastEmailDate
+    setLastEmailDate,
+    setEmailHasFilter
 } = emailSlice.actions
 
 export default emailSlice.reducer

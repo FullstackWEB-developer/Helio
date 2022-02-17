@@ -10,7 +10,7 @@ import {useTranslation} from 'react-i18next';
 import {useSelector} from 'react-redux';
 import {useHistory} from 'react-router';
 
-const ConversationHeaderPatientDetails = ({patient, outsideEmailInboxView = false}: {patient: ExtendedPatient, outsideEmailInboxView?: boolean}) => {
+const ConversationHeaderPatientDetails = ({patient}: {patient: ExtendedPatient}) => {
     const {t} = useTranslation();
     const history = useHistory();
     const voiceCounter = useSelector(selectVoiceCounter);
@@ -24,9 +24,6 @@ const ConversationHeaderPatientDetails = ({patient, outsideEmailInboxView = fals
         return !!value ? 'success-icon' : '';
     }
     const emailOnClick = () => {
-        if (!outsideEmailInboxView) {
-            return;
-        }
         const pathName = `${EmailPath}/${NEW_EMAIL}`;
         history.push({
             pathname: pathName,
@@ -36,7 +33,7 @@ const ConversationHeaderPatientDetails = ({patient, outsideEmailInboxView = fals
         });
     }
     return (
-        <div className="px-4 pb-4 pt-6 grid grid-cols-8 gap-1 body2">
+        <div className="px-4 pb-4 pt-6 grid grid-cols-8 gap-x-1 gap-y-3  body2">
             {patient?.mobilePhone && <ContactInfoField
                 label={`${t('contacts.contact_details.individual.mobile_phone')}`}
                 labelClass='col-span-2'

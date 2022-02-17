@@ -23,6 +23,7 @@ import {
 } from '@shared/models/email-sms-time-period-options';
 import useCheckPermission from '@shared/hooks/useCheckPermission';
 import {selectAppUserDetails} from '@shared/store/app-user/appuser.selectors';
+import {setEmailHasFilter} from '@pages/email/store/email-slice';
 
 interface EmailFilterProps {
     className?: string;
@@ -35,6 +36,7 @@ const EmailFilter = ({className, isUserFilterEnabled, value, ...props}: EmailFil
 
     dayjs.extend(utc);
     const dispatch = useDispatch();
+    const [displayFilters, setDisplayFilters] = useState<boolean>(true);
     const isDefaultTeamView = useCheckPermission('Email.DefaultToTeamView');
     const {id} = useSelector(selectAppUserDetails);
     const {t} = useTranslation();
@@ -102,6 +104,10 @@ const EmailFilter = ({className, isUserFilterEnabled, value, ...props}: EmailFil
                 }
                 fromDate = date.toDate();
             }
+
+            if (formData.timePeriod !== TimePeriodLast7Days) {
+                dispatch(setEmailHasFilter(true));
+            }
         }
         return {fromDate: fromDate, toDate: toDate};
     }
@@ -112,6 +118,7 @@ const EmailFilter = ({className, isUserFilterEnabled, value, ...props}: EmailFil
         };
 
         if (!!formData.assignedTo && isUserFilterEnabled) {
+            dispatch(setEmailHasFilter(true));
             filter.assignedTo = formData.assignedTo;
         } else if (!isUserFilterEnabled) {
             filter.assignedTo = value?.assignedTo;
@@ -132,7 +139,16 @@ const EmailFilter = ({className, isUserFilterEnabled, value, ...props}: EmailFil
             assignedTo: isDefaultTeamView ? '': id
         }
         reset(defaults);
-        onFilterClick(defaults)
+        dispatch(setEmailHasFilter(false));
+        setDisplayFilters(false);
+        setTimeout(() => {
+            setDisplayFilters(true);
+        }, 0)
+        onFilterClick(defaults);
+    }
+
+    if (!displayFilters) {
+        return null;
     }
 
     return (<div className={className}>

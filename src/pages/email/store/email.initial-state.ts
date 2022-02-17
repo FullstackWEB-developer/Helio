@@ -5,11 +5,13 @@ export interface EmailInitialState {
     messageSummaries: TicketMessageSummary[];
     unreadEmails: UnreadEmail[];
     lastEmailDate: Date;
+    hasFilter: boolean;
 }
 
 const initialEmailState: EmailInitialState = {
     messageSummaries: [],
     unreadEmails: [],
+    hasFilter: false,
     lastEmailDate: new Date()
 }
 

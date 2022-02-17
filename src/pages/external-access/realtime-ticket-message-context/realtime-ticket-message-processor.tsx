@@ -46,14 +46,14 @@ const RealtimeTicketMessageProcessor = ({type} : RealtimeTicketMessageProcessorP
     const markReadMutation = useMutation(({ticketId, channel}: {ticketId: string, channel: ChannelTypes}) => markRead(ticketId, channel, TicketMessagesDirection.Outgoing));
 
     useEffect(() => {
-        if (markAsRead && isPageVisible) {
+        if (markAsRead && isPageVisible && request?.ticketId) {
             markReadMutation.mutate({
                 ticketId: request.ticketId,
                 channel: type
             });
             dispatch(setMarkAsRead(false));
         }
-    }, [markAsRead, isPageVisible, markReadMutation, request.ticketId, dispatch])
+    }, [markAsRead, isPageVisible, markReadMutation, request?.ticketId, dispatch])
 
     useEffect(() => {
         if (connection && connection.state === HubConnectionState.Disconnected) {

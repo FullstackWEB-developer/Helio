@@ -61,6 +61,8 @@ button.secondary-button:hover:enabled,
 button.secondary-medium-button:hover:enabled,
 button.secondary-big-button:hover:enabled {
   background-color: rgba(var(--color-primary-500-rgb), 0.04);
+  color: var(--button-secondary-hover-color);
+  border-color: var(--button-secondary-hover-border-color);
 }
 
 button.secondary-button:focus:enabled,

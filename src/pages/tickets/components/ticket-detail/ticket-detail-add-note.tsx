@@ -342,7 +342,7 @@ const TicketDetailAddNote = ({ticket, patient, contact, emailMessages, smsMessag
     }, [noteDisabledText, disabledTab, selectedTab]);
 
     const isSendSmsDisabled = useMemo(() => {
-        return !mobileNumber || isTicketDisabled;
+        return !mobileNumber || isTicketDisabled || isTabDisabled;
     }, [isTicketDisabled, mobileNumber]);
 
     const isSendEmailDisabled = useMemo(() => {
@@ -367,7 +367,7 @@ const TicketDetailAddNote = ({ticket, patient, contact, emailMessages, smsMessag
                 <div className='flex w-16 h-full pb-4 pl-4 cursor-pointer'>
                     {(selectedTab === ChannelTabs.SmsTab || selectedTab === ChannelTabs.EmailTab) &&
                         <NotificationTemplateSelect
-                            disabled={(!emailAddress && !mobileNumber) || isTabDisabled}
+                            disabled={(!emailAddress && !mobileNumber) || isTabDisabled || isTicketDisabled}
                             usedFrom={TemplateUsedFrom.TicketDetail}
                             channel={selectedTab === 1 ? NotificationTemplateChannel.Sms : NotificationTemplateChannel.Email}
                             onSelect={(template) => onTemplateSelect(template)}
@@ -417,7 +417,7 @@ const TicketDetailAddNote = ({ticket, patient, contact, emailMessages, smsMessag
                                 resizable={false}
                                 isLoading={sendSmsMutation.isLoading || isProcessing}
                                 value={smsText}
-                                disabled={isSendSmsDisabled || isTabDisabled}
+                                disabled={isSendSmsDisabled}
                                 hasBorder={false}
                                 showFormatting={false}
                                 onChange={(message) => setSmsText(message)}
@@ -460,7 +460,7 @@ const TicketDetailAddNote = ({ticket, patient, contact, emailMessages, smsMessag
                                 maxRows={5}
                                 key='email'
                                 value={emailText}
-                                disabled={isSendEmailDisabled}
+                                disabled={isSendEmailDisabled || (!ticketHasEmailMessages && !emailSubject)}
                                 onChange={(message) => setEmailText(message)}
                                 resizable={false}
                                 isLoading={sendEmailMutation.isLoading || isProcessing}

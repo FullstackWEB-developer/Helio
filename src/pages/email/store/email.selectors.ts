@@ -19,3 +19,8 @@ export const selectLastEmailDate = createSelector(
     emailState,
     state => state.lastEmailDate as Date
 )
+
+export const selectEmailHasFilter = createSelector(
+    emailState,
+    state => state.hasFilter as Date
+)

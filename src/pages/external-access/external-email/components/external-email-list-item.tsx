@@ -66,7 +66,7 @@ const ExternalEmailListItem = ({message, patientPhoto, users, patient, onClick} 
 
     }, [message, patientPhoto, user, patient]);
 
-    return <div className='flex flex-row items-center border-b space-x-4 external-email-list-item' onClick={() => onClick(message)}>
+    return <div className='flex flex-row items-center border-b space-x-4 external-email-list-item cursor-pointer' onClick={() => onClick(message)}>
         <div>
             {photo}
         </div>

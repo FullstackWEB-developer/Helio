@@ -7,7 +7,6 @@
         font-size: var(--contact-phone-type-fontSize);
         color: var(--contact-phone-type-color);
         min-width: 5.5rem;
-        width: 7.5rem;
         &-disabled {
             @extend .conversation-header-quick-actions-phone-type;
             @extend .conversation-header-quick-actions-disabled-section;
