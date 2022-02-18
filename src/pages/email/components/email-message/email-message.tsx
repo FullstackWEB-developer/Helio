@@ -52,9 +52,6 @@ const EmailMessage = ({message, ticketCreatedForName, ticketHeaderPhoto, index, 
 
     const recipientChevronIcon = useRef(null);
     const [displayRecipientsTooltip, setDisplayRecipientTooltip] = useState(false);
-    console.log("a " + collapsed);
-    console.log("b " + emailCount);
-    console.log("c " + index);
 
     return (
         <div className='px-6'>
