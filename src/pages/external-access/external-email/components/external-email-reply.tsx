@@ -78,7 +78,7 @@ const ExternalEmailReply = ({message, setReplyMode, setSelectedMessage}: Externa
                     <SvgIcon wrapperClassName={`cursor-pointer ${displaySendButton ? 'pr-6': 'pr-2'}`} type={Icon.Delete} fillClass='white-icon' onClick={discardCompose} />
                     {
                         displaySendButton &&
-                        <Button label='common.send' buttonType='secondary' className='z-10' onClick={sendEmail} isLoading={sendEmailMutation.isLoading} />
+                        <Button label='common.send' buttonType='secondary' className='external-reply-outline-button z-10' onClick={sendEmail} isLoading={sendEmailMutation.isLoading} />
                     }
                 </div>
             </div>
