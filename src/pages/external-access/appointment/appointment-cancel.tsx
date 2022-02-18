@@ -133,7 +133,7 @@ const AppointmentCancel = () => {
         return reasons ? reasons.filter(r => r.type === CancellationReasonTypes.Cancel).map((item: AppointmentCancelReason) => {
             return {
                 value: item.id.toString(),
-                label: item.description
+                label: item.name
             } as Option;
         }) : [];
     }
@@ -285,7 +285,7 @@ const AppointmentCancel = () => {
                     </Trans>
                 </div></>}
                 <div className='pt-6'>
-                    <Button buttonType='big' isLoading={cancelAppointmentMutation.isLoading} disabled={!isDirty} label='external_access.appointments.cancel_appointment' type='submit' />
+                    <Button buttonType='big' isLoading={cancelAppointmentMutation.isLoading} disabled={!isDirty || cancelAppointmentMutation.isError} label='external_access.appointments.cancel_appointment' type='submit' />
                 </div>
             </form>
         </div>
