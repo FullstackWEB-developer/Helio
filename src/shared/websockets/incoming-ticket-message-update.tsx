@@ -28,7 +28,7 @@ const IncomingTicketMessageUpdate = () => {
         client.invalidateQueries([QueryTicketMessagesInfinite, channel, id], {
             exact: true
         }).then();
-            }
+    }
 
     const onTicketMessageReceived = (data: SmsNotificationData) => {
         if (data.messageDirection === TicketMessagesDirection.Incoming && data.channelId === ChannelTypes[ChannelTypes.SMS]) {
