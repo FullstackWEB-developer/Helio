@@ -47,6 +47,24 @@ const SearchboxAddIcon = ({onClick, type, patient, contact}: SearchboxAddIconPro
         }
     }
 
+    const getUnavailableMessage = () => {
+        if (patient) {
+            if (type == ChannelTypes.SMS) {
+                return 'searchbox_result.tooltip_unavailable_sms_message';
+            } else {
+                return 'searchbox_result.tooltip_unavailable_email_message';
+            }
+        }
+        if (contact) {
+            if (type == ChannelTypes.SMS) {
+                return 'searchbox_result.tooltip_unavailable_sms_message_contact';
+            } else {
+                return 'searchbox_result.tooltip_unavailable_email_message_contact';
+            }
+        }
+        return '';
+    }
+
     return <div className='flex items-center justify-center w-1/12 '>
         <div ref={addIconRef}>
             <SvgIcon
@@ -57,7 +75,7 @@ const SearchboxAddIcon = ({onClick, type, patient, contact}: SearchboxAddIconPro
         </div>
         <Tooltip targetRef={addIconRef} isVisible={isToolTipVisible} placement='bottom-end'>
             <div className="flex p-6 body2 w-80">
-                {t(type === ChannelTypes.SMS ? 'searchbox_result.tooltip_unavailable_sms_message' : 'searchbox_result.tooltip_unavailable_email_message')}
+                {t(getUnavailableMessage())}
             </div>
         </Tooltip>
 

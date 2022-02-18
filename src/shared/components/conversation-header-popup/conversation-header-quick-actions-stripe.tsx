@@ -116,9 +116,8 @@ const ConversationHeaderQuickActionsStripe = ({patient, contact}: {patient?: Ext
                     disabled={voiceCounter === 1 || (!contactHasAnyPhoneOptions && !patientHasAnyPhoneOptions)}
                 />
             </span>
-            <div className='flex items-center cursor-pointer relative' ref={typeDropdownRef}>
+            <div className='flex items-center cursor-pointer relative' ref={typeDropdownRef}  onClick={() => {if (contactHasAnyPhoneOptions || patientHasAnyPhoneOptions) {setDisplayPhoneTypeDropdown(!displayPhoneTypeDropdown)} }}>
                 <div
-                    onClick={() => {if (contactHasAnyPhoneOptions || patientHasAnyPhoneOptions) {setDisplayPhoneTypeDropdown(!displayPhoneTypeDropdown)} }}
                     className='flex flex-row'>
                     <div className={`${contactHasAnyPhoneOptions || patientHasAnyPhoneOptions ? 'conversation-header-quick-actions-phone-type' : 'conversation-header-quick-actions-phone-type-disabled'}`}>
                         {t(`email.inbox.phone_types.${selectedPhoneType}`)}

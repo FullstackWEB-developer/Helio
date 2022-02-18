@@ -2,7 +2,7 @@ import SvgIcon, {Icon} from '@components/svg-icon';
 import Tooltip from '@components/tooltip/tooltip';
 import {EmailMessageDto, TicketMessagesDirection} from '@shared/models';
 import utils from '@shared/utils/utils';
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {Trans, useTranslation} from 'react-i18next';
 import EmailMessageHeader from './email-message-header';
 import EmailAttachment from './email-attachment';
@@ -12,10 +12,10 @@ export interface EmailMessageProps {
     message: EmailMessageDto;
     ticketCreatedForName: string;
     ticketHeaderPhoto: string;
-    isCollapsed: boolean;
+    index: number;
     emailCount: number;
 }
-const EmailMessage = ({message, ticketCreatedForName, ticketHeaderPhoto, isCollapsed, emailCount}: EmailMessageProps) => {
+const EmailMessage = ({message, ticketCreatedForName, ticketHeaderPhoto, index, emailCount}: EmailMessageProps) => {
 
     const {t} = useTranslation();
     const emailFromLabel = message.direction === TicketMessagesDirection.Incoming ? ticketCreatedForName || message.fromAddress :
@@ -23,7 +23,11 @@ const EmailMessage = ({message, ticketCreatedForName, ticketHeaderPhoto, isColla
 
     const emailFromPhoto = message.direction === TicketMessagesDirection.Incoming ? ticketHeaderPhoto : '';
 
-    const [collapsed, setCollapsed] = useState(isCollapsed);
+    const [collapsed, setCollapsed] = useState(false);
+
+    useEffect(() => {
+        setCollapsed(index !== 0);
+    }, [index])
 
     const constructToField = () => {
         const cwcEmail = utils.getAppParameter('HelioEmailAddress');
@@ -48,7 +52,9 @@ const EmailMessage = ({message, ticketCreatedForName, ticketHeaderPhoto, isColla
 
     const recipientChevronIcon = useRef(null);
     const [displayRecipientsTooltip, setDisplayRecipientTooltip] = useState(false);
-
+    console.log("a " + collapsed);
+    console.log("b " + emailCount);
+    console.log("c " + index);
 
     return (
         <div className='px-6'>

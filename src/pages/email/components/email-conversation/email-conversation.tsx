@@ -93,7 +93,8 @@ const EmailConversation = () => {
         isLoading: emailMessagesQueryIsLoading,
         isFetchingNextPage: isFetchingEmailMessagesNextPage,
         fetchNextPage: fetchEmailMessagesNextPage,
-        hasNextPage: emailMessageHasNextPage
+        hasNextPage: emailMessageHasNextPage,
+        isFetching
     } = useInfiniteQuery([QueryTicketMessagesInfinite],
         ({pageParam = 1}) => getMessages(ticketId || '', ChannelTypes.Email, {...DEFAULT_MESSAGE_QUERY_PARAMS, page: pageParam}),
         {
@@ -141,7 +142,7 @@ const EmailConversation = () => {
     return (
         ticket ?
             <div className='w-full flex flex-col'>
-                {(!messages || messages.length === 0) &&<NewEmailHeader/>}
+                {(!messages || messages.length === 0)  && !isFetching &&<NewEmailHeader/>}
                 <div className='pb-4'>
                     <ConversationHeader info={{...ticket, ticketId: ticket.id, createdForEndpoint: ticket.incomingEmailAddress}}
                                         ticket={ticket}
@@ -156,7 +157,7 @@ const EmailConversation = () => {
                                 messages.length ? messages.map((m: EmailMessageDto, index) =>
                                     <EmailMessage
                                         key={m.id}
-                                        isCollapsed={index > 0}
+                                        index={index}
                                         emailCount={messages.length}
                                         message={m}
                                         ticketCreatedForName={ticket.createdForName || ''}
@@ -176,7 +177,7 @@ const EmailConversation = () => {
                         </div>
                     </div>
                 }
-                {(!messages || messages.length === 0) && <SendFirstEmail onMailSend={() => emailMessagesQueryRefetch()} contact={contact} patient={patient} ticket={ticket} />}
+                {(!messages || messages.length === 0) && !isFetching && <SendFirstEmail onMailSend={() => emailMessagesQueryRefetch()} contact={contact} patient={patient} ticket={ticket} />}
             </div> : null
     )
 }

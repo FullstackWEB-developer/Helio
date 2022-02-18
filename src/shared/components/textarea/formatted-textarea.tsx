@@ -18,6 +18,7 @@ export interface FormattedTextareaProps {
 
 const FormattedTextarea = React.forwardRef<ReactQuill, FormattedTextareaProps>(({isLoading, iconFill, onClick, value='', onChange, disabled, showSendIcon = true, placeHolder='common.enter_text'}: FormattedTextareaProps, ref) => {
     const {t} = useTranslation();
+    const emptyHtml = '<p><br></p>';
     const [content, setContent] = useState(value);
 
     useEffect(() => {
@@ -25,6 +26,9 @@ const FormattedTextarea = React.forwardRef<ReactQuill, FormattedTextareaProps>((
     }, [value])
 
     const handleChange = (value: string) =>  {
+        if (value === emptyHtml) {
+            value ='';
+        }
         setContent(value);
         onChange(value);
     }

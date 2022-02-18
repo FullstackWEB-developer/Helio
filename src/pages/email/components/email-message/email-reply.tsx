@@ -130,7 +130,7 @@ const EmailReply = ({ticket, patient, contact, onMailSend, disabled}: EmailReply
                 }
             </div>
             <div className='flex items-center justify-between pb-6 pt-2 w-full'>
-                <div className='w-16 mt-auto pl-4'>
+                <div className='w-16 mt-auto pl-4 pr-2'>
                     <NotificationTemplateSelect isLoading={isProcessingTemplate}
                                                 channel={NotificationTemplateChannel.Email}
                                                 usedFrom={TemplateUsedFrom.Inbox}

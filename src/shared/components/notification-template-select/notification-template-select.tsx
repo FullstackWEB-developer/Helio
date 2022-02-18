@@ -146,7 +146,7 @@ const NotificationTemplateSelect = ({channel, category, onSelect, asSelect, sele
             !disabled && setDisplayTemplateForTab(!displayTemplateForTab)
         }}>
             <div className='w-10 h-10 flex items-center justify-center'>
-                <SvgIcon isLoading={isLoadingOrFetching()} type={Icon.Templates} disabled={disabled} fillClass='rgba-05-fill' className='icon-medium'/>
+                <SvgIcon isLoading={isLoadingOrFetching()} type={Icon.Templates} disabled={disabled} fillClass='rgba-062-fill' className='icon-medium'/>
             </div>
         </div>
         <div className={dropdownWrapperClassname} hidden={!displayTemplateForTab || isLoadingOrFetching() || items.length === 0 }>

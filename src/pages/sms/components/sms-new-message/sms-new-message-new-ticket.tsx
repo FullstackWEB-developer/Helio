@@ -86,22 +86,23 @@ const SmsNewMessageNewTicket = ({patient, contact, type, ...props}: SmsNewMessag
 
             <div className='mt-11 flex flex-row'>
                 <Button
-                    isLoading={createTicketMutation.isLoading}
-                    buttonType='medium'
-                    disabled={!isValid}
-                    data-test-id='new-message-select-ticket-button'
-                    label='common.ok'
-                    className='mr-8'
-                    onClick={onClick}
-                />
-
-                <Button
                     data-test-id='new-message-cancel-ticket-button'
                     type='button'
                     buttonType='secondary-medium'
+                    className='mr-8'
                     label='common.cancel'
                     disabled={createTicketMutation.isLoading}
                     onClick={() => props.onCancelClick && props.onCancelClick()}
+                />
+
+                <Button
+                    isLoading={createTicketMutation.isLoading}
+                    buttonType='medium'
+                    className='uppercase'
+                    disabled={!isValid}
+                    data-test-id='new-message-select-ticket-button'
+                    label='common.ok'
+                    onClick={onClick}
                 />
             </div>
 

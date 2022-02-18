@@ -160,19 +160,20 @@ const SmsNewMessageExistingTicket = ({tickets, patient, contact, ...props}: SmsN
 
                 <div className='mt-11'>
                     <Button
-                        buttonType='medium'
-                        disabled={!isValid}
-                        className='mr-8'
-                        data-test-id='new-message-select-ticket-button'
-                        label='common.ok'
-                        onClick={onClick}
-                    />
-                    <Button
                         data-test-id='new-message-cancel-ticket-button'
                         type='button'
+                        className='mr-8'
                         buttonType='secondary-medium'
                         label='common.cancel'
                         onClick={() => props.onCancelClick && props.onCancelClick()}
+                    />
+                    <Button
+                        buttonType='medium'
+                        disabled={!isValid}
+                        className='uppercase'
+                        data-test-id='new-message-select-ticket-button'
+                        label='common.ok'
+                        onClick={onClick}
                     />
                 </div>
             </div>
