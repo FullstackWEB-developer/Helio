@@ -83,10 +83,13 @@ const AppointmentSchedule = () => {
         dispatch(getLocations());
     }, [dispatch]);
 
-    const locationOptions = useMemo(() => utils.parseOptions(locations,
-        item => item.name,
-        item => item.id.toString()
-    ), [locations]);
+    const locationOptions = useMemo(() => [
+        DEFAULT_OPTION_ANY,
+        ...utils.parseOptions(locations,
+            item => utils.capitalizeFirstLetters(item.name),
+            item => item.id.toString()
+        )
+    ], [DEFAULT_OPTION_ANY, locations]);
 
     const appointmentTypeOptions = useMemo(() => utils.parseOptions(appointmentTypes || [],
         item => item.name,

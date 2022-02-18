@@ -96,7 +96,7 @@ const AppointmentScheduleSelect = () => {
     const locationOptions = useMemo(() => [
         DEFAULT_OPTION_ANY,
         ...utils.parseOptions(locations,
-            item => item.name,
+            item => utils.capitalizeFirstLetters(item.name),
             item => item.id.toString()
         )
     ], [DEFAULT_OPTION_ANY, locations]);

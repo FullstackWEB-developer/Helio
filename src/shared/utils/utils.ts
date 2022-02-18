@@ -153,6 +153,17 @@ const formatRelativeTime = (days?: number, hours?: number, minutes?: number, abs
     return '';
 }
 
+const capitalizeFirstLetters = (sentence: string) : string => {
+    if (!sentence || sentence.length === 0) {
+        return '';
+    }
+    return sentence
+        .toLowerCase()
+        .split(' ')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ');
+}
+
 const getRelativeTime = (date?: Date, isPast = false): RelativeTime => {
     if (!date) {
         return [];
@@ -567,7 +578,8 @@ const utils = {
     formatSeconds,
     isDateInNextSevenDays,
     isDateTimeInPast,
-    determineMimeTypeIcon
+    determineMimeTypeIcon,
+    capitalizeFirstLetters
 };
 
 export default utils;
