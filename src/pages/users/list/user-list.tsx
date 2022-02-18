@@ -318,6 +318,16 @@ const UserList = () => {
         return !!userSelected[userId] && (userSelected[userId].checkboxCheckEvent?.checked ?? false);
     }
 
+    const isFiltered = () => {
+        if (!filters) {
+            return false;
+        }
+        if (filters && Object.keys(filters).length === 1 && filters.searchText === '') {
+            return false;
+        }
+        return !!filters && Object.keys(filters).length > 0;
+    }
+
     return (
         <div className='flex flex-auto h-full'>
             <UserFilter isOpen={isUserFilterOpen} />
@@ -336,7 +346,7 @@ const UserList = () => {
                                 <UserListSearch
                                     handleAllCheck={handleAllCheck}
                                     allChecked={checkAll}
-                                    isFiltered={!!filters && Object.keys(filters).length > 0}
+                                    isFiltered={isFiltered()}
                                     displayActions={allCheckedUsersDisabled || allCheckedUsersEnabled || allCheckedUsersPending || false}
                                     displayDisableAction={allCheckedUsersEnabled || false}
                                     displayEnableAction={allCheckedUsersDisabled || false}
