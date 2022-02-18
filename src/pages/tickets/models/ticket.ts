@@ -49,4 +49,5 @@ export interface Ticket {
     communicationDirection?: CommunicationDirection;
     ipAddress?: string;
     incomingEmailAddress?: string;
+    isPassive?: boolean;
 }

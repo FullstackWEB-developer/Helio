@@ -36,6 +36,7 @@ import {createBlockAccess} from '@pages/blacklists/services/blacklists.service';
 import ConversationHeaderPopup from '@components/conversation-header-popup/conversation-header-popup';
 import {ExtendedPatient} from '@pages/patients/models/extended-patient';
 import {BlockAccessType} from '@pages/blacklists/models/blacklist.model';
+import {Ticket} from '@pages/tickets/models/ticket';
 
 interface ConversationHeaderProps {
     info: TicketMessageSummary;
@@ -44,11 +45,14 @@ interface ConversationHeaderProps {
     conversationChannel: ChannelTypes.SMS | ChannelTypes.Email;
     patient?: ExtendedPatient;
     contact?: ContactExtended;
+    ticket?: Ticket;
+    refetchTicket?: () => void;
 }
-const ConversationHeader = ({info, forNewTicketMessagePurpose, patientPhoto, conversationChannel = ChannelTypes.SMS, patient, contact}: ConversationHeaderProps) => {
+const ConversationHeader = ({info, forNewTicketMessagePurpose, patientPhoto, conversationChannel = ChannelTypes.SMS, patient, contact, ticket, refetchTicket}: ConversationHeaderProps) => {
     const {t} = useTranslation();
     const history = useHistory();
     const dispatch = useDispatch();
+    const [markedAsSpam, setMarkedAsSpam] = useState<boolean>(false);
     useEffect(() => {
         dispatch(getLookupValues('TicketReason'));
         dispatch(getEnumByType('TicketType'));
@@ -65,7 +69,7 @@ const ConversationHeader = ({info, forNewTicketMessagePurpose, patientPhoto, con
         const options: DropdownItemModel[] = [];
         const commonClassName = 'body2 py-1.5';
 
-        if (!forNewTicketMessagePurpose) {
+        if (!forNewTicketMessagePurpose && ticket) {
             options.push({label: 'sms.chat.view_ticket', value: MORE_MENU_OPTION_TICKET, className: commonClassName});
         }
         if (!info.patientId && !info.contactId) {
@@ -73,8 +77,12 @@ const ConversationHeader = ({info, forNewTicketMessagePurpose, patientPhoto, con
             options.push({label: 'email.inbox.add_contact', value: MORE_MENU_OPTION_ADD_CONTACT, className: commonClassName});
         }
 
-        options.push({label: 'email.inbox.close_ticket.label', value: MORE_MENU_OPTION_CLOSE_TICKET, className: commonClassName});
-        options.push({label: 'email.inbox.solve_ticket.label', value: MORE_MENU_OPTION_SOLVE_TICKET, className: commonClassName});
+        if (ticket && ticket.status !== TicketStatuses.Closed) {
+            options.push({label: 'email.inbox.close_ticket.label', value: MORE_MENU_OPTION_CLOSE_TICKET, className: commonClassName});
+        }
+        if (ticket && ticket.status !== TicketStatuses.Solved) {
+            options.push({label: 'email.inbox.solve_ticket.label', value: MORE_MENU_OPTION_SOLVE_TICKET, className: commonClassName});
+        }
 
         if (!!info.patientId) {
             options.push({label: 'sms.chat.view_patient', value: MORE_MENU_OPTION_PATIENT, className: commonClassName});
@@ -83,10 +91,16 @@ const ConversationHeader = ({info, forNewTicketMessagePurpose, patientPhoto, con
         if (!!info.contactId) {
             options.push({label: 'sms.chat.view_contact', value: MORE_MENU_OPTION_CONTACT, className: commonClassName});
         }
-
-        options.push({label: 'email.inbox.archive_ticket.label', value: MORE_MENU_OPTION_ARCHIVE_TICKET, className: commonClassName});
-        options.push({label: 'email.inbox.spam', value: MORE_MENU_OPTION_SPAM, className: commonClassName});
-
+        if (ticket && !ticket.isDeleted) {
+            options.push({
+                label: 'email.inbox.archive_ticket.label',
+                value: MORE_MENU_OPTION_ARCHIVE_TICKET,
+                className: commonClassName
+            });
+        }
+        if (!markedAsSpam) {
+            options.push({label: 'email.inbox.spam', value: MORE_MENU_OPTION_SPAM, className: commonClassName});
+        }
 
         return options;
     }
@@ -175,6 +189,9 @@ const ConversationHeader = ({info, forNewTicketMessagePurpose, patientPhoto, con
                 type: SnackbarType.Success,
                 message: `email.inbox.${status === TicketStatuses.Closed ? 'close' : 'solve'}_ticket.success`
             }));
+            if (refetchTicket) {
+                refetchTicket();
+            }
         },
         onError: (_, {status}) => {
             dispatch(addSnackbarMessage({
@@ -190,6 +207,9 @@ const ConversationHeader = ({info, forNewTicketMessagePurpose, patientPhoto, con
                 type: SnackbarType.Success,
                 message: t('email.inbox.archive_ticket.success')
             }));
+            if (refetchTicket) {
+                refetchTicket();
+            }
         },
         onError: () => {
             dispatch(addSnackbarMessage({
@@ -210,6 +230,7 @@ const ConversationHeader = ({info, forNewTicketMessagePurpose, patientPhoto, con
                 type: SnackbarType.Success,
                 message: t('email.inbox.blocked_success', {value: info.createdForEndpoint}),
             }));
+            setMarkedAsSpam(true);
         },
         onError: () => {
             dispatch(addSnackbarMessage({

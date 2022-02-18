@@ -62,7 +62,7 @@ const SmsChat = ({info, isLoading, isSending, isBottomFocus, messages = [], last
         enabled: !!info.contactId
     })
 
-    const {data: ticket} = useQuery([QueryTickets, info.ticketId], () => getTicketById(info.ticketId!), {
+    const {data: ticket, refetch: refetchTicket} = useQuery([QueryTickets, info.ticketId], () => getTicketById(info.ticketId!), {
         enabled: !!info.ticketId
     });
 
@@ -157,7 +157,9 @@ const SmsChat = ({info, isLoading, isSending, isBottomFocus, messages = [], last
     }
 
     return (<div className="flex flex-col justify-between flex-auto h-full sms-chat">
-        <ConversationHeader info={info} forNewTicketMessagePurpose={false} patientPhoto={patientPhoto} conversationChannel={ChannelTypes.SMS} />
+        <ConversationHeader ticket={ticket}
+                            refetchTicket={refetchTicket}
+                            info={info} forNewTicketMessagePurpose={false} patientPhoto={patientPhoto} conversationChannel={ChannelTypes.SMS} />
         <div className="flex flex-col flex-1 pl-6 overflow-y-auto">
             {messages && messages.length > 0 &&
                 <>
@@ -200,7 +202,7 @@ const SmsChat = ({info, isLoading, isSending, isBottomFocus, messages = [], last
                         rows={2}
                         maxRows={5}
                         value={smsText}
-                        disabled={!!smsDisabledText}
+                        disabled={!!smsDisabledText || ticket?.isPassive}
                         onChange={(message) => setSmsText(message)}
                         resizable={false}
                         isLoading={isSending || isProcessing}

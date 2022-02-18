@@ -32,7 +32,7 @@ const EmailConversation = () => {
     const dispatch = useDispatch();
     const unreadEmailIds = useSelector(selectUnreadEmails);
     const [emailDisabledText, setEmailDisabledText] = useState<string>();
-    const {data: ticket} = useQuery([QueryTickets, ticketId], () => getTicketById(ticketId!), {
+    const {data: ticket, refetch: refetchTicket} = useQuery([QueryTickets, ticketId], () => getTicketById(ticketId!), {
         enabled: !!ticketId
     });
 
@@ -144,6 +144,8 @@ const EmailConversation = () => {
                 {(!messages || messages.length === 0) &&<NewEmailHeader/>}
                 <div className='pb-4'>
                     <ConversationHeader info={{...ticket, ticketId: ticket.id, createdForEndpoint: ticket.incomingEmailAddress}}
+                                        ticket={ticket}
+                                        refetchTicket={refetchTicket}
                         forNewTicketMessagePurpose={false} patientPhoto={patientPhoto} conversationChannel={ChannelTypes.Email}
                         patient={patient} contact={contact} />
                 </div>
@@ -170,7 +172,7 @@ const EmailConversation = () => {
                             {!!emailDisabledText && <div className='unavailable-sms pb-4 px-16'>
                                 <Alert message={emailDisabledText} type='error'/>
                             </div>}
-                            <EmailReply disabled={!!emailDisabledText} ticket={ticket} patient={patient} contact={contact} onMailSend={onEmailReplySuccess} />
+                            <EmailReply disabled={!!emailDisabledText || ticket?.isPassive} ticket={ticket} patient={patient} contact={contact} onMailSend={onEmailReplySuccess} />
                         </div>
                     </div>
                 }
