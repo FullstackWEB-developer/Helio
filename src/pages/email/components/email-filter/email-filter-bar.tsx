@@ -45,8 +45,8 @@ const EmailFilterBar = ({filter, searchTerm, onSearchTermChanged, emailQueryType
     const GetTimeLabel = () => {
         if (filter.timePeriod === TimePeriodDateRange) {
             return t('common.time_periods.date_range_value', {
-                from: dayjs(filter.fromDate).format(DATE_INPUT_LONG_FORMAT),
-                to: dayjs(filter.toDate).format(DATE_INPUT_LONG_FORMAT)
+                from: filter.fromDate ? dayjs(filter.fromDate).format(DATE_INPUT_LONG_FORMAT) : '',
+                to: filter.toDate ? dayjs(filter.toDate).format(DATE_INPUT_LONG_FORMAT) : ''
             });
         }
         return GetTimePeriodLabel(filter.timePeriod);
