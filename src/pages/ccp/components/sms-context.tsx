@@ -68,6 +68,7 @@ const SmsContext = () => {
             }));
             setSmsText('');
             setRefreshTemplate(refreshTemplate + 1);
+            setSelectedTemplate(undefined);
         },
         onError: () => {
             dispatch(addSnackbarMessage({
