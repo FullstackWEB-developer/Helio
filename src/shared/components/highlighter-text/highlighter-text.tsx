@@ -6,6 +6,9 @@ interface HighlighterTextProps {
     highlighterText?: string;
 }
 const HighlighterText = ({text, highlighterText}: HighlighterTextProps) => {
+    if (!text) {
+        return <></>;
+    }
     if (!highlighterText) {
         return <div dangerouslySetInnerHTML={{__html: text}}/>
     }
