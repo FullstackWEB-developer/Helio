@@ -60,7 +60,6 @@ const AppointmentCancel = () => {
     const [appointmentTypeId, setAppointmentTypeId] = useState<number>(0);
     const [location, setLocation] = useState<Location>();
     const maxSlots = 3;
-    const [errorMessage, setErrorMessage] = useState('');
 
     useEffect(() => {
         dispatch(getProviders());
@@ -146,7 +145,6 @@ const AppointmentCancel = () => {
             const prefix = 'Error Message: ';
             let errMsg = error.response?.data.message;
             errMsg = errMsg.slice(errMsg.indexOf(prefix) + prefix.length);
-            setErrorMessage(errMsg);
         }
     });
 
@@ -274,16 +272,16 @@ const AppointmentCancel = () => {
                         )}
                     />
                 </div>
-                {cancelAppointmentMutation.isError && <><div className='text-danger'>
-                    {t('external_access.appointments.cancel_appointment_error')} {errorMessage}
-                </div>
-                <div>
-                    <Trans i18nKey="external_access.appointments.cancel_appointment_reach_us">
-                        {utils.getAppParameter('HelioEmailAddress')}
-                        <a rel='noreferrer' target='_self' href={utils.getAppParameter('ChatLink')}>Chat</a>
+                {cancelAppointmentMutation.isError && <div>
+                    <Trans i18nKey="external_access.appointments.cancel_appointment_reach_us" values={
+                        {
+                            email: utils.getAppParameter('SupportEmailAddress'),
+                            chatLink:utils.getAppParameter('ChatLink')}}>
+                        <a className='link' rel='noreferrer' href={`mailto:${utils.getAppParameter('SupportEmailAddress')}`}>{utils.getAppParameter('SupportEmailAddress')}</a>
+                        <a rel='noreferrer' target='_self' href={utils.getAppParameter('ChatLink')}></a>
                         {utils.getAppParameter('CallUsPhone')}
                     </Trans>
-                </div></>}
+                </div>}
                 <div className='pt-6'>
                     <Button buttonType='big' isLoading={cancelAppointmentMutation.isLoading} disabled={!isDirty || cancelAppointmentMutation.isError} label='external_access.appointments.cancel_appointment' type='submit' />
                 </div>
