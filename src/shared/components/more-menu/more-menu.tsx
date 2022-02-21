@@ -21,12 +21,12 @@ interface MoreMenuProps {
     horizontalOffset?: number
 }
 
-const MoreMenu = ({value, items, menuClassName, iconClassName, iconFillClassname, containerClassName, menuPlacement = 'bottom', verticalOffset=0, horizontalOffset =0, ...props}: MoreMenuProps) => {
+const MoreMenu = ({value, items, menuClassName, iconClassName, iconFillClassname, containerClassName, menuPlacement = 'bottom', verticalOffset = 0, horizontalOffset = 0, ...props}: MoreMenuProps) => {
     const [isVisible, setIsVisible, elementRef] = useComponentVisibility<HTMLDivElement>(false);
     const [valueSelected, setValueSelected] = useState(value);
     const iconContainerRef = useRef<HTMLDivElement>(null);
     const [popper, setPopper] = useState<HTMLDivElement | null>(null);
-    const { styles, attributes, update } = usePopper(elementRef.current, popper, {
+    const {styles, attributes, update} = usePopper(elementRef.current, popper, {
         placement: menuPlacement,
         strategy: 'fixed',
         modifiers: [{
@@ -68,6 +68,12 @@ const MoreMenu = ({value, items, menuClassName, iconClassName, iconFillClassname
         }
 
     }, [hideDropdown]);
+
+    useEffect(() => {
+        if (!isVisible) {
+            setValueSelected(undefined);
+        }
+    }, [isVisible]);
 
     return (<div ref={elementRef} className={containerClassName}>
         <div
