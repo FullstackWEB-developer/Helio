@@ -31,6 +31,8 @@ const PersonalInformationRegistrationStep = ({onPatientUpsert}: PersonalInformat
             switch (errors.dob?.type) {
                 case "required":
                     return t('external_access.invalid_dob', {'format': utils.getBrowserDatePattern()});
+                case "min":
+                    return t('external_access.registration.minor_dob');
                 case "max":
                     return t('external_access.registration.max_age');
             }
@@ -57,6 +59,9 @@ const PersonalInformationRegistrationStep = ({onPatientUpsert}: PersonalInformat
     });
 
     const dobValue = watch('dob', '');
+    if (utils.isMinor(dobValue) && !errors.dob) {
+        setError('dob', {type: 'min', message: 'external_access.registration.minor_dob'});
+    }
     if(utils.isValidDobByAthenaMaxAgeConstraint(dobValue) && !errors.dob){
         setError('dob', {type: 'max', message: 'external_access.registration.max_age'})
     }
@@ -108,6 +113,10 @@ const PersonalInformationRegistrationStep = ({onPatientUpsert}: PersonalInformat
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col w-full'>
+            {
+                errors?.dob?.type === 'min' && <div className='pt-5 body2 text-danger'>{t('external_access.registration.minor_dob_detail',
+                    {number: utils.getAppParameter('CallUsPhone')})}</div>
+            }
             <div className='flex flex-col md:flex-row md:gap-8'>
                 <ControlledInput
                     name='firstName'
