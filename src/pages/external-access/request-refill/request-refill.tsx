@@ -72,7 +72,7 @@ const RequestRefill = () => {
         dispatch(getProviders());
     }, [dispatch]);
 
-    const {isLoading: isMedicationLoading, data: medications} = useQuery<Medication[], AxiosError>([QueryPatientMedication, verifiedPatient?.patientId], () =>
+    const {isLoading: isMedicationLoading, data: medications, isFetched} = useQuery<Medication[], AxiosError>([QueryPatientMedication, verifiedPatient?.patientId], () =>
         getPatientMedications(verifiedPatient?.patientId),
         {
             enabled: !!verifiedPatient
@@ -156,10 +156,10 @@ const RequestRefill = () => {
     }) : [];
 
     useEffect(() => {
-        if (medicationOptions.length && providerOptions.length && !formReady) {
+        if (isFetched && providerOptions.length && !formReady) {
             setFormReady(true);
         }
-    }, [medicationOptions, providerOptions, formReady])
+    }, [isFetched, providerOptions, formReady])
 
     const defaultMedication = medicationOptions?.find(m => m.value === medication?.medicationName)?.value;
 
