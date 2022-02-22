@@ -19,7 +19,9 @@ import {
     InitialVerificationPath,
     LabResultsPath,
     LabResultsShortPath,
-    RequestMedicalRecordsPath, RequestMedicalRecordsShortPath,
+    RequestMedicalRecordsPath,
+    RequestMedicalRecordsShortPath,
+    RequestRefillPath,
     ViewMedicationsPath, ViewMedicationsShortPath
 } from '@app/paths';
 import {RedirectLink} from '@pages/external-access/verify-patient/models/redirect-link';
@@ -166,6 +168,12 @@ const VerifiedPatientGuard = ({children}: VerifiedPatientGuardProps) => {
         strict: false
     });
 
+    const requestRefillPathMatch = matchPath(history.location.pathname, {
+        path: RequestRefillPath,
+        exact: true,
+        strict: false
+    });
+
     const viewMedicationsShortMatch = matchPath(history.location.pathname, {
         path: ViewMedicationsShortPath,
         exact: true,
@@ -197,7 +205,7 @@ const VerifiedPatientGuard = ({children}: VerifiedPatientGuardProps) => {
         requestType = ExternalAccessRequestTypes.ScheduleAppointment;
     } else if (labResultsMatch || singleLabResultMatch || singleLabResultShortMatch || labResultsShortMatch) {
         requestType = ExternalAccessRequestTypes.GetLabResults;
-    } else if (viewMedicationsMatch || viewMedicationsShortMatch) {
+    } else if (viewMedicationsMatch || viewMedicationsShortMatch || requestRefillPathMatch) {
         requestType = ExternalAccessRequestTypes.RequestRefill
     } else if (requestMedicalRecordsMatch || requestMedicalRecordsShortMatch) {
         requestType = ExternalAccessRequestTypes.RequestMedicalRecords
