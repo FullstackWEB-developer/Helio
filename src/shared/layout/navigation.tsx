@@ -16,7 +16,7 @@ const Navigation = () => {
     const location = useLocation();
     const dispatch = useDispatch();
     const isActive = (link: string): boolean => {
-        return (location && location.pathname === link)
+        return (location && location.pathname.startsWith(link))
     };
 
     const unreadSMSList = useSelector(selectUnreadSmsMessages);

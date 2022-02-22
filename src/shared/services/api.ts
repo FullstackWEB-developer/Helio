@@ -12,6 +12,7 @@ import i18n from "i18next";
 import dayjs from 'dayjs';
 import {SnackbarPosition} from '@components/snackbar/snackbar-position.enum';
 import {clearVerifiedPatient} from '@pages/patients/store/patients.slice';
+import {setVerifiedLink} from '@pages/external-access/verify-patient/store/verify-patient.slice';
 
 const logger = Logger.getInstance();
 const Api = axios.create({
@@ -111,23 +112,24 @@ Api.interceptors.response.use(
         if (error.response.status !== 401) {
             return Promise.reject(error);
         }
-
+        const userState = store.getState().appUserState;
+        if (!userState.auth.isGuestLogin && userState.auth?.isLoggedIn) {
+            signOut();
+        }
 
         if (store.getState().appUserState.auth.isGuestLogin) {
+            store.dispatch(clearVerifiedPatient());
+            store.dispatch(setVerifiedLink(''));
             store.dispatch(addSnackbarMessage({
                 type: SnackbarType.Error,
                 message: 'login.session_timeout_guest',
-                position: SnackbarPosition.TopCenter
+                position: SnackbarPosition.TopCenter,
+                durationInSeconds: 10
             }));
             const link = store.getState().appUserState.auth.authenticationLink;
             store.dispatch(logOut());
-            store.dispatch(clearVerifiedPatient());
-            window.location.replace(link);
+            window.location.href = link;
             return;
-        } else {
-            if (store.getState().appUserState.auth) {
-                signOut();
-            }
         }
     }
 )
@@ -139,13 +141,13 @@ const isCustomToken = (): boolean => {
 
 const signOut = () => {
     store.dispatch(logOut());
-      getMsalInstance()?.logoutRedirect()
-          .then(() => {
-              logger.info('Logged out successfully!');
-          })
-          .catch((reason: any) => {
-              logger.error('Error logging out ' + JSON.stringify(reason));
-          });
+    getMsalInstance()?.logoutRedirect()
+        .then(() => {
+            logger.info('Logged out successfully!');
+        })
+        .catch((reason: any) => {
+            logger.error('Error logging out ' + JSON.stringify(reason));
+        });
 }
 
 export default Api;
