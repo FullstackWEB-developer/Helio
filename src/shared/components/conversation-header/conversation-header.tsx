@@ -59,11 +59,11 @@ const ConversationHeader = ({info, forNewTicketMessagePurpose, patientPhoto, con
     }, [dispatch]);
     const ticketReasons = useSelector((state) => selectLookupValues(state, 'TicketReason'));
     const getTicketReasons = () => {
-        return ticketReasons.find((lookupValue) => lookupValue.value === info?.reason)?.label ?? t('common.not_available');
+        return ticketReasons.find((lookupValue) => lookupValue.value === ticket?.reason)?.label ?? t('common.not_available');
     }
     const ticketTypes = useSelector((state => selectEnumValues(state, 'TicketType')));
     const getTicketType = () => {
-        return ticketTypes.find((lookupValue) => lookupValue.key === info?.ticketType)?.value ?? t('tickets.types.default');
+        return ticketTypes.find((lookupValue) => lookupValue.key === ticket?.type)?.value ?? t('tickets.types.default');
     }
     const getMoreMenuOption = (): DropdownItemModel[] => {
         const options: DropdownItemModel[] = [];
