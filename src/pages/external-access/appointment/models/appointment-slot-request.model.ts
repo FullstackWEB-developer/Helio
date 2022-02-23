@@ -16,5 +16,6 @@ export interface AppointmentSlotRequest {
     patientDefaultDepartmentId?: number;
     patientDefaultProviderId?: number
     timeOfDays?: AppointmentSlotTimeOfDay[];
+    firstAvailable: boolean;
 }
 

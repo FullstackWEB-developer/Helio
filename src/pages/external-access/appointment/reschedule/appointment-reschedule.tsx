@@ -101,7 +101,8 @@ const AppointmentReschedule = () => {
                 departmentId: location?.id as number,
                 appointmentTypeId: appointment!.appointmentTypeId,
                 startDate: beginDate,
-                endDate: dayjs(beginDate).utc().add(numberOfDays, 'day').toDate()
+                endDate: dayjs(beginDate).utc().add(numberOfDays, 'day').toDate(),
+                firstAvailable: false
             });
         },
             {

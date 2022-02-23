@@ -783,6 +783,7 @@
         "provider": "Provider",
         "location": "Location"
       },
+      "no_appointment_found_in_max_tries": "No open slots found for this filters. Please update your filters and try again",
       "list_title": "You have {{number}} upcoming appointments.",
       "select_appointment": "Please select appointment to view details.",
       "fetch_failed": "Could not retrieve appointments from server. Please try again later",

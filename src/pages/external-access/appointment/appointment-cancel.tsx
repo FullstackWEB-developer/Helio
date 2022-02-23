@@ -104,7 +104,8 @@ const AppointmentCancel = () => {
             departmentId: location?.id as number,
             appointmentTypeId: appointmentTypeId,
             startDate: startDate,
-            endDate: endDate
+            endDate: endDate,
+            firstAvailable: false
         }),
         {
             enabled: false
@@ -140,11 +141,6 @@ const AppointmentCancel = () => {
     const cancelAppointmentMutation = useMutation(cancelAppointment, {
         onSuccess: () => {
             history.push(`/o/appointment-canceled`);
-        },
-        onError: (error: AxiosError) => {
-            const prefix = 'Error Message: ';
-            let errMsg = error.response?.data.message;
-            errMsg = errMsg.slice(errMsg.indexOf(prefix) + prefix.length);
         }
     });
 

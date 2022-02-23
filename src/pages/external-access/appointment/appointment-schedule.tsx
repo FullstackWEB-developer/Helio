@@ -124,7 +124,8 @@ const AppointmentSchedule = () => {
             startDate: beginDate,
             itemCount: 100,
             endDate: dayjs(beginDate).utc().add(14, 'day').toDate(),
-            allowMultipleDepartment: true
+            allowMultipleDepartment: true,
+            firstAvailable: timePreference === TimePreference.FirstAvailable
         }
         dispatch(setAppointmentSlotRequest(request));
 

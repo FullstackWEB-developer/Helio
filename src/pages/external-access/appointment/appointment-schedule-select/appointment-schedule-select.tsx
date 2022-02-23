@@ -1,6 +1,7 @@
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {ControlledCheckbox, ControlledDateInput, ControlledSelect} from '@components/controllers';
+import {isMobile} from 'react-device-detect';
 import {useForm} from 'react-hook-form';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
@@ -19,7 +20,6 @@ import classnames from 'classnames';
 import {selectAppointmentSlotRequest} from '../store/appointments.selectors';
 import {AxiosError} from 'axios';
 import Spinner from '@components/spinner/Spinner';
-import businessDays from '@shared/utils/business-days';
 import {Option} from '@components/option/option';
 import Button from '@components/button/button';
 import {setSelectedAppointmentSlot} from '../store/appointments.slice';
@@ -34,8 +34,8 @@ import {AppointmentDepartmentModel} from '@pages/external-access/appointment/mod
 import AppointmentScheduleMap from './appointment-schedule-map';
 import FilterDot from '@components/filter-dot/filter-dot';
 
-const numberOfWorkDays = 5;
-
+const numberOfWorkDays = 7;
+const MaxFetchCount = 8;
 const AppointmentScheduleSelect = () => {
     dayjs.extend(utc);
     dayjs.extend(isoWeek);
@@ -49,13 +49,14 @@ const AppointmentScheduleSelect = () => {
     const locations = useSelector(selectLocationList);
     const appointmentSlotRequest = useSelector(selectAppointmentSlotRequest);
     const [currentFilterCount, setCurrentFilterCount] = useState<number>(0);
-    const [isWeekendSelected, setIsWeekendSelected] = useState(false);
     const [showAllSlot, setShowAllSlot] = useState(false);
     const [slotRequest, setSlotRequest] = useState(appointmentSlotRequest);
     const [departmentLatLng, setDepartmentLatLng] = useState<AppointmentDepartmentModel[]>([]);
     const [isFilterOpen, setFilterOpen] = useState(false);
-    const [startDate, setStartDate] = useState(appointmentSlotRequest?.startDate ?? dayjs().utc().local().toDate());
-
+    const [selectedDate, setSelectedDate] = useState<Date>(appointmentSlotRequest?.startDate ?? dayjs().utc().local().toDate());
+    const [appointmentSlots, setAppointmentSlots] = useState<AppointmentSlot[]>([]);
+    const [displayMaxTryError, setDisplayMaxTryError] = useState<boolean>();
+    const tryCount = useRef<number>(0);
     const DEFAULT_OPTION_ANY: Option = useMemo(() => ({
         label: t('common.any'),
         value: '0'
@@ -112,16 +113,16 @@ const AppointmentScheduleSelect = () => {
 
     const getWorkDates = useCallback(() => {
         const workDates: string[] = [];
-        let workDate = dayjs(startDate).startOf('isoWeek').toDate();
+        let workDate = dayjs(selectedDate).startOf('isoWeek').toDate();
         const startDay = workDate.getDay();
         for (let day = startDay; day <= numberOfWorkDays; day++) {
             workDates.push(utils.formatUtcDate(workDate, 'YYYY-MM-DDT00:00:00'));
             workDate = dayjs(workDate).add(1, 'day').toDate();
         }
         return workDates;
-    }, [startDate]);
+    }, [selectedDate]);
 
-    const {isLoading: isAppointmentSlotsLoading, data: appointmentSlots, isFetching} =
+    const {isLoading: isAppointmentSlotsLoading, isFetching} =
         useQuery<AppointmentSlot[], AxiosError>([GetAppointmentSlots, slotRequest],
             () => getAppointmentSlots({...slotRequest}, false),
             {
@@ -129,6 +130,13 @@ const AppointmentScheduleSelect = () => {
                 onSuccess: (data: AppointmentSlot[]) => {
                     if (!data || data.length < 1) {
                         setDepartmentLatLng([]);
+                        if (slotRequest.firstAvailable && tryCount.current <= MaxFetchCount) {
+                            nextPage(isMobile);
+                            tryCount.current = tryCount.current + 1;
+                        }
+                        if (tryCount.current === MaxFetchCount) {
+                            setDisplayMaxTryError(true);
+                        }
                         return;
                     }
                     const latLong = locations.filter(p => data.findIndex(d => p.id === d.departmentId) > -1)
@@ -144,8 +152,11 @@ const AppointmentScheduleSelect = () => {
                             }
                         });
                     setDepartmentLatLng(latLong);
-
-                    setValue('selectedDate', new Date(data[0].date));
+                    const sorted =data.sort((a, b) => dayjs.utc(a.date).toDate().getTime() - dayjs.utc(b.date).toDate().getTime());
+                    setAppointmentSlots(sorted);
+                    const firstAvailableDate = new Date(sorted[0].date);
+                    setValue('selectedDate', firstAvailableDate);
+                    setSelectedDate(firstAvailableDate);
                 }
             }
         );
@@ -193,12 +204,13 @@ const AppointmentScheduleSelect = () => {
 
 
     const isBordered = (slotsDate: string) => {
-        return dayjs(slotsDate).isSame(startDate);
+        return dayjs(slotsDate).isSame(selectedDate);
     }
     const changeDate = (newStartDate: Date) => {
         setValue('selectedDate', newStartDate);
-        setStartDate(newStartDate);
+        setSelectedDate(newStartDate);
         setSlotRequest({...slotRequest, startDate: newStartDate});
+        setDisplayMaxTryError(false);
     }
 
     const changeProvider = (event?: Option) => {
@@ -206,6 +218,7 @@ const AppointmentScheduleSelect = () => {
             return;
         }
         setSlotRequest({...slotRequest, providerId: !!event.value ? [Number(event.value)] : undefined});
+        setDisplayMaxTryError(false);
     }
 
     const changeLocation = (event?: Option) => {
@@ -213,24 +226,23 @@ const AppointmentScheduleSelect = () => {
             return;
         }
         setSlotRequest({...slotRequest, departmentId: !!event.value ? Number(event.value) : undefined});
+        setDisplayMaxTryError(false);
     }
 
     const nextPage = (isMobile = false) => {
-        setIsWeekendSelected(false);
-        let nextStartDate = dayjs(startDate).startOf('isoWeek').utc().add(7, 'day').toDate();
+        let nextStartDate = dayjs(selectedDate).startOf('isoWeek').utc().add(7, 'day').toDate();
         if (isMobile) {
-            const d = (dayjs(startDate).day() === 5) ? 3 : 1;
-            nextStartDate = dayjs(startDate).utc().add(d, 'day').toDate();
+            const d = (dayjs(selectedDate).day() === 5) ? 3 : 1;
+            nextStartDate = dayjs(selectedDate).utc().add(d, 'day').toDate();
         }
         changeDate(nextStartDate);
     };
 
     const previousPage = (isMobile = false) => {
-        setIsWeekendSelected(false);
-        let prevStartDate = dayjs(startDate).startOf('isoWeek').utc().add(-7, 'day').toDate();
+        let prevStartDate = dayjs(selectedDate).startOf('isoWeek').utc().add(-7, 'day').toDate();
         if (isMobile) {
-            const d = (dayjs(startDate).day() === 1) ? -3 : -1;
-            prevStartDate = dayjs(startDate).utc().add(d, 'day').toDate();
+            const d = (dayjs(selectedDate).day() === 1) ? -3 : -1;
+            prevStartDate = dayjs(selectedDate).utc().add(d, 'day').toDate();
         }
         changeDate(prevStartDate);
     };
@@ -239,12 +251,6 @@ const AppointmentScheduleSelect = () => {
         if (!date) {
             return;
         }
-        if (!businessDays.isBusinessDay(dayjs(date))) {
-            setValue('selectedDate', startDate);
-            setIsWeekendSelected(true);
-            return;
-        }
-        setIsWeekendSelected(false);
         changeDate(date);
     }
 
@@ -264,6 +270,7 @@ const AppointmentScheduleSelect = () => {
             setSlotRequest({...slotRequest, providerId: b});
             setCurrentFilterCount((count) => count - 1);
         }
+        setDisplayMaxTryError(false);
     }
 
     const onTimeOfDayChanged = (event: CheckboxCheckEvent) => {
@@ -278,6 +285,7 @@ const AppointmentScheduleSelect = () => {
             setSlotRequest({...slotRequest, timeOfDays: slotRequestTimeOfDayCopy});
             setCurrentFilterCount((count) => count - 1);
         }
+        setDisplayMaxTryError(false);
     }
 
     if (!verifiedPatient) {
@@ -301,7 +309,7 @@ const AppointmentScheduleSelect = () => {
                             label='external_access.appointments.date'
                             className='lg:mr-8'
                             name='selectedDate'
-                            value={startDate}
+                            value={selectedDate}
                             isWeekendDisabled
                             min={new Date(new Date().toDateString())}
                             onChange={(event) => onDateChange(event)}
@@ -344,7 +352,8 @@ const AppointmentScheduleSelect = () => {
                         {(isAppointmentSlotsLoading || isFetching) &&
                             <Spinner />
                         }
-                        {!isAppointmentSlotsLoading && !isFetching &&
+                        {displayMaxTryError && <div>{t('external_access.appointments.no_appointment_found_in_max_tries')}</div>}
+                        {!isAppointmentSlotsLoading && !displayMaxTryError && !isFetching &&
                             <>
                                 <div className='flex-row hidden lg:flex'>
                                     <SvgIcon type={Icon.ArrowLeft} className='cursor-pointer' fillClass='active-item-icon'
@@ -402,15 +411,15 @@ const AppointmentScheduleSelect = () => {
                                             <>
                                                 <div className='p-1'>
                                                     <div className='flex justify-center w-auto px-4 pb-3 mb-4 border-b subtitle2'>
-                                                        {dayjs(startDate).format('ddd, MMM D')}
+                                                        {dayjs(selectedDate).format('ddd, MMM D')}
                                                     </div>
                                                     {
                                                         !isFetching && <>
                                                             {
-                                                                mappedSlots.get(dayjs(startDate).format('YYYY-MM-DDT00:00:00'))
+                                                                mappedSlots.get(dayjs(selectedDate).format('YYYY-MM-DDT00:00:00'))
                                                                     ? <DaySlots
                                                                         hideShowMore
-                                                                        column={mappedSlots.get(dayjs(startDate).format('YYYY-MM-DDT00:00:00'))}
+                                                                        column={mappedSlots.get(dayjs(selectedDate).format('YYYY-MM-DDT00:00:00'))}
                                                                         showAllSlot={showAllSlot}
                                                                         slotClick={onSlotClick}
                                                                     />
@@ -440,11 +449,11 @@ const AppointmentScheduleSelect = () => {
                 <Modal
                     isOpen={isFilterOpen}
                     title={t('common.filters')}
-                    className='appointment-schedule-select-modal'
+                    className='appointment-schedule-select-modal h-full md:h-auto'
                     onClose={() => setFilterOpen(false)}
                     isClosable
                 >
-                    <div className='pt-5 pb-12'>
+                    <div className='pt-5 pb-12 h-full'>
                         <div>
                             <span className='subtitle2'>{t('external_access.schedule_appointment.time_of_day.title')}</span>
                             <div className='mt-5'>
@@ -484,7 +493,7 @@ const AppointmentScheduleSelect = () => {
                         </div>
                         <div className='mt-6'>
                             <span className='subtitle2'>{t('external_access.schedule_appointment.gender.title')}</span>
-                            <div className='flex flex-row justify-between mt-5'>
+                            <div className='flex flex-col md:flex-row justify-between mt-5'>
                                 <ControlledCheckbox
                                     control={control}
                                     label='external_access.schedule_appointment.gender.female'
