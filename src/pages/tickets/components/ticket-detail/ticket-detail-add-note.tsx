@@ -106,11 +106,11 @@ const TicketDetailAddNote = ({ticket, patient, contact, emailMessages, smsMessag
                 lastSmsAddress = lastSmsAddress.substring(2);
             }
             if (patient && (!patient.consentToText || patient.mobilePhone !== lastSmsAddress)) {
-                setNoteDisabledText('sms.sms_not_available_patient');
-                setDisabledTab(ChannelTabs.SmsTab);
+                //setNoteDisabledText('sms.sms_not_available_patient');//Undo when 4552 approved
+                //setDisabledTab(ChannelTabs.SmsTab);//Undo when 4552 approved
             } else if (contact && contact.mobilePhone !== lastSmsAddress) {
-                setNoteDisabledText('sms.sms_not_available_contact');
-                setDisabledTab(ChannelTabs.SmsTab);
+                //setNoteDisabledText('sms.sms_not_available_contact');//Undo when 4552 approved
+                //setDisabledTab(ChannelTabs.SmsTab);//Undo when 4552 approved
             }
             else {
                 setNoteDisabledText(undefined);
@@ -126,13 +126,13 @@ const TicketDetailAddNote = ({ticket, patient, contact, emailMessages, smsMessag
             const lastEmailAddress = lastMessage.direction === TicketMessagesDirection.Outgoing ? lastMessage.toAddress : lastMessage.fromAddress;
             if (patient) {
                 if (patient.emailAddress !== lastEmailAddress) {
-                    setNoteDisabledText('email.inbox.email_not_available_patient');
-                    setDisabledTab(ChannelTabs.EmailTab);
+                    //setNoteDisabledText('email.inbox.email_not_available_patient');//Undo when 4552 approved
+                    //setDisabledTab(ChannelTabs.EmailTab);
                 }
             } else if (contact) {
                 if (contact.emailAddress !== lastEmailAddress) {
-                    setNoteDisabledText('email.inbox.email_not_available_contact');
-                    setDisabledTab(ChannelTabs.EmailTab);
+                    //setNoteDisabledText('email.inbox.email_not_available_contact');//Undo when 4552 approved
+                    //setDisabledTab(ChannelTabs.EmailTab);
                 }
             }
             else {

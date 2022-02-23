@@ -72,13 +72,15 @@ const EmailConversation = () => {
         const lastEmailAddress = lastMessage.direction === TicketMessagesDirection.Outgoing ? lastMessage.toAddress : lastMessage.fromAddress;
         if (patient) {
             if (patient.emailAddress !== lastEmailAddress) {
-                setEmailDisabledText('email.inbox.email_not_available_patient')
+                setEmailDisabledText(undefined);
+                //setEmailDisabledText('email.inbox.email_not_available_patient') //Undo when 4552 approved
             } else {
                 setEmailDisabledText(undefined);
             }
         } else if (contact) {
             if (contact.emailAddress !== lastEmailAddress) {
-                setEmailDisabledText('email.inbox.email_not_available_contact')
+                setEmailDisabledText(undefined);                
+                //setEmailDisabledText('email.inbox.email_not_available_contact') //Undo when 4552 approved
             } else {
                 setEmailDisabledText(undefined);
             }

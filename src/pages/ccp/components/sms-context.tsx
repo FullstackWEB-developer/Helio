@@ -55,7 +55,7 @@ const SmsContext = () => {
     useEffect(() => {
         if (botContext?.patient) {
             if (!botContext.patient.consentToText) {
-                setNoteDisabledText('ccp.sms_context.no_consent');
+                //setNoteDisabledText('ccp.sms_context.no_consent');//Undo when 4552 approved
             }
         }
     }, [botContext?.patient]);
