@@ -5,12 +5,14 @@ export interface SmsInitialState {
     messageSummaries: TicketMessageSummary[];
     unreadSmsMessages: UnreadSms[];
     lastSmsDate: Date;
+    isFiltered: Boolean;
 }
 
 const initialSmsState: SmsInitialState = {
     messageSummaries: [],
     unreadSmsMessages: [],
-    lastSmsDate: new Date()
+    lastSmsDate: new Date(),
+    isFiltered: false
 }
 
 export default initialSmsState;

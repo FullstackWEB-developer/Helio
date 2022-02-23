@@ -42,8 +42,9 @@ import {useHistory, useLocation, useParams} from 'react-router';
 import {SmsPath} from '@app/paths';
 import useCheckPermission from '@shared/hooks/useCheckPermission';
 import {ExtendedPatient} from '@pages/patients/models/extended-patient';
-import {removeUnreadSmsTicketId, setSmsMessageSummaries} from '@pages/sms/store/sms.slice';
-import {selectLastSmsDate, selectSmsSummaries, selectUnreadSmsMessages} from '@pages/sms/store/sms.selectors';
+import {removeUnreadSmsTicketId, setIsSmsFiltered, setSmsMessageSummaries} from '@pages/sms/store/sms.slice';
+import {selectIsSmsFiltered, selectLastSmsDate, selectSmsSummaries, selectUnreadSmsMessages} from '@pages/sms/store/sms.selectors';
+import FilterDot from '@components/filter-dot/filter-dot';
 
 interface SmsLocationState {
     contact?: ContactExtended,
@@ -54,6 +55,7 @@ const Sms = () => {
     const isDefaultTeamView = useCheckPermission('SMS.DefaultToTeamView');
     const {id, fullName} = useSelector(selectAppUserDetails);
     const [isFilterVisible, setFilterVisible] = useState(false);
+    const isFiltered = useSelector(selectIsSmsFiltered);
     const [queryParams, setQueryParams] = useState<TicketMessageSummaryRequest>({
         channel: ChannelTypes.SMS,
         assignedTo: !isDefaultTeamView ? id : '',
@@ -113,6 +115,12 @@ const Sms = () => {
     useEffect(() => {
         refetchTicketSummaries().then()
     }, [lastSmsDate, queryParams])
+
+    useEffect(() => {
+        return () => {
+            dispatch(setIsSmsFiltered(false));
+        }
+    }, [dispatch]);
 
     useEffect(() => {
         setSmsQueryType(isDefaultTeamView ? SmsQueryType.MyTeam : SmsQueryType.MySms);
@@ -442,12 +450,18 @@ const Sms = () => {
                                     wrapperClassName='mr-7'
                                     onClick={onNewChatClick}
                                 />
-                                <SvgIcon
-                                    type={Icon.FilterList}
-                                    fillClass='default-toolbar-icon'
-                                    className='cursor-pointer icon-medium'
-                                    onClick={() => setFilterVisible(true)}
-                                />
+                                <div className='relative flex flex-row items-center'>
+                                    <SvgIcon
+                                        type={Icon.FilterList}
+                                        fillClass='default-toolbar-icon'
+                                        className='cursor-pointer icon-medium'
+                                        onClick={() => setFilterVisible(true)}
+                                    />
+                                    
+                                    {isFiltered && <div className='absolute bottom-0 right-0'>
+                                        <FilterDot />
+                                    </div>}
+                                </div>
                             </div>
                         </div>
                     </div>

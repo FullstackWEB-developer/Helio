@@ -11,5 +11,5 @@ export const DEFAULT_MESSAGE_QUERY_PARAMS: PagedRequest = {
 
 export const DEFAULT_FILTER_VALUE: EmailFilterModel = {
     assignedTo: '',
-    timePeriod: '1',
+    timePeriod: '',
 }

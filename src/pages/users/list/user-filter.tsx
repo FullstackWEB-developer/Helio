@@ -190,6 +190,7 @@ const UserFilter = ({isOpen}: {isOpen: boolean}) => {
             departments: clearArray(fieldsValue.departments),
             titles: clearArray(fieldsValue.titles)
         });
+        setFilters({});
     }
 
     useEffect(() => {

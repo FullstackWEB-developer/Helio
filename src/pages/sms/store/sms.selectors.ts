@@ -19,3 +19,9 @@ export const selectLastSmsDate = createSelector(
     smsState,
     state => state.lastSmsDate as Date
 )
+
+
+export const selectIsSmsFiltered = createSelector(
+    smsState,
+    state => state.isFiltered as boolean
+)

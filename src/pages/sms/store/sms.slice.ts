@@ -34,6 +34,9 @@ const smsSlice = createSlice({
         },
         setLastSmsDate(state) {
             state.lastSmsDate = new Date();
+        },
+        setIsSmsFiltered(state, {payload}: PayloadAction<boolean>) {
+            state.isFiltered = payload;
         }
     }
 });
@@ -42,7 +45,8 @@ export const {
     setSmsMessageSummaries,
     appendUnreadSmsTicketId,
     removeUnreadSmsTicketId,
-    setLastSmsDate
+    setLastSmsDate,
+    setIsSmsFiltered
 } = smsSlice.actions
 
 export default smsSlice.reducer

@@ -127,23 +127,28 @@ const CallsLogFilter = ({isOpen, value: propsValue, logType, ...props}: CallsLog
                 });
             return cloned;
         }
-
-        reset({
+        const defaults = {
             status: clearCheckboxValue(fieldsValue.status),
             callType: clearCheckboxValue(fieldsValue.callType),
             reason: '',
             fromDate: undefined,
             toDate: undefined,
             timePeriod: ''
-        });
+        }
+        reset(defaults);
+        onSubmit(defaults);
     }
 
     const onSubmit = (formData: any) => {
         const filter: TicketLogRequestModel = {};
 
         const formDate = getFormDate(formData);
-        filter.toDate = formDate.toDate;
-        filter.fromDate = formDate.fromDate;
+        if(formDate.toDate){
+            filter.toDate = formDate.toDate;
+        }
+        if(formDate.fromDate){
+            filter.fromDate = formDate.fromDate;
+        }
         filter.reason = formData.reason;
 
         if (formData.status) {

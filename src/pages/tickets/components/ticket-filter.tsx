@@ -426,6 +426,7 @@ const TicketFilter = ({isOpen}: {isOpen: boolean}) => {
             tags: [],
             timePeriod: ''
         });
+        fetchTickets({});
     }
     const dateFilters = () => {
         if (watchTimePeriod === timePeriod_DateRange) {

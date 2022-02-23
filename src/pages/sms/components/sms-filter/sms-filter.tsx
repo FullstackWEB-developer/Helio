@@ -14,6 +14,7 @@ import dayjs from 'dayjs';
 import ControlledDateInput from '@components/controllers/ControlledDateInput';
 import {SmsFilterParamModel} from './sms-filter.model';
 import classNames from 'classnames';
+import { setIsSmsFiltered } from '@pages/sms/store/sms.slice';
 const TIME_PERIOD_DATE_RANGE_OPTION = '3';
 
 interface SmsFilterProps {
@@ -124,10 +125,17 @@ const SmsFilter = ({className, isUserFilterEnabled, value, defaultValue, ...prop
         if (props.onFilterClick) {
             props.onFilterClick(filter);
         }
+
+        if (filter.fromDate || filter.toDate || filter.assignedTo) {
+            dispatch(setIsSmsFiltered(true));
+        } else {
+            dispatch(setIsSmsFiltered(false));
+        }
     }
 
     const onClearFilter = () => {
         reset();
+        onFilterClick({});
     }
 
     return (<div className={className}>

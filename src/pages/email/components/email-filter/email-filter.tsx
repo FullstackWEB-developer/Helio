@@ -24,6 +24,7 @@ import {
 import useCheckPermission from '@shared/hooks/useCheckPermission';
 import {selectAppUserDetails} from '@shared/store/app-user/appuser.selectors';
 import {setEmailHasFilter} from '@pages/email/store/email-slice';
+import { DEFAULT_FILTER_VALUE } from '@pages/email/constants';
 
 interface EmailFilterProps {
     className?: string;
@@ -135,7 +136,7 @@ const EmailFilter = ({className, isUserFilterEnabled, value, ...props}: EmailFil
 
     const onClearFilter = () => {
         const defaults = {
-            timePeriod: TimePeriodLast7Days,
+            timePeriod: DEFAULT_FILTER_VALUE.timePeriod,
             assignedTo: isDefaultTeamView ? '': id
         }
         reset(defaults);

@@ -9,7 +9,7 @@ export const DEFAULT_MESSAGE_QUERY_PARAMS: PagedRequest = {
 
 export const DEFAULT_FILTER_VALUE: SmsFilterParamModel = {
     assignedTo: '',
-    timePeriod: '1',
+    timePeriod: '',
 }
 
 export const NEW_MESSAGE_OPTION_SELECT_TICKET = 'SELECT_TICKET';
