@@ -36,6 +36,7 @@ export const ViewMedicationsPath = '/o/view-medications';
 export const ViewMedicationsShortPath = '/o/vm';
 export const RequestMedicalRecordsPath = '/o/request-medical-records';
 export const RequestMedicalRecordsShortPath = '/o/rm';
+export const RequestMedicalRecordsSuccessPath = '/o/request-medical-records/success';
 export const AppointmentRescheduleConfirmPath = '/o/appointment-reschedule-confirm';
 export const AppointmentRescheduledPath = '/o/appointment-rescheduled';
 export const AppointmentSchedulePatientStatusPathRouter = '/o/new-appointment';

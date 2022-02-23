@@ -29,6 +29,8 @@ import TextArea from '@components/textarea/textarea';
 import {selectRedirectLink} from '@pages/external-access/verify-patient/store/verify-patient.selectors';
 import Confirmation from '@components/confirmation/confirmation';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
+import {useHistory} from 'react-router-dom';
+import { RequestMedicalRecordsSuccessPath } from '@app/paths';
 const RequestMedicalRecords = () => {
     enum DateOptions {
         AllTime = 1,
@@ -59,6 +61,7 @@ const RequestMedicalRecords = () => {
     });
     const {isDirty, isValid} = formState;
     const {t} = useTranslation();
+    const history = useHistory();
 
     const email = watch('email');
     const emailConfirm = watch('email_confirm');
@@ -104,6 +107,13 @@ const RequestMedicalRecords = () => {
                             downloadMedicalRecordsMutation.mutate({linkId: downloadRequestId});
                             break;
                         case RequestType.Share:
+                            const pathName = RequestMedicalRecordsSuccessPath;
+                            history.push({
+                                pathname: pathName,
+                                state: {
+                                    emailAddress: request?.emailAddress
+                                }
+                            });
                             displaySuccessSnackbars();
                             break;
                         case RequestType.Preview:

@@ -45,7 +45,7 @@ import {
     AppointmentSchedulePatientStatusPathRouter,
     AppointmentConfirmationPath,
     AppointmentConfirmationShortPath,
-    EmailPath, TicketEmailPath
+    EmailPath, TicketEmailPath, RequestMedicalRecordsSuccessPath
 } from './paths';
 import RealTimeUserStatusUpdate from '@shared/websockets/real-time-user-status-update';
 import ExternalAccessLayout from '@pages/external-access/layout/external-access-layout';
@@ -75,6 +75,7 @@ const RequestRefill = React.lazy(() => import('@pages/external-access/request-re
 const ViewMedications = React.lazy(() => import('@pages/external-access/request-refill/view-medications'));
 const RequestRefillConfirmation = React.lazy(() => import('@pages/external-access/request-refill/request-refill-confirmation'));
 const RequestMedicalRecords = React.lazy(() => import('@pages/external-access/request-medical-records/request-medical-records'));
+const RequestMedicalRecordsSuccess = React.lazy(() => import('@pages/external-access/request-medical-records/request-medical-records-success'));
 const LabResults = React.lazy(() => import('@pages/external-access/lab-results/lab-results'));
 const LabResultsDetailed = React.lazy(() => import('@pages/external-access/lab-results/lab-result-detailed'));
 const TicketNew = React.lazy(() => import('@pages/tickets/ticket-new'));
@@ -141,8 +142,9 @@ function App() {
                                 <Route path={ViewMedicationsShortPath} component={withSuspense(ViewMedications)} />
                                 <Route path={ViewMedicationsPath} component={withSuspense(ViewMedications)} />
                                 <Route path='/o/request-refill-confirmation' component={withSuspense(RequestRefillConfirmation)} />
-                                <Route path={RequestMedicalRecordsPath} component={withSuspense(RequestMedicalRecords)} />
+                                <Route exact path={RequestMedicalRecordsPath} component={withSuspense(RequestMedicalRecords)} />
                                 <Route path={RequestMedicalRecordsShortPath} component={withSuspense(RequestMedicalRecords)} />
+                                <Route path={RequestMedicalRecordsSuccessPath} component={withSuspense(RequestMedicalRecordsSuccess)} />
                                 <Route exact path={LabResultsPath} component={withSuspense(LabResults)} />
                                 <Route exact path={LabResultsShortPath} component={withSuspense(LabResults)} />
                                 <Route path={`${LabResultsPath}/:labResultId`} component={withSuspense(LabResultsDetailed)} />
@@ -217,3 +219,4 @@ function App() {
 }
 
 export default App;
+

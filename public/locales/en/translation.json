@@ -880,7 +880,8 @@
       "close_window_title": "Close window",
       "close_window_description": "Your Medical History was successfully downloaded. If you have completed your request, please close this form.",
       "close_window_description_third_party": "Medical History was successfully downloaded. Please close this form.",
-      "close_window_after_sent_description": "Your Medical History is sent successfully. If you have completed your request, please close this form."
+      "close_window_after_sent_description": "Your Medical History is sent successfully. If you have completed your request, please close this form.",
+      "close_window_share": "Your medical records have been sent to the following email address: <0>{{emailAddress}}</0>\nPlease close this window."
     },
     "download_medical_records": {
       "title": "Download medical records",
