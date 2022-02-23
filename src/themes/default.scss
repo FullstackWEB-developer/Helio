@@ -499,3 +499,25 @@ select:focus {
   pointer-events: none;
 }
 
+
+.ql-size-large {
+  font-family: var(--subtitle-font-family);
+  font-size: var(--subtitle-font-size);
+  font-weight: var(--subtitle-font-weight);
+  font-stretch: var(--subtitle-font-stretch);
+  font-style: var(--subtitle-font-style);
+  line-height: var(--subtitle-line-height);
+  letter-spacing: var(--subtitle-letter-spacing);
+  color: var(--subtitle-color);
+}
+
+.ql-size-huge {
+  font-family: var(--h6-font-family);
+  font-size: var(--h6-font-size);
+  font-weight: var(--h6-font-weight);
+  font-stretch: var(--h6-font-stretch);
+  font-style: var(--h6-font-style);
+  line-height: var(--h6-line-height);
+  letter-spacing: var(--h6-letter-spacing);
+  color: var(--h6-color);
+}
