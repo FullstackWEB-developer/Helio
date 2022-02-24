@@ -1,7 +1,7 @@
-import React, {Fragment, useState} from 'react';
+import React, {Fragment, useMemo, useState} from 'react';
 import {useSelector} from 'react-redux';
 import {Appointment} from '@pages/external-access/appointment/models';
-import {selectDepartmentById, selectProviderById} from '@shared/store/lookups/lookups.selectors';
+import {selectAllProviderList, selectDepartmentById} from '@shared/store/lookups/lookups.selectors';
 import {RootState} from '@app/store';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
@@ -26,8 +26,13 @@ interface AppointmentDisplayProps {
 
 const AppointmentDisplay = ({ appointment, border, isLast, isDetailed }: AppointmentDisplayProps) => {
     const department = useSelector((state: RootState) => selectDepartmentById(state, appointment.departmentId));
-    const provider = useSelector((state: RootState) => selectProviderById(state, appointment.providerId));
+    const providers = useSelector(selectAllProviderList);
     const [appointmentTypeName, setAppointmentTypeName] = useState<string>('');
+
+    const provider = useMemo(() => {
+        return providers?.find(a => a.id === appointment.providerId);
+    }, [providers, appointment.providerId]);
+
     useQuery<AppointmentType, AxiosError>([GetAppointmentType, appointment.appointmentTypeId], () => getAppointmentTypeById(appointment.appointmentTypeId), {
         enabled: !!appointment?.appointmentTypeId,
         cacheTime: 5 * OneMinute,

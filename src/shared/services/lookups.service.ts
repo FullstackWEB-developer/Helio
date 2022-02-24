@@ -2,6 +2,7 @@ import {KeyValuePair} from '@shared/models';
 import {Dispatch} from '@reduxjs/toolkit';
 import {setError} from '@components/search-bar/store/search-bar.slice';
 import {
+    setAllProviders,
     setLoading,
     setLocations,
     setMetricOptions,
@@ -43,6 +44,36 @@ export const getProviders = () => {
         }
     };
 };
+
+export const getAllProviders = () => {
+    const url = `${lookupsUrl}/providers`;
+    const providers = store.getState().lookupsState.allProviderList;
+    return async (dispatch: Dispatch) => {
+        if (!providers || providers.length === 0) {
+            dispatch(setError(false));
+            dispatch(setLoading(true));
+            await Api.get(url, {
+                params: {
+                    includeAll: true
+                }
+            })
+                .then((response) => {
+                    dispatch(setAllProviders(response.data));
+                })
+                .catch((error: any) => {
+                    if (error.response?.status === 404) {
+                        dispatch(setAllProviders(undefined));
+                    } else {
+                        logger.error('Failed getting Providers', error);
+                        dispatch(setError(true));
+                        dispatch(setAllProviders(undefined));
+                        dispatch(setLoading(false));
+                    }
+                });
+        }
+    };
+};
+
 
 export const getLocations = () => {
     const url = lookupsUrl + '/departments';

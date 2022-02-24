@@ -1,7 +1,7 @@
 import withErrorLogging from '../../../shared/HOC/with-error-logging';
 import {HotSpotDetail, HotSpotInfo} from '../models/hotspot.model';
 import {useSelector} from 'react-redux';
-import {selectLocationList, selectProviderList} from '@shared/store/lookups/lookups.selectors';
+import {selectLocationList, selectAllProviderList} from '@shared/store/lookups/lookups.selectors';
 import {TableModel} from '@components/table/table.models';
 import Table from '@components/table/table';
 
@@ -11,7 +11,7 @@ interface DailyHotspotsProps {
 
 const DailyHotspots = ({dailyhotspot}: DailyHotspotsProps) => {
 
-    const providers = useSelector(selectProviderList);
+    const providers = useSelector(selectAllProviderList);
     const departments = useSelector(selectLocationList);
     const getEnrichedData = (data: HotSpotDetail[]) => {
         return data.map((datum) => {

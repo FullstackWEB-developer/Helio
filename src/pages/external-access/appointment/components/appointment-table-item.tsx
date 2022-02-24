@@ -3,8 +3,8 @@ import {Appointment} from '@pages/external-access/appointment/models/appointment
 import './appointment-table-item.scss';
 import utils from '@shared/utils/utils';
 import {useDispatch, useSelector} from 'react-redux';
-import {selectLocationList, selectProviderList} from '@shared/store/lookups/lookups.selectors';
-import {getLocations, getProviders} from '@shared/services/lookups.service';
+import {selectAllProviderList, selectLocationList} from '@shared/store/lookups/lookups.selectors';
+import {getAllProviders, getLocations} from '@shared/services/lookups.service';
 import {AppointmentSlot} from '@pages/external-access/appointment/models/appointment-slot.model';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
@@ -31,9 +31,9 @@ const AppointmentTableItem = ({data,
     dayjs.extend(customParseFormat);
     const dispatch = useDispatch();
     const departments = useSelector(selectLocationList);
-    const providers = useSelector(selectProviderList);
+    const providers = useSelector(selectAllProviderList);
     useEffect(() => {
-        dispatch(getProviders());
+        dispatch(getAllProviders());
         dispatch(getLocations());
     }, [dispatch]);
 

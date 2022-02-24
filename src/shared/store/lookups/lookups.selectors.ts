@@ -5,13 +5,14 @@ import {
     Location,
     User
 } from '@shared/models';
-import {RootState} from '../../../app/store';
+import {RootState} from '@app/store';
 import {Option} from '@components/option/option';
 import {RoleBase} from '@shared/models/role-base.model';
 import {TicketEnumValue} from '@pages/tickets/models/ticket-enum-value.model';
 
 export const selectLocationList = (state: RootState) => state.lookupsState.locationList as Location[];
 export const selectProviderList = (state: RootState) => state.lookupsState.providerList as Provider[];
+export const selectAllProviderList = (state: RootState) => state.lookupsState.allProviderList as Provider[];
 export const selectUserList = (state: RootState): User[] => state.lookupsState.userList ? state.lookupsState.userList : [];
 export const selectRoleList = (state: RootState) => state.lookupsState.roleList as RoleBase[];
 export const selectConnectUserList = (state: RootState) => state.lookupsState.connectUserList as ConnectUser[]

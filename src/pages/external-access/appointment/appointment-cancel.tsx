@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {Trans, useTranslation} from 'react-i18next';
 import {useDispatch, useSelector} from 'react-redux';
-import {selectLocationList, selectProviderList} from '@shared/store/lookups/lookups.selectors';
-import {getLocations, getProviders} from '@shared/services/lookups.service';
+import {selectAllProviderList, selectLocationList} from '@shared/store/lookups/lookups.selectors';
+import {getAllProviders, getLocations} from '@shared/services/lookups.service';
 import {useMutation, useQuery} from 'react-query';
 import {AxiosError} from 'axios';
 import {
@@ -55,14 +55,14 @@ const AppointmentCancel = () => {
     const [appointment, setAppointment] = useState<Appointment>();
     const locations = useSelector(selectLocationList);
     const {appointmentId} = useParams<{appointmentId: string}>();
-    const providers = useSelector(selectProviderList);
+    const providers = useSelector(selectAllProviderList);
     const [provider, setProvider] = useState<Provider>();
     const [appointmentTypeId, setAppointmentTypeId] = useState<number>(0);
     const [location, setLocation] = useState<Location>();
     const maxSlots = 3;
 
     useEffect(() => {
-        dispatch(getProviders());
+        dispatch(getAllProviders());
         dispatch(getLocations());
     }, [dispatch]);
 

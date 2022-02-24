@@ -3,8 +3,8 @@ import {useDispatch, useSelector} from 'react-redux';
 import {
     selectPatientUpcomingAppointment
 } from '@pages/external-access/appointment/store/appointments.selectors';
-import {selectLocationList, selectProviderList} from '@shared/store/lookups/lookups.selectors';
-import {getLocations, getProviders} from '@shared/services/lookups.service';
+import {selectAllProviderList, selectLocationList} from '@shared/store/lookups/lookups.selectors';
+import {getAllProviders, getLocations} from '@shared/services/lookups.service';
 import {useEffect} from 'react';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
@@ -24,7 +24,7 @@ const AppointmentFound = () => {
 
     const appointment = useSelector(selectPatientUpcomingAppointment);
     const departments = useSelector(selectLocationList);
-    const providers = useSelector(selectProviderList);
+    const providers = useSelector(selectAllProviderList);
 
     const provider = providers?.find(a => a.id === appointment.providerId);
     const department = departments?.find(a => a.id === appointment.departmentId);
@@ -41,7 +41,7 @@ const AppointmentFound = () => {
     }
 
     useEffect(() => {
-        dispatch(getProviders());
+        dispatch(getAllProviders());
         dispatch(getLocations());
     }, [dispatch]);
 

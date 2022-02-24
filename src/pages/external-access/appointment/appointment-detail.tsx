@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {Trans, useTranslation} from 'react-i18next';
-import {getLocations, getProviders} from '@shared/services/lookups.service';
+import {getAllProviders, getLocations} from '@shared/services/lookups.service';
 import Button from '@components/button/button';
 import {useHistory, useParams} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
-import {selectLocationList, selectProviderList} from '@shared/store/lookups/lookups.selectors';
+import {selectAllProviderList, selectLocationList} from '@shared/store/lookups/lookups.selectors';
 import './appointment.scss';
 import {
     setRescheduleTimeFrame,
@@ -39,12 +39,12 @@ const AppointmentDetail = () => {
     const [appointment, setAppointment] = useState<Appointment>();
     const [appointmentType, setAppointmentType] = useState<AppointmentType>();
     const locations = useSelector(selectLocationList);
-    const providers = useSelector(selectProviderList);
+    const providers = useSelector(selectAllProviderList);
     const [provider, setProvider] = useState<Provider>();
     const [appointmentTypeId, setAppointmentTypeId] = useState<number>(0);
     const [location, setLocation] = useState<Location>();
     useEffect(() => {
-        dispatch(getProviders());
+        dispatch(getAllProviders());
         dispatch(getLocations());
     }, [dispatch]);
 

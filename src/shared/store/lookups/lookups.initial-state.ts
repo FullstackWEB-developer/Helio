@@ -9,6 +9,7 @@ export interface LookupsState {
     locationList?: Location[];
     providerList?: Provider[];
     userList?: User[];
+    allProviderList?: Provider[];
     roleList?: RoleBase[];
     isLoading: boolean;
     isError: boolean;
@@ -20,6 +21,7 @@ export interface LookupsState {
 const initialState: LookupsState = {
     locationList: undefined,
     providerList: undefined,
+    allProviderList: undefined,
     isLoading: false,
     isError: false,
     userList: [],

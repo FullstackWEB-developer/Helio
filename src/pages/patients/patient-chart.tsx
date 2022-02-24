@@ -8,7 +8,7 @@ import {RecentPatient} from '@components/search-bar/models/recent-patient';
 import patientUtils from './utils/utils';
 import {addRecentPatient} from '@components/search-bar/store/search-bar.slice';
 import PatientTabs from './components/patient-tabs';
-import {getLocations, getProviders} from '@shared/services/lookups.service';
+import {getAllProviders, getLocations} from '@shared/services/lookups.service';
 import ActivityPanel from './components/activity-panel';
 import './patient-chart.scss';
 import {getPatientById, getPatientSummary} from './services/patients.service';
@@ -44,7 +44,7 @@ const PatientChart = () => {
                 dob: patientUtils.formatDob(patient.dateOfBirth)
             }
             dispatch(addRecentPatient(recentPatient));
-            dispatch(getProviders());
+            dispatch(getAllProviders());
             dispatch(getLocations());
         }
     }, [dispatch, patient]);

@@ -9,8 +9,8 @@ import {useForm} from 'react-hook-form';
 import ControlledSelect from '@components/controllers/controlled-select';
 import {useDispatch, useSelector} from 'react-redux';
 import {selectVerifiedPatent} from '@pages/patients/store/patients.selectors';
-import {getProviders} from '@shared/services/lookups.service';
-import {selectProviderList} from '@shared/store/lookups/lookups.selectors';
+import {getAllProviders} from '@shared/services/lookups.service';
+import {selectAllProviderList} from '@shared/store/lookups/lookups.selectors';
 import {Provider} from '@shared/models/provider';
 import {Option} from '@components/option/option';
 import utils from '@shared/utils/utils';
@@ -29,10 +29,10 @@ const LabResultSendAMessage = ({labResult}: {labResult?: LabResultDetail}) => {
     const [message, setMessage] = useState('');
     const verifiedPatient = useSelector(selectVerifiedPatent);
     const dispatch = useDispatch();
-    const providers = useSelector(selectProviderList);
+    const providers = useSelector(selectAllProviderList);
 
     useEffect(() => {
-        dispatch(getProviders());
+        dispatch(getAllProviders());
     }, [dispatch]);
 
     const onClose = () => {

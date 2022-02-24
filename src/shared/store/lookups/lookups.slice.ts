@@ -21,6 +21,10 @@ const lookupsSlice = createSlice({
             state.providerList = payload;
             state.isLoading = false;
         },
+        setAllProviders(state, {payload}: PayloadAction<Provider[] | undefined>) {
+            state.allProviderList = payload;
+            state.isLoading = false;
+        },
         setStates(state, {payload}: PayloadAction<Option[] | undefined>) {
             state.states = payload;
         },
@@ -54,7 +58,8 @@ export const {
     setRoleList,
     setMetricOptions,
     setForwardToOptions,
-    setStates
+    setStates,
+    setAllProviders
 } = lookupsSlice.actions
 
 export default lookupsSlice.reducer
