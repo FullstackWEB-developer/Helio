@@ -14,6 +14,8 @@ import customParseFormat from 'dayjs/plugin/customParseFormat';
 import {InputType} from '@shared/models/input.types';
 import {DATE_ISO_FORMAT, DATE_INPUT_LONG_FORMAT} from '@shared/constants/form-constants';
 import {getScrollParent} from './date-time-picker-utils';
+import {isMobile} from 'react-device-detect';
+import { usePopper } from 'react-popper';
 interface DateTimePickerProps {
     name?: string;
     label?: string;
@@ -66,8 +68,11 @@ const DateTimePicker = React.forwardRef<HTMLInputElement, DateTimePickerProps>((
     const [isInputReadOnly, setInputReadOnly] = useState(false);
     const [inputType, setInputType] = useState<InputType>('date');
     const [isISOFormat, setIsISOFormat] = useState(!longDateFormat);
-    const [calendarPositionTop, setCalendarPositionTop] = useState(0)
-    
+    const [popper, setPopper] = useState<HTMLDivElement | null>(null);
+    const {styles, update} = usePopper(calendarWrapperRef.current, popper, {
+        placement: 'bottom',
+        strategy: 'absolute'
+    });
     const maxDate =dayjs(max).utc().local().toDate();
     const minDate = dayjs(min).utc().local().toDate();
     
@@ -82,11 +87,6 @@ const DateTimePicker = React.forwardRef<HTMLInputElement, DateTimePickerProps>((
             setInputType('text');
         }
     }
-    const calcCalendarPosition = useCallback(() => {
-        const inputElementRef = (ref as React.MutableRefObject<HTMLButtonElement>).current;
-        const position = utils.getElementPosition(inputElementRef);
-        setCalendarPositionTop(position.top + inputElementRef.offsetHeight);
-    }, [ref]);
 
     useEffect(() => {
         switchDateFormat(isISOFormat);
@@ -112,10 +112,13 @@ const DateTimePicker = React.forwardRef<HTMLInputElement, DateTimePickerProps>((
         if (onCalendarVisibilityChange) {
             onCalendarVisibilityChange(isCalendarOpen);
         }
-        if (isCalendarPositionComputed) {
-            calcCalendarPosition();
+    }, [isCalendarOpen, isCalendarPositionComputed, onCalendarVisibilityChange])
+
+    useEffect(() => {
+        if (isCalendarOpen && update) {
+            update().then();
         }
-    }, [isCalendarOpen, isCalendarPositionComputed, onCalendarVisibilityChange, calcCalendarPosition])
+    }, [update, isCalendarOpen]);
 
     useEffect(() => {
         const empty = () => undefined;
@@ -132,11 +135,6 @@ const DateTimePicker = React.forwardRef<HTMLInputElement, DateTimePickerProps>((
         const parent = getScrollParent(inputElementRef) as HTMLElement;
         if (!parent) {
             return empty;
-        }
-
-        parent.addEventListener('scroll', calcCalendarPosition);
-        return () => {
-            parent.removeEventListener('scroll', calcCalendarPosition);
         }
 
     }, [isCalendarPositionComputed, ref]);
@@ -325,8 +323,9 @@ const DateTimePicker = React.forwardRef<HTMLInputElement, DateTimePickerProps>((
             </div>
             {!isCalendarDisabled && isCalendarOpen &&
                 <div
-                    className={classNames('absolute top-14 z-20', {'right-0': calendarHorizontalAlign === CalendarHorizontalAlign.Left})}
-                    style={isCalendarPositionComputed ? {top: calendarPositionTop} : undefined}
+                    className={classNames('top-14 z-20', {'right-0': calendarHorizontalAlign === CalendarHorizontalAlign.Left && !isMobile})}
+                    style={styles.popper}
+                    ref={setPopper}
                     onClick={onCalendarWrapperClick}
                 >
                     <Calendar
