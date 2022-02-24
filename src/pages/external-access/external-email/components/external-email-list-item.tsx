@@ -76,7 +76,7 @@ const ExternalEmailListItem = ({message, patientPhoto, users, patient, onClick} 
                     <span className={!message.isRead ? 'font-bold' : ''}>{displayName}</span>
                 </div>
                 <div className='flex flex-row'>
-                    {message.attachments && <div>
+                    {message.attachments && message.attachments.length > 0 && <div>
                         <SvgIcon type={Icon.Attachment} className="icon-small" fillClass="rgba-06-fill"  />
                     </div>}
                     <div className='body3-medium flex items-center w-16 justify-end'>
