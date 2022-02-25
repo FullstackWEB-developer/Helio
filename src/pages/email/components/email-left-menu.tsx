@@ -2,7 +2,6 @@ import React, {useContext, useEffect, useMemo, useState} from 'react';
 import {DEFAULT_FILTER_VALUE} from '../constants';
 import {DropdownItemModel} from '@components/dropdown';
 import {EmailQueryType} from '@pages/email/models/email-query-type';
-import utils from '@shared/utils/utils';
 import DropdownLabel from '@components/dropdown-label';
 import {EmailFilterModel} from '@pages/email/components/email-filter/email-filter.model';
 import EmailFilterBar from '@pages/email/components/email-filter/email-filter-bar';
@@ -13,8 +12,11 @@ import {DEBOUNCE_SEARCH_DELAY_MS} from '@constants/form-constants';
 import { EmailContext } from '../context/email-context';
 import {useSelector} from 'react-redux';
 import {selectAppUserDetails} from '@shared/store/app-user/appuser.selectors';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
 
 const EmailLeftMenu = () => {
+    dayjs.extend(utc);
     const [searchTerm, setSearchTerm] = useState<string>();
     const [isFilterVisible, setFilterVisible] = useState<boolean>(false);
     const {id} = useSelector(selectAppUserDetails);
@@ -72,12 +74,25 @@ const EmailLeftMenu = () => {
     }, [getEmailsQuery.isFetchingNextPage, getEmailsQuery.isLoading])
 
     const onFilterClick = (value: EmailFilterModel) => {
-        setQueryParams({
+        let params = {
             ...queryParams,
-            fromDate: utils.toShortISOLocalString(value.fromDate),
-            toDate: utils.toShortISOLocalString(value.toDate),
-            assignedTo: value.assignedTo
-        });
+            assignedTo: value.assignedTo,
+            fromDate: '',
+            toDate: ''
+        }
+        if (value.fromDate) {
+            params = {
+                ...params,
+                fromDate: dayjs(value.fromDate).utc().format("YYYY-MM-DDT[00:00:00]"),
+            }
+        }
+        if (value.toDate) {
+            params = {
+                ...params,
+                toDate:  dayjs(value.toDate).utc().format("YYYY-MM-DDT[23:59:59]"),
+            }
+        }
+        setQueryParams(params);
         setFilterVisible(false);
         setFilterParams(value);
     }
