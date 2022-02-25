@@ -120,6 +120,12 @@ const Contacts: React.FC<ContactProps> = () => {
         }
     }
 
+    const refreshContactList = () => {
+        if (!isFetching) {
+            refetch().then();
+        }
+    }
+
     const toggleEditMode = () => {
         setEditMode(!editMode);
     }
@@ -158,7 +164,7 @@ const Contacts: React.FC<ContactProps> = () => {
     const onContactUpdateSuccess = (contact: ContactExtended) => {
         setEditMode(false);
         setSelectedContact(contact);
-
+        refreshContactList();
         dispatch(addSnackbarMessage({
             type: SnackbarType.Success,
             message: 'contacts.contact_details.contact_updated'
