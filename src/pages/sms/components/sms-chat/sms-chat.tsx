@@ -156,6 +156,7 @@ const SmsChat = ({info, isLoading, isSending, isBottomFocus, messages = [], last
         if (sendToNumber) {
             props.onSendClick(sendToNumber, smsText);
         }
+        setSelectedMessageTemplate(undefined);
     }
 
     return (<div className="flex flex-col justify-between flex-auto h-full sms-chat">
