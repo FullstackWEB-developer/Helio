@@ -83,13 +83,13 @@ const EmailLeftMenu = () => {
         if (value.fromDate) {
             params = {
                 ...params,
-                fromDate: dayjs(value.fromDate).utc().format("YYYY-MM-DDT[00:00:00]"),
+                fromDate: dayjs(value.fromDate).startOf('day').format("YYYY-MM-DDTHH:mm:ss"),
             }
         }
         if (value.toDate) {
             params = {
                 ...params,
-                toDate:  dayjs(value.toDate).utc().format("YYYY-MM-DDT[23:59:59]"),
+                toDate:  dayjs(value.toDate).endOf('day').format("YYYY-MM-DDTHH:mm:ss"),
             }
         }
         setQueryParams(params);

@@ -438,6 +438,7 @@ const TicketFilter = ({isOpen}: {isOpen: boolean}) => {
                     name='fromDate'
                     dataTestId='ticket-filter-from-date'
                     value={fromDate}
+                    max={new Date(new Date().toDateString())}
                     isCalendarPositionComputed
                     onChange={setFromDate}
                 />
@@ -448,6 +449,7 @@ const TicketFilter = ({isOpen}: {isOpen: boolean}) => {
                     min={fromDate}
                     isCalendarPositionComputed
                     label='tickets.filter.to_date'
+                    max={new Date(new Date().toDateString())}
                     name='toDate'
                     dataTestId='ticket-filter-to-date'
                 />

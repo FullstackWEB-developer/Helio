@@ -194,6 +194,7 @@ const EmailFilter = ({className, isUserFilterEnabled, value, ...props}: EmailFil
                         label='tickets.filter.from_date'
                         name='fromDate'
                         defaultValue={null}
+                        max={new Date(new Date().toDateString())}
                         min={dayjs().subtract(6, 'month').toDate()}
                         dataTestId='ticket-filter-from-date'
                         isCalendarPositionComputed
@@ -205,6 +206,7 @@ const EmailFilter = ({className, isUserFilterEnabled, value, ...props}: EmailFil
                         isCalendarPositionComputed
                         defaultValue={null}
                         min={fromDateField}
+                        max={new Date(new Date().toDateString())}
                         disabled={!fromDateField}
                         label='tickets.filter.to_date'
                         name='toDate'

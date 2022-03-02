@@ -257,6 +257,7 @@ const CallsLogFilter = ({isOpen, value: propsValue, logType, ...props}: CallsLog
                         type='date'
                         label='tickets.filter.from_date'
                         name='fromDate'
+                        max={new Date(new Date().toDateString())}
                         min={dayjs().subtract(6, 'month').toDate()}
                         dataTestId='filter-from-date'
                         isCalendarPositionComputed
@@ -265,6 +266,7 @@ const CallsLogFilter = ({isOpen, value: propsValue, logType, ...props}: CallsLog
                     <ControlledDateInput
                         control={control}
                         type='date'
+                        max={new Date(new Date().toDateString())}
                         isCalendarPositionComputed
                         min={fromDateField}
                         disabled={!fromDateField}
