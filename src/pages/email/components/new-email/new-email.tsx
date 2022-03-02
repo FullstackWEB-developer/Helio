@@ -269,7 +269,7 @@ const NewEmail = () => {
                 onCancelClick={onTicketSelectionCancelClick}
             />
         }
-    }, [step, patients, contacts, contactPagination]);
+    }, [step, patients, contacts, contactPagination, tickets]);
 
 
     return <div className='w-full h-full overflow-y-auto'>
