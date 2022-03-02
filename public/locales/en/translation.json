@@ -747,7 +747,7 @@
     "hipaa_verify_description": "For security purposes, we ask you to re-verify your data every {{day}} days. Please verify your information.",
     "emergency_note": "If you have an emergency, please contact 911 or your local emergency center.",
     "mobile_verification_failed": "Please check provided details and try again.",
-    "patient_verification_failed_callback_note": "Patient could not be verified during Hipaa verification.",
+    "patient_verification_failed_callback_note": "Patient could not be verified during HIPAA verification.",
     "patient_verification_failed_callback_subject": "Patient verification failed",
     "zip_code": "Zip Code",
     "dob": "Date of birth",
