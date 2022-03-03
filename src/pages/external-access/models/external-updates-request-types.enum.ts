@@ -12,5 +12,6 @@ export enum ExternalAccessRequestTypes {
     RegisterNewPatient,
     AppointmentList,
     AppointmentConfirmation,
-    SentTicketMessageViaEmail
+    SentTicketMessageViaEmail,
+    FeedbackRating,
 }

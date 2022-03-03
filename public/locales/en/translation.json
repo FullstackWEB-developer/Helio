@@ -767,6 +767,7 @@
     "six_digit_code_resent_to_email": "Code is sent to your email address",
     "six_digit_code_resent_to_mobile": "Code is sent to your mobile number",
     "not_verified_patient": "Please use the link that is provided to you.",
+    "not_verified_link": "Please use the link that is provided to you.",
     "could_not_verify_header": "Sorry, we were not able to verify you.",
     "could_not_verify_description_1": "The data you entered does not match our records. Your account has been locked for {{minutes}} minutes for security reasons.",
     "could_not_verify_description_2": "Please complete and submit the form below and we will contact you as soon as possible.",
@@ -981,6 +982,23 @@
       "select_provider": "Provider",
       "message_success": "Your message was sent.",
       "message_error": "Sending message failed. Please try again."
+    },
+    "feedbacks": {
+      "title": "Please rate your recent experience with CWC.",
+      "paragraph_1": "Thinking about your interaction you had with CWC how satisfied are you with the experience?",
+      "paragraph_2": "What is the single most important thing that caused you to give the employee this rating?",
+      "warning": "Please do not include sensitive information such as your medical history information, user name or password in your response. The security and confidentiality of your information is important to us.",
+      "submit": "Submit your feedback",
+      "enter_your_message":"Enter your message",
+      "unsatisfied": "Unsatisfied",
+      "satisfied": "Satisfied",
+      "very_satisfied": "Very Satisfied",
+      "result_title": "Thank you for sharing your feedback with us.",
+      "result_paragraph_1": "Thank you for taking time to share your feedback with us. We strive to provide the best patient experience and we value your feedback.",
+      "result_paragraph_2": "Would you give us feedback on ",
+      "result_paragraph_3": " and help us spread the word?",
+      "feedback_button": "Give Feedback on ",
+      "result_failed": "Submit feedback failed."
     },
     "schedule_appointment": {
       "what_you_are_coming_for": "Tell us what you are coming in for.",

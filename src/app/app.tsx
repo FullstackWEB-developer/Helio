@@ -45,7 +45,7 @@ import {
     AppointmentSchedulePatientStatusPathRouter,
     AppointmentConfirmationPath,
     AppointmentConfirmationShortPath,
-    EmailPath, TicketEmailPath, RequestMedicalRecordsSuccessPath
+    EmailPath, TicketEmailPath, RequestMedicalRecordsSuccessPath, FeedbackPath
 } from './paths';
 import RealTimeUserStatusUpdate from '@shared/websockets/real-time-user-status-update';
 import ExternalAccessLayout from '@pages/external-access/layout/external-access-layout';
@@ -105,6 +105,7 @@ const MyStats = React.lazy(() => import('@pages/application/my-stats'));
 const NewAppointmentRouter = React.lazy(() => import('@pages/external-access/appointment/new-appointment-router/new-appointment-router'));
 const AppointmentConfirmation = React.lazy(() => import('@pages/external-access/appointment/appointment-confirmation/appointment-confirmation'));
 const AppointmentConfirmed = React.lazy(()=> import('@pages/external-access/appointment/appointment-confirmed'));
+const Feedback = React.lazy(()=> import('@pages/external-access/feedbacks/feedback'));
 
 function App() {
     const accessToken = useSelector(selectAccessToken);
@@ -167,6 +168,7 @@ function App() {
                                 <Route path='/o/download-medical-records' component={withSuspense(DownloadMedicalRecords)} />
                                 <Route path={AppointmentFoundPath} component={withSuspense(ExternalAppointmentFound)} />
                                 <Route path='/o/dmr/:linkId' component={withSuspense(DownloadMedicalRecords)} />
+                                <Route path={`${FeedbackPath}/:ticketId/:ratingOption?`} component={withSuspense(Feedback)} />
                                 <Route exact path='/o/:linkId' component={withSuspense(VerifyRedirectLink)} />
                             </Switch>
                         </VerifiedPatientGuard>

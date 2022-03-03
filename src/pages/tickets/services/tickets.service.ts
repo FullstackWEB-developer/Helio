@@ -30,6 +30,8 @@ import utils from '@shared/utils/utils';
 import {setGlobalLoading} from '@shared/store/app/app.slice';
 import {ChatTranscript} from '@pages/tickets/models/chat-transcript.model';
 import {TicketBase} from '../models/ticket-base';
+import {FeedbackRequest} from '../models/feedback-request';
+import {FeedbackResponse} from '../models/feedback-response';
 import {
     AgentStatus,
     PagedList,
@@ -403,3 +405,9 @@ export const getFileAsBlob = async (url: string) => {
     });
     return response.data as Blob;
 }
+
+export const creteFeedback = async (request: FeedbackRequest) : Promise<FeedbackResponse> => {
+    const url = `${ticketsBaseUrl}/rating`;
+    const response = await Api.post(url, request);
+    return response.data;
+};

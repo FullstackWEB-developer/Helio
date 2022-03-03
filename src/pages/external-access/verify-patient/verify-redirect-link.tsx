@@ -42,6 +42,8 @@ const VerifyRedirectLink = () => {
                     history.push('/o/download-medical-records');
                 } else if (data.requestType === ExternalAccessRequestTypes.RegisterNewPatient) {
                     history.push('/o/registration');
+                } else if (data.requestType === ExternalAccessRequestTypes.FeedbackRating) {
+                    history.push(`/o/feedback/${data.ticketId}`);
                 } else {
                     history.push('/o/verify-patient-get-mobile');
                 }

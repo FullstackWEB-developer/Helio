@@ -42,3 +42,4 @@ export const AppointmentRescheduledPath = '/o/appointment-rescheduled';
 export const AppointmentSchedulePatientStatusPathRouter = '/o/new-appointment';
 export const AppointmentConfirmationPath = '/o/appointment-confirmation';
 export const AppointmentConfirmationShortPath = '/o/aco';
+export const FeedbackPath = '/o/feedback';

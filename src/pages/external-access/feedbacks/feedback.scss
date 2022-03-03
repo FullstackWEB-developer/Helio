@@ -1,0 +1,13 @@
+.feedback-body{
+  max-width: 58rem;
+}
+
+.feedback:hover{
+  border: solid 2px rgba(var(--color-primary-500-rgb), 0.5);
+  background-color: rgba(var(--color-primary-500-rgb), 0.03);
+}
+
+.feedback-selected{
+  border: solid 2px var(--color-primary-default);
+  background-color: rgba(var(--color-primary-500-rgb), 0.07);
+}
