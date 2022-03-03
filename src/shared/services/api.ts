@@ -117,6 +117,10 @@ Api.interceptors.response.use(
             signOut();
         }
 
+        if (!userState.auth.isGuestLogin && !userState.auth?.isLoggedIn) {
+            window.location.href = '/login';
+        }
+
         if (store.getState().appUserState.auth.isGuestLogin) {
             store.dispatch(clearVerifiedPatient());
             store.dispatch(setVerifiedLink(''));
