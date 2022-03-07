@@ -15,7 +15,8 @@ import AppointmentTable from './components/appointment-table';
 import {getAppointmentTypes} from '@pages/appointments/services/appointments.service';
 import {AppointmentType} from './models/appointment-type.model';
 import Spinner from '@components/spinner/Spinner';
-import {AppointmentDetailPath} from '@app/paths';
+import {AppointmentDetailPath, AppointmentSchedulePath} from '@app/paths';
+import Button from '@components/button/button';
 
 const AppointmentList = () => {
     const {t} = useTranslation();
@@ -78,11 +79,14 @@ const AppointmentList = () => {
                 {appointmentList.length > 0 && <div className='pt-6 pb-8'>
                     {t('external_access.appointments.select_appointment')}
                 </div>}
-
-                <AppointmentTable
-                    isActionColumnVisible={false}
-                    data={appointmentList}
-                    onRowClick={(appointment) => selectAppointment(appointment as Appointment)} />
+                {
+                    appointmentList.length > 0 ?
+                    <AppointmentTable
+                        isActionColumnVisible={false}
+                        data={appointmentList}
+                        onRowClick={(appointment) => selectAppointment(appointment as Appointment)} /> :
+                    <Button label='external_access.appointments.appointment_schedule' onClick={() => history.push(AppointmentSchedulePath)}/>
+                }
             </div>
         );
     }
