@@ -1463,6 +1463,7 @@
         "failure": "Archiving ticket failed. Please try again."
       },
       "spam": "Spam",
+      "block_email": "Block Email",
       "create_patient_chart": "Create Patient Chart",
       "add_contact": "Add Contact",
       "blocked_success": "{{value}} has been blocked succesfully.",

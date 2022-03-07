@@ -312,7 +312,7 @@ const ConversationHeader = ({info, forNewTicketMessagePurpose, patientPhoto, con
                 </div>
             </div>
             <div className='flex items-center justify-center justify-self-center'>
-                <Modal isDraggable={true} isOpen={blockedAccessModalOpen} title={t('ticket_detail.header.block_user.title')}
+                <Modal isDraggable={true} isOpen={blockedAccessModalOpen} title={t('email.inbox.block_email')}
                     onClose={() => setBlockedAccessModalOpen(false)}
                     isClosable={true}>
                     <div className='w-full mb-10'>
@@ -341,7 +341,7 @@ const ConversationHeader = ({info, forNewTicketMessagePurpose, patientPhoto, con
                                 buttonType='small'
                                 disabled={!isValid}
                                 isLoading={blockMutation.isLoading}
-                                label='blacklist.add_new_block_form.block_user'
+                                label='email.inbox.block_email'
                                 onClick={() => handleSubmit(performEmailBlock)()}
                             />
                         </div>
