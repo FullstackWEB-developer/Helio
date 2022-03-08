@@ -173,6 +173,15 @@ export const Dashboard = () => {
             volumes: {
                 closedTotal: [],
                 createdTotal: []
+            },
+            patientRatings: {
+                unsatisfiedPercent: 0,
+                unsatisfiedCount: 0,
+                neutralPercent: 0,
+                neutralCount: 0,
+                satisfiedPercent: 0,
+                satisfiedCount: 0,
+                overallSatisfiedPercent: 0
             }
         } as DashboardResponse
     }

@@ -48,6 +48,7 @@ import {AgentContactPerformanceResponse} from '@pages/application/models/agent-c
 import {TicketManagerReview} from '@pages/application/models/ticket-manager-review';
 import {ManagerRatingsMetricResponse} from '@pages/application/models/manager-ratings-metric-response';
 import {CreateTicketFeedbackRequest} from '@pages/tickets/models/create-ticket-feedback-request';
+import { PatientRatings } from '@pages/dashboard/models/patient-ratings.model';
 
 const logger = Logger.getInstance();
 const ticketsBaseUrl = "/tickets";
@@ -409,5 +410,15 @@ export const getFileAsBlob = async (url: string) => {
 export const creteFeedback = async (request: FeedbackRequest) : Promise<FeedbackResponse> => {
     const url = `${ticketsBaseUrl}/rating`;
     const response = await Api.post(url, request);
+    return response.data;
+};
+
+export const getOverallPatientReviews = async (type: DashboardTypes) : Promise<PatientRatings> => {
+    const url = `${ticketsBaseUrl}/rating/overall-patient-reviews`;
+    const response = await Api.get(url, {
+        params: {
+            type
+        }
+    });
     return response.data;
 };

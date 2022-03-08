@@ -3,7 +3,7 @@ import {Icon} from '@components/svg-icon';
 import TicketsVolumeChart from '@pages/dashboard/components/charts/tickets-volume.chart';
 import TicketsPriorityChart from '@pages/dashboard/components/charts/tickets-priority.chart';
 import TicketsReasonChart from '@pages/dashboard/components/charts/tickets-reason.chart';
-import DashboardRatingsWidget from '@pages/dashboard/components/dashboard-ratings-widget';
+import DashboardPatientRatingsWidget from '@pages/dashboard/components/dashboard-patients-ratings-widget';
 import TicketResponseTimeWidget from '@pages/dashboard/components/ticket-response-time-widget';
 import TicketsByChannelsWidget from '@pages/dashboard/components/tickets-by-channels-widget';
 import React from 'react';
@@ -75,9 +75,9 @@ const DashboardContent = (dataInput: DashboardContentProps) => {
         </div>
         <div className='col-span-12 px-0 py-8 xl:py-0 xl:pl-8 lg:col-span-4 xl:space-y-8 space-y-0'>
             <div>
-                <Card hasBorderRadius title='dashboard.ratings.title'>
+                <Card hasBorderRadius title='dashboard.patient_ratings.title'>
                     <div className='h-64'>
-                        <DashboardRatingsWidget data={data.ratingStats}/>
+                        <DashboardPatientRatingsWidget data={data.patientRatings}/>
                     </div>
                 </Card>
             </div>

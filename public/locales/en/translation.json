@@ -1298,6 +1298,13 @@
       "very_satisfied": "Very satisfied",
       "neutral": "Neutral",
       "unsatisfied": "Unsatisfied"
+    },
+    "patient_ratings": {
+      "title": "Patient Ratings",
+      "overall_ratings": "Overall Ratings",
+      "very_satisfied": "Very satisfied",
+      "neutral": "Neutral",
+      "unsatisfied": "Unsatisfied"
     }
   },
   "my_stats": {

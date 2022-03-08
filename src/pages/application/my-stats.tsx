@@ -8,6 +8,7 @@ import {
     TicketsPerformance
 } from '@pages/application/components';
 import {useTranslation} from 'react-i18next';
+import DashboardPatientRatingsWidget from '@pages/dashboard/components/dashboard-patients-ratings-widget';
 
 const MyStats = () => {
 
@@ -36,8 +37,8 @@ const MyStats = () => {
         </div>
         <div className='flex flex-row space-x-4 flex flex-col md:flex-row grid-cols-12 grid space-y-8 xl:space-y-0 xl:space-x-8'>
             <div className='col-span-12 md:col-span-3'>
-                <Card hasBorderRadius title='my_stats.manager_ratings.title'>
-                    <ManagerRatings/>
+                <Card hasBorderRadius title='dashboard.patient_ratings.title' hasFullHeight={true}>
+                    <DashboardPatientRatingsWidget/>
                 </Card>
             </div>
             <div className='col-span-12 md:col-span-9'>

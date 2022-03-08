@@ -7,13 +7,15 @@ export interface CardProps {
     title?: string;
     children: React.ReactNode;
     extra?: React.ReactNode;
-    hasBorderRadius?: boolean
+    hasBorderRadius?: boolean,
+    hasFullHeight?: boolean
 }
 
-const Card = ({title, children, extra, hasBorderRadius = false}: CardProps) => {
+const Card = ({title, children, extra, hasBorderRadius = false, hasFullHeight = false}: CardProps) => {
     const {t} = useTranslation();
     const cardClass = classnames('card w-full', {
-        'rounded-xl' : hasBorderRadius
+        'rounded-xl' : hasBorderRadius,
+        'h-full' : hasFullHeight
     });
     return <div className={cardClass}>
         { title &&
