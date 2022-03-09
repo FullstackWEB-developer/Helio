@@ -7,6 +7,7 @@ import {Option} from '@components/option/option';
 import {keyboardKeys} from '@components/search-bar/constants/keyboard-keys';
 import SvgIcon from '@components/svg-icon/svg-icon';
 import {Icon} from '@components/svg-icon/icon';
+import {isIOS, isIOS13} from 'react-device-detect';
 import Spinner from '@components/spinner/Spinner';
 import classnames from 'classnames';
 interface SelectProps {
@@ -143,7 +144,7 @@ const Select = React.forwardRef<HTMLDivElement, SelectProps>(({options, order, l
                                 onClick={() => selectValueChange(option)}
                                 disabled={option.disabled}
                                 className={`${cursor === index ? 'active' : ''}`}
-                                changeCursorValueOnHover={() => setCursor(index)}
+                                changeCursorValueOnHover={() => (!isIOS || !isIOS13) && setCursor(index)}
                             />)
                     }
                 </>
