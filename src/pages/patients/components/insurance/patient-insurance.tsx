@@ -18,7 +18,7 @@ const PatientInsurance = () => {
     const getPolicyHolder = (insurance: Insurance) => {
         if (insurance !== undefined) {
             if (insurance.insuredLastName && insurance.insuredFirstName) {
-                return `${insurance.insuredLastName},${insurance.insuredFirstName}`
+                return `${insurance.insuredLastName}, ${insurance.insuredFirstName}`
             } else {
                 return insurance.insurancePolicyHolder;
             }
