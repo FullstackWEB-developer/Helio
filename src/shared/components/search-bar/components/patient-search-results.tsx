@@ -94,7 +94,7 @@ const PatientSearchResults = () => {
                         <div className="truncate">{t('search.search_results.id')}</div>
                         <div className="truncate">{t('search.search_results.dob')}</div>
                         <div className="truncate">{t('search.search_results.ssn')}</div>
-                        <div className="truncate">{t('search.search_results.department')}</div>
+                        <div className="truncate">{t('search.search_results.phone')}</div>
                         <div className="truncate"></div>
                     </div>
                     {
@@ -102,11 +102,11 @@ const PatientSearchResults = () => {
                             <div key={patient.patientId} className="search-results-grid data-row h-10 col-template-patients px-6 body2">
                                 <div className="truncate">{patient.lastName || ''}</div>
                                 <div className="truncate">{patient.firstName || ''}</div>
-                                <div className="truncate">{patient.patientId || ''}</div>
+                                <div className="truncate cursor-pointer" onClick={() => handlePatientSelection(patient.patientId)}>{patient.patientId || ''}</div>
                                 <div className="truncate">{patient.dateOfBirth ? patientUtils.formatDob(patient.dateOfBirth) : ''}</div>
                                 <div className="truncate">{patient.ssn && patientUtils.displayPatientSsn(patient.ssn) ? patient.ssn : ''}</div>
-                                <div className="truncate">{patient.currentDepartment || ''}</div>
-                                <div>
+                                <div className="truncate">{patient.mobilePhone || ''}</div>
+                                <div className="flex justify-end items-center">
                                     <SvgIcon type={Icon.View} className="cursor-pointer" fillClass="search-results-icon-fill"
                                         onClick={() => handlePatientSelection(patient.patientId)} />
                                 </div>
