@@ -12,6 +12,7 @@ interface AudioPlayerProps {
 const AudioPlayer = ({url}: AudioPlayerProps) => {
     const audioRef = useRef<HTMLAudioElement>(null);
     const [currentTime, setCurrentAudioTime] = useState<string>(DEFAULT_INIT_TIME);
+    const [duration, setDuration] = useState<number>(-1);
     const [currentValue, setCurrentValue] = useState(0);
     const [isAutoPlay, setAutoPlay] = useState(true);
     const isPlay = audioRef.current ? !audioRef.current.paused : false;
@@ -22,7 +23,13 @@ const AudioPlayer = ({url}: AudioPlayerProps) => {
         }
 
         audioRef.current.load();
-    }, [url])
+    }, [url]);
+
+    useEffect(() => {
+        if (audioRef?.current?.duration && audioRef?.current?.duration > 0) {
+            setDuration(audioRef.current.duration);
+        }
+    }, [audioRef?.current])
 
     useEffect(() => {
         if (!audioRef.current) {
@@ -63,7 +70,6 @@ const AudioPlayer = ({url}: AudioPlayerProps) => {
         audioRef.current?.load();
     }
 
-    const getDuration = () => (audioRef.current?.duration ?? -1);
     return (
         <div>
             <audio
@@ -84,14 +90,14 @@ const AudioPlayer = ({url}: AudioPlayerProps) => {
                 <div className='flex flex-col justify-center w-full ml-8'>
                     <Slider
                         min={0}
-                        max={getDuration()}
+                        max={duration}
                         value={currentValue}
                         step={0.05}
                         onChange={onSliderChanged}
                     />
                     <div className='flex justify-between w-full mt-1'>
                         <span className='mr-4'>{currentTime}</span>
-                        <span>{utils.formatTime(getDuration())}</span>
+                        <span>{utils.formatTime(duration)}</span>
                     </div>
                 </div>
             </div>
