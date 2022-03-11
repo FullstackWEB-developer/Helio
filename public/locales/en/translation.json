@@ -1337,7 +1337,8 @@
       "avg_hold_time": "Avg. Hold Time",
       "avg_interaction_time": "Avg. Interaction Time",
       "avg_after_contact_work": "Avg. After Contact Work",
-      "could_not_fetch_contact_performance": "Could not fetch contact performance statistics"
+      "could_not_fetch_contact_performance": "Could not fetch contact performance statistics",
+      "no_data": "No call or chat data"
     },
     "manager_ratings": {
       "title": "Manager Ratings",
