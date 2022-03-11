@@ -369,12 +369,8 @@ const formatTime = (sec: number): string => {
     if (sec < 0) {
         return '--:--:--'
     }
-
-    const seconds = (Math.floor(sec % 60) || '00').toString().padStart(2, '0');
-    const minutes = (Math.floor(sec / 60) || '00').toString().padStart(2, '0');
-    const hours = (Math.floor(sec / 120) || '00').toString().padStart(2, '0');
-
-    return `${hours}:${minutes}:${seconds}`
+    const duration = dayjs.duration(sec, 'seconds');
+    return duration.format('HH:mm:ss');
 }
 
 const applyPhoneMask = (phone: string) => {
