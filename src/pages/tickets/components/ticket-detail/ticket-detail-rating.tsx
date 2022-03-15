@@ -58,7 +58,7 @@ const TicketDetailRating = ({botRating, patientRating, ticketId}: {botRating?: n
 
     return (
         <>
-            {botRating && displayBotRating()}
+            {(botRating || botRating === 0) && displayBotRating()}
             {patientRating && displayPatientRating()}
             <Modal isDraggable={true} isOpen={ratingModalOpen} title={t('patient_ratings.title_singular')} onClose={() => setRatingModalOpen(false)}
                 isClosable={true} closeableOnEscapeKeyPress={ratingModalOpen} >
