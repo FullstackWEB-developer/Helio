@@ -104,5 +104,8 @@ export enum Icon {
     ZipMime = "Zip",
     RarMime = "Rar",
     TiffMime = 'Tiff',
-    FallbackMime = "ImagePlaceholder"
+    FallbackMime = "ImagePlaceholder",
+    RatingDissatisfiedComment = 'RatingDissatisfiedComment',
+    RatingSatisfiedComment = 'RatingSatisfiedComment',
+    RatingVerySatisfiedComment = 'RatingVerySatisfiedComment',
 }

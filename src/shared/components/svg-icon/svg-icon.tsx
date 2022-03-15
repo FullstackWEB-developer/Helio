@@ -1177,6 +1177,48 @@ const SvgIcon = ({type, wrapperClassName = '', className = 'icon-medium', fillCl
         )
     }
 
+    const getIconRatingDissatisfiedComment = () => {
+        return (
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className={mainClass}>
+                <rect width="24" height="24" fill="none"/>
+                <g transform="translate(-0.005 0.031)">
+                    <path d="M12.005,2a10.011,10.011,0,0,0-10,10,9.907,9.907,0,0,0,1.223,4.783L.089,23.969l7.1-3.213A9.9,9.9,0,0,0,12.005,22a10,10,0,0,0,0-20Zm0,18A7.956,7.956,0,0,1,7.34,18.49L4.005,20l1.476-3.38A8,8,0,1,1,12.005,20Z" className={fillClass}/>
+                    <circle cx="1.5" cy="1.5" r="1.5" transform="translate(14 8)" className={fillClass}/>
+                    <circle cx="1.5" cy="1.5" r="1.5" transform="translate(7 8)" className={fillClass}/>
+                    <path d="M12,14a5.426,5.426,0,0,0-5.1,3.5H8.6a3.994,3.994,0,0,1,3.4-2,3.871,3.871,0,0,1,3.4,2h1.7A5.426,5.426,0,0,0,12,14Z" transform="translate(0.1 -0.031)" className={fillClass}/>
+                </g>
+            </svg>
+        );
+    }
+
+    const getIconRatingSatisfiedComment = () => {
+        return (
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className={mainClass}>
+                <rect width="24" height="24" fill="none"/>
+                <g transform="translate(-0.005 0.031)">
+                    <path className={fillClass} d="M12.005,2a10.011,10.011,0,0,0-10,10,9.907,9.907,0,0,0,1.223,4.783L.089,23.969l7.1-3.213A9.9,9.9,0,0,0,12.005,22a10,10,0,0,0,0-20Zm0,18A7.956,7.956,0,0,1,7.34,18.49L4.005,20l1.476-3.38A8,8,0,1,1,12.005,20Z"/>
+                    <circle className={fillClass} cx="1.5" cy="1.5" r="1.5" transform="translate(14 8)"/>
+                    <circle className={fillClass} cx="1.5" cy="1.5" r="1.5" transform="translate(7 8)"/>
+                    <path className={fillClass} d="M12,16a3.8,3.8,0,0,1-1.96-.52c-.12.14-.86.98-1.01,1.15a5.5,5.5,0,0,0,5.95-.01c-.97-1.09-.01-.02-1.01-1.15A3.772,3.772,0,0,1,12,16Z"/>
+                </g>
+            </svg>
+        )
+    }
+
+    const getIconRatingVerySatisfiedComment = () => {
+        return (
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className={mainClass}>
+                <rect width="24" height="24" fill="none"/>
+                <g transform="translate(-0.005 0.031)">
+                    <path className={fillClass} d="M12.005,2a10.011,10.011,0,0,0-10,10,9.907,9.907,0,0,0,1.223,4.783L.089,23.969l7.1-3.213A9.9,9.9,0,0,0,12.005,22a10,10,0,0,0,0-20Zm0,18A7.956,7.956,0,0,1,7.34,18.49L4.005,20l1.476-3.38A8,8,0,1,1,12.005,20Z"/>
+                    <circle className={fillClass} cx="1.5" cy="1.5" r="1.5" transform="translate(14 8)"/>
+                    <circle className={fillClass} cx="1.5" cy="1.5" r="1.5" transform="translate(7 8)"/>
+                    <path className={fillClass} d="M7,14a5.458,5.458,0,0,0,5,4,5.458,5.458,0,0,0,5-4Z" transform="translate(0.005 -0.031)"/>
+                </g>
+            </svg>
+        )
+    }
+
     const icons = {
         [Icon.Add]: getIconAdd,
         [Icon.AddBlack]: getIconAddBlack,
@@ -1284,7 +1326,10 @@ const SvgIcon = ({type, wrapperClassName = '', className = 'icon-medium', fillCl
         [Icon.PngMime]: getIconPng,
         [Icon.RarMime]: getIconRar,
         [Icon.ZipMime]: getIconZip,
-        [Icon.TiffMime]: getIconTiff
+        [Icon.TiffMime]: getIconTiff,
+        [Icon.RatingDissatisfiedComment]: getIconRatingDissatisfiedComment,
+        [Icon.RatingSatisfiedComment]: getIconRatingSatisfiedComment,
+        [Icon.RatingVerySatisfiedComment]: getIconRatingVerySatisfiedComment
     }
 
     const iconClicked = (e: React.MouseEvent<HTMLDivElement>) => {

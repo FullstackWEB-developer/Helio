@@ -75,3 +75,5 @@ export const GetAppointmentNotes = 'get-appointment-notes';
 export const ExportTicketList = 'export-ticket-list'
 export const SplitTicket = 'split-ticket';
 export const GetPatientRatings = 'get-patient-ratings';
+export const GetPatientTicketRating = 'get-patient-ticket-rating';
+export const GetUserDetail = 'get-user-details';

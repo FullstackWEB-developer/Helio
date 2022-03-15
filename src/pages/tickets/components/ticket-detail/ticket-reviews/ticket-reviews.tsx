@@ -9,10 +9,9 @@ import TicketReviewItem from '@pages/tickets/components/ticket-detail/ticket-rev
 import Button from '@components/button/button';
 import React, {useMemo, useState} from 'react';
 import {AddTicketReview} from '@components/ticket-rating';
+import useCheckPermission from '@shared/hooks/useCheckPermission';
 import SvgIcon, {Icon} from '@components/svg-icon';
 import dayjs from 'dayjs';
-import useCheckPermission from '@shared/hooks/useCheckPermission';
-
 export interface TicketReviewsProps {
     ticket: Ticket
 }
@@ -24,7 +23,7 @@ const TicketReviews = ({ticket}: TicketReviewsProps) => {
     const canAddReview = useCheckPermission('Tickets.AddReview');
 
     const getRatingIcon = useMemo(() => {
-        switch (ticket.ratingScore) {
+        switch (ticket.botRating) {
             case -1:
                 return <SvgIcon
                     fillClass='icon-medium rating-widget-unsatisfied'
@@ -46,7 +45,6 @@ const TicketReviews = ({ticket}: TicketReviewsProps) => {
         return <div className='h-40'><Spinner fullScreen={true} /></div>
     }
 
-
     return <div className='flex flex-col pb-8'>
         <div className='h8 pb-4'>{t('ticket_detail.info_panel.reviews.manager_ratings_reviews')}</div>
         <div>{
@@ -57,16 +55,16 @@ const TicketReviews = ({ticket}: TicketReviewsProps) => {
                 onClick={() => setAddReviewForTicket(ticket.id)} />
         </div>}
         {getRatingIcon && <>
-            <div className='h8 pt-4.5 pb-3.5'>{t('ticket_detail.info_panel.reviews.patient_ratings')}</div>
+            <div className='h8 pt-4.5 pb-3.5'>{t('patient_ratings.bot_ratings')}</div>
             <div className='body2-medium'>
-                {dayjs.utc(ticket.ratingScoreCreatedOn).local().format('MMM D, YYYY h:mm A')}
+                {dayjs.utc(ticket.botRatingCreatedOn).local().format('MMM D, YYYY h:mm A')}
             </div>
             <div className='flex flex-row pt-3.5'>
                 <div className='pr-4'>{getRatingIcon}</div>
                 <div className='body2-medium pr-2'>{t('ticket_detail.info_panel.reviews.by')}</div>
                 <div className='body2'>{ticket.createdForName}</div>
             </div>
-        </>}
+        </>}    
         {addReviewForTicket && <AddTicketReview
             ticketId={addReviewForTicket}
             isOpen={!!addReviewForTicket}

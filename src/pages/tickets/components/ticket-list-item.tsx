@@ -91,9 +91,9 @@ const TicketListItem = ({item}: TicketListItemProps) => {
         </div>
         <div className={classnames('w-2/12 max-w-xs truncate', {'subtitle2': !!item.subject, 'body2': !item.subject})}>
             <div className='ml-2'>
-            <Link to={getTicketPath()}>
-                <span>{item.subject ? item.subject : t('tickets.no_subject')}</span>
-            </Link>
+                <Link to={getTicketPath()}>
+                    <span>{item.subject ? item.subject : t('tickets.no_subject')}</span>
+                </Link>
             </div>
         </div>
         <div className='w-1/12 body3'>
@@ -128,7 +128,7 @@ const TicketListItem = ({item}: TicketListItemProps) => {
             <TicketAssignee ticketId={ticketId} assignee={item.assignee} />
         </div>
         <div className='w-1/12 flex justify-center'>
-            <TicketDetailRating rating={item.ratingScore} />
+            <TicketDetailRating botRating={item.botRating} ticketId={item.id!} />
         </div>
         <div className='w-1/12'>
             <div className='flex justify-center'>

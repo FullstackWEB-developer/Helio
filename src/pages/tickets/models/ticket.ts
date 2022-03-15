@@ -1,4 +1,5 @@
 import {CommunicationDirection, TicketType} from '@shared/models';
+import {PatientRating} from './patient-rating.model';
 import {TicketFeed} from './ticket-feed';
 import {TicketNote} from './ticket-note';
 import {TicketStatuses} from './ticket.status.enum';
@@ -13,7 +14,7 @@ export interface Ticket {
     closedOn?: Date;
     createdByName?: string;
     createdOn?: Date;
-    ratingScoreCreatedOn?: Date;
+    botRatingCreatedOn?: Date;
     modifiedOn?: Date;
     contactId?: string;
     patientId?: number;
@@ -34,7 +35,7 @@ export interface Ticket {
     feeds?: TicketFeed[];
     recordedConversationLink?: string;
     isDeleted?: boolean;
-    ratingScore?: number;
+    botRating?: number;
     originationNumber?: string;
     isOverdue?: boolean;
     createdForName?: string;
@@ -50,4 +51,5 @@ export interface Ticket {
     ipAddress?: string;
     incomingEmailAddress?: string;
     isPassive?: boolean;
+    patientRating?: PatientRating;
 }

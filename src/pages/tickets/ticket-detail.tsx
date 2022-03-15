@@ -147,7 +147,7 @@ const TicketDetail = () => {
                         <Modal isOpen={displayChatTranscript}
                                title='ticket_detail.chat_transcript.title'
                                isClosable={true}
-                               closeableOnEscapeKeyPress={true}
+                               closeableOnEscapeKeyPress={displayChatTranscript}
                                isDraggable={true}
                                onClose={() => (dispatch(toggleChatTranscriptWindowVisible()))}>
                             <ChatTranscript ticket={ticket} patient={patient} />

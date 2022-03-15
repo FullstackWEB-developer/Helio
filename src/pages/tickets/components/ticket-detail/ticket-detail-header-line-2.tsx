@@ -40,11 +40,20 @@ const TicketDetailHeaderLine2 = ({ticket, patientOrContactName}: {ticket: Ticket
                 value={dayjs().to(dayjs.utc(feedLastMessageOn).local())} />}
         </div>
         {
-            (ticket?.ratingScore || ticket?.ratingScore === 0) &&
+            (ticket?.botRating || ticket?.botRating === 0) &&
             <div className='flex flex-row'>
-                <div className='pl-6 body-medium'>{t('ticket_detail.header.rating')}</div>
+                <div className='pl-6 body-medium'>{t('patient_ratings.bot_ratings')}</div>
                 <div className='pl-2'>
-                    <TicketDetailRating rating={ticket.ratingScore} />
+                    <TicketDetailRating botRating={ticket.botRating} ticketId={ticket.id!} />
+                </div>
+            </div>
+        }
+        {
+            ticket?.patientRating && 
+            <div className='flex flex-row'>
+                <div className='pl-6 body-medium'>{t('patient_ratings.title_singular')}</div>
+                <div className='pl-2'>
+                    <TicketDetailRating patientRating={ticket.patientRating} ticketId={ticket.id!} />
                 </div>
             </div>
         }

@@ -49,6 +49,7 @@ import {TicketManagerReview} from '@pages/application/models/ticket-manager-revi
 import {ManagerRatingsMetricResponse} from '@pages/application/models/manager-ratings-metric-response';
 import {CreateTicketFeedbackRequest} from '@pages/tickets/models/create-ticket-feedback-request';
 import { PatientRatings } from '@pages/dashboard/models/patient-ratings.model';
+import {TicketRatingAppliedRequest} from '../models/ticket-rating-applied-request';
 
 const logger = Logger.getInstance();
 const ticketsBaseUrl = "/tickets";
@@ -422,3 +423,15 @@ export const getOverallPatientReviews = async (type: DashboardTypes) : Promise<P
     });
     return response.data;
 };
+
+export const getPatientTicketRating = async (ticketId: string) => {
+    const url = `${ticketsBaseUrl}/${ticketId}/rating`;
+    const response = await Api.get(url);
+    return response.data;
+}
+
+export const togglePatientRatingApplianceToTicket = async(reqBody: TicketRatingAppliedRequest) => {
+    const url = `${ticketsBaseUrl}/rating/toggle-rating-applied`;
+    const response = await Api.post(url, reqBody);
+    return response.data;
+}

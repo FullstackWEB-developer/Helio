@@ -32,6 +32,7 @@ import './ticket-detail-info-panel.scss';
 import {usePrevious} from '@shared/hooks/usePrevious';
 import dayjs from 'dayjs';
 import TicketReviews from '@pages/tickets/components/ticket-detail/ticket-reviews/ticket-reviews';
+import PatientRatingSideBar from '../patient-rating-sidebar';
 interface TicketDetailInfoPanelProps {
     ticket: Ticket,
     patient?: Patient,
@@ -77,7 +78,7 @@ const TicketDetailInfoPanel = ({ticket, patient, contact}: TicketDetailInfoPanel
             patientCaseNumber: ticket.patientCaseNumber,
             storedDueDate: ticket.dueDate,
             dueDate: ticket.dueDate ? dayjs(ticket.dueDate).toDate() : undefined,
-            dueTime: ticket.dueDate ?  utils.formatUtcDate(ticket.dueDate,'HH:mm') : undefined,
+            dueTime: ticket.dueDate ? utils.formatUtcDate(ticket.dueDate, 'HH:mm') : undefined,
             isDeleted: ticket.isDeleted
         };
         const initialTicketHash = hash.MD5(ticketUpdateModel);
@@ -177,58 +178,61 @@ const TicketDetailInfoPanel = ({ticket, patient, contact}: TicketDetailInfoPanel
                 {
                     isDirty() &&
                     <div className='flex flex-row items-center'>
-                        <Button onClick={resetForm} className='mr-6' buttonType='secondary' label={'common.cancel'}/>
+                        <Button onClick={resetForm} className='mr-6' buttonType='secondary' label={'common.cancel'} />
                         <Button buttonType='small' label={'common.save'} type='submit'
-                                disabled={!isValid || isPatientCaseNumberLoading}
-                                isLoading={ticketUpdateMutation.isLoading}/>
+                            disabled={!isValid || isPatientCaseNumberLoading}
+                            isLoading={ticketUpdateMutation.isLoading} />
                     </div>
                 }
             </div>
             <div className='border-b'>
                 <div className='px-6'>
                     <Collapsible title={'ticket_detail.info_panel.ticket_info'} isOpen={true}>
-                        <TicketDetailTicketInfo ticket={ticket} control={control} watch={watch}/>
+                        <TicketDetailTicketInfo ticket={ticket} control={control} watch={watch} />
                     </Collapsible>
                 </div>
             </div>
             <div className='px-6'>
                 <Collapsible title={'ticket_detail.info_panel.assigned_to'} isOpen={true}>
-                    <TicketDetailAssignee ticket={ticket}/>
+                    <TicketDetailAssignee ticket={ticket} />
                 </Collapsible>
             </div>
             <div className='border-b'>
                 <div className='px-6'>
                     {patient && <Collapsible title={'ticket_detail.info_panel.patient_info'} isOpen={true}>
                         <TicketDetailPatientInfo ticket={ticket} patient={patient}
-                                                 control={control}
-                                                 isPatientCaseNumberLoading={isPatientCaseNumberLoading}
-                                                 errorMessage={errors.patientCaseNumber?.message}
-                                                 validatePatientCaseNumber={validatePatientCaseNumber}/>
+                            control={control}
+                            isPatientCaseNumberLoading={isPatientCaseNumberLoading}
+                            errorMessage={errors.patientCaseNumber?.message}
+                            validatePatientCaseNumber={validatePatientCaseNumber} />
                     </Collapsible>}
 
                     <Collapsible title={'ticket_detail.info_panel.reviews.title'} isOpen={true}>
+                        {
+                            ticket?.patientRating && <PatientRatingSideBar ticket={ticket} />
+                        }
                         <TicketReviews ticket={ticket} />
                     </Collapsible>
                     {patient && <Collapsible title={'ticket_detail.info_panel.appointments'} isOpen={true}>
-                        <TicketDetailAppointments ticket={ticket}/>
+                        <TicketDetailAppointments ticket={ticket} />
                     </Collapsible>}
                     {contact &&
-                    <Collapsible title={'ticket_detail.info_panel.contact_details.contact_info'} isOpen={true}>
-                        <TicketDetailContactInfo contact={contact}/>
-                    </Collapsible>}
+                        <Collapsible title={'ticket_detail.info_panel.contact_details.contact_info'} isOpen={true}>
+                            <TicketDetailContactInfo contact={contact} />
+                        </Collapsible>}
                 </div>
             </div>
             <div className='border-b'>
                 <div className='px-6'>
                     <Collapsible title={'ticket_detail.info_panel.attachments'} isOpen={true}>
-                        <TicketDetailAttachments ticket={ticket}/>
+                        <TicketDetailAttachments ticket={ticket} />
                     </Collapsible>
                 </div>
             </div>
             <div className='px-6'>
                 <Collapsible title={'ticket_detail.info_panel.event_log'} isOpen={true}>
                     <TicketDetailEventLog ticket={ticket} control={control}
-                                          setIsVisible={setIsDueDateVisible} isVisible={isDueDateVisible}/>
+                        setIsVisible={setIsDueDateVisible} isVisible={isDueDateVisible} />
                 </Collapsible>
             </div>
         </form>

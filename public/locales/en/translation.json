@@ -331,7 +331,7 @@
       "ssn": "SSN",
       "view_in_athena": "View in Athena"
     },
-    "phone_types" : {
+    "phone_types": {
       "1": "Mobile Phone",
       "2": "Home Phone"
     },
@@ -681,7 +681,7 @@
       "error": "Failed to add Feed.",
       "description_prefix": "Ticket status was changed to",
       "title": "Recent Activity",
-      "all_activity":  "All Activity",
+      "all_activity": "All Activity",
       "internal_notes": "Internal Notes"
     }
   },
@@ -989,7 +989,7 @@
       "paragraph_2": "What is the single most important thing that caused you to give the employee this rating?",
       "warning": "Please do not include sensitive information such as your medical history information, user name or password in your response. The security and confidentiality of your information is important to us.",
       "submit": "Submit your feedback",
-      "enter_your_message":"Enter your message",
+      "enter_your_message": "Enter your message",
       "unsatisfied": "Unsatisfied",
       "satisfied": "Satisfied",
       "very_satisfied": "Very Satisfied",
@@ -1489,7 +1489,7 @@
         "5": "Work Direct Phone"
       },
       "formatter": {
-        "heading":"Heading",
+        "heading": "Heading",
         "subheading": "Subheading",
         "normal": "Normal"
       },
@@ -1504,7 +1504,7 @@
       "new_ticket": {
         "title": "You are starting a new email conversation."
       },
-      "subject" : "Subject",
+      "subject": "Subject",
       "template": "Template",
       "template_label": "Template:",
       "body_placeholder": "Enter Text",
@@ -1792,5 +1792,20 @@
   },
   "security": {
     "not_authorized": "It seems that you are not authorized to perform this operation,\nplease try again by re-logging into the system."
+  },
+  "patient_ratings": {
+    "title_plural": "Patient Ratings",
+    "title_singular": "Patient Rating",
+    "rating_by": "By <0>{{name}}</0>",
+    "rating_fetch_error": "Fetching patient rating for ticket failed. Please try again",
+    "dissatisified": "Dissatisfied",
+    "satisfied": "Satisfied",
+    "very_satisfied": "Very Satisfied",
+    "patient_comment": "Patient Comment",
+    "agent": "Agent",
+    "rating_not_applied": "Rating not applied to an agent.",
+    "dont_apply": "Don’t Apply Rating",
+    "rating_appliance_error": "Error toggling patient rating appliance. Please try again.",
+    "bot_ratings": "Bot rating"
   }
 }
