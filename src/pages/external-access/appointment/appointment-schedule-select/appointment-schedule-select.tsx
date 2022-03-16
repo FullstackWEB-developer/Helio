@@ -209,7 +209,7 @@ const AppointmentScheduleSelect = () => {
     const changeDate = (newStartDate: Date) => {
         setValue('selectedDate', newStartDate);
         setSelectedDate(newStartDate);
-        setSlotRequest({...slotRequest, startDate: newStartDate});
+        setSlotRequest({...slotRequest, startDate: newStartDate, endDate: dayjs(newStartDate).add(7, 'day').toDate()});
         setDisplayMaxTryError(false);
     }
 
