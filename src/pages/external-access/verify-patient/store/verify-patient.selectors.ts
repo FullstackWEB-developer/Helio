@@ -1,6 +1,7 @@
 import { RootState } from '@app/store';
 import { createSelector } from '@reduxjs/toolkit';
 import {RedirectLink} from '@pages/external-access/verify-patient/models/redirect-link';
+import {VerificationType} from '@pages/external-access/models/verification-type.enum';
 export const verifyPatientState = (state: RootState) => state.externalAccessState.verifyPatientState;
 
 export const selectRedirectLink = createSelector(
@@ -32,4 +33,9 @@ export const selectPreventRetryUntil = createSelector(
 export const selectRetryPrevented = createSelector(
     verifyPatientState,
     items => items.retryPrevented as boolean
+)
+
+export const selectVerificationChannel = createSelector(
+    verifyPatientState,
+    items => items.verificationChannel as VerificationType
 )

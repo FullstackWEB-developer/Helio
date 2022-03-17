@@ -59,7 +59,10 @@ const GetExternalUserDobZip = () => {
                     }
                     if (!request.patientId || data.patientId.toString() === request.patientId) {
                         dispatch(setExternalUserEmail(data.email));
-                        history.push('/o/verify-patient-code');
+                        history.push('/o/verify-patient-select-channel', {
+                            email: data.email,
+                            mobileNumber: data.mobileNumber
+                        });
                     } else if (!!request.patientId) {
                         dispatch(addSnackbarMessage({
                             type: SnackbarType.Error,
@@ -93,7 +96,7 @@ const GetExternalUserDobZip = () => {
     if (failCount > Number(utils.getAppParameter('HipaaVerificationRetryNumber'))) {
         history.push('/o/callback-ticket');
     }
-    return <div className='pt-4 md:px-48 without-default-padding xl:pt-16'>
+    return <div className='pt-4 md:px-12 xl:px-48 without-default-padding xl:pt-16'>
         <GetExternalUserHeader
             title={`external_access.title_${request.requestType}`}
             description={t('external_access.hipaa_verify_description', { day: utils.getAppParameter('VerifiedPatientExpiresInDays') })} />

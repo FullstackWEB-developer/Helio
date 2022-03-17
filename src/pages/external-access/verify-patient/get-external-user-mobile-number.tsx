@@ -65,10 +65,13 @@ const GetExternalUserMobileNumber = () => {
                 if (data.isVerified) {
                     dispatch(setRedirectLink({
                         ...request,
-                        patientId:data.verifiedPatient.patientId.toString()
+                        patientId: data.verifiedPatient.patientId.toString()
                     }));
                     dispatch(setExternalUserEmail(data.email));
-                    history.push('/o/verify-patient-code');
+                    history.push('/o/verify-patient-select-channel', {
+                        email: data.email,
+                        mobileNumber: data.mobileNumber
+                    });
                 } else {
                     history.push('/o/verify-patient');
                 }
@@ -88,10 +91,10 @@ const GetExternalUserMobileNumber = () => {
         return <Spinner fullScreen={true} />
     }
 
-    return <div className='md:px-48 without-default-padding pt-4 xl:pt-16'>
+    return <div className='md:px-12 xl:px-48 without-default-padding pt-4 xl:pt-16'>
             <GetExternalUserHeader
                 title={`external_access.title_${request.requestType}`}
-                description='external_access.enter_mobile_number' />
+                description='external_access.enter_mobile_or_home_number' />
             <div>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className='pb-6'>
@@ -101,7 +104,7 @@ const GetExternalUserMobileNumber = () => {
                             required={true}
                             control={control}
                             className='w-full md:w-88'
-                            label={t('external_access.mobile_phone_number')}
+                            label={t('external_access.phone_number')}
                             name='phone'/>
                     </div>
                     <div className='pb-2 flex justify-start'>

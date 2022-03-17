@@ -5,6 +5,7 @@ export interface PatientVerificationResponse {
     isVerified: boolean;
     patientId: number;
     email:string;
+    mobileNumber: string;
     authenticationResponse: AuthenticationResponse;
     verifiedPatient: VerifiedPatient;
 }

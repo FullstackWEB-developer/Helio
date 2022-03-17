@@ -1,4 +1,5 @@
 import {RedirectLink} from '@pages/external-access/verify-patient/models/redirect-link';
+import {VerificationType} from '@pages/external-access/models/verification-type.enum';
 
 export interface VerifyPatientState {
     redirectLink?: RedirectLink;
@@ -7,6 +8,7 @@ export interface VerifyPatientState {
     preventRetryUntil: Date | undefined;
     retryPrevented: boolean;
     verifiedLink?: string;
+    verificationChannel?: VerificationType
 }
 
 const initialVerifyPatientState: VerifyPatientState = {
@@ -14,7 +16,7 @@ const initialVerifyPatientState: VerifyPatientState = {
     phoneNumber: '',
     email: '',
     preventRetryUntil: undefined,
-    retryPrevented: false
+    retryPrevented: false,
 }
 
 export default initialVerifyPatientState;

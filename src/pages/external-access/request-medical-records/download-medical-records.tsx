@@ -83,7 +83,7 @@ const DownloadMedicalRecords = () => {
         verifyPatientRefetch().then()
     }
 
-    return <div className='md:px-48 without-default-padding pt-4 xl:pt-16'>
+    return <div className='md:px-12 xl:px-48 without-default-padding pt-4 xl:pt-16'>
         <GetExternalUserHeader
             title={`external_access.download_medical_records.title`}
             description='external_access.download_medical_records.verify_desc' />

@@ -29,12 +29,12 @@ import {SnackbarPosition} from '@components/snackbar/snackbar-position.enum';
 import ExternalUserEmergencyNote from '@pages/external-access/verify-patient/external-user-emergency-note';
 import {VerificationType} from '@pages/external-access/models/verification-type.enum';
 import {setAuthentication} from '@shared/store/app-user/appuser.slice';
-import Checkbox from '@components/checkbox/checkbox';
 import {ResendTimeout} from '@pages/external-access/verify-patient/resend-timeout';
 import {
     selectExternalUserEmail,
     selectExternalUserPhoneNumber,
     selectRedirectLink,
+    selectVerificationChannel,
     selectVerifiedLink
 } from '@pages/external-access/verify-patient/store/verify-patient.selectors';
 import {setVerifiedLink} from '@pages/external-access/verify-patient/store/verify-patient.slice';
@@ -45,12 +45,11 @@ const ExternalUserVerificationCode = () => {
     const email = useSelector(selectExternalUserEmail);
     const phoneNumber = useSelector(selectExternalUserPhoneNumber);
     const request = useSelector(selectRedirectLink);
+    const verificationChannel = useSelector(selectVerificationChannel);
     const history = useHistory();
     const [isPageLoading, setPageLoading] = useState<boolean>(true);
     const [verificationFailed, setVerificationFailed] = useState<boolean>(false);
-    const [sendViaEmail, setSendViaEmail] = useState<boolean>(false);
     const [isResendDisabled, setResendDisabled] = useState<boolean>(false);
-    const [emailSentBefore, setEmailSentBefore] = useState<boolean>(false);
     const verifiedLink = useSelector(selectVerifiedLink);
     const fingerPrintCode = useFingerPrint();
     const dispatch = useDispatch();
@@ -103,7 +102,7 @@ const ExternalUserVerificationCode = () => {
             request.requestType === ExternalAccessRequestTypes.SentTicketMessageViaEmail)&& !request.patientId) {
             forwardToRelatedPage();
         } else {
-            sendVerification(VerificationType.Sms);
+            sendVerification();
         }
         setPageLoading(false);
     }, []);
@@ -152,9 +151,9 @@ const ExternalUserVerificationCode = () => {
                 }
             });
 
-    const sendVerification = (type: VerificationType) => {
+    const sendVerification = () => {
         sendVerificationCodeMutation.mutate({
-            verificationType: type,
+            verificationType: verificationChannel,
             verificationChannel: VerificationChannel.Web,
             patientId: Number(request.patientId),
             mobilePhoneNumber: phoneNumber
@@ -162,7 +161,7 @@ const ExternalUserVerificationCode = () => {
             onSuccess: () => {
                 dispatch(addSnackbarMessage({
                     type: SnackbarType.Success,
-                    message: type === VerificationType.Email ? 'external_access.six_digit_code_resent_to_email' : 'external_access.six_digit_code_resent_to_mobile',
+                    message: verificationChannel === VerificationType.Email ? 'external_access.six_digit_code_resent_to_email' : 'external_access.six_digit_code_resent_to_mobile',
                     position: SnackbarPosition.TopCenter
                 }));
                 setResendDisabled(true);
@@ -170,22 +169,11 @@ const ExternalUserVerificationCode = () => {
         });
     }
 
-    const resendVerification = (type: VerificationType) => {
+    const resendVerification = () => {
         if (verifiedLink && verifiedLink.length > 0) {
             return;
         }
-        sendVerification(type);
-    }
-
-    const triggerEmailSend = (isChecked: boolean) => {
-        setSendViaEmail(isChecked);
-        if (isChecked && !emailSentBefore) {
-            setResendDisabled(false);
-            setEmailSentBefore(true);
-            resendVerification(VerificationType.Email);
-        } else {
-            setResendDisabled(true);
-        }
+        sendVerification();
     }
 
     const onSubmit = () => {
@@ -198,7 +186,7 @@ const ExternalUserVerificationCode = () => {
     };
 
     const headerDescription = () => {
-        if (sendViaEmail) {
+        if (verificationChannel === VerificationType.Email) {
             return t('external_access.verification_code_sent_description_email', {
                 'email': email
             });
@@ -213,7 +201,7 @@ const ExternalUserVerificationCode = () => {
         return <Spinner fullScreen={true} />
     }
 
-    return <div className='md:px-48'>
+    return <div className='md:px-12 xl:px-48'>
         <GetExternalUserHeader
             title={`external_access.title_${request.requestType}`}
             description={headerDescription()}/>
@@ -236,7 +224,7 @@ const ExternalUserVerificationCode = () => {
                     <div className='body2'>{t('external_access.resend_verification_message')}</div>
                     <div className='body2'>
                         <a className={(isResendDisabled || sendVerificationCodeMutation.isLoading) ? 'disabled xl:px-2' : 'xl:px-2'}
-                           onClick={() => resendVerification(sendViaEmail ? VerificationType.Email : VerificationType.Sms)}>
+                           onClick={() => resendVerification()}>
                             {t('external_access.resend_verification_cta')}
                         </a>
                     </div>
@@ -244,11 +232,6 @@ const ExternalUserVerificationCode = () => {
                                                         countdownSeconds={isResendDisabled ? 60 : 0}
                                                         onTimeOut={() => setResendDisabled(false)}/>}
                 </div>
-                {!!email && <div className='pb-10'>
-                    <Checkbox labelClassName='w-96' value='sendViaEmail'
-                              onChange={(checked) => triggerEmailSend(checked.checked)}
-                              name='sendViaEmail' label='external_access.send_via_email'/>
-                </div>}
                 <div className='pb-2 flex justify-start'>
                     <div>
                         <Button
