@@ -37,6 +37,7 @@ import {selectIsChatLogFiltered} from '@pages/chat-log/store/chat-log.selectors'
 import {setIsChatLogFiltered} from '@pages/chat-log/store/chat-log.slice';
 import useCheckPermission from '@shared/hooks/useCheckPermission';
 import {AddTicketReview, ViewTicketRatings} from '@components/ticket-rating';
+import TicketDetailRating from '@pages/tickets/components/ticket-detail/ticket-detail-rating';
 
 const ChatsLogList = () => {
     const {t} = useTranslation();
@@ -257,29 +258,10 @@ const ChatsLogList = () => {
             },
             {
                 title: 'ticket_log.rating',
-                field: 'ratingScore',
-                widthClass: 'w-1/12 flex items-center justify-center',
-                render: (value?: number) => (
-                    <>
-                        {value === undefined &&
-                            null
-                        }
-                        {value === -1 &&
-                            <SvgIcon type={Icon.RatingDissatisfied}
-                                fillClass='danger-icon'
-                            />
-                        }
-                        {value === 0 &&
-                            <SvgIcon type={Icon.RatingSatisfied}
-                                fillClass='warning-icon'
-                            />
-                        }
-                        {value === 1 &&
-                            <SvgIcon type={Icon.RatingVerySatisfied}
-                                fillClass='success-icon'
-                            />
-                        }
-                    </>
+                field: 'patientRating',
+                widthClass: 'w-1/12 flex flex-col items-center justify-center',
+                render: (_, data: TicketLogModel) => (
+                    <TicketDetailRating patientRating={data?.patientRating} ticketId={data?.id!} />
                 )
             },{
                 title: 'ticket_log.review',
