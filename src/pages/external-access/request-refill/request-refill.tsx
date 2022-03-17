@@ -168,7 +168,7 @@ const RequestRefill = () => {
         if (medicationProvider) {
             return medicationProvider;
         }
-        return providerOptions.find(p => p.value === verifiedPatient.defaultProviderId.toString())?.value;
+        return providerOptions.find(p => p.value === verifiedPatient?.defaultProviderId?.toString())?.value;
     }
 
     const determineProviderForMedication = () => {
