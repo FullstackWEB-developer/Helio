@@ -198,7 +198,9 @@
         "last_7_days": "Last 7 Days",
         "last_30_days": "Last 30 Days",
         "date_range": "Date Range"
-      }
+      },
+      "patient_ratings":"Patient Ratings",
+      "bot_ratings": "Bot Ratings"
     },
     "unassigned": "Unassigned",
     "due": "Due",

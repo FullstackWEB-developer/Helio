@@ -16,4 +16,6 @@ export interface TicketQuery extends Paging {
     tags?: string[];
     sorts?: string[];
     states?: number[];
+    patientRating?: number[];
+    botRating?: number[];
 }

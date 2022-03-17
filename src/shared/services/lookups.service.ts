@@ -7,6 +7,7 @@ import {
     setLocations,
     setMetricOptions,
     setProviders,
+    setRatingOptions,
     setUserList,
 } from '../store/lookups/lookups.slice';
 import Api from './api';
@@ -140,3 +141,19 @@ export const getMetricOptions = () => {
         }
     };
 };
+
+export const getRatingOptions = () => {
+    const url = 'lookups/Rating';
+    const ratingOptions = store.getState().lookupsState.ratingOptions;
+    return async (dispatch: Dispatch) => {
+        if (!ratingOptions || ratingOptions.length === 0) {
+            try {
+                const response = await Api.get(url);
+                dispatch(setRatingOptions(response.data));
+            }
+            catch (error: any) {
+                dispatch(setFailure(error.message));
+            }
+        }
+    }
+}

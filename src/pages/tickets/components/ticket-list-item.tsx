@@ -127,8 +127,10 @@ const TicketListItem = ({item}: TicketListItemProps) => {
         <div className='w-3/12'>
             <TicketAssignee ticketId={ticketId} assignee={item.assignee} />
         </div>
-        <div className='w-1/12 flex justify-center'>
-            <TicketDetailRating botRating={item.botRating} ticketId={item.id!} />
+        <div className='w-1/12'>
+            <div className='flex flex-col items-center justify-center'>
+                <TicketDetailRating patientRating={item.patientRating} ticketId={item.id!} />
+            </div>
         </div>
         <div className='w-1/12'>
             <div className='flex justify-center'>

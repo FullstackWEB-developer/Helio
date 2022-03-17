@@ -2,7 +2,7 @@ import withErrorLogging from '@shared/HOC/with-error-logging';
 import Collapsible from '@components/collapsible/collapsible';
 import React, {useEffect, useState} from 'react';
 import {getContacts} from '@shared/services/contacts.service';
-import {getLocations, getUserList} from '@shared/services/lookups.service';
+import {getLocations, getRatingOptions, getUserList} from '@shared/services/lookups.service';
 import {getEnumByType, getList, getLookupValues} from '../services/tickets.service';
 import {useDispatch, useSelector} from 'react-redux';
 import {useTranslation} from 'react-i18next';
@@ -19,7 +19,7 @@ import Radio from '@components/radio/radio';
 import {TicketOptionsBase} from '../models/ticket-options-base.model';
 import {Controller, useForm} from 'react-hook-form';
 import {Option} from '@components/option/option';
-import {selectLocationList, selectUserOptions} from '@shared/store/lookups/lookups.selectors';
+import {selectLocationList, selectRatingOptions, selectUserOptions} from '@shared/store/lookups/lookups.selectors';
 import {TicketQuery} from '../models/ticket-query';
 import dayjs from 'dayjs';
 import {TicketEnumValue} from '../models/ticket-enum-value.model';
@@ -34,7 +34,6 @@ import ControlledSelect from '@components/controllers/controlled-select';
 import {DATE_ISO_FORMAT} from '@shared/constants/form-constants'
 import utils from '@shared/utils/utils';
 import './ticket-filter.scss';
-
 
 const TicketFilter = ({isOpen}: {isOpen: boolean}) => {
     dayjs.extend(utc);
@@ -61,6 +60,7 @@ const TicketFilter = ({isOpen}: {isOpen: boolean}) => {
     const ticketListQueryType = useSelector(selectTicketQueryType);
     const [collapsibleState, setCollapsibleState] = useState<{[key: string]: boolean}>({});
     const watchTimePeriod = watch('timePeriod');
+    const ratings = useSelector(selectRatingOptions);
 
     useEffect(() => {
         dispatch(getContacts());
@@ -70,6 +70,7 @@ const TicketFilter = ({isOpen}: {isOpen: boolean}) => {
         dispatch(getEnumByType('TicketPriority'));
         dispatch(getEnumByType('TicketStatus'));
         dispatch(getEnumByType('TicketStateFilter'));
+        dispatch(getRatingOptions());
         dispatch(getEnumByType('TicketType'));
         dispatch(getLookupValues('Department'));
         dispatch(getLookupValues('TicketTags'));
@@ -142,13 +143,15 @@ const TicketFilter = ({isOpen}: {isOpen: boolean}) => {
         if (ticketQueryFilter.assignedTo && ticketQueryFilter.assignedTo.length > 0) {
             setValue('assignedTo', ticketQueryFilter.assignedTo);
         }
+        setCheckBoxControl('patientRating', ticketQueryFilter.patientRating);
+        setCheckBoxControl('botRating', ticketQueryFilter.botRating);
 
     }, [setValue, ticketQueryFilter])
 
-    const getSelectedFromCheckbox = (items: CheckboxCheckEvent[]): string[] => {
+    const getSelectedFromCheckbox = (items: CheckboxCheckEvent[], ignoreIsAllKeyCheck = false): string[] => {
         if (items) {
             const isAll = items.find(a => a && parseInt(a.value) === parseInt(allKey) && a.checked);
-            if (!isAll) {
+            if (!isAll || ignoreIsAllKeyCheck) {
                 return items.filter((a: CheckboxCheckEvent) => a.checked).map((b: CheckboxCheckEvent) => b.value);
             }
         }
@@ -166,6 +169,8 @@ const TicketFilter = ({isOpen}: {isOpen: boolean}) => {
         query.ticketTypes = getSelectedFromCheckbox(values.ticketTypes).map((a: string) => parseInt(a));
         query.locations = getSelectedFromCheckbox(values.offices);
         query.states = getSelectedFromCheckbox(values.states).map((a: string) => parseInt(a));
+        query.patientRating = getSelectedFromCheckbox(values.patientRating, true).map((a: string) => parseInt(a));
+        query.botRating = getSelectedFromCheckbox(values.botRating, true).map((a: string) => parseInt(a));
         query.departments = [];
         query.tags = [];
         query.reasons = [];
@@ -178,7 +183,9 @@ const TicketFilter = ({isOpen}: {isOpen: boolean}) => {
             (query.channels && query.channels.length > 0) ||
             (query.ticketTypes && query.ticketTypes.length > 0) ||
             (query.locations && query.locations.length > 0) ||
-            (query.states && query.states.length > 0)) {
+            (query.states && query.states.length > 0) ||
+            (query.patientRating && query.patientRating.length > 0) ||
+            (query.botRating && query.botRating.length > 0)) {
             hasFilter = true;
         }
         if (values.priority) {
@@ -273,11 +280,11 @@ const TicketFilter = ({isOpen}: {isOpen: boolean}) => {
             return [...reasons]
                 .sort((a, b) => a.label.localeCompare(b.label))
                 .map(reason => {
-                return {
-                    key: reason.value,
-                    value: reason.label
-                }
-            })
+                    return {
+                        key: reason.value,
+                        value: reason.label
+                    }
+                })
         }
 
         return [];
@@ -296,12 +303,12 @@ const TicketFilter = ({isOpen}: {isOpen: boolean}) => {
         return [];
     }
 
-    const convertEnumToOptions = (items: TicketEnumValue[]): TicketOptionsBase[] => {
+    const convertEnumToOptions = (items: TicketEnumValue[], camelCaseToWords = false): TicketOptionsBase[] => {
         if (items && items.length > 0) {
             return items.map(item => {
                 return {
                     key: item.key.toString(),
-                    value: item.value
+                    value: camelCaseToWords ? utils.spaceBetweenCamelCaseWords(item.value) : item.value
                 }
             })
         }
@@ -346,10 +353,10 @@ const TicketFilter = ({isOpen}: {isOpen: boolean}) => {
     const GetCollapsibleCheckboxControl = (title: string, name: string, items: TicketOptionsBase[]) => {
         return <Collapsible title={title} isOpen={collapsibleState[name]} onClick={(isCollapsed) => setCollapsibleState({...collapsibleState, [name]: isCollapsed})}>
             {
-                items.map((item) => {
+                items.map((item, index) => {
                     return <Controller
                         control={control}
-                        name={`${name}[${item.key}]`}
+                        name={`${name}[${index}]`}
                         defaultValue=''
                         key={item.key}
                         render={(props) => {
@@ -421,10 +428,12 @@ const TicketFilter = ({isOpen}: {isOpen: boolean}) => {
             ticketTypes: clearArray(fieldsValue.ticketTypes),
             assignedTo: '',
             department: '',
-            reasons:'',
+            reasons: '',
             priority: '',
             tags: [],
-            timePeriod: ''
+            timePeriod: '',
+            patientRating: clearArray(fieldsValue.patientRating),
+            botRating: clearArray(fieldsValue.botRating)
         });
         fetchTickets({});
     }
@@ -499,6 +508,8 @@ const TicketFilter = ({isOpen}: {isOpen: boolean}) => {
                         </div>
                     </Collapsible>
                 }
+                {GetCollapsibleCheckboxControl('tickets.filter.patient_ratings', 'patientRating', convertEnumToOptions(ratings, true))}
+                {GetCollapsibleCheckboxControl('tickets.filter.bot_ratings', 'botRating', convertEnumToOptions(ratings, true))}
                 <Collapsible title='tickets.filter.tags'
                     isOpen={collapsibleState['tags']}
                     onClick={(isCollapsed) => setCollapsibleState({...collapsibleState, "tags": isCollapsed})}>

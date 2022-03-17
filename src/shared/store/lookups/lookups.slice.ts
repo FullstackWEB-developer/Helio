@@ -45,6 +45,10 @@ const lookupsSlice = createSlice({
         setMetricOptions(state, {payload}: PayloadAction<KeyValuePair[] | undefined>) {
             state.metricOptions = payload;
             state.isLoading = false;
+        },
+        setRatingOptions(state, {payload}: PayloadAction<TicketEnumValue[] | undefined>){
+            state.ratingOptions = payload;
+            state.isLoading = false;
         }
     }
 });
@@ -59,7 +63,8 @@ export const {
     setMetricOptions,
     setForwardToOptions,
     setStates,
-    setAllProviders
+    setAllProviders,
+    setRatingOptions
 } = lookupsSlice.actions
 
 export default lookupsSlice.reducer
