@@ -16,6 +16,7 @@ export interface LookupsState {
     metricOptions?: KeyValuePair[];
     states?: Option[],
     forwardToOptions?: TicketEnumValue[];
+    ratingOptions?: TicketEnumValue[];
 }
 
 const initialState: LookupsState = {
@@ -27,6 +28,7 @@ const initialState: LookupsState = {
     userList: [],
     metricOptions: [],
     roleList:[],
-    forwardToOptions: []
+    forwardToOptions: [],
+    ratingOptions: []
 }
 export default initialState;

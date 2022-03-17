@@ -76,7 +76,7 @@ const ExternalUserCreateCallbackTicket = () => {
         return dayjs(preventRetryUntil).diff(dayjs(), 'seconds');
     }
 
-    return <div className='md:px-48 without-default-padding pt-4 xl:pt-16'>
+    return <div className='md:px-12 xl:px-48 without-default-padding pt-4 xl:pt-16'>
             <div className='md:whitespace-pre md:h-24 my-1 md:pb-10 w-full items-center'>
                 <h4>
                     {t('external_access.could_not_verify_header')}

@@ -527,6 +527,10 @@ const determineMimeTypeIcon = (mimeType: string, extension?: string) => {
     }
 }
 
+export const spaceBetweenCamelCaseWords = (phrase: string) => {
+    return phrase.replace(/([A-Z])/g, ' $1').trim();
+}
+
 const utils = {
     getWindowCenter,
     maskPhone,
@@ -575,7 +579,8 @@ const utils = {
     isDateInNextSevenDays,
     isDateTimeInPast,
     determineMimeTypeIcon,
-    capitalizeFirstLetters
+    capitalizeFirstLetters,
+    spaceBetweenCamelCaseWords
 };
 
 export default utils;

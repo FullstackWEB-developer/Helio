@@ -1,3 +1,4 @@
+import {PatientRating} from "@pages/tickets/models/patient-rating.model";
 import {CommunicationDirection, PagedRequest} from "@shared/models";
 
 export interface TicketLogModel {
@@ -12,15 +13,15 @@ export interface TicketLogModel {
     agentInteractionDuration?: number;
     contactStatus?: TicketLogContactStatus;
     recordedConversationLink?: string;
-    ratingScore?: number;
+    botRating?: number;
     communicationDirection: CommunicationDirection;
     originationNumber: string;
     connectedToSystemTimestamp?: string;
     contactDisconnectTimestamp?: string;
     contactInitiationTimestamp?: string;
     contactAgent?: string;
-    hasManagerReview: boolean
-
+    hasManagerReview: boolean;
+    patientRating?: PatientRating;
 }
 
 export enum TicketLogContactStatus {

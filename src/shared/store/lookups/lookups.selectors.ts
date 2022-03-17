@@ -53,3 +53,4 @@ export const selectIsDepartmentListLoading = (state: RootState) => state.lookups
 export const selectMetricOptions = (state: RootState) => state.lookupsState.metricOptions as KeyValuePair[];
 export const selectForwardToOptions = (state: RootState) => state.lookupsState.forwardToOptions as TicketEnumValue[];
 export const selectIsLoadingLookupValues = (state: RootState) => state.lookupsState.isLoading as boolean;
+export const selectRatingOptions = (state: RootState) => state.lookupsState.ratingOptions as TicketEnumValue[];

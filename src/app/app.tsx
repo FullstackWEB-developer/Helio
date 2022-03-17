@@ -96,6 +96,7 @@ const BlackList = React.lazy(() => import('@pages/blacklists/blacklists'));
 const BulkAddUser = React.lazy(() => import('@pages/users/bulk-add/bulk-add'));
 const GetExternalUserDobZip = React.lazy(() => import('@pages/external-access/verify-patient/get-external-user-dob-zip'));
 const ExternalUserVerificationCode = React.lazy(() => import('@pages/external-access/verify-patient/external-user-verification-code'));
+const ExternalUserVerificationSelectChannel = React.lazy(() => import('@pages/external-access/verify-patient/get-external-user-select-channel'));
 const ExternalUserMobileNumber = React.lazy(() => import('@pages/external-access/verify-patient/get-external-user-mobile-number'));
 const ExternalUserCreateCallbackTicket = React.lazy(() => import('@pages/external-access/verify-patient/external-user-create-callback-ticket'));
 const Registration = React.lazy(() => import('@pages/external-access/registration/registration'));
@@ -128,6 +129,7 @@ function App() {
                         <Route path={TicketEmailPath} component={withSuspense(ExternalEmailRealTimeProcessor)} />
                         <Route path='/o/verify-patient' component={withSuspense(GetExternalUserDobZip)} />
                         <Route path='/o/verify-patient-code' component={withSuspense(ExternalUserVerificationCode)} />
+                        <Route path='/o/verify-patient-select-channel' component={withSuspense(ExternalUserVerificationSelectChannel)} />
                         <Route path='/o/verify-patient-get-mobile' component={withSuspense(ExternalUserMobileNumber)} />
                         <Route path='/o/callback-ticket' component={withSuspense(ExternalUserCreateCallbackTicket)} />
                         <Route path={RegistrationPath} component={withSuspense(Registration)} />

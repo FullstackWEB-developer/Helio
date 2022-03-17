@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {RedirectLink} from '@pages/external-access/verify-patient/models/redirect-link';
 import initialVerifyPatientState from '@pages/external-access/verify-patient/store/verify-patient.initial-state';
 import {ExternalAccessRequestTypes} from '@pages/external-access/models/external-updates-request-types.enum';
+import {VerificationType} from '@pages/external-access/models/verification-type.enum';
 
 const verifyPatientSlice = createSlice({
     name: 'verifyPatientSlice',
@@ -32,12 +33,16 @@ const verifyPatientSlice = createSlice({
         setRetryPrevented(state, { payload }: PayloadAction<boolean>) {
             state.retryPrevented = payload;
         },
+        setVerificationCodeChannel(state, { payload }: PayloadAction<VerificationType>) {
+            state.verificationChannel = payload;
+        },
         clearState(state) {
             state.retryPrevented = false;
             state.preventRetryUntil = undefined;
             state.verifiedLink = undefined;
             state.email = '';
             state.phoneNumber = '';
+            state.verificationChannel = undefined;
         }
     }
 });
@@ -50,7 +55,8 @@ export const {
     setPreventRetryUntil,
     setRetryPrevented,
     clearState,
-    clearRedirectLink
+    clearRedirectLink,
+    setVerificationCodeChannel
 } = verifyPatientSlice.actions;
 
 export default verifyPatientSlice.reducer;

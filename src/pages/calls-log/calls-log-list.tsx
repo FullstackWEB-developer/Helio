@@ -35,6 +35,7 @@ import {selectIsCallsLogFiltered} from '@pages/calls-log/store/calls-log.selecto
 import {setIsCallsLogFiltered} from '@pages/calls-log/store/calls-log.slice';
 import useCheckPermission from '@shared/hooks/useCheckPermission';
 import {AddTicketReview, ViewTicketRatings} from '@components/ticket-rating';
+import TicketDetailRating from '@pages/tickets/components/ticket-detail/ticket-detail-rating';
 
 dayjs.extend(utc);
 
@@ -120,7 +121,7 @@ const CallsLogList = () => {
             options.push({
                 label: 'ticket_log.add_review',
                 value: '5',
-                icon: <SvgIcon type={Icon.Comment} fillClass='rgba-062-fill'/>
+                icon: <SvgIcon type={Icon.Comment} fillClass='rgba-062-fill' />
             });
         }
 
@@ -262,35 +263,16 @@ const CallsLogList = () => {
             },
             {
                 title: 'ticket_log.rating',
-                field: 'ratingScore',
-                widthClass: 'w-1/12 flex items-center justify-center',
-                render: (value?: number) => (
-                    <>
-                        {value === undefined &&
-                        null
-                        }
-                        {value === -1 &&
-                        <SvgIcon type={Icon.RatingDissatisfied}
-                                 fillClass='danger-icon'
-                        />
-                        }
-                        {value === 0 &&
-                        <SvgIcon type={Icon.RatingSatisfied}
-                                 fillClass='warning-icon'
-                        />
-                        }
-                        {value === 1 &&
-                        <SvgIcon type={Icon.RatingVerySatisfied}
-                                 fillClass='success-icon'
-                        />
-                        }
-                    </>
+                field: 'patientRating',
+                widthClass: 'w-1/12 flex flex-col items-center justify-center',
+                render: (_, data: TicketLogModel) => (
+                    <TicketDetailRating patientRating={data?.patientRating} ticketId={data?.id!} />
                 )
-            },{
+            }, {
                 title: 'ticket_log.review',
                 field: 'hasManagerReview',
                 widthClass: 'w-1/12 flex items-center justify-center',
-                render: (value: boolean, record: TicketLogModel) => (value && canViewAnyReview) ? <SvgIcon  onClick={() => setDisplayRatingsForTicket(record.ticketNumber)} type={Icon.Comment} className='cursor-pointer' fillClass='rgba-062-fill'/> : null
+                render: (value: boolean, record: TicketLogModel) => (value && canViewAnyReview) ? <SvgIcon onClick={() => setDisplayRatingsForTicket(record.ticketNumber)} type={Icon.Comment} className='cursor-pointer' fillClass='rgba-062-fill' /> : null
             },
             {
                 title: '',
@@ -433,12 +415,12 @@ const CallsLogList = () => {
                     {addReviewForTicket && <AddTicketReview
                         ticketId={addReviewForTicket}
                         isOpen={!!addReviewForTicket}
-                        onClose={() => setAddReviewForTicket(undefined)}/>}
+                        onClose={() => setAddReviewForTicket(undefined)} />}
 
                     {displayRatingsForTicket && <ViewTicketRatings
                         onClose={() => setDisplayRatingsForTicket(undefined)}
                         isOpen={!!displayRatingsForTicket}
-                        ticketNumber={displayRatingsForTicket}/>}
+                        ticketNumber={displayRatingsForTicket} />}
                 </div>
             </div>
         </div>
