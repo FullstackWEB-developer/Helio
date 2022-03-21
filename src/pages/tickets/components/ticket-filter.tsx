@@ -60,7 +60,7 @@ const TicketFilter = ({isOpen}: {isOpen: boolean}) => {
     const ticketListQueryType = useSelector(selectTicketQueryType);
     const [collapsibleState, setCollapsibleState] = useState<{[key: string]: boolean}>({});
     const watchTimePeriod = watch('timePeriod');
-    const ratings = useSelector(selectRatingOptions);
+    const ratings = useSelector(selectRatingOptions).sort((a, b) => b.key - a.key);
 
     useEffect(() => {
         dispatch(getContacts());
@@ -83,7 +83,7 @@ const TicketFilter = ({isOpen}: {isOpen: boolean}) => {
                 return;
             }
             if (Array.isArray(values)) {
-                values.forEach((value) => setValue(`${name}[${value}]`, {value: value, checked: true}));
+                values.forEach((value) => setValue(`${name}[${parseInt(value) + 1000}]`, {value: value, checked: true}));
             } else {
                 setValue(`${name}[${values}]`, {value: values, checked: true});
             }
@@ -353,10 +353,10 @@ const TicketFilter = ({isOpen}: {isOpen: boolean}) => {
     const GetCollapsibleCheckboxControl = (title: string, name: string, items: TicketOptionsBase[]) => {
         return <Collapsible title={title} isOpen={collapsibleState[name]} onClick={(isCollapsed) => setCollapsibleState({...collapsibleState, [name]: isCollapsed})}>
             {
-                items.map((item, index) => {
+                items.map((item) => {
                     return <Controller
                         control={control}
-                        name={`${name}[${index}]`}
+                        name={`${name}[${parseInt(item.key) + 1000}]`}
                         defaultValue=''
                         key={item.key}
                         render={(props) => {
