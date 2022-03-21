@@ -261,6 +261,7 @@ const RequestMedicalRecords = () => {
                                     buttonType='big'
                                     onClick={(e) => startRequest(e, RequestType.Download)}/>
                         </div>
+                        <div className='body2 pt-6'>{t('external_access.medical_records_request.disable_popups')}</div>
                     </div>
                 </Tab>
                 <Tab title={t('external_access.medical_records_request.share_tab_header')}>
