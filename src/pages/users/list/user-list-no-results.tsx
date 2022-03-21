@@ -24,7 +24,8 @@ const UserListNoResults = () => {
             <div className="flex">
                 <Button label={'users.list_section.add_users'} className='mr-6' onClick={() => redirectToAdd()} />
                 <Button label={'users.list_section.add_users_bulk'} className='mr-6' onClick={() => redirectToAdd(true)} />
-                <Button label={'users.list_section.reset_results'} onClick={() => dispatch(setUserFilters({filters: undefined, resetPagination: true}))} />
+                <Button label={'users.list_section.reset_results'} className='mr-6' onClick={() => dispatch(setUserFilters({filters: undefined, resetPagination: true}))} />
+                <Button buttonType='secondary' label={'users.list_section.back'} onClick={() => dispatch(setUserFilters({filters: undefined, resetPagination: true}))} />
             </div>
         </div>
     );

@@ -1633,6 +1633,7 @@
       "resend_invite_failure_fallback": "Sending invite failed",
       "resend_invite_failure_multi": "Sending invites to selected users failed",
       "reset_results": "Reset search and filters",
+      "back": "Back",
       "selected_count": "{{selectedCount}} of {{totalCount}} selected",
       "placeholder_search": "Users"
     },
