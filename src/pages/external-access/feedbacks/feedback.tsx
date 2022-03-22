@@ -105,7 +105,7 @@ const Feedback = () => {
             </div>
             <div className='mb-9 w-full'>
                 <div className="flex">
-                    <FeedbackRatingOptions id={-1} fillClass={'danger-icon'} icon={Icon.RatingDissatisfied} text={t('external_access.feedbacks.unsatisfied')} wrapperClassNames={'mr-6'} selectedReview={selectedReview} setSelectedReview={setSelectedReview} />
+                    <FeedbackRatingOptions id={-1} fillClass={'unsatify-color'} icon={Icon.RatingDissatisfied} text={t('external_access.feedbacks.unsatisfied')} wrapperClassNames={'mr-6'} selectedReview={selectedReview} setSelectedReview={setSelectedReview} />
                     <FeedbackRatingOptions id={0} fillClass={'warning-icon'} icon={Icon.RatingSatisfied} text={t('external_access.feedbacks.satisfied')} wrapperClassNames={'mr-6'} selectedReview={selectedReview} setSelectedReview={setSelectedReview} />
                     <FeedbackRatingOptions id={1} fillClass={'success-icon'} icon={Icon.RatingVerySatisfied} text={t('external_access.feedbacks.very_satisfied')} selectedReview={selectedReview} setSelectedReview={setSelectedReview} />
                 </div>
