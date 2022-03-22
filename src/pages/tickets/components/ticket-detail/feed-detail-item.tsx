@@ -7,10 +7,12 @@ import utils from '../../../../shared/utils/utils';
 import {FeedTypes} from '@pages/tickets/models/ticket-feed';
 import SvgIcon, {Icon} from '@components/svg-icon';
 import updateLocale from 'dayjs/plugin/updateLocale';
-import {EmailMessageDto} from '@shared/models';
+import {ChatActivity, EmailMessageDto, PhoneCallActivity} from '@shared/models';
 import FeedDetailEmailItem from '@pages/tickets/components/ticket-detail/feed-detail-email-item';
 import './feed-detail-item.scss';
 import linkifyHtml from 'linkifyjs/html'
+import FeedDetailPhoneCallActivity from './feed-detail-phone-call-activity';
+import FeedDetailChatActivity from './feed-detail-chat-activity';
 interface FeedDetailItemProps {
     feed: FeedDetailDisplayItem,
     index: number;
@@ -52,6 +54,9 @@ const FeedDetailItem = ({feed, index}: FeedDetailItemProps) => {
         case FeedTypes.StatusChange:
             icon = Icon.Scripts;
             break;
+        case FeedTypes.PhoneCall:
+            icon = Icon.Phone;
+            break;
     }
 
     if (feed.feedType === FeedTypes.Email) {
@@ -62,6 +67,24 @@ const FeedDetailItem = ({feed, index}: FeedDetailItemProps) => {
             isCollapsed={index > 0}
             feedTime={itemDateTime}
         />
+    }
+
+    if (feed.feedType === FeedTypes.PhoneCall) {
+        const activity = feed.item as PhoneCallActivity;
+        return(
+            <FeedDetailPhoneCallActivity
+                feed={feed}
+                message={activity}/>
+        );
+    }
+
+    if (feed.feedType === FeedTypes.ChatActiviy) {
+        const activity = feed.item as ChatActivity;
+        return(
+            <FeedDetailChatActivity
+                feed={feed}
+                message={activity}/>
+        );
     }
 
     return (

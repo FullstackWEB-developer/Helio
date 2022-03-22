@@ -1,5 +1,5 @@
 import {FeedTypes} from '@pages/tickets/models/ticket-feed';
-import {EmailMessageDto, TicketMessage} from '@shared/models';
+import {ChatActivity, EmailMessageDto, PhoneCallActivity, TicketMessage} from '@shared/models';
 import {TicketNote} from '@pages/tickets/models/ticket-note';
 
 export interface FeedDetailDisplayItem {
@@ -9,5 +9,5 @@ export interface FeedDetailDisplayItem {
     feedType?: FeedTypes;
     dateTime?: Date;
     feedText?: string;
-    item?: EmailMessageDto | TicketMessage | TicketNote;
+    item?: EmailMessageDto | TicketMessage | TicketNote | PhoneCallActivity | ChatActivity;
 }

@@ -577,9 +577,9 @@
       "last_activity": "Last activity",
       "archive": "Archive",
       "unarchive": "Unarchive",
-      "solved": "Solved",
-      "close": "Close",
-      "solve": "Solve",
+      "solved": "Solved Ticket",
+      "close": "Close Ticket",
+      "solve": "Solve Ticket",
       "rating": "Rating",
       "call_mobile": "Call",
       "call_home": "Call Home",
@@ -684,7 +684,12 @@
       "description_prefix": "Ticket status was changed to",
       "title": "Recent Activity",
       "all_activity": "All Activity",
-      "internal_notes": "Internal Notes"
+      "internal_notes": "Internal Notes",
+      "outbound": "Outbound call",
+      "inbound": "Inbound call",
+      "hours": "hours",
+      "minutes": "minutes",
+      "seconds": "seconds"
     }
   },
   "statuses": {

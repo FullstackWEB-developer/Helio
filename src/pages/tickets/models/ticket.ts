@@ -52,4 +52,5 @@ export interface Ticket {
     incomingEmailAddress?: string;
     isPassive?: boolean;
     patientRating?: PatientRating;
+    agentInteractionDuration?: number;
 }

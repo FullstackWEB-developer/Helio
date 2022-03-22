@@ -1,5 +1,6 @@
 import {TicketMessagesDirection} from "@shared/models";
 import {ChannelTypes} from "@shared/models/ticket-channel";
+import { CommunicationDirection } from "../communication-direction";
 
 export interface EmailMessageDto extends TicketMessage {
     id: string;
@@ -14,6 +15,14 @@ export interface TicketMessage extends TicketMessageBase {
     createdByName?: string;
     createdOn: Date;
     createdForName?: string;
+}
+export interface PhoneCallActivity {
+    callDirection?: CommunicationDirection;
+    canListenAnyRecording: boolean;
+    callDuration?: number;
+}
+export interface ChatActivity {
+    canViewAnyTranscript: boolean;
 }
 export interface TicketMessageBase {
     ticketId: string;

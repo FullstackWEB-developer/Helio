@@ -14,5 +14,7 @@ export enum FeedTypes {
     Email,
     StatusChange,
     Note,
-    Phone
+    Phone,
+    PhoneCall,
+    ChatActiviy
 }

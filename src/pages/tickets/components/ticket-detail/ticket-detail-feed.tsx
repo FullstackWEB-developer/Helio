@@ -10,13 +10,15 @@ import './ticket-detail-feed.scss';
 import {selectUserList} from '@shared/store/lookups/lookups.selectors';
 import {User} from '@shared/models/user';
 import utils from '@shared/utils/utils';
-import {EmailMessageDto, PagedList, TicketMessage, TicketMessagesDirection} from '@shared/models';
+import {ChannelTypes, EmailMessageDto, PagedList, TicketMessage, TicketMessagesDirection, TicketType} from '@shared/models';
 import AlwaysScrollToBottom from '@components/scroll-to-bottom';
 import Spinner from '@components/spinner/Spinner';
 import {getUserList} from '@shared/services/lookups.service';
 import DropdownLabel from '@components/dropdown-label';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
+import { selectAppUserDetails } from '@shared/store/app-user/appuser.selectors';
+import useCheckPermission from '@shared/hooks/useCheckPermission';
 
 export enum FeedFilter {
     AllActivity = 'ALL_ACTIVITY',
@@ -40,6 +42,9 @@ const TicketDetailFeed = ({ticket, emailLoading, emailMessages, smsMessages, sms
     const [scrollToBottom, setScrollToBottom] = useState<boolean>(true);
     const [selectedFeedFilter, setSelectedFeedFilter] = useState<FeedFilter>(FeedFilter.AllActivity);
     const [hasAnyFeed, setHasAnyFeed] = useState<boolean>(false);
+    const {email} = useSelector(selectAppUserDetails);
+    const hasListenAnyRecordingPermission = useCheckPermission('Tickets.ListenAnyRecording');
+    const hasViewAnyTranscriptPermission = useCheckPermission('Tickets.ViewAnyChatTranscript');
     const getTime = (date?: Date) => {
         return date ? dayjs.utc(date).toDate().getTime() :  0;
     }
@@ -59,7 +64,7 @@ const TicketDetailFeed = ({ticket, emailLoading, emailMessages, smsMessages, sms
         if (smsLoading || emailLoading) {
             return;
         }
-        const feedItems: FeedDetailDisplayItem[] = [];
+        let feedItems: FeedDetailDisplayItem[] = [];
         ticket.notes?.forEach(note => {
             const user = getUser(note.createdBy);
             feedItems.push({
@@ -106,6 +111,33 @@ const TicketDetailFeed = ({ticket, emailLoading, emailMessages, smsMessages, sms
                 });
             });
         }
+
+        if(ticket.recordedConversationLink){
+            const user = getUser(ticket.contactAgent);
+
+            let callActivity: Partial<FeedDetailDisplayItem> = {
+                userFullName: ticket.createdByName,
+                userPicture: user?.profilePicture,
+                dateTime: ticket.createdOn,
+            };
+            
+            if(ticket.channel === ChannelTypes.PhoneCall){
+                callActivity.feedType = FeedTypes.PhoneCall;
+                callActivity.item = {
+                    callDirection: ticket.communicationDirection,
+                    canListenAnyRecording: user?.email === email || hasListenAnyRecordingPermission,
+                    callDuration: ticket.agentInteractionDuration
+                }
+            }else if(ticket.channel === ChannelTypes.Chat){
+                callActivity.feedType = FeedTypes.ChatActiviy;
+                callActivity.item = {
+                    canViewAnyTranscript: user?.email === email || hasViewAnyTranscriptPermission,
+                }
+            }
+            
+            feedItems = [callActivity, ...feedItems]
+        }
+
         const hasAnyFeed = emailMessages?.results && emailMessages.results.length > 0 ||
             smsMessages?.results && smsMessages.results.length > 0 ||
             ticket?.feeds && ticket.feeds.length > 0 ||
