@@ -82,26 +82,26 @@ const DashboardPatientRatingsWidget = ({data}: PatientRatingsProps) => {
     }
 
     return <div className='flex flex-col items-center justify-center pt-2.5'>
-        <div className='body3'>{t('dashboard.patient_ratings.overall_ratings')}</div>
+        <div className='body3 patient-title'>{t('dashboard.patient_ratings.overall_ratings')}</div>
         <div>
             <div className='flex flex-row items-center justify-center pb-10'>
                 <WidgetIcon/>
                 <div className='pl-2.5'><h3>{calculateOverall()}%</h3></div>
             </div>
             <div className='flex flex-row items-center body2 pb-2'>
-                <div className='pr-2.5'><StatusDot status={UserStatus.Available}/></div>
+                <div className='pr-2.5'><div className='rounded-lg w-2.5 h-2.5 patient-widget-satisfied'></div></div>
                 <div className='w-24'>{t('dashboard.patient_ratings.very_satisfied')}</div>
                 <div className='px-6 w-10'>{patientData?.satisfiedCount}</div>
                 <div className='pl-6 w-10'>{patientData?.satisfiedPercent}%</div>
             </div>
             <div className='flex flex-row items-center body2 pb-2'>
-                <div className='pr-2.5'><StatusDot status={UserStatus.Offline}/></div>
+                <div className='pr-2.5'><div className='rounded-lg w-2.5 h-2.5 patient-widget-neutral'></div></div>
                 <div className='w-24'>{t('dashboard.patient_ratings.neutral')}</div>
                 <div className='px-6 w-10'>{patientData?.neutralCount}</div>
                 <div className='pl-6 w-10'>{patientData?.neutralPercent}%</div>
             </div>
             <div className='flex flex-row items-center body2'>
-                <div className='pr-2.5'><StatusDot status={UserStatus.Busy}/></div>
+                <div className='pr-2.5'><div className='rounded-lg w-2.5 h-2.5 patient-widget-unsatisfied'></div></div>
                 <div className='w-24'>{t('dashboard.patient_ratings.unsatisfied')}</div>
                 <div className='px-6 w-10'>{patientData?.unsatisfiedCount}</div>
                 <div className='pl-6 w-10'>{patientData?.unsatisfiedPercent}%</div>

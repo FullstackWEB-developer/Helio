@@ -9,3 +9,19 @@
 .rating-widget-neutral {
   fill: var(--color-yellow);
 }
+
+.patient-widget-satisfied {
+  background-color: var(--color-primary-500);
+}
+
+.patient-widget-unsatisfied {
+  background-color: var(--color-red);
+}
+
+.patient-widget-neutral {
+  background-color: var(--color-yellow);
+}
+
+.patient-title{
+  color: var(--light-text-high-emphasis);
+}
