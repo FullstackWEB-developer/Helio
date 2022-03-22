@@ -33,6 +33,7 @@ import {usePrevious} from '@shared/hooks/usePrevious';
 import dayjs from 'dayjs';
 import TicketReviews from '@pages/tickets/components/ticket-detail/ticket-reviews/ticket-reviews';
 import PatientRatingSideBar from '../patient-rating-sidebar';
+import {ContactType} from '@shared/models';
 interface TicketDetailInfoPanelProps {
     ticket: Ticket,
     patient?: Patient,
@@ -171,6 +172,20 @@ const TicketDetailInfoPanel = ({ticket, patient, contact}: TicketDetailInfoPanel
         clearErrors();
     }
 
+    const [patientOrContactName, setPatientOrContactName] = useState<string>('');
+    useEffect(() => {
+        if (contact) {
+            setPatientOrContactName(contact.type === ContactType.Company ? contact.companyName : utils.stringJoin(' ', contact.firstName, contact.lastName));
+        } else if (patient) {
+            setPatientOrContactName(`${patient.firstName} ${patient.lastName}`);
+        }
+        else {
+            if (ticket?.createdForName) {
+                setPatientOrContactName(ticket.createdForName);
+            }
+        }
+    }, [contact, patient, ticket]);
+
     return <>
         <form className='relative flex flex-col' onSubmit={handleSubmit(onSubmit)}>
             <div className='sticky top-0 flex items-center justify-between px-6 ticket-details-info-header z-30'>
@@ -211,7 +226,7 @@ const TicketDetailInfoPanel = ({ticket, patient, contact}: TicketDetailInfoPanel
                         {
                             ticket?.patientRating && <PatientRatingSideBar ticket={ticket} />
                         }
-                        <TicketReviews ticket={ticket} />
+                        <TicketReviews ticket={{...ticket, createdForName: patientOrContactName}} />
                     </Collapsible>
                     {patient && <Collapsible title={'ticket_detail.info_panel.appointments'} isOpen={true}>
                         <TicketDetailAppointments ticket={ticket} />
