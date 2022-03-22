@@ -60,7 +60,7 @@ const TicketFilter = ({isOpen}: {isOpen: boolean}) => {
     const ticketListQueryType = useSelector(selectTicketQueryType);
     const [collapsibleState, setCollapsibleState] = useState<{[key: string]: boolean}>({});
     const watchTimePeriod = watch('timePeriod');
-    const ratings = useSelector(selectRatingOptions).sort((a, b) => b.key - a.key);
+    const ratings = useSelector(selectRatingOptions);
 
     useEffect(() => {
         dispatch(getContacts());
@@ -508,8 +508,8 @@ const TicketFilter = ({isOpen}: {isOpen: boolean}) => {
                         </div>
                     </Collapsible>
                 }
-                {GetCollapsibleCheckboxControl('tickets.filter.patient_ratings', 'patientRating', convertEnumToOptions(ratings, true))}
-                {GetCollapsibleCheckboxControl('tickets.filter.bot_ratings', 'botRating', convertEnumToOptions(ratings, true))}
+                {GetCollapsibleCheckboxControl('tickets.filter.patient_ratings', 'patientRating', convertEnumToOptions([...ratings].sort((a, b) => b.key - a.key), true))}
+                {GetCollapsibleCheckboxControl('tickets.filter.bot_ratings', 'botRating', convertEnumToOptions([...ratings].sort((a, b) => b.key - a.key), true))}
                 <Collapsible title='tickets.filter.tags'
                     isOpen={collapsibleState['tags']}
                     onClick={(isCollapsed) => setCollapsibleState({...collapsibleState, "tags": isCollapsed})}>
