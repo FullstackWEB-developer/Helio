@@ -224,7 +224,7 @@ const TicketDetailInfoPanel = ({ticket, patient, contact}: TicketDetailInfoPanel
 
                     <Collapsible title={'ticket_detail.info_panel.reviews.title'} isOpen={true}>
                         {
-                            ticket?.patientRating && <PatientRatingSideBar ticket={ticket} />
+                            ticket?.patientRating && <PatientRatingSideBar ticket={{...ticket, createdForName: patientOrContactName}} />
                         }
                         <TicketReviews ticket={{...ticket, createdForName: patientOrContactName}} />
                     </Collapsible>
