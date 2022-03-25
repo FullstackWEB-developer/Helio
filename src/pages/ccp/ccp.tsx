@@ -573,15 +573,6 @@ const Ccp: React.FC<BoxProps> = ({
                                     fillClass={applyProperIconClass(contextPanels.sms)}
                                     onClick={() => dispatch(setContextPanel(contextPanels.sms))} />
                             </span>
-                            {
-                                isInboundCall &&
-                                    <span className={`h-10 flex items-center justify-center w-12 ${applyProperIconClass(contextPanels.scripts, 'background')}`}>
-                                    <SvgIcon type={Icon.Scripts}
-                                             className='cursor-pointer icon-medium'
-                                             fillClass={applyProperIconClass(contextPanels.scripts)}
-                                             onClick={() => dispatch(setContextPanel(contextPanels.scripts))} />
-                            </span>
-                            }
                         </div>
                     </div>
                     <CcpContext />

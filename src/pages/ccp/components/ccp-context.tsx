@@ -12,7 +12,6 @@ import {
     selectHasActiveContact,
 } from '../store/ccp.selectors';
 import SmsContext from '@pages/ccp/components/sms-context';
-import CcpScripts from '@pages/ccp/components/ccp-scripts';
 import {selectPatientInCollectionsBalance} from '@pages/patients/store/patients.selectors';
 import {ContextKeyValuePair} from '@pages/ccp/models/context-key-value-pair';
 import SvgIcon, {Icon} from '@components/svg-icon';
@@ -68,8 +67,6 @@ const CcpContext = () => {
                 return <NoteContext />
             case contextPanels.sms:
                 return <SmsContext />
-            case contextPanels.scripts:
-                return <CcpScripts />
             default:
                 return null;
         }
@@ -81,7 +78,6 @@ const CcpContext = () => {
         tickets: ['', ''],
         sms: [t('ccp.suggestions.discuss_lab_results'), t('ccp.suggestions.send_lab_results')],
         email: ['', ''],
-        scripts: ['', ''],
     }
 
     const renderFooter = () => {

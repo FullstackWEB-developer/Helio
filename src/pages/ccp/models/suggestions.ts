@@ -4,5 +4,4 @@ export interface Suggestions {
     tickets: string[],
     sms: string[],
     email: string[],
-    scripts: string[],
 }

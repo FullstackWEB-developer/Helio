@@ -261,9 +261,6 @@
       "send": "Send",
       "message": "Message",
       "no_consent": "Messaging to this patient is disabled. This patient did not consent to text messaging."
-    },
-    "scripts": {
-      "title": "Suggested Chat Scripts"
     }
   },
   "error": {
