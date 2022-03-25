@@ -508,8 +508,8 @@ const TicketFilter = ({isOpen}: {isOpen: boolean}) => {
                         </div>
                     </Collapsible>
                 }
-                {GetCollapsibleCheckboxControl('tickets.filter.patient_ratings', 'patientRating', convertEnumToOptions([...ratings].sort((a, b) => b.key - a.key), true))}
-                {GetCollapsibleCheckboxControl('tickets.filter.bot_ratings', 'botRating', convertEnumToOptions([...ratings].sort((a, b) => b.key - a.key), true))}
+                {ratings && GetCollapsibleCheckboxControl('tickets.filter.patient_ratings', 'patientRating', convertEnumToOptions([...ratings].sort((a, b) => b.key - a.key), true))}
+                {ratings && GetCollapsibleCheckboxControl('tickets.filter.bot_ratings', 'botRating', convertEnumToOptions([...ratings].sort((a, b) => b.key - a.key), true))}
                 <Collapsible title='tickets.filter.tags'
                     isOpen={collapsibleState['tags']}
                     onClick={(isCollapsed) => setCollapsibleState({...collapsibleState, "tags": isCollapsed})}>

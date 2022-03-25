@@ -132,7 +132,7 @@ const PatientRatingsPopup = ({ticketId}: {ticketId: string}) => {
                             data?.feedback &&
                             <div className='flex flex-col pt-8'>
                                 <div className='subtitle pb-2 border-b'>{t('patient_ratings.patient_comment')}</div>
-                                <div className='body2 pt-4 whitespace-pre-line'>
+                                <div className='body2 pt-4 whitespace-pre-line overflow-y-auto max-h-64'>
                                     {data.feedback}
                                 </div>
                             </div>

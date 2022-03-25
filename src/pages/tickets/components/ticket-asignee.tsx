@@ -119,7 +119,7 @@ const TicketAssignee = ({ticketId, assignee}: TicketAssigneeProps) => {
                     <div className='mr-4'>
                         <Avatar displayStatus={true} userId={selectedUser.id} userFullName={utils.stringJoin(' ', selectedUser.firstName, selectedUser.lastName)} userPicture={selectedUser.profilePicture} />
                     </div>
-                    <div ref={chevronPosition} className='pr-2'>
+                    <div ref={chevronPosition} className='pr-2 truncate'>
                         <div>{selectedUser.firstName} {selectedUser.lastName}</div>
                     </div>
                     <SvgIcon type={isVisible ? Icon.ArrowUp : Icon.ArrowDown} fillClass={'select-arrow-fill'} />
