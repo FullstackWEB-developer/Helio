@@ -10,10 +10,11 @@ import TicketDetailFeed from './components/ticket-detail/ticket-detail-feed';
 import TicketDetailAddNote from './components/ticket-detail/ticket-detail-add-note';
 import {Ticket} from './models/ticket';
 import {useQuery} from 'react-query';
-import {getTicketByNumber} from './services/tickets.service';
+import {getPatientTicketRating, getTicketByNumber} from './services/tickets.service';
 import {
     GetContactById,
     GetPatientPhoto,
+    GetPatientTicketRating,
     QueryGetPatientById,
     QueryTicketMessagesInfinite,
     QueryTickets
@@ -38,6 +39,7 @@ import {useTranslation} from 'react-i18next';
 import utils from '@shared/utils/utils';
 import {ChannelTypes, CommunicationDirection} from '@shared/models';
 import {getMessages} from '@pages/sms/services/ticket-messages.service';
+import {PatientRating} from './models/patient-rating.model';
 interface TicketParams {
     ticketNumber: string
 }
@@ -92,13 +94,13 @@ const TicketDetail = () => {
     } = useQuery([QueryTicketMessagesInfinite, ChannelTypes.SMS, ticket?.id], () => getMessages(ticket.id!, ChannelTypes.SMS, {
         page: 1,
         pageSize: 50
-    }),{
+    }), {
         enabled: !!ticket?.id
     });
 
     useQuery([GetPatientPhoto, ticket?.patientId], () => getPatientPhoto(ticket?.patientId!), {
         enabled: !!ticket?.patientId,
-        onSuccess:(data) => {
+        onSuccess: (data) => {
             dispatch(setPatientPhoto(data));
         }
     });
@@ -109,6 +111,15 @@ const TicketDetail = () => {
             enabled: !!ticket?.contactId
         }
     );
+
+    const {data} = useQuery<PatientRating>([GetPatientTicketRating, ticket.id], () => getPatientTicketRating(ticket.id!), {
+        enabled: !!ticket?.id
+    });
+    useEffect(() => {
+        if (data) {
+            dispatch(setTicket({...ticket, patientRating: data}))
+        }
+    }, [ticket.patientRating]);
 
     if (isLoading || isFetching) {
         return <Spinner fullScreen />;
@@ -145,11 +156,11 @@ const TicketDetail = () => {
                     <TicketDetailHeader ticket={ticket} contact={contact} patient={patient} />
                     <div className='flex items-center justify-center justify-self-center' data-test-id='chat-transcript-modal'>
                         <Modal isOpen={displayChatTranscript}
-                               title='ticket_detail.chat_transcript.title'
-                               isClosable={true}
-                               closeableOnEscapeKeyPress={displayChatTranscript}
-                               isDraggable={true}
-                               onClose={() => (dispatch(toggleChatTranscriptWindowVisible()))}>
+                            title='ticket_detail.chat_transcript.title'
+                            isClosable={true}
+                            closeableOnEscapeKeyPress={displayChatTranscript}
+                            isDraggable={true}
+                            onClose={() => (dispatch(toggleChatTranscriptWindowVisible()))}>
                             <ChatTranscript ticket={ticket} patient={patient} />
                         </Modal>
 
