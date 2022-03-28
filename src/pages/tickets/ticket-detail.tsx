@@ -112,14 +112,14 @@ const TicketDetail = () => {
         }
     );
 
-    const {data} = useQuery<PatientRating>([GetPatientTicketRating, ticket.id], () => getPatientTicketRating(ticket.id!), {
+    const {data} = useQuery<PatientRating>([GetPatientTicketRating, ticket?.id], () => getPatientTicketRating(ticket.id!), {
         enabled: !!ticket?.id
     });
     useEffect(() => {
         if (data) {
             dispatch(setTicket({...ticket, patientRating: data}))
         }
-    }, [ticket.patientRating]);
+    }, [ticket?.patientRating]);
 
     if (isLoading || isFetching) {
         return <Spinner fullScreen />;
