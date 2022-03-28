@@ -191,18 +191,20 @@ const AppointmentCancel = () => {
             appointmentType?.cancelationFee &&
             (appointmentType?.cancelationTimeFrame &&
                 dayjs.utc(appointment!.startDateTime).diff(dayjs.utc(), 'hour') < appointmentType?.cancelationTimeFrame) &&
-            <div className='pt-9 xl:pt-8'>
-                <div className='p-4 warning-message body2'>
-                    <Trans i18nKey="external_access.appointments.will_be_charged">
-                        {appointmentType.cancelationTimeFrame?.toString()}
-                        {appointmentType.cancelationFee?.toString()}
-                    </Trans>
+            <div>
+                <div className='pt-9 xl:pt-8'>
+                    <div className='p-4 warning-message body2'>
+                        <Trans i18nKey="external_access.appointments.will_be_charged">
+                            {appointmentType.cancelationTimeFrame?.toString()}
+                            {appointmentType.cancelationFee?.toString()}
+                        </Trans>
+                    </div>
+                </div>
+                <div className='pt-8 pb-6'>
+                    {t('external_access.appointments.please_confirm')}
                 </div>
             </div>
         }
-        <div className='pt-8 pb-6'>
-            {t('external_access.appointments.please_confirm')}
-        </div>
 
         {appointmentSlots && appointmentSlots?.length > 0 &&
             <>
@@ -239,44 +241,41 @@ const AppointmentCancel = () => {
                 </div>
             </div>
         }
-        <div className='pb-5'>
-            {t('external_access.appointments.to_cancel')}
-        </div>
+        {appointmentSlots && appointmentSlots?.length > 0 &&
+            <div className='pb-5'>
+                {t('external_access.appointments.to_cancel')}
+            </div>
+        }
         <div>
             <form onSubmit={handleSubmit(onSubmit)}>
-                <div className='lg:w-1/2 xl:w-1/3 2xl:w-1/4'>
-                    <Controller
-                        name='appointmentCancelReasonId'
-                        control={control}
-                        rules={{required: requiredText}}
-                        defaultValue={''}
-                        render={(props) => (
-                            <Select
-                                options={getCancellationReasonsOptions(cancellationReasons)}
-                                label='external_access.appointments.select_reason'
-                                {...props}
-                                data-test-id={'external-access-appointments-cancellation-reasons'}
-                                error={errors.appointmentCancelReasonId?.message}
-                                required={true}
-                                value={props.value}
-                                onSelect={(option?: Option) => {
-                                    if (option) {
-                                        props.onChange(option.value);
-                                    }
-                                }}
-                            />
-                        )}
-                    />
-                </div>
+                {appointmentSlots && appointmentSlots?.length > 0 &&
+                    <div className='lg:w-1/2 xl:w-1/3 2xl:w-1/4'>
+                        <Controller
+                            name='appointmentCancelReasonId'
+                            control={control}
+                            rules={{required: requiredText}}
+                            defaultValue={''}
+                            render={(props) => (
+                                <Select
+                                    options={getCancellationReasonsOptions(cancellationReasons)}
+                                    label='external_access.appointments.select_reason'
+                                    {...props}
+                                    data-test-id={'external-access-appointments-cancellation-reasons'}
+                                    error={errors.appointmentCancelReasonId?.message}
+                                    required={true}
+                                    value={props.value}
+                                    onSelect={(option?: Option) => {
+                                        if (option) {
+                                            props.onChange(option.value);
+                                        }
+                                    }}
+                                />
+                            )}
+                        />
+                    </div>
+                }
                 {cancelAppointmentMutation.isError && <div>
-                    <Trans i18nKey="external_access.appointments.cancel_appointment_reach_us" values={
-                        {
-                            email: utils.getAppParameter('SupportEmailAddress'),
-                            chatLink:utils.getAppParameter('ChatLink')}}>
-                        <a className='link' rel='noreferrer' href={`mailto:${utils.getAppParameter('SupportEmailAddress')}`}>{utils.getAppParameter('SupportEmailAddress')}</a>
-                        <a rel='noreferrer' target='_self' href={utils.getAppParameter('ChatLink')}></a>
-                        {utils.getAppParameter('CallUsPhone')}
-                    </Trans>
+                    {t('external_access.appointments.cancel_appointment_reach_us')}
                 </div>}
                 <div className='pt-6'>
                     <Button buttonType='big' isLoading={cancelAppointmentMutation.isLoading} disabled={!isDirty || cancelAppointmentMutation.isError} label='external_access.appointments.cancel_appointment' type='submit' />

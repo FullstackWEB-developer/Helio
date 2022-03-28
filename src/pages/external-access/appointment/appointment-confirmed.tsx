@@ -19,7 +19,6 @@ const AppointmentConfirmed = () => {
             <div className='pt-6 whitespace-pre-line'>
                 <Trans i18nKey="external_access.appointments.confirmation.confirmed_desc">
                     <a rel='noreferrer' target='_self' href={utils.getAppParameter('ChatLink')}>Chat</a>
-                    {utils.getAppParameter('CallUsPhone')}
                 </Trans>
             </div>
         </div>

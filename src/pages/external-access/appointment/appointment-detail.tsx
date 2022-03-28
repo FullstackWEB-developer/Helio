@@ -123,9 +123,7 @@ const AppointmentDetail = () => {
         </div>
         {!displayCancel() && <div className='pt-6 pb-2 w-4/5'>
             <div className='warning-message body2 px-6 py-3.5 rounded border border-solid'>
-                <Trans i18nKey="external_access.appointments.can_not_be_canceled">
-                    {utils.getAppParameter('CallUsPhone')}
-                </Trans>
+                {t('external_access.appointments.can_not_be_canceled')}
             </div>
         </div>
         }

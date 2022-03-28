@@ -16,7 +16,6 @@ const AppointmentCanceled = () => {
             <Trans i18nKey="external_access.appointments.to_schedule">
                 <a rel='noreferrer' target='_self' href={scheduleAppointmentLink}>here</a>
                 <a rel='noreferrer' target='_self' href={utils.getAppParameter('ChatLink')}>Chat</a>
-                {utils.getAppParameter('CallUsPhone')}
             </Trans>
         </div>
         <div>

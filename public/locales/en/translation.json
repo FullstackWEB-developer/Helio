@@ -820,12 +820,12 @@
       "to_cancel": "To cancel your appointment please select reason for cancelation below.",
       "cancel_appointment": "Cancel Appointment",
       "cancel_appointment_error": "Appointment could not be cancelled. ",
-      "cancel_appointment_reach_us": "This appointment cannot be canceled. Please email us at <0>{{email}}</0>, chat with us at <1>{{chatLink}}</1> or call our office at <2>callUsPhone</2>. Our Patient Coordinators will assist you with this request.",
+      "cancel_appointment_reach_us": "This appointment cannot be canceled. Please call our office or chat with us during business hours and we will be happy to assist you.",
       "select_reason": "Select Reason for Cancelation",
       "appointment_canceled": "Thank you. Your Appointment has been canceled.",
-      "to_schedule": "To schedule appointment online please click <0>here</0> or <1>Chat</1> with us or call us <2>callUsPhone</2>.",
+      "to_schedule": "To schedule appointment online please click <0>here</0> or <1>Chat</1> with us or call us.",
       "we_will_be_happy": "We will be happy to assist you.",
-      "can_not_be_canceled": "This appointment type can not be canceled. To change appointment date click on the Reschedule button above, chat with us or call us <0>callUsPhone</0>. We will be happy to assist you.",
+      "can_not_be_canceled": "This appointment type can not be canceled. To change appointment date click on the Reschedule button above, chat with us or call our office. We will be happy to assist you.",
       "will_be_charged": "This appointment is within <0>cancelationTimeFrame</0> hours from the appointment time. You will be charged a cancelation fee of $<1>cancelationFee</1>. We will bill you or charge your credit card on file.",
       "select_your_appointment": "Select Your Appointment.",
       "below_available_appointments": "Below are available appointments, starting with first available date.",
@@ -854,7 +854,7 @@
         "confirm_error": "Appointment confirmation failed. Please try again.",
         "not_in_next_seven_days": "You may only confirm upcoming appointments scheduled within next 7 days.",
         "confirmed_title": "Thank you. Your Appointment has been confirmed.",
-        "confirmed_desc": "We look forward to seeing you at your next appointment.\nIf you have any questions <0>chat</0> with us or call us <1>callUsPhone</1>. We will be happy to assist you."
+        "confirmed_desc": "We look forward to seeing you at your next appointment.\nIf you have any questions <0>chat</0> with us or call our office. We will be happy to assist you."
       }
     },
     "medical_records_request": {
