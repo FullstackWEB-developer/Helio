@@ -38,14 +38,14 @@ const PatientRatingsPopup = ({ticketId}: {ticketId: string}) => {
                     <SvgIcon fillClass='rating-widget-unsatisfied' className='icon-large mr-3' type={Icon.RatingDissatisfied} />
                     {t('patient_ratings.dissatisified')}
                 </div>;
-            case 1:
-                return <div className='flex items-center subtitle'><SvgIcon fillClass='rating-widget-satisfied' className='icon-large mr-3'
-                    type={Icon.RatingVerySatisfied} />
-                    {t('patient_ratings.satisfied')}
-                </div>;
             case 0:
                 return <div className='flex items-center subtitle'><SvgIcon fillClass='rating-widget-neutral' className='icon-large mr-3'
                     type={Icon.RatingSatisfied} />
+                    {t('patient_ratings.satisfied')}
+                </div>;
+            case 1:
+                return <div className='flex items-center subtitle'><SvgIcon fillClass='rating-widget-satisfied' className='icon-large mr-3'
+                    type={Icon.RatingVerySatisfied} />
                     {t('patient_ratings.very_satisfied')}
                 </div>;
             default:

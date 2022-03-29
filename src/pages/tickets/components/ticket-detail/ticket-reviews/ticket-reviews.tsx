@@ -12,6 +12,7 @@ import {AddTicketReview} from '@components/ticket-rating';
 import useCheckPermission from '@shared/hooks/useCheckPermission';
 import SvgIcon, {Icon} from '@components/svg-icon';
 import dayjs from 'dayjs';
+import TicketChannelIcon from '../../ticket-channel-icon';
 export interface TicketReviewsProps {
     ticket: Ticket
 }
@@ -23,19 +24,30 @@ const TicketReviews = ({ticket}: TicketReviewsProps) => {
     const canAddReview = useCheckPermission('Tickets.AddReview');
 
     const getRatingIcon = useMemo(() => {
-        switch (ticket.botRating) {
+        switch (ticket?.botRating) {
             case -1:
-                return <SvgIcon
-                    fillClass='icon-medium rating-widget-unsatisfied'
-                    type={Icon.RatingDissatisfied} />;
+                return (
+                    <div className='flex'>
+                        <div className='pr-3'><TicketChannelIcon channel={ticket?.channel} circledIcons={false} iconSize='icon-medium' fillClass='rgba-038-fill'/></div>
+                        <SvgIcon
+                            fillClass='icon-medium rating-widget-unsatisfied'
+                            type={Icon.RatingDissatisfied} />;
+                    </div>);
             case 1:
-                return <SvgIcon
-                    fillClass='icon-medium rating-widget-satisfied'
-                    type={Icon.RatingVerySatisfied} />;
+                return (<div className='flex'>
+                    <div className='pr-3'><TicketChannelIcon channel={ticket?.channel} circledIcons={false} iconSize='icon-medium' fillClass='rgba-038-fill'/></div>
+                    <SvgIcon
+                        fillClass='icon-medium rating-widget-satisfied'
+                        type={Icon.RatingVerySatisfied} />
+                </div>);
             case 0:
-                return <SvgIcon
-                    fillClass='icon-medium rating-widget-neutral'
-                    type={Icon.RatingSatisfied} />;
+                return (
+                    <div className='flex'>
+                        <div className='pr-3'><TicketChannelIcon channel={ticket?.channel} circledIcons={false} iconSize='icon-medium' fillClass='rgba-038-fill'/></div>
+                        <SvgIcon
+                            fillClass='icon-medium rating-widget-neutral'
+                            type={Icon.RatingSatisfied} />
+                    </div>);
             default:
                 return null;
         }
@@ -64,7 +76,7 @@ const TicketReviews = ({ticket}: TicketReviewsProps) => {
                 <div className='body2-medium pr-2'>{t('ticket_detail.info_panel.reviews.by')}</div>
                 <div className='body2'>{ticket.createdForName}</div>
             </div>
-        </>}    
+        </>}
         {addReviewForTicket && <AddTicketReview
             ticketId={addReviewForTicket}
             isOpen={!!addReviewForTicket}

@@ -6,34 +6,37 @@ import SvgIcon from '@components/svg-icon/svg-icon';
 import {Icon} from '@components/svg-icon/icon';
 
 interface TicketChannelIconProps {
-    channel?: number
+    channel?: number,
+    circledIcons?: boolean;
+    iconSize?: string;
+    fillClass?: string;
 }
 
-const TicketChannelIcon = ({channel}: TicketChannelIconProps) => {
+const TicketChannelIcon = ({channel, circledIcons = true, iconSize = 'icon-x-large', fillClass = 'channel-icon-fill'}: TicketChannelIconProps) => {
     let type: Icon;
     switch (channel) {
         case ChannelTypes.Chat:
-            type = Icon.ChannelChat;
+            type = circledIcons ? Icon.ChannelChat : Icon.Chat;
             break;
         case ChannelTypes.PhoneCall:
-            type = Icon.ChannelPhone;
+            type = circledIcons ? Icon.ChannelPhone : Icon.Phone;
             break;
         case ChannelTypes.WebSite:
-            type = Icon.ChannelWeb;
+            type = circledIcons ? Icon.ChannelWeb : Icon.Web;
             break;
         case ChannelTypes.UserCreated:
-            type = Icon.ChannelUser
+            type = Icon.ChannelUser;
             break;
         case ChannelTypes.SMS:
-            type = Icon.ChannelSms
+            type = circledIcons ? Icon.ChannelSms : Icon.Sms;
             break;
         case ChannelTypes.Email:
-            type = Icon.ChannelEmail
+            type = circledIcons ? Icon.ChannelEmail : Icon.Email;
             break;
         default:
-            type = Icon.ChannelChat;
+            type = circledIcons ? Icon.ChannelChat : Icon.Chat;;
     }
-    return <SvgIcon type={type} className='icon-x-large' fillClass='channel-icon-fill'
+    return <SvgIcon type={type} className={iconSize} fillClass={fillClass}
                     strokeClass='channel-icon-stroke'/>;
 }
 

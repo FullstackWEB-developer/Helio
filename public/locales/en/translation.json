@@ -1808,7 +1808,7 @@
     "title_singular": "Patient Rating",
     "rating_by": "By <0>{{name}}</0>",
     "rating_fetch_error": "Fetching patient rating for ticket failed. Please try again",
-    "dissatisified": "Dissatisfied",
+    "dissatisified": "Unsatisfied",
     "satisfied": "Satisfied",
     "very_satisfied": "Very Satisfied",
     "patient_comment": "Patient Comment",
