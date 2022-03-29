@@ -41,6 +41,10 @@ export interface UserDetail {
     invitationStatus?: UserInvitationStatus;
     permissions?: string[];
     fullName: string;
+    chatNotification: boolean;
+    emailNotification: boolean;
+    callNotification: boolean;
+    smsNotification: boolean;
 }
 
 export interface CallForwardingDetail {

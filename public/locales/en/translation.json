@@ -1817,5 +1817,13 @@
     "dont_apply": "Don’t Apply Rating",
     "rating_appliance_error": "Error toggling patient rating appliance. Please try again.",
     "bot_ratings": "Bot rating"
+  },
+  "browser_notifications": {
+    "title": "Browser Notifications",
+    "call": "Voice Calls",
+    "chat": "Chats",
+    "sms" : "SMS Messages",
+    "email": "Email Messages",
+    "description": "Turn on browser notifications to be notified of incoming calls, messages and emails."
   }
 }

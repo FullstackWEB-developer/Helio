@@ -41,8 +41,10 @@ import ProviderMappingToolTip from "../components/provider-tool-tip";
 import './user-details.scss';
 import {CheckboxCheckEvent} from '@components/checkbox/checkbox';
 import useCheckPermission from "@shared/hooks/useCheckPermission";
-import { NotAuthorizedPath } from "@app/paths";
+import {NotAuthorizedPath} from "@app/paths";
 import {Option} from '@components/option/option';
+import UserNotificationPreference from "../components/user-notifications-toggle";
+import {UserNotificationPreferences} from "@shared/models/user-notification-preferences.enum";
 
 dayjs.extend(utc);
 
@@ -112,7 +114,7 @@ const UserDetails = () => {
         {
             enabled: false,
             onSuccess: (data) => {
-                setValue('forward_to_value_phone', data.mobilePhoneNumber, { shouldDirty: true, shouldValidate: true});
+                setValue('forward_to_value_phone', data.mobilePhoneNumber, {shouldDirty: true, shouldValidate: true});
             }
         });
 
@@ -235,9 +237,11 @@ const UserDetails = () => {
             reset();
             loadUserData(updatedUserDetail);
             showMessage(SnackbarType.Success, 'users.user_update_success');
+            setCurrentlyUpdatingNotificationPreference(undefined);
         },
         onError: () => {
             showMessage(SnackbarType.Error, 'users.user_update_error');
+            setCurrentlyUpdatingNotificationPreference(undefined);
         }
     });
 
@@ -370,6 +374,14 @@ const UserDetails = () => {
         updateCallForwardingMutation.mutate(callForwardingDetail);
     }
 
+    const [currentlyUpdatingNotificationPreference, setCurrentlyUpdatingNotificationPreference] = useState<UserNotificationPreferences | undefined>(undefined); 
+    const onNotificationToggleSwitch = (checked: boolean, notificationType: UserNotificationPreferences) => {
+        if (userDetailExtended?.user) {
+            setCurrentlyUpdatingNotificationPreference(notificationType);
+            updateMutation.mutate({...userDetailExtended.user, [`${notificationType}Notification`]: checked});
+        }
+    }
+
     if (isError) {
         return (
             <div className="px-6 py-8">
@@ -450,7 +462,7 @@ const UserDetails = () => {
                             buttonType='medium'
                             label='common.save'
                             className='mr-5'
-                            disabled={!isDirty || !isValid || !isSomeUserRoleChecked ||  isMobilePhoneLoading || isMobilePhoneFetching}
+                            disabled={!isDirty || !isValid || !isSomeUserRoleChecked || isMobilePhoneLoading || isMobilePhoneFetching}
                             isLoading={updateMutation.isLoading}
                             onClick={() => canEditUser ? handleSubmit(saveUser)() : handleSubmit(saveCallForwarding)()}
                         />
@@ -502,7 +514,7 @@ const UserDetails = () => {
                                         <ControlledSelect
                                             name='provider'
                                             control={control}
-                                            defaultValue={{label: 'common.not_available', value:'common.not_available'}}
+                                            defaultValue={{label: 'common.not_available', value: 'common.not_available'}}
                                             options={providerOptions}
                                         />
                                         <div className='pb-6 ml-2'>
@@ -578,6 +590,25 @@ const UserDetails = () => {
                             </div>
                         </div>
                     </div>
+                    {
+                        userDetailExtended?.user &&
+                        <div className='flex flex-col mt-8 pr-28 sm:w-full md:w-1/2 pb-20'>
+                            <div className='subtitle'>{t('browser_notifications.title')}</div>
+                            <div className='body2 pb-6'>{t('browser_notifications.description')}</div>
+                            <UserNotificationPreference isChecked={userDetailExtended.user.callNotification} onSwitch={onNotificationToggleSwitch}
+                                isLoading={updateMutation.isLoading} notificationType={UserNotificationPreferences.call} 
+                                mutationRunningForType={currentlyUpdatingNotificationPreference} />
+                            <UserNotificationPreference isChecked={userDetailExtended.user.chatNotification} onSwitch={onNotificationToggleSwitch}
+                                isLoading={updateMutation.isLoading} notificationType={UserNotificationPreferences.chat} 
+                                mutationRunningForType={currentlyUpdatingNotificationPreference} />
+                            <UserNotificationPreference isChecked={userDetailExtended.user.smsNotification} onSwitch={onNotificationToggleSwitch}
+                                isLoading={updateMutation.isLoading} notificationType={UserNotificationPreferences.sms} 
+                                mutationRunningForType={currentlyUpdatingNotificationPreference} />
+                            <UserNotificationPreference isChecked={userDetailExtended.user.emailNotification} onSwitch={onNotificationToggleSwitch}
+                                isLoading={updateMutation.isLoading} notificationType={UserNotificationPreferences.email} 
+                                mutationRunningForType={currentlyUpdatingNotificationPreference} hasBottomBorder={true} />
+                        </div>
+                    }
                 </div>
             </div>
         </div>
