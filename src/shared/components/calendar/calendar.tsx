@@ -93,31 +93,33 @@ const Calendar = ({
         }
     }
 
-    return (<div tabIndex={0}  className='calendar px-7 pb-7 pt-10 overflow-hidden' onBlur={onBlur} onFocus={onFocus}>
+    return (<div tabIndex={0}  className='calendar px-4 pb-4 pt-6 overflow-hidden xl:px-7 xl:pb-7 xl:pt-10' onBlur={onBlur} onFocus={onFocus}>
         <div className='calendar-container'>
             <div className='flex flex-row items-center justify-between'>
                 <div role='button' className='cursor-pointer' onClick={() => !isDisabledBackward && goBackward('month')}>
                     <SvgIcon type={Icon.ArrowLeft} fillClass={isDisabledBackward ? 'arrow-disabled' : ''} />
                 </div>
                 <div>
-                    <span className='h5-regular'>{currentDate.format('MMMM YYYY')}</span>
+                    <span className='subtitle'>{currentDate.format('MMMM YYYY')}</span>
                 </div>
                 <div role='button' className='cursor-pointer' onClick={() => !isDisabledForward && goForward('month')}>
                     <SvgIcon type={Icon.ArrowRight} fillClass={isDisabledForward ? 'arrow-disabled' : ''} />
                 </div>
             </div>
-            <div className='w-full mt-5'>
-                <div className='grid grid-cols-7 gap-x-6 items-center justify-items-center subtitle2'>
+            <div className='w-full mt-4 xl:mt-5'>
+                <div className='grid grid-cols-7 items-center justify-items-center subtitle2 xl:gap-x-6'>
                     {dayjs.weekdaysMin().map((d, i) => <div key={i} className='items-center'>{d.charAt(0)}</div>)}
                 </div>
-                <div className='grid grid-cols-7 gap-x-6 gap-y-1.5 items-center justify-items-center pt-7'>
+                <div className='grid grid-cols-7 items-center justify-items-center xl:gap-x-6 xl:gap-y-1.5 xl:pt-7'>
                     {monthDetail &&
                         monthDetail.map((dateDetail, index) => (
                             <div key={index}>
-                                <div role="button" onClick={() => !isDisabled(dateDetail) && onDayClick(dateDetail)}
-                                    className={`${getClassName(dateDetail)} calendar-day-container flex items-center justify-center body2`}>
-                                    <span className={classNames({'weekend': dateDetail.isWeekend})}>{dateDetail.isCurrentMonth ? dateDetail.day : ''}</span>
-                                </div>
+                                {dateDetail.isCurrentMonth &&
+                                    <div role="button" onClick={() => !isDisabled(dateDetail) && onDayClick(dateDetail)}
+                                        className={`${getClassName(dateDetail)} calendar-day-container flex items-center justify-center body2`}>
+                                        <span className={classNames({'weekend': dateDetail.isWeekend})}>{dateDetail.day}</span>
+                                    </div>
+                                }
                             </div>)
                         )
                     }
