@@ -31,7 +31,7 @@ const TicketReviews = ({ticket}: TicketReviewsProps) => {
                         <div className='pr-3'><TicketChannelIcon channel={ticket?.channel} circledIcons={false} iconSize='icon-medium' fillClass='rgba-038-fill'/></div>
                         <SvgIcon
                             fillClass='icon-medium rating-widget-unsatisfied'
-                            type={Icon.RatingDissatisfied} />;
+                            type={Icon.RatingDissatisfied} />
                     </div>);
             case 1:
                 return (<div className='flex'>
