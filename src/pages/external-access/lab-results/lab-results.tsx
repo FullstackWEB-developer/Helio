@@ -49,7 +49,7 @@ const LabResults = () => {
                     isLoading && <Spinner fullScreen/>
                 }
                 {
-                    isError && <h6 className='text-danger'>{t('external_access.lab_results.error')}</h6>
+                    isError && <div className='pt-12 body2 text-danger'>{t('external_access.lab_results.error')}</div>
                 }
                 {
                     data && data?.length > 0 && !isLoading &&
