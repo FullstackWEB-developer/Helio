@@ -50,6 +50,7 @@ import {ManagerRatingsMetricResponse} from '@pages/application/models/manager-ra
 import {CreateTicketFeedbackRequest} from '@pages/tickets/models/create-ticket-feedback-request';
 import { PatientRatings } from '@pages/dashboard/models/patient-ratings.model';
 import {TicketRatingAppliedRequest} from '../models/ticket-rating-applied-request';
+import {UpdateConnectAttributesRequest} from '@pages/tickets/models/update-connect-attributes-request';
 
 const logger = Logger.getInstance();
 const ticketsBaseUrl = "/tickets";
@@ -433,5 +434,11 @@ export const getPatientTicketRating = async (ticketId: string) => {
 export const togglePatientRatingApplianceToTicket = async(reqBody: TicketRatingAppliedRequest) => {
     const url = `${ticketsBaseUrl}/rating/toggle-rating-applied`;
     const response = await Api.post(url, reqBody);
+    return response.data;
+}
+
+export const updateConnectAttributes = async(request: UpdateConnectAttributesRequest) => {
+    const url = `${ticketsBaseUrl}/connect/${request.contactId}/update-attributes`;
+    const response = await Api.put(url, request.attributes);
     return response.data;
 }

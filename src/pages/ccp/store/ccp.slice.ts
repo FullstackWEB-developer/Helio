@@ -5,6 +5,7 @@ import {CCPConnectionStatus} from '../models/connection-status.enum';
 import {TicketNote} from '@pages/tickets/models/ticket-note';
 import {Ticket} from '@pages/tickets/models/ticket';
 import {ExtendedPatient} from '@pages/patients/models/extended-patient';
+import {InternalCallDetails} from '@pages/ccp/models/internal-call-details';
 
 const ccpSlice = createSlice({
     name: 'ccp',
@@ -73,6 +74,13 @@ const ccpSlice = createSlice({
         clearCCPContext:(state) => {
             state.currentContactId = "";
             state.botContexts = [];
+            state.internalCallDetails = undefined;
+        },
+        setInternalCallDetails: (state, {payload}: PayloadAction<InternalCallDetails | undefined>) => {
+            state.internalCallDetails = payload
+        },
+        setInitiateInternalCall: (state, {payload}: PayloadAction<boolean>) => {
+            state.initiateInternalCall = payload
         }
     }
 });
@@ -88,6 +96,8 @@ export const {
     addNoteToTicket,
     setBotContextTicket,
     setBotContextPatient,
+    setInternalCallDetails,
+    setInitiateInternalCall,
     setCurrentContactId} = ccpSlice.actions;
 
 export default ccpSlice.reducer;

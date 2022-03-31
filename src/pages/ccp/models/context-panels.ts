@@ -3,7 +3,8 @@ const contextPanels = {
     note: 'note',
     tickets: 'tickets',
     sms: 'sms',
-    email: 'email'
+    email: 'email',
+    extensions: 'extensions'
 }
 
 export default contextPanels;

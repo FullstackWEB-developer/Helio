@@ -60,6 +60,10 @@
   background-color: var(--ccp-background-color);
 }
 
+.ccp-loading-background {
+  background-color: var(--ccp-background-color);
+}
+
 @keyframes toggleAnimation {
   0% {
     scale: (var(--ccpAnimationInitialScale));

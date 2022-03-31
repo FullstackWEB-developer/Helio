@@ -37,6 +37,7 @@ export enum Icon {
     EditCircled = 'EditCircled',
     Email = 'Email',
     Error = 'Error',
+    Extension = 'Extension',
     Filter = 'Filter',
     FilterList = 'FilterList',
     Info = 'Info',

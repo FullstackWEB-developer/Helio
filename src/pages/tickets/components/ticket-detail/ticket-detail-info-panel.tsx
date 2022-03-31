@@ -188,7 +188,7 @@ const TicketDetailInfoPanel = ({ticket, patient, contact}: TicketDetailInfoPanel
 
     return <>
         <form className='relative flex flex-col' onSubmit={handleSubmit(onSubmit)}>
-            <div className='sticky top-0 flex items-center justify-between px-6 ticket-details-info-header z-30'>
+            <div className='sticky top-0 flex items-center justify-between px-6 ticket-details-info-header z-10'>
                 <h6>{t('ticket_detail.info_panel.details')}</h6>
                 {
                     isDirty() &&

@@ -4,6 +4,7 @@ import {UserStatus} from './app-user.models';
 import {AgentState} from '@shared/models/agent-state';
 import {LiveAgentStatusInfo} from '@shared/models/live-agent-status-info.model';
 import {UserDetail} from '@shared/models';
+import {InternalQueueStatus} from '@pages/ccp/models/internal-queue-status';
 
 export const appUserState = (state: RootState) => state.appUserState
 
@@ -53,4 +54,9 @@ export const selectAppUserDetails = createSelector(
 export const selectAppUserPermission = createSelector(
     appUserState,
     state => (state.appUserDetails as UserDetail)?.permissions
+)
+
+export const selectInternalQueueStatuses = createSelector(
+    appUserState,
+    state => state.internalQueueStatuses as InternalQueueStatus[]
 )

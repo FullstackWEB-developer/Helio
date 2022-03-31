@@ -168,7 +168,7 @@ const UserDetails = () => {
             }
         }
 
-        for (const role of user.roles) {
+        for (const role of user?.roles) {
             setValue(`userrole_${role}`, {value: role, checked: true}, {shouldDirty: false, shouldValidate: false});
         }
 
@@ -332,7 +332,7 @@ const UserDetails = () => {
                 }
             });
 
-        const diff = roles.filter(x => !user.roles.includes(x)).concat(user.roles.filter(x => !roles.includes(x)))
+        const diff = roles.filter(x => !user?.roles.includes(x)).concat(user.roles?.filter(x => !roles.includes(x)))
         let isRolesChanged = false;
         if (diff.length > 0) {
             user.roles = roles;

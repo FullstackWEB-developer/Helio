@@ -217,14 +217,7 @@
   },
   "ccp": {
     "title": "Contact Control Panel",
-    "suggested_steps": "Suggested steps",
-    "went_offline": "Because you changed your status to offline or you logged out \n you will not be able to receive any calls/chats\nTo continue getting calls/chats, please change your status\n or refresh if you logged out.",
-    "suggestions": {
-      "create_patient_record": "Create Patient Chart",
-      "schedule_appointment": "Schedule Appointment",
-      "discuss_lab_results": "Discuss Lab Results",
-      "send_lab_results": "Send Lab Results"
-    },
+    "logging_in": "Logging in...",
     "bot_context": {
       "header": "Bot Context",
       "queue": "Queue",
@@ -242,6 +235,11 @@
       "copy_note": "Copy Note",
       "enter_your_note": "Enter note",
       "note_add_error": "Could not add note, please try again"
+    },
+    "extensions_context": {
+      "title": "Internal Contacts",
+      "click_to_dial": "Double click on the name to dial.",
+      "error_loading_extensions": "Extensions could not be loaded. Please try again later"
     },
     "modal": {
       "aws_connect": "Amazon Connect",

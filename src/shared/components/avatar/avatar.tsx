@@ -28,6 +28,8 @@ const Avatar = ({userFullName, labelClassName, userPicture, icon, className = 'w
         const liveAgentStatus = liveAgentStatuses.find(a => a.userId === userId);
         if (liveAgentStatus) {
             status = liveAgentStatus.status as UserStatus
+        } else {
+            status = UserStatus.Offline;
         }
     }
     return (<div className={classnames('avatar rounded-full flex items-center justify-center relative', className)}>

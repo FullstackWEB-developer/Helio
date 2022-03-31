@@ -3,6 +3,7 @@ import {AgentState} from '@shared/models/agent-state';
 import {LogStream} from '@aws-sdk/client-cloudwatch-logs';
 import {LiveAgentStatusInfo} from '@shared/models/live-agent-status-info.model';
 import {UserDetail} from '@shared/models';
+import {InternalQueueStatus} from '@pages/ccp/models/internal-queue-status';
 export interface AppUserState {
     auth: AuthenticationInfo;
     appUserDetails?: UserDetail;
@@ -10,7 +11,8 @@ export interface AppUserState {
     status: UserStatus | string;
     agentStates: AgentState[];
     liveAgentStatuses: LiveAgentStatusInfo[];
-    logStream?: LogStream
+    logStream?: LogStream,
+    internalQueueStatuses: InternalQueueStatus[];
 }
 
 const initialAppUserState: AppUserState = {
@@ -23,6 +25,7 @@ const initialAppUserState: AppUserState = {
     status: UserStatus.Offline,
     agentStates: [],
     liveAgentStatuses: [],
-    logStream: undefined
+    logStream: undefined,
+    internalQueueStatuses: []
 }
 export default initialAppUserState;

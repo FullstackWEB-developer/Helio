@@ -1,5 +1,6 @@
 import { BotContext } from '../models/bot-context';
 import {CCPConnectionStatus} from '../models/connection-status.enum';
+import {InternalCallDetails} from '@pages/ccp/models/internal-call-details';
 
 export interface CcpState {
     chatCounter: number;
@@ -8,6 +9,9 @@ export interface CcpState {
     botContexts: BotContext[];
     connectionStatus: CCPConnectionStatus;
     currentContactId: string;
+    internalCallDetails?: InternalCallDetails;
+    initiateInternalCall: boolean;
+
 }
 
 const initialState: CcpState = {
@@ -16,7 +20,9 @@ const initialState: CcpState = {
     contextPanel: '',
     botContexts: [],
     connectionStatus: CCPConnectionStatus.None,
-    currentContactId: ''
+    currentContactId: '',
+    internalCallDetails: undefined,
+    initiateInternalCall: false
 }
 
 export default initialState;

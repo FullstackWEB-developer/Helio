@@ -220,7 +220,7 @@ const ExternalUserVerificationCode = () => {
                         control={control}
                         name='code'/>
                 </div>
-                <div className='pt-2 flex flex-col md:flex-row pb-10 space-y-3 md:space-y-0'>
+                <div className='pt-2 flex flex-col xl:flex-row pb-10 space-y-3 xl:space-y-0'>
                     <div className='body2'>{t('external_access.resend_verification_message')}</div>
                     <div className='body2'>
                         <a className={(isResendDisabled || sendVerificationCodeMutation.isLoading) ? 'disabled xl:px-2' : 'xl:px-2'}

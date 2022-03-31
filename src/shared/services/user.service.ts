@@ -20,6 +20,7 @@ import {TicketEnumValue} from '@pages/tickets/models/ticket-enum-value.model';
 import {setExternalUserJobTitles, setInvitationStatusList, setUserDepartments, setUserExternalDepartments, setUserJobTitles, setUserStatusList} from '@pages/users/store/users.slice';
 import {UserQueryFilter} from '@pages/users/models/user-filter-query.model';
 import utils from '@shared/utils/utils';
+import {InternalQueueStatus} from '@pages/ccp/models/internal-queue-status';
 
 const userBaseUrl = '/users';
 
@@ -222,5 +223,10 @@ export const getUserDetail = async () : Promise<UserDetail> => {
 
 export const updateCallForwarding = async (callForwardingDetail: CallForwardingDetail): Promise<CallForwardingDetail> => {
     const {data} = await Api.put(`${userBaseUrl}/call-forwarding`, callForwardingDetail);
+    return data;
+}
+
+export const getInternalQueues = async (): Promise<InternalQueueStatus[]> => {
+    const {data} = await Api.get(`${userBaseUrl}/internal-queues`);
     return data;
 }

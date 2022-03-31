@@ -423,6 +423,15 @@ const SvgIcon = ({type, wrapperClassName = '', className = 'icon-medium', fillCl
         </svg>
     }
 
+    const getIconExtension = () => {
+        return <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className={mainClass}>
+            <g id="Icon_Extension_24px" data-name="Icon/Extension/24px" transform="translate(-144 -632)">
+                <rect id="Bound" width="24" height="24" transform="translate(144 632)" fill="none"/>
+                <path id="ic_contact_phone_24px" d="M22,3H2A2.006,2.006,0,0,0,0,5V19a2.006,2.006,0,0,0,2,2H22a2,2,0,0,0,1.99-2L24,5A2.006,2.006,0,0,0,22,3ZM8,6A3,3,0,1,1,5,9,3,3,0,0,1,8,6Zm6,12H2V17c0-2,4-3.1,6-3.1S14,15,14,17Zm3.85-4h1.64L21,16l-1.99,1.99A7.512,7.512,0,0,1,16.28,14a7.283,7.283,0,0,1,0-4,7.474,7.474,0,0,1,2.73-3.99L21,8l-1.51,2H17.85a5.889,5.889,0,0,0,0,4Z" transform="translate(144 632)" className={fillClass} />
+            </g>
+        </svg>
+    }
+
     const getIconFilter = () => {
         return <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className={mainClass}>
             <rect width="24" height="24" fill="none" />
@@ -1257,6 +1266,7 @@ const SvgIcon = ({type, wrapperClassName = '', className = 'icon-medium', fillCl
         [Icon.EditCircled]: getIconEditCircled,
         [Icon.Email]: getIconEmail,
         [Icon.Error]: getIconError,
+        [Icon.Extension]: getIconExtension,
         [Icon.Filter]: getIconFilter,
         [Icon.FilterList]: getIconFilterList,
         [Icon.Info]: getIconInfo,
