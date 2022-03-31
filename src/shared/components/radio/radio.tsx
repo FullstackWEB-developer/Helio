@@ -47,8 +47,7 @@ const Radio = React.forwardRef<HTMLInputElement, RadioProps>(({
                     <label htmlFor={`${name}_${item.value}`}
                         className={`body2 ${truncate ? ' truncate' : ''} ${labelClassName ? labelClassName : ''}`}>
                         <ElipsisTooltipTextbox asSpan={true} value={t(item.label)}
-                            classNames={classNames('body2', {labelClassName: !!labelClassName})}
-                            yOffsetInPixels={-28} />
+                            classNames={classNames('body2', {labelClassName: !!labelClassName})} />
                     </label>
                 </div>
             })

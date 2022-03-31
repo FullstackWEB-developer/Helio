@@ -54,8 +54,7 @@ const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(({
             <span className="checkbox-control">
                 <SvgIcon type={Icon.LightCheckBoxOn} fillClass='svg-checkbox'></SvgIcon>
             </span>
-            <ElipsisTooltipTextbox value={t(label)} classNames={classnames(labelClassName, {'w-60': !assistiveText})} asSpan={true}
-                yOffsetInPixels={-28} />
+            <ElipsisTooltipTextbox value={t(label)} classNames={classnames(labelClassName, {'w-60': !assistiveText})} asSpan={true} />
             {!!assistiveText &&
                 <span className='body3-medium ml-1.5'>{t(assistiveText)}</span>
             }

@@ -34,7 +34,7 @@ const ElipsisTooltipTextbox = ({value, asSpan = false, classNames, yOffsetInPixe
 
     const [popper, setPopper] = useState<HTMLDivElement | null>(null);
     const {styles, attributes, update} = usePopper(ref.current, popper, {
-        placement: 'bottom-start',
+        placement: 'top-start',
         strategy: 'fixed',
         modifiers: [{
             name: 'offset',
