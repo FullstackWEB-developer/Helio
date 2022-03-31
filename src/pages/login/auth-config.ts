@@ -20,7 +20,8 @@ export const getMsalInstance = () => {
                     authority: 'https://login.microsoftonline.com/' + utils.getAppParameter('MsalTenantId')
                 },
                 cache: {
-                    cacheLocation: 'localStorage'
+                    cacheLocation: 'localStorage',
+                    storeAuthStateInCookie: true
                 },
                 system: {
                     iframeHashTimeout: 10000

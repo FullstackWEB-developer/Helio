@@ -52,7 +52,7 @@ const appUserSlice = createSlice({
                     state.liveAgentStatuses.push(agentInfo);
                 }
             }
-            let internalQueueIndex = state.internalQueueStatuses.findIndex(a => a.userId === payload.userId);
+            let internalQueueIndex = state.internalQueueStatuses?.findIndex(a => a.userId === payload.userId);
             if (internalQueueIndex > 1) {
                 state.internalQueueStatuses = state.internalQueueStatuses.map((item, index)=> {
                     return index === internalQueueIndex ? {...item, connectStatus : payload.status} : item
