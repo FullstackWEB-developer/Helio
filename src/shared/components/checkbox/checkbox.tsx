@@ -4,6 +4,7 @@ import SvgIcon from '../svg-icon/svg-icon';
 import {Icon} from '@components/svg-icon/icon';
 import classnames from 'classnames';
 import {useTranslation} from 'react-i18next';
+import ElipsisTooltipTextbox from '@components/elipsis-tooltip-textbox/elipsis-tooltip-textbox';
 export interface CheckboxCheckEvent {
     value: string;
     checked: boolean;
@@ -53,7 +54,8 @@ const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(({
             <span className="checkbox-control">
                 <SvgIcon type={Icon.LightCheckBoxOn} fillClass='svg-checkbox'></SvgIcon>
             </span>
-            <span className={classnames(labelClassName, {'truncate': truncate, 'w-60': !assistiveText})}>{t(label)}</span>
+            <ElipsisTooltipTextbox value={t(label)} classNames={classnames(labelClassName, {'w-60': !assistiveText})} asSpan={true}
+                yOffsetInPixels={-28} />
             {!!assistiveText &&
                 <span className='body3-medium ml-1.5'>{t(assistiveText)}</span>
             }

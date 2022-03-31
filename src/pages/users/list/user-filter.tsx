@@ -26,7 +26,7 @@ const UserFilter = ({isOpen}: {isOpen: boolean}) => {
 
     const {t} = useTranslation();
     const getClassNames = () => classNames({
-        'w-72 transition-width transition-slowest ease top-0 bg-secondary-100 overflow-y-auto relative': isOpen,
+        'w-72 transition-width transition-slowest ease top-0 bg-secondary-100 overflow-y-auto overflow-x-hidden relative': isOpen,
         'hidden': !isOpen
     });
     const dispatch = useDispatch();
