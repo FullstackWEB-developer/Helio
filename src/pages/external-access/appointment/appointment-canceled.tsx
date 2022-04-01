@@ -18,9 +18,6 @@ const AppointmentCanceled = () => {
                 <a rel='noreferrer' target='_self' href={utils.getAppParameter('ChatLink')}>Chat</a>
             </Trans>
         </div>
-        <div>
-            {t('external_access.appointments.we_will_be_happy')}
-        </div>
     </div>
 }
 
