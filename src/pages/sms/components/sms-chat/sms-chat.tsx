@@ -80,11 +80,9 @@ const SmsChat = ({info, isLoading, isSending, isBottomFocus, messages = [], last
             originalNumber = originalNumber.substring(2);
         }
         if(patient && (!patient.consentToText || patient.mobilePhone !== originalNumber) ) {
-            //setSmsDisabledText('sms.sms_not_available_patient'); //Undo when 4552 approved
-            setSmsDisabledText(undefined);
+            setSmsDisabledText('sms.sms_not_available_patient');
         } else if (contact && contact.mobilePhone !== originalNumber) {
-            //setSmsDisabledText('sms.sms_not_available_contact'); //Undo when 4552 approved
-            setSmsDisabledText(undefined);
+            setSmsDisabledText('sms.sms_not_available_contact');
         } else {
             setSmsDisabledText(undefined)
         }
