@@ -280,9 +280,10 @@ const TicketFilter = ({isOpen}: {isOpen: boolean}) => {
             return [...reasons]
                 .sort((a, b) => a.label.localeCompare(b.label))
                 .map(reason => {
+                    const parentLabel = reason?.parentValue ? reasons.find(r => r.value === reason.parentValue)?.label : '';
                     return {
                         key: reason.value,
-                        value: reason.label
+                        value: parentLabel ? `${parentLabel} - ${reason.label}` : reason.label
                     }
                 })
         }
