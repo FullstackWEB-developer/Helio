@@ -24,7 +24,7 @@ import {selectAgentStates, selectAppUserDetails, selectUserStatus} from '@shared
 import {DragPreviewImage, useDrag} from 'react-dnd';
 import {DndItemTypes} from '@shared/layout/dragndrop/dnd-item-types';
 import './ccp.scss';
-import {toggleCcp} from '@shared/layout/store/layout.slice';
+import {setIncomingOrActiveCallFlag, toggleCcp} from '@shared/layout/store/layout.slice';
 import {Trans, useTranslation} from 'react-i18next';
 import CcpContext from './components/ccp-context';
 import contextPanels from './models/context-panels';
@@ -279,6 +279,7 @@ const Ccp: React.FC<BoxProps> = ({
         connect.contact((contact) => {
             window.CCP.contact = contact;
             contact.onConnecting(() => {
+                dispatch(setIncomingOrActiveCallFlag(true));
                 if (!isCcpVisibleRef.current) {
                     dispatch(toggleCcp());
                 }
@@ -369,6 +370,7 @@ const Ccp: React.FC<BoxProps> = ({
             contact.onDestroy((contact) => {
                 dispatch(removeCurrentBotContext(contact.contactId));
                 dispatch(setInternalCallDetails(undefined));
+                dispatch(setIncomingOrActiveCallFlag(false));
             })
         });
         connect.agent((agent) => {
@@ -399,6 +401,7 @@ const Ccp: React.FC<BoxProps> = ({
 
             agent.onAfterCallWork(() => {
                 dispatch(updateUserStatus(UserStatus.AfterWork));
+                dispatch(setIncomingOrActiveCallFlag(false));
             });
 
             agent.onRefresh(ag => {

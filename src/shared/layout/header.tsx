@@ -4,11 +4,11 @@ import SearchBar from '../components/search-bar/search-bar';
 import {useDispatch, useSelector} from 'react-redux';
 import {toggleCcp, toggleUserProfileMenu} from './store/layout.slice';
 import {authenticationSelector, selectAppUserDetails, selectUserStatus} from '../store/app-user/appuser.selectors';
-import {isCcpVisibleSelector, isProfileMenuExpandedSelector} from './store/layout.selectors';
+import {incomingOrActiveCallInProgressSelector, isCcpVisibleSelector, isProfileMenuExpandedSelector} from './store/layout.selectors';
 import HelioLogo from '@icons/helio-logo';
 import ProfileDropdown from './components/profile-dropdown';
 import customHooks from '../hooks/customHooks';
-import {selectChatCounter, selectConnectionStatus, selectVoiceCounter} from '@pages/ccp/store/ccp.selectors';
+import {selectConnectionStatus} from '@pages/ccp/store/ccp.selectors';
 import './header.scss';
 import {Link} from 'react-router-dom';
 import SvgIcon from '@components/svg-icon/svg-icon';
@@ -21,7 +21,7 @@ import {Trans, useTranslation} from 'react-i18next';
 import utils from '@shared/utils/utils';
 import ComponentPermissionGuard from "@components/component-permission-guard";
 import ReLoginModal from '@shared/layout/components/relogin-modal';
-
+import classNames from 'classnames';
 
 const Header = ({headsetIconRef}: {headsetIconRef: React.RefObject<HTMLDivElement>}) => {
     const {t} = useTranslation();
@@ -31,8 +31,6 @@ const Header = ({headsetIconRef}: {headsetIconRef: React.RefObject<HTMLDivElemen
     const isProfileMenuOpen = useSelector(isProfileMenuExpandedSelector);
     const avatarRef = useRef(null);
     const dropdownRef = useRef<HTMLDivElement>(null);
-    const numberOfAgentChats = useSelector(selectChatCounter);
-    const numberOfAgentVoices = useSelector(selectVoiceCounter);
     const isCcpVisible = useSelector(isCcpVisibleSelector);
     const ccpConnectionState = useSelector(selectConnectionStatus);
     const userStatus = useSelector(selectUserStatus);
@@ -40,6 +38,7 @@ const Header = ({headsetIconRef}: {headsetIconRef: React.RefObject<HTMLDivElemen
     const [isErrorToolTipVisible, setErrorToolTipVisible] = useState(true);
     const [animate, setAnimate] = useState(false);
     const [ccpOpened, setCcpOpened] = useState(false);
+    const isIncomingOrActiveCall = useSelector(incomingOrActiveCallInProgressSelector);
 
     useEffect(() => {
         if (isCcpVisible) {
@@ -88,18 +87,20 @@ const Header = ({headsetIconRef}: {headsetIconRef: React.RefObject<HTMLDivElemen
                     <div className='pl-2'>
                         <SearchBar />
                     </div>
-                    <div><ReLoginModal type='header'/></div>
+                    <div><ReLoginModal type='header' /></div>
                 </div>
                 <div className='flex flex-row items-center'>
-                    <div ref={headsetIconRef} className='relative mr-4 cursor-pointer'>
-                        <SvgIcon type={Icon.Ccp} data-test-id='toggle-ccp'
-                            className={`${animate ? 'icon-large-40 animate-pulse' : 'icon-large-40'}`}
-                            fillClass={`${animate ? 'header-active-item-icon header-animation-fill' : 'header-active-item-icon'}`}
-                            onClick={() => dispatch(toggleCcp())} />
+                    <div ref={headsetIconRef} className='relative cursor-pointer mr-32'>
+                        <div className={classNames({'ccp-incoming-pulse': isIncomingOrActiveCall, 'ccp-idle-border': !isIncomingOrActiveCall})} onClick={() => dispatch(toggleCcp())}>
+                            <SvgIcon type={Icon.Ccp} data-test-id='toggle-ccp'
+                                className={classNames('icon-large-40', {'animate-pulse': animate})}
+                                fillClass2={`${isIncomingOrActiveCall ? 'ccp-icon-active-headset' : 'ccp-icon-idle-headset'}`}
+                                fillClass={`${isIncomingOrActiveCall ? 'ccp-icon-active-background' : 'ccp-icon-idle-background'}`} />
+                        </div>
                         {ccpConnectionState === CCPConnectionStatus.Failed &&
                             <div ref={iconContainerRef}
                                 onClick={() => setErrorToolTipVisible(!isErrorToolTipVisible)}
-                                className='absolute bottom-0 right-0'>
+                                className='absolute bottom-0 left-7'>
                                 <SvgIcon
                                     type={Icon.ErrorFilled}
                                     className='icon-small'
@@ -121,24 +122,6 @@ const Header = ({headsetIconRef}: {headsetIconRef: React.RefObject<HTMLDivElemen
                             </div>
                         }
                     </div>
-                    <div className='pr-1'>
-                        <SvgIcon type={Icon.Phone} className='icon-small' fillClass='header-inactive-item-icon' />
-                    </div>
-                    <div>
-                        <div data-test-id='number-of-agent-voices'
-                            className={'pr-5 hidden md:block subtitle'}><span
-                                className={(numberOfAgentVoices > 0 ? 'header-active-agent-item' : 'text-disabled')}>{numberOfAgentVoices}</span>
-                        </div>
-                    </div>
-                    <div className='pr-1.5'>
-                        <SvgIcon type={Icon.Chat} className='icon-medium' fillClass='header-inactive-item-icon' />
-                    </div>
-                    <div>
-                        <div data-test-id='number-of-agent-chats'
-                            className={'pr-20 hidden md:block subtitle'}><span
-                                className={(numberOfAgentChats > 0 ? 'header-active-agent-item' : 'text-disabled')}>{numberOfAgentChats}</span>
-                        </div>
-                    </div>
                     <div className='flex flex-row items-center'>
                         <ComponentPermissionGuard permission='Home.AWSConnectButton'>
                             <div className='hidden pr-6 md:block'>
@@ -152,15 +135,16 @@ const Header = ({headsetIconRef}: {headsetIconRef: React.RefObject<HTMLDivElemen
                         <div data-test-id='athena-icon' className='hidden pr-10 md:block'>
                             <SvgIcon type={Icon.Athena} className='cursor-pointer header-icon' onClick={() => openUrl(utils.getAppParameter('AthenaHealthUrl'))} />
                         </div>
+
                         <div>
                             <div ref={dropdownRef} className='relative hidden h-full md:block'>
                                 <div ref={avatarRef} data-test-id='letter-avatar' className='pr-6 cursor-pointer'
                                     onClick={() => displayProfileMenu()}>
                                     <Avatar userFullName={auth.isLoggedIn && appUserDetails ? appUserDetails.fullName : ''}
-                                            userId={appUserDetails?.id}
-                                            displayStatus={true}
-                                            status={userStatus}
-                                            userPicture={appUserDetails?.profilePicture} />
+                                        userId={appUserDetails?.id}
+                                        displayStatus={true}
+                                        status={userStatus}
+                                        userPicture={appUserDetails?.profilePicture} />
                                 </div>
                                 <div>
                                     {isProfileMenuOpen &&

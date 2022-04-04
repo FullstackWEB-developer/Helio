@@ -33,6 +33,9 @@ const layoutSlice = createSlice({
         },
         setLastNavigationDate(state) {
             state.lastNavigationDate = new Date();
+        },
+        setIncomingOrActiveCallFlag(state, {payload}: PayloadAction<boolean>){
+            state.incomingOrActiveCallInProgress = payload;
         }
     }
 });
@@ -46,7 +49,8 @@ export const {
     toggleHotspots,
     toggleStatusBar,
     updateLatestUsersStatusUpdateTime,
-    setLastNavigationDate
+    setLastNavigationDate,
+    setIncomingOrActiveCallFlag
 } = layoutSlice.actions
 
 export default layoutSlice.reducer

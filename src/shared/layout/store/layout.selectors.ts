@@ -37,3 +37,8 @@ export const selectLastNavigationDate = createSelector(
     layoutState,
     state => state.lastNavigationDate
 )
+
+export const incomingOrActiveCallInProgressSelector = createSelector(
+    layoutState,
+    state => state.incomingOrActiveCallInProgress as boolean
+)

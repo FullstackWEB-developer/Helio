@@ -160,3 +160,18 @@
 .attachment-4{
   fill: var(--color-white);
 }
+
+.ccp-icon {
+  &-active-headset {
+    fill: (var(--color-white))
+  }
+  &-idle-headset {
+    fill: var(--ccp-icon-idle);
+  }
+  &-active-background {
+    fill: (var(--color-primary-800));
+  }
+  &-idle-background {
+    fill: (var(--color-white));
+  }
+}

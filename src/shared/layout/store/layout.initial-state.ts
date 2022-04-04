@@ -6,6 +6,7 @@ export interface LayoutState {
     isStatusBarVisible: boolean;
     latestUsersStatusUpdateTime?: Date;
     lastNavigationDate?: Date;
+    incomingOrActiveCallInProgress: boolean;
 }
 
 const initialState: LayoutState = {
@@ -13,6 +14,7 @@ const initialState: LayoutState = {
     isProfileMenuExpanded: false,
     isCcpVisible: true,
     isHotspotsVisible: false,
-    isStatusBarVisible: false
+    isStatusBarVisible: false,
+    incomingOrActiveCallInProgress: false
 }
 export default initialState;

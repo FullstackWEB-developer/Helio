@@ -249,8 +249,8 @@
       "title_fail": "Failed to connect",
       "desc_connecting": "We are connecting you to following services:",
       "desc_success": "You are now connected to following services:",
-      "desc_fail": "We were unable to connect to some of the services.",
-      "desc_fail_try": "Please retry or contact your technical support team at <0>{{email}}</0> if problem persists."
+      "desc_fail": "Contact Control Panel failed to connect to Amazon Connect.",
+      "desc_fail_try": "Please contact your technical support team at <0>{{email}}</0> if problem persists."
     },
     "sms_context": {
       "title": "Send SMS Message",
