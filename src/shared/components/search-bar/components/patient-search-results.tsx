@@ -44,7 +44,7 @@ const PatientSearchResults = () => {
 
     const handlePatientSelection = (patientId: number) => {
         dispatch(setSearchTermDisplayValue(''));
-        history.push(`/patients/${patientId}`);
+        window.open(`/patients/${patientId}`);
     }
 
     const paginateResults = (data: Patient[]) => {
@@ -65,6 +65,23 @@ const PatientSearchResults = () => {
             setPatientPagedResults(patients.slice(p.pageSize * (p.page - 1),
                 p.pageSize * p.page))
         }
+    }
+
+    const toCamelCase = (name?) => {
+        if(!name)
+            return '';
+        
+        let result: string[] = [];
+        let namePartials = name.split(' ');
+        namePartials.forEach(element => {
+            if(element.length > 1){
+                result.push(element[0] + element.substring(1, element.length).toLowerCase());
+            }else{
+                result.push(element);
+            }
+        });
+        
+        return result.join(' ');
     }
 
     const shouldDisplayPhoneHint = useMemo(() =>
@@ -100,8 +117,8 @@ const PatientSearchResults = () => {
                     {
                         patientPagedResults.map(patient =>
                             <div key={patient.patientId} className="search-results-grid data-row h-10 col-template-patients px-6 body2">
-                                <div className="truncate">{patient.lastName || ''}</div>
-                                <div className="truncate">{patient.firstName || ''}</div>
+                                <div className="truncate">{toCamelCase(patient.lastName) || ''}</div>
+                                <div className="truncate">{toCamelCase(patient.firstName) || ''}</div>
                                 <div className="truncate cursor-pointer" onClick={() => handlePatientSelection(patient.patientId)}>{patient.patientId || ''}</div>
                                 <div className="truncate">{patient.dateOfBirth ? patientUtils.formatDob(patient.dateOfBirth) : ''}</div>
                                 <div className="truncate">{patient.ssn && patientUtils.displayPatientSsn(patient.ssn) ? patient.ssn : ''}</div>
