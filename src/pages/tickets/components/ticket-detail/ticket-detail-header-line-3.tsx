@@ -56,7 +56,7 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
     const [confirmationOkButtonLabel, setConfirmationOkButtonLabel] = useState<string>('');
     const [selectedPhoneToCall, setSelectedPhoneToCall] = useState<PhoneType>(PhoneType.None);
     const [isBlockUserOpen, setIsBlockUserOpen] = useState(false);
-        const ticketStatuses = useSelector((state => selectEnumValues(state, 'TicketStatus')));
+    const ticketStatuses = useSelector((state => selectEnumValues(state, 'TicketStatus')));
     const phoneDropdownRef = useRef<HTMLDivElement>(null);
     const ticketUpdateModel = useSelector(selectTicketUpdateModel);
 
@@ -138,7 +138,7 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
             }));
             dispatch(setTicketUpdateModel({
                 ...ticketUpdateModel,
-                isDeleted:true
+                isDeleted: true
             }))
         },
         onError: (_, variables) => {
@@ -277,7 +277,7 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
     }
 
     const getPhones = () => {
-        const phones : Phone[] = [];
+        const phones: Phone[] = [];
         if (patient?.mobilePhone) {
             phones.push(
                 {
@@ -318,7 +318,7 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
                 }
             );
         }
-        if (!patient && !contact && ticket.originationNumber){
+        if (!patient && !contact && ticket.originationNumber) {
             phones.push(
                 {
                     phoneType: t('ticket_detail.header.block_user.other_phone'),
@@ -330,7 +330,7 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
     }
 
     const onBlockAllChanged = () => {
-        if(getValues('block_all').checked){
+        if (getValues('block_all').checked) {
             setValue('block_email', {value: undefined, checked: true});
             setValue('block_phones', {value: undefined, checked: true});
             setValue('block_ip', {value: undefined, checked: true});
@@ -342,25 +342,29 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
     }
 
     const createBlockUserMutation = useMutation(createBlockAccess, {
-        onSuccess: () => {
+        onSuccess: (_, variables: BlockAccessModel) => {
             dispatch(addSnackbarMessage({
                 type: SnackbarType.Success,
-                message: 'ticket_detail.header.block_user.success',
+                message: t('ticket_detail.header.block_user.success_detailed', {
+                    value: variables.value
+                }),
                 position: SnackbarPosition.TopCenter
             }));
             setIsBlockUserOpen(false);
         },
-        onError: () => {
+        onError: (_, variables: BlockAccessModel) => {
             dispatch(addSnackbarMessage({
                 type: SnackbarType.Error,
-                message: 'ticket_detail.header.block_user.failed',
+                message: t('ticket_detail.header.block_user.failure_detailed', {
+                    value: variables.value
+                }),
                 position: SnackbarPosition.TopCenter
             }));
         }
     })
 
     const onBlockUser = (formData: any) => {
-        if(formData.block_email?.checked){
+        if (formData.block_email?.checked) {
             getEmails().forEach(email => {
                 if (email) {
                     createBlockUserMutation.mutate({
@@ -373,20 +377,20 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
             });
         }
 
-        if(formData.block_phones?.checked) {
+        if (formData.block_phones?.checked) {
             getPhones().forEach(phone => {
-               if (phone && phone.phoneNumber) {
-                   createBlockUserMutation.mutate({
-                       isActive: true,
-                       accessType: BlockAccessType.Phone,
-                       value: phone.phoneNumber,
-                       comment: formData.note
-                   } as BlockAccessModel);
-               }
+                if (phone && phone.phoneNumber) {
+                    createBlockUserMutation.mutate({
+                        isActive: true,
+                        accessType: BlockAccessType.Phone,
+                        value: phone.phoneNumber,
+                        comment: formData.note
+                    } as BlockAccessModel);
+                }
             });
         }
 
-        if(ticket.ipAddress && formData.block_ip?.checked) {
+        if (ticket.ipAddress && formData.block_ip?.checked) {
             createBlockUserMutation.mutate({
                 isActive: true,
                 accessType: BlockAccessType.IPAddress,
@@ -421,19 +425,19 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
                     displayCall() && <div>
                         <div ref={phoneDropdownRef} className='relative flex flex-row items-center cursor-pointer'>
                             <SvgIcon type={Icon.ChannelPhone} className='icon-x-large'
-                                     fillClass='header-active-item-call-icon'
-                                     strokeClass='channel-call-icon-stroke'
-                                     onClick={() => callRelated(selectedPhoneToCall)}/>
+                                fillClass='header-active-item-call-icon'
+                                strokeClass='channel-call-icon-stroke'
+                                onClick={() => callRelated(selectedPhoneToCall)} />
                             <div onClick={() => callRelated(selectedPhoneToCall)}
-                                 className='pl-3 pr-2'>{t(`ticket_detail.header.call_${displayCall()}`)}</div>
+                                className='pl-3 pr-2'>{t(`ticket_detail.header.call_${displayCall()}`)}</div>
                             {dropdownModel.items && dropdownModel.items.length > 0 &&
-                            <SvgIcon onClick={() => setDisplayPhoneDropdown(!displayPhoneDropdown)}
-                                     type={Icon.ArrowDown} className='icon-medium'/>}
+                                <SvgIcon onClick={() => setDisplayPhoneDropdown(!displayPhoneDropdown)}
+                                    type={Icon.ArrowDown} className='icon-medium' />}
                         </div>
                         {displayPhoneDropdown && dropdownModel.items && dropdownModel.items.length > 0 &&
-                        <div className='absolute'>
-                            <Dropdown model={dropdownModel}/>
-                        </div>}
+                            <div className='absolute'>
+                                <Dropdown model={dropdownModel} />
+                            </div>}
                     </div>
                 }
                 {
@@ -448,41 +452,41 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
             <div className='flex flex-row'>
                 <div className='flex flex-row items-center pr-6 cursor-pointer'>
                     <SvgIcon type={Icon.Spam} className='icon-medium'
-                             fillClass='header-spam-icon'
-                             onClick={() => setIsBlockUserOpen(true)}/>
+                        fillClass='header-spam-icon'
+                        onClick={() => setIsBlockUserOpen(true)} />
                     <div className='pl-3 pr-2' onClick={() => setIsBlockUserOpen(true)}>
                         {t('ticket_detail.header.spam')}
                     </div>
                 </div>
                 <div className='pr-6'>
                     {ticket.isDeleted ? <Button data-test-id='ticket-detail-header-unarchive-button'
-                                                buttonType='secondary'
-                                                isLoading={archiveTicketMutation.isLoading}
-                                                disabled={archiveTicketMutation.isLoading}
-                                                onClick={() => confirmUnarchive()}
-                                                label={'ticket_detail.header.unarchive'}/>
-                    : <Button data-test-id='ticket-detail-header-delete-button'
-                              buttonType='secondary'
-                              isLoading={archiveTicketMutation.isLoading}
-                              disabled={archiveTicketMutation.isLoading}
-                              onClick={() => confirmArchive()}
-                              label={'ticket_detail.header.archive'}/>}
+                        buttonType='secondary'
+                        isLoading={archiveTicketMutation.isLoading}
+                        disabled={archiveTicketMutation.isLoading}
+                        onClick={() => confirmUnarchive()}
+                        label={'ticket_detail.header.unarchive'} />
+                        : <Button data-test-id='ticket-detail-header-delete-button'
+                            buttonType='secondary'
+                            isLoading={archiveTicketMutation.isLoading}
+                            disabled={archiveTicketMutation.isLoading}
+                            onClick={() => confirmArchive()}
+                            label={'ticket_detail.header.archive'} />}
                 </div>
                 <div className='pr-6'>
                     <Button disabled={ticket.status === TicketStatuses.Solved || updateStatusMutation.isLoading}
-                            data-test-id='ticket-detail-header-solved-button'
-                            buttonType='small'
-                            isLoading={updateStatusMutation.isLoading && updateStatusMutation.variables?.status === TicketStatuses.Solved}
-                            onClick={() => updateStatus('Solved')}
-                            label={'ticket_detail.header.solved'}/>
+                        data-test-id='ticket-detail-header-solved-button'
+                        buttonType='small'
+                        isLoading={updateStatusMutation.isLoading && updateStatusMutation.variables?.status === TicketStatuses.Solved}
+                        onClick={() => updateStatus('Solved')}
+                        label={'ticket_detail.header.solved'} />
                 </div>
                 <div className='pr-8'>
                     <Button disabled={ticket.status === TicketStatuses.Closed || updateStatusMutation.isLoading}
-                            data-test-id='ticket-detail-header-close-button'
-                            buttonType='small'
-                            isLoading={updateStatusMutation.isLoading && updateStatusMutation.variables?.status === TicketStatuses.Closed}
-                            onClick={() => updateStatus('Closed')}
-                            label={'ticket_detail.header.close'}/>
+                        data-test-id='ticket-detail-header-close-button'
+                        buttonType='small'
+                        isLoading={updateStatusMutation.isLoading && updateStatusMutation.variables?.status === TicketStatuses.Closed}
+                        onClick={() => updateStatus('Closed')}
+                        label={'ticket_detail.header.close'} />
                 </div>
             </div>
         </div>
@@ -493,82 +497,82 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
             onOk={() => processConfirmed()}
             title={confirmationTitle}
             message={confirmationMessage}
-            isOpen={displayConfirmation}/>
+            isOpen={displayConfirmation} />
 
         <div className='flex items-center justify-center'>
             <Modal isOpen={isBlockUserOpen}
-                   title={t('ticket_detail.header.block_user.title')}
-                   className='block-user-modal'
-                   onClose={() => {setIsBlockUserOpen(false)}}
-                   isClosable>
+                title={t('ticket_detail.header.block_user.title')}
+                className='block-user-modal'
+                onClose={() => {setIsBlockUserOpen(false)}}
+                isClosable>
                 <div className='pt-1'>
                     <span className='subtitle2'>{t('ticket_detail.header.block_user.description')}</span>
                     <div className='mt-5'>
                         {
                             isBlockAllVisible() &&
-                                <ControlledCheckbox
-                                    control={control}
-                                    label='ticket_detail.header.block_user.block_all'
-                                    name='block_all'
-                                    className='body2'
-                                    labelClassName=''
-                                    onChange={onBlockAllChanged}
-                                />
+                            <ControlledCheckbox
+                                control={control}
+                                label='ticket_detail.header.block_user.block_all'
+                                name='block_all'
+                                className='body2'
+                                labelClassName=''
+                                onChange={onBlockAllChanged}
+                            />
                         }
                         {
                             getEmails().length > 0 &&
-                                <div className='grid grid-cols-3'>
-                                    <ControlledCheckbox
-                                        control={control}
-                                        label='ticket_detail.header.block_user.block_email'
-                                        name='block_email'
-                                        className='body2'
-                                    />
-                                    <div className='body2 col-span-2'>
-                                        {
-                                            getEmails().map(email => {
-                                                return <div className='pb-2.5' key={email}>{
-                                                    email
-                                                }</div>
-                                            })
-                                        }
-                                    </div>
+                            <div className='grid grid-cols-3'>
+                                <ControlledCheckbox
+                                    control={control}
+                                    label='ticket_detail.header.block_user.block_email'
+                                    name='block_email'
+                                    className='body2'
+                                />
+                                <div className='body2 col-span-2'>
+                                    {
+                                        getEmails().map(email => {
+                                            return <div className='pb-2.5' key={email}>{
+                                                email
+                                            }</div>
+                                        })
+                                    }
                                 </div>
+                            </div>
                         }
                         {
                             getPhones().length > 0 &&
-                                <div className='grid grid-cols-3'>
-                                    <ControlledCheckbox
-                                        control={control}
-                                        label='ticket_detail.header.block_user.block_phones'
-                                        name='block_phones'
-                                        className='body2'
-                                    />
-                                    <div className='body2 col-span-2'>
-                                        {
-                                            getPhones().map(phone => {
-                                                return <div className='pb-2.5' key={phone.phoneNumber}>{
-                                                    phone && phone.phoneNumber && `${phone.phoneType} ${utils.formatPhone(phone.phoneNumber)}`
-                                                }</div>
-                                            })
-                                        }
-                                    </div>
+                            <div className='grid grid-cols-3'>
+                                <ControlledCheckbox
+                                    control={control}
+                                    label='ticket_detail.header.block_user.block_phones'
+                                    name='block_phones'
+                                    className='body2'
+                                />
+                                <div className='body2 col-span-2'>
+                                    {
+                                        getPhones().map(phone => {
+                                            return <div className='pb-2.5' key={phone.phoneNumber}>{
+                                                phone && phone.phoneNumber && `${phone.phoneType} ${utils.formatPhone(phone.phoneNumber)}`
+                                            }</div>
+                                        })
+                                    }
                                 </div>
+                            </div>
                         }
                         {
                             ticket.ipAddress &&
-                                <div className='grid grid-cols-3'>
-                                    <ControlledCheckbox
-                                        control={control}
-                                        label='ticket_detail.header.block_user.block_ip'
-                                        name='block_ip'
-                                        className='body2 pb-16'
+                            <div className='grid grid-cols-3'>
+                                <ControlledCheckbox
+                                    control={control}
+                                    label='ticket_detail.header.block_user.block_ip'
+                                    name='block_ip'
+                                    className='body2 pb-16'
 
-                                    />
-                                    <div className='body2 col-span-2'>
-                                        {ticket.ipAddress}
-                                    </div>
+                                />
+                                <div className='body2 col-span-2'>
+                                    {ticket.ipAddress}
                                 </div>
+                            </div>
                         }
                         <ControlledTextArea
                             control={control}
@@ -587,7 +591,7 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
                                 className='ml-6 mr-2'
                                 disabled={isBlockUserDisabled()}
                                 onClick={() => handleSubmit(onBlockUser)()}
-                                />
+                            />
                         </div>
                     </div>
                 </div>

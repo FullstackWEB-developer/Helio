@@ -606,7 +606,9 @@
         "home_phone": "Home Phone",
         "other_phone": "Other Phone",
         "success": "Blocked",
-        "failed": "Failed to block"
+        "success_detailed": "{{value}} blocked successfully.",
+        "failed": "Failed to block",
+        "failure_detailed": "{{value}} failed to be blocked at this time."
       }
     },
     "info_panel": {
