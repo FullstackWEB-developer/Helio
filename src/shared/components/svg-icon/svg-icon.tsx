@@ -50,7 +50,7 @@ const SvgIcon = ({type, wrapperClassName = '', className = 'icon-medium', fillCl
     const getIconAwsConnect = () => {
         return (<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className={mainClass}>
             <g transform="translate(12)"><rect width="24" height="24" transform="translate(-12)" fill="none" />
-                <g transform="translate(-10 3)" clip-path="url(#a)">
+                <g transform="translate(-10 3)">
                     <path d="M10.669,9.344a.877.877,0,1,0,.876.876.877.877,0,0,0-.876-.876" />
                     <path d="M14.032,6.65a.876.876,0,1,0,.876.876.877.877,0,0,0-.876-.876" />
                     <path d="M5.033,7.768a.876.876,0,1,0,.876.876.877.877,0,0,0-.876-.876" />
