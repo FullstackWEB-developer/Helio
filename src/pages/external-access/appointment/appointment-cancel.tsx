@@ -161,6 +161,20 @@ const AppointmentCancel = () => {
         history.push(`${AppointmentReschedulePath}/${appointment?.appointmentId}`);
     }
 
+    const canCancelable = (hasChargeControl: boolean) => {
+        if(hasChargeControl)
+            return appointmentType?.cancelable &&
+                appointmentType?.cancelationFee &&
+                (appointmentType?.cancelationTimeFrame && dayjs.utc(appointment!.startDateTime).diff(dayjs.utc(), 'hour') < appointmentType?.cancelationTimeFrame);
+
+        return appointmentType?.cancelable &&
+            (appointmentType?.cancelationTimeFrame && dayjs.utc(appointment!.startDateTime).diff(dayjs.utc(), 'hour') >= appointmentType?.cancelationTimeFrame);
+    }
+
+    const canReschedulable = (minLenght: number) => {
+        return appointmentType?.reschedulable && appointmentSlots && appointmentSlots?.length > minLenght
+    }
+
     if (!isFetchedAfterMount || isAppointmentTypesLoading || isAppointmentSlotsLoading || isGetCancellationReasonsLoading || isAppointmentsLoading) {
         return <Spinner fullScreen />
     }
@@ -179,11 +193,7 @@ const AppointmentCancel = () => {
                 {t('external_access.appointments.appointment_cancelation')}
             </h4>
         </div>
-        {appointmentType?.cancelable &&
-            appointmentType?.cancelationFee &&
-            (appointmentType?.cancelationTimeFrame &&
-                dayjs.utc(appointment!.startDateTime).diff(dayjs.utc(), 'hour') < appointmentType?.cancelationTimeFrame) &&
-            <div>
+        {appointmentType && canCancelable(true) &&
                 <div className='pt-9 xl:pt-8'>
                     <div className='p-4 warning-message body2'>
                         <Trans i18nKey="external_access.appointments.will_be_charged">
@@ -192,13 +202,15 @@ const AppointmentCancel = () => {
                         </Trans>
                     </div>
                 </div>
+        }
+
+        {canCancelable(false) &&
                 <div className='pt-8 pb-6'>
                     {t('external_access.appointments.please_confirm')}
                 </div>
-            </div>
         }
 
-        {appointmentSlots && appointmentSlots?.length > 0 &&
+        {canReschedulable(0) &&
             <>
                 <div className=''>
                     <div className='h7'>
@@ -220,27 +232,26 @@ const AppointmentCancel = () => {
                 </div>
             </>
         }
-        {
-            appointmentSlots && appointmentSlots?.length > 3 &&
+        {canReschedulable(3) &&
             <div className='pb-16'>
                 <Button buttonType='secondary-big' label='external_access.appointments.view_more_slots' onClick={() => showMoreSlots()} />
             </div>
         }
-        {appointmentSlots && appointmentSlots?.length > 0 &&
+        {canReschedulable(0) &&
             <div className='pb-6'>
                 <div className='h7'>
                     {t('external_access.appointments.want_to_cancel')}
                 </div>
             </div>
         }
-        {appointmentSlots && appointmentSlots?.length > 0 &&
+        {canCancelable(false) &&
             <div className='pb-5'>
                 {t('external_access.appointments.to_cancel')}
             </div>
         }
         <div>
             <form onSubmit={handleSubmit(onSubmit)}>
-                {appointmentSlots && appointmentSlots?.length > 0 &&
+                {canCancelable(false) &&
                     <div className='lg:w-1/2 xl:w-1/3 2xl:w-1/4'>
                         <Controller
                             name='appointmentCancelReasonId'
@@ -266,9 +277,11 @@ const AppointmentCancel = () => {
                         />
                     </div>
                 }
-                {cancelAppointmentMutation.isError && <div>
-                    {t('external_access.appointments.cancel_appointment_reach_us')}
-                </div>}
+                {!canCancelable(false) &&
+                    <div className='pt-6'>
+                        {t('external_access.appointments.cancel_appointment_reach_us')}
+                    </div>
+                }
                 <div className='pt-6'>
                     <Button buttonType='big' isLoading={cancelAppointmentMutation.isLoading} disabled={!isDirty || cancelAppointmentMutation.isError} label='external_access.appointments.cancel_appointment' type='submit' />
                 </div>
