@@ -226,7 +226,10 @@
       "patient_is_pregnant": "Patient is pregnant!",
       "pregnancy": "Pregnancy",
       "patient_with_no_late_appointment": "No appointment in last 3 years",
-      "patient_name": "Patient"
+      "patient": "Patient",
+      "caller": "Caller",
+      "contact": "Contact",
+      "internal": "Internal Call"
     },
     "note_context": {
       "header": "Add Note",
