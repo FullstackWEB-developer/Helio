@@ -31,9 +31,6 @@ import Spinner from '@components/spinner/Spinner';
 import {Appointment} from '@pages/external-access/appointment/models';
 import {Location, Provider} from '@shared/models';
 import {getAppointments} from '@pages/patients/services/patients.service';
-import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
-import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
-import {SnackbarPosition} from '@components/snackbar/snackbar-position.enum';
 import {useParams} from 'react-router-dom';
 
 const AppointmentReschedule = () => {
@@ -66,11 +63,6 @@ const AppointmentReschedule = () => {
             onSuccess: (data) => {
                 const appointment = data.find(a => a.appointmentId === appointmentId);
                 if (!appointment) {
-                    dispatch(addSnackbarMessage({
-                        type: SnackbarType.Error,
-                        position: SnackbarPosition.TopCenter,
-                        message:  t('external_access.appointments.no_single_appointment_with_id', {id: appointmentId})
-                    }));
                     return;
                 }
                 setAppointment(appointment);
