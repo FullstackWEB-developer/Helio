@@ -367,6 +367,10 @@ const Ccp: React.FC<BoxProps> = ({
                 }
             });
 
+            contact.onMissed((contact) => {
+                dispatch(setIncomingOrActiveCallFlag(false));
+            });
+
             contact.onDestroy((contact) => {
                 dispatch(removeCurrentBotContext(contact.contactId));
                 dispatch(setInternalCallDetails(undefined));
