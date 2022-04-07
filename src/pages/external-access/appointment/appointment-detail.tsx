@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {Trans, useTranslation} from 'react-i18next';
 import {getAllProviders, getLocations} from '@shared/services/lookups.service';
 import Button from '@components/button/button';
@@ -7,13 +7,11 @@ import {useDispatch, useSelector} from 'react-redux';
 import {selectAllProviderList, selectLocationList} from '@shared/store/lookups/lookups.selectors';
 import './appointment.scss';
 import {
-    setRescheduleTimeFrame,
-    setSelectedAppointment
+    setRescheduleTimeFrame
 } from '@pages/external-access/appointment/store/appointments.slice';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import classnames from 'classnames';
-import utils from '@shared/utils/utils';
 import ProviderPicture from './components/provider-picture';
 import {Appointment, AppointmentType} from '@pages/external-access/appointment/models';
 import {Location, Provider} from '@shared/models';
@@ -50,8 +48,8 @@ const AppointmentDetail = () => {
         dispatch(setRescheduleTimeFrame(appointmentType?.rescheduleTimeFrame || defaultTimeFrame));
     }, [appointmentType?.rescheduleTimeFrame, dispatch]);
 
-    const {isLoading: appointmentTypesLoading} = useQuery<AppointmentType[], AxiosError>([GetAppointmentTypes], () => getAppointmentTypes(), {
-        enabled: true,
+    const {isLoading: appointmentTypesLoading, refetch: fetchAppointmentTypes} = useQuery<AppointmentType[], AxiosError>([GetAppointmentTypes], () => getAppointmentTypes(), {
+        enabled: false,
         onSuccess: (data) => {
             if (data.length < 1) {
                 return;
@@ -69,8 +67,8 @@ const AppointmentDetail = () => {
                     return;
                 }
                 setAppointment(appointment);
-                setAppointmentTypeId(appointment.appointmentTypeId);
-                dispatch(setSelectedAppointment(appointment));
+                fetchAppointmentTypes().then();
+                setAppointmentTypeId(Number(appointment.appointmentTypeId));
                 setProvider(providers?.find(a => a.id === appointment.providerId));
                 setLocation(locations?.find(a => a.id === appointment.departmentId));
             }
@@ -88,12 +86,33 @@ const AppointmentDetail = () => {
         return !appointmentType || appointmentType.cancelable;
     }
 
+    const displayReschedule = () => {
+        return !appointmentType || appointmentType.reschedulable;
+    }
+
     const redirectToReschedule = () => {
         history.push(`/o/appointment-reschedule/${appointment?.appointmentId}`);
     }
     const redirectToCancel = () => {
         history.push(`/o/appointment-cancel/${appointment?.appointmentId}`);
     }
+
+
+    const cancelRescheduleMessage = useMemo(() => {
+        if (!appointmentType) {
+            return ''
+        }
+        if (appointmentType.cancelable && !appointmentType.reschedulable) {
+            return 'external_access.appointments.can_not_be_rescheduled';
+        }
+        if (!appointmentType.cancelable && appointmentType.reschedulable) {
+            return 'external_access.appointments.can_not_be_canceled';
+        }
+        if (!appointmentType.cancelable && !appointmentType.reschedulable) {
+            return 'external_access.appointments.can_not_be_rescheduled_canceled';
+        }
+    }, [appointmentType]);
+
 
     if (isAppointmentsLoading || !isFetchedAfterMount || appointmentTypesLoading) {
         return <Spinner />
@@ -106,16 +125,15 @@ const AppointmentDetail = () => {
     if (!appointment) {
         return <div>{t('external_access.appointments.no_single_appointment_with_id', {id : appointmentId})}</div>
     }
-
     return <div>
         <div className='2xl:whitespace-pre 2xl:h-12 2xl:my-3 flex w-full items-center'>
             <h4>
                 {t('external_access.appointments.appointment_details')}
             </h4>
         </div>
-        {!displayCancel() && <div className='pt-6 pb-2 w-4/5'>
+        {!!cancelRescheduleMessage && <div className='pt-6 pb-2 w-4/5'>
             <div className='warning-message body2 px-6 py-3.5 rounded border border-solid'>
-                {t('external_access.appointments.can_not_be_canceled')}
+                {t(cancelRescheduleMessage)}
             </div>
         </div>
         }
@@ -154,7 +172,7 @@ const AppointmentDetail = () => {
         </div>
 
         <div className='pt-12 flex flex-col xl:flex-row xl:space-x-6 space-x-0 space-y-6 xl:space-y-0'>
-            {(appointmentType ? appointmentType?.reschedulable : true) && <Button onClick={() => redirectToReschedule()} buttonType='big' label='external_access.appointments.reschedule' />}
+            <Button disabled={!displayReschedule()} onClick={() => redirectToReschedule()} buttonType='big' label='external_access.appointments.reschedule' />
             <Button disabled={!displayCancel()} onClick={() => redirectToCancel()} buttonType='secondary-big' label='common.cancel' />
         </div>
 
