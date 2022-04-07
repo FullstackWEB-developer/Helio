@@ -11,8 +11,8 @@ export interface DashboardDateFormProps {
 }
 
 const DashboardDateForm = ({onDatesSelected}: DashboardDateFormProps) => {
-    const [selectedStartDate, setSelectedStartDate] = useState<Date>(dayjs().add(-1, 'day').toDate());
-    const [selectedEndDate, setSelectedEndDate] = useState<Date>(new Date());
+    const [selectedStartDate, setSelectedStartDate] = useState<Date>();
+    const [selectedEndDate, setSelectedEndDate] = useState<Date>();
     const {t} = useTranslation();
     const {handleSubmit, control, formState, watch} = useForm({
         mode: 'onBlur',
@@ -34,7 +34,10 @@ const DashboardDateForm = ({onDatesSelected}: DashboardDateFormProps) => {
     }
 
     const isValid = () => {
-        return new Date(watchStartDate).getDate() < new Date(watchEndDate).getDate();
+        if (!watchStartDate || !watchEndDate) {
+            return true;
+        }
+        return dayjs(watchStartDate).isBefore(watchEndDate) || dayjs(watchStartDate).isSame(dayjs(watchEndDate), 'day');
     }
 
 
