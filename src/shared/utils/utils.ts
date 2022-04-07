@@ -387,10 +387,6 @@ const maskPhone = (phone: string) => {
     return `(XXX) XXX-${phone.slice(6, 10)}`
 }
 
-const isMinor = (date: Date) => {
-    return dayjs().diff(date, 'year') < 12;
-}
-
 const isValidDobByAthenaMaxAgeConstraint = (date: Date) => {
     return dayjs().diff(date, 'year') > 125;
 }
@@ -561,7 +557,6 @@ const utils = {
     formatTime,
     applyPhoneMask,
     getAppParameter,
-    isMinor,
     isValidDobByAthenaMaxAgeConstraint,
     convertBlobToBase64,
     getTimeDiffInFormattedSeconds,
