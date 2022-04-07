@@ -913,6 +913,18 @@ const SvgIcon = ({type, wrapperClassName = '', className = 'icon-medium', fillCl
         );
     }
 
+    const getIconConfigurations = () => {
+        return (
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g transform="translate(6 1)">
+                <rect width="24" height="24" transform="translate(-6 -1)" fill="none" opacity="0.7" />
+                <path d="M20,6H12L10,4H4A2,2,0,0,0,2.01,6L2,18a2.006,2.006,0,0,0,2,2H20a2.006,2.006,0,0,0,2-2V8A2.006,2.006,0,0,0,20,6ZM15,9a2,2,0,1,1-2,2A2.006,2.006,0,0,1,15,9Zm4,8H11V16c0-1.33,2.67-2,4-2s4,.67,4,2Z"
+                    transform="translate(-6 -1)"
+                    className={fillClass} />
+            </g>
+            </svg>
+        );
+    }
+
     const getIconPause = () => {
         return (
             <svg xmlns="https://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className={mainClass}>
@@ -1319,6 +1331,7 @@ const SvgIcon = ({type, wrapperClassName = '', className = 'icon-medium', fillCl
         [Icon.ChannelUser]: getIconChannelUser,
         [Icon.Pause]: getIconPause,
         [Icon.Blacklist]: getIconBlacklist,
+        [Icon.Configurations]: getIconConfigurations,
         [Icon.CallOutbound]: getIconCallOutbound,
         [Icon.CallInbound]: getIconCallInbound,
         [Icon.CallMissedOutgoing]: getIconCallMissedOutgoing,

@@ -14,6 +14,7 @@ import {
     UserDetailsPath,
     UsersBulkPath,
     BlackListsPath,
+    ConfigurationsPath,
     TicketSmsPath,
     CallsLogPath,
     ChatsLogPath,
@@ -93,6 +94,7 @@ const UserList = React.lazy(() => import('@pages/users/list/user-list'));
 const CallsLogList = React.lazy(() => import('@pages/calls-log/calls-log-list'));
 const ChatsLogList = React.lazy(() => import('@pages/chat-log/chat-log-list'));
 const BlackList = React.lazy(() => import('@pages/blacklists/blacklists'));
+const Configurations = React.lazy(() => import('@pages/configurations/configurations'));
 const BulkAddUser = React.lazy(() => import('@pages/users/bulk-add/bulk-add'));
 const GetExternalUserDobZip = React.lazy(() => import('@pages/external-access/verify-patient/get-external-user-dob-zip'));
 const ExternalUserVerificationCode = React.lazy(() => import('@pages/external-access/verify-patient/external-user-verification-code'));
@@ -211,6 +213,7 @@ function App() {
                     <GuardedRoute exact path={`${UserDetailsPath}/:userId`} component={withSuspense(UserDetails)} />
                     <GuardedRoute exact path={MyStatsPath} component={withSuspense(MyStats)}/>
                     <GuardedRoute exact path={BlackListsPath} component={withSuspense(BlackList)} permission='BlockedAccess.Access' />
+                    <GuardedRoute exact path={`${ConfigurationsPath}/:type?/:id?`} component={withSuspense(Configurations)} permission='Configurations.Access' />
                     <GuardedRoute exact path={UsersBulkPath} component={withSuspense(BulkAddUser)} />
                     <GuardedRoute exact path={CallsLogPath} component={withSuspense(CallsLogList)} />
                     <GuardedRoute exact path={ChatsLogPath} component={withSuspense(ChatsLogList)} />

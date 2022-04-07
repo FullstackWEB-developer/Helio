@@ -10,12 +10,13 @@ interface AccordionProps {
     title?: string;
     className?: string;
     headerClassName?: string;
+    titleClassName?: string;
     children: React.ReactNode;
     isOpen?: boolean;
     onClick?: (isCollapsed: boolean) => void;
 }
 
-const Collapsible = ({title, children, className, headerClassName = 'h-12', isOpen = false, ...props}: AccordionProps) => {
+const Collapsible = ({title, children, className, headerClassName = 'h-12', titleClassName = 'subtitle', isOpen = false, ...props}: AccordionProps) => {
     const {t} = useTranslation();
     const [open, setOpen] = useState(isOpen);
 
@@ -31,7 +32,7 @@ const Collapsible = ({title, children, className, headerClassName = 'h-12', isOp
 
     return <div className={className}>
         <div className={classnames('cursor-pointer flex flex-row justify-between items-center', headerClassName)} onClick={() => onClick()}>
-            <div className='subtitle'>{t(title || '')}</div>
+            <div className={titleClassName}>{t(title || '')}</div>
             <div>
                 {open ? <SvgIcon type={Icon.ArrowUp} className='cursor-pointer' fillClass='active-item-icon' />
                     : <SvgIcon type={Icon.ArrowDown} className='cursor-pointer' fillClass='active-item-icon' />}

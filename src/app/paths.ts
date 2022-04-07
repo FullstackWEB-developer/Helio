@@ -12,6 +12,7 @@ export const CallsLogPath = '/calls';
 export const ChatsLogPath = '/chats';
 export const NotAuthorizedPath = '/not-authorized';
 export const BlackListsPath = '/blacklists';
+export const ConfigurationsPath = '/configurations';
 export const TicketSmsPath = '/o/ticket-sms';
 export const TicketEmailPath = '/o/ticket-email';
 export const AppointmentFoundPath = '/o/appointment-found';

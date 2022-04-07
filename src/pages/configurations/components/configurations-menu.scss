@@ -1,0 +1,9 @@
+.configuration-menu{
+  width: 16.5rem;
+  background-color: var(--dashboard-background);
+  padding: 1.5rem 1rem 1.5rem 1.5rem;
+}
+
+.menu-item:hover{
+  color: var(--color-primary-600);
+}

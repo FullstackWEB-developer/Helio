@@ -4,7 +4,7 @@ import {useLocation} from 'react-router-dom';
 import {toggleNavigation} from './store/layout.slice';
 import React, {useMemo} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {BlackListsPath, TicketsPath, UsersPath} from '@app/paths';
+import {BlackListsPath, ConfigurationsPath, TicketsPath, UsersPath} from '@app/paths';
 import SvgIcon from '@components/svg-icon/svg-icon';
 import {Icon} from '@components/svg-icon/icon';
 import './navigation.scss';
@@ -84,6 +84,12 @@ const Navigation = () => {
             id: 'navigation-blacklists',
             icon: <SvgIcon type={Icon.Blacklist} fillClass='active-item-icon' />,
             permission: 'BlockedAccess.Access'
+        }, {
+            title: t('navigation.configurations'),
+            link: `${ConfigurationsPath}/appointment-type`,
+            id: 'navigation-configurations',
+            icon: <SvgIcon type={Icon.Configurations} fillClass='active-item-icon' />,
+            permission: 'Configurations.Access'
         }
     ];
 

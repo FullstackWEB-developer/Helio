@@ -103,7 +103,8 @@
     "chat": "Chat",
     "users": "Users",
     "blacklists": "Blocked Access",
-    "users_bulk": "Add Users In Bulk"
+    "users_bulk": "Add Users In Bulk",
+    "configurations":"Configurations"
   },
   "footer": {
     "hotspots": "Hotspots",
@@ -1826,5 +1827,18 @@
     "sms" : "SMS Messages",
     "email": "Email Messages",
     "description": "Turn on browser notifications to be notified of incoming calls, messages and emails."
+  },
+  "configuration": {
+    "title": "Configurations",
+    "appointments": "Appointments",
+    "appointment_type": "Appointment Type",
+    "appointment_cancellation" : "Appointment Cancellation",
+    "notifications": "Notifications",
+    "appointment_reminder": "Appointment Reminder",
+    "email_notification_templates": "Email Notification Templates",
+    "sms_notification_templates": "SMS Notification Templates",
+    "call_center": "Call Center",
+    "security": "Security",
+    "general": "General"
   }
 }
