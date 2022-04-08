@@ -1,4 +1,4 @@
-import {Icon} from '@components/svg-icon/icon';
+import { Icon } from '@components/svg-icon/icon';
 import CwcLogo from '@shared/icons/cwc-logo';
 import './svg-icon.scss';
 import classNames from 'classnames';
@@ -17,8 +17,8 @@ export interface SvgIconProps {
     disabled?: boolean
 }
 
-const SvgIcon = ({type, wrapperClassName = '', className = 'icon-medium', fillClass = 'fill-default', fillClass2 = 'fill-default',
-    strokeClass = 'stroke-default', opacity, onClick, isLoading = false, disabled = false}: SvgIconProps) => {
+const SvgIcon = ({ type, wrapperClassName = '', className = 'icon-medium', fillClass = 'fill-default', fillClass2 = 'fill-default',
+    strokeClass = 'stroke-default', opacity, onClick, isLoading = false, disabled = false }: SvgIconProps) => {
 
     const mainClass = `${className} ${fillClass ? '' : 'fill-default'}`;
 
@@ -444,6 +444,13 @@ const SvgIcon = ({type, wrapperClassName = '', className = 'icon-medium', fillCl
         return <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className={mainClass}>
             <rect width="24" height="24" fill="none" />
             <path d="M10,18h4V16H10ZM3,6V8H21V6Zm3,7H18V11H6Z" className={fillClass} />
+        </svg>
+    }
+
+    const getIconHelp = () => {
+        return <svg id="Icon_Help_Outline_24px" data-name="Icon/Help/Outline/24px" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className={mainClass}>
+            <rect id="Container" width="24" height="24" fill="none" />
+            <path id="ic_help_outline_24px" d="M11,18h2V16H11ZM12,2A10,10,0,1,0,22,12,10,10,0,0,0,12,2Zm0,18a8,8,0,1,1,8-8A8.011,8.011,0,0,1,12,20ZM12,6a4,4,0,0,0-4,4h2a2,2,0,0,1,4,0c0,2-3,1.75-3,5h2c0-2.25,3-2.5,3-5A4,4,0,0,0,12,6Z" />
         </svg>
     }
 
@@ -1279,6 +1286,7 @@ const SvgIcon = ({type, wrapperClassName = '', className = 'icon-medium', fillCl
         [Icon.Extension]: getIconExtension,
         [Icon.Filter]: getIconFilter,
         [Icon.FilterList]: getIconFilterList,
+        [Icon.Help]: getIconHelp,
         [Icon.Info]: getIconInfo,
         [Icon.Location]: getIconLocation,
         [Icon.Menu]: getIconMenu,

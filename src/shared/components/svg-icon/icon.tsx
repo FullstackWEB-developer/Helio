@@ -40,6 +40,7 @@ export enum Icon {
     Extension = 'Extension',
     Filter = 'Filter',
     FilterList = 'FilterList',
+    Help = 'Help',
     Info = 'Info',
     Location = 'Location',
     Menu = 'Menu',
