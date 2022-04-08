@@ -37,14 +37,19 @@ const PatientSearchResults = () => {
     useEffect(() => {
         dispatch(setGlobalLoading(isFetching));
         if (patients && patients.length === 1 && !isFetching) {
-            handlePatientSelection(patients[0].patientId);
+            handlePatientSelection(patients[0].patientId, false);
         }
     }, [patients, isFetching]);
 
 
-    const handlePatientSelection = (patientId: number) => {
+    const handlePatientSelection = (patientId: number, inNewWindow: boolean) => {
         dispatch(setSearchTermDisplayValue(''));
-        window.open(`/patients/${patientId}`);
+        if (inNewWindow) {
+            window.open(`/patients/${patientId}`);
+        } else {
+            history.push(`/patients/${patientId}`);
+        }
+
     }
 
     const paginateResults = (data: Patient[]) => {
@@ -119,13 +124,13 @@ const PatientSearchResults = () => {
                             <div key={patient.patientId} className="search-results-grid data-row h-10 col-template-patients px-6 body2">
                                 <div className="truncate">{toCamelCase(patient.lastName) || ''}</div>
                                 <div className="truncate">{toCamelCase(patient.firstName) || ''}</div>
-                                <div className="truncate cursor-pointer" onClick={() => handlePatientSelection(patient.patientId)}>{patient.patientId || ''}</div>
+                                <div className="truncate cursor-pointer" onClick={() => handlePatientSelection(patient.patientId, true)}>{patient.patientId || ''}</div>
                                 <div className="truncate">{patient.dateOfBirth ? patientUtils.formatDob(patient.dateOfBirth) : ''}</div>
                                 <div className="truncate">{patient.ssn && patientUtils.displayPatientSsn(patient.ssn) ? patient.ssn : ''}</div>
                                 <div className="truncate">{patient.mobilePhone || ''}</div>
                                 <div className="flex justify-end items-center">
                                     <SvgIcon type={Icon.View} className="cursor-pointer" fillClass="search-results-icon-fill"
-                                        onClick={() => handlePatientSelection(patient.patientId)} />
+                                        onClick={() => handlePatientSelection(patient.patientId, false)} />
                                 </div>
                             </div>
                         )
