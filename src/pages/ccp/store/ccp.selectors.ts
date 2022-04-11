@@ -3,6 +3,7 @@ import {BotContext} from '../models/bot-context';
 import {TicketNote} from '../../tickets/models/ticket-note';
 import {CCPConnectionStatus} from '../models/connection-status.enum';
 import {InternalCallDetails} from '@pages/ccp/models/internal-call-details';
+import {CcpNotificationContent} from '../models/ccp-notification-content.model';
 
 export const selectChatCounter = (state: RootState) => state.ccpState.chatCounter;
 export const selectVoiceCounter = (state: RootState) => state.ccpState.voiceCounter;
@@ -14,3 +15,4 @@ export const selectConnectionStatus = (state: RootState) => state.ccpState.conne
 export const selectCurrentContactId = (state: RootState) => state.ccpState.currentContactId as string;
 export const selectInternalCallDetails = (state: RootState) => state.ccpState.internalCallDetails as InternalCallDetails | undefined;
 export const selectInitiateInternalCall = (state: RootState) => state.ccpState.initiateInternalCall as boolean;
+export const selectCcpNotificationContent = (state: RootState) => state.ccpState.notificationContent as CcpNotificationContent | undefined;

@@ -59,6 +59,7 @@ import {TICKET_MESSAGE_INCOMING_NAME} from '@shared/constants/signalr-provider-c
 import utils from '@shared/utils/utils';
 import IncomingTicketMessageUpdate from '@shared/websockets/incoming-ticket-message-update';
 import VerifiedPatientGuard from '@components/verified-patient-guard/verified-patient-guard';
+import useBrowserNotification from '@shared/hooks/useBrowserNotification';
 const SearchResults = React.lazy(() => import('../shared/components/search-bar/components/search-results'));
 const PatientChart = React.lazy(() => import('@pages/patients/patient-chart'));
 const VerifyRedirectLink = React.lazy(() => import('@pages/external-access/verify-patient/verify-redirect-link'));
@@ -112,11 +113,15 @@ const Feedback = React.lazy(()=> import('@pages/external-access/feedbacks/feedba
 
 function App() {
     const accessToken = useSelector(selectAccessToken);
-
+    const {askNotificationPermission, shouldPromptUserWithPopup} = useBrowserNotification();
     useEffect(() => {
         const logStreamInterval = setInterval(() => {
             Logger.getInstance();
         }, Number(utils.getAppParameter('LogStreamCheckInterval')) || 5000);
+
+        if(shouldPromptUserWithPopup()){
+            askNotificationPermission();
+        }
         return () => {
             clearInterval(logStreamInterval)
         }

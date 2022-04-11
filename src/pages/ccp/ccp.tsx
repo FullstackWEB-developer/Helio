@@ -10,6 +10,7 @@ import {
     removeCurrentBotContext,
     setBotContextPatient,
     setBotContextTicket,
+    setCcpNotificationContent,
     setChatCounter,
     setConnectionStatus,
     setContextPanel,
@@ -37,6 +38,7 @@ import {Icon} from '@components/svg-icon/icon';
 import SvgIcon from '@components/svg-icon/svg-icon';
 import {
     selectBotContext,
+    selectCcpNotificationContent,
     selectContextPanel,
     selectInitiateInternalCall,
     selectInternalCallDetails
@@ -54,6 +56,8 @@ import {ContextKeyValuePair} from '@pages/ccp/models/context-key-value-pair';
 import {getUserList} from '@shared/services/lookups.service';
 import {clearAppParameters} from '@shared/store/app/app.slice';
 import Spinner from '@components/spinner/Spinner';
+import useBrowserNotification from '@shared/hooks/useBrowserNotification';
+import {Intent} from './models/intent.enum';
 
 const ccpConfig = {
     region: utils.getAppParameter('AwsRegion'),
@@ -136,7 +140,7 @@ const Ccp: React.FC<BoxProps> = ({
             dispatch(setBotContextTicket({
                 ticket: data
             }));
-            if(data?.notes && data.notes.length > 0){
+            if (data?.notes && data.notes.length > 0) {
                 dispatch(setContextPanel(contextPanels.note));
             }
         }
@@ -154,14 +158,14 @@ const Ccp: React.FC<BoxProps> = ({
     }, [ticketId]);
 
     useEffect(() => {
-        if (!!botContext?.ticket?.patientId){
+        if (!!botContext?.ticket?.patientId) {
             setPatientId(botContext?.ticket?.patientId);
             history.push('/patients/' + botContext?.ticket?.patientId);
         }
     }, [botContext?.ticket?.patientId, history]);
 
     useEffect(() => {
-        if (!botContext?.ticket && !!botContext?.initialContactId){
+        if (!botContext?.ticket && !!botContext?.initialContactId) {
             setTicketId(botContext?.initialContactId);
             refetchTicket()
         }
@@ -224,7 +228,7 @@ const Ccp: React.FC<BoxProps> = ({
             iframeEle?.setAttribute('scrolling', 'no');
         }
 
-        const handleLogOut= () => {
+        const handleLogOut = () => {
             // @ts-ignore
             const eventBus = connect.core.getEventBus();
             eventBus.subscribe(connect.EventType.TERMINATED, () => {
@@ -272,14 +276,25 @@ const Ccp: React.FC<BoxProps> = ({
             }
         });
 
-        const getInitialContactId = (contact : any) => {
+        const getInitialContactId = (contact: any) => {
             return contact.getInitialContactId() || contact.getContactId()
         }
 
         connect.contact((contact) => {
             window.CCP.contact = contact;
-            contact.onConnecting(() => {
+            contact.onConnecting((contact) => {
                 dispatch(setIncomingOrActiveCallFlag(true));
+                const attributeMap = contact.getAttributes();
+                const botAttributes: ContextKeyValuePair[] = [];
+                for (const [_, value] of Object.entries(attributeMap)) {
+                    botAttributes.push({
+                        label: value.name,
+                        value: value.value
+                    })
+                }
+                const notificationTitle = prepareChatOrVoiceNotificationTitle(botAttributes);
+                const notificationBody = prepareChatOrVoiceNotificationContent(botAttributes, contact.getQueue()?.name);
+                dispatch(setCcpNotificationContent({body: notificationBody, title: notificationTitle, type: contact.getType()}));
                 if (!isCcpVisibleRef.current) {
                     dispatch(toggleCcp());
                 }
@@ -322,10 +337,10 @@ const Ccp: React.FC<BoxProps> = ({
                     setTicketId(ticketId);
                 }
 
-                if(contact.isInbound()) {
+                if (contact.isInbound()) {
                     setIsInboundCall(true);
                     dispatch(setContextPanel(contextPanels.bot));
-                }else {
+                } else {
                     setIsInboundCall(false);
                     dispatch(setContextPanel(contextPanels.note));
                 }
@@ -441,6 +456,52 @@ const Ccp: React.FC<BoxProps> = ({
         })
     });
 
+
+    const checkConnectAttributesForValue = (botAttributes: ContextKeyValuePair[], key: string) => {
+        return botAttributes?.find(a => a.label === key)?.value;
+    }
+    const prepareChatOrVoiceNotificationTitle = (botAttributes: ContextKeyValuePair[]) => {
+        const helioContactId = checkConnectAttributesForValue(botAttributes, 'HelioContactId');
+        const createdForName = checkConnectAttributesForValue(botAttributes, 'CreatedForName');
+        const isInternalCall = checkConnectAttributesForValue(botAttributes, 'IsInternalCall');
+        const internalCallFromUserName = checkConnectAttributesForValue(botAttributes, 'FromUserName');
+        const patientFullname = checkConnectAttributesForValue(botAttributes, 'PatientFullName');
+        const initialInputName = checkConnectAttributesForValue(botAttributes, 'InitialInputName');
+        const welcomeVoiceName = checkConnectAttributesForValue(botAttributes, 'WelcomeName');
+        const incomingPhoneNumber = checkConnectAttributesForValue(botAttributes, 'IncomingPhoneNumber');
+
+        if (patientFullname) {
+            return `${patientFullname} (${t('ccp.bot_context.patient')})`;
+        }
+        if (helioContactId && createdForName) {
+            return `${createdForName} (${t('ccp.bot_context.contact')})`;
+        }
+        if (isInternalCall && isInternalCall.toLowerCase() === "true" && internalCallFromUserName) {
+            return `${internalCallFromUserName} (${t('ccp.bot_context.internal')})`;
+        }
+        if (createdForName) {
+            return createdForName;
+        }
+        if (initialInputName) {
+            return initialInputName;
+        }
+        if (welcomeVoiceName) {
+            return welcomeVoiceName;
+        }
+        if (incomingPhoneNumber) {
+            return incomingPhoneNumber;
+        }
+        return '';
+    }
+    const prepareChatOrVoiceNotificationContent = (botAttributes: ContextKeyValuePair[], queueName?: string) => {
+        const reason = checkConnectAttributesForValue(botAttributes, 'CallerMainIntent');
+        let recognizedReasonFromIntent = '';
+        if (reason && reason !== 'none') {
+            recognizedReasonFromIntent = Intent[reason];
+        }
+        return `${queueName || ''}\n${recognizedReasonFromIntent ?? utils.spaceBetweenCamelCaseWords(reason || '')}`;
+    }
+
     const applyProperIconClass = (type: string, mode: 'fillColor' | 'background' = 'fillColor') => {
         if (mode === 'fillColor') {
             return `ccp-bottom-bar-icon${currentContext === type ? '-active' : ''}`;
@@ -533,6 +594,45 @@ const Ccp: React.FC<BoxProps> = ({
         }
     }, [isCcpVisibleRef.current]);
 
+    const {displayNotification} = useBrowserNotification();
+    const notificationContent = useSelector(selectCcpNotificationContent);
+
+    useEffect(() => {
+        if (notificationContent) {
+            displayBrowserNotification();
+            dispatch(setCcpNotificationContent(undefined));
+        }
+    }, [notificationContent])
+
+    const displayBrowserNotification = () => {
+        if (!notificationContent) {
+            return ;
+        };
+        const icon = `${utils.getAppParameter('NotificationIconsLocation')}notification-${notificationContent.type}.png`;
+        const notification: NotificationOptions = {
+            body: notificationContent.body,
+            tag: String(Date.now()),
+            icon
+        }
+        const notificationOnClickHandler = () => {
+            if (!isCcpVisibleRef.current) {
+                dispatch(toggleCcp());
+            }
+        }
+        switch (notificationContent.type) {
+            case connect.ContactType.CHAT:
+                if (user?.chatNotification) {
+                    displayNotification(notificationContent.title, notification, notificationOnClickHandler);
+                }
+                break;
+            case connect.ContactType.VOICE:
+                if (user?.callNotification) {
+                    displayNotification(notificationContent.title, notification, notificationOnClickHandler);
+                }
+                break;
+        }
+    }
+
     return (
         <>
             <div className='flex items-center justify-center justify-self-center'>
@@ -581,43 +681,43 @@ const Ccp: React.FC<BoxProps> = ({
                 </div>
                 <div className={'flex h-full shadow-md'}>
                     <div className={'flex flex-col h-full min-ccp-width'}>
-                        {ccpConnectionState === CCPConnectionStatus.Loading && <div className='ccp-loading-background h-full'><Spinner fullScreen={true} title={t('ccp.logging_in')}/></div>}
-                       <div data-test-id='ccp-container' id='ccp-container'
-                              className={`h-full overflow-hidden ccp-drag-background ${ccpConnectionState === CCPConnectionStatus.Loading ? 'hidden': 'block'}`}/>
-                        {ccpConnectionState === CCPConnectionStatus.Success  &&
-                        <div className={`flex justify-center items-center w-full p-0 box-content shadow-md border-t footer-ff ccp-bottom-bar block`}>
-                            {
-                                isInboundCall &&
+                        {ccpConnectionState === CCPConnectionStatus.Loading && <div className='ccp-loading-background h-full'><Spinner fullScreen={true} title={t('ccp.logging_in')} /></div>}
+                        <div data-test-id='ccp-container' id='ccp-container'
+                            className={`h-full overflow-hidden ccp-drag-background ${ccpConnectionState === CCPConnectionStatus.Loading ? 'hidden' : 'block'}`} />
+                        {ccpConnectionState === CCPConnectionStatus.Success &&
+                            <div className={`flex justify-center items-center w-full p-0 box-content shadow-md border-t footer-ff ccp-bottom-bar block`}>
+                                {
+                                    isInboundCall &&
                                     <span className={`h-10 flex items-center justify-center w-12 ${applyProperIconClass(contextPanels.bot, 'background')}`}>
-                                    <SvgIcon type={Icon.Bot}
-                                             className='cursor-pointer icon-medium'
-                                             onClick={() => dispatch(setContextPanel(contextPanels.bot))}
-                                             fillClass={applyProperIconClass(contextPanels.bot)} />
+                                        <SvgIcon type={Icon.Bot}
+                                            className='cursor-pointer icon-medium'
+                                            onClick={() => dispatch(setContextPanel(contextPanels.bot))}
+                                            fillClass={applyProperIconClass(contextPanels.bot)} />
                                     </span>
-                            }
-                            {ticketId &&
-                                <>
-                                    <span className={`h-10 flex items-center justify-center w-12 ${applyProperIconClass(contextPanels.note, 'background')}`}>
-                                        <SvgIcon type={Icon.Note}
-                                                 className='cursor-pointer icon-medium'
-                                                 fillClass={applyProperIconClass(contextPanels.note)}
-                                                 onClick={() => dispatch(setContextPanel(contextPanels.note))}/>
-                                    </span>
-                                    <span className={`h-10 flex items-center justify-center w-12 ${applyProperIconClass(contextPanels.sms, 'background')}`}>
-                                        <SvgIcon type={Icon.Sms}
+                                }
+                                {ticketId &&
+                                    <>
+                                        <span className={`h-10 flex items-center justify-center w-12 ${applyProperIconClass(contextPanels.note, 'background')}`}>
+                                            <SvgIcon type={Icon.Note}
+                                                className='cursor-pointer icon-medium'
+                                                fillClass={applyProperIconClass(contextPanels.note)}
+                                                onClick={() => dispatch(setContextPanel(contextPanels.note))} />
+                                        </span>
+                                        <span className={`h-10 flex items-center justify-center w-12 ${applyProperIconClass(contextPanels.sms, 'background')}`}>
+                                            <SvgIcon type={Icon.Sms}
+                                                className='cursor-pointer icon-medium'
+                                                fillClass={applyProperIconClass(contextPanels.sms)}
+                                                onClick={() => dispatch(setContextPanel(contextPanels.sms))} />
+                                        </span>
+                                    </>
+                                }
+                                <span className={`h-10 flex items-center justify-center w-12 ${applyProperIconClass(contextPanels.extensions, 'background')}`}>
+                                    <SvgIcon type={Icon.Extension}
                                         className='cursor-pointer icon-medium'
-                                        fillClass={applyProperIconClass(contextPanels.sms)}
-                                        onClick={() => dispatch(setContextPanel(contextPanels.sms))} />
-                                    </span>
-                                </>
-                            }
-                            <span className={`h-10 flex items-center justify-center w-12 ${applyProperIconClass(contextPanels.extensions, 'background')}`}>
-                                <SvgIcon type={Icon.Extension}
-                                         className='cursor-pointer icon-medium'
-                                         fillClass={applyProperIconClass(contextPanels.extensions)}
-                                         onClick={() => dispatch(currentContext === contextPanels.extensions ? setContextPanel('') : setContextPanel(contextPanels.extensions))} />
-                            </span>
-                        </div> }
+                                        fillClass={applyProperIconClass(contextPanels.extensions)}
+                                        onClick={() => dispatch(currentContext === contextPanels.extensions ? setContextPanel('') : setContextPanel(contextPanels.extensions))} />
+                                </span>
+                            </div>}
                     </div>
                     <CcpContext />
                 </div>

@@ -33,7 +33,7 @@ import {
 } from "@shared/models";
 import Spinner from '@components/spinner/Spinner';
 import {DATE_LONG_FORMAT} from "@constants/form-constants";
-import {authenticationSelector, selectLiveAgentStatuses} from "@shared/store/app-user/appuser.selectors";
+import {authenticationSelector, selectAppUserDetails, selectLiveAgentStatuses} from "@shared/store/app-user/appuser.selectors";
 import {addSnackbarMessage} from "@shared/store/snackbar/snackbar.slice";
 import {SnackbarType} from "@components/snackbar/snackbar-type.enum";
 import {useTranslation} from "react-i18next";
@@ -45,6 +45,7 @@ import {NotAuthorizedPath} from "@app/paths";
 import {Option} from '@components/option/option';
 import UserNotificationPreference from "../components/user-notifications-toggle";
 import {UserNotificationPreferences} from "@shared/models/user-notification-preferences.enum";
+import {setAppUserDetails} from "@shared/store/app-user/appuser.slice";
 
 dayjs.extend(utc);
 
@@ -230,6 +231,7 @@ const UserDetails = () => {
         }
     }
 
+    const storedUserData = useSelector(selectAppUserDetails)
     const updateMutation = useMutation(updateUser, {
         onSuccess: (data) => {
             const updatedUserDetail = {...userDetailExtended!, user: data};
@@ -238,6 +240,13 @@ const UserDetails = () => {
             loadUserData(updatedUserDetail);
             showMessage(SnackbarType.Success, 'users.user_update_success');
             setCurrentlyUpdatingNotificationPreference(undefined);
+            dispatch(setAppUserDetails({
+                ...storedUserData,
+                callNotification: data.callNotification,
+                smsNotification: data.smsNotification,
+                emailNotification: data.emailNotification,
+                chatNotification: data.chatNotification,
+            }));
         },
         onError: () => {
             showMessage(SnackbarType.Error, 'users.user_update_error');

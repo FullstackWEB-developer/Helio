@@ -20,6 +20,7 @@ import utc from 'dayjs/plugin/utc'
 import './login.scss';
 import {getMsalInstance} from '@pages/login/auth-config';
 import {getUserDetail} from '@shared/services/user.service';
+import useBrowserNotification from '@shared/hooks/useBrowserNotification';
 dayjs.extend(utc);
 
 const Login = () => {
@@ -35,7 +36,7 @@ const Login = () => {
         getMsalInstance()?.loginRedirect();
     }
 
-
+    const {askNotificationPermission} = useBrowserNotification();
     useEffect(() => {
         if (utils.isSessionExpired() || auth.isGuestLogin) {
             dispatch(logOut());
@@ -45,7 +46,7 @@ const Login = () => {
             dispatch(setLoginLoading(true));
             getMsalInstance()?.handleRedirectPromise()
                 .then(async (info) => {
-                    await SetAuthenticationInfo(info, dispatch, history);
+                    await SetAuthenticationInfo(info, dispatch, history, askNotificationPermission);
                 }).catch((err: any) => {
                     Logger.getInstance().error('Error logging in', err);
                 }).finally(() => dispatch(setLoginLoading(false)))
@@ -93,7 +94,7 @@ const Login = () => {
 
 export default Login;
 
-async function SetAuthenticationInfo(info: AuthenticationResult | null, dispatch: Dispatch<any>, history: string[] | History<unknown>) {
+async function SetAuthenticationInfo(info: AuthenticationResult | null, dispatch: Dispatch<any>, history: string[] | History<unknown>, askNotificationPermission: () => void) {
     if (info !== null) {
         const s = info;
         const auth: AuthenticationInfo = {
@@ -109,6 +110,10 @@ async function SetAuthenticationInfo(info: AuthenticationResult | null, dispatch
 
         const userDetails = await getUserDetail();
         if (userDetails) {
+            if (askNotificationPermission &&
+                (userDetails.callNotification || userDetails.smsNotification || userDetails.emailNotification || userDetails.chatNotification)) {
+                askNotificationPermission();
+            }
             dispatch(setAppUserDetails({
                 ...userDetails,
                 fullName: `${userDetails.firstName} ${userDetails.lastName}`
