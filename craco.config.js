@@ -19,19 +19,7 @@ module.exports = {
   babel: {
     ignore: ["craco.config.js"],
       plugins: [
-        "@babel/plugin-proposal-nullish-coalescing-operator",
-      process.env.REACT_APP_REMOVE_TEST_ID === "true"
-        ? [
-            "babel-plugin-jsx-remove-data-test-id",
-            {
-              attributes: ["data-test-id"],
-            }
-          ]
-        : [
-            () => {
-              return [];
-            },
-          ],
+        "@babel/plugin-proposal-nullish-coalescing-operator"
     ],
   },
   webpack: {

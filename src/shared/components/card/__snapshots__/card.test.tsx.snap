@@ -1,0 +1,114 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Card tests renders card correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="card w-full"
+  >
+    <div
+      class="w-full"
+    >
+      <div>
+        Test
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Card tests renders card with extra correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="card w-full"
+  >
+    <div
+      class="h-14 px-6 pt-5 h7 w-full flex justify-between"
+    >
+      <div>
+        test
+      </div>
+      <div>
+        <div>
+          extra
+        </div>
+      </div>
+    </div>
+    <div
+      class="w-full"
+    >
+      <div>
+        Test
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Card tests renders card with full height correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="card w-full h-full"
+  >
+    <div
+      class="h-14 px-6 pt-5 h7 w-full flex justify-between"
+    >
+      <div>
+        test
+      </div>
+    </div>
+    <div
+      class="w-full"
+    >
+      <div>
+        Test
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Card tests renders card with radius correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="card w-full rounded-xl"
+  >
+    <div
+      class="h-14 px-6 pt-5 h7 w-full flex justify-between"
+    >
+      <div>
+        test
+      </div>
+    </div>
+    <div
+      class="w-full"
+    >
+      <div>
+        Test
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Card tests renders card with title correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="card w-full"
+  >
+    <div
+      class="h-14 px-6 pt-5 h7 w-full flex justify-between"
+    >
+      <div>
+        test
+      </div>
+    </div>
+    <div
+      class="w-full"
+    >
+      <div>
+        Test
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

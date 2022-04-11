@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Badge tests renders danger badge correctly 1`] = `
+<span
+  className="rounded-full px-2 badge flex content-center items-center badge-danger"
+>
+   
+  badge-text
+   
+</span>
+`;
+
+exports[`Badge tests renders default badge correctly 1`] = `
+<span
+  className="rounded-full px-2 badge flex content-center items-center badge-default"
+>
+   
+  badge-text
+   
+</span>
+`;
+
+exports[`Badge tests renders default badge with class correctly 1`] = `
+<span
+  className="rounded-full px-2 badge flex content-center items-center badge-default test-class"
+>
+   
+  badge-text
+   
+</span>
+`;

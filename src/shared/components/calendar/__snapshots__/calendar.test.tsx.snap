@@ -1,0 +1,512 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Calendar tests renders calendar correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="calendar px-4 pb-4 pt-6 overflow-hidden xl:px-7 xl:pb-7 xl:pt-10"
+    tabindex="0"
+  >
+    <div
+      class="calendar-container"
+    >
+      <div
+        class="flex flex-row items-center justify-between"
+      >
+        <div
+          class="cursor-pointer"
+          role="button"
+        >
+          <div
+            class=""
+          >
+            <svg
+              class="icon-medium "
+              height="24"
+              viewBox="0 0 24 24"
+              width="24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                fill="none"
+                height="24"
+                transform="translate(0 24) rotate(-90)"
+                width="24"
+              />
+              <path
+                class="arrow-disabled"
+                d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                transform="translate(8 5)"
+              />
+            </svg>
+          </div>
+        </div>
+        <div>
+          <span
+            class="subtitle"
+          >
+            January 2019
+          </span>
+        </div>
+        <div
+          class="cursor-pointer"
+          role="button"
+        >
+          <div
+            class=""
+          >
+            <svg
+              class="icon-medium "
+              height="24"
+              viewBox="0 0 24 24"
+              width="24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                fill="none"
+                height="24"
+                transform="translate(0 24) rotate(-90)"
+                width="24"
+              />
+              <path
+                class="arrow-disabled"
+                d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                transform="translate(16.272 19) rotate(180)"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div
+        class="w-full mt-4 xl:mt-5"
+      >
+        <div
+          class="grid grid-cols-7 items-center justify-items-center subtitle2 xl:gap-x-6"
+        >
+          <div
+            class="items-center"
+          >
+            S
+          </div>
+          <div
+            class="items-center"
+          >
+            M
+          </div>
+          <div
+            class="items-center"
+          >
+            T
+          </div>
+          <div
+            class="items-center"
+          >
+            W
+          </div>
+          <div
+            class="items-center"
+          >
+            T
+          </div>
+          <div
+            class="items-center"
+          >
+            F
+          </div>
+          <div
+            class="items-center"
+          >
+            S
+          </div>
+        </div>
+        <div
+          class="grid grid-cols-7 items-center justify-items-center xl:gap-x-6 xl:gap-y-1.5 xl:pt-7"
+        >
+          <div />
+          <div />
+          <div>
+            <div
+              class="disabled calendar-day-container flex items-center justify-center body2"
+              role="button"
+            >
+              <span
+                class=""
+              >
+                1
+              </span>
+            </div>
+          </div>
+          <div>
+            <div
+              class="disabled calendar-day-container flex items-center justify-center body2"
+              role="button"
+            >
+              <span
+                class=""
+              >
+                2
+              </span>
+            </div>
+          </div>
+          <div>
+            <div
+              class="disabled calendar-day-container flex items-center justify-center body2"
+              role="button"
+            >
+              <span
+                class=""
+              >
+                3
+              </span>
+            </div>
+          </div>
+          <div>
+            <div
+              class="disabled calendar-day-container flex items-center justify-center body2"
+              role="button"
+            >
+              <span
+                class=""
+              >
+                4
+              </span>
+            </div>
+          </div>
+          <div>
+            <div
+              class="disabled weekend calendar-day-container flex items-center justify-center body2"
+              role="button"
+            >
+              <span
+                class="weekend"
+              >
+                5
+              </span>
+            </div>
+          </div>
+          <div>
+            <div
+              class="disabled weekend calendar-day-container flex items-center justify-center body2"
+              role="button"
+            >
+              <span
+                class="weekend"
+              >
+                6
+              </span>
+            </div>
+          </div>
+          <div>
+            <div
+              class="disabled calendar-day-container flex items-center justify-center body2"
+              role="button"
+            >
+              <span
+                class=""
+              >
+                7
+              </span>
+            </div>
+          </div>
+          <div>
+            <div
+              class="disabled calendar-day-container flex items-center justify-center body2"
+              role="button"
+            >
+              <span
+                class=""
+              >
+                8
+              </span>
+            </div>
+          </div>
+          <div>
+            <div
+              class="disabled calendar-day-container flex items-center justify-center body2"
+              role="button"
+            >
+              <span
+                class=""
+              >
+                9
+              </span>
+            </div>
+          </div>
+          <div>
+            <div
+              class="disabled calendar-day-container flex items-center justify-center body2"
+              role="button"
+            >
+              <span
+                class=""
+              >
+                10
+              </span>
+            </div>
+          </div>
+          <div>
+            <div
+              class="disabled calendar-day-container flex items-center justify-center body2"
+              role="button"
+            >
+              <span
+                class=""
+              >
+                11
+              </span>
+            </div>
+          </div>
+          <div>
+            <div
+              class="disabled weekend calendar-day-container flex items-center justify-center body2"
+              role="button"
+            >
+              <span
+                class="weekend"
+              >
+                12
+              </span>
+            </div>
+          </div>
+          <div>
+            <div
+              class="disabled weekend calendar-day-container flex items-center justify-center body2"
+              role="button"
+            >
+              <span
+                class="weekend"
+              >
+                13
+              </span>
+            </div>
+          </div>
+          <div>
+            <div
+              class="disabled calendar-day-container flex items-center justify-center body2"
+              role="button"
+            >
+              <span
+                class=""
+              >
+                14
+              </span>
+            </div>
+          </div>
+          <div>
+            <div
+              class="disabled calendar-day-container flex items-center justify-center body2"
+              role="button"
+            >
+              <span
+                class=""
+              >
+                15
+              </span>
+            </div>
+          </div>
+          <div>
+            <div
+              class="disabled calendar-day-container flex items-center justify-center body2"
+              role="button"
+            >
+              <span
+                class=""
+              >
+                16
+              </span>
+            </div>
+          </div>
+          <div>
+            <div
+              class="disabled calendar-day-container flex items-center justify-center body2"
+              role="button"
+            >
+              <span
+                class=""
+              >
+                17
+              </span>
+            </div>
+          </div>
+          <div>
+            <div
+              class="disabled calendar-day-container flex items-center justify-center body2"
+              role="button"
+            >
+              <span
+                class=""
+              >
+                18
+              </span>
+            </div>
+          </div>
+          <div>
+            <div
+              class="disabled weekend calendar-day-container flex items-center justify-center body2"
+              role="button"
+            >
+              <span
+                class="weekend"
+              >
+                19
+              </span>
+            </div>
+          </div>
+          <div>
+            <div
+              class="disabled weekend calendar-day-container flex items-center justify-center body2"
+              role="button"
+            >
+              <span
+                class="weekend"
+              >
+                20
+              </span>
+            </div>
+          </div>
+          <div>
+            <div
+              class="disabled calendar-day-container flex items-center justify-center body2"
+              role="button"
+            >
+              <span
+                class=""
+              >
+                21
+              </span>
+            </div>
+          </div>
+          <div>
+            <div
+              class="disabled calendar-day-container flex items-center justify-center body2"
+              role="button"
+            >
+              <span
+                class=""
+              >
+                22
+              </span>
+            </div>
+          </div>
+          <div>
+            <div
+              class="disabled calendar-day-container flex items-center justify-center body2"
+              role="button"
+            >
+              <span
+                class=""
+              >
+                23
+              </span>
+            </div>
+          </div>
+          <div>
+            <div
+              class="disabled calendar-day-container flex items-center justify-center body2"
+              role="button"
+            >
+              <span
+                class=""
+              >
+                24
+              </span>
+            </div>
+          </div>
+          <div>
+            <div
+              class="highlight-selected calendar-day-container flex items-center justify-center body2"
+              role="button"
+            >
+              <span
+                class=""
+              >
+                25
+              </span>
+            </div>
+          </div>
+          <div>
+            <div
+              class="disabled weekend calendar-day-container flex items-center justify-center body2"
+              role="button"
+            >
+              <span
+                class="weekend"
+              >
+                26
+              </span>
+            </div>
+          </div>
+          <div>
+            <div
+              class="disabled weekend calendar-day-container flex items-center justify-center body2"
+              role="button"
+            >
+              <span
+                class="weekend"
+              >
+                27
+              </span>
+            </div>
+          </div>
+          <div>
+            <div
+              class="disabled calendar-day-container flex items-center justify-center body2"
+              role="button"
+            >
+              <span
+                class=""
+              >
+                28
+              </span>
+            </div>
+          </div>
+          <div>
+            <div
+              class="disabled calendar-day-container flex items-center justify-center body2"
+              role="button"
+            >
+              <span
+                class=""
+              >
+                29
+              </span>
+            </div>
+          </div>
+          <div>
+            <div
+              class="disabled calendar-day-container flex items-center justify-center body2"
+              role="button"
+            >
+              <span
+                class=""
+              >
+                30
+              </span>
+            </div>
+          </div>
+          <div>
+            <div
+              class="disabled calendar-day-container flex items-center justify-center body2"
+              role="button"
+            >
+              <span
+                class=""
+              >
+                31
+              </span>
+            </div>
+          </div>
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

@@ -1,0 +1,170 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Avatar tests should render correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="avatar rounded-full flex items-center justify-center relative w-10 h-10"
+  >
+    <div
+      class="avatar-initial"
+    >
+      NS
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Avatar tests should render correctly with class 1`] = `
+<DocumentFragment>
+  <div
+    class="avatar rounded-full flex items-center justify-center relative myClass"
+  >
+    <div
+      class="avatar-initial"
+    >
+      NS
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Avatar tests should render correctly with icon 1`] = `
+<DocumentFragment>
+  <div
+    class="avatar rounded-full flex items-center justify-center relative w-10 h-10"
+  >
+    <div
+      class=""
+    >
+      <svg
+        class="icon-medium "
+        height="24"
+        viewBox="0 0 24 24"
+        width="24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <g
+          data-name="Icon/Extension/24px"
+          id="Icon_Extension_24px"
+          transform="translate(-144 -632)"
+        >
+          <rect
+            fill="none"
+            height="24"
+            id="Bound"
+            transform="translate(144 632)"
+            width="24"
+          />
+          <path
+            class="white-icon"
+            d="M22,3H2A2.006,2.006,0,0,0,0,5V19a2.006,2.006,0,0,0,2,2H22a2,2,0,0,0,1.99-2L24,5A2.006,2.006,0,0,0,22,3ZM8,6A3,3,0,1,1,5,9,3,3,0,0,1,8,6Zm6,12H2V17c0-2,4-3.1,6-3.1S14,15,14,17Zm3.85-4h1.64L21,16l-1.99,1.99A7.512,7.512,0,0,1,16.28,14a7.283,7.283,0,0,1,0-4,7.474,7.474,0,0,1,2.73-3.99L21,8l-1.51,2H17.85a5.889,5.889,0,0,0,0,4Z"
+            id="ic_contact_phone_24px"
+            transform="translate(144 632)"
+          />
+        </g>
+      </svg>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Avatar tests should render correctly with labelClass 1`] = `
+<DocumentFragment>
+  <div
+    class="avatar rounded-full flex items-center justify-center relative myClass"
+  >
+    <div
+      class="avatar-initial labelClass"
+    >
+      NS
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Avatar tests should render correctly with user id 1`] = `
+<DocumentFragment>
+  <div
+    class="avatar rounded-full flex items-center justify-center relative w-10 h-10"
+  >
+    <div
+      class="avatar-initial"
+    >
+      NS
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Avatar tests should render correctly with user picture 1`] = `
+<DocumentFragment>
+  <div
+    class="avatar rounded-full flex items-center justify-center relative w-10 h-10"
+  >
+    <img
+      alt="user"
+      class="w-full h-full rounded-full"
+      src="userpicture"
+    />
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Avatar tests should render correctly with user picture 2`] = `
+<DocumentFragment>
+  <div
+    class="avatar rounded-full flex items-center justify-center relative w-10 h-10"
+  >
+    <div
+      class="avatar-initial"
+    >
+      NS
+    </div>
+    <div
+      class="absolute bottom-0 right-0"
+    >
+      <svg
+        fill="none"
+        height="10"
+        viewBox="0 0 16 16"
+        width="10"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <g
+          class="fill-gray"
+          data-name="Status indicator with border"
+          stroke="#fff"
+          stroke-width="2"
+        >
+          <circle
+            cx="8"
+            cy="8"
+            r="8"
+            stroke="none"
+          />
+          <circle
+            cx="8"
+            cy="8"
+            fill="none"
+            r="7"
+          />
+        </g>
+      </svg>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Avatar tests should render correctly with user status 1`] = `
+<DocumentFragment>
+  <div
+    class="avatar rounded-full flex items-center justify-center relative w-10 h-10"
+  >
+    <div
+      class="avatar-initial"
+    >
+      NS
+    </div>
+  </div>
+</DocumentFragment>
+`;

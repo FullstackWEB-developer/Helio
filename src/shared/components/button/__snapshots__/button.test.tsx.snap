@@ -1,0 +1,198 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Button tests renders big button correctly 1`] = `
+<DocumentFragment>
+  <button
+    class="big-button"
+    type="button"
+  >
+    <div
+      class="flex flex-row space-x-2 justify-center items-center"
+    >
+      <div>
+        test-button
+      </div>
+    </div>
+  </button>
+</DocumentFragment>
+`;
+
+exports[`Button tests renders button correctly 1`] = `
+<DocumentFragment>
+  <button
+    class="medium-button"
+    type="button"
+  >
+    <div
+      class="flex flex-row space-x-2 justify-center items-center"
+    >
+      <div>
+        test-button
+      </div>
+    </div>
+  </button>
+</DocumentFragment>
+`;
+
+exports[`Button tests renders disabled button correctly 1`] = `
+<DocumentFragment>
+  <button
+    class="secondary-medium-button"
+    disabled=""
+    type="button"
+  >
+    <div
+      class="flex flex-row space-x-2 justify-center items-center"
+    >
+      <div>
+        test-button
+      </div>
+    </div>
+  </button>
+</DocumentFragment>
+`;
+
+exports[`Button tests renders icon button correctly 1`] = `
+<DocumentFragment>
+  <button
+    class="secondary-medium-button"
+    type="button"
+  >
+    <div
+      class="flex flex-row space-x-2 justify-center items-center"
+    >
+      <div
+        class="h-6 w-6 inline-flex  align-middle "
+      >
+        <div
+          class=""
+        >
+          <svg
+            class="icon-medium "
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect
+              fill="none"
+            />
+            <path
+              class="enabled-icon-fill"
+              d="M19,13H13v6H11V13H5V11h6V5h2v6h6Z"
+            />
+          </svg>
+        </div>
+      </div>
+      <div>
+        test-button
+      </div>
+    </div>
+  </button>
+</DocumentFragment>
+`;
+
+exports[`Button tests renders loading button correctly 1`] = `
+<DocumentFragment>
+  <button
+    class="secondary-medium-button loading"
+    disabled=""
+    type="button"
+  >
+    <div
+      class="flex flex-row space-x-2 justify-center items-center"
+    >
+      <div
+        class="flex flex-col space-y-4 items-center justify-center undefined"
+      >
+        <div>
+          <div
+            class=""
+          >
+            <svg
+              class="spinner icon-large-40 "
+              viewBox="0 0 40 40"
+            >
+              <circle
+                class="path"
+                cx="20"
+                cy="20"
+                fill="none"
+                r="16"
+                stroke-width="4"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div />
+    </div>
+  </button>
+</DocumentFragment>
+`;
+
+exports[`Button tests renders secondary button correctly 1`] = `
+<DocumentFragment>
+  <button
+    class="secondary-button"
+    type="button"
+  >
+    <div
+      class="flex flex-row space-x-2 justify-center items-center"
+    >
+      <div>
+        test-button
+      </div>
+    </div>
+  </button>
+</DocumentFragment>
+`;
+
+exports[`Button tests renders secondary-big button correctly 1`] = `
+<DocumentFragment>
+  <button
+    class="secondary-big-button"
+    type="button"
+  >
+    <div
+      class="flex flex-row space-x-2 justify-center items-center"
+    >
+      <div>
+        test-button
+      </div>
+    </div>
+  </button>
+</DocumentFragment>
+`;
+
+exports[`Button tests renders secondary-medium button correctly 1`] = `
+<DocumentFragment>
+  <button
+    class="secondary-medium-button"
+    type="button"
+  >
+    <div
+      class="flex flex-row space-x-2 justify-center items-center"
+    >
+      <div>
+        test-button
+      </div>
+    </div>
+  </button>
+</DocumentFragment>
+`;
+
+exports[`Button tests renders small button correctly 1`] = `
+<DocumentFragment>
+  <button
+    class="small-button"
+    type="button"
+  >
+    <div
+      class="flex flex-row space-x-2 justify-center items-center"
+    >
+      <div>
+        test-button
+      </div>
+    </div>
+  </button>
+</DocumentFragment>
+`;

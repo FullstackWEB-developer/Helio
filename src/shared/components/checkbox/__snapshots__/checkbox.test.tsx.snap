@@ -1,0 +1,443 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Checkbox tests renders checkbox correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="h-9"
+  >
+    <label
+      class="flex flex-row items-center checkbox-button"
+    >
+      <input
+        class="checkbox"
+        id="name_"
+        name="name"
+        type="checkbox"
+      />
+      <span
+        class="checkbox-control"
+      >
+        <div
+          class=""
+        >
+          <svg
+            class="icon-medium "
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect
+              fill="none"
+              height="24"
+              width="24"
+            />
+            <path
+              class="svg-checkbox"
+              d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+            />
+          </svg>
+        </div>
+      </span>
+      <div
+        class="relative inline-block w-full h-full truncate"
+      >
+        <span
+          class="w-60 w-60"
+        >
+          test
+        </span>
+      </div>
+    </label>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Checkbox tests renders checkbox default checked correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="h-9 class-name"
+  >
+    <label
+      class="flex flex-row items-center checkbox-button"
+    >
+      <input
+        checked=""
+        class="checkbox"
+        id="name_3"
+        name="name"
+        type="checkbox"
+      />
+      <span
+        class="checkbox-control"
+      >
+        <div
+          class=""
+        >
+          <svg
+            class="icon-medium "
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect
+              fill="none"
+              height="24"
+              width="24"
+            />
+            <path
+              class="svg-checkbox"
+              d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+            />
+          </svg>
+        </div>
+      </span>
+      <div
+        class="relative inline-block w-full h-full truncate"
+      >
+        <span
+          class="label-class"
+        >
+          test
+        </span>
+      </div>
+      <span
+        class="body3-medium ml-1.5"
+      >
+        assistive-text
+      </span>
+    </label>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Checkbox tests renders checkbox with assistive-text correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="h-9 class-name"
+  >
+    <label
+      class="flex flex-row items-center checkbox-button"
+    >
+      <input
+        class="checkbox"
+        id="name_3"
+        name="name"
+        type="checkbox"
+      />
+      <span
+        class="checkbox-control"
+      >
+        <div
+          class=""
+        >
+          <svg
+            class="icon-medium "
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect
+              fill="none"
+              height="24"
+              width="24"
+            />
+            <path
+              class="svg-checkbox"
+              d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+            />
+          </svg>
+        </div>
+      </span>
+      <div
+        class="relative inline-block w-full h-full truncate"
+      >
+        <span
+          class="label-class"
+        >
+          test
+        </span>
+      </div>
+      <span
+        class="body3-medium ml-1.5"
+      >
+        assistive-text
+      </span>
+    </label>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Checkbox tests renders checkbox with className correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="h-9 class-name"
+  >
+    <label
+      class="flex flex-row items-center checkbox-button"
+    >
+      <input
+        class="checkbox"
+        id="name_"
+        name="name"
+        type="checkbox"
+      />
+      <span
+        class="checkbox-control"
+      >
+        <div
+          class=""
+        >
+          <svg
+            class="icon-medium "
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect
+              fill="none"
+              height="24"
+              width="24"
+            />
+            <path
+              class="svg-checkbox"
+              d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+            />
+          </svg>
+        </div>
+      </span>
+      <div
+        class="relative inline-block w-full h-full truncate"
+      >
+        <span
+          class="label-class w-60"
+        >
+          test
+        </span>
+      </div>
+    </label>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Checkbox tests renders checkbox with label-class correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="h-9"
+  >
+    <label
+      class="flex flex-row items-center checkbox-button"
+    >
+      <input
+        class="checkbox"
+        id="name_"
+        name="name"
+        type="checkbox"
+      />
+      <span
+        class="checkbox-control"
+      >
+        <div
+          class=""
+        >
+          <svg
+            class="icon-medium "
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect
+              fill="none"
+              height="24"
+              width="24"
+            />
+            <path
+              class="svg-checkbox"
+              d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+            />
+          </svg>
+        </div>
+      </span>
+      <div
+        class="relative inline-block w-full h-full truncate"
+      >
+        <span
+          class="label-class w-60"
+        >
+          test
+        </span>
+      </div>
+    </label>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Checkbox tests renders checkbox with value correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="h-9 class-name"
+  >
+    <label
+      class="flex flex-row items-center checkbox-button"
+    >
+      <input
+        class="checkbox"
+        id="name_3"
+        name="name"
+        type="checkbox"
+      />
+      <span
+        class="checkbox-control"
+      >
+        <div
+          class=""
+        >
+          <svg
+            class="icon-medium "
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect
+              fill="none"
+              height="24"
+              width="24"
+            />
+            <path
+              class="svg-checkbox"
+              d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+            />
+          </svg>
+        </div>
+      </span>
+      <div
+        class="relative inline-block w-full h-full truncate"
+      >
+        <span
+          class="label-class w-60"
+        >
+          test
+        </span>
+      </div>
+    </label>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Checkbox tests renders checked checkbox correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="h-9 class-name"
+  >
+    <label
+      class="flex flex-row items-center checkbox-button"
+    >
+      <input
+        checked=""
+        class="checkbox"
+        id="name_3"
+        name="name"
+        type="checkbox"
+      />
+      <span
+        class="checkbox-control"
+      >
+        <div
+          class=""
+        >
+          <svg
+            class="icon-medium "
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect
+              fill="none"
+              height="24"
+              width="24"
+            />
+            <path
+              class="svg-checkbox"
+              d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+            />
+          </svg>
+        </div>
+      </span>
+      <div
+        class="relative inline-block w-full h-full truncate"
+      >
+        <span
+          class="label-class w-60"
+        >
+          test
+        </span>
+      </div>
+    </label>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Checkbox tests renders truncated checkbox correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="h-9 class-name"
+  >
+    <label
+      class="flex flex-row items-center checkbox-button"
+    >
+      <input
+        checked=""
+        class="checkbox"
+        id="name_3"
+        name="name"
+        type="checkbox"
+      />
+      <span
+        class="checkbox-control"
+      >
+        <div
+          class=""
+        >
+          <svg
+            class="icon-medium "
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect
+              fill="none"
+              height="24"
+              width="24"
+            />
+            <path
+              class="svg-checkbox"
+              d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+            />
+          </svg>
+        </div>
+      </span>
+      <div
+        class="relative inline-block w-full h-full truncate"
+      >
+        <span
+          class="label-class"
+        >
+          test
+        </span>
+      </div>
+      <span
+        class="body3-medium ml-1.5"
+      >
+        assistive-text
+      </span>
+    </label>
+  </div>
+</DocumentFragment>
+`;
