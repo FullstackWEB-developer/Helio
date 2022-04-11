@@ -127,7 +127,11 @@ const SearchBar = () => {
         const chosenType = type || selectedType;
         if (isValidInput(chosenType)) {
             dispatch(setType(chosenType));
-            dispatch(setSearchTerm(searchTermDisplayValue));
+            if(chosenType === searchTypeContact.phone || chosenType === searchTypePatient.phone){
+                dispatch(setSearchTerm(searchTermDisplayValue.replaceAll('-','')));
+            }else{
+                dispatch(setSearchTerm(searchTermDisplayValue));
+            }
             dispatch(resetFilteredTypes());
             displayDropdown(false);
             return chosenType;
