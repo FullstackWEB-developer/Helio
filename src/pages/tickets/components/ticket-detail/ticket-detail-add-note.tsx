@@ -343,7 +343,7 @@ const TicketDetailAddNote = ({ticket, patient, contact, emailMessages, smsMessag
 
     const isSendSmsDisabled = useMemo(() => {
         return !mobileNumber || isTicketDisabled || isTabDisabled;
-    }, [isTicketDisabled, mobileNumber]);
+    }, [isTicketDisabled, mobileNumber, isTabDisabled]);
 
     const isSendEmailDisabled = useMemo(() => {
         if (selectedTab === ChannelTabs.EmailTab && isTabDisabled) {
@@ -355,7 +355,7 @@ const TicketDetailAddNote = ({ticket, patient, contact, emailMessages, smsMessag
             return true;
         }
         return
-    }, [isTicketDisabled, emailAddress, selectedTab, noteDisabledText])
+    }, [isTicketDisabled, emailAddress, selectedTab, noteDisabledText, isTabDisabled])
 
 
     return <>
