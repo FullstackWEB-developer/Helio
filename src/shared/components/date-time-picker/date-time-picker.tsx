@@ -33,6 +33,7 @@ interface DateTimePickerProps {
     isWeekendDisabled?: boolean;
     calendarContainerClassName?: string;
     isCalendarPositionComputed?: boolean;
+    isSmallSize?:boolean,
     onChange?: (date: Date | undefined) => void;
     onBlur?: () => void;
     onCalendarVisibilityChange?: (isVisible: boolean) => void;
@@ -52,6 +53,7 @@ const DateTimePicker = React.forwardRef<HTMLInputElement, DateTimePickerProps>((
     isCalendarDisabled = false,
     longDateFormat = false,
     isCalendarPositionComputed = false,
+    isSmallSize = false,
     onBlur,
     onValidationError,
     onPressEnter,
@@ -330,6 +332,7 @@ const DateTimePicker = React.forwardRef<HTMLInputElement, DateTimePickerProps>((
                 >
                     <Calendar
                         isWeekendDisabled={isWeekendDisabled}
+                        isSmallSize={isSmallSize}
                         onBlur={onCalendarBlur}
                         date={date}
                         max={max}

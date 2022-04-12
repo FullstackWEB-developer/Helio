@@ -15,6 +15,7 @@ interface CalendarProps {
     min?: Date,
     isWeekendDisabled?: boolean,
     highlightToday?: boolean,
+    isSmallSize?:boolean,
     onChange?: (date: string) => void;
     onBlur?: () => void;
     onFocus?: () => void;
@@ -25,6 +26,7 @@ const Calendar = ({
     min = new Date(1900, 0, 1),
     max = new Date(9999, 11, 12),
     isWeekendDisabled = false,
+    isSmallSize = false,
     onChange,
     onBlur,
     onFocus
@@ -93,7 +95,15 @@ const Calendar = ({
         }
     }
 
-    return (<div tabIndex={0}  className='calendar px-4 pb-4 pt-6 overflow-hidden xl:px-7 xl:pb-7 xl:pt-10' onBlur={onBlur} onFocus={onFocus}>
+    const getSizedClassName = (smallClassNames: string, responsiveClassNames: string) => {
+        if(isSmallSize){
+            return smallClassNames
+        }else{
+            return responsiveClassNames
+        }
+    }
+
+    return (<div tabIndex={0}  className={`px-4 pb-4 pt-6 overflow-hidden ${getSizedClassName('small-calendar','calendar xl:px-7 xl:pb-7 xl:pt-10')}`} onBlur={onBlur} onFocus={onFocus}>
         <div className='calendar-container'>
             <div className='flex flex-row items-center justify-between'>
                 <div role='button' className='cursor-pointer' onClick={() => !isDisabledBackward && goBackward('month')}>
@@ -106,17 +116,17 @@ const Calendar = ({
                     <SvgIcon type={Icon.ArrowRight} fillClass={isDisabledForward ? 'arrow-disabled' : ''} />
                 </div>
             </div>
-            <div className='w-full mt-4 xl:mt-5'>
-                <div className='grid grid-cols-7 items-center justify-items-center subtitle2 xl:gap-x-6'>
+            <div className={`w-full mt-4 ${getSizedClassName('','xl:mt-5')}`}>
+                <div className={`grid grid-cols-7 items-center justify-items-center subtitle2 ${getSizedClassName('','xl:gap-x-6')}`}>
                     {dayjs.weekdaysMin().map((d, i) => <div key={i} className='items-center'>{d.charAt(0)}</div>)}
                 </div>
-                <div className='grid grid-cols-7 items-center justify-items-center xl:gap-x-6 xl:gap-y-1.5 xl:pt-7'>
+                <div className={`grid grid-cols-7 items-center justify-items-center ${getSizedClassName('','xl:gap-x-6 xl:gap-y-1.5 xl:pt-7')}`}>
                     {monthDetail &&
                         monthDetail.map((dateDetail, index) => (
                             <div key={index}>
                                 {dateDetail.isCurrentMonth &&
                                     <div role="button" onClick={() => !isDisabled(dateDetail) && onDayClick(dateDetail)}
-                                        className={`${getClassName(dateDetail)} calendar-day-container flex items-center justify-center body2`}>
+                                        className={`${getClassName(dateDetail)} ${getSizedClassName('small-calendar-day-container','calendar-day-container')} flex items-center justify-center body2`}>
                                         <span className={classNames({'weekend': dateDetail.isWeekend})}>{dateDetail.day}</span>
                                     </div>
                                 }

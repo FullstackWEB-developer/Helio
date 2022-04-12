@@ -25,6 +25,7 @@ export interface ControllerDateInputProps {
     isCalendarPositionComputed?: boolean;
     calendarHorizontalAlign?: CalendarHorizontalAlign;
     assistiveText?: string;
+    isSmallSize?:boolean,
     onValidationError?: () => void;
     onChange?: (date: Date | undefined) => void;
     onCalendarVisibilityChange?: (isVisible: boolean) => void;
@@ -49,6 +50,7 @@ const ControlledDateInput = ({
     isCalendarDisabled,
     assistiveText,
     isCalendarPositionComputed,
+    isSmallSize = false,
     onValidationError,
     onCalendarVisibilityChange,
     onPressEnter,
@@ -92,6 +94,7 @@ const ControlledDateInput = ({
                 longDateFormat={longDateFormat}
                 label={t(label)}
                 error={props.errorMessage || control.formState.errors[name]?.message}
+                isSmallSize={isSmallSize}
                 onChange={onChange}
                 onValidationError={onValidationError}
                 onCalendarVisibilityChange={onCalendarVisibilityChange}
