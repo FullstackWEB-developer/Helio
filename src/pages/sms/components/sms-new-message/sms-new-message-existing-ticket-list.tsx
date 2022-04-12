@@ -72,7 +72,7 @@ const SmsNewMessageExistingTicketList = ({items, ...props}: SmsNewMessageExistin
                     <span className='body3-small'>
                         <span className="mr-0.5">{t('sms.chat.new.existing_ticket.list.created_label')}</span>
                         <span>
-                            {ticketListRelativeTimeFormat(t('sms.chat.new.existing_ticket.list.relative_time_suffix'), ticket.createdOn)}
+                            {ticketListRelativeTimeFormat(t('sms.chat.new.existing_ticket.list.relative_time_suffix'), t('sms.chat.new.existing_ticket.list.a_few_seconds_ago'), ticket.createdOn)}
                         </span>
                     </span>
                 </div>

@@ -17,7 +17,7 @@ export const messageRelativeTimeFormat = (value: dayjs.Dayjs): string => {
     return value.format('MMM DD YYYY');
 }
 
-export const ticketListRelativeTimeFormat = (suffix: string, value?: Date) => {
+export const ticketListRelativeTimeFormat = (suffix: string, justNow?: string, value?: Date) => {
     if (!value) {
         return '-';
     }
@@ -28,7 +28,11 @@ export const ticketListRelativeTimeFormat = (suffix: string, value?: Date) => {
         return valueDayJs.format('MMMM DD[,] YYYY hh:mm A');
     } else {
         const [day, hours, minute] = utils.getRelativeTime(value, true);
-        return `${utils.formatRelativeTime(day, hours, minute, true)} ${suffix}`;
+        if(day === 0 && hours === 0 && minute === 0){
+            return justNow;
+        }else{
+            return `${utils.formatRelativeTime(day, hours, minute, true)} ${suffix}`;
+        }
     }
 }
 
