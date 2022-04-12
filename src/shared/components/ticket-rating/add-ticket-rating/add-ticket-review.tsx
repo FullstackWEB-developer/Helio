@@ -82,7 +82,7 @@ const AddTicketReview = ({ticketId, onClose, isOpen, onAdded} : AddTicketReviewP
                 <Button label='ticket_log.add_review'
                         buttonType='small'
                         isLoading={createReviewMutation.isLoading}
-                        disabled={rating === 0 || !feedback}
+                        disabled={rating === 0}
                         onClick={() => addReview()}/>
             </div>
         </div>
