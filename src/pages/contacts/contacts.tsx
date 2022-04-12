@@ -145,7 +145,7 @@ const Contacts: React.FC<ContactProps> = () => {
 
     const onContactAddSuccess = (contact: ContactExtended) => {
         setAddNewContactMode(false);
-
+        refreshContactList();
         dispatch(addSnackbarMessage({
             type: SnackbarType.Success,
             message: 'contacts.contact_details.contact_created'
