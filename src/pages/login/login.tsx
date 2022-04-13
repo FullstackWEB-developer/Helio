@@ -39,7 +39,7 @@ const Login = () => {
     const {askNotificationPermission} = useBrowserNotification();
     useEffect(() => {
         if (utils.isSessionExpired() || auth.isGuestLogin) {
-            dispatch(logOut());
+            utils.logout();
         }
         if (!utils.isLoggedIn()) {
             dispatch(resetState());
