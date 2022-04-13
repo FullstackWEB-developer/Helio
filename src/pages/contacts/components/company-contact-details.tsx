@@ -40,13 +40,10 @@ const CompanyContactDetails = ({editMode, contact, initiateACall, addNewContactH
     }
     const renderAddressField = (addressType: AddressType) => {
         const address = contact.addresses?.find(a => a.addressType === addressType);
-        return address ? (
-            <>
-                <ContactInfoField label={t(`contacts.contact_details.individual.${determineAddressTranslation(addressType)}`)}
-                    value={displayValue(address.line)} />
-                <ContactInfoField value={`${address.city || ''}${address.state ? ', ' : ''} ${address.state || ''} ${address.zipCode || ''}`} />
-            </>
-        ) : null
+        return address ?
+            <ContactInfoField label={t(`contacts.contact_details.individual.${determineAddressTranslation(addressType)}`)}
+                value={`${displayValue(address.line)}\n${address.city || ''}${address.state ? ', ' : ''} ${address.state || ''} ${address.zipCode || ''}`} />
+            : null
     }
     const updateContactMutation = useMutation(updateContact,
         {

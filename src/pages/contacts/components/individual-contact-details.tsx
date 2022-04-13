@@ -36,13 +36,10 @@ const IndividualContactDetails = ({contact, editMode, initiateACall, closeEditMo
     }
     const renderAddressField = (addressType: AddressType) => {
         const address = contact.addresses?.find(a => a.addressType === addressType);
-        return address ? (
-            <>
-                <ContactInfoField label={t(`contacts.contact_details.individual.${determineAddressTranslation(addressType)}`)}
-                    value={displayValue(address.line)} />
-                <ContactInfoField value={`${address.city || ''}${address.state ? ', ' : ''} ${address.state || ''} ${address.zipCode || ''}`} />
-            </>
-        ) : null
+        return address ?
+            <ContactInfoField label={t(`contacts.contact_details.individual.${determineAddressTranslation(addressType)}`)}
+                value={`${displayValue(address.line)}\n${address.city || ''}${address.state ? ', ' : ''} ${address.state || ''} ${address.zipCode || ''}`} />
+            : null
     }
 
     const updateContactMutation = useMutation(updateContact,
@@ -78,10 +75,10 @@ const IndividualContactDetails = ({contact, editMode, initiateACall, closeEditMo
     const emailOnClick = () => {
         const pathName = `${EmailPath}/${NEW_EMAIL}`;
         history.push({
-           pathname: pathName,
-           state: {
-               contact
-           }
+            pathname: pathName,
+            state: {
+                contact
+            }
         });
     }
 
@@ -91,61 +88,61 @@ const IndividualContactDetails = ({contact, editMode, initiateACall, closeEditMo
                 (
                     <div className="grid grid-cols-8 gap-2 body2">
                         <ContactInfoField label={`${t('contacts.contact_details.individual.company')}`}
-                                          value={displayValue(contact.companyName)}
-                                          onValueClick={() => history.push(`${ContactsPath}/${contact.relatedId}?`)} 
-                                          isValueClickDisabled={displayValue(contact.companyName) === t('common.not_available')} 
-                                          isLink={true}/>
+                            value={displayValue(contact.companyName)}
+                            onValueClick={() => history.push(`${ContactsPath}/${contact.relatedId}?`)}
+                            isValueClickDisabled={displayValue(contact.companyName) === t('common.not_available')}
+                            isLink={true} />
                         <ContactInfoField label={`${t('contacts.contact_details.individual.category')}`}
-                                          value={getCategoryName(contact.category)} />
+                            value={getCategoryName(contact.category)} />
                         <ContactInfoField label={`${t('contacts.contact_details.individual.department')}`}
-                                          value={displayValue(contact.department)} />
+                            value={displayValue(contact.department)} />
                         <ContactInfoField label={`${t('contacts.contact_details.individual.email')}`}
-                                          value={displayValue(contact.emailAddress)}
-                                          icon={Icon.Email}
-                                          onValueClick={() => emailOnClick()}
-                                          iconOnClick={() => emailOnClick()}
-                                          iconFillClass={getIconFillClass(contact.emailAddress)}
-                                          isIconDisabled={!contact.emailAddress} />
+                            value={displayValue(contact.emailAddress)}
+                            icon={Icon.Email}
+                            onValueClick={() => emailOnClick()}
+                            iconOnClick={() => emailOnClick()}
+                            iconFillClass={getIconFillClass(contact.emailAddress)}
+                            isIconDisabled={!contact.emailAddress} />
                         <ContactInfoField label={`${t('contacts.contact_details.individual.work_main_phone')}`}
-                                          value={displayValue(contact.workMainPhone, true)}
-                                          icon={Icon.Phone}
-                                          appendix={true}
-                                          isIconDisabled={voiceCounter === 1 || !contact?.workMainPhone}
-                                          isValueClickDisabled={voiceCounter === 1 || !contact?.workMainPhone}
-                                          onValueClick={() => phoneIconOnClick(contact.workMainPhone)}
-                                          iconFillClass={getIconFillClass(contact.workMainPhone)}
-                                          appendixLabel={t('contacts.contact_details.individual.ext')}
-                                          appendixValue={contact.workMainExtension}
-                                          iconOnClick={() => phoneIconOnClick(contact.workMainPhone)}
-                                          isLink={!(voiceCounter === 1 || !contact?.workMainPhone)}
+                            value={displayValue(contact.workMainPhone, true)}
+                            icon={Icon.Phone}
+                            appendix={true}
+                            isIconDisabled={voiceCounter === 1 || !contact?.workMainPhone}
+                            isValueClickDisabled={voiceCounter === 1 || !contact?.workMainPhone}
+                            onValueClick={() => phoneIconOnClick(contact.workMainPhone)}
+                            iconFillClass={getIconFillClass(contact.workMainPhone)}
+                            appendixLabel={t('contacts.contact_details.individual.ext')}
+                            appendixValue={contact.workMainExtension}
+                            iconOnClick={() => phoneIconOnClick(contact.workMainPhone)}
+                            isLink={!(voiceCounter === 1 || !contact?.workMainPhone)}
                         />
                         <ContactInfoField label={`${t('contacts.contact_details.individual.work_direct_phone')}`}
-                                          value={displayValue(contact.workDirectPhone, true)}
-                                          isIconDisabled={voiceCounter === 1 || !contact?.workDirectPhone}
-                                          iconFillClass={getIconFillClass(contact.workDirectPhone)}
-                                          icon={Icon.Phone}
-                                          iconOnClick={() => phoneIconOnClick(contact.workDirectPhone)}
-                                          isLink={!(voiceCounter === 1 || !contact?.workDirectPhone)}
-                                          isValueClickDisabled={voiceCounter === 1 || !contact?.workDirectPhone}
-                                          onValueClick={() => phoneIconOnClick(contact.workDirectPhone)}
+                            value={displayValue(contact.workDirectPhone, true)}
+                            isIconDisabled={voiceCounter === 1 || !contact?.workDirectPhone}
+                            iconFillClass={getIconFillClass(contact.workDirectPhone)}
+                            icon={Icon.Phone}
+                            iconOnClick={() => phoneIconOnClick(contact.workDirectPhone)}
+                            isLink={!(voiceCounter === 1 || !contact?.workDirectPhone)}
+                            isValueClickDisabled={voiceCounter === 1 || !contact?.workDirectPhone}
+                            onValueClick={() => phoneIconOnClick(contact.workDirectPhone)}
                         />
                         <ContactInfoField label={`${t('contacts.contact_details.individual.mobile_phone')}`}
-                                          value={displayValue(contact.mobilePhone, true)}
-                                          iconFillClass={getIconFillClass(contact.mobilePhone)}
-                                          icon={Icon.Phone}
-                                          isIconDisabled={voiceCounter === 1 || !contact?.mobilePhone}
-                                          iconOnClick={() => phoneIconOnClick(contact.mobilePhone)}
-                                          isValueClickDisabled={voiceCounter === 1 || !contact?.mobilePhone}
-                                          isLink={!(voiceCounter === 1 || !contact?.mobilePhone)}
-                                          onValueClick={() => phoneIconOnClick(contact.mobilePhone)} />
+                            value={displayValue(contact.mobilePhone, true)}
+                            iconFillClass={getIconFillClass(contact.mobilePhone)}
+                            icon={Icon.Phone}
+                            isIconDisabled={voiceCounter === 1 || !contact?.mobilePhone}
+                            iconOnClick={() => phoneIconOnClick(contact.mobilePhone)}
+                            isValueClickDisabled={voiceCounter === 1 || !contact?.mobilePhone}
+                            isLink={!(voiceCounter === 1 || !contact?.mobilePhone)}
+                            onValueClick={() => phoneIconOnClick(contact.mobilePhone)} />
                         <ContactInfoField label={`${t('contacts.contact_details.individual.fax')}`}
-                                          value={displayValue(contact.fax, true)}
-                                          icon={Icon.Phone}
-                                          isIconDisabled={true} />
+                            value={displayValue(contact.fax, true)}
+                            icon={Icon.Phone}
+                            isIconDisabled={true} />
                         <ContactInfoField label={`${t('contacts.contact_details.individual.website')}`}
-                                          value={displayValue(contact.website)}
-                                          onValueClick={() => contact.website && utils.openWebSite(contact.website)}
-                                          isLink={!!contact.website}/>
+                            value={displayValue(contact.website)}
+                            onValueClick={() => contact.website && utils.openWebSite(contact.website)}
+                            isLink={!!contact.website} />
                         {
                             renderAddressField(AddressType.PrimaryAddress)
                         }
@@ -159,7 +156,7 @@ const IndividualContactDetails = ({contact, editMode, initiateACall, closeEditMo
                 )
                 :
                 <ContactForm isSaving={updateContactMutation.isLoading} contactType={ContactType.Individual} contact={contact}
-                            submitHandler={onSubmit} closeHandler={closeEditMode} editMode={true} />
+                    submitHandler={onSubmit} closeHandler={closeEditMode} editMode={true} />
             }
         </>
     )
