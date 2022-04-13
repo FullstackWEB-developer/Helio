@@ -32,10 +32,6 @@ const Feedback = () => {
         }
     }, [ratingOption]);
 
-    const getIsSelected = (id:number) => {
-        return (selectedReview == id) && ' feedback-selected'
-    }
-
     const sendReview = () => {
         if(selectedReview != undefined){
             createReview.mutate({
@@ -76,7 +72,8 @@ const Feedback = () => {
                 <div className='mb-9 w-full'>
                     <span className='body2-primary'>{`${t('external_access.feedbacks.result_paragraph_1')} `}</span>
                 </div>
-                {(feedbackResponse?.name && feedbackResponse.url) && (
+                
+                {(feedbackResponse?.name && feedbackResponse.url && selectedReview === 1) && (
                     <div>
                         <div className='mb-6 w-full'>
                             <span className='subtitle'>{`${t('external_access.feedbacks.result_paragraph_2')} ${feedbackResponse.name} ${t('external_access.feedbacks.result_paragraph_3')} `}</span>
