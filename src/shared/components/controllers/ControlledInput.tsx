@@ -1,10 +1,10 @@
-import { Controller, ControllerRenderProps } from 'react-hook-form';
-import { Control } from 'react-hook-form/dist/types/form';
-import Input, { InputType, InputTypes } from '@components/input';
-import { useTranslation } from 'react-i18next';
+import {Controller, ControllerRenderProps} from 'react-hook-form';
+import {Control} from 'react-hook-form/dist/types/form';
+import Input, {InputType, InputTypes} from '@components/input';
+import {useTranslation} from 'react-i18next';
 import React from 'react';
-import { Option } from '@components/option/option';
-import { Icon } from '@components/svg-icon/icon';
+import {Option} from '@components/option/option';
+import {Icon} from '@components/svg-icon/icon';
 import {INPUT_DATE_FORMAT} from '@constants/form-constants';
 import {ValidationRule} from 'react-hook-form/dist/types/validator';
 
@@ -63,7 +63,7 @@ const ControlledInput = ({
     ...props
 }: ControlledInputProps) => {
 
-    const { t } = useTranslation();
+    const {t} = useTranslation();
     const requiredText = t('common.required');
     let inputKeyDown = (): void => undefined;
 
@@ -111,7 +111,7 @@ const ControlledInput = ({
         return value;
     }
 
-    const onInputDateChanged = (value: string, controllerProps: ControllerRenderProps<Record<string,any>>) => {
+    const onInputDateChanged = (value: string, controllerProps: ControllerRenderProps<Record<string, any>>) => {
         if (value === INPUT_DATE_FORMAT) {
             value = '';
         }
@@ -127,6 +127,18 @@ const ControlledInput = ({
             props.onChange(event);
         }
         control.setValue(name, value, {shouldValidate: true});
+    }
+
+    const onBlur = (e: React.FocusEvent<HTMLInputElement>, controllerProps: ControllerRenderProps<Record<string, any>>) => {
+        if(e?.target?.value){
+            control.setValue(name, e.target.value.trim(), {shouldValidate: true});
+        }
+        if (props.onBlur) {
+            props.onBlur(e);
+        }
+        else {
+            controllerProps.onBlur();
+        }
     }
     return (<Controller
         name={name}
@@ -156,7 +168,7 @@ const ControlledInput = ({
                 disabled={props.disabled}
                 data-test-id={dataTestId}
                 onKeyDown={inputKeyDown}
-                onBlur={props.onBlur || controllerProps.onBlur}
+                onBlur={(e) => onBlur(e, controllerProps)}
                 onChange={(event) => onInputChanged(event, controllerProps)}
                 onChangeDate={event => onInputDateChanged(event, controllerProps)}
                 autoSuggestDropdown={props.autosuggestDropdown}

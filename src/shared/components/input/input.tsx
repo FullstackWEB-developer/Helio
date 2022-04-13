@@ -92,7 +92,6 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({
 
     const onBlur = (e: React.FocusEvent<HTMLInputElement>) => {
         setIsFocused(false);
-
         if (autoSuggestDropdown) {
             setDropdownOpen(false);
 
