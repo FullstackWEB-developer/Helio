@@ -26,6 +26,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {selectUnreadEmails} from '@pages/email/store/email.selectors';
 import Alert from '@components/alert/alert';
 import NewEmailHeader from '@pages/email/components/new-email/components/new-email-header';
+import './email-conversation.scss'
 
 const EmailConversation = () => {
     const {ticketId} = useParams<{ticketId: string}>();
@@ -152,7 +153,7 @@ const EmailConversation = () => {
                 </div>
                 {messages && messages.length > 0 &&
                     <div className='flex flex-col flex-auto overflow-y-auto'>
-                        <div ref={messageListContainerRef} className='overflow-y-auto' onScroll={onScroll}>
+                        <div ref={messageListContainerRef} className='overflow-y-auto message-list' onScroll={onScroll}>
                             {
                                 messages.length ? messages.map((m: EmailMessageDto, index) =>
                                     <EmailMessage
