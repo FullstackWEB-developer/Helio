@@ -23,6 +23,8 @@ import {setTicketSmsMessages} from '@pages/external-access/ticket-sms/store/tick
 import {
     RealtimeTicketMessageContext
 } from '@pages/external-access/realtime-ticket-message-context/realtime-ticket-message-context';
+import classnames from 'classnames';
+import { isMobile } from 'react-device-detect';
 
 const TicketSms = () => {
     dayjs.extend(isToday);
@@ -147,11 +149,11 @@ const TicketSms = () => {
         return !dayjs.utc(message.createdOn).local().isSame(dayjs.utc(previousMessage.createdOn).local(), 'day');
     }
 
-    return <div className='flex flex-col min-h-screen'>
+    return <div className={classnames('flex flex-col', {'min-h-screen': !isMobile})}>
         <div className='h7 border-b w-ful flex items-center justify-center h-14 flex-none'>
             {t('external_access.ticket_sms.conversation_history')}
         </div>
-        <div className='overflow-y-auto flex-grow space-y-4 pb-6'>
+        <div className={classnames('overflow-y-auto space-y-4 pb-6', {'flex-grow': !isMobile, 'mobile_message_wrapper': isMobile })}>
             {(!messages || messages.length === 0) && <div className='pt-4 body2-medium flex justify-center'>{t('external_access.ticket_sms.no_messages')}</div>}
             {React.Children.toArray(sortedMessages.map((message, index) => {
                 const previousMessage = sortedMessages[index - 1];

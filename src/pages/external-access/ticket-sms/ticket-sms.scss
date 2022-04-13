@@ -13,3 +13,7 @@
 .outgoing_sms {
   background-color: var(--color-primary-800);
 }
+
+.mobile_message_wrapper{
+  height: calc(100vh - 10.875rem);
+}

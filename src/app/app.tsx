@@ -5,7 +5,6 @@ import Login from '../pages/login/login';
 import GuardedRoute from './guarded-route';
 import {Dashboard} from '@pages/dashboard/dashboard';
 import {withSuspense} from '@shared/HOC/with-suspense';
-import {isMobile} from 'react-device-detect';
 import TicketList from '../pages/tickets/ticket-list';
 import {
     ContactsPath,
@@ -115,18 +114,10 @@ const Feedback = React.lazy(()=> import('@pages/external-access/feedbacks/feedba
 function App() {
     const accessToken = useSelector(selectAccessToken);
     const {askNotificationPermission, shouldPromptUserWithPopup} = useBrowserNotification();
-    const resize = function() {
-        let body = document.body as HTMLCanvasElement;
-        body.height = window.innerHeight;
-    }
     useEffect(() => {
         const logStreamInterval = setInterval(() => {
             Logger.getInstance();
         }, Number(utils.getAppParameter('LogStreamCheckInterval')) || 5000);
-
-        if(isMobile){
-            resize();
-        }
 
         if(shouldPromptUserWithPopup()){
             askNotificationPermission();
