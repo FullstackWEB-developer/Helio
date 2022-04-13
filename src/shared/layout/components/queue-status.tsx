@@ -1,47 +1,49 @@
-import React, {useEffect, useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
-import {getMetricOptions} from '../../services/lookups.service';
-import {selectMetricOptions} from '../../store/lookups/lookups.selectors';
-import {QueueMetric} from '@shared/models';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getMetricOptions } from '../../services/lookups.service';
+import { selectMetricOptions } from '../../store/lookups/lookups.selectors';
+import { QueueMetric } from '@shared/models';
 import Dropdown from '../../components/dropdown/dropdown';
-import {DropdownModel} from '@components/dropdown/dropdown.models';
-import {TableModel} from '@components/table/table.models';
+import { DropdownModel } from '@components/dropdown/dropdown.models';
+import { TableModel } from '@components/table/table.models';
 import Table from '@components/table/table';
-import {KeyValuePair} from 'src/shared/models/key-value-pair';
-import {useTranslation} from 'react-i18next';
-import {useQuery} from 'react-query';
-import {QueryQueueMetrics} from '@constants/react-query-constants';
+import { KeyValuePair } from 'src/shared/models/key-value-pair';
+import { useTranslation } from 'react-i18next';
+import { useQuery } from 'react-query';
+import { QueryQueueMetrics } from '@constants/react-query-constants';
 import SvgIcon from '@components/svg-icon/svg-icon';
-import {Icon} from '@components/svg-icon/icon';
-import {userNameSelector} from "@shared/store/app-user/appuser.selectors";
-import {selectLatestUsersStatusUpdateTime} from '@shared/layout/store/layout.selectors';
-import {QueueStatusType} from "@shared/layout/enums/queue-status-type";
+import { Icon } from '@components/svg-icon/icon';
+import { userNameSelector } from "@shared/store/app-user/appuser.selectors";
+import { selectLatestUsersStatusUpdateTime } from '@shared/layout/store/layout.selectors';
+import { QueueStatusType } from "@shared/layout/enums/queue-status-type";
 import Spinner from '@components/spinner/Spinner';
-import {getQueueStatus} from '@pages/tickets/services/tickets.service';
+import { getQueueStatus } from '@pages/tickets/services/tickets.service';
+import './queue-status.scss';
 
 interface QueueStatusProps {
-    queueType: QueueStatusType
+    queueType: QueueStatusType,
+    queueTitle: string
 }
 
-const QueueStatus = ({queueType}: QueueStatusProps) => {
+const QueueStatus = ({ queueType, queueTitle }: QueueStatusProps) => {
     const defaultDropdownKey = 5;
     const defaultDropdownValue = 'Agents with Contact';
     const dispatch = useDispatch();
-    const {t: translate} = useTranslation();
+    const { t: translate } = useTranslation();
     const metricOptions = useSelector(selectMetricOptions);
     const [activeMetric, setMetric] = useState<QueueMetric[]>([]);
     const username = useSelector(userNameSelector);
     const latestUserUpdateTime = useSelector(selectLatestUsersStatusUpdateTime);
     const [selectedOption, setSelectedOption] = useState<KeyValuePair | undefined>();
 
-    const {isLoading, error, data: quickConnectExtensions, refetch} = useQuery<QueueMetric[],
+    const { isLoading, error, data: quickConnectExtensions, refetch } = useQuery<QueueMetric[],
         Error>([QueryQueueMetrics, queueType, username], () => queueType === QueueStatusType.AllQueues
-        ? getQueueStatus()
-        : getQueueStatus({
-            agentUsername: username
-        }), {
-        staleTime: 0
-    });
+            ? getQueueStatus()
+            : getQueueStatus({
+                agentUsername: username
+            }), {
+            staleTime: 0
+        });
 
     useEffect(() => {
         refetch();
@@ -134,13 +136,13 @@ const QueueStatus = ({queueType}: QueueStatusProps) => {
                 {
                     field: 'voiceCount',
                     widthClass: 'w-24',
-                    title: <SvgIcon type={Icon.Phone} fillClass='status-bar-inactive-item-icon'/>,
+                    title: <SvgIcon type={Icon.Phone} fillClass='status-bar-inactive-item-icon' />,
                     alignment: 'center',
                 },
                 {
                     field: 'chatCount',
                     widthClass: 'w-24',
-                    title: <SvgIcon type={Icon.Chat} fillClass='status-bar-inactive-item-icon'/>,
+                    title: <SvgIcon type={Icon.Chat} fillClass='status-bar-inactive-item-icon' />,
                     alignment: 'center',
                 },
             ],
@@ -152,14 +154,17 @@ const QueueStatus = ({queueType}: QueueStatusProps) => {
         return <div>{translate('statuses.queuestatus.loading_error')}</div>;
     }
     if (isLoading) {
-        return <Spinner fullScreen/>;
+        return <Spinner fullScreen />;
     }
 
     return (
-        <div className='flex-auto'>
-            <Dropdown key={queueType} model={getDropDownOptions()}/>
-            <div className='pt-10'>
-                <Table model={getTableModel()}/>
+        <div className='queue-status-div overflow-y-auto' id={queueTitle}>
+            <div className='flex-auto'>
+                <div className='subtitle px-4 py-3 border-b flex items-center'>{queueTitle}</div>
+                <Dropdown key={queueType} model={getDropDownOptions()} />
+                <div className='pt-10'>
+                    <Table model={getTableModel()} />
+                </div>
             </div>
         </div>
     );

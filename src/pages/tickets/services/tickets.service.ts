@@ -343,12 +343,6 @@ export const GetTodaysPerformanceMetrics = async () : Promise<PerformanceMetric[
     return response.data as PerformanceMetric[];
 };
 
-export const getQuickConnects = async () => {
-    const url = `${ticketsBaseUrl}/dashboard/quick-connects`;
-    const response = await Api.get(url);
-    return response.data as QuickConnectExtension[];
-};
-
 export const getTicketPerformanceForUser = async (request?: AgentPerformanceRequest) : Promise<AgentPerformanceResponse> => {
     const url = `${ticketsBaseUrl}/dashboard/agent-ticket-performance`;
     const response = await Api.get(url, {

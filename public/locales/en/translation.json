@@ -700,11 +700,6 @@
       "all_queues": "All Queues",
       "my_queues": "My Qeueues",
       "loading_error": "Error Loading Queue Metrics"
-    },
-    "extensions": {
-      "extensions_label": "Extensions",
-      "all_departments": "All Departments",
-      "loading_error": "Error Loading extensions"
     }
   },
   "components": {
