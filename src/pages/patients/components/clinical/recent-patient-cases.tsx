@@ -11,9 +11,10 @@ export interface RecentPatientCasesProps {
 
 const RecentPatientCases = ({clinical}: RecentPatientCasesProps) => {
     const {t} = useTranslation();
+    const DeletedPatientCaseStatus = 'Deleted';
 
     const tableModel: TableModel = {
-        rows: clinical.patientCases,
+        rows: clinical.patientCases.filter(a => a.status !== DeletedPatientCaseStatus),
         title: {
             title:t('patient.clinical.recent_patient_cases')
         },
