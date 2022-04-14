@@ -57,18 +57,18 @@ const VerifyRedirectLink = () => {
 
     if (isError) {
         if (error?.response?.status === 404) {
-            return <div className='text-danger'>{t('redirect_link.link_not_valid')}</div>;
+            return <div>{t('redirect_link.link_not_valid')}</div>;
         } else if (error?.response?.status === 409) {
-            return <div className='text-danger'>{t('redirect_link.link_not_active')}</div>;
+            return <div>{t('redirect_link.link_not_active')}</div>;
         }
         else
         {
-            return <div className='text-danger'>{t('redirect_link.is_error')}</div>
+            return <div>{t('redirect_link.is_error')}</div>
         }
     }
     return (
         <div>
-            <span className='text-danger'>{t('redirect_link.link_not_active')}</span>
+            <span>{t('redirect_link.link_not_active')}</span>
         </div>
     );
 }
