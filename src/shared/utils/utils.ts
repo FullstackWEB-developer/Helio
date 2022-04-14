@@ -280,6 +280,11 @@ const accumulateInfiniteData = <T extends unknown>(infiniteData: InfiniteData<Pa
 }
 
 const isLoggedIn = (): boolean => {
+    const auth = store.getState()?.appUserState?.auth;
+
+    if (!auth.isLoggedIn) {
+        return false;
+    }
     const accounts = getMsalInstance()?.getAllAccounts();
     return !!(accounts && accounts[0]);
 }
