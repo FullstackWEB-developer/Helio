@@ -73,7 +73,7 @@ const ExternalEmailListItem = ({message, patientPhoto, users, patient, onClick} 
         <div className='flex flex-col w-full'>
             <div className='flex flex-row justify-between items-center w-full'>
                 <div className='subtitle2'>
-                    <span className={!message.isRead ? 'font-bold' : ''}>{displayName}</span>
+                    <span className={!message.isRead && message.direction === TicketMessagesDirection.Outgoing ? 'font-bold' : ''}>{displayName}</span>
                 </div>
                 <div className='flex flex-row'>
                     {message.attachments && message.attachments.length > 0 && <div>
