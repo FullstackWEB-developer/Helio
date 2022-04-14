@@ -118,6 +118,10 @@ const CompanyContactDetails = ({editMode, contact, initiateACall, addNewContactH
                                     onValueClick={() => phoneIconOnClick(contact.mobilePhone)}
                                     isLink={!(voiceCounter > 0 || !contact.mobilePhone)}
                                     isValueClickDisabled={voiceCounter > 0 || !contact.mobilePhone} />
+                                <ContactInfoField label={`${t('contacts.contact_details.company.fax')}`}
+                                                  value={displayValue(contact.fax, true)}
+                                                  icon={Icon.Phone}
+                                                  isIconDisabled={true} />
                                 <ContactInfoField label={`${t('contacts.contact_details.company.website')}`}
                                     value={displayValue(contact.website)}
                                     onValueClick={() => contact.website && utils.openWebSite(contact.website)}

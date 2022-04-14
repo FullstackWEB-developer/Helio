@@ -42,6 +42,7 @@ const formatPhone = (phone: string) => {
         return phone;
     }
     phone = phone.replaceAll('-', '');
+    phone = phone.replaceAll('(', '').replace(')','');
     if (phone && phone.startsWith('+1')) {
         phone = phone.substring(2);
     }
