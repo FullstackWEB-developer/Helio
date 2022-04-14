@@ -97,8 +97,8 @@ const PatientChartList = ({headings, rows, dividerLine, isLongValue, patient}: P
                             </span> :
                             row.values.map((value, i) => {
                                 return <div key={i} className={rowClassName(row)}>
-                                    <div className='flex flex row px-2'>
-                                        <div className={`flex flex row px-2 ${(row.canCall || row.canEmail) ? ' cursor-pointer hover:underline' : ''}`}  onClick={()  => rowClicked(row, value)}>
+                                    <div className='flex flex row'>
+                                        <div className={`flex flex row ${(row.canCall || row.canEmail) ? ' cursor-pointer hover:underline' : ''}`}  onClick={()  => rowClicked(row, value)}>
                                             <div>
                                                 {value || t('common.not_available')}
                                             </div>
