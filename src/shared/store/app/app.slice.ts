@@ -30,6 +30,9 @@ const appSlice = createSlice({
         setLoginRequiredDismissed(state, {payload} : PayloadAction<boolean>) {
             state.loginRequiredDismissed = payload;
         },
+        setDashboardFilterEndDate(state, {payload} : PayloadAction<Date>) {
+            state.dashboardFilterEndDate = payload;
+        },
     }
 });
 
@@ -41,7 +44,8 @@ export const {
     setAppParameters,
     clearAppParameters,
     setDisplayLoginRequired,
-    setLoginRequiredDismissed
+    setLoginRequiredDismissed,
+    setDashboardFilterEndDate
 } = appSlice.actions
 
 export default appSlice.reducer

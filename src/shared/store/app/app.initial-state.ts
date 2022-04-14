@@ -9,6 +9,7 @@ export interface AppState {
     appParameters : AppParameter[];
     displayLoginRequired: boolean;
     loginRequiredDismissed: boolean;
+    dashboardFilterEndDate: Date;
 }
 const initialAppState: AppState = {
     isGlobalLoading : false,
@@ -17,7 +18,8 @@ const initialAppState: AppState = {
     isNavigationChanging: false,
     appParameters: [],
     displayLoginRequired: false,
-    loginRequiredDismissed: false
+    loginRequiredDismissed: false,
+    dashboardFilterEndDate: new Date()
 }
 
 export default initialAppState;

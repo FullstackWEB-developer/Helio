@@ -240,7 +240,7 @@ const CallsLogList = () => {
                 field: 'communicationDirection',
                 widthClass: 'w-1/12',
                 render: (value: CommunicationDirection) =>
-                    (<span className='body2'>{t(`ticket_log.${CommunicationDirection[value].toString().toLowerCase()}`)}</span>)
+                    (<span className='body2'>{t(`ticket_log.${CommunicationDirection[value]?.toString()?.toLowerCase()}`)}</span>)
             },
             {
                 title: 'ticket_log.recording',

@@ -28,6 +28,8 @@ import {AgentStatus} from '@shared/models';
 import {addLiveAgentStatus} from '@shared/store/app-user/appuser.slice';
 import {useDispatch} from 'react-redux';
 import {getLocations} from '@shared/services/lookups.service';
+import classNames from 'classnames';
+import {setDashboardFilterEndDate} from '@shared/store/app/app.slice';
 
 export const Dashboard = () => {
     const {t} = useTranslation();
@@ -105,6 +107,7 @@ export const Dashboard = () => {
     const datesSelected = (startDate: Date, endDate: Date) => {
         setSelectedStartDate(startDate);
         setSelectedEndDate(endDate);
+        dispatch(setDashboardFilterEndDate(endDate));
         setDisplayTimeFrameDropdown(false);
         refreshDashboard();
     }
@@ -216,6 +219,16 @@ export const Dashboard = () => {
         }
     }
 
+    const dashboardDateFormClass = classNames({
+        'hidden': selectedDashboardTime !== DashboardTimeframes.custom,
+        'block': selectedDashboardTime === DashboardTimeframes.custom
+    });
+
+    const displayTimeFrameDropdownClass = classNames('absolute right-12', {
+        'hidden':!displayTimeFrameDropdown,
+        'block':displayTimeFrameDropdown
+    });
+
 
     return (
         <div className='w-full px-6 pb-10 overflow-y-auto dashboard'>
@@ -250,15 +263,12 @@ export const Dashboard = () => {
                                 </div>
                             </div>}
                         <div>
-                            {displayTimeFrameDropdown &&
-                                <div className='absolute right-12'>
-                                    <div className='flex flex-col'>
-                                        <Dropdown model={dashboardTimeFrameDropdownModel} />
-                                        {selectedDashboardTime === DashboardTimeframes.custom &&
-                                            <DashboardDateForm onDatesSelected={datesSelected} />}
-                                    </div>
-
-                                </div>}
+                            <div className={displayTimeFrameDropdownClass}>
+                                <div className='flex flex-col'>
+                                    <Dropdown model={dashboardTimeFrameDropdownModel} />
+                                    <span className={dashboardDateFormClass}><DashboardDateForm onDatesSelected={datesSelected} /></span>
+                                </div>
+                            </div>
                         </div>
                         <div>
                             <CountdownTimer

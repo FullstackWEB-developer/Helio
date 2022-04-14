@@ -3,13 +3,16 @@ import {ChartTooltip, CustomTick} from '@components/dashboard';
 import {Point, ResponsiveLine, Serie} from '@nivo/line'
 import {useEffect, useMemo, useState} from 'react';
 import {useTranslation} from 'react-i18next';
+import {TicketVolumeDataType} from '@pages/dashboard/models/ticket-volume-data-type.enum';
 
 export interface HelioResponsiveLineProps {
     data: Serie[];
     tickRotation : number;
+    volumeDataType?: TicketVolumeDataType
+    tickValues?: string | Date[];
     toolTipLabelGenerator: (point: Point) => string;
 }
-const HelioResponsiveLine = ({data, tickRotation, toolTipLabelGenerator} : HelioResponsiveLineProps) => {
+const HelioResponsiveLine = ({data, tickRotation, tickValues = 'every 1 day', toolTipLabelGenerator, volumeDataType = TicketVolumeDataType.Daily} : HelioResponsiveLineProps) => {
 
     const [hasData, setHasData] = useState<boolean>(false);
     const {t} = useTranslation();
@@ -30,13 +33,15 @@ const HelioResponsiveLine = ({data, tickRotation, toolTipLabelGenerator} : Helio
         return <div className='flex h-full w-full items-center justify-center body3-medium'>{t('my_stats.calls_chats.no_data')}</div>
     }
 
+    const scaleFormat = volumeDataType === TicketVolumeDataType.SingleDay ? "%Y-%m-%d %H:%M:%S" : "%Y-%m-%d";
+    const xFormat = volumeDataType === TicketVolumeDataType.SingleDay ? "time:%Y-%m-%d %H:%M:%S" : "time:%Y-%m-%d";
     return <ResponsiveLine
         data={data}
         enableSlices={false}
         useMesh={true}
         margin={{top: 10, right: 110, bottom: 100, left: 60}}
-        xScale={{format: "%Y-%m-%d", type: "time"}}
-        xFormat="time:%Y-%m-%d"
+        xScale={{format: scaleFormat, type: "time"}}
+        xFormat={xFormat}
         yFormat=" >-.0f"
         enableCrosshair={false}
         curve='linear'
@@ -54,14 +59,12 @@ const HelioResponsiveLine = ({data, tickRotation, toolTipLabelGenerator} : Helio
         }}
         enableGridX={false}
         pointLabelYOffset={-12}
-        tooltip={({ point }) => <ChartTooltip label={toolTipLabelGenerator(point)} point={point}/>}
+        tooltip={({ point }) => <ChartTooltip volumeDataType={volumeDataType} label={toolTipLabelGenerator(point)} point={point}/>}
         enableArea={true}
         axisBottom={{
-            tickValues: "every 1 day",
-            legendOffset: 36,
+            tickValues,
             legendPosition: "middle",
-            tickRotation: tickRotation,
-            renderTick: (tick) =>  <CustomTick tick={tick} tickRotation={tickRotation} />,
+            renderTick: (tick) =>  <CustomTick volumeDataType={volumeDataType} tick={tick} tickRotation={tickRotation} />,
         }}
         legends={[
             {

@@ -11,8 +11,8 @@ export interface DashboardDateFormProps {
 }
 
 const DashboardDateForm = ({onDatesSelected}: DashboardDateFormProps) => {
-    const [selectedStartDate, setSelectedStartDate] = useState<Date>();
-    const [selectedEndDate, setSelectedEndDate] = useState<Date>();
+    const [selectedStartDate, setSelectedStartDate] = useState<Date | undefined>(dayjs().add(-1, 'day').toDate());
+    const [selectedEndDate, setSelectedEndDate] = useState<Date | undefined>(new Date());
     const {t} = useTranslation();
     const {handleSubmit, control, formState, watch} = useForm({
         mode: 'onBlur',
@@ -48,14 +48,19 @@ const DashboardDateForm = ({onDatesSelected}: DashboardDateFormProps) => {
                 calendarHorizontalAlign={CalendarHorizontalAlign.Left}
                 required={true}
                 control={control}
+                value={selectedStartDate}
+                max={new Date()}
                 name='startDate'
+                onChange={(value) => setSelectedStartDate(value)}
                 dataTestId='dashboard-start-date' />
             <ControlledDateInput
                 label='dashboard.timeframes.end_date'
                 calendarHorizontalAlign={CalendarHorizontalAlign.Left}
                 required={true}
+                value={selectedEndDate}
+                onChange={(value) => setSelectedEndDate(value)}
                 control={control}
-                max={new Date(new Date().toDateString())}
+                max={new Date()}
                 name='endDate'
                 dataTestId='dashboard-end-date' />
             <div className='flex justify-center py-4'><Button disabled={!formState.isValid || !isValid()} type='submit'

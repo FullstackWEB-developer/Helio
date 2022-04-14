@@ -117,7 +117,7 @@ const UserFilter = ({isOpen}: {isOpen: boolean}) => {
 
     const jobTitleOptions = utils.convertStringArrayToOptions(jobTitles);
     const departmentOptions = utils.convertStringArrayToOptions(departments);
-    const roleOptions = utils.convertStringArrayToOptions(userRoleList.map(r => r.name));
+    const roleOptions = utils.convertStringArrayToOptions(userRoleList?.map(r => r.name));
     const userStatusOptions: TicketEnumValue[] = userStatusList?.map(s => ({key: s.key, value: t(`users.list_section.status_${s.key === 1 ? 'enabled' : 'disabled'}`)}));
     const displayInvitationStatus = (invitationStatus: UserInvitationStatus): string => {
         switch (invitationStatus) {

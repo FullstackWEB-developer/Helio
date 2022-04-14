@@ -39,6 +39,11 @@ export const selectLoginRequiredDismissed = createSelector(
     state => state.loginRequiredDismissed as boolean
 );
 
+export const selectDashboardFilterEndDate = createSelector(
+    appState,
+    state => state.dashboardFilterEndDate as Date
+);
+
 
 export const selectAppParameter = (state: RootState, key: string): KeyValuePair => {
     return state.appState.appParameters.find((a: KeyValuePair) => a.key === key);

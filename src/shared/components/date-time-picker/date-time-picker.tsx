@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import useComponentVisibility from '@shared/hooks/useComponentVisibility';
 import SvgIcon from '@components/svg-icon/svg-icon';
@@ -286,6 +286,7 @@ const DateTimePicker = React.forwardRef<HTMLInputElement, DateTimePickerProps>((
                     type={inputType}
                     onClick={onInputClick}
                     onChange={onInputValueChange}
+                    autoComplete='off'
                     onFocus={onInputFocus}
                     onBlur={onInputBlur}
                     onKeyPress={onInputPress}
