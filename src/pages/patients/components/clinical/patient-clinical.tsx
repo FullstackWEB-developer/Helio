@@ -5,7 +5,7 @@ import {
     getPatientClinicalDetails,
 } from '@pages/patients/services/patients.service';
 import {useQuery} from 'react-query';
-import {GetPatientClinical, OneMinute} from '@constants/react-query-constants';
+import {GetPatientClinical} from '@constants/react-query-constants';
 import {ClinicalDetails} from '@pages/patients/models/clinical-details';
 import Spinner from '@components/spinner/Spinner';
 import ClinicalLabResults from '@pages/patients/components/clinical/clinical-lab-results';
@@ -19,10 +19,7 @@ const PatientClinical = ({patientId} : PatientClinicalProps) => {
     const { t } = useTranslation();
 
     const {isLoading, isError, data} = useQuery<ClinicalDetails, Error>([GetPatientClinical, patientId], () =>
-            getPatientClinicalDetails(patientId),
-        {
-            staleTime: OneMinute
-        }
+            getPatientClinicalDetails(patientId)
     );
 
     if (isLoading || !data) {
