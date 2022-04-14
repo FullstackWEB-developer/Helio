@@ -294,10 +294,16 @@ await axios.get(utils.getAppParameter('ConnectBaseUrl') + utils.getAppParameter(
     .catch(() => {
     })
     .finally(() => {
+        const auth = store.getState()?.appUserState?.auth;
         store.dispatch(clearAppParameters());
-        getMsalInstance()?.logoutRedirect({
-            postLogoutRedirectUri: '/login'
-        }).then().finally(() => store.dispatch(logOut()));
+        const account = getMsalInstance()?.getAccountByUsername(auth.username);
+        if (!!account) {
+            getMsalInstance()?.logoutRedirect({
+                postLogoutRedirectUri: '/login'
+            }).then().finally(() => store.dispatch(logOut()));
+        } else {
+            store.dispatch(logOut())
+        }
     });
 }
 
