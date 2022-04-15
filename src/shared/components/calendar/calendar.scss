@@ -53,10 +53,30 @@
   border-radius: 0.25rem;
   box-shadow: 0 0.25rem 0.25rem 0 rgba(0, 0, 0, 0.06);
   background-color: var(--color-bg-primary);
+  .highlight {
+    &-today:not(.disabled) {
+      border: 0.0625rem solid var(--color-blue);
+    }
+    &-selected:not(.disabled) {
+      background: var(--color-primary-500);
+      color: var(--color-white);
+    }
+  }
+  .disabled {
+    color: var(--light-text-disabled);
+  }
+  .arrow-disabled {
+    fill: var(--light-text-disabled);
+  }
   &-day {
     &-container {
       width: 2rem;
       height: 2rem;
+      border-radius: 100%;
+      &:hover:not(.highlight-selected):not(.disabled) {
+        cursor: pointer;
+        background: var(--color-secondary-200);
+      }
     }
   }
 }
