@@ -439,36 +439,32 @@ const TicketFilter = ({isOpen}: {isOpen: boolean}) => {
         fetchTickets({});
     }
     const dateFilters = () => {
-        if (watchTimePeriod === timePeriod_DateRange) {
-            return (<div>
-                <ControlledDateInput
-                    control={control}
-                    type='date'
-                    label='tickets.filter.from_date'
-                    name='fromDate'
-                    dataTestId='ticket-filter-from-date'
-                    value={fromDate}
-                    max={new Date(new Date().toDateString())}
-                    isSmallSize={true}
-                    isCalendarPositionComputed
-                    onChange={setFromDate}
-                />
-                <ControlledDateInput
-                    control={control}
-                    type='date'
-                    disabled={!fromDate}
-                    min={fromDate}
-                    isCalendarPositionComputed
-                    label='tickets.filter.to_date'
-                    max={new Date(new Date().toDateString())}
-                    isSmallSize={true}
-                    name='toDate'
-                    dataTestId='ticket-filter-to-date'
-                />
-            </div>);
-        } else {
-            return <span />;
-        }
+        return (<div className={watchTimePeriod === timePeriod_DateRange ? 'block' : 'hidden'}>
+            <ControlledDateInput
+                control={control}
+                type='date'
+                label='tickets.filter.from_date'
+                name='fromDate'
+                dataTestId='ticket-filter-from-date'
+                value={fromDate}
+                max={new Date(new Date().toDateString())}
+                isSmallSize={true}
+                isCalendarPositionComputed
+                onChange={setFromDate}
+            />
+            <ControlledDateInput
+                control={control}
+                type='date'
+                disabled={!fromDate}
+                min={fromDate}
+                isCalendarPositionComputed
+                label='tickets.filter.to_date'
+                max={new Date(new Date().toDateString())}
+                isSmallSize={true}
+                name='toDate'
+                dataTestId='ticket-filter-to-date'
+            />
+        </div>);
     }
 
     const setSelectedTags = (values: string[]) => {
