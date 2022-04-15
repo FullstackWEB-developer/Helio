@@ -4,9 +4,9 @@ import {GetAgentStatus, GetDashboard} from '@constants/react-query-constants';
 import {
     getAgentsStatus,
     getDashboardData,
-    getEnumByType,
-    getLookupValues
+    getEnumByType
 } from '@pages/tickets/services/tickets.service';
+import { getLookupValues } from '@shared/services/lookups.service';
 import {useTranslation} from 'react-i18next';
 import './dashboard.scss';
 import {DropdownModel} from '@components/dropdown/dropdown.models';

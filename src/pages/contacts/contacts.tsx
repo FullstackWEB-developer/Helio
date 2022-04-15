@@ -25,7 +25,7 @@ import Spinner from '@components/spinner/Spinner';
 import {selectGlobalLoading} from '@shared/store/app/app.selectors';
 import './contacts.scss';
 import {ContactType} from './models/ContactType';
-import {getLookupValues} from '@pages/tickets/services/tickets.service';
+import { getLookupValues } from '@shared/services/lookups.service';
 import {selectLookupValuesAsOptions} from '@pages/tickets/store/tickets.selectors';
 
 interface ContactProps { }

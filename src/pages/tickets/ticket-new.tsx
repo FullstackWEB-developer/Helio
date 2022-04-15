@@ -26,7 +26,8 @@ import {
     selectLocationsAsOptions,
     selectUserOptions
 } from '@shared/store/lookups/lookups.selectors';
-import {createTicket, getEnumByType, getLookupValues} from './services/tickets.service';
+import {createTicket, getEnumByType} from './services/tickets.service';
+import { getLookupValues } from '@shared/services/lookups.service';
 import {getContactById, searchContactsByName} from '@shared/services/contacts.service';
 import {getLocations, getUserList} from '@shared/services/lookups.service';
 import {Prompt, useHistory} from 'react-router-dom';

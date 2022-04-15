@@ -8,7 +8,8 @@ import {
     selectTicketQueryType
 } from './store/tickets.selectors';
 import React, {useCallback, useEffect, useState} from 'react';
-import {getList, getLookupValues} from './services/tickets.service';
+import {getList} from './services/tickets.service';
+import { getLookupValues } from '@shared/services/lookups.service';
 import withErrorLogging from '../../shared/HOC/with-error-logging';
 import {Ticket} from './models/ticket';
 import TicketsHeader from './tickets-header';

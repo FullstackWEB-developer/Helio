@@ -10,13 +10,13 @@ import Radio from '@components/radio/radio';
 import utc from 'dayjs/plugin/utc';
 import dayjs from 'dayjs';
 import {useDispatch, useSelector} from 'react-redux';
-import {getLookupValues} from '@pages/tickets/services/tickets.service';
 import {selectLookupValues} from '@pages/tickets/store/tickets.selectors';
 import utils from '@shared/utils/utils';
 import {TicketLogRequestModel} from '@shared/models/ticket-log.model';
 import {CommunicationDirection} from '@shared/models';
 import {setIsCallsLogFiltered} from '@pages/calls-log/store/calls-log.slice';
 import {setIsChatLogFiltered} from '@pages/chat-log/store/chat-log.slice';
+import { getLookupValues } from '@shared/services/lookups.service';
 
 const TIME_PERIOD_DATE_RANGE_OPTION = '3';
 const DEFAULT_ALL_OPTION = {key: 'all', value: undefined};

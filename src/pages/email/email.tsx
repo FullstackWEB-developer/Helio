@@ -1,6 +1,7 @@
 import EmailConversation from '@pages/email/components/email-conversation/email-conversation';
 import './email.scss'
-import {getEnumByType, getLookupValues} from '@pages/tickets/services/tickets.service';
+import {getEnumByType} from '@pages/tickets/services/tickets.service';
+import { getLookupValues } from '@shared/services/lookups.service';
 import {useEffect} from 'react';
 import {useDispatch} from 'react-redux';
 import {useParams} from 'react-router';

@@ -61,7 +61,8 @@
     "default_avatar": "#",
     "voice": "Voice",
     "chat": "Chat",
-    "bot": "Bot"
+    "bot": "Bot",
+    "delete": "Delete"
   },
   "app": {
     "error_loading_parameters": "Error loading parameters, please try again later",
@@ -1837,10 +1838,31 @@
     "call_center": "Call Center",
     "security": "Security",
     "general": "General",
-    "cancellation_reason": {
-      "title": "Appointment Cancelation Settings",
-      "description": "Map and configure EHR/EMR appointment cancelation types to how they will appear to patients.\n\nIf voice bot can not recognize the reason for canceling or rescheduling an appointment, chose default options on how they should be entered/mapped in the EMR/EHR system.",
-      "error_fetching_reasons": "Fetching cancellation reasons failed. Please try again."
-    }
+    "tickets": "Tickets",
+    "ticket_department": "Departments/Groups"
+  },
+  "ticket_department": {
+    "title": "Departments/Groups",
+    "description": "Use setting below to manage departments or groups in your organization.",
+    "table_header": "Departments",
+    "create_department": "Add Department",
+    "table": {
+      "department_name": "Department Name"
+    },
+    "add_department": "Add Department",
+    "edit_department": "Edit Department",
+    "input_label": "Department Name",
+    "delete_error": "Error while deleting record, please try again later.",
+    "create_error": "Error while adding record, please try again later.",
+    "update_error": "Error while updating record, please try again later.",
+    "get_error": "Error while getting records, please try again later.",
+    "create_success": "Successfully added.",
+    "update_success": "Successfully updated.",
+    "delete_success": "Successfully deleted."
+  },
+  "cancellation_reason": {
+    "title": "Appointment Cancelation Settings",
+    "description": "Map and configure EHR/EMR appointment cancelation types to how they will appear to patients.\n\nIf voice bot can not recognize the reason for canceling or rescheduling an appointment, chose default options on how they should be entered/mapped in the EMR/EHR system.",
+    "error_fetching_reasons": "Fetching cancellation reasons failed. Please try again."
   }
 }

@@ -5,7 +5,7 @@ import {RegistrationStep} from '../models/registration-step.enum';
 import {useTranslation} from 'react-i18next';
 import RegistrationForm from './components/registration-form';
 import {useDispatch} from 'react-redux';
-import {getLookupValues} from '@pages/tickets/services/tickets.service';
+import { getLookupValues } from '@shared/services/lookups.service';
 import {clearVerifiedPatient} from '@pages/patients/store/patients.slice';
 import {clearRedirectLink} from '../verify-patient/store/verify-patient.slice';
 import {logOut} from '@shared/store/app-user/appuser.slice';

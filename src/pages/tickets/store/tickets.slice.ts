@@ -87,6 +87,7 @@ const ticketsSlice = createSlice({
       if (!state.lookupValues) {
         state.lookupValues = [];
       }
+      state.lookupValues = state.lookupValues.filter((a) => a.key !== payload.key);
       state.lookupValues.push(lookupValue);
     },
     startGeLookupValuesRequest(state) {

@@ -8,15 +8,12 @@ import store from '../../../app/store';
 import {
     add,
     addPaging,
-    endGetLookupValuesRequest,
     endGetTicketEnumRequest,
     setFailure,
-    setLookupValues,
     setSearchTerm,
     setTicketEnum,
     setTicketFilter,
     setTicketListQueryType,
-    startGeLookupValuesRequest,
     startGetTicketEnumRequest
 } from '../store/tickets.slice';
 import {Ticket} from '../models/ticket';
@@ -36,8 +33,7 @@ import {
     AgentStatus,
     PagedList,
     QueueCurrentMetricQuery,
-    QueueMetric,
-    QuickConnectExtension
+    QueueMetric
 } from '@shared/models';
 import {CallbackTicket} from '@pages/tickets/models/callback-ticket.model';
 import {PerformanceMetric} from '@pages/dashboard/models/performance-metric.model';
@@ -167,25 +163,6 @@ export const getEnumByType = (enumType: string) => {
                 .catch(error => {
                     logger.error(`Failed getting ${enumType}`, error);
                     dispatch(endGetTicketEnumRequest('ticket-new.error'));
-                });
-        }
-    }
-}
-
-export const getLookupValues = (key: string) => {
-    const getLookupValuesUrl = `/lookups/values/${key}`;
-    const stateLookupValues = store.getState().ticketState.lookupValues?.find((a: LookupValue) => a.key === key) || undefined;
-    return async (dispatch: Dispatch) => {
-        if (!stateLookupValues) {
-            dispatch(startGeLookupValuesRequest());
-            await Api.get(getLookupValuesUrl)
-                .then(response => {
-                    dispatch(setLookupValues({key: key, result: response.data}));
-                    dispatch(endGetLookupValuesRequest(''));
-                })
-                .catch(error => {
-                    logger.error(`Failed getting Lookup values`, error);
-                    dispatch(endGetLookupValuesRequest('ticket-new.error'));
                 });
         }
     }

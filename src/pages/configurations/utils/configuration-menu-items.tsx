@@ -27,6 +27,14 @@ export const ConfigurationMenuItems = [{
         url: "sms-notification-templates",
     }]
 },{
+    id: "configuration-menu-item-10",
+    title: 'configuration.tickets',
+    children: [{
+        id: "configuration-menu-item-11",
+        title: 'configuration.ticket_department',
+        url: "ticket-department",
+    }]
+},{
     id: "configuration-menu-item-7",
     title: 'configuration.call_center',
     url: "call-center",

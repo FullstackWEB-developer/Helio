@@ -3,7 +3,8 @@ import {selectEnumValues, selectLookupValues} from '@pages/tickets/store/tickets
 import {useEffect, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import classnames from 'classnames';
-import {getEnumByType, getLookupValues} from '@pages/tickets/services/tickets.service';
+import {getEnumByType} from '@pages/tickets/services/tickets.service';
+import { getLookupValues } from '@shared/services/lookups.service';
 import {ticketListRelativeTimeFormat} from '@pages/sms/utils';
 import {useTranslation} from 'react-i18next';
 import './sms-new-message-existing-ticket-list.scss';

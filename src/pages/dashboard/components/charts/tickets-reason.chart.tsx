@@ -1,7 +1,7 @@
 import {BasicStatistic} from '@pages/dashboard/models/basic-statistic.model';
 import {useTranslation} from 'react-i18next';
 import {useEffect} from 'react';
-import {getLookupValues} from '@pages/tickets/services/tickets.service';
+import { getLookupValues } from '@shared/services/lookups.service';
 import {useDispatch, useSelector} from 'react-redux';
 import {selectLookupValues} from '@pages/tickets/store/tickets.selectors';
 import DashboardPieChart from '@pages/dashboard/components/charts/dashboard-pie-chart';

@@ -14,7 +14,7 @@ import ConversationHeaderPatientDetails from './conversation-header-patient-deta
 import ConversationHeaderQuickActionsStripe from './conversation-header-quick-actions-stripe';
 import ConversationHeaderContactDetails from './conversation-header-contact-details';
 import {useDispatch} from 'react-redux';
-import {getLookupValues} from '@pages/tickets/services/tickets.service';
+import { getLookupValues } from '@shared/services/lookups.service';
 import {ContactType} from '@pages/contacts/models/ContactType';
 import {useTranslation} from 'react-i18next';
 

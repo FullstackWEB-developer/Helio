@@ -86,7 +86,7 @@ const Navigation = () => {
             permission: 'BlockedAccess.Access'
         }, {
             title: t('navigation.configurations'),
-            link: `${ConfigurationsPath}/appointment-type`,
+            link: `${ConfigurationsPath}`,
             id: 'navigation-configurations',
             icon: <SvgIcon type={Icon.Configurations} fillClass='active-item-icon' />,
             permission: 'Configurations.Access'
