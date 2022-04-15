@@ -8,7 +8,7 @@ export const ConfigurationMenuItems = [{
     },{
         id: "configuration-menu-item-2",
         title: 'configuration.appointment_cancellation',
-        url: "appointment-cancellation",
+        url: "cancellation-reasons",
     }]
 },{
     id: "configuration-menu-item-3",

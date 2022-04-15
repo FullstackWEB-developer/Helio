@@ -111,7 +111,13 @@ export const rescheduleAppointment = async ({appointmentId, newAppointmentId, pa
 }
 
 export const getCancellationReasons = async () => {
-     const url = `${appointmentsBaseUrl}/lookup/cancellation-reasons`;
+     const url = `${appointmentsBaseUrl}/cancellationreason`;
+     const result = await Api.get(url);
+     return result.data;
+}
+
+export const getCancellationReasonsEditable = async () => {
+     const url = `${appointmentsBaseUrl}/cancellationreason/editable-cancellation-reasons`;
      const result = await Api.get(url);
      return result.data;
 }

@@ -1829,13 +1829,18 @@
     "title": "Configurations",
     "appointments": "Appointments",
     "appointment_type": "Appointment Type",
-    "appointment_cancellation" : "Appointment Cancellation",
+    "appointment_cancellation" : "Cancellation Reasons",
     "notifications": "Notifications",
     "appointment_reminder": "Appointment Reminder",
     "email_notification_templates": "Email Notification Templates",
     "sms_notification_templates": "SMS Notification Templates",
     "call_center": "Call Center",
     "security": "Security",
-    "general": "General"
+    "general": "General",
+    "cancellation_reason": {
+      "title": "Appointment Cancelation Settings",
+      "description": "Map and configure EHR/EMR appointment cancelation types to how they will appear to patients.\n\nIf voice bot can not recognize the reason for canceling or rescheduling an appointment, chose default options on how they should be entered/mapped in the EMR/EHR system.",
+      "error_fetching_reasons": "Fetching cancellation reasons failed. Please try again."
+    }
   }
 }
