@@ -129,17 +129,6 @@ const ControlledInput = ({
         control.setValue(name, value, {shouldValidate: true});
     }
 
-    const onBlur = (e: React.FocusEvent<HTMLInputElement>, controllerProps: ControllerRenderProps<Record<string, any>>) => {
-        if(e?.target?.value){
-            control.setValue(name, e.target.value.trim(), {shouldValidate: true});
-        }
-        if (props.onBlur) {
-            props.onBlur(e);
-        }
-        else {
-            controllerProps.onBlur();
-        }
-    }
     return (<Controller
         name={name}
         control={control}
@@ -168,7 +157,7 @@ const ControlledInput = ({
                 disabled={props.disabled}
                 data-test-id={dataTestId}
                 onKeyDown={inputKeyDown}
-                onBlur={(e) => onBlur(e, controllerProps)}
+                onBlur={props.onBlur || controllerProps.onBlur}
                 onChange={(event) => onInputChanged(event, controllerProps)}
                 onChangeDate={event => onInputDateChanged(event, controllerProps)}
                 autoSuggestDropdown={props.autosuggestDropdown}
