@@ -106,7 +106,7 @@ const SmsChatSummary = ({
                 </div>
                 <div className="flex flex-row justify-between">
                     <div className='w-full'>
-                        <div className={classnames('pr-3.5', {'sms-summary-message-read': isRead, 'sms-summary-message-unread': !isRead})}>
+                        <div className={classnames('pr-3.5', {'sms-summary-message-read body3': isRead, 'sms-summary-message-unread subtitle3': !isRead})}>
                             <HighlighterText text={messageSummary} highlighterText={searchTerm} />
                         </div>
                         {searchFilterMatch && searchFilterMatch.length > 0 &&

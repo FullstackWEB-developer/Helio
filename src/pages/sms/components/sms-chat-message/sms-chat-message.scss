@@ -1,10 +1,7 @@
-@import "./../../../../themes/base/typography";
-
 .sms-chat-message {
   max-width: 41.5rem;
 
   &-body {
-    @extend .body2;
     max-width: 34.5rem;
     border-radius: 1.25rem;
     line-height: 1.25rem;

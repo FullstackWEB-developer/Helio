@@ -8,6 +8,7 @@ import utils from '@shared/utils/utils';
 import SvgIcon, {Icon} from '@components/svg-icon';
 import SearchboxAddIcon from '@components/searchbox/components/searchbox-add-icon';
 import {ContactType} from '@pages/contacts/models/ContactType';
+import ElipsisTooltipTextbox from '@components/elipsis-tooltip-textbox/elipsis-tooltip-textbox';
 
 interface SearchBoxResultsProps {
     items?: ContactExtended[];
@@ -35,7 +36,12 @@ const SearchboxContactsResults = ({items, error, onSelect, type, paging, onPageC
             },{
                 title: 'searchbox_result.email',
                 widthClass: 'w-2/12',
-                field: 'emailAddress'
+                field: 'emailAddress',
+                render:(_, record: ContactExtended) => {
+                    if(record.emailAddress){
+                        return (<ElipsisTooltipTextbox value={record.emailAddress} asSpan={true}/>)
+                    }
+                }
             },{
                 title: 'searchbox_result.phone',
                 widthClass: 'w-1/6',

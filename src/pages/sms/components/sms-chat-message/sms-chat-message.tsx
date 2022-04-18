@@ -85,7 +85,7 @@ const SmsChatMessageTime = ({date}: {date: Date}) => (
 );
 
 const SmsChatMessageBody = ({body}: {body: string}) => (
-    <div className="sms-chat-message-body px-4 py-2.5 mx-2">{body}</div>
+    <div className="sms-chat-message-body body2 px-4 py-2.5 mx-2">{body}</div>
 );
 
 
