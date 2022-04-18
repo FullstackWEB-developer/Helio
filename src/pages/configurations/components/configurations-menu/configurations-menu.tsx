@@ -2,7 +2,7 @@ import Collapsible from '@components/collapsible';
 import classnames from 'classnames';
 import {useTranslation} from 'react-i18next';
 import { Link } from 'react-router-dom';
-import {ConfigurationMenuItems} from '../utils/configuration-menu-items';
+import {ConfigurationMenuItems} from '../../utils/configuration-menu-items';
 import './configurations-menu.scss';
 
 interface ConfigurationsMenuProps {
@@ -19,13 +19,13 @@ const ConfigurationsMenu = ({activeUrl}: ConfigurationsMenuProps) => {
 
     }
     return (
-        <div className='configuration-menu h-full'>
+        <div className='configuration-menu p-6 pr-4 h-full'>
             <h5 className='pb-6'>{t('configuration.title')}</h5>
             {configurationMenu.map(item => {
                 if(item.children){
                     return <Collapsible key={item.id} title={t(item.title)} isOpen={true} headerClassName={'h-10'} titleClassName={'subtitle2'}>
                                 {item.children.map(child => {
-                                    return <Link to={`/configurations/${child.url}`}>
+                                    return <Link key={child.id} to={`/configurations/${child.url}`}>
                                                 <div key={child.id} id={child.id} className={`${getClassName(child.url)} body2 pl-6 h-8`}>{t(child.title)}</div>
                                             </Link>
                                 })}

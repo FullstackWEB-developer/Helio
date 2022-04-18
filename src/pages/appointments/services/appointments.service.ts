@@ -5,6 +5,7 @@ import utils from '@shared/utils/utils';
 import {AppointmentCancellationModel} from '@pages/external-access/appointment/models/appointment-cancellation.model';
 import {AppointmentSlotRequest, AppointmentType} from '@pages/external-access/appointment/models';
 import {CreateAppointmentRequest} from '../models/create-appointment-request';
+import { AppointmentTypeSummary } from '../models/appointment-type-summary';
 const itemCount = 100;
 const appointmentsBaseUrl = '/appointments';
 
@@ -30,6 +31,12 @@ export const getAppointmentNotes = async (appointments: Appointment[]) => {
 
 export const getAppointmentTypeById = async (appointmentTypeId: number): Promise<AppointmentType> => {
      const url = `${appointmentsBaseUrl}/appointmenttypes/${appointmentTypeId}`;
+     const result = await Api.get(url);
+     return result.data;
+}
+
+export const getAppointmentTypeSummary = async (): Promise<AppointmentTypeSummary[]> => {
+     const url = `${appointmentsBaseUrl}/appointmenttypes/summary`;
      const result = await Api.get(url);
      return result.data;
 }

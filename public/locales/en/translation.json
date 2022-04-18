@@ -1839,7 +1839,23 @@
     "security": "Security",
     "general": "General",
     "tickets": "Tickets",
-    "ticket_department": "Departments/Groups"
+    "ticket_department": "Departments/Groups",
+    "appointment_type_list":{
+      "title": "Appointment Type",
+      "description": "You need to map and configure EHR/EMR appointment types to Helio appointment types. You need at least 1 Helio appointment type in order for patients to be able to select and schedule appointments through Helio application.",
+      "not_available": "N/A",
+      "not_exists_on_emr": "This appointment type has been removed from EHR/EMR. Appointment type mapping will remain in Helio until configuration is changed.",
+      "column_names": {
+        "ehr_emr_appointment_id": "EHR/EMR Appointment ID",
+        "helio_appointment_name": "Helio Appointment Name",
+        "description": "Description"
+      }
+    },
+    "cancellation_reason": {
+      "title": "Appointment Cancelation Settings",
+      "description": "Map and configure EHR/EMR appointment cancelation types to how they will appear to patients.\n\nIf voice bot can not recognize the reason for canceling or rescheduling an appointment, chose default options on how they should be entered/mapped in the EMR/EHR system.",
+      "error_fetching_reasons": "Fetching cancellation reasons failed. Please try again."
+    }
   },
   "ticket_department": {
     "title": "Departments/Groups",
@@ -1859,10 +1875,5 @@
     "create_success": "Successfully added.",
     "update_success": "Successfully updated.",
     "delete_success": "Successfully deleted."
-  },
-  "cancellation_reason": {
-    "title": "Appointment Cancelation Settings",
-    "description": "Map and configure EHR/EMR appointment cancelation types to how they will appear to patients.\n\nIf voice bot can not recognize the reason for canceling or rescheduling an appointment, chose default options on how they should be entered/mapped in the EMR/EHR system.",
-    "error_fetching_reasons": "Fetching cancellation reasons failed. Please try again."
   }
 }

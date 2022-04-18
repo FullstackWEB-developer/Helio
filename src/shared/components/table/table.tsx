@@ -57,6 +57,14 @@ const Table = ({model}: TableProps) => {
         }
     }
 
+    const isPageable = (position: string) => {
+        if(model.paginationPosition){
+            return model.pageable && (model.paginationPosition === position || model.paginationPosition === 'both') && rows.length > pageSize;
+        }else if(position === 'bottom'){
+            return model.pageable && rows.length > pageSize;
+        }    
+    }
+
     let pagination: Paging = {
         page: currentPage,
         totalPages: Math.ceil(rows.length/ pageSize),
@@ -65,10 +73,13 @@ const Table = ({model}: TableProps) => {
     }
 
     return <div className={`flex flex-col ${wrapperClassName}`}>
+        {isPageable('top') && <div className='pb-4 flex justify-end'>
+            <Pagination value={pagination} onChange={(data) => setCurrentPage(data.page)} />
+        </div>}
         {title && <TableTitle model={title} size={size} />}
         {!hideHeader && <TableHeader size={size} className={model.headerClassName} headers={columns} />}
         {getContent()}
-        {model.pageable && rows.length > pageSize && <div className='pt-4 flex justify-end'>
+        {isPageable('bottom') && <div className='pt-4 flex justify-end'>
             <Pagination value={pagination} onChange={(data) => setCurrentPage(data.page)} />
         </div>}
     </div>;

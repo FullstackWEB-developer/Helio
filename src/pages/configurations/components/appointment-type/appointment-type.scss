@@ -1,0 +1,21 @@
+.appointment-type{
+  width: calc(100% - 16.5rem);
+}
+
+.appointment-type-header{
+  padding-bottom: 1.625rem;
+}
+
+.not-available{
+  color: var(--rgba-color-062);
+}
+
+.exists-on-emr{
+  color: var(--rgba-color-038)
+}
+
+.ellipsis-row{
+  -webkit-line-clamp: 2;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}

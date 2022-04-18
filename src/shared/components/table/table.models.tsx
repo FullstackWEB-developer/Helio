@@ -18,6 +18,7 @@ export interface TableModel {
     emptyMessage?: string;
     showEmptyMessage?: boolean;
     size?: TableSize;
+    paginationPosition?: 'top' | 'bottom' | 'both';
 }
 
 export interface TableColumnModel {

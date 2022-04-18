@@ -79,3 +79,4 @@ export const GetPatientRatings = 'get-patient-ratings';
 export const GetPatientTicketRating = 'get-patient-ticket-rating';
 export const GetUserDetail = 'get-user-details';
 export const GetInternalQueues = 'get-internal-queues';
+export const GetAppointmentTypeSummary = 'get-appointment-type-summary';

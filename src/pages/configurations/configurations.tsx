@@ -1,7 +1,8 @@
 import {useCallback} from 'react';
 import { useParams } from 'react-router';
+import AppointmentType from './components/appointment-type/appointment-type';
+import ConfigurationsMenu from './components/configurations-menu/configurations-menu';
 import CancellationReasonConfig from './components/cancellation-reason-config';
-import ConfigurationsMenu from './components/configurations-menu';
 import TicketDepartment from './components/ticket-department/ticket-department';
 
 const Configurations = () => {
@@ -12,13 +13,15 @@ const Configurations = () => {
                 return <CancellationReasonConfig />
             case "ticket-department":
                 return <TicketDepartment />
+            case "appointment-type":
+                return <AppointmentType />
             default:
-                return <div>{type}</div>
+                return <AppointmentType />
         }
     }, [type]);
     return (
         <div className="flex w-full h-full overflow-y-auto">
-            <ConfigurationsMenu activeUrl={type}></ConfigurationsMenu>
+            <ConfigurationsMenu activeUrl={type ? type : 'appointment-type'}></ConfigurationsMenu>
             {
                 renderBodyByActiveRoute()
             }
