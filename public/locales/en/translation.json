@@ -1824,7 +1824,11 @@
     "chat": "Chats",
     "sms" : "SMS Messages",
     "email": "Email Messages",
-    "description": "Turn on browser notifications to be notified of incoming calls, messages and emails."
+    "description": "Turn on browser notifications to be notified of incoming calls, messages and emails.",
+    "have_unread_email": "You have unread email messages",
+    "have_unread_sms": "You have unread SMS messages",
+    "have_unread_email_body": "You have new email messages. \nClick here to view on your inbox",
+    "have_unread_sms_body": "You have new SMS messages. \nClick here to view on your inbox"
   },
   "configuration": {
     "title": "Configurations",

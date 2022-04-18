@@ -15,6 +15,7 @@ import SpinnerOverlay from '@components/spinner-overlay/spinner-overlay';
 import {useSelector} from 'react-redux';
 import {selectGlobalLoading} from '@shared/store/app/app.selectors';
 import ReLoginModal from '@shared/layout/components/relogin-modal';
+import EmailSmsNotifications from '@shared/layout/components/email-sms-notifications';
 
 interface LayoutProps {
     children: React.ReactNode
@@ -65,6 +66,7 @@ const Layout = (props: LayoutProps) => {
                             </div>
                             <Snackbar position={SnackbarPosition.TopRight} />
                             <Snackbar position={SnackbarPosition.TopCenter} />
+                            <EmailSmsNotifications />
                         </DndContainer>
                     </DndProvider>
                 </div>
