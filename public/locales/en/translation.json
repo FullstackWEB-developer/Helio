@@ -463,7 +463,7 @@
     "search_heading_result": "Patient search results"
   },
   "redirect_link": {
-    "link_not_active": "This link has expired. Please send us a new SMS and we will assist you.",
+    "link_not_active": "This link has expired. Please send us a new request and we will assist you.",
     "is_error": "Apologies, an error occurred. Please try your query again.",
     "link_not_valid": "This link seems not to be a valid link. Please check the URL and try again."
   },
