@@ -71,6 +71,12 @@ const Header = ({ headsetIconRef }: { headsetIconRef: React.RefObject<HTMLDivEle
             dispatch(toggleUserProfileMenu(false));
         }
     });
+
+    customHooks.useOutsideClick([iconContainerRef], () => {
+        if (isErrorToolTipVisible) {
+            setErrorToolTipVisible(false);
+        }
+    });
     return (
         <header className='flex flex-row items-center border-b md:pl-6 bg-primary text-primary'>
             <div className='flex flex-row justify-between w-full'>
