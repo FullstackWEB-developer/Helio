@@ -99,8 +99,15 @@ const AppointmentType = () => {
                 widthClass: 'w-10 flex items-center justify-center h-full',
                 render: (id: string, row: AppointmentTypeSummary) => {
                     return (<SvgIcon type={Icon.Edit} className={`icon-medium  ${row.existsOnEmr ? 'cursor-pointer' : 'cursor-not-allowed'}`} fillClass={row.existsOnEmr ? 'edit-icon' : 'rgba-038-fill'} onClick={() => {
-                        if(row.existsOnEmr)
-                            history.push(`${ConfigurationsPath}/appointment-type/${id}`)
+                        if(row.existsOnEmr){
+                            const pathName = `${ConfigurationsPath}/appointment-type/${id}`;
+                            history.push({
+                                pathname: pathName,
+                                state: {
+                                    nameOnEmr: row.nameOnEmr
+                                }
+                            });
+                        }
                     }}/>);
                 }
             }
