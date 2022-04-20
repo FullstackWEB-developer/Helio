@@ -74,6 +74,12 @@ const ExtensionsContext = () => {
             list = list.concat(busyAgents.sort((a,b) => a?.queueName?.localeCompare(b?.queueName)));
         }
 
+        let afterWorkAgents = items.filter(a=> a.queueType === AgentType && a.connectStatus === UserStatus.AfterWork);
+        if (!!afterWorkAgents && afterWorkAgents.length > 0)
+        {
+            list = list.concat(afterWorkAgents.sort((a,b) => a?.queueName?.localeCompare(b?.queueName)));
+        }
+
         let queues = items.filter(a=> a.queueType === QueueType);
         if (!!queues && queues.length > 0)
         {
