@@ -60,6 +60,7 @@ import utils from '@shared/utils/utils';
 import IncomingTicketMessageUpdate from '@shared/websockets/incoming-ticket-message-update';
 import VerifiedPatientGuard from '@components/verified-patient-guard/verified-patient-guard';
 import useBrowserNotification from '@shared/hooks/useBrowserNotification';
+import TicketMessageReadUpdate from '@shared/websockets/ticket-message-read';
 const SearchResults = React.lazy(() => import('../shared/components/search-bar/components/search-results'));
 const PatientChart = React.lazy(() => import('@pages/patients/patient-chart'));
 const VerifyRedirectLink = React.lazy(() => import('@pages/external-access/verify-patient/verify-redirect-link'));
@@ -193,6 +194,7 @@ function App() {
                 <Layout>
                     <RealTimeUserStatusUpdate />
                     <IncomingTicketMessageUpdate />
+                    <TicketMessageReadUpdate />
                     <GuardedRoute exact path='/dashboard' component={Dashboard} />
                     <GuardedRoute exact path={TicketsPath} component={withSuspense(TicketList)} />
                     <GuardedRoute exact path={`${TicketsPath}/new`} component={withSuspense(TicketNew)} />
