@@ -1,6 +1,7 @@
 import React from 'react';
 import {Trans, useTranslation} from 'react-i18next';
 import utils from '@shared/utils/utils';
+import HipaaWarningModal from '../shared/hipaa-warning-modal';
 
 const AppointmentCanceled = () => {
     const {t} = useTranslation();
@@ -18,6 +19,7 @@ const AppointmentCanceled = () => {
                 <a rel='noreferrer' target='_self' href={utils.getAppParameter('ChatLink')}>Chat</a>
             </Trans>
         </div>
+        <HipaaWarningModal actionTranslation='external_access.appointments.appointment_canceled' />
     </div>
 }
 

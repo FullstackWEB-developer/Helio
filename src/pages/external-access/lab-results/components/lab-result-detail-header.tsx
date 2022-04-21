@@ -15,6 +15,7 @@ import {GetLabResultDetailImage, GetLabResultsProviderPicture} from '@constants/
 import {selectVerifiedPatent} from '@pages/patients/store/patients.selectors';
 import {LabResultDetailPage} from '../models/lab-result-detail-page.model';
 import {LabResultsPath} from '@app/paths';
+import HipaaWarningModal from '@pages/external-access/shared/hipaa-warning-modal';
 
 const LabResultDetailHeader = ({labResultDetail}: {labResultDetail: LabResultDetail}) => {
     const {t} = useTranslation();
@@ -23,8 +24,10 @@ const LabResultDetailHeader = ({labResultDetail}: {labResultDetail: LabResultDet
     const verifiedPatient = useSelector(selectVerifiedPatent);
     const queryClient = useQueryClient();
     const [preparingPdf, setPreparingPdf] = useState(false);
+    const [pdfDownloaded, setPdfDownloaded] = useState(false);
 
     const downloadPdf = async () => {
+        setPdfDownloaded(false);
         setPreparingPdf(true);
         const providerImage: string | undefined = queryClient.getQueryData([GetLabResultsProviderPicture, labResultDetail.providerId]);
         const pages: {contentType: string, content: string}[] = [];
@@ -48,6 +51,7 @@ const LabResultDetailHeader = ({labResultDetail}: {labResultDetail: LabResultDet
         const blob = await asPdf.toBlob();
         saveAs(blob, `lab-result-${labResultDetail.labResultId}.pdf`);
         setPreparingPdf(false);
+        setPdfDownloaded(true);
     }
     return (
         <div className="flex flex-col mb-6">
@@ -67,6 +71,9 @@ const LabResultDetailHeader = ({labResultDetail}: {labResultDetail: LabResultDet
             <h4>
                 {labResultDetail.description || ''}
             </h4>
+            {
+                pdfDownloaded && <HipaaWarningModal actionTranslation='external_access.lab_results.lab_results_download_success' />
+            }
         </div>
     )
 }

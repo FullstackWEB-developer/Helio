@@ -4,6 +4,7 @@ import SvgIcon from '@components/svg-icon/svg-icon';
 import {Icon} from '@components/svg-icon/icon';
 import {Link} from 'react-router-dom';
 import {ViewMedicationsPath} from '@app/paths';
+import HipaaWarningModal from '../shared/hipaa-warning-modal';
 
 const RequestRefillConfirmation = () => {
     const {t} = useTranslation();
@@ -27,6 +28,7 @@ const RequestRefillConfirmation = () => {
         <div className='pt-9 pb-8'>
             {t('external_access.medication_refill.refill_request_sent_details')}
         </div>
+        <HipaaWarningModal actionTranslation='external_access.medication_refill.refill_request_sent' />
     </div>
 }
 

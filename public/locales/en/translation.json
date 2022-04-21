@@ -62,7 +62,9 @@
     "voice": "Voice",
     "chat": "Chat",
     "bot": "Bot",
-    "delete": "Delete"
+    "delete": "Delete",
+    "close_window_title": "Close window",
+    "close_window_message": "{{action}} If you have completed your request, please close this form."
   },
   "app": {
     "error_loading_parameters": "Error loading parameters, please try again later",
@@ -990,7 +992,8 @@
       "error": "We apologize for the inconvenience. We cannot retrieve your results at the moment. Please call our office during business hours and we will assist you or try again later.",
       "select_provider": "Provider",
       "message_success": "Your message was sent.",
-      "message_error": "Sending message failed. Please try again."
+      "message_error": "Sending message failed. Please try again.",
+      "lab_results_download_success": "Lab result successfully downloaded to your device."
     },
     "feedbacks": {
       "title": "Please rate your recent experience with CWC.",

@@ -18,6 +18,7 @@ import customParseFormat from 'dayjs/plugin/customParseFormat';
 import Spinner from '@components/spinner/Spinner';
 import {useHistory} from 'react-router-dom';
 import ProviderPicture from '../components/provider-picture';
+import HipaaWarningModal from '@pages/external-access/shared/hipaa-warning-modal';
 
 const AppointmentRescheduled = () => {
     dayjs.extend(customParseFormat);
@@ -126,6 +127,7 @@ const AppointmentRescheduled = () => {
                 <a rel='noreferrer' target='_blank' href={`https://maps.google.com/?q=${department?.latitude},${department?.longitude}`}>Get directions</a> to your appointment location.
             </Trans>
         </div>
+        <HipaaWarningModal actionTranslation='external_access.appointments.appointment_scheduled' />
     </div>
 
 }

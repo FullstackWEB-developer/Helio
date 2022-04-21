@@ -18,10 +18,11 @@ export interface ConfirmationProps {
     className?: string;
     messageClassName?: string;
     isCloseButtonDisabled?: boolean;
+    isDraggable?: boolean;
 }
 
 const Confirmation = ({title, onOk, onCancel, onClose, message = '', className, messageClassName, okButtonLabel = 'common.ok', cancelButtonLabel = 'common.cancel',
-    displayCancel = true, isOpen, closeableOnEscapeKeyPress, hasOverlay = false, isLoading = false, isCloseButtonDisabled = false}: ConfirmationProps) => {
+    displayCancel = true, isOpen, closeableOnEscapeKeyPress, hasOverlay = false, isLoading = false, isCloseButtonDisabled = false, isDraggable = false}: ConfirmationProps) => {
     const {t} = useTranslation();
     const close = () => {
         if (onClose) {
@@ -40,6 +41,7 @@ const Confirmation = ({title, onOk, onCancel, onClose, message = '', className, 
             title={t(title)}
             className={className}
             hasOverlay={hasOverlay}
+            isDraggable={isDraggable}
             isOpen={isOpen}
             isClosable={!isCloseButtonDisabled}
             closeableOnEscapeKeyPress={closeableOnEscapeKeyPress}
