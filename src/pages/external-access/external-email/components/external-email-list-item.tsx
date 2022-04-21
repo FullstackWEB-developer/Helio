@@ -51,7 +51,9 @@ const ExternalEmailListItem = ({message, patientPhoto, users, patient, onClick} 
         if(message.direction=== TicketMessagesDirection.Outgoing) {
             return <Avatar userId={message.createdByName}
                     userFullName={message.createdByName}
-                    userPicture={user?.profilePicture} />
+                    userPicture={user?.profilePicture}
+                    forUnreadPurposes={!message.isRead}
+                     />
         }
         if (message.direction === TicketMessagesDirection.Incoming) {
             if (patientPhoto) {
@@ -73,7 +75,7 @@ const ExternalEmailListItem = ({message, patientPhoto, users, patient, onClick} 
         <div className='flex flex-col w-full'>
             <div className='flex flex-row justify-between items-center w-full'>
                 <div className='subtitle2'>
-                    <span className={!message.isRead && message.direction === TicketMessagesDirection.Outgoing ? 'font-bold' : ''}>{displayName}</span>
+                    <span className={!message.isRead && message.direction === TicketMessagesDirection.Outgoing ? 'font-black' : ''}>{displayName}</span>
                 </div>
                 <div className='flex flex-row'>
                     {message.attachments && message.attachments.length > 0 && <div>

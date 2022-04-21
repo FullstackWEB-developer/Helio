@@ -16,12 +16,13 @@ export interface AvatarProps {
     userPicture?: string;
     icon?: Icon;
     userId?: string;
-    displayStatus?:boolean;
+    displayStatus?: boolean;
     status?: UserStatus;
+    forUnreadPurposes?: boolean;
     enlargedStatusDot?: boolean;
 }
 
-const Avatar = ({userFullName, labelClassName, userPicture, icon, className = 'w-10 h-10', displayStatus, userId, status, enlargedStatusDot}: AvatarProps) => {
+const Avatar = ({userFullName, labelClassName, userPicture, icon, className = 'w-10 h-10', displayStatus, userId, status, forUnreadPurposes, enlargedStatusDot}: AvatarProps) => {
     const {t} = useTranslation();
     const liveAgentStatuses = useSelector(selectLiveAgentStatuses);
     const [isErrorPhoto, setErrorPhoto] = useState(false);
@@ -36,7 +37,7 @@ const Avatar = ({userFullName, labelClassName, userPicture, icon, className = 'w
     return (<div className={classnames('avatar rounded-full flex items-center justify-center relative', className)}>
         {(!userPicture || isErrorPhoto) && !icon &&
             <div className={classnames('avatar-initial', labelClassName)}>
-            {!!userFullName ? utils.getInitialsFromFullName(userFullName): t('common.default_avatar')}
+                {!!userFullName ? utils.getInitialsFromFullName(userFullName) : t('common.default_avatar')}
             </div>
         }
 
@@ -45,12 +46,18 @@ const Avatar = ({userFullName, labelClassName, userPicture, icon, className = 'w
         }
 
         {!!icon && (!userPicture || isErrorPhoto) &&
-            <SvgIcon type={icon} fillClass='white-icon'/>
+            <SvgIcon type={icon} fillClass='white-icon' />
         }
 
         {displayStatus && status &&
             <div className='absolute bottom-0 right-0'>
                 <StatusDot status={status} isBorderAround={true} enlargedDot={enlargedStatusDot} />
+            </div>
+        }
+        {
+            forUnreadPurposes &&
+            <div className='absolute bottom-0 right-0'>
+                <StatusDot status={UserStatus.Unread} isBorderAround={true} />
             </div>
         }
     </div>);

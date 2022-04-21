@@ -17,5 +17,6 @@ export enum UserStatus {
     Busy='Busy',
     Offline='Offline',
     OnCall='OnCall',
-    Routable ='Routable'
+    Routable ='Routable',
+    Unread = 'Unread'
 }
