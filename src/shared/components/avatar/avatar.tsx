@@ -18,9 +18,10 @@ export interface AvatarProps {
     userId?: string;
     displayStatus?:boolean;
     status?: UserStatus;
+    enlargedStatusDot?: boolean;
 }
 
-const Avatar = ({userFullName, labelClassName, userPicture, icon, className = 'w-10 h-10', displayStatus, userId, status}: AvatarProps) => {
+const Avatar = ({userFullName, labelClassName, userPicture, icon, className = 'w-10 h-10', displayStatus, userId, status, enlargedStatusDot}: AvatarProps) => {
     const {t} = useTranslation();
     const liveAgentStatuses = useSelector(selectLiveAgentStatuses);
     const [isErrorPhoto, setErrorPhoto] = useState(false);
@@ -49,7 +50,7 @@ const Avatar = ({userFullName, labelClassName, userPicture, icon, className = 'w
 
         {displayStatus && status &&
             <div className='absolute bottom-0 right-0'>
-                <StatusDot status={status} isBorderAround={true} />
+                <StatusDot status={status} isBorderAround={true} enlargedDot={enlargedStatusDot} />
             </div>
         }
     </div>);

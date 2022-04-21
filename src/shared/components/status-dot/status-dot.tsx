@@ -3,12 +3,13 @@ import './status-dot.scss';
 
 export interface StatusDotProps {
     status: UserStatus,
-    isBorderAround?: boolean
+    isBorderAround?: boolean,
+    enlargedDot?: boolean;
 }
 
-const StatusDot = ({status, isBorderAround = false}: StatusDotProps) => {
+const StatusDot = ({status, isBorderAround = false, enlargedDot = false}: StatusDotProps) => {
     let className;
-
+    const size = enlargedDot ? "14" : "10";
     if (status) {
         if (status === UserStatus.AfterWork) {
             className = 'fill-yellow';
@@ -22,13 +23,13 @@ const StatusDot = ({status, isBorderAround = false}: StatusDotProps) => {
     }
 
     return (isBorderAround ?
-        <svg width="10" height="10" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g data-name='Status indicator with border' stroke='#fff' strokeWidth='2' className={className}>
-                <circle cx="8" cy="8" r="8" stroke='none'/>
-                <circle cx="8" cy="8" r="7" fill='none'/>
+                <circle cx={"8"} cy={"8"} r={"8"} stroke='none'/>
+                <circle cx={"8"} cy={"8"} r="7" fill='none'/>
             </g>
         </svg> :
-        <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg width={size} height={size} viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g data-name='Status indicator' className={className}>
                 <circle cx="5" cy="5" r="4" stroke='none'/>
             </g>

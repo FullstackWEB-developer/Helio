@@ -98,15 +98,6 @@ const CcpContext = () => {
             })
         }
 
-        const callerName = determineCallerName();
-        if (callerName) {
-            const callerType = determineCallerType();
-            items.push({
-                label: 'ccp.bot_context.caller',
-                value: `${callerName}${callerType ? ` (${callerType})` : ''}`
-            });
-        }
-
         const reason = determineCallerReason();
         if (reason) {
             items.push({
@@ -115,6 +106,15 @@ const CcpContext = () => {
             });
         }
 
+        const callerName = determineCallerName();
+        if (callerName) {
+            const callerType = determineCallerType();
+            items.push({
+                label: 'ccp.bot_context.caller',
+                value: `${callerName}${callerType ? ` (${callerType})` : ''}`
+            });
+        }
+        
         if (botContext?.isPregnant) {
             items.push({
                 label: 'ccp.bot_context.pregnancy',
