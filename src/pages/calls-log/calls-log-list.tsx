@@ -160,6 +160,10 @@ const CallsLogList = () => {
         setPlayerOpen(true);
     }
 
+    const onManagerReviewAdd = () => {
+        setRows(rows.map(r => r.id === addReviewForTicket ? {...r, hasManagerReview: true} : r))
+    }
+
     let tableModel = {
         columns: [
             {
@@ -415,7 +419,8 @@ const CallsLogList = () => {
                     {addReviewForTicket && <AddTicketReview
                         ticketId={addReviewForTicket}
                         isOpen={!!addReviewForTicket}
-                        onClose={() => setAddReviewForTicket(undefined)} />}
+                        onClose={() => setAddReviewForTicket(undefined)} 
+                        onAdded={onManagerReviewAdd} />}
 
                     {displayRatingsForTicket && <ViewTicketRatings
                         onClose={() => setDisplayRatingsForTicket(undefined)}

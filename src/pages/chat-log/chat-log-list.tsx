@@ -125,7 +125,7 @@ const ChatsLogList = () => {
             options.push({
                 label: 'ticket_log.add_review',
                 value: '5',
-                icon: <SvgIcon type={Icon.Comment} fillClass='rgba-062-fill'/>
+                icon: <SvgIcon type={Icon.Comment} fillClass='rgba-062-fill' />
             });
         }
 
@@ -263,11 +263,11 @@ const ChatsLogList = () => {
                 render: (_, data: TicketLogModel) => (
                     <TicketDetailRating patientRating={data?.patientRating} ticketId={data?.id!} />
                 )
-            },{
+            }, {
                 title: 'ticket_log.review',
                 field: 'hasManagerReview',
                 widthClass: 'w-1/12 flex items-center justify-center',
-                render: (value: boolean, record: TicketLogModel) => (value && canViewAnyReview) ? <SvgIcon onClick={() => setDisplayRatingsForTicket(record.ticketNumber)} type={Icon.Comment} className='cursor-pointer' fillClass='rgba-062-fill'/> : null
+                render: (value: boolean, record: TicketLogModel) => (value && canViewAnyReview) ? <SvgIcon onClick={() => setDisplayRatingsForTicket(record.ticketNumber)} type={Icon.Comment} className='cursor-pointer' fillClass='rgba-062-fill' /> : null
             },
             {
                 title: '',
@@ -329,6 +329,10 @@ const ChatsLogList = () => {
         setChatsLogFilter({...chatsLogFilter, ...filterParameters, ...DEFAULT_PAGING});
     }
 
+    const onManagerReviewAdd = () => {
+        setRows(rows.map(r => r.id === addReviewForTicket ? {...r, hasManagerReview: true} : r));
+    }
+
     return (
         <div className='flex flex-row flex-auto chats-log'>
             <CallsLogFilter isOpen={isFilterOpen} isCallTypeHide logType='Chat' onSubmit={onFilterSubmit} />
@@ -382,7 +386,7 @@ const ChatsLogList = () => {
             </div>
             <div className='flex items-center justify-center'>
                 <Modal isOpen={isChatTranscriptOpen}
-                       closeableOnEscapeKeyPress={true}
+                    closeableOnEscapeKeyPress={true}
                     title='ticket_detail.chat_transcript.title'
                     isClosable={true}
                     isDraggable={true}
@@ -398,12 +402,13 @@ const ChatsLogList = () => {
                 {addReviewForTicket && <AddTicketReview
                     ticketId={addReviewForTicket}
                     isOpen={!!addReviewForTicket}
-                    onClose={() => setAddReviewForTicket(undefined)}/>}
+                    onClose={() => setAddReviewForTicket(undefined)}
+                    onAdded={onManagerReviewAdd} />}
 
                 {displayRatingsForTicket && <ViewTicketRatings
                     onClose={() => setDisplayRatingsForTicket(undefined)}
                     isOpen={!!displayRatingsForTicket}
-                    ticketNumber={displayRatingsForTicket}/>}
+                    ticketNumber={displayRatingsForTicket} />}
             </div>
         </div>
     );
