@@ -1245,6 +1245,16 @@ const SvgIcon = ({ type, wrapperClassName = '', className = 'icon-medium', fillC
         )
     }
 
+    const getIndicator = () => {
+        return (
+            <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g className={fillClass}>
+                    <circle cx="4" cy="4" r="4" stroke='none'/>
+                </g>
+            </svg>
+        )
+    }
+
     const icons = {
         [Icon.Add]: getIconAdd,
         [Icon.AddBlack]: getIconAddBlack,
@@ -1358,7 +1368,8 @@ const SvgIcon = ({ type, wrapperClassName = '', className = 'icon-medium', fillC
         [Icon.TiffMime]: getIconTiff,
         [Icon.RatingDissatisfiedComment]: getIconRatingDissatisfiedComment,
         [Icon.RatingSatisfiedComment]: getIconRatingSatisfiedComment,
-        [Icon.RatingVerySatisfiedComment]: getIconRatingVerySatisfiedComment
+        [Icon.RatingVerySatisfiedComment]: getIconRatingVerySatisfiedComment,
+        [Icon.Indicator]: getIndicator
     }
 
     const iconClicked = (e: React.MouseEvent<HTMLDivElement>) => {

@@ -12,7 +12,7 @@ export const selectEmailSummaries = createSelector(
 
 export const selectUnreadEmails = createSelector(
     emailState,
-    state => state.unreadEmails as UnreadEmail[]
+    state => state.unreadEmails as number
 )
 
 export const selectLastEmailDate = createSelector(

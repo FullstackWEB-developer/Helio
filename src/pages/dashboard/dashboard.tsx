@@ -3,6 +3,7 @@ import {useQuery} from 'react-query';
 import {GetAgentStatus, GetDashboard} from '@constants/react-query-constants';
 import {
     getAgentsStatus,
+    getBadgeValues,
     getDashboardData,
     getEnumByType
 } from '@pages/tickets/services/tickets.service';
@@ -30,6 +31,7 @@ import {useDispatch} from 'react-redux';
 import {getLocations} from '@shared/services/lookups.service';
 import classNames from 'classnames';
 import {setDashboardFilterEndDate} from '@shared/store/app/app.slice';
+import { BadgeValues } from '@pages/tickets/models/badge-values.model';
 
 export const Dashboard = () => {
     const {t} = useTranslation();
@@ -68,6 +70,7 @@ export const Dashboard = () => {
         dispatch(getLookupValues('Department'));
         dispatch(getLookupValues('TicketReason'));
         dispatch(getLookupValues('TicketTags'));
+        dispatch(getBadgeValues(BadgeValues.All));
     }, []);
 
     customHooks.useOutsideClick([typeDropdownRef], () => {

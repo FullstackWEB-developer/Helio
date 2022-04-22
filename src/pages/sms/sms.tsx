@@ -30,7 +30,7 @@ import useDebounce from '@shared/hooks/useDebounce';
 import {selectAppUserDetails} from '@shared/store/app-user/appuser.selectors';
 import {SmsFilterParamModel} from './components/sms-filter/sms-filter.model';
 import utils from '@shared/utils/utils';
-import {getTicketById, setAssignee} from '@pages/tickets/services/tickets.service';
+import {getBadgeValues, getTicketById, setAssignee} from '@pages/tickets/services/tickets.service';
 import {TicketBase} from '@pages/tickets/models/ticket-base';
 import {SmsNotificationData, SmsQueryType} from '@pages/sms/models';
 import {DEFAULT_FILTER_VALUE, DEFAULT_MESSAGE_QUERY_PARAMS} from './constants';
@@ -42,9 +42,10 @@ import {useHistory, useLocation, useParams} from 'react-router';
 import {SmsPath} from '@app/paths';
 import useCheckPermission from '@shared/hooks/useCheckPermission';
 import {ExtendedPatient} from '@pages/patients/models/extended-patient';
-import {removeUnreadSmsTicketId, setIsSmsFiltered, setSmsMessageSummaries} from '@pages/sms/store/sms.slice';
+import {setIsSmsFiltered, setSmsMessageSummaries} from '@pages/sms/store/sms.slice';
 import {selectIsSmsFiltered, selectLastSmsDate, selectSmsSummaries, selectUnreadSmsMessages} from '@pages/sms/store/sms.selectors';
 import FilterDot from '@components/filter-dot/filter-dot';
+import { BadgeValues } from '@pages/tickets/models/badge-values.model';
 
 interface SmsLocationState {
     contact?: ContactExtended,
@@ -168,7 +169,7 @@ const Sms = () => {
         if (summary.unreadCount > 0) {
             markReadMutation.mutate({ticketId: summary.ticketId, channel: ChannelTypes.SMS}, {
                 onSuccess: () => {
-                    dispatch(removeUnreadSmsTicketId(summary.ticketId));
+                    dispatch(getBadgeValues(BadgeValues.SMSOnly))
                 }
             });
         }
@@ -418,12 +419,10 @@ const Sms = () => {
 
     useEffect(() => {
         if (selectedTicketSummary) {
-            if ((unreadSMSList ?? []).map(a => a.ticketId).includes(selectedTicketSummary?.ticketId)) {
-                dispatch(removeUnreadSmsTicketId(selectedTicketSummary?.ticketId));
-                markReadMutation.mutate({ticketId: selectedTicketSummary.ticketId, channel: ChannelTypes.SMS});
-            }
+            dispatch(getBadgeValues(BadgeValues.SMSOnly))
+            markReadMutation.mutate({ticketId: selectedTicketSummary.ticketId, channel: ChannelTypes.SMS});
         }
-    }, [unreadSMSList, unreadSMSList.length])
+    }, [unreadSMSList, unreadSMSList])
 
     return (
         <div className='flex flex-row w-full sms'>

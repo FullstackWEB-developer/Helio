@@ -132,6 +132,9 @@ const ticketsSlice = createSlice({
     setPatientPhoto(state, { payload }: PayloadAction<string>) {
       state.patientPhoto = payload;
     },
+    setUnreadTicket(state, {payload}: PayloadAction<number>) {
+      state.unreadTickets = payload;
+    }
   },
 });
 
@@ -160,7 +163,8 @@ export const {
   toggleCallLogPlayerVisible,
   clearTicketFilters,
   setTicketsFiltered,
-  setPatientPhoto
+  setPatientPhoto,
+  setUnreadTicket
 } = ticketsSlice.actions;
 
 export default ticketsSlice.reducer;

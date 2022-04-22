@@ -116,3 +116,8 @@ export const selectPatientPhoto = createSelector(
     ticketState,
     state => state.patientPhoto  as string
 )
+
+export const selectUnreadTickets = createSelector(
+    ticketState,
+    state => state.unreadTickets as number
+)

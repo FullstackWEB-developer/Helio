@@ -1,16 +1,15 @@
 import {TicketMessageSummary} from '@shared/models';
-import {UnreadEmail} from '@pages/email/models/unread-email.model';
 
 export interface EmailInitialState {
     messageSummaries: TicketMessageSummary[];
-    unreadEmails: UnreadEmail[];
+    unreadEmails: number;
     lastEmailDate: Date;
     hasFilter: boolean;
 }
 
 const initialEmailState: EmailInitialState = {
     messageSummaries: [],
-    unreadEmails: [],
+    unreadEmails: 0,
     hasFilter: false,
     lastEmailDate: new Date()
 }

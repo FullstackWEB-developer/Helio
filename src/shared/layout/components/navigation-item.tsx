@@ -11,6 +11,7 @@ import {setLastNavigationDate} from '../store/layout.slice';
 import useCheckPermission from '@shared/hooks/useCheckPermission';
 import classnames from 'classnames';
 import Tooltip from '@components/tooltip/tooltip';
+import SvgIcon, { Icon } from '@components/svg-icon';
 
 interface NavigationItemProps {
     title: string,
@@ -49,14 +50,14 @@ const NavigationItem = ({title, link, icon, isSelected, displayBadge, badgeValue
                         <div
                             className={'items-center flex h-14  navigation-item-active cursor-pointer ' + (isNavigationExpanded ? 'w-62' : 'w-20')}>
                             <div>{icon}</div>
-                            {!isNavigationExpanded && displayBadge && <BadgeNumber type='red' number={badgeValue} hideIfZero={true} circleBadge={true} />}
+                            {displayBadge && <div className='flex items-center pb-4'><SvgIcon fillClass='danger-icon' type={Icon.Indicator} /></div>}
                             {isNavigationExpanded &&
                                 <div className='flex flex-row items-center justify-between w-full pl-4'>
                                     <div className=''>
                                         {t(title)}
                                     </div>
                                     <div className='justify-end w-16'>
-                                        {displayBadge && <BadgeNumber type='red' number={badgeValue} hideIfZero={true} circleBadge={true} />}
+                                        {displayBadge && <BadgeNumber type='red' number={badgeValue} hideIfZero={true} wideAutoIfLarger={true} />}
                                     </div>
                                 </div>
                             }

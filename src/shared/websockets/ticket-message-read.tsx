@@ -1,7 +1,9 @@
 import {HubConnection, HubConnectionBuilder, LogLevel} from "@microsoft/signalr";
-import {removeUnreadEmailTicketId} from "@pages/email/store/email-slice";
-import {removeUnreadSmsTicketId} from "@pages/sms/store/sms.slice";
-import {ChannelTypes} from "@shared/models";
+import { removeUnreadEmailTicketId } from "@pages/email/store/email-slice";
+import { removeUnreadSmsTicketId } from "@pages/sms/store/sms.slice";
+import { BadgeValues } from "@pages/tickets/models/badge-values.model";
+import { getBadgeValues } from "@pages/tickets/services/tickets.service";
+import { ChannelTypes } from "@shared/models";
 import {selectAccessToken} from "@shared/store/app-user/appuser.selectors";
 import utils from "@shared/utils/utils";
 import {useEffect, useState} from "react";
@@ -34,15 +36,19 @@ const TicketMessageReadUpdate = () => {
                 .then(_ => {
                     connection.on('TicketMessageMarkedRead', (data: any) => {
                         if (data?.ticketId && data?.channel) {
-                            dispatch(data.channel == ChannelTypes.Email ?
-                                removeUnreadEmailTicketId(data.ticketId) :
-                                removeUnreadSmsTicketId(data.ticketId));
+                            
+                            if(data.channel === ChannelTypes.Email){
+                                removeUnreadEmailTicketId(data.ticketId);
+                                dispatch(getBadgeValues(BadgeValues.EmailOnly))
+                            }else{
+                                removeUnreadSmsTicketId(data.ticketId);
+                                dispatch(getBadgeValues(BadgeValues.SMSOnly))
+                            }
                         }
                     });
                 })
                 .catch(error => realtimeConnectionLogger.log(LogLevel.Error, `Connection to TicketMessageReadHub failed: ${error}.`))
         }
-
         return () => {
             connection?.stop();
         }

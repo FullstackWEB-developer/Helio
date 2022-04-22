@@ -14,6 +14,7 @@ import {
     setTicketEnum,
     setTicketFilter,
     setTicketListQueryType,
+    setUnreadTicket,
     startGetTicketEnumRequest
 } from '../store/tickets.slice';
 import {Ticket} from '../models/ticket';
@@ -47,6 +48,9 @@ import {CreateTicketFeedbackRequest} from '@pages/tickets/models/create-ticket-f
 import { PatientRatings } from '@pages/dashboard/models/patient-ratings.model';
 import {TicketRatingAppliedRequest} from '../models/ticket-rating-applied-request';
 import {UpdateConnectAttributesRequest} from '@pages/tickets/models/update-connect-attributes-request';
+import { setUnreadSmsMessages } from '@pages/sms/store/sms.slice';
+import { setUnreadEmailMessages } from '@pages/email/store/email-slice';
+import { BadgeValues } from '../models/badge-values.model';
 
 const logger = Logger.getInstance();
 const ticketsBaseUrl = "/tickets";
@@ -412,4 +416,21 @@ export const updateConnectAttributes = async(request: UpdateConnectAttributesReq
     const url = `${ticketsBaseUrl}/connect/${request.contactId}/update-attributes`;
     const response = await Api.put(url, request.attributes);
     return response.data;
+}
+
+export function getBadgeValues(badgeValues: BadgeValues) {
+    let url = `${ticketsBaseUrl}/badge-values?badgeValue=${badgeValues}`;
+    return async (dispatch: Dispatch) => {
+        await Api.get(url).then((response) => {
+            if(badgeValues === BadgeValues.All){
+                dispatch(setUnreadTicket(response.data.ticketBadgeCount));
+            }
+            if(badgeValues !== BadgeValues.SMSOnly){
+                dispatch(setUnreadEmailMessages(response.data.emailBadgeCount));
+            }
+            if(badgeValues !== BadgeValues.EmailOnly){
+                dispatch(setUnreadSmsMessages(response.data.smsBadgeCount));
+            }
+        });
+    }
 }

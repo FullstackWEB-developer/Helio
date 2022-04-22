@@ -12,7 +12,7 @@ export const selectSmsSummaries = createSelector(
 
 export const selectUnreadSmsMessages = createSelector(
     smsState,
-    state => state.unreadSmsMessages as UnreadSms[]
+    state => state.unreadSmsMessages as number
 )
 
 export const selectLastSmsDate = createSelector(

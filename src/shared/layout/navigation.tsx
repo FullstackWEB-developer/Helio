@@ -10,6 +10,7 @@ import {Icon} from '@components/svg-icon/icon';
 import './navigation.scss';
 import {selectUnreadSmsMessages} from '@pages/sms/store/sms.selectors';
 import {selectUnreadEmails} from '@pages/email/store/email.selectors';
+import { selectUnreadTickets } from '@pages/tickets/store/tickets.selectors';
 
 const Navigation = () => {
     const {t} = useTranslation();
@@ -21,14 +22,19 @@ const Navigation = () => {
 
     const unreadSMSList = useSelector(selectUnreadSmsMessages);
     const unreadEmails = useSelector(selectUnreadEmails);
+    const unreadTickets = useSelector(selectUnreadTickets);
 
     const unreadEmailCount = useMemo(() => {
-        return unreadEmails.reduce((a, b) => a + b.count, 0);
+        return unreadEmails;
     }, [unreadEmails]);
 
     const unreadSMSListCount = useMemo(() => {
-        return unreadSMSList.reduce((a, b) => a + b.count, 0);
+        return unreadSMSList;
     }, [unreadSMSList]);
+
+    const unreadTicketsCount = useMemo(() => {
+        return unreadTickets;
+    }, [unreadTickets]);
 
     const menuItems = [
         {
@@ -40,7 +46,9 @@ const Navigation = () => {
             title: t('navigation.tickets'),
             link: TicketsPath,
             id: 'navigation-tickets',
-            icon: <SvgIcon type={Icon.Tickets} fillClass='active-item-icon' />
+            icon: <SvgIcon type={Icon.Tickets} fillClass='active-item-icon' />,
+            displayBadge: unreadTicketsCount > 0,
+            badgeValue: unreadTicketsCount
         }, {
             title: t('navigation.contacts'),
             link: '/contacts',
