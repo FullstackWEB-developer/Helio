@@ -58,6 +58,7 @@ import {selectAccessToken} from '@shared/store/app-user/appuser.selectors';
 import {TICKET_MESSAGE_INCOMING_NAME} from '@shared/constants/signalr-provider-constants';
 import utils from '@shared/utils/utils';
 import IncomingTicketMessageUpdate from '@shared/websockets/incoming-ticket-message-update';
+import BadgeValueUpdate from '@shared/websockets/badge-value-update';
 import VerifiedPatientGuard from '@components/verified-patient-guard/verified-patient-guard';
 import useBrowserNotification from '@shared/hooks/useBrowserNotification';
 import TicketMessageReadUpdate from '@shared/websockets/ticket-message-read';
@@ -193,6 +194,7 @@ function App() {
             <SignalRProvider name={TICKET_MESSAGE_INCOMING_NAME} createConnection={() => createTicketMessageConnectionHub(accessToken)}>
                 <Layout>
                     <RealTimeUserStatusUpdate />
+                    <BadgeValueUpdate/>
                     <IncomingTicketMessageUpdate />
                     <TicketMessageReadUpdate />
                     <GuardedRoute exact path='/dashboard' component={Dashboard} />

@@ -1,33 +1,28 @@
 import {SmsNotificationData} from '@pages/sms/models';
 import {useEffect} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {useSignalRConnectionContext} from '../contexts/signalRContext';
 import {ChannelTypes, TicketMessagesDirection} from '@shared/models';
 import {setLastEmailDate} from '@pages/email/store/email-slice';
 import {setLastSmsDate} from '@pages/sms/store/sms.slice';
 import {QueryTicketMessagesInfinite} from '@constants/react-query-constants';
-import { TicketAssignedNotification } from '@pages/tickets/models/ticket-assigned-notification.model';
 import {useQueryClient} from 'react-query';
 import { getBadgeValues } from '@pages/tickets/services/tickets.service';
 import { BadgeValues } from '@pages/tickets/models/badge-values.model';
-import { selectAppUserDetails } from '@shared/store/app-user/appuser.selectors';
 
 const IncomingTicketMessageUpdate = () => {
 
     const {smsIncoming} = useSignalRConnectionContext();
     const dispatch = useDispatch();
     const client = useQueryClient();
-    const currentUser = useSelector(selectAppUserDetails);
     useEffect(() => {
         if (!smsIncoming) {
             return () => { };
         }
 
         smsIncoming.on('ReceiveSmsMessage', onTicketMessageReceived);
-        smsIncoming.on('ReceiveBadgeValueUpdateEvent', onReceiveBadgeValueUpdateEvent);
         return () => {
             smsIncoming?.off('ReceiveSmsMessage', onTicketMessageReceived);
-            smsIncoming?.off('ReceiveBadgeValueUpdateEvent', onReceiveBadgeValueUpdateEvent);
         }
     }, [smsIncoming]);
 
@@ -49,11 +44,6 @@ const IncomingTicketMessageUpdate = () => {
         }
     }
 
-    const onReceiveBadgeValueUpdateEvent = (data: TicketAssignedNotification) => {
-        if(data.fromUser === currentUser.id || data.toUser === currentUser.id){
-            dispatch(getBadgeValues(BadgeValues.All))
-        }
-    }
     return null;
 }
 
