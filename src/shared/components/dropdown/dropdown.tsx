@@ -12,7 +12,6 @@ export interface DropdownProps {
 }
 
 const Dropdown = ({model}: DropdownProps) => {
-
     const {header,
         title,
         categorizedItems,
@@ -26,7 +25,6 @@ const Dropdown = ({model}: DropdownProps) => {
     } = model;
     const [dropDownItems, setDropDownItems] = useState<DropdownItemModel[]>([]);
     const [searchTerm, setSearchTerm] = useState('');
-
     useEffect(() => {
         const querySearch = () => {
             const results = items.reduce((res: any, item: DropdownItemModel) => {

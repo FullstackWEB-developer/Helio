@@ -2,5 +2,9 @@
     min-height: 32rem ;
 }
 .queue-status-div {
-    max-height: 50%;
+    height: 50%;
+}
+
+.queue-status-table-item {
+    color: var(--light-text-high-emphasis);
 }

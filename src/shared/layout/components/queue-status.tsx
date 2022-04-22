@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getMetricOptions } from '../../services/lookups.service';
 import { selectMetricOptions } from '../../store/lookups/lookups.selectors';
@@ -18,6 +18,7 @@ import { selectLatestUsersStatusUpdateTime } from '@shared/layout/store/layout.s
 import { QueueStatusType } from "@shared/layout/enums/queue-status-type";
 import Spinner from '@components/spinner/Spinner';
 import { getQueueStatus } from '@pages/tickets/services/tickets.service';
+import { customHooks } from '@shared/hooks';
 import './queue-status.scss';
 
 interface QueueStatusProps {
@@ -35,6 +36,12 @@ const QueueStatus = ({ queueType, queueTitle }: QueueStatusProps) => {
     const username = useSelector(userNameSelector);
     const latestUserUpdateTime = useSelector(selectLatestUsersStatusUpdateTime);
     const [selectedOption, setSelectedOption] = useState<KeyValuePair | undefined>();
+    const [displayMetricDropdown, setDisplayMetricDropdown] = useState<boolean>(false);
+    const metricDropdownRef = useRef<HTMLDivElement>(null);
+    customHooks.useOutsideClick([metricDropdownRef], () => {
+        setDisplayMetricDropdown(false);
+    });
+
 
     const { isLoading, error, data: quickConnectExtensions, refetch } = useQuery<QueueMetric[],
         Error>([QueryQueueMetrics, queueType, username], () => queueType === QueueStatusType.AllQueues
@@ -61,14 +68,11 @@ const QueueStatus = ({ queueType, queueTitle }: QueueStatusProps) => {
                 (m) => m.metricId === (selectedOption ? Number(selectedOption.key) : defaultDropdownKey)
             );
             if (!selectedOption) {
-                setSelectedOption({
-                    key: defaultDropdownKey.toString(),
-                    value: defaultDropdownValue
-                });
+                setSelectedOption(metricOptions.find(a => Number(a.key) === defaultDropdownKey))
             }
             setMetric(metrics);
         }
-    }, [dispatch, isLoading, queueType, quickConnectExtensions, selectedOption]);
+    }, [dispatch, isLoading, queueType, quickConnectExtensions, selectedOption, displayMetricDropdown]);
 
     const selectOption = (key: string) => {
         if (quickConnectExtensions) {
@@ -78,6 +82,7 @@ const QueueStatus = ({ queueType, queueTitle }: QueueStatusProps) => {
             setMetric(metrics);
         }
         setSelectedOption(metricOptions.find(a => a.key === key));
+        setDisplayMetricDropdown(false);
     };
 
     const getDropDownOptions = (): DropdownModel => {
@@ -92,9 +97,9 @@ const QueueStatus = ({ queueType, queueTitle }: QueueStatusProps) => {
         }
 
         const ddModel: DropdownModel = {
-            asSelect: true,
             defaultValue: selectedOption?.key,
             items: [],
+            itemsWrapperClass: 'h-72'
         };
 
         if (metricOptions && metricOptions.length > 0) {
@@ -124,7 +129,7 @@ const QueueStatus = ({ queueType, queueTitle }: QueueStatusProps) => {
 
     const getTableModel = (): TableModel => {
         return {
-            hasRowsBottomBorder: true,
+            hasRowsBottomBorder: false,
             headerClassName: 'mb-2',
             size: 'compact',
             columns: [
@@ -132,18 +137,21 @@ const QueueStatus = ({ queueType, queueTitle }: QueueStatusProps) => {
                     field: 'queueName',
                     widthClass: 'w-40',
                     title: 'statuses.queuestatus.queue',
+                    rowClassname: 'body3-medium queue-status-table-item'
                 },
                 {
                     field: 'voiceCount',
                     widthClass: 'w-24',
-                    title: <SvgIcon type={Icon.Phone} fillClass='status-bar-inactive-item-icon' />,
+                    title: <SvgIcon type={Icon.Phone} className='icon-small' fillClass='status-bar-inactive-item-icon' />,
                     alignment: 'center',
+                    rowClassname: 'subtitle3'
                 },
                 {
                     field: 'chatCount',
                     widthClass: 'w-24',
-                    title: <SvgIcon type={Icon.Chat} fillClass='status-bar-inactive-item-icon' />,
+                    title: <SvgIcon type={Icon.Chat} className='icon-small' fillClass='status-bar-inactive-item-icon' />,
                     alignment: 'center',
+                    rowClassname: 'subtitle3'
                 },
             ],
             rows: activeMetric,
@@ -158,11 +166,27 @@ const QueueStatus = ({ queueType, queueTitle }: QueueStatusProps) => {
     }
 
     return (
-        <div className='queue-status-div overflow-y-auto' id={queueTitle}>
-            <div className='flex-auto'>
-                <div className='subtitle px-4 py-3 border-b flex items-center'>{queueTitle}</div>
-                <Dropdown key={queueType} model={getDropDownOptions()} />
-                <div className='pt-10'>
+        <div className='queue-status-div border-b overflow-y-hidden' id={queueTitle}>
+            <div className='flex-auto h-full'>
+                <div className='subtitle px-4 py-3 h-12 border-b flex items-center'>{queueTitle}</div>
+                <div className='flex flex-col' ref={metricDropdownRef}>
+                    <div
+                        onClick={() => { setDisplayMetricDropdown(!displayMetricDropdown) }}
+                        className='flex flex-row h-10 pl-4 py-2.5'>
+                        <div className='body2' >
+                            {selectedOption?.value}
+                        </div>
+                        <div className='ml-auto pr-3'>
+                            <SvgIcon type={displayMetricDropdown ? Icon.ArrowUp : Icon.ArrowDown}
+                                className='icon-medium'
+                                fillClass={'rgba-color-062'} />
+                        </div>
+                    </div>
+
+                    {displayMetricDropdown &&
+                        <Dropdown key={queueType} model={getDropDownOptions()} />}
+                </div>
+                <div className='pb-10 flex flex-col h-4/5 overflow-y-auto'>
                     <Table model={getTableModel()} />
                 </div>
             </div>
