@@ -44,7 +44,7 @@ const PatientAddNote = () => {
         }
         if (noteText && noteText.trim().length > 0) {
             const note: Note = {
-                date:dayjs.utc().toDate(),
+                date:dayjs.utc().local().toDate(),
                 userDisplayName: userFullName,
                 text: noteText
             }

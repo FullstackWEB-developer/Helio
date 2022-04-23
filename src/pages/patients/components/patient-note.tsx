@@ -14,7 +14,7 @@ const PatientNote: React.FC<PatientNoteProps> = ({ note, id }) => {
     return <div className='flex flex-col pt-7'>
         <div className='flex flex-row justify-between'>
             <div data-test-id={'patient-note-date-' + id}
-                 className='body3-medium'>{dayjs(note.date).format(format)}</div>
+                 className='body3-medium'>{dayjs.utc(note.date).local().format(format)}</div>
             <div data-test-id={'patient-note-username-' + id}
                  className='justify-end flex truncate  body3-medium'>{note.userDisplayName}</div>
         </div>
