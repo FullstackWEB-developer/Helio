@@ -123,19 +123,17 @@ const PersonalInformationRegistrationStep = ({onPatientUpsert}: PersonalInformat
                     defaultValue=''
                     required={true} containerClassName='md:w-1/2' />
             </div>
-            <div className='flex flex-col md:flex-row md:gap-8'>
-                <ControlledDateInput
+            <div className='flex flex-col md:flex-row md:gap-8 md:w-full'>
+                <ControlledInput
                     type='date'
-                    longDateFormat={false}
-                    isCalendarDisabled
+                    containerClassName='md:w-1/2'
                     required={true}
                     errorMessage={errors?.dob && displayDobErrorMessage()}
                     label='external_access.registration.dob'
                     assistiveText={utils.getBrowserDatePattern()}
                     control={control}
                     name='dob'
-                    className='md:w-1/2'
-                    max={new Date()}
+                    className='w-full'
                 />
                 <ControlledInput
                     name='email'
