@@ -10,7 +10,7 @@ import {ChannelTypes, ContactExtended, ContactType, PagedList, Paging, TicketTyp
 import {userNameSelector} from '@shared/store/app-user/appuser.selectors';
 import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
 import utils from '@shared/utils/utils';
-import {useState} from 'react';
+import {useContext, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {useMutation} from 'react-query';
 import {useDispatch, useSelector} from 'react-redux';
@@ -18,6 +18,7 @@ import SmsNewMessageExistingTicketList from './sms-new-message-existing-ticket-l
 import SmsNewMessageNewTicketForm from './sms-new-message-new-ticket-form';
 import Spinner from '@components/spinner/Spinner';
 import {NEW_MESSAGE_OPTION_CREATE_TICKET, NEW_MESSAGE_OPTION_SELECT_TICKET} from '@pages/sms/constants';
+import {EmailContext} from '@pages/email/context/email-context';
 
 interface SmsNewMessageExistingTicketProps {
     tickets: PagedList<TicketBase>,
@@ -34,6 +35,7 @@ const SmsNewMessageExistingTicket = ({tickets, patient, contact, ...props}: SmsN
     const dispatch = useDispatch();
     const username = useSelector(userNameSelector);
 
+    const {setCreatedFromNewTicket} = useContext(EmailContext)!;
     const [isTicketListVisible, setTicketListVisible] = useState(true);
     const [ticketTypeSelected, setTicketTypeSelected] = useState<TicketType>();
     const [ticketReasonSelected, setTicketReasonSelected] = useState<string>();
@@ -54,6 +56,7 @@ const SmsNewMessageExistingTicket = ({tickets, patient, contact, ...props}: SmsN
     }
 
     const onSelectTicket = (value: TicketBase) => {
+        setCreatedFromNewTicket(false);
         setTicket(value);
         setValid(true);
     }
@@ -65,6 +68,7 @@ const SmsNewMessageExistingTicket = ({tickets, patient, contact, ...props}: SmsN
 
     const createTicketMutation = useMutation(createTicket, {
         onSuccess: (data) => {
+            setCreatedFromNewTicket(true);
             dispatch(addSnackbarMessage({
                 type: SnackbarType.Success,
                 message: t('tickets.ticket_created', {ticketNumber: data.ticketNumber})
