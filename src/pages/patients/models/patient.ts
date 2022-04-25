@@ -12,5 +12,7 @@ export interface Patient {
     patientId: number,
     providerGroupId: number,
     ssn: string,
-    translatedMobilePhoneIndex: string
+    translatedMobilePhoneIndex: string;
+    previousLastName?: string;
 }
+

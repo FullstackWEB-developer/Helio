@@ -101,6 +101,13 @@ const PatientSearchResults = () => {
         return term.length !== 10;
     },[searchTerm, selectedType])
 
+    const getLastNameOfPatient = (patient: Patient) => {
+        if (!!patient.previousLastName) {
+            return `${toCamelCase(patient.lastName)} (${toCamelCase(patient.previousLastName)})`
+        }
+        return toCamelCase(patient.lastName);
+    }
+
     return (
         <>
             <div className="p-6 flex justify-between items-center">
@@ -122,7 +129,7 @@ const PatientSearchResults = () => {
                     {
                         patientPagedResults.map(patient =>
                             <div key={patient.patientId} className="search-results-grid data-row h-10 col-template-patients px-6 body2">
-                                <div className="truncate">{toCamelCase(patient.lastName) || ''}</div>
+                                <div className="truncate">{getLastNameOfPatient(patient) || ''}</div>
                                 <div className="truncate">{toCamelCase(patient.firstName) || ''}</div>
                                 <div className="truncate cursor-pointer" onClick={() => handlePatientSelection(patient.patientId, true)}>{patient.patientId || ''}</div>
                                 <div className="truncate">{patient.dateOfBirth ? patientUtils.formatDob(patient.dateOfBirth) : ''}</div>
