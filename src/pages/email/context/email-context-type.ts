@@ -9,6 +9,4 @@ export type EmailContextType = {
     setQueryParams: (TicketMessageSummaryRequest) => void;
     getEmailsQuery: UseInfiniteQueryResult<PagedList<TicketMessageSummary>>
     isDefaultTeamView: boolean;
-    isCreatedFromNewTicket: boolean;
-    setCreatedFromNewTicket: (boolean) => void;
 }

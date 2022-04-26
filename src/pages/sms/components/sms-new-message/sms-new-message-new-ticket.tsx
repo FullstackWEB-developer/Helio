@@ -1,4 +1,4 @@
-import React, {useContext, useState} from "react";
+import React, {useState} from "react";
 import {Patient} from '@pages/patients/models/patient';
 import {TicketBase} from '@pages/tickets/models/ticket-base';
 import SmsNewMessageNewTicketForm from './sms-new-message-new-ticket-form';
@@ -14,7 +14,6 @@ import {Ticket} from '@pages/tickets/models/ticket';
 import {ChannelTypes, ContactExtended, TicketType} from '@shared/models';
 import utils from "@shared/utils/utils";
 import {ContactType} from "@pages/contacts/models/ContactType";
-import {EmailContext} from '@pages/email/context/email-context';
 
 interface SmsNewMessageNewTicketProps {
     patient?: Patient;
@@ -32,11 +31,8 @@ const SmsNewMessageNewTicket = ({patient, contact, type, ...props}: SmsNewMessag
     const [ticketReasonSelected, setTicketReasonSelected] = useState<string>();
     const [isValid, setValid] = useState(false);
 
-    const {setCreatedFromNewTicket} = useContext(EmailContext)!;
-
     const createTicketMutation = useMutation(createTicket, {
         onSuccess: (data) => {
-            setCreatedFromNewTicket(true);
             dispatch(addSnackbarMessage({
                 type: SnackbarType.Success,
                 message: t('tickets.ticket_created', {ticketNumber: data.ticketNumber})

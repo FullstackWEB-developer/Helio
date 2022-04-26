@@ -21,7 +21,6 @@ const EmailProvider =({children}: {children: ReactNode}) => {
     const lastEmailDate = useSelector(selectLastEmailDate);
     const dispatch = useDispatch();
     const {id} = useSelector(selectAppUserDetails);
-    const [isCreatedFromNewTicket, setCreatedFromNewTicket] = useState<boolean>(false);
     const [emailQueryType, setEmailQueryType] = useState<EmailQueryType>();
     const isDefaultTeamView = useCheckPermission('Email.DefaultToTeamView');
     const [queryParams, setQueryParams] = useState<TicketMessageSummaryRequest>({
@@ -50,9 +49,7 @@ const EmailProvider =({children}: {children: ReactNode}) => {
         queryParams,
         setQueryParams,
         getEmailsQuery,
-        isDefaultTeamView,
-        isCreatedFromNewTicket,
-        setCreatedFromNewTicket}}>
+        isDefaultTeamView}}>
                 {children}
     </EmailContext.Provider>)
 
