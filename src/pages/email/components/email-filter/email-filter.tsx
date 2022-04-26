@@ -1,19 +1,19 @@
-import SvgIcon, {Icon} from '@components/svg-icon';
+import SvgIcon, { Icon } from '@components/svg-icon';
 import Collapsible from '@components/collapsible';
-import {Controller, useForm} from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import Radio from '@components/radio/radio';
-import {Option} from '@components/option/option';
+import { Option } from '@components/option/option';
 import ControlledSelect from '@components/controllers/controlled-select';
-import {useEffect, useState} from 'react';
-import {getUserList} from '@shared/services/lookups.service';
-import {selectUserOptions} from '@shared/store/lookups/lookups.selectors';
-import {useDispatch, useSelector} from 'react-redux';
-import {useTranslation} from 'react-i18next';
+import { useEffect, useState } from 'react';
+import { getUserList } from '@shared/services/lookups.service';
+import { selectUserOptions } from '@shared/store/lookups/lookups.selectors';
+import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import utc from 'dayjs/plugin/utc';
 import dayjs from 'dayjs';
 import ControlledDateInput from '@components/controllers/ControlledDateInput';
 import classNames from 'classnames';
-import {EmailFilterModel} from '@pages/email/components/email-filter/email-filter.model';
+import { EmailFilterModel } from '@pages/email/components/email-filter/email-filter.model';
 import {
     TimePeriodDateRange,
     TimePeriodLast30Days,
@@ -22,9 +22,10 @@ import {
     TimePeriodToday
 } from '@shared/models/email-sms-time-period-options';
 import useCheckPermission from '@shared/hooks/useCheckPermission';
-import {selectAppUserDetails} from '@shared/store/app-user/appuser.selectors';
-import {setEmailHasFilter} from '@pages/email/store/email-slice';
+import { selectAppUserDetails } from '@shared/store/app-user/appuser.selectors';
+import { setEmailHasFilter } from '@pages/email/store/email-slice';
 import { DEFAULT_FILTER_VALUE } from '@pages/email/constants';
+import Button from '@components/button/button';
 
 interface EmailFilterProps {
     className?: string;
@@ -33,17 +34,17 @@ interface EmailFilterProps {
     onFilterClick?: (param: EmailFilterModel) => void;
     isUserFilterEnabled?: boolean;
 }
-const EmailFilter = ({className, isUserFilterEnabled, value, ...props}: EmailFilterProps) => {
+const EmailFilter = ({ className, isUserFilterEnabled, value, ...props }: EmailFilterProps) => {
 
     dayjs.extend(utc);
     const dispatch = useDispatch();
     const [displayFilters, setDisplayFilters] = useState<boolean>(true);
     const isDefaultTeamView = useCheckPermission('Email.DefaultToTeamView');
-    const {id} = useSelector(selectAppUserDetails);
-    const {t} = useTranslation();
+    const { id } = useSelector(selectAppUserDetails);
+    const { t } = useTranslation();
     const userList = useSelector(selectUserOptions);
     const [fromDateField, setFromDateField] = useState<Date | undefined>(value?.fromDate ? dayjs(value.fromDate).utc().toDate() : undefined);
-    const {control, handleSubmit, watch, setValue, reset} = useForm<EmailFilterModel>();
+    const { control, handleSubmit, watch, setValue, reset } = useForm<EmailFilterModel>();
     const watchTimePeriod = watch('timePeriod');
 
     useEffect(() => {
@@ -77,7 +78,7 @@ const EmailFilter = ({className, isUserFilterEnabled, value, ...props}: EmailFil
         return cloned;
     }
 
-    const getFormDate = (formData: any): {fromDate?: Date, toDate?: Date} => {
+    const getFormDate = (formData: any): { fromDate?: Date, toDate?: Date } => {
         let fromDate: Date | undefined;
         let toDate: Date | undefined;
 
@@ -110,7 +111,7 @@ const EmailFilter = ({className, isUserFilterEnabled, value, ...props}: EmailFil
                 dispatch(setEmailHasFilter(true));
             }
         }
-        return {fromDate: fromDate, toDate: toDate};
+        return { fromDate: fromDate, toDate: toDate };
     }
 
     const onFilterClick = (formData: any) => {
@@ -137,7 +138,7 @@ const EmailFilter = ({className, isUserFilterEnabled, value, ...props}: EmailFil
     const onClearFilter = () => {
         const defaults = {
             timePeriod: DEFAULT_FILTER_VALUE.timePeriod,
-            assignedTo: isDefaultTeamView ? '': id
+            assignedTo: isDefaultTeamView ? '' : id
         }
         reset(defaults);
         dispatch(setEmailHasFilter(false));
@@ -153,19 +154,23 @@ const EmailFilter = ({className, isUserFilterEnabled, value, ...props}: EmailFil
     }
 
     return (<div className={className}>
-        <div className='flex justify-between py-4 border-b flew-row'>
-            <div className="pl-5 subtitle">{t("common.filters")}</div>
-            <div className="flex flex-row items-center justify-between">
-                <div className='cursor-pointer body2-primary' onClick={() => handleSubmit(onFilterClick)()}>{t('common.apply')}</div>
-                <div className='pl-5 cursor-pointer body2' onClick={onClearFilter} >{t('common.clear_all')}</div>
-                <div>
-                    <SvgIcon
-                        type={Icon.Close}
-                        onClick={props.onCloseClick}
-                        className='icon-small'
-                        wrapperClassName='pl-7 pr-4 cursor-pointer'
-                    />
+        <div className='pl-5 flex py-4 border-b flex-col'>
+            <div className='flex justify-between'>
+                <div className="subtitle">{t("common.filters")}</div>
+                <div className="flex flex-row items-center">
+                    <div>
+                        <SvgIcon
+                            type={Icon.Close}
+                            onClick={props.onCloseClick}
+                            className='icon-small'
+                            wrapperClassName='pl-7 pr-4 cursor-pointer'
+                        />
+                    </div>
                 </div>
+            </div>
+            <div className='flex flex-row pt-4'>
+                <Button data-test-id='apply-button' className='cursor-pointer mr-4' label='common.apply' buttonType='small' onClick={() => handleSubmit(onFilterClick)()} ></Button>
+                <Button data-test-id='clear-all-button' className='cursor-pointer' label='common.clear_all' buttonType='secondary' onClick={onClearFilter}></Button>
             </div>
         </div>
         <div className="flex flex-col pt-4 pl-5 pr-4">
@@ -176,18 +181,18 @@ const EmailFilter = ({className, isUserFilterEnabled, value, ...props}: EmailFil
                     defaultValue=''
                     render={(radioProps) => {
                         return (<Radio
-                                name='timePeriod'
-                                truncate={true}
-                                ref={radioProps.ref}
-                                data-test-id='timePeriod-radio'
-                                value={radioProps.value}
-                                items={TimePeriodOptions}
-                                onChange={radioProps.onChange}
-                            />
+                            name='timePeriod'
+                            truncate={true}
+                            ref={radioProps.ref}
+                            data-test-id='timePeriod-radio'
+                            value={radioProps.value}
+                            items={TimePeriodOptions}
+                            onChange={radioProps.onChange}
+                        />
                         )
                     }}
                 />
-                <div className={classNames({'hidden': watchTimePeriod !== TimePeriodDateRange})}>
+                <div className={classNames({ 'hidden': watchTimePeriod !== TimePeriodDateRange })}>
                     <ControlledDateInput
                         control={control}
                         type='date'

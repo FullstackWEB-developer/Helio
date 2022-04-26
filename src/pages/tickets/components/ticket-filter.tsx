@@ -1,13 +1,13 @@
 import withErrorLogging from '@shared/HOC/with-error-logging';
 import Collapsible from '@components/collapsible/collapsible';
-import React, {useEffect, useState} from 'react';
-import {getContacts} from '@shared/services/contacts.service';
-import {getLocations, getRatingOptions, getUserList} from '@shared/services/lookups.service';
-import {getEnumByType, getList} from '../services/tickets.service';
+import React, { useEffect, useState } from 'react';
+import { getContacts } from '@shared/services/contacts.service';
+import { getLocations, getRatingOptions, getUserList } from '@shared/services/lookups.service';
+import { getEnumByType, getList } from '../services/tickets.service';
 import { getLookupValues } from '@shared/services/lookups.service';
-import {useDispatch, useSelector} from 'react-redux';
-import {useTranslation} from 'react-i18next';
-import Checkbox, {CheckboxCheckEvent} from '@components/checkbox/checkbox';
+import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import Checkbox, { CheckboxCheckEvent } from '@components/checkbox/checkbox';
 import {
     selectEnumValues,
     selectLookupValues,
@@ -17,29 +17,30 @@ import {
     selectTicketsPaging
 } from '../store/tickets.selectors';
 import Radio from '@components/radio/radio';
-import {TicketOptionsBase} from '../models/ticket-options-base.model';
-import {Controller, useForm} from 'react-hook-form';
-import {Option} from '@components/option/option';
-import {selectLocationList, selectRatingOptions, selectUserOptions} from '@shared/store/lookups/lookups.selectors';
-import {TicketQuery} from '../models/ticket-query';
+import { TicketOptionsBase } from '../models/ticket-options-base.model';
+import { Controller, useForm } from 'react-hook-form';
+import { Option } from '@components/option/option';
+import { selectLocationList, selectRatingOptions, selectUserOptions } from '@shared/store/lookups/lookups.selectors';
+import { TicketQuery } from '../models/ticket-query';
 import dayjs from 'dayjs';
-import {TicketEnumValue} from '../models/ticket-enum-value.model';
+import { TicketEnumValue } from '../models/ticket-enum-value.model';
 import utc from 'dayjs/plugin/utc';
 import TagInput from '@components/tag-input/tag-input';
-import {setTicketListQueryType, setTicketsFiltered} from '../store/tickets.slice';
-import {userNameSelector} from '@shared/store/app-user/appuser.selectors';
-import {TicketListQueryType} from '../models/ticket-list-type';
+import { setTicketListQueryType, setTicketsFiltered } from '../store/tickets.slice';
+import { userNameSelector } from '@shared/store/app-user/appuser.selectors';
+import { TicketListQueryType } from '../models/ticket-list-type';
 import ControlledDateInput from '@components/controllers/ControlledDateInput';
 import classNames from 'classnames';
 import ControlledSelect from '@components/controllers/controlled-select';
-import {DATE_ISO_FORMAT} from '@shared/constants/form-constants'
+import { DATE_ISO_FORMAT } from '@shared/constants/form-constants'
 import utils from '@shared/utils/utils';
 import './ticket-filter.scss';
+import Button from '@components/button/button';
 
-const TicketFilter = ({isOpen}: {isOpen: boolean}) => {
+const TicketFilter = ({ isOpen }: { isOpen: boolean }) => {
     dayjs.extend(utc);
     const dispatch = useDispatch();
-    const {t} = useTranslation();
+    const { t } = useTranslation();
     const allKey = '0';
     const timePeriod_DateRange = '4';
     const paging = useSelector(selectTicketsPaging);
@@ -56,10 +57,10 @@ const TicketFilter = ({isOpen}: {isOpen: boolean}) => {
     const offices = useSelector(selectLocationList);
     const username = useSelector(userNameSelector);
     const searchTerm: string = useSelector(selectSearchTerm);
-    const {control, handleSubmit, watch, setValue, getValues, reset} = useForm({});
+    const { control, handleSubmit, watch, setValue, getValues, reset } = useForm({});
     const [fromDate, setFromDate] = useState<Date | undefined>();
     const ticketListQueryType = useSelector(selectTicketQueryType);
-    const [collapsibleState, setCollapsibleState] = useState<{[key: string]: boolean}>({});
+    const [collapsibleState, setCollapsibleState] = useState<{ [key: string]: boolean }>({});
     const watchTimePeriod = watch('timePeriod');
     const ratings = useSelector(selectRatingOptions);
 
@@ -84,9 +85,9 @@ const TicketFilter = ({isOpen}: {isOpen: boolean}) => {
                 return;
             }
             if (Array.isArray(values)) {
-                values.forEach((value) => setValue(`${name}[${parseInt(value) + 1000}]`, {value: value, checked: true}));
+                values.forEach((value) => setValue(`${name}[${parseInt(value) + 1000}]`, { value: value, checked: true }));
             } else {
-                setValue(`${name}[${values}]`, {value: values, checked: true});
+                setValue(`${name}[${values}]`, { value: values, checked: true });
             }
         }
         const setRadioButtonControl = (name: string, values: any[] | any | undefined) => {
@@ -216,7 +217,7 @@ const TicketFilter = ({isOpen}: {isOpen: boolean}) => {
         if (values.timePeriod) {
             hasFilter = true;
             if (values.timePeriod === timePeriod_DateRange) {
-                const {fromDate: fromDateValue, toDate}: {fromDate: Date | undefined, toDate: Date | undefined} = values;
+                const { fromDate: fromDateValue, toDate }: { fromDate: Date | undefined, toDate: Date | undefined } = values;
                 if (fromDateValue) {
                     query.fromDate = utils.toShortISOLocalString(fromDateValue);
                 }
@@ -353,7 +354,7 @@ const TicketFilter = ({isOpen}: {isOpen: boolean}) => {
     }
 
     const GetCollapsibleCheckboxControl = (title: string, name: string, items: TicketOptionsBase[]) => {
-        return <Collapsible title={title} isOpen={collapsibleState[name]} onClick={(isCollapsed) => setCollapsibleState({...collapsibleState, [name]: isCollapsed})}>
+        return <Collapsible title={title} isOpen={collapsibleState[name]} onClick={(isCollapsed) => setCollapsibleState({ ...collapsibleState, [name]: isCollapsed })}>
             {
                 items.map((item) => {
                     return <Controller
@@ -384,7 +385,7 @@ const TicketFilter = ({isOpen}: {isOpen: boolean}) => {
     }
 
     const GetRadioCollapsibleControl = (title: string, name: string, items: TicketOptionsBase[], children?: React.ReactNode) => {
-        return <Collapsible title={title} isOpen={collapsibleState[name]} onClick={(isCollapsed) => setCollapsibleState({...collapsibleState, [name]: isCollapsed})}>
+        return <Collapsible title={title} isOpen={collapsibleState[name]} onClick={(isCollapsed) => setCollapsibleState({ ...collapsibleState, [name]: isCollapsed })}>
             <Controller
                 control={control}
                 name={name}
@@ -478,11 +479,11 @@ const TicketFilter = ({isOpen}: {isOpen: boolean}) => {
     });
 
     return <div className={getClassNames()}>
-        <div className='min-h-full px-6 pb-20 bg-secondary-100 relative' >
-            <div className='flex flex-row justify-between pt-7'>
-                <div className='pb-8 subtitle h7'>{t('tickets.filter.filter_tickets')}</div>
-                <div className='cursor-pointer' onClick={() => handleSubmit(fetchTickets)()}>{t('tickets.filter.fetch')}</div>
-                <div className='cursor-pointer' onClick={() => resetForm()}>{t('tickets.filter.clear_all')}</div>
+        <div className='min-h-full px-6 pb-20 bg-secondary-100 relative pt-4' >
+            <div className='py-4 subtitle'>{t('tickets.filter.filter_tickets')}</div>
+            <div className='flex flex-row pb-3'>
+                <Button data-test-id='apply-button' className='cursor-pointer mr-4' label='tickets.filter.fetch' buttonType='small' onClick={() => handleSubmit(fetchTickets)()} ></Button>
+                <Button data-test-id='clear-all-button' className='cursor-pointer' label='tickets.filter.clear_all' buttonType='secondary' onClick={() => resetForm()}></Button>
             </div>
             <form id='myForm'>
                 {GetCollapsibleCheckboxControl('tickets.filter.statuses', 'statuses', addAllOption(convertEnumToOptions(ticketStatuses)))}
@@ -497,7 +498,7 @@ const TicketFilter = ({isOpen}: {isOpen: boolean}) => {
                 {ticketListQueryType !== TicketListQueryType.MyTicket &&
                     <Collapsible title={'tickets.filter.assigned_to'}
                         isOpen={collapsibleState['assignedTo']}
-                        onClick={(isCollapsed) => setCollapsibleState({...collapsibleState, "assignedTo": isCollapsed})}>
+                        onClick={(isCollapsed) => setCollapsibleState({ ...collapsibleState, "assignedTo": isCollapsed })}>
                         <div>
                             <ControlledSelect
                                 name='assignedTo'
@@ -512,7 +513,7 @@ const TicketFilter = ({isOpen}: {isOpen: boolean}) => {
                 {ratings && GetCollapsibleCheckboxControl('tickets.filter.bot_ratings', 'botRating', convertEnumToOptions([...ratings].sort((a, b) => b.key - a.key), true))}
                 <Collapsible title='tickets.filter.tags'
                     isOpen={collapsibleState['tags']}
-                    onClick={(isCollapsed) => setCollapsibleState({...collapsibleState, "tags": isCollapsed})}>
+                    onClick={(isCollapsed) => setCollapsibleState({ ...collapsibleState, "tags": isCollapsed })}>
                     <Controller
                         name='tags'
                         control={control}

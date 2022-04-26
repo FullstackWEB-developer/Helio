@@ -1,32 +1,33 @@
-import {TicketEnumValue} from "@pages/tickets/models/ticket-enum-value.model";
-import {TicketOptionsBase} from "@pages/tickets/models/ticket-options-base.model";
+import { TicketEnumValue } from "@pages/tickets/models/ticket-enum-value.model";
+import { TicketOptionsBase } from "@pages/tickets/models/ticket-options-base.model";
 import {
     getRoleWithState, getUserDepartmentsWithState, getUserInvitationStatusWithState,
     getUserJobTitleListWithState, getUserStatusWithState
 } from "@shared/services/user.service";
 import classNames from "classnames";
-import React, {useEffect, useState} from "react";
-import {Controller, useForm} from "react-hook-form";
-import {useTranslation} from "react-i18next";
-import {useDispatch, useSelector} from "react-redux";
+import React, { useEffect, useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
 import Collapsible from '@components/collapsible/collapsible';
-import Checkbox, {CheckboxCheckEvent} from "@components/checkbox/checkbox";
-import {getLocations} from "@shared/services/lookups.service";
+import Checkbox, { CheckboxCheckEvent } from "@components/checkbox/checkbox";
+import { getLocations } from "@shared/services/lookups.service";
 import {
     selectUserDepartments, selectUserFilters,
     selectUserInvitationStatusList, selectUserJobTitles, selectUserStatusList
 } from "../store/users.selectors";
-import {selectRoleList} from "@shared/store/lookups/lookups.selectors";
-import {UserQueryFilter} from '../models/user-filter-query.model';
-import {setUserFilters} from "../store/users.slice";
-import {UserInvitationStatus} from "@shared/models";
+import { selectRoleList } from "@shared/store/lookups/lookups.selectors";
+import { UserQueryFilter } from '../models/user-filter-query.model';
+import { setUserFilters } from "../store/users.slice";
+import { UserInvitationStatus } from "@shared/models";
 import utils from "@shared/utils/utils";
+import Button from '@components/button/button';
 
-const UserFilter = ({isOpen}: {isOpen: boolean}) => {
+const UserFilter = ({ isOpen }: { isOpen: boolean }) => {
 
-    const {t} = useTranslation();
+    const { t } = useTranslation();
     const getClassNames = () => classNames({
-        'w-72 transition-width transition-slowest ease top-0 bg-secondary-100 overflow-y-auto overflow-x-hidden relative': isOpen,
+        'w-80 transition-width transition-slowest ease top-0 bg-secondary-100 overflow-y-auto overflow-x-hidden relative': isOpen,
         'hidden': !isOpen
     });
     const dispatch = useDispatch();
@@ -36,9 +37,9 @@ const UserFilter = ({isOpen}: {isOpen: boolean}) => {
     const departments = useSelector(selectUserDepartments);
     const jobTitles = useSelector(selectUserJobTitles);
     const storedFilters = useSelector(selectUserFilters);
-    const [collapsibleState, setCollapsibleState] = useState<{[key: string]: boolean}>({});
+    const [collapsibleState, setCollapsibleState] = useState<{ [key: string]: boolean }>({});
     const allKey = '0';
-    const {control, handleSubmit, reset, getValues, setValue} = useForm({});
+    const { control, handleSubmit, reset, getValues, setValue } = useForm({});
 
 
 
@@ -62,7 +63,7 @@ const UserFilter = ({isOpen}: {isOpen: boolean}) => {
     }
 
     const GetCollapsibleCheckboxControl = (title: string, name: string, items: TicketOptionsBase[]) => {
-        return <Collapsible title={title} isOpen={collapsibleState[name] || true} onClick={(isCollapsed) => setCollapsibleState({...collapsibleState, [name]: isCollapsed})}>
+        return <Collapsible title={title} isOpen={collapsibleState[name] || true} onClick={(isCollapsed) => setCollapsibleState({ ...collapsibleState, [name]: isCollapsed })}>
             {
                 items.map((item) => {
                     return (
@@ -99,9 +100,9 @@ const UserFilter = ({isOpen}: {isOpen: boolean}) => {
             return;
         }
         if (Array.isArray(values)) {
-            values.forEach((value) => setValue(`${name}[${value}]`, {value: value, checked: true}));
+            values.forEach((value) => setValue(`${name}[${value}]`, { value: value, checked: true }));
         } else {
-            setValue(`${name}[${values}]`, {value: values, checked: true});
+            setValue(`${name}[${values}]`, { value: values, checked: true });
         }
     }
 
@@ -118,7 +119,7 @@ const UserFilter = ({isOpen}: {isOpen: boolean}) => {
     const jobTitleOptions = utils.convertStringArrayToOptions(jobTitles);
     const departmentOptions = utils.convertStringArrayToOptions(departments);
     const roleOptions = utils.convertStringArrayToOptions(userRoleList?.map(r => r.name));
-    const userStatusOptions: TicketEnumValue[] = userStatusList?.map(s => ({key: s.key, value: t(`users.list_section.status_${s.key === 1 ? 'enabled' : 'disabled'}`)}));
+    const userStatusOptions: TicketEnumValue[] = userStatusList?.map(s => ({ key: s.key, value: t(`users.list_section.status_${s.key === 1 ? 'enabled' : 'disabled'}`) }));
     const displayInvitationStatus = (invitationStatus: UserInvitationStatus): string => {
         switch (invitationStatus) {
             case UserInvitationStatus.Accepted:
@@ -176,7 +177,7 @@ const UserFilter = ({isOpen}: {isOpen: boolean}) => {
         if (storedFilters?.searchText && storedFilters.searchText.length > 0) {
             filters.searchText = storedFilters.searchText;
         }
-        dispatch(setUserFilters({filters, resetPagination: true}));
+        dispatch(setUserFilters({ filters, resetPagination: true }));
     }
 
 
@@ -233,10 +234,12 @@ const UserFilter = ({isOpen}: {isOpen: boolean}) => {
     return (
         <div className={getClassNames()}>
             <div className="pt-4 px-6 flex flex-col">
-                <div className='flex justify-between h-14 items-center pb-2'>
-                    <div className='subtitle'>{t('users.filters.title')}</div>
-                    <div className='body2 cursor-pointer' onClick={() => handleSubmit(setFilters)()}>{t('users.filters.apply')}</div>
-                    <div className='body2 cursor-pointer' onClick={() => resetForm()}>{t('users.filters.clear_all')}</div>
+                <div className='flex-col items-center pb-2'>
+                    <div className='py-3 subtitle'>{t('users.filters.title')}</div>
+                    <div className='flex flex-row pb-3'>
+                        <Button data-test-id='apply-button' className='cursor-pointer mr-4' label='users.filters.apply' buttonType='small' onClick={() => handleSubmit(setFilters)()} ></Button>
+                        <Button data-test-id='clear-all-button' className='cursor-pointer' label='users.filters.clear_all' buttonType='secondary' onClick={() => resetForm()}></Button>
+                    </div>
                 </div>
                 <form>
                     {GetCollapsibleCheckboxControl('users.filters.statuses', 'statuses', addAllOption(convertEnumToOptions(userStatusOptions)))}

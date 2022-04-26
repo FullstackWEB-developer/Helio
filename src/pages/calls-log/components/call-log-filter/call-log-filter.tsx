@@ -1,25 +1,26 @@
 import classnames from 'classnames';
-import {useMemo, useState, useEffect, useCallback} from 'react';
-import {Controller, useForm} from 'react-hook-form';
-import {useTranslation} from 'react-i18next';
+import { useMemo, useState, useEffect, useCallback } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import Collapsible from '@components/collapsible/collapsible';
-import {ContactStatus} from '@pages/calls-log/models/call-log.model';
-import {ControlledCheckbox, ControlledDateInput, ControlledSelect} from '@components/controllers';
-import {Option} from '@components/option/option';
+import { ContactStatus } from '@pages/calls-log/models/call-log.model';
+import { ControlledCheckbox, ControlledDateInput, ControlledSelect } from '@components/controllers';
+import { Option } from '@components/option/option';
 import Radio from '@components/radio/radio';
 import utc from 'dayjs/plugin/utc';
 import dayjs from 'dayjs';
-import {useDispatch, useSelector} from 'react-redux';
-import {selectLookupValues} from '@pages/tickets/store/tickets.selectors';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectLookupValues } from '@pages/tickets/store/tickets.selectors';
 import utils from '@shared/utils/utils';
-import {TicketLogRequestModel} from '@shared/models/ticket-log.model';
-import {CommunicationDirection} from '@shared/models';
-import {setIsCallsLogFiltered} from '@pages/calls-log/store/calls-log.slice';
-import {setIsChatLogFiltered} from '@pages/chat-log/store/chat-log.slice';
+import { TicketLogRequestModel } from '@shared/models/ticket-log.model';
+import { CommunicationDirection } from '@shared/models';
+import { setIsCallsLogFiltered } from '@pages/calls-log/store/calls-log.slice';
+import { setIsChatLogFiltered } from '@pages/chat-log/store/chat-log.slice';
 import { getLookupValues } from '@shared/services/lookups.service';
+import Button from '@components/button/button';
 
 const TIME_PERIOD_DATE_RANGE_OPTION = '3';
-const DEFAULT_ALL_OPTION = {key: 'all', value: undefined};
+const DEFAULT_ALL_OPTION = { key: 'all', value: undefined };
 const DEFAULT_ANY_KEY = '';
 
 interface CallsLogFilterProps {
@@ -29,13 +30,13 @@ interface CallsLogFilterProps {
     isCallTypeHide?: boolean;
     onSubmit?: (filter: TicketLogRequestModel) => void;
 }
-const CallsLogFilter = ({isOpen, value: propsValue, logType, ...props}: CallsLogFilterProps) => {
+const CallsLogFilter = ({ isOpen, value: propsValue, logType, ...props }: CallsLogFilterProps) => {
     dayjs.extend(utc);
     const dispatch = useDispatch();
-    const {control, handleSubmit, watch, getValues, reset} = useForm({});
+    const { control, handleSubmit, watch, getValues, reset } = useForm({});
     const [fromDateField, setFromDateField] = useState<Date | undefined>(propsValue?.fromDate ? dayjs(propsValue.fromDate).utc().toDate() : undefined);
-    const {t} = useTranslation();
-    const [collapsibleState, setCollapsibleState] = useState<{[key: string]: boolean}>({});
+    const { t } = useTranslation();
+    const [collapsibleState, setCollapsibleState] = useState<{ [key: string]: boolean }>({});
     const watchTimePeriod = watch('timePeriod');
     const ticketLookupValuesReason = useSelector((state) => selectLookupValues(state, 'TicketReason'));
 
@@ -60,9 +61,9 @@ const CallsLogFilter = ({isOpen, value: propsValue, logType, ...props}: CallsLog
         'hidden': !isOpen
     }), [isOpen]);
 
-    const enumToArray = <T extends any>(enumValue: {[s: string]: T}, exludes: number[] = []) => Object.entries(enumValue)
+    const enumToArray = <T extends any>(enumValue: { [s: string]: T }, exludes: number[] = []) => Object.entries(enumValue)
         .filter(([_, value]) => !isNaN(Number(value)) && !exludes.includes(Number(value)))
-        .map(([key, value]) => ({key, value}));
+        .map(([key, value]) => ({ key, value }));
 
     const contactStatusItem = useMemo(() => {
         return [DEFAULT_ALL_OPTION, ...enumToArray(ContactStatus, logType === 'Chat' ? [2, 3] : [])]
@@ -72,10 +73,10 @@ const CallsLogFilter = ({isOpen, value: propsValue, logType, ...props}: CallsLog
 
     const getTimePeriodOptions = (): Option[] => (
         [
-            {value: '0', label: 'common.time_periods.today'},
-            {value: '1', label: 'common.time_periods.last_7_days'},
-            {value: '2', label: 'common.time_periods.last_30_days'},
-            {value: '3', label: 'common.time_periods.date_range'},
+            { value: '0', label: 'common.time_periods.today' },
+            { value: '1', label: 'common.time_periods.last_7_days' },
+            { value: '2', label: 'common.time_periods.last_30_days' },
+            { value: '3', label: 'common.time_periods.date_range' },
         ]
     )
 
@@ -84,7 +85,7 @@ const CallsLogFilter = ({isOpen, value: propsValue, logType, ...props}: CallsLog
     }, [dispatch])
 
 
-    const getFormDate = (formData: any): {fromDate?: Date, toDate?: Date} => {
+    const getFormDate = (formData: any): { fromDate?: Date, toDate?: Date } => {
         let fromDate: Date | undefined;
         let toDate: Date | undefined;
 
@@ -113,13 +114,13 @@ const CallsLogFilter = ({isOpen, value: propsValue, logType, ...props}: CallsLog
                 fromDate = date.toDate();
             }
         }
-        return {fromDate: fromDate, toDate: toDate};
+        return { fromDate: fromDate, toDate: toDate };
     }
 
     const resetForm = () => {
         const fieldsValue = getValues();
         const clearCheckboxValue = (values: any) => {
-            const cloned = {...values};
+            const cloned = { ...values };
             Object.keys(cloned)
                 .filter(p => !!cloned[p])
                 .forEach(p => {
@@ -143,10 +144,10 @@ const CallsLogFilter = ({isOpen, value: propsValue, logType, ...props}: CallsLog
         const filter: TicketLogRequestModel = {};
 
         const formDate = getFormDate(formData);
-        if(formDate.toDate){
+        if (formDate.toDate) {
             filter.toDate = formDate.toDate;
         }
-        if(formDate.fromDate){
+        if (formDate.fromDate) {
             filter.fromDate = formDate.fromDate;
         }
         filter.reason = formData.reason;
@@ -194,11 +195,11 @@ const CallsLogFilter = ({isOpen, value: propsValue, logType, ...props}: CallsLog
         props.onSubmit?.(filter);
     };
 
-    const GetCollapsibleCheckboxControl = (title: string, name: string, items: {key: string; value: any}[]) => {
+    const GetCollapsibleCheckboxControl = (title: string, name: string, items: { key: string; value: any }[]) => {
         return <Collapsible
             title={title}
             isOpen={collapsibleState[name]}
-            onClick={(isCollapsed) => setCollapsibleState({...collapsibleState, [name]: isCollapsed})}>
+            onClick={(isCollapsed) => setCollapsibleState({ ...collapsibleState, [name]: isCollapsed })}>
             {
                 items.map((item) =>
                     <ControlledCheckbox
@@ -218,7 +219,7 @@ const CallsLogFilter = ({isOpen, value: propsValue, logType, ...props}: CallsLog
         return <Collapsible
             title={title}
             isOpen={collapsibleState[name]}
-            onClick={(isCollapsed) => setCollapsibleState({...collapsibleState, [name]: isCollapsed})}>
+            onClick={(isCollapsed) => setCollapsibleState({ ...collapsibleState, [name]: isCollapsed })}>
             <ControlledSelect
                 name={name}
                 label='ticket_new.reason'
@@ -231,7 +232,7 @@ const CallsLogFilter = ({isOpen, value: propsValue, logType, ...props}: CallsLog
     const GetCollapsibleDateTime = (title: string, name: string) => (
         <Collapsible title={title}
             isOpen={collapsibleState[name]}
-            onClick={(isCollapsed) => setCollapsibleState({...collapsibleState, [name]: isCollapsed})}
+            onClick={(isCollapsed) => setCollapsibleState({ ...collapsibleState, [name]: isCollapsed })}
             headerClassName='h-10 mb-1.5'>
             <Controller
                 control={control}
@@ -281,11 +282,11 @@ const CallsLogFilter = ({isOpen, value: propsValue, logType, ...props}: CallsLog
 
     return (
         <div className={getClassNames}>
-            <div className='min-h-full pb-20 pl-6 pr-6 bg-secondary-100'>
-                <div className='flex flex-row justify-between py-8'>
-                    <div className='mr-10 subtitle h7'>{t('common.filters')}</div>
-                    <div className='mr-6 cursor-pointer' onClick={() => handleSubmit(onSubmit)()}>{t('common.apply')}</div>
-                    <div className='cursor-pointer whitespace-nowrap' onClick={() => resetForm()}>{t('common.clear_all')}</div>
+            <div className='min-h-full px-6 pb-20 bg-secondary-100 pt-4' >
+                <div className='py-4 subtitle'>{t('common.filters')}</div>
+                <div className='flex flex-row pb-3'>
+                    <Button data-test-id='apply-button' className='cursor-pointer mr-4' label='common.apply' buttonType='small' onClick={() => handleSubmit(onSubmit)()} ></Button>
+                    <Button data-test-id='clear-all-button' className='cursor-pointer' label='common.clear_all' buttonType='secondary' onClick={() => resetForm()}></Button>
                 </div>
                 <form>
                     {GetCollapsibleCheckboxControl('common.statuses', 'status', contactStatusItem)}

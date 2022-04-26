@@ -1,20 +1,21 @@
-import SvgIcon, {Icon} from '@components/svg-icon';
+import SvgIcon, { Icon } from '@components/svg-icon';
 import Collapsible from '@components/collapsible';
-import {Controller, useForm} from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import Radio from '@components/radio/radio';
-import {Option} from '@components/option/option';
+import { Option } from '@components/option/option';
 import ControlledSelect from '@components/controllers/controlled-select';
-import {useEffect, useState} from 'react';
-import {getUserList} from '@shared/services/lookups.service';
-import {selectUserOptions} from '@shared/store/lookups/lookups.selectors';
-import {useDispatch, useSelector} from 'react-redux';
-import {useTranslation} from 'react-i18next';
+import { useEffect, useState } from 'react';
+import { getUserList } from '@shared/services/lookups.service';
+import { selectUserOptions } from '@shared/store/lookups/lookups.selectors';
+import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import utc from 'dayjs/plugin/utc';
 import dayjs from 'dayjs';
 import ControlledDateInput from '@components/controllers/ControlledDateInput';
-import {SmsFilterParamModel} from './sms-filter.model';
+import { SmsFilterParamModel } from './sms-filter.model';
 import classNames from 'classnames';
 import { setIsSmsFiltered } from '@pages/sms/store/sms.slice';
+import Button from '@components/button/button';
 const TIME_PERIOD_DATE_RANGE_OPTION = '3';
 
 interface SmsFilterProps {
@@ -25,14 +26,14 @@ interface SmsFilterProps {
     onFilterClick?: (param: SmsFilterParamModel) => void;
     isUserFilterEnabled?: boolean;
 }
-const SmsFilter = ({className, isUserFilterEnabled, value, defaultValue, ...props}: SmsFilterProps) => {
+const SmsFilter = ({ className, isUserFilterEnabled, value, defaultValue, ...props }: SmsFilterProps) => {
 
     dayjs.extend(utc);
     const dispatch = useDispatch();
-    const {t} = useTranslation();
+    const { t } = useTranslation();
     const userList = useSelector(selectUserOptions);
     const [fromDateField, setFromDateField] = useState<Date | undefined>(value?.fromDate ? dayjs(value.fromDate).utc().toDate() : undefined);
-    const {control, handleSubmit, watch, setValue, reset} = useForm<SmsFilterParamModel>({
+    const { control, handleSubmit, watch, setValue, reset } = useForm<SmsFilterParamModel>({
         defaultValues: defaultValue
     });
     const watchTimePeriod = watch('timePeriod');
@@ -59,10 +60,10 @@ const SmsFilter = ({className, isUserFilterEnabled, value, defaultValue, ...prop
 
     const getTimePeriodOptions = (): Option[] => (
         [
-            {value: '0', label: t('common.time_periods.today')},
-            {value: '1', label: t('common.time_periods.last_7_days')},
-            {value: '2', label: t('common.time_periods.last_30_days')},
-            {value: '3', label: t('common.time_periods.date_range')},
+            { value: '0', label: t('common.time_periods.today') },
+            { value: '1', label: t('common.time_periods.last_7_days') },
+            { value: '2', label: t('common.time_periods.last_30_days') },
+            { value: '3', label: t('common.time_periods.date_range') },
         ]
     )
 
@@ -75,7 +76,7 @@ const SmsFilter = ({className, isUserFilterEnabled, value, defaultValue, ...prop
         return cloned;
     }
 
-    const getFormDate = (formData: any): {fromDate?: Date, toDate?: Date} => {
+    const getFormDate = (formData: any): { fromDate?: Date, toDate?: Date } => {
         let fromDate: Date | undefined;
         let toDate: Date | undefined;
 
@@ -104,7 +105,7 @@ const SmsFilter = ({className, isUserFilterEnabled, value, defaultValue, ...prop
                 fromDate = date.toDate();
             }
         }
-        return {fromDate: fromDate, toDate: toDate};
+        return { fromDate: fromDate, toDate: toDate };
     }
 
     const onFilterClick = (formData: any) => {
@@ -139,19 +140,23 @@ const SmsFilter = ({className, isUserFilterEnabled, value, defaultValue, ...prop
     }
 
     return (<div className={className}>
-        <div className='flex justify-between py-4 border-b flew-row'>
-            <div className="pl-5 subtitle">{t("common.filters")}</div>
-            <div className="flex flex-row items-center justify-between">
-                <div className='cursor-pointer body2-primary' onClick={() => handleSubmit(onFilterClick)()}>{t('common.apply')}</div>
-                <div className='pl-5 cursor-pointer body2' onClick={onClearFilter} >{t('common.clear_all')}</div>
-                <div>
-                    <SvgIcon
-                        type={Icon.Close}
-                        onClick={props.onCloseClick}
-                        className='icon-small'
-                        wrapperClassName='pl-7 pr-4 cursor-pointer'
-                    />
+        <div className='pl-5 flex-col py-4 border-b'>
+            <div className='flex justify-between'>
+                <div className="subtitle">{t("common.filters")}</div>
+                <div className="flex flex-row items-center">
+                    <div>
+                        <SvgIcon
+                            type={Icon.Close}
+                            onClick={props.onCloseClick}
+                            className='icon-small'
+                            wrapperClassName='pl-7 pr-4 cursor-pointer'
+                        />
+                    </div>
                 </div>
+            </div>
+            <div className='flex flex-row pt-4'>
+                <Button data-test-id='apply-button' className='cursor-pointer mr-4' label='common.apply' buttonType='small' onClick={() => handleSubmit(onFilterClick)()} ></Button>
+                <Button data-test-id='clear-all-button' className='cursor-pointer' label='common.clear_all' buttonType='secondary' onClick={onClearFilter}></Button>
             </div>
         </div>
         <div className="flex flex-col pt-4 pl-5 pr-4">
@@ -173,7 +178,7 @@ const SmsFilter = ({className, isUserFilterEnabled, value, defaultValue, ...prop
                         )
                     }}
                 />
-                <div className={classNames({'hidden': watchTimePeriod !== TIME_PERIOD_DATE_RANGE_OPTION})}>
+                <div className={classNames({ 'hidden': watchTimePeriod !== TIME_PERIOD_DATE_RANGE_OPTION })}>
                     <ControlledDateInput
                         control={control}
                         type='date'
