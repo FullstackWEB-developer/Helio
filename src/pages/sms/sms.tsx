@@ -239,7 +239,7 @@ const Sms = () => {
     }, [debounceSearchTerm]);
 
     const fetchMore = () => {
-        if (hasNextPage) {
+        if (hasNextPage && !isFetchingNextPage) {
             fetchNextPage();
         }
     }
