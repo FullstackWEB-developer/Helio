@@ -36,7 +36,7 @@ const PatientSearchResults = () => {
 
     useEffect(() => {
         dispatch(setGlobalLoading(isFetching));
-        if (patients && patients.length === 1 && !isFetching) {
+        if (patients && patients.length === 1 && !isFetching && !isError) {
             handlePatientSelection(patients[0].patientId, false);
         }
     }, [patients, isFetching]);

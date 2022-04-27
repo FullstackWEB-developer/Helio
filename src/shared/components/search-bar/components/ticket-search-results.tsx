@@ -38,7 +38,7 @@ const TicketSearchResults = () => {
 
     useEffect(() => {
         dispatch(setGlobalLoading(isFetching));
-        if (data?.results && data.results.length === 1 && !isFetching) {
+        if (data?.results && data.results.length === 1 && !isFetching && !isError) {
             handleTicketSelection(data.results[0].ticketNumber);
         }
     }, [isFetching]);

@@ -39,7 +39,7 @@ const ContactSearchResults = () => {
 
     useEffect(() => {
         dispatch(setGlobalLoading(isFetching));
-        if (data?.results && data.results.length === 1 && !isFetching) {
+        if (data?.results && data.results.length === 1 && !isFetching && !isError) {
             handleContactSelection(data.results[0].id);
         }
     }, [isFetching]);
