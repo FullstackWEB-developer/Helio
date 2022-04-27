@@ -238,7 +238,7 @@ const UserFilter = ({ isOpen }: { isOpen: boolean }) => {
                     <div className='py-3 subtitle'>{t('users.filters.title')}</div>
                     <div className='flex flex-row pb-3'>
                         <Button data-test-id='apply-button' className='cursor-pointer mr-4' label='users.filters.apply' buttonType='small' onClick={() => handleSubmit(setFilters)()} ></Button>
-                        <Button data-test-id='clear-all-button' className='cursor-pointer' label='users.filters.clear_all' buttonType='secondary' onClick={() => resetForm()}></Button>
+                        <Button data-test-id='reset-all-button' className='cursor-pointer' label='users.filters.reset_all' buttonType='secondary' onClick={() => resetForm()}></Button>
                     </div>
                 </div>
                 <form>

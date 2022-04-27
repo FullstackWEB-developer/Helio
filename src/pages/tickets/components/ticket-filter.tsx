@@ -483,7 +483,7 @@ const TicketFilter = ({ isOpen }: { isOpen: boolean }) => {
             <div className='py-4 subtitle'>{t('tickets.filter.filter_tickets')}</div>
             <div className='flex flex-row pb-3'>
                 <Button data-test-id='apply-button' className='cursor-pointer mr-4' label='tickets.filter.fetch' buttonType='small' onClick={() => handleSubmit(fetchTickets)()} ></Button>
-                <Button data-test-id='clear-all-button' className='cursor-pointer' label='tickets.filter.clear_all' buttonType='secondary' onClick={() => resetForm()}></Button>
+                <Button data-test-id='reset-all-button' className='cursor-pointer' label='tickets.filter.reset_all' buttonType='secondary' onClick={() => resetForm()}></Button>
             </div>
             <form id='myForm'>
                 {GetCollapsibleCheckboxControl('tickets.filter.statuses', 'statuses', addAllOption(convertEnumToOptions(ticketStatuses)))}

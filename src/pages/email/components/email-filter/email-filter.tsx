@@ -170,7 +170,7 @@ const EmailFilter = ({ className, isUserFilterEnabled, value, ...props }: EmailF
             </div>
             <div className='flex flex-row pt-4'>
                 <Button data-test-id='apply-button' className='cursor-pointer mr-4' label='common.apply' buttonType='small' onClick={() => handleSubmit(onFilterClick)()} ></Button>
-                <Button data-test-id='clear-all-button' className='cursor-pointer' label='common.clear_all' buttonType='secondary' onClick={onClearFilter}></Button>
+                <Button data-test-id='reset-all-button' className='cursor-pointer' label='common.reset_all' buttonType='secondary' onClick={onClearFilter}></Button>
             </div>
         </div>
         <div className="flex flex-col pt-4 pl-5 pr-4">

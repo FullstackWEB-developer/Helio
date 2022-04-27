@@ -38,6 +38,7 @@
       "date_range_value": "Date ({{from}} - {{to}})"
     },
     "clear_all": "Clear All",
+    "reset_all": "Reset All",
     "apply": "Apply",
     "filters": "Filters",
     "enter_text": "Enter Text",
@@ -176,7 +177,7 @@
     },
     "filter": {
       "filter_tickets": "Filters",
-      "clear_all": "Clear All",
+      "reset_all": "Reset All",
       "statuses": "Statuses",
       "time_period": "Time period",
       "state": "State",
@@ -1594,6 +1595,7 @@
       "title": "Filters",
       "apply": "Apply",
       "clear_all": "Clear All",
+      "reset_all": "Reset All",
       "statuses": "Statuses",
       "invites": "Invites",
       "role": "Role",
