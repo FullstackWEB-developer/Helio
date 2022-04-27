@@ -23,8 +23,8 @@ const HotSpots = () => {
     const {isLoading, error, data} = useQuery<HotSpotInfo[], Error>(QueryHotSpots, () =>
             getHotSpots(),
         {
-            staleTime: OneMinute,
-
+            refetchInterval: OneMinute,
+            enabled: true
         }
     );
     useEffect(() => {
@@ -59,9 +59,10 @@ const HotSpots = () => {
         <div className='flex items-center justify-center justify-self-center' data-test-id='hot-spot-modal-parent'>
             <Modal isDraggable={true} isOpen={true} title={t('appointment.hot_spots.title')} onClose={() => dispatch(toggleHotspots())}
                    isClosable={true}>
-                <div className='w-full mb-10'>
+                <div className='w-full mb-2'>
                     <div data-test-id='hot-spot-modal-content'>{getContent()}</div>
                 </div>
+                <div className='mb-8 body3'>{t('appointment.hot_spots.refresh_interval')}</div>
             </Modal>
         </div>
     );

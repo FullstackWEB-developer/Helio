@@ -500,7 +500,8 @@
       "provider": "Provider",
       "open_slots": "Open Slots",
       "location": "Location",
-      "error": "Error loading hotspots"
+      "error": "Error loading hotspots",
+      "refresh_interval": "*This data may be stale. Data is refreshed at every 15 minutes."
     },
     "notes": {
       "error": "Error loading notes"
