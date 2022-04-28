@@ -44,9 +44,9 @@ const TicketDetailAssignee = ({ticket}: TicketDetailAssigneeProps) => {
             setEditMode(false);
             dispatch(setTicket(data))
         },
-        onError: () => {
+        onError: (error : any) => {
             dispatch(addSnackbarMessage({
-                message: 'ticket_detail.ticket_assign_error',
+                message: error?.response?.data.statusCode === 409 ? 'ticket_detail.ticket_already_assigned_to_selected_user_error' :'ticket_detail.ticket_assign_error',
                 type: SnackbarType.Error
             }));
         },

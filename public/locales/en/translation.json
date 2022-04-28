@@ -543,6 +543,7 @@
     "ticket_updated": "Ticket updated successfully",
     "ticket_update_failed": "Ticket update failed",
     "ticket_assign_error": "Ticket assignment failed",
+    "ticket_already_assigned_to_selected_user_error": "This ticket has already been assigned to the selected user",
     "ticket_status_update_error": "Ticket status change failed",
     "internal_note_title": "Internal Note",
     "send_sms_title": "Send SMS",
