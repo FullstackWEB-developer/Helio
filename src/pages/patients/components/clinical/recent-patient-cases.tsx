@@ -33,7 +33,8 @@ const RecentPatientCases = ({clinical}: RecentPatientCasesProps) => {
                 widthClass:'w-5/6',
                 field:'description',
                 alignment:'start',
-                rowClassname:'items-start h-full'
+                rowClassname:'items-start h-full',
+                render: (description) => <div>{description?.replace(/<[^>]*>?/gm, '')}</div>
             }
         ]
     }
