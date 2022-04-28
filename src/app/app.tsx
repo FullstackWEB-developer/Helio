@@ -62,6 +62,7 @@ import BadgeValueUpdate from '@shared/websockets/badge-value-update';
 import VerifiedPatientGuard from '@components/verified-patient-guard/verified-patient-guard';
 import useBrowserNotification from '@shared/hooks/useBrowserNotification';
 import TicketMessageReadUpdate from '@shared/websockets/ticket-message-read';
+import TicketNotesUpdate from '@shared/websockets/ticket-notes-update';
 const SearchResults = React.lazy(() => import('../shared/components/search-bar/components/search-results'));
 const PatientChart = React.lazy(() => import('@pages/patients/patient-chart'));
 const VerifyRedirectLink = React.lazy(() => import('@pages/external-access/verify-patient/verify-redirect-link'));
@@ -195,6 +196,7 @@ function App() {
                 <Layout>
                     <RealTimeUserStatusUpdate />
                     <BadgeValueUpdate/>
+                    <TicketNotesUpdate/>
                     <IncomingTicketMessageUpdate />
                     <TicketMessageReadUpdate />
                     <GuardedRoute exact path='/dashboard' component={Dashboard} />
