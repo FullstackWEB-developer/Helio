@@ -1,0 +1,27 @@
+.cancellation-reason-list {
+    &-grid {
+        display: grid;
+        column-gap: 2rem;
+        align-items: center;
+        align-content: center;
+        grid-template-columns: 24% 24% 1fr 3%;
+        &.head-row{
+            background-color: var(--color-secondary-100);
+            text-transform: uppercase;
+            min-height: 3rem;
+            color: var(--table-header-color);
+        }
+        &.data-row{
+            border-bottom: 1px solid var(--light-divider-7);
+            grid-auto-rows: minmax(3.5rem, min-content);
+            &:hover{
+                background-color: var(--dashboard-background);
+                cursor: pointer;
+            }
+            &-disabled{
+                color: var(--light-text-disabled);
+                pointer-events: none;
+            }
+        }
+    }
+}

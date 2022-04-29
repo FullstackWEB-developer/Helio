@@ -31,8 +31,8 @@ const ConfigurationsMenu = ({activeUrl}: ConfigurationsMenuProps) => {
                                 })}
                             </Collapsible>
                 }else{
-                    return <Link to={`/configurations/${item.url}`}>
-                                <div key={item.id} id={item.id} className={`${getClassName(item.url)} subtitle2 h-10`}>{t(item.title)}</div>
+                    return <Link key={item.id} to={`/configurations/${item.url}`}>
+                                <div id={item.id} className={`${getClassName(item.url)} subtitle2 h-10`}>{t(item.title)}</div>
                             </Link>
                 }
             })}

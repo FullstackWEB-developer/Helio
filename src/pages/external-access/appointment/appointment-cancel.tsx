@@ -21,7 +21,6 @@ import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc'
 import Button from '@components/button/button';
 import Select from '@components/select/select';
-import {AppointmentCancelReason} from '@pages/external-access/appointment/models/appointment-cancel-reason.model';
 import {Option} from '@components/option/option';
 import {Controller, useForm} from 'react-hook-form';
 import {AppointmentCancellationModel} from '@pages/external-access/appointment/models/appointment-cancellation.model';
@@ -40,7 +39,7 @@ import {Appointment} from '@pages/external-access/appointment/models';
 import {Location, Provider} from '@shared/models';
 import {getAppointments} from '@pages/patients/services/patients.service';
 import {AppointmentReschedulePath} from '@app/paths';
-import utils from '@shared/utils/utils';
+import {CancellationReason} from '@shared/models/cancellation-reason.model';
 
 const AppointmentCancel = () => {
     dayjs.extend(utc);
@@ -104,7 +103,7 @@ const AppointmentCancel = () => {
         }
     );
 
-    const {isLoading: isGetCancellationReasonsLoading, data: cancellationReasons} = useQuery<AppointmentCancelReason[], AxiosError>([GetCancellationReasons], () =>
+    const {isLoading: isGetCancellationReasonsLoading, data: cancellationReasons} = useQuery<CancellationReason[], AxiosError>([GetCancellationReasons], () =>
         getCancellationReasons()
     );
 
@@ -121,8 +120,8 @@ const AppointmentCancel = () => {
         return ''
     }
 
-    const getCancellationReasonsOptions = (reasons: AppointmentCancelReason[] | undefined) => {
-        return reasons ? reasons.filter(r => r.type === CancellationReasonTypes.Cancel).map((item: AppointmentCancelReason) => {
+    const getCancellationReasonsOptions = (reasons: CancellationReason[] | undefined) => {
+        return reasons ? reasons.filter(r => r.type === CancellationReasonTypes.Cancel).map((item: CancellationReason) => {
             return {
                 value: item.id.toString(),
                 label: item.name

@@ -2,7 +2,7 @@ import {useCallback} from 'react';
 import { useParams } from 'react-router';
 import AppointmentType from './components/appointment-type/appointment-type';
 import ConfigurationsMenu from './components/configurations-menu/configurations-menu';
-import CancellationReasonConfig from './components/cancellation-reason-config';
+import CancellationReasonConfig from './components/cancellation-reason/cancellation-reason-config';
 import TicketDepartment from './components/ticket-department/ticket-department';
 
 const Configurations = () => {

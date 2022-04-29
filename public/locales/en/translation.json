@@ -1864,7 +1864,17 @@
     "cancellation_reason": {
       "title": "Appointment Cancelation Settings",
       "description": "Map and configure EHR/EMR appointment cancelation types to how they will appear to patients.\n\nIf voice bot can not recognize the reason for canceling or rescheduling an appointment, chose default options on how they should be entered/mapped in the EMR/EHR system.",
-      "error_fetching_reasons": "Fetching cancellation reasons failed. Please try again."
+      "error_fetching_reasons": "Fetching cancellation reasons failed. Please try again.",
+      "grid_id": "EHR/EMR Appointment cancelation ID",
+      "grid_name": "Helio Appointment Cancelation Name",
+      "grid_description": "Description",
+      "default_reason_label": "Cancelation Reason Type",
+      "cancellation_reason_option": "cancelation reason",
+      "reschedule_reason_option": "rescheduling reason",
+      "set_default": "If <strong><0>{{reason}}</0></strong> is not recognized by the bot set",
+      "as_default": "as default.",
+      "save_default_success": "Default cancellation reason(s) configured successfully.",
+      "save_default_error": "Setting up default cancellation reason(s) failed. Please try again later."
     }
   },
   "ticket_department": {
