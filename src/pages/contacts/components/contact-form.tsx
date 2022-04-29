@@ -235,7 +235,7 @@ const ContactForm = ({contact, contactType, submitHandler, closeHandler, editMod
                             onChange={(e) => onCompanyChange(e.target.value)}
                             isFetchingSuggestions={shouldCompanyFieldBeAutosuggest ? (isLoadingCompanySuggestions || isFetchingCompanySuggestions) : undefined}
                             selectedSuggestion={shouldCompanyFieldBeAutosuggest ? selectedCompany : undefined}
-                            fetchingSuggestionsPlaceholder={'contacts.contact_details.company_search_placeholder'}
+                            fetchingSuggestionsPlaceholder={t('contacts.contact_details.company_search_placeholder')}
                             disabled={!editMode && !!contact?.relatedId}
                             onBlur={companyFieldOnBlur}
 

@@ -1191,7 +1191,7 @@
       "error_favorite_contact": "Error (un)favoriting contact",
       "error_adding_note": "Error adding note for contact",
       "error_dialing_phone": "Error dialing phone",
-      "company_search_placeholder": "Start typing a company name to see available companies...",
+      "company_search_placeholder": "Start typing a company name to see available companies.\nIf company is not available, please choose “Company” instead of “Individual contact” above",
       "contact_deleted": "Contact has been deleted",
       "contact_updated": "Contact has been updated",
       "contact_created": "Contact has been created",
