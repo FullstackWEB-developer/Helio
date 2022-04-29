@@ -23,7 +23,7 @@ const ContactSearchResults = () => {
     const searchTerm = useSelector(selectSearchTerm);
     const selectedType = useSelector(selectSelectedType);
     const [paginationProperties, setPaginationProperties] = useState<Paging>(DefaultPagination);
-    const {data, isFetching, isError} = useQuery([SearchContactResults, searchTerm, selectedType, paginationProperties.page],
+    const {data, isFetching, isError} = useQuery([SearchContactResults, searchTerm, paginationProperties.page],
         () => selectedType === searchTypeContact.phone ? queryContactsByPhone(searchTerm, paginationProperties.page) : queryContacts(searchTerm, paginationProperties.page), {
         onSuccess: (data) => {
             setPaginationProperties({
