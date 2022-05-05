@@ -5,13 +5,15 @@ export interface EmailInitialState {
     unreadEmails: number;
     lastEmailDate: Date;
     hasFilter: boolean;
+    unreadTeamEmails: number;
 }
 
 const initialEmailState: EmailInitialState = {
     messageSummaries: [],
     unreadEmails: 0,
     hasFilter: false,
-    lastEmailDate: new Date()
+    lastEmailDate: new Date(),
+    unreadTeamEmails: 0
 }
 
 export default initialEmailState;

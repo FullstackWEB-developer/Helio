@@ -69,7 +69,7 @@ const SearchboxAddIcon = ({onClick, type, patient, contact}: SearchboxAddIconPro
         <div ref={addIconRef}>
             <SvgIcon
                 fillClass={classnames({"rgba-025-fill": !canSend, "default-toolbar-icon": canSend })}
-                type={Icon.AddContact}
+                type={Icon.AddPhone}
                 onClick={onIconClick}
             />
         </div>

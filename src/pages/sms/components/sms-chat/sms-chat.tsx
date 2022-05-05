@@ -198,7 +198,7 @@ const SmsChat = ({info, isLoading, isSending, isBottomFocus, messages = [], last
                     </div>}
                     {selectedMessageTemplate && <div className='pb-5' />}
                     <TextArea
-                        className='w-full pl-6 pr-0 body2'
+                        className='w-full pl-6 pr-0 body2 sms-chat-textarea'
                         data-test-id='ticket-send-email'
                         placeHolder={t('ticket_detail.add_note')}
                         rows={2}
@@ -214,6 +214,7 @@ const SmsChat = ({info, isLoading, isSending, isBottomFocus, messages = [], last
                         icon={Icon.Send}
                         iconFill='notes-send'
                         iconOnClick={() => onSend()}
+                        focusState={true}
                     />
                 </div>
             </div>

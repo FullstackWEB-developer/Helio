@@ -40,6 +40,7 @@ interface TextAreaProps {
     rows?: number;
     showSendIconInRichTextMode?: boolean;
     toggleRichTextMode?: boolean;
+    focusState?: boolean;
 }
 
 const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(({
@@ -136,7 +137,11 @@ const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(({
         'flex flex-row w-full h-full items-center p-4': !overwriteDefaultContainerClasses,
         'border-b': !hasBorder,
         'border': hasBorder,
-        'textarea-wrapper': props.disabled        
+        'textarea-wrapper': props.disabled
+    });
+
+    const textAreaOutWrapperClass = classnames('w-full h-full',{
+        'textarea-wrapper-focus': props.focusState   
     });
 
     useEffect(() => {
@@ -164,7 +169,7 @@ const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(({
                                                    disabled={props.disabled}
                                                    isLoading={isLoading}
                                                         showSendIcon={showSendIconInRichTextMode}/></div>}
-            {!isFormatEnabled &&<div className='w-full h-full'>
+            {!isFormatEnabled &&<div className={textAreaOutWrapperClass}>
                 <div className={textAreaWrapperClass}>
                     <textarea ref={mergeRefs([textAreaRef, ref])}
                               {...props}

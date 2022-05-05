@@ -63,6 +63,7 @@ import VerifiedPatientGuard from '@components/verified-patient-guard/verified-pa
 import useBrowserNotification from '@shared/hooks/useBrowserNotification';
 import TicketMessageReadUpdate from '@shared/websockets/ticket-message-read';
 import TicketNotesUpdate from '@shared/websockets/ticket-notes-update';
+import TeamBadgeValueUpdate from '@shared/websockets/team-badge-value-update';
 const SearchResults = React.lazy(() => import('../shared/components/search-bar/components/search-results'));
 const PatientChart = React.lazy(() => import('@pages/patients/patient-chart'));
 const VerifyRedirectLink = React.lazy(() => import('@pages/external-access/verify-patient/verify-redirect-link'));
@@ -195,6 +196,7 @@ function App() {
             <SignalRProvider name={TICKET_MESSAGE_INCOMING_NAME} createConnection={() => createTicketMessageConnectionHub(accessToken)}>
                 <Layout>
                     <RealTimeUserStatusUpdate />
+                    <TeamBadgeValueUpdate />
                     <BadgeValueUpdate/>
                     <TicketNotesUpdate/>
                     <IncomingTicketMessageUpdate />

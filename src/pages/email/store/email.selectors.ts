@@ -24,3 +24,8 @@ export const selectEmailHasFilter = createSelector(
     emailState,
     state => state.hasFilter as Date
 )
+
+export const selectUnreadTeamEmails = createSelector(
+    emailState,
+    state => state.unreadTeamEmails as number
+)

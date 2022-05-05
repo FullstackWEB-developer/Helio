@@ -121,3 +121,8 @@ export const selectUnreadTickets = createSelector(
     ticketState,
     state => state.unreadTickets as number
 )
+
+export const selectUnreadTeamTickets = createSelector(
+    ticketState,
+    state => state.unreadTeamTickets as number
+)

@@ -70,7 +70,7 @@ export const Dashboard = () => {
         dispatch(getLookupValues('Department'));
         dispatch(getLookupValues('TicketReason'));
         dispatch(getLookupValues('TicketTags'));
-        dispatch(getBadgeValues(BadgeValues.All));
+        dispatch(getBadgeValues(BadgeValues.All, true));
     }, []);
 
     customHooks.useOutsideClick([typeDropdownRef], () => {

@@ -134,6 +134,9 @@ const ticketsSlice = createSlice({
     },
     setUnreadTicket(state, {payload}: PayloadAction<number>) {
       state.unreadTickets = payload;
+    },
+    setUnreadTeamTicket(state, {payload}: PayloadAction<number>) {
+      state.unreadTeamTickets = payload;
     }
   },
 });
@@ -164,7 +167,8 @@ export const {
   clearTicketFilters,
   setTicketsFiltered,
   setPatientPhoto,
-  setUnreadTicket
+  setUnreadTicket,
+  setUnreadTeamTicket
 } = ticketsSlice.actions;
 
 export default ticketsSlice.reducer;

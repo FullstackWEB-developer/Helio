@@ -20,10 +20,11 @@ interface NavigationItemProps {
     isSelected: boolean,
     displayBadge?: boolean,
     badgeValue?: number,
-    permission?: string;
+    permission?: string,
+    teamValue?: number
 }
 
-const NavigationItem = ({title, link, icon, isSelected, displayBadge, badgeValue, permission}: NavigationItemProps) => {
+const NavigationItem = ({title, link, icon, isSelected, displayBadge, badgeValue, permission, teamValue}: NavigationItemProps) => {
     const {t} = useTranslation();
     const menuItem = useRef<HTMLDivElement>(null);
     const hasPermission = useCheckPermission(permission);
@@ -47,18 +48,25 @@ const NavigationItem = ({title, link, icon, isSelected, displayBadge, badgeValue
                 {<div className={'w-1.5 ' + (isSelected ? 'bg-green-400' : '')} />}
                 <Link to={link} onClick={() => navigate(link)}>
                     <div className={(isSelected ? 'subtitle2' : 'body2-medium')}>
-                        <div
-                            className={'items-center flex h-14  navigation-item-active cursor-pointer ' + (isNavigationExpanded ? 'w-62' : 'w-20')}>
+                        <div className={'items-center flex h-14  navigation-item-active cursor-pointer ' + (isNavigationExpanded ? 'w-62' : 'w-20')}>
                             <div>{icon}</div>
-                            {displayBadge && <div className='flex items-center pb-4'><SvgIcon fillClass='danger-icon' type={Icon.Indicator} /></div>}
+                            {displayBadge && <div className='flex items-center pb-4'><SvgIcon fillClass={displayBadge && !badgeValue ? 'info-icon' : 'danger-icon'} type={Icon.Indicator} /></div>}
                             {isNavigationExpanded &&
-                                <div className='flex flex-row items-center justify-between w-full pl-4'>
-                                    <div className=''>
+                                <div className='grid grid-rows-1 grid-flow-col gap-1 w-full pl-4'>
+                                    <div className={displayBadge ? 'w-20' : ''}>
                                         {t(title)}
                                     </div>
-                                    <div className='justify-end w-16'>
-                                        {displayBadge && <BadgeNumber type='red' number={badgeValue} hideIfZero={true} wideAutoIfLarger={true} />}
-                                    </div>
+                                    {displayBadge && (
+                                        <>
+                                            <div className='flex justify-start items-center'>
+                                                <BadgeNumber type='red' number={badgeValue} hideIfZero={true} wideAutoIfLarger={true} />
+                                            </div>
+                                            <div className='flex justify-start items-center'>
+                                                <BadgeNumber type='blue' number={teamValue} hideIfZero={true} wideAutoIfLarger={true} />
+                                            </div>
+                                        </>
+                                    )}
+                                    
                                 </div>
                             }
                         </div>
@@ -66,8 +74,29 @@ const NavigationItem = ({title, link, icon, isSelected, displayBadge, badgeValue
                 </Link>
             </div>
         </div>
-        <Tooltip targetRef={menuItem} isVisible={tooltipVisible && !isNavigationExpanded} placement='right'>
+        <Tooltip targetRef={menuItem} isVisible={tooltipVisible && !isNavigationExpanded && !displayBadge} placement='right'>
             <div className='p-3'>{t(title)}</div>
+        </Tooltip>
+        <Tooltip targetRef={menuItem} isVisible={tooltipVisible && !isNavigationExpanded && displayBadge == true} placement='right'>
+            <div className='p-3 h-16 w-44 px-4 py-4'>
+                <div className='flex flex-row items-center justify-between w-full'>
+                    <div className='body3-medium w-36'>
+                        {t('common.my_messages')}
+                    </div>
+                    <div className='flex justify-end w-16'>
+                        <BadgeNumber type='red' number={badgeValue} hideIfZero={false} wideAutoIfLarger={true} />
+                    </div>
+                </div>
+                <div className='flex flex-row items-center justify-between w-full pt-1'>
+                    <div className='body3-medium w-48'>
+                        {t('common.team_messages')}
+                    </div>
+                    <div className='flex justify-end w-16'>
+                        <BadgeNumber type='blue' number={teamValue} tooltipOnOverflow={true} hideIfZero={false} wideAutoIfLarger={true} />
+                    </div>
+                </div>
+                
+            </div>
         </Tooltip></>);
 }
 

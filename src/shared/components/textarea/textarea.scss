@@ -4,3 +4,7 @@ textarea:disabled {
 .textarea-wrapper {
   background-color: var(--text-area-disabled-color);
 }
+
+.textarea-wrapper-focus:focus-within {
+  border-bottom: solid 1px #00cc88;
+}

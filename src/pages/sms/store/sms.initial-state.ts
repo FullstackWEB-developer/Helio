@@ -5,13 +5,15 @@ export interface SmsInitialState {
     unreadSmsMessages: number;
     lastSmsDate: Date;
     isFiltered: Boolean;
+    unreadTeamSms: number;
 }
 
 const initialSmsState: SmsInitialState = {
     messageSummaries: [],
     unreadSmsMessages: 0,
     lastSmsDate: new Date(),
-    isFiltered: false
+    isFiltered: false,
+    unreadTeamSms: 0
 }
 
 export default initialSmsState;

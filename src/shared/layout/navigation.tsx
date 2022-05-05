@@ -8,9 +8,9 @@ import {BlackListsPath, ConfigurationsPath, TicketsPath, UsersPath} from '@app/p
 import SvgIcon from '@components/svg-icon/svg-icon';
 import {Icon} from '@components/svg-icon/icon';
 import './navigation.scss';
-import {selectUnreadSmsMessages} from '@pages/sms/store/sms.selectors';
-import {selectUnreadEmails} from '@pages/email/store/email.selectors';
-import { selectUnreadTickets } from '@pages/tickets/store/tickets.selectors';
+import {selectUnreadSmsMessages, selectUnreadTeamSms} from '@pages/sms/store/sms.selectors';
+import {selectUnreadEmails, selectUnreadTeamEmails} from '@pages/email/store/email.selectors';
+import { selectUnreadTeamTickets, selectUnreadTickets } from '@pages/tickets/store/tickets.selectors';
 
 const Navigation = () => {
     const {t} = useTranslation();
@@ -23,6 +23,9 @@ const Navigation = () => {
     const unreadSMSList = useSelector(selectUnreadSmsMessages);
     const unreadEmails = useSelector(selectUnreadEmails);
     const unreadTickets = useSelector(selectUnreadTickets);
+    const unreadTeamSMSList = useSelector(selectUnreadTeamSms);
+    const unreadTeamEmails = useSelector(selectUnreadTeamEmails);
+    const unreadTeamTickets = useSelector(selectUnreadTeamTickets);
 
     const unreadEmailCount = useMemo(() => {
         return unreadEmails;
@@ -36,6 +39,18 @@ const Navigation = () => {
         return unreadTickets;
     }, [unreadTickets]);
 
+    const unreadTeamEmailCount = useMemo(() => {
+        return unreadTeamEmails;
+    }, [unreadTeamEmails]);
+
+    const unreadTeamSMSListCount = useMemo(() => {
+        return unreadTeamSMSList;
+    }, [unreadTeamSMSList]);
+
+    const unreadTeamTicketsCount = useMemo(() => {
+        return unreadTeamTickets;
+    }, [unreadTeamTickets]);
+
     const menuItems = [
         {
             title: t('navigation.dashboard'),
@@ -47,8 +62,9 @@ const Navigation = () => {
             link: TicketsPath,
             id: 'navigation-tickets',
             icon: <SvgIcon type={Icon.Tickets} fillClass='active-item-icon' />,
-            displayBadge: unreadTicketsCount > 0,
-            badgeValue: unreadTicketsCount
+            displayBadge: unreadTicketsCount > 0 || unreadTeamTicketsCount > 0,
+            badgeValue: unreadTicketsCount,
+            teamValue: unreadTeamTicketsCount
         }, {
             title: t('navigation.contacts'),
             link: '/contacts',
@@ -69,16 +85,18 @@ const Navigation = () => {
             link: '/sms',
             id: 'navigation-sms',
             icon: <SvgIcon type={Icon.Sms} fillClass='active-item-icon' />,
-            displayBadge: unreadSMSListCount > 0,
-            badgeValue: unreadSMSListCount
+            displayBadge: unreadSMSListCount > 0 || unreadTeamSMSListCount > 0,
+            badgeValue: unreadSMSListCount,
+            teamValue: unreadTeamSMSListCount
         },
         {
              title: t('navigation.email'),
              link: '/email',
              id: 'navigation-email',
              icon: <SvgIcon type={Icon.Email} fillClass='active-item-icon' />,
-             displayBadge: unreadEmailCount > 0,
-             badgeValue: unreadEmailCount
+             displayBadge: unreadEmailCount > 0 || unreadTeamEmailCount > 0,
+             badgeValue: unreadEmailCount,
+             teamValue: unreadTeamEmailCount
         },
         {
             title: t('navigation.users'),
@@ -112,6 +130,7 @@ const Navigation = () => {
                 title={item.title}
                 displayBadge={item.displayBadge}
                 badgeValue={item.badgeValue}
+                teamValue={item.teamValue}
                 permission={item.permission}
             />
         );

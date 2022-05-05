@@ -14,6 +14,7 @@ import isToday from 'dayjs/plugin/isToday';
 import {useQuery} from 'react-query';
 import {GetPatientPhoto} from '@constants/react-query-constants';
 import {getPatientPhoto} from '@pages/patients/services/patients.service';
+import { BadgeNumber } from '@icons/BadgeNumber';
 dayjs.extend(utc);
 dayjs.extend(isToday);
 
@@ -114,7 +115,7 @@ const SmsChatSummary = ({
                         }
                     </div>
                     {!isRead &&
-                        <Badge text={unreadCount?.toString()} />
+                        <BadgeNumber type='red' number={unreadCount} hideIfZero={true} wideAutoIfLarger={true} />
                     }
                 </div>
             </div>

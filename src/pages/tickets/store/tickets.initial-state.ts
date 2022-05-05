@@ -33,6 +33,7 @@ export interface TicketState {
     ticketUpdateHash?: string;
     patientPhoto?: string;
     unreadTickets: number;
+    unreadTeamTickets: number;
 }
 
 const initialTicketState: TicketState = {
@@ -66,7 +67,8 @@ const initialTicketState: TicketState = {
     ticketUpdateHash: undefined,
     isCallLogPlayerVisible: false,
     isTicketsFiltered: false,
-    unreadTickets: 0
+    unreadTickets: 0,
+    unreadTeamTickets: 0,
 }
 
 export default initialTicketState;

@@ -14,6 +14,7 @@ import {
     setTicketEnum,
     setTicketFilter,
     setTicketListQueryType,
+    setUnreadTeamTicket,
     setUnreadTicket,
     startGetTicketEnumRequest
 } from '../store/tickets.slice';
@@ -48,8 +49,8 @@ import {CreateTicketFeedbackRequest} from '@pages/tickets/models/create-ticket-f
 import { PatientRatings } from '@pages/dashboard/models/patient-ratings.model';
 import {TicketRatingAppliedRequest} from '../models/ticket-rating-applied-request';
 import {UpdateConnectAttributesRequest} from '@pages/tickets/models/update-connect-attributes-request';
-import { setUnreadSmsMessages } from '@pages/sms/store/sms.slice';
-import { setUnreadEmailMessages } from '@pages/email/store/email-slice';
+import { setUnreadSmsMessages, setUnreadTeamSms } from '@pages/sms/store/sms.slice';
+import { setUnreadEmailMessages, setUnreadTeamEmail } from '@pages/email/store/email-slice';
 import { BadgeValues } from '../models/badge-values.model';
 
 const logger = Logger.getInstance();
@@ -418,18 +419,23 @@ export const updateConnectAttributes = async(request: UpdateConnectAttributesReq
     return response.data;
 }
 
-export function getBadgeValues(badgeValues: BadgeValues) {
-    let url = `${ticketsBaseUrl}/badge-values?badgeValue=${badgeValues}`;
+export function getBadgeValues(badgeValues: BadgeValues, teamBadgeValues: boolean = false) {
+    let url = `${ticketsBaseUrl}/badge-values?badgeValue=${badgeValues}&teamBadgeValue=${teamBadgeValues}`;
     return async (dispatch: Dispatch) => {
         await Api.get(url).then((response) => {
             if(badgeValues === BadgeValues.All){
-                dispatch(setUnreadTicket(response.data.ticketBadgeCount));
+                dispatch(setUnreadTicket(response.data.myValues.ticketBadgeCount));
             }
             if(badgeValues !== BadgeValues.SMSOnly){
-                dispatch(setUnreadEmailMessages(response.data.emailBadgeCount));
+                dispatch(setUnreadEmailMessages(response.data.myValues.emailBadgeCount));
             }
             if(badgeValues !== BadgeValues.EmailOnly){
-                dispatch(setUnreadSmsMessages(response.data.smsBadgeCount));
+                dispatch(setUnreadSmsMessages(response.data.myValues.smsBadgeCount));
+            }
+            if(teamBadgeValues){
+                dispatch(setUnreadTeamSms(response.data.teamValues.smsCount));
+                dispatch(setUnreadTeamEmail(response.data.teamValues.emailCount));
+                dispatch(setUnreadTeamTicket(response.data.teamValues.ticketCount));
             }
         });
     }

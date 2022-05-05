@@ -65,7 +65,10 @@
     "bot": "Bot",
     "delete": "Delete",
     "close_window_title": "Close window",
-    "close_window_message": "{{action}} If you have completed your request, please close this form."
+    "close_window_message": "{{action}} If you have completed your request, please close this form.",
+    "my_messages": "My Messages",
+    "team_messages": "Team Messages",
+    "overflow_value_1k": "1K+"
   },
   "app": {
     "error_loading_parameters": "Error loading parameters, please try again later",

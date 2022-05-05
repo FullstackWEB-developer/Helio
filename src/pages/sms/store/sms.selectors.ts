@@ -25,3 +25,8 @@ export const selectIsSmsFiltered = createSelector(
     smsState,
     state => state.isFiltered as boolean
 )
+
+export const selectUnreadTeamSms = createSelector(
+    smsState,
+    state => state.unreadTeamSms as number
+)

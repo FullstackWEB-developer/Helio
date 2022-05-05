@@ -1255,6 +1255,18 @@ const SvgIcon = ({ type, wrapperClassName = '', className = 'icon-medium', fillC
         )
     }
 
+    const getAddPhoneIcon = () => {
+        return (
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                <rect width="24" height="24" fill="none" opacity="0.7"/>
+                <g transform="translate(0.5)" className={fillClass}>
+                    <path className={fillClass} d="M16.5,11.5a5,5,0,1,0,5,5A5,5,0,0,0,16.5,11.5Zm3,5.75H17.25V19.5h-1.5V17.25H13.5v-1.5h2.25V13.5h1.5v2.25H19.5Z"/>
+                    <path className={fillClass} d="M10.025,17H3.844a.47.47,0,0,1-.469-.469V4.344a.47.47,0,0,1,.469-.469h7.813a.47.47,0,0,1,.469.469V11.7A6.5,6.5,0,0,1,14,10.5V3.875A1.874,1.874,0,0,0,12.125,2H3.375A1.874,1.874,0,0,0,1.5,3.875v16.25A1.874,1.874,0,0,0,3.375,22h8.75a1.862,1.862,0,0,0,.7-.139A6.489,6.489,0,0,1,10.025,17ZM7.752,20.75h0A1.25,1.25,0,1,1,9,19.5,1.25,1.25,0,0,1,7.75,20.75Z"/>
+                </g>
+            </svg>
+        )
+    }
+
     const icons = {
         [Icon.Add]: getIconAdd,
         [Icon.AddBlack]: getIconAddBlack,
@@ -1369,7 +1381,8 @@ const SvgIcon = ({ type, wrapperClassName = '', className = 'icon-medium', fillC
         [Icon.RatingDissatisfiedComment]: getIconRatingDissatisfiedComment,
         [Icon.RatingSatisfiedComment]: getIconRatingSatisfiedComment,
         [Icon.RatingVerySatisfiedComment]: getIconRatingVerySatisfiedComment,
-        [Icon.Indicator]: getIndicator
+        [Icon.Indicator]: getIndicator,
+        [Icon.AddPhone]: getAddPhoneIcon
     }
 
     const iconClicked = (e: React.MouseEvent<HTMLDivElement>) => {
