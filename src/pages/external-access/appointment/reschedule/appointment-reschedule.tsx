@@ -229,7 +229,8 @@ const AppointmentReschedule = () => {
                     name='selectedDate'
                     min={new Date(new Date().toDateString())}
                     onChange={(event) => onDateChange(event)}
-                    dataTestId='external-access-appointments-reschedule-date' />
+                    dataTestId='external-access-appointments-reschedule-date'
+                    isSmallSize={true} />
             </form>
             {isWeekendSelected && <div className='text-danger'>
                 {t('external_access.appointments.select_business_day')}

@@ -189,6 +189,7 @@ const SmsFilter = ({ className, isUserFilterEnabled, value, defaultValue, ...pro
                         min={dayjs().subtract(6, 'month').toDate()}
                         dataTestId='ticket-filter-from-date'
                         isCalendarPositionComputed
+                        isSmallSize={true}
                         onChange={setFromDateField}
                     />
                     <ControlledDateInput
@@ -202,6 +203,7 @@ const SmsFilter = ({ className, isUserFilterEnabled, value, defaultValue, ...pro
                         label='tickets.filter.to_date'
                         name='toDate'
                         dataTestId='ticket-filter-to-date'
+                        isSmallSize={true}
                     />
                 </div>
             </Collapsible>

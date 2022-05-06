@@ -183,7 +183,8 @@ const AppointmentSchedule = () => {
                         <ControlledDateInput
                             label='external_access.schedule_appointment.select_date'
                             control={control}
-                            name='date' />
+                            name='date'
+                            isSmallSize={true} />
                     </div>}
 
                 <div className='flex justify-start pt-8'>

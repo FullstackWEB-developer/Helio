@@ -314,6 +314,7 @@ const AppointmentScheduleSelect = () => {
                             min={new Date(new Date().toDateString())}
                             onChange={(event) => onDateChange(event)}
                             dataTestId='external-access-appointments-reschedule-date'
+                            isSmallSize={true}
                         />
                         <ControlledSelect
                             control={control}

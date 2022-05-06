@@ -57,7 +57,7 @@ const CallsLogFilter = ({ isOpen, value: propsValue, logType, ...props }: CallsL
         ), [addAnyOption, ticketLookupValuesReason]);
 
     const getClassNames = useMemo(() => classnames({
-        'transition-width transition-slowest ease top-0 bg-secondary-100 overflow-y-auto ': isOpen,
+        'transition-width transition-slowest ease top-0 bg-secondary-100 overflow-y-auto': isOpen,
         'hidden': !isOpen
     }), [isOpen]);
 
@@ -263,6 +263,7 @@ const CallsLogFilter = ({ isOpen, value: propsValue, logType, ...props }: CallsL
                         dataTestId='filter-from-date'
                         isCalendarPositionComputed
                         onChange={setFromDateField}
+                        isSmallSize={true}
                     />
                     <ControlledDateInput
                         control={control}
@@ -274,6 +275,7 @@ const CallsLogFilter = ({ isOpen, value: propsValue, logType, ...props }: CallsL
                         label='tickets.filter.to_date'
                         name='toDate'
                         dataTestId='filter-to-date'
+                        isSmallSize={true}
                     />
                 </div>
             }
@@ -282,7 +284,7 @@ const CallsLogFilter = ({ isOpen, value: propsValue, logType, ...props }: CallsL
 
     return (
         <div className={getClassNames}>
-            <div className='min-h-full px-6 pb-20 bg-secondary-100 pt-4' >
+            <div className='min-h-full px-6 pb-20 bg-secondary-100 pt-4'>
                 <div className='py-4 subtitle'>{t('common.filters')}</div>
                 <div className='flex flex-row pb-3'>
                     <Button data-test-id='apply-button' className='cursor-pointer mr-4' label='common.apply' buttonType='small' onClick={() => handleSubmit(onSubmit)()} ></Button>

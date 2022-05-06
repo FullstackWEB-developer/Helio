@@ -38,7 +38,8 @@ const RequestMedicalRecordDateSelection = ({dateSelected}: RequestMedicalRecordD
                 max={watchEndDate}
                 onChange={(value) => onDateSelected('startDate', value)}
                 name='startDate'
-                dataTestId='medical-records-start-date'/>
+                dataTestId='medical-records-start-date'
+                isSmallSize={true}/>
             <ControlledDateInput
                 label='external_access.medical_records_request.end_date'
                 calendarHorizontalAlign={CalendarHorizontalAlign.Left}
@@ -48,7 +49,8 @@ const RequestMedicalRecordDateSelection = ({dateSelected}: RequestMedicalRecordD
                 min={watchStartDate}
                 max={new Date()}
                 name='endDate'
-                dataTestId='medical-records-end-date'/>
+                dataTestId='medical-records-end-date'
+                isSmallSize={true}/>
         </div>
     </form>
 }

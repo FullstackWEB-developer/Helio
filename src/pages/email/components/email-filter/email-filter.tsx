@@ -204,6 +204,7 @@ const EmailFilter = ({ className, isUserFilterEnabled, value, ...props }: EmailF
                         dataTestId='ticket-filter-from-date'
                         isCalendarPositionComputed
                         onChange={setFromDateField}
+                        isSmallSize={true}
                     />
                     <ControlledDateInput
                         control={control}
@@ -216,6 +217,7 @@ const EmailFilter = ({ className, isUserFilterEnabled, value, ...props }: EmailF
                         label='tickets.filter.to_date'
                         name='toDate'
                         dataTestId='ticket-filter-to-date'
+                        isSmallSize={true}
                     />
                 </div>
             </Collapsible>

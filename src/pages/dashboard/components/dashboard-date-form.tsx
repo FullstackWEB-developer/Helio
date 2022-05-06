@@ -52,7 +52,8 @@ const DashboardDateForm = ({onDatesSelected}: DashboardDateFormProps) => {
                 max={new Date()}
                 name='startDate'
                 onChange={(value) => setSelectedStartDate(value)}
-                dataTestId='dashboard-start-date' />
+                dataTestId='dashboard-start-date'
+                isSmallSize={true} />
             <ControlledDateInput
                 label='dashboard.timeframes.end_date'
                 calendarHorizontalAlign={CalendarHorizontalAlign.Left}
@@ -62,7 +63,8 @@ const DashboardDateForm = ({onDatesSelected}: DashboardDateFormProps) => {
                 control={control}
                 max={new Date()}
                 name='endDate'
-                dataTestId='dashboard-end-date' />
+                dataTestId='dashboard-end-date'
+                isSmallSize={true} />
             <div className='flex justify-center py-4'><Button disabled={!formState.isValid || !isValid()} type='submit'
                 label={t('common.ok')} /></div>
             {!isValid() && <div className='pb-4 w-48 text-danger'>{t('dashboard.dates_error')}</div>}
