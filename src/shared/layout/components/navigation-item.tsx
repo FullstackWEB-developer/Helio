@@ -21,10 +21,12 @@ interface NavigationItemProps {
     displayBadge?: boolean,
     badgeValue?: number,
     permission?: string,
-    teamValue?: number
+    teamValue?: number,
+    myBadgeLabel?: string,
+    teamBadgeLabel?: string,
 }
 
-const NavigationItem = ({title, link, icon, isSelected, displayBadge, badgeValue, permission, teamValue}: NavigationItemProps) => {
+const NavigationItem = ({title, link, icon, isSelected, displayBadge, badgeValue, permission, teamValue, myBadgeLabel, teamBadgeLabel}: NavigationItemProps) => {
     const {t} = useTranslation();
     const menuItem = useRef<HTMLDivElement>(null);
     const hasPermission = useCheckPermission(permission);
@@ -81,7 +83,7 @@ const NavigationItem = ({title, link, icon, isSelected, displayBadge, badgeValue
             <div className='p-3 h-16 w-44 px-4 py-4'>
                 <div className='flex flex-row items-center justify-between w-full'>
                     <div className='body3-medium w-36'>
-                        {t('common.my_messages')}
+                        {myBadgeLabel && t(myBadgeLabel)}
                     </div>
                     <div className='flex justify-end w-16'>
                         <BadgeNumber type='red' number={badgeValue} hideIfZero={false} wideAutoIfLarger={true} />
@@ -89,7 +91,7 @@ const NavigationItem = ({title, link, icon, isSelected, displayBadge, badgeValue
                 </div>
                 <div className='flex flex-row items-center justify-between w-full pt-1'>
                     <div className='body3-medium w-48'>
-                        {t('common.team_messages')}
+                        {teamBadgeLabel && t(teamBadgeLabel)}
                     </div>
                     <div className='flex justify-end w-16'>
                         <BadgeNumber type='blue' number={teamValue} tooltipOnOverflow={true} hideIfZero={false} wideAutoIfLarger={true} />

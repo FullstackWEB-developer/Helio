@@ -64,7 +64,9 @@ const Navigation = () => {
             icon: <SvgIcon type={Icon.Tickets} fillClass='active-item-icon' />,
             displayBadge: unreadTicketsCount > 0 || unreadTeamTicketsCount > 0,
             badgeValue: unreadTicketsCount,
-            teamValue: unreadTeamTicketsCount
+            teamValue: unreadTeamTicketsCount,
+            myBadgeLabel: t('common.my_tickets'),
+            teamBadgeLabel: t('common.team_tickets')
         }, {
             title: t('navigation.contacts'),
             link: '/contacts',
@@ -87,7 +89,9 @@ const Navigation = () => {
             icon: <SvgIcon type={Icon.Sms} fillClass='active-item-icon' />,
             displayBadge: unreadSMSListCount > 0 || unreadTeamSMSListCount > 0,
             badgeValue: unreadSMSListCount,
-            teamValue: unreadTeamSMSListCount
+            teamValue: unreadTeamSMSListCount,
+            myBadgeLabel: t('common.my_sms'),
+            teamBadgeLabel: t('common.team_sms')
         },
         {
              title: t('navigation.email'),
@@ -96,7 +100,9 @@ const Navigation = () => {
              icon: <SvgIcon type={Icon.Email} fillClass='active-item-icon' />,
              displayBadge: unreadEmailCount > 0 || unreadTeamEmailCount > 0,
              badgeValue: unreadEmailCount,
-             teamValue: unreadTeamEmailCount
+             teamValue: unreadTeamEmailCount,
+             myBadgeLabel: t('common.my_emails'),
+             teamBadgeLabel: t('common.team_emails')
         },
         {
             title: t('navigation.users'),
@@ -132,6 +138,8 @@ const Navigation = () => {
                 badgeValue={item.badgeValue}
                 teamValue={item.teamValue}
                 permission={item.permission}
+                myBadgeLabel={item.myBadgeLabel}
+                teamBadgeLabel={item.teamBadgeLabel}
             />
         );
     }));

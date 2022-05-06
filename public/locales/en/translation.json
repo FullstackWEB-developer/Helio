@@ -66,8 +66,12 @@
     "delete": "Delete",
     "close_window_title": "Close window",
     "close_window_message": "{{action}} If you have completed your request, please close this form.",
-    "my_messages": "My Messages",
-    "team_messages": "Team Messages",
+    "my_emails": "My Emails",
+    "team_emails": "Team Emails",
+    "my_tickets": "My Tickets",
+    "team_tickets": "Team Tickets",
+    "my_sms": "My Messages",
+    "team_sms": "Team Messages",
     "overflow_value_1k": "1K+"
   },
   "app": {
