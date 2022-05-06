@@ -28,7 +28,7 @@ const OutgoingSms = ({message, users}: {message: TicketMessage, users?: UserBase
                             }) : t('external_access.ticket_sms.cwc_only')
                     }
                 </div>
-                <div className='body3-small'>{dayjs.utc(message.createdOn).local().format('HH:mm A')}</div>
+                <div className='body3-small'>{dayjs.utc(message.createdOn).local().format('hh:mm A')}</div>
             </div>
             <div className='outgoing_sms pl-4 pr-2 pt-3 pb-4 rounded-b-md rounded-tr-md body2-white break-words'>
                 <Linkify
