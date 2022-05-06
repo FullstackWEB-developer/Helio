@@ -39,21 +39,24 @@ const SearchboxContactsResults = ({items, error, onSelect, type, paging, onPageC
                 field: 'emailAddress',
                 render:(_, record: ContactExtended) => {
                     if(record.emailAddress){
-                        return (<ElipsisTooltipTextbox value={record.emailAddress} asSpan={true}/>)
+                        return (<ElipsisTooltipTextbox value={record.emailAddress} asSpan={true} />)
                     }
                 }
             },{
                 title: 'searchbox_result.phone',
                 widthClass: 'w-1/6',
                 field: 'mobilePhone',
+                headerClassName: 'ml-4',
                 render:(_, record) => !!record.mobilePhone && <SvgIcon
                     type={Icon.CheckMark}
                     fillClass="default-toolbar-icon"
+                    className='ml-4'
                 />
             },{
                 title: 'searchbox_result.add',
                 widthClass: 'w-1/6',
                 field: 'patientId',
+                headerClassName: '-ml-4',
                 render:(_, record: ContactExtended) => <div className='cursor-pointer'><SearchboxAddIcon contact={record} onClick={() => onSelect(record)} type={type} /></div>
             }],
             hasRowsBottomBorder: true,
