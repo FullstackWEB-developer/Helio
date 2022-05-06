@@ -509,7 +509,7 @@
       "open_slots": "Open Slots",
       "location": "Location",
       "error": "Error loading hotspots",
-      "refresh_interval": "*Data is refreshed at every 15 minutes."
+      "refresh_interval": "*Data is refreshed every 15 minutes."
     },
     "notes": {
       "error": "Error loading notes"
