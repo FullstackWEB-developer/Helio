@@ -1,18 +1,19 @@
 import customHooks from '@shared/hooks/customHooks';
-import React, { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import React, {useEffect, useState} from 'react';
+import {useTranslation} from 'react-i18next';
 import './input.scss';
 // @ts-ignore
 import InputMask from 'react-input-mask';
 import SvgIcon from '@components/svg-icon/svg-icon';
-import { Icon } from '@components/svg-icon/icon';
-import { Option } from '@components/option/option';
+import {Icon} from '@components/svg-icon/icon';
+import {Option} from '@components/option/option';
 import SelectCell from '@components/select/select-cell';
 import Spinner from '@components/spinner/Spinner';
-import { InputType, InputTypes } from './InputTypes';
+import {InputType, InputTypes} from './InputTypes';
 import classnames from 'classnames';
 import ReactInputDateMask from '@components/react-input-date-mask/ReactInputDateMask';
 import {INPUT_DATE_FORMAT} from '@constants/form-constants';
+import ElipsisTooltipTextbox from '@components/elipsis-tooltip-textbox/elipsis-tooltip-textbox';
 interface InputProps extends React.HTMLAttributes<HTMLInputElement> {
     id?: string,
     name?: string,
@@ -42,6 +43,7 @@ interface InputProps extends React.HTMLAttributes<HTMLInputElement> {
     containerClassName?: string;
     maxLength?: number;
     max?: number;
+    applyTruncating?: boolean;
 }
 const Input = React.forwardRef<HTMLInputElement, InputProps>(({
     label,
@@ -66,7 +68,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({
     onChangeDate,
     ...props
 }: InputProps, ref) => {
-    const { t } = useTranslation();
+    const {t} = useTranslation();
     const [isFocused, setIsFocused] = useState(false);
     const innerRef = customHooks.useCombinedForwardAndInnerRef(ref);
     const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -151,17 +153,25 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({
             setDropdownOpen(true);
         }
     }
-    let component = <InputMask ref={innerRef} inputRef={innerRef} {...props}
-        mask={mask}
-        type={type}
-        onFocus={onInputFocus}
-        onBlur={onBlur}
-        onChange={onChange}
-        className={`pl-4 pt-6 body2 h-14 flex-shrink flex-grow flex-auto leading-normal w-px flex-1 input-date-mask`}
-        placeholder=''
-        value={props.value}
-        disabled={props.disabled || isLoading}
-        autoComplete={shouldDisplayAutocomplete ? 'on' : 'off'} />;
+    const elipsisTextboxWidthStyle = {'maxWidth': !!dropdownIcon ? 'calc(100% - 2.75rem)' : '100%'};
+    let component =
+        props.applyTruncating && props.disabled ?
+            <div className='flex pl-4 pt-6 h-14' style={elipsisTextboxWidthStyle}>
+                <ElipsisTooltipTextbox value={props.value || ''}
+                    asSpan={true}
+                    classNames={'body2 leading-normal'} />
+            </div> :
+            <InputMask ref={innerRef} inputRef={innerRef} {...props}
+                mask={mask}
+                type={type}
+                onFocus={onInputFocus}
+                onBlur={onBlur}
+                onChange={onChange}
+                className={`pl-4 pt-6 body2 h-14 flex-shrink flex-grow flex-auto leading-normal w-px flex-1 input-date-mask`}
+                placeholder=''
+                value={props.value}
+                disabled={props.disabled || isLoading}
+                autoComplete={shouldDisplayAutocomplete ? 'on' : 'off'} />;
     if (type === 'date') {
         component = <ReactInputDateMask {...props}
             mask={INPUT_DATE_FORMAT}

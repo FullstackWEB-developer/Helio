@@ -172,7 +172,7 @@ export const getPatientById = (patientId: string, queryParams?: GetPatientInfoRe
      }
 }
 
-export const getAppointments = async (patientId: number) : Promise<Appointment[]> => {
+export const getAppointments = async (patientId: number): Promise<Appointment[]> => {
      const url = `${patientsUrl}/${patientId}/appointments`;
      const result = await Api.get(url);
      return result.data;
@@ -208,7 +208,7 @@ export const upsertPatient = async (request: CreatePatientRequest): Promise<Crea
      return data;
 }
 
-export const verifyPatient = async (dob:string, mobilePhoneNumber:string, zip:string) : Promise<VerifiedPatient> => {
+export const verifyPatient = async (dob: string, mobilePhoneNumber: string, zip: string): Promise<VerifiedPatient> => {
      const url = `${patientsUrl}/verify`;
      const {data} = await Api.get(url, {
           params: {

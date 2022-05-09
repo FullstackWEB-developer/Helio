@@ -50,7 +50,8 @@ const TicketDetailContactInfo = ({contact}: TicketDetailContactInfoProps) => {
                 value={contact?.type === ContactType.Company ? contact.companyName : `${contact.firstName} ${contact.lastName}`}
                 dropdownIcon={contact?.id ? Icon.Contacts : undefined}
                 dropdownIconFill={contact?.id ? 'success-icon' : ''}
-                dropdownIconClickHandler={redirectToContactDetailsPage} />
+                dropdownIconClickHandler={redirectToContactDetailsPage}
+                applyTruncating={true} />
             <Input disabled={true} label='ticket_detail.info_panel.contact_details.facility_type'
                 value={facilityTypes.find(a => a.value === contact.category.toString())?.label || ''} />
             <Input disabled={true} label='ticket_detail.info_panel.contact_details.facility_name'
