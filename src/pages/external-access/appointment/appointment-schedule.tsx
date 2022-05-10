@@ -52,7 +52,7 @@ const AppointmentSchedule = () => {
     const hasUpcomingAppointment = (history.location.state as any)?.hasUpcomingAppointment ?? false
 
     const {isLoading: appointmentTypesLoading, data: appointmentTypes} = useQuery<AppointmentType[], AxiosError>([GetAppointmentTypesForPatient],
-        () => getAppointmentTypesForPatient(verifiedPatient.patientId, verifiedPatient.primaryProviderId || verifiedPatient.defaultProviderId),
+        () => getAppointmentTypesForPatient(verifiedPatient.patientId),
         {
             enabled: !!verifiedPatient
         });

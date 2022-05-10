@@ -48,7 +48,7 @@ export const getAppointmentTypes = async (): Promise<AppointmentType[]> => {
      return result.data;
 }
 
-export const getAppointmentTypesForPatient = async (patientId: number, providerId: number): Promise<AppointmentType[]> => {
+export const getAppointmentTypesForPatient = async (patientId: number, providerId?: number): Promise<AppointmentType[]> => {
      const url = `${appointmentsBaseUrl}/appointmenttypes/patient-appointment-types`;
      const result = await Api.get(url, {
           params: {
