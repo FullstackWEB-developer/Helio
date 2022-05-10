@@ -1,6 +1,8 @@
 import {HubConnection, HubConnectionBuilder, LogLevel} from "@microsoft/signalr";
 import { setUnreadTeamEmail } from "@pages/email/store/email-slice";
+import { setUnreadSmsMessages, setUnreadTeamSms } from "@pages/sms/store/sms.slice";
 import { TeamBadgeValue } from "@pages/tickets/models/team-badge-values.model";
+import { setUnreadTeamTicket } from "@pages/tickets/store/tickets.slice";
 import {selectAccessToken} from "@shared/store/app-user/appuser.selectors";
 import utils from "@shared/utils/utils";
 import {useEffect, useState} from "react";
@@ -36,11 +38,11 @@ const TeamBadgeValueUpdate = () => {
                         }
 
                         if(data.smsCount){
-                            dispatch(setUnreadTeamEmail(data.smsCount));
+                            dispatch(setUnreadTeamSms(data.smsCount));
                         }
 
                         if(data.ticketCount){
-                            dispatch(setUnreadTeamEmail(data.ticketCount));
+                            dispatch(setUnreadTeamTicket(data.ticketCount));
                         }
                     });
                 })
