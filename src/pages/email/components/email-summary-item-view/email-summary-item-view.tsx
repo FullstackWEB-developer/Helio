@@ -85,7 +85,7 @@ const EmailSummaryItemView = ({emailInfo, searchTerm}: EmailSummaryItemViewProps
                     {!isRead &&
                         <div className='justify-end flex flex-row w-20'>
                             <div className='w-min pt-1'>
-                                <Badge text={unreadCount?.toString()} />
+                                <Badge text={unreadCount?.toString()} type={'danger'} />
                             </div>
                         </div>
                     }
