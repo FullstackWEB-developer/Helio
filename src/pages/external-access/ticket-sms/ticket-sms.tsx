@@ -169,7 +169,7 @@ const TicketSms = () => {
             }))}
             <AlwaysScrollToBottom enabled={isBottomFocus} />
         </div>
-        <TicketSmsSendMessage ticketId={request?.ticketId} onMessageSend={(text) => onMessageSend(text)} />
+        <TicketSmsSendMessage ticketId={request?.ticketId} onMessageSend={(text) => onMessageSend(text)} patientId={messages[0].patientId} contactId={messages[0].contactId} />
     </div>
 }
 
