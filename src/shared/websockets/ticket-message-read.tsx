@@ -38,10 +38,10 @@ const TicketMessageReadUpdate = () => {
                         if (data?.ticketId && data?.channel) {
                             
                             if(data.channel === ChannelTypes.Email){
-                                removeUnreadEmailTicketId(data.ticketId);
+                                dispatch(removeUnreadEmailTicketId(data.ticketId));
                                 dispatch(getBadgeValues(BadgeValues.EmailOnly))
                             }else{
-                                removeUnreadSmsTicketId(data.ticketId);
+                                dispatch(removeUnreadSmsTicketId(data.ticketId));
                                 dispatch(getBadgeValues(BadgeValues.SMSOnly))
                             }
                         }
