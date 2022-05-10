@@ -43,14 +43,14 @@ const TicketSmsSendMessage = ({ticketId, patientId, contactId, onMessageSend}: T
         }
     });
 
-    const {refetch: refetchPatient} = useQuery([GetPatient, patientId], () => getPatientByIdWithQuery(patientId!), {
+    const {refetch: refetchPatient, isLoading: isPatientLoading, isFetching: isPatientFetching} = useQuery([GetPatient, patientId], () => getPatientByIdWithQuery(patientId!), {
         enabled: false,
          onSuccess: (data) => {
             checkMobilePhoneStatus(data.mobilePhone);
         }
     });
 
-    const {refetch: refetchContact} = useQuery([GetContactById, contactId], () => getContactById(contactId!), {
+    const {refetch: refetchContact, isLoading: isContactLoading, isFetching: isContactFetching} = useQuery([GetContactById, contactId], () => getContactById(contactId!), {
         enabled: false,
         onSuccess: (data) => {
             checkMobilePhoneStatus(data.mobilePhone);
@@ -97,7 +97,7 @@ const TicketSmsSendMessage = ({ticketId, patientId, contactId, onMessageSend}: T
             required={true}
             minRows={1}
             maxRows={1}
-            isLoading={createTicketSmsMutation.isLoading}
+            isLoading={createTicketSmsMutation.isLoading || isPatientLoading || isContactLoading || isPatientFetching || isContactFetching}
             resizable={false}
             hasBorder={false}
             onChange={(message) => setSmsText(message)}

@@ -47,14 +47,14 @@ const ExternalEmailReply = ({message, setReplyMode, setSelectedMessage}: Externa
             refetchContact();
         }
     }
-    const {refetch: refetchPatient} = useQuery([GetPatient, message.patientId], () => getPatientByIdWithQuery(message.patientId!), {
+    const {refetch: refetchPatient, isLoading: isPatientLoading, isFetching: isPatientFetching} = useQuery([GetPatient, message.patientId], () => getPatientByIdWithQuery(message.patientId!), {
         enabled: false,
         onSuccess: (data) => {
             checkEmailStatus(data.emailAddress);
         }
     });
 
-    const {refetch: refetchContact} = useQuery([GetContactById, message.contactId], () => getContactById(message.contactId!), {
+    const {refetch: refetchContact, isLoading: isContactLoading, isFetching: isContactFetching} = useQuery([GetContactById, message.contactId], () => getContactById(message.contactId!), {
         enabled: false,
         onSuccess: (data) => {
             checkEmailStatus(data.emailAddress);
@@ -116,7 +116,7 @@ const ExternalEmailReply = ({message, setReplyMode, setSelectedMessage}: Externa
                     <SvgIcon wrapperClassName={`cursor-pointer ${displaySendButton ? 'pr-6': 'pr-2'}`} type={Icon.Delete} fillClass='white-icon' onClick={discardCompose} />
                     {
                         displaySendButton &&
-                        <Button label='common.send' buttonType='secondary' className='external-reply-outline-button z-10' onClick={sendEmail} isLoading={sendEmailMutation.isLoading} />
+                        <Button label='common.send' buttonType='secondary' className='external-reply-outline-button z-10' onClick={sendEmail} isLoading={sendEmailMutation.isLoading || isPatientLoading || isContactLoading || isPatientFetching || isContactFetching} />
                     }
                 </div>
             </div>
