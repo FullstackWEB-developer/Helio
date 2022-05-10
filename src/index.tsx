@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import store from './app/store';
@@ -10,6 +10,7 @@ import { persistStore } from 'redux-persist';
 import InitializeApp from '@app/initialize-app';
 import {QueryClient, QueryClientProvider} from 'react-query';
 import Logger from '@shared/services/logger';
+import SvgIcon, { Icon } from '@components/svg-icon';
 
 const rootElement = document.getElementById('root');
 const persistor = persistStore(store);
@@ -32,11 +33,19 @@ const queryClient = new QueryClient({
     }
 });
 
+const spinner = (
+    <div className='flex flex-col space-y-4 items-center h-full w-full justify-center'>
+        <SvgIcon type={Icon.Spinner} className={`icon-large-40`}/>
+    </div>
+)
+
 ReactDOM.render(
     <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-            <QueryClientProvider client={queryClient}>
-                <InitializeApp />
+            <QueryClientProvider client={queryClient}> 
+                <Suspense fallback={spinner}>
+                    <InitializeApp />
+                </Suspense>
             </QueryClientProvider>
         </PersistGate>
     </Provider>,
