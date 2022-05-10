@@ -15,7 +15,8 @@ import {
     getConnectUser,
     getRoleWithState,
     getUserDetailExtended,
-    getUserMobilePhone, updateCallForwarding,
+    getUserMobilePhone,
+    updateCallForwarding,
     updateUser
 } from "@shared/services/user.service";
 import {useHistory, useParams} from 'react-router';
@@ -26,14 +27,19 @@ import {GetMobilePhone, GetUserConnect, GetUserExtended} from "@constants/react-
 import {
     CallForwardingDetail,
     CallForwardingType,
-    ConnectUser, RoleBase,
+    ConnectUser,
+    RoleBase,
     UserDetailExtended,
     UserDetailStatus,
     UserRole
 } from "@shared/models";
 import Spinner from '@components/spinner/Spinner';
 import {DATE_LONG_FORMAT} from "@constants/form-constants";
-import {authenticationSelector, selectAppUserDetails, selectLiveAgentStatuses} from "@shared/store/app-user/appuser.selectors";
+import {
+    authenticationSelector,
+    selectAppUserDetails,
+    selectLiveAgentStatuses
+} from "@shared/store/app-user/appuser.selectors";
 import {addSnackbarMessage} from "@shared/store/snackbar/snackbar.slice";
 import {SnackbarType} from "@components/snackbar/snackbar-type.enum";
 import {useTranslation} from "react-i18next";
@@ -42,7 +48,6 @@ import './user-details.scss';
 import {CheckboxCheckEvent} from '@components/checkbox/checkbox';
 import useCheckPermission from "@shared/hooks/useCheckPermission";
 import {NotAuthorizedPath} from "@app/paths";
-import {Option} from '@components/option/option';
 import UserNotificationPreference from "../components/user-notifications-toggle";
 import {UserNotificationPreferences} from "@shared/models/user-notification-preferences.enum";
 import {setAppUserDetails} from "@shared/store/app-user/appuser.slice";
@@ -52,12 +57,10 @@ dayjs.extend(utc);
 const UserDetails = () => {
 
     const {t} = useTranslation();
-    const {control, handleSubmit, watch, formState, setValue, getValues, reset, register, unregister, clearErrors} = useForm({
+    const {control, handleSubmit, watch, formState, setValue, getValues, reset, clearErrors} = useForm({
         shouldUnregister: false,
         mode: "all"
     });
-
-    const {isValid, isDirty} = formState;
 
     const dispatch = useDispatch();
     const providers = useSelector(selectProviderList);
@@ -70,6 +73,7 @@ const UserDetails = () => {
     const forwardToSelected = Number(watch('forward_to')) as CallForwardingType;
     const [isForwardEnabled, setIsForwardEnabled] = useState(false);
     const forwardValuePhone = watch('forward_to_value_phone') as string;
+    const forwardValueAgent = watch('forward_to_value_agent') as string;
     const [connectUserList, setConnectUserList] = useState<ConnectUser[]>([]);
     const currentUserStatus = userDetailExtended?.user.status;
     const canEditUser = useCheckPermission('Users.EditUserDetail');
@@ -311,6 +315,9 @@ const UserDetails = () => {
 
     const onChangeEnableForward = (event: CheckboxCheckEvent) => {
         setIsForwardEnabled(event.checked);
+        if(!event.checked) {
+            clearErrors('forward_to_value_phone');
+        }
     }
 
     const saveUser = (formData: any) => {
@@ -403,22 +410,15 @@ const UserDetails = () => {
         return <Spinner fullScreen />;
     }
 
-    const onForwardToChanged = (option?: Option) => {
-        if (!option) {
-            return;
-        }
-
-        const value = parseInt(option.value) as CallForwardingType;
-        if (value === CallForwardingType.Agent) {
-            clearErrors('forward_to_value_phone');
-            unregister('forward_to_value_phone');
-            register('forward_to_value_agent');
-        } else if (value === CallForwardingType.Phone) {
-            clearErrors('forward_to_value_agent');
-            register('forward_to_value_phone');
-            unregister('forward_to_value_agent');
-        }
-
+    const isButtonDisabled = () => {
+        return !formState.isDirty ||
+            !isSomeUserRoleChecked ||
+            !!formState.errors['forward_to_value_phone']?.message ||
+            !!formState.errors['forward_to_value_agent']?.message ||
+            isMobilePhoneLoading ||
+            isMobilePhoneFetching ||
+            (isForwardEnabled && !forwardToSelected) ||
+            (isForwardEnabled && forwardToSelected && !forwardValuePhone && !forwardValueAgent);
     }
 
     return (
@@ -471,7 +471,7 @@ const UserDetails = () => {
                             buttonType='medium'
                             label='common.save'
                             className='mr-5'
-                            disabled={!isDirty || !isValid || !isSomeUserRoleChecked || isMobilePhoneLoading || isMobilePhoneFetching}
+                            disabled={isButtonDisabled()}
                             isLoading={updateMutation.isLoading}
                             onClick={() => canEditUser ? handleSubmit(saveUser)() : handleSubmit(saveCallForwarding)()}
                         />
@@ -521,6 +521,7 @@ const UserDetails = () => {
                                 canEditUser ?
                                     <div className="flex flex-row items-center">
                                         <ControlledSelect
+                                            allowClear={true}
                                             name='provider'
                                             control={control}
                                             defaultValue={{label: 'common.not_available', value: 'common.not_available'}}
@@ -571,31 +572,30 @@ const UserDetails = () => {
                                     className='mt-6'
                                     disabled={!isForwardEnabled}
                                     defaultValue=''
+                                    required={isForwardEnabled}
                                     options={forwardToOptions}
-                                    onSelect={(option) => onForwardToChanged(option)}
                                 />
-
-                                {isForwardEnabled && forwardToSelected === CallForwardingType.Phone &&
+                                <div className={isForwardEnabled && forwardToSelected === CallForwardingType.Phone ? 'block' : 'hidden'}>
                                     <ControlledInput
                                         name="forward_to_value_phone"
-                                        type="tel"
+                                        type={isForwardEnabled && forwardToSelected === CallForwardingType.Phone ? 'tel' : 'text'}
                                         control={control}
+                                        errorMessage={formState.errors['forward_to_value_phone']?.message}
                                         disabled={!isForwardEnabled || isMobilePhoneLoading || isMobilePhoneFetching}
                                         label='users.call_forwarding_value_phone'
-                                        required={isForwardEnabled}
+                                        required={isForwardEnabled && forwardToSelected === CallForwardingType.Phone}
                                     />
-                                }
-
-                                {isForwardEnabled && forwardToSelected === CallForwardingType.Agent &&
+                                </div>
+                                <div className={isForwardEnabled && forwardToSelected === CallForwardingType.Agent ? 'block' : 'hidden'}>
                                     <ControlledSelect
                                         control={control}
                                         name='forward_to_value_agent'
                                         disabled={!isForwardEnabled}
                                         label='users.call_forwarding_value_agent'
                                         options={connectUserOptions}
-                                        required={isForwardEnabled}
+                                        required={isForwardEnabled && forwardToSelected === CallForwardingType.Agent}
                                     />
-                                }
+                                </div>
                             </div>
                         </div>
                     </div>
