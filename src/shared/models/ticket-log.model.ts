@@ -22,6 +22,8 @@ export interface TicketLogModel {
     contactAgent?: string;
     hasManagerReview: boolean;
     patientRating?: PatientRating;
+    fromUserId: string;
+    toUserId: string;
 }
 
 export enum TicketLogContactStatus {
