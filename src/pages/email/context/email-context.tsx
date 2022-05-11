@@ -7,7 +7,6 @@ import {getChats} from '@pages/sms/services/ticket-messages.service';
 import {getNextPage} from '@pages/sms/utils';
 import utils from '@shared/utils/utils';
 import {EmailQueryType} from '@pages/email/models/email-query-type';
-import dayjs from 'dayjs';
 import {DEFAULT_MESSAGE_QUERY_PARAMS} from '@pages/email/constants';
 import useCheckPermission from '@shared/hooks/useCheckPermission';
 import {useDispatch, useSelector} from 'react-redux';
@@ -26,7 +25,7 @@ const EmailProvider =({children}: {children: ReactNode}) => {
     const [queryParams, setQueryParams] = useState<TicketMessageSummaryRequest>({
         channel: ChannelTypes.Email,
         assignedTo: !isDefaultTeamView ? id : '',
-        fromDate: utils.toShortISOLocalString(dayjs().utc().subtract(7, 'day').toDate()),
+        fromDate: '',
         ...DEFAULT_MESSAGE_QUERY_PARAMS
     });
 
