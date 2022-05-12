@@ -1517,7 +1517,8 @@
         "normal": "Normal"
       },
       "email_not_available_patient": "Messaging to this patient is disabled. This patient has changed their email address.",
-      "email_not_available_contact": "Messaging to this contact is disabled. This contact has changed their email address."
+      "email_not_available_contact": "Messaging to this contact is disabled. This contact has changed their email address.",
+      "ticket_closed": "This ticket is closed, to send a SMS reopen this ticket or create a new one."
     },
     "new_email": {
       "title": "New Message",
@@ -1597,7 +1598,8 @@
     "phone": "Phone",
     "messages": "Messages",
     "sms_not_available_patient": "Messaging to this patient is disabled. This patient has either changed their phone number or has changed their SMS texting preferences.",
-    "sms_not_available_contact": "Messaging to this contact is disabled. This contact has changed their phone number."
+    "sms_not_available_contact": "Messaging to this contact is disabled. This contact has changed their phone number.",
+    "ticket_closed": "This ticket is closed, to send a SMS reopen this ticket or create a new one."
   },
   "users": {
     "not_found": "User not found",

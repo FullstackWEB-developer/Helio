@@ -21,8 +21,7 @@ import ConversationHeader from '@components/conversation-header/conversation-hea
 import SendFirstEmail from '@pages/email/components/send-first-email/send-first-email';
 import {getContactById} from '@shared/services/contacts.service';
 import EmailReply from '@pages/email/components/email-message/email-reply';
-import {useDispatch, useSelector} from 'react-redux';
-import {selectUnreadEmails} from '@pages/email/store/email.selectors';
+import {useDispatch} from 'react-redux';
 import Alert from '@components/alert/alert';
 import NewEmailHeader from '@pages/email/components/new-email/components/new-email-header';
 import './email-conversation.scss'
@@ -31,7 +30,6 @@ import { BadgeValues } from '@pages/tickets/models/badge-values.model';
 const EmailConversation = () => {
     const {ticketId} = useParams<{ticketId: string}>();
     const dispatch = useDispatch();
-    const unreadEmailIds = useSelector(selectUnreadEmails);
     const [emailDisabledText, setEmailDisabledText] = useState<string>();
     const {data: ticket, refetch: refetchTicket} = useQuery([QueryTickets, ticketId], () => getTicketById(ticketId!), {
         enabled: !!ticketId
@@ -76,6 +74,8 @@ const EmailConversation = () => {
             } else {
                 setEmailDisabledText(undefined);
             }
+        } else if(ticket?.isPassive) {
+            setEmailDisabledText('email.inbox.ticket_closed');
         } else {
             setEmailDisabledText(undefined);
         }

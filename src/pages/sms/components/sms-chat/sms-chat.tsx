@@ -84,6 +84,8 @@ const SmsChat = ({info, isLoading, isSending, isBottomFocus, messages = [], last
             setSmsDisabledText('sms.sms_not_available_patient');
         } else if (contact && contact.mobilePhone !== originalNumber) {
             setSmsDisabledText('sms.sms_not_available_contact');
+        } else if(ticket?.isPassive) {
+            setSmsDisabledText('sms.ticket_closed');
         } else {
             setSmsDisabledText(undefined)
         }
