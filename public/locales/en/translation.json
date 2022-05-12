@@ -1572,9 +1572,9 @@
         "to": "To",
         "draft": "Draft",
         "existing_ticket": {
-          "title": "Existing open tickets found.",
-          "description": "We have found existing open tickets for this patient. Please select ticket you would like this communication to be associated with or select create new ticket below.",
-          "description_contact": "We have found existing open tickets for this contact. Please select ticket you would like this communication to be associated with or select create new ticket below.",
+          "title": "Existing tickets found.",
+          "description": "We have found existing tickets for this patient. Please select ticket you would like this communication to be associated with or select create new ticket below.",
+          "description_contact": "We have found existing tickets for this contact. Please select ticket you would like this communication to be associated with or select create new ticket below.",
           "select_ticket": "Select Existing Ticket",
           "create_ticket": "Create a New Ticket",
           "list": {
