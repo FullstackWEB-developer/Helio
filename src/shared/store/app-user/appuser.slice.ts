@@ -52,8 +52,8 @@ const appUserSlice = createSlice({
                     state.liveAgentStatuses.push(agentInfo);
                 }
             }
-            let internalQueueIndex = state.internalQueueStatuses?.findIndex(a => a.userId === payload.userId);
-            if (internalQueueIndex > 1) {
+            let internalQueueIndex = state.internalQueueStatuses.findIndex(a => a.userId === payload.userId);
+            if (internalQueueIndex > -1) {
                 state.internalQueueStatuses = state.internalQueueStatuses.map((item, index)=> {
                     return index === internalQueueIndex ? {...item, connectStatus : payload.status} : item
                 })
@@ -63,12 +63,13 @@ const appUserSlice = createSlice({
             state.logStream = payload;
         },
         setInternalQueueStatuses: (state, {payload}: PayloadAction<InternalQueueStatus[]>) => {
-            state.internalQueueStatuses = payload.map(item => {
-                let liveAgentStatus = state.liveAgentStatuses.find(a => a.userId === item.userId);
-                return {
-                    ...item,
-                    connectStatus: liveAgentStatus ? liveAgentStatus.status : UserStatus.Offline.toString()
-                };
+            state.internalQueueStatuses = payload;
+            state.liveAgentStatuses = state.liveAgentStatuses.map(liveAgent => {
+                const internalQueueUser = payload.find(i => i.userId === liveAgent.userId);
+                if (!internalQueueUser){
+                    return liveAgent;
+                }
+                return {...liveAgent, status: internalQueueUser.connectStatus}
             });
         }
     }
@@ -109,7 +110,6 @@ export const {
     setAuthentication,
     setAppUserDetails,
     logOut,
-    loginInitiated,
     setLoginLoading,
     updateUserStatus,
     setAgentStates,
