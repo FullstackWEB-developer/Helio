@@ -39,9 +39,11 @@ import SvgIcon from '@components/svg-icon/svg-icon';
 import {
     selectBotContext,
     selectCcpNotificationContent,
+    selectChatCounter,
     selectContextPanel,
     selectInitiateInternalCall,
-    selectInternalCallDetails
+    selectInternalCallDetails,
+    selectVoiceCounter
 } from './store/ccp.selectors';
 import {useMutation, useQuery} from 'react-query';
 import {CCP_ANIMATION_DURATION} from '@constants/form-constants';
@@ -116,6 +118,16 @@ const Ccp: React.FC<BoxProps> = ({
     const internalCallDetails = useSelector(selectInternalCallDetails);
     const initiateInternalCall = useSelector(selectInitiateInternalCall);
     const updateAttributesMutation = useMutation(updateConnectAttributes);
+    const chatCounter = useSelector(selectChatCounter);
+    const voiceCounter = useSelector(selectVoiceCounter);
+
+    useEffect(() => {
+        const activeConversations = chatCounter + voiceCounter;
+        if (activeConversations === 0) {
+            dispatch(setIncomingOrActiveCallFlag(false));
+        }
+    }, [chatCounter, voiceCounter]);
+
     const ccpConnectionFailed = (isRetry: boolean) => {
         setCcpConnectionState(CCPConnectionStatus.Failed);
         if (isRetry) {
@@ -382,14 +394,9 @@ const Ccp: React.FC<BoxProps> = ({
                 }
             });
 
-            contact.onMissed((contact) => {
-                dispatch(setIncomingOrActiveCallFlag(false));
-            });
-
             contact.onDestroy((contact) => {
                 dispatch(removeCurrentBotContext(contact.contactId));
                 dispatch(setInternalCallDetails(undefined));
-                dispatch(setIncomingOrActiveCallFlag(false));
             })
         });
         connect.agent((agent) => {
@@ -420,7 +427,6 @@ const Ccp: React.FC<BoxProps> = ({
 
             agent.onAfterCallWork(() => {
                 dispatch(updateUserStatus(UserStatus.AfterWork));
-                dispatch(setIncomingOrActiveCallFlag(false));
             });
 
             agent.onRefresh(ag => {
@@ -606,7 +612,7 @@ const Ccp: React.FC<BoxProps> = ({
 
     const displayBrowserNotification = () => {
         if (!notificationContent) {
-            return ;
+            return;
         };
         const icon = `${utils.getAppParameter('NotificationIconsLocation')}notification-${notificationContent.type}.png`;
         const notification: NotificationOptions = {
