@@ -121,11 +121,11 @@ const ExtensionsContext = () => {
         <SearchInputField onChange={(value) => setSearchTerm(value)} />
         <div className={`overflow-y-auto ${displayDescription ? 'max-h-with-desc' : 'max-h-no-desc'}`}>
             <div className='flex flex-col'>
-                {list.map(queue => {
-                    return <div key={queue.userId + queue.queueArn} className='border-b h-14 flex items-center px-4 cursor-pointer' onDoubleClick={() => onDoubleClick(queue)}>
+                {list.map((queue, index) => {
+                    return <div key={index} className='border-b h-14 flex items-center px-4 cursor-pointer' onDoubleClick={() => onDoubleClick(queue)}>
                         <div className='flex flex-row space items-center'>
                             <Avatar displayStatus={true} userId={queue.userId} userPicture={queue.user?.profilePicture} userFullName={queue.displayName}
-                                enlargedStatusDot={true} />
+                                    enlargedStatusDot={true} />
                             <div className='pl-4 body3'>{queue.displayName}</div>
                         </div>
                     </div>
