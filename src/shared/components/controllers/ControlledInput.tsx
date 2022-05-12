@@ -102,6 +102,12 @@ const ControlledInput = ({
             }
             break;
         }
+        case 'website': {
+            pattern ={
+                value: InputTypes.Website,
+                message: t(invalidErrorMessage ?? 'components.input.invalid_website')
+            }
+        }
     }
 
     const cleanMask = (value?: string) => {

@@ -312,9 +312,12 @@ const ContactForm = ({contact, contactType, submitHandler, closeHandler, editMod
                         />
                     </div>
                     <div className="col-span-12 lg:col-span-5">
-                        <ControlledInput name='website' control={control}
-                            defaultValue={contact?.website || ''} label={t('contacts.contact_details.individual.website')}
-                            dataTestId='contact-website' />
+                        <ControlledInput name='website'
+                                         control={control}
+                                         defaultValue={contact?.website || ''}
+                                         label={t('contacts.contact_details.individual.website')}
+                                         type='website'
+                                         dataTestId='contact-website' />
                     </div>
                 </div>
                 <ContactAddress defaultValue={defaultPrimaryAddress}

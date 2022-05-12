@@ -720,7 +720,8 @@
       "invalid_phone": "Phone number is not valid.",
       "invalid_date": "Date is not valid",
       "invalid_zip": "Enter a valid zip code",
-      "invalid_ip": "IP address is not valid"
+      "invalid_ip": "IP address is not valid",
+      "invalid_website": "Web site is not valid"
     },
     "textarea": {
       "formatting": {
