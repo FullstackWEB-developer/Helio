@@ -67,7 +67,7 @@ const ExtensionsContext = () => {
             list = list.concat(availableAgents.sort((a, b) => a?.queueName?.localeCompare(b?.queueName)));
         }
 
-        let busyAgents = items.filter(a => a.queueType === AgentType && a.connectStatus === UserStatus.Busy);
+        let busyAgents = items.filter(a => a.queueType === AgentType && (a.connectStatus === UserStatus.Busy || a.connectStatus === UserStatus.OnCall));
         if (!!busyAgents && busyAgents.length > 0) {
             list = list.concat(busyAgents.sort((a, b) => a?.queueName?.localeCompare(b?.queueName)));
         }
@@ -87,7 +87,7 @@ const ExtensionsContext = () => {
             list = list.concat(nonAvailableCallForwardingEnabled.sort((a, b) => a?.queueName?.localeCompare(b?.queueName)));
         }
 
-        let nonAvailableAgents = items.filter(a => a.queueType === AgentType && !a.forwardingEnabled && a.connectStatus !== UserStatus.Available);
+        let nonAvailableAgents = items.filter(a => a.queueType === AgentType && !a.forwardingEnabled && a.connectStatus !== UserStatus.Available && a.connectStatus !== UserStatus.OnCall);
         if (!!nonAvailableAgents && nonAvailableAgents.length > 0) {
             list = list.concat(nonAvailableAgents.sort((a, b) => a?.queueName?.localeCompare(b?.queueName)));
         }

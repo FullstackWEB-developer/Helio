@@ -2,7 +2,7 @@ import {useEffect, useState} from 'react';
 import {HubConnection, HubConnectionBuilder, LogLevel} from '@microsoft/signalr';
 import {useDispatch, useSelector} from 'react-redux';
 import {useQueryClient} from 'react-query';
-import {authenticationSelector, selectAccessToken} from '../store/app-user/appuser.selectors';
+import {selectAccessToken, selectAppUserDetails} from '../store/app-user/appuser.selectors';
 import {UserStatusUpdate} from '@shared/models';
 import {QuickConnectExtension} from '@shared/models';
 import RealTimeConnectionLogger from './real-time-connection-logger';
@@ -15,7 +15,7 @@ const RealTimeUserStatusUpdate = () => {
     const dispatch = useDispatch();
     const [connection, setConnection] = useState<HubConnection | null>(null);
     const accessToken = useSelector(selectAccessToken);
-    const username = useSelector(authenticationSelector).username;
+    const userId = useSelector(selectAppUserDetails)?.id;
     const queryClient = useQueryClient();
 
     const realtimeConnectionLogger = new RealTimeConnectionLogger();
@@ -57,7 +57,7 @@ const RealTimeUserStatusUpdate = () => {
     }
 
     const propagateStatusChangeValue = (statusChange: UserStatusUpdate) => {
-        if (statusChange.userId === username) {
+        if (statusChange.userId === userId) {
             dispatch(updateUserStatus(statusChange.status));
         }
         dispatch(addLiveAgentStatus(statusChange));
