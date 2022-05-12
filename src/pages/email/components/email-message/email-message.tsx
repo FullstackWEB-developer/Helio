@@ -80,10 +80,10 @@ const EmailMessage = ({message, ticketCreatedForName, ticketHeaderPhoto, index, 
                     </div>
                     {
                         message.attachments?.length > 0 &&
-                        <div className='mt-4 pt-7 border-t flex flex-wrap'>
+                        <div className='mt-4 pt-4 border-t flex flex-wrap'>
                             {
-                                message.attachments.map(a =>
-                                    <EmailAttachment key={a.fileName} attachment={a} messageId={message.id} />
+                                message.attachments.map((a, i) =>
+                                    <EmailAttachment key={a.fileName} attachment={a} messageId={message.id} index={i}/>
                                 )
                             }
                         </div>
@@ -91,7 +91,7 @@ const EmailMessage = ({message, ticketCreatedForName, ticketHeaderPhoto, index, 
                 </div>
             }
 
-            <div className='ml-14 pl-4 pb-7 border-b'/>
+            <div className='ml-14 pl-4 border-b'/>
 
             <Tooltip targetRef={recipientChevronIcon} isVisible={displayRecipientsTooltip}
                 placement='bottom-start'>

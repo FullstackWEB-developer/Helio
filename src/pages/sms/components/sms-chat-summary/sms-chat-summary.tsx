@@ -98,7 +98,7 @@ const SmsChatSummary = ({
             <div className="pr-4">
                 {userImage}
             </div>
-            <div className="flex flex-col w-full">
+            <div className="flex flex-col w-full sms-item-max-width">
                 <div className="flex justify-between">
                     <span className='body1 w-4/6'>
                         <HighlighterText text={createdForName ? createdForName : utils.applyPhoneMask(smsInfo.createdForEndpoint)} highlighterText={searchTerm} />

@@ -1,5 +1,6 @@
 import React from "react";
 import './highlighter-text.scss';
+import ElipsisTooltipTextbox from '@components/elipsis-tooltip-textbox/elipsis-tooltip-textbox';
 
 interface HighlighterTextProps {
     text: string;
@@ -10,7 +11,7 @@ const HighlighterText = ({text, highlighterText}: HighlighterTextProps) => {
         return <></>;
     }
     if (!highlighterText) {
-        return <div dangerouslySetInnerHTML={{__html: text}}/>
+        return <ElipsisTooltipTextbox value={text} classNames={"truncate"} asSpan={true} />
     }
 
     const regExp = new RegExp(`(${highlighterText})`, 'i');
@@ -21,7 +22,7 @@ const HighlighterText = ({text, highlighterText}: HighlighterTextProps) => {
             {
                 React.Children.toArray(words.map(word => {
                     if (word.toLowerCase().startsWith(highlighterText.toLowerCase())) {
-                        return <mark className='highlighter-text-mark'>{word}</mark>
+                        return <mark className='highlighter-text-mark truncate'>{word}</mark>
                     } else {
                         return word;
                     }

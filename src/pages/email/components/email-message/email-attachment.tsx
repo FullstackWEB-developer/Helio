@@ -12,7 +12,7 @@ import './email-attachment.scss';
 import {SnackbarPosition} from '@components/snackbar/snackbar-position.enum';
 import classNames from 'classnames';
 
-const EmailAttachment = ({attachment, messageId, externalPagesUse = false}: {attachment: EmailAttachmentHeader, messageId: string, externalPagesUse?: boolean}) => {
+const EmailAttachment = ({attachment, messageId, externalPagesUse = false, index}: {attachment: EmailAttachmentHeader, messageId: string, externalPagesUse?: boolean, index?: number}) => {
 
     const [hovered, setHovered] = useState(false);
     const dispatch = useDispatch();
@@ -47,10 +47,11 @@ const EmailAttachment = ({attachment, messageId, externalPagesUse = false}: {att
             onMouseOver={() => setHovered(true)}
             onMouseOut={() => setHovered(false)}
             onClick={() => downloadAttachment(attachment.fileName)}
-            className={classNames('flex items-center email-attachment-thumbnail w-60 p-4 ml-4 mb-4 cursor-pointer body3-medium attachment-file-name',
+            className={classNames('flex items-center email-attachment-thumbnail w-60 p-4 mb-4 cursor-pointer body3-medium attachment-file-name',
                 {
                     'h-10': externalPagesUse,
-                    'h-16': !externalPagesUse
+                    'h-16': !externalPagesUse,
+                    'ml-4': index && index > 0
                 })}>
             {
                 externalPagesUse ?

@@ -70,16 +70,18 @@ const FeedDetailEmailItem = ({message, isCollapsed, feedTime}: FeedDetailEmailIt
                     <div className={collapsed ? 'links' : 'links border-b pb-4'} dangerouslySetInnerHTML={{__html: linkifyHtml(message.body)}}/>
                     {
                         message.attachments?.length > 0 &&
-                        <div className='mt-4 pt-7 border-t flex flex-wrap'>
+                        <div className='pt-4 flex flex-wrap'>
                             {
-                                message.attachments.map(a =>
-                                    <EmailAttachment key={a.fileName} attachment={a} messageId={message.id} />
+                                message.attachments.map((a, i) =>
+                                    <EmailAttachment key={a.fileName} attachment={a} messageId={message.id} index={i} />
                                 )
                             }
                         </div>
                     }
                 </div>
             }
+
+            <div className='ml-14 pl-4 border-b'/>
 
             <Tooltip targetRef={recipientChevronIcon} isVisible={displayRecipientsTooltip}
                      placement='bottom-start'>
