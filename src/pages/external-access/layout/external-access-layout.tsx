@@ -15,6 +15,10 @@ import {useDispatch, useSelector} from 'react-redux';
 import {logOut} from '@shared/store/app-user/appuser.slice';
 import { useIdleTimer } from 'react-idle-timer';
 import {authenticationSelector} from '@shared/store/app-user/appuser.selectors';
+import { SnackbarType } from '@components/snackbar/snackbar-type.enum';
+import {clearVerifiedPatient} from '@pages/patients/store/patients.slice';
+import {setVerifiedLink} from '@pages/external-access/verify-patient/store/verify-patient.slice';
+import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
 
 export interface ExternalAccessLayoutProps {
     children: ReactNode;
@@ -74,9 +78,19 @@ const ExternalAccessLayout = ({children}: ExternalAccessLayoutProps) => {
         'hidden': isSmsTicketPage || isEmailPage
     });
 
-    const onIdle = () => {
+    const onIdle = async () => {
         if(isIdle() && auth.isGuestLogin){
-            dispatch(logOut());
+            dispatch(addSnackbarMessage({
+                type: SnackbarType.Error,
+                message: 'login.session_timeout_guest',
+                position: SnackbarPosition.TopCenter,
+                durationInSeconds: 10
+            }));
+            const link = auth.authenticationLink;
+            await dispatch(logOut());
+            await dispatch(clearVerifiedPatient());
+            await dispatch(setVerifiedLink(''));
+            window.location.href = link;
         }
     }
 
