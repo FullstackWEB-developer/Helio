@@ -1,10 +1,10 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
-import {useHistory} from 'react-router-dom';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import 'amazon-connect-streams';
 import 'amazon-connect-chatjs';
 import withErrorLogging from '@shared/HOC/with-error-logging';
-import {isCcpVisibleSelector} from '@shared/layout/store/layout.selectors';
+import { isCcpVisibleSelector } from '@shared/layout/store/layout.selectors';
 import {
     clearCCPContext,
     removeCurrentBotContext,
@@ -20,21 +20,21 @@ import {
     setVoiceCounter,
     upsertCurrentBotContext
 } from './store/ccp.slice';
-import {getTicketById, setAssignee, updateConnectAttributes} from '../tickets/services/tickets.service';
-import {selectAgentStates, selectAppUserDetails, selectUserStatus} from '@shared/store/app-user/appuser.selectors';
-import {DragPreviewImage, useDrag} from 'react-dnd';
-import {DndItemTypes} from '@shared/layout/dragndrop/dnd-item-types';
+import { getTicketById, setAssignee, updateConnectAttributes } from '../tickets/services/tickets.service';
+import { selectAgentStates, selectAppUserDetails, selectUserStatus } from '@shared/store/app-user/appuser.selectors';
+import { DragPreviewImage, useDrag } from 'react-dnd';
+import { DndItemTypes } from '@shared/layout/dragndrop/dnd-item-types';
 import './ccp.scss';
-import {setIncomingOrActiveCallFlag, toggleCcp} from '@shared/layout/store/layout.slice';
-import {Trans, useTranslation} from 'react-i18next';
+import { setIncomingOrActiveCallFlag, toggleCcp } from '@shared/layout/store/layout.slice';
+import { Trans, useTranslation } from 'react-i18next';
 import CcpContext from './components/ccp-context';
 import contextPanels from './models/context-panels';
-import {ccpImage} from './ccpImage';
-import {addLiveAgentStatus, setAgentStates, updateUserStatus} from '@shared/store/app-user/appuser.slice';
-import {UserStatus} from '@shared/store/app-user/app-user.models';
+import { ccpImage } from './ccpImage';
+import { addLiveAgentStatus, setAgentStates, updateUserStatus } from '@shared/store/app-user/appuser.slice';
+import { UserStatus } from '@shared/store/app-user/app-user.models';
 import Logger from '@shared/services/logger';
-import {AgentState} from '@shared/models/agent-state';
-import {Icon} from '@components/svg-icon/icon';
+import { AgentState } from '@shared/models/agent-state';
+import { Icon } from '@components/svg-icon/icon';
 import SvgIcon from '@components/svg-icon/svg-icon';
 import {
     selectBotContext,
@@ -45,21 +45,21 @@ import {
     selectInternalCallDetails,
     selectVoiceCounter
 } from './store/ccp.selectors';
-import {useMutation, useQuery} from 'react-query';
-import {CCP_ANIMATION_DURATION} from '@constants/form-constants';
+import { useMutation, useQuery } from 'react-query';
+import { CCP_ANIMATION_DURATION } from '@constants/form-constants';
 import Modal from '@components/modal/modal';
 import Button from '@components/button/button';
-import {CCPConnectionStatus} from './models/connection-status.enum';
-import {QueryGetPatientById, QueryTickets} from '@constants/react-query-constants';
-import {getPatientByIdWithQuery} from '@pages/patients/services/patients.service';
+import { CCPConnectionStatus } from './models/connection-status.enum';
+import { QueryGetPatientById, QueryTickets } from '@constants/react-query-constants';
+import { getPatientByIdWithQuery } from '@pages/patients/services/patients.service';
 import useLocalStorage from '@shared/hooks/useLocalStorage';
 import utils from '@shared/utils/utils';
-import {ContextKeyValuePair} from '@pages/ccp/models/context-key-value-pair';
-import {getUserList} from '@shared/services/lookups.service';
-import {clearAppParameters} from '@shared/store/app/app.slice';
+import { ContextKeyValuePair } from '@pages/ccp/models/context-key-value-pair';
+import { getUserList } from '@shared/services/lookups.service';
+import { clearAppParameters } from '@shared/store/app/app.slice';
 import Spinner from '@components/spinner/Spinner';
 import useBrowserNotification from '@shared/hooks/useBrowserNotification';
-import {Intent} from './models/intent.enum';
+import { Intent } from './models/intent.enum';
 
 const ccpConfig = {
     region: utils.getAppParameter('AwsRegion'),
@@ -93,7 +93,7 @@ const Ccp: React.FC<BoxProps> = ({
     headsetIconRef,
     moveBox
 }) => {
-    const {t} = useTranslation();
+    const { t } = useTranslation();
     const dispatch = useDispatch();
     const history = useHistory();
     const logger = Logger.getInstance();
@@ -146,7 +146,7 @@ const Ccp: React.FC<BoxProps> = ({
         }
     });
 
-    const {refetch: refetchTicket} = useQuery([QueryTickets, ticketId], () => getTicketById(ticketId), {
+    const { refetch: refetchTicket } = useQuery([QueryTickets, ticketId], () => getTicketById(ticketId), {
         enabled: !!ticketId,
         onSuccess: (data) => {
             dispatch(setBotContextTicket({
@@ -158,13 +158,34 @@ const Ccp: React.FC<BoxProps> = ({
         }
     });
 
+    const handleCcpPosition = () => {
+        const ccp = document.getElementById('ccpControl');
+        if (ccp) {
+            const elementRect = ccp.getBoundingClientRect();
+            if (!utils.isInBounds(elementRect.top, elementRect.left, elementRect.bottom, elementRect.right)) {
+                moveBox(utils.getWindowCenter().x - ccp.offsetWidth / 2, top);
+            }
+        }
+    }
+
+    useEffect(() => {
+        window.addEventListener('onresize', () => handleCcpPosition());
+        return () => {
+            window.removeEventListener('onresize', () => handleCcpPosition());
+        }
+    }, [])
+
+    useEffect(() => {
+        handleCcpPosition();
+    }, [moveBox])
+
     useEffect(() => {
         dispatch(getUserList());
     }, [dispatch]);
 
     useEffect(() => {
         if (!!ticketId) {
-            updateAssigneeMutation.mutate({ticketId: ticketId, assignee: user.id});
+            updateAssigneeMutation.mutate({ ticketId: ticketId, assignee: user.id });
             refetchTicket();
         }
     }, [ticketId]);
@@ -306,7 +327,7 @@ const Ccp: React.FC<BoxProps> = ({
                 }
                 const notificationTitle = prepareChatOrVoiceNotificationTitle(botAttributes);
                 const notificationBody = prepareChatOrVoiceNotificationContent(botAttributes, contact.getQueue()?.name);
-                dispatch(setCcpNotificationContent({body: notificationBody, title: notificationTitle, type: contact.getType()}));
+                dispatch(setCcpNotificationContent({ body: notificationBody, title: notificationTitle, type: contact.getType() }));
                 if (!isCcpVisibleRef.current) {
                     dispatch(toggleCcp());
                 }
@@ -455,8 +476,8 @@ const Ccp: React.FC<BoxProps> = ({
     }, []);
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [{opacity}, drag, preview] = useDrag({
-        item: {id, left, top, type: DndItemTypes.BOX},
+    const [{ opacity }, drag, preview] = useDrag({
+        item: { id, left, top, type: DndItemTypes.BOX },
         collect: (monitor) => ({
             opacity: monitor.isDragging() ? 0.3 : 1
         })
@@ -553,7 +574,7 @@ const Ccp: React.FC<BoxProps> = ({
             ccp.style.setProperty('--ccpAnimationFinalScale', '1');
             setAnimateToggle(true);
             setDelayCcpDisplaying(false);
-            setTimeout(() => {setAnimateToggle(false); moveBox(ccpBoundingClientRect.x, ccpBoundingClientRect.y)}, (animationDuration * 1000) - animationDurationOffset);
+            setTimeout(() => { setAnimateToggle(false); moveBox(ccpBoundingClientRect.x, ccpBoundingClientRect.y) }, (animationDuration * 1000) - animationDurationOffset);
         }
     }
 
@@ -600,7 +621,7 @@ const Ccp: React.FC<BoxProps> = ({
         }
     }, [isCcpVisibleRef.current]);
 
-    const {displayNotification} = useBrowserNotification();
+    const { displayNotification } = useBrowserNotification();
     const notificationContent = useSelector(selectCcpNotificationContent);
 
     useEffect(() => {
@@ -675,7 +696,7 @@ const Ccp: React.FC<BoxProps> = ({
             </div>
             <DragPreviewImage src={ccpImage} connect={preview} />
             <div className={`ccp-main z-50 ${animateToggle ? 'ccp-toggle-animate' : ''} ` + (isCcpVisibleRef.current ? 'block' : 'hidden')}
-                style={{left, top, opacity: opacity, visibility: delayCcpDisplaying ? 'hidden' : 'visible'}}
+                style={{ left, top, opacity: opacity, visibility: delayCcpDisplaying ? 'hidden' : 'visible' }}
                 onMouseEnter={() => setHover(true)}
                 onMouseLeave={() => setHover(false)}
                 ref={drag}
