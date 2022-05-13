@@ -33,6 +33,10 @@ const getName = (props: SmsChatMessageProps, t: TFunction) => {
         return t('external_access.ticket_sms.cwc_only');
     }
 
+    if(!props.isOutGoing && props.name === systemUser){
+        return t('external_access.ticket_sms.unknown_sender');
+    }
+
     if (props.agent) {
         return t('sms.agent_label', {name: `${props.agent.firstName} ${props.agent.lastName}`});
     } else if (props.name.startsWith('+') || /\d/.test(props.name)) {

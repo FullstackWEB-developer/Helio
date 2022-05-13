@@ -1084,7 +1084,8 @@
       "today": "Today",
       "yesterday": "Yesterday",
       "sms_sent_failed": "Sending message failed",
-      "no_empty_message": "Please type your message before sending"
+      "no_empty_message": "Please type your message before sending",
+      "unknown_sender": "Unknown Sender"
     },
     "email": {
       "title": "Conversation History",
