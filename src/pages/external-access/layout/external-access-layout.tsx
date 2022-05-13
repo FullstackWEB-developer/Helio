@@ -11,8 +11,11 @@ import classNames from 'classnames';
 import {useLocation} from 'react-router-dom';
 import {TicketEmailPath, TicketSmsPath} from '@app/paths';
 import utils from '@shared/utils/utils';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {logOut} from '@shared/store/app-user/appuser.slice';
+import { useIdleTimer } from 'react-idle-timer';
+import {authenticationSelector} from '@shared/store/app-user/appuser.selectors';
+
 export interface ExternalAccessLayoutProps {
     children: ReactNode;
 }
@@ -21,6 +24,7 @@ const ExternalAccessLayout = ({children}: ExternalAccessLayoutProps) => {
     const {t} = useTranslation();
     const year = dayjs().year();
     const dispatch = useDispatch();
+    const auth = useSelector(authenticationSelector);
     const webFormsLabResult = useRouteMatch({
         path: '/o/lab-results/:labResultId',
         strict: true,
@@ -69,6 +73,23 @@ const ExternalAccessLayout = ({children}: ExternalAccessLayoutProps) => {
     const footerWrapperClass = classNames('h-16 xl:px-40 external-access-layout-footer body3-medium', {
         'hidden': isSmsTicketPage || isEmailPage
     });
+
+    const onIdle = () => {
+        if(isIdle() && auth.isGuestLogin){
+            dispatch(logOut());
+        }
+    }
+
+    const {
+        isIdle,
+    } = useIdleTimer({
+        onIdle,
+        timeout: Number(utils.getAppParameter("WebformsInactiveTimeout")) * 60000,
+        events: [
+            'mousemove',
+            'touchmove'
+        ]
+    })
 
     return <>
         <div className={externalAccessLayoutClassnames}>
