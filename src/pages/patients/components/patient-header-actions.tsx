@@ -127,7 +127,7 @@ const PatientHeaderActions = ({patient, refreshPatient} : PatientHeaderActionsPr
 
                 <span className='pl-8 pr-6' >
                             <SvgIcon type={Icon.ChannelSms}
-                                     disabled={!patient.mobilePhone}
+                                     disabled={!patient.consentToText || !patient.mobilePhone}
                                      fillClass={patient.mobilePhone ? 'success-icon' : ''}
                                      className={`icon-x-large ${!!patient.mobilePhone ? 'cursor-pointer' : ''}`}
                                      onClick={() => sendSms()}
