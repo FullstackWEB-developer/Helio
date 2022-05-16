@@ -169,9 +169,9 @@ const Ccp: React.FC<BoxProps> = ({
     }
 
     useEffect(() => {
-        window.addEventListener('onresize', () => handleCcpPosition());
+        window.addEventListener('resize', handleCcpPosition);
         return () => {
-            window.removeEventListener('onresize', () => handleCcpPosition());
+            window.removeEventListener('resize', handleCcpPosition);
         }
     }, [])
 
