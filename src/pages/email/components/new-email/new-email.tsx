@@ -50,7 +50,7 @@ const NewEmail = () => {
     const [contactPagination, setContactPagination] = useState<Paging>();
     const [toName, setToName] = useState<string>();
     const [searchParams, setSearchParams] = useState<{type: number, value: string}>({type: -1, value: ''});
-    const [ticketQueryParams, setTicketQueryParams] = useState<PatientTicketsRequest>({...DefaultPagination, pageSize: 5, status: 1});
+    const [ticketQueryParams, setTicketQueryParams] = useState<PatientTicketsRequest>({...DefaultPagination, pageSize: 5});
     const [ticketsContactParams, setTicketContactParams] = useState<ContactTicketsRequest>({...DefaultPagination, contactId: ''});
     const history = useHistory();
     const {t} = useTranslation();

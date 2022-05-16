@@ -46,8 +46,7 @@ const SmsNewMessage = ({...props}: SmsNewMessageProps) => {
     const [contactPagination, setContactPagination] = useState<Paging>();
     const [ticketQueryParams, setTicketQueryParams] = useState<PatientTicketsRequest>({
         ...DefaultPagination,
-        pageSize: 5,
-        status: 1
+        pageSize: 5
     });
 
     const [step, setStep] = useState<SmsNewMessageSteps>(SmsNewMessageSteps.Search);
