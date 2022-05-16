@@ -16,7 +16,7 @@ interface ContactAddressProps {
     control: Control
     defaultValue?: Address
 }
-const ContactAddress = ({title, addressType, control, removeCTAClickHandler, defaultValue}: ContactAddressProps) => {
+const ContactAddress = ({title, addressType, control, removeCTAClickHandler}: ContactAddressProps) => {
     const {t} = useTranslation();
     const [disabledFields, setDisabledField] = useState(false);
 
@@ -39,7 +39,7 @@ const ContactAddress = ({title, addressType, control, removeCTAClickHandler, def
         return states && states.length > 0 ? [...states] : [];
     }
     const options = getStatesOptions();
-    const defaultStateOption = defaultValue ? options.find(o => o.value === defaultValue.state) : '';
+    
 
     const onAsPrimaryCheckChange = (event: CheckboxCheckEvent) => {
         setDisabledField(event.checked);
@@ -91,7 +91,6 @@ const ContactAddress = ({title, addressType, control, removeCTAClickHandler, def
                         name={`${determineFormNamePrefix()}AddressLine`}
                         control={control}
                         disabled={disabledFields}
-                        defaultValue={defaultValue?.line || ''}
                         label={t('contacts.contact_details.individual.address')}
                         dataTestId={`contact-${determineFormNamePrefix()}-address-line`}
                     />
@@ -101,7 +100,6 @@ const ContactAddress = ({title, addressType, control, removeCTAClickHandler, def
                         name={`${determineFormNamePrefix()}Apt`}
                         control={control}
                         disabled={disabledFields}
-                        defaultValue={defaultValue?.apartmentNumber || ''}
                         label={t('contacts.contact_details.individual.apt')}
                         dataTestId={`contact${determineFormNamePrefix()}-address-apt`}
                     />
@@ -111,7 +109,6 @@ const ContactAddress = ({title, addressType, control, removeCTAClickHandler, def
                         name={`${determineFormNamePrefix()}City`}
                         control={control}
                         disabled={disabledFields}
-                        defaultValue={defaultValue?.city || ''}
                         label={t('contacts.contact_details.individual.city')}
                         dataTestId={`contact-${determineFormNamePrefix()}-address-city`}
                     />
@@ -119,7 +116,6 @@ const ContactAddress = ({title, addressType, control, removeCTAClickHandler, def
                 <div className="col-span-12 lg:col-span-3">
                     <ControlledSelect
                         name={`${determineFormNamePrefix()}State`}
-                        defaultValue={defaultStateOption}
                         disabled={disabledFields}
                         control={control}
                         label={t('contacts.contact_details.individual.state')}
@@ -137,7 +133,6 @@ const ContactAddress = ({title, addressType, control, removeCTAClickHandler, def
                         maxLength={5}
                         disabled={disabledFields}
                         control={control}
-                        defaultValue={defaultValue?.zipCode || ''}
                         label={t('contacts.contact_details.individual.zip_code')} dataTestId={`contact-${determineFormNamePrefix()}-zip-code`} />
                 </div>
             </div>

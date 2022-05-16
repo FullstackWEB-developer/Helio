@@ -21,6 +21,7 @@ import Confirmation from '@components/confirmation/confirmation';
 import {useSelector} from 'react-redux';
 import {selectLookupValuesAsOptions} from '@pages/tickets/store/tickets.selectors';
 import {Prompt, useLocation} from 'react-router';
+import {selectStates} from '@shared/store/lookups/lookups.selectors';
 
 const SHIPPING_ADDRESS_LABEL_KEY = 'contacts.contact_details.individual.shipping_address'
 const BILLING_ADDRESS_LABEL_KEY = 'contacts.contact_details.individual.billing_address';
@@ -84,9 +85,9 @@ const ContactForm = ({contact, contactType, submitHandler, closeHandler, editMod
     const handleRemoveCTABtnClick = (value: Option) => {
         setAddressDropdownOptions([...addressDropdownOptions, value]);
     }
-    const {handleSubmit, control, reset, formState, setValue} = useForm({mode: 'onChange'});
-    const {isValid, isDirty, isSubmitted} = formState;
-    const defaultCategory = contact?.category ? categoryOptions?.find(c => Number(c.value) === contact.category) : '';
+
+
+    const defaultCategory = contact?.category ? categoryOptions?.find(c => Number(c.value) === contact.category)?.value : '';
     const defaultPrimaryAddress: Address | undefined = (contact?.addresses?.some(a => a.addressType === AddressType.PrimaryAddress)) ?
         (contact.addresses.find(a => a.addressType === AddressType.PrimaryAddress)) : undefined;
     const defaultShippingAddress: Address | undefined = (contact?.addresses?.some(a => a.addressType === AddressType.ShippingAddress)) ?
@@ -96,6 +97,56 @@ const ContactForm = ({contact, contactType, submitHandler, closeHandler, editMod
     useEffect(() => {
         reset();
     }, [contactType]);
+
+    const location = useLocation<{email?: string, shouldLinkRelatedCompany?: boolean}>();
+
+    const states = useSelector(selectStates);
+    const getStatesOptions = (): Option[] => {
+        return states && states.length > 0 ? [...states] : [];
+    }
+    const options = getStatesOptions();
+    const defaultPrimaryStateOption = defaultPrimaryAddress ? options.find(o => o.value === defaultPrimaryAddress?.state)?.value : '';
+    const defaultShippingStateOption = defaultShippingAddress ? options.find(o => o.value === defaultShippingAddress?.state)?.value : '';
+    const defaultBillingStateOption = defaultBillingAddress ? options.find(o => o.value === defaultBillingAddress?.state)?.value : '';
+    const {handleSubmit, control, reset, formState, setValue} = useForm({
+        mode: 'onChange', defaultValues: {
+            firstName: contact?.firstName || '',
+            lastName: contact?.lastName || '',
+            companyName: contact?.companyName || '',
+            category: defaultCategory,
+            jobTitle: contact?.jobTitle || '',
+            department: contact?.department || '',
+            email: contact?.emailAddress || location?.state?.email || '',
+            workMainPhone: contact?.workMainPhone || '',
+            workMainExtension: contact?.workMainExtension || '',
+            workDirectPhone: contact?.workDirectPhone || '',
+            mobile: contact?.mobilePhone || '',
+            fax: contact?.fax || '',
+            website: contact?.website || '',
+            primaryAddressLine: defaultPrimaryAddress?.line,
+            primaryApt: defaultPrimaryAddress?.apartmentNumber,
+            primaryCity: defaultPrimaryAddress?.city,
+            primaryState: defaultPrimaryStateOption,
+            primaryZipCode: defaultPrimaryAddress?.zipCode,
+            ...(showAddressSection(shippingAddressOption.value) &&
+            {
+                shippingAddressLine: defaultShippingAddress?.line,
+                shippingApt: defaultShippingAddress?.apartmentNumber,
+                shippingCity: defaultShippingAddress?.city,
+                shippingState: defaultShippingStateOption,
+                shippingZipCode: defaultShippingAddress?.zipCode
+            }
+            ),
+            ...(showAddressSection(billingAddressOption.value) && {
+                billingAddressLine: defaultBillingAddress?.line,
+                billingApt: defaultBillingAddress?.apartmentNumber,
+                billingCity: defaultBillingAddress?.city,
+                billingState: defaultBillingStateOption,
+                billingZipCode: defaultBillingAddress?.zipCode
+            })
+        }
+    });
+    const {isValid, isDirty, isSubmitted} = formState;
 
     const [closingPromptOpen, setClosingPromptOpen] = useState(false);
     const onSubmit = (form: ContactFormModel) => {
@@ -209,7 +260,6 @@ const ContactForm = ({contact, contactType, submitHandler, closeHandler, editMod
         }
     };
 
-    const location = useLocation<{email?: string, shouldLinkRelatedCompany?: boolean}>();
     return (
         <div className={`flex flex-col relative ${editMode ? 'overflow-hidden' : ''}`}>
             <form onSubmit={handleSubmit(onSubmit)} noValidate={true} onKeyDown={(e) => checkKeyDown(e)}>
@@ -220,12 +270,12 @@ const ContactForm = ({contact, contactType, submitHandler, closeHandler, editMod
                             <>
                                 <div className="col-span-12 lg:col-span-5">
                                     <ControlledInput name='firstName' control={control}
-                                        defaultValue={contact?.firstName || ''} label={t('contacts.contact_details.individual.first_name')}
+                                        label={t('contacts.contact_details.individual.first_name')}
                                         required={true} dataTestId={'contact-first-name'} />
                                 </div>
                                 <div className="col-span-12 lg:col-span-5">
                                     <ControlledInput name='lastName' control={control}
-                                        defaultValue={contact?.lastName || ''} label={t('contacts.contact_details.individual.last_name')}
+                                        label={t('contacts.contact_details.individual.last_name')}
                                         required={true} dataTestId={'contact-last-name'} />
                                 </div>
                             </>
@@ -233,7 +283,7 @@ const ContactForm = ({contact, contactType, submitHandler, closeHandler, editMod
                     }
                     <div className="col-span-12 lg:col-span-5">
                         <ControlledInput name='companyName' control={control}
-                            defaultValue={contact?.companyName || ''} label={t('contacts.contact_details.individual.company')}
+                            label={t('contacts.contact_details.individual.company')}
                             required={isCompanyContact} dataTestId={'contact-company-name'}
                             autosuggestDropdown={shouldCompanyFieldBeAutosuggest}
                             autosuggestOptions={shouldCompanyFieldBeAutosuggest ? companyOptions : undefined}
@@ -250,7 +300,6 @@ const ContactForm = ({contact, contactType, submitHandler, closeHandler, editMod
                     <div className="col-span-12 lg:col-span-5">
                         <ControlledSelect
                             name='category'
-                            defaultValue={defaultCategory}
                             control={control}
                             label='contacts.contact_details.individual.category'
                             options={categoryOptions}
@@ -263,13 +312,13 @@ const ContactForm = ({contact, contactType, submitHandler, closeHandler, editMod
                             <>
                                 <div className="col-span-12 lg:col-span-5">
                                     <ControlledInput name='jobTitle' control={control}
-                                        defaultValue={contact?.jobTitle || ''} label={t('contacts.contact_details.individual.job_title')}
+                                        label={t('contacts.contact_details.individual.job_title')}
                                         dataTestId={'contact-job-title'}
                                     />
                                 </div>
                                 <div className="col-span-12 lg:col-span-5">
                                     <ControlledInput name='department' control={control}
-                                        defaultValue={contact?.department || ''} label={t('contacts.contact_details.individual.department')}
+                                        label={t('contacts.contact_details.individual.department')}
                                         dataTestId={'contact-department'}
                                     />
                                 </div>
@@ -277,19 +326,19 @@ const ContactForm = ({contact, contactType, submitHandler, closeHandler, editMod
                         )
                     }
                     <div className="col-span-12 lg:col-span-5">
-                        <ControlledInput name='email' control={control} defaultValue={contact?.emailAddress || location?.state?.email ||  ''}
+                        <ControlledInput name='email' control={control}
                             type='email' label={t('contacts.contact_details.individual.email')} dataTestId='contact-email' />
                     </div>
                     <div className={`col-span-12 lg:col-span-${!isCompanyContact ? '3' : '5'}`}>
                         <ControlledInput name='workMainPhone' control={control}
-                            defaultValue={contact?.workMainPhone || ''} label={t('contacts.contact_details.individual.work_main_phone')}
+                            label={t('contacts.contact_details.individual.work_main_phone')}
                             type='tel' mask={mask} dataTestId='contact-work-main-phone' />
                     </div>
                     {
                         !isCompanyContact &&
                         <div className="col-span-12 lg:col-span-2">
                             <ControlledInput name='workMainExtension' type='number' control={control}
-                                defaultValue={contact?.workMainExtension || ''} label={t('contacts.contact_details.individual.extension')}
+                                label={t('contacts.contact_details.individual.extension')}
                                 dataTestId='contact-work-main-extension' />
                         </div>
                     }
@@ -297,20 +346,19 @@ const ContactForm = ({contact, contactType, submitHandler, closeHandler, editMod
                         !isCompanyContact &&
                         <div className="col-span-12 lg:col-span-5">
                             <ControlledInput name='workDirectPhone' control={control}
-                                defaultValue={contact?.workDirectPhone || ''} label={t('contacts.contact_details.individual.work_direct_phone')}
+                                label={t('contacts.contact_details.individual.work_direct_phone')}
                                 type='tel' mask={mask} dataTestId='contact-work_direct_phone' />
                         </div>
                     }
                     <div className="col-span-12 lg:col-span-5">
                         <ControlledInput name='mobile' control={control}
-                            defaultValue={contact?.mobilePhone || ''} label={t('contacts.contact_details.individual.mobile')}
+                            label={t('contacts.contact_details.individual.mobile')}
                             type='tel' mask={mask} dataTestId='contact-mobile' />
                     </div>
                     <div className="col-span-12 lg:col-span-5">
                         <ControlledInput type='tel'
                             name='fax'
                             control={control}
-                            defaultValue={contact?.fax || ''}
                             label={t('contacts.contact_details.individual.fax')}
                             invalidErrorMessage={t('contacts.contact_details.individual.invalid_fax_format')}
                             mask={mask}
@@ -319,11 +367,10 @@ const ContactForm = ({contact, contactType, submitHandler, closeHandler, editMod
                     </div>
                     <div className="col-span-12 lg:col-span-5">
                         <ControlledInput name='website'
-                                         control={control}
-                                         defaultValue={contact?.website || ''}
-                                         label={t('contacts.contact_details.individual.website')}
-                                         type='website'
-                                         dataTestId='contact-website' />
+                            control={control}
+                            label={t('contacts.contact_details.individual.website')}
+                            type='website'
+                            dataTestId='contact-website' />
                     </div>
                 </div>
                 <ContactAddress defaultValue={defaultPrimaryAddress}
