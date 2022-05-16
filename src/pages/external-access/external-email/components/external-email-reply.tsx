@@ -45,6 +45,8 @@ const ExternalEmailReply = ({message, setReplyMode, setSelectedMessage}: Externa
             refetchPatient();
         } else if(message.contactId){
             refetchContact();
+        } else {
+            sendEmailAction();
         }
     }
     const {refetch: refetchPatient, isLoading: isPatientLoading, isFetching: isPatientFetching} = useQuery([GetPatient, message.patientId], () => getPatientByIdWithQuery(message.patientId!), {
@@ -68,17 +70,21 @@ const ExternalEmailReply = ({message, setReplyMode, setSelectedMessage}: Externa
                 message: 'external_access.email_changed'
             }))
         }else{
-            const cwcEmail = utils.getAppParameter('HelioEmailAddress');
-            const newMessage: TicketMessageBase = {
-                channel: ChannelTypes.Email,
-                body: emailContent,
-                toAddress: cwcEmail,
-                ticketId: request.ticketId,
-                direction: TicketMessagesDirection.Incoming,
-                subject: message?.subject
-            }
-            sendEmailMutation.mutate(newMessage);
+            sendEmailAction();
         }
+    }
+
+    const sendEmailAction = () => {
+        const cwcEmail = utils.getAppParameter('HelioEmailAddress');
+        const newMessage: TicketMessageBase = {
+            channel: ChannelTypes.Email,
+            body: emailContent,
+            toAddress: cwcEmail,
+            ticketId: request.ticketId,
+            direction: TicketMessagesDirection.Incoming,
+            subject: message?.subject
+        }
+        sendEmailMutation.mutate(newMessage);
     }
 
     const getUsersLastEmailAddress = () => {
