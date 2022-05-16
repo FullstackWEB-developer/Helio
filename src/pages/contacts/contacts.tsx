@@ -27,11 +27,13 @@ import './contacts.scss';
 import {ContactType} from './models/ContactType';
 import { getLookupValues } from '@shared/services/lookups.service';
 import {selectLookupValuesAsOptions} from '@pages/tickets/store/tickets.selectors';
+import {useMutation} from 'react-query';
+import {updateTicket} from '@pages/tickets/services/tickets.service';
 
 interface ContactProps { }
 const Contacts: React.FC<ContactProps> = () => {
     const {t} = useTranslation();
-    const location = useLocation<{email?: string, shouldLinkRelatedCompany?: boolean}>();
+    const location = useLocation<{email?: string, shouldLinkRelatedCompany?: boolean, ticketId?: string}>();
     const [selectedCategory, setSelectedCategory] = useState<string>(t('contacts.category.all_contacts'));
     const [selectedContact, setSelectedContact] = useState<ContactExtended>();
     const facilityTypes = useSelector((state) => selectLookupValuesAsOptions(state, 'ContactCategory'), (left, right)=> left.length === right.length)
@@ -143,7 +145,25 @@ const Contacts: React.FC<ContactProps> = () => {
         setAddNewContactMode(false);
     }
 
+    const ticketUpdateMutation = useMutation(updateTicket, {
+        onError: () => {
+            dispatch(addSnackbarMessage({
+                message: 'ticket_detail.ticket_update_failed',
+                type: SnackbarType.Error
+            }));
+        }
+    });
+
     const onContactAddSuccess = (contact: ContactExtended) => {
+        if(location.state?.ticketId){
+            ticketUpdateMutation.mutate({
+                id: location.state?.ticketId!,
+                ticketData: {
+                    contactId: contact.id,
+                    createdForName: contact.type === ContactType.Company ? contact.companyName : (contact.firstName + " " + contact.lastName)
+                }
+            });
+        }
         setAddNewContactMode(false);
         refreshContactList();
         dispatch(addSnackbarMessage({

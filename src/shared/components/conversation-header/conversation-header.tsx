@@ -130,7 +130,8 @@ const ConversationHeader = ({info, forNewTicketMessagePurpose, patientPhoto, con
                 break;
             case MORE_MENU_OPTION_ADD_CONTACT:
                 history.push(ContactsPath, {
-                    email: info.createdForEndpoint
+                    email: info.createdForEndpoint,
+                    ticketId: ticket?.id
                 });
                 break;
             case MORE_MENU_OPTION_CREATE_PATIENT_CHART:
