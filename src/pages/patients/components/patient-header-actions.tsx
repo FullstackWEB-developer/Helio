@@ -129,7 +129,7 @@ const PatientHeaderActions = ({patient, refreshPatient} : PatientHeaderActionsPr
                             <SvgIcon type={Icon.ChannelSms}
                                      disabled={!patient.consentToText || !patient.mobilePhone}
                                      fillClass={patient.mobilePhone ? 'success-icon' : ''}
-                                     className={`icon-x-large ${!!patient.mobilePhone ? 'cursor-pointer' : ''}`}
+                                     className={`icon-x-large ${(!!patient.mobilePhone && patient.consentToText) ? 'cursor-pointer' : ''}`}
                                      onClick={() => sendSms()}
                                      strokeClass='patient-stroke-color'
                             />
