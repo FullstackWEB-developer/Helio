@@ -418,7 +418,8 @@ const UserDetails = () => {
             isMobilePhoneLoading ||
             isMobilePhoneFetching ||
             (isForwardEnabled && !forwardToSelected) ||
-            (isForwardEnabled && forwardToSelected && !forwardValuePhone && !forwardValueAgent);
+            (isForwardEnabled && forwardToSelected && !forwardValuePhone && forwardToSelected === CallForwardingType.Phone) ||
+            (isForwardEnabled && forwardToSelected && !forwardValueAgent && forwardToSelected === CallForwardingType.Agent);
     }
 
     return (
