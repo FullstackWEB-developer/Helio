@@ -203,10 +203,16 @@ const ContactForm = ({contact, contactType, submitHandler, closeHandler, editMod
         }
     }
 
+    const checkKeyDown = (e) => {
+        if (e.code === 'Enter' || e.code === 'NumpadEnter') {
+            e.preventDefault();
+        }
+    };
+
     const location = useLocation<{email?: string, shouldLinkRelatedCompany?: boolean}>();
     return (
         <div className={`flex flex-col relative ${editMode ? 'overflow-hidden' : ''}`}>
-            <form onSubmit={handleSubmit(onSubmit)} noValidate={true}>
+            <form onSubmit={handleSubmit(onSubmit)} noValidate={true} onKeyDown={(e) => checkKeyDown(e)}>
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-x-8">
                     {
                         !isCompanyContact &&
