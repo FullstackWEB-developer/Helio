@@ -32,7 +32,7 @@ export const searchTypes: SearchType[] = [
     },
     {
         label: 'search.search_type.phone',
-        regex: '(^\\d+$|^(\\d)(?:\\d|$)(?:\\d|$)(?:\\-|$)(?:\\d|$)(?:\\d|$)(?:\\d|$)(?:\\-|$)(?:\\d|$)(?:\\d|$)(?:\\d|$)(?:\\d|$)$)',
+        regex: '^(\\([0-9]{3}\\)(.|-| )?|[0-9]{3}(-|.| ))[0-9]{3}( |.|-)?[0-9]{4}$|[0-9]{10}',
         type: searchTypePatient.phone,
         priority: 5,
         category: SearchCategory.Patient
@@ -60,7 +60,7 @@ export const searchTypes: SearchType[] = [
     },
     {
         label: 'search.search_type.contact_phone',
-        regex: '(^\\d+$|^(\\d)(?:\\d|$)(?:\\d|$)(?:\\-|$)(?:\\d|$)(?:\\d|$)(?:\\d|$)(?:\\-|$)(?:\\d|$)(?:\\d|$)(?:\\d|$)(?:\\d|$)$)',
+        regex: '^(\\([0-9]{3}\\)(.|-| )?|[0-9]{3}(-|.| ))[0-9]{3}( |.|-)?[0-9]{4}$|[0-9]{10}',
         type: searchTypeContact.phone,
         priority: 9,
         category: SearchCategory.Contact

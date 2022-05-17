@@ -328,11 +328,11 @@
     "recent_searches": "Recent Searches",
     "no_matching_filter": "No pattern matches to your input.",
     "search_date_format_not_correct": "Date format is not correct, please use MM/DD/YYYY format",
-    "search_by_phone_no_result": "Please use one of following formats: \n • 310-000-0000\n • 3101112222",
+    "search_by_phone_no_result": "Please use one of following formats: \n • 310-000-0000 \n •(310) 000-0000\n •3101112222",
     "search_by_patient_id_no_result": "Please use following format: XXXXX",
     "search_by_patient_name_no_result": "Please use one of following name formats: \n• First Last (Jane Doe)\n• Last, First (Doe, Jane)\n• Last (Doe)",
     "search_by_contact_name_no_result": "Please use one of following name formats: \n• First Last (Jane Doe)\n• Last First (Doe Jane)\n• Last (Doe)\n• First (Jane)\n• Company Name (My Company)",
-    "search_contact_by_phone_no_result": "Please use one of following formats: \n • 310-000-0000\n • 3101112222"
+    "search_contact_by_phone_no_result": "Please use one of following formats: \n • 310-000-0000\n • (310) 000-0000\n • 3101112222"
   },
   "patient": {
     "header": {

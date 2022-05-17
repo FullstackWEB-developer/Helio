@@ -34,6 +34,7 @@ export const queryContacts = async (searchTerm: string, page = 1) => {
 }
 
 export const queryContactsByPhone = async (phoneNumber: string, page = 1) => {
+    phoneNumber = phoneNumber.replace(/[() -]/g,'');
     const {data} = await Api.get(`${contactsUrl}?anyPhoneNumber=${phoneNumber}&page=${page}`);
     return data;
 }

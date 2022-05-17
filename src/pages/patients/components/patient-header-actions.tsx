@@ -16,9 +16,10 @@ import './patient-header-actions.scss';
 export interface PatientHeaderActionsProps {
     patient: ExtendedPatient;
     refreshPatient: () => void;
+    isRefetching: boolean;
 }
 
-const PatientHeaderActions = ({patient, refreshPatient} : PatientHeaderActionsProps) => {
+const PatientHeaderActions = ({patient, refreshPatient, isRefetching} : PatientHeaderActionsProps) => {
     const {t} = useTranslation();
     const voiceCounter = useSelector(selectVoiceCounter);
     const history = useHistory();
@@ -154,6 +155,7 @@ const PatientHeaderActions = ({patient, refreshPatient} : PatientHeaderActionsPr
                 <span className='cursor-pointer'>
                     <SvgIcon className='icon-medium'
                              type={Icon.Refresh}
+                             isLoading={isRefetching}
                              onClick={() => refreshPatient()}
                              fillClass='rgba-062-fill'
                     />

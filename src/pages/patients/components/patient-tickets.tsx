@@ -39,7 +39,7 @@ const PatientTickets: React.FC<PatientTicketProps> = ({patientId}) => {
     const {isLoading, error, data: items} = useQuery<TicketBase[], Error>([QueryPatientTickets, query], () =>
             getPatientTickets(query),
         {
-            staleTime: OneMinute
+            refetchInterval: OneMinute
         }
     );
 

@@ -128,7 +128,7 @@ const SearchBar = () => {
         if (isValidInput(chosenType)) {
             dispatch(setType(chosenType));
             if(chosenType === searchTypeContact.phone || chosenType === searchTypePatient.phone){
-                dispatch(setSearchTerm(searchTermDisplayValue.replaceAll('-','')));
+                dispatch(setSearchTerm(searchTermDisplayValue.replaceAll('-','').replaceAll('.', '')));
             }else{
                 dispatch(setSearchTerm(searchTermDisplayValue));
             }

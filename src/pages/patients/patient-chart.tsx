@@ -1,6 +1,6 @@
 import PatientHeader from './components/patient-header';
 import {useParams} from 'react-router';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {selectIsPatientError, selectPatient, selectPatientLoading} from './store/patients.selectors';
 import {useTranslation} from 'react-i18next';
@@ -29,6 +29,7 @@ const PatientChart = () => {
     const loading = useSelector(selectPatientLoading);
     const error = useSelector(selectIsPatientError);
     const patient = useSelector(selectPatient);
+    const [isRefetching, setIsRefetching] = useState<boolean>(false);
 
     useEffect(() => {
         dispatch(getPatientById(patientId, {includeInsuranceInfo: true}));
@@ -60,13 +61,24 @@ const PatientChart = () => {
         }
     );
 
-    const refreshPatient = () => {
+    const refreshPatient = async () => {
+        setIsRefetching(true);
         dispatch(getPatientById(patientId, {includeInsuranceInfo: true}));
-        refetch();
+        await refetch();
+        setIsRefetching(false);
     }
 
+    useEffect(() => {
+        let refreshInterval = setInterval(async () => {
+            await refreshPatient();
+        }, OneMinute);
+        return () => {
+            clearInterval(refreshInterval);
+        };
+    }, []);
 
-    if (isSummaryLoading || loading) {
+
+    if ((isSummaryLoading || loading) && !isRefetching) {
         return <Spinner fullScreen />
     }
     if (error) {
@@ -82,14 +94,14 @@ const PatientChart = () => {
             <div className='w-2/3 overflow-y-auto'>
                 {patientChartSummary &&
                     <>
-                        <PatientHeader refreshPatient={refreshPatient} patientChartSummary={patientChartSummary} />
+                        <PatientHeader isRefetching={isRefetching} refreshPatient={refreshPatient} patientChartSummary={patientChartSummary} />
                         <PatientTabs patientChartSummary={patientChartSummary} patientId={patient.patientId} />
                     </>
                 }
 
             </div>
             <div className='activity-panel border-l w-1/3'>
-                <ActivityPanel />
+                <ActivityPanel isRefetching={isRefetching} />
             </div>
         </div>
     );
