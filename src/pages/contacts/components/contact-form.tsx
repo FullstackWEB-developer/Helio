@@ -110,16 +110,16 @@ const ContactForm = ({contact, contactType, submitHandler, closeHandler, editMod
     const defaultBillingStateOption = defaultBillingAddress ? options.find(o => o.value === defaultBillingAddress?.state)?.value : '';
     const {handleSubmit, control, reset, formState, setValue} = useForm({
         mode: 'onChange', defaultValues: {
-            firstName: contact?.firstName || '',
-            lastName: contact?.lastName || '',
+            ...(!isCompanyContact && {firstName: contact?.firstName || ''}),
+            ...(!isCompanyContact && {lastName: contact?.lastName || ''}),
             companyName: contact?.companyName || '',
             category: defaultCategory,
-            jobTitle: contact?.jobTitle || '',
-            department: contact?.department || '',
+            ...(!isCompanyContact && {jobTitle: contact?.jobTitle || ''}),
+            ...(!isCompanyContact && {department: contact?.department || ''}),
             email: contact?.emailAddress || location?.state?.email || '',
             workMainPhone: contact?.workMainPhone || '',
-            workMainExtension: contact?.workMainExtension || '',
-            workDirectPhone: contact?.workDirectPhone || '',
+            ...(!isCompanyContact && {workMainExtension: contact?.workMainExtension || ''}),
+            ...(!isCompanyContact && {workDirectPhone: contact?.workDirectPhone || ''}),
             mobile: contact?.mobilePhone || '',
             fax: contact?.fax || '',
             website: contact?.website || '',
