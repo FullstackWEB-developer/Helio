@@ -156,7 +156,24 @@ const SvgIcon = ({ type, wrapperClassName = '', className = 'icon-medium', fillC
             <path d="M2,12.5A5.5,5.5,0,0,1,7.5,7H18a4,4,0,0,1,0,8H9.5a2.5,2.5,0,0,1,0-5H17v2H9.41c-.55,0-.55,1,0,1H18a2,2,0,0,0,0-4H7.5a3.5,3.5,0,0,0,0,7H17v2H7.5A5.5,5.5,0,0,1,2,12.5Z" className={fillClass} />
         </svg>
     }
-
+    const getIconOutgoingEmail = () => {
+        return <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" className={fillClass}>
+            <g transform="translate(-960 -728)">
+                <rect width="16" height="16" transform="translate(960 728)" fill="none" />
+                <path d="M9.222,8.556V5L3,11.222l6.222,6.222V13.8c4.444,0,7.556,1.422,9.778,4.533C18.111,13.889,15.444,9.444,9.222,8.556Z" transform="translate(957 724)" />
+            </g>
+        </svg>
+    }
+    const getIconIncomingEmail = () => {
+        return <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" className={fillClass}>
+            <g transform="translate(-2 -2)"><rect width="16" height="16" transform="translate(2 2)" fill="none" />
+                <path d="M18,8.893,10,2,2,8.893l8,5.6ZM8.766,8.059V4.286h2.467V8.062h1.347L10,10.9,7.419,8.062H8.766Z" />
+                <path d="M50.436,39.018a.971.971,0,0,0,.1-.423V31.15L45.85,34.433Z" transform="translate(-32.534 -21.627)" />
+                <path d="M11.217,47.051,8.332,45.03,3.64,49.719a1.025,1.025,0,0,0,.609.206H18.185a1.008,1.008,0,0,0,.609-.206L14.1,45.03Z" transform="translate(-1.217 -31.925)" />
+                <path d="M2,31.15V38.6a.971.971,0,0,0,.1.423L6.686,34.43Z" transform="translate(0 -21.627)" />
+            </g>
+        </svg>
+    }
     const getIconBot = () => {
         return <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className={mainClass}>
             <path d="M0,0H24V24H0Z" fill="none" />
@@ -923,10 +940,10 @@ const SvgIcon = ({ type, wrapperClassName = '', className = 'icon-medium', fillC
     const getIconConfigurations = () => {
         return (
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                <rect width="24" height="24" fill="none"/>
+                <rect width="24" height="24" fill="none" />
                 <path d="M19.43,12.98A7.793,7.793,0,0,0,19.5,12a7.793,7.793,0,0,0-.07-.98l2.11-1.65a.5.5,0,0,0,.12-.64l-2-3.46a.5.5,0,0,0-.61-.22l-2.49,1a7.306,7.306,0,0,0-1.69-.98l-.38-2.65A.488.488,0,0,0,14,2H10a.488.488,0,0,0-.49.42L9.13,5.07a7.683,7.683,0,0,0-1.69.98l-2.49-1a.488.488,0,0,0-.61.22l-2,3.46a.493.493,0,0,0,.12.64l2.11,1.65A7.931,7.931,0,0,0,4.5,12a7.931,7.931,0,0,0,.07.98L2.46,14.63a.5.5,0,0,0-.12.64l2,3.46a.5.5,0,0,0,.61.22l2.49-1a7.306,7.306,0,0,0,1.69.98l.38,2.65A.488.488,0,0,0,10,22h4a.488.488,0,0,0,.49-.42l.38-2.65a7.683,7.683,0,0,0,1.69-.98l2.49,1a.488.488,0,0,0,.61-.22l2-3.46a.5.5,0,0,0-.12-.64ZM12,15.5A3.5,3.5,0,1,1,15.5,12,3.5,3.5,0,0,1,12,15.5Z"
                     transform="translate(-0.271)"
-                    className={fillClass}/>
+                    className={fillClass} />
             </svg>
         );
     }
@@ -1249,7 +1266,7 @@ const SvgIcon = ({ type, wrapperClassName = '', className = 'icon-medium', fillC
         return (
             <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g className={fillClass}>
-                    <circle cx="4" cy="4" r="4" stroke='none'/>
+                    <circle cx="4" cy="4" r="4" stroke='none' />
                 </g>
             </svg>
         )
@@ -1258,10 +1275,10 @@ const SvgIcon = ({ type, wrapperClassName = '', className = 'icon-medium', fillC
     const getAddPhoneIcon = () => {
         return (
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                <rect width="24" height="24" fill="none" opacity="0.7"/>
+                <rect width="24" height="24" fill="none" opacity="0.7" />
                 <g transform="translate(0.5)" className={fillClass}>
-                    <path className={fillClass} d="M16.5,11.5a5,5,0,1,0,5,5A5,5,0,0,0,16.5,11.5Zm3,5.75H17.25V19.5h-1.5V17.25H13.5v-1.5h2.25V13.5h1.5v2.25H19.5Z"/>
-                    <path className={fillClass} d="M10.025,17H3.844a.47.47,0,0,1-.469-.469V4.344a.47.47,0,0,1,.469-.469h7.813a.47.47,0,0,1,.469.469V11.7A6.5,6.5,0,0,1,14,10.5V3.875A1.874,1.874,0,0,0,12.125,2H3.375A1.874,1.874,0,0,0,1.5,3.875v16.25A1.874,1.874,0,0,0,3.375,22h8.75a1.862,1.862,0,0,0,.7-.139A6.489,6.489,0,0,1,10.025,17ZM7.752,20.75h0A1.25,1.25,0,1,1,9,19.5,1.25,1.25,0,0,1,7.75,20.75Z"/>
+                    <path className={fillClass} d="M16.5,11.5a5,5,0,1,0,5,5A5,5,0,0,0,16.5,11.5Zm3,5.75H17.25V19.5h-1.5V17.25H13.5v-1.5h2.25V13.5h1.5v2.25H19.5Z" />
+                    <path className={fillClass} d="M10.025,17H3.844a.47.47,0,0,1-.469-.469V4.344a.47.47,0,0,1,.469-.469h7.813a.47.47,0,0,1,.469.469V11.7A6.5,6.5,0,0,1,14,10.5V3.875A1.874,1.874,0,0,0,12.125,2H3.375A1.874,1.874,0,0,0,1.5,3.875v16.25A1.874,1.874,0,0,0,3.375,22h8.75a1.862,1.862,0,0,0,.7-.139A6.489,6.489,0,0,1,10.025,17ZM7.752,20.75h0A1.25,1.25,0,1,1,9,19.5,1.25,1.25,0,0,1,7.75,20.75Z" />
                 </g>
             </svg>
         )
@@ -1382,7 +1399,9 @@ const SvgIcon = ({ type, wrapperClassName = '', className = 'icon-medium', fillC
         [Icon.RatingSatisfiedComment]: getIconRatingSatisfiedComment,
         [Icon.RatingVerySatisfiedComment]: getIconRatingVerySatisfiedComment,
         [Icon.Indicator]: getIndicator,
-        [Icon.AddPhone]: getAddPhoneIcon
+        [Icon.AddPhone]: getAddPhoneIcon,
+        [Icon.IncomingEmail]: getIconIncomingEmail,
+        [Icon.OutgoingEmail]: getIconOutgoingEmail,
     }
 
     const iconClicked = (e: React.MouseEvent<HTMLDivElement>) => {

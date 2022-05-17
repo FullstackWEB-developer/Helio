@@ -1,12 +1,12 @@
-import {EmailMessageDto, TicketMessagesDirection, UserBase} from '@shared/models';
+import { EmailMessageDto, TicketMessagesDirection, UserBase } from '@shared/models';
 import Avatar from '@components/avatar';
-import React, {useMemo} from 'react';
+import React, { useMemo } from 'react';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import isToday from 'dayjs/plugin/isToday';
-import SvgIcon, {Icon} from '@components/svg-icon';
-import {useTranslation} from 'react-i18next';
-import {ExtendedPatient} from '@pages/patients/models/extended-patient';
+import SvgIcon, { Icon } from '@components/svg-icon';
+import { useTranslation } from 'react-i18next';
+import { ExtendedPatient } from '@pages/patients/models/extended-patient';
 import './external-email-list-item.scss';
 
 export interface ExternalEmailListItemProps {
@@ -17,10 +17,10 @@ export interface ExternalEmailListItemProps {
     onClick: (message: EmailMessageDto) => void
 }
 
-const ExternalEmailListItem = ({message, patientPhoto, users, patient, onClick} : ExternalEmailListItemProps) => {
+const ExternalEmailListItem = ({ message, patientPhoto, users, patient, onClick }: ExternalEmailListItemProps) => {
     dayjs.extend(utc);
     dayjs.extend(isToday);
-    const {t} = useTranslation();
+    const { t } = useTranslation();
 
     const user = useMemo(() => {
         if (message.direction === TicketMessagesDirection.Outgoing) {
@@ -28,8 +28,8 @@ const ExternalEmailListItem = ({message, patientPhoto, users, patient, onClick} 
         }
     }, [message.createdBy, message.direction, users]);
 
-    const displayName = useMemo(() =>{
-        if(message.direction=== TicketMessagesDirection.Outgoing) {
+    const displayName = useMemo(() => {
+        if (message.direction === TicketMessagesDirection.Outgoing) {
             return message.createdByName;
         }
         if (!!message.createdForName) {
@@ -48,20 +48,20 @@ const ExternalEmailListItem = ({message, patientPhoto, users, patient, onClick} 
     }, [message.createdOn]);
 
     const photo = useMemo(() => {
-        if(message.direction=== TicketMessagesDirection.Outgoing) {
+        if (message.direction === TicketMessagesDirection.Outgoing) {
             return <Avatar userId={message.createdByName}
-                    userFullName={message.createdByName}
-                    userPicture={user?.profilePicture}
-                    forUnreadPurposes={!message.isRead}
-                     />
+                userFullName={message.createdByName}
+                userPicture={user?.profilePicture}
+                forUnreadPurposes={!message.isRead}
+            />
         }
         if (message.direction === TicketMessagesDirection.Incoming) {
             if (patientPhoto) {
                 return <img alt={t('patient.summary.profile_pic_alt_text')} className='w-10 h-10 rounded-full'
-                            src={`data:image/jpeg;base64,${patientPhoto}`} />;
+                    src={`data:image/jpeg;base64,${patientPhoto}`} />;
             }
             if (!!patient || !!message.contactId) {
-                return <Avatar userFullName={displayName}/>
+                return <Avatar userFullName={displayName} />
             }
         }
         return <Avatar userFullName={'#'} />
@@ -78,8 +78,12 @@ const ExternalEmailListItem = ({message, patientPhoto, users, patient, onClick} 
                     <span className={!message.isRead && message.direction === TicketMessagesDirection.Outgoing ? 'font-black' : ''}>{displayName}</span>
                 </div>
                 <div className='flex flex-row'>
+                    <div className='mr-2'>
+                        <SvgIcon type={message.direction === TicketMessagesDirection.Outgoing ?
+                            Icon.OutgoingEmail : Icon.IncomingEmail} className="icon-small" fillClass="rgba-06-fill" />
+                    </div>
                     {message.attachments && message.attachments.length > 0 && <div>
-                        <SvgIcon type={Icon.Attachment} className="icon-small" fillClass="rgba-06-fill"  />
+                        <SvgIcon type={Icon.Attachment} className="icon-small" fillClass="rgba-06-fill" />
                     </div>}
                     <div className='body3-medium flex items-center w-16 justify-end'>
                         {emailDate}
