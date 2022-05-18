@@ -164,7 +164,7 @@ const Select = React.forwardRef<HTMLDivElement, SelectProps>(({options, order, l
                 <input
                     ref={inputRef}
                     type='text'
-                    autoComplete={autoComplete ? 'on' : 'none'}
+                    autoComplete={autoComplete ? 'on' : 'off'}
                     onChange={(e) => searchOnChange(e)}
                     onFocus={(e) => {setOpen(true); e.target.select()}}
                     onBlur={(e) => {setOpen(false); e.target.value = ''; setSearchQuery(null); setCursor(-1)}}
