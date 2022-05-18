@@ -14,6 +14,7 @@ import {setRedirectLink} from '@pages/external-access/verify-patient/store/verif
 import {useHistory} from 'react-router';
 import {INSURANCE_PLAN} from '@pages/external-access/registration/components/registration-insurance-information';
 import Button from '@components/button/button';
+import { SnackbarPosition } from '@components/snackbar/snackbar-position.enum';
 export interface RegistrationReviewStepProps {
     goBack: () => void;
 }
@@ -63,7 +64,8 @@ const RegistrationReviewStep = ({goBack}: RegistrationReviewStepProps) => {
         dispatch(addSnackbarMessage({
             type: SnackbarType.Success,
             message: 'external_access.registration.patient_creation_success',
-            durationInSeconds: toastMessageDuration
+            durationInSeconds: toastMessageDuration,
+            position: SnackbarPosition.TopCenter
         }));
 
         const redirectLink: RedirectLink = {

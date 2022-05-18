@@ -9,7 +9,7 @@
   &-top-center {
     top: 2.2rem;
     @media (min-width:768px) {
-      right: 35%;
+      align-self: center;
     }
     transition: transform .6s ease-in-out;
     animation: toast-in-top .7s;

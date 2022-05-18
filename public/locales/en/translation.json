@@ -1160,7 +1160,7 @@
       "preferred_communication_short": "Preferred communication method",
       "image_upload_failed": "Uploading of images failed. Please try again.",
       "images_upload_success": "Images uploaded successfully.",
-      "patient_creation_success": "Patient record created successfully! Let's book your first appointment now.\nBefore proceeding, in a few seconds - you'll be redirected to phone number verification screen.\nThis is an additional security layer to check whether the phone number provided belongs to you.",
+      "patient_creation_success": "We created your chart, now let's book your first appointment!\nBefore we proceed you will be redirected to the phone number verification screen to confirm your identity.",
       "patient_creation_failure": "Something went wrong during creating of a patient record. Check the data and try again.",
       "referral_sources": {
         "42": "Online search",
