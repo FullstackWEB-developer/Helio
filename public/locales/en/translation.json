@@ -1162,6 +1162,7 @@
       "images_upload_success": "Images uploaded successfully.",
       "patient_creation_success": "Patient record created successfully! Let's book your first appointment now.\nBefore proceeding, in a few seconds - you'll be redirected to phone number verification screen.\nThis is an additional security layer to check whether the phone number provided belongs to you.",
       "patient_creation_failure": "Something went wrong during creating of a patient record. Check the data and try again.",
+      "patient_registration_submit_failure": "Error processing uploaded patient photos. Check the data and try again.",
       "referral_sources": {
         "42": "Online search",
         "43": "Online reviews",

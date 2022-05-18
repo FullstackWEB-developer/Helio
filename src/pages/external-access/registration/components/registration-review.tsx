@@ -1,5 +1,5 @@
 import utils from '@shared/utils/utils';
-import React from 'react';
+import React, {useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {useDispatch, useSelector} from 'react-redux';
 import {
@@ -14,17 +14,20 @@ import {setRedirectLink} from '@pages/external-access/verify-patient/store/verif
 import {useHistory} from 'react-router';
 import {INSURANCE_PLAN} from '@pages/external-access/registration/components/registration-insurance-information';
 import Button from '@components/button/button';
+import {useMutation} from 'react-query';
+import {upsertPatient} from '@pages/patients/services/patients.service';
 export interface RegistrationReviewStepProps {
     goBack: () => void;
 }
 const RegistrationReviewStep = ({goBack}: RegistrationReviewStepProps) => {
     const patientData = useSelector(selectRegisteredPatient);
+    const updatePatientMutation = useMutation(upsertPatient);
     const insuranceData = useSelector(selectRegisteredPatientInsurance);
     const {t} = useTranslation();
     const toastMessageDuration = 12;
     const dispatch = useDispatch();
     const history = useHistory();
-
+    const [successfullyCompletedRegistration, setSuccessfullyCompletedRegistration] = useState(false);
     const displayAddressField = () => {
         const city = patientData?.patient?.city;
         const address = patientData?.patient?.address;
@@ -55,32 +58,44 @@ const RegistrationReviewStep = ({goBack}: RegistrationReviewStepProps) => {
         return `external_access.registration.referral_sources.${value}`;
     }
 
-    if (!patientData?.patient){
+    if (!patientData?.patient) {
         return <></>;
     }
 
-    const confirm =()=> {
-        dispatch(addSnackbarMessage({
-            type: SnackbarType.Success,
-            message: 'external_access.registration.patient_creation_success',
-            durationInSeconds: toastMessageDuration
-        }));
+    const confirm = () => {
 
-        const redirectLink: RedirectLink = {
-            requestChannel: RequestChannel.Web,
-            patientId: patientData?.patient?.patientId.toString(),
-            requestType: ExternalAccessRequestTypes.ScheduleAppointment,
-            linkCreationDate: new Date(),
-            fullUrl: '',
-            linkId: '/o/schedule-appointment',
-            attributes: [],
-            sentAddress: patientData.patient.mobilePhone,
-            ticketId: ''
-        }
-        setTimeout(() => {
-            dispatch(setRedirectLink(redirectLink));
-            history.replace('/o/verify-patient-get-mobile');
-        }, toastMessageDuration * 1000);
+        updatePatientMutation.mutate(patientData, {
+            onSuccess: () => {
+                setSuccessfullyCompletedRegistration(true);
+                dispatch(addSnackbarMessage({
+                    type: SnackbarType.Success,
+                    message: 'external_access.registration.patient_creation_success',
+                    durationInSeconds: toastMessageDuration
+                }));
+
+                const redirectLink: RedirectLink = {
+                    requestChannel: RequestChannel.Web,
+                    patientId: patientData?.patient?.patientId.toString(),
+                    requestType: ExternalAccessRequestTypes.ScheduleAppointment,
+                    linkCreationDate: new Date(),
+                    fullUrl: '',
+                    linkId: '/o/schedule-appointment',
+                    attributes: [],
+                    sentAddress: patientData.patient.mobilePhone,
+                    ticketId: ''
+                }
+                setTimeout(() => {
+                    dispatch(setRedirectLink(redirectLink));
+                    history.replace('/o/verify-patient-get-mobile');
+                }, toastMessageDuration * 1000);
+            },
+            onError: () => {
+                dispatch(addSnackbarMessage({
+                    type: SnackbarType.Error,
+                    message: 'external_access.registration.patient_registration_submit_failure'
+                }));
+            }
+        });
     }
 
     return (
@@ -96,12 +111,12 @@ const RegistrationReviewStep = ({goBack}: RegistrationReviewStepProps) => {
             }
             <div className='body2'><span className='review-label'>{`${t('external_access.registration.address')}: `}</span>{displayAddressField()}</div>
             <div className='body2'><span className='review-label'>{`${t('external_access.registration.sex')}: `}</span>{patientData?.patient?.sex}</div>
-            <div className='pt-10'/>
+            <div className='pt-10' />
             <div className='body2'><span className='review-label'>{`${t('external_access.registration.text_consent_short')}: `}</span>{displayConsents('text')}</div>
             <div className='body2'><span className='review-label'>{`${t('external_access.registration.call_consent_short')}: `}</span>{displayConsents('call')}</div>
             <div className='body2'><span className='review-label'>{`${t('external_access.registration.preferred_communication_short')}: `}</span>{t(`${displayPreferredCommunication(patientData?.patient?.contactPreference)}`)}</div>
             <div className='body2'><span className='review-label'>{`${t('external_access.registration.referral_source')}: `}</span>{t(`${displayReferralSource(patientData?.patient?.referralSourceId)}`)}</div>
-            <div className='pt-10'/>
+            <div className='pt-10' />
             {
                 insuranceData?.insuranceOption?.value === INSURANCE_PLAN ?
                     <>
@@ -118,12 +133,16 @@ const RegistrationReviewStep = ({goBack}: RegistrationReviewStepProps) => {
                         }
                     </> : <div className='body2'><span className='review-label'>{`${t('external_access.registration.insurance_info')}: `}</span>{t(`${insuranceData?.insuranceOption?.label}`)}</div>
             }
-            <div className='flex pt-6'>
-                <Button label='common.back' buttonType='secondary-big' className='mr-8 w-36' onClick={() => goBack()} />
-                <Button type='submit' label='common.submit'
+            {
+                !successfullyCompletedRegistration &&
+                <div className='flex pt-6'>
+                    <Button label='common.back' buttonType='secondary-big' className='mr-8 w-36' onClick={() => goBack()} />
+                    <Button type='submit' label='common.submit'
                         onClick={() => confirm()}
+                        isLoading={updatePatientMutation.isLoading}
                         className='w-36' />
-            </div>
+                </div>
+            }
         </div>
     );
 }

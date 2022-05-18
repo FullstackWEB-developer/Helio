@@ -3,6 +3,7 @@ import {RegistrationImageType} from '@pages/external-access/models/registration-
 import React, {useEffect, useMemo, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {
+    selectRegisteredPatient,
     selectRegisteredPatientInsurance
 } from '@pages/external-access/registration/store/registration.selectors';
 import {useMutation} from 'react-query';
@@ -13,6 +14,7 @@ import {
     INSURANCE_PLAN
 } from '@pages/external-access/registration/components/registration-insurance-information';
 import Button from '@components/button/button';
+import {setRegisteredPatient} from '../store/registration.slice';
 
 interface UploadDocumentsRegistrationStepProps {
     goStepForward: () => void;
@@ -20,16 +22,18 @@ interface UploadDocumentsRegistrationStepProps {
 }
 const UploadDocumentsRegistrationStep = ({goStepForward, goBack}: UploadDocumentsRegistrationStepProps) => {
     const dispatch = useDispatch();
-    const [imageUploadTag, setImageUploadTag] = useState<string>('');
+    const patientData = useSelector(selectRegisteredPatient);
     const insuranceData = useSelector(selectRegisteredPatientInsurance);
     const [driversLicense, setDriversLicense] = useState<File | undefined>();
     const [insuranceCardFront, setInsuranceCardFront] = useState<File | undefined>();
     const [insuranceCardBack, setInsuranceCardBack] = useState<File | undefined>();
+    const [advanceNextStep, setAdvanceNextStep] = useState(false);
     useEffect(() => {
-        if (imageUploadTag) {
+        if (patientData?.imageUploadTag && advanceNextStep) {
+            setAdvanceNextStep(false);
             goStepForward();
         }
-    }, [goStepForward, imageUploadTag]);
+    }, [goStepForward, patientData?.imageUploadTag, advanceNextStep]);
 
     const insuranceDocumentUploadRequired = useMemo(() => {
         return insuranceData?.insuranceOption?.value === INSURANCE_PLAN
@@ -51,13 +55,17 @@ const UploadDocumentsRegistrationStep = ({goStepForward, goBack}: UploadDocument
                 setInsuranceCardBack(undefined);
             }
         }
-        setImageUploadTag('');
-
+        if (patientData) {
+            dispatch(setRegisteredPatient({...patientData, imageUploadTag: ''}));
+        }
     }, [insuranceCardBack, insuranceCardFront, insuranceDocumentUploadRequired]);
 
     const uploadDocumentsMutation = useMutation(uploadPatientRegistrationImages, {
         onSuccess: (data) => {
-            setImageUploadTag(data.fileTag);
+            if (patientData) {
+                setAdvanceNextStep(true);
+                dispatch(setRegisteredPatient({...patientData, imageUploadTag: data.fileTag}));
+            }
             dispatch(addSnackbarMessage({
                 type: SnackbarType.Success,
                 message: 'external_access.registration.images_upload_success'
@@ -85,7 +93,9 @@ const UploadDocumentsRegistrationStep = ({goStepForward, goBack}: UploadDocument
                 break;
         }
         if (!image) {
-            setImageUploadTag('');
+            if (patientData) {
+                dispatch(setRegisteredPatient({...patientData, imageUploadTag: ''}))
+            }
         }
     }
 
@@ -113,10 +123,10 @@ const UploadDocumentsRegistrationStep = ({goStepForward, goBack}: UploadDocument
             {
                 <div className='flex pt-6'>
                     <Button label='common.back' buttonType='secondary-big' className='mr-8 w-36' onClick={() => goBack()} />
-                    { !imageUploadTag && <Button label='common.upload' buttonType='big'
-                                            isLoading={uploadDocumentsMutation.isLoading}
-                                            disabled={!uploadButtonEnabled()}
-                                            onClick={uploadDocuments} />}
+                    {!patientData?.imageUploadTag && <Button label='common.upload' buttonType='big'
+                        isLoading={uploadDocumentsMutation.isLoading}
+                        disabled={!uploadButtonEnabled()}
+                        onClick={uploadDocuments} />}
                 </div>
             }
         </div>
