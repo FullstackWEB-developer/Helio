@@ -10,6 +10,7 @@ import {Ticket} from '@pages/tickets/models/ticket';
 const TicketDetailHeaderLine2 = ({ticket, patientOrContactName}: {ticket: Ticket, patientOrContactName: string}) => {
     const {t} = useTranslation();
     const feedLastMessageOn = useSelector(selectFeedLastMessageOn);
+    const sysdate = Date.now();
     const SmallLabel = ({text, value}: {text: string, value: string | undefined}) => {
         return (
             <div className='pl-6'>
@@ -33,7 +34,8 @@ const TicketDetailHeaderLine2 = ({ticket, patientOrContactName}: {ticket: Ticket
         </div>
         <div>
             {ticket.dueDate &&
-                <SmallLabel text='ticket_detail.header.due_in' value={dayjs().to(dayjs.utc(ticket.dueDate))} />}
+                <SmallLabel text={dayjs(ticket.dueDate).isBefore(sysdate) ? 'ticket_detail.header.overdue': 'ticket_detail.header.due_in'} 
+                value={dayjs().to(dayjs.utc(ticket.dueDate).local())} />}
         </div>
         <div>
             {feedLastMessageOn && <SmallLabel text='ticket_detail.header.last_activity'

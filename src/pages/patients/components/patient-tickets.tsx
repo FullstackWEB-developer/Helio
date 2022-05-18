@@ -17,7 +17,7 @@ import SvgIcon from '@components/svg-icon/svg-icon';
 import {Icon} from '@components/svg-icon/icon';
 import TicketStatusDot from '@pages/tickets/components/ticket-status-dot';
 import Spinner from '@components/spinner/Spinner';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import './patient-tickets.scss';
 
 interface PatientTicketProps {
@@ -37,27 +37,27 @@ const PatientTickets: React.FC<PatientTicketProps> = ({patientId}) => {
     }
 
     const {isLoading, error, data: items} = useQuery<TicketBase[], Error>([QueryPatientTickets, query], () =>
-            getPatientTickets(query),
+        getPatientTickets(query),
         {
             refetchInterval: OneMinute
         }
     );
 
-   
+
     return <Fragment>
         {
-            isLoading ? <Spinner fullScreen/>
+            isLoading ? <Spinner fullScreen />
                 : (
                     <Fragment>
 
-                            <div className={'py-3 align-middle border-b flex items-center'}>
-                                <Link to={`${TicketsPath}/new?patientId=${patientId}`} className='inline-flex cursor-pointer block items-center'>
+                        <div className={'py-3 align-middle border-b flex items-center'}>
+                            <Link to={`${TicketsPath}/new?patientId=${patientId}`} className='inline-flex cursor-pointer block items-center'>
                                 <SvgIcon type={Icon.Add}
-                                         className='icon-medium'
-                                         fillClass='active-item-icon'/>
-                                    <div className='pl-2 body2'>{t('patient.create_ticket')}</div>
-                                </Link>
-                            </div>
+                                    className='icon-medium'
+                                    fillClass='active-item-icon' />
+                                <div className='pl-2 body2'>{t('patient.create_ticket')}</div>
+                            </Link>
+                        </div>
                         {
                             error && <div className={'pt-4 text-red-500'}>{t('common.error')}</div>
                         }
@@ -74,7 +74,7 @@ const PatientTickets: React.FC<PatientTicketProps> = ({patientId}) => {
                                                 {item.status && (
                                                     <div className='flex flex-row items-center w-36 '>
                                                         <div>
-                                                            <TicketStatusDot ticket={item}/>
+                                                            <TicketStatusDot ticket={item} />
                                                         </div>
                                                         <div className='pl-3 subtitle3'>
                                                             {item.status && t(`tickets.statuses.${(item.status)}`)}
@@ -84,8 +84,10 @@ const PatientTickets: React.FC<PatientTicketProps> = ({patientId}) => {
                                             </div>
                                             <div className='flex flex-row body2'>
                                                 {item.dueDate && (
-                                                    <PatientTicketLabel labelText={t('tickets.overdue')}
-                                                        valueText={dayjs().to(dayjs(item.dueDate))}
+                                                    <PatientTicketLabel
+                                                        labelText={dayjs(item.dueDate).isBefore(sysdate) ? t('tickets.overdue') :
+                                                            t('tickets.due')}
+                                                        valueText={dayjs().to(dayjs.utc(item.dueDate).local())}
                                                         isDanger={dayjs(item.dueDate).isBefore(sysdate)} />
                                                 )}
                                                 {item.closedOn && (

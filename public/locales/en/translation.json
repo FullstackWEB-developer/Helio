@@ -585,7 +585,8 @@
     "header": {
       "id": "ID",
       "created_for": "Created for",
-      "due_in": "Due In",
+      "due_in": "Due",
+      "overdue": "Overdue",
       "last_activity": "Last activity",
       "archive": "Archive",
       "unarchive": "Unarchive",
