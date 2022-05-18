@@ -16,6 +16,7 @@ import {INSURANCE_PLAN} from '@pages/external-access/registration/components/reg
 import Button from '@components/button/button';
 import {useMutation} from 'react-query';
 import {upsertPatient} from '@pages/patients/services/patients.service';
+import { SnackbarPosition } from '@components/snackbar/snackbar-position.enum';
 export interface RegistrationReviewStepProps {
     goBack: () => void;
 }
@@ -70,7 +71,8 @@ const RegistrationReviewStep = ({goBack}: RegistrationReviewStepProps) => {
                 dispatch(addSnackbarMessage({
                     type: SnackbarType.Success,
                     message: 'external_access.registration.patient_creation_success',
-                    durationInSeconds: toastMessageDuration
+                    durationInSeconds: toastMessageDuration,
+                    position: SnackbarPosition.TopCenter
                 }));
 
                 const redirectLink: RedirectLink = {

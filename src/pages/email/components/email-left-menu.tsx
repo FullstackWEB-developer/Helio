@@ -21,7 +21,7 @@ const EmailLeftMenu = () => {
     const [isFilterVisible, setFilterVisible] = useState<boolean>(false);
     const {id} = useSelector(selectAppUserDetails);
     const [debounceSearchTerm] = useDebounce(searchTerm, DEBOUNCE_SEARCH_DELAY_MS);
-    const {setEmailQueryType, emailQueryType, queryParams, setQueryParams, getEmailsQuery, isDefaultTeamView} = useContext(EmailContext)!;
+    const {setEmailQueryType, emailQueryType, queryParams, setQueryParams, getEmailsQuery, isDefaultTeamView, isFetchingContactNames, isLoadingContactNames} = useContext(EmailContext)!;
     const [filterParams, setFilterParams] = useState<EmailFilterModel>({...DEFAULT_FILTER_VALUE, assignedTo: isDefaultTeamView ? '' : id});
 
     useEffect(() => {
@@ -70,8 +70,8 @@ const EmailLeftMenu = () => {
     }
 
     const loading = useMemo(() => {
-        return (getEmailsQuery.isLoading) && !getEmailsQuery.isFetchingNextPage
-    }, [getEmailsQuery.isFetchingNextPage, getEmailsQuery.isLoading])
+        return (getEmailsQuery.isLoading) && !getEmailsQuery.isFetchingNextPage && isLoadingContactNames && isFetchingContactNames
+    }, [getEmailsQuery.isFetchingNextPage, getEmailsQuery.isLoading, isLoadingContactNames, isFetchingContactNames])
 
     const onFilterClick = (value: EmailFilterModel) => {
         let params = {

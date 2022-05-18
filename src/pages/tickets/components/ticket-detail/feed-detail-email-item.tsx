@@ -14,8 +14,9 @@ interface FeedDetailEmailItemProps {
     message: EmailMessageDto,
     isCollapsed: boolean;
     feedTime: string;
+    userFullName?: string;
 }
-const FeedDetailEmailItem = ({message, isCollapsed, feedTime}: FeedDetailEmailItemProps) => {
+const FeedDetailEmailItem = ({message, isCollapsed, feedTime, userFullName}: FeedDetailEmailItemProps) => {
     const {t} = useTranslation();
     const ticket=useSelector(selectSelectedTicket);
     const [hover, setHover] = useState<boolean>(false);
@@ -23,6 +24,14 @@ const FeedDetailEmailItem = ({message, isCollapsed, feedTime}: FeedDetailEmailIt
         (message.createdByName ?? message.fromAddress);
 
     const [collapsed, setCollapsed] = useState(isCollapsed);
+
+    const getEmailFromLabel = () => {
+        if(ticket.contactId && userFullName){
+            return userFullName;
+        }else{
+            return emailFromLabel;
+        }
+    }
 
     const constructToField = () => {
         const cwcEmail = utils.getAppParameter('HelioEmailAddress');
@@ -52,7 +61,7 @@ const FeedDetailEmailItem = ({message, isCollapsed, feedTime}: FeedDetailEmailIt
         <div className='pl-6 pr-10' onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
             <FeedDetailEmailHeaderItem
                 message={message}
-                from={emailFromLabel}
+                from={getEmailFromLabel()}
                 collapseHandler={() => setCollapsed(!collapsed)}
                 collapsed={collapsed}
                 isHover={hover}

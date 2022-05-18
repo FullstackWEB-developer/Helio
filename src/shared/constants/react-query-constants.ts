@@ -82,3 +82,4 @@ export const GetInternalQueues = 'get-internal-queues';
 export const GetEmailsForNotifications = 'get-email-for-notification';
 export const GetSmsForNotifications = 'get-sms-for-notification';
 export const GetAppointmentTypeSummary = 'get-appointment-type-summary';
+export const GetContactsNames = 'get-contacts-names';

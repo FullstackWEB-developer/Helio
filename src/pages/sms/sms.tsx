@@ -46,6 +46,8 @@ import {setIsSmsFiltered, setSmsMessageSummaries} from '@pages/sms/store/sms.sli
 import {selectIsSmsFiltered, selectLastSmsDate, selectSmsSummaries, selectUnreadSmsMessages} from '@pages/sms/store/sms.selectors';
 import FilterDot from '@components/filter-dot/filter-dot';
 import { BadgeValues } from '@pages/tickets/models/badge-values.model';
+import {getContactsNames} from '@shared/services/contacts.service';
+import {GetContactsNames} from '@constants/react-query-constants';
 
 interface SmsLocationState {
     contact?: ContactExtended,
@@ -76,17 +78,41 @@ const Sms = () => {
     const [newMessageId, setNewMessageId] = useState('');
     const {ticketId} = useParams<{ticketId?: string}>();
     const [lastMessageSendTime, setLastMessageSendTime] = useState<Date>();
+    const [contactIds, setContactIds] = useState<string[]>([]);
+    const [pageResult, setPageResult] = useState<TicketMessageSummary[]>([]);
     const history = useHistory();
     const dispatch = useDispatch();
     const summaryMessages = useSelector(selectSmsSummaries);
 
+    const {isLoading: isLoadingContactNames, isFetching: isFetchingContactNames} = useQuery([GetContactsNames, contactIds], () => getContactsNames(contactIds),{
+        enabled: contactIds.length > 0,
+        onSuccess: data => {
+            let copyOfPageResult = [...pageResult];
+            data.forEach(element => {
+                let index = copyOfPageResult.findIndex( x => x.contactId === element.id);
+                let sms = Object.assign({}, pageResult.find( x => x.contactId === element.id))
+                if(sms && element.firstName){
+                    sms.createdForName = element.firstName
+                }
+
+                if(sms && element.lastName){
+                    sms.createdForName += " " + element.lastName
+                }
+                copyOfPageResult[index]=sms;
+            });
+            setPageResult(copyOfPageResult);
+            dispatch(setSmsMessageSummaries(copyOfPageResult));
+        }
+    });
 
     const {fetchNextPage, hasNextPage, isFetchingNextPage, refetch: refetchTicketSummaries} = useInfiniteQuery([QueryTicketMessageSummaryInfinite, queryParams],
         ({pageParam = 1}) => getChats({...queryParams, page: pageParam}), {
         enabled: !!smsQueryType,
         getNextPageParam: (lastPage) => getNextPage(lastPage),
         onSuccess: (result) => {
-            dispatch(setSmsMessageSummaries(utils.accumulateInfiniteData(result)));
+            let pageResult = utils.accumulateInfiniteData(result);
+            setPageResult(utils.accumulateInfiniteData(result));
+            setContactIds(pageResult.map(a => a.contactId).filter(Boolean) as string[]);
         }
     });
 
@@ -404,7 +430,7 @@ const Sms = () => {
                 searchTerm={searchTerm}
                 onScroll={onMessageListScroll}
                 onClick={onMessageListClick}
-                isLoading={isFetchingNextPage}
+                isLoading={isFetchingNextPage || isLoadingContactNames || isFetchingContactNames}
             />
             <SmsFilter
                 defaultValue={DEFAULT_FILTER_VALUE}

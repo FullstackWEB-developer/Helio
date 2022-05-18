@@ -38,6 +38,8 @@ import {setIsChatLogFiltered} from '@pages/chat-log/store/chat-log.slice';
 import useCheckPermission from '@shared/hooks/useCheckPermission';
 import {AddTicketReview, ViewTicketRatings} from '@components/ticket-rating';
 import TicketDetailRating from '@pages/tickets/components/ticket-detail/ticket-detail-rating';
+import {getContactsNames} from '@shared/services/contacts.service';
+import {GetContactsNames} from '@constants/react-query-constants';
 
 const ChatsLogList = () => {
     const {t} = useTranslation();
@@ -55,7 +57,8 @@ const ChatsLogList = () => {
     const canViewAnyReview = useCheckPermission('Tickets.ViewAnyReview');
     const [rows, setRows] = useState<TicketLogModel[]>([]);
     const [displayRatingsForTicket, setDisplayRatingsForTicket] = useState<number | undefined>(undefined);
-
+    const [contactIds, setContactIds] = useState<string[]>([]);
+    const [pageResult, setPageResult] = useState<TicketLogModel[]>([]);
     const [currentQueryType, setCurrentQueryType] = useState<ChatLogQueryType>(!isDefaultTeam ? ChatLogQueryType.MyChatLog : ChatLogQueryType.TeamChatLog);
     const dispatch = useDispatch();
     const dropdownItem: DropdownItemModel[] = [
@@ -320,7 +323,31 @@ const ChatsLogList = () => {
         onSuccess: (response) => {
             const {results, ...paging} = response;
             setPagingResult({...paging});
-            setRows(response.results);
+            let resultRows = response.results.map(a => a.contactId).filter(Boolean) as string[];
+            if(resultRows.length > 0){
+                setPageResult(response.results);
+                setContactIds(resultRows);
+            }else{
+                setRows(response.results);
+                setContactIds([]);
+            }
+        }
+    });
+
+    const {isLoading: isLoadingContactNames, isFetching: isFetchingContactNames} = useQuery([GetContactsNames, contactIds], () => getContactsNames(contactIds),{
+        enabled: contactIds.length > 0,
+        onSuccess: data => {
+            data.forEach(element => {
+                let email = pageResult.find( x => x.contactId === element.id)
+                if(email && element.firstName){
+                    email.createdForName = element.firstName
+                }
+
+                if(email && element.lastName){
+                    email.createdForName += " " + element.lastName
+                }
+            });
+            setRows(pageResult);
         }
     });
 
@@ -376,10 +403,10 @@ const ChatsLogList = () => {
                     />
                 </div>
                 <div className='overflow-y-auto'>
-                    {(isLoading || isFetching) &&
+                    {(isLoading || isFetching  || isLoadingContactNames || isFetchingContactNames) &&
                         <Spinner fullScreen />
                     }
-                    {(!isLoading && !isFetching) &&
+                    {(!isLoading && !isFetching && !isLoadingContactNames && !isFetchingContactNames) &&
                         <Table model={mainTableModel} />
                     }
                 </div>
