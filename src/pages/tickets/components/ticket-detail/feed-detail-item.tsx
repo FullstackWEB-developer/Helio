@@ -21,14 +21,13 @@ interface FeedDetailItemProps {
 const FeedDetailItem = ({feed, index}: FeedDetailItemProps) => {
     dayjs.extend(updateLocale);
     const formatTemplate = 'ddd, MMM DD, YYYY [at] h:mm a';
-
     dayjs.updateLocale('en', {
         relativeTime: {
             future: "in %s",
             past: "%s ago",
             s: 'a few seconds',
-            m: "1 m",
-            mm: "%d m",
+            m: "1 min",
+            mm: "%d mins",
             h: "1 h",
             hh: "%d h",
             d: "1 d",
