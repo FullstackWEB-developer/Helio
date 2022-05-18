@@ -235,6 +235,7 @@ const PersonalInformationRegistrationStep = ({onPatientUpsert}: PersonalInformat
                     options={referralSourceItems}
                     defaultValue=''
                     control={control}
+                    autoComplete={false}
                 />
             </div>
             <Button label='common.continue' buttonType='big' className='mr-8 w-36 pt-6'
