@@ -12,7 +12,7 @@ import {useInfiniteQuery, useMutation, useQuery} from 'react-query';
 import {useParams} from 'react-router';
 import {getPatientByIdWithQuery, getPatientPhoto} from '@pages/patients/services/patients.service';
 import {getMessages, markRead} from '@pages/sms/services/ticket-messages.service';
-import {ChannelTypes, EmailMessageDto, TicketMessagesDirection} from '@shared/models';
+import {ChannelTypes, ContactType, EmailMessageDto, TicketMessagesDirection} from '@shared/models';
 import {DEFAULT_MESSAGE_QUERY_PARAMS} from '@pages/sms/constants';
 import {getNextPage} from '@pages/sms/utils';
 import utils from '@shared/utils/utils';
@@ -133,6 +133,25 @@ const EmailConversation = () => {
         messageListContainerRef.current?.scrollTo(0, 0);
     }
 
+    const getUserFullName = () => {
+        if(contact && contact.type === ContactType.Company)
+        {
+            return contact.companyName
+        }
+
+        if(contact && contact.type === ContactType.Individual)
+        {
+            return contact.firstName + " " + contact.lastName;
+        }
+
+        if(patient)
+        {
+            return patient.firstName + " " + patient.lastName;
+        }
+
+        return "";
+    }
+
     return (
         ticket ?
             <div className='w-full flex flex-col'>
@@ -142,7 +161,7 @@ const EmailConversation = () => {
                                         ticket={ticket}
                                         refetchTicket={refetchTicket}
                         forNewTicketMessagePurpose={false} patientPhoto={patientPhoto} conversationChannel={ChannelTypes.Email}
-                        patient={patient} contact={contact} />
+                        patient={patient} contact={contact} userFullName={getUserFullName()} />
                 </div>
                 {messages && messages.length > 0 &&
                     <div className='flex flex-col flex-auto overflow-y-auto'>
@@ -154,7 +173,7 @@ const EmailConversation = () => {
                                         index={index}
                                         emailCount={messages.length}
                                         message={m}
-                                        ticketCreatedForName={ticket.createdForName || ''}
+                                        ticketCreatedForName={getUserFullName() || ''}
                                         ticketHeaderPhoto={patientPhoto || ''} />
                                 ) : null
                             }

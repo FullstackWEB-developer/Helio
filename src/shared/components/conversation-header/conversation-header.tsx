@@ -48,8 +48,9 @@ interface ConversationHeaderProps {
     contact?: ContactExtended;
     ticket?: Ticket;
     refetchTicket?: () => void;
+    userFullName?: string;
 }
-const ConversationHeader = ({info, forNewTicketMessagePurpose, patientPhoto, conversationChannel = ChannelTypes.SMS, patient, contact, ticket, refetchTicket}: ConversationHeaderProps) => {
+const ConversationHeader = ({info, forNewTicketMessagePurpose, patientPhoto, conversationChannel = ChannelTypes.SMS, patient, contact, ticket, refetchTicket, userFullName}: ConversationHeaderProps) => {
     const {t} = useTranslation();
     const history = useHistory();
     const dispatch = useDispatch();
@@ -149,7 +150,7 @@ const ConversationHeader = ({info, forNewTicketMessagePurpose, patientPhoto, con
             return <Link className='body2-primary hover:underline' to={`${PatientsPath}/${info.patientId}`}>{info.patientId}</Link>
         }
         if (!!info.contactId) {
-            return <Link className='body2-primary hover:underline' to={`${ContactsPath}/${info.contactId}`}>{info.createdForName}</Link>
+            return <Link className='body2-primary hover:underline' to={`${ContactsPath}/${info.contactId}`}>{userFullName}</Link>
         }
         return t('common.not_available');
     }
@@ -167,11 +168,11 @@ const ConversationHeader = ({info, forNewTicketMessagePurpose, patientPhoto, con
     }
 
     const displayName = () => {
-        if (info.createdForName) {
-            if (info.createdForName.startsWith('+') || /\d/.test(info.createdForName)) {
-                return utils.applyPhoneMask(info.createdForName);
+        if (userFullName) {
+            if (userFullName.startsWith('+') || /\d/.test(userFullName)) {
+                return utils.applyPhoneMask(userFullName);
             }
-            return info.createdForName;
+            return userFullName;
         }
         return utils.applyPhoneMask(info.createdForEndpoint);
     }
@@ -182,7 +183,7 @@ const ConversationHeader = ({info, forNewTicketMessagePurpose, patientPhoto, con
                 src={`data:image/jpeg;base64,${patientPhoto}`} />
         }
 
-        return <Avatar userFullName={info.createdForName} />
+        return <Avatar userFullName={userFullName} />
     }
 
     const updateStatusMutation = useMutation(setStatus, {
@@ -253,8 +254,8 @@ const ConversationHeader = ({info, forNewTicketMessagePurpose, patientPhoto, con
     return (
         <div className="flex flex-row border-b sms-chat-header">
             <div className="pt-4 pl-6">
-                {!!info.createdForName && getImage()}
-                {!info.createdForName &&
+                {!!userFullName && getImage()}
+                {!userFullName &&
                     <Avatar icon={Icon.UserUnknown} userPicture={patientPhoto} />
                 }
             </div>

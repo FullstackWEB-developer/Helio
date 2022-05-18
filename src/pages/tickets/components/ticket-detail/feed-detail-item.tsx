@@ -61,6 +61,7 @@ const FeedDetailItem = ({feed, index}: FeedDetailItemProps) => {
     if (feed.feedType === FeedTypes.Email) {
         const email = feed.item as EmailMessageDto;
         return <FeedDetailEmailItem
+            userFullName={feed.userFullName}
             message= {email}
             key={email.id}
             isCollapsed={index > 0}

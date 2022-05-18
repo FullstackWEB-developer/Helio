@@ -175,7 +175,7 @@ const TicketDetail = () => {
                         />
                     </div>
                     <div className='flex-1 mb-auto'>
-                        <TicketDetailFeed smsMessages={smsMessages} smsLoading={smsLoading} emailLoading={emailLoading} emailMessages={emailMessages} ticket={ticket} />
+                        <TicketDetailFeed smsMessages={smsMessages} smsLoading={smsLoading} emailLoading={emailLoading} emailMessages={emailMessages} ticket={ticket} contact={contact} />
                     </div>
                     <div className='absolute bottom-0 w-full'>
                         <TicketDetailAddNote smsMessages={smsMessages} emailMessages={emailMessages} patient={patient} contact={contact} ticket={ticket} />

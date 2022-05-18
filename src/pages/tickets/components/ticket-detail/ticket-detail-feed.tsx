@@ -10,7 +10,7 @@ import './ticket-detail-feed.scss';
 import {selectUserList} from '@shared/store/lookups/lookups.selectors';
 import {User} from '@shared/models/user';
 import utils from '@shared/utils/utils';
-import {ChannelTypes, EmailMessageDto, PagedList, TicketMessage, TicketMessagesDirection, TicketType} from '@shared/models';
+import {ChannelTypes, Contact, EmailMessageDto, PagedList, TicketMessage, TicketMessagesDirection, TicketType} from '@shared/models';
 import AlwaysScrollToBottom from '@components/scroll-to-bottom';
 import Spinner from '@components/spinner/Spinner';
 import {getUserList} from '@shared/services/lookups.service';
@@ -19,6 +19,7 @@ import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import { selectAppUserDetails } from '@shared/store/app-user/appuser.selectors';
 import useCheckPermission from '@shared/hooks/useCheckPermission';
+import { ContactType } from '@pages/contacts/models/ContactType';
 
 export enum FeedFilter {
     AllActivity = 'ALL_ACTIVITY',
@@ -31,9 +32,10 @@ interface TicketDetailFeedProps {
     emailMessages?: PagedList<TicketMessage | EmailMessageDto>;
     smsMessages?: PagedList<TicketMessage | EmailMessageDto>;
     smsLoading: boolean;
+    contact?: Contact;
 }
 
-const TicketDetailFeed = ({ticket, emailLoading, emailMessages, smsMessages, smsLoading}: TicketDetailFeedProps) => {
+const TicketDetailFeed = ({ticket, emailLoading, emailMessages, smsMessages, smsLoading, contact}: TicketDetailFeedProps) => {
     const {t} = useTranslation();
     dayjs.extend(utc);
     const dispatch = useDispatch();
@@ -53,11 +55,22 @@ const TicketDetailFeed = ({ticket, emailLoading, emailMessages, smsMessages, sms
         dispatch(getUserList());
     }, [dispatch]);
 
-
     const getUser = (id: string | undefined): User | undefined => !!id ? users.find(user => user.id === id) : undefined;
 
     const getUsername = (user: User | undefined) => {
         return utils.stringJoin(' ', user?.firstName, user?.lastName)
+    }
+
+    const getContactUsername = () => {
+        if(contact){
+            if(contact.type === ContactType.Individual){
+                return utils.stringJoin(' ', contact?.firstName, contact?.lastName)
+            }else if(contact.type === ContactType.Company){
+                return contact.companyName
+            }
+        }else{
+            return ticket.createdForName
+        }
     }
 
     useEffect(() => {
@@ -90,7 +103,7 @@ const TicketDetailFeed = ({ticket, emailLoading, emailMessages, smsMessages, sms
             smsMessages?.results.forEach(message => {
                 const user = getUser(message.createdBy);
                 feedItems.push({
-                    userFullName: message.direction === TicketMessagesDirection.Incoming ? ticket.createdForName : getUsername(user),
+                    userFullName: message.direction === TicketMessagesDirection.Incoming ? getContactUsername() : getUsername(user),
                     userPicture: user?.profilePicture,
                     dateTime: message.createdOn,
                     feedType: FeedTypes.Sms,
@@ -102,7 +115,7 @@ const TicketDetailFeed = ({ticket, emailLoading, emailMessages, smsMessages, sms
             emailMessages?.results.forEach(message => {
                 const user = getUser(message.createdBy);
                 feedItems.push({
-                    userFullName: getUsername(user),
+                    userFullName: message.direction === TicketMessagesDirection.Incoming ? getContactUsername() : getUsername(user),
                     userPicture: user?.profilePicture,
                     dateTime: message.createdOn,
                     feedType: FeedTypes.Email,
@@ -116,7 +129,7 @@ const TicketDetailFeed = ({ticket, emailLoading, emailMessages, smsMessages, sms
             const user = getUser(ticket.contactAgent);
 
             let callActivity: Partial<FeedDetailDisplayItem> = {
-                userFullName: ticket.createdByName,
+                userFullName: getContactUsername(),
                 userPicture: user?.profilePicture,
                 dateTime: ticket.createdOn,
             };
@@ -161,7 +174,7 @@ const TicketDetailFeed = ({ticket, emailLoading, emailMessages, smsMessages, sms
         return () => {
             dispatch(setFeedLastMessageOn());
         }
-    }, [dispatch, ticket.feeds, ticket.notes, smsMessages, emailMessages, selectedFeedFilter]);
+    }, [dispatch, ticket.feeds, ticket.notes, smsMessages, emailMessages, selectedFeedFilter, contact]);
 
     if (emailLoading || smsLoading) {
         return <Spinner fullScreen/>

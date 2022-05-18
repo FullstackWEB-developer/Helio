@@ -36,6 +36,8 @@ import {setIsCallsLogFiltered} from '@pages/calls-log/store/calls-log.slice';
 import useCheckPermission from '@shared/hooks/useCheckPermission';
 import {AddTicketReview, ViewTicketRatings} from '@components/ticket-rating';
 import TicketDetailRating from '@pages/tickets/components/ticket-detail/ticket-detail-rating';
+import {getContactsNames} from '@shared/services/contacts.service';
+import {GetContactsNames} from '@constants/react-query-constants';
 
 dayjs.extend(utc);
 
@@ -58,6 +60,8 @@ const CallsLogList = () => {
     const [pagingResult, setPagingResult] = useState({...DEFAULT_PAGING});
     const [rows, setRows] = useState<TicketLogModel[]>([]);
     const [displayRatingsForTicket, setDisplayRatingsForTicket] = useState<number | undefined>(undefined);
+    const [contactIds, setContactIds] = useState<string[]>([]);
+    const [pageResult, setPageResult] = useState<TicketLogModel[]>([]);
     const [callsLogFilter, setCallsLogFilter] = useState<TicketLogRequestModel>({
         ...DEFAULT_PAGING,
         assignedTo: !isDefaultTeam ? appUser?.id : '',
@@ -337,7 +341,31 @@ const CallsLogList = () => {
         onSuccess: (response) => {
             const {results, ...paging} = response;
             setPagingResult({...paging});
-            setRows(response.results);
+            let resultRows = response.results.map(a => a.contactId).filter(Boolean) as string[];
+            if(resultRows.length > 0){
+                setPageResult(response.results);
+                setContactIds(resultRows);
+            }else{
+                setRows(response.results);
+                setContactIds([]);
+            }
+        }
+    });
+
+    const {isLoading: isLoadingContactNames, isFetching: isFetchingContactNames} = useQuery([GetContactsNames, contactIds], () => getContactsNames(contactIds),{
+        enabled: contactIds.length > 0,
+        onSuccess: data => {
+            data.forEach(element => {
+                let email = pageResult.find( x => x.contactId === element.id)
+                if(email && element.firstName){
+                    email.createdForName = element.firstName
+                }
+
+                if(email && element.lastName){
+                    email.createdForName += " " + element.lastName
+                }
+            });
+            setRows(pageResult);
         }
     });
 
@@ -399,10 +427,10 @@ const CallsLogList = () => {
                     />
                 </div>
                 <div className='h-full overflow-y-auto'>
-                    {(isLoading || isFetching) &&
+                    {(isLoading || isFetching || isLoadingContactNames || isFetchingContactNames) &&
                         <Spinner fullScreen />
                     }
-                    {(!isLoading && !isFetching) &&
+                    {(!isLoading && !isFetching && !isLoadingContactNames && !isFetchingContactNames) &&
                         <Table model={tableModel} />
                     }
                     {rowSelected && !!rowSelected.recordedConversationLink &&

@@ -1,7 +1,7 @@
 import React, {useEffect, useLayoutEffect, useMemo, useRef, useState} from 'react';
 import AlwaysScrollToBottom from '@components/scroll-to-bottom';
 import SmsChatMessageList from '../sms-chat-message/sms-chat-message-list';
-import {ChannelTypes, ContactExtended, TicketMessage, TicketMessageSummary} from '@shared/models';
+import {ChannelTypes, ContactExtended, ContactType, TicketMessage, TicketMessageSummary} from '@shared/models';
 import {useDispatch} from 'react-redux';
 import classnames from 'classnames';
 import utils from '@shared/utils/utils';
@@ -160,10 +160,29 @@ const SmsChat = ({info, isLoading, isSending, isBottomFocus, messages = [], last
         setSelectedMessageTemplate(undefined);
     }
 
+    const getUserFullName = () => {
+        if(contact && contact.type === ContactType.Company)
+        {
+            return contact.companyName
+        }
+
+        if(contact && contact.type === ContactType.Individual)
+        {
+            return contact.firstName + " " + contact.lastName;
+        }
+
+        if(patient)
+        {
+            return patient.firstName + " " + patient.lastName;
+        }
+
+        return "";
+    }
+
     return (<div className="flex flex-col justify-between flex-auto h-full sms-chat">
         <ConversationHeader ticket={ticket}
                             refetchTicket={refetchTicket}
-                            info={info} forNewTicketMessagePurpose={false} patientPhoto={patientPhoto} conversationChannel={ChannelTypes.SMS} />
+                            info={info} forNewTicketMessagePurpose={false} patientPhoto={patientPhoto} conversationChannel={ChannelTypes.SMS} userFullName={getUserFullName()} />
         <div className="flex flex-col flex-1 pl-6 overflow-y-auto">
             {messages && messages.length > 0 &&
                 <>

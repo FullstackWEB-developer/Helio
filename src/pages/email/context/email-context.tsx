@@ -1,5 +1,5 @@
 import React, {createContext, ReactNode, useEffect, useState} from 'react';
-import {ChannelTypes, TicketMessageSummaryRequest} from '@shared/models';
+import {ChannelTypes, TicketMessageSummary, TicketMessageSummaryRequest} from '@shared/models';
 import {EmailContextType} from '@pages/email/context/email-context-type';
 import {useInfiniteQuery} from 'react-query';
 import {QueryTicketMessageSummaryInfinite} from '@constants/react-query-constants';
@@ -13,7 +13,9 @@ import {useDispatch, useSelector} from 'react-redux';
 import {selectAppUserDetails} from '@shared/store/app-user/appuser.selectors';
 import {selectLastEmailDate} from '@pages/email/store/email.selectors';
 import {setMessageSummaries} from '@pages/email/store/email-slice';
-
+import {useQuery} from 'react-query';
+import {getContactsNames} from '@shared/services/contacts.service';
+import {GetContactsNames} from '@constants/react-query-constants';
 export const EmailContext = createContext<EmailContextType | null>(null);
 
 const EmailProvider =({children}: {children: ReactNode}) => {
@@ -21,6 +23,8 @@ const EmailProvider =({children}: {children: ReactNode}) => {
     const dispatch = useDispatch();
     const {id} = useSelector(selectAppUserDetails);
     const [emailQueryType, setEmailQueryType] = useState<EmailQueryType>();
+    const [contactIds, setContactIds] = useState<string[]>([]);
+    const [pageResult, setPageResult] = useState<TicketMessageSummary[]>([]);
     const isDefaultTeamView = useCheckPermission('Email.DefaultToTeamView');
     const [queryParams, setQueryParams] = useState<TicketMessageSummaryRequest>({
         channel: ChannelTypes.Email,
@@ -31,14 +35,37 @@ const EmailProvider =({children}: {children: ReactNode}) => {
 
     useEffect(() => {
         getEmailsQuery.refetch().then();
-    }, [lastEmailDate])
+    }, [lastEmailDate]);
+
+    const {isLoading: isLoadingContactNames, isFetching: isFetchingContactNames} = useQuery([GetContactsNames, contactIds], () => getContactsNames(contactIds),{
+                enabled: contactIds.length > 0,
+                onSuccess: data => {
+                    let copyOfPageResult = [...pageResult];
+                    data.forEach(element => {
+                        let index = copyOfPageResult.findIndex( x => x.contactId === element.id);
+                        let email = Object.assign({}, pageResult.find( x => x.contactId === element.id))
+                        if(email && element.firstName){
+                            email.createdForName = element.firstName
+                        }
+
+                        if(email && element.lastName){
+                            email.createdForName += " " + element.lastName
+                        }
+                        copyOfPageResult[index]=email;
+                    });
+                    setPageResult(copyOfPageResult);
+                    dispatch(setMessageSummaries(copyOfPageResult));
+                }
+            });
 
     const getEmailsQuery = useInfiniteQuery([QueryTicketMessageSummaryInfinite, queryParams],
         ({pageParam = 1}) => getChats({...queryParams, page: pageParam}), {
             enabled: !!emailQueryType,
             getNextPageParam: (lastPage) => getNextPage(lastPage),
             onSuccess: (result) => {
-                dispatch(setMessageSummaries(utils.accumulateInfiniteData(result)));
+                let pageResult = utils.accumulateInfiniteData(result);
+                setPageResult(utils.accumulateInfiniteData(result));
+                setContactIds(pageResult.map(a => a.contactId).filter(Boolean) as string[]);
             }
         });
 
@@ -48,7 +75,9 @@ const EmailProvider =({children}: {children: ReactNode}) => {
         queryParams,
         setQueryParams,
         getEmailsQuery,
-        isDefaultTeamView}}>
+        isDefaultTeamView,
+        isLoadingContactNames,
+        isFetchingContactNames}}>
                 {children}
     </EmailContext.Provider>)
 

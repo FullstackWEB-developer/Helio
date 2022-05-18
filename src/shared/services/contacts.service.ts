@@ -95,3 +95,12 @@ export const searchCompanyContacts = async (searchTerm: string) => {
     const {data} = await Api.get(`${contactsUrl}?searchTerm=${searchTerm}&type=1`);
     return data;
 }
+
+export const getContactsNames = async (contactIds: string[]) => {
+    let requestUrl = new URL(`${contactsUrl}/contact-names`);
+    contactIds.forEach((element,i) => {
+        requestUrl.searchParams.append(`contactIds`, element)
+    });
+    const {data} = await Api.get(requestUrl.toString());
+    return data;
+}
