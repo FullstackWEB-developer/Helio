@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useEffect, useRef, useState} from 'react';
+import React, {ChangeEvent, useEffect, useRef, useState, useCallback} from 'react';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc'
 import {useTranslation} from 'react-i18next';
@@ -27,7 +27,7 @@ import {
     selectUserOptions
 } from '@shared/store/lookups/lookups.selectors';
 import {createTicket, getEnumByType} from './services/tickets.service';
-import { getLookupValues } from '@shared/services/lookups.service';
+import {getLookupValues} from '@shared/services/lookups.service';
 import {getContactById, searchContactsByName} from '@shared/services/contacts.service';
 import {getLocations, getUserList} from '@shared/services/lookups.service';
 import {Prompt, useHistory} from 'react-router-dom';
@@ -98,6 +98,18 @@ const TicketNew = () => {
     const [contactOptions, setContactOptions] = useState<Option[]>([]);
     const [contactName, setContactName] = useState<string>();
     const [debounceContactSearchTerm] = useDebounce(contactSearchTerm, DEBOUNCE_SEARCH_DELAY_MS);
+
+    const patientExcludedTicketTypes = [TicketType.BusinessOffice, TicketType.Facility, TicketType.Lab, TicketType.Pharmacy];
+    const contactExcludedTicketTypes = [TicketType.EstablishedPatient, TicketType.NewPatient];
+    const renderTicketTypeOptions = useCallback(() => {
+        if (queryPatientId) {
+            return ticketTypeOptions?.filter(o => !patientExcludedTicketTypes.includes(Number(o.value)));
+        }
+        if (queryContactId) {
+            return ticketTypeOptions?.filter(o => !contactExcludedTicketTypes.includes(Number(o.value)));
+        }
+        return ticketTypeOptions;
+    }, [ticketTypeOptions, queryPatientId, queryContactId]);
 
     const {
         refetch: refetchContacts,
@@ -424,7 +436,7 @@ const TicketNew = () => {
                     <ControlledSelect
                         name='type'
                         label={'ticket_new.ticket_type'}
-                        options={ticketTypeOptions}
+                        options={renderTicketTypeOptions()}
                         control={control}
                         allowClear={true}
                         required={true}
