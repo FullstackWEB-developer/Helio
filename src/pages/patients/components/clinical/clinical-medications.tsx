@@ -21,7 +21,8 @@ const ClinicalMedications = ({clinical} : ClinicalLabResults) => {
              {
                 title:'patient.clinical.medications.medication',
                 widthClass:'w-5/12',
-                field:'medicationName'
+                field:'medicationName',
+                rowClassname: 'mr-4',
             },{
                 title:'patient.clinical.medications.ordered_by',
                 widthClass:'w-3/12',
