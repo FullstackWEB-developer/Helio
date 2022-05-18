@@ -162,16 +162,14 @@ const InsuranceInformationRegistrationStep = ({goBack, onPatientUpdate}: Insuran
                             defaultValue=''
                             label='external_access.registration.policy_holder_name'
                         />
-                        <ControlledDateInput
+                        <ControlledInput
                             type='date'
-                            longDateFormat={false}
-                            isCalendarDisabled
+                            containerClassName='md:w-1/2'
                             required={insuranceOption?.value === INSURANCE_PLAN}
                             label='external_access.registration.policy_holder_dob'
                             control={control}
                             name='policyHolderDob'
-                            className='md:w-1/2'
-                            max={new Date(new Date().toDateString())}
+                            className='w-full'
                         />
                     </div>
 
