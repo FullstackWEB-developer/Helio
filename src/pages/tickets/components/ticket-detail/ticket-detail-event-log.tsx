@@ -26,7 +26,7 @@ const TicketDetailEventLog = ({ticket, control, isVisible, setIsVisible}: Ticket
     const {t} = useTranslation();
     const formatTemplate = 'ddd, MMM DD, YYYY h:mm A';
     const dispatch = useDispatch();
-
+    const sysdate = Date.now();
 
     const openCalendar = () => {
         setIsVisible(!isVisible);
@@ -52,7 +52,9 @@ const TicketDetailEventLog = ({ticket, control, isVisible, setIsVisible}: Ticket
         <div className='flex justify-between w-full'>
             <div className='flex flex-row items-center'>
                 <div className='body2-medium pr-2'>
-                    {t('ticket_detail.info_panel.due')}
+                    {
+                        t(dayjs(ticket.dueDate).isBefore(sysdate) ? 'ticket_detail.info_panel.overdue' : 'ticket_detail.info_panel.due')   
+                    }
                 </div>
                 <div className='body2 flex flex-row'>
                     <div className='py-1'>

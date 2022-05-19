@@ -648,6 +648,7 @@
       "upcoming_appointments": "Upcoming Appointments",
       "event_log": "Event Log",
       "due": "Due in",
+      "overdue": "Overdue",
       "due_date": "Date",
       "due_time": "Time",
       "created_by": "Created by",
