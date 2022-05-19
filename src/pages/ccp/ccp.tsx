@@ -163,7 +163,8 @@ const Ccp: React.FC<BoxProps> = ({
         if (ccp) {
             const elementRect = ccp.getBoundingClientRect();
             if (!utils.isInBounds(elementRect.top, elementRect.left, elementRect.bottom, elementRect.right)) {
-                moveBox(utils.getWindowCenter().x - ccp.offsetWidth / 2, top);
+                let windowCenter = utils.getWindowCenter();
+                moveBox(windowCenter.x - ccp.offsetWidth / 2, windowCenter.y - ccp.offsetHeight / 2);
             }
         }
     }
