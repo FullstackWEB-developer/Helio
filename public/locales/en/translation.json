@@ -930,6 +930,7 @@
       "message_your_provider": "If you have any questions regarding your medication refill, please message your provider’s office and we will reply within 24 hours.",
       "message_success": "Your message was sent.",
       "message_error": "Sending message failed. Please try again.",
+      "pharmacy_missing": "Your pharmacy information is missing. Please select a pharmacy below",
       "medication_list": {
         "medication": "Medication",
         "entered_by": "Entered By",

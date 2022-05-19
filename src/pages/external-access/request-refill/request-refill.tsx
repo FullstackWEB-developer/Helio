@@ -56,7 +56,7 @@ const RequestRefill = () => {
     const medication = useSelector(selectMedication);
     const verifiedPatient = useSelector(selectVerifiedPatent);
     const [isVisibleForm, setIsVisibleForm] = useState(false);
-    const {handleSubmit, control, errors, setError, setValue, getValues} = useForm();
+    const {handleSubmit, control, errors, setError, setValue, getValues, watch} = useForm();
     const [messageText, setMessageText] = useState('');
     const maxLength = 1000;
     const [pharmaciesSearchTerm, setPharmaciesSearchTerm] = useState('');
@@ -67,7 +67,7 @@ const RequestRefill = () => {
     const [stateOptions, setStateOptions] = useState<Option[]>([]);
     const [isReadonlyPharmacy, setIsReadonlyPharmacy] = useState(true);
     const [formReady, setFormReady] = useState(false);
-
+    const pharmacyName = watch('pharmacyName');
     useEffect(() => {
         dispatch(getProviders());
     }, [dispatch]);
@@ -85,6 +85,9 @@ const RequestRefill = () => {
             enabled: !!verifiedPatient,
             onSuccess: (data) => {
                 setDefaultPharmacy(data);
+            },
+            onError: (error) => {
+                setIsVisibleForm(true);
             }
         }
     );
@@ -358,6 +361,17 @@ const RequestRefill = () => {
         return <div>{t('external_access.not_verified_patient')}</div>
     }
 
+    const isDisabled = () => {
+        if (isLoading) {
+            return true;
+        }
+        if (!!defaultPharmacy || (isVisibleForm && !!pharmacyName)) {
+            return false;
+        }
+
+        return true;
+    }
+
     return <div className='2xl:px-48 pt-7 without-default-padding'>
         <div className='flex flex-row pb-5 cursor-pointer' onClick={() => history.goBack()}>
             <SvgIcon type={Icon.ArrowBack} />
@@ -430,6 +444,8 @@ const RequestRefill = () => {
                                 {t('external_access.medication_refill.pharmacy_information')}
                             </div>
                         </div>
+
+                        {!defaultPharmacy && <div className='body2 text-danger'>{t('external_access.medication_refill.pharmacy_missing')}</div>}
                         {defaultPharmacy && <Fragment>
                             <div className='subtitle2'>
                                 {defaultPharmacy.clinicalProviderName}
@@ -496,7 +512,7 @@ const RequestRefill = () => {
                     </div>}
                 </div>
                 <div className={`flex justify-start items-center full-w mt-8 ${getMarginBottom()}`}>
-                    <Button type='submit' isLoading={isLoading} buttonType='big' label={t('common.send')} disabled={isLoading} />
+                    <Button type='submit' isLoading={isLoading} buttonType='big' label={t('common.send')} disabled={isDisabled()} />
                 </div>
             </form>
         </div>
