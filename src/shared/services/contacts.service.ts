@@ -97,10 +97,8 @@ export const searchCompanyContacts = async (searchTerm: string) => {
 }
 
 export const getContactsNames = async (contactIds: string[]) => {
-    let requestUrl = new URL(`${contactsUrl}/contact-names`);
-    contactIds.forEach((element,i) => {
-        requestUrl.searchParams.append(`contactIds`, element)
-    });
-    const {data} = await Api.get(requestUrl.toString());
-    return data;
+    if(contactIds.length > 0){
+        const {data} = await Api.get(`${contactsUrl}/contact-names?${contactIds.map((n) => `contactIds=${n}`).join('&')}`);
+        return data;
+    }
 }
