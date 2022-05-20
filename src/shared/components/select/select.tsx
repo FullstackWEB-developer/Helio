@@ -164,9 +164,18 @@ const Select = React.forwardRef<HTMLDivElement, SelectProps>(({options, order, l
                 <input
                     ref={inputRef}
                     type='text'
-                    autoComplete={autoComplete ? 'on' : 'off'}
+                    autoComplete={autoComplete ? 'on' : 'nope'}
                     onChange={(e) => searchOnChange(e)}
-                    onFocus={(e) => {setOpen(true); e.target.select()}}
+                    autoCorrect={autoComplete ? 'on' : 'off'}
+                    spellCheck={autoComplete ? 'true' : 'false'}
+                    readOnly={autoComplete ? false : true}
+                    onFocus={(e) => {
+                        setOpen(true);
+                        e.target.select();
+                        if(!autoComplete){
+                            e.target.removeAttribute('readonly');
+                        }
+                    }}
                     onBlur={(e) => {setOpen(false); e.target.value = ''; setSearchQuery(null); setCursor(-1)}}
                     onKeyDown={(e) => {handleKeyDown(e)}}
                     className={`pl-4 pr-8 body2 ${!label ? 'pt-2.5' : 'select-trigger-pt'} h-1${!label ? '0' : '4'} relative truncate select-trigger ${selectedOption || searchQuery ? 'activated' : ''} ${props.error ? 'error' : ''} `}

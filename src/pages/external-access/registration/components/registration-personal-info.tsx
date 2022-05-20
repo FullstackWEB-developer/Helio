@@ -222,7 +222,8 @@ const PersonalInformationRegistrationStep = ({onPatientUpsert}: PersonalInformat
                     label='external_access.registration.state'
                     defaultValue=''
                     required={true}
-                    options={states || []} />
+                    options={states || []}
+                    autoComplete={false} />
             </div>
 
             <div className='flex flex-col'>
