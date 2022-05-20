@@ -63,6 +63,13 @@ const TicketSmsSendMessage = ({ticketId, patientId, contactId, onMessageSend}: T
                 refetchPatient();
             }else if(contactId){
                 refetchContact();
+            }else{
+                createTicketSmsMutation.mutate({
+                    body: smsText,
+                    ticketId,
+                    direction: TicketMessagesDirection.Incoming,
+                    channel: ChannelTypes.SMS
+                });
             }
         } else {
             dispatch(addSnackbarMessage({
