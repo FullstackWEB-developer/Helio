@@ -126,7 +126,11 @@ const UploadDocumentsRegistrationStep = ({goStepForward, goBack}: UploadDocument
                     {!patientData?.imageUploadTag && <Button label='common.upload' buttonType='big'
                         isLoading={uploadDocumentsMutation.isLoading}
                         disabled={!uploadButtonEnabled()}
-                        onClick={uploadDocuments} />}
+                        onClick={uploadDocuments} />
+                    }
+                    {
+                        patientData?.imageUploadTag && <Button label='common.continue' buttonType='big' onClick={() => goStepForward()} />
+                    }
                 </div>
             }
         </div>
