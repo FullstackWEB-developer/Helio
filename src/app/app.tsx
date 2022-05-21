@@ -1,10 +1,10 @@
-import React, {useEffect} from 'react';
-import {BrowserRouter, Route, Switch} from 'react-router-dom'
+import React, { useEffect } from 'react';
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import Layout from '../shared/layout/layout';
 import Login from '../pages/login/login';
 import GuardedRoute from './guarded-route';
-import {Dashboard} from '@pages/dashboard/dashboard';
-import {withSuspense} from '@shared/HOC/with-suspense';
+import { Dashboard } from '@pages/dashboard/dashboard';
+import { withSuspense } from '@shared/HOC/with-suspense';
 import TicketList from '../pages/tickets/ticket-list';
 import {
     ContactsPath,
@@ -46,16 +46,16 @@ import {
     AppointmentSchedulePatientStatusPathRouter,
     AppointmentConfirmationPath,
     AppointmentConfirmationShortPath,
-    EmailPath, TicketEmailPath, RequestMedicalRecordsSuccessPath, FeedbackPath
+    EmailPath, TicketEmailPath, RequestMedicalRecordsSuccessPath, FeedbackPath, CancellationReasonsPath
 } from './paths';
 import RealTimeUserStatusUpdate from '@shared/websockets/real-time-user-status-update';
 import ExternalAccessLayout from '@pages/external-access/layout/external-access-layout';
 import Logger from '@shared/services/logger';
-import {SignalRProvider} from '@shared/contexts/signalRContext';
-import {createTicketMessageConnectionHub} from '@shared/websockets/create-ticket-message-connection-hub';
-import {useSelector} from 'react-redux';
-import {selectAccessToken} from '@shared/store/app-user/appuser.selectors';
-import {TICKET_MESSAGE_INCOMING_NAME} from '@shared/constants/signalr-provider-constants';
+import { SignalRProvider } from '@shared/contexts/signalRContext';
+import { createTicketMessageConnectionHub } from '@shared/websockets/create-ticket-message-connection-hub';
+import { useSelector } from 'react-redux';
+import { selectAccessToken } from '@shared/store/app-user/appuser.selectors';
+import { TICKET_MESSAGE_INCOMING_NAME } from '@shared/constants/signalr-provider-constants';
 import utils from '@shared/utils/utils';
 import IncomingTicketMessageUpdate from '@shared/websockets/incoming-ticket-message-update';
 import BadgeValueUpdate from '@shared/websockets/badge-value-update';
@@ -64,6 +64,7 @@ import useBrowserNotification from '@shared/hooks/useBrowserNotification';
 import TicketMessageReadUpdate from '@shared/websockets/ticket-message-read';
 import TicketNotesUpdate from '@shared/websockets/ticket-notes-update';
 import TeamBadgeValueUpdate from '@shared/websockets/team-badge-value-update';
+import EditCancellationReason from '@pages/configurations/components/cancellation-reason/edit-cancellation-reason/edit-cancellation-reason';
 const SearchResults = React.lazy(() => import('../shared/components/search-bar/components/search-results'));
 const PatientChart = React.lazy(() => import('@pages/patients/patient-chart'));
 const VerifyRedirectLink = React.lazy(() => import('@pages/external-access/verify-patient/verify-redirect-link'));
@@ -112,18 +113,18 @@ const NotAuthorized = React.lazy(() => import('@pages/not-authorized/not-authori
 const MyStats = React.lazy(() => import('@pages/application/my-stats'));
 const NewAppointmentRouter = React.lazy(() => import('@pages/external-access/appointment/new-appointment-router/new-appointment-router'));
 const AppointmentConfirmation = React.lazy(() => import('@pages/external-access/appointment/appointment-confirmation/appointment-confirmation'));
-const AppointmentConfirmed = React.lazy(()=> import('@pages/external-access/appointment/appointment-confirmed'));
-const Feedback = React.lazy(()=> import('@pages/external-access/feedbacks/feedback'));
+const AppointmentConfirmed = React.lazy(() => import('@pages/external-access/appointment/appointment-confirmed'));
+const Feedback = React.lazy(() => import('@pages/external-access/feedbacks/feedback'));
 
 function App() {
     const accessToken = useSelector(selectAccessToken);
-    const {askNotificationPermission, shouldPromptUserWithPopup} = useBrowserNotification();
+    const { askNotificationPermission, shouldPromptUserWithPopup } = useBrowserNotification();
     useEffect(() => {
         const logStreamInterval = setInterval(() => {
             Logger.getInstance();
         }, Number(utils.getAppParameter('LogStreamCheckInterval')) || 5000);
 
-        if(shouldPromptUserWithPopup()){
+        if (shouldPromptUserWithPopup()) {
             askNotificationPermission();
         }
         return () => {
@@ -197,8 +198,8 @@ function App() {
                 <Layout>
                     <RealTimeUserStatusUpdate />
                     <TeamBadgeValueUpdate />
-                    <BadgeValueUpdate/>
-                    <TicketNotesUpdate/>
+                    <BadgeValueUpdate />
+                    <TicketNotesUpdate />
                     <IncomingTicketMessageUpdate />
                     <TicketMessageReadUpdate />
                     <GuardedRoute exact path='/dashboard' component={Dashboard} />
@@ -210,6 +211,7 @@ function App() {
                         path={`${TicketsPath}/:ticketNumber(\\d+)`}
                         component={withSuspense(TicketDetail)}
                     />
+
                     <Switch>
                         <GuardedRoute exact path='/patients/results' component={withSuspense(SearchResults)} />
                         <GuardedRoute exact path='/patients/:patientId' component={withSuspense(PatientChart)} />
@@ -224,7 +226,7 @@ function App() {
                     <GuardedRoute exact path={UsersPath} component={withSuspense(UserList)} permission='Users.Access' />
                     <GuardedRoute exact path={`${UsersPath}/new`} component={withSuspense(UserAdd)} permission='Users.Access' />
                     <GuardedRoute exact path={`${UserDetailsPath}/:userId`} component={withSuspense(UserDetails)} />
-                    <GuardedRoute exact path={MyStatsPath} component={withSuspense(MyStats)}/>
+                    <GuardedRoute exact path={MyStatsPath} component={withSuspense(MyStats)} />
                     <GuardedRoute exact path={BlackListsPath} component={withSuspense(BlackList)} permission='BlockedAccess.Access' />
                     <GuardedRoute exact path={`${ConfigurationsPath}/:type?/:id?`} component={withSuspense(Configurations)} permission='Configurations.Access' />
                     <GuardedRoute exact path={UsersBulkPath} component={withSuspense(BulkAddUser)} />
@@ -232,6 +234,7 @@ function App() {
                     <GuardedRoute exact path={ChatsLogPath} component={withSuspense(ChatsLogList)} />
                     <GuardedRoute exact path={NotAuthorizedPath} component={withSuspense(NotAuthorized)} />
                     <GuardedRoute exact path='/' component={Dashboard} />
+
                 </Layout>
             </SignalRProvider>
         </Switch>

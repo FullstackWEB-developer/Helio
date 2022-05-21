@@ -1,4 +1,5 @@
 export const TicketsPath = '/tickets';
+export const CancellationReasonsPath = '/cancellation-reasons';
 export const ContactsPath = '/contacts';
 export const SmsPath = '/sms';
 export const EmailPath = '/email';

@@ -7,6 +7,7 @@ import {AppointmentSlotRequest, AppointmentType} from '@pages/external-access/ap
 import {CreateAppointmentRequest} from '../models/create-appointment-request';
 import {AppointmentTypeSummary} from '../models/appointment-type-summary';
 import {CancellationReasonDefaultRequest} from '../models/cancellation-reason-default-request';
+import {CancellationReasonSaveRequest} from '../models/cancellation-reason-save-request';
 const itemCount = 100;
 const appointmentsBaseUrl = '/appointments';
 
@@ -158,5 +159,16 @@ export const confirmAppointment = async ({appointmentId, confirmationStatus}: {a
 export const saveCancellationReasonDefaults = async (payload: CancellationReasonDefaultRequest) => {
      const url = `${appointmentsBaseUrl}/cancellationreason/defaults`;
      const {data} = await Api.post(url, payload);
+     return data;
+}
+
+export const SaveCancellationReason = async (payload: CancellationReasonSaveRequest) => {
+     const url = `${appointmentsBaseUrl}/cancellationreason`;
+     const {data} = await Api.post(url, payload);
+     return data;
+}
+
+export const DeleteCancellationReason = async (reasonId: string) => {
+     const {data} = await Api.delete(`${appointmentsBaseUrl}/cancellationreason/${reasonId}`);
      return data;
 }

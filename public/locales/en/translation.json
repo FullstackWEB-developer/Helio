@@ -1891,8 +1891,28 @@
       "reschedule_reason_option": "rescheduling reason",
       "set_default": "If <strong><0>{{reason}}</0></strong> is not recognized by the bot set",
       "as_default": "as default.",
+      "save_success": "Cancellation reason saved successfully.",
+      "delete_success": "Cancellation reason deleted successfully.",
+      "save_error": "Operation failed. Please try again later.",
       "save_default_success": "Default cancellation reason(s) configured successfully.",
-      "save_default_error": "Setting up default cancellation reason(s) failed. Please try again later."
+      "save_default_error": "Setting up default cancellation reason(s) failed. Please try again later.",
+      "confirm_delete_title":"Are you sure you want to delete {{cancellationReason}}?",
+      "details":{
+          "created_by": "Created By:",
+          "created_date": "Created Date",
+          "modified_by": "Modified By:",
+          "modified_date": "Modified Date",
+          "helio_appointment_cancelation_name": "Helio Appointment Cancelation Name",
+          "helio_appointment_cancelation_name_tooltip": "Cancelation reason how it will appear to patients.",
+          "appointment_cancelation_description": "Appointment Cancelation Description",
+          "appointment_cancelation_description_tooltip": "Explanation of cancelation reason how it will appear to patients.",
+          "appointment_cancelation_description_character_limit": "50 characters",
+          "reason_mapping": "Reason Mapping",
+          "reason_mapping_tooltip": "How voice bot will recognize this cancelation reason.",
+          "save_success": "Cancelation reason saved successfully.",
+          "delete_success": "Cancelation reason saved successfully.",
+          "error": "An error ocurred. Please try again later."
+        }
     }
   },
   "ticket_department": {

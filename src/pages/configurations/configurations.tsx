@@ -1,16 +1,21 @@
-import {useCallback} from 'react';
+import { useCallback } from 'react';
 import { useParams } from 'react-router';
 import AppointmentType from './components/appointment-type/appointment-type';
 import ConfigurationsMenu from './components/configurations-menu/configurations-menu';
 import CancellationReasonConfig from './components/cancellation-reason/cancellation-reason-config';
 import TicketDepartment from './components/ticket-department/ticket-department';
-
+import EditCancellationReason from './components/cancellation-reason/edit-cancellation-reason/edit-cancellation-reason';
+interface CancellationReasonParams {
+    type: string,
+    id: string
+}
 const Configurations = () => {
-    const {type} = useParams<{type: string}>();
-    const renderBodyByActiveRoute = useCallback(()=>{
-        switch(type){
+    const { type, id } = useParams<CancellationReasonParams>();
+    const renderBodyByActiveRoute = useCallback(() => {
+        switch (type) {
             case "cancellation-reasons":
-                return <CancellationReasonConfig />
+                if (id) { return <EditCancellationReason /> }
+                else { return <CancellationReasonConfig /> }
             case "ticket-department":
                 return <TicketDepartment />
             case "appointment-type":
@@ -18,7 +23,7 @@ const Configurations = () => {
             default:
                 return <AppointmentType />
         }
-    }, [type]);
+    }, [type, id]);
     return (
         <div className="flex w-full h-full overflow-y-auto">
             <ConfigurationsMenu activeUrl={type ? type : 'appointment-type'}></ConfigurationsMenu>

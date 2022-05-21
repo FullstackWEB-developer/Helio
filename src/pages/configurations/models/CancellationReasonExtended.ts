@@ -1,4 +1,4 @@
-import {CancellationReasonTypes} from "@pages/external-access/models/cancellation-reason-types.enum";
+import { CancellationReasonTypes } from "@pages/external-access/models/cancellation-reason-types.enum";
 
 export interface CancellationReasonExtended {
     description?: string;
@@ -9,5 +9,9 @@ export interface CancellationReasonExtended {
     isMapped: boolean;
     name: string;
     nameOnEMR?: string;
-    type?: CancellationReasonTypes
+    type?: CancellationReasonTypes,
+    createdByName: string,
+    createdOn: Date,
+    modifiedByName: string,
+    modifiedOn?: Date
 }

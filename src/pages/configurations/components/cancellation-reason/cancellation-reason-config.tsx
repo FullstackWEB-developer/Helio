@@ -16,6 +16,7 @@ import {useHistory} from 'react-router';
 import {DefaultPagination, Paging} from '@shared/models';
 import Pagination from '@components/pagination';
 import CancellationReasonDefaults from './cancellation-reason-defaults';
+import { CancellationReasonsPath, ConfigurationsPath } from '@app/paths';
 
 
 const CancellationReasonConfig = () => {
@@ -58,7 +59,7 @@ const CancellationReasonConfig = () => {
 
     const onEditIconClick = (existsOnEMR: boolean, id: string) => {
         if (!existsOnEMR) return;
-        history.push(`/configurations/cancellation-reasons/${id}`);
+        history.push(`${ConfigurationsPath}${CancellationReasonsPath}/${id}`);
     }
 
     const paginationDisplayConditions = paginationProperties.totalCount !== DefaultPagination.totalCount && data;
