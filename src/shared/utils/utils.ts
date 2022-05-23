@@ -42,7 +42,7 @@ const formatPhone = (phone: string) => {
         return phone;
     }
     phone = phone.replaceAll('-', '');
-    phone = phone.replaceAll('(', '').replace(')','');
+    phone = phone.replaceAll('(', '').replace(')', '');
     if (phone && phone.startsWith('+1')) {
         phone = phone.substring(2);
     }
@@ -154,7 +154,7 @@ const formatRelativeTime = (days?: number, hours?: number, minutes?: number, abs
     return '';
 }
 
-const capitalizeFirstLetters = (sentence: string) : string => {
+const capitalizeFirstLetters = (sentence: string): string => {
     if (!sentence || sentence.length === 0) {
         return '';
     }
@@ -290,21 +290,21 @@ const isLoggedIn = (): boolean => {
 }
 
 const logout = async () => {
-await axios.get(utils.getAppParameter('ConnectBaseUrl') + utils.getAppParameter('CcpLogoutUrl'), {withCredentials: true})
-    .catch(() => {
-    })
-    .finally(() => {
-        const auth = store.getState()?.appUserState?.auth;
-        store.dispatch(clearAppParameters());
-        const account = getMsalInstance()?.getAccountByUsername(auth.username);
-        if (!!account) {
-            getMsalInstance()?.logoutRedirect({
-                postLogoutRedirectUri: '/login'
-            }).then().finally(() => store.dispatch(logOut()));
-        } else {
-            store.dispatch(logOut())
-        }
-    });
+    await axios.get(utils.getAppParameter('ConnectBaseUrl') + utils.getAppParameter('CcpLogoutUrl'), {withCredentials: true})
+        .catch(() => {
+        })
+        .finally(() => {
+            const auth = store.getState()?.appUserState?.auth;
+            store.dispatch(clearAppParameters());
+            const account = getMsalInstance()?.getAccountByUsername(auth.username);
+            if (!!account) {
+                getMsalInstance()?.logoutRedirect({
+                    postLogoutRedirectUri: '/login'
+                }).then().finally(() => store.dispatch(logOut()));
+            } else {
+                store.dispatch(logOut())
+            }
+        });
 }
 
 const isSessionExpired = (): boolean => {

@@ -1,7 +1,7 @@
 import React from 'react';
 import {ControlledDateInput, ControlledInput, ControlledSelect} from '@components/controllers';
 import Radio from '@components/radio/radio';
-import {Controller,  useForm} from 'react-hook-form';
+import {Controller, useForm} from 'react-hook-form';
 import utils from '@shared/utils/utils';
 import {Option} from '@components/option/option';
 import {useTranslation} from 'react-i18next';
@@ -57,7 +57,7 @@ const PersonalInformationRegistrationStep = ({onPatientUpsert}: PersonalInformat
     });
 
     const dobValue = watch('dob', '');
-    if(utils.isValidDobByAthenaMaxAgeConstraint(dobValue) && !errors.dob){
+    if (utils.isValidDobByAthenaMaxAgeConstraint(dobValue) && !errors.dob) {
         setError('dob', {type: 'max', message: 'external_access.registration.max_age'})
     }
 
@@ -183,24 +183,6 @@ const PersonalInformationRegistrationStep = ({onPatientUpsert}: PersonalInformat
             </div>
             <div className='flex flex-col md:flex-row md:gap-8'>
                 <ControlledInput
-                    control={control}
-                    name='zip'
-                    required={true}
-                    type='zip'
-                    containerClassName='md:w-1/2'
-                    defaultValue=''
-                    label='external_access.registration.zip'
-                />
-                <ControlledInput
-                    name='city'
-                    control={control}
-                    label='external_access.registration.city'
-                    defaultValue=''
-                    required={true}
-                    containerClassName='md:w-1/2' />
-            </div>
-            <div className='flex flex-col md:flex-row md:gap-8'>
-                <ControlledInput
                     name='address'
                     control={control}
                     label='external_access.registration.address'
@@ -215,17 +197,36 @@ const PersonalInformationRegistrationStep = ({onPatientUpsert}: PersonalInformat
                     required={false}
                     containerClassName='md:w-1/2' />
             </div>
-            <div className='flex flex-col md:flex-row md:gap-8 md:w-1/2'>
-                <ControlledSelect
-                    name='state'
+            <div className='flex flex-col md:flex-row md:gap-8'>
+                <ControlledInput
+                    name='city'
                     control={control}
-                    label='external_access.registration.state'
+                    label='external_access.registration.city'
                     defaultValue=''
                     required={true}
-                    options={states || []}
-                    autoComplete={false} />
-            </div>
+                    containerClassName='md:w-1/2' />
 
+                <div className='flex flex-col md:flex-row md:gap-8 md:w-1/2'>
+                    <ControlledSelect
+                        name='state'
+                        control={control}
+                        label='external_access.registration.state'
+                        defaultValue=''
+                        required={true}
+                        options={states || []}
+                        autoComplete={false}
+                        className='md:w-1/2' />
+                    <ControlledInput
+                        control={control}
+                        name='zip'
+                        required={true}
+                        type='zip'
+                        containerClassName='md:w-1/2'
+                        defaultValue=''
+                        label='external_access.registration.zip'
+                    />
+                </div>
+            </div>
             <div className='flex flex-col'>
                 <div className='body2'>{t('external_access.registration.referral_source')}</div>
                 <ControlledSelect
@@ -240,8 +241,8 @@ const PersonalInformationRegistrationStep = ({onPatientUpsert}: PersonalInformat
                 />
             </div>
             <Button label='common.continue' buttonType='big' className='mr-8 w-36 pt-6'
-                    isLoading={createPatientMutation.isLoading}
-                    disabled={!isValid || !isDirty} type='submit' />
+                isLoading={createPatientMutation.isLoading}
+                disabled={!isValid || !isDirty} type='submit' />
         </form>
     );
 }
