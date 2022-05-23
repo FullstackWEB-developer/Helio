@@ -1,23 +1,23 @@
-import {useHistory} from 'react-router-dom';
-import React, {useRef, useState} from 'react';
+import { useHistory } from 'react-router-dom';
+import React, { useRef, useState } from 'react';
 import Button from '@components/button/button';
-import {Medication} from '@pages/external-access/request-refill/models/medication.model';
-import {Icon} from '@components/svg-icon/icon';
+import { Medication } from '@pages/external-access/request-refill/models/medication.model';
+import { Icon } from '@components/svg-icon/icon';
 import SvgIcon from '@components/svg-icon/svg-icon';
 import dayjs from 'dayjs';
-import {useTranslation} from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import Tooltip from '@components/tooltip/tooltip';
-import {useDispatch, useSelector} from 'react-redux';
-import {setMedication} from '@pages/external-access/request-refill/store/request-refill.slice';
-import {selectMedicationsRefillRequested} from '@pages/external-access/request-refill/store/request-refill.selectors';
+import { useDispatch, useSelector } from 'react-redux';
+import { setMedication } from '@pages/external-access/request-refill/store/request-refill.slice';
+import { selectMedicationsRefillRequested } from '@pages/external-access/request-refill/store/request-refill.selectors';
 import MedicationRefillNotAllowed from '@pages/external-access/request-refill/components/medication-refill-not-allowed';
 
 interface MedicationListItemProps {
     data: Medication
 }
 
-const MedicationListItem = ({data}: MedicationListItemProps) => {
-    const {t} = useTranslation();
+const MedicationListItem = ({ data }: MedicationListItemProps) => {
+    const { t } = useTranslation();
     const dispatch = useDispatch();
     const history = useHistory();
     const refillRequestedMedications = useSelector(selectMedicationsRefillRequested);
@@ -36,7 +36,7 @@ const MedicationListItem = ({data}: MedicationListItemProps) => {
             return null;
         }
         if (!data.refillsAllowed) {
-            return <MedicationRefillNotAllowed/>;
+            return <MedicationRefillNotAllowed />;
         }
 
         if (refillRequestedMedications?.find(a => a === data?.medicationName)) {
@@ -44,8 +44,8 @@ const MedicationListItem = ({data}: MedicationListItemProps) => {
         }
 
         return <Button onClick={() => requestRefill()}
-                       buttonType='medium'
-                       label='external_access.medication_refill.medication_list.request_refill' />
+            buttonType='medium'
+            label='external_access.medication_refill.medication_list.request_refill' />
     }
 
     return <div className="px-6 py-4 flex border-b">
@@ -62,7 +62,7 @@ const MedicationListItem = ({data}: MedicationListItemProps) => {
                     <SvgIcon type={Icon.Info} fillClass='rgba-05-fill' />
                 </div>
                 <Tooltip targetRef={infoAlertIcon} isVisible={displayInfoAlert} placement='bottom-start'>
-                    {data.unstructuredSig}
+                    <div className='px-2'>{data.unstructuredSig}</div>
                 </Tooltip>
             </div>
         </div>
@@ -80,7 +80,7 @@ const MedicationListItem = ({data}: MedicationListItemProps) => {
         </div>
         <div className='hidden xl:flex flex-none w-8 items-center'> </div>
         <div className='hidden xl:flex w-2/12 items-center justify-center'>
-            { getRefillButton()}
+            {getRefillButton()}
         </div>
     </div>
 }
