@@ -327,7 +327,8 @@ const SearchBar = () => {
         header: (emptySearchTypes && searchTermDisplayValue) ? <div className='px-4 h-14 flex items-center body3'>{t('search.no_matching_filter')}</div> : undefined,
         defaultValue: selectedType.toString(),
         categorizedItems: getCategorizedItems(),
-        items: getItems()
+        items: getItems(),
+        itemsWrapperClass: 'max-h-120'
     }
 
     customHooks.useOutsideClick([dropdownRef], () => {
