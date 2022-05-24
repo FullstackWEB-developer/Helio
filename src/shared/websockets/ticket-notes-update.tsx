@@ -41,7 +41,7 @@ const TicketNotesUpdate = () => {
             .build();
 
         setConnection(newConnection);
-    }, []);
+    }, [ticketId, ccpTicketId]);
 
     useEffect(() => {
         if(connection?.state === HubConnectionState.Connected){
