@@ -1,16 +1,16 @@
-import React, {Fragment, useEffect, useState} from 'react';
-import {useTranslation} from 'react-i18next';
+import React, { Fragment, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import withErrorLogging from '../../../shared/HOC/with-error-logging';
 import SvgIcon from '@components/svg-icon/svg-icon';
-import {Icon} from '@components/svg-icon/icon';
+import { Icon } from '@components/svg-icon/icon';
 import {
     PatientCaseDocumentSource,
     PatientCaseDocumentSubClass
 } from '@pages/external-access/request-refill/models/patient-case-external.model';
-import {Controller, useForm} from 'react-hook-form';
-import {useDispatch, useSelector} from 'react-redux';
-import {selectVerifiedPatent} from '@pages/patients/store/patients.selectors';
-import {useMutation, useQuery} from 'react-query';
+import { Controller, useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectVerifiedPatent } from '@pages/patients/store/patients.selectors';
+import { useMutation, useQuery } from 'react-query';
 import {
     createPatientCase,
     getPatientDefaultPharmacy,
@@ -18,37 +18,38 @@ import {
     searchPharmacies
 } from '@pages/external-access/request-refill/services/request-refill.service';
 import ControlledSelect from '@components/controllers/controlled-select';
-import {Option} from '@components/option/option';
-import {Medication} from '@pages/external-access/request-refill/models/medication.model';
-import {AxiosError} from 'axios';
+import { Option } from '@components/option/option';
+import { Medication } from '@pages/external-access/request-refill/models/medication.model';
+import { AxiosError } from 'axios';
 import {
     QueryDefaultPharmacy,
     QueryPatientMedication,
     QueryPharmacies,
     QueryStates
 } from '@constants/react-query-constants';
-import {Pharmacy} from '@pages/external-access/request-refill/models/pharmacy.model';
+import { ViewMedicationsPath} from '@app/paths';
+import { Pharmacy } from '@pages/external-access/request-refill/models/pharmacy.model';
 import TextArea from '@components/textarea/textarea';
 import Button from '@components/button/button';
-import {useHistory} from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import utils from '@shared/utils/utils';
 import './request-refill.scss';
 import ControlledInput from '@components/controllers/ControlledInput';
-import {selectProviderList} from '@shared/store/lookups/lookups.selectors';
-import {Provider} from '@shared/models/provider';
-import {getProviders, getStates} from '@shared/services/lookups.service';
-import {selectMedication} from '@pages/external-access/request-refill/store/request-refill.selectors';
+import { selectProviderList } from '@shared/store/lookups/lookups.selectors';
+import { Provider } from '@shared/models/provider';
+import { getProviders, getStates } from '@shared/services/lookups.service';
+import { selectMedication } from '@pages/external-access/request-refill/store/request-refill.selectors';
 import useDebounce from '@shared/hooks/useDebounce';
-import {DEBOUNCE_SEARCH_DELAY_MS} from '@constants/form-constants';
-import {Facility} from '@pages/external-access/request-refill/models/facility.model';
+import { DEBOUNCE_SEARCH_DELAY_MS } from '@constants/form-constants';
+import { Facility } from '@pages/external-access/request-refill/models/facility.model';
 import Spinner from '@components/spinner/Spinner';
-import Checkbox, {CheckboxCheckEvent} from '@components/checkbox/checkbox';
-import {addRefillRequestedMedication} from './store/request-refill.slice';
-import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
-import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
+import Checkbox, { CheckboxCheckEvent } from '@components/checkbox/checkbox';
+import { addRefillRequestedMedication } from './store/request-refill.slice';
+import { addSnackbarMessage } from '@shared/store/snackbar/snackbar.slice';
+import { SnackbarType } from '@components/snackbar/snackbar-type.enum';
 
 const RequestRefill = () => {
-    const {t} = useTranslation();
+    const { t } = useTranslation();
     const dispatch = useDispatch();
     const mask = '(999) 999-9999';
     const history = useHistory();
@@ -56,7 +57,7 @@ const RequestRefill = () => {
     const medication = useSelector(selectMedication);
     const verifiedPatient = useSelector(selectVerifiedPatent);
     const [isVisibleForm, setIsVisibleForm] = useState(false);
-    const {handleSubmit, control, errors, setError, setValue, getValues, watch} = useForm();
+    const { handleSubmit, control, errors, setError, setValue, getValues, watch } = useForm();
     const [messageText, setMessageText] = useState('');
     const maxLength = 1000;
     const [pharmaciesSearchTerm, setPharmaciesSearchTerm] = useState('');
@@ -72,14 +73,14 @@ const RequestRefill = () => {
         dispatch(getProviders());
     }, [dispatch]);
 
-    const {isLoading: isMedicationLoading, data: medications, isFetched} = useQuery<Medication[], AxiosError>([QueryPatientMedication, verifiedPatient?.patientId], () =>
+    const { isLoading: isMedicationLoading, data: medications, isFetched } = useQuery<Medication[], AxiosError>([QueryPatientMedication, verifiedPatient?.patientId], () =>
         getPatientMedications(verifiedPatient?.patientId),
         {
             enabled: !!verifiedPatient
         }
     );
 
-    const {isLoading: isDefaultPharmacyLoading} = useQuery<Pharmacy, AxiosError>([QueryDefaultPharmacy, verifiedPatient?.patientId, verifiedPatient?.departmentId], () =>
+    const { isLoading: isDefaultPharmacyLoading } = useQuery<Pharmacy, AxiosError>([QueryDefaultPharmacy, verifiedPatient?.patientId, verifiedPatient?.departmentId], () =>
         getPatientDefaultPharmacy(verifiedPatient?.patientId),
         {
             enabled: !!verifiedPatient,
@@ -92,7 +93,7 @@ const RequestRefill = () => {
         }
     );
 
-    const {refetch: refetchPharmacies, isFetching: isFetchingPharmacies} = useQuery<Facility[], AxiosError>([QueryPharmacies, debouncePharmaciesSearchTerm], () =>
+    const { refetch: refetchPharmacies, isFetching: isFetchingPharmacies } = useQuery<Facility[], AxiosError>([QueryPharmacies, debouncePharmaciesSearchTerm], () =>
         searchPharmacies(verifiedPatient?.patientId, verifiedPatient?.departmentId, debouncePharmaciesSearchTerm), {
         enabled: false,
         onSuccess: (data) => {
@@ -115,11 +116,11 @@ const RequestRefill = () => {
             }
         },
         onError: () => {
-            setError('pharmacyName', {type: 'notFound', message: t('external_access.medication_refill.error_getting_pharmacies')});
+            setError('pharmacyName', { type: 'notFound', message: t('external_access.medication_refill.error_getting_pharmacies') });
         }
     });
 
-    const {isLoading: isStatesLoading} = useQuery(QueryStates, () =>
+    const { isLoading: isStatesLoading } = useQuery(QueryStates, () =>
         getStates(),
         {
             onSuccess: (data: any) => {
@@ -226,7 +227,7 @@ const RequestRefill = () => {
         }
     }
 
-    const {isLoading, isError, mutate} = useMutation(createPatientCase, {
+    const { isLoading, isError, mutate } = useMutation(createPatientCase, {
         onSuccess: () => {
             setMessageText('');
             history.push('/o/request-refill-confirmation');
@@ -349,7 +350,7 @@ const RequestRefill = () => {
         return <ControlledInput control={control} name='pharmacyName' required={true}
             label={'external_access.medication_refill.pharmacy_name'}
             data-test-id='request-refill-pharmacy-name'
-            onChange={({target}) => onPharmacyInputChange(target.value)}
+            onChange={({ target }) => onPharmacyInputChange(target.value)}
         />;
     }
 
@@ -373,7 +374,7 @@ const RequestRefill = () => {
     }
 
     return <div className='2xl:px-48 pt-7 without-default-padding'>
-        <div className='flex flex-row pb-5 cursor-pointer' onClick={() => history.goBack()}>
+        <div className='flex flex-row pb-5 cursor-pointer' onClick={() => history.push(ViewMedicationsPath)}>
             <SvgIcon type={Icon.ArrowBack} />
             <div className='body2 pl-4'>
                 {t('external_access.medication_refill.back_to_medications')}
