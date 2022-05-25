@@ -4,9 +4,9 @@ import Button from '@components/button/button';
 import { Medication } from '@pages/external-access/request-refill/models/medication.model';
 import { Icon } from '@components/svg-icon/icon';
 import SvgIcon from '@components/svg-icon/svg-icon';
+import ToolTipIcon from '@components/tooltip-icon/tooltip-icon';
 import dayjs from 'dayjs';
 import { useTranslation } from 'react-i18next';
-import Tooltip from '@components/tooltip/tooltip';
 import { useDispatch, useSelector } from 'react-redux';
 import { setMedication } from '@pages/external-access/request-refill/store/request-refill.slice';
 import { selectMedicationsRefillRequested } from '@pages/external-access/request-refill/store/request-refill.selectors';
@@ -21,10 +21,6 @@ const MedicationListItem = ({ data }: MedicationListItemProps) => {
     const dispatch = useDispatch();
     const history = useHistory();
     const refillRequestedMedications = useSelector(selectMedicationsRefillRequested);
-    const infoAlertIcon = useRef(null);
-    const [displayInfoAlert, setDisplayAlert] = useState<boolean>(false);
-    const tooltipDiv = useRef<HTMLDivElement>(null);
-
 
     const requestRefill = () => {
         dispatch(setMedication(data));
@@ -57,13 +53,14 @@ const MedicationListItem = ({ data }: MedicationListItemProps) => {
             <SvgIcon type={Icon.ArrowRight} fillClass='rgba-05-fill' onClick={() => data.refillsAllowed ? requestRefill() : {}} />
         </div>
         <div className='hidden xl:flex items-center w-6'>
-            <div ref={tooltipDiv} className='pt-1'>
-                <div ref={infoAlertIcon} onClick={() => setDisplayAlert(!displayInfoAlert)} className='cursor-pointer'>
-                    <SvgIcon type={Icon.Info} fillClass='rgba-05-fill' />
-                </div>
-                <Tooltip targetRef={infoAlertIcon} isVisible={displayInfoAlert} placement='bottom-start'>
+            <div className='pt-1'>
+                <ToolTipIcon
+                    icon={Icon.Info}
+                    iconFillClass='rgba-05-fill'
+                    placement='bottom-start'
+                >
                     <div className='px-2'>{data.unstructuredSig}</div>
-                </Tooltip>
+                </ToolTipIcon>
             </div>
         </div>
         <div className='hidden xl:flex flex-none w-8 items-center'> </div>
