@@ -9,11 +9,12 @@ import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
 import Spinner from '@components/spinner/Spinner';
 import App from '@app/app';
 import utils from '@shared/utils/utils';
+import {useEffect} from 'react';
 
 const InitializeApp = () => {
     const {t} = useTranslation();
     const dispatch = useDispatch();
-    const {isLoading, isError} = useQuery(FetchAppParameters, () => axios.get(`${process.env.REACT_APP_API_ENDPOINT}/parameters`,{
+    const {isLoading, isError, refetch} = useQuery(FetchAppParameters, () => axios.get(`${process.env.REACT_APP_API_ENDPOINT}/parameters`,{
             headers: {
             'X-Api-Key': process.env.REACT_APP_AWS_API_KEY
             }
@@ -30,6 +31,10 @@ const InitializeApp = () => {
             }))
         }
     })
+
+    useEffect(() => {
+        refetch().then();
+    }, []);
 
     if (isError) {
         return <div>{t('app.error_loading_parameters')}</div>
