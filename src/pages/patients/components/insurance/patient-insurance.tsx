@@ -59,10 +59,10 @@ const PatientInsurance = () => {
                 <span>
                     {insurance?.insurancePlanName || ''} {primaryInsuranceHeader}
                     {
-                        insurance?.insurancePhone && <span>{`${t('patient.insurance.phone')}: ${insurance.insurancePhone}`}</span>
+                        insurance?.insurancePhone && <div>{`${t('patient.insurance.phone')}: ${insurance.insurancePhone}`}</div>
                     }
-                    {insurance?.insuranceType !== SelfPayInsuranceTypeName && <><span className='ml-3'>{t('patient.insurance.copay')}</span>
-                        <span className='subtitle2'>{insurance.copayAmount}</span>
+                    {insurance?.insuranceType !== SelfPayInsuranceTypeName && <><span>{t('patient.insurance.copay')}</span>
+                        <span className='subtitle2'>{' $' + insurance.copayAmount}</span>
                     </>}
                 </span>
             </div>
