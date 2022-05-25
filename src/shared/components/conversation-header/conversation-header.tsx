@@ -60,6 +60,12 @@ const ConversationHeader = ({info, forNewTicketMessagePurpose, patientPhoto, con
         dispatch(getEnumByType('TicketType'));
     }, [dispatch]);
     const ticketReasons = useSelector((state) => selectLookupValues(state, 'TicketReason'));
+    const getUserFullName = () => {
+        if(info.contactId && userFullName){
+            return userFullName;
+        }
+        return info.createdForName
+    }
     const getTicketReasons = () => {
         return ticketReasons.find((lookupValue) => lookupValue.value === ticket?.reason)?.label ?? t('common.not_available');
     }
@@ -150,7 +156,7 @@ const ConversationHeader = ({info, forNewTicketMessagePurpose, patientPhoto, con
             return <Link className='body2-primary hover:underline' to={`${PatientsPath}/${info.patientId}`}>{info.patientId}</Link>
         }
         if (!!info.contactId) {
-            return <Link className='body2-primary hover:underline' to={`${ContactsPath}/${info.contactId}`}>{userFullName}</Link>
+            return <Link className='body2-primary hover:underline' to={`${ContactsPath}/${info.contactId}`}>{getUserFullName()}</Link>
         }
         return t('common.not_available');
     }
@@ -168,12 +174,20 @@ const ConversationHeader = ({info, forNewTicketMessagePurpose, patientPhoto, con
     }
 
     const displayName = () => {
-        if (userFullName) {
+        if(info.contactId && userFullName){
             if (userFullName.startsWith('+') || /\d/.test(userFullName)) {
                 return utils.applyPhoneMask(userFullName);
             }
             return userFullName;
         }
+
+        if(info.createdForName){
+            if (info.createdForName.startsWith('+') || /\d/.test(info.createdForName)) {
+                return utils.applyPhoneMask(info.createdForName);
+            }
+            return info.createdForName;
+        }
+        
         return utils.applyPhoneMask(info.createdForEndpoint);
     }
 
@@ -183,7 +197,7 @@ const ConversationHeader = ({info, forNewTicketMessagePurpose, patientPhoto, con
                 src={`data:image/jpeg;base64,${patientPhoto}`} />
         }
 
-        return <Avatar userFullName={userFullName} />
+        return <Avatar userFullName={getUserFullName()} />
     }
 
     const updateStatusMutation = useMutation(setStatus, {
@@ -254,8 +268,8 @@ const ConversationHeader = ({info, forNewTicketMessagePurpose, patientPhoto, con
     return (
         <div className="flex flex-row border-b sms-chat-header">
             <div className="pt-4 pl-6">
-                {!!userFullName && getImage()}
-                {!userFullName &&
+                {!!getUserFullName() && getImage()}
+                {!getUserFullName() &&
                     <Avatar icon={Icon.UserUnknown} userPicture={patientPhoto} />
                 }
             </div>
