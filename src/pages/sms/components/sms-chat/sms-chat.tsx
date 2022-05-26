@@ -9,7 +9,7 @@ import Spinner from '@components/spinner/Spinner';
 import {useTranslation} from 'react-i18next';
 import './sms-chat.scss';
 import {getEnumByType, getTicketById} from '@pages/tickets/services/tickets.service';
-import { getLookupValues } from '@shared/services/lookups.service';
+import {getLookupValues} from '@shared/services/lookups.service';
 import {Icon} from '@components/svg-icon';
 import TextArea from '@components/textarea/textarea';
 import SelectedTemplateInfo from '@components/notification-template-select/components/selected-template-info';
@@ -42,7 +42,7 @@ interface SmsChatProps {
     lastMessageSendTime?: Date;
 }
 
-const SmsChat = ({info, isLoading, isSending, isBottomFocus, messages = [], lastMessageSendTime,...props}: SmsChatProps) => {
+const SmsChat = ({info, isLoading, isSending, isBottomFocus, messages = [], lastMessageSendTime, ...props}: SmsChatProps) => {
     const dispatch = useDispatch();
     const {t} = useTranslation();
     const [smsDisabledText, setSmsDisabledText] = useState<string>();
@@ -51,7 +51,7 @@ const SmsChat = ({info, isLoading, isSending, isBottomFocus, messages = [], last
     const topMessagePosition = useRef<number>();
     const [selectedMessageTemplate, setSelectedMessageTemplate] = useState<NotificationTemplate>();
 
-    const {data: patient} = useQuery([QueryGetPatientById, info.patientId], () => getPatientByIdWithQuery(info.patientId!), {
+    const {data: patient, isFetching: isFetchingPatient} = useQuery([QueryGetPatientById, info.patientId], () => getPatientByIdWithQuery(info.patientId!), {
         enabled: !!info.patientId
     });
 
@@ -59,17 +59,17 @@ const SmsChat = ({info, isLoading, isSending, isBottomFocus, messages = [], last
         enabled: !!info.patientId
     });
 
-    const {data: contact} = useQuery<ContactExtended>([QueryContactsInfinite, info.contactId], () => getContactById(info.contactId!), {
+    const {data: contact, isFetching: isFetchingContact} = useQuery<ContactExtended>([QueryContactsInfinite, info.contactId], () => getContactById(info.contactId!), {
         enabled: !!info.contactId
     })
 
-    const {data: ticket, refetch: refetchTicket} = useQuery([QueryTickets, info.ticketId], () => getTicketById(info.ticketId!), {
+    const {data: ticket, refetch: refetchTicket, isFetching: isFetchingTicket} = useQuery([QueryTickets, info.ticketId], () => getTicketById(info.ticketId!), {
         enabled: !!info.ticketId
     });
 
     const sendToNumber = useMemo(() => {
         let mobilePhone = patient?.mobilePhone ?? contact?.mobilePhone;
-        if(!mobilePhone){
+        if (!mobilePhone) {
             mobilePhone = info.createdForEndpoint;
         }
         return mobilePhone;
@@ -77,14 +77,14 @@ const SmsChat = ({info, isLoading, isSending, isBottomFocus, messages = [], last
 
     useEffect(() => {
         let originalNumber = info?.createdForEndpoint || ticket?.originationNumber;
-        if(originalNumber && originalNumber.startsWith('+1')) {
+        if (originalNumber && originalNumber.startsWith('+1')) {
             originalNumber = originalNumber.substring(2);
         }
-        if(patient && (!patient.consentToText || patient.mobilePhone !== originalNumber) ) {
+        if (patient && (!patient.consentToText || patient.mobilePhone !== originalNumber)) {
             setSmsDisabledText('sms.sms_not_available_patient');
         } else if (contact && contact.mobilePhone !== originalNumber) {
             setSmsDisabledText('sms.sms_not_available_contact');
-        } else if(ticket?.isPassive) {
+        } else if (ticket?.isPassive) {
             setSmsDisabledText('sms.ticket_closed');
         } else {
             setSmsDisabledText(undefined)
@@ -131,7 +131,7 @@ const SmsChat = ({info, isLoading, isSending, isBottomFocus, messages = [], last
         if (props.onFetchMore && currentTarget.scrollTop <= 0) {
             props.onFetchMore();
         }
-    }   
+    }
 
     const onTemplateSelect = (template: NotificationTemplate) => {
         setSelectedMessageTemplate(template);
@@ -161,86 +161,89 @@ const SmsChat = ({info, isLoading, isSending, isBottomFocus, messages = [], last
     }
 
     const getUserFullName = () => {
-        if(contact && contact.type === ContactType.Company)
-        {
+        if (contact && contact.type === ContactType.Company) {
             return contact.companyName
         }
 
-        if(contact && contact.type === ContactType.Individual)
-        {
+        if (contact && contact.type === ContactType.Individual) {
             return contact.firstName + " " + contact.lastName;
         }
 
-        if(patient)
-        {
+        if (patient) {
             return patient.firstName + " " + patient.lastName;
         }
 
         return "";
     }
 
+    const showBodyLoader = isLoading || isFetchingContact || isFetchingPatient || isFetchingTicket;
+
     return (<div className="flex flex-col justify-between flex-auto h-full sms-chat">
         <ConversationHeader ticket={ticket}
-                            refetchTicket={refetchTicket}
-                            info={info} forNewTicketMessagePurpose={false} patientPhoto={patientPhoto} conversationChannel={ChannelTypes.SMS} userFullName={getUserFullName()} />
-        <div className="flex flex-col flex-1 pl-6 overflow-y-auto">
-            {messages && messages.length > 0 &&
+            refetchTicket={refetchTicket}
+            info={info} forNewTicketMessagePurpose={false} patientPhoto={patientPhoto} conversationChannel={ChannelTypes.SMS} userFullName={getUserFullName()} />
+        {
+             showBodyLoader ? <Spinner fullScreen /> :
                 <>
-                    <div className={classnames('flex flex-row justify-center', {'hidden': !isLoading})}>
-                        <Spinner />
+                    <div className="flex flex-col flex-1 pl-6 overflow-y-auto">
+                        {messages && messages.length > 0 &&
+                            <>
+                                <div className={classnames('flex flex-row justify-center', {'hidden': !isLoading})}>
+                                    <Spinner />
+                                </div>
+                                <div ref={messageListContainerRef} className='flex flex-col h-full overflow-y-auto pb-6' onScroll={onScroll}>
+                                    <SmsChatMessageList messages={messages} patientPhoto={patientPhoto} />
+                                    <AlwaysScrollToBottom enabled={!isBottomFocus} />
+                                </div>
+                            </>
+                        }
+                        {(!messages || messages.length < 1) &&
+                            <EmptyMessage />
+                        }
                     </div>
-                    <div ref={messageListContainerRef} className='flex flex-col h-full overflow-y-auto pb-6' onScroll={onScroll}>
-                        <SmsChatMessageList messages={messages} patientPhoto={patientPhoto} />
-                        <AlwaysScrollToBottom enabled={!isBottomFocus} />
+                    {!!smsDisabledText && <div className='unavailable-sms pb-4'>
+                        <Alert message={smsDisabledText} type='error' />
+                    </div>}
+                    <div className="flex flex-col justify-center pt-4 pb-4 pl-6 pr-16 sms-chat-footer">
+                        <div className='flex flex-row items-end'>
+                            <div className='pb-6 mr-3'>
+                                <NotificationTemplateSelect
+                                    disabled={!!smsDisabledText}
+                                    channel={NotificationTemplateChannel.Sms}
+                                    onSelect={(template) => onTemplateSelect(template)}
+                                    usedFrom={TemplateUsedFrom.Inbox}
+                                />
+                            </div>
+                            <div className='flex flex-col w-full py-5'>
+                                <SelectedTemplateInfo selectedMessageTemplate={selectedMessageTemplate} />
+                                {selectedMessageTemplate && <div>
+                                    <ParentExtraTemplate logicKey={selectedMessageTemplate?.logicKey} patient={patient} parentType='sms' />
+                                </div>}
+                                {selectedMessageTemplate && <div className='pb-5' />}
+                                <TextArea
+                                    className='w-full pl-6 pr-0 body2 sms-chat-textarea'
+                                    data-test-id='ticket-send-email'
+                                    placeHolder={t('ticket_detail.add_note')}
+                                    rows={2}
+                                    maxRows={5}
+                                    value={smsText}
+                                    disabled={!!smsDisabledText || ticket?.isPassive}
+                                    onChange={(message) => setSmsText(message)}
+                                    resizable={false}
+                                    isLoading={isSending || isProcessing}
+                                    hasBorder={false}
+                                    iconClassNames='icon-medium'
+                                    showFormatting={false}
+                                    icon={Icon.Send}
+                                    iconFill='notes-send'
+                                    iconOnClick={() => onSend()}
+                                    focusState={true}
+                                />
+                            </div>
+                        </div>
                     </div>
                 </>
-            }
-            {(!messages || messages.length < 1) &&
-                <EmptyMessage />
-            }
-        </div>
-        {!!smsDisabledText && <div className='unavailable-sms pb-4'>
-            <Alert message={smsDisabledText} type='error'/>
-        </div>}
-        <div className="flex flex-col justify-center pt-4 pb-4 pl-6 pr-16 sms-chat-footer">
-            <div className='flex flex-row items-end'>
-                <div className='pb-6 mr-3'>
-                    <NotificationTemplateSelect
-                        disabled={!!smsDisabledText}
-                        channel={NotificationTemplateChannel.Sms}
-                        onSelect={(template) => onTemplateSelect(template)}
-                        usedFrom={TemplateUsedFrom.Inbox}
-                    />
-                </div>
-                <div className='flex flex-col w-full py-5'>
-                    <SelectedTemplateInfo selectedMessageTemplate={selectedMessageTemplate} />
-                    {selectedMessageTemplate && <div>
-                        <ParentExtraTemplate logicKey={selectedMessageTemplate?.logicKey} patient={patient} parentType='sms' />
-                    </div>}
-                    {selectedMessageTemplate && <div className='pb-5' />}
-                    <TextArea
-                        className='w-full pl-6 pr-0 body2 sms-chat-textarea'
-                        data-test-id='ticket-send-email'
-                        placeHolder={t('ticket_detail.add_note')}
-                        rows={2}
-                        maxRows={5}
-                        value={smsText}
-                        disabled={!!smsDisabledText || ticket?.isPassive}
-                        onChange={(message) => setSmsText(message)}
-                        resizable={false}
-                        isLoading={isSending || isProcessing}
-                        hasBorder={false}
-                        iconClassNames='icon-medium'
-                        showFormatting={false}
-                        icon={Icon.Send}
-                        iconFill='notes-send'
-                        iconOnClick={() => onSend()}
-                        focusState={true}
-                    />
-                </div>
-            </div>
-
-        </div>
+        }
     </div>);
 }
 
