@@ -1,21 +1,50 @@
-import {Point} from '@nivo/line';
+import {Point, Serie} from '@nivo/line';
 import dayjs from 'dayjs';
 import React, {useMemo} from 'react';
 import {useTranslation} from 'react-i18next';
 import {TicketVolumeDataType} from '@pages/dashboard/models/ticket-volume-data-type.enum';
 import utc from 'dayjs/plugin/utc';
 import weekday from 'dayjs/plugin/weekday';
+import {useSelector} from 'react-redux';
+import {selectDashboardFilterEndDate} from '@shared/store/app/app.selectors';
 
 export interface ChartTooltipProps {
+    data?: Serie[];
     point: Point;
     label: string;
     volumeDataType?: TicketVolumeDataType;
 }
-const ChartTooltip = ({point, label, volumeDataType = TicketVolumeDataType.Daily}: ChartTooltipProps) => {
+const ChartTooltip = ({point, label, volumeDataType = TicketVolumeDataType.Daily, data = []}: ChartTooltipProps) => {
 
     dayjs.extend(utc);
+    const dashboardFilterEndDate = useSelector(selectDashboardFilterEndDate);
     dayjs.extend(weekday);
     const {t} = useTranslation();
+
+    const findPoint = (point, date) => {
+        return point.x == date.format('YYYY-MM-DD');
+    }
+
+    const getEndDate = (date: dayjs.Dayjs, isMonth: boolean) => {
+        if(data && data.length > 1){
+            let currentIndex = data[0].data.findIndex( x => findPoint(x, date));
+            if(currentIndex > -1 && data[0].data[currentIndex + 1]){
+                if(data[0].data[currentIndex + 1].x){
+                    return dayjs(data[0].data[currentIndex + 1].x)
+                }
+            }
+        }
+                
+        if(isMonth){
+            return date.endOf('month');
+        }
+        
+        if (date < dayjs() && dayjs.utc(dashboardFilterEndDate).isBefore(date.weekday(7))) {
+            return dayjs(dashboardFilterEndDate);
+        } else {
+            return date.weekday(7);
+        }
+    }
 
     const headerLabel = useMemo(() => {
         const date = dayjs.utc(point.data.x);
@@ -23,9 +52,9 @@ const ChartTooltip = ({point, label, volumeDataType = TicketVolumeDataType.Daily
             case TicketVolumeDataType.Daily:
                 return date.format('MMM D');
             case TicketVolumeDataType.SingleDay:
-                return date.format('HH:mm') + " - " + date.add(2, 'hour').format('HH:mm');
+                return date.format('hh:mm A') + " - " + date.add(2, 'hour').format('hh:mm A');
             case TicketVolumeDataType.Weekly:
-                return date.format('MMM D') + " - " + date.weekday(7).format('MMM D');
+                return date.format('MMM D') + " - " + getEndDate(date, true).format('MMM DD');
             case TicketVolumeDataType.Quarterly:
                 return date.format('MMM D') + " - " + date.add(3, 'month').format('MMM D');
             case TicketVolumeDataType.Monthly:

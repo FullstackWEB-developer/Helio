@@ -32,6 +32,7 @@ import {getLocations} from '@shared/services/lookups.service';
 import classNames from 'classnames';
 import {setDashboardFilterEndDate} from '@shared/store/app/app.slice';
 import { BadgeValues } from '@pages/tickets/models/badge-values.model';
+import dayjs from 'dayjs';
 
 export const Dashboard = () => {
     const {t} = useTranslation();
@@ -140,6 +141,11 @@ export const Dashboard = () => {
             setDisplayTimeFrameDropdown(false);
             refreshDashboard();
         }
+        if( id === DashboardTimeframes.week) {
+            dispatch(setDashboardFilterEndDate(dayjs.utc().endOf('week').toDate()));
+        } else if( id === DashboardTimeframes.month) {
+            dispatch(setDashboardFilterEndDate(dayjs.utc().endOf('month').toDate()));
+        }
     }
 
     if (error) {
@@ -232,9 +238,12 @@ export const Dashboard = () => {
         'block':displayTimeFrameDropdown
     });
 
+    const wrapperClassName = classNames('w-full px-6 pb-10 overflow-y-auto dashboard', {
+        'opacity-40 pointer-events-none': isFetching || isLoading
+    });
 
     return (
-        <div className='w-full px-6 pb-10 overflow-y-auto dashboard'>
+        <div className={wrapperClassName} >
             <div className='flex flex-col'>
                 <div className='flex flex-col items-center justify-between dashboard-header xl:flex-row'>
                     <div className='relative' ref={typeDropdownRef}>
@@ -282,7 +291,7 @@ export const Dashboard = () => {
                 </div>
                 {isWallboard ?
                     <Wallboard lastUpdateTime={lastUpdateTime} /> :
-                    <div className={isFetching || isLoading ? 'opacity-40' : ''}><DashboardContent data={dashboardInformation} /></div>
+                    <div><DashboardContent data={dashboardInformation} /></div>
                 }
             </div>
         </div>

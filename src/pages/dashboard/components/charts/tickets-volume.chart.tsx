@@ -49,12 +49,12 @@ const TicketsVolumeChart = ({data}: TicketsVolumeChartProps) => {
     const tickValues = useMemo(() => {
         const values: Date[] = [];
         data.createdTotal.forEach(a => {
-            values.push(dayjs.utc(a.label).toDate());
+            values.push(dayjs.utc(a.label).local().toDate());
         });
 
         data.closedTotal.forEach(a => {
             if (!values.map(a => a.toTimeString()).includes(dayjs.utc(a.label).toDate().toTimeString())) {
-                values.push(dayjs.utc(a.label).toDate());
+                values.push(dayjs.utc(a.label).local().toDate());
             }
         });
 
@@ -78,6 +78,6 @@ const TicketsVolumeChart = ({data}: TicketsVolumeChartProps) => {
     }
 
 
-    return <HelioResponsiveLine volumeDataType={data.volumeDataType} tickValues={tickValues} data={convertedData} tickRotation={0} toolTipLabelGenerator={(point) => `dashboard.tickets_volume.${point.serieId}_tickets`} />
+    return <HelioResponsiveLine volumeDataType={data.volumeDataType} tickValues={data.volumeDataType !== TicketVolumeDataType.Daily ? tickValues :undefined} data={convertedData} tickRotation={0} toolTipLabelGenerator={(point) => `dashboard.tickets_volume.${point.serieId}_tickets`} />
 }
 export default TicketsVolumeChart;

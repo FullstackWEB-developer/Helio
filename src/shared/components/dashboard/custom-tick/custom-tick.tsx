@@ -5,21 +5,40 @@ import utc from 'dayjs/plugin/utc';
 import weekday from 'dayjs/plugin/weekday';
 import {useSelector} from 'react-redux';
 import {selectDashboardFilterEndDate} from '@shared/store/app/app.selectors';
+import { Serie } from '@nivo/line';
 
 export interface CustomTickProps {
+    data?: Serie[];
     tick: any;
     tickRotation: number;
     volumeDataType: TicketVolumeDataType;
 }
 
-const CustomTick = ({tick, tickRotation, volumeDataType}: CustomTickProps) => {
+const CustomTick = ({tick, tickRotation, volumeDataType, data = []}: CustomTickProps) => {
     const style = getComputedStyle(document.body);
     dayjs.extend(utc);
     const dashboardFilterEndDate = useSelector(selectDashboardFilterEndDate);
     dayjs.extend(weekday);
 
-    const getEndDate = (date: dayjs.Dayjs) => {
-        if (dayjs.utc(dashboardFilterEndDate).isBefore(date.weekday(7))) {
+    const findPoint = (point, date) => {
+        return point.x == date.format('YYYY-MM-DD');
+    }
+
+    const getEndDate = (date: dayjs.Dayjs, isMonth: boolean) => {
+        if(data && data.length > 1){
+            let currentIndex = data[0].data.findIndex( x => findPoint(x, date));
+            if(currentIndex > -1 && data[0].data[currentIndex + 1]){
+                if(data[0].data[currentIndex + 1].x){
+                    return dayjs(data[0].data[currentIndex + 1].x)
+                }
+            }
+        }
+        
+        if(isMonth){
+            return date.endOf('month');
+        }
+        
+        if (date < dayjs() && dayjs.utc(dashboardFilterEndDate).isBefore(date.weekday(7))) {
             return dayjs(dashboardFilterEndDate);
         } else {
             return date.weekday(7);
@@ -40,13 +59,13 @@ const CustomTick = ({tick, tickRotation, volumeDataType}: CustomTickProps) => {
                 </>;
             case TicketVolumeDataType.SingleDay:
                 return <>
-                    <tspan x={"6"} dy="1.2em">{date.format('HH:mm')}</tspan>
-                    <tspan x={"6"} dy="1.2em">{date.add(2, 'hour').format('HH:mm')}</tspan>
+                    <tspan x={"6"} dy="1.2em">{date.format('hh:mm A')}</tspan>
+                    <tspan x={"6"} dy="1.2em">{date.add(2, 'hour').format('hh:mm A')}</tspan>
                 </>
             case TicketVolumeDataType.Weekly:
                 return <>
                     <tspan x={"6"} dy="1.2em">{date.format('MMM DD')}</tspan>
-                    <tspan x={"6"} dy="1.2em">{getEndDate(date).format('MMM DD')} </tspan>
+                    <tspan x={"6"} dy="1.2em">{getEndDate(date, true).format('MMM DD')} </tspan>
                 </>;
             case TicketVolumeDataType.Monthly:
                 return <tspan x="0" dy="1.2em">{date.format('MMM')}</tspan>;

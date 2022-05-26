@@ -59,12 +59,12 @@ const HelioResponsiveLine = ({data, tickRotation, tickValues = 'every 1 day', to
         }}
         enableGridX={false}
         pointLabelYOffset={-12}
-        tooltip={({ point }) => <ChartTooltip volumeDataType={volumeDataType} label={toolTipLabelGenerator(point)} point={point}/>}
+        tooltip={({ point }) => <ChartTooltip data={data} volumeDataType={volumeDataType} label={toolTipLabelGenerator(point)} point={point}/>}
         enableArea={true}
         axisBottom={{
             tickValues,
             legendPosition: "middle",
-            renderTick: (tick) =>  <CustomTick volumeDataType={volumeDataType} tick={tick} tickRotation={tickRotation} />,
+            renderTick: (tick) =>  <CustomTick data={data} volumeDataType={volumeDataType} tick={tick} tickRotation={tickRotation} />,
         }}
         legends={[
             {
