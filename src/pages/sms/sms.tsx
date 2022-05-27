@@ -111,8 +111,12 @@ const Sms = () => {
         getNextPageParam: (lastPage) => getNextPage(lastPage),
         onSuccess: (result) => {
             let pageResult = utils.accumulateInfiniteData(result);
+            let tempContactIds = pageResult.map(a => a.contactId).filter(Boolean) as string[]
             setPageResult(utils.accumulateInfiniteData(result));
-            setContactIds(pageResult.map(a => a.contactId).filter(Boolean) as string[]);
+            setContactIds(tempContactIds);
+            if(tempContactIds.length === 0){
+                dispatch(setSmsMessageSummaries(pageResult));
+            }
         }
     });
 
