@@ -1,8 +1,10 @@
 textarea:disabled {
-  background-color: var(--text-area-disabled-color);
+  background-color: var(--color-white);
+  opacity: var(--text-area-disabled-opacity);
 }
 .textarea-wrapper {
-  background-color: var(--text-area-disabled-color);
+  background-color: var(--color-white);
+  opacity: var(--text-area-disabled-opacity);
 }
 
 .textarea-wrapper-focus:focus-within {
