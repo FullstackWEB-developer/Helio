@@ -62,8 +62,10 @@ const SmsChatSummary = ({
     const getDate = () => {
         if (dayjs(messageCreatedOn).isToday()) {
             return dayjs.utc(messageCreatedOn).local().format('hh:mm A');
-        } else {
+        } else if (dayjs(messageCreatedOn).year() === dayjs().year()) {
             return dayjs.utc(messageCreatedOn).local().format('MMM D');
+        } else {
+            return dayjs.utc(messageCreatedOn).local().format('MMM D, YYYY');
         }
     }
 

@@ -15,6 +15,7 @@ import utc from 'dayjs/plugin/utc';
 import './email-summary-item-view.scss';
 import {EmailPath} from '@app/paths';
 import {useHistory, useParams} from 'react-router';
+import ElipsisTooltipTextbox from '@components/elipsis-tooltip-textbox/elipsis-tooltip-textbox';
 export interface EmailSummaryItemViewProps {
     emailInfo : TicketMessageSummary,
     searchTerm? : string;
@@ -36,8 +37,10 @@ const EmailSummaryItemView = ({emailInfo, searchTerm}: EmailSummaryItemViewProps
         const messageSendAt = messageCreatedOn;
         if (dayjs(messageSendAt).isToday()) {
             return dayjs.utc(messageSendAt).local().format('hh:mm A');
-        } else {
+        } else if (dayjs(messageSendAt).year() === dayjs().year()){
             return dayjs.utc(messageSendAt).local().format('MMM D');
+        } else {
+            return dayjs.utc(messageSendAt).local().format('MMM D, YYYY');
         }
     }, [messageCreatedOn]);
 
@@ -76,7 +79,10 @@ const EmailSummaryItemView = ({emailInfo, searchTerm}: EmailSummaryItemViewProps
                     <div className='body1 truncate w-44'>
                         <HighlighterText text={createdForName ? createdForName : createdForEndpoint} highlighterText={searchTerm} />
                     </div>
-                    <div className='body3-small w-20 justify-end flex flex-row'>{hasAttachment && <div className='pr-2'><SvgIcon type={Icon.Attachment} className='icon-small' fillClass='rgba-06-fill' /></div>}<div>{getDate}</div></div>
+                    <div className='body3-small w-20 justify-end flex flex-row'>
+                        {hasAttachment && <div className='pr-2'><SvgIcon type={Icon.Attachment} className='icon-small' fillClass='rgba-06-fill' /></div>}
+                        <ElipsisTooltipTextbox value={getDate} classNames={"truncate"} asSpan={true} isDefaultTextClass={false} />
+                    </div>
                 </div>
                 <div className='flex flex-row'>
                     <div className={classnames('w-44 email-summary-display', {'body3-medium': isRead, 'body3-big': !isRead})}>

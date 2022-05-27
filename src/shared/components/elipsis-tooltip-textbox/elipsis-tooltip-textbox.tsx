@@ -9,9 +9,10 @@ interface ElipsisTooltipTextboxProps {
     asSpan?: boolean;
     classNames?: string;
     yOffsetInPixels?: number;
+    isDefaultTextClass?: boolean
 }
 
-const ElipsisTooltipTextbox = ({value, asSpan = false, classNames, yOffsetInPixels}: ElipsisTooltipTextboxProps) => {
+const ElipsisTooltipTextbox = ({value, asSpan = false, classNames, yOffsetInPixels, isDefaultTextClass = true}: ElipsisTooltipTextboxProps) => {
     const {t} = useTranslation();
     const classes = classnames(classNames);
     const ref = useRef(null);
@@ -52,7 +53,7 @@ const ElipsisTooltipTextbox = ({value, asSpan = false, classNames, yOffsetInPixe
 
 
     return (
-        <div ref={ref} className='relative inline-block w-full h-full truncate'>
+        <div ref={ref} className={classnames('truncate', {'relative inline-block w-full h-full': isDefaultTextClass})}>
             {
                 asSpan ? <span onMouseEnter={() => setIsVisible(true)} onMouseLeave={() => setIsVisible(false)} className={classes}>{t(value)}</span> :
                     <div onMouseEnter={() => setIsVisible(true)} onMouseLeave={() => setIsVisible(false)} className={classes}>{t(value)}</div>
