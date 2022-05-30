@@ -8,7 +8,7 @@ const AgentStatusDuration = ({date}: {date: Date}) => {
 
     useEffect(() => {
         let isMounted = true;
-        setTimeout(() => {
+        let interval = setInterval(() => {
             if (isMounted) {
                 setTimePassed(dayjs(new Date()).diff(dayjs(date), 'second'));
             }
@@ -16,10 +16,11 @@ const AgentStatusDuration = ({date}: {date: Date}) => {
 
         return () => {
             isMounted = false;
+            clearInterval(interval)
         };
-    }, [timePassed, date]);
+    }, [date]);
 
-    return <div>{dayjs.duration(timePassed, 'seconds').format('HH:mm:ss')}</div>
+    return <div> {dayjs.duration(timePassed, 'seconds').asHours().toFixed()}{dayjs.duration(timePassed, 'seconds').format(':mm:ss')}</div>
 }
 
 export default AgentStatusDuration;

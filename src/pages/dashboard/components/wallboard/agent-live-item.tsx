@@ -1,11 +1,12 @@
 import {LiveAgentStatusItemInfo} from '@shared/models/live-agent-status-info.model';
 import './agent-live-item.scss';
 import SvgIcon, {Icon} from '@components/svg-icon';
-import {useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 import classnames from 'classnames';
 import utils from '@shared/utils/utils';
+import ElipsisTooltipTextbox from '@components/elipsis-tooltip-textbox/elipsis-tooltip-textbox';
 
 export enum AgentLivItemType {
     Chat =1,
@@ -43,8 +44,8 @@ const AgentLiveItem = ({data, type} : AgentLiveItemProps) => {
         <div className={iconBackgroundClassName}>
             <SvgIcon fillClass='white-icon' type={type === AgentLivItemType.Call ? Icon.Phone : Icon.Chat}/>
         </div>
-        <div className='flex flex-col pl-2 pt-2 agent-live-text-background rounded-r-md'>
-            <div className='subtitle3'>{type === AgentLivItemType.Call ? utils.formatPhone(data.customerData) : data.customerData}</div>
+        <div className='flex flex-col h-12 pl-2 pt-1 agent-live-text-background rounded-r-md'>
+            <ElipsisTooltipTextbox value={type === AgentLivItemType.Call ? utils.formatPhone(data.customerData) : data.customerData} classNames={"w-16 subtitle3 truncate"} asSpan={true} />
             <div className='caption-caps'>{dayjs.duration(secondsPassed, 'seconds').format('m:ss')}</div>
         </div>
     </div>

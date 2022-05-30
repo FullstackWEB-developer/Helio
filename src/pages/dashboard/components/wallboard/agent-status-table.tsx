@@ -17,6 +17,8 @@ import Dropdown from '@components/dropdown/dropdown';
 import {DropdownItemModel, DropdownModel} from '@components/dropdown/dropdown.models';
 import {Option} from '@components/option/option';
 import customHooks from '@shared/hooks/customHooks';
+import {UserStatus} from '@shared/store/app-user/app-user.models';
+import ElipsisTooltipTextbox from '@components/elipsis-tooltip-textbox/elipsis-tooltip-textbox';
 
 const AgentStatusTable = () => {
 
@@ -64,13 +66,41 @@ const AgentStatusTable = () => {
                 }
             }
         })
-        return data;
+        return sortByStatus(data);
+    }
+
+    const sortByStatus = (data: LiveAgentStatusInfo[])  : LiveAgentStatusInfo[]=> {
+        let list: LiveAgentStatusInfo[] = [];
+        const listedStatuses = [
+            UserStatus.Available.toString(),
+            UserStatus.Busy.toString(),
+            UserStatus.OnCall.toString(),
+            UserStatus.AfterWork.toString(),
+            UserStatus.Offline.toString()];
+        list = list.concat(sortByName(data.filter(a => a.status === UserStatus.Available)));
+        list = list.concat(sortByName(data.filter(a => a.status === UserStatus.Busy || a.status === UserStatus.OnCall)));
+        list = list.concat(sortByName(data.filter(a => !listedStatuses.includes(a.status))));
+        list = list.concat(sortByName(data.filter(a => a.status === UserStatus.AfterWork)))
+        list = list.concat(sortByName(data.filter(a => a.status === UserStatus.Offline)));
+        return list;
+    }
+
+    const sortByName = (data: LiveAgentStatusInfo[]) => {
+        return data.sort((a, b) => {
+            if (!a.name) {
+                return -1;
+            }
+            if (!b.name) {
+                return -1;
+            }
+            return a.name > b.name ? 1 : -1;
+        });
     }
 
     const getAvatarAndName =(record: LiveAgentStatusInfo) => {
         return <div className='flex flex-row items-center space-x-4'>
             <Avatar userFullName={record.name!} userId={record.userId} displayStatus={true} userPicture={record.profilePicture} />
-            <div className='body2'>{record.name}</div>
+            {record.name && <div className='w-32 flex'><ElipsisTooltipTextbox value={record.name} classNames={"body2 truncate"} asSpan={true} /></div>}
         </div>
     }
 
