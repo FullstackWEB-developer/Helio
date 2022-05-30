@@ -1,0 +1,905 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Ticket New tests renders new-ticket correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="flex flex-col w-full pb-5 mx-6 mt-5 overflow-y-auto"
+  >
+    <div
+      class="h-18"
+    >
+      <h5>
+        ticket_new.title
+      </h5>
+    </div>
+    <div
+      class="pt-7"
+    >
+      <form
+        novalidate=""
+      >
+        <div
+          class="grid grid-cols-3 gap-x-8"
+        >
+          <div
+            class="select-wrapper relative w-full flex flex-col h-20 "
+          >
+            <div
+              class="select relative flex flex-col "
+            >
+              <input
+                autocomplete="on"
+                autocorrect="on"
+                class="pl-4 pr-8 body2 select-trigger-pt h-14 relative truncate select-trigger   "
+                spellcheck="true"
+                type="text"
+                value=""
+              />
+              <label
+                class="select-label absolute truncate"
+              >
+                <span
+                  class="text-danger"
+                >
+                  *
+                </span>
+                <span
+                  class="select-label-span body2"
+                >
+                  ticket_new.ticket_type
+                </span>
+              </label>
+              <div
+                class="absolute pt-4 right-4 "
+              >
+                <div
+                  class="flex flex-row items-start"
+                >
+                  <div
+                    class="cursor-pointer"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium "
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="24"
+                          width="24"
+                        />
+                        <path
+                          class="select-arrow-fill"
+                          d="M7,14l1.273-1.273L2.545,7,8.273,1.273,7,0,0,7Z"
+                          transform="translate(5 16.273) rotate(-90)"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="absolute py-2 options"
+              >
+                <div
+                  class="w-full pt-2 text-center subtitle3-small"
+                >
+                  common.autocomplete_search
+                </div>
+              </div>
+            </div>
+          </div>
+          <div />
+          <div />
+          <div>
+            <div
+              class="flex flex-col h-20 input-group"
+            >
+              <div
+                class="input-group-container flex flex-wrap items-stretch w-full relative  "
+              >
+                <input
+                  autocomplete="off"
+                  class="pl-4 pt-6 body2 h-14 flex-shrink flex-grow flex-auto leading-normal w-px flex-1 input-date-mask"
+                  data-test-id="ticket-new-assignee"
+                  name="subjectInput"
+                  placeholder=""
+                  required=""
+                  type="text"
+                  value=""
+                />
+                <label
+                  class="absolute truncate required body2 "
+                >
+                  ticket_new.subject
+                </label>
+              </div>
+            </div>
+          </div>
+          <div
+            class="select-wrapper relative w-full flex flex-col h-20 "
+          >
+            <div
+              class="select relative flex flex-col "
+            >
+              <input
+                autocomplete="on"
+                autocorrect="on"
+                class="pl-4 pr-8 body2 select-trigger-pt h-14 relative truncate select-trigger   "
+                spellcheck="true"
+                type="text"
+                value=""
+              />
+              <label
+                class="select-label absolute truncate"
+              >
+                <span
+                  class="text-danger"
+                >
+                  *
+                </span>
+                <span
+                  class="select-label-span body2"
+                >
+                  ticket_new.assignee
+                </span>
+              </label>
+              <div
+                class="absolute pt-4 right-4 "
+              >
+                <div
+                  class="flex flex-row items-start"
+                >
+                  <div
+                    class="cursor-pointer"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium "
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="24"
+                          width="24"
+                        />
+                        <path
+                          class="select-arrow-fill"
+                          d="M7,14l1.273-1.273L2.545,7,8.273,1.273,7,0,0,7Z"
+                          transform="translate(5 16.273) rotate(-90)"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="absolute py-2 options"
+              >
+                <div
+                  class="w-full select-cell justify-between flex items-center  body2   cursor-pointer  "
+                >
+                  <div
+                    class="flex flex-col justify-center w-full"
+                    data-test-id="select-cell-icon-content"
+                  >
+                    <div
+                      class="flex items-center pl-4"
+                      data-test-id="select-cell-text-last test"
+                    >
+                      last test
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div />
+          <div
+            class="select-wrapper relative w-full flex flex-col h-20 "
+          >
+            <div
+              class="select relative flex flex-col "
+            >
+              <input
+                autocomplete="on"
+                autocorrect="on"
+                class="pl-4 pr-8 body2 select-trigger-pt h-14 relative truncate select-trigger   "
+                spellcheck="true"
+                type="text"
+                value=""
+              />
+              <label
+                class="select-label absolute truncate"
+              >
+                <span
+                  class="text-danger"
+                >
+                  *
+                </span>
+                <span
+                  class="select-label-span body2"
+                >
+                  ticket_new.status
+                </span>
+              </label>
+              <div
+                class="absolute pt-4 right-4 "
+              >
+                <div
+                  class="flex flex-row items-start"
+                >
+                  <div
+                    class="cursor-pointer"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium "
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="24"
+                          width="24"
+                        />
+                        <path
+                          class="select-arrow-fill"
+                          d="M7,14l1.273-1.273L2.545,7,8.273,1.273,7,0,0,7Z"
+                          transform="translate(5 16.273) rotate(-90)"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="absolute py-2 options"
+              >
+                <div
+                  class="w-full pt-2 text-center subtitle3-small"
+                >
+                  common.autocomplete_search
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="select-wrapper relative w-full flex flex-col h-20 "
+          >
+            <div
+              class="select relative flex flex-col "
+            >
+              <input
+                autocomplete="on"
+                autocorrect="on"
+                class="pl-4 pr-8 body2 select-trigger-pt h-14 relative truncate select-trigger   "
+                spellcheck="true"
+                type="text"
+                value=""
+              />
+              <label
+                class="select-label absolute truncate"
+              >
+                <span
+                  class="text-danger"
+                >
+                  *
+                </span>
+                <span
+                  class="select-label-span body2"
+                >
+                  ticket_new.priority
+                </span>
+              </label>
+              <div
+                class="absolute pt-4 right-4 "
+              >
+                <div
+                  class="flex flex-row items-start"
+                >
+                  <div
+                    class="cursor-pointer"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium "
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="24"
+                          width="24"
+                        />
+                        <path
+                          class="select-arrow-fill"
+                          d="M7,14l1.273-1.273L2.545,7,8.273,1.273,7,0,0,7Z"
+                          transform="translate(5 16.273) rotate(-90)"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="absolute py-2 options"
+              >
+                <div
+                  class="w-full pt-2 text-center subtitle3-small"
+                >
+                  common.autocomplete_search
+                </div>
+              </div>
+            </div>
+          </div>
+          <div />
+          <div
+            class="flex"
+          >
+            <div
+              class="date-time-picker w-full flex flex-col h-20 mr-8 relative"
+            >
+              <div
+                class="date-time-picker-container flex flex-wrap relative"
+              >
+                <input
+                  autocomplete="off"
+                  class="relative truncate flex-shrink flex-grow flex-auto leading-normal w-px pl-4 body2 input-pt h-14 cursor-pointer"
+                  max="9999-12-31"
+                  min="2022-05-29"
+                  name="dueDate"
+                  readonly=""
+                  type="text"
+                  value=""
+                />
+                <label
+                  class="absolute truncate"
+                >
+                  <span
+                    class="label-span body2"
+                  >
+                    ticket_new.due_date
+                  </span>
+                </label>
+                <div
+                  class="input-addon px-3 pt-4"
+                  role="button"
+                >
+                  <div
+                    class=""
+                  >
+                    <svg
+                      class="icon-medium "
+                      height="24"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <rect
+                        fill="none"
+                        height="24"
+                        width="24"
+                      />
+                      <path
+                        class="date-time-picker-arrow"
+                        d="M7,14l1.273-1.273L2.545,7,8.273,1.273,7,0,0,7Z"
+                        transform="translate(5 16.273) rotate(-90)"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="time-picker relative w-full flex flex-col h-20"
+            >
+              <div
+                class="time-picker-container relative flex flex-wrap"
+              >
+                <input
+                  autocomplete="off"
+                  class="w-px pl-4 body2 relative truncate flex-shrink flex-grow flex-auto leading-normal input-pt h-14"
+                  data-test-id="ticket-new-due-time"
+                  name="dueTime"
+                  type="text"
+                  value=""
+                />
+                <label
+                  class="absolute truncate"
+                >
+                  <span
+                    class="label-span body2"
+                  >
+                    ticket_new.due_time
+                  </span>
+                </label>
+              </div>
+            </div>
+          </div>
+          <div
+            class="select-wrapper relative w-full flex flex-col h-20 "
+          >
+            <div
+              class="select relative flex flex-col "
+            >
+              <input
+                autocomplete="on"
+                autocorrect="on"
+                class="pl-4 pr-8 body2 select-trigger-pt h-14 relative truncate select-trigger   "
+                spellcheck="true"
+                type="text"
+                value=""
+              />
+              <label
+                class="select-label absolute truncate"
+              >
+                <span
+                  class="text-danger"
+                >
+                  *
+                </span>
+                <span
+                  class="select-label-span body2"
+                >
+                  ticket_new.channel
+                </span>
+              </label>
+              <div
+                class="absolute pt-4 right-4 "
+              >
+                <div
+                  class="flex flex-row items-start"
+                >
+                  <div
+                    class="cursor-pointer"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium "
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="24"
+                          width="24"
+                        />
+                        <path
+                          class="select-arrow-fill"
+                          d="M7,14l1.273-1.273L2.545,7,8.273,1.273,7,0,0,7Z"
+                          transform="translate(5 16.273) rotate(-90)"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="absolute py-2 options"
+              >
+                <div
+                  class="w-full pt-2 text-center subtitle3-small"
+                >
+                  common.autocomplete_search
+                </div>
+              </div>
+            </div>
+          </div>
+          <div />
+          <div
+            class="select-wrapper relative w-full flex flex-col h-20 "
+          >
+            <div
+              class="select relative flex flex-col "
+            >
+              <input
+                autocomplete="on"
+                autocorrect="on"
+                class="pl-4 pr-8 body2 select-trigger-pt h-14 relative truncate select-trigger   "
+                spellcheck="true"
+                type="text"
+                value=""
+              />
+              <label
+                class="select-label absolute truncate"
+              >
+                <span
+                  class="select-label-span body2"
+                >
+                  ticket_new.department
+                </span>
+              </label>
+              <div
+                class="absolute pt-4 right-4 "
+              >
+                <div
+                  class="flex flex-row items-start"
+                >
+                  <div
+                    class="cursor-pointer"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium "
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="24"
+                          width="24"
+                        />
+                        <path
+                          class="select-arrow-fill"
+                          d="M7,14l1.273-1.273L2.545,7,8.273,1.273,7,0,0,7Z"
+                          transform="translate(5 16.273) rotate(-90)"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="absolute py-2 options"
+              >
+                <div
+                  class="w-full pt-2 text-center subtitle3-small"
+                >
+                  common.autocomplete_search
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="select-wrapper relative w-full flex flex-col h-20 "
+          >
+            <div
+              class="select relative flex flex-col "
+            >
+              <input
+                autocomplete="on"
+                autocorrect="on"
+                class="pl-4 pr-8 body2 select-trigger-pt h-14 relative truncate select-trigger   "
+                spellcheck="true"
+                type="text"
+                value=""
+              />
+              <label
+                class="select-label absolute truncate"
+              >
+                <span
+                  class="select-label-span body2"
+                >
+                  ticket_new.location
+                </span>
+              </label>
+              <div
+                class="absolute pt-4 right-4 "
+              >
+                <div
+                  class="flex flex-row items-start"
+                >
+                  <div
+                    class="cursor-pointer"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium "
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="24"
+                          width="24"
+                        />
+                        <path
+                          class="select-arrow-fill"
+                          d="M7,14l1.273-1.273L2.545,7,8.273,1.273,7,0,0,7Z"
+                          transform="translate(5 16.273) rotate(-90)"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="absolute py-2 options"
+              >
+                <div
+                  class="w-full pt-2 text-center subtitle3-small"
+                >
+                  common.autocomplete_search
+                </div>
+              </div>
+            </div>
+          </div>
+          <div />
+          <div>
+            <div
+              class="flex flex-col h-20 input-group"
+            >
+              <div
+                class="input-group-container flex flex-wrap items-stretch w-full relative  "
+              >
+                <input
+                  autocomplete="off"
+                  class="pl-4 pt-6 body2 h-14 flex-shrink flex-grow flex-auto leading-normal w-px flex-1 input-date-mask"
+                  data-test-id="patientId"
+                  name="patientId"
+                  placeholder=""
+                  type="number"
+                  value=""
+                />
+                <label
+                  class="absolute truncate  body2 "
+                >
+                  ticket_new.patient_id
+                </label>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div
+              class="flex flex-col h-20 input-group"
+            >
+              <div
+                class="input-group-container flex flex-wrap items-stretch w-full relative  "
+              >
+                <input
+                  autocomplete="off"
+                  class="pl-4 pt-6 body2 h-14 flex-shrink flex-grow flex-auto leading-normal w-px flex-1 input-date-mask"
+                  data-test-id="patientCaseNumber"
+                  name="patientCaseNumber"
+                  placeholder=""
+                  type="number"
+                  value=""
+                />
+                <label
+                  class="absolute truncate  body2 "
+                >
+                  ticket_new.patient_case_number
+                </label>
+              </div>
+            </div>
+          </div>
+          <div />
+          <div>
+            <div>
+              <div
+                class="select-wrapper relative w-full flex flex-col h-20 "
+              >
+                <div
+                  class="select relative flex flex-col "
+                >
+                  <input
+                    autocomplete="on"
+                    autocorrect="on"
+                    class="pl-4 pr-8 body2 select-trigger-pt h-14 relative truncate select-trigger   "
+                    spellcheck="true"
+                    type="text"
+                    value=""
+                  />
+                  <label
+                    class="select-label absolute truncate"
+                  >
+                    <span
+                      class="select-label-span body2"
+                    >
+                      ticket_new.contact
+                    </span>
+                  </label>
+                  <div
+                    class="absolute pt-4 right-4 "
+                  >
+                    <div
+                      class="flex flex-row items-start"
+                    >
+                      <div
+                        class="cursor-pointer"
+                      >
+                        <div
+                          class=""
+                        >
+                          <svg
+                            class="icon-medium "
+                            height="24"
+                            viewBox="0 0 24 24"
+                            width="24"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <rect
+                              fill="none"
+                              height="24"
+                              width="24"
+                            />
+                            <path
+                              class="select-arrow-fill"
+                              d="M7,14l1.273-1.273L2.545,7,8.273,1.273,7,0,0,7Z"
+                              transform="translate(5 16.273) rotate(-90)"
+                            />
+                          </svg>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="absolute py-2 options"
+                  >
+                    <div
+                      class="w-full pt-2 text-center subtitle3-small"
+                    >
+                      ticket_new.suggestion_placeholder
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div />
+          <div />
+          <div
+            class="col-span-2"
+          >
+            <div
+              class="flex flex-col h-20 input-group"
+            >
+              <div
+                class="input-group-container flex flex-wrap items-stretch w-full relative  "
+              >
+                <input
+                  autocomplete="off"
+                  class="pl-4 pt-6 body2 h-14 flex-shrink flex-grow flex-auto leading-normal w-px flex-1 input-date-mask"
+                  data-test-id="note"
+                  name="note"
+                  placeholder=""
+                  type="text"
+                  value=""
+                />
+                <label
+                  class="absolute truncate  body2 "
+                >
+                  ticket_new.add_note
+                </label>
+              </div>
+            </div>
+          </div>
+          <div />
+          <div
+            class="flex flex-col "
+          >
+            <div
+              class="flex flex-col pb-5"
+            >
+              <label
+                class="body2"
+              >
+                ticket_new.tags
+              </label>
+            </div>
+            <div>
+              <div
+                class="relative h-10 w-full search-input-field flex items-center "
+              >
+                <div
+                  class="absolute pl-4"
+                >
+                  <div
+                    class=""
+                  >
+                    <svg
+                      class="cursor-pointer icon-small "
+                      height="16"
+                      viewBox="0 0 16 16"
+                      width="16"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <rect
+                        fill="none"
+                        height="16"
+                        width="16"
+                      />
+                      <path
+                        class="search-icon-fill"
+                        d="M12.7,11.23a6.777,6.777,0,0,0,1.4-4.174A7.02,7.02,0,0,0,7.1,0,7.105,7.105,0,0,0,0,7.056a7.105,7.105,0,0,0,7.1,7.056,6.667,6.667,0,0,0,4.2-1.391l3,2.981a.971.971,0,0,0,1.4,0,.957.957,0,0,0,0-1.391Zm-5.6.8A5.022,5.022,0,0,1,2,7.056a5.1,5.1,0,0,1,10.2,0A5.022,5.022,0,0,1,7.1,12.025Z"
+                      />
+                    </svg>
+                  </div>
+                </div>
+                <input
+                  autocomplete="off"
+                  class="py-2.5 h-full w-full search-input-field body2 pl-12 border-b"
+                  placeholder="tickets.search_tag"
+                  type="text"
+                  value=""
+                />
+                <div
+                  class="search-input-field-options mb-2 hidden absolute block py-2 mt-0.5"
+                >
+                  <div
+                    class="w-full pt-2 text-center subtitle3-small"
+                  >
+                    common.empty_search_result
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div />
+          <div />
+          <div
+            class="pt-8"
+          >
+            <button
+              class="secondary-medium-button"
+              data-test-id="ticket-new-cancel-button"
+              type="button"
+            >
+              <div
+                class="flex flex-row space-x-2 justify-center items-center"
+              >
+                <div>
+                  common.cancel
+                </div>
+              </div>
+            </button>
+          </div>
+          <div
+            class="flex justify-end pt-8"
+          >
+            <button
+              class="medium-button"
+              data-test-id="ticket-new-create-button"
+              disabled=""
+              type="submit"
+            >
+              <div
+                class="flex flex-row space-x-2 justify-center items-center"
+              >
+                <div>
+                  ticket_new.create
+                </div>
+              </div>
+            </button>
+          </div>
+        </div>
+        <div />
+      </form>
+      <div
+        class="flex items-center justify-center m-auto justify-self-center"
+      />
+    </div>
+  </div>
+</DocumentFragment>
+`;

@@ -3,7 +3,7 @@
 exports[`Calendar tests renders calendar correctly 1`] = `
 <DocumentFragment>
   <div
-    class="calendar px-4 pb-4 pt-6 overflow-hidden xl:px-7 xl:pb-7 xl:pt-10"
+    class="px-4 pb-4 pt-6 overflow-hidden calendar xl:px-7 xl:pb-7 xl:pt-10"
     tabindex="0"
   >
     <div

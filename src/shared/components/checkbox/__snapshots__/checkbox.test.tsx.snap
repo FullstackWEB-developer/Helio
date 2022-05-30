@@ -40,7 +40,7 @@ exports[`Checkbox tests renders checkbox correctly 1`] = `
         </div>
       </span>
       <div
-        class="relative inline-block w-full h-full truncate"
+        class="truncate relative inline-block w-full h-full"
       >
         <span
           class="w-60 w-60"
@@ -94,7 +94,7 @@ exports[`Checkbox tests renders checkbox default checked correctly 1`] = `
         </div>
       </span>
       <div
-        class="relative inline-block w-full h-full truncate"
+        class="truncate relative inline-block w-full h-full"
       >
         <span
           class="label-class"
@@ -152,7 +152,7 @@ exports[`Checkbox tests renders checkbox with assistive-text correctly 1`] = `
         </div>
       </span>
       <div
-        class="relative inline-block w-full h-full truncate"
+        class="truncate relative inline-block w-full h-full"
       >
         <span
           class="label-class"
@@ -210,7 +210,7 @@ exports[`Checkbox tests renders checkbox with className correctly 1`] = `
         </div>
       </span>
       <div
-        class="relative inline-block w-full h-full truncate"
+        class="truncate relative inline-block w-full h-full"
       >
         <span
           class="label-class w-60"
@@ -263,7 +263,7 @@ exports[`Checkbox tests renders checkbox with label-class correctly 1`] = `
         </div>
       </span>
       <div
-        class="relative inline-block w-full h-full truncate"
+        class="truncate relative inline-block w-full h-full"
       >
         <span
           class="label-class w-60"
@@ -316,7 +316,7 @@ exports[`Checkbox tests renders checkbox with value correctly 1`] = `
         </div>
       </span>
       <div
-        class="relative inline-block w-full h-full truncate"
+        class="truncate relative inline-block w-full h-full"
       >
         <span
           class="label-class w-60"
@@ -370,7 +370,7 @@ exports[`Checkbox tests renders checked checkbox correctly 1`] = `
         </div>
       </span>
       <div
-        class="relative inline-block w-full h-full truncate"
+        class="truncate relative inline-block w-full h-full"
       >
         <span
           class="label-class w-60"
@@ -424,7 +424,7 @@ exports[`Checkbox tests renders truncated checkbox correctly 1`] = `
         </div>
       </span>
       <div
-        class="relative inline-block w-full h-full truncate"
+        class="truncate relative inline-block w-full h-full"
       >
         <span
           class="label-class"

@@ -2,12 +2,13 @@ import {render, unmountComponentAtNode} from 'react-dom';
 import {act} from 'react-dom/test-utils';
 import ReLoginModal from './relogin-modal';
 import initialAppState from '@shared/store/app/app.initial-state';
-import i18n from '../../../i18n';
 import configureStore from 'redux-mock-store';
 import {Provider} from 'react-redux';
 import initialAppUserState from '@shared/store/app-user/appuser.initial-state';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
+import i18n from '../../../i18nForTests';
+
 describe("tests for ReLogin modal", () => {
     const mockStore = configureStore();
     let store;

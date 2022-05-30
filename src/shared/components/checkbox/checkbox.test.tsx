@@ -1,4 +1,3 @@
-import i18n from '../../../i18n';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 import {unmountComponentAtNode} from 'react-dom';
@@ -7,6 +6,7 @@ import React from 'react';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import utc from 'dayjs/plugin/utc';
 import Checkbox from '@components/checkbox/checkbox';
+import i18n from '../../../i18nForTests';
 
 describe("Checkbox tests", () => {
     let container: HTMLDivElement | null;

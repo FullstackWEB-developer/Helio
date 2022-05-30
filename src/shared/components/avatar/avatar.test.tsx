@@ -1,5 +1,5 @@
 import {unmountComponentAtNode} from 'react-dom';
-import i18n from '../../../i18n';
+import i18n from '../../../i18nForTests';
 import {render} from '@testing-library/react';
 import React from 'react';
 import Avatar from '@components/avatar/avatar';

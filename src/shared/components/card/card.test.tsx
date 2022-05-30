@@ -1,4 +1,4 @@
-import i18n from '../../../i18n';
+import i18n from '../../../i18nForTests';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 import {unmountComponentAtNode} from 'react-dom';
