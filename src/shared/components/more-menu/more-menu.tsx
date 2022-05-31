@@ -75,7 +75,7 @@ const MoreMenu = ({value, items, menuClassName, iconClassName, iconFillClassname
         }
     }, [isVisible]);
 
-    return (<div ref={elementRef} className={containerClassName}>
+    return (<div ref={elementRef} className={containerClassName} onMouseLeave={() => setIsVisible(false)}>
         <div
             className="relative flex flex-row items-center cursor-pointer flex-nowrap"
             onClick={() => setIsVisible(!isVisible)}
