@@ -1,13 +1,13 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import './conversation-header.scss';
 import Avatar from '@components/avatar';
 import MoreMenu from '@components/more-menu'
 import utils from '@shared/utils/utils';
-import {useDispatch, useSelector} from 'react-redux';
-import {ChannelTypes, ContactExtended, TicketMessageSummary} from '@shared/models';
-import {useTranslation} from 'react-i18next';
-import {selectEnumValues, selectLookupValues} from '@pages/tickets/store/tickets.selectors';
-import {DropdownItemModel} from '@components/dropdown';
+import { useDispatch, useSelector } from 'react-redux';
+import { ChannelTypes, ContactExtended, TicketMessageSummary } from '@shared/models';
+import { useTranslation } from 'react-i18next';
+import { selectEnumValues, selectEnumValuesAsOptions, selectLookupValues } from '@pages/tickets/store/tickets.selectors';
+import { DropdownItemModel } from '@components/dropdown';
 import {
     MORE_MENU_OPTION_ADD_CONTACT,
     MORE_MENU_OPTION_ARCHIVE_TICKET,
@@ -19,25 +19,26 @@ import {
     MORE_MENU_OPTION_SPAM,
     MORE_MENU_OPTION_TICKET
 } from '@pages/sms/constants';
-import {ContactsPath, PatientsPath, TicketsPath} from '@app/paths';
-import {Link, useHistory} from 'react-router-dom';
-import {Icon} from '@components/svg-icon';
-import {useMutation} from 'react-query';
-import {getEnumByType, setDelete, setStatus} from '@pages/tickets/services/tickets.service';
+import { ContactsPath, PatientsPath, TicketsPath } from '@app/paths';
+import { Link, useHistory } from 'react-router-dom';
+import { Icon } from '@components/svg-icon';
+import { useMutation } from 'react-query';
+import { addFeed, getEnumByType, setDelete, setStatus } from '@pages/tickets/services/tickets.service';
 import { getLookupValues } from '@shared/services/lookups.service';
-import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
-import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
-import {TicketStatuses} from '@pages/tickets/models/ticket.status.enum';
+import { addSnackbarMessage } from '@shared/store/snackbar/snackbar.slice';
+import { SnackbarType } from '@components/snackbar/snackbar-type.enum';
+import { TicketStatuses } from '@pages/tickets/models/ticket.status.enum';
 import Spinner from '@components/spinner/Spinner';
 import Modal from '@components/modal/modal';
-import {ControlledInput, ControlledTextArea} from '@components/controllers';
-import {useForm} from 'react-hook-form';
+import { ControlledInput, ControlledTextArea } from '@components/controllers';
+import { useForm } from 'react-hook-form';
 import Button from '@components/button/button';
-import {createBlockAccess} from '@pages/blacklists/services/blacklists.service';
+import { createBlockAccess } from '@pages/blacklists/services/blacklists.service';
 import ConversationHeaderPopup from '@components/conversation-header-popup/conversation-header-popup';
-import {ExtendedPatient} from '@pages/patients/models/extended-patient';
-import {BlockAccessType} from '@pages/blacklists/models/blacklist.model';
-import {Ticket} from '@pages/tickets/models/ticket';
+import { ExtendedPatient } from '@pages/patients/models/extended-patient';
+import { BlockAccessType } from '@pages/blacklists/models/blacklist.model';
+import { Ticket } from '@pages/tickets/models/ticket';
+import { FeedTypes, TicketFeed } from '@pages/tickets/models/ticket-feed';
 
 interface ConversationHeaderProps {
     info: TicketMessageSummary;
@@ -55,6 +56,7 @@ const ConversationHeader = ({info, forNewTicketMessagePurpose, patientPhoto, con
     const history = useHistory();
     const dispatch = useDispatch();
     const [markedAsSpam, setMarkedAsSpam] = useState<boolean>(false);
+    const statusOptions = useSelector((state => selectEnumValuesAsOptions(state, 'TicketStatus')));
     useEffect(() => {
         dispatch(getLookupValues('TicketReason'));
         dispatch(getEnumByType('TicketType'));
@@ -78,26 +80,26 @@ const ConversationHeader = ({info, forNewTicketMessagePurpose, patientPhoto, con
         const commonClassName = 'body2 py-1.5';
 
         if (!forNewTicketMessagePurpose && ticket) {
-            options.push({label: 'sms.chat.view_ticket', value: MORE_MENU_OPTION_TICKET, className: commonClassName});
+            options.push({ label: 'sms.chat.view_ticket', value: MORE_MENU_OPTION_TICKET, className: commonClassName });
         }
         if (!info.patientId && !info.contactId) {
-            options.push({label: 'email.inbox.create_patient_chart', value: MORE_MENU_OPTION_CREATE_PATIENT_CHART, className: commonClassName});
-            options.push({label: 'email.inbox.add_contact', value: MORE_MENU_OPTION_ADD_CONTACT, className: commonClassName});
+            options.push({ label: 'email.inbox.create_patient_chart', value: MORE_MENU_OPTION_CREATE_PATIENT_CHART, className: commonClassName });
+            options.push({ label: 'email.inbox.add_contact', value: MORE_MENU_OPTION_ADD_CONTACT, className: commonClassName });
         }
 
         if (ticket && ticket.status !== TicketStatuses.Closed) {
-            options.push({label: 'email.inbox.close_ticket.label', value: MORE_MENU_OPTION_CLOSE_TICKET, className: commonClassName});
+            options.push({ label: 'email.inbox.close_ticket.label', value: MORE_MENU_OPTION_CLOSE_TICKET, className: commonClassName });
         }
         if (ticket && ticket.status !== TicketStatuses.Solved) {
-            options.push({label: 'email.inbox.solve_ticket.label', value: MORE_MENU_OPTION_SOLVE_TICKET, className: commonClassName});
+            options.push({ label: 'email.inbox.solve_ticket.label', value: MORE_MENU_OPTION_SOLVE_TICKET, className: commonClassName });
         }
 
         if (!!info.patientId) {
-            options.push({label: 'sms.chat.view_patient', value: MORE_MENU_OPTION_PATIENT, className: commonClassName});
+            options.push({ label: 'sms.chat.view_patient', value: MORE_MENU_OPTION_PATIENT, className: commonClassName });
         }
 
         if (!!info.contactId) {
-            options.push({label: 'sms.chat.view_contact', value: MORE_MENU_OPTION_CONTACT, className: commonClassName});
+            options.push({ label: 'sms.chat.view_contact', value: MORE_MENU_OPTION_CONTACT, className: commonClassName });
         }
         if (ticket && !ticket.isDeleted) {
             options.push({
@@ -107,7 +109,7 @@ const ConversationHeader = ({info, forNewTicketMessagePurpose, patientPhoto, con
             });
         }
         if (!markedAsSpam) {
-            options.push({label: 'email.inbox.spam', value: MORE_MENU_OPTION_SPAM, className: commonClassName});
+            options.push({ label: 'email.inbox.spam', value: MORE_MENU_OPTION_SPAM, className: commonClassName });
         }
 
         return options;
@@ -124,13 +126,13 @@ const ConversationHeader = ({info, forNewTicketMessagePurpose, patientPhoto, con
                 goToContactDetail();
                 break;
             case MORE_MENU_OPTION_CLOSE_TICKET:
-                updateStatusMutation.mutate({id: info.ticketId, status: TicketStatuses.Closed});
+                updateStatusMutation.mutate({ id: info.ticketId, status: TicketStatuses.Closed });
                 break;
             case MORE_MENU_OPTION_SOLVE_TICKET:
-                updateStatusMutation.mutate({id: info.ticketId, status: TicketStatuses.Solved});
+                updateStatusMutation.mutate({ id: info.ticketId, status: TicketStatuses.Solved });
                 break;
             case MORE_MENU_OPTION_ARCHIVE_TICKET:
-                archiveTicketMutation.mutate({id: info.ticketId})
+                archiveTicketMutation.mutate({ id: info.ticketId })
                 break;
             case MORE_MENU_OPTION_SPAM:
                 setBlockedAccessModalOpen(true);
@@ -199,18 +201,23 @@ const ConversationHeader = ({info, forNewTicketMessagePurpose, patientPhoto, con
 
         return <Avatar userFullName={getUserFullName()} />
     }
-
+    const addFeedMutation = useMutation(addFeed);
     const updateStatusMutation = useMutation(setStatus, {
-        onSuccess: (_, {status}) => {
+        onSuccess: (ticket, { status }) => {
             dispatch(addSnackbarMessage({
                 type: SnackbarType.Success,
                 message: `email.inbox.${status === TicketStatuses.Closed ? 'close' : 'solve'}_ticket.success`
             }));
+            const feedData: TicketFeed = {
+                feedType: FeedTypes.StatusChange,
+                description: `${t('ticket_detail.feed.description_prefix')} ${statusOptions.find(a => a.value === ticket.status?.toString())?.label}`
+            };
+            addFeedMutation.mutate({ ticketId: ticket.id!, feed: feedData });
             if (refetchTicket) {
                 refetchTicket();
             }
         },
-        onError: (_, {status}) => {
+        onError: (_, { status }) => {
             dispatch(addSnackbarMessage({
                 message: `email.inbox.${status === TicketStatuses.Closed ? 'close' : 'solve'}_ticket.failure`,
                 type: SnackbarType.Error
@@ -239,20 +246,20 @@ const ConversationHeader = ({info, forNewTicketMessagePurpose, patientPhoto, con
     const isLoading = updateStatusMutation.isLoading || archiveTicketMutation.isLoading;
 
     const [blockedAccessModalOpen, setBlockedAccessModalOpen] = useState(false);
-    const {control, handleSubmit, formState: {isValid}} = useForm({mode: 'all'});
+    const { control, handleSubmit, formState: { isValid } } = useForm({ mode: 'all' });
     const blockMutation = useMutation(createBlockAccess, {
         onSuccess: () => {
             setBlockedAccessModalOpen(false);
             dispatch(addSnackbarMessage({
                 type: SnackbarType.Success,
-                message: t('email.inbox.blocked_success', {value: info.createdForEndpoint}),
+                message: t('email.inbox.blocked_success', { value: info.createdForEndpoint }),
             }));
             setMarkedAsSpam(true);
         },
         onError: () => {
             dispatch(addSnackbarMessage({
                 type: SnackbarType.Error,
-                message: t('email.inbox.blocked_failure', {value: info.createdForEndpoint})
+                message: t('email.inbox.blocked_failure', { value: info.createdForEndpoint })
             }));
         }
     });

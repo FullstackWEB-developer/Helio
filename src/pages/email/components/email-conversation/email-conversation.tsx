@@ -55,7 +55,9 @@ const EmailConversation = () => {
             dispatch(getBadgeValues(BadgeValues.EmailOnly))
         }
     });
-
+    useEffect(()=>{
+        emailMessagesQueryRefetch().then();
+    }, [unreadEmailIds]);
     useEffect(() =>{
         if (!messages || messages.length === 0) {
             return;
