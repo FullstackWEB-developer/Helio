@@ -176,7 +176,13 @@ const NewEmail = () => {
         setTicketContactParams({...ticketsContactParams, contactId: contact.id ?? ''});
     }
     const onTicketsPageChanged = (paging: Paging) => {
-        setTicketQueryParams({...ticketQueryParams, ...paging});
+        if (!!ticketsContactParams.contactId) {
+            setTicketContactParams({...ticketsContactParams, ...paging})
+        }
+
+        if (!!ticketQueryParams.patientId) {
+            setTicketQueryParams({...ticketQueryParams, ...paging});
+        }
     }
 
     const onTicketSelectionCancelClick = () => {
