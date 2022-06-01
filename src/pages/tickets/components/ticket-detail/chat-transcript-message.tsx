@@ -64,7 +64,7 @@ const ChatTranscriptMessage = ({message, previousMessageDisplayName= '', previou
         if (message.Type === MessageTypeMessage || message.Type === MessageTypeEvent) {
             return messageText;
         } else if (message.Type === MessageTypeAttachment) {
-            return t('ticket_detail.chat_transcript.file_uploaded', { 'fileName': message.Attachments[0].AttachmentName});
+            return t('ticket_detail.chat_transcript.file_uploaded', { 'fileName': message?.Attachments[0]?.AttachmentName});
         }
     }
 
