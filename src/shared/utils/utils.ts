@@ -19,6 +19,7 @@ import {MimeTypes} from '@shared/models/mime-types.enum';
 import {Icon} from '@components/svg-icon/icon';
 import axios from 'axios';
 import {clearAppParameters} from '@shared/store/app/app.slice';
+import { SortDirection } from '@shared/models/sort-direction';
 
 const getWindowCenter = () => {
     const {width, height} = getWindowDimensions();
@@ -534,7 +535,27 @@ const determineMimeTypeIcon = (mimeType: string, extension?: string) => {
             return Icon.FallbackMime;
     }
 }
-
+const dynamicSort= (sortField: string, sortDirection:SortDirection)=>{
+    var sortDirectionValue = 1;
+    if(sortDirection === SortDirection.Desc){
+        sortDirectionValue = -1;
+    }
+    return function (a, b){
+        if (a === null) {
+            return 1;
+        }
+        else if (b === null) {
+            return -1;
+        }
+        else if(a[sortField] < b[sortField]){
+                return -1 * sortDirectionValue;
+        }else if(a[sortField] > b[sortField]){
+                return 1 * sortDirectionValue;
+        }else{
+                return 0 * sortDirectionValue;
+        }
+    }
+}
 export const spaceBetweenCamelCaseWords = (phrase: string) => {
     return phrase.replace(/([A-Z])/g, ' $1').trim();
 }
@@ -587,7 +608,8 @@ const utils = {
     isDateTimeInPast,
     determineMimeTypeIcon,
     capitalizeFirstLetters,
-    spaceBetweenCamelCaseWords
+    spaceBetweenCamelCaseWords,
+    dynamicSort
 };
 
 export default utils;

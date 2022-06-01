@@ -64,7 +64,6 @@ import useBrowserNotification from '@shared/hooks/useBrowserNotification';
 import TicketMessageReadUpdate from '@shared/websockets/ticket-message-read';
 import TicketNotesUpdate from '@shared/websockets/ticket-notes-update';
 import TeamBadgeValueUpdate from '@shared/websockets/team-badge-value-update';
-import EditCancellationReason from '@pages/configurations/components/cancellation-reason/edit-cancellation-reason/edit-cancellation-reason';
 const SearchResults = React.lazy(() => import('../shared/components/search-bar/components/search-results'));
 const PatientChart = React.lazy(() => import('@pages/patients/patient-chart'));
 const VerifyRedirectLink = React.lazy(() => import('@pages/external-access/verify-patient/verify-redirect-link'));

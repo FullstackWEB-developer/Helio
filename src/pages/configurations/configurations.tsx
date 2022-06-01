@@ -5,6 +5,8 @@ import ConfigurationsMenu from './components/configurations-menu/configurations-
 import CancellationReasonConfig from './components/cancellation-reason/cancellation-reason-config';
 import TicketDepartment from './components/ticket-department/ticket-department';
 import EditCancellationReason from './components/cancellation-reason/edit-cancellation-reason/edit-cancellation-reason';
+import SMSTemplates from './components/sms-templates/sms-templates';
+import SMSTemplateEdit from './components/sms-templates/sms-template-edit/sms-template-edit';
 interface CancellationReasonParams {
     type: string,
     id: string
@@ -16,6 +18,9 @@ const Configurations = () => {
             case "cancellation-reasons":
                 if (id) { return <EditCancellationReason /> }
                 else { return <CancellationReasonConfig /> }
+            case "sms-templates":
+                if (id) { return <SMSTemplateEdit /> }
+                else { return <SMSTemplates /> }
             case "ticket-department":
                 return <TicketDepartment />
             case "appointment-type":

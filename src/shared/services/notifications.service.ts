@@ -4,6 +4,7 @@ import {Contact, ContactExtended} from '@shared/models';
 import {Patient} from '@pages/patients/models/patient';
 import {Ticket} from '@pages/tickets/models/ticket';
 import {TemplateUsedFrom} from '@components/notification-template-select/template-used-from';
+import { SMSTemplate } from '@pages/configurations/models/sms-templates';
 
 const notificationsUrl = '/notifications';
 
@@ -37,4 +38,9 @@ export const getRedirectLink = async (linkId: string) => {
     const url = `${notificationsUrl}/${linkId}`;
     const response = await Api.get(url);
     return response.data;
+}
+export const getSMSTemplates = async () => {
+    const url = `${notificationsUrl}/admin/sms-templates`;
+    const result = await Api.get<SMSTemplate[]>(url);
+    return result.data;
 }

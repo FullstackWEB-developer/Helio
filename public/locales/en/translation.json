@@ -115,7 +115,7 @@
     "users": "Users",
     "blacklists": "Blocked Access",
     "users_bulk": "Add Users In Bulk",
-    "configurations":"Configurations"
+    "configurations": "Configurations"
   },
   "footer": {
     "hotspots": "Hotspots",
@@ -211,7 +211,7 @@
         "last_30_days": "Last 30 Days",
         "date_range": "Date Range"
       },
-      "patient_ratings":"Patient Ratings",
+      "patient_ratings": "Patient Ratings",
       "bot_ratings": "Bot Ratings"
     },
     "unassigned": "Unassigned",
@@ -812,7 +812,7 @@
       "list_title": "You have {{number}} upcoming appointments.",
       "select_appointment": "Please select appointment to view details.",
       "fetch_failed": "Could not retrieve appointments from server. Please try again later",
-      "no_single_appointment_with_id": "It seems that your appointment has been canceled or rescheduled. Please contact us via phone or email so we can assist you.", 
+      "no_single_appointment_with_id": "It seems that your appointment has been canceled or rescheduled. Please contact us via phone or email so we can assist you.",
       "appointment_details": "Appointment Details",
       "appointment_schedule": "Schedule Appointment",
       "see_appointment_details": "Please see your appointment details below.",
@@ -1846,7 +1846,7 @@
     "title": "Browser Notifications",
     "call": "Voice Calls",
     "chat": "Chats",
-    "sms" : "SMS Messages",
+    "sms": "SMS Messages",
     "email": "Email Messages",
     "description": "Turn on browser notifications to be notified of incoming calls, messages and emails.",
     "have_unread_email": "You have unread email messages",
@@ -1858,7 +1858,7 @@
     "title": "Configurations",
     "appointments": "Appointments",
     "appointment_type": "Appointment Type",
-    "appointment_cancellation" : "Cancellation Reasons",
+    "appointment_cancellation": "Cancellation Reasons",
     "notifications": "Notifications",
     "appointment_reminder": "Appointment Reminder",
     "email_notification_templates": "Email Notification Templates",
@@ -1868,7 +1868,7 @@
     "general": "General",
     "tickets": "Tickets",
     "ticket_department": "Departments/Groups",
-    "appointment_type_list":{
+    "appointment_type_list": {
       "title": "Appointment Type",
       "description": "You need to map and configure EHR/EMR appointment types to Helio appointment types. You need at least 1 Helio appointment type in order for patients to be able to select and schedule appointments through Helio application.",
       "not_available": "N/A",
@@ -1896,23 +1896,34 @@
       "save_error": "Operation failed. Please try again later.",
       "save_default_success": "Default cancellation reason(s) configured successfully.",
       "save_default_error": "Setting up default cancellation reason(s) failed. Please try again later.",
-      "confirm_delete_title":"Are you sure you want to delete {{cancellationReason}}?",
-      "details":{
-          "created_by": "Created By:",
-          "created_date": "Created Date",
-          "modified_by": "Modified By:",
-          "modified_date": "Modified Date",
-          "helio_appointment_cancelation_name": "Helio Appointment Cancelation Name",
-          "helio_appointment_cancelation_name_tooltip": "Cancelation reason how it will appear to patients.",
-          "appointment_cancelation_description": "Appointment Cancelation Description",
-          "appointment_cancelation_description_tooltip": "Explanation of cancelation reason how it will appear to patients.",
-          "appointment_cancelation_description_character_limit": "50 characters",
-          "reason_mapping": "Reason Mapping",
-          "reason_mapping_tooltip": "How voice bot will recognize this cancelation reason.",
-          "save_success": "Cancelation reason saved successfully.",
-          "delete_success": "Cancelation reason saved successfully.",
-          "error": "An error ocurred. Please try again later."
-        }
+      "confirm_delete_title": "Are you sure you want to delete {{cancellationReason}}?",
+      "details": {
+        "created_by": "Created By:",
+        "created_date": "Created Date",
+        "modified_by": "Modified By:",
+        "modified_date": "Modified Date",
+        "helio_appointment_cancelation_name": "Helio Appointment Cancelation Name",
+        "helio_appointment_cancelation_name_tooltip": "Cancelation reason how it will appear to patients.",
+        "appointment_cancelation_description": "Appointment Cancelation Description",
+        "appointment_cancelation_description_tooltip": "Explanation of cancelation reason how it will appear to patients.",
+        "appointment_cancelation_description_character_limit": "50 characters",
+        "reason_mapping": "Reason Mapping",
+        "reason_mapping_tooltip": "How voice bot will recognize this cancelation reason.",
+        "save_success": "Cancelation reason saved successfully.",
+        "delete_success": "Cancelation reason saved successfully.",
+        "error": "An error ocurred. Please try again later."
+      }
+    },
+    "sms_templates": {
+      "title": "SMS Notification Templates",
+      "description": "Please select SMS template and click on the edit icon to modify.",
+      "error_fetching": "Fetching sms templates failed. Please try again.",
+      "grid_name": "SMS TEMPLATE NAME",
+      "grid_direction": "DIRECTION",
+      "grid_modified_by": "MODIFIED BY",
+      "grid_modified_on": "MODIFIED ON",
+      "tool_tip_grid_direction_two_way": "Two way: Response from patient needed (Confirm, Cancel etc.)",
+      "tool_tip_grid_direction_one_way": "One way: Notification, no response needed."
     }
   },
   "ticket_department": {

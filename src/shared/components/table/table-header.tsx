@@ -52,7 +52,14 @@ const TableHeaderColumn = ({header}: {header: TableColumnModel}) => {
             </div>
         );
     } else if (React.isValidElement(title)) {
-        return <div key={field} className={className}>{title}</div>;
+        return <div key={field} className={className} onClick={onClicked}>{title}{isSortable && currentSortDirection !== SortDirection.None &&
+            <SvgIcon type={SortIconMap[currentSortDirection]}
+                className='pl-2 icon-medium'
+                fillClass='active-item-icon' />
+        }
+        {isSortable && currentSortDirection !== SortDirection.None && header.sortOrder &&
+            <span className='pl-0.5 body3-medium'>{header.sortOrder}</span>
+        }</div>;
     } else {
         return null;
     }
@@ -62,7 +69,7 @@ const TableHeader = ({headers, className, size}: TableHeaderProps) => {
     if (!headers) {
         return null;
     }
-
+    
     const content = React.Children.toArray(headers.map(header => <TableHeaderColumn header={header}/>));
     const headerClassName = classnames('flex flex-row caption-caps table-header h-8 items-center', className, {
         'h-12': size === 'large',
