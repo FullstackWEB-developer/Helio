@@ -73,5 +73,6 @@ export interface ExtendedPatient {
     notes: Note[],
     address: string,
     address2: string,
-    homePhone: string
+    homePhone: string,
+    workPhone: string
 }

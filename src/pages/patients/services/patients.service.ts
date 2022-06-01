@@ -42,6 +42,7 @@ export interface UpdatePatientContactInformationProps {
 export const updatePatientContactInformation = async ({patientId, data}: UpdatePatientContactInformationProps) => {
      const result = await Api.put(`${patientsUrl}/${patientId}`, {
           mobilePhone: data.mobilePhone,
+          workPhone: data.workPhone,
           address: data.address,
           address2: data.address2,
           homePhone: data.homePhone,

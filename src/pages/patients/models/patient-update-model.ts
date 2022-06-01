@@ -1,5 +1,6 @@
 export interface PatientUpdateModel {
     mobilePhone: string;
+    workPhone: string;
     address: string;
     homePhone: string;
     address2: string;

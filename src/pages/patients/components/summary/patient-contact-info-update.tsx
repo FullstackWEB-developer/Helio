@@ -59,6 +59,7 @@ const PatientContactInfoUpdate = ({onUpdateComplete} : PatientInformationUpdateP
         mode: 'onBlur',
         defaultValues: {
             mobilePhone: patient.mobilePhone,
+            workPhone: patient.workPhone,
             address: patient.address,
             homePhone: patient.homePhone,
             address2: patient.address2,
@@ -194,6 +195,17 @@ const PatientContactInfoUpdate = ({onUpdateComplete} : PatientInformationUpdateP
                             required={watchContactPreference === 'MOBILEPHONE'}
                             type='tel'
                             label='patient.summary.mobile_phone'
+                            className='w-full'
+                        />
+                    </div>
+                    <div className='col-span-12 lg:col-span-5 lg:col-start-7 pt-4'>
+                        <ControlledInput
+                            control={control}
+                            name='workPhone'
+                            dataTestId='patient-update-work_phone'
+                            required={watchContactPreference === 'WORKPHONE'}
+                            type='tel'
+                            label='patient.summary.work_phone'
                             className='w-full'
                         />
                     </div>
