@@ -14,6 +14,7 @@ import {useSelector} from 'react-redux';
 import {selectAppUserDetails} from '@shared/store/app-user/appuser.selectors';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
+import utils from '@shared/utils/utils';
 
 const EmailLeftMenu = () => {
     dayjs.extend(utc);
@@ -83,13 +84,13 @@ const EmailLeftMenu = () => {
         if (value.fromDate) {
             params = {
                 ...params,
-                fromDate: dayjs(value.fromDate).startOf('day').format("YYYY-MM-DDTHH:mm:ss"),
+                fromDate: utils.toShortISOLocalString(value.fromDate)
             }
         }
         if (value.toDate) {
             params = {
                 ...params,
-                toDate:  dayjs(value.toDate).endOf('day').format("YYYY-MM-DDTHH:mm:ss"),
+                toDate:  utils.toShortISOLocalString(value.toDate)
             }
         }
         setQueryParams(params);
