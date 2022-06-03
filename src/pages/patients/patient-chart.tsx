@@ -75,7 +75,7 @@ const PatientChart = () => {
         return () => {
             clearInterval(refreshInterval);
         };
-    }, []);
+    }, [patientId]);
 
 
     if ((isSummaryLoading || loading) && !isRefetching) {
