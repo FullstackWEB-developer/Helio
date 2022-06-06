@@ -361,6 +361,13 @@ const Sms = () => {
             toDate: utils.toShortISOLocalString(value.toDate),
             assignedTo: value.assignedTo
         });
+
+        if (value.assignedTo === id){
+            setSmsQueryType(SmsQueryType.MySms)
+        } else if (value.assignedTo === '') {
+            setSmsQueryType(SmsQueryType.MyTeam)
+        }
+        
         setFilterVisible(false);
         setFilterParam(value);
     }
