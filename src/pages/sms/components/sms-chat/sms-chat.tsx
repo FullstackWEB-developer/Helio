@@ -1,7 +1,14 @@
 import React, {useEffect, useLayoutEffect, useMemo, useRef, useState} from 'react';
 import AlwaysScrollToBottom from '@components/scroll-to-bottom';
 import SmsChatMessageList from '../sms-chat-message/sms-chat-message-list';
-import {ChannelTypes, ContactExtended, ContactType, TicketMessage, TicketMessageSummary} from '@shared/models';
+import {
+    ChannelTypes,
+    ContactExtended,
+    ContactType,
+    TicketMessage,
+    TicketMessagesDirection,
+    TicketMessageSummary
+} from '@shared/models';
 import {useDispatch} from 'react-redux';
 import classnames from 'classnames';
 import utils from '@shared/utils/utils';
@@ -76,7 +83,13 @@ const SmsChat = ({info, isLoading, isSending, isBottomFocus, messages = [], last
     }, [patient?.mobilePhone, contact?.mobilePhone, info.createdForEndpoint]);
 
     useEffect(() => {
-        let originalNumber = info?.createdForEndpoint || ticket?.originationNumber;
+        let lastMessage : TicketMessage;
+        let lastSmsAddress : string | undefined;
+        if (messages && messages.length > 0) {
+            lastMessage = messages[messages.length - 1];
+            lastSmsAddress = lastMessage.direction === TicketMessagesDirection.Outgoing ? lastMessage.toAddress : lastMessage.fromAddress;
+        }
+        let originalNumber = info?.createdForEndpoint || ticket?.originationNumber || lastSmsAddress;
         if (originalNumber && originalNumber.startsWith('+1')) {
             originalNumber = originalNumber.substring(2);
         }
