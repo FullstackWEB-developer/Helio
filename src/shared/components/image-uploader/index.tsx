@@ -4,15 +4,18 @@ import {useTranslation} from 'react-i18next';
 import './image-uploader.scss';
 import SvgIcon, {Icon} from '@components/svg-icon';
 import {RegistrationImageType} from '@pages/external-access/models/registration-image-type.enum';
+import classNames from 'classnames';
 interface ImageUploaderProps {
     title: string;
     buttonText?: string;
     uploadedImage: (image: File | undefined, type: RegistrationImageType) => void,
     maxFileSizeInMegabytes?: number,
     imageType: RegistrationImageType,
-    required: boolean
+    required: boolean,
+    disableImageRemoval?: boolean
 }
-const ImageUploader = ({title, buttonText = 'common.choose_file', uploadedImage, maxFileSizeInMegabytes = 5.0, imageType, required}: ImageUploaderProps) => {
+const ImageUploader = ({title, buttonText = 'common.choose_file', uploadedImage, maxFileSizeInMegabytes = 5.0,
+    imageType, required, disableImageRemoval = false}: ImageUploaderProps) => {
 
     const {t} = useTranslation();
     const [image, setImage] = useState<File>();
@@ -38,6 +41,9 @@ const ImageUploader = ({title, buttonText = 'common.choose_file', uploadedImage,
     }
 
     const clearUpload = () => {
+        if(disableImageRemoval){
+            return;
+        }
         setImage(undefined);
         uploadedImage(undefined, imageType);
     }
@@ -45,9 +51,9 @@ const ImageUploader = ({title, buttonText = 'common.choose_file', uploadedImage,
     return (
         <div className='flex flex-col pb-6'>
             <div className='pb-5'>{t(title)}
-            {
-                required && <span className='text-danger'>*</span>
-            }
+                {
+                    required && <span className='text-danger'>*</span>
+                }
             </div>
             {
                 image ?
@@ -58,7 +64,7 @@ const ImageUploader = ({title, buttonText = 'common.choose_file', uploadedImage,
                                 src={URL.createObjectURL(image)}
                                 alt={`upload-preview-${image.name}`}
                             />
-                            <div className='pl-5'>
+                            <div className={classNames('pl-5', {'pointer-events-none': disableImageRemoval})}>
                                 <SvgIcon type={Icon.Close} fillClass='clear-icon-fill' className='cursor-pointer' onClick={clearUpload} />
                             </div>
                         </div>
@@ -66,7 +72,7 @@ const ImageUploader = ({title, buttonText = 'common.choose_file', uploadedImage,
                     </div>
                     :
                     <>
-                        <input type='file' ref={fileInputField} title="" value="" multiple={false} accept='.jpg, .jpeg' style={{display: 'none'}}
+                        <input type='file' ref={fileInputField} title="" value="" multiple={false} accept='.jpg, .jpeg, .png' style={{display: 'none'}}
                             onChange={handleUpload} />
                         <Button label={t(buttonText)} className='mt-5 mb-11 w-44' buttonType='secondary-big'
                             onClick={handleUploadBClick} />

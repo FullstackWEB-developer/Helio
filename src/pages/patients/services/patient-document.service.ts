@@ -1,7 +1,6 @@
 import Api from "@shared/services/api";
 import {PatientDocumentActionNote} from "../models/patient-document-action-note";
 import {PatientCaseDocument} from "../models/patient-case-document";
-import {PatientRegistrationDocuments} from "../models/patient-registration-documents";
 const documentUrl = "/patients";
 
 export const getPatientActionNotes = async (
@@ -21,19 +20,17 @@ export const getPatientCaseDocument = async (
   return response.data;
 };
 
-export const uploadPatientRegistrationImages = async (files: PatientRegistrationDocuments) => {
+export const uploadPatientRegistrationImage = async ({file, imageUploadTag, label}: {file: File, imageUploadTag: string, label: string}) => {
   const url = `${documentUrl}/documents/registration/upload-patient-files`;
-  let formData = new FormData();
-  formData.append('DriversLicense', files.driversLicenseImage);
-  formData.append('InsuranceCardRequired', files.insuranceFrontImage && files.insuranceBackImage ? "true" : "false");
-  if (files.insuranceFrontImage && files.insuranceBackImage) {
-    formData.append('InsuranceCardFront', files.insuranceFrontImage);
-    formData.append('InsuranceCardBack', files.insuranceBackImage);
-  }
-  const {data} = await Api.post(url, formData, {
+  const options = {
     headers: {
       'Content-Type': 'multipart/form-data'
     }
-  });
+  };
+  let formData = new FormData();
+  formData.append('imageUploadTag', imageUploadTag);
+  formData.append('file', file);
+  formData.append('label', label);
+  const {data} = await Api.post(url, formData, options);
   return data;
 }
