@@ -993,7 +993,7 @@
       "value": "Value",
       "ref_range": "Ref. range",
       "units": "Units",
-      "no_observations": "No observations included in lab result",
+      "no_observations": "No observations included in test result",
       "test_information": "Test Information",
       "note": "Note",
       "note_paragraph_1": "A test result listed as “abnormal” may be normal for you.",
@@ -1003,13 +1003,13 @@
       "dob": "Date of birth: ",
       "laboratory": "Laboratory: ",
       "specimen_id": "Specimen ID: ",
-      "no_lab_results_found": "There are no lab results",
-      "lab_results_image_error": "Could not load page {{pageNumber}} for this lab result.",
+      "no_lab_results_found": "There are no test results",
+      "lab_results_image_error": "Could not load page {{pageNumber}} for this test result.",
       "error": "We apologize for the inconvenience. We cannot retrieve your results at the moment. Please call our office during business hours and we will assist you or try again later.",
       "select_provider": "Provider",
       "message_success": "Your message was sent.",
       "message_error": "Sending message failed. Please try again.",
-      "lab_results_download_success": "Lab result successfully downloaded to your device."
+      "lab_results_download_success": "Test result successfully downloaded to your device."
     },
     "feedbacks": {
       "title": "Please rate your recent experience with CWC.",
