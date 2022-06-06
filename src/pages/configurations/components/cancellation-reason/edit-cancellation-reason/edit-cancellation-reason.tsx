@@ -107,7 +107,7 @@ const EditCancellationReason = () => {
 
     const DisplayToolTip = (message: string) => {
         return <ToolTipIcon
-            icon={Icon.Info}
+            icon={Icon.Error}
             iconFillClass='rgba-05-fill'
             placement='right-start'
             iconClassName='cursor-pointer icon'
@@ -121,27 +121,27 @@ const EditCancellationReason = () => {
         <> {cancellationReason &&
             <form onSubmit={handleSubmit(onSubmit)} className='px-6 pt-7 flex flex-1 flex-col group overflow-y-auto body2'>
                 <div id="title-container" className='flex flex-row pb-4'>
-                    <h6> {cancellationReason.id} </h6>
+                    <h6 className='details-label'> {cancellationReason.id}: </h6>
                     <h6 className='pl-3'> {cancellationReason.name}</h6>
                 </div>
                 <div className='flex flex-row pt-6'>
                     <div className=' flex flex-row w-1/3'>
                         <div className='flex flex-col details-label'>
-                            <span >{t('configuration.cancellation_reason.details.created_by')}</span>
-                            <span> {t('configuration.cancellation_reason.details.created_date')}</span>
+                            <span >{t('configuration.cancellation_reason.details.created_by')} </span>
+                            <span> {t('configuration.cancellation_reason.details.created_date')} </span>
                         </div>
                         <div className='flex flex-col ml-4'>
-                            <span>{cancellationReason.createdByName}</span>
-                            <span> {cancellationReason.createdByName && dayjs.utc(cancellationReason.createdOn).local().format('MMM DD, YYYY')}</span>
+                            <span>{cancellationReason.createdByName ?? t('common.not_available')}</span>
+                            <span> {cancellationReason.createdByName ? dayjs.utc(cancellationReason.createdOn).local().format('MMM DD, YYYY') : t('common.not_available')}</span>
                         </div>
                     </div>
                     <div className='flex flex-col details-label'>
-                        <span >{t('configuration.cancellation_reason.details.modified_by')}</span>
-                        <span> {t('configuration.cancellation_reason.details.modified_date')}</span>
+                        <span >{t('configuration.cancellation_reason.details.modified_by')} </span>
+                        <span> {t('configuration.cancellation_reason.details.modified_date')} </span>
                     </div>
                     <div className='flex flex-col ml-4'>
-                        <span>{cancellationReason.modifiedByName}</span>
-                        <span>{cancellationReason.modifiedByName && dayjs.utc(cancellationReason.modifiedOn).local().format('MMM DD, YYYY')}</span>
+                        <span>{cancellationReason.modifiedByName ?? t('common.not_available')}</span>
+                        <span>{cancellationReason.modifiedByName ? dayjs.utc(cancellationReason.modifiedOn).local().format('MMM DD, YYYY') : t('common.not_available')}</span>
                     </div>
                 </div>
 
@@ -166,8 +166,8 @@ const EditCancellationReason = () => {
                 </div>
                 <div className='pr-24'>
                     <ControlledTextArea control={control} name='description' defaultValue={cancellationReason.description}
-                        className='body2 w-full'
-                        resizable={false} />
+                        className='body2 w-full p-4' overwriteDefaultContainerClasses={true}
+                        resizable={false} rows={4} />
                     <span className='body2 mt-4 flex justify-end'>{t('configuration.cancellation_reason.details.appointment_cancelation_description_character_limit')}</span>
                 </div>
                 <div className="mt-8 flex flex-row items-center">

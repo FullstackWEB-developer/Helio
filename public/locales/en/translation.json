@@ -1900,9 +1900,9 @@
       "confirm_delete_title": "Are you sure you want to delete {{cancellationReason}}?",
       "details": {
         "created_by": "Created By:",
-        "created_date": "Created Date",
+        "created_date": "Created Date:",
         "modified_by": "Modified By:",
-        "modified_date": "Modified Date",
+        "modified_date": "Modified Date:",
         "helio_appointment_cancelation_name": "Helio Appointment Cancelation Name",
         "helio_appointment_cancelation_name_tooltip": "Cancelation reason how it will appear to patients.",
         "appointment_cancelation_description": "Appointment Cancelation Description",
