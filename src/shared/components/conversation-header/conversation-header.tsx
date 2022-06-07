@@ -51,8 +51,8 @@ interface ConversationHeaderProps {
     refetchTicket?: () => void;
     userFullName?: string;
 }
-const ConversationHeader = ({info, forNewTicketMessagePurpose, patientPhoto, conversationChannel = ChannelTypes.SMS, patient, contact, ticket, refetchTicket, userFullName}: ConversationHeaderProps) => {
-    const {t} = useTranslation();
+const ConversationHeader = ({ info, forNewTicketMessagePurpose, patientPhoto, conversationChannel = ChannelTypes.SMS, patient, contact, ticket, refetchTicket, userFullName }: ConversationHeaderProps) => {
+    const { t } = useTranslation();
     const history = useHistory();
     const dispatch = useDispatch();
     const [markedAsSpam, setMarkedAsSpam] = useState<boolean>(false);
@@ -63,7 +63,7 @@ const ConversationHeader = ({info, forNewTicketMessagePurpose, patientPhoto, con
     }, [dispatch]);
     const ticketReasons = useSelector((state) => selectLookupValues(state, 'TicketReason'));
     const getUserFullName = () => {
-        if(info.contactId && userFullName){
+        if (info.contactId && userFullName) {
             return userFullName;
         }
         return info.createdForName
@@ -176,20 +176,20 @@ const ConversationHeader = ({info, forNewTicketMessagePurpose, patientPhoto, con
     }
 
     const displayName = () => {
-        if(info.contactId && userFullName){
+        if (info.contactId && userFullName) {
             if (userFullName.startsWith('+') || /\d/.test(userFullName)) {
                 return utils.applyPhoneMask(userFullName);
             }
             return userFullName;
         }
 
-        if(info.createdForName){
+        if (info.createdForName) {
             if (info.createdForName.startsWith('+') || /\d/.test(info.createdForName)) {
                 return utils.applyPhoneMask(info.createdForName);
             }
             return info.createdForName;
         }
-        
+
         return utils.applyPhoneMask(info.createdForEndpoint);
     }
 
@@ -336,7 +336,7 @@ const ConversationHeader = ({info, forNewTicketMessagePurpose, patientPhoto, con
                 </div>
             </div>
             <div className='flex items-center justify-center justify-self-center'>
-                <Modal isDraggable={true} isOpen={blockedAccessModalOpen} title={t('email.inbox.block_email')}
+                <Modal isDraggable={true} isOpen={blockedAccessModalOpen} title={conversationChannel === ChannelTypes.SMS ? t('sms.block_number') : t('email.inbox.block_email')}
                     onClose={() => setBlockedAccessModalOpen(false)}
                     isClosable={true}>
                     <div className='w-full mb-10'>
@@ -365,7 +365,7 @@ const ConversationHeader = ({info, forNewTicketMessagePurpose, patientPhoto, con
                                 buttonType='small'
                                 disabled={!isValid}
                                 isLoading={blockMutation.isLoading}
-                                label='email.inbox.block_email'
+                                label={conversationChannel === ChannelTypes.SMS ? 'sms.block_number' : 'email.inbox.block_email'}
                                 onClick={() => handleSubmit(performEmailBlock)()}
                             />
                         </div>
