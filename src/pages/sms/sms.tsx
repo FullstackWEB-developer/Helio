@@ -114,9 +114,7 @@ const Sms = () => {
             let tempContactIds = pageResult.map(a => a.contactId).filter(Boolean) as string[]
             setPageResult(utils.accumulateInfiniteData(result));
             setContactIds(tempContactIds);
-            if(tempContactIds.length === 0){
-                dispatch(setSmsMessageSummaries(pageResult));
-            }
+            dispatch(setSmsMessageSummaries(pageResult));
         }
     });
 
