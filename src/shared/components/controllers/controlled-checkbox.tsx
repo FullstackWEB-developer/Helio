@@ -11,9 +11,10 @@ interface ControlledCheckboxProps {
     assistiveText?: string;
     className?: string;
     labelClassName?: string;
+    hasTooltip?: boolean;
     onChange?: (event: CheckboxCheckEvent) => void;
 }
-const ControlledCheckbox = ({control, name, label, value, assistiveText, className, labelClassName, ...props}: ControlledCheckboxProps) => {
+const ControlledCheckbox = ({control, name, label, value, assistiveText, className, labelClassName, hasTooltip, ...props}: ControlledCheckboxProps) => {
     return (
         <Controller
             control={control}
@@ -29,6 +30,7 @@ const ControlledCheckbox = ({control, name, label, value, assistiveText, classNa
                     assistiveText={assistiveText}
                     data-test-id={`${name}-checkbox-${value}`}
                     labelClassName={labelClassName}
+                    hasTooltip={hasTooltip}
                     value={value}
                     onChange={(e: CheckboxCheckEvent) => {
                         controllerProps.onChange(e);

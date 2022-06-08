@@ -20,6 +20,7 @@ interface CheckboxProps {
     labelClassName?: string;
     truncate?: boolean;
     assistiveText?: string;
+    hasTooltip?: boolean;
     onChange?: (event: CheckboxCheckEvent) => void;
 }
 
@@ -33,6 +34,7 @@ const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(({
     labelClassName = 'w-60',
     truncate = false,
     assistiveText,
+    hasTooltip = true,
     onChange,
     ...props
 }: CheckboxProps, ref) => {
@@ -54,7 +56,12 @@ const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(({
             <span className="checkbox-control">
                 <SvgIcon type={Icon.LightCheckBoxOn} fillClass='svg-checkbox'></SvgIcon>
             </span>
-            <ElipsisTooltipTextbox value={t(label)} classNames={classnames(labelClassName, {'w-60': !assistiveText})} asSpan={true} />
+            {hasTooltip &&
+                <ElipsisTooltipTextbox value={t(label)} classNames={classnames(labelClassName, {'w-60': !assistiveText})} asSpan={true} />
+            }
+            {!hasTooltip &&
+                <div className={labelClassName}>{t(label)}</div>
+            }
             {!!assistiveText &&
                 <span className='body3-medium ml-1.5'>{t(assistiveText)}</span>
             }

@@ -467,6 +467,7 @@ const AppointmentScheduleSelect = () => {
                                     labelClassName=''
                                     assistiveText='external_access.schedule_appointment.time_of_day.early_morning_info'
                                     onChange={onTimeOfDayChanged}
+                                    hasTooltip={false}
                                 />
 
                                 <ControlledCheckbox
@@ -478,6 +479,7 @@ const AppointmentScheduleSelect = () => {
                                     value={AppointmentSlotTimeOfDay.Morning.toString()}
                                     assistiveText='external_access.schedule_appointment.time_of_day.morning_info'
                                     onChange={onTimeOfDayChanged}
+                                    hasTooltip={false}
                                 />
 
                                 <ControlledCheckbox
@@ -489,6 +491,7 @@ const AppointmentScheduleSelect = () => {
                                     value={AppointmentSlotTimeOfDay.Afternoon.toString()}
                                     assistiveText='external_access.schedule_appointment.time_of_day.afternoon_info'
                                     onChange={onTimeOfDayChanged}
+                                    hasTooltip={false}
                                 />
                             </div>
                         </div>
