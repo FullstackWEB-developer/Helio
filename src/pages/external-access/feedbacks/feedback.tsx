@@ -15,6 +15,7 @@ import { useDispatch } from 'react-redux';
 import utils from '@shared/utils/utils';
 import { FeedbackResponse } from '@pages/tickets/models/feedback-response';
 import FeedbackRatingOptions from './components/feeedback-rating-options';
+import { AxiosError } from 'axios';
 const Feedback = () => {
 
     const {t} = useTranslation();
@@ -52,12 +53,21 @@ const Feedback = () => {
             setFeedbackResponse(response);
             setIsReviewSend(true);
         },
-        onError: () => {
-            dispatch(addSnackbarMessage({
-                type: SnackbarType.Error,
-                message: 'external_access.feedbacks.result_failed',
-                position: SnackbarPosition.TopCenter
-            }));
+        onError: (error) => {
+            let formattedError = error as AxiosError;
+            if(formattedError.response){
+                dispatch(addSnackbarMessage({
+                    type: SnackbarType.Error,
+                    message: formattedError.response.data.message,
+                    position: SnackbarPosition.TopCenter
+                }));
+            }else{
+                dispatch(addSnackbarMessage({
+                    type: SnackbarType.Error,
+                    message: 'external_access.feedbacks.result_failed',
+                    position: SnackbarPosition.TopCenter
+                }));
+            }
         }
     });
     
