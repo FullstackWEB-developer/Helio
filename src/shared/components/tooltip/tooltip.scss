@@ -21,6 +21,8 @@
   }
 
   &[data-popper-placement^="top"] > .arrow {
+    top: auto;
+    bottom:-0.2rem;
     :after {
       box-shadow: var(--tooltip-box-shadow);
     }
