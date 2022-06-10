@@ -813,7 +813,7 @@
       "list_title": "You have {{number}} upcoming appointments.",
       "select_appointment": "Please select appointment to view details.",
       "fetch_failed": "Could not retrieve appointments from server. Please try again later",
-      "no_single_appointment_with_id": "It seems that your appointment has been canceled or rescheduled. Please contact us via phone or email so we can assist you.",
+      "no_single_appointment_with_id": "It seems that your appointment has been canceled or rescheduled. Please contact us via phone or email so we can assist you.", 
       "appointment_details": "Appointment Details",
       "appointment_schedule": "Schedule Appointment",
       "see_appointment_details": "Please see your appointment details below.",
@@ -1866,6 +1866,7 @@
     "email_notification_templates": "Email Notification Templates",
     "sms_notification_templates": "SMS Notification Templates",
     "call_center": "Call Center",
+    "contact_categories_menu": "Contact Categories",
     "security": "Security",
     "general": "General",
     "tickets": "Tickets",
@@ -1926,6 +1927,23 @@
       "grid_modified_on": "MODIFIED ON",
       "tool_tip_grid_direction_two_way": "Two way: Response from patient needed (Confirm, Cancel etc.)",
       "tool_tip_grid_direction_one_way": "One way: Notification, no response needed."
+    },
+    "contact_categories": {
+      "title": "Contact Categories",
+      "description": "Use settings below to manage contacts categories.",
+      "grid_name": "CATEGORY NAME",
+      "edit_title": "Edit Category",
+      "add_title": "Add Category",
+      "category_name_label": "Category Name",
+      "add_category_button": "Add Category",
+      "delete_error": "Error while deleting record, please try again later.",
+      "create_error": "Error while adding record, please try again later.",
+      "update_error": "Error while updating record, please try again later.",
+      "get_error": "Error while getting records, please try again later.",
+      "create_success": "Successfully added.",
+      "update_success": "Successfully updated.",
+      "delete_success": "Successfully deleted.",
+      "any_contact_exists_in_category": "This category has contacts associated with it and can not be deleted."
     }
   },
   "ticket_department": {

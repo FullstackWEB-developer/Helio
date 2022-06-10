@@ -7,6 +7,7 @@ import TicketDepartment from './components/ticket-department/ticket-department';
 import EditCancellationReason from './components/cancellation-reason/edit-cancellation-reason/edit-cancellation-reason';
 import SMSTemplates from './components/sms-templates/sms-templates';
 import SMSTemplateEdit from './components/sms-templates/sms-template-edit/sms-template-edit';
+import ContactCategories from './components/contact-categories/contact-categories';
 interface CancellationReasonParams {
     type: string,
     id: string
@@ -25,6 +26,8 @@ const Configurations = () => {
                 return <TicketDepartment />
             case "appointment-type":
                 return <AppointmentType />
+            case "contact-categories":
+                return <ContactCategories />
             default:
                 return <AppointmentType />
         }

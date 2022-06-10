@@ -1,19 +1,19 @@
-import {Dispatch} from '@reduxjs/toolkit';
-import {Contact, ContactExtended} from '@shared/models/contact.model';
-import {endGetContactsRequest, setContacts, startGetContactsRequest} from '../store/contacts/contacts.slice';
+import { Dispatch } from '@reduxjs/toolkit';
+import { Contact, ContactExtended } from '@shared/models/contact.model';
+import { endGetContactsRequest, setContacts, startGetContactsRequest } from '../store/contacts/contacts.slice';
 import Api from './api';
 import Logger from './logger';
-import {QueryContactRequest} from '@shared/models/query-contact-request';
-import {AddContactNoteProps} from '@pages/contacts/models/contact-note.model';
-import {setGlobalLoading} from '@shared/store/app/app.slice';
+import { QueryContactRequest } from '@shared/models/query-contact-request';
+import { AddContactNoteProps } from '@pages/contacts/models/contact-note.model';
+import { setGlobalLoading } from '@shared/store/app/app.slice';
 
 const logger = Logger.getInstance();
 
 const contactsUrl = '/contacts';
 
 export const searchContactsByName = async (searchTerm: string): Promise<Contact[]> => {
-    const {data} = await Api.get(contactsUrl, {
-        params: {searchTerm: searchTerm}
+    const { data } = await Api.get(contactsUrl, {
+        params: { searchTerm: searchTerm }
     });
     return data.results;
 }
@@ -38,8 +38,8 @@ export const getContacts = () => {
 }
 
 export const queryContactsInfinite = async (pageParam: number, queryParams?: QueryContactRequest) => {
-    const {category, searchTerm, type, pageSize, starredOnly} = queryParams ?? {};
-    const {data} = await Api.get(`${contactsUrl}`, {
+    const { category, searchTerm, type, pageSize, starredOnly } = queryParams ?? {};
+    const { data } = await Api.get(`${contactsUrl}`, {
         params: {
             page: pageParam,
             pageSize: pageSize,
@@ -56,49 +56,53 @@ export const queryContactsInfinite = async (pageParam: number, queryParams?: Que
     }
 }
 
-export const getContactById = async (contactId: string) : Promise<Contact> => {
-    const {data} = await Api.get(`${contactsUrl}/${contactId}`);
+export const getContactById = async (contactId: string): Promise<Contact> => {
+    const { data } = await Api.get(`${contactsUrl}/${contactId}`);
     return data;
 }
 
 export const createNewContact = async (contact: ContactExtended) => {
-    const {data} = await Api.post(contactsUrl, contact);
+    const { data } = await Api.post(contactsUrl, contact);
     return data;
 }
 
 export const updateContact = async (contact: ContactExtended) => {
-    const {data} = await Api.put(contactsUrl, contact);
+    const { data } = await Api.put(contactsUrl, contact);
     return data;
 }
 
 export const toggleFavoriteContact = async (contactId: string) => {
-    const {data} = await Api.put(`${contactsUrl}/${contactId}/toggle-favorite`);
+    const { data } = await Api.put(`${contactsUrl}/${contactId}/toggle-favorite`);
     return data;
 }
 
 export const deleteContact = async (contactId: string) => {
-    const {data} = await Api.delete(`${contactsUrl}/${contactId}`);
+    const { data } = await Api.delete(`${contactsUrl}/${contactId}`);
     return data;
 }
 
-export const addContactNote = async ({contactId, contactNoteDto}: AddContactNoteProps) => {
-    const {data} = await Api.post(`${contactsUrl}/${contactId}/notes`, contactNoteDto);
+export const addContactNote = async ({ contactId, contactNoteDto }: AddContactNoteProps) => {
+    const { data } = await Api.post(`${contactsUrl}/${contactId}/notes`, contactNoteDto);
     return data;
 }
 
 export const getContactNotes = async (contactId: string) => {
-    const {data} = await Api.get(`${contactsUrl}/${contactId}/notes`);
+    const { data } = await Api.get(`${contactsUrl}/${contactId}/notes`);
     return data;
 }
 
 export const searchCompanyContacts = async (searchTerm: string) => {
-    const {data} = await Api.get(`${contactsUrl}?searchTerm=${searchTerm}&type=1`);
+    const { data } = await Api.get(`${contactsUrl}?searchTerm=${searchTerm}&type=1`);
     return data;
 }
 
 export const getContactsNames = async (contactIds: string[]) => {
-    if(contactIds.length > 0){
-        const {data} = await Api.get(`${contactsUrl}/contact-names?${contactIds.map((n) => `contactIds=${n}`).join('&')}`);
+    if (contactIds.length > 0) {
+        const { data } = await Api.get(`${contactsUrl}/contact-names?${contactIds.map((n) => `contactIds=${n}`).join('&')}`);
         return data;
     }
+}
+export const existsInCategory = async (categoryId: number) => {
+    const { data } = await Api.get<boolean>(`${contactsUrl}/exists-in-category/${categoryId}`);
+    return data;
 }
