@@ -42,8 +42,8 @@ const ExternalUserCreateCallbackTicket = () => {
     const createCallbackTicketMutation = useMutation(createCallbackTicket, {
         onSuccess: () => {
             setTicketSubmitted(true);
-            dispatch(setRetryPrevented(true));
-            dispatch(setPreventRetryUntil(dayjs().add(Number(utils.getAppParameter('VerificationFailWaitInSeconds')), 'seconds').toDate()));
+            dispatch(setRetryPrevented(true));            
+            dispatch(setPreventRetryUntil(dayjs().add(Number(utils.getAppParameter('VerificationFailWaitInMinutes')), 'minutes').toDate()));
             dispatch(addSnackbarMessage({
                 type: SnackbarType.Success,
                 message: 'external_access.callback_ticket_created'
@@ -84,7 +84,7 @@ const ExternalUserCreateCallbackTicket = () => {
             </div>
             <div className='pt-10 xl:pt-2'>
                 {t('external_access.could_not_verify_description_1', {
-                    'minutes': (Number(utils.getAppParameter('VerificationFailWaitInSeconds')) /60)
+                    'minutes': (Number(utils.getAppParameter('VerificationFailWaitInMinutes')))
                 })}
             </div>
             <div>
