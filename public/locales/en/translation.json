@@ -813,7 +813,7 @@
       "list_title": "You have {{number}} upcoming appointments.",
       "select_appointment": "Please select appointment to view details.",
       "fetch_failed": "Could not retrieve appointments from server. Please try again later",
-      "no_single_appointment_with_id": "It seems that your appointment has been canceled or rescheduled. Please contact us via phone or email so we can assist you.", 
+      "no_single_appointment_with_id": "It seems that your appointment has been canceled or rescheduled. Please contact us via phone or email so we can assist you.",
       "appointment_details": "Appointment Details",
       "appointment_schedule": "Schedule Appointment",
       "see_appointment_details": "Please see your appointment details below.",
@@ -1870,7 +1870,8 @@
     "security": "Security",
     "general": "General",
     "tickets": "Tickets",
-    "ticket_department": "Departments/Groups",
+    "public_links_menu": "Public Links",
+    "ticket_department_menu": "Departments/Groups",
     "appointment_type_list": {
       "title": "Appointment Type",
       "description": "You need to map and configure EHR/EMR appointment types to Helio appointment types. You need at least 1 Helio appointment type in order for patients to be able to select and schedule appointments through Helio application.",
@@ -1927,6 +1928,23 @@
       "grid_modified_on": "MODIFIED ON",
       "tool_tip_grid_direction_two_way": "Two way: Response from patient needed (Confirm, Cancel etc.)",
       "tool_tip_grid_direction_one_way": "One way: Notification, no response needed."
+    },
+    "public_links": {
+      "title": "Public Links",
+      "description": "Public links allow your practice to include Helio web forms for most frequent patient requests with your practice website. Simply copy below links and embed them in your website to allow users to access web forms.",
+      "description_link_holder": "To customize your brand colors please visit <0>Practice Brand</0> screen.",
+      "grid_name": "WEB FORM",
+      "grid_link": "LINK",
+      "grid_copy_link": "COPY LINK",
+      "copied_badge": "Copied to clipboard",
+      "items": {
+        "new_patient_registration": "New patient registration",
+        "schedule_appointment": "Schedule Appointment",
+        "manage_upcoming_appointments": "Manage upcoming appointments",
+        "request_prescription_refills": "Request prescription refills",
+        "medical_records": "Medical Records",
+        "recent_test_results": "Recent test results"
+      }
     },
     "contact_categories": {
       "title": "Contact Categories",
