@@ -1,0 +1,27 @@
+.black-cell {
+    color: var(--color-secondary-default);
+}
+
+.not-on-emr {
+    color: var(--color-secondary-500);
+}
+
+.grid-configuration {
+    display: grid;
+    column-gap: 2rem;
+    align-items: center;
+    align-content: center;
+    grid-template-columns: 24% 24% 1fr 7%;
+
+    &.head-row {
+        background-color: var(--color-secondary-100);
+        text-transform: uppercase;
+        min-height: 3rem;
+        color: var(--table-header-color);
+    }
+
+    &.data-row {
+        border-bottom: 1px solid var(--light-divider-7);
+        grid-auto-rows: minmax(3.5rem, min-content);
+    }
+}

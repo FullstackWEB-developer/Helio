@@ -1920,6 +1920,20 @@
         "error": "An error ocurred. Please try again later."
       }
     },
+    "appointment_types_for_providers": {
+      "provider_dropdown_label": "Providers",
+      "menu_name": "Provider Appointment Settings",
+      "title": "Provider Appointment Settings",
+      "description": "Select a provider and appointment types that patients will be able to manage in Helio via voice bot, SMS, chat and webforms (Schedule, Reschedule, Cancel). Appointments that are not selected will be still available in your EMR/EHR but not visible to patients in Helio. Mapping must be done for each provider individually.",
+      "grid_appointment_id": "EHR/EMR APPOINTMENT ID",
+      "grid_appointment_name": "HELIO APPOINTMENT NAME",
+      "grid_description": "DESCRIPTION",
+      "grid_allow": "ALLOW",
+      "error_fetching_items": "Fetching items failed. Please try again.",
+      "tooltip_allow": "Allow appointment scheduling in Helio for this provider.",
+      "save_success": "Appointment types saved successfully.",
+      "save_error": "Operation failed. Please try again later."
+    },
     "sms_templates": {
       "title": "SMS Notification Templates",
       "description": "Please select SMS template and click on the edit icon to modify.",

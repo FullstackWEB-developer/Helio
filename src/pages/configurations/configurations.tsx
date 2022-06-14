@@ -7,6 +7,7 @@ import TicketDepartment from './components/ticket-department/ticket-department';
 import EditCancellationReason from './components/cancellation-reason/edit-cancellation-reason/edit-cancellation-reason';
 import SMSTemplates from './components/sms-templates/sms-templates';
 import SMSTemplateEdit from './components/sms-templates/sms-template-edit/sms-template-edit';
+import ProviderAppointmentType from './components/provider-appointment-types/provider-appointment-types';
 import { PublicLinksPath } from '@app/paths';
 import PublicLinks from './components/public-links/public-links';
 import ContactCategories from './components/contact-categories/contact-categories';
@@ -28,6 +29,8 @@ const Configurations = () => {
                 return <TicketDepartment />
             case "appointment-type":
                 return <AppointmentType />
+            case "provider-appointment-settings":
+                return <ProviderAppointmentType />
             case PublicLinksPath:
                 return <PublicLinks />
             case "contact-categories":

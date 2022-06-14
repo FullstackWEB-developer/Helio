@@ -16,6 +16,7 @@ export const GetPatientAppointments = 'patient-appointments';
 export const GetAppointmentType = 'appointment-type';
 export const GetAppointmentTypes = 'appointment-types';
 export const GetAppointmentTypesForPatient = 'appointment-types-for-patient'
+export const GetAppointmentTypesForProvider = 'appointment-types-for-provider'
 export const GetAppointmentSlots = 'appointment-slots';
 export const GetCancellationReasons = 'cancellation-reasons';
 export const GetCancellationReasonsEditable = 'cancellation-reasons-editable';

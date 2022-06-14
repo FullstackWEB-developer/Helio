@@ -23,7 +23,16 @@ export const ConfigurationMenuItems = [{
         id: "configuration-menu-item-5",
         title: 'configuration.email_notification_templates',
         url: "email-notification-templates",
+    }, {
+        id: "configuration-menu-item-6",
+        title: 'configuration.sms_notification_templates',
+        url: "sms-templates",
     }]
+},
+{
+    id: "configuration-menu-item-4",
+    title: 'configuration.appointment_types_for_providers.menu_name',
+    url: 'provider-appointment-settings'
 }, {
     id: "configuration-menu-item-7",
     title: 'configuration.tickets',
