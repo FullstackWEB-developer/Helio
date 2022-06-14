@@ -284,6 +284,7 @@ const ChatsLogList = () => {
                             iconFillClassname='cursor-pointer icon-medium'
                             menuClassName='more-menu-list'
                             containerClassName='h-full flex items-center justify-center more-menu'
+                            closeOnMouseLeave={true}
                             onClick={(item: DropdownItemModel) => {
                                 switch (item.value) {
                                     case '2':

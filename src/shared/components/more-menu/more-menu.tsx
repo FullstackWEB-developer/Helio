@@ -18,10 +18,11 @@ interface MoreMenuProps {
     onClick?: (item: DropdownItemModel) => void,
     menuPlacement?: Placement;
     verticalOffset?: number;
-    horizontalOffset?: number
+    horizontalOffset?: number;
+    closeOnMouseLeave?: boolean;
 }
 
-const MoreMenu = ({value, items, menuClassName, iconClassName, iconFillClassname, containerClassName, menuPlacement = 'bottom', verticalOffset = 0, horizontalOffset = 0, ...props}: MoreMenuProps) => {
+const MoreMenu = ({value, items, menuClassName, iconClassName, iconFillClassname, containerClassName, menuPlacement = 'bottom', verticalOffset = 0, horizontalOffset = 0, closeOnMouseLeave = false, ...props}: MoreMenuProps) => {
     const [isVisible, setIsVisible, elementRef] = useComponentVisibility<HTMLDivElement>(false);
     const [valueSelected, setValueSelected] = useState(value);
     const iconContainerRef = useRef<HTMLDivElement>(null);
@@ -75,7 +76,7 @@ const MoreMenu = ({value, items, menuClassName, iconClassName, iconFillClassname
         }
     }, [isVisible]);
 
-    return (<div ref={elementRef} className={containerClassName} onMouseLeave={() => setIsVisible(false)}>
+    return (<div ref={elementRef} className={containerClassName} onMouseLeave={() => {closeOnMouseLeave && setIsVisible(false)}}>
         <div
             className="relative flex flex-row items-center cursor-pointer flex-nowrap"
             onClick={() => setIsVisible(!isVisible)}

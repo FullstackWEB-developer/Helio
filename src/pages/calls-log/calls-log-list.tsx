@@ -294,6 +294,7 @@ const CallsLogList = () => {
                             iconFillClassname='cursor-pointer icon-medium'
                             menuClassName='more-menu-list'
                             containerClassName='h-full flex items-center justify-center more-menu'
+                            closeOnMouseLeave={true}
                             onClick={(item: DropdownItemModel) => {
                                 setRowSelected(data);
                                 switch (item.value) {
