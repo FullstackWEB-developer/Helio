@@ -1,6 +1,6 @@
 export const DEBOUNCE_SEARCH_DELAY_MS: number = 500;
 export const DATE_ISO_FORMAT = 'YYYY-MM-DD';
-export const DATE_INPUT_LONG_FORMAT = 'ddd[,] MMM D';
+export const DATE_INPUT_LONG_FORMAT = 'ddd[,] MMM D YYYY';
 export const DATE_LONG_FORMAT = 'MMMM DD[,] YYYY hh:mm A';
 export const DATE_FORMAT = 'MMM D[,] YYYY';
 export const TIME_FORMAT = 'hh:mm A';
