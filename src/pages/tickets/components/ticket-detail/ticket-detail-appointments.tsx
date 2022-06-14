@@ -22,7 +22,6 @@ const TicketDetailAppointments = ({ticket}: TicketDetailAppointmentsProps) => {
     const {data: patientClinical} = useQuery<ClinicalDetails, Error>([GetPatientClinical, ticket?.patientId], () =>
             getPatientClinicalDetails(ticket?.patientId as number),
         {
-            staleTime: OneMinute,
             enabled: !!ticket?.patientId
         }
     );
