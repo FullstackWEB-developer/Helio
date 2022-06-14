@@ -19,6 +19,7 @@ import { CancellationReasonSaveRequest } from '@pages/appointments/models/cancel
 import { GetCancellationReasonsEditable } from '@constants/react-query-constants';
 import dayjs from 'dayjs';
 import Confirmation from '@components/confirmation/confirmation';
+import RouteLeavingGuard from '@components/route-leaving-guard/route-leaving-guard';
 
 interface CancellationReasonForm {
     description: string;
@@ -197,6 +198,10 @@ const EditCancellationReason = () => {
                 </div>
             </form>
         }
+          <RouteLeavingGuard
+                when={formState.isDirty && !formState.isSubmitSuccessful}
+                navigate={path => history.push(path)}
+            />
             <Confirmation title={t('configuration.cancellation_reason.confirm_delete_title', { cancellationReason: `${cancellationReason?.id} ${cancellationReason?.name}` })}
                 okButtonLabel={t('contacts.contact_details.confirm_delete_yes')} isOpen={deleteConfirmationOpened}
                 onOk={() => handleDeleteClick()} onCancel={() => setDeleteConfirmationOpened(false)} onClose={() => setDeleteConfirmationOpened(false)} closeableOnEscapeKeyPress={true} />
