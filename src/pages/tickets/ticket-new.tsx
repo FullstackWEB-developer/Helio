@@ -514,6 +514,7 @@ const TicketNew = () => {
                             type='date'
                             dataTestId={'ticket-new-due-date'}
                             onValidationError={() => setError('dueDate', {message: 'Validation error'})}
+                            isSmallSize={true}
                         />
                         <ControlledTimeInput
                             name='dueTime'

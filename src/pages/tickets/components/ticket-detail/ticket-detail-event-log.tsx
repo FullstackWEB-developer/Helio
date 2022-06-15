@@ -86,6 +86,7 @@ const TicketDetailEventLog = ({ticket, control, isVisible, setIsVisible}: Ticket
                     dataTestId='datetime-date'
                     onChange={handleDateChange}
                     value={updateModel.dueDate}
+                    isSmallSize={true}
                 />
                 <ControlledTimeInput
                     name='time'
