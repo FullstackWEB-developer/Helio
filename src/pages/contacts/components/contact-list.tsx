@@ -64,7 +64,7 @@ const ContactList = ({contacts, onContactSelect, currentlySelected, fetchMore, i
 
     const handleScroll = (event: any) => {
         const target = event.target;
-        if (target.scrollHeight - target.scrollTop === target.clientHeight) {
+        if (target.scrollHeight <= target.scrollTop + target.clientHeight) {
             fetchMore();
         }
     }

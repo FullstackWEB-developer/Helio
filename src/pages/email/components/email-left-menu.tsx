@@ -65,7 +65,7 @@ const EmailLeftMenu = () => {
     }
     const handleScroll = (event: any) => {
         const target = event.target;
-        if (target.scrollHeight - target.scrollTop === target.clientHeight && !getEmailsQuery.isFetchingNextPage) {
+        if (target.scrollHeight <= target.scrollTop + target.clientHeight && !getEmailsQuery.isFetchingNextPage) {
             getEmailsQuery.fetchNextPage().then();
         }
     }

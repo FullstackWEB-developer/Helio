@@ -140,8 +140,8 @@ const SmsChat = ({info, isLoading, isSending, isBottomFocus, messages = [], last
         messageListContainerRef.current?.scrollTo(0, topMessagePosition.current);
     }, [messages, messages.length]);
 
-    const onScroll = ({currentTarget}: React.UIEvent<HTMLDivElement, UIEvent>) => {
-        if (props.onFetchMore && currentTarget.scrollTop <= 0) {
+    const onScroll = (event: any) => {
+        if (props.onFetchMore && event.target.scrollHeight <= event.scrollTop + event.clientHeight) {
             props.onFetchMore();
         }
     }
