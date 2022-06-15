@@ -7,6 +7,7 @@ import TicketDepartment from './components/ticket-department/ticket-department';
 import EditCancellationReason from './components/cancellation-reason/edit-cancellation-reason/edit-cancellation-reason';
 import SMSTemplates from './components/sms-templates/sms-templates';
 import SMSTemplateEdit from './components/sms-templates/sms-template-edit/sms-template-edit';
+import { SMSTemplatesPath } from '@app/paths';
 import ProviderAppointmentType from './components/provider-appointment-types/provider-appointment-types';
 import { PublicLinksPath } from '@app/paths';
 import PublicLinks from './components/public-links/public-links';
@@ -22,7 +23,7 @@ const Configurations = () => {
             case "cancellation-reasons":
                 if (id) { return <EditCancellationReason /> }
                 else { return <CancellationReasonConfig /> }
-            case "sms-templates":
+            case SMSTemplatesPath:
                 if (id) { return <SMSTemplateEdit /> }
                 else { return <SMSTemplates /> }
             case "ticket-department":

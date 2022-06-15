@@ -1,7 +1,7 @@
-import {Icon} from '@components/svg-icon/icon';
-import {Control} from 'react-hook-form/dist/types/form';
-import {Controller, ControllerRenderProps} from 'react-hook-form';
-import {useTranslation} from 'react-i18next';
+import { Icon } from '@components/svg-icon/icon';
+import { Control } from 'react-hook-form/dist/types/form';
+import { Controller, ControllerRenderProps } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import TextArea from '@components/textarea/textarea';
 
 interface ControlledTextAreaProps {
@@ -34,7 +34,8 @@ interface ControlledTextAreaProps {
     minRows?: number;
     maxRows?: number;
     rows?: number;
-    showSendIconInRichTextMode?: boolean
+    showSendIconInRichTextMode?: boolean,
+    refObject?: React.RefObject<HTMLTextAreaElement>
 }
 const ControlledTextArea = ({
     control,
@@ -65,9 +66,10 @@ const ControlledTextArea = ({
     showFormatting,
     textareaContainerClasses,
     showSendIconInRichTextMode,
+    refObject,
     ...props
 }: ControlledTextAreaProps) => {
-    const {t} = useTranslation();
+    const { t } = useTranslation();
     const requiredText = t('common.required');
 
     const onChanged = (message: string, controller: ControllerRenderProps<Record<string, any>>) => {
@@ -78,7 +80,7 @@ const ControlledTextArea = ({
         <Controller
             name={name}
             control={control}
-            rules={{required: required ? requiredText : ''}}
+            rules={{ required: required ? requiredText : '' }}
             defaultValue={defaultValue}
             render={(controllerProps) => {
                 return (
@@ -112,6 +114,7 @@ const ControlledTextArea = ({
                         textareaContainerClasses={textareaContainerClasses}
                         value={controllerProps.value}
                         showSendIconInRichTextMode={showSendIconInRichTextMode}
+                        ref={refObject}
                     />
 
                 );
@@ -122,4 +125,4 @@ const ControlledTextArea = ({
 
 }
 
-export default  ControlledTextArea;
+export default ControlledTextArea;

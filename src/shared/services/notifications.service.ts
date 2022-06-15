@@ -6,6 +6,7 @@ import { Patient } from '@pages/patients/models/patient';
 import { Ticket } from '@pages/tickets/models/ticket';
 import { TemplateUsedFrom } from '@components/notification-template-select/template-used-from';
 import { SMSTemplate } from '@pages/configurations/models/sms-templates';
+import { SMSTemplateUpdate } from '@pages/configurations/models/sms-template-update';
 import { AppointmentTypeForProvider } from '@shared/models/appointment-type-for-provider';
 
 const notificationsUrl = '/notifications';
@@ -54,4 +55,13 @@ export const getSMSTemplates = async () => {
     const url = `${notificationsUrl}/admin/sms-templates`;
     const result = await Api.get<SMSTemplate[]>(url);
     return result.data;
+}
+export const getSMSTemplateById = async (id: string) => {
+    const url = `${notificationsUrl}/admin/sms-templates/${id}`;
+    const result = await Api.get<SMSTemplate>(url);
+    return result.data;
+}
+export const updateSMSTemplate = async (payload: SMSTemplateUpdate) => {
+    const url = `${notificationsUrl}/admin/sms-templates`;
+    await Api.post(url, payload);
 }

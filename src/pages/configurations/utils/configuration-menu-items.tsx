@@ -1,3 +1,4 @@
+import { SMSTemplatesPath } from "@app/paths";
 import { PublicLinksPath } from "@app/paths";
 
 export const ConfigurationMenuItems = [{
@@ -26,7 +27,7 @@ export const ConfigurationMenuItems = [{
     }, {
         id: "configuration-menu-item-6",
         title: 'configuration.sms_notification_templates',
-        url: "sms-templates",
+        url: SMSTemplatesPath,
     }]
 },
 {

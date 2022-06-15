@@ -71,16 +71,16 @@ const SMSTemplates = () => {
         }
     }
     const onEditIconClick = (id: string) => {
-        history.push(`${ConfigurationsPath}${SMSTemplatesPath}/${id}`);
+        history.push(`${ConfigurationsPath}/${SMSTemplatesPath}/${id}`);
     }
     const DisplayToolTip = (messages: string[]) => {
         return <ToolTipIcon
-            icon={Icon.Info}
+            icon={Icon.Error}
             iconFillClass='rgba-05-fill'
-            placement='right-start'
+            placement='bottom'
             iconClassName='cursor-pointer icon ml-2'
         >
-            <div className='flex flex-col p-6 w-80'>
+            <div className='flex flex-col p-6 w-80 normal-case'>
                 {messages.map(message => <> <p className='body2'>{message}</p></>)}
             </div>
         </ToolTipIcon>
@@ -99,7 +99,7 @@ const SMSTemplates = () => {
                 },
                 render: (value: string) => {
                     return (
-                        <span className='body3-small'>
+                        <span>
                             {value}
                         </span>
                     );
@@ -120,7 +120,7 @@ const SMSTemplates = () => {
                 },
                 render: (value: number) => {
                     return (
-                        <span className='body3-small'>
+                        <span>
                             {SMSDirection[value]}
                         </span>
                     );
@@ -128,7 +128,7 @@ const SMSTemplates = () => {
             },
             {
                 title: 'configuration.sms_templates.grid_modified_by',
-                field: 'modifiedBy',
+                field: 'modifiedByName',
                 isSortable: true,
                 widthClass: 'w-3/12',
                 disableNoneSort: true,
@@ -137,15 +137,15 @@ const SMSTemplates = () => {
                 },
                 render: (value: string) => {
                     return (
-                        <span className='body3-small'>
+                        <span>
                             {value}
                         </span>
                     );
                 }
             },
             {
-                title: 'configuration.sms_templates.grid_modified_by',
-                field: 'modifiedBy',
+                title: 'configuration.sms_templates.grid_modified_on',
+                field: 'modifiedOn',
                 isSortable: true,
                 widthClass: 'w-2/12',
                 disableNoneSort: true,
@@ -154,7 +154,7 @@ const SMSTemplates = () => {
                 },
                 render: (value: Date) => {
                     return (
-                        <span className='body3-small'>
+                        <span>
                             {value ? dayjs.utc(value).local().format('MMM DD, YYYY') : ''}
                         </span>
                     );
@@ -181,7 +181,7 @@ const SMSTemplates = () => {
         rows: pagedResults,
         hasRowsBottomBorder: true,
         headerClassName: 'h-12',
-        rowClass: 'h-20 items-center hover:bg-gray-100 cursor-pointer',
+        rowClass: 'h-20 items-center hover:bg-gray-100 cursor-pointer body2',
     };
     return (
 
@@ -191,9 +191,10 @@ const SMSTemplates = () => {
             {
                 paginationDisplayConditions && <div className='py-4 ml-auto'><Pagination value={paginationProperties} onChange={handlePageChange} /></div>
             }
-            <div className='h-full overflow-y-auto'>
-                {isFetching ? <Spinner className='px-2' /> : <Table model={tableModel} />}
-            </div>
+            {isFetching ? <Spinner className='px-2' /> : <Table model={tableModel} />}
+            {
+                paginationDisplayConditions && <div className='py-4 ml-auto'><Pagination value={paginationProperties} onChange={handlePageChange} /></div>
+            }
         </div>
     )
 }

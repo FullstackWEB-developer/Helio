@@ -6,6 +6,7 @@ export interface SMSTemplate {
     direction: SMSDirection,
     description: string,
     templateBody: string,
+    defaultBody: string,
     createdByName: string,
     modifiedByName: string,
     createdOn: Date,
