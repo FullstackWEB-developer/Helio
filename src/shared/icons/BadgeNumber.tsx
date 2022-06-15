@@ -4,7 +4,7 @@ import {useTranslation} from 'react-i18next';
 
 export interface BadgeNumberProps {
     number?: number;
-    type?: 'yellow' | 'gray' | 'red' | 'blue',
+    type?: 'yellow' | 'gray' | 'red' | 'blue' | 'black' | 'white' | 'green',
     hideIfZero?: boolean,
     circleBadge?: boolean,
     wideAutoIfLarger?: boolean,
@@ -13,11 +13,14 @@ export interface BadgeNumberProps {
 
 export const BadgeNumber = ({type = 'yellow', number = 0, hideIfZero, circleBadge, wideAutoIfLarger, tooltipOnOverflow}: BadgeNumberProps) => {
     const {t} = useTranslation();
-    const badgeClasses = classnames(`px-2 light-badge badge-${type}`, {
+    const badgeClasses = classnames(`px-2  badge-${type}`, {
         'hidden': hideIfZero && (!number || number === 0),
-        'w-fit h-fit items-center justify-center rounded-full': wideAutoIfLarger && number >= 10,
+        'items-center justify-center rounded-full': wideAutoIfLarger && number >= 10,
         'w-5 h-5 flex items-center justify-center rounded-full': circleBadge || (wideAutoIfLarger && number < 10),
         'rounded-xl': !circleBadge && !wideAutoIfLarger,
+        'w-fit h-fit': !circleBadge || number > 10,
+        'light-badge-invert': type === 'white',
+        'light-badge': type !== 'white'
     });
 
     return (

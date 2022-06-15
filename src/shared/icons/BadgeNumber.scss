@@ -14,6 +14,18 @@
   background-color: var(--badge-blue-color);
 }
 
+.badge-black {
+  background-color: var(--rgba-color-062);
+}
+
+.badge-white {
+  background-color: var(--color-white);
+}
+
+.badge-green {
+  background-color: var(--navigation-active-item-icon);
+}
+
 .w-fit{
   width: fit-content;
 }

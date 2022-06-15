@@ -10,6 +10,8 @@
   --color-primary-200: #61f2b8;
   --color-primary-100: #e0f5eb;
   --color-primary-50: #f5fcf8;
+  --color-primary-navigation: #00b478;
+  --color-primary-navigation-hover: #259E69;
 
   --color-secondary-default: #212121;
   --color-secondary-900: #212121;
@@ -33,6 +35,7 @@
   --color-white: #ffffff;
   --color-gray50: #fafafa;
   --color-red: #f86854;
+  --color-strong-red: #fa201b;
   --color-yellow: #fdc06a;
   --color-gray: #bdbdbd;
   --color-blue: #006eff;
@@ -286,6 +289,7 @@
   --light-badge-line-height: 1.6;
   --light-badge-letter-spacing: normal;
   --light-badge-color: var(--color-white);
+  --light-badge-color-invert: var(--light-text-high-emphasis);
 
   //Component variables
   --dropdown-box-shadow: 0 1px 0.125rem 1px rgba(0, 0, 0, 0.15);
@@ -308,9 +312,9 @@
   --header-inactive-item-icon: rgba(54, 54, 54, 0.38);
   --header-active-item-icon: rgba(0, 0, 0, 0.5);
 
-  --navigation-inactive-item-icon: rgba(54, 54, 54, 0.6);
-  --navigation-active-item-icon: rgba(0, 0, 0, 0.5);
-
+  --navigation-inactive-item-icon: var(--color-white);
+  --navigation-active-item-icon: #2ab478;
+  --navigation-border-color: #27A770;
   --status-bar-inactive-item-icon: rgba(0, 0, 0, 0.3);
 
   --list-inactive-icon: rgba(0, 0, 0, 0.87);

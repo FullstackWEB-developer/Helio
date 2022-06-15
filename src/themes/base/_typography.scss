@@ -296,6 +296,17 @@ body {
   color: var(--light-badge-color);
 }
 
+.light-badge-invert {
+  font-family: var(--light-badge-font-family);
+  font-size: var(--light-badge-font-size);
+  font-weight: var(--light-badge-font-weight);
+  font-stretch: var(--light-badge-font-stretch);
+  font-style: var(--light-badge-font-style);
+  line-height: var(--light-badge-line-height);
+  letter-spacing: var(--light-badge-letter-spacing);
+  color: var(--light-badge-color-invert);
+}
+
 .default-toolbar-icon {
   fill:var(--default-toolbar-icon);
 }

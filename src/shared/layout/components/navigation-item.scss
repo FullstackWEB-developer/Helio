@@ -1,3 +1,8 @@
-.navigation-item-active {
-  padding-left: 1.375rem;
+.navigation-item{
+  &:hover {
+    background-color: var(--color-primary-navigation-hover);
+  }
+  &-active {
+    padding-left: 1.375rem;
+  }
 }

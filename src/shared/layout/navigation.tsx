@@ -127,11 +127,10 @@ const Navigation = () => {
 
     const items = React.Children.toArray(menuItems.map((item) => {
         const isSelected = isActive(item.link);
-        const icon = React.cloneElement(item.icon, {pathClass: (isSelected ? 'navigation-active-icon-color' : 'navigation-inactive-icon-color')})
         return (
             <NavigationItem
                 isSelected={isSelected}
-                icon={icon}
+                icon={item.icon}
                 link={item.link}
                 title={item.title}
                 displayBadge={item.displayBadge}
@@ -145,11 +144,11 @@ const Navigation = () => {
     }));
 
     return (
-        <nav className='flex flex-col h-full'>
+        <nav className='flex flex-col h-full navigation'>
             <div className='flex items-center h-16 border-r pl-7'>
-                <SvgIcon type={Icon.Menu} className='cursor-pointer' fillClass='active-item-icon' onClick={() => dispatch(toggleNavigation())} />
+                <SvgIcon type={Icon.Menu} className='cursor-pointer' fillClass='white-icon' onClick={() => dispatch(toggleNavigation())} />
             </div>
-            <div className='border-t'>
+            <div className='border-t items-border-top'>
                 {items}
             </div>
             <div className='flex-grow border-r' />

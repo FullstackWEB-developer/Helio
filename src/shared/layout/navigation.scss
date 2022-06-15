@@ -1,12 +1,17 @@
-.navigation-inactive-icon-color {
-  fill: var(--navigation-inactive-item-icon);
-}
+.navigation {
+  background-color: var(--color-primary-navigation);
+  .items-border-top{
+    border-color: var(--navigation-border-color);
+  }
+  &-inactive-icon-color {
+    fill: var(--navigation-inactive-item-icon);
+  }
 
+  &-active-icon-color {
+    fill: var(--navigation-active-item-icon);
+  }
 
-.navigation-active-icon-color {
-  fill: var(--navigation-active-item-icon);
-}
-
-.navigation-icon-rect {
-  fill: none;
+  &-icon-rect {
+    fill: none;
+  }
 }
