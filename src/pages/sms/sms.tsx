@@ -293,8 +293,8 @@ const Sms = () => {
     }
 
 
-    const onMessageListScroll = ({currentTarget}: React.UIEvent<HTMLDivElement, UIEvent>) => {
-        if (currentTarget.scrollHeight - currentTarget.scrollTop === currentTarget.clientHeight) {
+    const onMessageListScroll = (event: any) => {
+        if (event.target.scrollHeight <= event.target.scrollTop + event.target.clientHeight) {
             fetchMore();
         }
     }
