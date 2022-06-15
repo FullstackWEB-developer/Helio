@@ -127,9 +127,11 @@ const SmsFilter = ({ className, isUserFilterEnabled, value, defaultValue, ...pro
             props.onFilterClick(filter);
         }
 
-        if (filter.fromDate || filter.toDate || filter.assignedTo) {
+        if (filter.fromDate || filter.toDate) {
             dispatch(setIsSmsFiltered(true));
-        } else {
+        } else if(filter.assignedTo && isUserFilterEnabled){
+            dispatch(setIsSmsFiltered(true));
+        }else {
             dispatch(setIsSmsFiltered(false));
         }
     }
