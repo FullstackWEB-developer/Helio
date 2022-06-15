@@ -1,6 +1,6 @@
-import {KeyValuePair} from '@shared/models';
-import {Dispatch} from '@reduxjs/toolkit';
-import {setError} from '@components/search-bar/store/search-bar.slice';
+import { KeyValuePair } from '@shared/models';
+import { Dispatch } from '@reduxjs/toolkit';
+import { setError } from '@components/search-bar/store/search-bar.slice';
 import {
     setAllProviders,
     setLoading,
@@ -13,8 +13,8 @@ import {
 import Api from './api';
 import Logger from './logger';
 import store from '../../app/store';
-import {endGetLookupValuesRequest, setFailure, setLookupValues, startGeLookupValuesRequest} from '@pages/tickets/store/tickets.slice';
-import {User} from '../models/user';
+import { endGetLookupValuesRequest, setFailure, setLookupValues, startGeLookupValuesRequest } from '@pages/tickets/store/tickets.slice';
+import { User } from '../models/user';
 import { LookupValue } from '@pages/tickets/models/lookup-value';
 import { TicketLookupValue } from '@pages/tickets/models/ticket-lookup-values.model';
 
@@ -22,6 +22,7 @@ const logger = Logger.getInstance();
 
 const lookupsUrl = '/lookups';
 const lookupsValueUrl = '/lookups/values'
+const parametersUrl = '/lookups/parameters'
 
 export const getProviders = () => {
     const url = `${lookupsUrl}/providers`;
@@ -165,11 +166,11 @@ export const getLookupValues = (key: string, forceUpdate: boolean = false) => {
     const getLookupValuesUrl = `/lookups/values/${key}`;
     const stateLookupValues = store.getState().ticketState.lookupValues?.find((a: LookupValue) => a.key === key) || undefined;
     return async (dispatch: Dispatch) => {
-        if (!stateLookupValues ||  forceUpdate) {
+        if (!stateLookupValues || forceUpdate) {
             dispatch(startGeLookupValuesRequest());
             await Api.get(getLookupValuesUrl)
                 .then(response => {
-                    dispatch(setLookupValues({key: key, result: response.data}));
+                    dispatch(setLookupValues({ key: key, result: response.data }));
                     dispatch(endGetLookupValuesRequest(''));
                 })
                 .catch(error => {
@@ -181,20 +182,27 @@ export const getLookupValues = (key: string, forceUpdate: boolean = false) => {
 }
 
 export const upsertLookupValue = async (label: string, value: string, key: string, isUpdate: boolean) => {
-    let request : TicketLookupValue = {
+    let request: TicketLookupValue = {
         label: label,
         value: value,
         key: key,
         parentValue: ""
     }
 
-    if(isUpdate){
+    if (isUpdate) {
         await Api.put(lookupsValueUrl, request);
-    }else{
+    } else {
         await Api.post(lookupsValueUrl, request);
     }
 }
 
 export const deleteLookupValue = async (key: string, value: string) => {
     await Api.delete(`${lookupsValueUrl}/${key}/${value}`);
+}
+export const getAppointmentReminders = async () => {
+    const { data } = await Api.get<string>(`${parametersUrl}/appointment-reminder`);
+    return data;
+}
+export const setAppointmentReminders = async (newValue: string) => {
+    await Api.post(`${parametersUrl}/set-appointment-reminder?newValue=${newValue}`);
 }

@@ -1982,6 +1982,20 @@
         "department_directions_link": "Department Directions Link"
       }
     },
+    "appointment_reminders": {
+      "title": "Appointment Reminder Settings",
+      "non_reminders_description_1": "Configure automated appointment reminders for patients. Those will replace your EMR/EHR automated appointment reminders.",
+      "non_reminders_description_2": "You currently don’t have any appointment reminders set.",
+      "reminders_description": "Configure your appointment reminder timing. You can add multiple reminders. Reminders will be received via email or SMS based on patient’s communication preference set in EMR/EHR system.",
+      "days_dropdown_label": "Days",
+      "days_dropdown_label_prefix": "Appointment reminder",
+      "days_dropdown_label_sufix": "prior to appointment time.",
+      "add_another_reminder_button": "Add Another Reminder",
+      "add_reminder_button": "Add Reminder",
+      "get_error": "Error while getting records, please try again later.",
+      "set_success": "Successfully set.",
+      "set_error": "Error while setting record, please try again later."
+    },
     "public_links": {
       "title": "Public Links",
       "description": "Public links allow your practice to include Helio web forms for most frequent patient requests with your practice website. Simply copy below links and embed them in your website to allow users to access web forms.",

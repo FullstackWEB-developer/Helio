@@ -1,3 +1,4 @@
+import { AppointmentRemindersPath } from "@app/paths";
 import { SMSTemplatesPath } from "@app/paths";
 import { PublicLinksPath } from "@app/paths";
 
@@ -19,7 +20,7 @@ export const ConfigurationMenuItems = [{
     children: [{
         id: "configuration-menu-item-4",
         title: 'configuration.appointment_reminder',
-        url: "appointment-reminder",
+        url: AppointmentRemindersPath,
     }, {
         id: "configuration-menu-item-5",
         title: 'configuration.email_notification_templates',
