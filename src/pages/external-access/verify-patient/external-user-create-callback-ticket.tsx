@@ -119,7 +119,8 @@ const ExternalUserCreateCallbackTicket = () => {
                     name='dateOfBirth'
                     className='w-full md:w-88'
                     max={new Date(new Date().toDateString())}
-                    dataTestId='hipaa-dob'/>
+                    dataTestId='hipaa-dob'
+                    isSmallSize={true}/>
                 <ControlledInput
                     type='tel'
                     required={true}
