@@ -33,16 +33,16 @@ const EmailSummaryItemView = ({emailInfo, searchTerm}: EmailSummaryItemViewProps
         enabled: !!patientId
     });
 
-    const getDate = useMemo(() => {
-        const messageSendAt = messageCreatedOn;
-        if (dayjs(messageSendAt).isToday()) {
-            return dayjs.utc(messageSendAt).local().format('hh:mm A');
-        } else if (dayjs(messageSendAt).year() === dayjs().year()){
-            return dayjs.utc(messageSendAt).local().format('MMM D');
+    const getDate = () => {
+        let date = dayjs.utc(messageCreatedOn).local();
+        if (date.isToday()) {
+            return date.format('hh:mm A');
+        } else if (date.year() === dayjs().year()) {
+            return date.format('MMM D');
         } else {
-            return dayjs.utc(messageSendAt).local().format('MMM D, YYYY');
+            return date.format('MMM D, YYYY');
         }
-    }, [messageCreatedOn]);
+    }
 
 
     const userImage = useMemo(() => {
@@ -81,7 +81,7 @@ const EmailSummaryItemView = ({emailInfo, searchTerm}: EmailSummaryItemViewProps
                     </div>
                     <div className='body3-small w-20 justify-end flex flex-row'>
                         {hasAttachment && <div className='pr-2'><SvgIcon type={Icon.Attachment} className='icon-small' fillClass='rgba-06-fill' /></div>}
-                        <ElipsisTooltipTextbox value={getDate} classNames={"truncate"} asSpan={true} isDefaultTextClass={false} />
+                        <ElipsisTooltipTextbox value={getDate()} classNames={"truncate"} asSpan={true} isDefaultTextClass={false} />
                     </div>
                 </div>
                 <div className='flex flex-row'>
