@@ -1,5 +1,4 @@
 import Avatar from '@shared/components/avatar/avatar';
-import Badge from '@shared/components/badge';
 import HighlighterText from '@shared/components/highlighter-text/highlighter-text';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
@@ -95,6 +94,16 @@ const SmsChatSummary = ({
         }
     }, [createdForName, contactId, patientId, patientPhoto, t]);
 
+    const getDisplayName = () => {
+        if (createdForName) {
+            return createdForName;
+        }
+        if (utils.applyPhoneMask(smsInfo.createdForEndpoint)) {
+            return utils.applyPhoneMask(smsInfo.createdForEndpoint);
+        }
+        return t('external_access.ticket_sms.unknown_sender');
+    }
+
     return (<div className={classnames('border-b sms-summary cursor-pointer', {'sms-summary-selected': isSelected})} onClick={() => props.onClick && props.onClick(ticketId)}>
         <div className='flex flex-row pl-5 pt-2.5 pb-1.5 pr-4'>
             <div className="pr-4">
@@ -103,7 +112,7 @@ const SmsChatSummary = ({
             <div className="flex flex-col w-full sms-item-max-width">
                 <div className="flex justify-between">
                     <span className='body1 w-4/6'>
-                        <HighlighterText text={createdForName ? createdForName : utils.applyPhoneMask(smsInfo.createdForEndpoint)} highlighterText={searchTerm} />
+                        <HighlighterText text={getDisplayName()} highlighterText={searchTerm} />
                     </span>
                     <span className='body3-small'>{getDate()}</span>
                 </div>

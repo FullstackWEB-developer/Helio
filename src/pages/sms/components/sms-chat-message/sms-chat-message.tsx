@@ -8,6 +8,7 @@ import utils from '@shared/utils/utils';
 import {useTranslation} from 'react-i18next';
 import {TFunction} from 'i18next';
 import {Icon} from '@components/svg-icon';
+import {Anonymous, SystemUser} from '@pages/email/constants';
 dayjs.extend(utc);
 
 interface SmsChatMessageProps {
@@ -23,17 +24,16 @@ interface SmsChatMessageProps {
     patientPhoto?: string;
 }
 
-const systemUser = "System User";
 const getName = (props: SmsChatMessageProps, t: TFunction) => {
     if (!props.isNameVisible) {
         return '';
     }
 
-    if(props.isOutGoing && props.name === systemUser){
+    if(props.isOutGoing && props.name === SystemUser){
         return t('external_access.ticket_sms.cwc_only');
     }
 
-    if(!props.isOutGoing && props.name === systemUser){
+    if(!props.isOutGoing && (props.name === SystemUser || props.name === Anonymous)){
         return t('external_access.ticket_sms.unknown_sender');
     }
 
@@ -105,7 +105,7 @@ const SmsChatMessageOut = (props: SmsChatMessageProps) => {
         <div className="flex flex-row justify-end">
             <SmsChatMessageTime date={props.date} />
             <SmsChatMessageBody body={props.body} />
-            {props.isPhotoVisible && props.name !== systemUser && <SmsChatMessageAvatar name={name} photoUrl={props.photoProfileUrl} />}
+            {props.isPhotoVisible && props.name !== SystemUser && <SmsChatMessageAvatar name={name} photoUrl={props.photoProfileUrl} />}
         </div>
     </div>);
 }
@@ -113,6 +113,10 @@ const SmsChatMessageOut = (props: SmsChatMessageProps) => {
 const SmsChatMessageIn = (props: SmsChatMessageProps) => {
     const {t} = useTranslation();
     const name = props.name && (props.name.startsWith('+') || /\d/.test(props.name)) ? '' : props.name;
+
+    const isAnonymous = () => {
+        return props.name === SystemUser || props.name === Anonymous
+    }
     return (<div className={classnames("flex flex-col mt-2 sms-chat-message in-going", {'is-top': props.isTheTop})}>
         <div className='flex flex-row'>
             <div className='w-10' />
@@ -120,7 +124,7 @@ const SmsChatMessageIn = (props: SmsChatMessageProps) => {
             <div className="sms-chat-message-time body3-small" />
         </div>
         <div className="flex flex-row justify-start">
-            {props.isPhotoVisible && <SmsChatMessageAvatar name={name} photoUrl={props.photoProfileUrl} patientPhoto={props.patientPhoto} />}
+            {props.isPhotoVisible && <SmsChatMessageAvatar name={isAnonymous() ? '' : name} photoUrl={props.photoProfileUrl} patientPhoto={props.patientPhoto} />}
             <SmsChatMessageBody body={props.body} />
             <SmsChatMessageTime date={props.date} />
         </div>

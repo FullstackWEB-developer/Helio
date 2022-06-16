@@ -4,6 +4,9 @@ import {EmailFilterModel} from '@pages/email/components/email-filter/email-filte
 
 export const NEW_EMAIL = 'new';
 
+export const SystemUser = "System User";
+export const Anonymous = "Anonymous";
+
 export const DEFAULT_MESSAGE_QUERY_PARAMS: PagedRequest = {
     page: 1,
     pageSize: getPageSize()

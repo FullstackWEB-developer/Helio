@@ -190,7 +190,8 @@ const ConversationHeader = ({ info, forNewTicketMessagePurpose, patientPhoto, co
             return info.createdForName;
         }
 
-        return utils.applyPhoneMask(info.createdForEndpoint);
+        let phone = utils.applyPhoneMask(info.createdForEndpoint);
+        return phone ? phone : t('external_access.ticket_sms.unknown_sender');
     }
 
     const getImage = () => {
