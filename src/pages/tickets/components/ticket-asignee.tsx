@@ -2,7 +2,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {useDispatch, useSelector} from 'react-redux';
 import withErrorLogging from '../../../shared/HOC/with-error-logging';
-import {selectUserList} from '@shared/store/lookups/lookups.selectors';
+import {selectActiveUserList, selectUserList} from '@shared/store/lookups/lookups.selectors';
 import {User} from '@shared/models/user';
 import Avatar from '@shared/components/avatar/avatar';
 import utils from '@shared/utils/utils';
@@ -29,7 +29,8 @@ interface TicketAssigneeProps {
 
 const TicketAssignee = ({ticketId, assignee}: TicketAssigneeProps) => {
     const {t} = useTranslation();
-    const users = useSelector(selectUserList);
+    const activeUsers = useSelector(selectActiveUserList);
+    const allUsers = useSelector(selectUserList);
     const dispatch = useDispatch();
     const [searchAssigneeToggle, setSearchAssigneeToggle] = useState(false);
     const [userDropdownItems, setUserDropdownItems] = useState<DropdownItemModel[]>([]);
@@ -46,7 +47,7 @@ const TicketAssignee = ({ticketId, assignee}: TicketAssigneeProps) => {
         defaultValue: selectedUser.id,
         items: userDropdownItems.sort((a:DropdownItemModel,b:DropdownItemModel) => a.label.localeCompare(b.label)),
         onClick: (id) => {
-            const result = users.find(user => user.id === id);
+            const result = activeUsers.find(user => user.id === id);
             if (!result) {
                 return;
             }
@@ -72,22 +73,23 @@ const TicketAssignee = ({ticketId, assignee}: TicketAssigneeProps) => {
     });
 
     useEffect(() => {
-        let results = users.map(user => ({
+        let results = activeUsers.map(user => ({
             label: `${user.firstName} ${user.lastName}`,
-            value: user.id
+            value: user.id,
+            disabled: false
         } as DropdownItemModel));
         if (assignee) {
             results = results.filter(a => a.value !== assignee);
         }
         setUserDropdownItems(results);
-    }, [users, assignee]);
+    }, [activeUsers, assignee]);
 
     useEffect(() => {
-        const user = users.find(user => user.id === assignee);
+        const user = allUsers.find(user => user.id === assignee);
         if (user) {
             setSelectedUser(user);
         }
-    }, [users, assignee]);
+    }, [activeUsers, allUsers, assignee]);
 
 
     const updateAssignee = (tId: string, assig: User) => {

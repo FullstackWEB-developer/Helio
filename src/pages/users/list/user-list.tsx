@@ -21,6 +21,7 @@ import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
 import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
 import {UserListCheckedState} from '../models/user-list-checked-state.model';
 import utils from '@shared/utils/utils';
+import {setUserList} from '@shared/store/lookups/lookups.slice';
 
 const UserList = () => {
     const {t} = useTranslation();
@@ -89,6 +90,7 @@ const UserList = () => {
         {
             onSuccess: (_, variables) => {
                 updateQueryDataOnStatusChangeSuccess(variables);
+                dispatch(setUserList([]));
                 if (variables.length === 1) {
                     const userName = findUserName(variables[0].id);
                     if (userName) {

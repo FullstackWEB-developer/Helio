@@ -51,6 +51,7 @@ import {NotAuthorizedPath} from "@app/paths";
 import UserNotificationPreference from "../components/user-notifications-toggle";
 import {UserNotificationPreferences} from "@shared/models/user-notification-preferences.enum";
 import {setAppUserDetails} from "@shared/store/app-user/appuser.slice";
+import {setUserList} from "@shared/store/lookups/lookups.slice";
 
 dayjs.extend(utc);
 
@@ -294,7 +295,7 @@ const UserDetails = () => {
             onSuccess: () => {
                 const data = {...userDetailExtended!};
                 data.user.status = getNextStatus();
-
+                dispatch(setUserList([]));
                 setUserDetailExtended(data);
                 showMessage(SnackbarType.Success, t('users.user_update_success'));
             },

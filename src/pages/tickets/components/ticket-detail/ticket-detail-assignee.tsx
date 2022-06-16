@@ -5,7 +5,7 @@ import withErrorLogging from '../../../../shared/HOC/with-error-logging';
 import {Ticket} from '../../models/ticket';
 import Select from '../../../../shared/components/select/select';
 import {Option} from '@components/option/option';
-import {selectUserList, selectUserOptions} from '@shared/store/lookups/lookups.selectors';
+import {selectActiveUserOptions, selectUserList} from '@shared/store/lookups/lookups.selectors';
 import {setAssignee} from '../../services/tickets.service';
 import {useMutation} from 'react-query';
 import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
@@ -16,6 +16,7 @@ import {useTranslation} from 'react-i18next';
 import './ticket-detail-assignee.scss';
 import {User} from '@shared/models/user';
 import {setGlobalLoading} from '@shared/store/app/app.slice';
+import SvgIcon, {Icon} from '@components/svg-icon';
 
 interface TicketDetailAssigneeProps {
     ticket: Ticket
@@ -25,15 +26,15 @@ const TicketDetailAssignee = ({ticket}: TicketDetailAssigneeProps) => {
     const {control} = useForm();
     const {t} = useTranslation();
     const dispatch = useDispatch();
-    const userListOptions = useSelector(selectUserOptions);
-    const userList = useSelector(selectUserList);
+    const userListOptions = useSelector(selectActiveUserOptions);
+    const allUserList = useSelector(selectUserList);
     const [isEditMode, setEditMode] = useState<boolean>(false);
     const [selectedUser, setSelectedUser] = useState<User>();
 
     useEffect(() => {
-        const user: User | undefined = userList ? userList.find(item => item.id === ticket.assignee) : undefined;
+        const user: User | undefined = allUserList ? allUserList.find(item => item.id === ticket.assignee) : undefined;
         setSelectedUser(user);
-    }, [ticket.assignee, userList])
+    }, [ticket.assignee, allUserList])
 
     const updateAssigneeMutation = useMutation(setAssignee, {
         onSuccess: (data) => {
@@ -44,13 +45,13 @@ const TicketDetailAssignee = ({ticket}: TicketDetailAssigneeProps) => {
             setEditMode(false);
             dispatch(setTicket(data))
         },
-        onError: (error : any) => {
+        onError: (error: any) => {
             dispatch(addSnackbarMessage({
-                message: error?.response?.data.statusCode === 409 ? 'ticket_detail.ticket_already_assigned_to_selected_user_error' :'ticket_detail.ticket_assign_error',
+                message: error?.response?.data.statusCode === 409 ? 'ticket_detail.ticket_already_assigned_to_selected_user_error' : 'ticket_detail.ticket_assign_error',
                 type: SnackbarType.Error
             }));
         },
-        onSettled:()=> {
+        onSettled: () => {
             dispatch(setGlobalLoading(false));
         }
     });
@@ -75,7 +76,7 @@ const TicketDetailAssignee = ({ticket}: TicketDetailAssigneeProps) => {
         return <div className='flex h-14 pb-4 flex-row items-center justify-between'>
             <div className='flex flex-row items-center'>
                 <div>
-                    {selectedUser && <Avatar userFullName={getFullName()} userPicture={selectedUser?.profilePicture}/>}
+                    {selectedUser && <Avatar userFullName={getFullName()} userPicture={selectedUser?.profilePicture} />}
                 </div>
                 <div className='pl-4'>{getFullName()}</div>
             </div>
@@ -90,7 +91,7 @@ const TicketDetailAssignee = ({ticket}: TicketDetailAssigneeProps) => {
 
     return <div className={'w-96 h-14 pb-4 mx-auto flex flex-col'}>
         <form>
-            <div className='divide-y'>
+            <div className='flex items-baseline'>
                 <Controller
                     name='assignedTo'
                     control={control}
@@ -107,8 +108,10 @@ const TicketDetailAssignee = ({ticket}: TicketDetailAssigneeProps) => {
                         />
                     )}
                 />
+                <SvgIcon type={Icon.Close} className='icon-small cursor-pointer' onClick={() => setEditMode(false)} />
             </div>
         </form>
+        
     </div>
 }
 

@@ -3,7 +3,8 @@ import {
     KeyValuePair,
     Provider,
     Location,
-    User
+    User,
+    UserDetailStatus
 } from '@shared/models';
 import {RootState} from '@app/store';
 import {Option} from '@components/option/option';
@@ -14,6 +15,8 @@ export const selectLocationList = (state: RootState) => state.lookupsState.locat
 export const selectProviderList = (state: RootState) => state.lookupsState.providerList as Provider[];
 export const selectAllProviderList = (state: RootState) => state.lookupsState.allProviderList as Provider[];
 export const selectUserList = (state: RootState): User[] => state.lookupsState.userList ? state.lookupsState.userList : [];
+export const selectActiveUserList = (state: RootState): User[] => state.lookupsState.userList ?
+    state.lookupsState.userList.filter((u: User) => u.status === UserDetailStatus.Active) : [];
 export const selectRoleList = (state: RootState) => state.lookupsState.roleList as RoleBase[];
 export const selectConnectUserList = (state: RootState) => state.lookupsState.connectUserList as ConnectUser[]
 export const selectUserOptions = (state: RootState): Option[] => {
@@ -23,6 +26,16 @@ export const selectUserOptions = (state: RootState): Option[] => {
             label: `${item.firstName} ${item.lastName}`
         };
     }) : [];
+}
+export const selectActiveUserOptions = (state: RootState): Option[] => {
+    return state.lookupsState.userList ? state.lookupsState.userList
+        .filter((u: User) => u.status === UserDetailStatus.Active)
+        .map((item: User) => {
+            return {
+                value: item.id,
+                label: `${item.firstName} ${item.lastName}`
+            };
+        }) : [];
 }
 
 export const selectUserByEmail = (state: RootState, email?: string): User | undefined => {

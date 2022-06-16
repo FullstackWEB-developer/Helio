@@ -22,9 +22,9 @@ import {
 } from './store/tickets.selectors';
 import {selectContacts} from '@shared/store/contacts/contacts.selectors';
 import {
+    selectActiveUserOptions,
     selectIsDepartmentListLoading,
-    selectLocationsAsOptions,
-    selectUserOptions
+    selectLocationsAsOptions
 } from '@shared/store/lookups/lookups.selectors';
 import {createTicket, getEnumByType} from './services/tickets.service';
 import {getLookupValues} from '@shared/services/lookups.service';
@@ -67,7 +67,7 @@ const TicketNew = () => {
     const queryPatientId = queryParams.get('patientId') || '';
     const queryContactId = queryParams.get('contactId');
 
-    const users = useSelector(selectUserOptions);
+    const users = useSelector(selectActiveUserOptions);
     const locationOptions = useSelector(selectLocationsAsOptions);
     const contacts = useSelector(selectContacts);
     const sourceOptions = useSelector((state => selectEnumValuesAsOptions(state, 'TicketChannel')));
