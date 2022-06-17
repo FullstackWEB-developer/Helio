@@ -180,7 +180,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({
             onFocus={onInputFocus}
             onBlur={onBlur}
             onChange={onChangeDate}
-            className='flex-1 flex-auto flex-grow flex-shrink w-px pt-6 pl-4 leading-normal body2 h-14 input-date-mask'
+            className='flex-1 flex-auto flex-grow flex-shrink w-px pt-6 pl-4 leading-normal body2 h-14 input-date-mask date-label-mask'
             value={props.value}
             disabled={props.disabled || isLoading}
         />
