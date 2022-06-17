@@ -57,7 +57,7 @@ const PatientInsurance = () => {
         return <div>
             <div className='pt-4'>
                 <span>
-                    {insurance?.insurancePlanName || ''} {primaryInsuranceHeader}
+                    {insurance?.insurancePlanDisplayName ? insurance?.insurancePlanDisplayName : insurance?.insurancePlanName || ''} {primaryInsuranceHeader}
                     {
                         insurance?.insurancePhone && <div>{`${t('patient.insurance.phone')}: ${insurance.insurancePhone}`}</div>
                     }
