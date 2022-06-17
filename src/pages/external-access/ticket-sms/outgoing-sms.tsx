@@ -23,9 +23,9 @@ const OutgoingSms = ({message, users}: {message: TicketMessage, users?: UserBase
                 <div className='body2 pr-4'>
                     {
                         user ?
-                            t('external_access.ticket_sms.cwc_name', {
+                            t('external_access.ticket_sms.helio_name', {
                                 'name': `${user?.firstName || ''} ${user?.lastName || ''}`
-                            }) : t('external_access.ticket_sms.cwc_only')
+                            }) : t('external_access.ticket_sms.helio_only')
                     }
                 </div>
                 <div className='body3-small'>{dayjs.utc(message.createdOn).local().format('hh:mm A')}</div>

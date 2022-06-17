@@ -34,8 +34,8 @@ const FeedDetailEmailItem = ({message, isCollapsed, feedTime, userFullName}: Fee
     }
 
     const constructToField = () => {
-        const cwcEmail = utils.getAppParameter('HelioEmailAddress');
-        const recipients = message.toAddress?.replace(cwcEmail, "CWC").split(';');
+        const helioEmail = utils.getAppParameter('HelioEmailAddress');
+        const recipients = message.toAddress?.replace(helioEmail, "Helio").split(';');
         const carbonCopyRecipientsNumber = message.ccAddress?.length > 0 ? message.ccAddress.split(';').length : 0;
 
         if (recipients!?.length > 1 || carbonCopyRecipientsNumber > 0) {

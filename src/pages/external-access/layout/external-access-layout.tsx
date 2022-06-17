@@ -1,11 +1,10 @@
-import React, {ReactNode, useEffect} from 'react';
+import React, {ReactNode, useEffect, useState} from 'react';
 import './external-access-layout.scss';
 import {useTranslation} from 'react-i18next';
 import dayjs from 'dayjs';
 import Snackbar from '@components/snackbar/snackbar';
 import {SnackbarPosition} from '@components/snackbar/snackbar-position.enum';
-import '../../../themes/cwc-theme.scss';
-import SvgIcon, {Icon} from '@shared/components/svg-icon';
+import '../../../themes/helio-theme.scss';
 import {useRouteMatch} from 'react-router';
 import classNames from 'classnames';
 import {useLocation} from 'react-router-dom';
@@ -28,6 +27,7 @@ const ExternalAccessLayout = ({children}: ExternalAccessLayoutProps) => {
     const {t} = useTranslation();
     const year = dayjs().year();
     const dispatch = useDispatch();
+    const [logoPath, setLogoPath] = useState<string>();
     const auth = useSelector(authenticationSelector);
     const webFormsLabResult = useRouteMatch({
         path: '/o/lab-results/:labResultId',
@@ -42,15 +42,32 @@ const ExternalAccessLayout = ({children}: ExternalAccessLayoutProps) => {
     }, [dispatch])
 
     const location = useLocation();
+    const isPreview = new URLSearchParams(location.search).get('isPreview');
 
     const isSmsTicketPage = location && location.pathname === TicketSmsPath;
     const isEmailPage = location && location.pathname === TicketEmailPath;
 
     useEffect(() => {
+        if(isPreview){
+            const imagePart = new URLSearchParams(location.search).get('logoPath');
+            if(imagePart){
+                setLogoPath(`${utils.getAppParameter('AssetsPath')}${imagePart}`);
+            }
+        }
+    }, []);
+
+    useEffect(() => {
         const bodyEl = document.getElementsByTagName('body')[0];
         if (bodyEl.classList.contains('default')) {
-            bodyEl.classList.replace('default', 'cwc-theme');
+            bodyEl.classList.replace('default', 'helio-theme');
         }
+        
+        if(!isPreview){
+            const practiceBranding = JSON.parse(utils.getAppParameter('PracticeBranding'));
+            utils.addPracticeBranding(practiceBranding);
+            setLogoPath(`${utils.getAppParameter('AssetsPath')}${practiceBranding.logoPath}`);
+        }
+        
 
         if (webFormsLabResult?.isExact) {
             bodyEl.classList.remove('overflow-y-hidden');
@@ -109,7 +126,7 @@ const ExternalAccessLayout = ({children}: ExternalAccessLayoutProps) => {
         <div className={externalAccessLayoutClassnames}>
             {<div className={iconWrapperClass}>
                 <div className='flex items-center justify-center h-full md:justify-start'>
-                    <SvgIcon type={Icon.CwcLogo}/>
+                    <img src={logoPath}></img>
                 </div>
             </div>}
             <div className={childrenWrapperClass}>{children}</div>

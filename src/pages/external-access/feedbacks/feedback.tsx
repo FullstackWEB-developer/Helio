@@ -10,7 +10,7 @@ import { addSnackbarMessage } from '@shared/store/snackbar/snackbar.slice';
 import { SnackbarType } from '@components/snackbar/snackbar-type.enum';
 import { SnackbarPosition } from '@components/snackbar/snackbar-position.enum';
 import { creteFeedback } from '@pages/tickets/services/tickets.service';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import utils from '@shared/utils/utils';
 import { FeedbackResponse } from '@pages/tickets/models/feedback-response';
@@ -22,6 +22,8 @@ const Feedback = () => {
     const [selectedReview, setSelectedReview] = useState<number>();
     const {ticketId} = useParams<{ticketId: string}>();
     const {ratingOption} = useParams<{ratingOption: string}>();
+    const search = useLocation().search;
+    const isPreview = new URLSearchParams(search).get('isPreview');
     const [reviewMessage, setReviewMessage] = useState<string>("");
     const [isReviewSend, setIsReviewSend] = useState<boolean>(false);
     const [feedbackResponse, setFeedbackResponse] = useState<FeedbackResponse>();
@@ -32,6 +34,19 @@ const Feedback = () => {
             setSelectedReview(Number(ratingOption));
         }
     }, [ratingOption]);
+
+    useEffect(() => {
+        if(isPreview){
+            const practiceBranding = {
+                primaryColor: new URLSearchParams(search).get('primaryColor'),
+                hoverColor: new URLSearchParams(search).get('hoverColor'),
+                focusedColor: new URLSearchParams(search).get('focusedColor'),
+                secondaryColor: new URLSearchParams(search).get('secondaryColor'),
+                tertiaryColor: new URLSearchParams(search).get('tertiaryColor')
+            }
+            utils.addPracticeBranding(practiceBranding);
+        }
+    }, []);
 
     const sendReview = () => {
         if(selectedReview != undefined){
@@ -71,7 +86,7 @@ const Feedback = () => {
         }
     });
     
-    if(!utils.isGuid(ticketId)){
+    if(!utils.isGuid(ticketId) && !isPreview){
         return <div>{t('external_access.not_verified_link')}</div>;
     }
 
@@ -105,10 +120,10 @@ const Feedback = () => {
     }
 
     return <div className={'feedback-body w-full h-full'} >
-        <h4 className='mb-10'>{t('external_access.feedbacks.title')}</h4>
+        <h4 className='mb-10'>{isPreview ? t('configuration.web_form_preview.title') : t('external_access.feedbacks.title')}</h4>
         <div className="flex flex-col body2 w-full">
             <div className='mb-9 w-full'>
-                <span className='subtitle'>{`${t('external_access.feedbacks.paragraph_1')}`}</span>
+                <span className='subtitle'>{isPreview ? t('configuration.web_form_preview.paragraph_1') : t('external_access.feedbacks.paragraph_1')}</span>
             </div>
             <div className='mb-9 w-full'>
                 <div className="flex">

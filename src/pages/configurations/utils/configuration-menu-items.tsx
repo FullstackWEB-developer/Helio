@@ -61,9 +61,8 @@ export const ConfigurationMenuItems = [{
     id: "configuration-menu-item-12",
     title: 'configuration.general',
     url: "general",
-}, {
+},{
     id: "configuration-menu-item-13",
     title: 'configuration.public_links_menu',
     url: PublicLinksPath
-}
-];
+}];

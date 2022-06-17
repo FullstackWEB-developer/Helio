@@ -30,7 +30,7 @@ const getName = (props: SmsChatMessageProps, t: TFunction) => {
     }
 
     if(props.isOutGoing && props.name === SystemUser){
-        return t('external_access.ticket_sms.cwc_only');
+        return t('external_access.ticket_sms.helio_only');
     }
 
     if(!props.isOutGoing && (props.name === SystemUser || props.name === Anonymous)){

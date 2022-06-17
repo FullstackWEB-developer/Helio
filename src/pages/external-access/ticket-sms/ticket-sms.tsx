@@ -41,7 +41,7 @@ const TicketSms = () => {
     useEffect(() => {
         const bodyEl = document.getElementsByTagName('body')[0];
         if (bodyEl.classList.contains('default')) {
-            bodyEl.classList.replace('default', 'cwc-theme');
+            bodyEl.classList.replace('default', 'helio-theme');
         }
         setBottomFocus(false);
     }, []);

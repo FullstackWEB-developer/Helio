@@ -1,5 +1,4 @@
 import { Icon } from '@components/svg-icon/icon';
-import CwcLogo from '@shared/icons/cwc-logo';
 import './svg-icon.scss';
 import classNames from 'classnames';
 import React from 'react';
@@ -849,7 +848,6 @@ const SvgIcon = ({ type, wrapperClassName = '', className = 'icon-medium', fillC
                 className={fillClass} />
         </svg>
     }
-    const getCwcLogo = () => <CwcLogo className={mainClass} />
 
     const getIconFormat = () => (
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className={mainClass}>
@@ -1364,7 +1362,6 @@ const SvgIcon = ({ type, wrapperClassName = '', className = 'icon-medium', fillC
         [Icon.LightRadioOff]: getIconLightRadioOff,
         [Icon.LightRadioOn]: getIconLightRadioOn,
         [Icon.Comment]: getIconComment,
-        [Icon.CwcLogo]: getCwcLogo,
         [Icon.Spinner]: getIconSpinner,
         [Icon.Format]: getIconFormat,
         [Icon.CheckMark]: getIconCheckMark,

@@ -20,8 +20,9 @@ interface ModalProps {
     closeableOnEscapeKeyPress?: boolean;
     isDraggable?: boolean;
     hasOverlay?: boolean;
+    titleClassName?: string;
 }
-const Modal = ({isOpen, children, title = '', isClosable, className, contentClassName, onClose, closeableOnEscapeKeyPress, isDraggable = false, hasOverlay = false}: ModalProps) => {
+const Modal = ({isOpen, children, title = '', isClosable, className, contentClassName, onClose, closeableOnEscapeKeyPress, isDraggable = false, hasOverlay = false, titleClassName = "px-6 pb-2 pt-9"}: ModalProps) => {
     const {t} = useTranslation();
 
     useEffect(() => {
@@ -56,7 +57,7 @@ const Modal = ({isOpen, children, title = '', isClosable, className, contentClas
                                 <div className={classname('flex justify-between h-18 draggable-handle', {
                                     'cursor-move': isDraggable
                                 })}>
-                                    <h6 className='px-6 pb-2 pt-9'>{t(title)}</h6>
+                                    <h6 className={titleClassName}>{t(title)}</h6>
                                     {isClosable && <div className='pt-4 pr-4 cursor-pointer' onClick={onClose}>
                                         <SvgIcon type={Icon.Close} className='icon-medium' fillClass='active-item-icon' />
                                     </div>}

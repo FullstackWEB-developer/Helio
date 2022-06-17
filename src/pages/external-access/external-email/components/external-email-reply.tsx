@@ -75,11 +75,11 @@ const ExternalEmailReply = ({message, setReplyMode, setSelectedMessage}: Externa
     }
 
     const sendEmailAction = () => {
-        const cwcEmail = utils.getAppParameter('HelioEmailAddress');
+        const helioEmail = utils.getAppParameter('HelioEmailAddress');
         const newMessage: TicketMessageBase = {
             channel: ChannelTypes.Email,
             body: emailContent,
-            toAddress: cwcEmail,
+            toAddress: helioEmail,
             ticketId: request.ticketId,
             direction: TicketMessagesDirection.Incoming,
             subject: message?.subject

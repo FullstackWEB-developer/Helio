@@ -1,16 +1,4 @@
-.cwc-theme {
-  --color-primary-default: #bd3a6c;
-  --color-primary-900: #bd3a6c;
-  --color-primary-800: #bd3a6c;
-  --color-primary-700: #b03664;
-  --color-primary-600: #bd3a6c;
-  --color-primary-500: #bd3a6c;
-  --color-primary-400: #ef508c;
-  --color-primary-300: #dd719a;
-  --color-primary-200: #dd719a;
-  --color-primary-100: #e0f5eb;
-  --color-primary-50: #f5fcf8;
-
+.helio-theme {
   --color-secondary-default: #212121;
   --color-secondary-900: #212121;
   --color-secondary-800: #424242;
@@ -27,7 +15,6 @@
   --badge-blue-color: #2d9ffb;
 
   //RGB Color
-  --color-primary-500-rgb: 189, 58, 108;
 
   --color-white: #ffffff;
   --color-gray50: #fafafa;
@@ -36,7 +23,6 @@
   --color-gray: #bdbdbd;
   --color-blue: #006eff;
   --color-light-blue: #2d9ffb;
-  --color-burgundy: #7b2c3b;
   --color-white-06: rgba(255, 255, 255, 0.6);
   --color-bg-primary: #fff;
 
@@ -300,7 +286,7 @@
   --profile-dropdown-shadow: 0 0.25rem 0.125rem 0 rgba(0, 0, 0, 0.15);
   --ccp-header-color: #4a4a4a;
 
-  --input-focus-background-color: rgba(189, 58, 108, 0.04);
+  --input-focus-background-color: rgba(--color-primary-500-rgb, 0.04);
   --select-box-shadow: 0 0.25rem 0.125rem 0 rgba(0, 0, 0, 0.15);
   --external-access-background: rgba(0, 0, 0, 0.04);
   --appointment-list-item-background: rgba(0, 0, 0, 0.04);
@@ -339,7 +325,7 @@
   --button-secondary-small-padding: 0 1.5rem;
   --button-secondary-small-font-size: var(--subtitle2-font-size);
 
-  --highlight-text-background-color: rgba(189, 58, 108, 0.3);
+  --highlight-text-background-color: rgba(--color-primary-500-rgb, 0.3);
   
   --loading-button-background: var(--light-divider-7);
 
@@ -357,6 +343,7 @@
   --mime-excel-color: #006c3a;
   --mime-archive-color: #616161;
   --rgba-color-062: rgba(0, 0, 0, 0.62);
+  --rgba-color-087: rgba(97, 97, 97, 0.87);
 
   a {
     color: var(--color-primary-800);

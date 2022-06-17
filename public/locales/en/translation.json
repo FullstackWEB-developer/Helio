@@ -745,8 +745,7 @@
     "left_chat": " left the chat."
   },
   "external_access": {
-    "copyright": "COMPLETE WOMEN CARE - COPYRIGHT © {{year}} - ALL RIGHTS RESERVED",
-    "cwc_logo": "CWC Logo",
+    "copyright": "COPYRIGHT © {{year}} - ALL RIGHTS RESERVED",
     "title_1": "Manage your appointments online.",
     "title_2": "Reschedule your appointments online.",
     "title_3": "View your test results.",
@@ -1014,8 +1013,8 @@
       "lab_results_download_success": "Test result successfully downloaded to your device."
     },
     "feedbacks": {
-      "title": "Please rate your recent experience with CWC.",
-      "paragraph_1": "Thinking about your interaction you had with CWC how satisfied are you with the experience?",
+      "title": "Please rate your recent experience with.",
+      "paragraph_1": "Thinking about your interaction you had, how satisfied are you with the experience?",
       "paragraph_2": "What is the single most important thing that caused you to give the employee this rating?",
       "warning": "Please do not include sensitive information such as your medical history information, user name or password in your response. The security and confidentiality of your information is important to us.",
       "submit": "Submit your feedback",
@@ -1084,8 +1083,8 @@
       "no_messages": "You have no messages",
       "conversation_history": "Conversation History",
       "me": "Me",
-      "cwc_name": "CWC - {{name}}",
-      "cwc_only": "CWC",
+      "helio_name": "Helio - {{name}}",
+      "helio_only": "Helio",
       "type": "Type your message",
       "today": "Today",
       "yesterday": "Yesterday",
@@ -2029,6 +2028,10 @@
       "update_success": "Successfully updated.",
       "delete_success": "Successfully deleted.",
       "any_contact_exists_in_category": "This category has contacts associated with it and can not be deleted."
+    },
+    "web_form_preview": {
+      "title": "Please rate your recent experience with.",
+      "paragraph_1": "Thinking about your interaction you had, how satisfied are you with the experience?"
     }
   },
   "ticket_department": {

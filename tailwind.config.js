@@ -27,8 +27,6 @@ module.exports = {
       backgroundColor: {
         primary : {
           DEFAULT: "var(--color-bg-primary)",
-          50: 'var(--color-primary-50)',
-          100: 'var(--color-primary-100)',
           200: 'var(--color-primary-200)',
           300: 'var(--color-primary-300)',
           400: 'var(--color-primary-400)',
@@ -57,8 +55,6 @@ module.exports = {
       colors: {
         primary : {
           DEFAULT: "var(--color-primary-default)",
-          50: 'var(--color-primary-50)',
-          100: 'var(--color-primary-100)',
           200: 'var(--color-primary-200)',
           300: 'var(--color-primary-300)',
           400: 'var(--color-primary-400)',

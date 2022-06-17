@@ -193,6 +193,11 @@ function App() {
             <Route path='/login'>
                 <Login />
             </Route>
+            <Route path={`${ConfigurationsPath}/web-form-preview`}>
+                <ExternalAccessLayout>
+                    <GuardedRoute exact path={`${ConfigurationsPath}/web-form-preview`} component={withSuspense(Feedback)} permission='Configurations.Access' />
+                </ExternalAccessLayout>
+            </Route>
             <SignalRProvider name={TICKET_MESSAGE_INCOMING_NAME} createConnection={() => createTicketMessageConnectionHub(accessToken)}>
                 <Layout>
                     <RealTimeUserStatusUpdate />
@@ -219,7 +224,6 @@ function App() {
                         <GuardedRoute exact path={`${ContactsPath}/results`} component={withSuspense(SearchResults)} />
                         <GuardedRoute exact path={`${ContactsPath}/:contactId?`} component={withSuspense(Contacts)} />
                     </Switch>
-
                     <GuardedRoute exact path={`${SmsPath}/:ticketId?`} component={withSuspense(Sms)} />
                     <GuardedRoute exact path={`${EmailPath}/:ticketId?`} component={withSuspense(Email)} />
                     <GuardedRoute exact path={UsersPath} component={withSuspense(UserList)} permission='Users.Access' />
