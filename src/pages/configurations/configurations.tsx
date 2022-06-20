@@ -15,6 +15,7 @@ import ProviderAppointmentType from './components/provider-appointment-types/pro
 import { PublicLinksPath } from '@app/paths';
 import PublicLinks from './components/public-links/public-links';
 import ContactCategories from './components/contact-categories/contact-categories';
+import EmailNotificationList from './components/email-notification-templates/email-notification-list'
 interface CancellationReasonParams {
     type: string,
     id: string
@@ -43,6 +44,8 @@ const Configurations = () => {
                 return <PublicLinks />
             case "contact-categories":
                 return <ContactCategories />
+            case "email-templates":
+                return <EmailNotificationList/>
             default:
                 return <AppointmentType />
         }

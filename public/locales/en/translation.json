@@ -1864,7 +1864,7 @@
     "appointment_cancellation": "Cancellation Reasons",
     "notifications": "Notifications",
     "appointment_reminder": "Appointment Reminder",
-    "email_notification_templates": "Email Notification Templates",
+    "email_templates": "Email Templates",
     "sms_notification_templates": "SMS Notification Templates",
     "call_center": "Call Center",
     "contact_categories_menu": "Contact Categories",
@@ -2030,6 +2030,14 @@
       "update_success": "Successfully updated.",
       "delete_success": "Successfully deleted.",
       "any_contact_exists_in_category": "This category has contacts associated with it and can not be deleted."
+    },
+    "email_template_list": {
+      "title": "Email Templates",
+      "description": "Please select email template and click on the edit icon to modify.",
+      "email_template_name": "Email template name",
+      "email_subject": "Email subject",
+      "email_template_modified_on": "Modified on",
+      "error_fetching": "Fetching email templates failed. Please try again."
     },
     "web_form_preview": {
       "title": "Please rate your recent experience with.",

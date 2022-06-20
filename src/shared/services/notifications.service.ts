@@ -65,3 +65,8 @@ export const updateSMSTemplate = async (payload: SMSTemplateUpdate) => {
     const url = `${notificationsUrl}/admin/sms-templates`;
     await Api.post(url, payload);
 }
+export const getEmailNotificationList = async () => {
+    const url = `${notificationsUrl}/admin/practice-email-templates`;
+    const { data } = await Api.get(url);
+    return data;
+}
