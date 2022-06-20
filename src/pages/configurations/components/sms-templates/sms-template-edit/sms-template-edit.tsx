@@ -187,7 +187,7 @@ const SMSTemplateEdit = () => {
                             resizable={false} refObject={textAreaRef}
                             overwriteDefaultContainerClasses={true}
                             rows={4} />
-                        <span className='body2 mt-4 flex justify-end'>{t('configuration.sms_templates.edit.template_body_character', { currentLength: currentLength })} {DisplayToolTip(['configuration.sms_templates.edit.template_body_character_tooltip'])}</span>
+                        <span className='body2 flex -mt-3 justify-end'>{t('configuration.sms_templates.edit.template_body_character', { currentLength: currentLength })} {DisplayToolTip(['configuration.sms_templates.edit.template_body_character_tooltip'])}</span>
                     </div>
                     <div className='flex mt-10'>
                         <Button
