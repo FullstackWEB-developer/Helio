@@ -17,7 +17,7 @@ import { SnackbarType } from '@components/snackbar/snackbar-type.enum';
 import Spinner from '@components/spinner/Spinner';
 
 const TicketDepartment = () => {
-    const {t} = useTranslation();
+    const {t} = useTranslation(); 
     const key = "Department"
     const [departmentModalOpen, setDepartmentModalOpen] = useState(false);
     const [departmentId, setDepartmentId] = useState<string | undefined>(undefined);

@@ -181,12 +181,13 @@ export const getLookupValues = (key: string, forceUpdate: boolean = false) => {
     }
 }
 
-export const upsertLookupValue = async (label: string, value: string, key: string, isUpdate: boolean) => {
+export const upsertLookupValue = async (label: string, value: string, key: string, isUpdate: boolean, isReadOnly: boolean = false) => {
     let request: TicketLookupValue = {
         label: label,
         value: value,
         key: key,
-        parentValue: ""
+        parentValue: "",
+        isReadOnly: isReadOnly
     }
 
     if (isUpdate) {

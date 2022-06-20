@@ -1871,6 +1871,8 @@
     "security": "Security",
     "general": "General",
     "tickets": "Tickets",
+    "tags": "Tags",
+    "ticket_department": "Departments/Groups",
     "public_links_menu": "Public Links",
     "ticket_department_menu": "Departments/Groups",
     "appointment_type_list": {
@@ -2036,7 +2038,7 @@
   },
   "ticket_department": {
     "title": "Departments/Groups",
-    "description": "Use setting below to manage departments or groups in your organization.",
+    "description": "Use settings below to manage departments or groups in your organization.",
     "table_header": "Departments",
     "create_department": "Add Department",
     "table": {
@@ -2052,5 +2054,27 @@
     "create_success": "Successfully added.",
     "update_success": "Successfully updated.",
     "delete_success": "Successfully deleted."
+  },
+  "ticket_tags": {
+    "title": "Tags",
+    "description": "Use settings below to manage tags in the system. Tickets can be associated with and searched by specific tags.",
+    "table_header": "Tags",
+    "create_tag": "Add Tag",
+    "tooltip_system_default": "System default",
+    "table": {
+      "tag_name": "Tag Name"
+    },
+    "delete_error": "Error while deleting tag, please try again later.",
+    "create_error": "Error while adding tag, please try again later.",
+    "update_error": "Error while updating tag, please try again later.",
+    "get_error": "Error while getting tag, please try again later.",
+    "create_success": "Tag successfully added.",
+    "update_success": "Tag successfully updated.",
+    "delete_success": "Tag successfully deleted.",
+    "modal": {
+      "add_tag": "Add Tag",
+      "edit_tag": "Edit Tag",
+      "input_label": "Tag Name"
+    }
   }
 }

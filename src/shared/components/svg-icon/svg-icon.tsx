@@ -479,6 +479,13 @@ const SvgIcon = ({ type, wrapperClassName = '', className = 'icon-medium', fillC
         </svg>
     }
 
+    const getIconInfoOutline = () => {
+        return <svg id="Icon_Info_Outline_24px" data-name="Icon/Info/Outline/24px" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className={mainClass}>
+            <rect id="Container" width="24" height="24" fill="none" />
+            <path id="ic_info_outline_24px" d="M11,17h2V11H11ZM12,2A10,10,0,1,0,22,12,10,10,0,0,0,12,2Zm0,18a8,8,0,1,1,8-8A8.011,8.011,0,0,1,12,20ZM11,9h2V7H11Z" className={fillClass} />
+        </svg>
+    }
+
     const getIconLocation = () => {
         return <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" className={mainClass}>
             <rect width="48" height="48" fill="none" opacity="0.7" />
@@ -1325,6 +1332,7 @@ const SvgIcon = ({ type, wrapperClassName = '', className = 'icon-medium', fillC
         [Icon.FilterList]: getIconFilterList,
         [Icon.Help]: getIconHelp,
         [Icon.Info]: getIconInfo,
+        [Icon.InfoOutline]: getIconInfoOutline,
         [Icon.Location]: getIconLocation,
         [Icon.Menu]: getIconMenu,
         [Icon.MoreVert]: getIconMoreVert,
