@@ -24,7 +24,7 @@ export const ConfigurationMenuItems = [{
     }, {
         id: "configuration-menu-item-5",
         title: 'configuration.email_notification_templates',
-        url: "email-notification-templates",
+        url: "email-templates",
     }, {
         id: "configuration-menu-item-6",
         title: 'configuration.sms_notification_templates',
