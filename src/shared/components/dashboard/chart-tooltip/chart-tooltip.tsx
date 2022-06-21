@@ -25,7 +25,7 @@ const ChartTooltip = ({point, label, volumeDataType = TicketVolumeDataType.Daily
         return point.x == date.format('YYYY-MM-DD');
     }
 
-    const getEndDate = (date: dayjs.Dayjs, isMonth: boolean) => {
+    const getEndDate = (date: dayjs.Dayjs, isWeek: boolean) => {
         if(data && data.length > 1){
             let currentIndex = data[0].data.findIndex( x => findPoint(x, date));
             if(currentIndex > -1 && data[0].data[currentIndex + 1]){
@@ -35,8 +35,8 @@ const ChartTooltip = ({point, label, volumeDataType = TicketVolumeDataType.Daily
             }
         }
                 
-        if(isMonth){
-            return date.endOf('month');
+        if(isWeek){
+            return date.endOf('week');
         }
         
         if (date < dayjs() && dayjs.utc(dashboardFilterEndDate).isBefore(date.weekday(7))) {
