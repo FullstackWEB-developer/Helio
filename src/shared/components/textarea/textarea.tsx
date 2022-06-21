@@ -41,6 +41,8 @@ interface TextAreaProps {
     showSendIconInRichTextMode?: boolean;
     toggleRichTextMode?: boolean;
     focusState?: boolean;
+    hyperLinkButton?: boolean;
+    hideFormattingButton?: boolean;
 }
 
 const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(({
@@ -65,6 +67,8 @@ const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(({
    alwaysDisplayIcon,
    showSendIconInRichTextMode,
    toggleRichTextMode = false,
+   hyperLinkButton = false,
+   hideFormattingButton = false,
     ...props
 }: TextAreaProps, ref) => {
 
@@ -145,7 +149,7 @@ const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(({
     });
 
     useEffect(() => {
-        if(showFormatting){
+        if(showFormatting || hideFormattingButton){
             setFormatEnabled(toggleRichTextMode);
         }        
     }, [toggleRichTextMode]);
@@ -168,7 +172,8 @@ const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(({
                                                    onClick={onClick}
                                                    disabled={props.disabled}
                                                    isLoading={isLoading}
-                                                        showSendIcon={showSendIconInRichTextMode}/></div>}
+                                                   hyperLinkButton={hyperLinkButton}
+                                                   showSendIcon={showSendIconInRichTextMode}/></div>}
             {!isFormatEnabled &&<div className={textAreaOutWrapperClass}>
                 <div className={textAreaWrapperClass}>
                     <textarea ref={mergeRefs([textAreaRef, ref])}

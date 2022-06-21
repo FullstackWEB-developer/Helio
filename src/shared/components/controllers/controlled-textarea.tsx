@@ -35,7 +35,10 @@ interface ControlledTextAreaProps {
     maxRows?: number;
     rows?: number;
     showSendIconInRichTextMode?: boolean,
-    refObject?: React.RefObject<HTMLTextAreaElement>
+    refObject?: React.RefObject<HTMLTextAreaElement>,
+    toggleRichTextMode?: boolean;
+    hyperLinkButton?: boolean;
+    hideFormattingButton?: boolean;
 }
 const ControlledTextArea = ({
     control,
@@ -67,6 +70,9 @@ const ControlledTextArea = ({
     textareaContainerClasses,
     showSendIconInRichTextMode,
     refObject,
+    toggleRichTextMode,
+    hyperLinkButton,
+    hideFormattingButton,
     ...props
 }: ControlledTextAreaProps) => {
     const { t } = useTranslation();
@@ -115,6 +121,9 @@ const ControlledTextArea = ({
                         value={controllerProps.value}
                         showSendIconInRichTextMode={showSendIconInRichTextMode}
                         ref={refObject}
+                        hyperLinkButton={hyperLinkButton}
+                        toggleRichTextMode={toggleRichTextMode}
+                        hideFormattingButton={hideFormattingButton}
                     />
 
                 );

@@ -2031,6 +2031,22 @@
       "delete_success": "Successfully deleted.",
       "any_contact_exists_in_category": "This category has contacts associated with it and can not be deleted."
     },
+    "email_template_details": {
+      "not_found": "Specified template not found.",
+      "template_name": "Email Template Name: <0>{{name}}</0>",
+      "subject": "Email Subject",
+      "title": "Email Title",
+      "created_by": "Created By: ",
+      "modified_by": "Modified By: ",
+      "created_date": "Created Date: ",
+      "modified_date":"Modified Date: ",
+      "body": "Email Body",
+      "reset_to_default": "Reset To Default Template",
+      "preview": "Preview",
+      "preview_error": "Previewing failed. Please try again.",
+      "update_error": "Updating of {{templateName}} template failed. Please try again.",
+      "update_success": "{{templateName}} template updated successfully."
+    },
     "email_template_list": {
       "title": "Email Templates",
       "description": "Please select email template and click on the edit icon to modify.",

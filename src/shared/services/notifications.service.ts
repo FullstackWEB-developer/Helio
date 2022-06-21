@@ -1,13 +1,15 @@
 import Api from './api';
-import { AppointmentTypesForProviderUpdateRequest } from '@shared/models/appointment-type-for-provider-update-request';
-import { NotificationTemplate, NotificationTemplateChannel } from '@shared/models/notification-template.model';
-import { Contact, ContactExtended } from '@shared/models';
-import { Patient } from '@pages/patients/models/patient';
-import { Ticket } from '@pages/tickets/models/ticket';
-import { TemplateUsedFrom } from '@components/notification-template-select/template-used-from';
-import { SMSTemplate } from '@pages/configurations/models/sms-templates';
-import { SMSTemplateUpdate } from '@pages/configurations/models/sms-template-update';
-import { AppointmentTypeForProvider } from '@shared/models/appointment-type-for-provider';
+import {AppointmentTypesForProviderUpdateRequest} from '@shared/models/appointment-type-for-provider-update-request';
+import {NotificationTemplate, NotificationTemplateChannel} from '@shared/models/notification-template.model';
+import {Contact, ContactExtended} from '@shared/models';
+import {Patient} from '@pages/patients/models/patient';
+import {Ticket} from '@pages/tickets/models/ticket';
+import {TemplateUsedFrom} from '@components/notification-template-select/template-used-from';
+import {SMSTemplate} from '@pages/configurations/models/sms-templates';
+import {SMSTemplateUpdate} from '@pages/configurations/models/sms-template-update';
+import {AppointmentTypeForProvider} from '@shared/models/appointment-type-for-provider';
+import {EmailTemplatePreviewRequest} from '@shared/models/email-template-preview-request';
+import {EmailTemplateUpdateRequest} from '@shared/models/email-template-update-request';
 
 const notificationsUrl = '/notifications';
 
@@ -67,6 +69,24 @@ export const updateSMSTemplate = async (payload: SMSTemplateUpdate) => {
 }
 export const getEmailNotificationList = async () => {
     const url = `${notificationsUrl}/admin/practice-email-templates`;
-    const { data } = await Api.get(url);
+    const {data} = await Api.get(url);
+    return data;
+}
+
+export const getEmailTemplatePreview = async (payload: EmailTemplatePreviewRequest) => {
+    const url = `${notificationsUrl}/admin/email-templates/preview`;
+    const {data} = await Api.post(url, payload);
+    return data;
+}
+
+export const updateEmailTemplate = async (payload: {body: EmailTemplateUpdateRequest, id: string}) => {
+    const url = `${notificationsUrl}/admin/email-templates/${payload.id}`;
+    const {data} = await Api.put(url, payload.body);
+    return data;
+}
+
+export const getEmailTemplateById = async(id: string) => {
+    const url = `${notificationsUrl}/admin/email-templates/${id}`;
+    const {data} = await Api.get(url);
     return data;
 }

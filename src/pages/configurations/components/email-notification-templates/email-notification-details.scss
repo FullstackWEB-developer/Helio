@@ -1,0 +1,9 @@
+.email-template {
+    &-title, &-auditable-labels{
+        color: var(--light-text-medium-062);
+    }
+
+    &-auditable-grid {
+        grid-template-columns: 7rem auto;
+    }
+}

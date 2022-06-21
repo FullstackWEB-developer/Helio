@@ -1,5 +1,5 @@
-import { useCallback } from 'react';
-import { useParams } from 'react-router';
+import {useCallback} from 'react';
+import {useParams} from 'react-router';
 import AppointmentType from './components/appointment-type/appointment-type';
 import ConfigurationsMenu from './components/configurations-menu/configurations-menu';
 import CancellationReasonConfig from './components/cancellation-reason/cancellation-reason-config';
@@ -10,26 +10,27 @@ import SMSTemplateEdit from './components/sms-templates/sms-template-edit/sms-te
 import TicketTags from './components/ticket-tags/ticket-tags';
 import { AppointmentRemindersPath } from '@app/paths';
 import AppointmentReminders from './components/appointment-reminders/appointment-reminders';
-import { SMSTemplatesPath } from '@app/paths';
+import {SMSTemplatesPath} from '@app/paths';
 import ProviderAppointmentType from './components/provider-appointment-types/provider-appointment-types';
-import { PublicLinksPath } from '@app/paths';
+import {PublicLinksPath} from '@app/paths';
 import PublicLinks from './components/public-links/public-links';
 import ContactCategories from './components/contact-categories/contact-categories';
-import EmailNotificationList from './components/email-notification-templates/email-notification-list'
-interface CancellationReasonParams {
+import EmailNotificationDetails from './components/email-notification-templates/email-notification-details';
+import EmailNotificationList from './components/email-notification-templates/email-notification-list';
+interface ConfigurationUrlParams {
     type: string,
     id: string
 }
 const Configurations = () => {
-    const { type, id } = useParams<CancellationReasonParams>();
+    const {type, id} = useParams<ConfigurationUrlParams>();
     const renderBodyByActiveRoute = useCallback(() => {
         switch (type) {
             case "cancellation-reasons":
-                if (id) { return <EditCancellationReason /> }
-                else { return <CancellationReasonConfig /> }
+                if (id) {return <EditCancellationReason />}
+                else {return <CancellationReasonConfig />}
             case SMSTemplatesPath:
-                if (id) { return <SMSTemplateEdit /> }
-                else { return <SMSTemplates /> }
+                if (id) {return <SMSTemplateEdit />}
+                else {return <SMSTemplates />}
             case "ticket-department":
                 return <TicketDepartment />
             case "appointment-type":
@@ -45,7 +46,8 @@ const Configurations = () => {
             case "contact-categories":
                 return <ContactCategories />
             case "email-templates":
-                return <EmailNotificationList/>
+                if (id) {return <EmailNotificationDetails />}
+                return <EmailNotificationList />;
             default:
                 return <AppointmentType />
         }
