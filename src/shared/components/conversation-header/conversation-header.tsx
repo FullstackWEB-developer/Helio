@@ -249,18 +249,18 @@ const ConversationHeader = ({ info, forNewTicketMessagePurpose, patientPhoto, co
     const [blockedAccessModalOpen, setBlockedAccessModalOpen] = useState(false);
     const { control, handleSubmit, formState: { isValid } } = useForm({ mode: 'all' });
     const blockMutation = useMutation(createBlockAccess, {
-        onSuccess: () => {
+        onSuccess: (_, variables) => {
             setBlockedAccessModalOpen(false);
             dispatch(addSnackbarMessage({
                 type: SnackbarType.Success,
-                message: t('email.inbox.blocked_success', { value: info.createdForEndpoint }),
+                message: t('email.inbox.blocked_success', { value: variables.value }),
             }));
             setMarkedAsSpam(true);
         },
-        onError: () => {
+        onError: (_, variables) => {
             dispatch(addSnackbarMessage({
                 type: SnackbarType.Error,
-                message: t('email.inbox.blocked_failure', { value: info.createdForEndpoint })
+                message: t('email.inbox.blocked_failure', { value: variables.value })
             }));
         }
     });
