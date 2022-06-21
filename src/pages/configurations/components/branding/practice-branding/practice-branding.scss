@@ -1,0 +1,6 @@
+.color-picker-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 15rem) minmax(0, 30rem);
+    column-gap: 1rem;
+    row-gap: 1rem;
+}

@@ -17,12 +17,13 @@ import { endGetLookupValuesRequest, setFailure, setLookupValues, startGeLookupVa
 import { User } from '../models/user';
 import { LookupValue } from '@pages/tickets/models/lookup-value';
 import { TicketLookupValue } from '@pages/tickets/models/ticket-lookup-values.model';
+import { PracticeBranding } from '@shared/models/practice-branding';
 
 const logger = Logger.getInstance();
 
+const parametersUrl = '/lookups/parameters';
 const lookupsUrl = '/lookups';
 const lookupsValueUrl = '/lookups/values'
-const parametersUrl = '/lookups/parameters'
 
 export const getProviders = () => {
     const url = `${lookupsUrl}/providers`;
@@ -199,6 +200,24 @@ export const upsertLookupValue = async (label: string, value: string, key: strin
 
 export const deleteLookupValue = async (key: string, value: string) => {
     await Api.delete(`${lookupsValueUrl}/${key}/${value}`);
+}
+export const uploadAssetFile = async (logo: File) => {
+    const options = {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    };
+    let formData = new FormData();
+    formData.append('formFile', logo);
+    const { data } = await Api.post<{ fileName: string, success: boolean }>(`${parametersUrl}/upload-asset-file`, formData, options);
+    return data;
+}
+export const savePracticeBranding = async (payload: PracticeBranding) => {
+    await Api.post(`${parametersUrl}/practice-branding`, payload);
+}
+export const getPracticeBranding = async () => {
+    const { data } = await Api.get<PracticeBranding>(`${parametersUrl}/practice-branding`);
+    return data
 }
 export const getAppointmentReminders = async () => {
     const { data } = await Api.get<string>(`${parametersUrl}/appointment-reminder`);

@@ -16,7 +16,9 @@ import {PublicLinksPath} from '@app/paths';
 import PublicLinks from './components/public-links/public-links';
 import ContactCategories from './components/contact-categories/contact-categories';
 import EmailNotificationDetails from './components/email-notification-templates/email-notification-details';
-import EmailNotificationList from './components/email-notification-templates/email-notification-list';
+import EmailNotificationList from './components/email-notification-templates/email-notification-list'
+import { PracticeBrandingPath } from '@app/paths';
+import PracticeBrandingEdit from './components/branding/practice-branding/practice-branding';
 interface ConfigurationUrlParams {
     type: string,
     id: string
@@ -45,6 +47,8 @@ const Configurations = () => {
                 return <PublicLinks />
             case "contact-categories":
                 return <ContactCategories />
+            case PracticeBrandingPath:
+                return <PracticeBrandingEdit />
             case "email-templates":
                 if (id) {return <EmailNotificationDetails />}
                 return <EmailNotificationList />;

@@ -20,6 +20,7 @@ export const GetAppointmentTypesForProvider = 'appointment-types-for-provider'
 export const GetAppointmentSlots = 'appointment-slots';
 export const GetCancellationReasons = 'cancellation-reasons';
 export const GetCancellationReasonsEditable = 'cancellation-reasons-editable';
+export const GetPracticeBranding = 'practice-branding';
 export const GetSMSTemplates = 'sms-templates';
 export const GetAppointmentReminders = 'appointment-reminders';
 export const GetSMSTemplate = 'sms-template';

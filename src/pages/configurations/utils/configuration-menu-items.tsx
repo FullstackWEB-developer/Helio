@@ -23,8 +23,8 @@ export const ConfigurationMenuItems = [{
         url: AppointmentRemindersPath,
     }, {
         id: "configuration-menu-item-5",
-        title: 'configuration.email_templates',
-        url: "email-templates"
+        title: 'configuration.email_notification_templates',
+        url: "email-notification-templates",
     }, {
         id: "configuration-menu-item-6",
         title: 'configuration.sms_notification_templates',
@@ -63,10 +63,6 @@ export const ConfigurationMenuItems = [{
     url: "general",
 },{
     id: "configuration-menu-item-13",
-    title: 'configuration.tags',
-    url: "ticket-tags"
-}, {
-    id: "configuration-menu-item-14",
     title: 'configuration.public_links_menu',
     url: PublicLinksPath
 }
