@@ -97,10 +97,10 @@ const TicketListItemActions = ({ticketInfo}: {ticketInfo: Ticket}) => {
 
     return (
         <>
-            <MoreMenu
-                items={generateDropdownModelOptions().items}
+            <MoreMenu items={generateDropdownModelOptions().items}
                 iconClassName='opacity-0 group-hover:opacity-100'
                 onClick={(item) => handleDropdownClick(item.value)}
+                closeOnMouseLeave={true}
             />
             {addReviewForTicket && <AddTicketReview
                 ticketId={addReviewForTicket}
