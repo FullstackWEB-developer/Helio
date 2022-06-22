@@ -142,9 +142,9 @@ export const Dashboard = () => {
             refreshDashboard();
         }
         if( id === DashboardTimeframes.week) {
-            dispatch(setDashboardFilterEndDate(dayjs.utc().endOf('week').toDate()));
+            dispatch(setDashboardFilterEndDate(dayjs().endOf('week').toDate()));
         } else if( id === DashboardTimeframes.month) {
-            dispatch(setDashboardFilterEndDate(dayjs.utc().endOf('month').toDate()));
+            dispatch(setDashboardFilterEndDate(dayjs().endOf('month').toDate()));
         }
     }
 

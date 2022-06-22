@@ -34,14 +34,10 @@ const CustomTick = ({tick, tickRotation, volumeDataType, data = []}: CustomTickP
             }
         }
         
-        if(isWeek){
+        if(isWeek && date.endOf('week').isBefore(dayjs(dashboardFilterEndDate))){
             return date.endOf('week');
-        }
-        
-        if (date < dayjs() && dayjs.utc(dashboardFilterEndDate).isBefore(date.weekday(7))) {
-            return dayjs(dashboardFilterEndDate);
         } else {
-            return date.weekday(7);
+            return dayjs(dashboardFilterEndDate);
         }
     }
 
