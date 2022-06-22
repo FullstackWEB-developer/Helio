@@ -37,7 +37,7 @@ interface BlacklistsTableProps {
     type: BlockAccessType;
 }
 
-const BlacklistsTable = ({type, ...props}: BlacklistsTableProps) => {
+const BlacklistsTable = ({type}: BlacklistsTableProps) => {
     dayjs.extend(utc);
     const {t} = useTranslation();
     const dispatch = useDispatch();
@@ -93,7 +93,7 @@ const BlacklistsTable = ({type, ...props}: BlacklistsTableProps) => {
                 field: 'value',
                 widthClass: 'w-2/6',
                 rowClassname: 'subtitle2',
-                render: (value: string, row: BlacklistModel) => {
+                render: (value: string) => {
                     return (<span className='flex items-center h-full subtitle2'>{type !== BlockAccessType.Phone ? value : utils.applyPhoneMask(value)}</span>)
                 }
             },
@@ -120,7 +120,7 @@ const BlacklistsTable = ({type, ...props}: BlacklistsTableProps) => {
                                     <span>{t('blacklist.reported_on')}:</span>
                                     <span className='ml-0.5'>{dayjs.utc(row.createdOn).local().format(DATE_TIME_FORMAT)}</span>
                                 </span>
-                                <span className='mt-3 body2'> {value}</span>
+                                <span className='mt-3 body2 max-h-80 overflow-y-auto'> {value}</span>
                             </div>
                         </ToolTipIcon>
                     );
