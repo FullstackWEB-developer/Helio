@@ -107,9 +107,7 @@ const EmailFilter = ({ className, isUserFilterEnabled, value, ...props }: EmailF
                 fromDate = date.toDate();
             }
 
-            if (formData.timePeriod !== TimePeriodLast7Days) {
-                dispatch(setEmailHasFilter(true));
-            }
+            dispatch(setEmailHasFilter(true));
         }
         return { fromDate: fromDate, toDate: toDate };
     }
