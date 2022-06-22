@@ -57,7 +57,7 @@ const CancellationReasonConfig = () => {
         }
     }
 
-    const onEditIconClick = (existsOnEMR: boolean, id: string) => {
+    const onEditIconClick = (existsOnEMR: boolean, id: number) => {
         if (!existsOnEMR) return;
         history.push(`${ConfigurationsPath}${CancellationReasonsPath}/${id}`);
     }

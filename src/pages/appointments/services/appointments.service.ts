@@ -168,7 +168,7 @@ export const SaveCancellationReason = async (payload: CancellationReasonSaveRequ
      return data;
 }
 
-export const DeleteCancellationReason = async (reasonId: string) => {
+export const DeleteCancellationReason = async (reasonId: number) => {
      const {data} = await Api.delete(`${appointmentsBaseUrl}/cancellationreason/${reasonId}`);
      return data;
 }

@@ -1,45 +1,53 @@
-import { CancellationReasonsPath, ConfigurationsPath } from '@app/paths';
-import { Option } from '@components/option/option';
-import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
-import { useHistory, useParams } from 'react-router-dom';
-import { useMutation, useQuery } from 'react-query';
-import { Icon } from '@components/svg-icon';
+import {CancellationReasonsPath, ConfigurationsPath} from '@app/paths';
+import {Option} from '@components/option/option';
+import {useTranslation} from 'react-i18next';
+import {useDispatch} from 'react-redux';
+import {useHistory, useParams} from 'react-router-dom';
+import {useMutation, useQuery} from 'react-query';
+import {Icon} from '@components/svg-icon';
 import ToolTipIcon from '@components/tooltip-icon/tooltip-icon';
-import { addSnackbarMessage } from '@shared/store/snackbar/snackbar.slice';
-import { SnackbarType } from '@components/snackbar/snackbar-type.enum';
-import { ControlledSelect, ControlledInput, ControlledTextArea } from "@components/controllers";
-import { SaveCancellationReason, DeleteCancellationReason, getCancellationReasonsEditable } from '@pages/appointments/services/appointments.service';
-import { useForm } from 'react-hook-form';
+import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
+import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
+import {ControlledSelect, ControlledInput, ControlledTextArea} from "@components/controllers";
+import {
+    SaveCancellationReason,
+    DeleteCancellationReason,
+    getCancellationReasonsEditable
+} from '@pages/appointments/services/appointments.service';
+import {useForm} from 'react-hook-form';
 import Button from '@components/button/button';
 import './edit-cancellation-reason.scss'
-import { CancellationReasonExtended } from '@pages/configurations/models/CancellationReasonExtended';
-import { useState } from 'react';
-import { CancellationReasonSaveRequest } from '@pages/appointments/models/cancellation-reason-save-request';
-import { GetCancellationReasonsEditable } from '@constants/react-query-constants';
+import {CancellationReasonExtended} from '@pages/configurations/models/CancellationReasonExtended';
+import {useState} from 'react';
+import {CancellationReasonSaveRequest} from '@pages/appointments/models/cancellation-reason-save-request';
+import {GetCancellationReasonsEditable} from '@constants/react-query-constants';
 import dayjs from 'dayjs';
 import Confirmation from '@components/confirmation/confirmation';
 import RouteLeavingGuard from '@components/route-leaving-guard/route-leaving-guard';
+import Spinner from "@components/spinner/Spinner";
 
 interface CancellationReasonForm {
     description: string;
     name: string;
     intentName: string
 }
+
 const EditCancellationReason = () => {
-    const { t } = useTranslation();
+    const {t} = useTranslation();
     const history = useHistory();
     const dispatch = useDispatch();
-    const { id } = useParams<{ id: string }>();
+    const {id} = useParams<{ id: string }>();
     const [intentNames, setIntentNames] = useState<Option[]>([]);
     const [deleteConfirmationOpened, setDeleteConfirmationOpened] = useState<boolean>(false);
     const [cancellationReason, setCancellationReason] = useState<CancellationReasonExtended>();
-    const { isFetching, data: cancellationReasons } = useQuery<CancellationReasonExtended[]>(GetCancellationReasonsEditable, () => getCancellationReasonsEditable(), {
+    const {isFetching} = useQuery<CancellationReasonExtended[]>(GetCancellationReasonsEditable, () => getCancellationReasonsEditable(), {
         onSuccess: (data) => {
             const options = [...new Map(data.map(item =>
-                [item['intentName'], item])).values()].map(x => { return { value: x.intentName, label: x.intentName } as Option });
+                [item['intentName'], item])).values()].map(x => {
+                return {value: x.intentName, label: x.intentName} as Option
+            });
             setIntentNames(options);
-            setCancellationReason(data.find(x => x.id == id));
+            setCancellationReason(data.find(x => x.id === parseInt(id)));
         },
         onError: () => {
             dispatch(addSnackbarMessage({
@@ -77,7 +85,7 @@ const EditCancellationReason = () => {
         }
 
     }
-    const { handleSubmit, control, formState } = useForm({ mode: 'all' });
+    const {handleSubmit, control, formState} = useForm({mode: 'all'});
 
     const navigateBackToCancelationReasonsList = () => {
         const pathName = `${ConfigurationsPath}${CancellationReasonsPath}`;
@@ -119,8 +127,10 @@ const EditCancellationReason = () => {
         </ToolTipIcon>
     }
     return (
-        <> {cancellationReason &&
-            <form onSubmit={handleSubmit(onSubmit)} className='px-6 pt-7 flex flex-1 flex-col group overflow-y-auto body2'>
+        <> {isFetching ? <Spinner fullScreen={true}/> :
+            cancellationReason &&
+            <form onSubmit={handleSubmit(onSubmit)}
+                  className='px-6 pt-7 flex flex-1 flex-col group overflow-y-auto body2'>
                 <div id="title-container" className='flex flex-row pb-4'>
                     <h6 className='details-label'> {cancellationReason.id}: </h6>
                     <h6 className='pl-3'> {cancellationReason.name}</h6>
@@ -128,7 +138,7 @@ const EditCancellationReason = () => {
                 <div className='flex flex-row pt-6'>
                     <div className=' flex flex-row w-1/3'>
                         <div className='flex flex-col details-label'>
-                            <span >{t('configuration.cancellation_reason.details.created_by')} </span>
+                            <span>{t('configuration.cancellation_reason.details.created_by')} </span>
                             <span> {t('configuration.cancellation_reason.details.created_date')} </span>
                         </div>
                         <div className='flex flex-col ml-4'>
@@ -137,7 +147,7 @@ const EditCancellationReason = () => {
                         </div>
                     </div>
                     <div className='flex flex-col details-label'>
-                        <span >{t('configuration.cancellation_reason.details.modified_by')} </span>
+                        <span>{t('configuration.cancellation_reason.details.modified_by')} </span>
                         <span> {t('configuration.cancellation_reason.details.modified_date')} </span>
                     </div>
                     <div className='flex flex-col ml-4'>
@@ -149,11 +159,11 @@ const EditCancellationReason = () => {
                 <div className="mt-10 flex flex-row items-center">
                     <div className='w-1/3'>
                         <ControlledInput name='name' control={control}
-                            defaultValue={cancellationReason.name}
-                            label={'configuration.cancellation_reason.details.helio_appointment_cancelation_name'}
-                            required={true}
-                            autosuggestDropdown={false}
-                            autosuggestOptions={[]}
+                                         defaultValue={cancellationReason.name}
+                                         label={'configuration.cancellation_reason.details.helio_appointment_cancelation_name'}
+                                         required={true}
+                                         autosuggestDropdown={false}
+                                         autosuggestOptions={[]}
                         />
                     </div>
                     {DisplayToolTip(t('configuration.cancellation_reason.details.helio_appointment_cancelation_name_tooltip'))}
@@ -166,10 +176,12 @@ const EditCancellationReason = () => {
                     {DisplayToolTip(t('configuration.cancellation_reason.details.appointment_cancelation_description_tooltip'))}
                 </div>
                 <div className='pr-24'>
-                    <ControlledTextArea control={control} name='description' defaultValue={cancellationReason.description}
-                        className='body2 w-full p-4' overwriteDefaultContainerClasses={true}
-                        resizable={false} rows={4} />
-                    <span className='body2 mt-4 flex justify-end'>{t('configuration.cancellation_reason.details.appointment_cancelation_description_character_limit')}</span>
+                    <ControlledTextArea control={control} name='description'
+                                        defaultValue={cancellationReason.description}
+                                        className='body2 w-full p-4'
+                                        resizable={false} rows={4}/>
+                    <span
+                        className='body2 flex justify-end'>{t('configuration.cancellation_reason.details.appointment_cancelation_description_character_limit')}</span>
                 </div>
                 <div className="mt-8 flex flex-row items-center">
                     <div className='w-1/3'>
@@ -180,7 +192,8 @@ const EditCancellationReason = () => {
                             defaultValue={cancellationReason.intentName}
                             label='configuration.cancellation_reason.details.reason_mapping'
                             options={intentNames}
-                            onSelect={() => { }}
+                            onSelect={() => {
+                            }}
                         />
                     </div>
                     {DisplayToolTip(t('configuration.cancellation_reason.details.reason_mapping_tooltip'))}
@@ -193,18 +206,25 @@ const EditCancellationReason = () => {
                         label='common.save'
                         isLoading={updateCancellationReasonMutation.isLoading}
                     />
-                    <Button label='common.cancel' className=' ml-8 mr-8' buttonType='secondary' onClick={() => navigateBackToCancelationReasonsList()} isLoading={updateCancellationReasonMutation.isLoading || deleteCancellationReasonMutation.isLoading} />
-                    <Button label='common.delete' className='mr-8' buttonType='secondary' onClick={() => setDeleteConfirmationOpened(true)} isLoading={deleteCancellationReasonMutation.isLoading} />
+                    <Button label='common.cancel' className=' ml-8 mr-8' buttonType='secondary'
+                            onClick={() => navigateBackToCancelationReasonsList()}
+                            isLoading={updateCancellationReasonMutation.isLoading || deleteCancellationReasonMutation.isLoading}/>
+                    <Button label='common.delete' className='mr-8' buttonType='secondary'
+                            onClick={() => setDeleteConfirmationOpened(true)}
+                            isLoading={deleteCancellationReasonMutation.isLoading}/>
                 </div>
             </form>
+
         }
-          <RouteLeavingGuard
+            <RouteLeavingGuard
                 when={formState.isDirty && !formState.isSubmitSuccessful}
                 navigate={path => history.push(path)}
             />
-            <Confirmation title={t('configuration.cancellation_reason.confirm_delete_title', { cancellationReason: `${cancellationReason?.id} ${cancellationReason?.name}` })}
+            <Confirmation
+                title={t('configuration.cancellation_reason.confirm_delete_title', {cancellationReason: `${cancellationReason?.id} ${cancellationReason?.name}`})}
                 okButtonLabel={t('contacts.contact_details.confirm_delete_yes')} isOpen={deleteConfirmationOpened}
-                onOk={() => handleDeleteClick()} onCancel={() => setDeleteConfirmationOpened(false)} onClose={() => setDeleteConfirmationOpened(false)} closeableOnEscapeKeyPress={true} />
+                onOk={() => handleDeleteClick()} onCancel={() => setDeleteConfirmationOpened(false)}
+                onClose={() => setDeleteConfirmationOpened(false)} closeableOnEscapeKeyPress={true}/>
         </>
     )
 }

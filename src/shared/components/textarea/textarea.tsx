@@ -145,13 +145,13 @@ const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(({
     });
 
     const textAreaOutWrapperClass = classnames('w-full h-full',{
-        'textarea-wrapper-focus': props.focusState   
+        'textarea-wrapper-focus': props.focusState
     });
 
     useEffect(() => {
         if(showFormatting || hideFormattingButton){
             setFormatEnabled(toggleRichTextMode);
-        }        
+        }
     }, [toggleRichTextMode]);
 
 

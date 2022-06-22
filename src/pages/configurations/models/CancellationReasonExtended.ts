@@ -3,7 +3,7 @@ import { CancellationReasonTypes } from "@pages/external-access/models/cancellat
 export interface CancellationReasonExtended {
     description?: string;
     existsOnEMR: boolean;
-    id: string;
+    id: number;
     intentName?: string;
     isDefault: boolean;
     isMapped: boolean;
