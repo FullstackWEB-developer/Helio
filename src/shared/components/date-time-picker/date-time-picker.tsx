@@ -270,9 +270,12 @@ const DateTimePicker = React.forwardRef<HTMLInputElement, DateTimePickerProps>((
         }
     }
 
-    const onClearClick = () => {
+    const onClearClick = (e?: React.MouseEvent<HTMLDivElement>) => {
         setInputValue('');
         onChange();
+        if(e){
+            e.stopPropagation();
+        }
     }
 
 
@@ -309,7 +312,7 @@ const DateTimePicker = React.forwardRef<HTMLInputElement, DateTimePickerProps>((
                     <div
                         role="button"
                         className={classNames('input-addon', {'pt-3': !label, 'pt-4': !!label, 'px-3': isCalendarDisabled})}
-                        onClick={onClearClick}>
+                        onClick={(e) => onClearClick(e)}>
                         <SvgIcon type={Icon.Clear} fillClass='date-time-picker-clear' />
                     </div>
                 }
