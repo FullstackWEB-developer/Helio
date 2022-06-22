@@ -2130,5 +2130,12 @@
       "edit_tag": "Edit Tag",
       "input_label": "Tag Name"
     }
+  },
+  "blocked_popup": {
+    "title": "Pop-ups blocked.",
+    "content": "It looks like pop-ups in your web browser are blocked. Please use the links below to see instructions on how to update your browser settings and allow pop-ups.",
+    "chrome_settings": "Google Chrome browser settings",
+    "firefox_settings": "Firefox browser settings",
+    "edge_settings": "Microsoft Edge browser settings"
   }
 }

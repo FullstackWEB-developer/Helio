@@ -16,6 +16,7 @@ import {useSelector} from 'react-redux';
 import {selectGlobalLoading} from '@shared/store/app/app.selectors';
 import ReLoginModal from '@shared/layout/components/relogin-modal';
 import EmailSmsNotifications from '@shared/layout/components/email-sms-notifications';
+import BlockedPopup from '@components/blocked-popup/blocked-popup';
 
 interface LayoutProps {
     children: React.ReactNode
@@ -67,6 +68,7 @@ const Layout = (props: LayoutProps) => {
                             <Snackbar position={SnackbarPosition.TopRight} />
                             <Snackbar position={SnackbarPosition.TopCenter} />
                             <EmailSmsNotifications />
+                            <BlockedPopup />
                         </DndContainer>
                     </DndProvider>
                 </div>
