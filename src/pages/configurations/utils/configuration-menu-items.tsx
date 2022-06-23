@@ -1,8 +1,18 @@
-import { AppointmentRemindersPath } from "@app/paths";
+import {AppointmentRemindersPath, PracticeBrandingPath} from "@app/paths";
 import { SMSTemplatesPath } from "@app/paths";
 import { PublicLinksPath } from "@app/paths";
 
-export const ConfigurationMenuItems = [{
+export const ConfigurationMenuItems = [
+    {
+        id: "configuration-menu-item-14",
+        title: 'configuration.branding_menu',
+        children: [{
+            id: "configuration-menu-item-15",
+            title: 'configuration.practice_branding_menu',
+            url: PracticeBrandingPath,
+        }]
+    },
+    {
     id: "configuration-menu-item-0",
     title: 'configuration.appointments',
     children: [{
