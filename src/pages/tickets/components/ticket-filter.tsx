@@ -59,6 +59,7 @@ const TicketFilter = ({ isOpen }: { isOpen: boolean }) => {
     const searchTerm: string = useSelector(selectSearchTerm);
     const { control, handleSubmit, watch, setValue, getValues, reset } = useForm({});
     const [fromDate, setFromDate] = useState<Date | undefined>();
+    const [toDate, setToDate] = useState<Date | undefined>();
     const ticketListQueryType = useSelector(selectTicketQueryType);
     const [collapsibleState, setCollapsibleState] = useState<{ [key: string]: boolean }>({});
     const watchTimePeriod = watch('timePeriod');
@@ -459,10 +460,12 @@ const TicketFilter = ({ isOpen }: { isOpen: boolean }) => {
                 type='date'
                 disabled={!fromDate}
                 min={fromDate}
+                value={toDate}
                 isCalendarPositionComputed
                 label='tickets.filter.to_date'
                 max={new Date(new Date().toDateString())}
                 isSmallSize={true}
+                onChange={setToDate}
                 name='toDate'
                 dataTestId='ticket-filter-to-date'
             />
