@@ -85,6 +85,7 @@ const UserListActions = ({user, handleStatusChange, handleResendInvite}:
                 items={generateDropdownModelOptions().items}
                 iconClassName='opacity-0 group-hover:opacity-100'
                 onClick={(item) => handleDropdownClick(item.value)}
+                closeOnMouseLeave={true}
             />
             <div className='absolute top-0 w-1/3 left-1/3'>
                 <Confirmation title={t('users.list_section.disable_modal_title_identity', {
