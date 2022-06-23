@@ -1,6 +1,7 @@
 export const TicketsPath = '/tickets';
 export const CancellationReasonsPath = '/cancellation-reasons';
 export const AppointmentRemindersPath = 'appointment-reminders';
+export const SecuritySettingsPath = 'security-settings';
 export const SMSTemplatesPath = 'sms-templates';
 export const ContactsPath = '/contacts';
 export const SmsPath = '/sms';

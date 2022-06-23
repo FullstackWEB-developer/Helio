@@ -1,4 +1,4 @@
-import {AppointmentRemindersPath, PracticeBrandingPath} from "@app/paths";
+import { AppointmentRemindersPath, SecuritySettingsPath, PracticeBrandingPath } from "@app/paths";
 import { SMSTemplatesPath } from "@app/paths";
 import { PublicLinksPath } from "@app/paths";
 
@@ -65,8 +65,8 @@ export const ConfigurationMenuItems = [
     url: "contact-categories",
 }, {
     id: "configuration-menu-item-11",
-    title: 'configuration.security',
-    url: "security",
+    title: 'configuration.security_settings_menu',
+    url: SecuritySettingsPath,
 }, {
     id: "configuration-menu-item-12",
     title: 'configuration.general',

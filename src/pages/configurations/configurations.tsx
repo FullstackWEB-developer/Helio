@@ -7,8 +7,8 @@ import TicketDepartment from './components/ticket-department/ticket-department';
 import EditCancellationReason from './components/cancellation-reason/edit-cancellation-reason/edit-cancellation-reason';
 import SMSTemplates from './components/sms-templates/sms-templates';
 import SMSTemplateEdit from './components/sms-templates/sms-template-edit/sms-template-edit';
+import { AppointmentRemindersPath, SecuritySettingsPath } from '@app/paths';
 import TicketTags from './components/ticket-tags/ticket-tags';
-import { AppointmentRemindersPath } from '@app/paths';
 import AppointmentReminders from './components/appointment-reminders/appointment-reminders';
 import {SMSTemplatesPath} from '@app/paths';
 import ProviderAppointmentType from './components/provider-appointment-types/provider-appointment-types';
@@ -18,6 +18,7 @@ import ContactCategories from './components/contact-categories/contact-categorie
 import EmailNotificationDetails from './components/email-notification-templates/email-notification-details';
 import EmailNotificationList from './components/email-notification-templates/email-notification-list'
 import { PracticeBrandingPath } from '@app/paths';
+import SecuritySettings from './components/security-settings/security-settings';
 import PracticeBrandingEdit from './components/branding/practice-branding/practice-branding';
 interface ConfigurationUrlParams {
     type: string,
@@ -47,6 +48,8 @@ const Configurations = () => {
                 return <PublicLinks />
             case "contact-categories":
                 return <ContactCategories />
+            case SecuritySettingsPath:
+                return <SecuritySettings />
             case PracticeBrandingPath:
                 return <PracticeBrandingEdit />
             case "email-templates":

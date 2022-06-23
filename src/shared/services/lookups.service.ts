@@ -17,6 +17,7 @@ import { endGetLookupValuesRequest, setFailure, setLookupValues, startGeLookupVa
 import { User } from '../models/user';
 import { LookupValue } from '@pages/tickets/models/lookup-value';
 import { TicketLookupValue } from '@pages/tickets/models/ticket-lookup-values.model';
+import { SecuritySettings } from '@pages/configurations/models/security-settings';
 import { PracticeBranding } from '@shared/models/practice-branding';
 
 const logger = Logger.getInstance();
@@ -225,4 +226,12 @@ export const getAppointmentReminders = async () => {
 }
 export const setAppointmentReminders = async (newValue: string) => {
     await Api.post(`${parametersUrl}/set-appointment-reminder?newValue=${newValue}`);
+}
+
+export const getSecuritySettings = async () => {
+    const { data } = await Api.get<SecuritySettings>(`${parametersUrl}/security-settings`);
+    return data;
+}
+export const saveSecuritySettings = async (payload: SecuritySettings) => {
+    await Api.post(`${parametersUrl}/security-settings`, payload);
 }

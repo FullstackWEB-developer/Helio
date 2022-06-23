@@ -1,0 +1,6 @@
+.security-settings-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 30rem) minmax(0, 10rem);
+    column-gap: 1rem;
+    row-gap: 2rem;
+}
