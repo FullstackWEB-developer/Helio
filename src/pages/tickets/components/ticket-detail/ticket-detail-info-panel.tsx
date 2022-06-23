@@ -45,7 +45,7 @@ const TicketDetailInfoPanel = ({ticket, patient, contact}: TicketDetailInfoPanel
     const {t} = useTranslation();
     const updateModel = useSelector(selectTicketUpdateModel);
     const storedUpdateModelHash = useSelector(selectTicketUpdateHash);
-    const {handleSubmit, control, formState: {isValid}, setError, clearErrors, errors, reset, watch} = useForm({
+    const {handleSubmit, control, setError, clearErrors, errors, reset, watch} = useForm({
         defaultValues: updateModel,
         mode: 'onChange'
     });
@@ -195,7 +195,7 @@ const TicketDetailInfoPanel = ({ticket, patient, contact}: TicketDetailInfoPanel
                     <div className='flex flex-row items-center'>
                         <Button onClick={resetForm} className='mr-6' buttonType='secondary' label={'common.cancel'} />
                         <Button buttonType='small' label={'common.save'} type='submit'
-                            disabled={!isValid || isPatientCaseNumberLoading}
+                            disabled={isPatientCaseNumberLoading}
                             isLoading={ticketUpdateMutation.isLoading} />
                     </div>
                 }
