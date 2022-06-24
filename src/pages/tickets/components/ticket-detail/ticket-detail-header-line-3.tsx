@@ -262,8 +262,10 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
     }
 
     const getEmails = () => {
-        if (patient) {
+        if (!!patient?.emailAddress) {
             return [patient.emailAddress];
+        } else if (!!ticket.incomingEmailAddress) {
+            return [ticket.incomingEmailAddress]
         } else {
             const emails: string[] = [];
             if (contact?.primaryEmailAddress) {
@@ -511,6 +513,7 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
             <Modal isOpen={isBlockUserOpen}
                 title={t('ticket_detail.header.block_user.title')}
                 className='block-user-modal'
+                isDraggable={true}
                 onClose={() => {setIsBlockUserOpen(false)}}
                 isClosable>
                 <div className='pt-1'>
@@ -540,7 +543,7 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
                                 <div className='body2 col-span-2'>
                                     {
                                         getEmails().map(email => {
-                                            return <div className='pb-2.5' key={email}>{
+                                            return <div className='pb-2.5 truncate' key={email}>{
                                                 email
                                             }</div>
                                         })
