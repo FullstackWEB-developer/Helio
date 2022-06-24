@@ -418,6 +418,14 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
         return !ticket.ipAddress && !contact && !patient && !ticket.originationNumber;
     }
 
+    const checkboxStatusChange = () => {
+        if ((ticket.ipAddress && !getValues('block_ip').checked) || (getEmails().length > 0 && !getValues('block_email').checked) || (getPhones().length > 0 && !getValues('block_phones').checked)) {
+            setValue('block_all', {value: undefined, checked: false});
+        } else {
+            setValue('block_all', {value: undefined, checked: true});
+        }
+    }
+
     return <>
         <div className='flex flex-row items-center justify-between pl-8 border-t border-b h-14'>
             <div className='flex flex-row items-center'>
@@ -527,6 +535,7 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
                                     label='ticket_detail.header.block_user.block_email'
                                     name='block_email'
                                     className='body2'
+                                    onChange={() => checkboxStatusChange()}
                                 />
                                 <div className='body2 col-span-2'>
                                     {
@@ -547,6 +556,7 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
                                     label='ticket_detail.header.block_user.block_phones'
                                     name='block_phones'
                                     className='body2'
+                                    onChange={() => checkboxStatusChange()}
                                 />
                                 <div className='body2 col-span-2'>
                                     {
@@ -567,7 +577,7 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
                                     label='ticket_detail.header.block_user.block_ip'
                                     name='block_ip'
                                     className='body2 pb-16'
-
+                                    onChange={() => checkboxStatusChange()}
                                 />
                                 <div className='body2 col-span-2'>
                                     {ticket.ipAddress}
