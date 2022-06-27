@@ -10,7 +10,7 @@ import './ticket-detail-feed.scss';
 import {selectUserList} from '@shared/store/lookups/lookups.selectors';
 import {User} from '@shared/models/user';
 import utils from '@shared/utils/utils';
-import {ChannelTypes, Contact, EmailMessageDto, PagedList, TicketMessage, TicketMessagesDirection, TicketType} from '@shared/models';
+import {ChannelTypes, Contact, EmailMessageDto, PagedList, TicketMessage, TicketMessagesDirection} from '@shared/models';
 import AlwaysScrollToBottom from '@components/scroll-to-bottom';
 import Spinner from '@components/spinner/Spinner';
 import {getUserList} from '@shared/services/lookups.service';
@@ -123,32 +123,32 @@ const TicketDetailFeed = ({ticket, emailLoading, emailMessages, smsMessages, sms
                     item: message
                 });
             });
-        }
 
-        if(ticket.recordedConversationLink){
-            const user = getUser(ticket.contactAgent);
+            if(ticket.recordedConversationLink){
+                const user = getUser(ticket.contactAgent);
 
-            let callActivity: Partial<FeedDetailDisplayItem> = {
-                userFullName: getContactUsername(),
-                userPicture: user?.profilePicture,
-                dateTime: ticket.createdOn,
-            };
-            
-            if(ticket.channel === ChannelTypes.PhoneCall){
-                callActivity.feedType = FeedTypes.PhoneCall;
-                callActivity.item = {
-                    callDirection: ticket.communicationDirection,
-                    canListenAnyRecording: user?.email === email || hasListenAnyRecordingPermission,
-                    callDuration: ticket.agentInteractionDuration
+                let callActivity: Partial<FeedDetailDisplayItem> = {
+                    userFullName: getContactUsername(),
+                    userPicture: user?.profilePicture,
+                    dateTime: ticket.createdOn,
+                };
+
+                if(ticket.channel === ChannelTypes.PhoneCall){
+                    callActivity.feedType = FeedTypes.PhoneCall;
+                    callActivity.item = {
+                        callDirection: ticket.communicationDirection,
+                        canListenAnyRecording: user?.email === email || hasListenAnyRecordingPermission,
+                        callDuration: ticket.agentInteractionDuration
+                    }
+                }else if(ticket.channel === ChannelTypes.Chat){
+                    callActivity.feedType = FeedTypes.ChatActiviy;
+                    callActivity.item = {
+                        canViewAnyTranscript: user?.email === email || hasViewAnyTranscriptPermission,
+                    }
                 }
-            }else if(ticket.channel === ChannelTypes.Chat){
-                callActivity.feedType = FeedTypes.ChatActiviy;
-                callActivity.item = {
-                    canViewAnyTranscript: user?.email === email || hasViewAnyTranscriptPermission,
-                }
+
+                feedItems = [callActivity, ...feedItems]
             }
-            
-            feedItems = [callActivity, ...feedItems]
         }
 
         const hasAnyFeed = emailMessages?.results && emailMessages.results.length > 0 ||

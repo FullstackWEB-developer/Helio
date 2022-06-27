@@ -6,7 +6,7 @@ import {useTranslation} from 'react-i18next';
 import {Link} from 'react-router-dom';
 
 const BlockedPopup = () => {
-    const popupExplanatoryURLs = JSON.parse(utils.getAppParameter('BlockedPopupExplanatoryUrls'));
+    const popupExplanatoryURLs = JSON.parse(utils.getAppParameter('BlockedPopupExplanatoryUrls') ?? "{}");
     const [displayBlockedPopupsModal, setDisplayBlockedPopupsModal] = useState(false);
     useEffect(() => {
         var openAttempt = window.open();
