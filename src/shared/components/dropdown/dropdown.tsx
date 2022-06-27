@@ -112,7 +112,7 @@ const Dropdown = ({model}: DropdownProps) => {
         {isSearchable &&
             <SearchInputField onChange={searchInputChanged} value={searchTerm} />
         }
-        <div className={`overflow-y-auto overflow-x-hidden max-h-96 ${itemsWrapperClass}`}>
+        <div className={`overflow-y-auto overflow-x-hidden dropdown-max-height ${itemsWrapperClass}`}>
             {getCategoryItemListContent()}
             {getItemListContent()}
         </div>

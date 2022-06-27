@@ -2,3 +2,21 @@
   box-shadow: var(--dropdown-box-shadow);
   border-radius: 0.1875rem;
 }
+
+@media screen and ( min-height: 768px ){
+  .dropdown-max-height {
+    max-height: 24rem;
+  }
+}
+
+@media screen and ( max-height: 768px ){
+  .dropdown-max-height {
+    max-height: 18rem;
+  }
+}
+
+@media screen and ( max-height: 700px ){
+  .dropdown-max-height {
+    max-height: 9rem;
+  }
+}
