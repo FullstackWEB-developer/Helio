@@ -141,6 +141,9 @@ const Header = ({ headsetIconRef }: { headsetIconRef: React.RefObject<HTMLDivEle
                                 />
                             </div>
                         </ComponentPermissionGuard>
+                        <div className='hidden pr-6 md:block'>
+                            <SvgIcon type={Icon.Office365} className='cursor-pointer header-icon'  onClick={()=>openUrl('https://www.office.com/')} />
+                        </div>
                         <div data-test-id='athena-icon' className='hidden pr-10 md:block'>
                             <SvgIcon type={Icon.Athena} className='cursor-pointer header-icon' onClick={() => openUrl(utils.getAppParameter('AthenaHealthUrl'))} />
                         </div>
