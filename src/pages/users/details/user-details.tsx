@@ -76,6 +76,7 @@ const UserDetails = () => {
     const forwardValuePhone = watch('forward_to_value_phone') as string;
     const forwardValueAgent = watch('forward_to_value_agent') as string;
     const [connectUserList, setConnectUserList] = useState<ConnectUser[]>([]);
+    const [isNotificationPermissionChange, setIsNotificationPermissionChange] = useState<boolean>(false);
     const currentUserStatus = userDetailExtended?.user.status;
     const canEditUser = useCheckPermission('Users.EditUserDetail');
     const [userProvider, setUserProvider] = useState('');
@@ -244,7 +245,6 @@ const UserDetails = () => {
             reset();
             loadUserData(updatedUserDetail);
             showMessage(SnackbarType.Success, 'users.user_update_success');
-            setCurrentlyUpdatingNotificationPreference(undefined);
             dispatch(setAppUserDetails({
                 ...storedUserData,
                 callNotification: data.callNotification,
@@ -255,7 +255,6 @@ const UserDetails = () => {
         },
         onError: () => {
             showMessage(SnackbarType.Error, 'users.user_update_error');
-            setCurrentlyUpdatingNotificationPreference(undefined);
         }
     });
 
@@ -390,12 +389,13 @@ const UserDetails = () => {
 
         updateCallForwardingMutation.mutate(callForwardingDetail);
     }
-
-    const [currentlyUpdatingNotificationPreference, setCurrentlyUpdatingNotificationPreference] = useState<UserNotificationPreferences | undefined>(undefined); 
+ 
     const onNotificationToggleSwitch = (checked: boolean, notificationType: UserNotificationPreferences) => {
         if (userDetailExtended?.user) {
-            setCurrentlyUpdatingNotificationPreference(notificationType);
-            updateMutation.mutate({...userDetailExtended.user, [`${notificationType}Notification`]: checked});
+            const updatedUser = {...userDetailExtended.user, [`${notificationType}Notification`]: checked};
+            const updatedUserDetail = {...userDetailExtended!, user: updatedUser};
+            setUserDetailExtended(updatedUserDetail);
+            setIsNotificationPermissionChange(true);
         }
     }
 
@@ -473,7 +473,7 @@ const UserDetails = () => {
                             buttonType='medium'
                             label='common.save'
                             className='mr-5'
-                            disabled={isButtonDisabled()}
+                            disabled={ userDetailExtended?.user ? (isButtonDisabled() && !isNotificationPermissionChange) : (isButtonDisabled())}
                             isLoading={updateMutation.isLoading}
                             onClick={() => canEditUser ? handleSubmit(saveUser)() : handleSubmit(saveCallForwarding)()}
                         />
@@ -607,17 +607,13 @@ const UserDetails = () => {
                             <div className='subtitle'>{t('browser_notifications.title')}</div>
                             <div className='body2 pb-6'>{t('browser_notifications.description')}</div>
                             <UserNotificationPreference isChecked={userDetailExtended.user.callNotification} onSwitch={onNotificationToggleSwitch}
-                                isLoading={updateMutation.isLoading} notificationType={UserNotificationPreferences.call} 
-                                mutationRunningForType={currentlyUpdatingNotificationPreference} />
+                                isLoading={updateMutation.isLoading} notificationType={UserNotificationPreferences.call} />
                             <UserNotificationPreference isChecked={userDetailExtended.user.chatNotification} onSwitch={onNotificationToggleSwitch}
-                                isLoading={updateMutation.isLoading} notificationType={UserNotificationPreferences.chat} 
-                                mutationRunningForType={currentlyUpdatingNotificationPreference} />
+                                isLoading={updateMutation.isLoading} notificationType={UserNotificationPreferences.chat} />
                             <UserNotificationPreference isChecked={userDetailExtended.user.smsNotification} onSwitch={onNotificationToggleSwitch}
-                                isLoading={updateMutation.isLoading} notificationType={UserNotificationPreferences.sms} 
-                                mutationRunningForType={currentlyUpdatingNotificationPreference} />
+                                isLoading={updateMutation.isLoading} notificationType={UserNotificationPreferences.sms} />
                             <UserNotificationPreference isChecked={userDetailExtended.user.emailNotification} onSwitch={onNotificationToggleSwitch}
-                                isLoading={updateMutation.isLoading} notificationType={UserNotificationPreferences.email} 
-                                mutationRunningForType={currentlyUpdatingNotificationPreference} hasBottomBorder={true} />
+                                isLoading={updateMutation.isLoading} notificationType={UserNotificationPreferences.email} hasBottomBorder={true} />
                         </div>
                     }
                 </div>

@@ -8,7 +8,7 @@ interface UserNotificationPreferenceProps {
     isChecked: boolean;
     onSwitch: (checked: boolean, notificationType: UserNotificationPreferences) => void
     notificationType: UserNotificationPreferences;
-    mutationRunningForType: UserNotificationPreferences | undefined;
+    mutationRunningForType?: UserNotificationPreferences;
     isLoading: boolean;
     hasBottomBorder?: boolean;
 }
