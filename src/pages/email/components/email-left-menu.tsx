@@ -26,7 +26,7 @@ const EmailLeftMenu = () => {
     const [filterParams, setFilterParams] = useState<EmailFilterModel>({...DEFAULT_FILTER_VALUE, assignedTo: isDefaultTeamView ? '' : id});
 
     useEffect(() => {
-        setQueryParams({...queryParams, searchTerm: debounceSearchTerm, page: 1});
+        setQueryParams({...queryParams, searchTerm: debounceSearchTerm?.trim(), page: 1});
     }, [debounceSearchTerm]);
 
     useEffect(() => {

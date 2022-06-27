@@ -400,7 +400,7 @@ const ChatsLogList = () => {
                         inputClassNames='border-b-0'
                         hasBorderBottom={false}
                         placeholder='ticket_log.search_chats_placeholder'
-                        onPressEnter={(inputValue) => setChatsLogFilter({...chatsLogFilter, searchTerm: inputValue})}
+                        onPressEnter={(inputValue) => setChatsLogFilter({...chatsLogFilter, searchTerm: inputValue.trim()})}
                     />
                 </div>
                 <div className='overflow-y-auto'>

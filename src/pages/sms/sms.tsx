@@ -263,7 +263,7 @@ const Sms = () => {
     }, [selectedTicketSummary, messageQueryRefetch]);
 
     useEffect(() => {
-        setQueryParams({...queryParams, searchTerm: debounceSearchTerm, page: 1});
+        setQueryParams({...queryParams, searchTerm: debounceSearchTerm.trim(), page: 1});
     }, [debounceSearchTerm]);
 
     const fetchMore = () => {

@@ -47,7 +47,7 @@ const UserListSearch = ({handleAllCheck,
     const filters = useSelector(selectUserFilters);
     const [searchText, setSearchText] = useState(filters?.searchText);
     const search = (searchOnClear = false) => {
-        dispatch(setUserFilters({filters: {...filters, searchText: searchOnClear ? '' : searchText}, resetPagination: true}))
+        dispatch(setUserFilters({filters: {...filters, searchText: searchOnClear ? '' : searchText?.trim()}, resetPagination: true}))
     }
     const [disableConfirmationOpen, setDisableConfirmationOpen] = useState(false);
 

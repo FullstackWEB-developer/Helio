@@ -424,7 +424,7 @@ const CallsLogList = () => {
                         hasBorderBottom={false}
                         inputClassNames='border-b-0'
                         placeholder='ticket_log.search_calls_placeholder'
-                        onPressEnter={(inputValue) => setCallsLogFilter({...callsLogFilter, searchTerm: inputValue})}
+                        onPressEnter={(inputValue) => setCallsLogFilter({...callsLogFilter, searchTerm: inputValue.trim()})}
                     />
                 </div>
                 <div className='h-full overflow-y-auto'>
