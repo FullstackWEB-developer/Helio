@@ -16,6 +16,7 @@ import {
     selectTicketQueryType,
     selectTicketsPaging
 } from '../store/tickets.selectors';
+import { selectAppUserDetails } from '@shared/store/app-user/appuser.selectors';
 import Radio from '@components/radio/radio';
 import { TicketOptionsBase } from '../models/ticket-options-base.model';
 import { Controller, useForm } from 'react-hook-form';
@@ -64,6 +65,7 @@ const TicketFilter = ({ isOpen }: { isOpen: boolean }) => {
     const [collapsibleState, setCollapsibleState] = useState<{ [key: string]: boolean }>({});
     const watchTimePeriod = watch('timePeriod');
     const ratings = useSelector(selectRatingOptions);
+    const { id } = useSelector(selectAppUserDetails);
 
     useEffect(() => {
         dispatch(getContacts());
@@ -254,14 +256,15 @@ const TicketFilter = ({ isOpen }: { isOpen: boolean }) => {
             hasFilter = true;
             query.searchTerm = searchTerm;
         }
-        dispatch(setTicketsFiltered(hasFilter));
-        dispatch(getList(query, true));
 
-        if (query.assignedTo && query.assignedTo.length === 1 && query.assignedTo[0] === username) {
+        if (ticketListQueryType === TicketListQueryType.MyTicket) {
             dispatch(setTicketListQueryType(TicketListQueryType.MyTicket));
+            query.assignedTo = [id];
         } else {
             dispatch(setTicketListQueryType(TicketListQueryType.AllTicket));
         }
+        dispatch(setTicketsFiltered(hasFilter));
+        dispatch(getList(query, true));
 
     }
 
