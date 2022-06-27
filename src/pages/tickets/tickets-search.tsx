@@ -46,7 +46,7 @@ const TicketsSearch = () => {
             const query: TicketQuery = {
                 ...ticketFilter,
                 ...paging,
-                searchTerm: searchTerm.trim()
+                searchTerm: searchTerm?.trim()
             }
             dispatch(getList(query, true));
         }

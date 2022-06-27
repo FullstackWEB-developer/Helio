@@ -88,7 +88,7 @@ const Contacts: React.FC<ContactProps> = () => {
     }, [selectedCategory]);
 
     useEffect(() => {
-        setQueryParams({...queryParams, searchTerm: debounceSearchTerm.trim(), page: 1})
+        setQueryParams({...queryParams, searchTerm: debounceSearchTerm?.trim(), page: 1})
     }, [debounceSearchTerm]);
 
     const handleCategoryChange = (selectedCategory: string): QueryContactRequest => {
