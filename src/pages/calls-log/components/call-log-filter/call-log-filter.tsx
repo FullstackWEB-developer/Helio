@@ -144,12 +144,8 @@ const CallsLogFilter = ({ isOpen, value: propsValue, logType, ...props }: CallsL
         const filter: TicketLogRequestModel = {};
 
         const formDate = getFormDate(formData);
-        if (formDate.toDate) {
-            filter.toDate = formDate.toDate;
-        }
-        if (formDate.fromDate) {
-            filter.fromDate = formDate.fromDate;
-        }
+        filter.toDate = formDate.toDate;
+        filter.fromDate = formDate.fromDate;
         filter.reason = formData.reason;
 
         if (formData.status) {
