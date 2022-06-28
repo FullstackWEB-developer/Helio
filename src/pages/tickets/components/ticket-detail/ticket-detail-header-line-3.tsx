@@ -336,10 +336,12 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
             setValue('block_email', {value: undefined, checked: true});
             setValue('block_phones', {value: undefined, checked: true});
             setValue('block_ip', {value: undefined, checked: true});
+            setOneOfTheBlockOptionsIsChecked(true);
         } else {
             setValue('block_email', {value: undefined, checked: false});
             setValue('block_phones', {value: undefined, checked: false});
             setValue('block_ip', {value: undefined, checked: false});
+            setOneOfTheBlockOptionsIsChecked(false);
         }
     }
 
@@ -415,13 +417,19 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
         }
         return checkBoxCounter > 1;
     }
-
+    const [oneOfTheBlockOptionsIsChecked, setOneOfTheBlockOptionsIsChecked]= useState<boolean>(false);
     const isBlockUserDisabled = () => {
-        return !ticket.ipAddress && !contact && !patient && !ticket.originationNumber;
+        return !ticket.ipAddress && !contact && !patient && !ticket.originationNumber || !oneOfTheBlockOptionsIsChecked;
     }
-
     const checkboxStatusChange = () => {
-        if ((ticket.ipAddress && !getValues('block_ip').checked) || (getEmails().length > 0 && !getValues('block_email').checked) || (getPhones().length > 0 && !getValues('block_phones').checked)) {
+        if(getValues('block_ip')?.checked ||
+            getValues('block_email')?.checked ||
+            getValues('block_phones')?.checked){
+            setOneOfTheBlockOptionsIsChecked(true);
+        }else {
+            setOneOfTheBlockOptionsIsChecked(false);
+        }
+        if ((ticket.ipAddress && !getValues('block_ip')?.checked) || (getEmails().length > 0 && !getValues('block_email')?.checked) || (getPhones().length > 0 && !getValues('block_phones')?.checked)) {
             setValue('block_all', {value: undefined, checked: false});
         } else {
             setValue('block_all', {value: undefined, checked: true});
