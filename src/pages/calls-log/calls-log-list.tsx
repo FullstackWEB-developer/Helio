@@ -38,6 +38,7 @@ import {AddTicketReview, ViewTicketRatings} from '@components/ticket-rating';
 import TicketDetailRating from '@pages/tickets/components/ticket-detail/ticket-detail-rating';
 import {getContactsNames} from '@shared/services/contacts.service';
 import {GetContactsNames} from '@constants/react-query-constants';
+import ElipsisTooltipTextbox from '@components/elipsis-tooltip-textbox/elipsis-tooltip-textbox';
 
 dayjs.extend(utc);
 
@@ -232,13 +233,13 @@ const CallsLogList = () => {
                         return (<></>);
                     }
                     return (
-                        <span className={classnames('body2', {'text-danger': value === TicketLogContactStatus.Missed})}>
-                            {
-                                t(`ticket_log.${TicketLogContactStatus[value]
+                        <span className={classnames('body2 flex justify-center mr-4', {'text-danger': value === TicketLogContactStatus.Missed})}>
+                            <ElipsisTooltipTextbox
+                            value={t(`ticket_log.${TicketLogContactStatus[value]
                                     .toString()
                                     .replace(/[A-Z]/g, (match, offset) => (offset > 0 ? '_' + match : match))
-                                    .toLowerCase()}`)
-                            }
+                                    .toLowerCase()}`)}
+                            classNames={"truncate"} asSpan={true} />
                         </span>
                     );
                 }
