@@ -419,7 +419,7 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
     }
     const [oneOfTheBlockOptionsIsChecked, setOneOfTheBlockOptionsIsChecked]= useState<boolean>(false);
     const isBlockUserDisabled = () => {
-        return !ticket.ipAddress && !contact && !patient && !ticket.originationNumber || !oneOfTheBlockOptionsIsChecked;
+        return !oneOfTheBlockOptionsIsChecked;
     }
     const checkboxStatusChange = () => {
         if(getValues('block_ip')?.checked ||
