@@ -31,7 +31,9 @@ export enum TicketLogContactStatus {
     Abandoned = 2,
     Missed = 3,
     AgentDisconnected = 4,
-    ContactDisconnected = 5
+    ContactDisconnected = 5,
+    HandledByBot,
+    Other
 }
 
 export interface TicketLogRequestModel extends PagedRequest {

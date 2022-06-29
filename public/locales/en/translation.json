@@ -1745,6 +1745,8 @@
     "abandoned": "Abandoned",
     "agent_disconnected": "Agent disconnected",
     "contact_disconnected": "Contact disconnected",
+    "handled_by_bot": "Handled by bot",
+    "other": "Other",
     "inbound": "Inbound",
     "outbound": "Outbound",
     "internal": "Internal Call",
