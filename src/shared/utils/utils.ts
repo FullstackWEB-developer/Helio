@@ -1,33 +1,33 @@
-import {PagedList} from '@shared/models';
+import { PagedList } from '@shared/models';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc'
-import {InfiniteData} from 'react-query';
-import {RelativeTime} from './types';
-import {Option} from '@components/option/option';
-import {TicketOptionsBase} from '@pages/tickets/models/ticket-options-base.model';
+import { InfiniteData } from 'react-query';
+import { RelativeTime } from './types';
+import { Option } from '@components/option/option';
+import { TicketOptionsBase } from '@pages/tickets/models/ticket-options-base.model';
 import store from '@app/store';
-import {getMsalInstance} from '@pages/login/auth-config';
-import {AppParameter} from '@shared/models/app-parameter.model';
-import {logOut} from '@shared/store/app-user/appuser.slice';
+import { getMsalInstance } from '@pages/login/auth-config';
+import { AppParameter } from '@shared/models/app-parameter.model';
+import { logOut } from '@shared/store/app-user/appuser.slice';
 import duration from 'dayjs/plugin/duration';
-import {showCcp} from '@shared/layout/store/layout.slice';
-import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
-import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
+import { showCcp } from '@shared/layout/store/layout.slice';
+import { addSnackbarMessage } from '@shared/store/snackbar/snackbar.slice';
+import { SnackbarType } from '@components/snackbar/snackbar-type.enum';
 import Logger from '@shared/services/logger';
 import i18n from 'i18next';
-import {MimeTypes} from '@shared/models/mime-types.enum';
-import {Icon} from '@components/svg-icon/icon';
+import { MimeTypes } from '@shared/models/mime-types.enum';
+import { Icon } from '@components/svg-icon/icon';
 import axios from 'axios';
-import {clearAppParameters} from '@shared/store/app/app.slice';
+import { clearAppParameters } from '@shared/store/app/app.slice';
 import { SortDirection } from '@shared/models/sort-direction';
 
 const getWindowCenter = () => {
-    const {width, height} = getWindowDimensions();
-    return {x: width / 2, y: height / 2};
+    const { width, height } = getWindowDimensions();
+    return { x: width / 2, y: height / 2 };
 }
 
 const getWindowDimensions = () => {
-    const {innerWidth: width, innerHeight: height} = window;
+    const { innerWidth: width, innerHeight: height } = window;
     return {
         width,
         height
@@ -102,6 +102,19 @@ const formatUtcDate = (date?: Date, format: string = 'ddd, MMM DD, YYYY h:mm A')
 
 const formatDateShortMonth = (date: string) => {
     return dayjs(date).format('MMM DD, YYYY');
+}
+
+const formatPhoneWithoutBrackets = (phone: string) => {
+    phone = clearFormatPhone(phone);
+
+    if (phone && phone.startsWith('+1')) {
+        phone = phone.substring(2);
+    }
+    if (phone && phone.length >= 10) {
+        return `${phone.slice(0, 3)} ${phone.slice(3, 6)} ${phone.slice(6, phone.length)}`;
+    } else {
+        return phone;
+    }
 }
 
 const getInitialsFromFullName = (username: string): string => {
@@ -270,7 +283,7 @@ export const getElementPosition = (element: HTMLElement | Element, scrolledEleme
         scrollLeft = scrolledElement.scrollLeft;
         scrollTop = scrolledElement.scrollTop;
     }
-    return {top: rect.top + scrollTop, left: rect.left + scrollLeft}
+    return { top: rect.top + scrollTop, left: rect.left + scrollLeft }
 }
 
 const accumulateInfiniteData = <T extends unknown>(infiniteData: InfiniteData<PagedList<T>> | undefined): T[] => {
@@ -291,7 +304,7 @@ const isLoggedIn = (): boolean => {
 }
 
 const logout = async () => {
-    await axios.get(utils.getAppParameter('ConnectBaseUrl') + utils.getAppParameter('CcpLogoutUrl'), {withCredentials: true})
+    await axios.get(utils.getAppParameter('ConnectBaseUrl') + utils.getAppParameter('CcpLogoutUrl'), { withCredentials: true })
         .catch(() => {
         })
         .finally(() => {
@@ -407,7 +420,7 @@ const isValidDobByAthenaMaxAgeConstraint = (date: Date) => {
 const convertBlobToBase64 = (file: Blob) => {
     return new Promise<string | ArrayBuffer | null>(function (resolve, reject) {
         const reader = new FileReader();
-        reader.onload = function () {resolve(reader.result);};
+        reader.onload = function () { resolve(reader.result); };
         reader.onerror = reject;
         reader.readAsDataURL(file);
     });
@@ -473,7 +486,7 @@ const isInBounds = (top: number, left: number, bottom: number, right: number, mo
 }
 
 const downloadFileFromData = (data: any, fileName: string, dataType: string) => {
-    const blob = new Blob([data], {type: dataType});
+    const blob = new Blob([data], { type: dataType });
     const objectUrl: string = URL.createObjectURL(blob);
     const a: HTMLAnchorElement = document.createElement('a') as HTMLAnchorElement;
     a.href = objectUrl;
@@ -535,24 +548,24 @@ const determineMimeTypeIcon = (mimeType: string, extension?: string) => {
             return Icon.FallbackMime;
     }
 }
-const dynamicSort= (sortField: string, sortDirection:SortDirection)=>{
+const dynamicSort = (sortField: string, sortDirection: SortDirection) => {
     var sortDirectionValue = 1;
-    if(sortDirection === SortDirection.Desc){
+    if (sortDirection === SortDirection.Desc) {
         sortDirectionValue = -1;
     }
-    return function (a, b){
+    return function (a, b) {
         if (a === null) {
             return 1;
         }
         else if (b === null) {
             return -1;
         }
-        else if(a[sortField] < b[sortField]){
-                return -1 * sortDirectionValue;
-        }else if(a[sortField] > b[sortField]){
-                return 1 * sortDirectionValue;
-        }else{
-                return 0 * sortDirectionValue;
+        else if (a[sortField] < b[sortField]) {
+            return -1 * sortDirectionValue;
+        } else if (a[sortField] > b[sortField]) {
+            return 1 * sortDirectionValue;
+        } else {
+            return 0 * sortDirectionValue;
         }
     }
 }
@@ -568,7 +581,7 @@ const addPracticeBranding = (practiceBranding) => {
     root.style.setProperty('--color-primary-500-rgb', `${hexToRGB(practiceBranding.primaryColor.replace('#', ''))}`);
 
     //Hover
-    root.style.setProperty('--color-primary-700', `#${practiceBranding.hoverColor.replace('#', '')}`); 
+    root.style.setProperty('--color-primary-700', `#${practiceBranding.hoverColor.replace('#', '')}`);
 
     //Focus
     root.style.setProperty('--color-primary-400', `#${practiceBranding.focusedColor.replace('#', '')}`);
@@ -641,7 +654,8 @@ const utils = {
     capitalizeFirstLetters,
     spaceBetweenCamelCaseWords,
     dynamicSort,
-    addPracticeBranding
+    addPracticeBranding,
+    formatPhoneWithoutBrackets
 };
 
 export default utils;

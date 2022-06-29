@@ -253,14 +253,14 @@ const ConversationHeader = ({ info, forNewTicketMessagePurpose, patientPhoto, co
             setBlockedAccessModalOpen(false);
             dispatch(addSnackbarMessage({
                 type: SnackbarType.Success,
-                message: t('email.inbox.blocked_success', { value: variables.value }),
+                message: t('email.inbox.blocked_success', { value: utils.formatPhoneWithoutBrackets(variables.value)}),
             }));
             setMarkedAsSpam(true);
         },
         onError: (_, variables) => {
             dispatch(addSnackbarMessage({
                 type: SnackbarType.Error,
-                message: t('email.inbox.blocked_failure', { value: variables.value })
+                message: t('email.inbox.blocked_failure', { value: utils.formatPhoneWithoutBrackets(variables.value) })
             }));
         }
     });
@@ -347,7 +347,7 @@ const ConversationHeader = ({ info, forNewTicketMessagePurpose, patientPhoto, co
                             name='value'
                             type={conversationChannel === ChannelTypes.SMS ? 'tel' : 'email'}
                             label={conversationChannel === ChannelTypes.SMS ? 'blacklist.block_access_type.phone' : 'blacklist.block_access_type.email'}
-                            defaultValue={conversationChannel === ChannelTypes.SMS ? info.createdForEndpoint : (info.createdForEndpoint || patient?.emailAddress || contact?.emailAddress || ticket?.incomingEmailAddress)}
+                            defaultValue={conversationChannel === ChannelTypes.SMS ? utils.formatPhone(info.createdForEndpoint) : (info.createdForEndpoint || patient?.emailAddress || contact?.emailAddress || ticket?.incomingEmailAddress)}
                             containerClassName='w-72'
                             required
                         />

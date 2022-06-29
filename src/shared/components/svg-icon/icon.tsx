@@ -42,7 +42,7 @@ export enum Icon {
     FilterList = 'FilterList',
     Help = 'Help',
     Info = 'Info',
-    InfoOutline = 'Info',
+    InfoOutline = 'InfoOutline',
     IncomingEmail = 'IncomingEmail',
     Location = 'Location',
     Menu = 'Menu',
