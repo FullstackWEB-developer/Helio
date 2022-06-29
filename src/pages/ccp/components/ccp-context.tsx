@@ -10,7 +10,6 @@ import {
     selectHasActiveContact,
 } from '../store/ccp.selectors';
 import SmsContext from '@pages/ccp/components/sms-context';
-import {selectPatientInCollectionsBalance} from '@pages/patients/store/patients.selectors';
 import {ContextKeyValuePair} from '@pages/ccp/models/context-key-value-pair';
 import SvgIcon, {Icon} from '@components/svg-icon';
 import utils from '@shared/utils/utils';
@@ -22,7 +21,6 @@ const CcpContext = () => {
     const {t} = useTranslation();
     const context = useSelector(selectContextPanel);
     const hasActiveContact = useSelector(selectHasActiveContact);
-    const patientInCollectionsBalance = useSelector(selectPatientInCollectionsBalance);
     const botContext = useSelector(selectBotContext);
 
     const determineCallerName = () => {
@@ -121,7 +119,7 @@ const CcpContext = () => {
                 value: 'ccp.bot_context.patient_is_pregnant'
             });
         }
-        if (patientInCollectionsBalance) {
+        if (botContext?.patient?.patientInCollectionsBalance) {
             items.push({
                 value: 'ccp.bot_context.patient_in_collections',
                 containerClass: 'pt-4 flex items-center',
@@ -129,7 +127,7 @@ const CcpContext = () => {
             });
         }
         return items;
-    }, [patientInCollectionsBalance, botContext]);
+    }, [botContext]);
 
     const renderContext = () => {
         switch (context) {
