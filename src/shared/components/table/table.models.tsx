@@ -19,6 +19,7 @@ export interface TableModel {
     showEmptyMessage?: boolean;
     size?: TableSize;
     paginationPosition?: 'top' | 'bottom' | 'both';
+    onRowMouseLeave?: () => void;
 }
 
 export interface TableColumnModel {

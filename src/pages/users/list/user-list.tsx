@@ -33,6 +33,7 @@ const UserList = () => {
     const queryClient = useQueryClient();
     const [userSelected, setUserSelected] = useState<Dictionary<UserListCheckedState>>({});
     const [checkAll, setCheckAll] = useState(false);
+    const [forceMoreMenuClose, setForceMoreMenuClose] = useState(false);
     const isEditAccess = utils.hasPermission('Users.EditUserDetail');
 
     const {data, isFetching, refetch} = useQuery<PagedList<UserDetail>>([GetUserList, filters],
@@ -372,7 +373,7 @@ const UserList = () => {
                                 {
                                     data && data.results?.map((u: UserDetail, index: number) => (
                                         <div key={u.id}
-                                            className={`user-list-grid data-row px-6 body2 group ${isRowChecked(u.id) ? 'checked' : ''}`}>
+                                            className={`user-list-grid data-row px-6 body2 group ${isRowChecked(u.id) ? 'checked' : ''}`} onMouseLeave={() => setForceMoreMenuClose(!forceMoreMenuClose)}>
                                             <div>
                                                 <Checkbox
                                                     checked={isRowChecked(u.id)}
@@ -406,7 +407,7 @@ const UserList = () => {
                                             </div>
                                             <div>
                                                 {
-                                                    isEditAccess && <UserListActions user={u} handleStatusChange={handleStatusChange} handleResendInvite={handleResendInvite} />
+                                                    isEditAccess && <UserListActions user={u} handleStatusChange={handleStatusChange} handleResendInvite={handleResendInvite} forceToClose={forceMoreMenuClose} />
                                                 }
                                             </div>
                                         </div>

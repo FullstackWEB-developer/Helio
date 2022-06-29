@@ -29,6 +29,7 @@ const TicketListItem = ({item}: TicketListItemProps) => {
     const ticketPriorities = useSelector((state => selectEnumValues(state, 'TicketPriority')));
     const ticketTypes = useSelector((state => selectEnumValues(state, 'TicketType')));
     const ticketReasons = useSelector((state) => selectLookupValues(state, 'TicketReason'));
+    const [forceMoreMenuClose, setForceMoreMenuClose] = useState(false);
     const ticketId = item.id as string;
 
     const convertEnumToOptions = (items: TicketEnumValue[]): TicketOptionsBase[] => {
@@ -77,7 +78,7 @@ const TicketListItem = ({item}: TicketListItemProps) => {
     ]);
     const getRelativeTime = utils.getRelativeTime(item.dueDate);
 
-    return <div className='flex flex-row w-full auto-cols-max body2 border-b hover:bg-gray-100 px-7 items-center h-20 py-3.5 group' >
+    return <div className='flex flex-row w-full auto-cols-max body2 border-b hover:bg-gray-100 px-7 items-center h-20 py-3.5 group' onMouseLeave={() => setForceMoreMenuClose(!forceMoreMenuClose)} >
         <div className='w-24'>
             <Link to={getTicketPath()}>
                 <TicketChannelIcon channel={item.channel} />
@@ -134,7 +135,7 @@ const TicketListItem = ({item}: TicketListItemProps) => {
         </div>
         <div className='w-1/12'>
             <div className='flex justify-center'>
-                <TicketListItemActions ticketInfo={item} />
+                <TicketListItemActions ticketInfo={item} forceMoreMenuClose={forceMoreMenuClose} />
             </div>
         </div>
     </div>

@@ -6,18 +6,23 @@ import {AddTicketReview} from '@components/ticket-rating';
 import useCheckPermission from '@shared/hooks/useCheckPermission';
 import {ChannelTypes} from '@shared/models';
 import utils from '@shared/utils/utils';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {useHistory} from 'react-router';
 import {Ticket} from '../models/ticket';
 
-const TicketListItemActions = ({ticketInfo}: {ticketInfo: Ticket}) => {
+const TicketListItemActions = ({ticketInfo, forceMoreMenuClose = false}: {ticketInfo: Ticket, forceMoreMenuClose?: boolean}) => {
 
     const {t} = useTranslation();
     const anonymous = 'anonymous';
     const history = useHistory();
     const canAddReview = useCheckPermission('Tickets.AddReview');
     const [addReviewForTicket, setAddReviewForTicket] = useState<string | undefined>();
+    const [forceMenuClose, setForceMenuClose] = useState<boolean>(forceMoreMenuClose);
+
+    useEffect(() => {
+        setForceMenuClose(forceMoreMenuClose);
+    }, [forceMoreMenuClose]);
 
     const generateDropdownModelOptions = (): DropdownModel => {
         let items: DropdownItemModel[] = [
@@ -101,6 +106,7 @@ const TicketListItemActions = ({ticketInfo}: {ticketInfo: Ticket}) => {
                 iconClassName='opacity-0 group-hover:opacity-100'
                 onClick={(item) => handleDropdownClick(item.value)}
                 closeOnMouseLeave={true}
+                forceToClose={forceMenuClose}
             />
             {addReviewForTicket && <AddTicketReview
                 ticketId={addReviewForTicket}

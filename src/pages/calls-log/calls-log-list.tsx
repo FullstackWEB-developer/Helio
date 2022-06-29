@@ -55,6 +55,7 @@ const CallsLogList = () => {
     const dispatch = useDispatch();
     const [isFilterOpen, setFilterOpen] = useState(false);
     const [isPlayerOpen, setPlayerOpen] = useState(false);
+    const [moreMenuForceClose, setMoreMenuForceClose] = useState(false);
     const [rowSelected, setRowSelected] = useState<TicketLogModel>();
     const [addReviewForTicket, setAddReviewForTicket] = useState<string | undefined>();
     const [currentQueryType, setCurrentQueryType] = useState<CallLogQueryType>(!isDefaultTeam ? CallLogQueryType.MyCallLog : CallLogQueryType.TeamCallLog);
@@ -296,6 +297,7 @@ const CallsLogList = () => {
                             menuClassName='more-menu-list'
                             containerClassName='h-full flex items-center justify-center more-menu'
                             closeOnMouseLeave={true}
+                            forceToClose={moreMenuForceClose}
                             onClick={(item: DropdownItemModel) => {
                                 setRowSelected(data);
                                 switch (item.value) {
@@ -336,6 +338,7 @@ const CallsLogList = () => {
         hasRowsBottomBorder: true,
         headerClassName: 'h-12',
         rowClass: 'h-20 items-center hover:bg-gray-100 cursor-pointer call-log-row',
+        onRowMouseLeave: () => {setMoreMenuForceClose(!moreMenuForceClose)}
     };
 
     const {isLoading, isFetching} = useQuery([GetCallLogs, callsLogFilter], () => getCallsLog(callsLogFilter), {

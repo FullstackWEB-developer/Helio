@@ -51,6 +51,7 @@ const ChatsLogList = () => {
     const [pagingResult, setPagingResult] = useState({...DEFAULT_PAGING});
     const [isFilterOpen, setFilterOpen] = useState(false);
     const [isChatTranscriptOpen, setChatTranscriptOpen] = useState(false);
+    const [moreMenuForceClose, setMoreMenuForceClose] = useState(false);
     const [ticketNumber, setTicketNumber] = useState<number>();
     const isFiltered = useSelector(selectIsChatLogFiltered);
     const canAddTicketReview = useCheckPermission('Tickets.AddReview');
@@ -285,6 +286,7 @@ const ChatsLogList = () => {
                             menuClassName='more-menu-list'
                             containerClassName='h-full flex items-center justify-center more-menu'
                             closeOnMouseLeave={true}
+                            forceToClose={moreMenuForceClose}
                             onClick={(item: DropdownItemModel) => {
                                 switch (item.value) {
                                     case '2':
@@ -316,6 +318,7 @@ const ChatsLogList = () => {
         hasRowsBottomBorder: true,
         headerClassName: 'h-12 px-7',
         rowClass: 'h-20 items-center hover:bg-gray-100 cursor-pointer chat-log-row px-7',
+        onRowMouseLeave: () => {setMoreMenuForceClose(!moreMenuForceClose)}
     };
 
 

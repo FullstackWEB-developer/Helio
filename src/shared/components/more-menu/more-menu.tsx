@@ -20,9 +20,10 @@ interface MoreMenuProps {
     verticalOffset?: number;
     horizontalOffset?: number;
     closeOnMouseLeave?: boolean;
+    forceToClose?: boolean;
 }
 
-const MoreMenu = ({value, items, menuClassName, iconClassName, iconFillClassname, containerClassName, menuPlacement = 'bottom', verticalOffset = 0, horizontalOffset = 0, closeOnMouseLeave = false, ...props}: MoreMenuProps) => {
+const MoreMenu = ({value, items, menuClassName, iconClassName, iconFillClassname, containerClassName, menuPlacement = 'bottom', verticalOffset = 0, horizontalOffset = 0, closeOnMouseLeave = false, forceToClose = false, ...props}: MoreMenuProps) => {
     const [isVisible, setIsVisible, elementRef] = useComponentVisibility<HTMLDivElement>(false);
     const [valueSelected, setValueSelected] = useState(value);
     const iconContainerRef = useRef<HTMLDivElement>(null);
@@ -57,6 +58,10 @@ const MoreMenu = ({value, items, menuClassName, iconClassName, iconFillClassname
         }
     }, [update, isVisible]);
 
+    useEffect(() => {
+        setIsVisible(false);
+    }, [forceToClose]);
+
     const hideDropdown = useCallback(() => {
         setIsVisible(false);
     }, [setIsVisible]);
@@ -76,7 +81,7 @@ const MoreMenu = ({value, items, menuClassName, iconClassName, iconFillClassname
         }
     }, [isVisible]);
 
-    return (<div ref={elementRef} className={containerClassName} onMouseLeave={() => {closeOnMouseLeave && setIsVisible(false)}}>
+    return (<div ref={elementRef} className={containerClassName}>
         <div
             className="relative flex flex-row items-center cursor-pointer flex-nowrap"
             onClick={() => setIsVisible(!isVisible)}
@@ -89,6 +94,7 @@ const MoreMenu = ({value, items, menuClassName, iconClassName, iconFillClassname
             style={styles.popper}
             ref={setPopper}
             {...attributes.popper}
+            onMouseLeave={() => {closeOnMouseLeave && setIsVisible(false)}}
         >
             <Dropdown model={dropdownModel} />
         </div>

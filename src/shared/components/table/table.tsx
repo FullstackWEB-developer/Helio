@@ -22,7 +22,8 @@ const Table = ({model}: TableProps) => {
         size = 'normal',
         wrapperClassName = '',
         rowClass,
-        pageSize = 10
+        pageSize = 10,
+        onRowMouseLeave,
     } = model;
     const {t} = useTranslation();
     const [currentPage, setCurrentPage] = useState<number>(1);
@@ -39,7 +40,7 @@ const Table = ({model}: TableProps) => {
             data = rows;
         }
         return React.Children.toArray(data.filter(row => !!row).map(row => {
-            return <div className={hasRowsBottomBorder ? 'border-b' : ''}>
+            return <div className={hasRowsBottomBorder ? 'border-b' : ''} onMouseLeave={() => {onRowMouseLeave && onRowMouseLeave()}}>
                 <TableRow rowClass={classnames(rowClass, {'bg-gray-100': model.isSelected?.(row)})} size={size} columns={columns} data={row}/>
             </div>
         }));

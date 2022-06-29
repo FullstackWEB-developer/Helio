@@ -4,22 +4,26 @@ import Dropdown, {DropdownItemModel, DropdownModel} from '@components/dropdown';
 import SvgIcon, {Icon} from '@components/svg-icon';
 import {customHooks, useSmartPosition} from '@shared/hooks';
 import {ChangeUserStatusRequest, InviteUserRequest, UserDetail, UserDetailStatus, UserInvitationStatus} from '@shared/models';
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {useHistory} from 'react-router';
 import classnames from 'classnames';
 import MoreMenu from '@components/more-menu';
 
-const UserListActions = ({user, handleStatusChange, handleResendInvite}:
-    {user: UserDetail, handleStatusChange: (statuses: ChangeUserStatusRequest[]) => void, handleResendInvite: (resendInviteRequest: InviteUserRequest) => void}) => {
+const UserListActions = ({user, handleStatusChange, handleResendInvite, forceToClose = false}:
+    {user: UserDetail, handleStatusChange: (statuses: ChangeUserStatusRequest[]) => void, handleResendInvite: (resendInviteRequest: InviteUserRequest) => void, forceToClose?: boolean}) => {
     const {t} = useTranslation();
     const history = useHistory();
     const [actionDropdownOpen, setActionDropdownOpen] = useState(false);
     const [disableConfirmationOpen, setDisableConfirmationOpen] = useState(false);
+    const [forceMoreMenuClose, setForceMoreMenuClose] = useState(forceToClose);
     const dropdownContainerRef = useRef<HTMLDivElement>(null);
     const iconRef = useRef<HTMLDivElement>(null);
     const dropdownRef = useRef<HTMLDivElement>(null);
 
+    useEffect(() => {
+        setForceMoreMenuClose(forceToClose);
+    }, [forceToClose]);
 
     const generateDropdownModelOptions = (): DropdownModel => {
         let items: DropdownItemModel[] = [
@@ -86,6 +90,7 @@ const UserListActions = ({user, handleStatusChange, handleResendInvite}:
                 iconClassName='opacity-0 group-hover:opacity-100'
                 onClick={(item) => handleDropdownClick(item.value)}
                 closeOnMouseLeave={true}
+                forceToClose={forceMoreMenuClose}
             />
             <div className='absolute top-0 w-1/3 left-1/3'>
                 <Confirmation title={t('users.list_section.disable_modal_title_identity', {
