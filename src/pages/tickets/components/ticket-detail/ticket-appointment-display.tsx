@@ -3,8 +3,7 @@ import {useSelector} from 'react-redux';
 import {selectDepartmentById, selectProviderById} from '@shared/store/lookups/lookups.selectors';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
-import utils from '@shared/utils/utils';
-import {RootState} from '../../../../app/store';
+import {RootState} from '@app/store';
 import {Appointment} from '@pages/external-access/appointment/models/appointment.model';
 
 dayjs.extend(customParseFormat);
@@ -23,7 +22,7 @@ const TicketAppointmentDisplay = ({appointment}: AppointmentDisplayProps) => {
     return (<div className='flex flex-col'>
         <div className='flex flex-row space-x-1'>
             <div className='body2-medium'>
-                {utils.formatUtcDate(appointment.date, 'MMM, DD, YYYY')}
+                {dayjs(appointment.date).format('MMM, DD, YYYY')}
             </div>
             <div className='body2'>
                 {dayjs.utc(appointment.startTime, 'HH:mm').format('[at] h:mm A')}
