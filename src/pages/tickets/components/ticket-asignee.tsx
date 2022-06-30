@@ -22,6 +22,7 @@ import {changeAssignee, setTicket} from '@pages/tickets/store/tickets.slice';
 import {setGlobalLoading} from '@shared/store/app/app.slice';
 import {useSmartPosition} from '@shared/hooks';
 import classnames from 'classnames';
+import { usePopper } from 'react-popper';
 interface TicketAssigneeProps {
     ticketId: string,
     assignee?: string
@@ -34,13 +35,27 @@ const TicketAssignee = ({ticketId, assignee}: TicketAssigneeProps) => {
     const dispatch = useDispatch();
     const [searchAssigneeToggle, setSearchAssigneeToggle] = useState(false);
     const [userDropdownItems, setUserDropdownItems] = useState<DropdownItemModel[]>([]);
-    const assigneeDisplayRef = useRef<HTMLDivElement>(null);
     const [selectedUser, setSelectedUser] = useState({} as User);
     const [isVisible, setIsVisible, elementRef] = useComponentVisibility<HTMLDivElement>(false)
     const chevronPosition = useRef<HTMLDivElement>(null);
-    const dropdownRef = useRef<HTMLDivElement>(null);
 
-    const {top, left} = useSmartPosition(dropdownRef, assigneeDisplayRef, isVisible);
+    const [popper, setPopper] = useState<HTMLDivElement | null>(null);
+    const {styles, attributes, update} = usePopper(elementRef.current, popper, {
+        placement: 'bottom',
+        strategy: 'fixed',
+        modifiers: [{
+            name: 'offset',
+            options: {
+                offset: [0, 0],
+            },
+        }]
+    });
+
+    useEffect(() => {
+        if (isVisible && update) {
+            update().then();
+        }
+    }, [update, isVisible]);
 
     const userDropdownModel: DropdownModel = {
         isSearchable: true,
@@ -114,8 +129,8 @@ const TicketAssignee = ({ticketId, assignee}: TicketAssigneeProps) => {
         setTimeout(() => setSearchAssigneeToggle(!searchAssigneeToggle), 100);
     }
 
-    return <div ref={elementRef} className='col-span-2'>
-        <div ref={assigneeDisplayRef} className='flex items-center'>
+    return <div className='col-span-2 flex items-center' ref={elementRef}>
+        <div className='flex items-center'>
             {selectedUser?.id ?
                 <div className='inline-flex flex-row items-center flex-none cursor-pointer' onClick={openSearchAssignee}>
                     <div className='mr-4'>
@@ -137,8 +152,7 @@ const TicketAssignee = ({ticketId, assignee}: TicketAssigneeProps) => {
         </div>
         <div onClick={e => e.stopPropagation()}
             className={classnames('absolute z-10 w-48', {'hidden': !isVisible})}
-            style={{top: top, left: left}}
-            ref={dropdownRef}
+            style={styles.popper} ref={setPopper}{...attributes.popper}
         >
             <Dropdown model={userDropdownModel} />
         </div>
