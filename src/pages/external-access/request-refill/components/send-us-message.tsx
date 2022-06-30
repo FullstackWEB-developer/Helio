@@ -64,7 +64,7 @@ const SendUsMessage = () => {
     }
 
     const onSubmit = (data: any) => {
-        let internalNote = `** Patient Note \n ${getMessageText()} \n `;
+        let internalNote = `** Patient Note: \n ${getMessageText()} \n `;
         internalNote += `ProviderId: ${data.providerId}`;
 
         mutate({

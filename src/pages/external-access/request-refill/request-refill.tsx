@@ -300,7 +300,7 @@ const RequestRefill = () => {
             internalNote += `${t('external_access.medication_refill.pharmacy_information_ph')} ${utils.formatPhone(pharmacy.phoneNumber)}, `;
             internalNote += `${t('external_access.medication_refill.pharmacy_information_fax')} ${utils.formatPhone(pharmacy.faxNumber)} `;
         }
-        internalNote += `** Patient Note ${getMessageText()}" `;
+        internalNote += `** Patient Note: ${getMessageText()}" `;
         internalNote += `ProviderId: ${verifiedPatient.defaultProviderId}`;
 
         mutate({
