@@ -53,7 +53,8 @@ const TicketAssignee = ({ticketId, assignee}: TicketAssigneeProps) => {
             }
             updateAssignee(ticketId, result);
             setIsVisible(false);
-        }
+        },
+        isVisible: isVisible
     };
 
     const mutation = useMutation(setAssignee, {

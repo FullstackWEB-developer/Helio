@@ -18,6 +18,7 @@ export interface DropdownModel {
     defaultValue?: string;
     itemsWrapperClass?: string;
     excludeSelectedItem?: boolean;
+    isVisible?: boolean;
 }
 
 export interface DropdownItemModel extends Option {

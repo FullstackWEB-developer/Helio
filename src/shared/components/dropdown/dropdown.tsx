@@ -21,7 +21,8 @@ const Dropdown = ({model}: DropdownProps) => {
         asSelect = false,
         isSearchable = false,
         excludeSelectedItem,
-        itemsWrapperClass = ''
+        itemsWrapperClass = '',
+        isVisible = false
     } = model;
     const [dropDownItems, setDropDownItems] = useState<DropdownItemModel[]>([]);
     const [searchTerm, setSearchTerm] = useState('');
@@ -49,6 +50,12 @@ const Dropdown = ({model}: DropdownProps) => {
         }
 
     }, [searchTerm, items])
+
+    useEffect(() => {
+        if(!isVisible){
+            setSearchTerm('');
+        }
+    }, [isVisible])
 
     const getItemContent = (item: DropdownItemModel) => {
         const isSelected = item.value === defaultValue
