@@ -28,7 +28,7 @@ const ToolTipIcon = (
     return (
         <div ref={containerRef}
             className={className}
-            onClick={() => setToolTipVisible(!isToolTipVisible)}
+            onClick={(e: React.MouseEvent) => {e.stopPropagation(); setToolTipVisible(!isToolTipVisible)}}
         >
             <SvgIcon
                 type={icon}
