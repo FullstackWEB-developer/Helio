@@ -12,7 +12,7 @@ const AppointmentReminderEdit = ({ index,
     onRemove
 }: {
     index: number,
-    selectedDay: string | undefined,
+    selectedDay?: string,
     control: Control,
     availableDays: Option[],
     onSelect(value: string),
@@ -22,7 +22,7 @@ const AppointmentReminderEdit = ({ index,
     return (
         <div className="flex flex-row body2 items-center">
             <span> {t('configuration.appointment_reminders.days_dropdown_label_prefix')} </span>
-            <div className="w-48 mx-4 pt-2">
+            <div className="w-48 mx-6 pt-4">
                 <ControlledSelect
                     name={`appointmentReminders.${index}.selectedDay`}
                     label='configuration.appointment_reminders.days_dropdown_label'
@@ -36,7 +36,7 @@ const AppointmentReminderEdit = ({ index,
                 />
             </div>
 
-            <span className="mr-4"> {t('configuration.appointment_reminders.days_dropdown_label_sufix')} </span>
+            <span className="mr-8"> {t('configuration.appointment_reminders.days_dropdown_label_sufix')} </span>
             <SvgIcon type={Icon.Close} className={`icon-medium-18 rgba-038-fill cursor-pointer`} onClick={() => onRemove(index)} />
         </div>
     )

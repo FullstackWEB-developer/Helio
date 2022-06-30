@@ -21,6 +21,7 @@ interface AppointmentRemindersForm {
 const AppointmentReminders = () => {
     const { t } = useTranslation();
     const dispatch = useDispatch();
+    const NoRemindersString = "-";
     const availableDaysInitialState = Array(14).fill(0).map<Option>((_, i: number) => {
         return { value: (i + 1).toString(), label: (i + 1).toString() }
     });
@@ -49,10 +50,20 @@ const AppointmentReminders = () => {
         setValue
     } = useForm<AppointmentRemindersForm>({ mode: 'onChange' });
     const { fields, append, remove } = useFieldArray<AppointmentReminderControl>({ name: 'appointmentReminders', control });
-    const { isFetching, data, refetch } = useQuery<string>(GetAppointmentReminders, () => getAppointmentReminders(), {
+    const { isFetching, refetch } = useQuery<string>(GetAppointmentReminders, () => getAppointmentReminders(), {
         onSuccess: (data) => {
+            setAvailableDays(availableDaysInitialState);
             if (data) {
-                const days = data.split('|');
+                let days: string[] = [];
+                if (data) {
+                    if (data.toString().indexOf("|") > -1) {
+                        days = data.split('|');
+                    } else {
+                        if (data.toString() !== NoRemindersString) {
+                            days.push(data.toString());
+                        }
+                    }
+                }
                 setEditMode(days.length > 0)
                 const availableDaysCopy = [...availableDays];
                 setValue('appointmentReminders', days.map(day => {
@@ -90,7 +101,10 @@ const AppointmentReminders = () => {
     }
 
     const onSubmit = (formData: AppointmentRemindersForm) => {
-        const payload = formData.appointmentReminders.map(x => x.selectedDay).join('|');
+        let payload = NoRemindersString;
+        if (formData.appointmentReminders) {
+            payload = formData.appointmentReminders.map(x => parseInt(x.selectedDay)).sort((a,b) => a-b).join('|');
+        }
         setAppointmentRemindersMutation.mutate(payload);
     }
     const renderInterface = () => {
@@ -109,7 +123,7 @@ const AppointmentReminders = () => {
                             onRemove={removeReminder}
                         ></AppointmentReminderEdit>
                     })}
-                    <div className="flex flex-row cursor-pointer items-center mb-6" onClick={() => addAnotherReminder()}>
+                    <div className="flex flex-row cursor-pointer items-center mb-10" onClick={() => addAnotherReminder()}>
                         <SvgIcon type={Icon.Add} className={`icon-medium-18 rgba-038-fill`} />
                         <span className="body2-primary  ml-4 py-auto"> {t('configuration.appointment_reminders.add_another_reminder_button')}</span>
                     </div>
@@ -121,14 +135,17 @@ const AppointmentReminders = () => {
                             label='common.save'
                             isLoading={isFetching || setAppointmentRemindersMutation.isLoading}
                         />
-                        <Button label='common.cancel' className=' ml-8 mr-8' buttonType='secondary' onClick={() => refetch()} isLoading={isFetching || setAppointmentRemindersMutation.isLoading} />
+                        <Button label='common.cancel' className=' ml-8 mr-8' buttonType='secondary' onClick={() => refetch()} disabled={isFetching || setAppointmentRemindersMutation.isLoading} />
                     </div>
                 </form >
                 :
                 <>
                     <p className='body2'>{t('configuration.appointment_reminders.non_reminders_description_1')}</p>
                     <p className='body2'>{t('configuration.appointment_reminders.non_reminders_description_2')}</p>
-                    <Button label='configuration.appointment_reminders.add_reminder_button' className=' ml-6 mt-6' buttonType='medium' onClick={() => setEditMode(true)} />
+                    <Button label='configuration.appointment_reminders.add_reminder_button' className=' ml-6 mt-6' buttonType='medium' onClick={() => {
+                        setEditMode(true);
+                        addAnotherReminder();
+                    }} />
                 </>
         )
     }

@@ -225,7 +225,7 @@ export const getAppointmentReminders = async () => {
     return data;
 }
 export const setAppointmentReminders = async (newValue: string) => {
-    await Api.post(`${parametersUrl}/set-appointment-reminder?newValue=${newValue}`);
+    await Api.post(`${parametersUrl}/set-appointment-reminder?newValue=${encodeURIComponent(newValue)}`);
 }
 
 export const getSecuritySettings = async () => {
