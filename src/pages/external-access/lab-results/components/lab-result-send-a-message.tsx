@@ -91,7 +91,7 @@ const LabResultSendAMessage = ({labResult}: {labResult?: LabResultDetail}) => {
             internalNote += newLine;
             internalNote += newLine;
         }
-        internalNote += `** Patient Note: `;
+        internalNote += `** PATIENT NOTE: `;
         internalNote += newLine;
         internalNote += `${message}`;
 
