@@ -22,7 +22,7 @@ export const ConfigurationMenuItems = [
     }, {
         id: "configuration-menu-item-2",
         title: 'configuration.appointment_cancellation',
-        url: "cancellation-reasons",
+        url: "cancelation-reasons",
     }]
 }, {
     id: "configuration-menu-item-3",

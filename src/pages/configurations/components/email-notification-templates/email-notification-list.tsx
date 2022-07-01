@@ -13,7 +13,9 @@ import { useHistory } from 'react-router-dom';
 import Spinner from '@components/spinner/Spinner';
 import { EmailTemplate } from '@pages/configurations/models/email-template';
 import { getEmailNotificationList } from '@shared/services/notifications.service';
+import { SortDirection } from '@shared/models/sort-direction';
 import dayjs from 'dayjs';
+import utils from '@shared/utils/utils';
 
 const EmailNotificationList = () => {
     const { t } = useTranslation();
@@ -21,7 +23,7 @@ const EmailNotificationList = () => {
     const dispatch = useDispatch();
     const [pagedResults, setPagedResults] = useState<EmailTemplate[]>([]);
 
-    const { isFetching, isLoading } = useQuery<EmailTemplate[]>(GetEmailNotificationTemplates, () => getEmailNotificationList(), {
+    const { data, isFetching, isLoading } = useQuery<EmailTemplate[]>(GetEmailNotificationTemplates, () => getEmailNotificationList(), {
         onSuccess: (data) => setPagedResults(data),
         onError: () => {
             setPagedResults([]);
@@ -31,6 +33,13 @@ const EmailNotificationList = () => {
             }))
         }
     });
+
+    const onSort = (sortField: string | undefined, sortDirection: SortDirection) => {
+        if (sortField && data && data.length) {
+            var sortedData = data.slice(0).sort(utils.dynamicSort(sortField, sortDirection));
+            setPagedResults(sortedData);
+        }
+    }
 
     const tableModel: TableModel = {
         hasRowsBottomBorder: true,
@@ -44,19 +53,27 @@ const EmailNotificationList = () => {
             field: 'name',
             widthClass: 'w-2/5',
             isSortable: true,
-            disableNoneSort: true
+            onClick: (field: string | undefined, direction: SortDirection) => {
+                onSort(field, direction);
+            }
         },
         {
             title: 'configuration.email_template_list.email_subject',
             field: 'subject',
             widthClass: 'w-2/5',
             isSortable: true,
-            disableNoneSort: true
+            onClick: (field: string | undefined, direction: SortDirection) => {
+                onSort(field, direction);
+            }
         },
         {
             title: 'configuration.email_template_list.email_template_modified_on',
             field: 'modifiedOn',
             widthClass: 'w-1/6',
+            isSortable: true,
+            onClick: (field: string | undefined, direction: SortDirection) => {
+                onSort(field, direction);
+            },
             render: (value: Date) => {
                 return (
                     <span>
@@ -68,9 +85,7 @@ const EmailNotificationList = () => {
         {
             title: '',
             field: 'id',
-            isSortable: false,
             widthClass: 'w-1/12',
-            disableNoneSort: true,
             render: (id: string) => {
                 return (
                     <div>

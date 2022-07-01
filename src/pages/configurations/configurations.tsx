@@ -28,7 +28,7 @@ const Configurations = () => {
     const {type, id} = useParams<ConfigurationUrlParams>();
     const renderBodyByActiveRoute = useCallback(() => {
         switch (type) {
-            case "cancellation-reasons":
+            case "cancelation-reasons":
                 if (id) {return <EditCancellationReason />}
                 else {return <CancellationReasonConfig />}
             case SMSTemplatesPath:

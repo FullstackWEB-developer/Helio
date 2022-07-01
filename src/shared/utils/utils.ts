@@ -560,12 +560,17 @@ const dynamicSort = (sortField: string, sortDirection: SortDirection) => {
         else if (b === null) {
             return -1;
         }
-        else if (a[sortField] < b[sortField]) {
-            return -1 * sortDirectionValue;
-        } else if (a[sortField] > b[sortField]) {
-            return 1 * sortDirectionValue;
-        } else {
-            return 0 * sortDirectionValue;
+        else {
+            if(!a[sortField]) a[sortField] = '';
+            if(!b[sortField]) b[sortField] = '';
+
+            if (a[sortField] < b[sortField]) {
+                return -1 * sortDirectionValue;
+            } else if (a[sortField] > b[sortField]) {
+                return 1 * sortDirectionValue;
+            } else {
+                return 0 * sortDirectionValue;
+            }
         }
     }
 }
