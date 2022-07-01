@@ -2121,6 +2121,23 @@
       "title": "Please rate your recent experience with.",
       "paragraph_1": "Thinking about your interaction you had, how satisfied are you with the experience?"
     },
+    "general_settings": {
+      "title": "General Settings",
+      "force_to_redirect": "Force To Redirect",
+      "force_to_redirect_info": "Redirect all incoming calls to an external phone number.",
+      "call_us_phone_number": "Call Us Phone Number",
+      "call_us_phone_number_info": "Phone number that will be displayed if support is needed.",
+      "support_email_address": "Support Email Address",
+      "support_email_address_info": "Email address that will be displayed if support is needed. E.g. info@clinic.com",
+      "redirect_phone_number": "Redirect Phone Number",
+      "redirect_phone_number_info": "Enter an external phone number to redirect all incoming calls.",
+      "deleted_departments": "Deleted Departments",
+      "deleted_departments_info": "If a department is deleted in your EMR/EHR please enter the department ID.",
+      "deleted_departments_warning": "Deleted departmant should be contains only interger numbers seperate by comma and numbers should be greater then -1",
+      "warning_info": "There are unsaved chages, are you sure to cancel?",
+      "warning_info_leaving": "There are unsaved chages, are you sure to leave?",
+      "warning": "Warning"
+    },
     "practice_email_template": {
       "title": "Practice Email Template",
       "description": "Use the settings below to customize branding for your email templates. Updates will be applied for all email notifications.",

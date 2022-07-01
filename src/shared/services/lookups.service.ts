@@ -19,6 +19,7 @@ import { LookupValue } from '@pages/tickets/models/lookup-value';
 import { TicketLookupValue } from '@pages/tickets/models/ticket-lookup-values.model';
 import { SecuritySettings } from '@pages/configurations/models/security-settings';
 import { PracticeBranding } from '@shared/models/practice-branding';
+import { GeneralSettingsModel } from '@pages/configurations/models/general-settings.model';
 
 const logger = Logger.getInstance();
 
@@ -234,4 +235,12 @@ export const getSecuritySettings = async () => {
 }
 export const saveSecuritySettings = async (payload: SecuritySettings) => {
     await Api.post(`${parametersUrl}/security-settings`, payload);
+}
+
+export const getGeneralSetting = async () => {
+    const { data } = await Api.get<GeneralSettingsModel>(`${parametersUrl}/general-settings`);
+    return data;
+}
+export const setGeneralSetting = async (payload: GeneralSettingsModel) => {
+    await Api.post(`${parametersUrl}/general-settings`, payload);
 }

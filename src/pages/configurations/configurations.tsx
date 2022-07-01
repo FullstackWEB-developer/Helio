@@ -20,8 +20,8 @@ import EmailNotificationList from './components/email-notification-templates/ema
 import { PracticeBrandingPath } from '@app/paths';
 import SecuritySettings from './components/security-settings/security-settings';
 import PracticeBrandingEdit from './components/branding/practice-branding/practice-branding';
-import PracticeEmailTemplateEdit
-    from "@pages/configurations/components/branding/practice-email-template/practice-email-template";
+import GeneralSettings from './components/general-settings/general-settings';
+import PracticeEmailTemplateEdit from "@pages/configurations/components/branding/practice-email-template/practice-email-template";
 interface ConfigurationUrlParams {
     type: string,
     id: string
@@ -57,6 +57,8 @@ const Configurations = () => {
             case "email-templates":
                 if (id) {return <EmailNotificationDetails />}
                 return <EmailNotificationList />;
+            case "general":
+                return <GeneralSettings />;
             case PracticeEmailTemplatePath:
                 return <PracticeEmailTemplateEdit />;
             default:

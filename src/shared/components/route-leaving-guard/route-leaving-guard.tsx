@@ -6,11 +6,15 @@ interface RouteLeavingGuardProps {
     when?: boolean | undefined;
     navigate: (path: string) => void;
     shouldBlockNavigation?: (location: Location) => boolean;
+    message?: string;
+    title?: string;
 }
 const RouteLeavingGuard = ({
     when,
     navigate,
     shouldBlockNavigation = (_) => true,
+    message,
+    title
 }: RouteLeavingGuardProps) => {
     const [modalVisible, setModalVisible] = useState(false);
     const [lastLocation, setLastLocation] = useState<Location | null>(null);
@@ -35,7 +39,8 @@ const RouteLeavingGuard = ({
     return (
         <>
             <Prompt when={when} message={handleBlockedNavigation} />
-            <Confirmation title={'common.route_leaving_confirmation_message'}
+            <Confirmation title={ title ? title :  'common.route_leaving_confirmation_message'}
+                message={ message ? message :  undefined}
                 okButtonLabel={'common.route_leaving_leave_button'}
                 isOpen={modalVisible}
                 onOk={handleConfirmNavigationClick} onCancel={() => setModalVisible(false)} onClose={() => setModalVisible(false)}

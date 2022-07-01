@@ -65,11 +65,6 @@ export const ConfigurationMenuItems = [
     }]
 },
 {
-    id: "configuration-menu-item-9",
-    title: 'configuration.call_center',
-    url: "call-center",
-},
-{
     id: "configuration-menu-item-10",
     title: 'configuration.contact_categories_menu',
     url: "contact-categories",
