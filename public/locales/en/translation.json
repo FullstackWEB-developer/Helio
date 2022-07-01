@@ -2120,6 +2120,24 @@
     "web_form_preview": {
       "title": "Please rate your recent experience with.",
       "paragraph_1": "Thinking about your interaction you had, how satisfied are you with the experience?"
+    },
+    "practice_email_template": {
+      "title": "Practice Email Template",
+      "description": "Use the settings below to customize branding for your email templates. Updates will be applied for all email notifications.",
+      "logo_title": "Customize Header and Footer Logo Images",
+      "logo_description": "Please upload your logo image in PNG or GIF file format (72 dpi resolution). Maximum logo image height is 40 px. \nUploading GIF or PNG file with transparency will achieve best results with logo blending seamlessly with header background.",
+      "header_logo_label": "Header Logo Image:",
+      "footer_logo_label": "Footer Logo Image:",
+      "customize_color_title":"Customizing Template Colors",
+      "customize_color_description":"To customize your brand colors please visit <0>Practice Brand screen</0>.",
+      "reset_to_default_button": "Reset To Default Template",
+      "email_footer_disclaimer": "Email Footer Disclaimer Text",
+      "button_preview": "Preview",
+      "save_success": "Successfully updated.",
+      "save_error": "Error while updating data, please try again later.",
+      "logo_upload_error": "Error while uploading logo, please try again later.",
+      "get_error": "Error while getting data, please try again later.",
+      "logo_picker_button":"Choose File"
     }
   },
   "ticket_department": {

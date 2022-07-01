@@ -14,6 +14,10 @@ import ControlledColorPicker from '@components/controllers/controlled-color-pick
 import './practice-branding.scss'
 import SimpleImageUploader from '@components/simple-image-uploader/simple-image-uploader';
 import { useState } from 'react';
+import {
+    getPracticeEmailTemplatePreviewFromBranding
+} from "@shared/services/notifications.service";
+import {AxiosError} from "axios";
 
 interface PracticeBrandingInterface {
     primaryColor: string;
@@ -45,6 +49,31 @@ const PracticeBrandingEdit = () => {
             }))
         }
     });
+
+    const previewEmailTemplateMutation = useMutation(getPracticeEmailTemplatePreviewFromBranding, {
+        onSuccess: (data) => {
+            let newTabPreview = window.open("", "_blank");
+            newTabPreview?.document.write(data);
+        },
+        onError: (error: AxiosError) => {
+            dispatch(addSnackbarMessage({
+                message: error?.response?.data?.message ?? 'configuration.practice_branding.get_error',
+                type: SnackbarType.Error
+            }));
+        }
+    });
+    const previewEmailTemplate = () => {
+        if (data) {
+            previewEmailTemplateMutation.mutate({
+                hoverColor: data.hoverColor,
+                focusedColor: data.focusedColor,
+                primaryColor: data.primaryColor,
+                secondaryColor: data.secondaryColor,
+                tertiaryColor: data.tertiaryColor
+            })
+        }
+    }
+
     const savePracticeBrandingMutation = useMutation(savePracticeBranding);
     const uploadLogoMutation = useMutation(uploadAssetFile);
 
@@ -179,9 +208,11 @@ const PracticeBrandingEdit = () => {
                 <Link to={''}
                     className='body2-primary mb-2 hover:underline'
                     target={"_blank"}>{t('configuration.practice_branding.web_form_preview')}</Link>
-                <Link to={''}
-                    className='body2-primary mb-8 hover:underline'
-                    target={"_blank"}>{t('configuration.practice_branding.email_template_preview')}</Link>
+                <div className='body2-primary mb-8 hover:underline cursor-pointer'
+                     onClick={()=> previewEmailTemplate()}
+                >
+                    {t('configuration.practice_branding.email_template_preview')}
+                </div>
 
                 <div className='flex'>
                     <Button

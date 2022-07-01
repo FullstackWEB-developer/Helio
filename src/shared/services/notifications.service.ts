@@ -10,6 +10,10 @@ import {SMSTemplateUpdate} from '@pages/configurations/models/sms-template-updat
 import {AppointmentTypeForProvider} from '@shared/models/appointment-type-for-provider';
 import {EmailTemplatePreviewRequest} from '@shared/models/email-template-preview-request';
 import {EmailTemplateUpdateRequest} from '@shared/models/email-template-update-request';
+import {PracticeEmailTemplate} from "@pages/configurations/models/practice-email-template";
+import {
+    PracticeEmailTemplatePreviewFromBranding
+} from "@pages/configurations/models/practice-email-template-preview-from-branding";
 
 const notificationsUrl = '/notifications';
 
@@ -79,6 +83,18 @@ export const getEmailTemplatePreview = async (payload: EmailTemplatePreviewReque
     return data;
 }
 
+export const getPracticeEmailTemplatePreview = async (payload: PracticeEmailTemplate) => {
+    const url = `${notificationsUrl}/admin/practice-email-template/preview`;
+    const {data} = await Api.post(url, payload);
+    return data;
+}
+
+export const getPracticeEmailTemplatePreviewFromBranding = async (payload: PracticeEmailTemplatePreviewFromBranding) => {
+    const url = `${notificationsUrl}/admin/practice-email-template/preview-from-branding`;
+    const {data} = await Api.post(url, payload);
+    return data;
+}
+
 export const updateEmailTemplate = async (payload: {body: EmailTemplateUpdateRequest, id: string}) => {
     const url = `${notificationsUrl}/admin/email-templates/${payload.id}`;
     const {data} = await Api.put(url, payload.body);
@@ -88,5 +104,16 @@ export const updateEmailTemplate = async (payload: {body: EmailTemplateUpdateReq
 export const getEmailTemplateById = async(id: string) => {
     const url = `${notificationsUrl}/admin/email-templates/${id}`;
     const {data} = await Api.get(url);
+    return data;
+}
+
+export const getPracticeEmailTemplate = async() => {
+    const url = `${notificationsUrl}/admin/practice-email-template`;
+    const {data} = await Api.get<PracticeEmailTemplate>(url);
+    return data;
+}
+export const savePracticeEmailTemplate = async(payload: PracticeEmailTemplate) => {
+    const url = `${notificationsUrl}/admin/practice-email-template`;
+    const {data} = await Api.put<PracticeEmailTemplate>(url, payload);
     return data;
 }

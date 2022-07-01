@@ -19,6 +19,7 @@ export const BlackListsPath = '/blacklists';
 export const ConfigurationsPath = '/configurations';
 export const PublicLinksPath = 'public-links';
 export const PracticeBrandingPath = 'practice-branding';
+export const PracticeEmailTemplatePath = 'practice-email-template';
 export const TicketSmsPath = '/o/ticket-sms';
 export const TicketEmailPath = '/o/ticket-email';
 export const AppointmentFoundPath = '/o/appointment-found';

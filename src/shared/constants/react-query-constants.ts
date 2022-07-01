@@ -22,6 +22,7 @@ export const GetCancellationReasons = 'cancellation-reasons';
 export const GetCancellationReasonsEditable = 'cancellation-reasons-editable';
 export const GetSecuritySettings = 'security-settings';
 export const GetPracticeBranding = 'practice-branding';
+export const GetPracticeEmailTemplate = 'practice-email-template';
 export const GetSMSTemplates = 'sms-templates';
 export const GetAppointmentReminders = 'appointment-reminders';
 export const GetSMSTemplate = 'sms-template';
