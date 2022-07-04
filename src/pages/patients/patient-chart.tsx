@@ -29,6 +29,7 @@ const PatientChart = () => {
     const loading = useSelector(selectPatientLoading);
     const error = useSelector(selectIsPatientError);
     const patient = useSelector(selectPatient);
+    const [lastRefreshTime, setLastRefreshTime] = useState<Date>(new Date());
     const [isRefetching, setIsRefetching] = useState<boolean>(false);
 
     useEffect(() => {
@@ -63,6 +64,7 @@ const PatientChart = () => {
 
     const refreshPatient = async () => {
         setIsRefetching(true);
+        setLastRefreshTime(new Date());
         dispatch(getPatientById(patientId, {includeInsuranceInfo: true}));
         await refetch();
         setIsRefetching(false);
@@ -95,7 +97,7 @@ const PatientChart = () => {
                 {patientChartSummary &&
                     <>
                         <PatientHeader isRefetching={isRefetching} refreshPatient={refreshPatient} patientChartSummary={patientChartSummary} />
-                        <PatientTabs patientChartSummary={patientChartSummary} patientId={patient.patientId} />
+                        <PatientTabs lastRefreshTime={lastRefreshTime} patientChartSummary={patientChartSummary} patientId={patient.patientId} />
                     </>
                 }
 

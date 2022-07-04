@@ -13,12 +13,13 @@ import ClinicalMedications from '@pages/patients/components/clinical/clinical-me
 
 export interface PatientClinicalProps {
     patientId: number;
+    lastRefreshTime: Date;
 }
 
-const PatientClinical = ({patientId} : PatientClinicalProps) => {
+const PatientClinical = ({patientId, lastRefreshTime} : PatientClinicalProps) => {
     const { t } = useTranslation();
 
-    const {isLoading, isError, data, isRefetching} = useQuery<ClinicalDetails, Error>([GetPatientClinical, patientId], () =>
+    const {isLoading, isError, data, isRefetching} = useQuery<ClinicalDetails, Error>([GetPatientClinical, patientId, lastRefreshTime], () =>
             getPatientClinicalDetails(patientId), {
             refetchInterval: OneMinute
         }

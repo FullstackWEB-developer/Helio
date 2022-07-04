@@ -10,9 +10,10 @@ import {PatientChartSummary} from '@pages/patients/models/patient-chart-summary'
 export interface PatientTabsProps {
     patientId: number;
     patientChartSummary: PatientChartSummary;
+    lastRefreshTime: Date;
 }
 
-const PatientTabs = ({patientId, patientChartSummary} : PatientTabsProps) => {
+const PatientTabs = ({patientId, patientChartSummary, lastRefreshTime} : PatientTabsProps) => {
     const { t } = useTranslation();
     return (
         <div className={'p-8'}>
@@ -21,7 +22,7 @@ const PatientTabs = ({patientId, patientChartSummary} : PatientTabsProps) => {
                     <PatientSummary patientChartSummary={patientChartSummary} />
                 </Tab>
                 <Tab title={t('patient.tabs.clinical')}>
-                    <PatientClinical patientId={patientId} />
+                    <PatientClinical lastRefreshTime={lastRefreshTime} patientId={patientId} />
                 </Tab>
                 <Tab title={t('patient.tabs.insurance')}>
                     <PatientInsurance/>
