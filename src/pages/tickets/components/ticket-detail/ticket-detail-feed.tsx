@@ -180,11 +180,6 @@ const TicketDetailFeed = ({ticket, emailLoading, emailMessages, smsMessages, sms
         return <Spinner fullScreen/>
     }
 
-    if (feeds?.length < 1 && !hasAnyFeed) {
-        return <div className='p-4 h7'
-                    data-test-id='ticket-detail-feed-not-found'>{t('ticket_detail.feed.not_found')}</div>
-    }
-
     return <div>
         <div className='flex flex-row justify-between items-center pr-6 pt-6'>
             <div className='pb-1 h7 pl-20'>
@@ -202,6 +197,10 @@ const TicketDetailFeed = ({ticket, emailLoading, emailMessages, smsMessages, sms
         </div>
         <AlwaysScrollToBottom enabled={scrollToBottom}/>
         <div className={'overflow-y-auto h-full-minus-34'}>
+            {feeds?.length < 1 && !hasAnyFeed &&
+                <div className='pt-4 h7 pl-20'
+                     data-test-id='ticket-detail-feed-not-found'>{t('ticket_detail.feed.not_found')}</div>
+            }
             {
                 feeds.map((feedItem: FeedDetailDisplayItem, index) => <FeedDetailItem key={index}
                                                                                       index={index}
