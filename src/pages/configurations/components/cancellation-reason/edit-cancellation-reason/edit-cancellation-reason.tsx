@@ -127,7 +127,7 @@ const EditCancellationReason = () => {
         </ToolTipIcon>
     }
     return (
-        <> {isFetching ? <Spinner fullScreen={true}/> :
+        <> {isFetching ? <Spinner fullScreen={true} className='flex-1'/> :
             cancellationReason &&
             <form onSubmit={handleSubmit(onSubmit)}
                   className='px-6 pt-7 flex flex-1 flex-col group overflow-y-auto body2'>

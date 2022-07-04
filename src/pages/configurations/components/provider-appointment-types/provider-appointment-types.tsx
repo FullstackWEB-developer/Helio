@@ -1,26 +1,26 @@
-import { useEffect, useMemo, useState } from 'react';
-import { SnackbarType } from '@components/snackbar/snackbar-type.enum';
+import {useEffect, useMemo, useState} from 'react';
+import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
 import Spinner from '@components/spinner/Spinner';
-import { GetAppointmentTypesForProvider } from '@constants/react-query-constants';
-import { addSnackbarMessage } from '@shared/store/snackbar/snackbar.slice';
-import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
-import { useMutation, useQuery } from 'react-query';
-import { Icon } from '@components/svg-icon';
-import { DefaultPagination, Paging } from '@shared/models';
+import {GetAppointmentTypesForProvider} from '@constants/react-query-constants';
+import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
+import {useTranslation} from 'react-i18next';
+import {useDispatch, useSelector} from 'react-redux';
+import {useMutation, useQuery} from 'react-query';
+import SvgIcon, {Icon} from '@components/svg-icon';
+import {DefaultPagination, Paging} from '@shared/models';
 import utils from '@shared/utils/utils';
 import Pagination from '@components/pagination';
 import ToolTipIcon from '@components/tooltip-icon/tooltip-icon';
-import { AppointmentTypeForProvider } from '@shared/models/appointment-type-for-provider';
-import { getAppointmentTypesForProvider, saveAppointmentTypesForProvider } from '@shared/services/notifications.service';
-import { selectProviderList } from '@shared/store/lookups/lookups.selectors';
-import { Option } from '@components/option/option';
-import { ControlledSelect } from '@components/controllers';
-import { useForm } from 'react-hook-form';
-import { AppointmentTypesForProviderUpdateRequest } from '@shared/models/appointment-type-for-provider-update-request';
+import {AppointmentTypeForProvider} from '@shared/models/appointment-type-for-provider';
+import {getAppointmentTypesForProvider, saveAppointmentTypesForProvider} from '@shared/services/notifications.service';
+import {selectProviderList} from '@shared/store/lookups/lookups.selectors';
+import {Option} from '@components/option/option';
+import {ControlledSelect} from '@components/controllers';
+import {useForm} from 'react-hook-form';
+import {AppointmentTypesForProviderUpdateRequest} from '@shared/models/appointment-type-for-provider-update-request';
 import Button from '@components/button/button';
 import ToggleSwitch from '@components/toggle-switch/toggle-switch';
-import { getProviders } from '@shared/services/lookups.service';
+import {getProviders} from '@shared/services/lookups.service';
 import './provider-appointment-types.scss';
 import classnames from 'classnames';
 import ElipsisTooltipTextbox from '@components/elipsis-tooltip-textbox/elipsis-tooltip-textbox';
@@ -29,10 +29,10 @@ interface AppointmentTypesForProviderForm {
     providerId: number
 }
 const ProviderAppointmentType = () => {
-    const { t } = useTranslation();
+    const {t} = useTranslation();
     const dispatch = useDispatch();
     const pageSize = 8;
-    const [paginationProperties, setPaginationProperties] = useState<Paging>({ ...DefaultPagination, pageSize });
+    const [paginationProperties, setPaginationProperties] = useState<Paging>({...DefaultPagination, pageSize});
     const providers = useSelector(selectProviderList);
     const providerOptions = useMemo(() => utils.parseOptions(providers,
         item => utils.stringJoin(' ', item.firstName, item.lastName),
@@ -44,7 +44,7 @@ const ProviderAppointmentType = () => {
     const [selectedProvider, setSelectedProvider] = useState<number>();
     const [pagedResults, setPagedResults] = useState<AppointmentTypeForProvider[]>([]);
     const [resultsForUpdate, setResultsForUpdate] = useState<AppointmentTypeForProvider[]>();
-    const { isFetching, data, refetch } = useQuery<AppointmentTypeForProvider[]>([GetAppointmentTypesForProvider, selectedProvider], () => getAppointmentTypesForProvider(selectedProvider!), {
+    const {isFetching, data, refetch} = useQuery<AppointmentTypeForProvider[]>([GetAppointmentTypesForProvider, selectedProvider], () => getAppointmentTypesForProvider(selectedProvider!), {
         enabled: selectedProvider ? true : false,
         onSuccess: (data) => {
             setResultsForUpdate(data);
@@ -79,17 +79,16 @@ const ProviderAppointmentType = () => {
     }
     const DisplayToolTip = (messages: string[], iconFillClass?: string) => {
         return <ToolTipIcon
-            icon={Icon.Error}
+            icon={Icon.InfoOutline}
             iconFillClass={iconFillClass ?? 'rgba-05-fill'}
-            placement='right-start'
+            placement='bottom-start'
             iconClassName='cursor-pointer icon'
         >
-            <div className='flex flex-col p-6 w-80'>
+            <div className='flex flex-col p-6 w-80 normal-case'>
                 {messages.map((message: string, index: number) => <> <p key={index} className='body2'>{t(message)}</p></>)}
             </div>
         </ToolTipIcon>
     }
-    const paginationDisplayConditions = paginationProperties.totalCount !== DefaultPagination.totalCount && data;
     const onToggleSwitch = (selected: boolean, row: AppointmentTypeForProvider) => {
         const newResultsForUpdate = [...data ?? []]
         const resultForUpdate = newResultsForUpdate.find(x => x.id === row.id);
@@ -110,7 +109,7 @@ const ProviderAppointmentType = () => {
             setSelectedProvider(+option.value)
         }
     }
-    const { control, handleSubmit } = useForm({
+    const {control, handleSubmit} = useForm({
         mode: "all"
     });
     const saveAppointmentTypesForProvidersMutation = useMutation(saveAppointmentTypesForProvider);
@@ -146,7 +145,7 @@ const ProviderAppointmentType = () => {
 
         <form onSubmit={handleSubmit(onSubmit)} className='px-6 pt-7 flex flex-1 flex-col group overflow-y-auto'>
             <h6 className='pb-7'>{t('configuration.appointment_types_for_providers.title')}</h6>
-            <p className='flex'>{t('configuration.appointment_types_for_providers.description')} </p>
+            <p className='body2 w-4/6 whitespace-pre'>{t('configuration.appointment_types_for_providers.description')} </p>
             <div className='flex flex-row mt-5'>
                 <div className='w-1/3'>
                     <ControlledSelect
@@ -173,21 +172,22 @@ const ProviderAppointmentType = () => {
                             <div>{t('configuration.appointment_types_for_providers.grid_appointment_id')}</div>
                             <div>{t('configuration.appointment_types_for_providers.grid_appointment_name')}</div>
                             <div>{t('configuration.appointment_types_for_providers.grid_description')}</div>
-                            <div className='flex flex-row'>{t('configuration.appointment_types_for_providers.grid_allow')}
-                                {DisplayToolTip(
-                                    ['configuration.appointment_types_for_providers.tooltip_allow']
-                                )}</div>
+                            <div className='flex flex-row pr-2'>{t('configuration.appointment_types_for_providers.grid_allow')}
+                                <span className='pl-2'>
+                                    {DisplayToolTip(
+                                        ['configuration.appointment_types_for_providers.tooltip_allow']
+                                    )}
+                                </span>
+                            </div>
                         </div>
                         {
                             pagedResults.map(r =>
                                 <div key={r.id}
-                                    className={classnames('grid-configuration data-row body3-small black-cell', { 'not-on-emr': !r.existsOnEmr })}
+                                    className={classnames('grid-configuration data-row body2 black-cell', {'not-on-emr': !r.existsOnEmr})}
                                 >
                                     <div className='flex flex-row items-center h-full pl-4'>
-                                        {!r.existsOnEmr && DisplayToolTip(
-                                            ['configuration.appointment_types_for_providers.tooltip_allow'], 'danger-icon'
-                                        )}
-                                        <span>
+                                        {!r.existsOnEmr && <SvgIcon type={Icon.Error} fillClass='danger-icon' />}
+                                        <span className={classnames({'pl-2': !r.existsOnEmr})}>
                                             {r.id}
                                         </span>
                                     </div>
@@ -197,7 +197,7 @@ const ProviderAppointmentType = () => {
                                     />
                                     <ElipsisTooltipTextbox
                                         value={r.description}
-                                        classNames='flex items-center h-full'
+                                        classNames='flex items-center h-full body3'
                                     />
                                     <div className='flex items-center'>
                                         <ToggleSwitch isChecked={r.selected}

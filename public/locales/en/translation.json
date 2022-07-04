@@ -1927,10 +1927,10 @@
       }
     },
     "appointment_types_for_providers": {
-      "provider_dropdown_label": "Providers",
+      "provider_dropdown_label": "Provider",
       "menu_name": "Provider Appointment Settings",
       "title": "Provider Appointment Settings",
-      "description": "Select a provider and appointment types that patients will be able to manage in Helio via voice bot, SMS, chat and webforms (Schedule, Reschedule, Cancel). Appointments that are not selected will be still available in your EMR/EHR but not visible to patients in Helio. Mapping must be done for each provider individually.",
+      "description": "Select a provider and appointment types that patients will be able to manage in Helio via voice bot, SMS, chat and webforms\n(Schedule, Reschedule, Cancel).\nAppointments that are not selected will be still available in your EMR/EHR but not visible to patients in Helio.\nMapping must be done for each provider individually.",
       "grid_appointment_id": "EHR/EMR APPOINTMENT ID",
       "grid_appointment_name": "HELIO APPOINTMENT NAME",
       "grid_description": "DESCRIPTION",
