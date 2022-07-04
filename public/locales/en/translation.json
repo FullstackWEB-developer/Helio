@@ -1867,7 +1867,7 @@
     "notifications": "Notifications",
     "appointment_reminder": "Appointment Reminders",
     "email_notification_templates": "Email Templates",
-    "sms_notification_templates": "SMS Notification Templates",
+    "sms_notification_templates": "SMS Templates",
     "branding_menu": "Branding",
     "practice_branding_menu": "Practice Branding",
     "practice_email_template_menu": "Practice Email Template",
@@ -1941,24 +1941,24 @@
       "save_error": "Operation failed. Please try again later."
     },
     "sms_templates": {
-      "title": "SMS Notification Templates",
+      "title": "SMS Template:",
       "description": "Please select SMS template and click on the edit icon to modify.",
-      "direction": "Direction:",
+      "direction": "Direction:  ",
       "error_fetching": "Fetching sms templates failed. Please try again.",
       "grid_name": "SMS TEMPLATE NAME",
       "grid_direction": "DIRECTION",
       "grid_modified_by": "MODIFIED BY",
       "grid_modified_on": "MODIFIED ON",
-      "tool_tip_grid_direction_two_way": "<0>Two way</0>: Response from patient needed (Confirm, Cancel etc.)",
-      "tool_tip_grid_direction_one_way": "<0>One way</0>: Notification, no response needed.",
+      "tool_tip_grid_direction_two_way": "<strong>Two way</strong>: Response from patient needed (Confirm, Cancel etc.)",
+      "tool_tip_grid_direction_one_way": "<strong>One way</strong>: Notification, no response needed.",
       "save_success": "SMS template saved successfully.",
       "save_error": "Operation failed. Please try again later.",
       "edit": {
         "template_body_field_name": "SMS Notification Text",
         "insert_drowpdown": "Insert",
         "reset_button": "Reset To Default Template",
-        "template_body_character": "{{currentLength}} characters",
-        "template_body_character_tooltip": "Dynamic links are not included in the character count. They can add length to your SMS message. Consider keeping your content short. 1 SMS message= 160 characters."
+        "template_body_character": "<0>{{currentLength}} </0> characters",
+        "template_body_character_tooltip": "Dynamic links are not included in the character count. They can add length to your SMS message. Consider keeping your content short.<br/> 1 SMS message= 160 characters."
       },
       "formulas": {
         "first_name": "First Name",

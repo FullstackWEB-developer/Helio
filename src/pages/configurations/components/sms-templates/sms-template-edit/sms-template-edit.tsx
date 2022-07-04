@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
+import {Trans, useTranslation} from "react-i18next";
 import { useDispatch } from "react-redux";
 import { useHistory, useParams } from "react-router";
 import { Option } from '@components/option/option';
@@ -14,13 +14,13 @@ import { ConfigurationsPath, SMSTemplatesPath } from "@app/paths";
 import { SMSTemplateUpdate } from "@pages/configurations/models/sms-template-update";
 import dayjs from "dayjs";
 import { SMSDirection } from "@shared/models/sms-direction";
-import ToolTipIcon from "@components/tooltip-icon/tooltip-icon";
-import { Icon } from "@components/svg-icon";
 import Button from "@components/button/button";
 import { ControlledTextArea } from "@components/controllers";
 import Select from "@components/select/select";
 import React from "react";
 import Spinner from "@components/spinner/Spinner";
+import './sms-template-edit.scss';
+import SmsTemplateTooltip from '@pages/configurations/components/sms-templates/sms-template-edit/sms-template-tooltip';
 interface SMSTemplateForm {
     templateBody: string
 }
@@ -75,19 +75,21 @@ const SMSTemplateEdit = () => {
             }))
         }
     });
+
     const { handleSubmit, control, watch, setValue, getValues, formState } = useForm({ mode: 'all' });
     const watchTemplateBody = watch('templateBody', smsTemplate?.templateBody);
+
     useEffect(() => {
-        if (watchTemplateBody) {
-            setCurrentLength(watchTemplateBody.length)
-        }
+        setCurrentLength(watchTemplateBody ? watchTemplateBody.length : 0);
     }, [watchTemplateBody]);
+
     const navigateBackToList = () => {
         const pathName = `${ConfigurationsPath}/${SMSTemplatesPath}`;
         history.push({
             pathname: pathName,
         });
     }
+
     const updateCancellationReasonMutation = useMutation(updateSMSTemplate);
 
     const onSubmit = (formData: SMSTemplateForm) => {
@@ -100,56 +102,48 @@ const SMSTemplateEdit = () => {
                 onSuccess: () => {
                     dispatch(addSnackbarMessage({
                         type: SnackbarType.Success,
-                        message: 'configuration.sms_template.save_success'
+                        message: 'configuration.sms_templates.save_success'
                     }));
                     navigateBackToList();
                 },
                 onError: () => {
                     dispatch(addSnackbarMessage({
-                        message: 'configuration.sms_template.save_error',
+                        message: 'configuration.sms_templates.save_error',
                         type: SnackbarType.Error
                     }))
                 }
             });
         }
     }
-    const DisplayToolTip = (messages: string[]) => {
-        return <ToolTipIcon
-            icon={Icon.Error}
-            iconFillClass='rgba-05-fill'
-            placement='right-start'
-            iconClassName='cursor-pointer icon ml-2'
-        >
-            <div className='flex flex-col p-6 w-80'>
-                {messages.map((message, index) => <p key={index} className='body2'>{t(message)}</p>)}
-            </div>
-        </ToolTipIcon>
-    }
+
     const resetToDefaultBody = () => setValue('templateBody', smsTemplate?.defaultBody);
+
     const onSelected = (option: Option | undefined) => {
         if (option) {
             const templateBody = getValues('templateBody') as string;
             setValue('templateBody', `${templateBody.slice(0, textAreaRef.current?.selectionStart)}{${option.value}}${templateBody.slice(textAreaRef.current?.selectionStart)}`);
         }
     }
+
     return (
         <>
             {isFetching && <Spinner fullScreen />}
             {smsTemplate &&
                 <form onSubmit={handleSubmit(onSubmit)} className='px-6 pt-7 flex flex-1 flex-col group overflow-y-auto body2'>
                     <div id="title-container" className='flex flex-row pb-4'>
-                        <h6> {t('configuration.sms_templates.title')} </h6>
-                        <h6 className='pl-3'> {smsTemplate.name}</h6>
+                        <h6><span className='sms-template-title'>  {t('configuration.sms_templates.title')} </span></h6>
+                        <h6 className='pl-1'>{smsTemplate.name}</h6>
                     </div>
                     <div className='body2 whitespace-pre-line' >{smsTemplate.description}</div>
 
                     <div className='flex flex-row pt-6 mb-6'>
-                        <div className=' flex flex-row w-2/3'>
+                        <div className=' flex flex-row w-1/3'>
                             <div className='flex flex-col details-label'>
                                 <span>{t('configuration.cancellation_reason.details.created_by')}</span>
                                 <span> {t('configuration.cancellation_reason.details.created_date')}</span>
-                                <span className="flex"> {t('configuration.sms_templates.direction')} {DisplayToolTip(['configuration.sms_templates.tool_tip_grid_direction_two_way',
-                                    'configuration.sms_templates.tool_tip_grid_direction_one_way'])}</span>
+                                <span className="flex"> {t('configuration.sms_templates.direction')}
+                                    <SmsTemplateTooltip placement='bottom-start' messages={['configuration.sms_templates.tool_tip_grid_direction_two_way',
+                                    'configuration.sms_templates.tool_tip_grid_direction_one_way']}/></span>
                             </div>
                             <div className='flex flex-col ml-4'>
                                 <span>{smsTemplate.createdByName}</span>
@@ -166,28 +160,34 @@ const SMSTemplateEdit = () => {
                             <span>{smsTemplate.modifiedOn && dayjs.utc(smsTemplate.modifiedOn).local().format('MMM DD, YYYY')}</span>
                         </div>
                     </div>
-                    <div className='flex py-4 mb-2 pr-8'>
+                    <div className='flex pr-8 pb-4'>
                         <span className="mr-auto font-bold">{t('configuration.sms_templates.edit.template_body_field_name')}</span>
-                        <Button label='configuration.sms_templates.edit.reset_button' className='ml-auto' buttonType='secondary' onClick={() => resetToDefaultBody()} />
+                        <Button label='configuration.sms_templates.edit.reset_button' className='ml-auto' buttonType='secondary-medium' onClick={() => resetToDefaultBody()} />
                     </div>
-                    <div className='mr-auto'>
+                    <div className='border-l border-r border-t mr-8'>
                         <Select
                             onSelect={(option) => onSelected(option)}
                             data-test-id={'formula-test-id'}
+                            className='sms-template-select-var border-b-0'
+                            value={undefined}
                             label={'configuration.sms_templates.edit.insert_drowpdown'}
                             options={formulas}
                         />
                     </div>
-                    <div className='pr-8 -mt-8'>
+                    <div className='pr-8 -mt-8 h-32'>
                         <ControlledTextArea
                             control={control}
                             name='templateBody'
                             defaultValue={smsTemplate.templateBody}
-                            className='body2 w-full p-4'
+                            className='body2 w-full px-4 pt-4'
                             resizable={false} refObject={textAreaRef}
                             overwriteDefaultContainerClasses={true}
+                            required={true}
                             rows={4} />
-                        <span className='body2 flex -mt-3 justify-end'>{t('configuration.sms_templates.edit.template_body_character', { currentLength: currentLength })} {DisplayToolTip(['configuration.sms_templates.edit.template_body_character_tooltip'])}</span>
+                        <span className='body2 flex justify-end'>
+                            <Trans i18nKey="configuration.sms_templates.edit.template_body_character" values={{currentLength: currentLength}}>
+                                <div className='body2-primary whitespace-pre'>{currentLength}</div>
+                            </Trans> <SmsTemplateTooltip  placement='bottom-end' messages={['configuration.sms_templates.edit.template_body_character_tooltip']}/></span>
                     </div>
                     <div className='flex mt-10'>
                         <Button
@@ -202,7 +202,7 @@ const SMSTemplateEdit = () => {
                             className=' mx-8'
                             buttonType='secondary'
                             onClick={() => navigateBackToList()}
-                            isLoading={updateCancellationReasonMutation.isLoading} />
+                            disabled={updateCancellationReasonMutation.isLoading} />
                     </div>
                 </form>
             }
