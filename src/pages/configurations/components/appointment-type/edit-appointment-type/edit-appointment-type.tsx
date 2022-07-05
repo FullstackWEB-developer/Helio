@@ -54,7 +54,7 @@ const EditAppointmentType = () => {
     const onSelectableByPatientChange = () => setSelectableByPatient(!selectableByPatient);
     const onCancelableChange = () => { setIsCancelable(!isCancelable) }
     const onIsReschedulableChange = () => setIsReschedulable(!IsReschedulable);
-    const onSelectPatientTypeChange = (value: PatientAppointmentType) => setPatientType(value.valueOf())
+    const onSelectPatientTypeChange = (value: Option | undefined) => setPatientType(value?.value ? +value?.value : 0);
 
     const updateAppointmentTypeMutation = useMutation(saveAppointmentType, {
         onSuccess: (_) => {
@@ -128,7 +128,7 @@ const EditAppointmentType = () => {
         return <ToolTipIcon
             icon={Icon.Info}
             iconFillClass='warning-icon'
-            placement='right-start'
+           placement='right-start'
             iconClassName='icon-medium'
         >
             <div className='flex flex-col p-3'>
