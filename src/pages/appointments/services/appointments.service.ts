@@ -60,6 +60,12 @@ export const getAppointmentTypesForPatient = async (patientId: number, providerI
      return result.data;
 }
 
+export const saveAppointmentType = async (payload: AppointmentType) => {
+     const url = `${appointmentsBaseUrl}/appointmenttypes`;
+     const {data} = await Api.post(url, payload);
+     return data;
+}
+
 export const getAppointmentSlots = async (params: AppointmentSlotRequest, limitItemCount: boolean = true) => {
      const url = `${appointmentsBaseUrl}/open-slots`;
 

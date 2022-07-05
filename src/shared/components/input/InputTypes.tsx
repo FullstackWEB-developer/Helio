@@ -7,6 +7,7 @@ export class InputTypes {
     static Ip = new RegExp('^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$');
     static Date = new RegExp('^(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\\d\\d$');
     static Website = new RegExp("^(http[s]?:\\/\\/(www\\.)?|ftp:\\/\\/(www\\.)?|www\\.){1}([0-9A-Za-z-\\.@:%_\+~#=]+)+((\\.[a-zA-Z]{2,3})+)(/(.)*)?(\\?(.)*)?");
+    static TimeFrame = new RegExp('^\\d*$');
 }
 
-export type InputType = 'text' | 'number' | 'email' | 'tel' | 'zip' | 'ip' | 'date' | 'website';
+export type InputType = 'text' | 'number' | 'email' | 'tel' | 'zip' | 'ip' | 'date' | 'website' | 'timeframe';

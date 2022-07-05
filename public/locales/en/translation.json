@@ -726,7 +726,8 @@
       "invalid_date": "Date is not valid",
       "invalid_zip": "Enter a valid zip code",
       "invalid_ip": "IP address is not valid",
-      "invalid_website": "Web site is not valid"
+      "invalid_website": "Web site is not valid",
+      "invalid_value": "Value is not valid"
     },
     "textarea": {
       "formatting": {
@@ -1891,6 +1892,37 @@
         "description": "Description"
       }
     },
+    "appointment_type_details": {
+      "appointment_type_name": "Helio Appointment Name",
+      "appointment_description": "Appointment Description",
+      "selectable_by_patient": "Selectable By Patient",
+      "established_patient":"Established Patient",
+      "new_patient": "New Patient",
+      "all":"All",
+      "patient_type": "Patient Type",
+      "can_be_rescheduled": "Can Be Rescheduled",
+      "reschedule_timeframe": "Reschedule Time-frame",
+      "days": "Days",
+      "hours": "Hours",
+      "can_be_canceled": "Can be canceled",
+      "cancelation_timeframe": "Cancelation Time-frame",
+      "cancelation_fee": "Cancelation Fee",
+      "appointment_instructions": "Appointment Instructions",
+      "created_by": "Created By",
+      "created_date": "Created Date:",
+      "modified_by": "Modified By:",
+      "modified_date": "Modified Date:", 
+      "update_error": "Updating of appointment type failed. Please try again.",
+      "update_success": "Appointment type updated successfully.",
+      "error_fetching": "Fetching appointment type details failed. Please try again.",
+      "tooltip_helio_appointment_name": "Enter appointment name as displayed to patient. \n<1>(i.e. WWE in EMR/EHR can be entered here as “Well Woman Exam\")</1>",
+      "tooltip_helio_appointment_description": "Enter appointment description as displayed to patient. \n<1>(i.e. This appointment includes a physical exam and all necessary labs . It is fully covered by most insurances etc.</1>)",
+      "tooltip_selectable_by_patient": "Click Yes or No to define if appointment type will be available to patient for selection.",
+      "tooltip_reschedule_timeframe": "Enter number of days allowed to reschedule before the appointment day.\n<1>(i.e. patient can reschedule up to 2 days before the appointment time)</1>",
+      "tooltip_cancelation_timeframe": "Enter number of days allowed to cancel before the appointment day.\n<1>(i.e. patient can cancel up to 2 days before the appointment time)</1>",
+      "tooltip_selected_providers": "Select all applicable providers for this appointment type.",
+      "tooltip_appointment_instructions": "Enter any specific instructions for this appointment type to be shared with patient. \n<1>(i.e. arrival timing, parking, forms to be filled out etc.)</1>"
+    },
     "cancellation_reason": {
       "title": "Appointment Cancelation Settings",
       "description": "Map and configure EHR/EMR appointment cancelation types to how they will appear to patients.\n\nIf voice bot can not recognize the reason for canceling or rescheduling an appointment, choose default options on how they should be entered/mapped in the EMR/EHR system.",
@@ -2101,7 +2133,7 @@
       "created_by": "Created By: ",
       "modified_by": "Modified By: ",
       "created_date": "Created Date: ",
-      "modified_date":"Modified Date: ",
+      "modified_date": "Modified Date: ",
       "body": "Email Body",
       "reset_to_default": "Reset To Default Template",
       "preview": "Preview",

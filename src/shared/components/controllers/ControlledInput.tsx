@@ -1,12 +1,12 @@
-import {Controller, ControllerRenderProps} from 'react-hook-form';
-import {Control} from 'react-hook-form/dist/types/form';
-import Input, {InputType, InputTypes} from '@components/input';
-import {useTranslation} from 'react-i18next';
+import { Controller, ControllerRenderProps } from 'react-hook-form';
+import { Control } from 'react-hook-form/dist/types/form';
+import Input, { InputType, InputTypes } from '@components/input';
+import { useTranslation } from 'react-i18next';
 import React from 'react';
-import {Option} from '@components/option/option';
-import {Icon} from '@components/svg-icon/icon';
-import {INPUT_DATE_FORMAT} from '@constants/form-constants';
-import {ValidationRule} from 'react-hook-form/dist/types/validator';
+import { Option } from '@components/option/option';
+import { Icon } from '@components/svg-icon/icon';
+import { INPUT_DATE_FORMAT } from '@constants/form-constants';
+import { ValidationRule } from 'react-hook-form/dist/types/validator';
 
 
 export interface ControlledInputProps {
@@ -63,7 +63,7 @@ const ControlledInput = ({
     ...props
 }: ControlledInputProps) => {
 
-    const {t} = useTranslation();
+    const { t } = useTranslation();
     const requiredText = t('common.required');
     let inputKeyDown = (): void => undefined;
 
@@ -103,9 +103,16 @@ const ControlledInput = ({
             break;
         }
         case 'website': {
-            pattern ={
+            pattern = {
                 value: InputTypes.Website,
                 message: t(invalidErrorMessage ?? 'components.input.invalid_website')
+            }
+            break;
+        }
+        case 'timeframe': {
+            pattern = {
+                value: InputTypes.TimeFrame,
+                message: t(invalidErrorMessage ?? 'components.input.invalid_value')
             }
         }
     }
@@ -122,7 +129,7 @@ const ControlledInput = ({
             value = '';
         }
         controllerProps.onChange(value);
-        control.setValue(name, value, {shouldValidate: true});
+        control.setValue(name, value, { shouldValidate: true });
 
     }
     const onInputChanged = (event: React.ChangeEvent<HTMLInputElement>, controllerProps: ControllerRenderProps<Record<string, any>>) => {
@@ -132,7 +139,7 @@ const ControlledInput = ({
         if (props.onChange) {
             props.onChange(event);
         }
-        control.setValue(name, value, {shouldValidate: true});
+        control.setValue(name, value, { shouldValidate: true });
     }
 
     const onBlur = (e: React.FocusEvent<HTMLInputElement>, controllerProps: ControllerRenderProps<Record<string, any>>) => {
@@ -141,7 +148,7 @@ const ControlledInput = ({
             value = value.replace('(', '').replace(' ', '').replace(')', '').replace('-', '').replace(/_*/, '');
         }
         if (value) {
-            control.setValue(name, value.trim(), {shouldValidate: true});
+            control.setValue(name, value.trim(), { shouldValidate: true });
         }
         if (props.onBlur) {
             props.onBlur(e);

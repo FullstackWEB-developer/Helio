@@ -1,3 +1,5 @@
+
+import { PatientAppointmentType } from '@shared/models/patient-appointment-type.enum'
 export interface AppointmentType {
     id: number;
     instructions: string;
@@ -8,4 +10,11 @@ export interface AppointmentType {
     reschedulable: boolean;
     rescheduleTimeFrame?: number;
     description?: string;
+    createdByName: string;
+    modifiedByName?: string;
+    createdOn: Date;
+    modifiedOn?: Date;
+    selectableByPatient: boolean,
+    selectedProviders: number [],
+    patientType: PatientAppointmentType
 }
