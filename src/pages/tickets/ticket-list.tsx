@@ -61,7 +61,7 @@ const TicketList = () => {
 
     useEffect(() => {
         const query: any = queryString.parse(history.location.search, { parseNumbers: true });
-        const newQuery: TicketQuery = { ...query };
+        const newQuery: TicketQuery = { ...query, pageSize: 25 };
         if (!!newQuery && !!history.location.search) {
             dispatch(getList({ ...newQuery, assignedTo: newQuery.assignedTo ?? getAssignedTo() }));
         } else {
