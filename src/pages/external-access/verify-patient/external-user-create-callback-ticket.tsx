@@ -146,7 +146,7 @@ const ExternalUserCreateCallbackTicket = () => {
                     <Button
                         label={'common.back'}
                         className='w-full md:w-auto'
-                        onClick={() => history.go(-1)}
+                        onClick={() => history.go(-2)}
                         disabled={retryPrevented}
                         data-test-id='mobile-phone-submit-button'
                         buttonType='secondary-big'/>
