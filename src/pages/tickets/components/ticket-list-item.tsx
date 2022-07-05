@@ -18,7 +18,8 @@ import {useTranslation} from 'react-i18next';
 import classnames from 'classnames';
 import TicketDetailRating from './ticket-detail/ticket-detail-rating';
 import TicketListItemActions from './ticket-list-item-actions';
-
+import ElipsisTooltipTextbox from '@components/elipsis-tooltip-textbox/elipsis-tooltip-textbox';
+import './ticket-list-item.scss';
 interface TicketListItemProps {
     item: Ticket
 }
@@ -79,51 +80,61 @@ const TicketListItem = ({item}: TicketListItemProps) => {
     const getRelativeTime = utils.getRelativeTime(item.dueDate);
 
     return <div className='flex flex-row w-full auto-cols-max body2 border-b hover:bg-gray-100 px-7 items-center h-20 py-3.5 group' onMouseLeave={() => setForceMoreMenuClose(!forceMoreMenuClose)} >
-        <div className='w-24'>
+        <div className='w-24 flex justify-center'>
             <Link to={getTicketPath()}>
                 <TicketChannelIcon channel={item.channel} />
             </Link>
         </div>
 
-        <div className='w-1/12 flex justify-center'>
-            <Link to={getTicketPath()}>
-                {item.ticketNumber}
-            </Link>
+        <div className='w-2/12 flex justify-center'>
+            <div className='ml-2'>
+                <Link to={getTicketPath()}>
+                    {item.ticketNumber}
+                </Link>
+            </div>
         </div>
         <div className={classnames('w-2/12 max-w-xs truncate', {'subtitle2': !!item.subject, 'body2': !item.subject})}>
             <div className='ml-2'>
                 <Link to={getTicketPath()}>
-                    <span>{item.subject ? item.subject : t('tickets.no_subject')}</span>
+                    <ElipsisTooltipTextbox hasInlineBlock={false} asSpan={true} value={item.subject ? item.subject : t('tickets.no_subject')} />
                 </Link>
             </div>
         </div>
         <div className='w-1/12 body3'>
-            <Link to={getTicketPath()}>
-                <DueInRelativeTime value={getRelativeTime} isOverdue={item.isOverdue} />
-            </Link>
+            <div className='ml-2'>
+                <Link to={getTicketPath()}>
+                    <DueInRelativeTime value={getRelativeTime} isOverdue={item.isOverdue} />
+                </Link>
+            </div>
         </div>
-        <div className='w-2/12 h-full flex items-center'>
-            <Link to={getTicketPath()}>
-                <div className='body3-small'>{dayjs.utc(item.createdOn).local().format('MMM DD, YYYY h:mm A')}</div>
-            </Link>
+        <div className='w-2/12 created-date truncate'>
+            <div className='mr-2'>
+                <Link to={getTicketPath()}>
+                    <ElipsisTooltipTextbox hasInlineBlock={false} classNames='body3-small' asSpan={true} value={dayjs.utc(item.createdOn).local().format('MMM DD, YYYY h:mm A')} />
+                </Link>
+            </div>
         </div>
         <div className='w-2/12 h-full'>
             <TicketStatus ticket={item} />
         </div>
-        <div className='w-2/12'>
+        <div className='w-2/12 flex items-center justify-start'>
+            <div className='ml-2'>
+                <Link to={getTicketPath()}>
+                    {item.priority ? selectedPriority?.value : null}
+                </Link>
+            </div>
+        </div>
+        <div className='w-2/12 max-w-xs truncate'>
             <Link to={getTicketPath()}>
-                {item.priority ? selectedPriority?.value : null}
+                <ElipsisTooltipTextbox hasInlineBlock={false} asSpan={true} value={item.type && selectedTicketType ?  selectedTicketType.value : ''}/>
             </Link>
         </div>
-        <div className='w-2/12'>
-            <Link to={getTicketPath()}>
-                {item.type ? selectedTicketType?.value : ''}
-            </Link>
-        </div>
-        <div className='w-2/12'>
-            <Link to={getTicketPath()}>
-                {item.reason ? selectedReason?.label : ''}
-            </Link>
+        <div className='w-2/12 flex items-center justify-start'>
+            <div className='ml-2'>
+                <Link to={getTicketPath()}>
+                    <ElipsisTooltipTextbox hasInlineBlock={false} asSpan={true} value={item.reason && selectedReason ? selectedReason?.label : ''}/>
+                </Link>
+            </div>
         </div>
         <div className='w-3/12'>
             <TicketAssignee ticketId={ticketId} assignee={item.assignee} />
