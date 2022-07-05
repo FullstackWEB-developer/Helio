@@ -89,12 +89,12 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
         setDisplayConfirmation(false);
     }
 
-    const canSendSms = () => {
-        return (patient?.mobilePhone || contact?.mobilePhone || ticket.originationNumber);
-    }
-
     const displayCall = () => {
-        if (patient?.mobilePhone || contact?.mobilePhone || ticket.originationNumber) {
+        if (selectedPhoneToCall === PhoneType.Mobile) {
+            return 'mobile';
+        } else if (selectedPhoneToCall === PhoneType.Home) {
+            return 'home';
+        }else if (patient?.mobilePhone || contact?.mobilePhone || ticket.originationNumber) {
             return 'mobile';
         } else if (patient?.homePhone) {
             return 'home';
@@ -204,10 +204,14 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
         const items: DropdownItemModel[] = [];
 
         if (patient) {
-            if (patient.mobilePhone) {
-                setSelectedPhoneToCall(PhoneType.Mobile)
+            if (patient.contactPreference === "MOBILEPHONE" && !!patient.mobilePhone) {
+                setSelectedPhoneToCall(PhoneType.Mobile);
+            } else if(patient.contactPreference === "HOMEPHONE" && !!patient.mobilePhone) {
+                setSelectedPhoneToCall(PhoneType.Home);
+            } else if (patient.mobilePhone) {
+                setSelectedPhoneToCall(PhoneType.Mobile);
             } else if (patient.homePhone) {
-                setSelectedPhoneToCall(PhoneType.Home)
+                setSelectedPhoneToCall(PhoneType.Home);
             }
 
             if (patient.mobilePhone && selectedPhoneToCall !== PhoneType.Mobile) {
