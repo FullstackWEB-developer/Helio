@@ -243,7 +243,8 @@
       "patient": "Patient",
       "caller": "Caller",
       "contact": "Contact",
-      "internal": "Internal Call"
+      "internal": "Internal Call",
+      "on_behalf_of": "On Behalf Of"
     },
     "note_context": {
       "header": "Add Note",

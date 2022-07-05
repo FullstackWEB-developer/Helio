@@ -16,12 +16,14 @@ import utils from '@shared/utils/utils';
 import ExtensionsContext from '@pages/ccp/components/extensions-context';
 import {useTranslation} from 'react-i18next';
 import {Intent} from '../models/intent.enum';
+import {selectAppUserDetails} from '@shared/store/app-user/appuser.selectors';
 
 const CcpContext = () => {
     const {t} = useTranslation();
     const context = useSelector(selectContextPanel);
     const hasActiveContact = useSelector(selectHasActiveContact);
     const botContext = useSelector(selectBotContext);
+    const appUser = useSelector(selectAppUserDetails);
 
     const determineCallerName = () => {
         const patientFullNameAttribute = checkConnectAttributesForValue('PatientFullName');
@@ -81,9 +83,23 @@ const CcpContext = () => {
     }
 
     const determineCallerReason = () => {
-        if (!botContext?.reason || botContext.reason === 'none') {return };
+        if (!botContext?.reason || botContext.reason === 'none') {
+            return;
+        }
         const recognizedReasonFromIntent = Intent[botContext.reason];
         return recognizedReasonFromIntent ?? utils.spaceBetweenCamelCaseWords(botContext.reason);
+    }
+
+    const getOnBehalfOf = () => {
+        let onBehalfOf = botContext?.attributes?.find(a => a.label === "OnBehalfOfAgent")?.value;
+        if (!onBehalfOf) {
+            let toUserId = botContext?.attributes?.find(a => a.label === "ToUserId");
+            if (!!toUserId?.value && toUserId.value !== appUser.id) {
+                onBehalfOf = botContext?.attributes?.find(a => a.label === "ToUserName")?.value;
+            }
+        }
+
+        return onBehalfOf;
     }
 
     const botContextMessages: ContextKeyValuePair[] = useMemo(() => {
@@ -95,6 +111,7 @@ const CcpContext = () => {
                 value: botContext?.queue
             })
         }
+
 
         const reason = determineCallerReason();
         if (reason) {
@@ -125,6 +142,13 @@ const CcpContext = () => {
                 containerClass: 'pt-4 flex items-center',
                 label: <SvgIcon type={Icon.Warning} className='icon-medium' fillClass='warning-icon' />
             });
+        }
+        let onBehalfOf = getOnBehalfOf();
+        if (!!onBehalfOf) {
+            items.push({
+                label: 'ccp.bot_context.on_behalf_of',
+                value: onBehalfOf
+            })
         }
         return items;
     }, [botContext]);
