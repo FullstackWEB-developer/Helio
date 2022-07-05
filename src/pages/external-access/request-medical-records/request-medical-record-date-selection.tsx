@@ -10,8 +10,8 @@ export interface RequestMedicalRecordDateSelectionProps {
 
 const RequestMedicalRecordDateSelection = ({dateSelected}: RequestMedicalRecordDateSelectionProps) => {
 
-    const [selectedStartDate] = useState<Date>(dayjs().add(-1, 'month').toDate());
-    const [selectedEndDate] = useState<Date>(new Date());
+    const [selectedStartDate, setSelectedStartDate] = useState<Date>(dayjs().add(-1, 'month').toDate());
+    const [selectedEndDate, setSelectedEndDate] = useState<Date>(new Date());
     const {control, watch} = useForm({
         mode: 'onBlur',
         defaultValues: {
@@ -36,7 +36,8 @@ const RequestMedicalRecordDateSelection = ({dateSelected}: RequestMedicalRecordD
                 required={true}
                 control={control}
                 max={watchEndDate}
-                onChange={(value) => onDateSelected('startDate', value)}
+                value={selectedStartDate}
+                onChange={(value) => {onDateSelected('startDate', value); value && setSelectedStartDate(value)}}
                 name='startDate'
                 dataTestId='medical-records-start-date'
                 isSmallSize={true}/>
@@ -45,7 +46,8 @@ const RequestMedicalRecordDateSelection = ({dateSelected}: RequestMedicalRecordD
                 calendarHorizontalAlign={CalendarHorizontalAlign.Left}
                 required={true}
                 control={control}
-                onChange={(value) => onDateSelected('endDate', value)}
+                value={selectedEndDate}
+                onChange={(value) => {onDateSelected('endDate', value); value && setSelectedEndDate(value)}}
                 min={watchStartDate}
                 max={new Date()}
                 name='endDate'
