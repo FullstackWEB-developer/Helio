@@ -92,6 +92,10 @@ const TicketDetailInfoPanel = ({ticket, patient, contact}: TicketDetailInfoPanel
         generateTicketUpdateModel();
     }, [ticket]);
 
+    useEffect(() => {
+        control.trigger();
+    }, []);
+
     const ticketUpdateMutation = useMutation(updateTicket, {
         onSuccess: (data) => {
             dispatch(setTicket(data));
@@ -172,6 +176,10 @@ const TicketDetailInfoPanel = ({ticket, patient, contact}: TicketDetailInfoPanel
         clearErrors();
     }
 
+    const isEmpty = (obj) => {
+        return Object.keys(obj).length === 0
+    }
+
     const [patientOrContactName, setPatientOrContactName] = useState<string>('');
     useEffect(() => {
         if (contact) {
@@ -195,7 +203,7 @@ const TicketDetailInfoPanel = ({ticket, patient, contact}: TicketDetailInfoPanel
                     <div className='flex flex-row items-center'>
                         <Button onClick={resetForm} className='mr-6' buttonType='secondary' label={'common.cancel'} />
                         <Button buttonType='small' label={'common.save'} type='submit'
-                            disabled={!isValid || isPatientCaseNumberLoading}
+                            disabled={!isEmpty(control.formState.errors) || isPatientCaseNumberLoading}
                             isLoading={ticketUpdateMutation.isLoading} />
                     </div>
                 }
