@@ -42,7 +42,8 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
         None,
         Mobile,
         Home,
-        Work
+        Work,
+        Callback
     }
 
     const logger = Logger.getInstance();
@@ -94,7 +95,11 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
             return 'mobile';
         } else if (selectedPhoneToCall === PhoneType.Home) {
             return 'home';
-        }else if (patient?.mobilePhone || contact?.mobilePhone || ticket.originationNumber) {
+        }  else if (selectedPhoneToCall === PhoneType.Work) {
+            return 'work';
+        }   else if (selectedPhoneToCall === PhoneType.Callback) {
+            return 'callback';
+        } else if (patient?.mobilePhone || contact?.mobilePhone || ticket.originationNumber) {
             return 'mobile';
         } else if (patient?.homePhone) {
             return 'home';
@@ -109,13 +114,22 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
         setSelectedPhoneToCall(type);
         setDisplayPhoneDropdown(false);
         let phoneNumber = '';
-        if (ticket.originationNumber) {
-            phoneNumber = ticket.originationNumber;
-        } else if (patient) {
-            phoneNumber = type === PhoneType.Mobile ? patient.mobilePhone : patient.homePhone;
-        } else if (contact) {
-            phoneNumber = type === PhoneType.Mobile ? contact.mobilePhone : contact.workMainPhone;
-        }
+        if(type === PhoneType.Mobile) {
+            if (patient) {
+                phoneNumber = patient.mobilePhone;
+            }
+            else if (contact) {
+                phoneNumber = contact.mobilePhone;
+            }
+        } else if(type === PhoneType.Home && !!patient) {
+            phoneNumber = patient.homePhone;
+        } else  if(type === PhoneType.Work && !!contact) {
+            phoneNumber = contact.workMainPhone;
+        } else if (type === PhoneType.Callback && ticket.callbackPhoneNumber) {
+             phoneNumber = ticket.callbackPhoneNumber;
+         }else if (ticket.originationNumber) {
+             phoneNumber = ticket.originationNumber;
+         }
         if (window.CCP.agent) {
             const endpoint = connect.Endpoint.byPhoneNumber(phoneNumber);
             window.CCP.agent.connect(endpoint, {
@@ -202,58 +216,65 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
 
     const getCallablePhoneListCallback = useCallback(() => {
         const items: DropdownItemModel[] = [];
-
+        let selectedPhoneType = PhoneType.None;
         if (patient) {
             if (patient.contactPreference === "MOBILEPHONE" && !!patient.mobilePhone) {
-                setSelectedPhoneToCall(PhoneType.Mobile);
+                selectedPhoneType = PhoneType.Mobile;
             } else if(patient.contactPreference === "HOMEPHONE" && !!patient.mobilePhone) {
-                setSelectedPhoneToCall(PhoneType.Home);
+                selectedPhoneType = PhoneType.Home;
             } else if (patient.mobilePhone) {
-                setSelectedPhoneToCall(PhoneType.Mobile);
+                selectedPhoneType = PhoneType.Mobile;
             } else if (patient.homePhone) {
-                setSelectedPhoneToCall(PhoneType.Home);
+                selectedPhoneType = PhoneType.Home;
             }
 
-            if (patient.mobilePhone && selectedPhoneToCall !== PhoneType.Mobile) {
+            if (patient.mobilePhone && selectedPhoneType !== PhoneType.Mobile) {
                 items.push({
                     label: 'ticket_detail.header.call_mobile',
                     value: PhoneType.Mobile.toString(),
                     onClick: () => callRelated(PhoneType.Mobile)
                 } as DropdownItemModel);
             }
-            if (patient.homePhone && selectedPhoneToCall !== PhoneType.Home) {
+            if (patient.homePhone && selectedPhoneType !== PhoneType.Home) {
                 items.push({
                     label: 'ticket_detail.header.call_home',
                     value: PhoneType.Home.toString(),
                     onClick: () => callRelated(PhoneType.Home)
                 } as DropdownItemModel);
             }
-            setPhoneDropdownList(items);
         } else if (contact) {
             if (contact.mobilePhone) {
-                setSelectedPhoneToCall(PhoneType.Mobile)
+                selectedPhoneType = PhoneType.Mobile;
             } else if (contact.workMainPhone) {
-                setSelectedPhoneToCall(PhoneType.Work)
+                selectedPhoneType = PhoneType.Work;
             }
 
-            if (contact.mobilePhone && selectedPhoneToCall !== PhoneType.Mobile) {
+            if (contact.mobilePhone && selectedPhoneType !== PhoneType.Mobile) {
                 items.push({
                     label: 'ticket_detail.header.call_mobile',
                     value: PhoneType.Mobile.toString(),
                     onClick: () => callRelated(PhoneType.Mobile)
                 } as DropdownItemModel);
             }
-            if (contact.workMainPhone && selectedPhoneToCall !== PhoneType.Work) {
+            if (contact.workMainPhone && selectedPhoneType !== PhoneType.Work) {
                 items.push({
                     label: 'ticket_detail.header.call_work',
                     value: PhoneType.Work.toString(),
                     onClick: () => callRelated(PhoneType.Work)
                 } as DropdownItemModel);
             }
-            setPhoneDropdownList(items);
         } else if (ticket.originationNumber && ticket.originationNumber.length > 0) {
-            setSelectedPhoneToCall(PhoneType.Mobile);
+            selectedPhoneType =PhoneType.Mobile;
         }
+        if(!!ticket.callbackPhoneNumber) {
+            items.push({
+                label: 'ticket_detail.header.call_callback',
+                value: ticket.callbackPhoneNumber,
+                onClick: () => callRelated(PhoneType.Callback)
+            } as DropdownItemModel);
+        }
+        setSelectedPhoneToCall(selectedPhoneType);
+        setPhoneDropdownList(items);
     }, [PhoneType.Home, PhoneType.Mobile, PhoneType.Work, callRelated, patient, contact, selectedPhoneToCall, ticket.originationNumber]);
 
     useEffect(() => {
@@ -457,7 +478,7 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
                                     type={Icon.ArrowDown} className='icon-medium' />}
                         </div>
                         {displayPhoneDropdown && dropdownModel.items && dropdownModel.items.length > 0 &&
-                            <div className='absolute'>
+                            <div className='absolute z-20'>
                                 <Dropdown model={dropdownModel} />
                             </div>}
                     </div>

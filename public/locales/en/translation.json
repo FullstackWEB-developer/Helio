@@ -601,6 +601,7 @@
       "call_mobile": "Call Mobile",
       "call_home": "Call Home",
       "call_work": "Call Work",
+      "call_callback": "Callback Number",
       "send_sms": "Send SMS",
       "call_failed": "Failed to call phone number {{phone}}",
       "send_email": "Email",
