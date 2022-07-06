@@ -1,9 +1,9 @@
-import SvgIcon, { Icon } from '@components/svg-icon';
-import Tooltip from '@components/tooltip/tooltip';
+import { Icon } from '@components/svg-icon';
 import utils from '@shared/utils/utils';
 import ToolTipIcon from '@components/tooltip-icon/tooltip-icon';
-import React, { useRef, useState } from 'react';
+import React, { useRef} from 'react';
 import { useTranslation } from 'react-i18next';
+import {Link} from 'react-router-dom';
 
 const MedicationRefillNotAllowed = () => {
 
@@ -29,10 +29,10 @@ const MedicationRefillNotAllowed = () => {
                         {t('external_access.medication_refill.medication_list.you_ran_out')}
                     </div>
                     <div className='body2 message-link cursor-pointer pb-5'>
-                        <a rel='noreferrer' target='_self' href={scheduleAppointmentLink}>{t('external_access.medication_refill.medication_list.schedule_appointment_online')}</a>
+                        <Link to={scheduleAppointmentLink}>{t('external_access.medication_refill.medication_list.schedule_appointment_online')}</Link>
                     </div>
                     <div className='body2 message-link cursor-pointer'>
-                        <a rel='noreferrer' target='_self' href={utils.getAppParameter('ChatLink')}>{t('external_access.medication_refill.medication_list.chat_with_us')}</a>
+                        <a rel='noreferrer' target='_blank' href={utils.getAppParameter('ChatLink')}>{t('external_access.medication_refill.medication_list.chat_with_us')}</a>
                     </div>
                 </div>
             </ToolTipIcon>
