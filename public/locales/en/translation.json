@@ -533,7 +533,7 @@
     "location": "Office/Location",
     "assignee": "Assign To",
     "patient_id": "Patient Chart Number",
-    "patient_case_number": "Patient Case Number",
+    "patient_case_number": "EMR Patient Case Number",
     "tags": "Tags",
     "add_note": "Note",
     "create": "Create Ticket",
