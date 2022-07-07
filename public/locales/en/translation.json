@@ -86,7 +86,7 @@
     "loginButton": "Sign In",
     "session_timeout": "Session timeout",
     "session_timeout_description": "Your session timed out. Please login again.",
-    "session_timeout_guest": "You session timed out. Please enter your information again!",
+    "session_timeout_guest": "Your previous session timed out. Please wait...",
     "re-login_required": "Re-Login Required",
     "will_be_logged_out_in": "You will be automatically logged out in:",
     "session_duration": "Maximum session duration is 10 hours. \nYou can logout now and log back in to continue working.",
