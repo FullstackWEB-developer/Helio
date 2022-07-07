@@ -198,7 +198,7 @@ const TicketDetailFeed = ({ticket, emailLoading, emailMessages, smsMessages, sms
         <AlwaysScrollToBottom enabled={scrollToBottom}/>
         <div className={'overflow-y-auto h-full-minus-34'}>
             {feeds?.length < 1 && !hasAnyFeed &&
-                <div className='pt-4 h7 pl-20'
+                <div className='pt-4 h7 pl-20 body2'
                      data-test-id='ticket-detail-feed-not-found'>{t('ticket_detail.feed.not_found')}</div>
             }
             {
