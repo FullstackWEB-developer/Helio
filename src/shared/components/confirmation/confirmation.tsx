@@ -19,10 +19,13 @@ export interface ConfirmationProps {
     messageClassName?: string;
     isCloseButtonDisabled?: boolean;
     isDraggable?: boolean;
+    displayAssistiveButton?: boolean;
+    assistiveButtonLabel?: string;
+    onAssistive?: () => void;
 }
 
 const Confirmation = ({title, onOk, onCancel, onClose, message = '', className, messageClassName, okButtonLabel = 'common.ok', cancelButtonLabel = 'common.cancel',
-    displayCancel = true, isOpen, closeableOnEscapeKeyPress, hasOverlay = false, isLoading = false, isCloseButtonDisabled = false, isDraggable = false}: ConfirmationProps) => {
+    displayCancel = true, isOpen, closeableOnEscapeKeyPress, hasOverlay = false, isLoading = false, isCloseButtonDisabled = false, isDraggable = false, displayAssistiveButton = false, assistiveButtonLabel = 'common.cancel', onAssistive}: ConfirmationProps) => {
     const {t} = useTranslation();
     const close = () => {
         if (onClose) {
@@ -54,6 +57,8 @@ const Confirmation = ({title, onOk, onCancel, onClose, message = '', className, 
                         {displayCancel &&
                             <Button buttonType='secondary' label={t(cancelButtonLabel)} onClick={() => cancel()} />}
                         <Button label={t(okButtonLabel)} onClick={() => onOk()} isLoading={isLoading} />
+                        {displayAssistiveButton &&
+                            <Button isLoading={isLoading} label={t(assistiveButtonLabel)} onClick={() => onAssistive && onAssistive()} />}
                     </div>
                 </div>
             </div>

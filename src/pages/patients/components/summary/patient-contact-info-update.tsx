@@ -19,6 +19,8 @@ import {setPatient} from '@pages/patients/store/patients.slice';
 import ControlledInput from '@components/controllers/ControlledInput';
 import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
 import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
+import RouteLeavingGuard from '@components/route-leaving-guard/route-leaving-guard';
+import { useHistory } from 'react-router';
 
 export interface PatientInformationUpdateProps
 {
@@ -28,6 +30,7 @@ export interface PatientInformationUpdateProps
 const PatientContactInfoUpdate = ({onUpdateComplete} : PatientInformationUpdateProps) => {
     const {t} = useTranslation();
     const dispatch = useDispatch();
+    const history = useHistory();
     const patient = useSelector(selectPatient);
     const states = useSelector(selectStates);
     const requiredText = t('common.required');
@@ -55,7 +58,7 @@ const PatientContactInfoUpdate = ({onUpdateComplete} : PatientInformationUpdateP
 
     const {handleSubmit, control, errors, watch,
         clearErrors,
-        formState: { isDirty },} = useForm({
+        formState: { isDirty, isSubmitSuccessful },} = useForm({
         mode: 'onBlur',
         defaultValues: {
             mobilePhone: patient.mobilePhone,
@@ -330,6 +333,17 @@ const PatientContactInfoUpdate = ({onUpdateComplete} : PatientInformationUpdateP
                 <div className='pt-4'>
                     <Button isLoading={updatePatientContactInfoMutation.isLoading} disabled={!isDirty} label={t('common.save')} buttonType='small' type='submit'/>
                 </div>
+                <RouteLeavingGuard
+                    when={isDirty && !isSubmitSuccessful}
+                    navigate={path => history.push(path)}
+                    message={'patient.summary.warning_info_leaving'}
+                    title={'patient.summary.warning'}
+                    okButtonLabel={'patient.summary.discard_changes'}
+                    isLoading={updatePatientContactInfoMutation.isLoading}
+                    assistiveButtonLabel={'patient.summary.save_changes'}
+                    displayAssistiveButton={true}
+                    onAssistive={() => {handleSubmit(onSubmit)()}}
+                />
             </form>
         </div>
     );

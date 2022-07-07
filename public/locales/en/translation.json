@@ -398,7 +398,12 @@
       "update_error": "Patient contact information could not be updated. Please try again later.",
       "update_success": "Patient contact information updated successfully",
       "profile_pic_alt_text": "Picture of patient",
-      "refresh": "Refresh"
+      "refresh": "Refresh",
+      "warning": "Warning",
+      "warning_info_leaving": "Your changes have not been saved.",
+      "save_changes": "Save Changes",
+      "discard_changes": "Discard Changes",
+      "cancel": "Cancel"
     },
     "contact_preference": {
       "mobilephone": "Mobile Phone",
