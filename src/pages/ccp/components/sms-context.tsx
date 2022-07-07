@@ -46,9 +46,13 @@ const SmsContext = () => {
         });
 
     const templateSelected = (template: NotificationTemplate) => {
-        setSelectedTemplate(template);
-        if (!template.requirePreProcessing) {
-            setSmsText(template.content);
+        if (template) {
+            setSelectedTemplate(template);
+            if (!template.requirePreProcessing) {
+                setSmsText(template.content);
+            }
+        } else {
+            setSmsText('');
         }
     }
 

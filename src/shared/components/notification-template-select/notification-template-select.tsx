@@ -133,7 +133,7 @@ const NotificationTemplateSelect = ({channel, category, onSelect, asSelect, sele
         if (!displaySelect) {
             return <div className='h-20'/>;
         }
-        return <Select disabled={disabled} onSelect={(option) => onSelect(option?.object)} label={selectLabel} options={options} />;
+        return <Select disabled={disabled} allowClear={true} onSelect={(option) => onSelect(option?.object)} label={selectLabel} options={options} />;
     }
 
     const dropdownWrapperClassname = classnames('absolute z-50', {
