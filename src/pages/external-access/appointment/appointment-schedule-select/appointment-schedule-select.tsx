@@ -130,6 +130,7 @@ const AppointmentScheduleSelect = () => {
                 onSuccess: (data: AppointmentSlot[]) => {
                     if (!data || data.length < 1) {
                         setDepartmentLatLng([]);
+                        setAppointmentSlots([]);
                         if (slotRequest.firstAvailable && tryCount.current <= MaxFetchCount) {
                             nextPage(isMobile);
                             tryCount.current = tryCount.current + 1;
