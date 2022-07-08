@@ -8,7 +8,9 @@ export interface VerifyPatientState {
     preventRetryUntil: Date | undefined;
     retryPrevented: boolean;
     verifiedLink?: string;
-    verificationChannel?: VerificationType
+    verificationChannel?: VerificationType,
+    twoFACodeResendDisabled: boolean;
+    lastTwoFACodeSentTimestamp: Date | undefined;
 }
 
 const initialVerifyPatientState: VerifyPatientState = {
@@ -17,6 +19,8 @@ const initialVerifyPatientState: VerifyPatientState = {
     email: '',
     preventRetryUntil: undefined,
     retryPrevented: false,
+    twoFACodeResendDisabled: false,
+    lastTwoFACodeSentTimestamp: undefined
 }
 
 export default initialVerifyPatientState;

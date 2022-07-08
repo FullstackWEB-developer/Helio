@@ -36,6 +36,10 @@ const verifyPatientSlice = createSlice({
         setVerificationCodeChannel(state, { payload }: PayloadAction<VerificationType>) {
             state.verificationChannel = payload;
         },
+        set2FACodeResendDisabled(state, {payload}: PayloadAction<boolean>){
+            state.twoFACodeResendDisabled = payload;
+            state.lastTwoFACodeSentTimestamp = payload ? new Date() : undefined;
+        },
         clearState(state) {
             state.retryPrevented = false;
             state.preventRetryUntil = undefined;
@@ -43,6 +47,8 @@ const verifyPatientSlice = createSlice({
             state.email = '';
             state.phoneNumber = '';
             state.verificationChannel = undefined;
+            state.twoFACodeResendDisabled = false;
+            state.lastTwoFACodeSentTimestamp = undefined;
         }
     }
 });
@@ -56,7 +62,8 @@ export const {
     setRetryPrevented,
     clearState,
     clearRedirectLink,
-    setVerificationCodeChannel
+    setVerificationCodeChannel,
+    set2FACodeResendDisabled
 } = verifyPatientSlice.actions;
 
 export default verifyPatientSlice.reducer;

@@ -39,3 +39,13 @@ export const selectVerificationChannel = createSelector(
     verifyPatientState,
     items => items.verificationChannel as VerificationType
 )
+
+export const select2FACodeResendDisabled = createSelector(
+    verifyPatientState,
+    items => items.twoFACodeResendDisabled as boolean
+)
+
+export const selectLast2FACodeSentTimestamp = createSelector(
+    verifyPatientState,
+    items => items.lastTwoFACodeSentTimestamp as Date
+)

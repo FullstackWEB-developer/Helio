@@ -31,14 +31,17 @@ import {VerificationType} from '@pages/external-access/models/verification-type.
 import {setAuthentication} from '@shared/store/app-user/appuser.slice';
 import {ResendTimeout} from '@pages/external-access/verify-patient/resend-timeout';
 import {
+    selectLast2FACodeSentTimestamp,
+    select2FACodeResendDisabled,
     selectExternalUserEmail,
     selectExternalUserPhoneNumber,
     selectRedirectLink,
     selectVerificationChannel,
     selectVerifiedLink
 } from '@pages/external-access/verify-patient/store/verify-patient.selectors';
-import {setVerifiedLink} from '@pages/external-access/verify-patient/store/verify-patient.slice';
+import {set2FACodeResendDisabled, setVerifiedLink} from '@pages/external-access/verify-patient/store/verify-patient.slice';
 import Spinner from '@components/spinner/Spinner';
+import dayjs from 'dayjs';
 
 const ExternalUserVerificationCode = () => {
     const {t} = useTranslation();
@@ -49,7 +52,8 @@ const ExternalUserVerificationCode = () => {
     const history = useHistory();
     const [isPageLoading, setPageLoading] = useState<boolean>(true);
     const [verificationFailed, setVerificationFailed] = useState<boolean>(false);
-    const [isResendDisabled, setResendDisabled] = useState<boolean>(false);
+    const isResendDisabled = useSelector(select2FACodeResendDisabled);
+    const last2FACodeSentTimestamp = useSelector(selectLast2FACodeSentTimestamp);
     const verifiedLink = useSelector(selectVerifiedLink);
     const fingerPrintCode = useFingerPrint();
     const dispatch = useDispatch();
@@ -61,7 +65,7 @@ const ExternalUserVerificationCode = () => {
 
     const forwardToRelatedPage = () => {
         if (request !== undefined) {
-            if(request.redirectAfterVerification) {
+            if (request.redirectAfterVerification) {
                 history.push(request.redirectAfterVerification);
                 return;
             }
@@ -99,7 +103,7 @@ const ExternalUserVerificationCode = () => {
             return;
         }
         if ((request.requestType === ExternalAccessRequestTypes.SentTicketMessageViaSMS ||
-            request.requestType === ExternalAccessRequestTypes.SentTicketMessageViaEmail)&& !request.patientId) {
+            request.requestType === ExternalAccessRequestTypes.SentTicketMessageViaEmail) && !request.patientId) {
             forwardToRelatedPage();
         } else {
             sendVerification();
@@ -120,11 +124,11 @@ const ExternalUserVerificationCode = () => {
 
     const {isLoading, isError, refetch: checkVerificationRefetch} =
         useQuery([CheckVerificationCode, phoneNumber, watch('code'), request.patientId], () => checkVerificationCode({
-                verificationCode: watch('code'),
-                verificationChannel: VerificationChannel.Web,
-                patientId: parseInt(request.patientId),
-                fingerPrintCode: fingerPrintCode
-            }),
+            verificationCode: watch('code'),
+            verificationChannel: VerificationChannel.Web,
+            patientId: parseInt(request.patientId),
+            fingerPrintCode: fingerPrintCode
+        }),
             {
                 enabled: false,
                 onSuccess: (data) => {
@@ -152,6 +156,7 @@ const ExternalUserVerificationCode = () => {
             });
 
     const sendVerification = () => {
+        if (isResendDisabled) {return;}
         sendVerificationCodeMutation.mutate({
             verificationType: verificationChannel,
             verificationChannel: VerificationChannel.Web,
@@ -164,7 +169,7 @@ const ExternalUserVerificationCode = () => {
                     message: verificationChannel === VerificationType.Email ? 'external_access.six_digit_code_resent_to_email' : 'external_access.six_digit_code_resent_to_mobile',
                     position: SnackbarPosition.TopCenter
                 }));
-                setResendDisabled(true);
+                dispatch(set2FACodeResendDisabled(true));
             }
         });
     }
@@ -204,7 +209,7 @@ const ExternalUserVerificationCode = () => {
     return <div className='md:px-12 xl:px-48'>
         <GetExternalUserHeader
             title={`external_access.title_${request.requestType}`}
-            description={headerDescription()}/>
+            description={headerDescription()} />
 
         <div>
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -218,19 +223,19 @@ const ExternalUserVerificationCode = () => {
                         className='w-full md:w-88'
                         label={t('external_access.six_digit_code')}
                         control={control}
-                        name='code'/>
+                        name='code' />
                 </div>
                 <div className='pt-2 flex flex-col xl:flex-row pb-10 space-y-3 xl:space-y-0'>
                     <div className='body2'>{t('external_access.resend_verification_message')}</div>
                     <div className='body2'>
                         <a className={(isResendDisabled || sendVerificationCodeMutation.isLoading) ? 'disabled xl:px-2' : 'xl:px-2'}
-                           onClick={() => resendVerification()}>
+                            onClick={() => resendVerification()}>
                             {t('external_access.resend_verification_cta')}
                         </a>
                     </div>
                     {isResendDisabled && <ResendTimeout message='external_access.resend_in_seconds'
-                                                        countdownSeconds={isResendDisabled ? 60 : 0}
-                                                        onTimeOut={() => setResendDisabled(false)}/>}
+                        countdownSeconds={isResendDisabled ? 60 - (dayjs().local().diff(last2FACodeSentTimestamp, 'second')) : 0}
+                        onTimeOut={() => dispatch(set2FACodeResendDisabled(false))} />}
                 </div>
                 <div className='pb-2 flex justify-start'>
                     <div>
@@ -241,13 +246,13 @@ const ExternalUserVerificationCode = () => {
                             type='submit'
                             isLoading={isLoading || sendVerificationCodeMutation.isLoading}
                             data-test-id='mobile-phone-submit-button'
-                            buttonType='big'/>
+                            buttonType='big' />
                     </div>
                 </div>
             </form>
             {verificationFailed && <div className='text-danger'>{t('external_access.verification_failed')}</div>}
             {isError && <div className='text-danger'>{t('common.error')}</div>}
-            <ExternalUserEmergencyNote type={request.requestType}/>
+            <ExternalUserEmergencyNote type={request.requestType} />
         </div>
     </div>
 }
