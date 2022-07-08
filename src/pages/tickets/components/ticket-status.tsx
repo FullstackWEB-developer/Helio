@@ -19,8 +19,10 @@ import { setGlobalLoading } from '@shared/store/app/app.slice';
 import classnames from 'classnames';
 import { usePopper } from 'react-popper';
 import { FeedTypes, TicketFeed } from '../models/ticket-feed';
-import { selectEnumValuesAsOptions, selectTicketUpdateModel } from '../store/tickets.selectors';
+import { selectEnumValuesAsOptions, selectTicketFilter, selectTicketUpdateModel } from '../store/tickets.selectors';
 import { usePrevious } from '@shared/hooks/usePrevious';
+import {getList} from '../services/tickets.service';
+import { TicketQuery } from '../models/ticket-query';
 interface TicketStatusProps {
     ticket: Ticket,
     isExpired?: boolean,
@@ -30,6 +32,7 @@ interface TicketStatusProps {
 const TicketStatus = ({ ticket, isArrow = true, onUpdated }: TicketStatusProps) => {
     const { t } = useTranslation();
     const dispatch = useDispatch();
+    const ticketFilter: TicketQuery = useSelector(selectTicketFilter);
     const [isVisible, setIsVisible, elementRef] = useComponentVisibility<HTMLDivElement>(false);
     const statusOptions = useSelector((state => selectEnumValuesAsOptions(state, 'TicketStatus')));
     const previousTicket = usePrevious(ticket);
@@ -73,6 +76,8 @@ const TicketStatus = ({ ticket, isArrow = true, onUpdated }: TicketStatusProps) 
             if (onUpdated) {
                 onUpdated();
             }
+            
+            dispatch(getList(ticketFilter));
         },
         onError: () => {
             dispatch(addSnackbarMessage({

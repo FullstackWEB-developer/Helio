@@ -20,6 +20,7 @@ import TicketDetailRating from './ticket-detail/ticket-detail-rating';
 import TicketListItemActions from './ticket-list-item-actions';
 import ElipsisTooltipTextbox from '@components/elipsis-tooltip-textbox/elipsis-tooltip-textbox';
 import './ticket-list-item.scss';
+import { TicketStatuses } from '../models/ticket.status.enum';
 interface TicketListItemProps {
     item: Ticket
 }
@@ -77,7 +78,6 @@ const TicketListItem = ({item}: TicketListItemProps) => {
         ticketTypeOptions, selectedTicketType, item?.type,
         ticketReasons, selectedReason, item?.reason
     ]);
-    const getRelativeTime = utils.getRelativeTime(item.dueDate);
 
     return <div className='flex flex-row w-full auto-cols-max body2 border-b hover:bg-gray-100 px-7 items-center h-20 py-3.5 group' onMouseLeave={() => setForceMoreMenuClose(!forceMoreMenuClose)} >
         <div className='w-24 flex justify-center'>
@@ -103,7 +103,7 @@ const TicketListItem = ({item}: TicketListItemProps) => {
         <div className='w-1/12 body3'>
             <div className='ml-2'>
                 <Link to={getTicketPath()}>
-                    <DueInRelativeTime value={getRelativeTime} isOverdue={item.isOverdue} />
+                    <DueInRelativeTime value={item.dueDate ? item.dueDate : undefined} isOverdue={item.isOverdue} />
                 </Link>
             </div>
         </div>
