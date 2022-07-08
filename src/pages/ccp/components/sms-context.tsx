@@ -11,14 +11,14 @@ import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
 import {useDispatch, useSelector} from 'react-redux';
 import {ChannelTypes, TicketMessagesDirection} from '@shared/models';
 import Button from '@components/button/button';
-import './sms-context.scss';
 import {selectBotContext} from '@pages/ccp/store/ccp.selectors';
 import ParentExtraTemplate from '@components/notification-template-select/components/parent-extra-template';
-import {ProcessTemplate} from '@constants/react-query-constants';
+import {GetContactById, ProcessTemplate} from '@constants/react-query-constants';
 import utils from '@shared/utils/utils';
 import {processTemplate} from '@shared/services/notifications.service';
 import {TemplateUsedFrom} from '@components/notification-template-select/template-used-from';
 import Alert from '@components/alert/alert';
+import {getContactById} from '@shared/services/contacts.service';
 
 const SmsContext = () => {
     const {t} = useTranslation();
@@ -27,17 +27,27 @@ const SmsContext = () => {
     const [smsText, setSmsText] = useState<string>('');
     const [selectedTemplate, setSelectedTemplate] = useState<NotificationTemplate>();
     const [patientName, setPatientName] = useState<string>('');
+    const [contactName, setContactName] = useState<string>('');
     const [refreshTemplate, setRefreshTemplate] = useState<number>(0);
     const [noteDisabledText, setNoteDisabledText] = useState<string>();
 
     useEffect(() => {
         if (botContext?.patient) {
-            setPatientName(utils.stringJoin(' ',botContext.patient.firstName, botContext.patient.lastName));
+            setPatientName(utils.stringJoin(' ', botContext.patient.firstName, botContext.patient.lastName));
         }
-    }, [botContext?.patient])
+        if (botContext?.contactId && botContext?.ticket?.createdForName) {
+            setContactName(botContext.ticket.createdForName);
+            fetchContact();
+        }
+    }, [botContext?.contactId, botContext?.patient]);
 
-    const{isFetching: isProcessing} = useQuery([ProcessTemplate, selectedTemplate?.id!], () =>
-            processTemplate(selectedTemplate?.id!, botContext.ticket!, botContext.patient),
+    const {data: contact, refetch: fetchContact, isFetching: isFetchingContact} = useQuery([GetContactById, botContext?.contactId], () => getContactById(botContext?.contactId),
+        {
+            enabled: false
+        });
+
+    const {isFetching: isProcessing} = useQuery([ProcessTemplate, selectedTemplate?.id!], () =>
+        processTemplate(selectedTemplate?.id!, botContext.ticket!, botContext.patient, contact),
         {
             enabled: !!botContext && botContext.ticket && !!selectedTemplate?.requirePreProcessing,
             onSuccess: (data) => {
@@ -94,58 +104,70 @@ const SmsContext = () => {
                 direction: TicketMessagesDirection.Outgoing
             });
         }
+        else if (botContext?.ticket?.id && botContext?.contactId && contact?.mobilePhone) {
+            sendSmsMutation.mutate({
+                body: smsText,
+                ticketId: botContext.ticket?.id,
+                channel: ChannelTypes.SMS,
+                toAddress: contact.mobilePhone,
+                contactId: botContext.contactId,
+                recipientName: contactName,
+                direction: TicketMessagesDirection.Outgoing
+            });
+        }
     }
 
-    return <div className='overflow-y-auto sms-container pb-6'>
+    return <div className='pb-6 flex-1'>
         <div className='px-6 flex flex-col'>
             <div className='flex items-center h7 h-12'>{t('ccp.sms_context.title')}</div>
             <div className='flex flex-col'>
-                    <div className='pt-4 w-4/5'>
-                        <Input disabled={true} name='to' value={patientName} label='ccp.sms_context.to'/>
-                    </div>
-                    <div className='w-4/5'>
-                        <NotificationTemplateSelect selectLabel='ccp.sms_context.select_template'
-                                                    asSelect={true}
-                                                    disabled={!!noteDisabledText}
-                                                    resetValue={refreshTemplate}
-                                                    channel={NotificationTemplateChannel.Sms}
-                                                    usedFrom={TemplateUsedFrom.CCP}
-                                                    onSelect={templateSelected}/>
-                    </div>
+                <div className='pt-4 w-4/5'>
+                    <Input disabled={true} name='to' value={patientName || contactName} label='ccp.sms_context.to' />
+                </div>
+                <div className='w-4/5'>
+                    <NotificationTemplateSelect selectLabel='ccp.sms_context.select_template'
+                        asSelect={true}
+                        disabled={!!noteDisabledText}
+                        resetValue={refreshTemplate}
+                        channel={NotificationTemplateChannel.Sms}
+                        usedFrom={TemplateUsedFrom.CCP}
+                        onSelect={templateSelected} />
+                </div>
                 {
                     selectedTemplate &&
-                <div>
-                    <ParentExtraTemplate parentType='ccp' logicKey={selectedTemplate?.logicKey} patient={botContext?.patient}/>
-                </div>
+                    <div>
+                        <ParentExtraTemplate parentType='ccp' logicKey={selectedTemplate?.logicKey} patient={botContext?.patient} />
+                    </div>
                 }
 
                 {!!noteDisabledText && <div className='pb-4'>
-                    <Alert message={noteDisabledText} type='error'/>
+                    <Alert message={noteDisabledText} type='error' />
                 </div>}
 
+                <div>
+                    <TextArea
+                        className='body2 w-full'
+                        data-test-id='note-context-notes'
+                        value={smsText}
+                        required={true}
+                        rows={3}
+                        minRows={6}
+                        resizable={false}
+                        disabled={!(!!botContext?.patient?.mobilePhone || !!contact?.mobilePhone) || !!noteDisabledText}
+                        hasBorder={true}
+                        label='ccp.sms_context.message'
+                        onChange={(message) => setSmsText(message)}
+                    />
+                </div>
+                <div className='flex flex-row space-x-4 pt-6'>
                     <div>
-                        <TextArea
-                            className='body2 w-full'
-                            data-test-id='note-context-notes'
-                            value={smsText}
-                            required={true}
-                            rows={3}
-                            minRows={6}
-                            resizable={false}
-                            disabled={!(!!botContext?.patient?.mobilePhone) || !!noteDisabledText}
-                            hasBorder={true}
-                            label='ccp.sms_context.message'
-                            onChange={(message) => setSmsText(message)}
-                        />
-                    </div>
-                    <div className='flex flex-row space-x-4 pt-6'>
-                        <div>
-                            <Button buttonType='small' label='ccp.sms_context.send' onClick={sendSms}
-                                    disabled={(!(!!botContext?.patient?.mobilePhone) || !!noteDisabledText) || isProcessing}
-                                    isLoading={sendSmsMutation.isLoading}/>
-                        </div>
+                        <Button buttonType='small' label='ccp.sms_context.send' onClick={sendSms}
+                            disabled={(!(!!botContext?.patient?.mobilePhone || !!contact?.mobilePhone) || !!noteDisabledText)
+                                || isProcessing || isFetchingContact}
+                            isLoading={sendSmsMutation.isLoading || isProcessing} />
                     </div>
                 </div>
+            </div>
         </div>
     </div>
 }
