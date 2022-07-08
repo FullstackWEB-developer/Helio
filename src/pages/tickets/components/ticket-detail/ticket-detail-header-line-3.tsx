@@ -30,6 +30,7 @@ import {BlockAccessModel, BlockAccessType} from '@pages/blacklists/models/blackl
 import utils from '@shared/utils/utils';
 import {SnackbarPosition} from '@components/snackbar/snackbar-position.enum';
 import {Phone} from '@pages/tickets/models/phone.model';
+import { ContactPreference } from '@pages/patients/models/contact-preference.enum';
 
 export interface TicketDetailHeaderLine3Props {
     ticket: Ticket,
@@ -218,9 +219,9 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
         const items: DropdownItemModel[] = [];
         let selectedPhoneType = PhoneType.None;
         if (patient) {
-            if (patient.contactPreference === "MOBILEPHONE" && !!patient.mobilePhone) {
+            if (patient.contactPreference === ContactPreference.MOBILEPHONE && !!patient.mobilePhone) {
                 selectedPhoneType = PhoneType.Mobile;
-            } else if(patient.contactPreference === "HOMEPHONE" && !!patient.mobilePhone) {
+            } else if(patient.contactPreference === ContactPreference.HOMEPHONE && !!patient.mobilePhone) {
                 selectedPhoneType = PhoneType.Home;
             } else if (patient.mobilePhone) {
                 selectedPhoneType = PhoneType.Mobile;

@@ -19,6 +19,7 @@ import {setPatient} from '@pages/patients/store/patients.slice';
 import ControlledInput from '@components/controllers/ControlledInput';
 import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
 import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
+import { ContactPreference } from '@pages/patients/models/contact-preference.enum';
 import RouteLeavingGuard from '@components/route-leaving-guard/route-leaving-guard';
 import { useHistory } from 'react-router';
 
@@ -115,35 +116,35 @@ const PatientContactInfoUpdate = ({onUpdateComplete} : PatientInformationUpdateP
 
     const contactPreferenceOptions : Option[] = [
         {
-            value:'MOBILEPHONE',
+            value: ContactPreference.MOBILEPHONE,
             label: 'patient.contact_preference.mobilephone',
             disabled: !(watchMobilePhone && watchMobilePhone.length > 0)
         },{
-            value:'HOMEPHONE',
+            value: ContactPreference.HOMEPHONE,
             label: 'patient.contact_preference.homephone',
             disabled: !(watchHomePhone && watchHomePhone.length > 0)
         },{
-            value:'WORKPHONE',
+            value: ContactPreference.WORKPHONE,
             label: 'patient.contact_preference.workphone'
         },{
-            value:'MAIL',
+            value: ContactPreference.MAIL,
             label: 'patient.contact_preference.mail',
             disabled: !(watchEmail && watchEmail.length > 0)
         },{
-            value:'PORTAL',
+            value: ContactPreference.PORTAL,
             label: 'patient.contact_preference.portal'
         }
     ];
 
     const contactPreferenceUpdated = (option: Option) => {
         if (option) {
-            if (option.value === "MOBILEPHONE") {
+            if (option.value === ContactPreference.MOBILEPHONE) {
                 clearErrors('homePhone');
                 clearErrors('email');
-            } else if (option.value === "HOMEPHONE") {
+            } else if (option.value === ContactPreference.HOMEPHONE) {
                 clearErrors('mobilePhone');
                 clearErrors('email');
-            }  else if (option.value === "MAIL") {
+            }  else if (option.value === ContactPreference.MAIL) {
                 clearErrors('mobilePhone');
                 clearErrors('homePhone');
             } else {
@@ -172,7 +173,7 @@ const PatientContactInfoUpdate = ({onUpdateComplete} : PatientInformationUpdateP
                             control={control}
                             name='homePhone'
                             dataTestId='patient-update-home_phone'
-                            required={watchContactPreference === 'HOMEPHONE'}
+                            required={watchContactPreference === ContactPreference.HOMEPHONE}
                             type='tel'
                             label='patient.summary.home_phone'
                             className='w-full'                            

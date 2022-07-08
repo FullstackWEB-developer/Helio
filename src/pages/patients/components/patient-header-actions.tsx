@@ -12,6 +12,7 @@ import utils from '@shared/utils/utils';
 import { useHistory} from 'react-router-dom';
 import {customHooks} from '@shared/hooks';
 import './patient-header-actions.scss';
+import { ContactPreference } from '../models/contact-preference.enum';
 
 export interface PatientHeaderActionsProps {
     patient: ExtendedPatient;
@@ -44,6 +45,7 @@ const PatientHeaderActions = ({patient, refreshPatient, isRefetching} : PatientH
             return options;
         }
 
+        setSelectedPhoneType((patient.contactPreference === ContactPreference.HOMEPHONE ? PatientPhoneType.HomePhone : PatientPhoneType.MobilePhone));
         const options = generatePhoneTypeDropdownOptions();
         setPhoneTypeOptions(options);
         if (!options.find(a => a.value=== selectedPhoneType.toString()) && options[0]) {
@@ -52,7 +54,7 @@ const PatientHeaderActions = ({patient, refreshPatient, isRefetching} : PatientH
     }, [patient, t]);
 
     const phoneTypeDropdownModel: DropdownModel = {
-        defaultValue: selectedPhoneType?.toString(),
+        defaultValue: patient.contactPreference ? (patient.contactPreference === ContactPreference.HOMEPHONE ? String(PatientPhoneType.HomePhone) : String(PatientPhoneType.MobilePhone)) : selectedPhoneType?.toString(),
         onClick: (id) => phoneTypeSelected(Number(id)),
         items: phoneTypeOptions
     };
