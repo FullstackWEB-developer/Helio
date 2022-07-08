@@ -4,6 +4,7 @@ import React from 'react';
 import {useTranslation} from 'react-i18next';
 import './button.scss';
 import Spinner from '@components/spinner/Spinner';
+import classNames from 'classnames';
 
 type ButtonType = 'small' | 'medium' | 'big' | 'secondary-big' | 'secondary' | 'secondary-medium' | 'link';
 interface ButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
@@ -53,7 +54,7 @@ const Button = ({label, type = 'button', disabled = false, buttonType = 'medium'
 
     }
     return (<><button disabled={disabled || isLoading} {...props} className={`${constructButtonClassString()}`} type={type}>
-        <div className='flex flex-row space-x-2 justify-center items-center'>
+        <div className={classNames('flex flex-row justify-center items-center', {'space-x-2': !isLoading})}>
             {
                 getIcon()
             }
