@@ -1,4 +1,4 @@
-import {ALPHABETICAL_REGEX} from '@constants/form-constants';
+import {ALPHABETICAL_NUMERICAL_REGEX} from '@constants/form-constants';
 import { SearchType } from '../models/search-type';
 import { searchType } from './search-type';
 
@@ -35,7 +35,7 @@ export const searchTypes: SearchType[] = [
     },
     {
         label: 'search.search_type.contact_name',
-        regex: ALPHABETICAL_REGEX,
+        regex: ALPHABETICAL_NUMERICAL_REGEX,
         type: searchType.contactName,
         priority: 6,
     },

@@ -7,4 +7,5 @@ export const TIME_FORMAT = 'hh:mm A';
 export const DATE_TIME_FORMAT = 'MMM D[,] YYYY hh:mm A';
 export const CCP_ANIMATION_DURATION = 0.3;
 export const ALPHABETICAL_REGEX = '^[a-z, A-Z, \\s]+$';
+export const ALPHABETICAL_NUMERICAL_REGEX = '^[a-z,A-Z,0-9, \\s]+$';
 export const INPUT_DATE_FORMAT = 'mm/dd/yyyy';
