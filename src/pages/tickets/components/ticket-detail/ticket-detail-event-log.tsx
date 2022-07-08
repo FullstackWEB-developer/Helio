@@ -14,6 +14,8 @@ import {TicketUpdateModel} from '@pages/tickets/models/ticket-update.model';
 import {useDispatch, useSelector} from 'react-redux';
 import {selectTicketUpdateModel} from '@pages/tickets/store/tickets.selectors';
 import {setTicketUpdateModel} from '@pages/tickets/store/tickets.slice';
+import updateLocale from 'dayjs/plugin/updateLocale';
+
 interface TicketDetailEventLogProps {
     ticket: Ticket,
     control: Control<TicketUpdateModel>,
@@ -23,10 +25,29 @@ interface TicketDetailEventLogProps {
 
 const TicketDetailEventLog = ({ticket, control, isVisible, setIsVisible}: TicketDetailEventLogProps) => {
     dayjs.extend(relativeTime);
+    dayjs.extend(updateLocale);
     const {t} = useTranslation();
     const formatTemplate = 'ddd, MMM DD, YYYY h:mm A';
     const dispatch = useDispatch();
     const sysdate = Date.now();
+
+    dayjs.updateLocale('en', {
+        relativeTime: {
+            future: '%s',
+            past: '%s ago',
+            s: 'a few seconds',
+            m: 'a minute',
+            mm: '%d minutes',
+            h: 'an hour',
+            hh: '%d hours',
+            d: 'a day',
+            dd: '%d days',
+            M: 'a month',
+            MM: '%d months',
+            y: 'a year',
+            yy: '%d years'
+        }
+    })
 
     const openCalendar = () => {
         setIsVisible(!isVisible);
