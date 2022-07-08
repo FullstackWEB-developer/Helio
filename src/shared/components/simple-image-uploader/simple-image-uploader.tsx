@@ -10,8 +10,11 @@ interface ImageUploaderProps {
     initialSrc: string | undefined,
     buttonText?: string,
     uploadedImage: (image: File | undefined) => void,
-    onClearImage: () => void,
-    maxFileSizeInMegabytes?: number
+    onClearImage: (isReturnDefault?: boolean) => void,
+    maxFileSizeInMegabytes?: number,
+    acceptFileFormats?: string,
+    isTransparentBackground?: boolean,
+    defaultImageSrc?: string;
 }
 const SimpleImageUploader = ({
     src,
@@ -19,7 +22,11 @@ const SimpleImageUploader = ({
     buttonText = 'common.choose_file',
     uploadedImage,
     onClearImage,
-    maxFileSizeInMegabytes = 5.0 }: ImageUploaderProps) => {
+    maxFileSizeInMegabytes = 5.0,
+    acceptFileFormats = '.jpg, .jpeg, .png',
+    isTransparentBackground = false,
+    defaultImageSrc
+ }: ImageUploaderProps) => {
 
     const { t } = useTranslation();
     const imageBaseUrl = utils.getAppParameter('AssetsPath');
@@ -47,9 +54,14 @@ const SimpleImageUploader = ({
     }
 
     const clearUpload = () => {
-        setImageSrc(initialSrc);
+        if(typeof imageSrc !== 'string' || !defaultImageSrc){
+            setImageSrc(initialSrc);
+            onClearImage();
+        }else if(defaultImageSrc && imageSrc == initialSrc){
+            setImageSrc(defaultImageSrc);
+            onClearImage(true);
+        }
         uploadedImage(undefined);
-        onClearImage();
     }
     useEffect(() => {
         if (imageSrc) {
@@ -80,23 +92,23 @@ const SimpleImageUploader = ({
                     <div className='flex items-center'>
 
                         <img
-                            className='image-preview-pane'
+                            className={classNames('image-preview-pane', {'transparent-background': isTransparentBackground})}
                             src={typeof imageSrc === 'string' ? `${imageBaseUrl}${imageSrc}` : URL.createObjectURL(imageSrc)}
                             alt={`upload-preview-${imageName}`}
                         />
                         <div className={classNames('pl-5')}>
                             <SvgIcon type={Icon.Close}
                                 fillClass='clear-icon-fill'
-                                className='cursor-pointer'
+                                className={classNames('',{'cursor-pointer' : defaultImageSrc ? imageSrc !== defaultImageSrc : src !== initialSrc})}
                                 onClick={clearUpload}
-                                disabled={src == initialSrc} />
+                                disabled={defaultImageSrc ? imageSrc == defaultImageSrc : src == initialSrc} />
                         </div>
 
                     </div>
                     <div className='pt-3 body3'>{imageName}</div>
                 </div>
             }
-            <input type='file' ref={fileInputField} title="" value="" multiple={false} accept='.jpg, .jpeg, .png' style={{ display: 'none' }}
+            <input type='file' ref={fileInputField} title="" value="" multiple={false} accept={acceptFileFormats} style={{ display: 'none' }}
                 onChange={handleUpload} />
 
         </ div>

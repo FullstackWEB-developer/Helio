@@ -11,6 +11,7 @@ export interface ControlledInputProps {
     name: string;
     value?: string;
     defaultValue?: string;
+    onChangeColor?: (key:string, color: string) => void,
 }
 
 const ControlledColorPicker = ({
@@ -18,7 +19,8 @@ const ControlledColorPicker = ({
     required = false,
     name,
     value,
-    defaultValue
+    defaultValue,
+    onChangeColor,
 }: ControlledInputProps) => {
     const defaultColor = '#000000';
     const parentRef = useRef<HTMLDivElement>(null);
@@ -49,6 +51,7 @@ const ControlledColorPicker = ({
                                 <div className='cover' onClick={() => setDisplayColorPicker(false)} />
                                 <SketchPicker  {...controllerProps} color={controllerProps.value ?? defaultValue ?? defaultColor} onChange={(color, _) => {
                                     controllerProps.onChange(color.hex);
+                                    onChangeColor && onChangeColor(name, color.hex);
                                 }} />
                             </div>}
 

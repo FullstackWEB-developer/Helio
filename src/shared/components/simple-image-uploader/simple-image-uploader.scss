@@ -7,3 +7,12 @@
 .clear-icon-fill {
     fill: var(--grayed-out);
 }
+
+.transparent-background{
+    background-color: var(--color-secondary-300);
+    opacity: 0.8;
+    background-image: repeating-linear-gradient(45deg, var(--color-secondary-500) 25%, transparent 25%, transparent 75%, var(--color-secondary-500) 75%, var(--color-secondary-500)), repeating-linear-gradient(45deg, var(--color-secondary-500) 25%, var(--color-secondary-300) 25%, var(--color-secondary-300) 75%, var(--color-secondary-500) 75%, var(--color-secondary-500));
+    background-position: 0 0, 0.625rem 0.625rem;
+    background-size: 0.25rem 0.25rem;
+    padding: 0.25rem;
+}

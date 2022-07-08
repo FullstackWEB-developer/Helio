@@ -2130,7 +2130,13 @@
       "save_success": "Successfully updated.",
       "save_error": "Error while updating data, please try again later.",
       "logo_upload_error": "Error while uploading logo, please try again later.",
-      "get_error": "Error while getting data, please try again later."
+      "get_error": "Error while getting data, please try again later.",
+      "returned_to_default_logo": "Current image has been removed, and default image is being used now, You need to save your changes.",
+      "returned_to_current_logo": "New image has been removed.",
+      "uploaded_new_logo": "New image has been uploaded, You need to save your changes.",
+      "warning_info": "There are unsaved chages, are you sure to cancel?",
+      "warning_info_leaving": "There are unsaved chages, are you sure to leave?",
+      "warning": "Warning"
     },
     "email_template_details": {
       "not_found": "Specified template not found.",

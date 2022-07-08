@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useMutation, useQuery } from 'react-query';
 import { addSnackbarMessage } from '@shared/store/snackbar/snackbar.slice';
 import { SnackbarType } from '@components/snackbar/snackbar-type.enum';
@@ -18,6 +18,9 @@ import {
     getPracticeEmailTemplatePreviewFromBranding
 } from "@shared/services/notifications.service";
 import {AxiosError} from "axios";
+import { ConfigurationsPath } from '@app/paths';
+import RouteLeavingGuard from '@components/route-leaving-guard/route-leaving-guard';
+import Confirmation from '@components/confirmation/confirmation';
 
 interface PracticeBrandingInterface {
     primaryColor: string;
@@ -27,20 +30,26 @@ interface PracticeBrandingInterface {
     tertiaryColor: string;
 }
 const PracticeBrandingEdit = () => {
+    const defaultImageName = 'practice-logo.svg';
     const { t } = useTranslation();
     const dispatch = useDispatch();
+    const history = useHistory();
     const { handleSubmit, control, formState, reset } = useForm({ mode: 'onChange' });
-    const [logoPath, setLogoPath] = useState<string>()
+    const [logoPath, setLogoPath] = useState<string>();
+    const [colors, setColors] = useState<PracticeBrandingInterface>();
+    const [warning, setWarning] = useState<boolean>(false);
     const { isFetching, data, refetch } = useQuery<PracticeBranding>(GetPracticeBranding, () => getPracticeBranding(), {
         onSuccess: (data) => {
             setLogoPath(data.logoPath);
-            reset({
+            let defaultColor = {
                 primaryColor: data.primaryColor,
                 hoverColor: data.hoverColor,
                 focusedColor: data.focusedColor,
                 secondaryColor: data.secondaryColor,
                 tertiaryColor: data.tertiaryColor
-            });
+            }
+            setColors(defaultColor);
+            reset(defaultColor);
         },
         onError: () => {
             dispatch(addSnackbarMessage({
@@ -105,8 +114,21 @@ const PracticeBrandingEdit = () => {
         }
     }
 
-    const onRestoreDefaultIcon = () => {
-        setLogoPath(data?.logoPath);
+    const onRestoreDefaultIcon = (isReturnDefault?: boolean) => {
+        if(isReturnDefault) {
+            dispatch(addSnackbarMessage({
+                type: SnackbarType.Info,
+                message: 'configuration.practice_branding.returned_to_default_logo'
+            }));
+            setLogoPath(defaultImageName);
+        }else{
+            dispatch(addSnackbarMessage({
+                type: SnackbarType.Info,
+                message: 'configuration.practice_branding.returned_to_current_logo'
+            }));
+            setLogoPath(data?.logoPath);
+        }
+        
     }
     const onRestoreDefaultData = () => {
         if (data) {
@@ -119,6 +141,10 @@ const PracticeBrandingEdit = () => {
         if (image) {
             uploadLogoMutation.mutate(image, {
                 onSuccess: (response) => {
+                    dispatch(addSnackbarMessage({
+                        type: SnackbarType.Info,
+                        message: 'configuration.practice_branding.uploaded_new_logo'
+                    }));
                     setLogoPath(response.fileName);
                 },
                 onError: () => {
@@ -132,8 +158,21 @@ const PracticeBrandingEdit = () => {
         }
     }
 
+    const updateCurrentColor = (name: string, value: string) => {
+        if(colors){
+            setColors({
+                primaryColor: colors.primaryColor,
+                hoverColor: colors.hoverColor,
+                focusedColor: colors.focusedColor,
+                secondaryColor: colors.secondaryColor,
+                tertiaryColor: colors.tertiaryColor,
+                [name]: value
+            });
+        }
+    }
+
     return (
-        <> {isFetching ? <Spinner fullScreen /> :
+        <div className='practice-branding overflow-auto h-full pr-4'> {isFetching ? <Spinner fullScreen /> :
             <form onSubmit={handleSubmit(onSubmit)} className='px-6 py-6 flex flex-1 flex-col overflow-y-auto body2'>
                 <h5 className='mb-4'> {t('configuration.practice_branding.title')} </h5>
                 <p className='mb-6'>{t('configuration.practice_branding.description')}</p>
@@ -144,9 +183,12 @@ const PracticeBrandingEdit = () => {
                     <SimpleImageUploader
                         buttonText='configuration.practice_branding.logo_picker_button'
                         uploadedImage={handleImageUpload}
-                        onClearImage={() => onRestoreDefaultIcon()}
+                        onClearImage={(isReturnDefault) => onRestoreDefaultIcon(isReturnDefault)}
+                        defaultImageSrc={defaultImageName}
                         initialSrc={data?.logoPath}
                         src={logoPath}
+                        acceptFileFormats={'.png, .svg, .gif'}
+                        isTransparentBackground={true}
                     />
                 </div>
                 <h6 className='mb-3'> {t('configuration.practice_branding.colors_title')} </h6>
@@ -160,6 +202,7 @@ const PracticeBrandingEdit = () => {
                         <ControlledColorPicker
                             control={control}
                             name={'primaryColor'}
+                            onChangeColor={(key: string, color: string) => updateCurrentColor(key, color)}
                         />
                     </div>
                     <div className='flex flex-col'>
@@ -170,6 +213,7 @@ const PracticeBrandingEdit = () => {
                         <ControlledColorPicker
                             control={control}
                             name={'hoverColor'}
+                            onChangeColor={(key: string, color: string) => updateCurrentColor(key, color)}
                         />
                     </div>
                     <div className='flex flex-col'>
@@ -180,6 +224,7 @@ const PracticeBrandingEdit = () => {
                         <ControlledColorPicker
                             control={control}
                             name={'focusedColor'}
+                            onChangeColor={(key: string, color: string) => updateCurrentColor(key, color)}
                         />
                     </div>
                     <div className='flex flex-col'>
@@ -190,6 +235,7 @@ const PracticeBrandingEdit = () => {
                         <ControlledColorPicker
                             control={control}
                             name={'secondaryColor'}
+                            onChangeColor={(key: string, color: string) => updateCurrentColor(key, color)}
                         />
                     </div>
                     <div className='flex flex-col'>
@@ -200,15 +246,14 @@ const PracticeBrandingEdit = () => {
                         <ControlledColorPicker
                             control={control}
                             name={'tertiaryColor'}
+                            onChangeColor={(key: string, color: string) => updateCurrentColor(key, color)}
                         />
                     </div>
                 </div>
 
-                <h6 className='mb-3'> {t('configuration.practice_branding.preview_title')} </h6>
-                <Link to={''}
-                    className='body2-primary mb-2 hover:underline'
-                    target={"_blank"}>{t('configuration.practice_branding.web_form_preview')}</Link>
-                <div className='body2-primary mb-8 hover:underline cursor-pointer'
+                <h5 className='practice-branding-header-bottom-margin subtitle2'> {t('configuration.practice_branding.preview_title')} </h5>
+                <h5 className='practice-branding-subheader-bottom-margin body2-primary cursor-pointer w-max hover:underline' onClick={() => window.open(`${ConfigurationsPath}/web-form-preview?isPreview=true&logoPath=${logoPath}&primaryColor=${colors?.primaryColor.replaceAll('#', '')}&secondaryColor=${colors?.secondaryColor.replaceAll('#', '')}&hoverColor=${colors?.hoverColor.replaceAll('#', '')}&focusedColor=${colors?.focusedColor.replaceAll('#', '')}&tertiaryColor=${colors?.tertiaryColor.replaceAll('#', '')}`, '_blank', 'noopener,noreferrer')}>{t('configuration.practice_branding.web_form_preview')}</h5>
+                <div className='body2-primary practice-branding-subheader2-bottom-margin cursor-pointer w-max hover:underline'
                      onClick={()=> previewEmailTemplate()}
                 >
                     {t('configuration.practice_branding.email_template_preview')}
@@ -218,19 +263,33 @@ const PracticeBrandingEdit = () => {
                     <Button
                         type='submit'
                         buttonType='medium'
-                        disabled={!formState.isValid}
+                        disabled={!formState.isValid || uploadLogoMutation.isLoading}
                         label='common.save'
-                        isLoading={savePracticeBrandingMutation.isLoading || uploadLogoMutation.isLoading}
+                        isLoading={savePracticeBrandingMutation.isLoading }
                     />
                     <Button label='common.cancel'
                         className=' ml-8'
                         buttonType='secondary'
-                        onClick={() => onRestoreDefaultData()}
-                        isLoading={savePracticeBrandingMutation.isLoading || uploadLogoMutation.isLoading} />
+                        onClick={() => formState.isDirty && setWarning(true)}
+                        isLoading={savePracticeBrandingMutation.isLoading} />
+                    <RouteLeavingGuard
+                        when={formState.isDirty && !formState.isSubmitSuccessful}
+                        navigate={path => history.push(path)}
+                        message={'configuration.practice_branding.warning_info_leaving'}
+                        title={'configuration.practice_branding.warning'}
+                    />
+                    <Confirmation
+                            onClose={() => setWarning(false)}
+                            onCancel={() => setWarning(false)}
+                            okButtonLabel={'common.ok'}
+                            onOk={() => {setWarning(false); onRestoreDefaultData()}}
+                            title={'configuration.practice_branding.warning'}
+                            message={'configuration.practice_branding.warning_info'}
+                            isOpen={warning} />
                 </div>
             </form>
         }
-        </>
+        </div>
     )
 }
 export default PracticeBrandingEdit;
