@@ -105,7 +105,7 @@ const FeedDetailItem = ({feed, index}: FeedDetailItemProps) => {
                             {itemDateTime}
                         </span>
                     </div>
-                    {feed.feedText && <p className='pt-3 body2' dangerouslySetInnerHTML={{__html: linkifyHtml(feed.feedText)}}/>}
+                    {feed.feedText && <p className='pt-3 body2 break-all pr-8' dangerouslySetInnerHTML={{__html: linkifyHtml(feed.feedText)}}/>}
                 </div>
             </div>
         </div>
