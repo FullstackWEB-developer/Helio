@@ -54,6 +54,7 @@ const AppointmentScheduleSelect = () => {
     const [departmentLatLng, setDepartmentLatLng] = useState<AppointmentDepartmentModel[]>([]);
     const [isFilterOpen, setFilterOpen] = useState(false);
     const [selectedDate, setSelectedDate] = useState<Date>(appointmentSlotRequest?.startDate ?? dayjs().utc().local().toDate());
+    const [defaultDate, setDefaultDate] = useState<Date>(appointmentSlotRequest?.startDate ?? dayjs().utc().local().toDate());
     const [appointmentSlots, setAppointmentSlots] = useState<AppointmentSlot[]>([]);
     const [displayMaxTryError, setDisplayMaxTryError] = useState<boolean>();
     const tryCount = useRef<number>(0);
@@ -207,9 +208,12 @@ const AppointmentScheduleSelect = () => {
     const isBordered = (slotsDate: string) => {
         return dayjs(slotsDate).isSame(selectedDate);
     }
-    const changeDate = (newStartDate: Date) => {
+    const changeDate = (newStartDate: Date, isUpdateDefaultDate: boolean = true) => {
         setValue('selectedDate', newStartDate);
         setSelectedDate(newStartDate);
+        if(isUpdateDefaultDate){
+            setDefaultDate(newStartDate);
+        }
         setSlotRequest({...slotRequest, startDate: newStartDate, endDate: dayjs(newStartDate).add(7, 'day').toDate()});
         setDisplayMaxTryError(false);
     }
@@ -218,7 +222,9 @@ const AppointmentScheduleSelect = () => {
         if (!event) {
             return;
         }
-        setSlotRequest({...slotRequest, providerId: !!event.value ? [Number(event.value)] : undefined});
+        setSelectedDate(defaultDate);
+        changeDate(defaultDate);
+        setSlotRequest({...slotRequest, startDate: defaultDate, endDate: dayjs(defaultDate).add(7, 'day').toDate(), providerId: !!event.value ? [Number(event.value)] : undefined});
         setDisplayMaxTryError(false);
     }
 
@@ -236,7 +242,7 @@ const AppointmentScheduleSelect = () => {
             const d = (dayjs(selectedDate).day() === 5) ? 3 : 1;
             nextStartDate = dayjs(selectedDate).utc().add(d, 'day').toDate();
         }
-        changeDate(nextStartDate);
+        changeDate(nextStartDate, false);
     };
 
     const previousPage = (isMobile = false) => {
@@ -245,7 +251,7 @@ const AppointmentScheduleSelect = () => {
             const d = (dayjs(selectedDate).day() === 1) ? -3 : -1;
             prevStartDate = dayjs(selectedDate).utc().add(d, 'day').toDate();
         }
-        changeDate(prevStartDate);
+        changeDate(prevStartDate, false);
     };
 
     const onDateChange = (date?: Date) => {
