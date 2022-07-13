@@ -1,33 +1,36 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
-import {Link} from 'react-router-dom';
-import {useSelector} from 'react-redux';
-import {Ticket} from '../models/ticket';
+import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { Ticket } from '../models/ticket';
 import TicketStatus from './ticket-status';
 import TicketAssignee from './ticket-asignee';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import TicketChannelIcon from './ticket-channel-icon';
-import {selectEnumValues, selectLookupValues} from '../store/tickets.selectors';
-import {TicketEnumValue} from '../models/ticket-enum-value.model';
-import {TicketOptionsBase} from '../models/ticket-options-base.model';
-import {TicketLookupValue} from '../models/ticket-lookup-values.model';
-import {TicketsPath} from '@app/paths';
+import { selectEnumValues, selectLookupValues } from '../store/tickets.selectors';
+import { TicketEnumValue } from '../models/ticket-enum-value.model';
+import { TicketOptionsBase } from '../models/ticket-options-base.model';
+import { TicketLookupValue } from '../models/ticket-lookup-values.model';
+import { TicketsPath } from '@app/paths';
 import DueInRelativeTime from './ticket-due-in-relative-time';
 import utils from '@shared/utils/utils';
-import {useTranslation} from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import classnames from 'classnames';
 import TicketDetailRating from './ticket-detail/ticket-detail-rating';
 import TicketListItemActions from './ticket-list-item-actions';
+import Checkbox, { CheckboxCheckEvent } from '@components/checkbox/checkbox';
 import ElipsisTooltipTextbox from '@components/elipsis-tooltip-textbox/elipsis-tooltip-textbox';
 import './ticket-list-item.scss';
 import { TicketStatuses } from '../models/ticket.status.enum';
 interface TicketListItemProps {
-    item: Ticket
+    item: Ticket,
+    isRowSelected: (ticketId: string) => boolean,
+    handleCheckboxChange: (e: CheckboxCheckEvent) => void
 }
 
-const TicketListItem = ({item}: TicketListItemProps) => {
+const TicketListItem = ({ item, isRowSelected, handleCheckboxChange }: TicketListItemProps) => {
     dayjs.extend(relativeTime);
-    const {t} = useTranslation();
+    const { t } = useTranslation();
     const ticketPriorities = useSelector((state => selectEnumValues(state, 'TicketPriority')));
     const ticketTypes = useSelector((state => selectEnumValues(state, 'TicketType')));
     const ticketReasons = useSelector((state) => selectLookupValues(state, 'TicketReason'));
@@ -79,7 +82,21 @@ const TicketListItem = ({item}: TicketListItemProps) => {
         ticketReasons, selectedReason, item?.reason
     ]);
 
+    const handleCheckBoxChange = (e: CheckboxCheckEvent) => {
+        handleCheckboxChange(e);
+    }
+
     return <div className='flex flex-row w-full auto-cols-max body2 border-b hover:bg-gray-100 px-7 items-center h-20 py-3.5 group' onMouseLeave={() => setForceMoreMenuClose(!forceMoreMenuClose)} >
+        <div>
+            <Checkbox
+                checked={isRowSelected(ticketId)}
+                label=''
+                value={ticketId}
+                className='pt-2'
+                name={`${ticketId}-check`}
+                onChange={handleCheckBoxChange}
+            />
+        </div>
         <div className='w-24 flex justify-center'>
             <Link to={getTicketPath()}>
                 <TicketChannelIcon channel={item.channel} />
@@ -93,7 +110,7 @@ const TicketListItem = ({item}: TicketListItemProps) => {
                 </Link>
             </div>
         </div>
-        <div className={classnames('w-2/12 max-w-xs truncate', {'subtitle2': !!item.subject, 'body2': !item.subject})}>
+        <div className={classnames('w-2/12 max-w-xs truncate', { 'subtitle2': !!item.subject, 'body2': !item.subject })}>
             <div className='ml-2'>
                 <Link to={getTicketPath()}>
                     <ElipsisTooltipTextbox hasInlineBlock={false} asSpan={true} value={item.subject ? item.subject : t('tickets.no_subject')} />
@@ -126,13 +143,13 @@ const TicketListItem = ({item}: TicketListItemProps) => {
         </div>
         <div className='w-2/12 max-w-xs truncate'>
             <Link to={getTicketPath()}>
-                <ElipsisTooltipTextbox hasInlineBlock={false} asSpan={true} value={item.type && selectedTicketType ?  selectedTicketType.value : ''}/>
+                <ElipsisTooltipTextbox hasInlineBlock={false} asSpan={true} value={item.type && selectedTicketType ? selectedTicketType.value : ''} />
             </Link>
         </div>
         <div className='w-2/12 flex items-center justify-start'>
             <div className='ml-2'>
                 <Link to={getTicketPath()}>
-                    <ElipsisTooltipTextbox hasInlineBlock={false} asSpan={true} value={item.reason && selectedReason ? selectedReason?.label : ''}/>
+                    <ElipsisTooltipTextbox hasInlineBlock={false} asSpan={true} value={item.reason && selectedReason ? selectedReason?.label : ''} />
                 </Link>
             </div>
         </div>

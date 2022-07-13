@@ -126,6 +126,8 @@
   "tickets": {
     "title": "Tickets",
     "new": "New",
+    "assign": "Assign",
+    "agent": "Agent",
     "export": "Export",
     "channel": "Channel",
     "subject": "Subject",
@@ -147,6 +149,8 @@
     "reason": "Reason",
     "no_subject": "No Subject",
     "assigned_to": "Assigned To",
+    "assign_tickets": "Assign Tickets",
+    "assign_tickets_modal_text": "Select Agent you would like to assign tickets to:",
     "ticket_created": "Ticket {{ticketNumber}} created successfully",
     "ticket_creation_failed": "Ticket creation failed.",
     "search_tag": "Search Tags",
@@ -555,11 +559,12 @@
   "ticket_detail": {
     "ticket_info": "Ticket Info",
     "ticket_assigned": "Ticket assigned successfully",
+    "tickets_assigned": "Tickets assigned successfully",
     "ticket_status_updated": "Ticket status changed successfully",
     "ticket_updated": "Ticket updated successfully",
     "ticket_update_failed": "Ticket update failed",
     "ticket_assign_error": "Ticket assignment failed",
-    "ticket_already_assigned_to_selected_user_error": "This ticket has already been assigned to the selected user",
+    "ticket_already_assigned_to_selected_user_error": "Ticket has already been assigned to the selected user",
     "ticket_status_update_error": "Ticket status change failed",
     "internal_note_title": "Internal Note",
     "send_sms_title": "Send SMS",
@@ -2190,8 +2195,8 @@
       "logo_description": "Please upload your logo image in PNG or GIF file format (72 dpi resolution). Maximum logo image height is 40 px. \nUploading GIF or PNG file with transparency will achieve best results with logo blending seamlessly with header background.",
       "header_logo_label": "Header Logo Image:",
       "footer_logo_label": "Footer Logo Image:",
-      "customize_color_title":"Customizing Template Colors",
-      "customize_color_description":"To customize your brand colors please visit <0>Practice Brand screen</0>.",
+      "customize_color_title": "Customizing Template Colors",
+      "customize_color_description": "To customize your brand colors please visit <0>Practice Brand screen</0>.",
       "reset_to_default_button": "Reset To Default Template",
       "email_footer_disclaimer": "Email Footer Disclaimer Text",
       "button_preview": "Preview",
@@ -2199,7 +2204,7 @@
       "save_error": "Error while updating data, please try again later.",
       "logo_upload_error": "Error while uploading logo, please try again later.",
       "get_error": "Error while getting data, please try again later.",
-      "logo_picker_button":"Choose File"
+      "logo_picker_button": "Choose File"
     }
   },
   "ticket_department": {

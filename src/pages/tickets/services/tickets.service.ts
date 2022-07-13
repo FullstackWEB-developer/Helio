@@ -132,10 +132,24 @@ export interface setAssigneeProps {
     assignee: string;
 }
 
+export interface setMultipleTicketAssigneeProps {
+    ticketIdList: string[];
+    assignee: string;
+}
+
 export const setAssignee = async ({ticketId, assignee}: setAssigneeProps): Promise<Ticket> => {
     const url = `${ticketsBaseUrl}/${ticketId}/assignee`;
     const result = await Api.put(url, {
         id: ticketId,
+        assignee: assignee
+    });
+    return result.data;
+}
+
+export const setMultipleTicketsAssignee = async ({ticketIdList, assignee}: setMultipleTicketAssigneeProps): Promise<Ticket[]> => {
+    const url = `${ticketsBaseUrl}/assignee`;
+    const result = await Api.put(url, {
+        ticketIdList: ticketIdList,
         assignee: assignee
     });
     return result.data;
