@@ -66,3 +66,9 @@ body {
 }
 
 * {-webkit-font-smoothing: antialiased;}
+
+@for $i from 1 through 24 {
+    .w-#{$i}\/24 {
+        width: 100% / (24 / $i)
+    }
+}

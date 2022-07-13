@@ -35,21 +35,20 @@ const TicketListContainer = ({ dataSource, isRowSelected, handleCheckboxChange }
         <div className='overflow-scroll'>
             <div className="ticket-list-container">
                 <div className='flex flex-row items-center content-center w-full h-12 py-4 bg-gray-100 auto-cols-min px-7 body2-medium'>
-                    <TicketListHeaderCell className='w-10'></TicketListHeaderCell>
-                    <TicketListHeaderCell className='w-24'>{t('tickets.channel')}</TicketListHeaderCell>
+                    <TicketListHeaderCell className='w-1/24'></TicketListHeaderCell>
+                    <TicketListHeaderCell className='w-1/24 mr-2'>{t('tickets.channel')}</TicketListHeaderCell>
                     <TicketListHeaderCell
-                        className='w-2/12 flex justify-center'
+                        className='w-2/24 mr-2 flex justify-center'
                         field={'Id'}
                         isSortable
                         sortDirection={getSortDirection(ticketFilter.sorts, 'Id')}
                         sortOrder={getSortOrder(ticketFilter.sorts, 'Id')}
                         onClick={applySort}
-                    >
-                        <div className='ml-2'>{t('tickets.id')}</div>
+                    >{t('tickets.id')}
                     </TicketListHeaderCell>
-                    <TicketListHeaderCell className='w-2/12'>{t('tickets.subject')}</TicketListHeaderCell>
+                    <TicketListHeaderCell className='w-2/24 mr-2'>{t('tickets.subject')}</TicketListHeaderCell>
                     <TicketListHeaderCell
-                        className='w-1/12'
+                        className='w-1/24 mr-2'
                         field={'DueDate'}
                         isSortable
                         sortDirection={getSortDirection(ticketFilter.sorts, 'DueDate')}
@@ -59,31 +58,31 @@ const TicketListContainer = ({ dataSource, isRowSelected, handleCheckboxChange }
                         {t('tickets.due_in')}
                     </TicketListHeaderCell>
                     <TicketListHeaderCell
-                        className='w-2/12'
+                        className='w-2/24 mr-2'
                         field={'CreatedOn'}
                         isSortable
                         sortDirection={getSortDirection(ticketFilter.sorts, 'CreatedOn')}
                         sortOrder={getSortOrder(ticketFilter.sorts, 'CreatedOn')}
                         onClick={applySort}
                     >
-                        <div className='ml-2'>{t('tickets.created_on')}</div>
+                        <div>{t('tickets.created_on')}</div>
                     </TicketListHeaderCell>
                     <TicketListHeaderCell
-                        className='w-2/12'
+                        className='w-3/24 mr-2'
                         field={'Status'}
                         isSortable
                         sortDirection={getSortDirection(ticketFilter.sorts, 'Status')}
                         sortOrder={getSortOrder(ticketFilter.sorts, 'Status')}
                         onClick={applySort}
                     >
-                        <div className='ml-2'>{t('tickets.status')}</div>
+                        <div>{t('tickets.status')}</div>
                     </TicketListHeaderCell>
-                    <TicketListHeaderCell className='w-2/12 flex items-center justify-start'><div className='ml-2'>{t('tickets.priority_label')}</div></TicketListHeaderCell>
-                    <TicketListHeaderCell className='w-2/12 max-w-xs truncate'>{t('tickets.type')}</TicketListHeaderCell>
-                    <TicketListHeaderCell className='w-2/12 flex justify-start'><div className='ml-2'>{t('tickets.reason')}</div></TicketListHeaderCell>
-                    <TicketListHeaderCell className='w-3/12'>{t('tickets.assigned_to')}</TicketListHeaderCell>
-                    <TicketListHeaderCell className='w-1/12 flex justify-center'>{t('tickets.rating')}</TicketListHeaderCell>
-                    <TicketListHeaderCell className='w-1/12' />
+                    <TicketListHeaderCell className='w-2/24 mr-2 flex items-center justify-start'>{t('tickets.priority_label')}</TicketListHeaderCell>
+                    <TicketListHeaderCell className='w-2/24 mr-2 truncate'>{t('tickets.type')}</TicketListHeaderCell>
+                    <TicketListHeaderCell className='w-2/24 mr-2 flex justify-start'>{t('tickets.reason')}</TicketListHeaderCell>
+                    <TicketListHeaderCell className='w-3/24 mr-2'>{t('tickets.assigned_to')}</TicketListHeaderCell>
+                    <TicketListHeaderCell className='w-1/24 mr-2 flex justify-center'>{t('tickets.rating')}</TicketListHeaderCell>
+                    <TicketListHeaderCell className='w-1/24' />
                 </div>
                 {dataSource.map(item => <TicketListItem key={item.id} item={item} isRowSelected={isRowSelected} handleCheckboxChange={handleCheckboxChange} />)}
             </div>
