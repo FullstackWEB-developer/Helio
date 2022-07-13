@@ -388,7 +388,7 @@
       "no_last_appointment": "There is no last appointment",
       "upcoming_appointment": "UPCOMING APPOINTMENT",
       "upcoming_appointments": "UPCOMING APPOINTMENTS",
-      "recent_patient_cases": "Patient Cases",
+      "recent_patient_cases": "EMR Patient Cases",
       "no_patient_cases": "There is no case for this patient.",
       "apt_number": "Apt. #",
       "city": "City",
@@ -438,7 +438,7 @@
       "eligible": "Eligible"
     },
     "clinical": {
-      "recent_patient_cases": "Patient Cases",
+      "recent_patient_cases": "EMR Patient Cases",
       "date": "date",
       "case_description": "CASE DESCRIPTION",
       "originated_by": "ORIGINATED BY",
@@ -462,7 +462,7 @@
         "description": "Description"
       },
       "cases": {
-        "title": "Patient Cases",
+        "title": "EMR Patient Cases",
         "date": "Date",
         "description": "Description",
         "source": "Source"
@@ -548,7 +548,7 @@
     "create": "Create Ticket",
     "title": "New Ticket",
     "patient_id_not_found": "Patient Id not found.",
-    "patient_case_id_not_found": "Patient Case not found.",
+    "patient_case_id_not_found": "EMR Patient Case not found.",
     "error_getting_contacts": "Error getting contacts information.",
     "suggestion_placeholder": "Type three or more characters to filter.",
     "patient_label": "Patient:"
@@ -657,7 +657,7 @@
       "assigned_to": "Assigned To",
       "patient_info": "Patient Info",
       "patient_id": "Patient ID",
-      "patient_case_number": "Patient Case",
+      "patient_case_number": "EMR Patient Case Number",
       "appointments": "Appointments",
       "last_appointment": "Last Appointment",
       "upcoming_appointments": "Upcoming Appointments",

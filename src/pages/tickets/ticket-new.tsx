@@ -180,7 +180,7 @@ const TicketNew = () => {
     }
 
     const onSubmit = async (formData: any) => {
-        if (!formData) {
+        if (!formData || isPatientCaseIdLoading || isPatientIdLoading) {
             return;
         }
 
@@ -647,7 +647,7 @@ const TicketNew = () => {
                         />
                     </div>
                     <div className='flex justify-end pt-8'>
-                        <Button isLoading={createTicketMutation.isLoading} disabled={!isValid || !stateError}
+                        <Button isLoading={createTicketMutation.isLoading || isPatientCaseIdLoading || isPatientIdLoading} disabled={!isValid || !stateError}
                             data-test-id='ticket-new-create-button' type={'submit'}
                             label={'ticket_new.create'} />
                     </div>
