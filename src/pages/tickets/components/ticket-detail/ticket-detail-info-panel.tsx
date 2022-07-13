@@ -79,7 +79,7 @@ const TicketDetailInfoPanel = ({ticket, patient, contact}: TicketDetailInfoPanel
             patientCaseNumber: ticket.patientCaseNumber,
             storedDueDate: ticket.dueDate,
             dueDate: ticket.dueDate ? dayjs(ticket.dueDate).toDate() : undefined,
-            dueTime: ticket.dueDate ? utils.formatUtcDate(ticket.dueDate, 'HH:mm') : undefined,
+            dueTime: ticket.dueDate ? utils.formatUtcDate(ticket.dueDate, 'hh:mm A') : undefined,
             isDeleted: ticket.isDeleted
         };
         const initialTicketHash = hash.MD5(ticketUpdateModel);
