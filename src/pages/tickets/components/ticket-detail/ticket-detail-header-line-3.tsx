@@ -30,7 +30,7 @@ import {BlockAccessModel, BlockAccessType} from '@pages/blacklists/models/blackl
 import utils from '@shared/utils/utils';
 import {SnackbarPosition} from '@components/snackbar/snackbar-position.enum';
 import {Phone} from '@pages/tickets/models/phone.model';
-import { ContactPreference } from '@pages/patients/models/contact-preference.enum';
+import {ContactPreference} from '@pages/patients/models/contact-preference.enum';
 
 export interface TicketDetailHeaderLine3Props {
     ticket: Ticket,
@@ -96,9 +96,9 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
             return 'mobile';
         } else if (selectedPhoneToCall === PhoneType.Home) {
             return 'home';
-        }  else if (selectedPhoneToCall === PhoneType.Work) {
+        } else if (selectedPhoneToCall === PhoneType.Work) {
             return 'work';
-        }   else if (selectedPhoneToCall === PhoneType.Callback) {
+        } else if (selectedPhoneToCall === PhoneType.Callback) {
             return 'callback';
         } else if (patient?.mobilePhone || contact?.mobilePhone || ticket.originationNumber) {
             return 'mobile';
@@ -115,22 +115,22 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
         setSelectedPhoneToCall(type);
         setDisplayPhoneDropdown(false);
         let phoneNumber = '';
-        if(type === PhoneType.Mobile) {
+        if (type === PhoneType.Mobile) {
             if (patient) {
                 phoneNumber = patient.mobilePhone;
             }
             else if (contact) {
                 phoneNumber = contact.mobilePhone;
             }
-        } else if(type === PhoneType.Home && !!patient) {
+        } else if (type === PhoneType.Home && !!patient) {
             phoneNumber = patient.homePhone;
-        } else  if(type === PhoneType.Work && !!contact) {
+        } else if (type === PhoneType.Work && !!contact) {
             phoneNumber = contact.workMainPhone;
         } else if (type === PhoneType.Callback && ticket.callbackPhoneNumber) {
-             phoneNumber = ticket.callbackPhoneNumber;
-         }else if (ticket.originationNumber) {
-             phoneNumber = ticket.originationNumber;
-         }
+            phoneNumber = ticket.callbackPhoneNumber;
+        } else if (ticket.originationNumber) {
+            phoneNumber = ticket.originationNumber;
+        }
         if (window.CCP.agent) {
             const endpoint = connect.Endpoint.byPhoneNumber(phoneNumber);
             window.CCP.agent.connect(endpoint, {
@@ -221,7 +221,7 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
         if (patient) {
             if (patient.contactPreference === ContactPreference.MOBILEPHONE && !!patient.mobilePhone) {
                 selectedPhoneType = PhoneType.Mobile;
-            } else if(patient.contactPreference === ContactPreference.HOMEPHONE && !!patient.mobilePhone) {
+            } else if (patient.contactPreference === ContactPreference.HOMEPHONE && !!patient.mobilePhone) {
                 selectedPhoneType = PhoneType.Home;
             } else if (patient.mobilePhone) {
                 selectedPhoneType = PhoneType.Mobile;
@@ -265,9 +265,9 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
                 } as DropdownItemModel);
             }
         } else if (ticket.originationNumber && ticket.originationNumber.length > 0) {
-            selectedPhoneType =PhoneType.Mobile;
+            selectedPhoneType = PhoneType.Mobile;
         }
-        if(!!ticket.callbackPhoneNumber) {
+        if (!!ticket.callbackPhoneNumber) {
             items.push({
                 label: 'ticket_detail.header.call_callback',
                 value: ticket.callbackPhoneNumber,
@@ -321,6 +321,12 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
                     phoneNumber: patient.homePhone
                 }
             );
+        }
+        if (patient?.workPhone) {
+            phones.push({
+                phoneType: t('ticket_detail.header.block_user.work_phone'),
+                phoneNumber: patient.workPhone
+            })
         }
         if (contact?.mobilePhone) {
             phones.push(
@@ -408,7 +414,13 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
         }
 
         if (formData.block_phones?.checked) {
-            getPhones().forEach(phone => {
+            const phones = getPhones()
+                .filter((value, index, self) =>
+                    index === self.findIndex((phone) => (
+                        phone.phoneNumber === value.phoneNumber
+                    )));
+            
+            phones.forEach(phone => {
                 if (phone && phone.phoneNumber) {
                     createBlockUserMutation.mutate({
                         isActive: true,
@@ -443,16 +455,16 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
         }
         return checkBoxCounter > 1;
     }
-    const [oneOfTheBlockOptionsIsChecked, setOneOfTheBlockOptionsIsChecked]= useState<boolean>(false);
+    const [oneOfTheBlockOptionsIsChecked, setOneOfTheBlockOptionsIsChecked] = useState<boolean>(false);
     const isBlockUserDisabled = () => {
         return !oneOfTheBlockOptionsIsChecked;
     }
     const checkboxStatusChange = () => {
-        if(getValues('block_ip')?.checked ||
+        if (getValues('block_ip')?.checked ||
             getValues('block_email')?.checked ||
-            getValues('block_phones')?.checked){
+            getValues('block_phones')?.checked) {
             setOneOfTheBlockOptionsIsChecked(true);
-        }else {
+        } else {
             setOneOfTheBlockOptionsIsChecked(false);
         }
         if ((ticket.ipAddress && !getValues('block_ip')?.checked) || (getEmails().length > 0 && !getValues('block_email')?.checked) || (getPhones().length > 0 && !getValues('block_phones')?.checked)) {
@@ -598,7 +610,7 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
                                 <div className='body2 col-span-2'>
                                     {
                                         getPhones().map(phone => {
-                                            return <div className='pb-2.5' key={phone.phoneNumber}>{
+                                            return <div className='pb-2.5' key={`${phone.phoneType}-${phone.phoneNumber}`}>{
                                                 phone && phone.phoneNumber && `${phone.phoneType} ${utils.formatPhone(phone.phoneNumber)}`
                                             }</div>
                                         })
@@ -634,6 +646,7 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
                             <Button
                                 type='submit'
                                 buttonType='small'
+                                isLoading={createBlockUserMutation.isLoading}
                                 label={t('ticket_detail.header.block_user.block_user_btn')}
                                 className='ml-6 mr-2'
                                 disabled={isBlockUserDisabled()}
