@@ -51,7 +51,7 @@ const EditAppointmentType = () => {
         }
     ];
 
-    const providerOptions = useMemo(() => utils.parseOptions(providers?.sort((a, b) => a.firstName.localeCompare(b.firstName)),
+    const providerOptions = useMemo(() => utils.parseOptions([...providers]?.sort((a, b) => a.firstName.localeCompare(b.firstName)),
         item => utils.stringJoin(' ', item.firstName, item.lastName),
         item => item.id.toString(),
         _ => '',
