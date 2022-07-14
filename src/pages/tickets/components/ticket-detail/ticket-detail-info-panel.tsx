@@ -78,7 +78,7 @@ const TicketDetailInfoPanel = ({ticket, patient, contact}: TicketDetailInfoPanel
             callbackPhoneNumber: ticket.callbackPhoneNumber ?? '',
             patientCaseNumber: ticket.patientCaseNumber,
             storedDueDate: ticket.dueDate,
-            dueDate: ticket.dueDate ? dayjs(ticket.dueDate).toDate() : undefined,
+            dueDate: ticket.dueDate ? dayjs.utc(ticket.dueDate).toDate() : undefined,
             dueTime: ticket.dueDate ? utils.formatUtcDate(ticket.dueDate, 'hh:mm A') : undefined,
             isDeleted: ticket.isDeleted
         };
