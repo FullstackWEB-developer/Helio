@@ -29,14 +29,14 @@ const AppointmentType = () => {
         columns: [
             {
                 title: 'configuration.appointment_type_list.column_names.ehr_emr_appointment_id',
-                field: 'id',
+                field: 'nameOnEmr',
                 widthClass: 'w-1/3',
-                rowClassname: 'subtitle2',
-                render: (id: string, row: AppointmentTypeSummary) => {
+                rowClassname: 'body2',
+                render: (nameOnEmr: string, row: AppointmentTypeSummary) => {
                     if(row.existsOnEmr)
                         return (<div className='flex items-center h-full'>
-                            <div className={classnames('overflow-hidden overflow-ellipsis ellipsis-row', {'exists-on-emr': !row.existsOnEmr})}>
-                                {id}
+                            <div className={classnames('overflow-hidden overflow-ellipsis ellipsis-row body2', {'exists-on-emr': !row.existsOnEmr})}>
+                                {nameOnEmr ? nameOnEmr : "-"}
                             </div>
                         </div>)
                     else
@@ -52,8 +52,8 @@ const AppointmentType = () => {
                                     </div>
                                 </ToolTipIcon>
                                 <div className='flex items-center ml-3 h-full'>
-                                    <div className={classnames('overflow-hidden overflow-ellipsis ellipsis-row', {'exists-on-emr': !row.existsOnEmr})}>
-                                        {id}
+                                    <div className={classnames('overflow-hidden overflow-ellipsis ellipsis-row body2', {'exists-on-emr': !row.existsOnEmr})}>
+                                        {nameOnEmr ? nameOnEmr : "-"}
                                     </div>
                                 </div>
                             </div>
@@ -64,32 +64,32 @@ const AppointmentType = () => {
                 title: 'configuration.appointment_type_list.column_names.helio_appointment_name',
                 field: 'name',
                 widthClass: 'w-1/3',
-                rowClassname: 'subtitle2',
+                rowClassname: 'body2',
                 render: (name: string, row: AppointmentTypeSummary) => {
                     if(row.isMapped)
                         return (<span className='flex items-center h-full'>
-                            <div className={classnames('overflow-hidden overflow-ellipsis ellipsis-row', {'exists-on-emr': !row.existsOnEmr})}>
+                            <div className={classnames('overflow-hidden overflow-ellipsis ellipsis-row body2', {'exists-on-emr': !row.existsOnEmr})}>
                                 {name}
                             </div>
                         </span>)
                     else
-                        return (<span className={classnames('flex items-center h-full not-available', {'exists-on-emr': !row.existsOnEmr})}>{t('configuration.appointment_type_list.not_available')}</span>)
+                        return (<span className={classnames('flex items-center h-full not-available body2', {'exists-on-emr': !row.existsOnEmr})}>{t('configuration.appointment_type_list.not_available')}</span>)
                 }
             },
             {
                 title: 'configuration.appointment_type_list.column_names.description',
                 field: 'description',
                 widthClass: 'w-1/3',
-                rowClassname: 'subtitle2',
+                rowClassname: 'body2',
                 render: (description: string, row: AppointmentTypeSummary) => {
                     if(row.isMapped)
                         return (<span className='flex items-center h-full'>
-                            <div className={classnames('overflow-hidden overflow-ellipsis ellipsis-row', {'exists-on-emr': !row.existsOnEmr})}>
+                            <div className={classnames('overflow-hidden overflow-ellipsis ellipsis-row body2', {'exists-on-emr': !row.existsOnEmr})}>
                                 {description}
                             </div>
                         </span>)
                     else
-                        return (<span className={classnames('flex items-center h-full not-available', {'exists-on-emr': !row.existsOnEmr})}>{t('configuration.appointment_type_list.not_available')}</span>)
+                        return (<span className={classnames('flex items-center h-full not-available body2', {'exists-on-emr': !row.existsOnEmr})}>{t('configuration.appointment_type_list.not_available')}</span>)
                 }
             },
             {
