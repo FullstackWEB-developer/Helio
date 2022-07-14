@@ -154,6 +154,10 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({
         }
     }
     const elipsisTextboxWidthStyle = {'maxWidth': !!dropdownIcon ? 'calc(100% - 2.75rem)' : '100%'};
+    const inputMaskClassname = classnames(' pt-6 body2 h-14 flex-shrink flex-grow flex-auto leading-normal w-px flex-1 input-date-mask', {
+        'pl-7' : !!props.prefix,
+        'pl-4' : !props.prefix
+    })
     let component =
         props.applyTruncating && props.disabled ?
             <div className='flex pl-4 pt-6 h-14' style={elipsisTextboxWidthStyle}>
@@ -167,7 +171,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({
                 onFocus={onInputFocus}
                 onBlur={onBlur}
                 onChange={onChange}
-                className={`pl-4 pt-6 body2 h-14 flex-shrink flex-grow flex-auto leading-normal w-px flex-1 input-date-mask`}
+                className={inputMaskClassname}
                 placeholder=''
                 value={props.value}
                 disabled={props.disabled || isLoading}
@@ -185,7 +189,6 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({
             disabled={props.disabled || isLoading}
         />
     }
-
     return (
         <div className={classnames("flex flex-col h-20 input-group", containerClassName)}>
             <div className={`input-group-container flex flex-wrap items-stretch w-full relative ${props.error ? 'input-error' : ''} ` + props.className}>
@@ -194,6 +197,11 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({
                     className={`absolute truncate ${props.required ? 'required' : ''} ${isFocused || props.value ? 'body3 label-small' : `body2${props.disabled ? '-medium' : ''}`} ${props.error ? 'text-danger' : ''}`}>
                     {t(label || placeholder || '')}
                 </label>
+                {props.prefix && <div className={`absolute pt-${!label ? '4' : '6'}  left-4 body2-medium`}>
+                    {
+                        props.prefix
+                    }
+                </div>}
                 {dropdownIcon && (!isFocused || !props.value) && <div className={`absolute pt-${!label ? '3' : '4'} right-4 ${dropdownIconClickHandler ? 'cursor-pointer' : ''}`}>
                     {
                         <SvgIcon type={dropdownIcon} onClick={dropdownIconClickHandler} fillClass={dropdownIconFill ?? 'select-arrow-fill'} />

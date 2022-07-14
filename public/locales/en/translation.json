@@ -15,6 +15,7 @@
     "cancel": "Cancel",
     "close": "Close",
     "any": "Any",
+    "multiple": "Multiple",
     "not_available": "N/A",
     "all": "All",
     "please_select": " Please Select",
@@ -1923,7 +1924,8 @@
       "created_by": "Created By",
       "created_date": "Created Date:",
       "modified_by": "Modified By:",
-      "modified_date": "Modified Date:", 
+      "modified_date": "Modified Date:",
+      "template_body_character": "{{currentLength}} characters",
       "update_error": "Updating of appointment type failed. Please try again.",
       "update_success": "Appointment type updated successfully.",
       "error_fetching": "Fetching appointment type details failed. Please try again.",
@@ -1933,7 +1935,8 @@
       "tooltip_reschedule_timeframe": "Enter number of days allowed to reschedule before the appointment day.\n<1>(i.e. patient can reschedule up to 2 days before the appointment time)</1>",
       "tooltip_cancelation_timeframe": "Enter number of days allowed to cancel before the appointment day.\n<1>(i.e. patient can cancel up to 2 days before the appointment time)</1>",
       "tooltip_selected_providers": "Select all applicable providers for this appointment type.",
-      "tooltip_appointment_instructions": "Enter any specific instructions for this appointment type to be shared with patient. \n<1>(i.e. arrival timing, parking, forms to be filled out etc.)</1>"
+      "tooltip_appointment_instructions": "Enter any specific instructions for this appointment type to be shared with patient. \n<1>(i.e. arrival timing, parking, forms to be filled out etc.)</1>",
+      "selected_providers": "Selected Providers"
     },
     "cancellation_reason": {
       "title": "Appointment Cancelation Settings",

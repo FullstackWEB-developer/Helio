@@ -2,6 +2,8 @@ import {useTranslation} from 'react-i18next';
 import {Option} from '@components/option/option';
 import classnames from 'classnames';
 import './select-cell.scss';
+import Checkbox from '@components/checkbox/checkbox';
+import {useState} from 'react';
 
 export interface SelectCellProps {
     item: Option,
@@ -11,15 +13,17 @@ export interface SelectCellProps {
     className?: string,
     changeCursorValueOnHover?: () => void;
     truncateAssistiveText?: boolean;
+    isMultiple?: boolean;
 }
 
-const SelectCell = ({item, isSelected, onClick, disabled, ...props}: SelectCellProps) => {
+const SelectCell = ({item, isSelected, onClick, disabled, isMultiple = false, ...props}: SelectCellProps) => {
 
     const {t} = useTranslation();
+    const [isChecked, setIsChecked] = useState(isSelected);
 
     const calculateCss = (): string => {
         let cssClass = ''
-        if (isSelected) {
+        if (isSelected && !isMultiple) {
             cssClass = cssClass + ' body2-white ';
         }
         else {
@@ -27,11 +31,14 @@ const SelectCell = ({item, isSelected, onClick, disabled, ...props}: SelectCellP
         }
         return cssClass;
     }
-    const bgCssClass = isSelected ? ' is-selected ' : ' cursor-pointer '
+    const bgCssClass = isSelected && !isMultiple ? ' is-selected ' : ' cursor-pointer '
 
     const cellClicked = () => {
         if (onClick) {
             onClick(item);
+        }
+        if (isMultiple) {
+            setIsChecked(!isChecked);
         }
     }
 
@@ -41,7 +48,9 @@ const SelectCell = ({item, isSelected, onClick, disabled, ...props}: SelectCellP
         }
     }
 
-    if (disabled) return null;
+    if (disabled) {
+        return null;
+    }
 
     const assistiveTextCss = classnames('pl-4 body3-small assistive-text', {
         'select-cell-assistive-text-line-clamped': props.truncateAssistiveText
@@ -50,6 +59,7 @@ const SelectCell = ({item, isSelected, onClick, disabled, ...props}: SelectCellP
     return (
         <div onClick={() => cellClicked()} onMouseDown={(e) => {e.preventDefault()}} onMouseOver={() => handleMouseOver()}
             className={`w-full select-cell justify-between flex items-center ${calculateCss()} ${bgCssClass} ${props.className}`}>
+            {isMultiple && <Checkbox className='flex items-center justify-self-center pl-4' name={item.value} label='' checked={isChecked}/>}
             <div className={classnames('flex flex-col justify-center w-full', {'py-2': !!item.assistiveText})} data-test-id='select-cell-icon-content' >
                 <div className='flex items-center pl-4' data-test-id={`select-cell-text-${item.label}`}>{t(item.label)}</div>
                 {item.assistiveText &&

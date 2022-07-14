@@ -1,7 +1,7 @@
 import { ConfigurationsPath } from '@app/paths';
 import { Trans, useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
-import { useState } from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {useEffect, useMemo, useState} from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from 'react-query';
 import { Icon } from '@components/svg-icon';
@@ -21,6 +21,11 @@ import { getAppointmentTypeById, saveAppointmentType } from '@pages/appointments
 import dayjs from 'dayjs';
 import { PatientAppointmentType } from '@shared/models/patient-appointment-type.enum'
 import './edit-appointment-type.scss';
+import {selectProviderList} from '@shared/store/lookups/lookups.selectors';
+import {getProviders} from '@shared/services/lookups.service';
+import {Provider} from '@shared/models';
+import Select from '@components/select/select';
+import utils from '@shared/utils/utils';
 
 const EditAppointmentType = () => {
     const { t } = useTranslation();
@@ -33,7 +38,8 @@ const EditAppointmentType = () => {
     const [isCancelable, setIsCancelable] = useState<boolean>(false);
     const [IsReschedulable, setIsReschedulable] = useState<boolean>(false);
     const [patientType, setPatientType] = useState<number>(1);
-
+    const providers = useSelector(selectProviderList);
+    const [selectedProviders, setSelectedProviders] = useState<Provider[]>([]);
     const YesNoOptions: Option[] = [
         {
             value: 'true',
@@ -45,6 +51,13 @@ const EditAppointmentType = () => {
         }
     ];
 
+    const providerOptions = useMemo(() => utils.parseOptions(providers?.sort((a, b) => a.firstName.localeCompare(b.firstName)),
+        item => utils.stringJoin(' ', item.firstName, item.lastName),
+        item => item.id.toString(),
+        _ => '',
+        item => item
+    ), [providers])
+
     const PatientTypeOptions: Option[] = [
         { value: String(PatientAppointmentType.Established), label: t('configuration.appointment_type_details.established_patient') },
         { value: String(PatientAppointmentType.New), label: t('configuration.appointment_type_details.new_patient') },
@@ -55,6 +68,10 @@ const EditAppointmentType = () => {
     const onCancelableChange = () => { setIsCancelable(!isCancelable) }
     const onIsReschedulableChange = () => setIsReschedulable(!IsReschedulable);
     const onSelectPatientTypeChange = (value: Option | undefined) => setPatientType(value?.value ? +value?.value : 0);
+
+    useEffect(() => {
+        dispatch(getProviders());
+    }, [dispatch]);
 
     const updateAppointmentTypeMutation = useMutation(saveAppointmentType, {
         onSuccess: (_) => {
@@ -71,6 +88,7 @@ const EditAppointmentType = () => {
             }));
         }
     });
+
     const onSubmit = async (formData: any) => {
         if (!formData) {
             return;
@@ -82,12 +100,12 @@ const EditAppointmentType = () => {
                 name: formData.name,
                 description: formData.description,
                 cancelable: isCancelable,
-                cancelationTimeFrame: formData.cancelationTimeFrame,
-                cancelationFee: formData.cancelationFee,
+                cancelationTimeFrame: formData.cancelationTimeFrame ? parseInt(formData.cancelationTimeFrame) : 0,
+                cancelationFee: formData.cancelationFee ? parseInt(formData.cancelationFee) : 0,
                 reschedulable: IsReschedulable,
-                rescheduleTimeFrame: formData.rescheduleTimeFrame,
+                rescheduleTimeFrame: formData.rescheduleTimeFrame ? parseInt(formData.rescheduleTimeFrame) : 0,
                 selectableByPatient: selectableByPatient,
-                selectedProviders: appointmentType?.selectedProviders,
+                selectedProviders: selectedProviders.map(a => a.id),
                 patientType: patientType,
                 createdByName: appointmentType.createdByName,
                 createdOn: appointmentType.createdOn
@@ -108,11 +126,25 @@ const EditAppointmentType = () => {
 
             onError: () => {
                 dispatch(addSnackbarMessage({
-                    message: 'configuration.appointment_type_details.error_fetching"',
+                    message: 'configuration.appointment_type_details.error_fetching',
                     type: SnackbarType.Error
                 }))
             }
         });
+
+    useEffect(() => {
+        if (!appointmentType || !providers) {
+            return;
+        }
+        const apptProviders: Provider[] = [];
+        appointmentType.selectedProviders.forEach(item => {
+            const foundProvider = providers.find(a => a.id == item);
+            if (foundProvider) {
+                apptProviders.push(foundProvider)
+            }
+        });
+        setSelectedProviders(apptProviders);
+    }, [appointmentType, providers]);
 
     const { handleSubmit, control, formState: { isValid } } = useForm({ mode: 'onChange' });
 
@@ -137,6 +169,15 @@ const EditAppointmentType = () => {
                 </Trans>
             </div>
         </ToolTipIcon>
+    }
+
+    const providerSelected = (provider: Provider) => {
+        let index = selectedProviders.indexOf(provider);
+        if (index < 0) {
+            selectedProviders.push(provider);
+        } else {
+            selectedProviders.splice(index, 1);
+        }
     }
 
 
@@ -168,15 +209,18 @@ const EditAppointmentType = () => {
                         <ControlledTextArea name='description'
                             control={control}
                             defaultValue={appointmentType.description}
-                            className='body2 w-full p-4'
+                            className='body2 w-full'
                             resizable={false}
+                            minRows={2}
+                            rows={2}
+                            maxRows={2}
                             onChange={updateLength}
                         />
-                        <span className='body2 flex justify-end'>{t('configuration.sms_templates.edit.template_body_character', { currentLength: currentLength })}</span>
+                        <span className='body2 flex justify-end'>{t('configuration.appointment_type_details.template_body_character', { currentLength: currentLength })}</span>
                     </div>
                     <div className='flex flex-row mt-10'>
                         <div className='flex flex-col w-1/5'>
-                            <div className='flex flex-row body2'>{t('configuration.appointment_type_details.selectable_by_patient')} {displayToolTip(t('configuration.appointment_type_details.tooltip_selectable_by_patient'))}</div>
+                            <div className='flex flex-row body2 space-x-2'><span>{t('configuration.appointment_type_details.selectable_by_patient')}</span> {displayToolTip(t('configuration.appointment_type_details.tooltip_selectable_by_patient'))}</div>
                             <Radio name='selectableByPatient' className='flex space-x-8 mt-2' defaultValue={String(appointmentType.selectableByPatient)} items={YesNoOptions} onChange={onSelectableByPatientChange} />
                         </div>
                         <div className='w-1/4'>
@@ -218,13 +262,14 @@ const EditAppointmentType = () => {
                             <Radio name='cancelable' className='flex space-x-8 mt-2' defaultValue={String(appointmentType.cancelable)} items={YesNoOptions} onChange={onCancelableChange} />
                         </div>
                         <div className="flex flex-row items-center mr-40">
-                            <div className='w-44'>
+                            <div className='w-48'>
                                 <ControlledInput name='cancelationTimeFrame'
                                     control={control}
                                     defaultValue={appointmentType.cancelationTimeFrame ?? null}
                                     label={'configuration.appointment_type_details.cancelation_timeframe'}
                                     assistiveText={'configuration.appointment_type_details.hours'}
                                     required={isCancelable}
+                                    disabled={!isCancelable}
                                     type='timeframe'
                                 />
                             </div>
@@ -237,10 +282,26 @@ const EditAppointmentType = () => {
                                 label={'configuration.appointment_type_details.cancelation_fee'}
                                 required={isCancelable}
                                 type='timeframe'
+                                disabled={!isCancelable}
+                                prefix={'$'}
                             />
                         </div>
                     </div>
-                    <div className='flex flex-row items-center mt-4'>
+
+                    <div className='w-1/3 py-6 flex flex-row items-center'>
+                        <Select
+                            options={providerOptions}
+                            label='configuration.appointment_type_details.selected_providers'
+                            isMultiple={true}
+                            defaultValues={selectedProviders?.map(a => {
+                                return {
+                                    value: a.id.toString()
+                                } as Option
+                            })}
+                            onSelect={option => providerSelected(option?.object)}
+                        />{displayToolTip(t('configuration.appointment_type_details.tooltip_selected_providers'))}
+                    </div>
+                    <div className='flex flex-row items-center mt-4 space-x-2'>
                         <span className='body2'>{t('configuration.appointment_type_details.appointment_instructions')}</span>
                         {displayToolTip(t('configuration.appointment_type_details.tooltip_appointment_instructions'))}
                     </div>
@@ -270,7 +331,7 @@ const EditAppointmentType = () => {
                     <div className='flex mt-10'>
                         <Button type='submit' buttonType='medium' disabled={!isValid} label='common.save' isLoading={updateAppointmentTypeMutation.isLoading} />
                         <Button label='common.cancel' className=' mx-8' buttonType='secondary' onClick={() => navigateBackToAppointmentTypeList()}
-                            isLoading={updateAppointmentTypeMutation.isLoading}
+                            disabled={updateAppointmentTypeMutation.isLoading}
                         />
                     </div>
                 </form>

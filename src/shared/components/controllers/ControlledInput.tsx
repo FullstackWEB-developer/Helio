@@ -41,7 +41,8 @@ export interface ControlledInputProps {
     fetchingSuggestionsPlaceholder?: string;
     containerClassName?: string;
     maxLength?: number;
-    pattern?: ValidationRule<RegExp>
+    pattern?: ValidationRule<RegExp>,
+    prefix?: string
 }
 
 const ControlledInput = ({
@@ -179,6 +180,7 @@ const ControlledInput = ({
                 error={props.errorMessage || control.formState.errors[name]?.message}
                 type={type}
                 required={required}
+                prefix={props.prefix}
                 assistiveText={props.assistiveText}
                 forceAutoSuggestSelect={forceAutoSuggestSelect}
                 isLoading={props.isLoading}

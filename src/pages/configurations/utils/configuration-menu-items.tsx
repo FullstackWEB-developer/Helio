@@ -17,7 +17,7 @@ export const ConfigurationMenuItems = [
             url: PracticeBrandingPath,
         },
         {
-            id: "configuration-menu-item-15",
+            id: "configuration-menu-item-16",
             title: 'configuration.practice_email_template_menu',
             url: PracticeEmailTemplatePath,
         }]
