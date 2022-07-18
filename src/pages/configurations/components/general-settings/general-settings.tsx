@@ -30,7 +30,8 @@ const GeneralSettings = () => {
     const onSubmit = (formData) => {
         if(checkDeletedDepartmentsField(formData.deletedDepartments))
         {
-            setAppointmentRemindersMutation.mutate(formData);
+            formData.forceToRedirect = forceRedirect
+            saveGeneralSettings.mutate(formData);
         }else{
             dispatch(addSnackbarMessage({
                 message: 'configuration.general_settings.deleted_departments_warning',
@@ -52,12 +53,10 @@ const GeneralSettings = () => {
             return false;
         }
 
-        var number = data.split(',').map(i=>Number(i));
-        if(number.filter(x => x < -1).length >= 1){
-            return false;
-        }
+        let number = data.split(',').map(i=>Number(i));
+        return number.filter(x => x < -1).length < 1;
 
-        return true;
+
     }
 
     const { isFetching, data, refetch } = useQuery<GeneralSettingsModel>(GetGeneralSetting, () => getGeneralSetting(), {
@@ -66,23 +65,23 @@ const GeneralSettings = () => {
         },
         onError: () => {
             dispatch(addSnackbarMessage({
-                message: 'configuration.appointment_reminders.get_error',
+                message: 'configuration.general_settings.get_error',
                 type: SnackbarType.Error
             }))
         }
     });
 
-    const setAppointmentRemindersMutation = useMutation(setGeneralSetting, {
+    const saveGeneralSettings = useMutation(setGeneralSetting, {
         onSuccess: () => {
             dispatch(addSnackbarMessage({
                 type: SnackbarType.Success,
-                message: 'configuration.appointment_reminders.set_success'
+                message: 'configuration.general_settings.save_success'
             }));
         },
         onError: () => {
             dispatch(addSnackbarMessage({
                 type: SnackbarType.Error,
-                message: 'configuration.appointment_reminders.set_error'
+                message: 'configuration.general_settings.save_error'
             }));
         }
     });
@@ -106,7 +105,7 @@ const GeneralSettings = () => {
                                             {t('configuration.general_settings.force_to_redirect')}
                                             <ToolTipIcon
                                                 icon={Icon.Info}
-                                                iconFillClass='rgba-05-fill'
+                                                iconFillClass='warning-icon'
                                                 placement='bottom'
                                                 iconClassName='cursor-pointer icon ml-2'
                                             >
@@ -135,7 +134,7 @@ const GeneralSettings = () => {
                                                 ]}
                                                 onChange={(e: string) => {
                                                     setForceRedirect(JSON.parse(e));
-                                                    control.trigger();
+                                                    control.trigger().then();
                                                 }}
                                             />
                                         </div>
@@ -149,13 +148,14 @@ const GeneralSettings = () => {
                             <ControlledInput name='redirectToExternalPhone' control={control}
                                 defaultValue={data?.redirectToExternalPhone === "-" ? "" : data?.redirectToExternalPhone}
                                 type='tel'
+                                disabled={!forceRedirect}
                                 label={'configuration.general_settings.redirect_phone_number'}
                                 required={forceRedirect}
                             />
                         </div>
                         <ToolTipIcon
                             icon={Icon.Info}
-                            iconFillClass='rgba-05-fill'
+                            iconFillClass='warning-icon'
                             placement='bottom'
                             iconClassName='cursor-pointer icon ml-2'
                         >
@@ -175,7 +175,7 @@ const GeneralSettings = () => {
                         </div>
                         <ToolTipIcon
                             icon={Icon.Info}
-                            iconFillClass='rgba-05-fill'
+                            iconFillClass='warning-icon'
                             placement='bottom'
                             iconClassName='cursor-pointer icon ml-2'
                         >
@@ -195,7 +195,7 @@ const GeneralSettings = () => {
                         </div>
                         <ToolTipIcon
                             icon={Icon.Info}
-                            iconFillClass='rgba-05-fill'
+                            iconFillClass='warning-icon'
                             placement='bottom'
                             iconClassName='cursor-pointer icon ml-2'
                         >
@@ -214,7 +214,7 @@ const GeneralSettings = () => {
                         </div>
                         <ToolTipIcon
                             icon={Icon.Info}
-                            iconFillClass='rgba-05-fill'
+                            iconFillClass='warning-icon'
                             placement='bottom'
                             iconClassName='cursor-pointer icon ml-2'
                         >
@@ -229,7 +229,7 @@ const GeneralSettings = () => {
                             buttonType='medium'
                             disabled={!formState.isValid && forceRedirect}
                             label='common.save'
-                            isLoading={setAppointmentRemindersMutation.isLoading}
+                            isLoading={saveGeneralSettings.isLoading}
                         />
                         <Button label='common.cancel' className=' ml-8 mr-8' buttonType='secondary' onClick={() => formState.isDirty && setWarning(true)} />
                         <RouteLeavingGuard
@@ -242,7 +242,7 @@ const GeneralSettings = () => {
                             onClose={() => setWarning(false)}
                             onCancel={() => setWarning(false)}
                             okButtonLabel={'common.ok'}
-                            onOk={() => {setWarning(false); refetch()}}
+                            onOk={() => {setWarning(false); refetch().then()}}
                             title={'configuration.general_settings.warning'}
                             message={'configuration.general_settings.warning_info'}
                             isOpen={warning} />

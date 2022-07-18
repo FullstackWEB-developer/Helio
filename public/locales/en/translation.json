@@ -2185,11 +2185,14 @@
       "redirect_phone_number": "Redirect Phone Number",
       "redirect_phone_number_info": "Enter an external phone number to redirect all incoming calls.",
       "deleted_departments": "Deleted Departments",
-      "deleted_departments_info": "If a department is deleted in your EMR/EHR please enter the department ID.",
-      "deleted_departments_warning": "Deleted departmant should be contains only interger numbers seperate by comma and numbers should be greater then -1",
-      "warning_info": "There are unsaved chages, are you sure to cancel?",
-      "warning_info_leaving": "There are unsaved chages, are you sure to leave?",
-      "warning": "Warning"
+      "deleted_departments_info": "If a department is deleted in your EMR/EHR, please enter the department ID.",
+      "deleted_departments_warning": "Deleted departments should contain only numbers separated by comma and numbers should be greater than -1",
+      "warning_info": "There are unsaved changes, are you sure to cancel?",
+      "warning_info_leaving": "There are unsaved changes, are you sure to leave?",
+      "warning": "Warning",
+      "save_error": "Error saving settings, please try again.",
+      "save_success": "Settings saved successfully.",
+      "get_error": "Could not fetch record. Please try again."
     },
     "practice_email_template": {
       "title": "Practice Email Template",
