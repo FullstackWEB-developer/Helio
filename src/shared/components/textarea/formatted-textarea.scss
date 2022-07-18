@@ -48,8 +48,17 @@
 
 .formatted-text-area .ql-toolbar.ql-snow {
   border-bottom: none;
+  border-color: var(--color-secondary-300);
 }
 .formatted-text-area .ql-snow a {
   color: var(--color-primary-800);
   text-decoration: none ;
+}
+
+.ql-container.ql-snow {
+  border-color: var(--color-secondary-300) !important;
+}
+
+.quick-select-included  .ql-toolbar.ql-snow {
+  border: none;
 }

@@ -75,7 +75,8 @@
     "team_sms": "Team Messages",
     "overflow_value_1k": "1K+",
     "route_leaving_confirmation_message": "Leave without saving changes?",
-    "route_leaving_leave_button": "Leave"
+    "route_leaving_leave_button": "Leave",
+    "insert": "Insert"
   },
   "app": {
     "error_loading_parameters": "Error loading parameters, please try again later",
@@ -2160,7 +2161,8 @@
       "preview": "Preview",
       "preview_error": "Previewing failed. Please try again.",
       "update_error": "Updating of {{templateName}} template failed. Please try again.",
-      "update_success": "{{templateName}} template updated successfully."
+      "update_success": "{{templateName}} template updated successfully.",
+      "title_tooltip": "Add a title/headline that will be displayed in the email body."
     },
     "email_template_list": {
       "title": "Email Templates",

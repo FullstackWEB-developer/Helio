@@ -43,6 +43,8 @@ interface TextAreaProps {
     focusState?: boolean;
     hyperLinkButton?: boolean;
     hideFormattingButton?: boolean;
+    sizeSelectionEnabled?: boolean;
+    formulaSelectionDropdown?: boolean;
 }
 
 const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(({
@@ -69,6 +71,8 @@ const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(({
    toggleRichTextMode = false,
    hyperLinkButton = false,
    hideFormattingButton = false,
+   sizeSelectionEnabled = true,
+   formulaSelectionDropdown = false,
     ...props
 }: TextAreaProps, ref) => {
 
@@ -173,7 +177,9 @@ const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(({
                                                    disabled={props.disabled}
                                                    isLoading={isLoading}
                                                    hyperLinkButton={hyperLinkButton}
-                                                   showSendIcon={showSendIconInRichTextMode}/></div>}
+                                                   sizeSelectionEnabled={sizeSelectionEnabled}
+                                                   showSendIcon={showSendIconInRichTextMode}
+                                                   formulaSelectionDropdown={formulaSelectionDropdown}/></div>}
             {!isFormatEnabled &&<div className={textAreaOutWrapperClass}>
                 <div className={textAreaWrapperClass}>
                     <textarea ref={mergeRefs([textAreaRef, ref])}

@@ -39,6 +39,8 @@ interface ControlledTextAreaProps {
     toggleRichTextMode?: boolean;
     hyperLinkButton?: boolean;
     hideFormattingButton?: boolean;
+    sizeSelectionEnabled?: boolean;
+    formulaSelectionDropdown?: boolean;
 }
 const ControlledTextArea = ({
     control,
@@ -73,6 +75,8 @@ const ControlledTextArea = ({
     toggleRichTextMode,
     hyperLinkButton,
     hideFormattingButton,
+    sizeSelectionEnabled = true,
+    formulaSelectionDropdown = false,
     ...props
 }: ControlledTextAreaProps) => {
     const { t } = useTranslation();
@@ -124,6 +128,8 @@ const ControlledTextArea = ({
                         hyperLinkButton={hyperLinkButton}
                         toggleRichTextMode={toggleRichTextMode}
                         hideFormattingButton={hideFormattingButton}
+                        sizeSelectionEnabled={sizeSelectionEnabled}
+                        formulaSelectionDropdown={formulaSelectionDropdown}
                     />
 
                 );

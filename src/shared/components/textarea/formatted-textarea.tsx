@@ -5,6 +5,7 @@ import './formatted-textarea.scss';
 import 'react-quill/dist/quill.snow.css';
 import SvgIcon, {Icon} from '@components/svg-icon';
 import classnames from 'classnames';
+import QuickFormulaSelect from '@components/quick-formula-select/quick-formula-select';
 export interface FormattedTextareaProps {
     isLoading?: boolean;
     iconFill?: string;
@@ -15,10 +16,12 @@ export interface FormattedTextareaProps {
     showSendIcon?: boolean;
     placeHolder?: string;
     hyperLinkButton?: boolean;
+    sizeSelectionEnabled?: boolean;
+    formulaSelectionDropdown?: boolean;
 }
 
 const FormattedTextarea = React.forwardRef<ReactQuill, FormattedTextareaProps>(({isLoading, iconFill, onClick, value = '', onChange, disabled, showSendIcon = true,
-    placeHolder = 'common.enter_text', hyperLinkButton = false}: FormattedTextareaProps, ref) => {
+    placeHolder = 'common.enter_text', hyperLinkButton = false, sizeSelectionEnabled = true, formulaSelectionDropdown = false}: FormattedTextareaProps, ref: any) => {
     const {t} = useTranslation();
     const emptyHtml = '<p><br></p>';
     const [content, setContent] = useState(value);
@@ -44,17 +47,31 @@ const FormattedTextarea = React.forwardRef<ReactQuill, FormattedTextareaProps>((
         onChange(value);
     }
 
+    const [previousCursorIndex, setPreviousCursorIndex] = useState(0);
+
+    const handleFormulaSelect = (value: string) => {
+        const cursorPosition = ref?.current?.editor?.getSelection()?.index ?? previousCursorIndex;
+        ref?.current?.editor?.insertText(cursorPosition, `{{${value}}}`);
+    }
+
     const wrapperClass = classnames('relative formatted-text-area w-full', {
-        'ql-disabled': disabled
+        'ql-disabled': disabled,
+        'quick-select-included': formulaSelectionDropdown
     })
     return <div className={wrapperClass}>
-        <div className='bg-white z-50'>
+        <div className={classnames('bg-white z-50', {'flex items-center w-full border-b-0 border': formulaSelectionDropdown})}>
+            {
+                formulaSelectionDropdown && <QuickFormulaSelect formulaSelectionHandler={handleFormulaSelect}/>
+            }
             <div id="toolbar">
-                <select className="ql-size">
-                    <option value="huge">{t('email.inbox.formatter.heading')}</option>
-                    <option value="large">{t('email.inbox.formatter.subheading')}</option>
-                    <option selected></option>
-                </select>
+                {
+                    sizeSelectionEnabled &&
+                    <select className="ql-size">
+                        <option value="huge">{t('email.inbox.formatter.heading')}</option>
+                        <option value="large">{t('email.inbox.formatter.subheading')}</option>
+                        <option selected></option>
+                    </select>
+                }
                 <button className="ql-bold"></button>
                 <button className="ql-italic" ></button>
                 <button className="ql-underline"></button>
@@ -74,6 +91,9 @@ const FormattedTextarea = React.forwardRef<ReactQuill, FormattedTextareaProps>((
             placeholder={t(placeHolder)}
             modules={{
                 toolbar: '#toolbar'
+            }}
+            onBlur={(previousRange) => {
+                setPreviousCursorIndex(previousRange?.index);
             }}
         />
         {showSendIcon && content.replace(/<[^>]+>/g, '') && <div

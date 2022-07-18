@@ -1,6 +1,8 @@
 import Button from '@components/button/button';
 import {ControlledInput, ControlledTextArea} from '@components/controllers';
 import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
+import {Icon} from '@components/svg-icon';
+import ToolTipIcon from '@components/tooltip-icon/tooltip-icon';
 import {EmailTemplate} from '@pages/configurations/models/email-template';
 import {EmailTemplateUpdateRequest} from '@shared/models/email-template-update-request';
 import {getEmailTemplatePreview, updateEmailTemplate} from '@shared/services/notifications.service';
@@ -57,7 +59,7 @@ const EmailNotificationTemplateForm = ({template}: {template: EmailTemplate}) =>
     });
 
     const submitHandler = (data: EmailTemplateUpdateRequest) => {
-        if(!isValid) return;
+        if (!isValid) return;
         updateEmailTemplateMutation.mutate({body: data, id: template.id});
     }
 
@@ -65,19 +67,33 @@ const EmailNotificationTemplateForm = ({template}: {template: EmailTemplate}) =>
         <form className='w-full' onSubmit={handleSubmit(submitHandler)}>
             <div className='w-7/12'>
                 <ControlledInput control={control} label={'configuration.email_template_details.subject'} name='subject' required={true} />
-                <ControlledInput control={control} label={'configuration.email_template_details.title'} name='title' required={true} />
+                <div className='flex items-center'>
+                    <div className='flex-1'>
+                        <ControlledInput control={control} label={'configuration.email_template_details.title'} name='title' required={true} />
+                    </div>
+                    <ToolTipIcon
+                        icon={Icon.InfoOutline}
+                        iconFillClass='rgba-05-fill'
+                        placement='bottom-start'>
+                        <div className='p-4'>
+                            {t('configuration.email_template_details.title_tooltip')}
+                        </div>
+                    </ToolTipIcon>
+                </div>
             </div>
             <div className='flex justify-between items-center subtitle2 pb-2'>
                 {t('configuration.email_template_details.body')}
                 <Button label='configuration.email_template_details.reset_to_default' buttonType='secondary-medium' onClick={() => reset()} />
             </div>
-            <ControlledTextArea control={control} 
+            <ControlledTextArea control={control}
                 name='body'
                 required={true}
                 hyperLinkButton={true}
                 showSendIconInRichTextMode={false}
                 toggleRichTextMode={true}
-                hideFormattingButton={true} />
+                hideFormattingButton={true}
+                sizeSelectionEnabled={false}
+                formulaSelectionDropdown={true} />
             <div className='flex pt-10'>
                 <Button label='common.save' className='mr-8' type='submit' disabled={!isValid} isLoading={updateEmailTemplateMutation.isLoading} />
                 <Button label='configuration.email_template_details.preview' buttonType='secondary-medium' className='mr-6'
