@@ -11,7 +11,7 @@ import {changeStatus, setTicket, setTicketUpdateModel} from '@pages/tickets/stor
 import {FeedTypes, TicketFeed} from '@pages/tickets/models/ticket-feed';
 import {useMutation} from 'react-query';
 import {useDispatch, useSelector} from 'react-redux';
-import {selectEnumValues, selectTicketUpdateModel} from '@pages/tickets/store/tickets.selectors';
+import {selectEnumValues, selectTicketUpdateModel, selectTicketUpdateHash} from '@pages/tickets/store/tickets.selectors';
 import Button from '@components/button/button';
 import Confirmation from '@components/confirmation/confirmation';
 import {DropdownItemModel, DropdownModel} from '@components/dropdown/dropdown.models';
@@ -31,7 +31,7 @@ import utils from '@shared/utils/utils';
 import {SnackbarPosition} from '@components/snackbar/snackbar-position.enum';
 import {Phone} from '@pages/tickets/models/phone.model';
 import {ContactPreference} from '@pages/patients/models/contact-preference.enum';
-
+import hash from 'object-hash';
 export interface TicketDetailHeaderLine3Props {
     ticket: Ticket,
     patient?: ExtendedPatient,
@@ -61,7 +61,13 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
     const ticketStatuses = useSelector((state => selectEnumValues(state, 'TicketStatus')));
     const phoneDropdownRef = useRef<HTMLDivElement>(null);
     const ticketUpdateModel = useSelector(selectTicketUpdateModel);
-
+    const storedUpdateModelHash = useSelector(selectTicketUpdateHash);
+    const isDirty = () => {
+        if (!ticketUpdateModel) {
+            return false;
+        }
+        return storedUpdateModelHash !== hash.MD5(ticketUpdateModel);
+    }
     const {control, handleSubmit, getValues, setValue} = useForm({});
 
     customHooks.useOutsideClick([phoneDropdownRef], () => {
@@ -518,18 +524,18 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
                     {ticket.isDeleted ? <Button data-test-id='ticket-detail-header-unarchive-button'
                         buttonType='secondary'
                         isLoading={archiveTicketMutation.isLoading}
-                        disabled={archiveTicketMutation.isLoading}
+                        disabled={archiveTicketMutation.isLoading || isDirty()}
                         onClick={() => confirmUnarchive()}
                         label={'ticket_detail.header.unarchive'} />
                         : <Button data-test-id='ticket-detail-header-delete-button'
                             buttonType='secondary'
                             isLoading={archiveTicketMutation.isLoading}
-                            disabled={archiveTicketMutation.isLoading}
+                            disabled={archiveTicketMutation.isLoading || isDirty()}
                             onClick={() => confirmArchive()}
                             label={'ticket_detail.header.archive'} />}
                 </div>
                 <div className='pr-6'>
-                    <Button disabled={ticket.status === TicketStatuses.Solved || updateStatusMutation.isLoading}
+                    <Button disabled={ticket.status === TicketStatuses.Solved || updateStatusMutation.isLoading || isDirty()}
                         data-test-id='ticket-detail-header-solved-button'
                         buttonType='small'
                         isLoading={updateStatusMutation.isLoading && updateStatusMutation.variables?.status === TicketStatuses.Solved}
@@ -537,7 +543,7 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
                         label={'ticket_detail.header.solved'} />
                 </div>
                 <div className='pr-8'>
-                    <Button disabled={ticket.status === TicketStatuses.Closed || updateStatusMutation.isLoading}
+                    <Button disabled={ticket.status === TicketStatuses.Closed || updateStatusMutation.isLoading || isDirty()}
                         data-test-id='ticket-detail-header-close-button'
                         buttonType='small'
                         isLoading={updateStatusMutation.isLoading && updateStatusMutation.variables?.status === TicketStatuses.Closed}

@@ -34,6 +34,9 @@ import dayjs from 'dayjs';
 import TicketReviews from '@pages/tickets/components/ticket-detail/ticket-reviews/ticket-reviews';
 import PatientRatingSideBar from '../patient-rating-sidebar';
 import {ContactType} from '@shared/models';
+import {setAssignee} from '../../services/tickets.service';
+import {selectActiveUserOptions, selectUserList} from '@shared/store/lookups/lookups.selectors';
+import {Option} from '@components/option/option';
 interface TicketDetailInfoPanelProps {
     ticket: Ticket,
     patient?: Patient,
@@ -43,6 +46,7 @@ interface TicketDetailInfoPanelProps {
 const TicketDetailInfoPanel = ({ticket, patient, contact}: TicketDetailInfoPanelProps) => {
     const dispatch = useDispatch();
     const {t} = useTranslation();
+    const userListOptions = useSelector(selectActiveUserOptions);
     const updateModel = useSelector(selectTicketUpdateModel);
     const storedUpdateModelHash = useSelector(selectTicketUpdateHash);
     const {handleSubmit, control, formState: {isValid},setError, clearErrors, errors, reset, watch} = useForm({
@@ -80,7 +84,8 @@ const TicketDetailInfoPanel = ({ticket, patient, contact}: TicketDetailInfoPanel
             storedDueDate: ticket.dueDate,
             dueDate: ticket.dueDate ? dayjs.utc(ticket.dueDate).toDate() : undefined,
             dueTime: ticket.dueDate ? utils.formatUtcDate(ticket.dueDate, 'hh:mm A') : undefined,
-            isDeleted: ticket.isDeleted
+            isDeleted: ticket.isDeleted,
+            assignee: userListOptions.find(a => a.value.toString() === ticket.assignee?.toString())
         };
         const initialTicketHash = hash.MD5(ticketUpdateModel);
         reset(ticketUpdateModel);
@@ -98,7 +103,12 @@ const TicketDetailInfoPanel = ({ticket, patient, contact}: TicketDetailInfoPanel
 
     const ticketUpdateMutation = useMutation(updateTicket, {
         onSuccess: (data) => {
-            dispatch(setTicket(data));
+            const user = userListOptions ? userListOptions.find((o: Option) => o.value === updateModel["assignee"]?.value) : {} as any;
+            if (ticket.id && user && ticket.assignee !== user.value) {
+                updateAssigneeMutation.mutate({ticketId: ticket.id, assignee: user.value});
+            }else{
+                dispatch(setTicket(data));
+            }
             if (data.id && previousTicket?.status !== data.status) {
                 const feedData: TicketFeed = {
                     feedType: FeedTypes.StatusChange,
@@ -149,6 +159,18 @@ const TicketDetailInfoPanel = ({ticket, patient, contact}: TicketDetailInfoPanel
             setPatientCaseNumberLoading(false);
         }
     }
+
+    const updateAssigneeMutation = useMutation(setAssignee, {
+        onSuccess: (data) => {
+            dispatch(setTicket(data));
+        },
+        onError: (error: any) => {
+            dispatch(addSnackbarMessage({
+                message: error?.response?.data.statusCode === 409 ? 'ticket_detail.ticket_already_assigned_to_selected_user_error' : 'ticket_detail.ticket_assign_error',
+                type: SnackbarType.Error
+            }));
+        }
+    });
 
     const onSubmit = () => {
         const dateTime = utils.getDateTime(updateModel.dueDate, updateModel.dueTime);
@@ -214,11 +236,6 @@ const TicketDetailInfoPanel = ({ticket, patient, contact}: TicketDetailInfoPanel
                         <TicketDetailTicketInfo ticket={ticket} control={control} watch={watch} />
                     </Collapsible>
                 </div>
-            </div>
-            <div className='px-6'>
-                <Collapsible title={'ticket_detail.info_panel.assigned_to'} isOpen={true}>
-                    <TicketDetailAssignee ticket={ticket} />
-                </Collapsible>
             </div>
             <div className='border-b'>
                 <div className='px-6'>

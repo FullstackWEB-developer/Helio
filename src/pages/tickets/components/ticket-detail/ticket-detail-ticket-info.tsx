@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React, {useMemo, useEffect, useState} from 'react';
 import withErrorLogging from '@shared/HOC/with-error-logging';
 import {useDispatch, useSelector} from 'react-redux';
 import {
@@ -12,12 +12,14 @@ import {Control, Controller} from 'react-hook-form';
 import {setTicketUpdateModel} from '@pages/tickets/store/tickets.slice';
 import {selectLocationsAsOptions} from '@shared/store/lookups/lookups.selectors';
 import TagInput from '@components/tag-input/tag-input';
-import {Icon} from '@components/svg-icon';
+import SvgIcon, {Icon} from '@components/svg-icon';
 import Spinner from '@components/spinner/Spinner';
 import ControlledInput from '@components/controllers/ControlledInput';
 import {TicketUpdateModel} from '@pages/tickets/models/ticket-update.model';
 import utils from '@shared/utils/utils';
 import {Ticket} from '@pages/tickets/models/ticket';
+import {selectActiveUserOptions, selectUserList} from '@shared/store/lookups/lookups.selectors';
+import {User} from '@shared/models/user';
 
 interface TicketInfoProps {
     ticket: Ticket,
@@ -36,6 +38,7 @@ const TicketDetailTicketInfo = ({ticket, control, watch}: TicketInfoProps) => {
     const reasonOptions = useSelector((state) => selectLookupValues(state, 'TicketReason'));
     const tagOptions = useSelector((state) => selectLookupValuesAsOptions(state, 'TicketTags'));
     const ticketTypeOptions = useSelector((state) => selectEnumValuesAsOptions(state, 'TicketType'));
+    const userListOptions = useSelector(selectActiveUserOptions);
 
     const handleChangeItem = (fieldName: string, option?: Option) => {
         const value = option ? option : undefined;
@@ -140,6 +143,14 @@ const TicketDetailTicketInfo = ({ticket, control, watch}: TicketInfoProps) => {
                 allowClear={true}
                 control={control}
                 onSelect={(option?: Option) => handleChangeItem('location', option)}
+            />
+            <ControlledSelect
+                    name='assignee'
+                    label={'ticket_detail.info_panel.assigned_to'}
+                    options={userListOptions}
+                    control={control}
+                    allowClear={true}
+                    onSelect={(option?: Option) => handleChangeItem('assignee', option)}
             />
             <div className='pb-8'>
                 <Controller

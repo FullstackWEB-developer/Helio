@@ -13,6 +13,9 @@ import useCheckPermission from '@shared/hooks/useCheckPermission';
 import SvgIcon, {Icon} from '@components/svg-icon';
 import dayjs from 'dayjs';
 import TicketChannelIcon from '../../ticket-channel-icon';
+import {useSelector} from 'react-redux';
+import {selectTicketUpdateHash, selectTicketUpdateModel} from '@pages/tickets/store/tickets.selectors';
+import hash from 'object-hash';
 export interface TicketReviewsProps {
     ticket: Ticket
 }
@@ -22,7 +25,14 @@ const TicketReviews = ({ticket}: TicketReviewsProps) => {
     const [addReviewForTicket, setAddReviewForTicket] = useState<string | undefined>();
     const {isLoading: isReviewsLoading, data: reviews, refetch} = useQuery([GetReviewsByTicketId, ticket.id], () => getTicketReviews(ticket.id!));
     const canAddReview = useCheckPermission('Tickets.AddReview');
-
+    const updateModel = useSelector(selectTicketUpdateModel);
+    const storedUpdateModelHash = useSelector(selectTicketUpdateHash);
+    const isDirty = () => {
+        if (!updateModel) {
+            return false;
+        }
+        return storedUpdateModelHash !== hash.MD5(updateModel);
+    }
     const getRatingIcon = useMemo(() => {
         switch (ticket?.botRating) {
             case -1:
@@ -63,8 +73,7 @@ const TicketReviews = ({ticket}: TicketReviewsProps) => {
             reviews?.map((review: TicketManagerReview, index) => <TicketReviewItem review={review} ticket={ticket} key={review.id} isFirst={index === 0} />)
         }</div>
         {canAddReview && !!ticket.assignee && <div className='pt-4.5'>
-            <Button label='ticket_detail.info_panel.reviews.add_review' buttonType='secondary'
-                onClick={() => setAddReviewForTicket(ticket.id)} />
+            <Button label='ticket_detail.info_panel.reviews.add_review' buttonType='secondary' onClick={() => setAddReviewForTicket(ticket.id)} disabled={isDirty()}/>
         </div>}
         {getRatingIcon && <>
             <div className='h8 pt-4.5 pb-3.5'>{t('patient_ratings.bot_ratings')}</div>

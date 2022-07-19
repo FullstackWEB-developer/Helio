@@ -14,4 +14,5 @@ export interface TicketUpdateModel {
     dueDate?: Date;
     dueTime?: string;
     isDeleted?: boolean;
+    assignee?: Option;
 }
