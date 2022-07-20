@@ -305,6 +305,7 @@ const RequestMedicalRecords = () => {
                                             maxRows={5}
                                             resizable={false}
                                             hasBorder={true}
+                                            maxLength={4000}
                                         />
                                     )}
                                 />
