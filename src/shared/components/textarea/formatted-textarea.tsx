@@ -51,7 +51,7 @@ const FormattedTextarea = React.forwardRef<ReactQuill, FormattedTextareaProps>((
 
     const handleFormulaSelect = (value: string) => {
         const cursorPosition = ref?.current?.editor?.getSelection()?.index ?? previousCursorIndex;
-        ref?.current?.editor?.insertText(cursorPosition, `{{${value}}}`);
+        ref?.current?.editor?.insertText(cursorPosition, `{${value}}`);
     }
 
     const wrapperClass = classnames('relative formatted-text-area w-full', {
