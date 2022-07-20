@@ -47,6 +47,7 @@ describe("Sms-Chat tests", () => {
     };
 
     beforeEach(async () => {
+
         await i18n.init();
         dayjs.extend(duration);
         dayjs.extend(utc);
@@ -105,35 +106,6 @@ describe("Sms-Chat tests", () => {
             ["/tickets/lookup/TicketType"],
             ["/patients/75086", {"params": undefined}],
             ["/patients/75086/photo"],
-            ["/tickets/123"],
-            ["/lookups/values/TicketReason"],
-            ["/tickets/lookup/TicketType"]]);
-    });
-
-    it("should get contact data if there is contact id", async () => {
-        const messages: TicketMessage[] = [];
-        const contactId = '12313';
-        const infoWithPatientId = {
-            ...info,
-            contactId
-        }
-        const spy = jest.spyOn(api, 'get');
-        render(<TestWrapper mockState={mockState}>
-            <SmsChat
-                info={infoWithPatientId}
-                isLoading={false}
-                isBottomFocus={false}
-                isSending={false}
-                lastMessageSendTime={dayjs('2022-01-25').toDate()}
-                messages={messages}
-                onSendClick={() =>{}}
-            />
-        </TestWrapper>);
-
-        expect(spy).toHaveBeenCalledTimes(6);
-        expect(spy.mock.calls).toEqual([["/lookups/values/TicketReason"],
-            ["/tickets/lookup/TicketType"],
-            ["/contacts/12313"],
             ["/tickets/123"],
             ["/lookups/values/TicketReason"],
             ["/tickets/lookup/TicketType"]]);

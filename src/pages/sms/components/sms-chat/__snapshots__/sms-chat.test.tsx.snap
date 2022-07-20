@@ -78,7 +78,7 @@ exports[`Sms-Chat tests renders sms-chat correctly 1`] = `
                   data-test-id="dropdown-undefined"
                 >
                   <div
-                    class="overflow-y-auto overflow-x-hidden max-h-96 "
+                    class="overflow-y-auto overflow-x-hidden dropdown-max-height "
                   >
                     <span>
                       <div

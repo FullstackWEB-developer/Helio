@@ -105,7 +105,7 @@ exports[`Ticket New tests renders new-ticket correctly 1`] = `
               >
                 <input
                   autocomplete="off"
-                  class="pl-4 pt-6 body2 h-14 flex-shrink flex-grow flex-auto leading-normal w-px flex-1 input-date-mask"
+                  class=" pt-6 body2 h-14 flex-shrink flex-grow flex-auto leading-normal w-px flex-1 input-date-mask pl-4"
                   data-test-id="ticket-new-assignee"
                   name="subjectInput"
                   placeholder=""
@@ -187,19 +187,9 @@ exports[`Ticket New tests renders new-ticket correctly 1`] = `
                 class="absolute py-2 options"
               >
                 <div
-                  class="w-full select-cell justify-between flex items-center  body2   cursor-pointer  "
+                  class="w-full pt-2 text-center subtitle3-small"
                 >
-                  <div
-                    class="flex flex-col justify-center w-full"
-                    data-test-id="select-cell-icon-content"
-                  >
-                    <div
-                      class="flex items-center pl-4"
-                      data-test-id="select-cell-text-last test"
-                    >
-                      last test
-                    </div>
-                  </div>
+                  common.autocomplete_search
                 </div>
               </div>
             </div>
@@ -365,7 +355,7 @@ exports[`Ticket New tests renders new-ticket correctly 1`] = `
                   autocomplete="off"
                   class="relative truncate flex-shrink flex-grow flex-auto leading-normal w-px pl-4 body2 input-pt h-14 cursor-pointer"
                   max="9999-12-31"
-                  min="2022-05-29"
+                  min="2022-07-20"
                   name="dueDate"
                   readonly=""
                   type="text"
@@ -655,7 +645,7 @@ exports[`Ticket New tests renders new-ticket correctly 1`] = `
               >
                 <input
                   autocomplete="off"
-                  class="pl-4 pt-6 body2 h-14 flex-shrink flex-grow flex-auto leading-normal w-px flex-1 input-date-mask"
+                  class=" pt-6 body2 h-14 flex-shrink flex-grow flex-auto leading-normal w-px flex-1 input-date-mask pl-4"
                   data-test-id="patientId"
                   name="patientId"
                   placeholder=""
@@ -679,7 +669,7 @@ exports[`Ticket New tests renders new-ticket correctly 1`] = `
               >
                 <input
                   autocomplete="off"
-                  class="pl-4 pt-6 body2 h-14 flex-shrink flex-grow flex-auto leading-normal w-px flex-1 input-date-mask"
+                  class=" pt-6 body2 h-14 flex-shrink flex-grow flex-auto leading-normal w-px flex-1 input-date-mask pl-4"
                   data-test-id="patientCaseNumber"
                   name="patientCaseNumber"
                   placeholder=""
@@ -780,7 +770,7 @@ exports[`Ticket New tests renders new-ticket correctly 1`] = `
               >
                 <input
                   autocomplete="off"
-                  class="pl-4 pt-6 body2 h-14 flex-shrink flex-grow flex-auto leading-normal w-px flex-1 input-date-mask"
+                  class=" pt-6 body2 h-14 flex-shrink flex-grow flex-auto leading-normal w-px flex-1 input-date-mask pl-4"
                   data-test-id="note"
                   name="note"
                   placeholder=""
@@ -867,7 +857,7 @@ exports[`Ticket New tests renders new-ticket correctly 1`] = `
               type="button"
             >
               <div
-                class="flex flex-row space-x-2 justify-center items-center"
+                class="flex flex-row justify-center items-center space-x-2"
               >
                 <div>
                   common.cancel
@@ -885,7 +875,7 @@ exports[`Ticket New tests renders new-ticket correctly 1`] = `
               type="submit"
             >
               <div
-                class="flex flex-row space-x-2 justify-center items-center"
+                class="flex flex-row justify-center items-center space-x-2"
               >
                 <div>
                   ticket_new.create

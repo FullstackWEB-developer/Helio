@@ -25,7 +25,7 @@ exports[`Ticket List tests renders ticket-list correctly 1`] = `
             type="button"
           >
             <div
-              class="flex flex-row space-x-2 justify-center items-center"
+              class="flex flex-row justify-center items-center space-x-2"
             >
               <div>
                 tickets.filter.fetch
@@ -38,7 +38,7 @@ exports[`Ticket List tests renders ticket-list correctly 1`] = `
             type="button"
           >
             <div
-              class="flex flex-row space-x-2 justify-center items-center"
+              class="flex flex-row justify-center items-center space-x-2"
             >
               <div>
                 tickets.filter.reset_all
@@ -125,7 +125,7 @@ exports[`Ticket List tests renders ticket-list correctly 1`] = `
                     </div>
                   </span>
                   <div
-                    class="truncate relative inline-block w-full h-full"
+                    class="truncate relative w-full h-full inline-block"
                   >
                     <span
                       class="w-60 w-60"
@@ -213,7 +213,7 @@ exports[`Ticket List tests renders ticket-list correctly 1`] = `
                     </div>
                   </span>
                   <div
-                    class="truncate relative inline-block w-full h-full"
+                    class="truncate relative w-full h-full inline-block"
                   >
                     <span
                       class="w-60 w-60"
@@ -280,7 +280,7 @@ exports[`Ticket List tests renders ticket-list correctly 1`] = `
                     for="timePeriod_1"
                   >
                     <div
-                      class="truncate relative inline-block w-full h-full"
+                      class="truncate relative w-full h-full inline-block"
                     >
                       <span
                         class="body2 labelClassName"
@@ -305,7 +305,7 @@ exports[`Ticket List tests renders ticket-list correctly 1`] = `
                     for="timePeriod_2"
                   >
                     <div
-                      class="truncate relative inline-block w-full h-full"
+                      class="truncate relative w-full h-full inline-block"
                     >
                       <span
                         class="body2 labelClassName"
@@ -330,7 +330,7 @@ exports[`Ticket List tests renders ticket-list correctly 1`] = `
                     for="timePeriod_3"
                   >
                     <div
-                      class="truncate relative inline-block w-full h-full"
+                      class="truncate relative w-full h-full inline-block"
                     >
                       <span
                         class="body2 labelClassName"
@@ -355,7 +355,7 @@ exports[`Ticket List tests renders ticket-list correctly 1`] = `
                     for="timePeriod_4"
                   >
                     <div
-                      class="truncate relative inline-block w-full h-full"
+                      class="truncate relative w-full h-full inline-block"
                     >
                       <span
                         class="body2 labelClassName"
@@ -378,7 +378,7 @@ exports[`Ticket List tests renders ticket-list correctly 1`] = `
                     <input
                       autocomplete="off"
                       class="relative truncate flex-shrink flex-grow flex-auto leading-normal w-px pl-4 body2 input-pt h-14 cursor-pointer"
-                      max="2022-05-29"
+                      max="2022-07-20"
                       min="0001-01-01"
                       name="fromDate"
                       readonly=""
@@ -433,7 +433,7 @@ exports[`Ticket List tests renders ticket-list correctly 1`] = `
                       autocomplete="off"
                       class="relative truncate flex-shrink flex-grow flex-auto leading-normal w-px pl-4 body2 input-pt h-14 cursor-pointer"
                       disabled=""
-                      max="2022-05-29"
+                      max="2022-07-20"
                       min="0001-01-01"
                       name="toDate"
                       readonly=""
@@ -536,7 +536,7 @@ exports[`Ticket List tests renders ticket-list correctly 1`] = `
                     for="priority_0"
                   >
                     <div
-                      class="truncate relative inline-block w-full h-full"
+                      class="truncate relative w-full h-full inline-block"
                     >
                       <span
                         class="body2 labelClassName"
@@ -625,7 +625,7 @@ exports[`Ticket List tests renders ticket-list correctly 1`] = `
                     </div>
                   </span>
                   <div
-                    class="truncate relative inline-block w-full h-full"
+                    class="truncate relative w-full h-full inline-block"
                   >
                     <span
                       class="w-60 w-60"
@@ -713,7 +713,7 @@ exports[`Ticket List tests renders ticket-list correctly 1`] = `
                     </div>
                   </span>
                   <div
-                    class="truncate relative inline-block w-full h-full"
+                    class="truncate relative w-full h-full inline-block"
                   >
                     <span
                       class="w-60 w-60"
@@ -780,7 +780,7 @@ exports[`Ticket List tests renders ticket-list correctly 1`] = `
                     for="reasons_0"
                   >
                     <div
-                      class="truncate relative inline-block w-full h-full"
+                      class="truncate relative w-full h-full inline-block"
                     >
                       <span
                         class="body2 labelClassName"
@@ -848,7 +848,7 @@ exports[`Ticket List tests renders ticket-list correctly 1`] = `
                     for="department_0"
                   >
                     <div
-                      class="truncate relative inline-block w-full h-full"
+                      class="truncate relative w-full h-full inline-block"
                     >
                       <span
                         class="body2 labelClassName"
@@ -937,7 +937,7 @@ exports[`Ticket List tests renders ticket-list correctly 1`] = `
                     </div>
                   </span>
                   <div
-                    class="truncate relative inline-block w-full h-full"
+                    class="truncate relative w-full h-full inline-block"
                   >
                     <span
                       class="w-60 w-60"
@@ -1314,10 +1314,10 @@ exports[`Ticket List tests renders ticket-list correctly 1`] = `
               type="button"
             >
               <div
-                class="flex flex-row space-x-2 justify-center items-center"
+                class="flex flex-row justify-center items-center space-x-2"
               >
                 <div
-                  class="h-6 w-6 inline-flex  top-1 "
+                  class="w-6 flex"
                 >
                   <div
                     class=""
@@ -1344,13 +1344,26 @@ exports[`Ticket List tests renders ticket-list correctly 1`] = `
             </button>
             <button
               class="small-button"
+              disabled=""
               type="button"
             >
               <div
-                class="flex flex-row space-x-2 justify-center items-center"
+                class="flex flex-row justify-center items-center space-x-2"
+              >
+                <div>
+                  tickets.assign
+                </div>
+              </div>
+            </button>
+            <button
+              class="small-button"
+              type="button"
+            >
+              <div
+                class="flex flex-row justify-center items-center space-x-2"
               >
                 <div
-                  class="h-6 w-6 inline-flex  top-1 "
+                  class="w-6 flex"
                 >
                   <div
                     class=""
@@ -1420,224 +1433,174 @@ exports[`Ticket List tests renders ticket-list correctly 1`] = `
         </div>
       </div>
       <div
-        class=""
+        class="overflow-scroll"
       >
         <div
-          class="flex flex-row items-center content-center w-full h-12 py-4 bg-gray-100 auto-cols-min px-7 body2-medium"
+          class="ticket-list-container"
         >
           <div
-            class="uppercase flex items-center w-24 "
-          >
-            tickets.channel
-          </div>
-          <div
-            class="uppercase flex items-center w-1/12 flex justify-center cursor-pointer"
-          >
-            tickets.id
-          </div>
-          <div
-            class="uppercase flex items-center w-2/12 "
+            class="flex flex-row items-center content-center w-full h-12 py-4 bg-gray-100 auto-cols-min px-7 body2-medium"
           >
             <div
-              class="ml-2"
+              class="uppercase flex items-center w-1/24 "
+            />
+            <div
+              class="uppercase flex items-center w-1/24 mr-2 "
+            >
+              tickets.channel
+            </div>
+            <div
+              class="uppercase flex items-center w-2/24 mr-2 flex justify-center cursor-pointer"
+            >
+              tickets.id
+            </div>
+            <div
+              class="uppercase flex items-center w-2/24 mr-2 "
             >
               tickets.subject
             </div>
-          </div>
-          <div
-            class="uppercase flex items-center w-1/12 cursor-pointer"
-          >
-            tickets.due_in
-          </div>
-          <div
-            class="uppercase flex items-center w-2/12 cursor-pointer"
-          >
-            tickets.created_on
-          </div>
-          <div
-            class="uppercase flex items-center w-2/12 cursor-pointer"
-          >
-            tickets.status
-          </div>
-          <div
-            class="uppercase flex items-center w-2/12 "
-          >
-            tickets.priority_label
-          </div>
-          <div
-            class="uppercase flex items-center w-2/12 "
-          >
-            tickets.type
-          </div>
-          <div
-            class="uppercase flex items-center w-2/12 "
-          >
-            tickets.reason
-          </div>
-          <div
-            class="uppercase flex items-center w-3/12 "
-          >
-            tickets.assigned_to
-          </div>
-          <div
-            class="uppercase flex items-center w-1/12 flex justify-center "
-          >
-            tickets.rating
-          </div>
-          <div
-            class="uppercase flex items-center w-1/12 "
-          />
-        </div>
-        <div
-          class="flex flex-row w-full auto-cols-max body2 border-b hover:bg-gray-100 px-7 items-center h-20 py-3.5 group"
-        >
-          <div
-            class="w-24"
-          >
-            <a
-              href="/tickets/undefined"
+            <div
+              class="uppercase flex items-center w-1/24 mr-2 cursor-pointer"
             >
-              <div
-                class=""
-              >
-                <svg
-                  class="icon-x-large "
-                  height="48"
-                  viewBox="0 0 48 48"
-                  width="48"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <rect
-                    fill="none"
-                    height="48"
-                    width="48"
-                  />
-                  <g
-                    class="channel-icon-stroke"
-                    fill="none"
-                    transform="translate(4 4)"
-                  >
-                    <circle
-                      cx="20"
-                      cy="20"
-                      r="20"
-                      stroke="none"
-                    />
-                    <circle
-                      cx="20"
-                      cy="20"
-                      fill="none"
-                      r="19.5"
-                    />
-                  </g>
-                  <g
-                    transform="translate(12 12)"
-                  >
-                    <rect
-                      fill="none"
-                      height="24"
-                      width="24"
-                    />
-                    <path
-                      class="channel-icon-fill"
-                      d="M18.464,44.3a4.781,4.781,0,0,0,1.528-3.409c0-2.777-2.656-5.072-6.117-5.482A7.5,7.5,0,0,0,7.215,32C3.226,32-.007,34.486-.007,37.555a4.793,4.793,0,0,0,1.528,3.409A9.09,9.09,0,0,1,.212,42.87.8.8,0,0,0,.8,44.224a7.98,7.98,0,0,0,4.347-1.347,9.894,9.894,0,0,0,.986.17,7.481,7.481,0,0,0,6.642,3.4,9.19,9.19,0,0,0,2.076-.236,8,8,0,0,0,4.347,1.347.8.8,0,0,0,.583-1.354A8.848,8.848,0,0,1,18.464,44.3Zm-13.637-3.2-.594.385a7.064,7.064,0,0,1-1.5.743c.094-.163.187-.337.278-.514l.538-1.08-.861-.851A3.183,3.183,0,0,1,1.66,37.555c0-2.107,2.545-3.888,5.555-3.888s5.555,1.781,5.555,3.888-2.545,3.888-5.555,3.888a7.565,7.565,0,0,1-1.7-.194l-.687-.156ZM17.294,43.11l-.858.847.538,1.08c.09.177.184.351.278.514a7.065,7.065,0,0,1-1.5-.743l-.594-.385-.691.16a7.565,7.565,0,0,1-1.7.194,6.46,6.46,0,0,1-4.558-1.725c3.517-.375,6.225-2.687,6.225-5.5,0-.118-.014-.233-.024-.347,2.236.5,3.913,1.972,3.913,3.68A3.183,3.183,0,0,1,17.294,43.11Z"
-                      transform="translate(2.007 -28)"
-                    />
-                  </g>
-                </svg>
+              tickets.due_in
+            </div>
+            <div
+              class="uppercase flex items-center w-2/24 mr-2 cursor-pointer"
+            >
+              <div>
+                tickets.created_on
               </div>
-            </a>
-          </div>
-          <div
-            class="w-1/12 flex justify-center"
-          >
-            <a
-              href="/tickets/undefined"
+            </div>
+            <div
+              class="uppercase flex items-center w-3/24 mr-2 cursor-pointer"
+            >
+              <div>
+                tickets.status
+              </div>
+            </div>
+            <div
+              class="uppercase flex items-center w-2/24 mr-2 flex items-center justify-start "
+            >
+              tickets.priority_label
+            </div>
+            <div
+              class="uppercase flex items-center w-2/24 mr-2 truncate "
+            >
+              tickets.type
+            </div>
+            <div
+              class="uppercase flex items-center w-2/24 mr-2 flex justify-start "
+            >
+              tickets.reason
+            </div>
+            <div
+              class="uppercase flex items-center w-3/24 mr-2 "
+            >
+              tickets.assigned_to
+            </div>
+            <div
+              class="uppercase flex items-center w-1/24 mr-2 flex justify-center "
+            >
+              tickets.rating
+            </div>
+            <div
+              class="uppercase flex items-center w-1/24 "
             />
           </div>
           <div
-            class="w-2/12 max-w-xs truncate body2"
+            class="flex flex-row w-full auto-cols-max body2 border-b hover:bg-gray-100 px-7 items-center h-20 py-3.5 group"
           >
             <div
-              class="ml-2"
+              class="w-1/24"
+            >
+              <div
+                class="h-9 pt-2"
+              >
+                <label
+                  class="flex flex-row items-center checkbox-button"
+                >
+                  <input
+                    class="checkbox"
+                    id="123-check_123"
+                    name="123-check"
+                    type="checkbox"
+                  />
+                  <span
+                    class="checkbox-control"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium "
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="24"
+                          width="24"
+                        />
+                        <path
+                          class="svg-checkbox"
+                          d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                        />
+                      </svg>
+                    </div>
+                  </span>
+                  <div
+                    class="truncate relative w-full h-full inline-block"
+                  >
+                    <span
+                      class="w-60 w-60"
+                    />
+                  </div>
+                </label>
+              </div>
+            </div>
+            <div
+              class="w-1/24 mr-2 flex justify-center"
             >
               <a
                 href="/tickets/undefined"
               >
-                <span>
-                  tickets.no_subject
-                </span>
-              </a>
-            </div>
-          </div>
-          <div
-            class="w-1/12 body3"
-          >
-            <a
-              href="/tickets/undefined"
-            >
-              <span
-                class="body3-small"
-              />
-            </a>
-          </div>
-          <div
-            class="w-2/12 h-full flex items-center"
-          >
-            <a
-              href="/tickets/undefined"
-            >
-              <div
-                class="body3-small"
-              >
-                Oct 10, 2022 12:00 AM
-              </div>
-            </a>
-          </div>
-          <div
-            class="w-2/12 h-full"
-          >
-            <div
-              class="flex items-center h-full col-span-2"
-            >
-              <div
-                class="flex flex-row items-center cursor-pointer"
-              >
-                <div>
+                <div
+                  class=""
+                >
                   <svg
-                    fill="none"
-                    height="10"
-                    viewBox="0 0 10 10"
-                    width="10"
+                    class="icon-x-large "
+                    height="48"
+                    viewBox="0 0 48 48"
+                    width="48"
                     xmlns="http://www.w3.org/2000/svg"
                   >
+                    <rect
+                      fill="none"
+                      height="48"
+                      width="48"
+                    />
                     <g
-                      data-name="Status indicator"
+                      class="channel-icon-stroke"
+                      fill="none"
+                      transform="translate(4 4)"
                     >
                       <circle
-                        cx="5"
-                        cy="5"
-                        r="4"
+                        cx="20"
+                        cy="20"
+                        r="20"
                         stroke="none"
                       />
+                      <circle
+                        cx="20"
+                        cy="20"
+                        fill="none"
+                        r="19.5"
+                      />
                     </g>
-                  </svg>
-                </div>
-                <div
-                  class="pl-3"
-                />
-                <div
-                  class="pl-3"
-                >
-                  <div
-                    class=""
-                  >
-                    <svg
-                      class="icon-medium "
-                      height="24"
-                      viewBox="0 0 24 24"
-                      width="24"
-                      xmlns="http://www.w3.org/2000/svg"
+                    <g
+                      transform="translate(12 12)"
                     >
                       <rect
                         fill="none"
@@ -1645,151 +1608,101 @@ exports[`Ticket List tests renders ticket-list correctly 1`] = `
                         width="24"
                       />
                       <path
-                        class="active-item-icon"
-                        d="M7,14l1.273-1.273L2.545,7,8.273,1.273,7,0,0,7Z"
-                        transform="translate(5 16.273) rotate(-90)"
+                        class="channel-icon-fill"
+                        d="M18.464,44.3a4.781,4.781,0,0,0,1.528-3.409c0-2.777-2.656-5.072-6.117-5.482A7.5,7.5,0,0,0,7.215,32C3.226,32-.007,34.486-.007,37.555a4.793,4.793,0,0,0,1.528,3.409A9.09,9.09,0,0,1,.212,42.87.8.8,0,0,0,.8,44.224a7.98,7.98,0,0,0,4.347-1.347,9.894,9.894,0,0,0,.986.17,7.481,7.481,0,0,0,6.642,3.4,9.19,9.19,0,0,0,2.076-.236,8,8,0,0,0,4.347,1.347.8.8,0,0,0,.583-1.354A8.848,8.848,0,0,1,18.464,44.3Zm-13.637-3.2-.594.385a7.064,7.064,0,0,1-1.5.743c.094-.163.187-.337.278-.514l.538-1.08-.861-.851A3.183,3.183,0,0,1,1.66,37.555c0-2.107,2.545-3.888,5.555-3.888s5.555,1.781,5.555,3.888-2.545,3.888-5.555,3.888a7.565,7.565,0,0,1-1.7-.194l-.687-.156ZM17.294,43.11l-.858.847.538,1.08c.09.177.184.351.278.514a7.065,7.065,0,0,1-1.5-.743l-.594-.385-.691.16a7.565,7.565,0,0,1-1.7.194,6.46,6.46,0,0,1-4.558-1.725c3.517-.375,6.225-2.687,6.225-5.5,0-.118-.014-.233-.024-.347,2.236.5,3.913,1.972,3.913,3.68A3.183,3.183,0,0,1,17.294,43.11Z"
+                        transform="translate(2.007 -28)"
                       />
-                    </svg>
-                  </div>
+                    </g>
+                  </svg>
                 </div>
-              </div>
-              <div
-                class="z-10 hidden"
-                style="position: fixed; left: 0px; top: 0px;"
+              </a>
+            </div>
+            <div
+              class="w-2/24 mr-2 flex justify-center"
+            >
+              <a
+                href="/tickets/undefined"
+              />
+            </div>
+            <div
+              class="w-2/24 mr-2 body2"
+            >
+              <a
+                href="/tickets/undefined"
               >
                 <div
-                  class="py-2 bg-white dropdown-body"
-                  data-test-id="dropdown-undefined"
+                  class="truncate relative w-full h-full"
                 >
-                  <div
-                    class="overflow-y-auto overflow-x-hidden max-h-96 "
+                  <span
+                    class="truncate"
                   >
-                    <span>
-                      <div
-                        class="w-full px-4 dropdown-cell justify-between flex items-center  body2    cursor-pointer "
-                      >
-                        <div
-                          class="flex flex-row w-full items-center"
-                          data-test-id="dropdown-cell-icon-content"
-                        >
-                          <div
-                            class="flex items-center "
-                            data-test-id="dropdown-cell-text-tickets.statuses.1"
-                          >
-                            tickets.statuses.1
-                          </div>
-                        </div>
-                      </div>
-                    </span>
-                    <span>
-                      <div
-                        class="w-full px-4 dropdown-cell justify-between flex items-center  body2    cursor-pointer "
-                      >
-                        <div
-                          class="flex flex-row w-full items-center"
-                          data-test-id="dropdown-cell-icon-content"
-                        >
-                          <div
-                            class="flex items-center "
-                            data-test-id="dropdown-cell-text-tickets.statuses.2"
-                          >
-                            tickets.statuses.2
-                          </div>
-                        </div>
-                      </div>
-                    </span>
-                    <span>
-                      <div
-                        class="w-full px-4 dropdown-cell justify-between flex items-center  body2    cursor-pointer "
-                      >
-                        <div
-                          class="flex flex-row w-full items-center"
-                          data-test-id="dropdown-cell-icon-content"
-                        >
-                          <div
-                            class="flex items-center "
-                            data-test-id="dropdown-cell-text-tickets.statuses.3"
-                          >
-                            tickets.statuses.3
-                          </div>
-                        </div>
-                      </div>
-                    </span>
-                    <span>
-                      <div
-                        class="w-full px-4 dropdown-cell justify-between flex items-center  body2    cursor-pointer "
-                      >
-                        <div
-                          class="flex flex-row w-full items-center"
-                          data-test-id="dropdown-cell-icon-content"
-                        >
-                          <div
-                            class="flex items-center "
-                            data-test-id="dropdown-cell-text-tickets.statuses.4"
-                          >
-                            tickets.statuses.4
-                          </div>
-                        </div>
-                      </div>
-                    </span>
-                    <span>
-                      <div
-                        class="w-full px-4 dropdown-cell justify-between flex items-center  body2    cursor-pointer "
-                      >
-                        <div
-                          class="flex flex-row w-full items-center"
-                          data-test-id="dropdown-cell-icon-content"
-                        >
-                          <div
-                            class="flex items-center "
-                            data-test-id="dropdown-cell-text-tickets.statuses.5"
-                          >
-                            tickets.statuses.5
-                          </div>
-                        </div>
-                      </div>
-                    </span>
-                  </div>
+                    tickets.no_subject
+                  </span>
                 </div>
+              </a>
+            </div>
+            <div
+              class="w-1/24 mr-2 body3"
+            >
+              <div>
+                <a
+                  href="/tickets/undefined"
+                >
+                  <span
+                    class="body3-small"
+                  />
+                </a>
               </div>
             </div>
-          </div>
-          <div
-            class="w-2/12"
-          >
-            <a
-              href="/tickets/undefined"
-            />
-          </div>
-          <div
-            class="w-2/12"
-          >
-            <a
-              href="/tickets/undefined"
-            />
-          </div>
-          <div
-            class="w-2/12"
-          >
-            <a
-              href="/tickets/undefined"
-            />
-          </div>
-          <div
-            class="w-3/12"
-          >
             <div
-              class="col-span-2"
+              class="w-2/24 mr-2 created-date"
             >
-              <div
-                class="flex items-center"
+              <a
+                href="/tickets/undefined"
               >
                 <div
-                  class="flex flex-row items-center cursor-pointer w-min"
+                  class="truncate relative w-full h-full"
+                >
+                  <span
+                    class="body3-small truncate"
+                  >
+                    Oct 10, 2022 12:00 AM
+                  </span>
+                </div>
+              </a>
+            </div>
+            <div
+              class="w-3/24 mr-2 h-full"
+            >
+              <div
+                class="flex items-center h-full col-span-2"
+              >
+                <div
+                  class="flex flex-row items-center cursor-pointer"
                 >
                   <div>
-                    tickets.unassigned
+                    <svg
+                      fill="none"
+                      height="10"
+                      viewBox="0 0 10 10"
+                      width="10"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <g
+                        data-name="Status indicator"
+                      >
+                        <circle
+                          cx="5"
+                          cy="5"
+                          r="4"
+                          stroke="none"
+                        />
+                      </g>
+                    </svg>
                   </div>
+                  <div
+                    class="pl-3"
+                  />
                   <div
                     class="pl-3"
                   >
@@ -1797,7 +1710,7 @@ exports[`Ticket List tests renders ticket-list correctly 1`] = `
                       class=""
                     >
                       <svg
-                        class="cursor-pointer "
+                        class="icon-medium "
                         height="24"
                         viewBox="0 0 24 24"
                         width="24"
@@ -1817,122 +1730,8 @@ exports[`Ticket List tests renders ticket-list correctly 1`] = `
                     </div>
                   </div>
                 </div>
-              </div>
-              <div
-                class="absolute z-10 w-48 hidden"
-              >
                 <div
-                  class="py-2 bg-white dropdown-body"
-                  data-test-id="dropdown-undefined"
-                >
-                  <div
-                    class="relative h-10 w-full search-input-field flex items-center "
-                  >
-                    <div
-                      class="absolute pl-4"
-                    >
-                      <div
-                        class=""
-                      >
-                        <svg
-                          class="cursor-pointer icon-small "
-                          height="16"
-                          viewBox="0 0 16 16"
-                          width="16"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <rect
-                            fill="none"
-                            height="16"
-                            width="16"
-                          />
-                          <path
-                            class="search-icon-fill"
-                            d="M12.7,11.23a6.777,6.777,0,0,0,1.4-4.174A7.02,7.02,0,0,0,7.1,0,7.105,7.105,0,0,0,0,7.056a7.105,7.105,0,0,0,7.1,7.056,6.667,6.667,0,0,0,4.2-1.391l3,2.981a.971.971,0,0,0,1.4,0,.957.957,0,0,0,0-1.391Zm-5.6.8A5.022,5.022,0,0,1,2,7.056a5.1,5.1,0,0,1,10.2,0A5.022,5.022,0,0,1,7.1,12.025Z"
-                          />
-                        </svg>
-                      </div>
-                    </div>
-                    <input
-                      autocomplete="off"
-                      class="py-2.5 h-full w-full search-input-field body2 pl-12 border-b"
-                      placeholder="common.search"
-                      type="text"
-                      value=""
-                    />
-                  </div>
-                  <div
-                    class="overflow-y-auto overflow-x-hidden max-h-96 "
-                  >
-                    <span>
-                      <div
-                        class="w-full px-4 dropdown-cell justify-between flex items-center  body2    cursor-pointer "
-                      >
-                        <div
-                          class="flex flex-row w-full items-center"
-                          data-test-id="dropdown-cell-icon-content"
-                        >
-                          <div
-                            class="flex items-center "
-                            data-test-id="dropdown-cell-text-last test"
-                          >
-                            last test
-                          </div>
-                        </div>
-                      </div>
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            class="w-1/12"
-          >
-            <div
-              class="flex flex-col items-center justify-center"
-            />
-          </div>
-          <div
-            class="w-1/12"
-          >
-            <div
-              class="flex justify-center"
-            >
-              <div>
-                <div
-                  class="relative flex flex-row items-center cursor-pointer flex-nowrap"
-                >
-                  <div
-                    class=""
-                  >
-                    <svg
-                      class="opacity-0 group-hover:opacity-100 "
-                      height="24"
-                      viewBox="0 0 24 24"
-                      width="24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <g
-                        transform="translate(-416 -52)"
-                      >
-                        <rect
-                          fill="none"
-                          height="24"
-                          transform="translate(416 52)"
-                          width="24"
-                        />
-                        <path
-                          class="fill-default"
-                          d="M12,8a2,2,0,1,0-2-2A2.006,2.006,0,0,0,12,8Zm0,2a2,2,0,1,0,2,2A2.006,2.006,0,0,0,12,10Zm0,6a2,2,0,1,0,2,2A2.006,2.006,0,0,0,12,16Z"
-                          transform="translate(416 52)"
-                        />
-                      </g>
-                    </svg>
-                  </div>
-                </div>
-                <div
-                  class="absolute z-10 more-menu-shadow hidden"
+                  class="z-10 hidden"
                   style="position: fixed; left: 0px; top: 0px;"
                 >
                   <div
@@ -1940,7 +1739,7 @@ exports[`Ticket List tests renders ticket-list correctly 1`] = `
                     data-test-id="dropdown-undefined"
                   >
                     <div
-                      class="overflow-y-auto overflow-x-hidden max-h-96 "
+                      class="overflow-y-auto overflow-x-hidden dropdown-max-height "
                     >
                       <span>
                         <div
@@ -1951,41 +1750,319 @@ exports[`Ticket List tests renders ticket-list correctly 1`] = `
                             data-test-id="dropdown-cell-icon-content"
                           >
                             <div
-                              class="mr-2 dropdown-cell-icon flex justify-center items-center"
-                              data-test-id="dropdown-cell-icon"
-                            >
-                              <div
-                                class=""
-                              >
-                                <svg
-                                  class="icon-medium "
-                                  height="24"
-                                  viewBox="0 0 24 24"
-                                  width="24"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <rect
-                                    fill="none"
-                                    height="24"
-                                    width="24"
-                                  />
-                                  <path
-                                    class="rgba-062-fill"
-                                    d="M15.561,7.061,8.939.439A1.5,1.5,0,0,0,7.879,0H1.5A1.5,1.5,0,0,0,0,1.5V7.879A1.5,1.5,0,0,0,.439,8.939l6.621,6.621a1.5,1.5,0,0,0,2.121,0l6.379-6.379a1.5,1.5,0,0,0,0-2.121ZM3.5,5A1.5,1.5,0,1,1,5,3.5,1.5,1.5,0,0,1,3.5,5ZM19.561,9.182l-6.379,6.379a1.5,1.5,0,0,1-2.121,0l-.011-.011,5.439-5.439a2.813,2.813,0,0,0,0-3.978L10.356,0h1.523a1.5,1.5,0,0,1,1.061.439l6.621,6.621a1.5,1.5,0,0,1,0,2.121Z"
-                                    transform="translate(2 4)"
-                                  />
-                                </svg>
-                              </div>
-                            </div>
-                            <div
                               class="flex items-center "
-                              data-test-id="dropdown-cell-text-tickets.ticket_list_actions.ticket_details"
+                              data-test-id="dropdown-cell-text-tickets.statuses.1"
                             >
-                              tickets.ticket_list_actions.ticket_details
+                              tickets.statuses.1
                             </div>
                           </div>
                         </div>
                       </span>
+                      <span>
+                        <div
+                          class="w-full px-4 dropdown-cell justify-between flex items-center  body2    cursor-pointer "
+                        >
+                          <div
+                            class="flex flex-row w-full items-center"
+                            data-test-id="dropdown-cell-icon-content"
+                          >
+                            <div
+                              class="flex items-center "
+                              data-test-id="dropdown-cell-text-tickets.statuses.2"
+                            >
+                              tickets.statuses.2
+                            </div>
+                          </div>
+                        </div>
+                      </span>
+                      <span>
+                        <div
+                          class="w-full px-4 dropdown-cell justify-between flex items-center  body2    cursor-pointer "
+                        >
+                          <div
+                            class="flex flex-row w-full items-center"
+                            data-test-id="dropdown-cell-icon-content"
+                          >
+                            <div
+                              class="flex items-center "
+                              data-test-id="dropdown-cell-text-tickets.statuses.3"
+                            >
+                              tickets.statuses.3
+                            </div>
+                          </div>
+                        </div>
+                      </span>
+                      <span>
+                        <div
+                          class="w-full px-4 dropdown-cell justify-between flex items-center  body2    cursor-pointer "
+                        >
+                          <div
+                            class="flex flex-row w-full items-center"
+                            data-test-id="dropdown-cell-icon-content"
+                          >
+                            <div
+                              class="flex items-center "
+                              data-test-id="dropdown-cell-text-tickets.statuses.4"
+                            >
+                              tickets.statuses.4
+                            </div>
+                          </div>
+                        </div>
+                      </span>
+                      <span>
+                        <div
+                          class="w-full px-4 dropdown-cell justify-between flex items-center  body2    cursor-pointer "
+                        >
+                          <div
+                            class="flex flex-row w-full items-center"
+                            data-test-id="dropdown-cell-icon-content"
+                          >
+                            <div
+                              class="flex items-center "
+                              data-test-id="dropdown-cell-text-tickets.statuses.5"
+                            >
+                              tickets.statuses.5
+                            </div>
+                          </div>
+                        </div>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="w-2/24 mr-2 flex items-center justify-start"
+            >
+              <a
+                href="/tickets/undefined"
+              />
+            </div>
+            <div
+              class="w-2/24 mr-2 max-w-xs"
+            >
+              <a
+                href="/tickets/undefined"
+              >
+                <div
+                  class="truncate relative w-full h-full"
+                >
+                  <span
+                    class="truncate"
+                  />
+                </div>
+              </a>
+            </div>
+            <div
+              class="w-2/24 items-center justify-start mr-2"
+            >
+              <a
+                href="/tickets/undefined"
+              >
+                <div
+                  class="truncate relative w-full h-full"
+                >
+                  <span
+                    class="truncate"
+                  />
+                </div>
+              </a>
+            </div>
+            <div
+              class="w-3/24 mr-2"
+            >
+              <div
+                class="col-span-2 flex items-center"
+              >
+                <div
+                  class="flex items-center"
+                >
+                  <div
+                    class="flex flex-row items-center cursor-pointer w-min"
+                  >
+                    <div>
+                      tickets.unassigned
+                    </div>
+                    <div
+                      class="pl-3"
+                    >
+                      <div
+                        class=""
+                      >
+                        <svg
+                          class="cursor-pointer "
+                          height="24"
+                          viewBox="0 0 24 24"
+                          width="24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <rect
+                            fill="none"
+                            height="24"
+                            width="24"
+                          />
+                          <path
+                            class="active-item-icon"
+                            d="M7,14l1.273-1.273L2.545,7,8.273,1.273,7,0,0,7Z"
+                            transform="translate(5 16.273) rotate(-90)"
+                          />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="absolute z-10 w-48 hidden"
+                  style="position: fixed; left: 0px; top: 0px;"
+                >
+                  <div
+                    class="py-2 bg-white dropdown-body"
+                    data-test-id="dropdown-undefined"
+                  >
+                    <div
+                      class="relative h-10 w-full search-input-field flex items-center "
+                    >
+                      <div
+                        class="absolute pl-4"
+                      >
+                        <div
+                          class=""
+                        >
+                          <svg
+                            class="cursor-pointer icon-small "
+                            height="16"
+                            viewBox="0 0 16 16"
+                            width="16"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <rect
+                              fill="none"
+                              height="16"
+                              width="16"
+                            />
+                            <path
+                              class="search-icon-fill"
+                              d="M12.7,11.23a6.777,6.777,0,0,0,1.4-4.174A7.02,7.02,0,0,0,7.1,0,7.105,7.105,0,0,0,0,7.056a7.105,7.105,0,0,0,7.1,7.056,6.667,6.667,0,0,0,4.2-1.391l3,2.981a.971.971,0,0,0,1.4,0,.957.957,0,0,0,0-1.391Zm-5.6.8A5.022,5.022,0,0,1,2,7.056a5.1,5.1,0,0,1,10.2,0A5.022,5.022,0,0,1,7.1,12.025Z"
+                            />
+                          </svg>
+                        </div>
+                      </div>
+                      <input
+                        autocomplete="off"
+                        class="py-2.5 h-full w-full search-input-field body2 pl-12 border-b"
+                        placeholder="common.search"
+                        type="text"
+                        value=""
+                      />
+                    </div>
+                    <div
+                      class="overflow-y-auto overflow-x-hidden dropdown-max-height "
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="w-1/24"
+            >
+              <div
+                class="flex flex-col items-center justify-center mr-2"
+              />
+            </div>
+            <div
+              class="w-1/24"
+            >
+              <div
+                class="flex justify-center"
+              >
+                <div>
+                  <div
+                    class="relative flex flex-row items-center cursor-pointer flex-nowrap"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="opacity-0 group-hover:opacity-100 "
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <g
+                          transform="translate(-416 -52)"
+                        >
+                          <rect
+                            fill="none"
+                            height="24"
+                            transform="translate(416 52)"
+                            width="24"
+                          />
+                          <path
+                            class="fill-default"
+                            d="M12,8a2,2,0,1,0-2-2A2.006,2.006,0,0,0,12,8Zm0,2a2,2,0,1,0,2,2A2.006,2.006,0,0,0,12,10Zm0,6a2,2,0,1,0,2,2A2.006,2.006,0,0,0,12,16Z"
+                            transform="translate(416 52)"
+                          />
+                        </g>
+                      </svg>
+                    </div>
+                  </div>
+                  <div
+                    class="absolute z-10 more-menu-shadow hidden"
+                    style="position: fixed; left: 0px; top: 0px;"
+                  >
+                    <div
+                      class="py-2 bg-white dropdown-body"
+                      data-test-id="dropdown-undefined"
+                    >
+                      <div
+                        class="overflow-y-auto overflow-x-hidden dropdown-max-height "
+                      >
+                        <span>
+                          <div
+                            class="w-full px-4 dropdown-cell justify-between flex items-center  body2    cursor-pointer "
+                          >
+                            <div
+                              class="flex flex-row w-full items-center"
+                              data-test-id="dropdown-cell-icon-content"
+                            >
+                              <div
+                                class="mr-2 dropdown-cell-icon flex justify-center items-center"
+                                data-test-id="dropdown-cell-icon"
+                              >
+                                <div
+                                  class=""
+                                >
+                                  <svg
+                                    class="icon-medium "
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    width="24"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <rect
+                                      fill="none"
+                                      height="24"
+                                      width="24"
+                                    />
+                                    <path
+                                      class="rgba-062-fill"
+                                      d="M15.561,7.061,8.939.439A1.5,1.5,0,0,0,7.879,0H1.5A1.5,1.5,0,0,0,0,1.5V7.879A1.5,1.5,0,0,0,.439,8.939l6.621,6.621a1.5,1.5,0,0,0,2.121,0l6.379-6.379a1.5,1.5,0,0,0,0-2.121ZM3.5,5A1.5,1.5,0,1,1,5,3.5,1.5,1.5,0,0,1,3.5,5ZM19.561,9.182l-6.379,6.379a1.5,1.5,0,0,1-2.121,0l-.011-.011,5.439-5.439a2.813,2.813,0,0,0,0-3.978L10.356,0h1.523a1.5,1.5,0,0,1,1.061.439l6.621,6.621a1.5,1.5,0,0,1,0,2.121Z"
+                                      transform="translate(2 4)"
+                                    />
+                                  </svg>
+                                </div>
+                              </div>
+                              <div
+                                class="flex items-center "
+                                data-test-id="dropdown-cell-text-tickets.ticket_list_actions.ticket_details"
+                              >
+                                tickets.ticket_list_actions.ticket_details
+                              </div>
+                            </div>
+                          </div>
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </div>
