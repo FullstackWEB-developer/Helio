@@ -51,7 +51,7 @@ const ViewMedications = () => {
     }
 
     if (medications && medications.length < 1) {
-        return <div data-test-id='request-refill-no-medication-found'>{t('request-refill.no_medication_found')}</div>
+        return <div className='whitespace-pre' data-test-id='request-refill-no-medication-found'>{t('request-refill.no_medication_found')}</div>
     }
 
     return  <div id='printContent'>
