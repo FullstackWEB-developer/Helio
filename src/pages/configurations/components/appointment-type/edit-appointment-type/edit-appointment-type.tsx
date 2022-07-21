@@ -51,13 +51,13 @@ const EditAppointmentType = () => {
         }
     ];
 
-    const providerOptions = useMemo(() => utils.parseOptions([...providers]?.sort((a, b) => a.firstName.localeCompare(b.firstName)),
+    const providerOptions = useMemo(() => providers && utils.parseOptions([...providers]?.sort((a, b) => a.firstName.localeCompare(b.firstName)),
         item => utils.stringJoin(' ', item.firstName, item.lastName),
         item => item.id.toString(),
         _ => '',
         item => item
     ), [providers])
-
+    
     const PatientTypeOptions: Option[] = [
         { value: String(PatientAppointmentType.Established), label: t('configuration.appointment_type_details.established_patient') },
         { value: String(PatientAppointmentType.New), label: t('configuration.appointment_type_details.new_patient') },
