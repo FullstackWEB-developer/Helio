@@ -34,9 +34,10 @@ const EditAppointmentType = () => {
     const { id } = useParams<{ id: string }>();
     const [appointmentType, setAppointmentType] = useState<AppointmentType>();
     const [currentLength, setCurrentLength] = useState<number>(0);
+    const [currentCancelationFee, setCurrentCancelationFee] = useState<string>("");
     const [selectableByPatient, setSelectableByPatient] = useState<boolean>(false);
     const [isCancelable, setIsCancelable] = useState<boolean>(false);
-    const [IsReschedulable, setIsReschedulable] = useState<boolean>(false);
+    const [isReschedulable, setIsReschedulable] = useState<boolean>(false);
     const [patientType, setPatientType] = useState<number>(1);
     const providers = useSelector(selectProviderList);
     const [selectedProviders, setSelectedProviders] = useState<Provider[]>([]);
@@ -64,9 +65,13 @@ const EditAppointmentType = () => {
         { value: String(PatientAppointmentType.All), label: t('configuration.appointment_type_details.all') },
     ]
 
+    useEffect(() => {
+        control.trigger().then();
+      }, [isReschedulable, isCancelable]);
+
     const onSelectableByPatientChange = () => setSelectableByPatient(!selectableByPatient);
-    const onCancelableChange = () => { setIsCancelable(!isCancelable) }
-    const onIsReschedulableChange = () => setIsReschedulable(!IsReschedulable);
+    const onCancelableChange = () => { setIsCancelable(!isCancelable); clearErrors(["cancelationFee", "cancelationTimeFrame"]); }
+    const onIsReschedulableChange = () => {setIsReschedulable(!isReschedulable); clearErrors(["rescheduleTimeFrame"]);};
     const onSelectPatientTypeChange = (value: Option | undefined) => setPatientType(value?.value ? +value?.value : 0);
 
     useEffect(() => {
@@ -102,7 +107,7 @@ const EditAppointmentType = () => {
                 cancelable: isCancelable,
                 cancelationTimeFrame: formData.cancelationTimeFrame ? parseInt(formData.cancelationTimeFrame) : 0,
                 cancelationFee: formData.cancelationFee ? parseInt(formData.cancelationFee) : 0,
-                reschedulable: IsReschedulable,
+                reschedulable: isReschedulable,
                 rescheduleTimeFrame: formData.rescheduleTimeFrame ? parseInt(formData.rescheduleTimeFrame) : 0,
                 selectableByPatient: selectableByPatient,
                 selectedProviders: selectedProviders.map(a => a.id),
@@ -118,6 +123,7 @@ const EditAppointmentType = () => {
             onSuccess: (data) => {
                 setAppointmentType(data);
                 setSelectableByPatient(data.selectableByPatient);
+                setCurrentCancelationFee(data.cancelationFee ? data.cancelationFee.toString() : "");
                 setIsCancelable(data.cancelable);
                 setIsReschedulable(data.reschedulable);
                 setCurrentLength(data.description?.length ?? 0);
@@ -146,7 +152,7 @@ const EditAppointmentType = () => {
         setSelectedProviders(apptProviders);
     }, [appointmentType, providers]);
 
-    const { handleSubmit, control, formState: { isValid } } = useForm({ mode: 'onChange' });
+    const { handleSubmit, trigger, clearErrors, control, formState: { isValid } } = useForm({ mode: 'all'});
 
     const navigateBackToAppointmentTypeList = () => {
         const pathName = `${ConfigurationsPath}/appointment-type`;
@@ -250,6 +256,9 @@ const EditAppointmentType = () => {
                                     label={'configuration.appointment_type_details.reschedule_timeframe'}
                                     assistiveText={'configuration.appointment_type_details.days'}
                                     type='timeframe'
+                                    required={isReschedulable}
+                                    disabled={!isReschedulable}
+                                    
                                 />
                             </div>
                             {displayToolTip(t('configuration.appointment_type_details.tooltip_reschedule_timeframe'))}
@@ -263,7 +272,8 @@ const EditAppointmentType = () => {
                         </div>
                         <div className="flex flex-row items-center mr-40">
                             <div className='w-48'>
-                                <ControlledInput name='cancelationTimeFrame'
+                                <ControlledInput
+                                    name='cancelationTimeFrame'
                                     control={control}
                                     defaultValue={appointmentType.cancelationTimeFrame ?? null}
                                     label={'configuration.appointment_type_details.cancelation_timeframe'}
@@ -283,7 +293,8 @@ const EditAppointmentType = () => {
                                 required={isCancelable}
                                 type='timeframe'
                                 disabled={!isCancelable}
-                                prefix={'$'}
+                                prefix={currentCancelationFee === "" ? undefined : "$"}
+                                onChange={(e) => setCurrentCancelationFee(e.target.value)}
                             />
                         </div>
                     </div>
