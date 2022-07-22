@@ -83,7 +83,7 @@ const AppointmentDisplay = ({ appointment, border, isLast, isDetailed }: Appoint
             isDetailed ? <Fragment>
                 {getAppointment()}
             </Fragment> :
-            <div className={`grid grid-cols-2 gap-4 pt-2 ${getBorder()}`}>
+            <div className={`pt-2 ${getBorder()}`}>
                 <div>
                     <div className='body2-medium'>{dateStr()}</div>
                     <div className={'subtitle2'}>{provider?.displayName}</div>

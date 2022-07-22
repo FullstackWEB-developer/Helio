@@ -21,7 +21,7 @@ const Appointments = ({patientChartSummary} : AppointmentsProps) => {
 
     const displayLastAppointment = () => {
         if (patientChartSummary.lastAppointment) {
-            return <AppointmentDisplay appointment={patientChartSummary.lastAppointment} isLast={true}/>;
+            return <AppointmentDisplay appointment={patientChartSummary.lastAppointment} isLast={false}/>;
         } else {
             return <div>{t('patient.summary.no_last_appointment')}</div>;
         }

@@ -37,7 +37,7 @@ const Appointments = ({clinical} : AppointmentsProps) => {
 
     const displayLastAppointment = () => {
         if (clinical.lastAppointment) {
-            return <AppointmentDisplay appointment={clinical.lastAppointment} isLast={true}/>
+            return <AppointmentDisplay appointment={clinical.lastAppointment} isLast={false}/>
         } else {
             return <div>{t('patient.clinical.no_last_appointment')}</div>;
         }
