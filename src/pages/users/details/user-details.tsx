@@ -126,6 +126,10 @@ const UserDetails = () => {
         });
 
     useEffect(() => {
+        control.trigger().then();
+        }, [isForwardEnabled, forwardToSelected]);
+
+    useEffect(() => {
         if (!!user.id && !canEditUser && userId !== user.id) {
             history.replace(NotAuthorizedPath);
         }
