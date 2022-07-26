@@ -1,3 +1,3 @@
-import CallsLogList from "./calls-log-list"
+import CallsLogListWithProvider from "./calls-log-list-with-provider"
 
-export default CallsLogList;
+export default CallsLogListWithProvider;

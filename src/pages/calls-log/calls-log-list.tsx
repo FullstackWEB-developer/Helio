@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import DropdownLabel from '@components/dropdown-label';
 import {DropdownItemModel} from '@components/dropdown';
 import Pagination from '@components/pagination';
@@ -39,6 +39,7 @@ import TicketDetailRating from '@pages/tickets/components/ticket-detail/ticket-d
 import {getContactsNames} from '@shared/services/contacts.service';
 import {GetContactsNames} from '@constants/react-query-constants';
 import ElipsisTooltipTextbox from '@components/elipsis-tooltip-textbox/elipsis-tooltip-textbox';
+import { CallsLogContext } from './context/calls-log-context';
 
 dayjs.extend(utc);
 
@@ -64,11 +65,7 @@ const CallsLogList = () => {
     const [displayRatingsForTicket, setDisplayRatingsForTicket] = useState<number | undefined>(undefined);
     const [contactIds, setContactIds] = useState<string[]>([]);
     const [pageResult, setPageResult] = useState<TicketLogModel[]>([]);
-    const [callsLogFilter, setCallsLogFilter] = useState<TicketLogRequestModel>({
-        ...DEFAULT_PAGING,
-        assignedTo: !isDefaultTeam ? appUser?.id : '',
-        sorts: ['createdOn Desc']
-    });
+    const {searchTerm, setSearchTerm, callsLogFilter, setCallsLogFilter} = useContext(CallsLogContext)!;
 
     useEffect(() => {
         return () => {
@@ -424,11 +421,12 @@ const CallsLogList = () => {
                         </div>}
                     </div>
                     <SearchInputField
+                        value={searchTerm}
                         wrapperClassNames='relative w-full h-full border-l'
                         hasBorderBottom={false}
                         inputClassNames='border-b-0'
                         placeholder='ticket_log.search_calls_placeholder'
-                        onPressEnter={(inputValue) => setCallsLogFilter({...callsLogFilter, searchTerm: inputValue?.trim()})}
+                        onPressEnter={(inputValue) => {setCallsLogFilter({...callsLogFilter, searchTerm: inputValue?.trim(), page: 1}); setSearchTerm(inputValue)}}
                     />
                 </div>
                 <div className='h-full overflow-y-auto'>

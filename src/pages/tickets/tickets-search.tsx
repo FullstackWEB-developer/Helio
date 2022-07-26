@@ -4,7 +4,7 @@ import {useHistory} from 'react-router-dom';
 import {keyboardKeys} from '@components/search-bar/constants/keyboard-keys';
 import {useDispatch, useSelector} from 'react-redux';
 import {exportTickets, getList} from './services/tickets.service';
-import {selectIsTicketsFiltered, selectTicketFilter, selectTicketsPaging} from './store/tickets.selectors';
+import {selectIsTicketsFiltered, selectTicketFilter, selectTicketsPaging, selectSearchTerm} from './store/tickets.selectors';
 import {selectUserOptions} from '@shared/store/lookups/lookups.selectors';
 import {setTicketsFiltered, toggleTicketListFilter} from './store/tickets.slice';
 import {Paging} from '@shared/models/paging.model';
@@ -42,6 +42,7 @@ const TicketsSearch = ({selectedTickets, isAssignModalOpen, setAssignModalOpen, 
     const userList = useSelector(selectUserOptions);
     const paging: Paging = useSelector(selectTicketsPaging);
     const isFiltered = useSelector(selectIsTicketsFiltered);
+    const searchTermStore: string = useSelector(selectSearchTerm);
     const [searchTerm, setSearchTerm] = useState('');
 
     const {control, handleSubmit, formState} = useForm({mode: 'all'});
@@ -59,6 +60,12 @@ const TicketsSearch = ({selectedTickets, isAssignModalOpen, setAssignModalOpen, 
             dispatch(setTicketsFiltered(false));
         }
     }, [dispatch]);
+
+    useEffect(() => {
+        if(searchTermStore === ""){
+            setSearchTerm("");
+        }
+    }, [searchTermStore]);
 
 
     const searchList = (e: React.KeyboardEvent<HTMLInputElement>) => {

@@ -7,7 +7,7 @@ import {keyboardKeys} from '@components/search-bar/constants/keyboard-keys';
 import SearchInputField from '@components/search-input-field/search-input-field';
 import SvgIcon, {Icon} from '@components/svg-icon';
 import {UserDetailStatus} from '@shared/models';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {useTranslation} from 'react-i18next';
 import {useDispatch, useSelector} from 'react-redux';
 import {useHistory} from 'react-router';
@@ -50,6 +50,12 @@ const UserListSearch = ({handleAllCheck,
         dispatch(setUserFilters({filters: {...filters, searchText: searchOnClear ? '' : searchText?.trim()}, resetPagination: true}))
     }
     const [disableConfirmationOpen, setDisableConfirmationOpen] = useState(false);
+
+    useEffect(() => {
+        if(filters?.searchText !== undefined){
+            setSearchText(filters?.searchText);
+        }
+    }, [filters]);
 
     const onDisableCancel = () => {
         setDisableConfirmationOpen(false);

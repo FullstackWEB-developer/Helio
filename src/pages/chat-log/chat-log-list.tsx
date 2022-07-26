@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import DropdownLabel from '@components/dropdown-label';
 import {DropdownItemModel} from '@components/dropdown';
 import Pagination from '@components/pagination';
@@ -40,6 +40,7 @@ import {AddTicketReview, ViewTicketRatings} from '@components/ticket-rating';
 import TicketDetailRating from '@pages/tickets/components/ticket-detail/ticket-detail-rating';
 import {getContactsNames} from '@shared/services/contacts.service';
 import {GetContactsNames} from '@constants/react-query-constants';
+import {CallsLogContext} from '@pages/calls-log/context/calls-log-context';
 
 const ChatsLogList = () => {
     const {t} = useTranslation();
@@ -66,11 +67,7 @@ const ChatsLogList = () => {
         {label: 'ticket_log.my_chat_log', value: ChatLogQueryType.MyChatLog},
         {label: 'ticket_log.team_chat_log', value: ChatLogQueryType.TeamChatLog}
     ];
-    const [chatsLogFilter, setChatsLogFilter] = useState<TicketLogRequestModel>({
-        ...DEFAULT_PAGING,
-        assignedTo: !isDefaultTeam ? appUser?.id : '',
-        sorts: ['createdOn Desc']
-    });
+    const {searchTerm, setSearchTerm, callsLogFilter, setCallsLogFilter} = useContext(CallsLogContext)!;
 
     useEffect(() => {
         return () => {
@@ -95,9 +92,9 @@ const ChatsLogList = () => {
             return;
         }
 
-        const sorts = updateSort([...chatsLogFilter.sorts || []], field, direction);
-        const query = {...chatsLogFilter, sorts: [...sorts]};
-        setChatsLogFilter(query);
+        const sorts = updateSort([...callsLogFilter.sorts || []], field, direction);
+        const query = {...callsLogFilter, sorts: [...sorts]};
+        setCallsLogFilter(query);
     }
 
     const getMoreMenuOption = (data: TicketLogModel) => {
@@ -140,9 +137,9 @@ const ChatsLogList = () => {
         const context = item.value as ChatLogQueryType;
         setCurrentQueryType(context);
         if (context === ChatLogQueryType.MyChatLog) {
-            setChatsLogFilter({...chatsLogFilter, assignedTo: appUser?.id});
+            setCallsLogFilter({...callsLogFilter, assignedTo: appUser?.id});
         } else {
-            setChatsLogFilter({...chatsLogFilter, assignedTo: ''});
+            setCallsLogFilter({...callsLogFilter, assignedTo: ''});
         }
     }
 
@@ -201,9 +198,9 @@ const ChatsLogList = () => {
                 field: 'createdOn',
                 widthClass: 'w-2/12',
                 isSortable: true,
-                sortDirection: getSortDirection(chatsLogFilter.sorts, 'createdOn'),
+                sortDirection: getSortDirection(callsLogFilter.sorts, 'createdOn'),
                 disableNoneSort: true,
-                sortOrder: getSortOrder(chatsLogFilter.sorts, 'createdOn'),
+                sortOrder: getSortOrder(callsLogFilter.sorts, 'createdOn'),
                 onClick: (field: string | undefined, direction: SortDirection) => {
                     applySort(field, direction);
                 },
@@ -322,7 +319,7 @@ const ChatsLogList = () => {
     };
 
 
-    const {isLoading, isFetching} = useQuery([GetChatsLogs, chatsLogFilter], () => getChatsLog(chatsLogFilter), {
+    const {isLoading, isFetching} = useQuery([GetChatsLogs, callsLogFilter], () => getChatsLog(callsLogFilter), {
         enabled: true,
         onSuccess: (response) => {
             const {results, ...paging} = response;
@@ -357,7 +354,7 @@ const ChatsLogList = () => {
 
     const onFilterSubmit = (filter: TicketLogRequestModel) => {
         const {page, pageSize, searchTerm, ...filterParameters} = filter;
-        setChatsLogFilter({...chatsLogFilter, ...filterParameters, ...DEFAULT_PAGING});
+        setCallsLogFilter({...callsLogFilter, ...filterParameters, ...DEFAULT_PAGING});
     }
 
     const onManagerReviewAdd = () => {
@@ -380,7 +377,7 @@ const ChatsLogList = () => {
                         <Pagination
                             value={pagingResult}
                             onChange={(p) => {
-                                setChatsLogFilter({...chatsLogFilter, page: p.page, pageSize: p.pageSize});
+                                setCallsLogFilter({...callsLogFilter, page: p.page, pageSize: p.pageSize});
                             }}
                         />
                     </div>
@@ -399,11 +396,12 @@ const ChatsLogList = () => {
                         </div>}
                     </div>
                     <SearchInputField
+                        value={searchTerm}
                         wrapperClassNames='relative w-full h-full'
                         inputClassNames='border-b-0'
                         hasBorderBottom={false}
                         placeholder='ticket_log.search_chats_placeholder'
-                        onPressEnter={(inputValue) => setChatsLogFilter({...chatsLogFilter, searchTerm: inputValue?.trim()})}
+                        onPressEnter={(inputValue) => {setCallsLogFilter({...callsLogFilter, searchTerm: inputValue?.trim(), page: 1}); setSearchTerm(inputValue)}}
                     />
                 </div>
                 <div className='overflow-y-auto'>

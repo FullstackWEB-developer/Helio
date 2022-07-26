@@ -177,6 +177,9 @@ const UserFilter = ({ isOpen }: { isOpen: boolean }) => {
         if (storedFilters?.searchText && storedFilters.searchText.length > 0) {
             filters.searchText = storedFilters.searchText;
         }
+        if (formValues.search !== undefined) {
+            filters.searchText = formValues.search;
+        }
         dispatch(setUserFilters({ filters, resetPagination: true }));
     }
 
@@ -191,7 +194,9 @@ const UserFilter = ({ isOpen }: { isOpen: boolean }) => {
             departments: clearArray(fieldsValue.departments),
             titles: clearArray(fieldsValue.titles)
         });
-        setFilters({});
+        setFilters({
+            search: ""
+        });
     }
 
     useEffect(() => {

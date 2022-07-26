@@ -252,9 +252,12 @@ const TicketFilter = ({ isOpen }: { isOpen: boolean }) => {
             query.assignedTo.push(values.assignedTo);
         }
 
-        if (searchTerm) {
+        if (searchTerm && values.searchTerm !== "") {
             hasFilter = true;
             query.searchTerm = searchTerm;
+        }else{
+            hasFilter = false;
+            query.searchTerm = "";
         }
 
         if (ticketListQueryType === TicketListQueryType.MyTicket) {
@@ -440,9 +443,11 @@ const TicketFilter = ({ isOpen }: { isOpen: boolean }) => {
             tags: [],
             timePeriod: '',
             patientRating: clearArray(fieldsValue.patientRating),
-            botRating: clearArray(fieldsValue.botRating)
+            botRating: clearArray(fieldsValue.botRating),
         });
-        fetchTickets({});
+        fetchTickets({
+            searchTerm: ""
+        });
     }
     const dateFilters = () => {
         return (<div className={watchTimePeriod === timePeriod_DateRange ? 'block' : 'hidden'}>

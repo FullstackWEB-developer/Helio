@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import { useMemo, useState, useEffect, useCallback } from 'react';
+import { useMemo, useState, useEffect, useCallback, useContext } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import Collapsible from '@components/collapsible/collapsible';
@@ -18,7 +18,10 @@ import { setIsCallsLogFiltered } from '@pages/calls-log/store/calls-log.slice';
 import { setIsChatLogFiltered } from '@pages/chat-log/store/chat-log.slice';
 import { getLookupValues } from '@shared/services/lookups.service';
 import Button from '@components/button/button';
-
+import { CallsLogContext } from '@pages/calls-log/context/calls-log-context';
+import {DEFAULT_PAGING} from '@shared/constants/table-constants';
+import useCheckPermission from '@shared/hooks/useCheckPermission';
+import {selectAppUserDetails} from '@shared/store/app-user/appuser.selectors';
 const TIME_PERIOD_DATE_RANGE_OPTION = '3';
 const DEFAULT_ALL_OPTION = { key: 'all', value: undefined };
 const DEFAULT_ANY_KEY = '';
@@ -39,7 +42,9 @@ const CallsLogFilter = ({ isOpen, value: propsValue, logType, ...props }: CallsL
     const [collapsibleState, setCollapsibleState] = useState<{ [key: string]: boolean }>({});
     const watchTimePeriod = watch('timePeriod');
     const ticketLookupValuesReason = useSelector((state) => selectLookupValues(state, 'TicketReason'));
-
+    const isDefaultTeam = useCheckPermission('Calls.DefaultToTeamView');
+    const appUser = useSelector(selectAppUserDetails);
+    const {setSearchTerm, setCallsLogFilter} = useContext(CallsLogContext)!;
     const addAnyOption = useCallback((list: any[]): Option[] => [
         {
             value: DEFAULT_ANY_KEY,
@@ -134,10 +139,17 @@ const CallsLogFilter = ({ isOpen, value: propsValue, logType, ...props }: CallsL
             reason: '',
             fromDate: undefined,
             toDate: undefined,
-            timePeriod: ''
+            timePeriod: '',
+            searchTerm: ''
         }
         reset(defaults);
         onSubmit(defaults);
+        setSearchTerm("");
+        setCallsLogFilter({
+            ...DEFAULT_PAGING,
+            assignedTo: !isDefaultTeam ? appUser?.id : '',
+            sorts: ['createdOn Desc']
+        });
     }
 
     const onSubmit = (formData: any) => {
