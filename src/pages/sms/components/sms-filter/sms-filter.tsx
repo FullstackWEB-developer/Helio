@@ -32,6 +32,7 @@ const SmsFilter = ({ className, isUserFilterEnabled, value, defaultValue, ...pro
     const dispatch = useDispatch();
     const { t } = useTranslation();
     const userList = useSelector(selectUserOptions);
+    const [displayFilters, setDisplayFilters] = useState<boolean>(true);
     const [fromDateField, setFromDateField] = useState<Date | undefined>(value?.fromDate ? dayjs(value.fromDate).utc().toDate() : undefined);
     const { control, handleSubmit, watch, setValue, reset } = useForm<SmsFilterParamModel>({
         defaultValues: defaultValue
@@ -138,7 +139,15 @@ const SmsFilter = ({ className, isUserFilterEnabled, value, defaultValue, ...pro
 
     const onClearFilter = () => {
         reset();
+        setDisplayFilters(false);
         onFilterClick({});
+        setTimeout(() => {
+            setDisplayFilters(true);
+        }, 0);
+    }
+
+    if (!displayFilters) {
+        return null;
     }
 
     return (<div className={className}>
