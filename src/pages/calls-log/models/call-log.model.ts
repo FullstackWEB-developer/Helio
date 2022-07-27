@@ -20,6 +20,10 @@ export enum ContactStatus {
     Answered = 1,
     Abandoned = 2,
     Missed = 3,
+    AgentDisconnected,
+    ContactDisconnected,
+    HandledByBot,
+    Other
 }
 
 export interface CallLogRequestModel extends PagedRequest {

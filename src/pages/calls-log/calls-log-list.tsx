@@ -344,11 +344,11 @@ const CallsLogList = () => {
             const {results, ...paging} = response;
             setPagingResult({...paging});
             let resultRows = response.results.map(a => a.contactId).filter(Boolean) as string[];
+            setRows(response.results);
             if(resultRows.length > 0){
                 setPageResult(response.results);
                 setContactIds(resultRows);
             }else{
-                setRows(response.results);
                 setContactIds([]);
             }
         }

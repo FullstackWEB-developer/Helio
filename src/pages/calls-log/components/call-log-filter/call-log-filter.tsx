@@ -68,10 +68,13 @@ const CallsLogFilter = ({ isOpen, value: propsValue, logType, ...props }: CallsL
 
     const enumToArray = <T extends any>(enumValue: { [s: string]: T }, exludes: number[] = []) => Object.entries(enumValue)
         .filter(([_, value]) => !isNaN(Number(value)) && !exludes.includes(Number(value)))
-        .map(([key, value]) => ({ key, value }));
+        .map(([key, value]) => {
+            const underscoredKey = utils.spaceBetweenCamelCaseWords(key).toLowerCase().replaceAll(' ', '_');
+            return { key, value, underscoredKey }
+        });
 
     const contactStatusItem = useMemo(() => {
-        return [DEFAULT_ALL_OPTION, ...enumToArray(ContactStatus, logType === 'Chat' ? [2, 3] : [])]
+        return [DEFAULT_ALL_OPTION, ...enumToArray(ContactStatus, logType === 'Chat' ? [2, 3, 4, 5, 6, 7] : [])]
     }, [logType]);
 
     const callLogDirectionItem = useMemo(() => [DEFAULT_ALL_OPTION, ...enumToArray(CommunicationDirection)], []);
@@ -203,7 +206,7 @@ const CallsLogFilter = ({ isOpen, value: propsValue, logType, ...props }: CallsL
         props.onSubmit?.(filter);
     };
 
-    const GetCollapsibleCheckboxControl = (title: string, name: string, items: { key: string; value: any }[]) => {
+    const GetCollapsibleCheckboxControl = (title: string, name: string, items: { key: string; value: any, underscoredKey?: string }[]) => {
         return <Collapsible
             title={title}
             isOpen={collapsibleState[name]}
@@ -215,7 +218,7 @@ const CallsLogFilter = ({ isOpen, value: propsValue, logType, ...props }: CallsL
                         key={item.key}
                         name={`${name}[${item.key}]`}
                         labelClassName='body2'
-                        label={`ticket_log.${item.key.toLowerCase()}`}
+                        label={`ticket_log.${item.underscoredKey ?? item.key.toLowerCase()}`}
                         value={item.value?.toString()}
                     />
                 )
