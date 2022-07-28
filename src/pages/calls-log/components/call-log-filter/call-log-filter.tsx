@@ -23,7 +23,8 @@ import {DEFAULT_PAGING} from '@shared/constants/table-constants';
 import useCheckPermission from '@shared/hooks/useCheckPermission';
 import {selectAppUserDetails} from '@shared/store/app-user/appuser.selectors';
 const TIME_PERIOD_DATE_RANGE_OPTION = '3';
-const DEFAULT_ALL_OPTION = { key: 'all', value: undefined };
+const ALL_KEY = 0;
+const DEFAULT_ALL_OPTION = { key: 'all', value: ALL_KEY };
 const DEFAULT_ANY_KEY = '';
 
 interface CallsLogFilterProps {
@@ -173,7 +174,11 @@ const CallsLogFilter = ({ isOpen, value: propsValue, logType, ...props }: CallsL
                         statuses.push(Number(status.value));
                     }
                 });
-            filter.contactStatus = statuses;
+            if (statuses.map(a => a.toString()).includes(ALL_KEY.toString())) {
+                filter.contactStatus = [];
+            } else {
+                filter.contactStatus = statuses;
+            }
         }
 
         if (formData.callType) {
@@ -186,7 +191,12 @@ const CallsLogFilter = ({ isOpen, value: propsValue, logType, ...props }: CallsL
                         callTypes.push(callType.value);
                     }
                 });
-            filter.communicationDirections = callTypes;
+            if (callTypes.map(a => a.toString()).includes(ALL_KEY.toString())) {
+                filter.communicationDirections = [];
+            } else {
+                filter.communicationDirections = callTypes;
+            }
+
         }
 
         if (logType === 'Call') {
