@@ -1,10 +1,10 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {useHistory} from 'react-router-dom';
 import 'amazon-connect-streams';
 import 'amazon-connect-chatjs';
 import withErrorLogging from '@shared/HOC/with-error-logging';
-import { isCcpVisibleSelector } from '@shared/layout/store/layout.selectors';
+import {isCcpVisibleSelector} from '@shared/layout/store/layout.selectors';
 import {
     clearCCPContext,
     removeCurrentBotContext,
@@ -20,21 +20,21 @@ import {
     setVoiceCounter,
     upsertCurrentBotContext
 } from './store/ccp.slice';
-import { getTicketById, setAssignee, updateConnectAttributes } from '../tickets/services/tickets.service';
-import { selectAgentStates, selectAppUserDetails, selectUserStatus } from '@shared/store/app-user/appuser.selectors';
-import { DragPreviewImage, useDrag } from 'react-dnd';
-import { DndItemTypes } from '@shared/layout/dragndrop/dnd-item-types';
+import {getTicketById, setAssignee, updateConnectAttributes} from '../tickets/services/tickets.service';
+import {selectAgentStates, selectAppUserDetails, selectUserStatus} from '@shared/store/app-user/appuser.selectors';
+import {DragPreviewImage, useDrag} from 'react-dnd';
+import {DndItemTypes} from '@shared/layout/dragndrop/dnd-item-types';
 import './ccp.scss';
-import { setIncomingOrActiveCallFlag, toggleCcp } from '@shared/layout/store/layout.slice';
-import { Trans, useTranslation } from 'react-i18next';
+import {setIncomingOrActiveCallFlag, toggleCcp} from '@shared/layout/store/layout.slice';
+import {Trans, useTranslation} from 'react-i18next';
 import CcpContext from './components/ccp-context';
 import contextPanels from './models/context-panels';
-import { ccpImage } from './ccpImage';
-import { addLiveAgentStatus, setAgentStates, updateUserStatus } from '@shared/store/app-user/appuser.slice';
-import { UserStatus } from '@shared/store/app-user/app-user.models';
+import {ccpImage} from './ccpImage';
+import {addLiveAgentStatus, setAgentStates, updateUserStatus} from '@shared/store/app-user/appuser.slice';
+import {UserStatus} from '@shared/store/app-user/app-user.models';
 import Logger from '@shared/services/logger';
-import { AgentState } from '@shared/models/agent-state';
-import { Icon } from '@components/svg-icon/icon';
+import {AgentState} from '@shared/models/agent-state';
+import {Icon} from '@components/svg-icon/icon';
 import SvgIcon from '@components/svg-icon/svg-icon';
 import {
     selectBotContext,
@@ -45,21 +45,21 @@ import {
     selectInternalCallDetails,
     selectVoiceCounter
 } from './store/ccp.selectors';
-import { useMutation, useQuery } from 'react-query';
-import { CCP_ANIMATION_DURATION } from '@constants/form-constants';
+import {useMutation, useQuery} from 'react-query';
+import {CCP_ANIMATION_DURATION} from '@constants/form-constants';
 import Modal from '@components/modal/modal';
 import Button from '@components/button/button';
-import { CCPConnectionStatus } from './models/connection-status.enum';
-import { QueryGetPatientById, QueryTickets } from '@constants/react-query-constants';
-import { getPatientByIdWithQuery } from '@pages/patients/services/patients.service';
+import {CCPConnectionStatus} from './models/connection-status.enum';
+import {QueryGetPatientById, QueryTickets} from '@constants/react-query-constants';
+import {getPatientByIdWithQuery} from '@pages/patients/services/patients.service';
 import useLocalStorage from '@shared/hooks/useLocalStorage';
 import utils from '@shared/utils/utils';
-import { ContextKeyValuePair } from '@pages/ccp/models/context-key-value-pair';
-import { getUserList } from '@shared/services/lookups.service';
-import { clearAppParameters } from '@shared/store/app/app.slice';
+import {ContextKeyValuePair} from '@pages/ccp/models/context-key-value-pair';
+import {getUserList} from '@shared/services/lookups.service';
+import {clearAppParameters} from '@shared/store/app/app.slice';
 import Spinner from '@components/spinner/Spinner';
 import useBrowserNotification from '@shared/hooks/useBrowserNotification';
-import { Intent } from './models/intent.enum';
+import {Intent} from './models/intent.enum';
 
 const ccpConfig = {
     region: utils.getAppParameter('AwsRegion'),
@@ -220,6 +220,8 @@ const Ccp: React.FC<BoxProps> = ({
                 ccpConnectionFailed(true);
             }, CCP_TIMEOUT_MS);
             return () => clearTimeout(timer);
+        } else if (ccpConnectionState === CCPConnectionStatus.Failed) {
+            ccpConnectionFailed(true);
         }
         return () => { };
     }, [ccpConnectionState]);
@@ -635,7 +637,7 @@ const Ccp: React.FC<BoxProps> = ({
     const displayBrowserNotification = () => {
         if (!notificationContent) {
             return;
-        };
+        }
         const icon = `${utils.getAppParameter('NotificationIconsLocation')}notification-${notificationContent.type}.png`;
         const notification: NotificationOptions = {
             body: notificationContent.body,
