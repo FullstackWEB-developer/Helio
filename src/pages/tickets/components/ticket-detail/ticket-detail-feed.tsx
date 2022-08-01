@@ -56,6 +56,7 @@ const TicketDetailFeed = ({ticket, emailLoading, emailMessages, smsMessages, sms
     }, [dispatch]);
 
     const getUser = (id: string | undefined): User | undefined => !!id ? users.find(user => user.id === id) : undefined;
+    const getUserByEmail = (email: string | undefined): User | undefined => !!email ? users.find(user => user.email === email) : undefined;
 
     const getUsername = (user: User | undefined) => {
         return utils.stringJoin(' ', user?.firstName, user?.lastName)
@@ -125,7 +126,7 @@ const TicketDetailFeed = ({ticket, emailLoading, emailMessages, smsMessages, sms
             });
 
             if(ticket.recordedConversationLink){
-                const user = getUser(ticket.contactAgent);
+                const user = getUserByEmail(ticket.contactAgent);
 
                 let callActivity: Partial<FeedDetailDisplayItem> = {
                     userFullName: getContactUsername(),
