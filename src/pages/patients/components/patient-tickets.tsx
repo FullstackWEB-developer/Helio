@@ -19,6 +19,7 @@ import TicketStatusDot from '@pages/tickets/components/ticket-status-dot';
 import Spinner from '@components/spinner/Spinner';
 import {Link} from 'react-router-dom';
 import './patient-tickets.scss';
+import {TicketStatuses} from '@pages/tickets/models/ticket.status.enum';
 
 interface PatientTicketProps {
     patientId: number;
@@ -90,7 +91,7 @@ const PatientTickets: React.FC<PatientTicketProps> = ({patientId}) => {
                                                         valueText={dayjs().to(dayjs.utc(item.dueDate).local())}
                                                         isDanger={dayjs(item.dueDate).isBefore(sysdate)} />
                                                 )}
-                                                {item.closedOn && (
+                                                {item.closedOn && (item.status === TicketStatuses.Closed || item.status === TicketStatuses.Solved) && (
                                                     <PatientTicketLabel labelText={t('tickets.closed')} valueText={utils.formatUtcDate(item.closedOn, 'MMM D, YYYY h:mm A')} />
                                                 )}
                                                 {item.createdOn && (
