@@ -133,7 +133,7 @@ const AgentStatusTable = () => {
                 title:t('wallboard.agent_status.duration'),
                 field:'duration',
                 widthClass:'w-48',
-                render: (field, record: LiveAgentStatusInfo) => record.timestamp ? AgentStatusDuration({date: record.timestamp}) : null
+                render: (field, record: LiveAgentStatusInfo) => record.timestamp && record.status !== "Offline" ? AgentStatusDuration({date: record.timestamp}) : null
             },
             {
                 title:t('wallboard.agent_status.live_calls'),
