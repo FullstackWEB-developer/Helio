@@ -146,7 +146,14 @@ const UserDetails = () => {
         if (forwardToSelected === CallForwardingType.Phone && !phone) {
             mobilePhoneRefetch();
         }
-    }, [forwardToSelected, getValues, mobilePhoneRefetch])
+    }, [forwardToSelected, getValues, mobilePhoneRefetch]);
+
+    useEffect(() => {
+        let newStatus = usersLiveStatus.find(x => x.userId === storedUserData.id);
+        if (!!newStatus) {
+            setUserLiveStatus(newStatus.status as UserStatus ?? UserStatus.Offline);
+        }
+    }, [usersLiveStatus]);
 
     const loadUserData = (data: UserDetailExtended) => {
         const user = data.user;
