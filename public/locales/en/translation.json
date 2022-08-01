@@ -1315,9 +1315,9 @@
     },
     "tickets_volume": {
       "title": "Tickets Volume",
-      "open": "Open",
+      "created": "Created",
       "closed": "Closed",
-      "open_tickets": "Open Tickets:",
+      "created_tickets": "Created Tickets:",
       "closed_tickets": "Closed Tickets:"
     },
     "by_priority": {

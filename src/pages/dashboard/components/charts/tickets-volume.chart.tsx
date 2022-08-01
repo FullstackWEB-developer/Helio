@@ -35,7 +35,7 @@ const TicketsVolumeChart = ({data}: TicketsVolumeChartProps) => {
             })
         },
         {
-            id: t('dashboard.tickets_volume.open') as string,
+            id: t('dashboard.tickets_volume.created') as string,
             data: data.createdTotal.map(item => {
                 return {
                     x: dayjs(item.label).format(data.volumeDataType === TicketVolumeDataType.SingleDay ? 'YYYY-MM-DD HH:mm:ss' : 'YYYY-MM-DD'),
