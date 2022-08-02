@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import './conversation-header.scss';
 import Avatar from '@components/avatar';
 import MoreMenu from '@components/more-menu'
 import utils from '@shared/utils/utils';
-import { useDispatch, useSelector } from 'react-redux';
-import { ChannelTypes, ContactExtended, TicketMessageSummary } from '@shared/models';
-import { useTranslation } from 'react-i18next';
-import { selectEnumValues, selectEnumValuesAsOptions, selectLookupValues } from '@pages/tickets/store/tickets.selectors';
-import { DropdownItemModel } from '@components/dropdown';
+import {useDispatch, useSelector} from 'react-redux';
+import {ChannelTypes, ContactExtended, TicketMessageSummary} from '@shared/models';
+import {useTranslation} from 'react-i18next';
+import {selectEnumValues, selectEnumValuesAsOptions, selectLookupValues} from '@pages/tickets/store/tickets.selectors';
+import {DropdownItemModel} from '@components/dropdown';
 import {
     MORE_MENU_OPTION_ADD_CONTACT,
     MORE_MENU_OPTION_ARCHIVE_TICKET,
@@ -19,26 +19,26 @@ import {
     MORE_MENU_OPTION_SPAM,
     MORE_MENU_OPTION_TICKET
 } from '@pages/sms/constants';
-import { ContactsPath, PatientsPath, TicketsPath } from '@app/paths';
-import { Link, useHistory } from 'react-router-dom';
-import { Icon } from '@components/svg-icon';
-import { useMutation } from 'react-query';
-import { addFeed, getEnumByType, setDelete, setStatus } from '@pages/tickets/services/tickets.service';
-import { getLookupValues } from '@shared/services/lookups.service';
-import { addSnackbarMessage } from '@shared/store/snackbar/snackbar.slice';
-import { SnackbarType } from '@components/snackbar/snackbar-type.enum';
-import { TicketStatuses } from '@pages/tickets/models/ticket.status.enum';
+import {ContactsPath, PatientsPath, TicketsPath} from '@app/paths';
+import {Link, useHistory} from 'react-router-dom';
+import {Icon} from '@components/svg-icon';
+import {useMutation} from 'react-query';
+import {addFeed, getEnumByType, setDelete, setStatus} from '@pages/tickets/services/tickets.service';
+import {getLookupValues} from '@shared/services/lookups.service';
+import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
+import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
+import {TicketStatuses} from '@pages/tickets/models/ticket.status.enum';
 import Spinner from '@components/spinner/Spinner';
 import Modal from '@components/modal/modal';
-import { ControlledInput, ControlledTextArea } from '@components/controllers';
-import { useForm } from 'react-hook-form';
+import {ControlledInput, ControlledTextArea} from '@components/controllers';
+import {useForm} from 'react-hook-form';
 import Button from '@components/button/button';
-import { createBlockAccess } from '@pages/blacklists/services/blacklists.service';
+import {createBlockAccess} from '@pages/blacklists/services/blacklists.service';
 import ConversationHeaderPopup from '@components/conversation-header-popup/conversation-header-popup';
-import { ExtendedPatient } from '@pages/patients/models/extended-patient';
-import { BlockAccessType } from '@pages/blacklists/models/blacklist.model';
-import { Ticket } from '@pages/tickets/models/ticket';
-import { FeedTypes, TicketFeed } from '@pages/tickets/models/ticket-feed';
+import {ExtendedPatient} from '@pages/patients/models/extended-patient';
+import {BlockAccessType} from '@pages/blacklists/models/blacklist.model';
+import {Ticket} from '@pages/tickets/models/ticket';
+import {FeedTypes, TicketFeed} from '@pages/tickets/models/ticket-feed';
 
 interface ConversationHeaderProps {
     info: TicketMessageSummary;
@@ -253,14 +253,14 @@ const ConversationHeader = ({ info, forNewTicketMessagePurpose, patientPhoto, co
             setBlockedAccessModalOpen(false);
             dispatch(addSnackbarMessage({
                 type: SnackbarType.Success,
-                message: t('email.inbox.blocked_success', { value: utils.formatPhoneWithoutBrackets(variables.value)}),
+                message: t('email.inbox.blocked_success', { value: variables.accessType === BlockAccessType.Phone ? utils.formatPhoneWithoutBrackets(variables.value) : variables.value }),
             }));
             setMarkedAsSpam(true);
         },
         onError: (_, variables) => {
             dispatch(addSnackbarMessage({
                 type: SnackbarType.Error,
-                message: t('email.inbox.blocked_failure', { value: utils.formatPhoneWithoutBrackets(variables.value) })
+                message: t('email.inbox.blocked_failure', { value: conversationChannel === ChannelTypes.SMS ? utils.formatPhoneWithoutBrackets(variables.value) : variables.value })
             }));
         }
     });
