@@ -173,6 +173,13 @@ const SvgIcon = ({ type, wrapperClassName = '', className = 'icon-medium', fillC
             </g>
         </svg>
     }
+    const getIconReports = () => {
+        return <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className={fillClass}>
+            <g transform="translate(-552 -632)"><rect width="24" height="24" transform="translate(552 632)" fill="none"/>
+                <path d="M11,2V22A10.056,10.056,0,0,1,11,2Zm2.03,0v8.99H22A10.044,10.044,0,0,0,13.03,2Zm0,11.01V22A10.035,10.035,0,0,0,22,13.01Z" transform="translate(552 632)"/>
+            </g>
+        </svg>
+    }
     const getIconBot = () => {
         return <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className={mainClass}>
             <path d="M0,0H24V24H0Z" fill="none" />
@@ -1407,6 +1414,7 @@ const SvgIcon = ({ type, wrapperClassName = '', className = 'icon-medium', fillC
         [Icon.AddPhone]: getAddPhoneIcon,
         [Icon.IncomingEmail]: getIconIncomingEmail,
         [Icon.OutgoingEmail]: getIconOutgoingEmail,
+        [Icon.Reports]: getIconReports,
     }
 
     const iconClicked = (e: React.MouseEvent<HTMLDivElement>) => {

@@ -378,7 +378,7 @@ exports[`Ticket List tests renders ticket-list correctly 1`] = `
                     <input
                       autocomplete="off"
                       class="relative truncate flex-shrink flex-grow flex-auto leading-normal w-px pl-4 body2 input-pt h-14 cursor-pointer"
-                      max="2022-07-20"
+                      max="2022-08-02"
                       min="0001-01-01"
                       name="fromDate"
                       readonly=""
@@ -433,7 +433,7 @@ exports[`Ticket List tests renders ticket-list correctly 1`] = `
                       autocomplete="off"
                       class="relative truncate flex-shrink flex-grow flex-auto leading-normal w-px pl-4 body2 input-pt h-14 cursor-pointer"
                       disabled=""
-                      max="2022-07-20"
+                      max="2022-08-02"
                       min="0001-01-01"
                       name="toDate"
                       readonly=""

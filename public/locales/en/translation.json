@@ -119,7 +119,8 @@
     "users": "Users",
     "blacklists": "Blocked Access",
     "users_bulk": "Add Users In Bulk",
-    "configurations": "Configurations"
+    "configurations": "Configurations",
+    "reports": "Reports"
   },
   "footer": {
     "hotspots": "Hotspots",
@@ -2262,5 +2263,25 @@
     "chrome_settings": "Google Chrome browser settings",
     "firefox_settings": "Firefox browser settings",
     "edge_settings": "Microsoft Edge browser settings"
+  },
+  "reports": {
+    "performance_charts": "Performance Charts",
+    "reports": "Reports",
+    "report": "Report",
+    "view": "View",
+    "download": "Download",
+    "report_options": {
+      "agent_reports": "Agent Reports",
+      "bot_reports": "Bot Reports",
+      "system_reports": "System Reports",
+      "queue_reports": "Queue Reports"
+    },
+    "view_options": {
+      "yesterday": "Yesterday",
+      "last_7_days": "Last 7 Days",
+      "last_week": "Last Week (Mon - Sun)",
+      "last_month": "Last Calendar Month",
+      "monthly_reports": "Monthly Reports"
+    }
   }
 }

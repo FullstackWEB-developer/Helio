@@ -1,0 +1,370 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Reports tests renders reports correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="reports w-full h-full overflow-y-auto p-6"
+  >
+    <h5>
+      reports.reports
+    </h5>
+    <div
+      class="mt-6"
+    >
+      <div>
+        <div
+          class="flex flex-row  border-b"
+        >
+          <div
+            class="tab-title px-7 pb-2 cursor-pointer pt-2 border-b-2 border-primary subtitle2"
+          >
+            reports.reports
+          </div>
+          <div
+            class="tab-title px-7 pb-2 cursor-pointer pt-2 body2"
+          >
+            reports.performance_charts
+          </div>
+        </div>
+        <div>
+          <div
+            class="my-6"
+          >
+            <form
+              class="flex flex-1 flex-col group"
+            >
+              <div
+                class="flex flex-row mt-5 gap-6"
+              >
+                <div
+                  class="w-1/4 h-14"
+                >
+                  <div
+                    class="select-wrapper relative w-full flex flex-col h-20 "
+                  >
+                    <div
+                      class="select relative flex flex-col "
+                    >
+                      <input
+                        autocomplete="on"
+                        autocorrect="on"
+                        class="pl-4 pr-8 body2 select-trigger-pt h-14 relative truncate select-trigger   "
+                        spellcheck="true"
+                        type="text"
+                        value=""
+                      />
+                      <label
+                        class="select-label absolute truncate"
+                      >
+                        <span
+                          class="select-label-span body2"
+                        >
+                          reports.report
+                        </span>
+                      </label>
+                      <div
+                        class="absolute pt-4 right-4 "
+                      >
+                        <div
+                          class="flex flex-row items-start"
+                        >
+                          <div
+                            class="cursor-pointer"
+                          >
+                            <div
+                              class=""
+                            >
+                              <svg
+                                class="icon-medium "
+                                height="24"
+                                viewBox="0 0 24 24"
+                                width="24"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <rect
+                                  fill="none"
+                                  height="24"
+                                  width="24"
+                                />
+                                <path
+                                  class="select-arrow-fill"
+                                  d="M7,14l1.273-1.273L2.545,7,8.273,1.273,7,0,0,7Z"
+                                  transform="translate(5 16.273) rotate(-90)"
+                                />
+                              </svg>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="absolute py-2 options"
+                      >
+                        <div
+                          class="w-full select-cell justify-between flex items-center  body2   cursor-pointer  "
+                        >
+                          <div
+                            class="flex flex-col justify-center w-full"
+                            data-test-id="select-cell-icon-content"
+                          >
+                            <div
+                              class="flex items-center pl-4"
+                              data-test-id="select-cell-text-reports.report_options.agent_reports"
+                            >
+                              reports.report_options.agent_reports
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="w-full select-cell justify-between flex items-center  body2   cursor-pointer  "
+                        >
+                          <div
+                            class="flex flex-col justify-center w-full"
+                            data-test-id="select-cell-icon-content"
+                          >
+                            <div
+                              class="flex items-center pl-4"
+                              data-test-id="select-cell-text-reports.report_options.bot_reports"
+                            >
+                              reports.report_options.bot_reports
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="w-full select-cell justify-between flex items-center  body2   cursor-pointer  "
+                        >
+                          <div
+                            class="flex flex-col justify-center w-full"
+                            data-test-id="select-cell-icon-content"
+                          >
+                            <div
+                              class="flex items-center pl-4"
+                              data-test-id="select-cell-text-reports.report_options.system_reports"
+                            >
+                              reports.report_options.system_reports
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="w-full select-cell justify-between flex items-center  body2   cursor-pointer  "
+                        >
+                          <div
+                            class="flex flex-col justify-center w-full"
+                            data-test-id="select-cell-icon-content"
+                          >
+                            <div
+                              class="flex items-center pl-4"
+                              data-test-id="select-cell-text-reports.report_options.queue_reports"
+                            >
+                              reports.report_options.queue_reports
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="w-1/4 h-14"
+                >
+                  <div
+                    class="select-wrapper relative w-full flex flex-col h-20 "
+                  >
+                    <div
+                      class="select relative flex flex-col "
+                    >
+                      <input
+                        autocomplete="on"
+                        autocorrect="on"
+                        class="pl-4 pr-8 body2 select-trigger-pt h-14 relative truncate select-trigger   "
+                        spellcheck="true"
+                        type="text"
+                        value=""
+                      />
+                      <label
+                        class="select-label absolute truncate"
+                      >
+                        <span
+                          class="select-label-span body2"
+                        >
+                          reports.view
+                        </span>
+                      </label>
+                      <div
+                        class="absolute pt-4 right-4 "
+                      >
+                        <div
+                          class="flex flex-row items-start"
+                        >
+                          <div
+                            class="cursor-pointer"
+                          >
+                            <div
+                              class=""
+                            >
+                              <svg
+                                class="icon-medium "
+                                height="24"
+                                viewBox="0 0 24 24"
+                                width="24"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <rect
+                                  fill="none"
+                                  height="24"
+                                  width="24"
+                                />
+                                <path
+                                  class="select-arrow-fill"
+                                  d="M7,14l1.273-1.273L2.545,7,8.273,1.273,7,0,0,7Z"
+                                  transform="translate(5 16.273) rotate(-90)"
+                                />
+                              </svg>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="absolute py-2 options"
+                      >
+                        <div
+                          class="w-full select-cell justify-between flex items-center  body2   cursor-pointer  "
+                        >
+                          <div
+                            class="flex flex-col justify-center w-full"
+                            data-test-id="select-cell-icon-content"
+                          >
+                            <div
+                              class="flex items-center pl-4"
+                              data-test-id="select-cell-text-reports.view_options.yesterday"
+                            >
+                              reports.view_options.yesterday
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="w-full select-cell justify-between flex items-center  body2   cursor-pointer  "
+                        >
+                          <div
+                            class="flex flex-col justify-center w-full"
+                            data-test-id="select-cell-icon-content"
+                          >
+                            <div
+                              class="flex items-center pl-4"
+                              data-test-id="select-cell-text-reports.view_options.last_7_days"
+                            >
+                              reports.view_options.last_7_days
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="w-full select-cell justify-between flex items-center  body2   cursor-pointer  "
+                        >
+                          <div
+                            class="flex flex-col justify-center w-full"
+                            data-test-id="select-cell-icon-content"
+                          >
+                            <div
+                              class="flex items-center pl-4"
+                              data-test-id="select-cell-text-reports.view_options.last_week"
+                            >
+                              reports.view_options.last_week
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="w-full select-cell justify-between flex items-center  body2   cursor-pointer  "
+                        >
+                          <div
+                            class="flex flex-col justify-center w-full"
+                            data-test-id="select-cell-icon-content"
+                          >
+                            <div
+                              class="flex items-center pl-4"
+                              data-test-id="select-cell-text-reports.view_options.last_month"
+                            >
+                              reports.view_options.last_month
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="w-full select-cell justify-between flex items-center  body2   cursor-pointer  "
+                        >
+                          <div
+                            class="flex flex-col justify-center w-full"
+                            data-test-id="select-cell-icon-content"
+                          >
+                            <div
+                              class="flex items-center pl-4"
+                              data-test-id="select-cell-text-reports.view_options.monthly_reports"
+                            >
+                              reports.view_options.monthly_reports
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="w-2/4 h-14 flex items-center"
+                >
+                  <button
+                    class="medium-button"
+                    type="submit"
+                  >
+                    <div
+                      class="flex flex-row justify-center items-center space-x-2"
+                    >
+                      <div>
+                        reports.view
+                      </div>
+                    </div>
+                  </button>
+                  <button
+                    class="secondary-medium-button mx-6"
+                    type="button"
+                  >
+                    <div
+                      class="flex flex-row justify-center items-center space-x-2"
+                    >
+                      <div
+                        class="w-6 flex"
+                      >
+                        <div
+                          class=""
+                        >
+                          <svg
+                            class="icon-medium "
+                            height="24"
+                            viewBox="0 0 24 24"
+                            width="24"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <rect
+                              fill="none"
+                              height="24"
+                              width="24"
+                            />
+                            <path
+                              class="green-icon-fill"
+                              d="M19,9H15V3H9V9H5l7,7ZM5,18v2H19V18Z"
+                              transform="translate(0 1)"
+                            />
+                          </svg>
+                        </div>
+                      </div>
+                      <div>
+                        reports.download
+                      </div>
+                    </div>
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

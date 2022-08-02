@@ -4,7 +4,7 @@ import {useLocation} from 'react-router-dom';
 import {toggleNavigation} from './store/layout.slice';
 import React, {useMemo} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {BlackListsPath, ConfigurationsPath, TicketsPath, UsersPath} from '@app/paths';
+import {BlackListsPath, ConfigurationsPath, ReportsPath, TicketsPath, UsersPath} from '@app/paths';
 import SvgIcon from '@components/svg-icon/svg-icon';
 import {Icon} from '@components/svg-icon/icon';
 import './navigation.scss';
@@ -103,6 +103,13 @@ const Navigation = () => {
              teamValue: unreadTeamEmailCount,
              myBadgeLabel: t('common.my_emails'),
              teamBadgeLabel: t('common.team_emails')
+        },
+        {
+            title: t('navigation.reports'),
+            link: ReportsPath,
+            id: 'navigation-reports',
+            icon: <SvgIcon type={Icon.Reports} fillClass='active-item-icon' />,
+            permission: 'Reports.Access'
         },
         {
             title: t('navigation.users'),

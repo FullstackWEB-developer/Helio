@@ -73,6 +73,7 @@ const ControlledSelect = ({
                 {...controllerProps}
                 onSelect={(option) => onSelected(controllerProps, option)}
                 data-test-id={`${name}-test-id`}
+                data-testid={`${name}-testid`}
                 label={label}
                 allowClear={props.allowClear}
                 className={className}
