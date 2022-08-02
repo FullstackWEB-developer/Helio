@@ -62,12 +62,11 @@ export const refreshAccessToken = async () => {
 
                 if (response) {
                     const newAuth: AuthenticationInfo = {
+                        ...auth,
                         name: response.account?.name as string,
                         accessToken: response.idToken,
                         expiresOn: response.expiresOn as Date,
-                        username: response.account?.username as string,
-                        isLoggedIn: true,
-                        isGuestLogin: auth.isGuestLogin
+                        username: response.account?.username as string
                     };
                     const currentToken = auth?.accessToken;
                     if (newAuth?.accessToken !== currentToken) {
@@ -77,8 +76,6 @@ export const refreshAccessToken = async () => {
                 }
             } catch (error: any) {
                 debugger;
-                console.error('Error getMsalInstance ' + JSON.stringify(error));
-                console.dir(error);
                 if (error instanceof InteractionRequiredAuthError) {
                     if (getMsalInstance() !== undefined) {
                         let errResponse =  await getMsalInstance()!
@@ -87,13 +84,10 @@ export const refreshAccessToken = async () => {
                                 logger.error('Error logging in popup ' + JSON.stringify(error));
                                 return null;
                             });
-                        console.error('Refresh Token Response ' + JSON.stringify(errResponse));
-                        console.dir(errResponse);
                         return errResponse?.idToken;
                     }
                 } else {
                     console.error('Error refreshing token ' + JSON.stringify(error));
-                    logger.error('Error refreshing token.', error);
                 }
             }
         }
