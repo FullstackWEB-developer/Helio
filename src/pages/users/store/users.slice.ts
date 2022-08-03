@@ -140,7 +140,8 @@ const usersSlice = createSlice({
                         filteredSelection = filteredSelection.filter((u: SelectExternalUser) =>
                             u.info?.displayName?.toLowerCase()?.includes(searchTermLower || '') ||
                             u.info?.department?.toLowerCase()?.includes(searchTermLower || '') ||
-                            u.info?.jobTitle?.toLowerCase()?.includes(searchTermLower || ''));
+                            u.info?.jobTitle?.toLowerCase()?.includes(searchTermLower || '') ||
+                            u.info?.mail?.toLowerCase()?.includes(searchTermLower || ''));
                     }
                     state.filteredSelectedExternalUsers = filteredSelection;
                 }
