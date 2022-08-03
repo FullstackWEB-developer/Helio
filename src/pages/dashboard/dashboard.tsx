@@ -7,7 +7,7 @@ import {
     getDashboardData,
     getEnumByType
 } from '@pages/tickets/services/tickets.service';
-import { getLookupValues } from '@shared/services/lookups.service';
+import {getLocations, getLookupValues} from '@shared/services/lookups.service';
 import {useTranslation} from 'react-i18next';
 import './dashboard.scss';
 import {DropdownModel} from '@components/dropdown/dropdown.models';
@@ -28,11 +28,12 @@ import {DashboardResponse} from '@pages/dashboard/models/dashboard-response';
 import {AgentStatus} from '@shared/models';
 import {addLiveAgentStatus} from '@shared/store/app-user/appuser.slice';
 import {useDispatch} from 'react-redux';
-import {getLocations} from '@shared/services/lookups.service';
 import classNames from 'classnames';
 import {setDashboardFilterEndDate} from '@shared/store/app/app.slice';
-import { BadgeValues } from '@pages/tickets/models/badge-values.model';
+import {BadgeValues} from '@pages/tickets/models/badge-values.model';
 import dayjs from 'dayjs';
+import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
+import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
 
 export const Dashboard = () => {
     const {t} = useTranslation();
@@ -100,10 +101,16 @@ export const Dashboard = () => {
     }, [history.location.search])
 
 
-    const {isLoading, error, data, refetch, isFetching} = useQuery<DashboardResponse, Error>(GetDashboard, () =>
+    const {isLoading, data, refetch, isFetching} = useQuery<DashboardResponse, Error>(GetDashboard, () =>
         getDashboardData(selectedDashboardType, selectedDashboardTime, selectedStartDate, selectedEndDate), {
         retry: 3,
-        enabled: false
+        enabled: false,
+        onError: () => {
+            dispatch(addSnackbarMessage({
+                type: SnackbarType.Error,
+                message:'common.error'
+            }));
+        }
     });
 
 
@@ -146,10 +153,6 @@ export const Dashboard = () => {
         } else if( id === DashboardTimeframes.month) {
             dispatch(setDashboardFilterEndDate(dayjs().endOf('month').toDate()));
         }
-    }
-
-    if (error) {
-        return <div>{t('common.error')}</div>
     }
 
     let dashboardInformation = data;
