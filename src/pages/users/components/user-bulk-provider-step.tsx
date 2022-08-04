@@ -8,7 +8,7 @@ import {
     selectExternalUsersSelection, selectFilteredExternalUsersSelection,
     selectLocalBulkFilters, selectSelectedUsersLocalPagination
 } from '../store/users.selectors';
-import {setLocalBulkFilters} from '../store/users.slice';
+import {setBulkLocalUsersFiltered, setLocalBulkFilters} from '../store/users.slice';
 import BulkGridDropdown from './bulk-grid-dropdown';
 
 const UserBulkProviderStep = () => {
@@ -33,7 +33,8 @@ const UserBulkProviderStep = () => {
     }
 
     useEffect(() => {
-        dispatch(setLocalBulkFilters({filters: undefined, resetPagination: true}))
+        dispatch(setLocalBulkFilters({filters: undefined, resetPagination: true}));
+        dispatch(setBulkLocalUsersFiltered(false));
     }, []);
 
     const usersToDisplay = displayList();

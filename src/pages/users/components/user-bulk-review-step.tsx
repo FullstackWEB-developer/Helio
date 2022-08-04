@@ -6,7 +6,7 @@ import React, {useEffect, useMemo} from 'react';
 import {useTranslation} from 'react-i18next';
 import {useDispatch, useSelector} from 'react-redux';
 import {selectExternalUsersSelection, selectFilteredExternalUsersSelection, selectLocalBulkFilters, selectSelectedUsersLocalPagination} from '../store/users.selectors';
-import {setLocalBulkFilters} from '../store/users.slice';
+import {setBulkLocalUsersFiltered, setLocalBulkFilters} from '../store/users.slice';
 
 const UserBulkReviewStep = ({handleInvitationMessageChange, invitationMessage}: {invitationMessage: string, handleInvitationMessageChange: (message: string) => void}) => {
     const {t} = useTranslation();
@@ -35,7 +35,8 @@ const UserBulkReviewStep = ({handleInvitationMessageChange, invitationMessage}: 
     const usersToDisplay = displayList();
 
     useEffect(() => {
-        dispatch(setLocalBulkFilters({filters: undefined, resetPagination: true}))
+        dispatch(setLocalBulkFilters({filters: undefined, resetPagination: true}));
+        dispatch(setBulkLocalUsersFiltered(false));
     }, []);
 
     return (

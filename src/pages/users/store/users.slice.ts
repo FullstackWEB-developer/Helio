@@ -41,6 +41,9 @@ const usersSlice = createSlice({
         setBulkUsersFiltered(state, {payload}: PayloadAction<boolean>) {
             state.isBulkUsersFiltered = payload;
         },
+        setBulkLocalUsersFiltered(state, {payload}: PayloadAction<boolean>) {
+            state.isBulkLocalUsersFiltered = payload;
+        },
         setIsBulkFilterOpen(state, {payload}: PayloadAction<boolean>) {
             state.isBulkFilterOpen = payload
         },
@@ -206,7 +209,8 @@ export const {
     setIsLocalBulkFilterOpen,
     setSelectedUserProviderMapping,
     clearSelectedUserProviderMapping,
-    setBulkUsersFiltered
+    setBulkUsersFiltered,
+    setBulkLocalUsersFiltered
 } = usersSlice.actions;
 
 export default usersSlice.reducer;

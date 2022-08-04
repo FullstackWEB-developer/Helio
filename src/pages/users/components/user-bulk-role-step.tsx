@@ -10,7 +10,7 @@ import {BulkRolePicker} from '../models/bulk-role-picker.enum';
 import {selectExternalUsersSelection, selectFilteredExternalUsersSelection, selectLocalBulkFilters, selectSelectedUsersLocalPagination} from '../store/users.selectors';
 import BulkGridDropdown from './bulk-grid-dropdown';
 import {Option} from '@components/option/option';
-import {setLocalBulkFilters, setRoleToAllSelectedUsers} from '../store/users.slice';
+import {setBulkLocalUsersFiltered, setLocalBulkFilters, setRoleToAllSelectedUsers} from '../store/users.slice';
 import {getRoleWithState} from '@shared/services/user.service';
 
 
@@ -40,7 +40,8 @@ const UserBulkRoleStep = ({rolePickerBehavior}: {rolePickerBehavior: BulkRolePic
     }
 
     useEffect(() => {
-        dispatch(setLocalBulkFilters({filters: undefined, resetPagination: true}))
+        dispatch(setLocalBulkFilters({filters: undefined, resetPagination: true}));
+        dispatch(setBulkLocalUsersFiltered(false));
     }, []);
 
     useEffect(() => {

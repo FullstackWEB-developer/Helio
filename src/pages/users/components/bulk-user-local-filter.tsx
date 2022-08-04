@@ -10,7 +10,7 @@ import {Controller, useForm} from 'react-hook-form';
 import Checkbox, {CheckboxCheckEvent} from '@components/checkbox/checkbox';
 import {SelectExternalUser} from '@shared/models';
 import {UserQueryFilter} from '../models/user-filter-query.model';
-import {setLocalBulkFilters} from '../store/users.slice';
+import {setBulkLocalUsersFiltered, setLocalBulkFilters} from '../store/users.slice';
 import {getRoleWithState} from '@shared/services/user.service';
 import {BulkAddStep} from '../models/bulk-add-step.enum';
 
@@ -134,6 +134,12 @@ const BulkUserLocalFilter = ({currentStep}: {currentStep: BulkAddStep}) => {
 
         if (storedFilters?.searchText && storedFilters.searchText.length > 0) {
             filters.searchText = storedFilters.searchText;
+        }
+
+        if (filters.searchText || filters.jobTitle || filters.departments || filters.rolesUnassigned || filters.roles) {
+            dispatch(setBulkLocalUsersFiltered(true));
+        } else {
+            dispatch(setBulkLocalUsersFiltered(false));
         }
 
         dispatch(setLocalBulkFilters({filters, resetPagination: true}));
