@@ -698,7 +698,7 @@ const Ccp: React.FC<BoxProps> = ({
                 </Modal>
             </div>
             <DragPreviewImage src={ccpImage} connect={preview} />
-            <div className={`ccp-main z-50 ${animateToggle ? 'ccp-toggle-animate' : ''} ` + (isCcpVisibleRef.current ? 'block' : 'hidden')}
+            <div className={`ccp-main ${animateToggle ? 'ccp-toggle-animate' : ''} ` + (isCcpVisibleRef.current ? 'block' : 'hidden')}
                 style={{ left, top, opacity: opacity, visibility: delayCcpDisplaying ? 'hidden' : 'visible' }}
                 onMouseEnter={() => setHover(true)}
                 onMouseLeave={() => setHover(false)}
