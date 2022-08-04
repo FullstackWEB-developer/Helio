@@ -21,7 +21,8 @@ export interface UsersState {
     bulkLocalFilters: UserQueryFilter | undefined;
     isBulkLocalFilterOpen: boolean;
     filteredSelectedExternalUsers: SelectExternalUser[],
-    isBulkUsersFiltered: boolean
+    isBulkUsersFiltered: boolean,
+    isBulkLocalUsersFiltered: boolean
 }
 
 const initialUsersState: UsersState = {
@@ -42,7 +43,8 @@ const initialUsersState: UsersState = {
     bulkLocalFilters: undefined,
     isBulkLocalFilterOpen: false,
     filteredSelectedExternalUsers: [],
-    isBulkUsersFiltered: false
+    isBulkUsersFiltered: false,
+    isBulkLocalUsersFiltered: false
 }
 
 export default initialUsersState;

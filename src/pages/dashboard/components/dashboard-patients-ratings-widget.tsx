@@ -2,14 +2,11 @@ import {PatientRatings} from '@pages/dashboard/models/patient-ratings.model';
 import {useTranslation} from 'react-i18next';
 import SvgIcon from '@components/svg-icon/svg-icon';
 import {Icon} from '@components/svg-icon/icon';
-import StatusDot from '@components/status-dot/status-dot';
-import {UserStatus} from '@shared/store/app-user/app-user.models';
 import './ratings-widget.scss';
 import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 import { addSnackbarMessage } from '@shared/store/snackbar/snackbar.slice';
 import { SnackbarType } from '@components/snackbar/snackbar-type.enum';
-import { SnackbarPosition } from '@components/snackbar/snackbar-position.enum';
 import { getOverallPatientReviews } from '@pages/tickets/services/tickets.service';
 import { DashboardTypes } from '../enums/dashboard-type.enum';
 import { useDispatch } from 'react-redux';
@@ -45,8 +42,7 @@ const DashboardPatientRatingsWidget = ({data}: PatientRatingsProps) => {
         onError: () => {
             dispatch(addSnackbarMessage({
                 type: SnackbarType.Error,
-                message: 'external_access.feedbacks.result_failed',
-                position: SnackbarPosition.TopCenter
+                message: 'external_access.feedbacks.fetch_failed',
             }));
         },
         enabled: !data

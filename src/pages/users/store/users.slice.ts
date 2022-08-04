@@ -41,6 +41,9 @@ const usersSlice = createSlice({
         setBulkUsersFiltered(state, {payload}: PayloadAction<boolean>) {
             state.isBulkUsersFiltered = payload;
         },
+        setBulkLocalUsersFiltered(state, {payload}: PayloadAction<boolean>) {
+            state.isBulkLocalUsersFiltered = payload;
+        },
         setIsBulkFilterOpen(state, {payload}: PayloadAction<boolean>) {
             state.isBulkFilterOpen = payload
         },
@@ -140,7 +143,8 @@ const usersSlice = createSlice({
                         filteredSelection = filteredSelection.filter((u: SelectExternalUser) =>
                             u.info?.displayName?.toLowerCase()?.includes(searchTermLower || '') ||
                             u.info?.department?.toLowerCase()?.includes(searchTermLower || '') ||
-                            u.info?.jobTitle?.toLowerCase()?.includes(searchTermLower || ''));
+                            u.info?.jobTitle?.toLowerCase()?.includes(searchTermLower || '') ||
+                            u.info?.mail?.toLowerCase()?.includes(searchTermLower || ''));
                     }
                     state.filteredSelectedExternalUsers = filteredSelection;
                 }
@@ -205,7 +209,8 @@ export const {
     setIsLocalBulkFilterOpen,
     setSelectedUserProviderMapping,
     clearSelectedUserProviderMapping,
-    setBulkUsersFiltered
+    setBulkUsersFiltered,
+    setBulkLocalUsersFiltered
 } = usersSlice.actions;
 
 export default usersSlice.reducer;

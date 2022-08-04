@@ -1043,7 +1043,8 @@
       "result_paragraph_2": "Would you give us feedback on ",
       "result_paragraph_3": " and help us spread the word?",
       "feedback_button": "Give Feedback on ",
-      "result_failed": "Submit feedback failed."
+      "result_failed": "Submit feedback failed.",
+      "fetch_failed": "Could not get feedback data. Please try again later"
     },
     "schedule_appointment": {
       "what_you_are_coming_for": "Tell us what you are coming in for.",

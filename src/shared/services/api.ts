@@ -97,13 +97,13 @@ export const refreshAccessToken = async () => {
 Api.interceptors.response.use(
     response => response,
     error => {
-        if (error.response.status === 403) {
+        if (error.response?.status === 403) {
             store.dispatch(addSnackbarMessage({
                 type: SnackbarType.Error,
                 message: i18n.t('security.not_authorized')
             }));
         }
-        if (error.response.status !== 401) {
+        if (error.response?.status !== 401) {
             return Promise.reject(error);
         }
         const userState = store.getState().appUserState;

@@ -24,3 +24,4 @@ export const selectLocalBulkFilters = (state: RootState) => state.usersState.bul
 export const selectIsLocalBulkFilterOpen = (state: RootState) => state.usersState.isBulkLocalFilterOpen as boolean;
 export const selectIsBulkUsersFiltered = (state: RootState) => state.usersState.isBulkUsersFiltered as boolean;
 export const selectFilteredExternalUsersSelection = (state: RootState) => state.usersState.filteredSelectedExternalUsers as SelectExternalUser[];
+export const selectIsBulkLocalUsersFiltered = (state: RootState) => state.usersState.isBulkLocalUsersFiltered as boolean;

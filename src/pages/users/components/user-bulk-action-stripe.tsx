@@ -12,6 +12,7 @@ import {BulkAddStep} from '../models/bulk-add-step.enum';
 import {
     selectBulkFilters,
     selectExternalUsersSelection,
+    selectIsBulkLocalUsersFiltered,
     selectIsBulkUsersFiltered,
     selectIsBulkUsersFilterOpen,
     selectIsLocalBulkFilterOpen,
@@ -30,6 +31,7 @@ const UserBulkActionStripe = ({currentStep}: {currentStep: BulkAddStep}) => {
     const filters = useSelector(currentStep > BulkAddStep.Selection ? selectLocalBulkFilters : selectBulkFilters);
     const queryClient = useQueryClient();
     const isFiltered = useSelector(selectIsBulkUsersFiltered);
+    const isLocalFiltered = useSelector(selectIsBulkLocalUsersFiltered);
     const [searchText, setSearchText] = useState('');
     const currentPageUsers: any = queryClient.getQueryData([GetExternalUserList, filters]);
     const handleSelectAllCheckboxChange = (e: CheckboxCheckEvent) => {
@@ -142,7 +144,7 @@ const UserBulkActionStripe = ({currentStep}: {currentStep: BulkAddStep}) => {
                              className='icon-medium cursor-pointer mr-4'
                              onClick={() => dispatch(currentStep !== BulkAddStep.Selection ? setIsLocalBulkFilterOpen(!isLocalBulkFilterOpen) : setIsBulkFilterOpen(!isBulkFilterOpen))}
                              fillClass='filter-icon' />
-                            {isFiltered && <div className='absolute bottom-0.5 right-5'>
+                            {(currentStep > BulkAddStep.Selection ? isLocalFiltered : isFiltered) && <div className='absolute bottom-0.5 right-5'>
                         <FilterDot />
                     </div>}
                 </div>
