@@ -2272,10 +2272,10 @@
     "view": "View",
     "download": "Download",
     "report_options": {
-      "agent_reports": "Agent Reports",
-      "bot_reports": "Bot Reports",
-      "system_reports": "System Reports",
-      "queue_reports": "Queue Reports"
+      "agent_reports": "Agent KPIs",
+      "bot_reports": "Bot Report",
+      "system_reports": "System Report",
+      "queue_reports": "Queues Report"
     },
     "view_options": {
       "yesterday": "Yesterday",

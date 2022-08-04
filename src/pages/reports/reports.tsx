@@ -33,9 +33,9 @@ const Reports = () => {
         return <div className='my-6'>
             {selectedSelectedView === ViewTypes.MonthlyReports && <h6 className='pt-3 mb-1'>{t('reports.view_options.monthly_reports')}</h6>}
             <form onSubmit={handleSubmit(onSubmit)} className='flex flex-1 flex-col group'>
-                <div className='flex flex-row mt-5 gap-6'>
+                <div className='flex flex-row mt-5 gap-8'>
                     {
-                        selectedTab === TabTypes.Reports && <div className='w-1/4 h-14'>
+                        selectedTab === TabTypes.Reports && <div className='reports-select h-14'>
                             <ControlledSelect
                                 name='report-type'
                                 control={control}
@@ -44,7 +44,7 @@ const Reports = () => {
                             />
                         </div>
                     }
-                    <div className='w-1/4 h-14'>
+                    <div className='w-48 h-14'>
                         <ControlledSelect
                             name='view-type'
                             control={control}
@@ -82,5 +82,4 @@ const Reports = () => {
         </div>
     );
 }
-
 export default Reports;
