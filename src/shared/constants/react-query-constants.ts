@@ -92,3 +92,5 @@ export const GetAppointmentTypeSummary = 'get-appointment-type-summary';
 export const GetContactsNames = 'get-contacts-names';
 export const GetEmailNotificationTemplates = 'get-email-notification-templates';
 export const GetGeneralSetting = 'get-general-setting';
+export const ExportAgentReport = 'export-agent-report';
+export const GetAgentReport = 'get-agent-report';

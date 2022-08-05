@@ -52,7 +52,8 @@ import {UpdateConnectAttributesRequest} from '@pages/tickets/models/update-conne
 import { setUnreadSmsMessages, setUnreadTeamSms } from '@pages/sms/store/sms.slice';
 import { setUnreadEmailMessages, setUnreadTeamEmail } from '@pages/email/store/email-slice';
 import { BadgeValues } from '../models/badge-values.model';
-
+import { ViewTypes } from '@pages/reports/models/view-types.enum';
+import { MimeTypes } from '@shared/models/mime-types.enum';
 const logger = Logger.getInstance();
 const ticketsBaseUrl = "/tickets";
 
@@ -453,4 +454,23 @@ export function getBadgeValues(badgeValues: BadgeValues, teamBadgeValues: boolea
             }
         });
     }
+}
+
+export const getAgentReport = async(request: ViewTypes) => {
+    const url = `${ticketsBaseUrl}/reports/agents?period=${request}`;
+    const response = await Api.get(url);
+    return response.data;
+}
+
+export const exportAgentReport = async(request: ViewTypes, selectedIds: string[]) => {
+    const url = `${ticketsBaseUrl}/reports/agents/export`;
+    const response = await Api.get(url, {
+        params: {
+            period: request,
+            selectedIds: selectedIds
+        },
+        responseType: 'arraybuffer'
+    });
+    utils.downloadFileFromData(response.data, `AgentReport`, MimeTypes.XlsX);
+    return response.data;
 }
