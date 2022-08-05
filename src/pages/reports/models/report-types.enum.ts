@@ -1,6 +1,6 @@
 export enum ReportTypes {
-    AgentReports = 1,
-    BotReports = 2,
-    SystemReports = 3,
-    QueueReports = 4
+    AgentReports = "agent-reports",
+    BotReports = "bot-reports",
+    SystemReports = "system-reports",
+    QueueReports = "queue-reports"
 }

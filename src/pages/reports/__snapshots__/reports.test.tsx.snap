@@ -48,16 +48,16 @@ exports[`Reports tests renders reports correctly 1`] = `
                       <input
                         autocomplete="on"
                         autocorrect="on"
-                        class="pl-4 pr-8 body2 select-trigger-pt h-14 relative truncate select-trigger activated  "
+                        class="pl-4 pr-8 body2 select-trigger-pt h-14 relative truncate select-trigger   "
                         spellcheck="true"
                         type="text"
-                        value="reports.report_options.agent_reports"
+                        value=""
                       />
                       <label
                         class="select-label absolute truncate"
                       >
                         <span
-                          class="select-label-span body3"
+                          class="select-label-span body2"
                         >
                           reports.report
                         </span>
@@ -100,7 +100,7 @@ exports[`Reports tests renders reports correctly 1`] = `
                         class="absolute py-2 options"
                       >
                         <div
-                          class="w-full select-cell justify-between flex items-center  body2-white   is-selected  "
+                          class="w-full select-cell justify-between flex items-center  body2   cursor-pointer  "
                         >
                           <div
                             class="flex flex-col justify-center w-full"
@@ -175,16 +175,16 @@ exports[`Reports tests renders reports correctly 1`] = `
                       <input
                         autocomplete="on"
                         autocorrect="on"
-                        class="pl-4 pr-8 body2 select-trigger-pt h-14 relative truncate select-trigger activated  "
+                        class="pl-4 pr-8 body2 select-trigger-pt h-14 relative truncate select-trigger   "
                         spellcheck="true"
                         type="text"
-                        value="reports.view_options.last_7_days"
+                        value=""
                       />
                       <label
                         class="select-label absolute truncate"
                       >
                         <span
-                          class="select-label-span body3"
+                          class="select-label-span body2"
                         >
                           reports.view
                         </span>
@@ -250,14 +250,14 @@ exports[`Reports tests renders reports correctly 1`] = `
                           >
                             <div
                               class="flex items-center pl-4"
-                              data-test-id="select-cell-text-reports.view_options.last_week"
+                              data-test-id="select-cell-text-reports.view_options.last_7_days"
                             >
-                              reports.view_options.last_week
+                              reports.view_options.last_7_days
                             </div>
                           </div>
                         </div>
                         <div
-                          class="w-full select-cell justify-between flex items-center  body2-white   is-selected  "
+                          class="w-full select-cell justify-between flex items-center  body2   cursor-pointer  "
                         >
                           <div
                             class="flex flex-col justify-center w-full"
@@ -265,9 +265,9 @@ exports[`Reports tests renders reports correctly 1`] = `
                           >
                             <div
                               class="flex items-center pl-4"
-                              data-test-id="select-cell-text-reports.view_options.last_7_days"
+                              data-test-id="select-cell-text-reports.view_options.last_week"
                             >
-                              reports.view_options.last_7_days
+                              reports.view_options.last_week
                             </div>
                           </div>
                         </div>
@@ -361,29 +361,6 @@ exports[`Reports tests renders reports correctly 1`] = `
                 </div>
               </div>
             </form>
-          </div>
-          <div
-            class="flex flex-col space-y-4 items-center justify-center pt-2"
-          >
-            <div>
-              <div
-                class=""
-              >
-                <svg
-                  class="spinner icon-large-40 "
-                  viewBox="0 0 40 40"
-                >
-                  <circle
-                    class="path"
-                    cx="20"
-                    cy="20"
-                    fill="none"
-                    r="16"
-                    stroke-width="4"
-                  />
-                </svg>
-              </div>
-            </div>
           </div>
         </div>
       </div>

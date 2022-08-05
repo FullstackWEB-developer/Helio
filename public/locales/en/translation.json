@@ -2283,20 +2283,6 @@
       "last_week": "Last Week (Mon - Sun)",
       "last_month": "Last Calendar Month",
       "monthly_reports": "Monthly Reports"
-    },
-    "voice": "Voice",
-    "chat": "Chat",
-    "utilization": "Utilization",
-    "voice_average_hold_time": "Voice Average Hold Time",
-    "average_handle_time": "Average Handle Time",
-    "bottom_5_performers": "Bottom 5 Performers",
-    "report_for": "Report for ",
-    "get_agent_report": {
-      "error": "An error ocurred. Please try again later."
-    },
-    "download_agent_report": {
-      "success": "Agent report is downloaded.",
-      "error": "An error ocurred. Please try again later."
     }
   }
 }
