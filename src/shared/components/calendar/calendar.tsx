@@ -41,10 +41,15 @@ const Calendar = ({
 
     useEffect(() => {
         const reEvaluateNavigationEnabled = (valueDate: dayjs.Dayjs) => {
-            const valueMax = valueDate.set('date', max.getDate()).set('hour', max.getHours()).set('minute', max.getMinutes()).set('second', max.getSeconds()).toDate();
-            const valueMin = valueDate.set('date', min.getDate()).set('hour', min.getHours()).set('minute', min.getMinutes()).set('second', min.getSeconds()).toDate();
-            setDisabledForward(valueMax > max);
-            setDisabledBackward(valueMin < min);
+            if (min) {
+                const valueMin = valueDate.set('date', min.getDate()).set('hour', min.getHours()).set('minute', min.getMinutes()).set('second', min.getSeconds()).toDate();
+                setDisabledBackward(valueMin < min || valueMin.toDateString() == min?.toDateString());
+            }
+            if (max) {
+                const valueMax = valueDate.set('date', max.getDate()).set('hour', max.getHours()).set('minute', max.getMinutes()).set('second', max.getSeconds()).toDate();
+                setDisabledForward(valueMax > max || valueMax.toDateString() == max?.toDateString());
+            }
+
         }
 
         const days = getMonthDetails(currentDate);
