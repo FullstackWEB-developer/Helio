@@ -39,7 +39,7 @@ const Reports = () => {
     }, []);
     
 
-    const {isLoading: getAgentReportIsLoading, refetch: refetchAgentData, data: agentData} = useQuery([GetAgentReport, selectedView], () => getAgentReport(selectedView),{
+    const {isLoading: getAgentReportIsLoading, isFetching: getAgentReportIsFetching, refetch: refetchAgentData, data: agentData} = useQuery([GetAgentReport], () => getAgentReport(selectedView),{
         enabled: false,
         onError: () => {
             dispatch(addSnackbarMessage({
@@ -99,7 +99,7 @@ const Reports = () => {
     }
 
     const isLoading = () => {
-        return getAgentReportIsLoading
+        return getAgentReportIsLoading || getAgentReportIsFetching
     }
     
     const settings = () => {

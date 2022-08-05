@@ -44,6 +44,11 @@ const AgentReports = ({data, title}: AgentReportsProps) => {
                 percentage: i === 0 ? (data[0].avgVoiceHandleTime === 0 ? 0 : 80) : (obj.avgVoiceHandleTime === 0 || data[0].avgVoiceHandleTime === 0  ? 0 : obj.avgVoiceHandleTime * 80 / data[0].avgVoiceHandleTime),
                 value: obj.avgVoiceHandleTime
             })));
+        } else {
+            setUtilization([]);
+            setVoiceAverageHoldTime([]);
+            setVoiceAverageHandleTime([]);
+            setChatAverageHandleTime([]);
         }
     }, [data]);
 
