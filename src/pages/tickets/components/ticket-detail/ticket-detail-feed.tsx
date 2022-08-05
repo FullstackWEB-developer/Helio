@@ -138,13 +138,13 @@ const TicketDetailFeed = ({ticket, emailLoading, emailMessages, smsMessages, sms
                     callActivity.feedType = FeedTypes.PhoneCall;
                     callActivity.item = {
                         callDirection: ticket.communicationDirection,
-                        canListenAnyRecording: user?.email === email || hasListenAnyRecordingPermission,
+                        canListenAnyRecording: !!ticket.connectEvents?.find(a => a.userEmail === email) || hasListenAnyRecordingPermission,
                         callDuration: ticket.agentInteractionDuration
                     }
                 }else if(ticket.channel === ChannelTypes.Chat){
                     callActivity.feedType = FeedTypes.ChatActiviy;
                     callActivity.item = {
-                        canViewAnyTranscript: user?.email === email || hasViewAnyTranscriptPermission,
+                        canViewAnyTranscript: !!ticket.connectEvents?.find(a => a.userEmail === email)  || hasViewAnyTranscriptPermission,
                     }
                 }
 

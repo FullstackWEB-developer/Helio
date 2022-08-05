@@ -3,6 +3,7 @@ import {PatientRating} from './patient-rating.model';
 import {TicketFeed} from './ticket-feed';
 import {TicketNote} from './ticket-note';
 import {TicketStatuses} from './ticket.status.enum';
+import {ConnectEventRecord} from '@pages/tickets/models/connect-event-record.model';
 
 export interface Ticket {
     id?: string;
@@ -53,4 +54,5 @@ export interface Ticket {
     isPassive?: boolean;
     patientRating?: PatientRating;
     agentInteractionDuration?: number;
+    connectEvents?: ConnectEventRecord[];
 }

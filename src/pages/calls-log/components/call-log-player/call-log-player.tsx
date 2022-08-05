@@ -46,6 +46,7 @@ const CallLogPlayer = (
             onClose={props.onClose}
             className={classnames('call-log-player', className)}
             isClosable
+            isDraggable={true}
             contentClassName='pl-6 pr-10'
         >
             <div className='flex flex-col'>
