@@ -76,7 +76,7 @@ const SMSTemplateEdit = () => {
         }
     });
 
-    const { handleSubmit, control, watch, setValue, getValues, formState } = useForm({ mode: 'all' });
+    const { handleSubmit, control, watch, setValue, getValues, formState: {isValid, isDirty} } = useForm({ mode: 'all' });
     const watchTemplateBody = watch('templateBody', smsTemplate?.templateBody);
 
     useEffect(() => {
@@ -143,7 +143,7 @@ const SMSTemplateEdit = () => {
                                 <span> {t('configuration.cancellation_reason.details.created_date')}</span>
                                 <span className="flex"> {t('configuration.sms_templates.direction')}
                                     <SmsTemplateTooltip placement='bottom-start' messages={['configuration.sms_templates.tool_tip_grid_direction_two_way',
-                                    'configuration.sms_templates.tool_tip_grid_direction_one_way']}/></span>
+                                        'configuration.sms_templates.tool_tip_grid_direction_one_way']}/></span>
                             </div>
                             <div className='flex flex-col ml-4'>
                                 <span>{smsTemplate.createdByName}</span>
@@ -193,7 +193,7 @@ const SMSTemplateEdit = () => {
                         <Button
                             type='submit'
                             buttonType='medium'
-                            disabled={!formState.isValid}
+                            disabled={!isValid || !isDirty}
                             label='common.save'
                             isLoading={updateCancellationReasonMutation.isLoading}
                         />

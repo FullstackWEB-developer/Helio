@@ -85,7 +85,7 @@ const EditCancellationReason = () => {
         }
 
     }
-    const {handleSubmit, control, formState} = useForm({mode: 'all'});
+    const {handleSubmit, control, formState: {isValid, isDirty, isSubmitSuccessful}} = useForm({mode: 'all'});
 
     const navigateBackToCancelationReasonsList = () => {
         const pathName = `${ConfigurationsPath}${CancellationReasonsPath}`;
@@ -179,9 +179,9 @@ const EditCancellationReason = () => {
                     <ControlledTextArea control={control} name='description'
                                         defaultValue={cancellationReason.description}
                                         className='body2 w-full p-4'
+                                        overwriteDefaultContainerClasses={true}
+                                        maxLength={50}
                                         resizable={false} rows={4}/>
-                    <span
-                        className='body2 flex justify-end'>{t('configuration.cancellation_reason.details.appointment_cancelation_description_character_limit')}</span>
                 </div>
                 <div className="mt-8 flex flex-row items-center">
                     <div className='w-1/3'>
@@ -202,10 +202,11 @@ const EditCancellationReason = () => {
                     <Button
                         type='submit'
                         buttonType='medium'
-                        disabled={!formState.isValid}
                         label='common.save'
+                        disabled={!isDirty || !isValid}
                         isLoading={updateCancellationReasonMutation.isLoading}
                     />
+
                     <Button label='common.cancel' className=' ml-8 mr-8' buttonType='secondary'
                             onClick={() => navigateBackToCancelationReasonsList()}
                             isLoading={updateCancellationReasonMutation.isLoading || deleteCancellationReasonMutation.isLoading}/>
@@ -217,7 +218,7 @@ const EditCancellationReason = () => {
 
         }
             <RouteLeavingGuard
-                when={formState.isDirty && !formState.isSubmitSuccessful}
+                when={isDirty && !isSubmitSuccessful}
                 navigate={path => history.push(path)}
             />
             <Confirmation

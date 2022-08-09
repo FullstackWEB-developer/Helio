@@ -16,8 +16,8 @@ import {SecuritySettingsForm} from "@pages/configurations/models/security-settin
 const SecuritySettingsScreen = () => {
     const { t } = useTranslation();
     const dispatch = useDispatch();
-    const { control, handleSubmit, formState, reset } = useForm({ mode: 'all' })
-    const { isFetching, data } = useQuery<SecuritySettings>(GetSecuritySettings, getSecuritySettings, {
+    const { control, handleSubmit, formState : {isValid, isDirty}, reset } = useForm({ mode: 'all' })
+    const { isFetching } = useQuery<SecuritySettings>(GetSecuritySettings, getSecuritySettings, {
         onSuccess: (response) => {
             reset({
                 hipaaVerificationRetryNumber: response.hipaaVerificationRetryNumber,
@@ -154,7 +154,7 @@ const SecuritySettingsScreen = () => {
                     <Button
                         type='submit'
                         buttonType='medium'
-                        disabled={!formState.isValid}
+                        disabled={!isValid || !isDirty}
                         label='common.save'
                         isLoading={saveSecuritySettingsMuteation.isLoading}
                     />

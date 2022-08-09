@@ -88,6 +88,9 @@ const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(({
         setTimeout(() => {
             resizeHeight();
         }, 1);
+        if (!!value && props.maxLength) {
+            setRemainLength(props.maxLength - value.length);
+        }
     }, [value]);
 
     const onClick = () => {
