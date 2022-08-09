@@ -1,5 +1,6 @@
 import {PatientRating} from "@pages/tickets/models/patient-rating.model";
 import {CommunicationDirection, PagedRequest} from "@shared/models";
+import {ConnectEventRecord} from '@pages/tickets/models/connect-event-record.model';
 
 export interface TicketLogModel {
     id: string;
@@ -24,6 +25,7 @@ export interface TicketLogModel {
     patientRating?: PatientRating;
     fromUserId: string;
     toUserId: string;
+    connectEvents?: ConnectEventRecord[];
 }
 
 export enum TicketLogContactStatus {

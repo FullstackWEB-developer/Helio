@@ -248,7 +248,7 @@ const ChatsLogList = () => {
                             <SvgIcon
                                 type={Icon.View}
                                 fillClass='rgba-05-fill'
-                                disabled={data.contactAgent !== appUser.email && !canViewAnyTranscript}
+                                disabled={!data.connectEvents?.find(a => a.userEmail === appUser.email) && !canViewAnyTranscript}
                                 onClick={() => {
                                     onViewTranscriptClick(data);
                                 }}

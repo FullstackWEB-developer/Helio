@@ -259,7 +259,7 @@ const CallsLogList = () => {
                             <SvgIcon
                                 type={Icon.Play}
                                 fillClass='rgba-05-fill'
-                                disabled={data.contactAgent !== appUser.email && !canListenAnyRecording}
+                                disabled={!data.connectEvents?.find(a => a.userEmail === appUser.email) && !canListenAnyRecording}
                                 onClick={() => {
                                     onPlayButtonClick(data);
                                 }}

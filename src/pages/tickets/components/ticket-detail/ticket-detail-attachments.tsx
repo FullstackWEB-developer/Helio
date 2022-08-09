@@ -64,11 +64,12 @@ const TicketDetailAttachments = ({ticket}: TicketDetailAttachmentsProps) => {
     }
 
     const canListenAnyRecording = () => {
-        return ticket.contactAgent === email || hasListenAnyRecordingPermission;
+        return !!ticket.connectEvents?.find(a => a.userEmail === email) || ticket.contactAgent === email || hasListenAnyRecordingPermission;
     }
 
     const canViewAnyTranscript = () => {
-        return ticket.contactAgent === email || hasViewAnyTranscriptPermission;
+
+        return !!ticket.connectEvents?.find(a => a.userEmail === email) || ticket.contactAgent === email || hasViewAnyTranscriptPermission;
     }
 
     const canDownloadConversation = () => {
