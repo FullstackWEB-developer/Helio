@@ -18,7 +18,7 @@ const EmailNotificationTemplateForm = ({template}: {template: EmailTemplate}) =>
     const {t} = useTranslation();
     const history = useHistory();
     const dispatch = useDispatch();
-    const {control, reset, getValues, handleSubmit, formState: {isValid}} = useForm({
+    const {control, reset, getValues, handleSubmit, formState: {isValid, isDirty}} = useForm({
         mode: 'onChange', defaultValues: {
             subject: template.subject,
             title: template.title,
@@ -86,18 +86,18 @@ const EmailNotificationTemplateForm = ({template}: {template: EmailTemplate}) =>
                 <Button label='configuration.email_template_details.reset_to_default' buttonType='secondary-medium' onClick={() => reset()} />
             </div>
             <ControlledTextArea control={control}
-                name='body'
-                required={true}
-                hyperLinkButton={true}
-                showSendIconInRichTextMode={false}
-                toggleRichTextMode={true}
-                hideFormattingButton={true}
-                sizeSelectionEnabled={false}
-                formulaSelectionDropdown={true} />
+                                name='body'
+                                required={true}
+                                hyperLinkButton={true}
+                                showSendIconInRichTextMode={false}
+                                toggleRichTextMode={true}
+                                hideFormattingButton={true}
+                                sizeSelectionEnabled={false}
+                                formulaSelectionDropdown={true} />
             <div className='flex pt-10'>
-                <Button label='common.save' className='mr-8' type='submit' disabled={!isValid} isLoading={updateEmailTemplateMutation.isLoading} />
+                <Button label='common.save' className='mr-8' type='submit' disabled={!isValid || !isDirty} isLoading={updateEmailTemplateMutation.isLoading} />
                 <Button label='configuration.email_template_details.preview' buttonType='secondary-medium' className='mr-6'
-                    onClick={previewEmailTemplateHandler} isLoading={previewEmailTemplateMutation.isLoading} />
+                        onClick={previewEmailTemplateHandler} isLoading={previewEmailTemplateMutation.isLoading} />
                 <Button label='common.cancel' buttonType='secondary-medium' onClick={() => history.push('/configurations/email-templates')} />
             </div>
         </form>

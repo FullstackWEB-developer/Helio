@@ -131,7 +131,7 @@ const AppointmentReminders = () => {
                         <Button
                             type='submit'
                             buttonType='medium'
-                            disabled={!formState.isValid}
+                            disabled={!formState.isValid || !formState.isDirty}
                             label='common.save'
                             isLoading={isFetching || setAppointmentRemindersMutation.isLoading}
                         />

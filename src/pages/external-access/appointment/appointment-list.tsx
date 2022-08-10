@@ -17,6 +17,7 @@ import {AppointmentType} from './models/appointment-type.model';
 import Spinner from '@components/spinner/Spinner';
 import {AppointmentDetailPath, AppointmentSchedulePath} from '@app/paths';
 import Button from '@components/button/button';
+import {getAllProviders, getLocations} from '@shared/services/lookups.service';
 
 const AppointmentList = () => {
     const {t} = useTranslation();
@@ -24,6 +25,11 @@ const AppointmentList = () => {
     const history = useHistory();
     const dispatch = useDispatch();
     const [appointmentList, setAppointmentList] = useState<Appointment[]>();
+
+    useEffect(() => {
+        dispatch(getAllProviders());
+        dispatch(getLocations());
+    }, [dispatch]);
 
     const {isLoading: isAppointmentTypeLoading, data: appointmentTypes} = useQuery<AppointmentType[], AxiosError>([GetAppointmentTypes], () => getAppointmentTypes(), {
         enabled: true,

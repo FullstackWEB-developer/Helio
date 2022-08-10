@@ -11,6 +11,7 @@ import {GetLabResults} from '@constants/react-query-constants';
 import {LabResult} from './models/lab-result.model';
 import './lab-results.scss';
 import Spinner from '@components/spinner/Spinner';
+import {RequestChannel} from '@shared/models/request.channel.enum';
 
 const LabResults = () => {
 
@@ -18,7 +19,7 @@ const LabResults = () => {
     const verifiedPatient = useSelector(selectVerifiedPatent);
 
     const {isLoading, data, isError} = useQuery<LabResult[]>([GetLabResults, verifiedPatient?.patientId], () => {
-        return getPatientsLabResults(verifiedPatient?.patientId, verifiedPatient?.departmentId);
+        return getPatientsLabResults(verifiedPatient?.patientId, verifiedPatient?.departmentId, RequestChannel.Web);
     }, {enabled: !!verifiedPatient});
 
     if (!verifiedPatient) {

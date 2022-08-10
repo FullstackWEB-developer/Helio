@@ -7,7 +7,10 @@ import {useTranslation} from 'react-i18next';
 import Table from '@components/table/table';
 import {TableModel} from '@components/table/table.models';
 import dayjs from 'dayjs';
-import {NotificationTemplateContainerType} from '@components/notification-template-select/components/parent-extra-template';
+import {
+    NotificationTemplateContainerType
+} from '@components/notification-template-select/components/parent-extra-template';
+import {RequestChannel} from '@shared/models/request.channel.enum';
 
 export interface NotificationLabResultProps {
     patientId: number;
@@ -18,7 +21,7 @@ export interface NotificationLabResultProps {
 const NotificationLabResult = ({patientId, departmentId, parentType} : NotificationLabResultProps) => {
     const {t} = useTranslation();
     const {isLoading, data, isError} = useQuery<LabResult[]>([GetLabResults, patientId], () => {
-        return getPatientsLabResults(patientId, departmentId);
+        return getPatientsLabResults(patientId, departmentId, RequestChannel.Agent);
     });
 
     if (isLoading) {

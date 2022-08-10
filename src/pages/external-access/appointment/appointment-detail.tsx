@@ -15,13 +15,13 @@ import classnames from 'classnames';
 import ProviderPicture from './components/provider-picture';
 import {Appointment, AppointmentType} from '@pages/external-access/appointment/models';
 import {Location, Provider} from '@shared/models';
-import {useQuery} from 'react-query';
+import {useMutation, useQuery} from 'react-query';
 import {AxiosError} from 'axios';
 import {GetAppointmentTypes, GetPatientAppointments} from '@constants/react-query-constants';
 import {getAppointments} from '@pages/patients/services/patients.service';
 import {selectVerifiedPatent} from '@pages/patients/store/patients.selectors';
 import Spinner from '@components/spinner/Spinner';
-import {getAppointmentTypes} from '@pages/appointments/services/appointments.service';
+import {appointmentDisplayed, getAppointmentTypes} from '@pages/appointments/services/appointments.service';
 
 const AppointmentDetail = () => {
     dayjs.extend(customParseFormat);
@@ -47,6 +47,17 @@ const AppointmentDetail = () => {
     useEffect(() => {
         dispatch(setRescheduleTimeFrame(appointmentType?.rescheduleTimeFrame || defaultTimeFrame));
     }, [appointmentType?.rescheduleTimeFrame, dispatch]);
+
+    const appointmentDisplayedMutation = useMutation(appointmentDisplayed);
+
+    useEffect(() => {
+        if (!!appointmentId && !!verifiedPatient?.patientId) {
+            appointmentDisplayedMutation.mutate({
+                appointmentId: parseInt(appointmentId),
+                patientId: verifiedPatient.patientId
+            })
+        }
+    }, [appointmentId, verifiedPatient]);
 
     const {isLoading: appointmentTypesLoading, refetch: fetchAppointmentTypes} = useQuery<AppointmentType[], AxiosError>([GetAppointmentTypes], () => getAppointmentTypes(), {
         enabled: false,

@@ -58,7 +58,7 @@ const EditAppointmentType = () => {
         _ => '',
         item => item
     ), [providers])
-    
+
     const PatientTypeOptions: Option[] = [
         { value: String(PatientAppointmentType.Established), label: t('configuration.appointment_type_details.established_patient') },
         { value: String(PatientAppointmentType.New), label: t('configuration.appointment_type_details.new_patient') },
@@ -67,7 +67,7 @@ const EditAppointmentType = () => {
 
     useEffect(() => {
         control.trigger().then();
-      }, [isReschedulable, isCancelable]);
+    }, [isReschedulable, isCancelable]);
 
     const onSelectableByPatientChange = () => setSelectableByPatient(!selectableByPatient);
     const onCancelableChange = () => { setIsCancelable(!isCancelable); clearErrors(["cancelationFee", "cancelationTimeFrame"]); }
@@ -117,7 +117,6 @@ const EditAppointmentType = () => {
             })
         }
     }
-
     const { isFetching } =
         useQuery([GetAppointmentType], () => getAppointmentTypeById(parseInt(id)), {
             onSuccess: (data) => {
@@ -152,7 +151,7 @@ const EditAppointmentType = () => {
         setSelectedProviders(apptProviders);
     }, [appointmentType, providers]);
 
-    const { handleSubmit, trigger, clearErrors, control, formState: { isValid } } = useForm({ mode: 'all'});
+    const { handleSubmit, clearErrors, control, formState: { isValid, isDirty } } = useForm({ mode: 'all'});
 
     const navigateBackToAppointmentTypeList = () => {
         const pathName = `${ConfigurationsPath}/appointment-type`;
@@ -166,7 +165,7 @@ const EditAppointmentType = () => {
         return <ToolTipIcon
             icon={Icon.Info}
             iconFillClass='warning-icon'
-           placement='right-start'
+            placement='right-start'
             iconClassName='icon-medium'
         >
             <div className='flex flex-col p-3'>
@@ -199,10 +198,10 @@ const EditAppointmentType = () => {
                     <div className="flex flex-row items-center pt-4">
                         <div className='w-1/3'>
                             <ControlledInput name='name'
-                                control={control}
-                                defaultValue={appointmentType.name}
-                                label={'configuration.appointment_type_details.appointment_type_name'}
-                                required={true}
+                                             control={control}
+                                             defaultValue={appointmentType.name}
+                                             label={'configuration.appointment_type_details.appointment_type_name'}
+                                             required={true}
                             />
                         </div>
                         {displayToolTip(t('configuration.appointment_type_details.tooltip_helio_appointment_name'))}
@@ -213,14 +212,14 @@ const EditAppointmentType = () => {
                     </div>
                     <div className='pr-24'>
                         <ControlledTextArea name='description'
-                            control={control}
-                            defaultValue={appointmentType.description}
-                            className='body2 w-full'
-                            resizable={false}
-                            minRows={2}
-                            rows={2}
-                            maxRows={2}
-                            onChange={updateLength}
+                                            control={control}
+                                            defaultValue={appointmentType.description}
+                                            className='body2 w-full'
+                                            resizable={false}
+                                            minRows={2}
+                                            rows={2}
+                                            maxRows={2}
+                                            onChange={updateLength}
                         />
                         <span className='body2 flex justify-end'>{t('configuration.appointment_type_details.template_body_character', { currentLength: currentLength })}</span>
                     </div>
@@ -251,14 +250,14 @@ const EditAppointmentType = () => {
                         <div className="flex flex-row items-center">
                             <div className='w-48'>
                                 <ControlledInput name='rescheduleTimeFrame'
-                                    control={control}
-                                    defaultValue={appointmentType.rescheduleTimeFrame ?? null}
-                                    label={'configuration.appointment_type_details.reschedule_timeframe'}
-                                    assistiveText={'configuration.appointment_type_details.days'}
-                                    type='timeframe'
-                                    required={isReschedulable}
-                                    disabled={!isReschedulable}
-                                    
+                                                 control={control}
+                                                 defaultValue={appointmentType.rescheduleTimeFrame ?? null}
+                                                 label={'configuration.appointment_type_details.reschedule_timeframe'}
+                                                 assistiveText={'configuration.appointment_type_details.days'}
+                                                 type='timeframe'
+                                                 required={isReschedulable}
+                                                 disabled={!isReschedulable}
+
                                 />
                             </div>
                             {displayToolTip(t('configuration.appointment_type_details.tooltip_reschedule_timeframe'))}
@@ -287,14 +286,14 @@ const EditAppointmentType = () => {
                         </div>
                         <div className='w-48 ml-3'>
                             <ControlledInput name='cancelationFee'
-                                control={control}
-                                defaultValue={appointmentType.cancelationFee ?? ''}
-                                label={'configuration.appointment_type_details.cancelation_fee'}
-                                required={isCancelable}
-                                type='timeframe'
-                                disabled={!isCancelable}
-                                prefix={currentCancelationFee === "" ? undefined : "$"}
-                                onChange={(e) => setCurrentCancelationFee(e.target.value)}
+                                             control={control}
+                                             defaultValue={appointmentType.cancelationFee ?? ''}
+                                             label={'configuration.appointment_type_details.cancelation_fee'}
+                                             required={isCancelable}
+                                             type='timeframe'
+                                             disabled={!isCancelable}
+                                             prefix={currentCancelationFee === "" ? undefined : "$"}
+                                             onChange={(e) => setCurrentCancelationFee(e.target.value)}
                             />
                         </div>
                     </div>
@@ -318,11 +317,11 @@ const EditAppointmentType = () => {
                     </div>
                     <div className='pr-24'>
                         <ControlledTextArea control={control}
-                            name='instructions'
-                            showSendIconInRichTextMode={false}
-                            toggleRichTextMode={true}
-                            hideFormattingButton={true}
-                            defaultValue={appointmentType.instructions} />
+                                            name='instructions'
+                                            showSendIconInRichTextMode={false}
+                                            toggleRichTextMode={true}
+                                            hideFormattingButton={true}
+                                            defaultValue={appointmentType.instructions} />
                     </div>
                     <div className='flex flex-row mt-5'>
                         <div className='flex flex-col body2 appointment-type-id '>
@@ -340,9 +339,9 @@ const EditAppointmentType = () => {
 
                     </div>
                     <div className='flex mt-10'>
-                        <Button type='submit' buttonType='medium' disabled={!isValid} label='common.save' isLoading={updateAppointmentTypeMutation.isLoading} />
+                        <Button type='submit' buttonType='medium' disabled={!isDirty && !isValid} label='common.save' isLoading={updateAppointmentTypeMutation.isLoading} />
                         <Button label='common.cancel' className=' mx-8' buttonType='secondary' onClick={() => navigateBackToAppointmentTypeList()}
-                            disabled={updateAppointmentTypeMutation.isLoading}
+                                disabled={updateAppointmentTypeMutation.isLoading}
                         />
                     </div>
                 </form>
