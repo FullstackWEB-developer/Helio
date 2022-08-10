@@ -93,4 +93,6 @@ export const GetContactsNames = 'get-contacts-names';
 export const GetEmailNotificationTemplates = 'get-email-notification-templates';
 export const GetGeneralSetting = 'get-general-setting';
 export const ExportAgentReport = 'export-agent-report';
+export const ExportQueueReport = 'export-queue-report';
 export const GetAgentReport = 'get-agent-report';
+export const GetQueueReport = 'get-queue-report';

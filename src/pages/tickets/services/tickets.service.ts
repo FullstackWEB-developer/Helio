@@ -462,6 +462,12 @@ export const getAgentReport = async(request: ViewTypes) => {
     return response.data;
 }
 
+export const getQueueReport = async(request: ViewTypes) => {
+    const url = `${ticketsBaseUrl}/reports/queues?period=${request}`;
+    const response = await Api.get(url);
+    return response.data;
+}
+
 export const exportAgentReport = async(request: ViewTypes, selectedIds: string[]) => {
     const url = `${ticketsBaseUrl}/reports/agents/export`;
     const response = await Api.get(url, {
@@ -472,5 +478,18 @@ export const exportAgentReport = async(request: ViewTypes, selectedIds: string[]
         responseType: 'arraybuffer'
     });
     utils.downloadFileFromData(response.data, `AgentReport`, MimeTypes.XlsX);
+    return response.data;
+}
+
+export const exportQueueReport = async(request: ViewTypes, selectedIds: string[]) => {
+    const url = `${ticketsBaseUrl}/reports/queue/export`;
+    const response = await Api.get(url, {
+        params: {
+            period: request,
+            selectedIds: selectedIds
+        },
+        responseType: 'arraybuffer'
+    });
+    utils.downloadFileFromData(response.data, `QueueReport`, MimeTypes.XlsX);
     return response.data;
 }

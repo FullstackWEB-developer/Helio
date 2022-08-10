@@ -2,7 +2,7 @@ import './horizantal-statistic-widget.scss';
 import {useTranslation} from 'react-i18next';
 import Dropdown, { DropdownModel } from '@components/dropdown';
 import { customHooks } from '@shared/hooks';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import SvgIcon, { Icon } from '@components/svg-icon';
 
 var dayjs = require("dayjs")
@@ -23,7 +23,7 @@ interface DropdownItemModel {
 export interface HorizantalStatisticWidgetProps {
     data: BasicStatistic[];
     title: string;
-    description: string;
+    description?: string;
     wrapperClass?: string;
     dropdownSelected?: (id: string) => void;
     dropdownItems?: DropdownItemModel[]
@@ -71,14 +71,14 @@ const HorizantalStatisticWidget = ({data, title, description, wrapperClass = 'w-
         </div>
     }
     if (!data || data.length === 0) {
-        return <div className={`${wrapperClass} px-6 pt-4 bg-white rounded-lg`}>
+        return <div className={`${wrapperClass} pt-4 bg-white rounded-lg`}>
             <div className='h7'>{dropdownSelected ? `${selectedDropdownItem && t(selectedDropdownItem)} ${t(title)}` : `${t(title)}`}</div>
-            <div className='mb-7 h7'>{t(description)}</div>
+            <div className='mb-7 h7'>{description && t(description)}</div>
             <div className='w-full h-72 px-6 space-y-4 horizantal-statistic-widget-body justify-center items-center flex'>{t('dashboard.no_data_found')}</div>
         </div>
     }
 
-    return <div className={`${wrapperClass} px-6 pt-4 bg-white rounded-lg`}>
+    return <div className={`${wrapperClass} pt-4 bg-white rounded-lg`}>
         <div className='flex justify-between'>
             <div className='h7'>{dropdownSelected ? `${selectedDropdownItem && t(selectedDropdownItem)} ${t(title)}` : `${t(title)}`}</div>
             {
@@ -98,7 +98,7 @@ const HorizantalStatisticWidget = ({data, title, description, wrapperClass = 'w-
                 </div>
             }
         </div>
-        <div className='mb-7 h7'>{t(description)}</div>
+        <div className='mb-7 h7'>{description && t(description)}</div>
         {
             data.map(item => <Item key={item.label.toString()} label={item.label} percentage={item.percentage} value={item.value}/>)
         }

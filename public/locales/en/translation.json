@@ -2290,13 +2290,24 @@
     "voice_average_hold_time": "Voice Average Hold Time",
     "average_handle_time": "Average Handle Time",
     "bottom_5_performers": "Bottom 5 Performers",
-    "report_for": "Report for ",
+    "report_for": "Report for {{title}}",
     "get_agent_report": {
       "error": "An error ocurred. Please try again later."
     },
     "download_agent_report": {
       "success": "Agent report is downloaded.",
       "error": "An error ocurred. Please try again later."
-    }
+    },
+    "get_queue_report": {
+      "error": "An error ocurred. Please try again later."
+    },
+    "download_queue_report": {
+      "success": "Queue report is downloaded.",
+      "error": "An error ocurred. Please try again later."
+    },
+    "most_abandoned_queues": "Most Abandoned Queues",
+    "queues_with_highest_average_wait_time": "Queues with Highest Average Wait Time",
+    "top_5_queues_by_inbound_volume": "Top 5 Queues By Inbound Volume",
+    "queues_performance": "Queues Performance"
   }
 }

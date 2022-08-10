@@ -54,11 +54,11 @@ const AgentReports = ({data, title}: AgentReportsProps) => {
 
     return (
         <div>
-            <h6 className='my-7'>{t("reports.report_for")}{title}</h6>
+            <h6 className='my-7'>{t('reports.report_for', { title })}</h6>
             <div className='flex gap-8'>
-                <HorizantalStatisticWidget wrapperClass='w-1/3 h-96' title={'reports.utilization'} description={'reports.bottom_5_performers'} data={utilization}/>
-                <HorizantalStatisticWidget dropdownItems={[{ label: "reports.voice", value: ChannelTypes.PhoneCall.toString()}, { label: "reports.chat", value: ChannelTypes.Chat.toString()}]} dropdownSelected={(id) => setWidgetType(Number(id) as ChannelTypes)} wrapperClass='w-1/3 h-96' title={'reports.average_handle_time'} description={'reports.bottom_5_performers'} data={widgetType === ChannelTypes.PhoneCall ? voiceAverageHandleTime : chatAverageHandleTime}/>
-                <HorizantalStatisticWidget wrapperClass='w-1/3 h-96' title={'reports.voice_average_hold_time'} description={'reports.bottom_5_performers'} data={voiceAverageHoldTime}/>
+                <HorizantalStatisticWidget wrapperClass='w-1/3 h-96 px-6' title={'reports.utilization'} description={'reports.bottom_5_performers'} data={utilization}/>
+                <HorizantalStatisticWidget dropdownItems={[{ label: "reports.voice", value: ChannelTypes.PhoneCall.toString()}, { label: "reports.chat", value: ChannelTypes.Chat.toString()}]} dropdownSelected={(id) => setWidgetType(Number(id) as ChannelTypes)} wrapperClass='w-1/3 h-96 px-6' title={'reports.average_handle_time'} description={'reports.bottom_5_performers'} data={widgetType === ChannelTypes.PhoneCall ? voiceAverageHandleTime : chatAverageHandleTime}/>
+                <HorizantalStatisticWidget wrapperClass='w-1/3 h-96 px-6' title={'reports.voice_average_hold_time'} description={'reports.bottom_5_performers'} data={voiceAverageHoldTime}/>
             </div>
         </div>
     );
