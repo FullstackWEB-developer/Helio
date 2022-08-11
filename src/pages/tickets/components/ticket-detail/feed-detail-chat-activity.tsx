@@ -60,7 +60,7 @@ const FeedDetailChatActivity = ({message, feed}: FeedDetailChatActivityProps) =>
                             <SvgIcon className='icon-medium' type={Icon.Chat} />
                         </div>
                         <div className='w-44 h-12 p-2 flex flex-row text-xl items-center'>
-                            <div className='subtitle3'>{feed.userFullName ?? ''}</div>
+                            <div className='subtitle3 truncate'>{feed.userFullName ?? ''}</div>
                         </div>
                         <div className='w-12 h-12 rounded-r justify-center items-center flex cursor-pointer'>
                             <SvgIcon className='icon-medium' type={Icon.View} disabled={!message?.canViewAnyTranscript} onClick={() => dispatch(toggleChatTranscriptWindowVisible())} />

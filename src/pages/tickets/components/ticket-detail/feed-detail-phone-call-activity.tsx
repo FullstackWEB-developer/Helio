@@ -91,7 +91,7 @@ const FeedDetailPhoneCallActivity = ({message, feed}: FeedDetailPhoneCallActivit
                         </div>
                         <div className='w-44 h-12 p-2'>
                             <div className='h-4 rounded flex flex-row text-xl'>
-                                <div className='subtitle3'>{feed.userFullName ?? ''}</div>
+                                <div className='subtitle3 truncate'>{feed.userFullName ?? ''}</div>
                             </div>
                             <div className='h-4 rounded flex flex-row text-xl'>
                                 <div className='caption-caps'>{message?.callDuration && utils.formatTime(message?.callDuration)}</div>
