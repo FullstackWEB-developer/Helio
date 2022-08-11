@@ -5,6 +5,7 @@ export type TableSize = 'compact' | 'normal' | 'large';
 
 export interface TableModel {
     columns: TableColumnModel[];
+    subColumns?: TableColumnModel[];
     rows: any[];
     pageSize?: number;
     pageable?: boolean;

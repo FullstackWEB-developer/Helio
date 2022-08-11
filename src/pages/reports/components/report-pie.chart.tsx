@@ -16,7 +16,6 @@ export interface PieChartProps {
 
 const ReportPieChart = ({data, title, wrapperClass}: PieChartProps) => {
     const {t} = useTranslation();
-
     if (!data || data.length === 0) {
         return <div className={`${wrapperClass} pt-4 bg-white rounded-lg`}>
         <div className='h7'>{t(title)}</div>

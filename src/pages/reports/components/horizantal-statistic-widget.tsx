@@ -2,12 +2,11 @@ import './horizantal-statistic-widget.scss';
 import {useTranslation} from 'react-i18next';
 import Dropdown, { DropdownModel } from '@components/dropdown';
 import { customHooks } from '@shared/hooks';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import SvgIcon, { Icon } from '@components/svg-icon';
 
 var dayjs = require("dayjs")
 var duration = require('dayjs/plugin/duration')
-var utc = require('dayjs/plugin/utc')
 
 interface BasicStatistic {
     label: string | number | Date;
@@ -31,8 +30,7 @@ export interface HorizantalStatisticWidgetProps {
 
 const HorizantalStatisticWidget = ({data, title, description, wrapperClass = 'w-full h-96', dropdownSelected, dropdownItems}: HorizantalStatisticWidgetProps) => {
     const {t} = useTranslation();
-    dayjs.extend(duration)
-    dayjs.extend(utc)
+    dayjs.extend(duration);
     const typeDropdownRef = useRef<HTMLDivElement>(null);
     const [displayTypeDropdown, setDisplayTypeDropdown] = useState<boolean>(false);
     const [selectedDropdownItem, setSelectedDropdownItem] = useState<string | undefined>(dropdownItems && dropdownItems[0].label);
@@ -61,7 +59,7 @@ const HorizantalStatisticWidget = ({data, title, description, wrapperClass = 'w-
             <div className='flex flex-row justify-between'>
                 <div>{item.label}</div>
                 <div className='flex flex-row'>
-                    <div className='w-10 flex justify-end'>{item.value !== undefined ? `${dayjs.utc(dayjs.duration(item.value).asMilliseconds()).format('HH:mm:ss')}` : `${item.percentage}%`}</div>
+                    <div className='w-10 flex justify-end'>{item.value !== undefined ? `${dayjs.duration(item.value, 'seconds').format('HH:mm:ss')}` : `${item.percentage}%`}</div>
                 </div>
             </div>
             <div>

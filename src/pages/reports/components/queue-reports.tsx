@@ -7,6 +7,7 @@ import Dropdown, { DropdownModel } from '@components/dropdown';
 import { customHooks } from '@shared/hooks';
 import SvgIcon, { Icon } from '@components/svg-icon';
 import ReportPieChart from './report-pie.chart';
+import QueueReportsTable from './queue-reports-table';
 
 export interface QueueReportsProps {
     data: QueueReport[],
@@ -51,12 +52,12 @@ const QueueReports = ({data, title}: QueueReportsProps) => {
             })));
             setVoiceInbound(data.sort(({totalInboundCalls:a}, {totalInboundCalls:b}) => a-b).slice(0,5).map((obj) => ({
                 label: obj.queueName,
-                percentage: obj.totalInboundCalls * 100 / (data.reduce((n, {totalInboundCalls}) => n + totalInboundCalls, 0)),
+                percentage: obj.totalInboundCalls === 0 ? 0 : obj.totalInboundCalls * 100 / (data.reduce((n, {totalInboundCalls}) => n + totalInboundCalls, 0)),
                 value: obj.totalInboundCalls
             })));
             setChatInbound(data.sort(({totalNumberOfIncomingChats:a}, {totalNumberOfIncomingChats:b}) => a-b).slice(0,5).map((obj) => ({
                 label: obj.queueName,
-                percentage: obj.totalNumberOfIncomingChats * 100 / (data.reduce((n, {totalNumberOfIncomingChats}) => n + totalNumberOfIncomingChats, 0)),
+                percentage: obj.totalNumberOfIncomingChats === 0 ? 0 : obj.totalNumberOfIncomingChats * 100 / (data.reduce((n, {totalNumberOfIncomingChats}) => n + totalNumberOfIncomingChats, 0)),
                 value: obj.totalNumberOfIncomingChats
             })));
             setVoiceAverageWaitTime(data.sort(({averageInboundCallWaitTime:a}, {averageInboundCallWaitTime:b}) => a-b).slice(0,5).map((obj, i) => ({
@@ -117,6 +118,7 @@ const QueueReports = ({data, title}: QueueReportsProps) => {
                     <HorizantalStatisticWidget wrapperClass='w-1/3 h-96' title={'reports.queues_with_highest_average_wait_time'} data={widgetType === ChannelTypes.PhoneCall ? voiceAverageWaitTime : chatAverageWaitTime}/>
                 </div>
             </div>
+            <QueueReportsTable data={data} title={"reports.queues_report"}/>
         </div>
     );
 }

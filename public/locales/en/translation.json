@@ -2308,6 +2308,20 @@
     "most_abandoned_queues": "Most Abandoned Queues",
     "queues_with_highest_average_wait_time": "Queues with Highest Average Wait Time",
     "top_5_queues_by_inbound_volume": "Top 5 Queues By Inbound Volume",
-    "queues_performance": "Queues Performance"
+    "queues_performance": "Queues Performance",
+    "queues_report": "Queues Report",
+    "queue_reports": {
+      "column_names": {
+        "queue": "Queue",
+        "channel": "Channel",
+        "inbound": "Inbound",
+        "answered": "Answered",
+        "pertence_answered": "% Answered",
+        "abandoned": "Abandoned",
+        "pertence_abandoned": "% Abandoned",
+        "avg_duration": "Avrg. Duration",
+        "awt": "AWT"
+      }
+    }
   }
 }
