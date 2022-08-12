@@ -10,8 +10,8 @@ import { reportTypes, viewTypes } from './utils/constants';
 import { TabTypes } from './models/tab-types.enum';
 import { ViewTypes } from './models/view-types.enum';
 import { ReportTypes } from './models/report-types.enum';
-import { useQuery } from 'react-query';
-import { exportAgentReport, exportQueueReport, getAgentReport, getQueueReport } from '@pages/tickets/services/tickets.service';
+import {useMutation, useQuery} from 'react-query';
+import { exportAgentReport, exportQueueReport, getAgentReport, getAvailableMonths, getQueueReport } from '@pages/tickets/services/tickets.service';
 import { useDispatch } from 'react-redux';
 import { addSnackbarMessage } from '@shared/store/snackbar/snackbar.slice';
 import { SnackbarType } from '@components/snackbar/snackbar-type.enum';
@@ -20,12 +20,14 @@ import Spinner from '@components/spinner/Spinner';
 import dayjs from 'dayjs';
 import { ExportAgentReport, ExportQueueReport, GetAgentReport, GetQueueReport } from '@constants/react-query-constants';
 import QueueReports from './components/queue-reports';
+import MonthList from './components/month-list';
 var weekday = require('dayjs/plugin/weekday')
 const Reports = () => {
     const {t} = useTranslation();
     const [selectedView, setSelectedView] = useState<ViewTypes>(ViewTypes.Last7Days);
     const [selectedReport, setSelectedReport] = useState<ReportTypes>(ReportTypes.AgentReports);
     const [selectedReportForView, setSelectedReportForView] = useState<ReportTypes>(ReportTypes.AgentReports);
+    const [selectedViewForView, setSelectedViewForView] = useState<ViewTypes>(ViewTypes.Last7Days);
     const [selectedTab, setSelectedTab] = useState<TabTypes>(TabTypes.Reports);
     const [selectedMonths, setSelectedMonths] = useState<string[]>([]);
     const [reportTitle, setReportTitle] = useState<string>();
@@ -39,7 +41,21 @@ const Reports = () => {
         refetchAgentData();
         changeReportTitle();
     }, []);
-    
+
+    useEffect(() => {
+        if(selectedMonths.length > 0)
+        {
+            onDownload();
+        }
+    }, [selectedMonths]);
+
+    useEffect(() => {
+        setSelectedMonths([]);
+    }, [selectedViewForView, selectedReportForView]);
+
+    const getViewTypeForDownload = () => {
+        return selectedView === ViewTypes.MonthlyReports ? ViewTypes.LastMonth : selectedView;
+    }
 
     const {isLoading: getAgentReportIsLoading, isFetching: getAgentReportIsFetching, refetch: refetchAgentData, data: agentData} = useQuery([GetAgentReport], () => getAgentReport(selectedView),{
         enabled: false,
@@ -60,9 +76,18 @@ const Reports = () => {
             }));
         }
     });
-        
-    const {isLoading: downloadAgentReportIsLoading, refetch: downloadAgentReport} = useQuery([ExportAgentReport, selectedView, selectedMonths], () => exportAgentReport(selectedView, selectedMonths),{
+
+    const {isLoading: getAvailableMonthsIsLoading, isFetching: getAvailableMonthsIsFetching, refetch: refetchAvailableMonths, data: availableMonths} = useQuery([GetQueueReport], () => getAvailableMonths(selectedReport),{
         enabled: false,
+        onError: () => {
+            dispatch(addSnackbarMessage({
+                type: SnackbarType.Error,
+                message: 'reports.get_queue_report.error'
+            }));
+        }
+    });
+        
+    const exportAgentReportMutation = useMutation(exportAgentReport,{
         onSuccess: () => {
             dispatch(addSnackbarMessage({
                 type: SnackbarType.Success,
@@ -77,8 +102,7 @@ const Reports = () => {
         }
     });
 
-    const {isLoading: downloadQueueReportIsLoading, refetch: downloadQueueReport} = useQuery([ExportQueueReport, selectedView, selectedMonths], () => exportQueueReport(selectedView, selectedMonths),{
-        enabled: false,
+    const exportQueueReportMutation = useMutation(exportQueueReport,{
         onSuccess: () => {
             dispatch(addSnackbarMessage({
                 type: SnackbarType.Success,
@@ -102,6 +126,10 @@ const Reports = () => {
         {
             refetchQueueData();
         }
+        else if(selectedView === ViewTypes.MonthlyReports){
+            refetchAvailableMonths();
+        }
+        setSelectedViewForView(selectedView);
         setSelectedReportForView(selectedReport);
         changeReportTitle();
     }
@@ -120,13 +148,19 @@ const Reports = () => {
     }
 
     const onDownload = () => {
-        if(selectedReport === ReportTypes.AgentReports && selectedView !== ViewTypes.MonthlyReports)
+        if(selectedReport === ReportTypes.AgentReports)
         {
-            downloadAgentReport();
+            exportAgentReportMutation.mutate({
+                request: getViewTypeForDownload(),
+                selectedIds: selectedMonths
+            })
         }
-        else if(selectedReport === ReportTypes.QueueReports && selectedView !== ViewTypes.MonthlyReports)
+        else if(selectedReport === ReportTypes.QueueReports)
         {
-            downloadQueueReport();
+            exportQueueReportMutation.mutate({
+                request: getViewTypeForDownload(),
+                selectedIds: selectedMonths
+            })
         }
     }
 
@@ -136,12 +170,12 @@ const Reports = () => {
     }
 
     const isLoading = () => {
-        return getAgentReportIsLoading || getAgentReportIsFetching || getQueueReportIsLoading || getQueueReportIsFetching
+        return getAgentReportIsLoading || getAgentReportIsFetching || getQueueReportIsLoading || getQueueReportIsFetching || getAvailableMonthsIsLoading || getAvailableMonthsIsFetching
     }
     
     const settings = () => {
         return <div className='my-6'>
-            {selectedView === ViewTypes.MonthlyReports && <h6 className='pt-3 mb-1'>{t('reports.view_options.monthly_reports')}</h6>}
+            {selectedViewForView === ViewTypes.MonthlyReports && <h6 className='pt-3 mb-1'>{t('reports.view_options.monthly_reports')}</h6>}
             <form onSubmit={handleSubmit(onSubmit)} className='flex flex-1 flex-col group'>
                 <div className='flex flex-row mt-5 gap-8'>
                     {
@@ -170,7 +204,7 @@ const Reports = () => {
                         selectedTab === TabTypes.Reports && <div className='w-2/4 h-14 flex items-center'>
                             <Button label='reports.view' type='submit' buttonType='medium' />
                             {
-                                selectedView !== ViewTypes.MonthlyReports && <Button label='reports.download' isLoading={downloadAgentReportIsLoading || downloadQueueReportIsLoading} className='mx-6' buttonType='secondary-medium' icon={Icon.Download} onClick={() => onDownload()}/>
+                                selectedView !== ViewTypes.MonthlyReports && <Button label='reports.download' isLoading={exportAgentReportMutation.isLoading || exportQueueReportMutation.isLoading} className='mx-6' buttonType='secondary-medium' icon={Icon.Download} onClick={() => onDownload()}/>
                             }
                         </div>
                     }
@@ -190,10 +224,13 @@ const Reports = () => {
                             isLoading() && <Spinner size='large-40' className='pt-2' />
                         }
                         {
-                            (selectedReportForView === ReportTypes.AgentReports && selectedView !== ViewTypes.MonthlyReports && !isLoading()) && <AgentReports title={reportTitle} data={agentData}/>
+                            (selectedReportForView === ReportTypes.AgentReports && selectedViewForView !== ViewTypes.MonthlyReports && !isLoading()) && <AgentReports title={reportTitle} data={agentData}/>
                         }
                         {
-                            (selectedReportForView === ReportTypes.QueueReports && selectedView !== ViewTypes.MonthlyReports && !isLoading()) && <QueueReports title={reportTitle} data={queueData}/>
+                            (selectedReportForView === ReportTypes.QueueReports && selectedViewForView !== ViewTypes.MonthlyReports && !isLoading()) && <QueueReports title={reportTitle} data={queueData}/>
+                        }
+                        {
+                            (selectedViewForView === ViewTypes.MonthlyReports && !isLoading()) && <MonthList data={availableMonths} downloadReports={setSelectedMonths}/>
                         }
                     </Tab>
                     <Tab key={TabTypes.PerformanceCharts} title={t('reports.performance_charts')}>

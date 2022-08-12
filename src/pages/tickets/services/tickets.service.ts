@@ -54,6 +54,7 @@ import { setUnreadEmailMessages, setUnreadTeamEmail } from '@pages/email/store/e
 import { BadgeValues } from '../models/badge-values.model';
 import { ViewTypes } from '@pages/reports/models/view-types.enum';
 import { MimeTypes } from '@shared/models/mime-types.enum';
+import { ReportTypes } from '@pages/reports/models/report-types.enum';
 const logger = Logger.getInstance();
 const ticketsBaseUrl = "/tickets";
 
@@ -468,26 +469,24 @@ export const getQueueReport = async(request: ViewTypes) => {
     return response.data;
 }
 
-export const exportAgentReport = async(request: ViewTypes, selectedIds: string[]) => {
-    const url = `${ticketsBaseUrl}/reports/agents/export`;
+export const getAvailableMonths = async(reportType: ReportTypes) => {
+    const url = `${ticketsBaseUrl}/reports/available-months?reportType=${reportType}`;
+    const response = await Api.get(url);
+    return response.data;
+}
+
+export const exportAgentReport = async({request, selectedIds} : {request: ViewTypes, selectedIds: string[]}) => {
+    const url = `${ticketsBaseUrl}/reports/agents/export?period=${request}&${selectedIds.map((n) => `selectedIds=${n}`).join('&')}`;
     const response = await Api.get(url, {
-        params: {
-            period: request,
-            selectedIds: selectedIds
-        },
         responseType: 'arraybuffer'
     });
     utils.downloadFileFromData(response.data, `AgentReport`, MimeTypes.XlsX);
     return response.data;
 }
 
-export const exportQueueReport = async(request: ViewTypes, selectedIds: string[]) => {
-    const url = `${ticketsBaseUrl}/reports/queue/export`;
+export const exportQueueReport = async({request, selectedIds}: {request: ViewTypes, selectedIds: string[]}) => {
+    const url = `${ticketsBaseUrl}/reports/queue/export?period=${request}&${selectedIds.map((n) => `selectedIds=${n}`).join('&')}`;
     const response = await Api.get(url, {
-        params: {
-            period: request,
-            selectedIds: selectedIds
-        },
         responseType: 'arraybuffer'
     });
     utils.downloadFileFromData(response.data, `QueueReport`, MimeTypes.XlsX);

@@ -2271,6 +2271,7 @@
     "report": "Report",
     "view": "View",
     "download": "Download",
+    "month": "Month",
     "report_options": {
       "agent_reports": "Agent KPIs",
       "bot_reports": "Bot Report",
