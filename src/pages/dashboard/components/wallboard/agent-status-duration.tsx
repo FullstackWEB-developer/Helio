@@ -10,7 +10,8 @@ const AgentStatusDuration = ({date}: {date: Date}) => {
         let isMounted = true;
         let interval = setInterval(() => {
             if (isMounted) {
-                setTimePassed(dayjs(new Date()).diff(dayjs(date), 'second'));
+                let seconds = dayjs(new Date()).diff(dayjs(date), 'second');
+                setTimePassed(seconds >= 0 ? seconds : 0);
             }
         }, 1000);
 

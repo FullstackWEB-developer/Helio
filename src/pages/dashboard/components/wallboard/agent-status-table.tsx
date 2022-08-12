@@ -19,6 +19,7 @@ import {Option} from '@components/option/option';
 import customHooks from '@shared/hooks/customHooks';
 import {UserStatus} from '@shared/store/app-user/app-user.models';
 import ElipsisTooltipTextbox from '@components/elipsis-tooltip-textbox/elipsis-tooltip-textbox';
+import {spaceBetweenCamelCaseWords} from '@shared/utils/utils';
 
 const AgentStatusTable = () => {
 
@@ -54,7 +55,7 @@ const AgentStatusTable = () => {
             return [];
         }
         let data: LiveAgentStatusInfo[] = [];
-        liveAgentStatuses.forEach((a: LiveAgentStatusInfo) => {
+        liveAgentStatuses.filter(a => !!a.status && a.status !== UserStatus.Offline.toString()).forEach((a: LiveAgentStatusInfo) => {
             const user = users.find(u => u.id === a.userId);
             if (selectedStatus.value === AllStatuses.value || selectedStatus.value === a.status) {
                 if (user) {
@@ -75,13 +76,11 @@ const AgentStatusTable = () => {
             UserStatus.Available.toString(),
             UserStatus.Busy.toString(),
             UserStatus.OnCall.toString(),
-            UserStatus.AfterWork.toString(),
-            UserStatus.Offline.toString()];
+            UserStatus.AfterWork.toString()];
         list = list.concat(sortByName(data.filter(a => a.status === UserStatus.Available)));
         list = list.concat(sortByName(data.filter(a => a.status === UserStatus.Busy || a.status === UserStatus.OnCall)));
         list = list.concat(sortByName(data.filter(a => !listedStatuses.includes(a.status))));
-        list = list.concat(sortByName(data.filter(a => a.status === UserStatus.AfterWork)))
-        list = list.concat(sortByName(data.filter(a => a.status === UserStatus.Offline)));
+        list = list.concat(sortByName(data.filter(a => a.status === UserStatus.AfterWork)));
         return list;
     }
 
@@ -100,7 +99,7 @@ const AgentStatusTable = () => {
     const getAvatarAndName =(record: LiveAgentStatusInfo) => {
         return <div className='flex flex-row items-center space-x-4'>
             <Avatar userFullName={record.name!} userId={record.userId} displayStatus={true} userPicture={record.profilePicture} />
-            {record.name && <div className='w-32 flex'><ElipsisTooltipTextbox value={record.name} classNames={"body2 truncate"} asSpan={true} /></div>}
+            {record.name && <div className='w-72 flex'><ElipsisTooltipTextbox value={record.name} classNames={"body2 truncate"} asSpan={true} /></div>}
         </div>
     }
 
@@ -121,13 +120,14 @@ const AgentStatusTable = () => {
             {
                 title:t('wallboard.agent_status.agent_name'),
                 field:'name',
-                widthClass:'w-48 pl-2',
+                widthClass:'w-96 pl-2',
                 render: (field, record: LiveAgentStatusInfo) => getAvatarAndName(record)
             },
             {
                 title:t('wallboard.agent_status.status'),
                 field:'status',
-                widthClass:'w-48'
+                widthClass:'w-48',
+                render: (field) => spaceBetweenCamelCaseWords(field)
             },
             {
                 title:t('wallboard.agent_status.duration'),
@@ -155,7 +155,7 @@ const AgentStatusTable = () => {
         const statusOptions : Option[] = [];
         statusOptions.push(AllStatuses);
         if (liveAgentStatuses && liveAgentStatuses.length > 0) {
-            const statuses = [...new Set(liveAgentStatuses.map((a: LiveAgentStatusInfo) => a.status?.toString()))] as string[];
+            const statuses = [...new Set(liveAgentStatuses.filter(a => !!a.status && a.status !== UserStatus.Offline.toString()).map((a: LiveAgentStatusInfo) => a.status?.toString()))] as string[];
             statuses.forEach((item:string) => {
                 if (!!item) {
                     statusOptions.push({
