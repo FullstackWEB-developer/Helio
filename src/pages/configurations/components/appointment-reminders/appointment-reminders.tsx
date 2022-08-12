@@ -107,6 +107,12 @@ const AppointmentReminders = () => {
         }
         setAppointmentRemindersMutation.mutate(payload);
     }
+
+    const onCancel = () => {
+        refetch();
+        setAvailableDays(availableDaysInitialState);
+    }
+
     const renderInterface = () => {
         return (
             editMode ?
@@ -135,7 +141,7 @@ const AppointmentReminders = () => {
                             label='common.save'
                             isLoading={isFetching || setAppointmentRemindersMutation.isLoading}
                         />
-                        <Button label='common.cancel' className=' ml-8 mr-8' buttonType='secondary' onClick={() => refetch()} disabled={isFetching || setAppointmentRemindersMutation.isLoading} />
+                        <Button label='common.cancel' className=' ml-8 mr-8' buttonType='secondary' onClick={() => onCancel()} disabled={isFetching || setAppointmentRemindersMutation.isLoading} />
                     </div>
                 </form >
                 :
