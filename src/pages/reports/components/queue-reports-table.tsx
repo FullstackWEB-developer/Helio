@@ -30,7 +30,7 @@ const QueueReportsTable = ({data, title}: QueueReportsTableProps) => {
                 rowClassname: 'body2',
                 render: (queueName: string) => {
                     return (<div className='flex items-center h-full'>
-                        <div className={classnames('overflow-hidden overflow-ellipsis ellipsis-row body2')}>
+                        <div className={classnames('overflow-hidden overflow-ellipsis ellipsis-row subtitle2')}>
                             {queueName ? queueName : "-"}
                         </div>
                     </div>)
@@ -248,7 +248,6 @@ const QueueReportsTable = ({data, title}: QueueReportsTableProps) => {
             },
         ]
     }
-
     return (
         <div className='mt-6 pt-4 bg-white rounded-lg'>
             <div className='px-6 pb-4 flex justify-between'>
