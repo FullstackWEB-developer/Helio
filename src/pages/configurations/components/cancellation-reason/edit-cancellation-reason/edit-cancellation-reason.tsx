@@ -209,7 +209,7 @@ const EditCancellationReason = () => {
 
                     <Button label='common.cancel' className=' ml-8 mr-8' buttonType='secondary'
                             onClick={() => navigateBackToCancelationReasonsList()}
-                            isLoading={updateCancellationReasonMutation.isLoading || deleteCancellationReasonMutation.isLoading}/>
+                            disabled={updateCancellationReasonMutation.isLoading || deleteCancellationReasonMutation.isLoading}/>
                     <Button label='common.delete' className='mr-8' buttonType='secondary'
                             onClick={() => setDeleteConfirmationOpened(true)}
                             isLoading={deleteCancellationReasonMutation.isLoading}/>

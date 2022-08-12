@@ -45,7 +45,7 @@ const ProviderAppointmentType = () => {
     const [pagedResults, setPagedResults] = useState<AppointmentTypeForProvider[]>([]);
     const [resultsForUpdate, setResultsForUpdate] = useState<AppointmentTypeForProvider[]>();
     const {isFetching, data, refetch} = useQuery<AppointmentTypeForProvider[]>([GetAppointmentTypesForProvider, selectedProvider], () => getAppointmentTypesForProvider(selectedProvider!), {
-        enabled: selectedProvider ? true : false,
+        enabled: !!selectedProvider,
         onSuccess: (data) => {
             setResultsForUpdate(data);
             paginateResults(data);
@@ -223,7 +223,7 @@ const ProviderAppointmentType = () => {
                                 className=' mx-8'
                                 buttonType='secondary'
                                 onClick={() => onCancel()}
-                                isLoading={saveAppointmentTypesForProvidersMutation.isLoading} />
+                                disabled={saveAppointmentTypesForProvidersMutation.isLoading} />
                         </div>
                     </>)
             }

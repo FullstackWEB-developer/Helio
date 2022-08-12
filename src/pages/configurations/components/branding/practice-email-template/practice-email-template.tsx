@@ -191,7 +191,7 @@ const PracticeEmailTemplateEdit = () => {
                             className=' ml-8'
                             buttonType='secondary'
                             onClick={() => onRestoreDefaultData()}
-                            isLoading={savePracticeEmailTemplateMutation.isLoading || uploadLogoMutation.isLoading}/>
+                            disabled={savePracticeEmailTemplateMutation.isLoading || uploadLogoMutation.isLoading}/>
                 </div>
             </form>
         }

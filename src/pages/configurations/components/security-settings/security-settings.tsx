@@ -11,7 +11,6 @@ import { SnackbarType } from "@components/snackbar/snackbar-type.enum";
 import Spinner from "@components/spinner/Spinner";
 import { useDispatch } from "react-redux";
 import { GetSecuritySettings } from "@constants/react-query-constants";
-import {SecuritySettingsForm} from "@pages/configurations/models/security-settings-form";
 
 const SecuritySettingsScreen = () => {
     const { t } = useTranslation();
@@ -35,22 +34,23 @@ const SecuritySettingsScreen = () => {
             }))
         }
     })
-    const saveSecuritySettingsMuteation = useMutation(saveSecuritySettings);
-    const onSubmit = (form: SecuritySettingsForm) => {
+    const saveSecuritySettingsMutation = useMutation(saveSecuritySettings);
+    const onSubmit = (form: SecuritySettings) => {
         const request: SecuritySettings = {
-            hipaaVerificationRetryNumber: form.hipaaVerificationRetryNumber,
-            verifiedPatientExpiresInDays: form.verifiedPatientExpiresInDays,
-            medicalRecordsDownloadExpirationInDays: form.medicalRecordsDownloadExpirationInDays,
-            redirectLinkExpirationInHours: form.redirectLinkExpirationInHours,
-            verificationFailWaitInMinutes: form.verificationFailWaitInMinutes,
-            guestSmsExpirationInHours: form.guestSmsExpirationInHours
+            hipaaVerificationRetryNumber: parseInt(form.hipaaVerificationRetryNumber.toString()),
+            verifiedPatientExpiresInDays: parseInt(form.verifiedPatientExpiresInDays.toString()),
+            medicalRecordsDownloadExpirationInDays: parseInt(form.medicalRecordsDownloadExpirationInDays.toString()),
+            redirectLinkExpirationInHours: parseInt(form.redirectLinkExpirationInHours.toString()),
+            verificationFailWaitInMinutes: parseInt(form.verificationFailWaitInMinutes.toString()),
+            guestSmsExpirationInHours: parseInt(form.guestSmsExpirationInHours.toString())
         }
-        saveSecuritySettingsMuteation.mutate(request, {
+        saveSecuritySettingsMutation.mutate(request, {
             onSuccess: () => {
                 dispatch(addSnackbarMessage({
                     type: SnackbarType.Success,
                     message: 'configuration.security_settings.save_success'
                 }));
+                reset(request);
             },
             onError: () => {
                 dispatch(addSnackbarMessage({
@@ -156,13 +156,13 @@ const SecuritySettingsScreen = () => {
                         buttonType='medium'
                         disabled={!isValid || !isDirty}
                         label='common.save'
-                        isLoading={saveSecuritySettingsMuteation.isLoading}
+                        isLoading={saveSecuritySettingsMutation.isLoading}
                     />
                     <Button label='common.cancel'
                         className=' ml-8'
                         buttonType='secondary'
                         onClick={() => reset()}
-                        isLoading={saveSecuritySettingsMuteation.isLoading}
+                        disabled={saveSecuritySettingsMutation.isLoading}
                     />
                 </div>
             </form>

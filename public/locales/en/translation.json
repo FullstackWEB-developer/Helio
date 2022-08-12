@@ -2089,7 +2089,7 @@
     "security_settings": {
       "title": "Security Settings",
       "get_error": "Error while getting data, please try again later.",
-      "save_success": "Successfully saved.",
+      "save_success": "Successfully saved. \n Please note that your changes will take effect in 30 minutes.",
       "save_error": "Error while saving data, please try again later.",
       "hipaa_verification_retry_number_title": "HIPAA Verification Retry Count",
       "hipaa_verification_retry_number_description": "Number of identity verification retries allowed. If exceeded patient will have to call the office.",
