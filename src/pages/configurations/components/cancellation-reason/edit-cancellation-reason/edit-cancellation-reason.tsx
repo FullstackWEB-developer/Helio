@@ -213,6 +213,7 @@ const EditCancellationReason = () => {
                             disabled={updateCancellationReasonMutation.isLoading || deleteCancellationReasonMutation.isLoading}/>
                     <Button label='common.delete' className='mr-8' buttonType='secondary'
                             onClick={() => setDeleteConfirmationOpened(true)}
+                            disabled={!cancellationReason.isMapped}
                             isLoading={deleteCancellationReasonMutation.isLoading}/>
                 </div>
             </form>
