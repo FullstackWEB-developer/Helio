@@ -815,6 +815,7 @@
     "retry_in_seconds": "You can retry in {{timeLeft}} seconds.",
     "go_back_and_retry_in_seconds": "You can go back & retry in {{timeLeft}} seconds.",
     "patient_verification_failed": "We could not verify your information. Please try again.",
+    "patient_data_not_valid": "Your data is not up to date. Please contact us via phone or email so we can assist you.",
     "schedule_new_appointment": "Schedule New Appointment",
     "mobile_phone_changed": "Your number was changed on our system, please send a new sms",
     "email_changed": "Your email was changed on our system, please send a new email",
