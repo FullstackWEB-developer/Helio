@@ -85,7 +85,7 @@ const EditCancellationReason = () => {
         }
 
     }
-    const {handleSubmit, control, formState: {isValid, isDirty, isSubmitSuccessful}} = useForm({mode: 'all'});
+    const {handleSubmit, control, formState: {isValid, isDirty, isSubmitSuccessful}, reset} = useForm({mode: 'all'});
 
     const navigateBackToCancelationReasonsList = () => {
         const pathName = `${ConfigurationsPath}${CancellationReasonsPath}`;
@@ -103,6 +103,7 @@ const EditCancellationReason = () => {
                         type: SnackbarType.Success,
                         message: 'configuration.cancellation_reason.delete_success'
                     }));
+                    reset();
                     navigateBackToCancelationReasonsList();
                 },
                 onError: () => {
