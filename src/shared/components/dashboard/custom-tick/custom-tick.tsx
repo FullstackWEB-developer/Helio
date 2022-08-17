@@ -55,23 +55,20 @@ const CustomTick = ({tick, tickRotation, volumeDataType, data = []}: CustomTickP
                 </>;
             case TicketVolumeDataType.SingleDay:
                 return <>
-                    <tspan x={"6"} dy="1.2em">{date.format('hh:mm A')}</tspan>
                     <tspan x={"6"} dy="1.2em">{date.add(2, 'hour').format('hh:mm A')}</tspan>
                 </>
             case TicketVolumeDataType.Weekly:
                 return <>
-                    <tspan x={"6"} dy="1.2em">{date.format('MMM DD')}</tspan>
-                    <tspan x={"6"} dy="1.2em">{getEndDate(date, true).format('MMM DD')} </tspan>
+                    <tspan x={"6"} dy="1.2em">{getEndDate(date, true).format('MMM DD')}</tspan>
                 </>;
             case TicketVolumeDataType.Monthly:
                 return <tspan x="0" dy="1.2em">{date.format('MMM')}</tspan>;
             case TicketVolumeDataType.Quarterly:
                 return <>
-                    <tspan x={"8"} dy="1.2em">{date.format('MMM')}</tspan>
                     <tspan x={"6"} dy="1.2em">{date.add(3, 'month').format('MMM')}</tspan>
                 </>;
             case TicketVolumeDataType.Annually:
-                return <tspan x="0" dy="1.2em">{date.format('yyyy')}</tspan>;
+                return <tspan x="0" dy="1.2em">{date.format('YYYY')}</tspan>;
         }
     }, [tickRotation, tick, volumeDataType]);
     return (

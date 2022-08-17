@@ -52,11 +52,11 @@ const ChartTooltip = ({point, label, volumeDataType = TicketVolumeDataType.Daily
             case TicketVolumeDataType.Weekly:
                 return date.format('MMM D') + " - " + getEndDate(date, true).format('MMM DD');
             case TicketVolumeDataType.Quarterly:
-                return date.format('MMM D') + " - " + date.add(3, 'month').format('MMM D');
+                return date.format('MMM D, YYYY') + " - " + date.add(3, 'month').format('MMM D, YYYY');
             case TicketVolumeDataType.Monthly:
-                return date.format('MMM');
+                return date.format('MMM, YYYY');
             case TicketVolumeDataType.Annually:
-                return date.format('yyyy');
+                return date.format('YYYY');
         }
     }, [volumeDataType, point]);
 

@@ -58,6 +58,7 @@ const HelioResponsiveLine = ({data, tickRotation, tickValues = 'every 1 day', to
             textColor: style.getPropertyValue('--dashboard-volume-chart-axis-label-color')
         }}
         enableGridX={false}
+        animate={false}
         pointLabelYOffset={-12}
         tooltip={({ point }) => <ChartTooltip data={data} volumeDataType={volumeDataType} label={toolTipLabelGenerator(point)} point={point}/>}
         enableArea={true}
