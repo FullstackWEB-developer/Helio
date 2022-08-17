@@ -20,6 +20,10 @@ import customHooks from '@shared/hooks/customHooks';
 import {UserStatus} from '@shared/store/app-user/app-user.models';
 import ElipsisTooltipTextbox from '@components/elipsis-tooltip-textbox/elipsis-tooltip-textbox';
 import {spaceBetweenCamelCaseWords} from '@shared/utils/utils';
+import {useQuery} from 'react-query';
+import {QueryQuickConnects} from '@constants/react-query-constants';
+import {getLatestQuickConnectData} from '@pages/tickets/services/tickets.service';
+import {updateLiveAgentStatus} from '@shared/store/app-user/appuser.slice';
 
 const AgentStatusTable = () => {
 
@@ -38,6 +42,20 @@ const AgentStatusTable = () => {
     const [agentStatusDropdownOpen, setAgentStatusDropdownOpen] = useState<boolean>(false);
     const [selectedStatus, setSelectedStatus] = useState<Option>(AllStatuses);
     const dropdownRef = useRef<HTMLDivElement>(null);
+
+    useQuery([QueryQuickConnects], () => getLatestQuickConnectData(), {
+       onSuccess: (data) => {
+            if (!data || data.length === 0) {
+                return;
+            }
+            data.filter(a => a.latestConnectStatus !== 'Offline').forEach(status => {
+                if (!!users.find(user => user.id === status.id)) {
+                    dispatch(updateLiveAgentStatus(status));
+                }
+            });
+       },
+        refetchInterval: 10 * 1000
+    });
 
     useEffect(() => {
         dispatch(getUserList());
