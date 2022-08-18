@@ -89,6 +89,7 @@ const Reports = () => {
         
     const exportAgentReportMutation = useMutation(exportAgentReport,{
         onSuccess: () => {
+            setSelectedMonths([]);
             dispatch(addSnackbarMessage({
                 type: SnackbarType.Success,
                 message: 'reports.download_agent_report.success'
@@ -104,6 +105,7 @@ const Reports = () => {
 
     const exportQueueReportMutation = useMutation(exportQueueReport,{
         onSuccess: () => {
+            setSelectedMonths([]);
             dispatch(addSnackbarMessage({
                 type: SnackbarType.Success,
                 message: 'reports.download_queue_report.success'
