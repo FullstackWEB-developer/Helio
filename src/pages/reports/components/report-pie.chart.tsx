@@ -19,7 +19,7 @@ const ReportPieChart = ({data, title, wrapperClass}: PieChartProps) => {
     if (!data || data.length === 0) {
         return <div className={`${wrapperClass} pt-4 bg-white rounded-lg`}>
         <div className='h7'>{t(title)}</div>
-        <div className='w-full h-72 px-6 space-y-4 horizantal-statistic-widget-body justify-center items-center flex'>{t('dashboard.no_data_found')}</div>
+        <div className='w-full h-72 px-6 space-y-4 horizontal-statistic-widget-body justify-center items-center flex'>{t('dashboard.no_data_found')}</div>
     </div>
     }
 

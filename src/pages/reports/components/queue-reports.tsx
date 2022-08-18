@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import HorizantalStatisticWidget from './horizantal-statistic-widget';
+import HorizontalStatisticWidget from './horizontal-statistic-widget';
 import { QueueReport } from '../models/queue-report.model';
 import { useEffect, useRef, useState } from 'react';
 import { ChannelTypes } from '@shared/models';
@@ -114,8 +114,8 @@ const QueueReports = ({data, title}: QueueReportsProps) => {
                 </div>
                 <div className='flex gap-8'>
                     <ReportPieChart wrapperClass='w-1/3 h-96' title={'reports.top_5_queues_by_inbound_volume'} data={widgetType === ChannelTypes.PhoneCall ? voiceInbound : chatInbound}/>
-                    <HorizantalStatisticWidget wrapperClass='w-1/3 h-96' title={'reports.most_abandoned_queues'} data={widgetType === ChannelTypes.PhoneCall ? voiceAbandoned : chatAbandoned}/>
-                    <HorizantalStatisticWidget wrapperClass='w-1/3 h-96' title={'reports.queues_with_highest_average_wait_time'} data={widgetType === ChannelTypes.PhoneCall ? voiceAverageWaitTime : chatAverageWaitTime}/>
+                    <HorizontalStatisticWidget wrapperClass='w-1/3 h-96' title={'reports.most_abandoned_queues'} data={widgetType === ChannelTypes.PhoneCall ? voiceAbandoned : chatAbandoned}/>
+                    <HorizontalStatisticWidget wrapperClass='w-1/3 h-96' title={'reports.queues_with_highest_average_wait_time'} data={widgetType === ChannelTypes.PhoneCall ? voiceAverageWaitTime : chatAverageWaitTime}/>
                 </div>
             </div>
             <QueueReportsTable data={data} title={"reports.queues_report"}/>

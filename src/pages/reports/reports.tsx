@@ -21,6 +21,9 @@ import dayjs from 'dayjs';
 import { ExportAgentReport, ExportQueueReport, GetAgentReport, GetQueueReport } from '@constants/react-query-constants';
 import QueueReports from './components/queue-reports';
 import MonthList from './components/month-list';
+import { SortDirection } from '@shared/models/sort-direction';
+import { AgentReport } from './models/agent-report.model';
+import utils from '@shared/utils/utils';
 var weekday = require('dayjs/plugin/weekday')
 const Reports = () => {
     const {t} = useTranslation();
@@ -30,7 +33,9 @@ const Reports = () => {
     const [selectedViewForView, setSelectedViewForView] = useState<ViewTypes>(ViewTypes.Last7Days);
     const [selectedTab, setSelectedTab] = useState<TabTypes>(TabTypes.Reports);
     const [selectedMonths, setSelectedMonths] = useState<string[]>([]);
+    const [agentReportData, setAgentReportData] = useState<AgentReport[]>([]);
     const [reportTitle, setReportTitle] = useState<string>();
+    const [_, setOrderDate] = useState<Date | undefined>();
     const dispatch = useDispatch();
     const {control, handleSubmit} = useForm({
         mode: 'all'
@@ -57,9 +62,13 @@ const Reports = () => {
         return selectedView === ViewTypes.MonthlyReports ? ViewTypes.LastMonth : selectedView;
     }
 
-    const {isLoading: getAgentReportIsLoading, isFetching: getAgentReportIsFetching, refetch: refetchAgentData, data: agentData} = useQuery([GetAgentReport], () => getAgentReport(selectedView),{
+    const {isLoading: getAgentReportIsLoading, isFetching: getAgentReportIsFetching, refetch: refetchAgentData} = useQuery([GetAgentReport], () => getAgentReport(selectedView),{
         enabled: false,
+        onSuccess: (data) => {
+            setAgentReportData(data);
+        },
         onError: () => {
+            setAgentReportData([]);
             dispatch(addSnackbarMessage({
                 type: SnackbarType.Error,
                 message: 'reports.get_agent_report.error'
@@ -149,6 +158,13 @@ const Reports = () => {
         }
     }
 
+    const onAgentReportSort = (sortField: string | undefined, sortDirection: SortDirection) => {
+        if (sortField && agentReportData && agentReportData.length) {
+            setOrderDate(new Date());
+            setAgentReportData(agentReportData.sort(utils.dynamicSort(sortField, sortDirection)));
+        }
+    }
+
     const onDownload = () => {
         if(selectedReport === ReportTypes.AgentReports)
         {
@@ -226,7 +242,7 @@ const Reports = () => {
                             isLoading() && <Spinner size='large-40' className='pt-2' />
                         }
                         {
-                            (selectedReportForView === ReportTypes.AgentReports && selectedViewForView !== ViewTypes.MonthlyReports && !isLoading()) && <AgentReports title={reportTitle} data={agentData}/>
+                            (selectedReportForView === ReportTypes.AgentReports && selectedViewForView !== ViewTypes.MonthlyReports && !isLoading()) && <AgentReports title={reportTitle} data={agentReportData} onSort={onAgentReportSort}/>
                         }
                         {
                             (selectedReportForView === ReportTypes.QueueReports && selectedViewForView !== ViewTypes.MonthlyReports && !isLoading()) && <QueueReports title={reportTitle} data={queueData}/>

@@ -11,9 +11,10 @@ export interface TableHeaderProps {
     headers?: TableColumnModel[];
     className?: string;
     size: TableSize;
+    allowMultiSort?: boolean;
 }
 
-const TableHeaderColumn = ({header}: {header: TableColumnModel}) => {
+const TableHeaderColumn = ({header, allowMultiSort, setSortFields, currentSortFields}: {header: TableColumnModel, allowMultiSort?: boolean, setSortFields: (sortFields: string[]) => void, currentSortFields: string[]}) => {
     const {t} = useTranslation();
     const [currentSortDirection, setSortDirection] = useState(header.sortDirection ?? SortDirection.None);
 
@@ -32,6 +33,16 @@ const TableHeaderColumn = ({header}: {header: TableColumnModel}) => {
         }
         setSortDirection(newSortDirection);
 
+        if(allowMultiSort && newSortDirection !== SortDirection.None && currentSortFields && currentSortFields.filter(x => x === field).length === 0){
+            setSortFields([...currentSortFields, field]);
+        }else if(allowMultiSort && newSortDirection === SortDirection.None && currentSortFields && currentSortFields.filter(x => x === field).length === 1){
+            setSortFields(currentSortFields.filter(x => x !== field));
+        }else if(!allowMultiSort && newSortDirection !== SortDirection.None){
+            setSortFields([field]);
+        }else if(!allowMultiSort && newSortDirection === SortDirection.None){
+            setSortFields([]);
+        }
+
         if (header.onClick) {
             header.onClick(field, newSortDirection);
         }
@@ -41,23 +52,23 @@ const TableHeaderColumn = ({header}: {header: TableColumnModel}) => {
     if (typeof title === 'string') {
         return (
             <div key={field} className={className} onClick={onClicked}>{t(title)}
-                {isSortable && currentSortDirection !== SortDirection.None &&
+                {isSortable && currentSortDirection !== SortDirection.None && currentSortFields && currentSortFields.filter(x => x === field).length === 1 &&
                     <SvgIcon type={SortIconMap[currentSortDirection]}
                         className='pl-2 icon-medium'
                         fillClass='active-item-icon' />
                 }
-                {isSortable && currentSortDirection !== SortDirection.None && header.sortOrder &&
+                {isSortable && currentSortDirection !== SortDirection.None && header.sortOrder && currentSortFields && currentSortFields.filter(x => x === field).length === 1 &&
                     <span className='pl-0.5 body3-medium'>{header.sortOrder}</span>
                 }
             </div>
         );
     } else if (React.isValidElement(title)) {
-        return <div key={field} className={className} onClick={onClicked}>{title}{isSortable && currentSortDirection !== SortDirection.None &&
+        return <div key={field} className={className} onClick={onClicked}>{title}{isSortable && currentSortDirection !== SortDirection.None && currentSortFields && currentSortFields.filter(x => x === field).length === 1 &&
             <SvgIcon type={SortIconMap[currentSortDirection]}
                 className='pl-2 icon-medium'
                 fillClass='active-item-icon' />
         }
-        {isSortable && currentSortDirection !== SortDirection.None && header.sortOrder &&
+        {isSortable && currentSortDirection !== SortDirection.None && header.sortOrder && currentSortFields && currentSortFields.filter(x => x === field).length === 1 &&
             <span className='pl-0.5 body3-medium'>{header.sortOrder}</span>
         }</div>;
     } else {
@@ -65,12 +76,14 @@ const TableHeaderColumn = ({header}: {header: TableColumnModel}) => {
     }
 };
 
-const TableHeader = ({headers, className, size}: TableHeaderProps) => {
+const TableHeader = ({headers, className, size, allowMultiSort}: TableHeaderProps) => {
+    let initialSortedHeaders = headers?.filter(x => x.sortDirection !== SortDirection.None && x.sortDirection !== undefined);
+    const [currentSortFields, setSortFields] = useState<string[]>(initialSortedHeaders ? initialSortedHeaders.map(a => a.field) : []);
     if (!headers) {
         return null;
     }
     
-    const content = React.Children.toArray(headers.map(header => <TableHeaderColumn header={header}/>));
+    const content = React.Children.toArray(headers.map(header => <TableHeaderColumn header={header} allowMultiSort={allowMultiSort} setSortFields={setSortFields} currentSortFields={currentSortFields}/>));
     const headerClassName = classnames('flex flex-row caption-caps table-header h-8 items-center', className, {
         'h-12': size === 'large',
         'px-4': size !== 'large',

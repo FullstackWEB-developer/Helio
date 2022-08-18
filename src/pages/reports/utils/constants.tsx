@@ -1,6 +1,9 @@
 import { ReportTypes } from '../models/report-types.enum'
 import { ViewTypes } from '../models/view-types.enum'
 
+var dayjs = require("dayjs")
+var duration = require('dayjs/plugin/duration')
+
 export const viewTypes = [
     {
         label: 'reports.view_options.yesterday',
@@ -43,3 +46,22 @@ export const reportTypes = [
         value: ReportTypes.QueueReports.toString()
     }
 ]
+
+const ONE_DAY_AS_SECOND = 86400;
+const TWO_DAY_AS_SECOND = ONE_DAY_AS_SECOND * 2;
+const TIME_FORMAT = 'HH:mm:ss'
+
+export const getFormattedTime = (time, day, days) => {
+    let innerText = "-";
+    if(time){
+        let duration = dayjs.duration(time, 'seconds');
+        if(time < ONE_DAY_AS_SECOND){
+            innerText = duration.format(TIME_FORMAT);
+        }else if(time >= ONE_DAY_AS_SECOND && time < TWO_DAY_AS_SECOND){
+            innerText = `${duration.format('DD')} ${day} ${duration.format(TIME_FORMAT)}`
+        }else{
+            innerText = `${duration.format('DD')} ${days} ${duration.format(TIME_FORMAT)}`
+        }
+    }
+    return innerText;
+}

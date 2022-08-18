@@ -2323,6 +2323,28 @@
         "avg_duration": "Avrg. Duration",
         "awt": "AWT"
       }
+    },
+    "agent_report": "Agent KPIs",
+    "agent_reports": {
+      "column_names": {
+        "agent_name": "Agent Name",
+        "total_calls_and_chats": "Total Calls & Chats",
+        "utilization": "Utilization",
+        "avg_idle_time": "Avg. Idle Time",
+        "answer_rate": "Answer Rate",
+        "missed_contact": "Missed Contact",
+        "acwt": "ACWT"
+      },
+      "column_postfixes": {
+        "days": "days",
+        "day": "day"
+      }
+    },
+    "agent_reports_tabs": {
+      "voice_and_chat": "Voice & Chat",
+      "voice": "Voice",
+      "chat": "Chat",
+      "tickets": "Tickets"
     }
   }
 }

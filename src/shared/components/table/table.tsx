@@ -24,7 +24,8 @@ const Table = ({model}: TableProps) => {
         rowClass,
         pageSize = 10,
         onRowMouseLeave,
-        subColumns
+        subColumns,
+        allowMultiSort = true
     } = model;
     const {t} = useTranslation();
     const [currentPage, setCurrentPage] = useState<number>(1);
@@ -86,7 +87,7 @@ const Table = ({model}: TableProps) => {
             <Pagination value={pagination} onChange={(data) => setCurrentPage(data.page)} />
         </div>}
         {title && <TableTitle model={title} size={size} />}
-        {!hideHeader && <TableHeader size={size} className={model.headerClassName} headers={columns} />}
+        {!hideHeader && <TableHeader size={size} className={model.headerClassName} headers={columns} allowMultiSort={allowMultiSort} />}
         {getContent()}
         {isPageable('bottom') && <div className='pt-4 flex justify-end'>
             <Pagination value={pagination} onChange={(data) => setCurrentPage(data.page)} />

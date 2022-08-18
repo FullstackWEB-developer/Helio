@@ -21,6 +21,7 @@ export interface TableModel {
     size?: TableSize;
     paginationPosition?: 'top' | 'bottom' | 'both';
     onRowMouseLeave?: () => void;
+    allowMultiSort?: boolean;
 }
 
 export interface TableColumnModel {

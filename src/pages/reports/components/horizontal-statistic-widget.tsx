@@ -1,4 +1,4 @@
-import './horizantal-statistic-widget.scss';
+import './horizontal-statistic-widget.scss';
 import {useTranslation} from 'react-i18next';
 import Dropdown, { DropdownModel } from '@components/dropdown';
 import { customHooks } from '@shared/hooks';
@@ -19,7 +19,7 @@ interface DropdownItemModel {
     value: string;
 }
 
-export interface HorizantalStatisticWidgetProps {
+export interface HorizontalStatisticWidgetProps {
     data: BasicStatistic[];
     title: string;
     description?: string;
@@ -28,7 +28,7 @@ export interface HorizantalStatisticWidgetProps {
     dropdownItems?: DropdownItemModel[]
 }
 
-const HorizantalStatisticWidget = ({data, title, description, wrapperClass = 'w-full h-96', dropdownSelected, dropdownItems}: HorizantalStatisticWidgetProps) => {
+const HorizontalStatisticWidget = ({data, title, description, wrapperClass = 'w-full h-96', dropdownSelected, dropdownItems}: HorizontalStatisticWidgetProps) => {
     const {t} = useTranslation();
     dayjs.extend(duration);
     const typeDropdownRef = useRef<HTMLDivElement>(null);
@@ -63,8 +63,8 @@ const HorizantalStatisticWidget = ({data, title, description, wrapperClass = 'w-
                 </div>
             </div>
             <div>
-                <div className='h-2 horizantal-statistic-widget-row rounded' style={{width: width}}/>
-                <div className='h-2 horizantal-statistic-widget-row-bg relative bottom-2 rounded'/>
+                <div className='h-2 horizontal-statistic-widget-row rounded' style={{width: width}}/>
+                <div className='h-2 horizontal-statistic-widget-row-bg relative bottom-2 rounded'/>
             </div>
         </div>
     }
@@ -72,7 +72,7 @@ const HorizantalStatisticWidget = ({data, title, description, wrapperClass = 'w-
         return <div className={`${wrapperClass} pt-4 bg-white rounded-lg`}>
             <div className='h7'>{dropdownSelected ? `${selectedDropdownItem && t(selectedDropdownItem)} ${t(title)}` : `${t(title)}`}</div>
             <div className='mb-7 h7'>{description && t(description)}</div>
-            <div className='w-full h-72 px-6 space-y-4 horizantal-statistic-widget-body justify-center items-center flex'>{t('dashboard.no_data_found')}</div>
+            <div className='w-full h-72 px-6 space-y-4 horizontal-statistic-widget-body justify-center items-center flex'>{t('dashboard.no_data_found')}</div>
         </div>
     }
 
@@ -103,4 +103,4 @@ const HorizantalStatisticWidget = ({data, title, description, wrapperClass = 'w-
     </div>
 }
 
-export default HorizantalStatisticWidget;
+export default HorizontalStatisticWidget;

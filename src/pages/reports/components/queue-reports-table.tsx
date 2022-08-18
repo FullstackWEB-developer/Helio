@@ -3,6 +3,7 @@ import { QueueReport } from '../models/queue-report.model';
 import Table from '@components/table/table';
 import { TableModel } from '@components/table/table.models';
 import classnames from 'classnames';
+import { getFormattedTime } from '../utils/constants';
 
 var dayjs = require("dayjs")
 var duration = require('dayjs/plugin/duration')
@@ -119,13 +120,13 @@ const QueueReportsTable = ({data, title}: QueueReportsTableProps) => {
                 field: 'averageCallLength',
                 widthClass: 'w-1/12',
                 rowClassname: 'body2',
-                render: (averageCallLength: string) => {
+                render: (averageCallLength: number) => {
                     return (<div className='flex items-center h-full'>
                         <div className={classnames('overflow-hidden overflow-ellipsis ellipsis-row body2')}>
-                            {averageCallLength ? `${dayjs.duration(averageCallLength, 'seconds').format('HH:mm:ss')}` : "-"}
+                            {getFormattedTime(averageCallLength, t('reports.agent_reports.column_postfixes.day'), t('reports.agent_reports.column_postfixes.days'))}
                         </div>
                     </div>)
-                }
+                    }
             },
             {
                 title: 'reports.queue_reports.column_names.awt',
@@ -135,10 +136,10 @@ const QueueReportsTable = ({data, title}: QueueReportsTableProps) => {
                 render: (averageInboundCallWaitTime: number) => {
                     return (<div className='flex items-center h-full'>
                         <div className={classnames('overflow-hidden overflow-ellipsis ellipsis-row body2')}>
-                            {averageInboundCallWaitTime ? `${dayjs.duration(averageInboundCallWaitTime, 'seconds').format('HH:mm:ss')}` : "-"}
+                        {getFormattedTime(averageInboundCallWaitTime, t('reports.agent_reports.column_postfixes.day'), t('reports.agent_reports.column_postfixes.days'))}
                         </div>
                     </div>)
-                }
+                    }
             },
         ],
         subColumns: [
@@ -226,10 +227,10 @@ const QueueReportsTable = ({data, title}: QueueReportsTableProps) => {
                 field: 'averageChatLength',
                 widthClass: 'w-1/12',
                 rowClassname: 'body2',
-                render: (averageChatLength: string) => {
+                render: (averageChatLength: number) => {
                     return (<div className='flex items-center h-full'>
                         <div className={classnames('overflow-hidden overflow-ellipsis ellipsis-row body2')}>
-                            {averageChatLength ? `${dayjs.duration(averageChatLength, 'seconds').format('HH:mm:ss')}` : "-"}
+                            {getFormattedTime(averageChatLength, t('reports.agent_reports.column_postfixes.day'), t('reports.agent_reports.column_postfixes.days'))}
                         </div>
                     </div>)
                 }
@@ -238,10 +239,10 @@ const QueueReportsTable = ({data, title}: QueueReportsTableProps) => {
                 field: 'averageIncomingChatWaitTime',
                 widthClass: 'w-1/12',
                 rowClassname: 'body2',
-                render: (averageIncomingChatWaitTime: string) => {
+                render: (averageIncomingChatWaitTime: number) => {
                     return (<div className='flex items-center h-full'>
                         <div className={classnames('overflow-hidden overflow-ellipsis ellipsis-row body2')}>
-                            {averageIncomingChatWaitTime ? `${dayjs.duration(averageIncomingChatWaitTime, 'seconds').format('HH:mm:ss')}` : "-"}
+                            {getFormattedTime(averageIncomingChatWaitTime, t('reports.agent_reports.column_postfixes.day'), t('reports.agent_reports.column_postfixes.days'))}
                         </div>
                     </div>)
                 }
@@ -254,7 +255,7 @@ const QueueReportsTable = ({data, title}: QueueReportsTableProps) => {
                 <div className='h7'>{t(title)}</div>
             </div>
             {
-                data.length > 0 ? <Table model={tableModel} /> : <div className='w-full h-72 px-6 space-y-4 horizantal-statistic-widget-body justify-center items-center flex'>{t('dashboard.no_data_found')}</div>
+                data && data.length > 0 ? <Table model={tableModel} /> : <div className='w-full h-72 px-6 space-y-4 horizontal-statistic-widget-body justify-center items-center flex'>{t('dashboard.no_data_found')}</div>
             }
         </div>
     );
