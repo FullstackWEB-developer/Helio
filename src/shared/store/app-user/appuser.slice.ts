@@ -69,13 +69,14 @@ const appUserSlice = createSlice({
                 state.liveAgentStatuses = state.liveAgentStatuses.filter(a => a.userId !== payload.id);
                 state.liveAgentStatuses.push({
                     ...item,
-                    status: payload.latestConnectStatus
+                    status: payload.latestConnectStatus,
+                    timestamp: payload.timeStamp
                 });
             } else {
                 state.liveAgentStatuses.push({
                     status: payload.latestConnectStatus,
                     userId: payload.id,
-                    timestamp: dayjs.utc(payload.latestConnectStatus).local().toDate(),
+                    timestamp: dayjs.utc(payload.timeStamp).local().toDate(),
                     name: `${payload.firstName} ${(payload.lastName)}`
                 })
             }
