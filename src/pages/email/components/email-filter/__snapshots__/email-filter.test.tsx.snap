@@ -1,0 +1,801 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Email Filter tests renders email-filter correctly 1`] = `
+<DocumentFragment>
+  <div>
+    <div
+      class="pl-5 flex py-4 border-b flex-col"
+    >
+      <div
+        class="flex justify-between"
+      >
+        <div
+          class="subtitle"
+        >
+          common.filters
+        </div>
+        <div
+          class="flex flex-row items-center"
+        >
+          <div>
+            <div
+              class="pl-7 pr-4 cursor-pointer"
+            >
+              <svg
+                class="icon-small "
+                data-testid="svg-icon"
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="fill-default"
+                  d="M16,1.409,14.591,0,8,6.566,1.409,0,0,1.409,6.566,8,0,14.591,1.409,16,8,9.434,14.591,16,16,14.591,9.434,8Z"
+                  transform="translate(4 4)"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="flex flex-row pt-4"
+      >
+        <button
+          class="small-button cursor-pointer mr-4"
+          data-test-id="apply-button"
+          data-testid="apply-button"
+          type="button"
+        >
+          <div
+            class="flex flex-row justify-center items-center space-x-2"
+          >
+            <div>
+              common.apply
+            </div>
+          </div>
+        </button>
+        <button
+          class="secondary-button cursor-pointer"
+          data-test-id="reset-all-button"
+          data-testid="reset-all-button"
+          type="button"
+        >
+          <div
+            class="flex flex-row justify-center items-center space-x-2"
+          >
+            <div>
+              common.reset_all
+            </div>
+          </div>
+        </button>
+      </div>
+    </div>
+    <div
+      class="flex flex-col pt-4 pl-5 pr-4"
+    >
+      <div>
+        <div
+          class="cursor-pointer flex flex-row justify-between items-center h-10 mb-1.5"
+        >
+          <div
+            class="subtitle"
+          >
+            email.filter.time_section
+          </div>
+          <div>
+            <div
+              class=""
+            >
+              <svg
+                class="cursor-pointer "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="active-item-icon"
+                  d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                  transform="translate(19 8) rotate(90)"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div
+            class=""
+          >
+            <div
+              class="radio h-9 "
+            >
+              <input
+                data-test-id="timePeriod-radio"
+                data-testid="timePeriod_0"
+                id="timePeriod_0"
+                name="timePeriod"
+                type="radio"
+                value="0"
+              />
+              <label
+                class="body2  truncate "
+                for="timePeriod_0"
+              >
+                <div
+                  class="truncate relative w-full h-full inline-block"
+                >
+                  <span
+                    class="body2"
+                  >
+                    common.time_periods.today
+                  </span>
+                </div>
+              </label>
+            </div>
+            <div
+              class="radio h-9 "
+            >
+              <input
+                data-test-id="timePeriod-radio"
+                data-testid="timePeriod_1"
+                id="timePeriod_1"
+                name="timePeriod"
+                type="radio"
+                value="1"
+              />
+              <label
+                class="body2  truncate "
+                for="timePeriod_1"
+              >
+                <div
+                  class="truncate relative w-full h-full inline-block"
+                >
+                  <span
+                    class="body2"
+                  >
+                    common.time_periods.last_7_days
+                  </span>
+                </div>
+              </label>
+            </div>
+            <div
+              class="radio h-9 "
+            >
+              <input
+                data-test-id="timePeriod-radio"
+                data-testid="timePeriod_2"
+                id="timePeriod_2"
+                name="timePeriod"
+                type="radio"
+                value="2"
+              />
+              <label
+                class="body2  truncate "
+                for="timePeriod_2"
+              >
+                <div
+                  class="truncate relative w-full h-full inline-block"
+                >
+                  <span
+                    class="body2"
+                  >
+                    common.time_periods.last_30_days
+                  </span>
+                </div>
+              </label>
+            </div>
+            <div
+              class="radio h-9 "
+            >
+              <input
+                data-test-id="timePeriod-radio"
+                data-testid="timePeriod_3"
+                id="timePeriod_3"
+                name="timePeriod"
+                type="radio"
+                value="3"
+              />
+              <label
+                class="body2  truncate "
+                for="timePeriod_3"
+              >
+                <div
+                  class="truncate relative w-full h-full inline-block"
+                >
+                  <span
+                    class="body2"
+                  >
+                    common.time_periods.date_range
+                  </span>
+                </div>
+              </label>
+            </div>
+          </div>
+          <div
+            class="hidden"
+          >
+            <div
+              class="date-time-picker w-full flex flex-col h-20"
+            >
+              <div
+                class="date-time-picker-container flex flex-wrap relative"
+              >
+                <input
+                  autocomplete="off"
+                  class="relative truncate flex-shrink flex-grow flex-auto leading-normal w-px pl-4 body2 input-pt h-14 cursor-pointer"
+                  data-testid="fromDate"
+                  max="2022-08-19"
+                  min="2022-02-19"
+                  name="fromDate"
+                  readonly=""
+                  type="text"
+                  value=""
+                />
+                <label
+                  class="absolute truncate"
+                >
+                  <span
+                    class="label-span body2"
+                  >
+                    tickets.filter.from_date
+                  </span>
+                </label>
+                <div
+                  class="input-addon px-3 pt-4"
+                  role="button"
+                >
+                  <div
+                    class=""
+                  >
+                    <svg
+                      class="icon-medium "
+                      height="24"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <rect
+                        fill="none"
+                        height="24"
+                        width="24"
+                      />
+                      <path
+                        class="date-time-picker-arrow"
+                        d="M7,14l1.273-1.273L2.545,7,8.273,1.273,7,0,0,7Z"
+                        transform="translate(5 16.273) rotate(-90)"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="date-time-picker w-full flex flex-col h-20 date-time-picker-disabled"
+            >
+              <div
+                class="date-time-picker-container flex flex-wrap relative"
+              >
+                <input
+                  autocomplete="off"
+                  class="relative truncate flex-shrink flex-grow flex-auto leading-normal w-px pl-4 body2 input-pt h-14 cursor-pointer"
+                  data-testid="toDate"
+                  disabled=""
+                  max="2022-08-19"
+                  min="0001-01-01"
+                  name="toDate"
+                  readonly=""
+                  type="text"
+                  value=""
+                />
+                <label
+                  class="absolute truncate"
+                >
+                  <span
+                    class="label-span body2"
+                  >
+                    tickets.filter.to_date
+                  </span>
+                </label>
+                <div
+                  class="input-addon px-3 pt-4"
+                  role="button"
+                >
+                  <div
+                    class=""
+                  >
+                    <svg
+                      class="icon-medium "
+                      height="24"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <rect
+                        fill="none"
+                        height="24"
+                        width="24"
+                      />
+                      <path
+                        class="date-time-picker-arrow"
+                        d="M7,14l1.273-1.273L2.545,7,8.273,1.273,7,0,0,7Z"
+                        transform="translate(5 16.273) rotate(-90)"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Email Filter tests renders email-filter isUserFilterEnabled 1`] = `
+<DocumentFragment>
+  <div>
+    <div
+      class="pl-5 flex py-4 border-b flex-col"
+    >
+      <div
+        class="flex justify-between"
+      >
+        <div
+          class="subtitle"
+        >
+          common.filters
+        </div>
+        <div
+          class="flex flex-row items-center"
+        >
+          <div>
+            <div
+              class="pl-7 pr-4 cursor-pointer"
+            >
+              <svg
+                class="icon-small "
+                data-testid="svg-icon"
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="fill-default"
+                  d="M16,1.409,14.591,0,8,6.566,1.409,0,0,1.409,6.566,8,0,14.591,1.409,16,8,9.434,14.591,16,16,14.591,9.434,8Z"
+                  transform="translate(4 4)"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="flex flex-row pt-4"
+      >
+        <button
+          class="small-button cursor-pointer mr-4"
+          data-test-id="apply-button"
+          data-testid="apply-button"
+          type="button"
+        >
+          <div
+            class="flex flex-row justify-center items-center space-x-2"
+          >
+            <div>
+              common.apply
+            </div>
+          </div>
+        </button>
+        <button
+          class="secondary-button cursor-pointer"
+          data-test-id="reset-all-button"
+          data-testid="reset-all-button"
+          type="button"
+        >
+          <div
+            class="flex flex-row justify-center items-center space-x-2"
+          >
+            <div>
+              common.reset_all
+            </div>
+          </div>
+        </button>
+      </div>
+    </div>
+    <div
+      class="flex flex-col pt-4 pl-5 pr-4"
+    >
+      <div>
+        <div
+          class="cursor-pointer flex flex-row justify-between items-center h-10 mb-1.5"
+        >
+          <div
+            class="subtitle"
+          >
+            email.filter.time_section
+          </div>
+          <div>
+            <div
+              class=""
+            >
+              <svg
+                class="cursor-pointer "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="active-item-icon"
+                  d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                  transform="translate(19 8) rotate(90)"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div
+            class=""
+          >
+            <div
+              class="radio h-9 "
+            >
+              <input
+                data-test-id="timePeriod-radio"
+                data-testid="timePeriod_0"
+                id="timePeriod_0"
+                name="timePeriod"
+                type="radio"
+                value="0"
+              />
+              <label
+                class="body2  truncate "
+                for="timePeriod_0"
+              >
+                <div
+                  class="truncate relative w-full h-full inline-block"
+                >
+                  <span
+                    class="body2"
+                  >
+                    common.time_periods.today
+                  </span>
+                </div>
+              </label>
+            </div>
+            <div
+              class="radio h-9 "
+            >
+              <input
+                data-test-id="timePeriod-radio"
+                data-testid="timePeriod_1"
+                id="timePeriod_1"
+                name="timePeriod"
+                type="radio"
+                value="1"
+              />
+              <label
+                class="body2  truncate "
+                for="timePeriod_1"
+              >
+                <div
+                  class="truncate relative w-full h-full inline-block"
+                >
+                  <span
+                    class="body2"
+                  >
+                    common.time_periods.last_7_days
+                  </span>
+                </div>
+              </label>
+            </div>
+            <div
+              class="radio h-9 "
+            >
+              <input
+                data-test-id="timePeriod-radio"
+                data-testid="timePeriod_2"
+                id="timePeriod_2"
+                name="timePeriod"
+                type="radio"
+                value="2"
+              />
+              <label
+                class="body2  truncate "
+                for="timePeriod_2"
+              >
+                <div
+                  class="truncate relative w-full h-full inline-block"
+                >
+                  <span
+                    class="body2"
+                  >
+                    common.time_periods.last_30_days
+                  </span>
+                </div>
+              </label>
+            </div>
+            <div
+              class="radio h-9 "
+            >
+              <input
+                data-test-id="timePeriod-radio"
+                data-testid="timePeriod_3"
+                id="timePeriod_3"
+                name="timePeriod"
+                type="radio"
+                value="3"
+              />
+              <label
+                class="body2  truncate "
+                for="timePeriod_3"
+              >
+                <div
+                  class="truncate relative w-full h-full inline-block"
+                >
+                  <span
+                    class="body2"
+                  >
+                    common.time_periods.date_range
+                  </span>
+                </div>
+              </label>
+            </div>
+          </div>
+          <div
+            class="hidden"
+          >
+            <div
+              class="date-time-picker w-full flex flex-col h-20"
+            >
+              <div
+                class="date-time-picker-container flex flex-wrap relative"
+              >
+                <input
+                  autocomplete="off"
+                  class="relative truncate flex-shrink flex-grow flex-auto leading-normal w-px pl-4 body2 input-pt h-14 cursor-pointer"
+                  data-testid="fromDate"
+                  max="2022-08-19"
+                  min="2022-02-19"
+                  name="fromDate"
+                  readonly=""
+                  type="text"
+                  value=""
+                />
+                <label
+                  class="absolute truncate"
+                >
+                  <span
+                    class="label-span body2"
+                  >
+                    tickets.filter.from_date
+                  </span>
+                </label>
+                <div
+                  class="input-addon px-3 pt-4"
+                  role="button"
+                >
+                  <div
+                    class=""
+                  >
+                    <svg
+                      class="icon-medium "
+                      height="24"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <rect
+                        fill="none"
+                        height="24"
+                        width="24"
+                      />
+                      <path
+                        class="date-time-picker-arrow"
+                        d="M7,14l1.273-1.273L2.545,7,8.273,1.273,7,0,0,7Z"
+                        transform="translate(5 16.273) rotate(-90)"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="date-time-picker w-full flex flex-col h-20 date-time-picker-disabled"
+            >
+              <div
+                class="date-time-picker-container flex flex-wrap relative"
+              >
+                <input
+                  autocomplete="off"
+                  class="relative truncate flex-shrink flex-grow flex-auto leading-normal w-px pl-4 body2 input-pt h-14 cursor-pointer"
+                  data-testid="toDate"
+                  disabled=""
+                  max="2022-08-19"
+                  min="0001-01-01"
+                  name="toDate"
+                  readonly=""
+                  type="text"
+                  value=""
+                />
+                <label
+                  class="absolute truncate"
+                >
+                  <span
+                    class="label-span body2"
+                  >
+                    tickets.filter.to_date
+                  </span>
+                </label>
+                <div
+                  class="input-addon px-3 pt-4"
+                  role="button"
+                >
+                  <div
+                    class=""
+                  >
+                    <svg
+                      class="icon-medium "
+                      height="24"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <rect
+                        fill="none"
+                        height="24"
+                        width="24"
+                      />
+                      <path
+                        class="date-time-picker-arrow"
+                        d="M7,14l1.273-1.273L2.545,7,8.273,1.273,7,0,0,7Z"
+                        transform="translate(5 16.273) rotate(-90)"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="pt-4"
+      >
+        <div
+          class="cursor-pointer flex flex-row justify-between items-center h-10 mb-1.5"
+        >
+          <div
+            class="subtitle"
+          >
+            email.filter.team_section
+          </div>
+          <div>
+            <div
+              class=""
+            >
+              <svg
+                class="cursor-pointer "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="active-item-icon"
+                  d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                  transform="translate(19 8) rotate(90)"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div
+            class="select-wrapper relative w-full flex flex-col h-20 "
+          >
+            <div
+              class="select relative flex flex-col "
+            >
+              <input
+                autocomplete="on"
+                autocorrect="on"
+                class="pl-4 pr-8 body2 pt-2.5 h-10 relative truncate select-trigger activated  "
+                data-testid="assignedTo"
+                name="assignedTo"
+                spellcheck="true"
+                type="text"
+                value="common.all"
+              />
+              <div
+                class="absolute pt-3 right-4 "
+              >
+                <div
+                  class="flex flex-row items-start"
+                >
+                  <div
+                    class="cursor-pointer"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium "
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="24"
+                          width="24"
+                        />
+                        <path
+                          class="select-arrow-fill"
+                          d="M7,14l1.273-1.273L2.545,7,8.273,1.273,7,0,0,7Z"
+                          transform="translate(5 16.273) rotate(-90)"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="absolute py-2 options"
+              >
+                <div
+                  class="w-full select-cell justify-between flex items-center  body2-white   is-selected  "
+                >
+                  <div
+                    class="flex flex-col justify-center w-full"
+                    data-test-id="select-cell-icon-content"
+                  >
+                    <div
+                      class="flex items-center pl-4"
+                      data-test-id="select-cell-text-common.all"
+                    >
+                      common.all
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

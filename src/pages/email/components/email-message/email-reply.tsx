@@ -123,7 +123,7 @@ const EmailReply = ({ticket, patient, contact, onMailSend, disabled}: EmailReply
                 <h6 className='text-white'>{t('email.inbox.send_reply')}</h6>
                 {
                     (emailContent || selectedEmailTemplate) &&
-                    <div className='flex body3-medium items-center' onClick={discardReply}>
+                    <div data-testid='discard-context' className='flex body3-medium items-center' onClick={discardReply}>
                         <span className='text-white cursor-pointer'>{t('email.new_email.discard')}</span>
                         <SvgIcon wrapperClassName='pl-3 cursor-pointer' type={Icon.Delete} fillClass='white-icon' />
                     </div>
@@ -142,6 +142,7 @@ const EmailReply = ({ticket, patient, contact, onMailSend, disabled}: EmailReply
                         selectedEmailTemplate && <div className='body2'><span className='body2-medium whitespace-pre'>{t('email.inbox.template')}</span> {selectedEmailTemplate.displayText}</div>
                     }
                     <TextArea
+                        data-testid='email-context'
                         name='comment'
                         placeHolder='email.new_email.body_placeholder'
                         resizable={false}
@@ -159,7 +160,7 @@ const EmailReply = ({ticket, patient, contact, onMailSend, disabled}: EmailReply
                 <div className='send-button-width mt-auto'>
                     {
                         emailContent &&
-                        <SvgIcon wrapperClassName='p-4 cursor-pointer' isLoading={sendEmailMutation.isLoading} disabled={isProcessingTemplate} type={Icon.Send} onClick={sendReply} />
+                        <SvgIcon dataTestId='send-reply' wrapperClassName='p-4 cursor-pointer' isLoading={sendEmailMutation.isLoading} disabled={isProcessingTemplate} type={Icon.Send} onClick={sendReply} />
                     }
                 </div>
             </div>

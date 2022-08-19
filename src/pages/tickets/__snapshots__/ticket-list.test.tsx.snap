@@ -270,6 +270,7 @@ exports[`Ticket List tests renders ticket-list correctly 1`] = `
                 >
                   <input
                     data-test-id="timePeriod-radio"
+                    data-testid="timePeriod_1"
                     id="timePeriod_1"
                     name="timePeriod"
                     type="radio"
@@ -295,6 +296,7 @@ exports[`Ticket List tests renders ticket-list correctly 1`] = `
                 >
                   <input
                     data-test-id="timePeriod-radio"
+                    data-testid="timePeriod_2"
                     id="timePeriod_2"
                     name="timePeriod"
                     type="radio"
@@ -320,6 +322,7 @@ exports[`Ticket List tests renders ticket-list correctly 1`] = `
                 >
                   <input
                     data-test-id="timePeriod-radio"
+                    data-testid="timePeriod_3"
                     id="timePeriod_3"
                     name="timePeriod"
                     type="radio"
@@ -345,6 +348,7 @@ exports[`Ticket List tests renders ticket-list correctly 1`] = `
                 >
                   <input
                     data-test-id="timePeriod-radio"
+                    data-testid="timePeriod_4"
                     id="timePeriod_4"
                     name="timePeriod"
                     type="radio"
@@ -378,7 +382,8 @@ exports[`Ticket List tests renders ticket-list correctly 1`] = `
                     <input
                       autocomplete="off"
                       class="relative truncate flex-shrink flex-grow flex-auto leading-normal w-px pl-4 body2 input-pt h-14 cursor-pointer"
-                      max="2022-07-20"
+                      data-testid="fromDate"
+                      max="2022-08-19"
                       min="0001-01-01"
                       name="fromDate"
                       readonly=""
@@ -432,8 +437,9 @@ exports[`Ticket List tests renders ticket-list correctly 1`] = `
                     <input
                       autocomplete="off"
                       class="relative truncate flex-shrink flex-grow flex-auto leading-normal w-px pl-4 body2 input-pt h-14 cursor-pointer"
+                      data-testid="toDate"
                       disabled=""
-                      max="2022-07-20"
+                      max="2022-08-19"
                       min="0001-01-01"
                       name="toDate"
                       readonly=""
@@ -526,6 +532,7 @@ exports[`Ticket List tests renders ticket-list correctly 1`] = `
                 >
                   <input
                     data-test-id="priority-radio"
+                    data-testid="priority_0"
                     id="priority_0"
                     name="priority"
                     type="radio"
@@ -770,6 +777,7 @@ exports[`Ticket List tests renders ticket-list correctly 1`] = `
                 >
                   <input
                     data-test-id="reasons-radio"
+                    data-testid="reasons_0"
                     id="reasons_0"
                     name="reasons"
                     type="radio"
@@ -838,6 +846,7 @@ exports[`Ticket List tests renders ticket-list correctly 1`] = `
                 >
                   <input
                     data-test-id="department-radio"
+                    data-testid="department_0"
                     id="department_0"
                     name="department"
                     type="radio"
@@ -997,6 +1006,8 @@ exports[`Ticket List tests renders ticket-list correctly 1`] = `
                       autocomplete="on"
                       autocorrect="on"
                       class="pl-4 pr-8 body2 pt-2.5 h-10 relative truncate select-trigger activated  "
+                      data-testid="assignedTo"
+                      name="assignedTo"
                       spellcheck="true"
                       type="text"
                       value="common.all"
@@ -1737,6 +1748,7 @@ exports[`Ticket List tests renders ticket-list correctly 1`] = `
                   <div
                     class="py-2 bg-white dropdown-body"
                     data-test-id="dropdown-undefined"
+                    data-testid="dropdown-undefined"
                   >
                     <div
                       class="overflow-y-auto overflow-x-hidden dropdown-max-height "
@@ -1744,6 +1756,7 @@ exports[`Ticket List tests renders ticket-list correctly 1`] = `
                       <span>
                         <div
                           class="w-full px-4 dropdown-cell justify-between flex items-center  body2    cursor-pointer "
+                          data-testid="tickets.statuses.1"
                         >
                           <div
                             class="flex flex-row w-full items-center"
@@ -1761,6 +1774,7 @@ exports[`Ticket List tests renders ticket-list correctly 1`] = `
                       <span>
                         <div
                           class="w-full px-4 dropdown-cell justify-between flex items-center  body2    cursor-pointer "
+                          data-testid="tickets.statuses.2"
                         >
                           <div
                             class="flex flex-row w-full items-center"
@@ -1778,6 +1792,7 @@ exports[`Ticket List tests renders ticket-list correctly 1`] = `
                       <span>
                         <div
                           class="w-full px-4 dropdown-cell justify-between flex items-center  body2    cursor-pointer "
+                          data-testid="tickets.statuses.3"
                         >
                           <div
                             class="flex flex-row w-full items-center"
@@ -1795,6 +1810,7 @@ exports[`Ticket List tests renders ticket-list correctly 1`] = `
                       <span>
                         <div
                           class="w-full px-4 dropdown-cell justify-between flex items-center  body2    cursor-pointer "
+                          data-testid="tickets.statuses.4"
                         >
                           <div
                             class="flex flex-row w-full items-center"
@@ -1812,6 +1828,7 @@ exports[`Ticket List tests renders ticket-list correctly 1`] = `
                       <span>
                         <div
                           class="w-full px-4 dropdown-cell justify-between flex items-center  body2    cursor-pointer "
+                          data-testid="tickets.statuses.5"
                         >
                           <div
                             class="flex flex-row w-full items-center"
@@ -1918,6 +1935,7 @@ exports[`Ticket List tests renders ticket-list correctly 1`] = `
                   <div
                     class="py-2 bg-white dropdown-body"
                     data-test-id="dropdown-undefined"
+                    data-testid="dropdown-undefined"
                   >
                     <div
                       class="relative h-10 w-full search-input-field flex items-center "
@@ -2014,6 +2032,7 @@ exports[`Ticket List tests renders ticket-list correctly 1`] = `
                     <div
                       class="py-2 bg-white dropdown-body"
                       data-test-id="dropdown-undefined"
+                      data-testid="dropdown-undefined"
                     >
                       <div
                         class="overflow-y-auto overflow-x-hidden dropdown-max-height "
@@ -2021,6 +2040,7 @@ exports[`Ticket List tests renders ticket-list correctly 1`] = `
                         <span>
                           <div
                             class="w-full px-4 dropdown-cell justify-between flex items-center  body2    cursor-pointer "
+                            data-testid="tickets.ticket_list_actions.ticket_details"
                           >
                             <div
                               class="flex flex-row w-full items-center"

@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`New Email No Search Result tests renders new-email-no-search-result correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="pt-8 pl-6 body2"
+  >
+    search.search_results.empty
+  </div>
+</DocumentFragment>
+`;

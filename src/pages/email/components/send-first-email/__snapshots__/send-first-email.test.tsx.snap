@@ -1,0 +1,406 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Send First Email tests renders send-first-email correctly with contact 1`] = `
+<DocumentFragment>
+  <div
+    class="flex flex-col first-email"
+  >
+    <div
+      class="pr-20 pt-4 pb-10 flex flex-row"
+    >
+      <div
+        class="w-14 h-14 flex items-center justify-center"
+      >
+        <div
+          class="relative"
+        >
+          <div
+            class="cursor-pointer"
+            data-testid="notification-template-select"
+          >
+            <div
+              class="w-10 h-10 flex items-center justify-center"
+            >
+              <div
+                class=" relative"
+              >
+                <div
+                  class="absolute"
+                >
+                  <svg
+                    class="spinner flex items-center justify-center icon-large-40"
+                    viewBox="0 0 40 40"
+                  >
+                    <circle
+                      class="path"
+                      cx="20"
+                      cy="20"
+                      fill="none"
+                      r="16"
+                      stroke-width="4"
+                    />
+                  </svg>
+                </div>
+                <div
+                  class="flex items-center justify-center icon-large-40"
+                >
+                  <div
+                    class=""
+                  >
+                    <svg
+                      class="icon-medium "
+                      height="24"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <rect
+                        fill="none"
+                        height="24"
+                        width="24"
+                      />
+                      <path
+                        class="fill-loading"
+                        d="M20,2H4A2,2,0,0,0,2.01,4L2,22l4-4H20a2.006,2.006,0,0,0,2-2V4A2.006,2.006,0,0,0,20,2ZM8,14H6V12H8Zm0-3H6V9H8ZM8,8H6V6H8Zm7,6H10V12h5Zm3-3H10V9h8Zm0-3H10V6h8Z"
+                        data-name="icon templates"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="absolute z-50 bottom-50"
+            hidden=""
+          >
+            <div
+              class="w-96"
+            >
+              <div
+                class="py-2 bg-white dropdown-body"
+                data-test-id="dropdown-undefined"
+                data-testid="dropdown-undefined"
+              >
+                <div
+                  class="relative h-10 w-full search-input-field flex items-center "
+                >
+                  <div
+                    class="absolute pl-4"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="cursor-pointer icon-small "
+                        height="16"
+                        viewBox="0 0 16 16"
+                        width="16"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="16"
+                          width="16"
+                        />
+                        <path
+                          class="search-icon-fill"
+                          d="M12.7,11.23a6.777,6.777,0,0,0,1.4-4.174A7.02,7.02,0,0,0,7.1,0,7.105,7.105,0,0,0,0,7.056a7.105,7.105,0,0,0,7.1,7.056,6.667,6.667,0,0,0,4.2-1.391l3,2.981a.971.971,0,0,0,1.4,0,.957.957,0,0,0,0-1.391Zm-5.6.8A5.022,5.022,0,0,1,2,7.056a5.1,5.1,0,0,1,10.2,0A5.022,5.022,0,0,1,7.1,12.025Z"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                  <input
+                    autocomplete="off"
+                    class="py-2.5 h-full w-full search-input-field body2 pl-12 border-b"
+                    placeholder="common.search"
+                    type="text"
+                    value=""
+                  />
+                </div>
+                <div
+                  class="overflow-y-auto overflow-x-hidden dropdown-max-height py-2 h-80"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="w-full"
+      >
+        <div
+          class="w-full"
+        >
+          <div
+            class="flex flex-col h-20 input-group w-full"
+          >
+            <div
+              class="input-group-container flex flex-wrap items-stretch w-full relative  undefined"
+            >
+              <input
+                autocomplete="off"
+                class=" pt-6 body2 h-14 flex-shrink flex-grow flex-auto leading-normal w-px flex-1 input-date-mask pl-4"
+                data-testid="subject"
+                name="subject"
+                placeholder=""
+                required=""
+                type="text"
+                value=""
+              />
+              <label
+                class="absolute truncate required body2 "
+              >
+                email.new_email.subject
+              </label>
+            </div>
+          </div>
+          <div
+            class="email-editor"
+          >
+            <div
+              class="relative formatted-text-area w-full"
+            >
+              <div
+                class="bg-white z-50"
+              >
+                <div
+                  class="ql-toolbar ql-snow"
+                  id="toolbar"
+                >
+                  <span
+                    class="ql-size ql-picker"
+                  >
+                    <span
+                      aria-controls="ql-picker-options-0"
+                      aria-expanded="false"
+                      class="ql-picker-label"
+                      role="button"
+                      tabindex="0"
+                    >
+                      <svg
+                        viewBox="0 0 18 18"
+                      >
+                         
+                        <polygon
+                          class="ql-stroke"
+                          points="7 11 9 13 11 11 7 11"
+                        />
+                         
+                        <polygon
+                          class="ql-stroke"
+                          points="7 7 9 5 11 7 7 7"
+                        />
+                         
+                      </svg>
+                    </span>
+                    <span
+                      aria-hidden="true"
+                      class="ql-picker-options"
+                      id="ql-picker-options-0"
+                      tabindex="-1"
+                    >
+                      <span
+                        class="ql-picker-item"
+                        data-label="email.inbox.formatter.heading"
+                        data-value="huge"
+                        role="button"
+                        tabindex="0"
+                      />
+                      <span
+                        class="ql-picker-item"
+                        data-label="email.inbox.formatter.subheading"
+                        data-value="large"
+                        role="button"
+                        tabindex="0"
+                      />
+                      <span
+                        class="ql-picker-item ql-selected"
+                        role="button"
+                        tabindex="0"
+                      />
+                    </span>
+                  </span>
+                  <select
+                    class="ql-size"
+                    style="display: none;"
+                  >
+                    <option
+                      value="huge"
+                    >
+                      email.inbox.formatter.heading
+                    </option>
+                    <option
+                      value="large"
+                    >
+                      email.inbox.formatter.subheading
+                    </option>
+                    <option />
+                  </select>
+                  <button
+                    class="ql-bold"
+                    type="button"
+                  >
+                    <svg
+                      viewBox="0 0 18 18"
+                    >
+                       
+                      <path
+                        class="ql-stroke"
+                        d="M5,4H9.5A2.5,2.5,0,0,1,12,6.5v0A2.5,2.5,0,0,1,9.5,9H5A0,0,0,0,1,5,9V4A0,0,0,0,1,5,4Z"
+                      />
+                       
+                      <path
+                        class="ql-stroke"
+                        d="M5,9h5.5A2.5,2.5,0,0,1,13,11.5v0A2.5,2.5,0,0,1,10.5,14H5a0,0,0,0,1,0,0V9A0,0,0,0,1,5,9Z"
+                      />
+                       
+                    </svg>
+                  </button>
+                  <button
+                    class="ql-italic"
+                    type="button"
+                  >
+                    <svg
+                      viewBox="0 0 18 18"
+                    >
+                       
+                      <line
+                        class="ql-stroke"
+                        x1="7"
+                        x2="13"
+                        y1="4"
+                        y2="4"
+                      />
+                       
+                      <line
+                        class="ql-stroke"
+                        x1="5"
+                        x2="11"
+                        y1="14"
+                        y2="14"
+                      />
+                       
+                      <line
+                        class="ql-stroke"
+                        x1="8"
+                        x2="10"
+                        y1="14"
+                        y2="4"
+                      />
+                       
+                    </svg>
+                  </button>
+                  <button
+                    class="ql-underline"
+                    type="button"
+                  >
+                    <svg
+                      viewBox="0 0 18 18"
+                    >
+                       
+                      <path
+                        class="ql-stroke"
+                        d="M5,3V9a4.012,4.012,0,0,0,4,4H9a4.012,4.012,0,0,0,4-4V3"
+                      />
+                       
+                      <rect
+                        class="ql-fill"
+                        height="1"
+                        rx="0.5"
+                        ry="0.5"
+                        width="12"
+                        x="3"
+                        y="15"
+                      />
+                       
+                    </svg>
+                  </button>
+                </div>
+                <div
+                  id="editor"
+                />
+              </div>
+              <div
+                class="quill bg-white links"
+              >
+                <div
+                  class="ql-container ql-snow"
+                >
+                  <div
+                    class="ql-editor ql-blank"
+                    contenteditable="true"
+                    data-gramm="false"
+                    data-placeholder="common.enter_text"
+                  >
+                    <p>
+                      <br />
+                    </p>
+                  </div>
+                  <div
+                    class="ql-clipboard"
+                    contenteditable="true"
+                    tabindex="-1"
+                  />
+                  <div
+                    class="ql-tooltip ql-hidden"
+                  >
+                    <a
+                      class="ql-preview"
+                      href="about:blank"
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    />
+                    <input
+                      data-formula="e=mc^2"
+                      data-link="https://quilljs.com"
+                      data-video="Embed URL"
+                      type="text"
+                    />
+                    <a
+                      class="ql-action"
+                    />
+                    <a
+                      class="ql-remove"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="flex flex-row space-x-8 pt-10"
+          >
+            <button
+              class="secondary-big-button"
+              type="button"
+            >
+              <div
+                class="flex flex-row justify-center items-center space-x-2"
+              >
+                <div>
+                  email.new_email.discard
+                </div>
+              </div>
+            </button>
+            <button
+              class="big-button"
+              data-testid="send-email"
+              disabled=""
+              type="button"
+            >
+              <div
+                class="flex flex-row justify-center items-center space-x-2"
+              >
+                <div>
+                  email.new_email.send
+                </div>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

@@ -136,7 +136,7 @@ const SendFirstEmail = ({ticket, patient, contact, onMailSend} : SendFirstEmailP
                 <EmailEditor showSendIcon={false} content={body} onChange={(content) => {setBody(content)}}  />
                 <div className='flex flex-row space-x-8 pt-10'>
                     <Button label='email.new_email.discard' buttonType='secondary-big' onClick={() => history.replace(`${EmailPath}/${NEW_EMAIL}`)} />
-                    <Button label='email.new_email.send' isLoading={sendEmailMutation.isLoading} buttonType='big' disabled={!subject || !body} onClick={() => sendEmail()} />
+                    <Button data-testid={"send-email"} label='email.new_email.send' isLoading={sendEmailMutation.isLoading} buttonType='big' disabled={!subject || !body} onClick={() => sendEmail()} />
                 </div>
             </div>
         </div>

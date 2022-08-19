@@ -67,6 +67,7 @@ const EmailFilterBar = ({filter, searchTerm, onSearchTermChanged, emailQueryType
                     <div className='subtitle2'>{t(GetTimeLabel())}</div>
                     <div className='flex flex-row'>
                         <SvgIcon
+                            dataTestId={'new-email'}
                             type={Icon.Note}
                             className='cursor-pointer icon-medium'
                             fillClass='default-toolbar-icon'

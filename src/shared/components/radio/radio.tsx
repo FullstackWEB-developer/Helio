@@ -42,6 +42,7 @@ const Radio = React.forwardRef<HTMLInputElement, RadioProps>(({
                         checked={value !== undefined ? value === item.value : undefined}
                         ref={ref}
                         id={`${name}_${item.value}`}
+                        data-testid={`${name}_${item.value}`}
                         name={name}
                         onChange={_ => onChange(item.value, item.object)} />
                     <label htmlFor={`${name}_${item.value}`}

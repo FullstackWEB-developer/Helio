@@ -69,7 +69,7 @@ const EmailSummaryItemView = ({emailInfo, searchTerm}: EmailSummaryItemViewProps
         history.push(`${EmailPath}/${ticketId}`);
     }
 
-    return (<div className={classnames('border-b email-summary cursor-pointer pl-6 pt-4 pb-1.5 flex', {'email-summary-selected': urlParams?.ticketId === ticketId})} onClick={() => itemClicked()} >
+    return (<div data-testid="email-summary-item-view" className={classnames('border-b email-summary cursor-pointer pl-6 pt-4 pb-1.5 flex', {'email-summary-selected': urlParams?.ticketId === ticketId})} onClick={() => itemClicked()} >
         <div className='flex flex-row w-full'>
             <div className='pr-4'>
                 {userImage}

@@ -76,6 +76,7 @@ exports[`Sms-Chat tests renders sms-chat correctly 1`] = `
                 <div
                   class="py-2 bg-white dropdown-body"
                   data-test-id="dropdown-undefined"
+                  data-testid="dropdown-undefined"
                 >
                   <div
                     class="overflow-y-auto overflow-x-hidden dropdown-max-height "
@@ -83,6 +84,7 @@ exports[`Sms-Chat tests renders sms-chat correctly 1`] = `
                     <span>
                       <div
                         class="w-full px-4 dropdown-cell justify-between flex items-center  body2  body2 py-1.5  cursor-pointer "
+                        data-testid="email.inbox.create_patient_chart"
                       >
                         <div
                           class="flex flex-row w-full items-center"
@@ -100,6 +102,7 @@ exports[`Sms-Chat tests renders sms-chat correctly 1`] = `
                     <span>
                       <div
                         class="w-full px-4 dropdown-cell justify-between flex items-center  body2  body2 py-1.5  cursor-pointer "
+                        data-testid="email.inbox.add_contact"
                       >
                         <div
                           class="flex flex-row w-full items-center"
@@ -117,6 +120,7 @@ exports[`Sms-Chat tests renders sms-chat correctly 1`] = `
                     <span>
                       <div
                         class="w-full px-4 dropdown-cell justify-between flex items-center  body2  body2 py-1.5  cursor-pointer "
+                        data-testid="email.inbox.spam"
                       >
                         <div
                           class="flex flex-row w-full items-center"

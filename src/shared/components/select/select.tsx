@@ -31,6 +31,7 @@ interface SelectProps {
     truncateAssistiveText?: boolean;
     allowClear?: boolean;
     isMultiple?: boolean;
+    name?: string;
 }
 const Select = React.forwardRef<HTMLDivElement, SelectProps>(({options, order, label, className, autoComplete = true, defaultValue = null, truncateAssistiveText=false, allowClear =false, isMultiple=false, defaultValues, ...props}: SelectProps, ref) => {
     const {t}: {t: any} = useTranslation();
@@ -215,6 +216,8 @@ const Select = React.forwardRef<HTMLDivElement, SelectProps>(({options, order, l
             className={classnames(`select-wrapper relative w-full flex flex-col h-20 ${props.disabled ? 'select-wrapper-disabled' : ''}`, className)}>
             <div className={`select relative flex flex-col ${open ? 'open' : ''}`}>
                 <input
+                    data-testid={props.name}
+                    name={props.name}
                     ref={inputRef}
                     type='text'
                     autoComplete={autoComplete ? 'on' : 'nope'}

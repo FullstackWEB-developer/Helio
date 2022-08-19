@@ -165,7 +165,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({
                     asSpan={true}
                     classNames={'body2 leading-normal'} />
             </div> :
-            <InputMask ref={innerRef} inputRef={innerRef} {...props}
+            <InputMask data-testid={props.name} ref={innerRef} inputRef={innerRef} {...props}
                 mask={mask}
                 type={type}
                 onFocus={onInputFocus}

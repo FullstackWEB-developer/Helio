@@ -22,7 +22,8 @@ const Dropdown = ({model}: DropdownProps) => {
         isSearchable = false,
         excludeSelectedItem,
         itemsWrapperClass = '',
-        isVisible = false
+        isVisible = false,
+        dataTestId
     } = model;
     const [dropDownItems, setDropDownItems] = useState<DropdownItemModel[]>([]);
     const [searchTerm, setSearchTerm] = useState('');
@@ -114,7 +115,7 @@ const Dropdown = ({model}: DropdownProps) => {
     }
 
 
-    return <div className='py-2 bg-white dropdown-body' data-test-id={'dropdown-' + title}>
+    return <div className='py-2 bg-white dropdown-body' data-test-id={'dropdown-' + dataTestId} data-testid={'dropdown-' + dataTestId}>
         <DropdownTitle hasDivider={false} content={header} title={title} />
         {isSearchable &&
             <SearchInputField onChange={searchInputChanged} value={searchTerm} />

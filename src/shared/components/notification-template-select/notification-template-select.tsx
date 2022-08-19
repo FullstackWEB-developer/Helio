@@ -142,7 +142,7 @@ const NotificationTemplateSelect = ({channel, category, onSelect, asSelect, sele
     })
 
     return <div ref={templateDiv} className='relative'>
-        <div className={!disabled ? 'cursor-pointer' : ''} onClick={() => {
+        <div data-testid='notification-template-select' className={!disabled ? 'cursor-pointer' : ''} onClick={() => {
             !disabled && setDisplayTemplateForTab(!displayTemplateForTab)
         }}>
             <div className='w-10 h-10 flex items-center justify-center'>
