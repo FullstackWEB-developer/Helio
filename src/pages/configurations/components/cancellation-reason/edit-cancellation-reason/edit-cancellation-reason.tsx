@@ -85,7 +85,7 @@ const EditCancellationReason = () => {
         }
 
     }
-    const {handleSubmit, control, formState: {isValid, isDirty, isSubmitSuccessful}} = useForm({mode: 'all'});
+    const {handleSubmit, control, formState: {isValid, isDirty, isSubmitSuccessful}, reset} = useForm({mode: 'all'});
 
     const navigateBackToCancelationReasonsList = () => {
         const pathName = `${ConfigurationsPath}${CancellationReasonsPath}`;
@@ -103,6 +103,7 @@ const EditCancellationReason = () => {
                         type: SnackbarType.Success,
                         message: 'configuration.cancellation_reason.delete_success'
                     }));
+                    reset();
                     navigateBackToCancelationReasonsList();
                 },
                 onError: () => {
@@ -209,9 +210,10 @@ const EditCancellationReason = () => {
 
                     <Button label='common.cancel' className=' ml-8 mr-8' buttonType='secondary'
                             onClick={() => navigateBackToCancelationReasonsList()}
-                            isLoading={updateCancellationReasonMutation.isLoading || deleteCancellationReasonMutation.isLoading}/>
+                            disabled={updateCancellationReasonMutation.isLoading || deleteCancellationReasonMutation.isLoading}/>
                     <Button label='common.delete' className='mr-8' buttonType='secondary'
                             onClick={() => setDeleteConfirmationOpened(true)}
+                            disabled={!cancellationReason.isMapped}
                             isLoading={deleteCancellationReasonMutation.isLoading}/>
                 </div>
             </form>

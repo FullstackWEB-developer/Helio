@@ -9,6 +9,7 @@ import updateLocale from 'dayjs/plugin/updateLocale';
 import { useDispatch } from 'react-redux';
 import { toggleCallLogPlayerVisible } from '@pages/tickets/store/tickets.slice';
 import { useTranslation } from 'react-i18next';
+import {DAYJS_LOCALE} from '@pages/email/constants';
 
 interface FeedDetailPhoneCallActivityProps {
     message?: PhoneCallActivity,
@@ -20,23 +21,7 @@ const FeedDetailPhoneCallActivity = ({message, feed}: FeedDetailPhoneCallActivit
     dayjs.extend(updateLocale);
     const formatTemplate = 'ddd, MMM DD, YYYY [at] h:mm a';
 
-    dayjs.updateLocale('en', {
-        relativeTime: {
-            future: "in %s",
-            past: "%s ago",
-            s: 'a few seconds',
-            m: "1 min",
-            mm: "%d mins",
-            h: "1 h",
-            hh: "%d h",
-            d: "1 d",
-            dd: "%d d",
-            M: "1 mo",
-            MM: "%d mo",
-            y: "1 y",
-            yy: "%d y"
-        }
-    })
+    dayjs.updateLocale('en', DAYJS_LOCALE);
     const itemDateTime = feed.dateTime ? `${dayjs().to(dayjs.utc(feed.dateTime).local())} (${utils.formatUtcDate(feed.dateTime, formatTemplate)})` : '';
 
     const getCallDirectionText = (communicationDirection: CommunicationDirection) => {
@@ -91,7 +76,7 @@ const FeedDetailPhoneCallActivity = ({message, feed}: FeedDetailPhoneCallActivit
                         </div>
                         <div className='w-44 h-12 p-2'>
                             <div className='h-4 rounded flex flex-row text-xl'>
-                                <div className='subtitle3'>{feed.userFullName ?? ''}</div>
+                                <div className='subtitle3 truncate'>{feed.userFullName ?? ''}</div>
                             </div>
                             <div className='h-4 rounded flex flex-row text-xl'>
                                 <div className='caption-caps'>{message?.callDuration && utils.formatTime(message?.callDuration)}</div>

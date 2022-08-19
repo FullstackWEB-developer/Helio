@@ -6,8 +6,9 @@ import {AgentState} from '@shared/models/agent-state';
 import {LogStream} from '@aws-sdk/client-cloudwatch-logs';
 import {UserStatusUpdate} from '@shared/models/user-status-update.model';
 import {LiveAgentStatusInfo} from '@shared/models/live-agent-status-info.model';
-import {UserDetail} from '@shared/models';
+import {QuickConnectExtension, UserDetail} from '@shared/models';
 import {InternalQueueStatus} from '@pages/ccp/models/internal-queue-status';
+import dayjs from 'dayjs';
 
 const appUserSlice = createSlice({
     name: 'appuser',
@@ -56,6 +57,27 @@ const appUserSlice = createSlice({
             if (internalQueueIndex > -1) {
                 state.internalQueueStatuses = state.internalQueueStatuses.map((item, index)=> {
                     return index === internalQueueIndex ? {...item, connectStatus : payload.status} : item
+                })
+            }
+        },
+        updateLiveAgentStatus(state, {payload}: PayloadAction<QuickConnectExtension>) {
+            if (!state.liveAgentStatuses) {
+                state.liveAgentStatuses = [];
+            }
+            const item = state.liveAgentStatuses.find(a => a.userId === payload.id);
+            if (!!item) {
+                state.liveAgentStatuses = state.liveAgentStatuses.filter(a => a.userId !== payload.id);
+                state.liveAgentStatuses.push({
+                    ...item,
+                    status: payload.latestConnectStatus,
+                    timestamp: payload.timeStamp
+                });
+            } else {
+                state.liveAgentStatuses.push({
+                    status: payload.latestConnectStatus,
+                    userId: payload.id,
+                    timestamp: dayjs.utc(payload.timeStamp).local().toDate(),
+                    name: `${payload.firstName} ${(payload.lastName)}`
                 })
             }
         },
@@ -115,7 +137,8 @@ export const {
     setAgentStates,
     setLogStream,
     setInternalQueueStatuses,
-    addLiveAgentStatus
+    addLiveAgentStatus,
+    updateLiveAgentStatus
 } = appUserSlice.actions
 
 export default appUserSlice.reducer

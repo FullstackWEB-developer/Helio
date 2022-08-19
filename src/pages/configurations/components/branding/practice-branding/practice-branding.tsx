@@ -271,7 +271,7 @@ const PracticeBrandingEdit = () => {
                         className=' ml-8'
                         buttonType='secondary'
                         onClick={() => formState.isDirty && setWarning(true)}
-                        isLoading={savePracticeBrandingMutation.isLoading} />
+                        disabled={savePracticeBrandingMutation.isLoading} />
                     <RouteLeavingGuard
                         when={formState.isDirty && !formState.isSubmitSuccessful}
                         navigate={path => history.push(path)}

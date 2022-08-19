@@ -7,26 +7,11 @@ import {useSelector} from 'react-redux';
 import {selectFeedLastMessageOn} from '@pages/tickets/store/tickets.selectors';
 import {Ticket} from '@pages/tickets/models/ticket';
 import updateLocale from 'dayjs/plugin/updateLocale';
+import {DAYJS_LOCALE} from '@pages/email/constants';
 
 const TicketDetailHeaderLine2 = ({ticket, patientOrContactName}: {ticket: Ticket, patientOrContactName: string}) => {
     dayjs.extend(updateLocale);
-    dayjs.updateLocale('en', {
-        relativeTime: {
-            future: "in %s",
-            past: "%s ago",
-            s: 'a few seconds',
-            m: "1 min",
-            mm: "%d mins",
-            h: "1 h",
-            hh: "%d h",
-            d: "1 d",
-            dd: "%d d",
-            M: "1 mo",
-            MM: "%d mo",
-            y: "1 y",
-            yy: "%d y"
-        }
-    })
+    dayjs.updateLocale('en', DAYJS_LOCALE);
     const {t} = useTranslation();
     const feedLastMessageOn = useSelector(selectFeedLastMessageOn);
     const sysdate = Date.now();

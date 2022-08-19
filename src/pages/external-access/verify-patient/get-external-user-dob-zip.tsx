@@ -82,6 +82,8 @@ const GetExternalUserDobZip = () => {
                         message: 'external_access.patient_verification_failed',
                         position: SnackbarPosition.TopCenter
                     }));
+                } else if (error.response?.status === 409) {
+                    setErrorMessage('external_access.patient_data_not_valid');
                 } else {
                     setErrorMessage('common.error');
                 }

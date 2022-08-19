@@ -1418,7 +1418,7 @@ const SvgIcon = ({ type, wrapperClassName = '', className = 'icon-medium', fillC
     }
 
     const iconClicked = (e: React.MouseEvent<HTMLDivElement>) => {
-        if (disabled) {
+        if (disabled || isLoading) {
             return;
         }
         if (onClick) {

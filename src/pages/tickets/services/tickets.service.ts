@@ -35,7 +35,8 @@ import {
     AgentStatus,
     PagedList,
     QueueCurrentMetricQuery,
-    QueueMetric
+    QueueMetric,
+    QuickConnectExtension
 } from '@shared/models';
 import {CallbackTicket} from '@pages/tickets/models/callback-ticket.model';
 import {PerformanceMetric} from '@pages/dashboard/models/performance-metric.model';
@@ -419,6 +420,12 @@ export const getOverallPatientReviews = async (type: DashboardTypes) : Promise<P
 
 export const getPatientTicketRating = async (ticketId: string) => {
     const url = `${ticketsBaseUrl}/${ticketId}/rating`;
+    const response = await Api.get(url);
+    return response.data;
+}
+
+export const getLatestQuickConnectData = async () : Promise<QuickConnectExtension[]> => {
+    const url = `${ticketsBaseUrl}/dashboard/quick-connects`;
     const response = await Api.get(url);
     return response.data;
 }

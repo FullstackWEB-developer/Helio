@@ -3,4 +3,5 @@ export interface QuickConnectExtension {
     firstName: string;
     lastName: string;
     latestConnectStatus: string;
+    timeStamp?: Date
 }

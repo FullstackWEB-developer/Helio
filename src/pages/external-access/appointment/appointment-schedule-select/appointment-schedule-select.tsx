@@ -132,7 +132,7 @@ const AppointmentScheduleSelect = () => {
                     if (!data || data.length < 1) {
                         setDepartmentLatLng([]);
                         setAppointmentSlots([]);
-                        if (slotRequest.firstAvailable && tryCount.current <= MaxFetchCount) {
+                        if (slotRequest.firstAvailable && tryCount.current < MaxFetchCount) {
                             nextPage(isMobile);
                             tryCount.current = tryCount.current + 1;
                         }
@@ -360,7 +360,7 @@ const AppointmentScheduleSelect = () => {
                         {(isAppointmentSlotsLoading || isFetching) &&
                             <Spinner />
                         }
-                        {displayMaxTryError && <div>{t('external_access.appointments.no_appointment_found_in_max_tries')}</div>}
+                        {!isAppointmentSlotsLoading && !isFetching && displayMaxTryError && <div><div>{t('external_access.appointments.no_appointment_found_in_max_tries')}</div><div>{t('external_access.appointments.no_appointment_found_in_max_tries_2')}</div></div>}
                         {!isAppointmentSlotsLoading && !displayMaxTryError && !isFetching &&
                             <>
                                 <div className='flex-row hidden lg:flex'>

@@ -60,9 +60,9 @@ const ElipsisTooltipTextbox = ({value, asSpan = false, classNames, yOffsetInPixe
                     <div onMouseEnter={() => setIsVisible(true)} onMouseLeave={() => setIsVisible(false)} className={classes}>{t(value)}</div>
             }
             {
-                overflowActive &&
-                <div
-                    className={classnames('z-10 elipsis-tooltip body3 flex items-center justify-center', {'hidden': !isVisible})}
+                overflowActive && isVisible &&
+                <div id='ellipsis-tooltip'
+                    className={classnames('z-10 body3 flex items-center justify-center')}
                     style={styles.popper}
                     ref={setPopper}
                     {...attributes.popper}>
