@@ -2274,6 +2274,8 @@
     "view": "View",
     "download": "Download",
     "month": "Month",
+    "start_date": "Start Date",
+    "end_date": "End Date",
     "report_options": {
       "agent_reports": "Agent KPIs",
       "bot_reports": "Bot Report",
@@ -2285,7 +2287,8 @@
       "last_7_days": "Last 7 Days",
       "last_week": "Last Week (Mon - Sun)",
       "last_month": "Last Calendar Month",
-      "monthly_reports": "Monthly Reports"
+      "monthly_reports": "Monthly Reports",
+      "custom_date_range": "Custom Date Range"
     },
     "voice": "Voice",
     "chat": "Chat",
@@ -2295,18 +2298,25 @@
     "bottom_5_performers": "Bottom 5 Performers",
     "report_for": "Report for {{title}}",
     "get_agent_report": {
-      "error": "An error ocurred. Please try again later."
+      "error": "An error occurred. Please try again later."
     },
     "download_agent_report": {
       "success": "Agent report is downloaded.",
-      "error": "An error ocurred. Please try again later."
+      "error": "An error occurred. Please try again later."
     },
     "get_queue_report": {
-      "error": "An error ocurred. Please try again later."
+      "error": "An error occurred. Please try again later."
+    },
+    "get_bot_report": {
+      "error": "An error occurred. Please try again later."
     },
     "download_queue_report": {
       "success": "Queue report is downloaded.",
-      "error": "An error ocurred. Please try again later."
+      "error": "An error occurred. Please try again later."
+    },
+    "download_bot_report": {
+      "success": "Bot report is downloaded.",
+      "error": "An error occurred. Please try again later."
     },
     "most_abandoned_queues": "Most Abandoned Queues",
     "queues_with_highest_average_wait_time": "Queues with Highest Average Wait Time",
@@ -2347,6 +2357,29 @@
       "voice": "Voice",
       "chat": "Chat",
       "tickets": "Tickets"
+    },
+    "bot_reports": {
+      "key_kpis": "Key KPIs",
+      "total_calls": "Total Calls",
+      "total_chats": "Total Chats",
+      "appointments_scheduled": "Appointments Scheduled",
+      "new_patients_registered": "New Patients Registered",
+      "bot_kpis": "Bot KPIs",
+      "channel": "Channel",
+      "total_serviced": "Total Serviced",
+      "average_duration": "Average Duration",
+      "bot_ratings": "Bot Ratings",
+      "results": "Results",
+      "kpi": "KPI",
+      "value": "Value",
+      "appointments_rescheduled": "Appointments Rescheduled",
+      "appointments_canceled": "Appointments Canceled",
+      "appointment_information_requests": "Appointment Information Requests",
+      "medication_refill_requests": "Medication Refill Requests",
+      "test_results_requests": "Test Results Requests",
+      "medical_history_requests": "Medical History Requests",
+      "voice": "Voice",
+      "chat": "Chat"
     }
   }
 }

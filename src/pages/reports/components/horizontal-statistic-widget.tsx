@@ -4,9 +4,8 @@ import Dropdown, { DropdownModel } from '@components/dropdown';
 import { customHooks } from '@shared/hooks';
 import { useRef, useState } from 'react';
 import SvgIcon, { Icon } from '@components/svg-icon';
-
-var dayjs = require("dayjs")
-var duration = require('dayjs/plugin/duration')
+import duration from 'dayjs/plugin/duration';
+import dayjs from 'dayjs';
 
 interface BasicStatistic {
     label: string | number | Date;

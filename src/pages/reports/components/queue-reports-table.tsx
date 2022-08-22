@@ -4,9 +4,8 @@ import Table from '@components/table/table';
 import { TableModel } from '@components/table/table.models';
 import classnames from 'classnames';
 import { getFormattedTime } from '../utils/constants';
-
-var dayjs = require("dayjs")
-var duration = require('dayjs/plugin/duration')
+import duration from 'dayjs/plugin/duration';
+import dayjs from 'dayjs';
 
 export interface QueueReportsTableProps {
     data: QueueReport[],

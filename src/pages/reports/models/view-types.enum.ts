@@ -3,5 +3,6 @@ export enum ViewTypes {
     LastWeek,
     Last7Days,
     LastMonth,
-    MonthlyReports
+    MonthlyReports,
+    CustomDates
 }

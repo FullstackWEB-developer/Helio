@@ -1,8 +1,6 @@
 import { ReportTypes } from '../models/report-types.enum'
 import { ViewTypes } from '../models/view-types.enum'
-
-var dayjs = require("dayjs")
-var duration = require('dayjs/plugin/duration')
+import dayjs from 'dayjs';
 
 export const viewTypes = [
     {

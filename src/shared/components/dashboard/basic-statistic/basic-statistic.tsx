@@ -9,12 +9,13 @@ export interface BasicStatisticProps {
     icon?: Icon;
     isPercentage?: boolean;
     value: string | number;
-    valueClass?: string
+    valueClass?: string;
+    wrapperClass?: string;
 }
 
-const BasicStatistic = ({title, value = "0", icon, isPercentage, valueClass}: BasicStatisticProps) => {
+const BasicStatistic = ({title, value = "0", icon, isPercentage, valueClass, wrapperClass}: BasicStatisticProps) => {
     const {t} = useTranslation();
-    return <div className='basic-statistic flex justify-center flex-col items-center'>
+    return <div className={`basic-statistic flex justify-center flex-col items-center ${wrapperClass}`}>
         <div className='body3-medium pt-2.5 pb-3'>{t(title)}</div>
         <div className='flex flex-row'>
             <div>

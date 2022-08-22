@@ -6,8 +6,8 @@ import { SortDirection } from '@shared/models/sort-direction';
 import { useTranslation } from 'react-i18next';
 import { AgentReportTableType } from '@shared/models/agent-report-table-type.enum';
 import { getFormattedTime } from './constants';
-var dayjs = require("dayjs")
-var duration = require('dayjs/plugin/duration')
+import duration from 'dayjs/plugin/duration';
+import dayjs from 'dayjs';
 
 export interface AgentReportsTableProps {
     data: AgentReport[],
