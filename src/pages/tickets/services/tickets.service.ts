@@ -1,7 +1,6 @@
 import {ContactTicketsRequest, PatientTicketsRequest} from '../models/patient-tickets-request';
 import {Dispatch} from '@reduxjs/toolkit';
 import Api from '../../../shared/services/api';
-import Logger from '../../../shared/services/logger';
 import {LookupValue} from '../models/lookup-value';
 import {TicketNote} from '../models/ticket-note';
 import store from '../../../app/store';
@@ -52,7 +51,6 @@ import {MimeTypes} from '@shared/models/mime-types.enum';
 import {ReportTypes} from '@pages/reports/models/report-types.enum';
 import {BotReport} from '@pages/reports/models/bot-report.model';
 
-const logger = Logger.getInstance();
 const ticketsBaseUrl = "/tickets";
 
 export function getList(ticketQuery: TicketQuery, resetPagination?: boolean) {
@@ -178,8 +176,7 @@ export const getEnumByType = (enumType: string) => {
                     dispatch(setTicketEnum({key: enumType, result: response.data}));
                     dispatch(endGetTicketEnumRequest(''));
                 })
-                .catch(error => {
-                    logger.error(`Failed getting ${enumType}`, error);
+                .catch(() => {
                     dispatch(endGetTicketEnumRequest('ticket-new.error'));
                 });
         }

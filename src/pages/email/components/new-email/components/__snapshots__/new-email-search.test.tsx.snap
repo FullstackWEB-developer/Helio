@@ -1,0 +1,91 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`New Email No Search Result tests renders new-email-no-search-result correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="flex flex-row items-center w-full px-4 border-b"
+  >
+    <div
+      class="pr-1 body2"
+    >
+      email.new_email.to
+    </div>
+    <div
+      class="w-full"
+    >
+      <div
+        class="h-16 w-full"
+      >
+        <div
+          class="flex flex-row h-full"
+        >
+          <div
+            class="relative h-10 w-full search-input-field flex items-center h-16"
+          >
+            <input
+              autocomplete="off"
+              class="py-2.5 h-full w-full search-input-field body2 border-none border-b"
+              placeholder="email.new_email.search_placeholder"
+              type="text"
+              value=""
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`New Email No Search Result tests renders new-email-no-search-result with value 1`] = `
+<DocumentFragment>
+  <div
+    class="flex flex-row items-center w-full px-4 border-b"
+  >
+    <div
+      class="pr-1 body2"
+    >
+      email.new_email.to
+    </div>
+    <div
+      class="flex items-center flex-row justify-between h-16 w-full"
+    >
+      <div>
+        A
+      </div>
+      <div
+        class="cursor-pointer pr-4"
+        data-testid="clear-button"
+      >
+        <div
+          class=""
+        >
+          <svg
+            class="icon-medium "
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <g
+              transform="translate(-889 -16)"
+            >
+              <rect
+                fill="none"
+                height="24"
+                transform="translate(889 16)"
+                width="24"
+              />
+              <path
+                class="clear-input-icon-fill"
+                d="M12,2A10,10,0,1,0,22,12,9.991,9.991,0,0,0,12,2Zm5,13.59L15.59,17,12,13.41,8.41,17,7,15.59,10.59,12,7,8.41,8.41,7,12,10.59,15.59,7,17,8.41,13.41,12Z"
+                transform="translate(889 16)"
+              />
+            </g>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

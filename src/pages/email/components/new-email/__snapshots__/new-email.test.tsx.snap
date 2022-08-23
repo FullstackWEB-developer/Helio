@@ -1,0 +1,155 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`New Email tests renders new-email correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="w-full h-full overflow-y-auto"
+  >
+    <div
+      class="new-email-title-wrapper h-16 w-full flex items-center px-6 h6 justify-between"
+    >
+      <div
+        class="w-1/2 new-email-title"
+      >
+        email.new_email.title
+      </div>
+      <div
+        class="flex justify-end w-1/2 cursor-pointer"
+      >
+        <div
+          class=""
+        >
+          <svg
+            class="icon-medium "
+            data-testid="go-back"
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect
+              fill="none"
+              height="24"
+              width="24"
+            />
+            <path
+              class="white-icon"
+              d="M16,1.409,14.591,0,8,6.566,1.409,0,0,1.409,6.566,8,0,14.591,1.409,16,8,9.434,14.591,16,16,14.591,9.434,8Z"
+              transform="translate(4 4)"
+            />
+          </svg>
+        </div>
+      </div>
+    </div>
+    <div
+      class="flex flex-row items-center w-full px-4 border-b"
+    >
+      <div
+        class="pr-1 body2"
+      >
+        email.new_email.to
+      </div>
+      <div
+        class="w-full"
+      >
+        <div
+          class="h-16 w-full"
+        >
+          <div
+            class="flex flex-row h-full"
+          >
+            <div
+              class="relative h-10 w-full search-input-field flex items-center h-16"
+            >
+              <input
+                autocomplete="off"
+                class="py-2.5 h-full w-full search-input-field body2 border-none border-b"
+                placeholder="email.new_email.search_placeholder"
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`New Email tests renders new-email with contact 1`] = `
+<DocumentFragment>
+  <div
+    class="w-full h-full overflow-y-auto"
+  >
+    <div
+      class="new-email-title-wrapper h-16 w-full flex items-center px-6 h6 justify-between"
+    >
+      <div
+        class="w-1/2 new-email-title"
+      >
+        email.new_email.title
+      </div>
+      <div
+        class="flex justify-end w-1/2 cursor-pointer"
+      >
+        <div
+          class=""
+        >
+          <svg
+            class="icon-medium "
+            data-testid="go-back"
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect
+              fill="none"
+              height="24"
+              width="24"
+            />
+            <path
+              class="white-icon"
+              d="M16,1.409,14.591,0,8,6.566,1.409,0,0,1.409,6.566,8,0,14.591,1.409,16,8,9.434,14.591,16,16,14.591,9.434,8Z"
+              transform="translate(4 4)"
+            />
+          </svg>
+        </div>
+      </div>
+    </div>
+    <div
+      class="flex flex-row items-center w-full px-4 border-b"
+    >
+      <div
+        class="pr-1 body2"
+      >
+        email.new_email.to
+      </div>
+      <div
+        class="w-full"
+      >
+        <div
+          class="h-16 w-full"
+        >
+          <div
+            class="flex flex-row h-full"
+          >
+            <div
+              class="relative h-10 w-full search-input-field flex items-center h-16"
+            >
+              <input
+                autocomplete="off"
+                class="py-2.5 h-full w-full search-input-field body2 border-none border-b"
+                placeholder="email.new_email.search_placeholder"
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

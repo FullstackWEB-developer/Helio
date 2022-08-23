@@ -34,10 +34,10 @@ exports[`Reports tests renders reports correctly 1`] = `
               class="flex flex-1 flex-col group"
             >
               <div
-                class="flex flex-row mt-5 gap-6"
+                class="flex flex-row mt-5 gap-8"
               >
                 <div
-                  class="w-1/4 h-14"
+                  class="reports-select h-14"
                 >
                   <div
                     class="select-wrapper relative w-full flex flex-col h-20 "
@@ -49,6 +49,8 @@ exports[`Reports tests renders reports correctly 1`] = `
                         autocomplete="on"
                         autocorrect="on"
                         class="pl-4 pr-8 body2 select-trigger-pt h-14 relative truncate select-trigger activated  "
+                        data-testid="report-type"
+                        name="report-type"
                         spellcheck="true"
                         type="text"
                         value="reports.report_options.agent_reports"
@@ -109,6 +111,7 @@ exports[`Reports tests renders reports correctly 1`] = `
                             <div
                               class="flex items-center pl-4"
                               data-test-id="select-cell-text-reports.report_options.agent_reports"
+                              data-testid="select-cell-text-reports.report_options.agent_reports"
                             >
                               reports.report_options.agent_reports
                             </div>
@@ -124,6 +127,7 @@ exports[`Reports tests renders reports correctly 1`] = `
                             <div
                               class="flex items-center pl-4"
                               data-test-id="select-cell-text-reports.report_options.bot_reports"
+                              data-testid="select-cell-text-reports.report_options.bot_reports"
                             >
                               reports.report_options.bot_reports
                             </div>
@@ -139,6 +143,7 @@ exports[`Reports tests renders reports correctly 1`] = `
                             <div
                               class="flex items-center pl-4"
                               data-test-id="select-cell-text-reports.report_options.system_reports"
+                              data-testid="select-cell-text-reports.report_options.system_reports"
                             >
                               reports.report_options.system_reports
                             </div>
@@ -154,6 +159,7 @@ exports[`Reports tests renders reports correctly 1`] = `
                             <div
                               class="flex items-center pl-4"
                               data-test-id="select-cell-text-reports.report_options.queue_reports"
+                              data-testid="select-cell-text-reports.report_options.queue_reports"
                             >
                               reports.report_options.queue_reports
                             </div>
@@ -164,7 +170,7 @@ exports[`Reports tests renders reports correctly 1`] = `
                   </div>
                 </div>
                 <div
-                  class="w-1/4 h-14"
+                  class="w-48 h-14"
                 >
                   <div
                     class="select-wrapper relative w-full flex flex-col h-20 "
@@ -176,6 +182,8 @@ exports[`Reports tests renders reports correctly 1`] = `
                         autocomplete="on"
                         autocorrect="on"
                         class="pl-4 pr-8 body2 select-trigger-pt h-14 relative truncate select-trigger activated  "
+                        data-testid="view-type"
+                        name="view-type"
                         spellcheck="true"
                         type="text"
                         value="reports.view_options.last_7_days"
@@ -236,6 +244,7 @@ exports[`Reports tests renders reports correctly 1`] = `
                             <div
                               class="flex items-center pl-4"
                               data-test-id="select-cell-text-reports.view_options.yesterday"
+                              data-testid="select-cell-text-reports.view_options.yesterday"
                             >
                               reports.view_options.yesterday
                             </div>
@@ -251,6 +260,7 @@ exports[`Reports tests renders reports correctly 1`] = `
                             <div
                               class="flex items-center pl-4"
                               data-test-id="select-cell-text-reports.view_options.last_week"
+                              data-testid="select-cell-text-reports.view_options.last_week"
                             >
                               reports.view_options.last_week
                             </div>
@@ -266,6 +276,7 @@ exports[`Reports tests renders reports correctly 1`] = `
                             <div
                               class="flex items-center pl-4"
                               data-test-id="select-cell-text-reports.view_options.last_7_days"
+                              data-testid="select-cell-text-reports.view_options.last_7_days"
                             >
                               reports.view_options.last_7_days
                             </div>
@@ -281,6 +292,7 @@ exports[`Reports tests renders reports correctly 1`] = `
                             <div
                               class="flex items-center pl-4"
                               data-test-id="select-cell-text-reports.view_options.last_month"
+                              data-testid="select-cell-text-reports.view_options.last_month"
                             >
                               reports.view_options.last_month
                             </div>
@@ -296,6 +308,7 @@ exports[`Reports tests renders reports correctly 1`] = `
                             <div
                               class="flex items-center pl-4"
                               data-test-id="select-cell-text-reports.view_options.monthly_reports"
+                              data-testid="select-cell-text-reports.view_options.monthly_reports"
                             >
                               reports.view_options.monthly_reports
                             </div>

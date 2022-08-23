@@ -121,7 +121,7 @@ const EmailMessageHeader = ({messageId, subject, date, from, fromPhoto, collapse
                     <div className="flex mb-auto body3-medium">
                         {
                             downloadAttachmentsMutation.isLoading ? <Spinner size="small" className="px-2" /> :
-                                <span className="attachments-label hover:underline cursor-pointer" onClick={downloadAllAttachments}>{t('email.inbox.download_all')}</span>
+                                <span data-testid={"download-all"} className="attachments-label hover:underline cursor-pointer" onClick={downloadAllAttachments}>{t('email.inbox.download_all')}</span>
                         }
                         &nbsp;
                         {attachmentsCount}
@@ -131,6 +131,7 @@ const EmailMessageHeader = ({messageId, subject, date, from, fromPhoto, collapse
                 <div className="mb-auto body3-medium">{parsedDate}</div>
                 <div className="px-7">
                     <MoreMenu
+                        data-testid={"more-menu-icon"}
                         iconClassName='default-toolbar-icon'
                         iconFillClassname='cursor-pointer icon-medium'
                         menuClassName='w-52'
@@ -140,7 +141,7 @@ const EmailMessageHeader = ({messageId, subject, date, from, fromPhoto, collapse
                         verticalOffset={8}
                     />
                 </div>
-                <div className='flex justify-center items-center rounded-full h-10 w-10 leading-10 collapsible-button cursor-pointer' onClick={() => collapseHandler()}>
+                <div data-testid={"collapse-handler"} className='flex justify-center items-center rounded-full h-10 w-10 leading-10 collapsible-button cursor-pointer' onClick={() => collapseHandler()}>
                     <SvgIcon type={collapsedBody ? Icon.ArrowDown : Icon.ArrowUp} fillClass='collapsible-arrow-icon' />
                 </div>
             </div>

@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Email Attachment tests renders email-attachment correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="flex items-center email-attachment-thumbnail w-60 p-4 mb-4 cursor-pointer body3-medium attachment-file-name h-16"
+    data-testid="download-button"
+  >
+    <div
+      class="pr-2"
+    >
+      <svg
+        class="icon-large-40 "
+        viewBox="0 0 48 48"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <g
+          data-name="Layer 2"
+          id="Layer_2"
+        >
+          <g
+            id="Attachment_generic_48px"
+          >
+            <rect
+              class="attachment-1 fill-default"
+              height="48"
+              width="48"
+            />
+            <polygon
+              class="attachment-2 fill-default"
+              points="26.99 5 10.17 5 10.17 26.96 10.17 43.48 38.27 43.48 38.27 26.96 38.27 16.51 26.99 5"
+            />
+            <path
+              class="attachment-2 fill-default"
+              d="M27,5V16.28H38.26"
+            />
+          </g>
+        </g>
+      </svg>
+    </div>
+    <div
+      class="truncate"
+    >
+      s
+    </div>
+  </div>
+</DocumentFragment>
+`;

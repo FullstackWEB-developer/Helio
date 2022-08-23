@@ -1,0 +1,96 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Email Summary List tests renders email-summary-list correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="body3-small flex pt-4 px-6 text-center"
+  >
+    email.filter.no_emails
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Email Summary List tests renders email-summary-list with messages 1`] = `
+<DocumentFragment>
+  <div
+    class="overflow-y-auto overflow-x-hidden h-full"
+  >
+    <div
+      class="border-b email-summary cursor-pointer pl-6 pt-4 pb-1.5 flex"
+      data-testid="email-summary-item-view"
+    >
+      <div
+        class="flex flex-row w-full"
+      >
+        <div
+          class="pr-4"
+        >
+          <div
+            class="avatar rounded-full flex items-center justify-center relative w-10 h-10"
+          >
+            <div
+              class="avatar-initial"
+            >
+              T
+            </div>
+          </div>
+        </div>
+        <div
+          class="flex flex-col pr-6"
+        >
+          <div
+            class="flex flex-row items-center"
+          >
+            <div
+              class="body1 truncate w-44"
+            >
+              <div
+                class="truncate relative w-full h-full inline-block"
+              >
+                <span
+                  class="truncate"
+                >
+                  Test
+                </span>
+              </div>
+            </div>
+            <div
+              class="body3-small w-20 justify-end flex flex-row"
+            >
+              <div
+                class="truncate inline-block"
+              >
+                <span
+                  class="truncate"
+                >
+                  Aug 19, 2021
+                </span>
+              </div>
+            </div>
+          </div>
+          <div
+            class="flex flex-row"
+          >
+            <div
+              class="w-44 email-summary-display body3-big"
+            />
+            <div
+              class="justify-end flex flex-row w-20"
+            >
+              <div
+                class="w-min pt-1"
+              >
+                <span
+                  class="rounded-full px-2 badge flex content-center items-center badge-danger"
+                >
+                   2 
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

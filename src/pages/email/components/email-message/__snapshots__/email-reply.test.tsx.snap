@@ -1,0 +1,785 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Email Reply tests renders email-filter contact-email-address 1`] = `
+<DocumentFragment>
+  <div
+    class="email-reply w-full flex flex-col flex-auto"
+  >
+    <div
+      class="flex justify-between items-center h-12 email-reply-stripe px-6"
+    >
+      <h6
+        class="text-white"
+      >
+        email.inbox.send_reply
+      </h6>
+    </div>
+    <div
+      class="flex items-center justify-between pb-6 pt-2 w-full"
+    >
+      <div
+        class="w-16 mt-auto pl-4 pr-2"
+      >
+        <div
+          class="relative"
+        >
+          <div
+            class="cursor-pointer"
+            data-testid="notification-template-select"
+          >
+            <div
+              class="w-10 h-10 flex items-center justify-center"
+            >
+              <div
+                class=" relative"
+              >
+                <div
+                  class="absolute"
+                >
+                  <svg
+                    class="spinner flex items-center justify-center icon-large-40"
+                    viewBox="0 0 40 40"
+                  >
+                    <circle
+                      class="path"
+                      cx="20"
+                      cy="20"
+                      fill="none"
+                      r="16"
+                      stroke-width="4"
+                    />
+                  </svg>
+                </div>
+                <div
+                  class="flex items-center justify-center icon-large-40"
+                >
+                  <div
+                    class=""
+                  >
+                    <svg
+                      class="icon-medium "
+                      height="24"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <rect
+                        fill="none"
+                        height="24"
+                        width="24"
+                      />
+                      <path
+                        class="fill-loading"
+                        d="M20,2H4A2,2,0,0,0,2.01,4L2,22l4-4H20a2.006,2.006,0,0,0,2-2V4A2.006,2.006,0,0,0,20,2ZM8,14H6V12H8Zm0-3H6V9H8ZM8,8H6V6H8Zm7,6H10V12h5Zm3-3H10V9h8Zm0-3H10V6h8Z"
+                        data-name="icon templates"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="absolute z-50 bottom-0"
+            hidden=""
+          >
+            <div
+              class="w-96"
+            >
+              <div
+                class="py-2 bg-white dropdown-body"
+                data-test-id="dropdown-undefined"
+                data-testid="dropdown-undefined"
+              >
+                <div
+                  class="relative h-10 w-full search-input-field flex items-center "
+                >
+                  <div
+                    class="absolute pl-4"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="cursor-pointer icon-small "
+                        height="16"
+                        viewBox="0 0 16 16"
+                        width="16"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="16"
+                          width="16"
+                        />
+                        <path
+                          class="search-icon-fill"
+                          d="M12.7,11.23a6.777,6.777,0,0,0,1.4-4.174A7.02,7.02,0,0,0,7.1,0,7.105,7.105,0,0,0,0,7.056a7.105,7.105,0,0,0,7.1,7.056,6.667,6.667,0,0,0,4.2-1.391l3,2.981a.971.971,0,0,0,1.4,0,.957.957,0,0,0,0-1.391Zm-5.6.8A5.022,5.022,0,0,1,2,7.056a5.1,5.1,0,0,1,10.2,0A5.022,5.022,0,0,1,7.1,12.025Z"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                  <input
+                    autocomplete="off"
+                    class="py-2.5 h-full w-full search-input-field body2 pl-12 border-b"
+                    placeholder="common.search"
+                    type="text"
+                    value=""
+                  />
+                </div>
+                <div
+                  class="overflow-y-auto overflow-x-hidden dropdown-max-height py-2 h-80"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="w-full flex flex-col"
+      >
+        <div
+          class="flex flex-row justify-between"
+        >
+          <label
+            class="block subtitle2 pb-2"
+          />
+          <div
+            class="cursor-pointer"
+          >
+            <div
+              class=""
+            >
+              <svg
+                class="icon-medium "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="rgba-05-fill"
+                  d="M5,17v2H19V17Zm4.5-4.2h5l.9,2.2h2.1L12.75,4h-1.5L6.5,15H8.6ZM12,5.98,13.87,11H10.13Z"
+                  transform="translate(0 1)"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div
+          class="w-full h-full"
+        >
+          <div
+            class="undefined relative bg-white flex flex-row w-full h-full items-center p-4 border"
+          >
+            <textarea
+              class="shadow-none body2 w-full resize-none mt-1"
+              data-testid="email-context"
+              name="comment"
+              placeholder="email.new_email.body_placeholder"
+              rows="2"
+              wrap="hard"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="send-button-width mt-auto"
+      />
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Email Reply tests renders email-filter correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="email-reply w-full flex flex-col flex-auto"
+  >
+    <div
+      class="flex justify-between items-center h-12 email-reply-stripe px-6"
+    >
+      <h6
+        class="text-white"
+      >
+        email.inbox.send_reply
+      </h6>
+    </div>
+    <div
+      class="flex items-center justify-between pb-6 pt-2 w-full"
+    >
+      <div
+        class="w-16 mt-auto pl-4 pr-2"
+      >
+        <div
+          class="relative"
+        >
+          <div
+            class="cursor-pointer"
+            data-testid="notification-template-select"
+          >
+            <div
+              class="w-10 h-10 flex items-center justify-center"
+            >
+              <div
+                class=" relative"
+              >
+                <div
+                  class="absolute"
+                >
+                  <svg
+                    class="spinner flex items-center justify-center icon-large-40"
+                    viewBox="0 0 40 40"
+                  >
+                    <circle
+                      class="path"
+                      cx="20"
+                      cy="20"
+                      fill="none"
+                      r="16"
+                      stroke-width="4"
+                    />
+                  </svg>
+                </div>
+                <div
+                  class="flex items-center justify-center icon-large-40"
+                >
+                  <div
+                    class=""
+                  >
+                    <svg
+                      class="icon-medium "
+                      height="24"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <rect
+                        fill="none"
+                        height="24"
+                        width="24"
+                      />
+                      <path
+                        class="fill-loading"
+                        d="M20,2H4A2,2,0,0,0,2.01,4L2,22l4-4H20a2.006,2.006,0,0,0,2-2V4A2.006,2.006,0,0,0,20,2ZM8,14H6V12H8Zm0-3H6V9H8ZM8,8H6V6H8Zm7,6H10V12h5Zm3-3H10V9h8Zm0-3H10V6h8Z"
+                        data-name="icon templates"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="absolute z-50 bottom-0"
+            hidden=""
+          >
+            <div
+              class="w-96"
+            >
+              <div
+                class="py-2 bg-white dropdown-body"
+                data-test-id="dropdown-undefined"
+                data-testid="dropdown-undefined"
+              >
+                <div
+                  class="relative h-10 w-full search-input-field flex items-center "
+                >
+                  <div
+                    class="absolute pl-4"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="cursor-pointer icon-small "
+                        height="16"
+                        viewBox="0 0 16 16"
+                        width="16"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="16"
+                          width="16"
+                        />
+                        <path
+                          class="search-icon-fill"
+                          d="M12.7,11.23a6.777,6.777,0,0,0,1.4-4.174A7.02,7.02,0,0,0,7.1,0,7.105,7.105,0,0,0,0,7.056a7.105,7.105,0,0,0,7.1,7.056,6.667,6.667,0,0,0,4.2-1.391l3,2.981a.971.971,0,0,0,1.4,0,.957.957,0,0,0,0-1.391Zm-5.6.8A5.022,5.022,0,0,1,2,7.056a5.1,5.1,0,0,1,10.2,0A5.022,5.022,0,0,1,7.1,12.025Z"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                  <input
+                    autocomplete="off"
+                    class="py-2.5 h-full w-full search-input-field body2 pl-12 border-b"
+                    placeholder="common.search"
+                    type="text"
+                    value=""
+                  />
+                </div>
+                <div
+                  class="overflow-y-auto overflow-x-hidden dropdown-max-height py-2 h-80"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="w-full flex flex-col"
+      >
+        <div
+          class="flex flex-row justify-between"
+        >
+          <label
+            class="block subtitle2 pb-2"
+          />
+          <div
+            class="cursor-pointer"
+          >
+            <div
+              class=""
+            >
+              <svg
+                class="icon-medium "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="rgba-05-fill"
+                  d="M5,17v2H19V17Zm4.5-4.2h5l.9,2.2h2.1L12.75,4h-1.5L6.5,15H8.6ZM12,5.98,13.87,11H10.13Z"
+                  transform="translate(0 1)"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div
+          class="w-full h-full"
+        >
+          <div
+            class="undefined relative bg-white flex flex-row w-full h-full items-center p-4 border"
+          >
+            <textarea
+              class="shadow-none body2 w-full resize-none mt-1"
+              data-testid="email-context"
+              name="comment"
+              placeholder="email.new_email.body_placeholder"
+              rows="2"
+              wrap="hard"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="send-button-width mt-auto"
+      />
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Email Reply tests renders email-filter patient-email-address 1`] = `
+<DocumentFragment>
+  <div
+    class="email-reply w-full flex flex-col flex-auto"
+  >
+    <div
+      class="flex justify-between items-center h-12 email-reply-stripe px-6"
+    >
+      <h6
+        class="text-white"
+      >
+        email.inbox.send_reply
+      </h6>
+    </div>
+    <div
+      class="flex items-center justify-between pb-6 pt-2 w-full"
+    >
+      <div
+        class="w-16 mt-auto pl-4 pr-2"
+      >
+        <div
+          class="relative"
+        >
+          <div
+            class="cursor-pointer"
+            data-testid="notification-template-select"
+          >
+            <div
+              class="w-10 h-10 flex items-center justify-center"
+            >
+              <div
+                class=" relative"
+              >
+                <div
+                  class="absolute"
+                >
+                  <svg
+                    class="spinner flex items-center justify-center icon-large-40"
+                    viewBox="0 0 40 40"
+                  >
+                    <circle
+                      class="path"
+                      cx="20"
+                      cy="20"
+                      fill="none"
+                      r="16"
+                      stroke-width="4"
+                    />
+                  </svg>
+                </div>
+                <div
+                  class="flex items-center justify-center icon-large-40"
+                >
+                  <div
+                    class=""
+                  >
+                    <svg
+                      class="icon-medium "
+                      height="24"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <rect
+                        fill="none"
+                        height="24"
+                        width="24"
+                      />
+                      <path
+                        class="fill-loading"
+                        d="M20,2H4A2,2,0,0,0,2.01,4L2,22l4-4H20a2.006,2.006,0,0,0,2-2V4A2.006,2.006,0,0,0,20,2ZM8,14H6V12H8Zm0-3H6V9H8ZM8,8H6V6H8Zm7,6H10V12h5Zm3-3H10V9h8Zm0-3H10V6h8Z"
+                        data-name="icon templates"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="absolute z-50 bottom-0"
+            hidden=""
+          >
+            <div
+              class="w-96"
+            >
+              <div
+                class="py-2 bg-white dropdown-body"
+                data-test-id="dropdown-undefined"
+                data-testid="dropdown-undefined"
+              >
+                <div
+                  class="relative h-10 w-full search-input-field flex items-center "
+                >
+                  <div
+                    class="absolute pl-4"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="cursor-pointer icon-small "
+                        height="16"
+                        viewBox="0 0 16 16"
+                        width="16"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="16"
+                          width="16"
+                        />
+                        <path
+                          class="search-icon-fill"
+                          d="M12.7,11.23a6.777,6.777,0,0,0,1.4-4.174A7.02,7.02,0,0,0,7.1,0,7.105,7.105,0,0,0,0,7.056a7.105,7.105,0,0,0,7.1,7.056,6.667,6.667,0,0,0,4.2-1.391l3,2.981a.971.971,0,0,0,1.4,0,.957.957,0,0,0,0-1.391Zm-5.6.8A5.022,5.022,0,0,1,2,7.056a5.1,5.1,0,0,1,10.2,0A5.022,5.022,0,0,1,7.1,12.025Z"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                  <input
+                    autocomplete="off"
+                    class="py-2.5 h-full w-full search-input-field body2 pl-12 border-b"
+                    placeholder="common.search"
+                    type="text"
+                    value=""
+                  />
+                </div>
+                <div
+                  class="overflow-y-auto overflow-x-hidden dropdown-max-height py-2 h-80"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="w-full flex flex-col"
+      >
+        <div
+          class="flex flex-row justify-between"
+        >
+          <label
+            class="block subtitle2 pb-2"
+          />
+          <div
+            class="cursor-pointer"
+          >
+            <div
+              class=""
+            >
+              <svg
+                class="icon-medium "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="rgba-05-fill"
+                  d="M5,17v2H19V17Zm4.5-4.2h5l.9,2.2h2.1L12.75,4h-1.5L6.5,15H8.6ZM12,5.98,13.87,11H10.13Z"
+                  transform="translate(0 1)"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div
+          class="w-full h-full"
+        >
+          <div
+            class="undefined relative bg-white flex flex-row w-full h-full items-center p-4 border"
+          >
+            <textarea
+              class="shadow-none body2 w-full resize-none mt-1"
+              data-testid="email-context"
+              name="comment"
+              placeholder="email.new_email.body_placeholder"
+              rows="2"
+              wrap="hard"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="send-button-width mt-auto"
+      />
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Email Reply tests renders email-filter ticket-email-address 1`] = `
+<DocumentFragment>
+  <div
+    class="email-reply w-full flex flex-col flex-auto"
+  >
+    <div
+      class="flex justify-between items-center h-12 email-reply-stripe px-6"
+    >
+      <h6
+        class="text-white"
+      >
+        email.inbox.send_reply
+      </h6>
+    </div>
+    <div
+      class="flex items-center justify-between pb-6 pt-2 w-full"
+    >
+      <div
+        class="w-16 mt-auto pl-4 pr-2"
+      >
+        <div
+          class="relative"
+        >
+          <div
+            class="cursor-pointer"
+            data-testid="notification-template-select"
+          >
+            <div
+              class="w-10 h-10 flex items-center justify-center"
+            >
+              <div
+                class=" relative"
+              >
+                <div
+                  class="absolute"
+                >
+                  <svg
+                    class="spinner flex items-center justify-center icon-large-40"
+                    viewBox="0 0 40 40"
+                  >
+                    <circle
+                      class="path"
+                      cx="20"
+                      cy="20"
+                      fill="none"
+                      r="16"
+                      stroke-width="4"
+                    />
+                  </svg>
+                </div>
+                <div
+                  class="flex items-center justify-center icon-large-40"
+                >
+                  <div
+                    class=""
+                  >
+                    <svg
+                      class="icon-medium "
+                      height="24"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <rect
+                        fill="none"
+                        height="24"
+                        width="24"
+                      />
+                      <path
+                        class="fill-loading"
+                        d="M20,2H4A2,2,0,0,0,2.01,4L2,22l4-4H20a2.006,2.006,0,0,0,2-2V4A2.006,2.006,0,0,0,20,2ZM8,14H6V12H8Zm0-3H6V9H8ZM8,8H6V6H8Zm7,6H10V12h5Zm3-3H10V9h8Zm0-3H10V6h8Z"
+                        data-name="icon templates"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="absolute z-50 bottom-0"
+            hidden=""
+          >
+            <div
+              class="w-96"
+            >
+              <div
+                class="py-2 bg-white dropdown-body"
+                data-test-id="dropdown-undefined"
+                data-testid="dropdown-undefined"
+              >
+                <div
+                  class="relative h-10 w-full search-input-field flex items-center "
+                >
+                  <div
+                    class="absolute pl-4"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="cursor-pointer icon-small "
+                        height="16"
+                        viewBox="0 0 16 16"
+                        width="16"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="16"
+                          width="16"
+                        />
+                        <path
+                          class="search-icon-fill"
+                          d="M12.7,11.23a6.777,6.777,0,0,0,1.4-4.174A7.02,7.02,0,0,0,7.1,0,7.105,7.105,0,0,0,0,7.056a7.105,7.105,0,0,0,7.1,7.056,6.667,6.667,0,0,0,4.2-1.391l3,2.981a.971.971,0,0,0,1.4,0,.957.957,0,0,0,0-1.391Zm-5.6.8A5.022,5.022,0,0,1,2,7.056a5.1,5.1,0,0,1,10.2,0A5.022,5.022,0,0,1,7.1,12.025Z"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                  <input
+                    autocomplete="off"
+                    class="py-2.5 h-full w-full search-input-field body2 pl-12 border-b"
+                    placeholder="common.search"
+                    type="text"
+                    value=""
+                  />
+                </div>
+                <div
+                  class="overflow-y-auto overflow-x-hidden dropdown-max-height py-2 h-80"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="w-full flex flex-col"
+      >
+        <div
+          class="flex flex-row justify-between"
+        >
+          <label
+            class="block subtitle2 pb-2"
+          />
+          <div
+            class="cursor-pointer"
+          >
+            <div
+              class=""
+            >
+              <svg
+                class="icon-medium "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="rgba-05-fill"
+                  d="M5,17v2H19V17Zm4.5-4.2h5l.9,2.2h2.1L12.75,4h-1.5L6.5,15H8.6ZM12,5.98,13.87,11H10.13Z"
+                  transform="translate(0 1)"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div
+          class="w-full h-full"
+        >
+          <div
+            class="undefined relative bg-white flex flex-row w-full h-full items-center p-4 border"
+          >
+            <textarea
+              class="shadow-none body2 w-full resize-none mt-1"
+              data-testid="email-context"
+              name="comment"
+              placeholder="email.new_email.body_placeholder"
+              rows="2"
+              wrap="hard"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="send-button-width mt-auto"
+      />
+    </div>
+  </div>
+</DocumentFragment>
+`;

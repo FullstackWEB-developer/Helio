@@ -44,6 +44,7 @@ const EmailAttachment = ({attachment, messageId, externalPagesUse = false, index
 
     return (
         <div
+            data-testid={"download-button"}
             onMouseOver={() => setHovered(true)}
             onMouseOut={() => setHovered(false)}
             onClick={() => downloadAttachment(attachment.fileName)}

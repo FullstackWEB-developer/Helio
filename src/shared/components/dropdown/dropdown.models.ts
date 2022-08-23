@@ -8,6 +8,7 @@ export interface CategoryItemModel {
 }
 
 export interface DropdownModel {
+    dataTestId?: string;
     title?: string;
     header?: ReactNode;
     asSelect?: boolean;

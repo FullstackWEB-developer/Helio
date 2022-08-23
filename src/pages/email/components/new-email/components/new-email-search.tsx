@@ -16,7 +16,7 @@ const NewEmailSearch = ({onSearchHandler, value, onValueClear} : NewEmailSearchP
         <div className='pr-1 body2'>{t('email.new_email.to')}</div>
         {value ? <div className='flex items-center flex-row justify-between h-16 w-full'>
                     <div>{value}</div>
-                    <div className='cursor-pointer pr-4' onClick={() => onValueClear()}>
+                    <div data-testid="clear-button" className='cursor-pointer pr-4' onClick={() => onValueClear()}>
                         <SvgIcon type={Icon.Clear} fillClass="clear-input-icon-fill" />
                     </div>
                 </div> :

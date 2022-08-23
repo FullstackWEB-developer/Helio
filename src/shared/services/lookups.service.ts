@@ -11,7 +11,6 @@ import {
     setUserList,
 } from '../store/lookups/lookups.slice';
 import Api from './api';
-import Logger from './logger';
 import store from '../../app/store';
 import { endGetLookupValuesRequest, setFailure, setLookupValues, startGeLookupValuesRequest } from '@pages/tickets/store/tickets.slice';
 import { User } from '../models/user';
@@ -20,9 +19,6 @@ import { TicketLookupValue } from '@pages/tickets/models/ticket-lookup-values.mo
 import { SecuritySettings } from '@pages/configurations/models/security-settings';
 import { PracticeBranding } from '@shared/models/practice-branding';
 import { GeneralSettingsModel } from '@pages/configurations/models/general-settings.model';
-
-const logger = Logger.getInstance();
-
 const parametersUrl = '/lookups/parameters';
 const lookupsUrl = '/lookups';
 const lookupsValueUrl = '/lookups/values'
@@ -43,7 +39,6 @@ export const getProviders = () => {
                     if (error.response?.status === 404) {
                         dispatch(setProviders(undefined));
                     } else {
-                        logger.error('Failed getting Providers', error);
                         dispatch(setError(true));
                         dispatch(setProviders(undefined));
                         dispatch(setLoading(false));
@@ -72,7 +67,6 @@ export const getAllProviders = () => {
                     if (error.response?.status === 404) {
                         dispatch(setAllProviders(undefined));
                     } else {
-                        logger.error('Failed getting Providers', error);
                         dispatch(setError(true));
                         dispatch(setAllProviders(undefined));
                         dispatch(setLoading(false));
@@ -98,7 +92,6 @@ export const getLocations = () => {
                     if (error.response?.status === 404) {
                         dispatch(setLocations(undefined));
                     } else {
-                        logger.error('Failed getting Locations', error);
                         dispatch(setError(true));
                         dispatch(setLocations(undefined));
                         dispatch(setLoading(false));
@@ -176,8 +169,7 @@ export const getLookupValues = (key: string, forceUpdate: boolean = false) => {
                     dispatch(setLookupValues({ key: key, result: response.data }));
                     dispatch(endGetLookupValuesRequest(''));
                 })
-                .catch(error => {
-                    logger.error(`Failed getting Lookup values`, error);
+                .catch(() => {
                     dispatch(endGetLookupValuesRequest('ticket-new.error'));
                 });
         }

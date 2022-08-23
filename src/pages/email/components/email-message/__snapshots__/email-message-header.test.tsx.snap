@@ -1,0 +1,129 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Send First Email tests renders email-message-header correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="flex items-center py-4"
+  >
+    <img
+      alt="patient.summary.profile_pic_alt_text"
+      class="w-10 h-10 rounded-full"
+      src="data:image/jpeg;base64,test"
+    />
+    <div
+      class="flex flex-col px-4"
+    >
+      <span
+        class="subtitle"
+      />
+      <span />
+    </div>
+    <div
+      class="ml-auto flex justify-center items-center"
+    >
+      <div
+        class="mb-auto body3-medium"
+      >
+        email.inbox.date
+      </div>
+      <div
+        class="px-7"
+      >
+        <div>
+          <div
+            class="relative flex flex-row items-center cursor-pointer flex-nowrap"
+          >
+            <div
+              class=""
+            >
+              <svg
+                class="default-toolbar-icon "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g
+                  transform="translate(-416 -52)"
+                >
+                  <rect
+                    fill="none"
+                    height="24"
+                    transform="translate(416 52)"
+                    width="24"
+                  />
+                  <path
+                    class="cursor-pointer icon-medium"
+                    d="M12,8a2,2,0,1,0-2-2A2.006,2.006,0,0,0,12,8Zm0,2a2,2,0,1,0,2,2A2.006,2.006,0,0,0,12,10Zm0,6a2,2,0,1,0,2,2A2.006,2.006,0,0,0,12,16Z"
+                    transform="translate(416 52)"
+                  />
+                </g>
+              </svg>
+            </div>
+          </div>
+          <div
+            class="absolute z-10 more-menu-shadow hidden"
+            style="position: fixed; left: 0px; top: 0px;"
+          >
+            <div
+              class="py-2 bg-white dropdown-body"
+              data-test-id="dropdown-undefined"
+              data-testid="dropdown-undefined"
+            >
+              <div
+                class="overflow-y-auto overflow-x-hidden dropdown-max-height "
+              >
+                <span>
+                  <div
+                    class="w-full px-4 dropdown-cell-disabled justify-between flex items-center  body2  body2 py-1.5  cursor-pointer "
+                    data-testid="email.inbox.split_ticket"
+                  >
+                    <div
+                      class="flex flex-row w-full items-center"
+                      data-test-id="dropdown-cell-icon-content"
+                    >
+                      <div
+                        class="flex items-center body2 py-1.5"
+                        data-test-id="dropdown-cell-text-email.inbox.split_ticket"
+                      >
+                        email.inbox.split_ticket
+                      </div>
+                    </div>
+                  </div>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="flex justify-center items-center rounded-full h-10 w-10 leading-10 collapsible-button cursor-pointer"
+        data-testid="collapse-handler"
+      >
+        <div
+          class=""
+        >
+          <svg
+            class="icon-medium "
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect
+              fill="none"
+              height="24"
+              width="24"
+            />
+            <path
+              class="collapsible-arrow-icon"
+              d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+              transform="translate(19 8) rotate(90)"
+            />
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

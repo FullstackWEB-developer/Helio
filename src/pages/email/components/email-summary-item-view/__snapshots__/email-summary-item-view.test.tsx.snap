@@ -1,0 +1,286 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EmailSummaryItemView tests renders email-summary-item-view last year 1`] = `
+<DocumentFragment>
+  <div
+    class="border-b email-summary cursor-pointer pl-6 pt-4 pb-1.5 flex"
+    data-testid="email-summary-item-view"
+  >
+    <div
+      class="flex flex-row w-full"
+    >
+      <div
+        class="pr-4"
+      >
+        <div
+          class="avatar rounded-full flex items-center justify-center relative w-10 h-10"
+        >
+          <div
+            class="avatar-initial"
+          >
+            A
+          </div>
+        </div>
+      </div>
+      <div
+        class="flex flex-col pr-6"
+      >
+        <div
+          class="flex flex-row items-center"
+        >
+          <div
+            class="body1 truncate w-44"
+          >
+            <div
+              class="truncate relative w-full h-full inline-block"
+            >
+              <span
+                class="truncate"
+              >
+                A
+              </span>
+            </div>
+          </div>
+          <div
+            class="body3-small w-20 justify-end flex flex-row"
+          >
+            <div
+              class="truncate inline-block"
+            >
+              <span
+                class="truncate"
+              >
+                Dec 29, 2020
+              </span>
+            </div>
+          </div>
+        </div>
+        <div
+          class="flex flex-row"
+        >
+          <div
+            class="w-44 email-summary-display body3-big"
+          />
+          <div
+            class="justify-end flex flex-row w-20"
+          >
+            <div
+              class="w-min pt-1"
+            >
+              <span
+                class="rounded-full px-2 badge flex content-center items-center badge-danger"
+              >
+                 1 
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`EmailSummaryItemView tests renders email-summary-item-view this year 1`] = `
+<DocumentFragment>
+  <div
+    class="border-b email-summary cursor-pointer pl-6 pt-4 pb-1.5 flex"
+    data-testid="email-summary-item-view"
+  >
+    <div
+      class="flex flex-row w-full"
+    >
+      <div
+        class="pr-4"
+      >
+        <div
+          class="avatar rounded-full flex items-center justify-center relative w-10 h-10"
+        >
+          <div
+            class=""
+          >
+            <svg
+              class="icon-medium "
+              height="24"
+              viewBox="0 0 24 24"
+              width="24"
+              xmlns="https://www.w3.org/2000/svg"
+            >
+              <rect
+                fill="none"
+                height="24"
+                width="24"
+              />
+              <g
+                transform="translate(-0.164 -0.535)"
+              >
+                <path
+                  class="white-icon"
+                  d="M16.857,11.722a5.307,5.307,0,1,0,5.308,5.307A5.307,5.307,0,0,0,16.857,11.722Zm.575,8.684h-1.1V19.261h1.1Zm1.375-4.077a5.851,5.851,0,0,1-.8.882,2.4,2.4,0,0,0-.533.654,1.982,1.982,0,0,0-.119.786v.117h-1.01v-.117A2.957,2.957,0,0,1,16.5,17.6a2.747,2.747,0,0,1,.7-.922l.357-.346a1.374,1.374,0,0,0,.234-.287.975.975,0,0,0,.164-.531,1.009,1.009,0,0,0-.234-.671.964.964,0,0,0-.776-.273.946.946,0,0,0-.935.481,1.963,1.963,0,0,0-.171.823l0,.1h-1.01v-.116a2.253,2.253,0,0,1,.58-1.6,2.055,2.055,0,0,1,1.571-.612,2.077,2.077,0,0,1,1.47.512,1.77,1.77,0,0,1,.564,1.344A1.471,1.471,0,0,1,18.807,16.329Z"
+                />
+                <circle
+                  class="white-icon"
+                  cx="4.222"
+                  cy="4.222"
+                  r="4.222"
+                  transform="translate(6.99 3.535)"
+                />
+                <path
+                  class="white-icon"
+                  d="M10.608,13.861c-.22-.01-.434-.019-.658-.019a12.537,12.537,0,0,0-6.432,1.77,2.845,2.845,0,0,0-1.353,2.463v2.579h9.012A6.783,6.783,0,0,1,9.95,16.762,6.9,6.9,0,0,1,10.608,13.861Z"
+                />
+              </g>
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div
+        class="flex flex-col pr-6"
+      >
+        <div
+          class="flex flex-row items-center"
+        >
+          <div
+            class="body1 truncate w-44"
+          />
+          <div
+            class="body3-small w-20 justify-end flex flex-row"
+          >
+            <div
+              class="truncate inline-block"
+            >
+              <span
+                class="truncate"
+              >
+                Dec 30, 2021
+              </span>
+            </div>
+          </div>
+        </div>
+        <div
+          class="flex flex-row"
+        >
+          <div
+            class="w-44 email-summary-display body3-big"
+          />
+          <div
+            class="justify-end flex flex-row w-20"
+          >
+            <div
+              class="w-min pt-1"
+            >
+              <span
+                class="rounded-full px-2 badge flex content-center items-center badge-danger"
+              >
+                 1 
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`EmailSummaryItemView tests renders email-summary-item-view today 1`] = `
+<DocumentFragment>
+  <div
+    class="border-b email-summary cursor-pointer pl-6 pt-4 pb-1.5 flex"
+    data-testid="email-summary-item-view"
+  >
+    <div
+      class="flex flex-row w-full"
+    >
+      <div
+        class="pr-4"
+      >
+        <div
+          class="avatar rounded-full flex items-center justify-center relative w-10 h-10"
+        >
+          <div
+            class=""
+          >
+            <svg
+              class="icon-medium "
+              height="24"
+              viewBox="0 0 24 24"
+              width="24"
+              xmlns="https://www.w3.org/2000/svg"
+            >
+              <rect
+                fill="none"
+                height="24"
+                width="24"
+              />
+              <g
+                transform="translate(-0.164 -0.535)"
+              >
+                <path
+                  class="white-icon"
+                  d="M16.857,11.722a5.307,5.307,0,1,0,5.308,5.307A5.307,5.307,0,0,0,16.857,11.722Zm.575,8.684h-1.1V19.261h1.1Zm1.375-4.077a5.851,5.851,0,0,1-.8.882,2.4,2.4,0,0,0-.533.654,1.982,1.982,0,0,0-.119.786v.117h-1.01v-.117A2.957,2.957,0,0,1,16.5,17.6a2.747,2.747,0,0,1,.7-.922l.357-.346a1.374,1.374,0,0,0,.234-.287.975.975,0,0,0,.164-.531,1.009,1.009,0,0,0-.234-.671.964.964,0,0,0-.776-.273.946.946,0,0,0-.935.481,1.963,1.963,0,0,0-.171.823l0,.1h-1.01v-.116a2.253,2.253,0,0,1,.58-1.6,2.055,2.055,0,0,1,1.571-.612,2.077,2.077,0,0,1,1.47.512,1.77,1.77,0,0,1,.564,1.344A1.471,1.471,0,0,1,18.807,16.329Z"
+                />
+                <circle
+                  class="white-icon"
+                  cx="4.222"
+                  cy="4.222"
+                  r="4.222"
+                  transform="translate(6.99 3.535)"
+                />
+                <path
+                  class="white-icon"
+                  d="M10.608,13.861c-.22-.01-.434-.019-.658-.019a12.537,12.537,0,0,0-6.432,1.77,2.845,2.845,0,0,0-1.353,2.463v2.579h9.012A6.783,6.783,0,0,1,9.95,16.762,6.9,6.9,0,0,1,10.608,13.861Z"
+                />
+              </g>
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div
+        class="flex flex-col pr-6"
+      >
+        <div
+          class="flex flex-row items-center"
+        >
+          <div
+            class="body1 truncate w-44"
+          />
+          <div
+            class="body3-small w-20 justify-end flex flex-row"
+          >
+            <div
+              class="truncate inline-block"
+            >
+              <span
+                class="truncate"
+              >
+                Jan 1, 2010
+              </span>
+            </div>
+          </div>
+        </div>
+        <div
+          class="flex flex-row"
+        >
+          <div
+            class="w-44 email-summary-display body3-big"
+          />
+          <div
+            class="justify-end flex flex-row w-20"
+          >
+            <div
+              class="w-min pt-1"
+            >
+              <span
+                class="rounded-full px-2 badge flex content-center items-center badge-danger"
+              >
+                 1 
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

@@ -1,6 +1,5 @@
 import Api from '../../../shared/services/api';
 import {Note} from '@pages/patients/models/note';
-import Logger from '../../../shared/services/logger';
 import {Dispatch} from '@reduxjs/toolkit';
 import {clearPatient, setError as setPatientError, setLoading, setPatient, } from '@pages/patients/store/patients.slice';
 import {PatientUpdateModel} from '@pages/patients/models/patient-update-model';
@@ -57,7 +56,6 @@ export const updatePatientContactInformation = async ({patientId, data}: UpdateP
 }
 
 
-const logger = Logger.getInstance();
 
 export const getPatientSummary = async (patientId: number) => {
      const url = `${patientsUrl}/${patientId}/summary`;
@@ -162,7 +160,6 @@ export const getPatientById = (patientId: string, queryParams?: GetPatientInfoRe
                     if (error.response?.status === 404) {
                          dispatch(clearPatient());
                     } else {
-                         logger.error('Failed searching for patients', error);
                          dispatch(setPatientError(true));
                          dispatch(clearPatient());
                     }

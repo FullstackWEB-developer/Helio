@@ -55,7 +55,7 @@ const DropdownCell = ({item, isSelected, onClick}: DropdownCellProps) => {
         }
     }
     return <>
-            <div onClick={() => cellClicked()}
+            <div data-testid={label} onClick={() => cellClicked()}
                 className={`w-full ${ content ? '' : 'px-4'} ${item.disabled ? 'dropdown-cell-disabled' : 'dropdown-cell'} justify-between flex items-center ${calculateCss()} ${className} ${bgCssClass}`}>
                 <div data-test-id='dropdown-cell-icon-content' className={'flex flex-row w-full items-center'}>
                     {getIcon(icon)}

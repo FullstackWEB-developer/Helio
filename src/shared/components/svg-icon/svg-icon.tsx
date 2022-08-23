@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import React from 'react';
 
 export interface SvgIconProps {
+    dataTestId?: string;
     type: Icon,
     className?: string,
     wrapperClassName?: string,
@@ -17,7 +18,7 @@ export interface SvgIconProps {
 }
 
 const SvgIcon = ({ type, wrapperClassName = '', className = 'icon-medium', fillClass = 'fill-default', fillClass2 = 'fill-default',
-    strokeClass = 'stroke-default', opacity, onClick, isLoading = false, disabled = false }: SvgIconProps) => {
+    strokeClass = 'stroke-default', opacity, onClick, isLoading = false, disabled = false, dataTestId = "svg-icon" }: SvgIconProps) => {
 
     const mainClass = `${className} ${fillClass ? '' : 'fill-default'}`;
 
@@ -325,7 +326,7 @@ const SvgIcon = ({ type, wrapperClassName = '', className = 'icon-medium', fillC
     }
 
     const getIconClose = () => {
-        return <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className={mainClass}>
+        return <svg data-testid={dataTestId} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className={mainClass}>
             <rect width="24" height="24" fill="none" />
             <path
                 d="M16,1.409,14.591,0,8,6.566,1.409,0,0,1.409,6.566,8,0,14.591,1.409,16,8,9.434,14.591,16,16,14.591,9.434,8Z" transform="translate(4 4)"
@@ -556,7 +557,7 @@ const SvgIcon = ({ type, wrapperClassName = '', className = 'icon-medium', fillC
     }
 
     const getIconNote = () => {
-        return <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className={mainClass}>
+        return <svg data-testid={dataTestId} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className={mainClass}>
             <path d="M0,0H24V24H0Z" fill="none" />
             <path
                 d="M13.979,2.985l3.132,3.132a.34.34,0,0,1,0,.479L9.528,14.18l-3.222.358a.675.675,0,0,1-.747-.747l.358-3.222L13.5,2.985a.339.339,0,0,1,.479,0Zm5.625-.8L17.91.5a1.358,1.358,0,0,0-1.917,0L14.764,1.725a.34.34,0,0,0,0,.479L17.9,5.336a.339.339,0,0,0,.479,0L19.6,4.107a1.358,1.358,0,0,0,0-1.917Zm-6.271,9.927v3.535H2.222V4.541H10.2a.427.427,0,0,0,.3-.122l1.389-1.389a.417.417,0,0,0-.3-.712H1.667A1.667,1.667,0,0,0,0,3.985V16.208a1.667,1.667,0,0,0,1.667,1.667H13.889a1.667,1.667,0,0,0,1.667-1.667V10.728a.417.417,0,0,0-.712-.3l-1.389,1.389A.427.427,0,0,0,13.333,12.117Z"
@@ -708,7 +709,7 @@ const SvgIcon = ({ type, wrapperClassName = '', className = 'icon-medium', fillC
     }
 
     const getIconSend = () => {
-        return <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className={mainClass}>
+        return <svg data-testid={dataTestId} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className={mainClass}>
             <rect width="24" height="24" fill="none" />
             <path
                 d="M23.883.117a.4.4,0,0,0-.419-.093l-23.2,8.4a.4.4,0,0,0-.037.737l8.354,4.01,7.546-5.578a.2.2,0,0,1,.28.28L10.83,15.419l4.01,8.354A.4.4,0,0,0,15.2,24h.02a.4.4,0,0,0,.356-.263l8.4-23.2A.4.4,0,0,0,23.883.117Z"

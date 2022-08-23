@@ -34,6 +34,7 @@ interface DateTimePickerProps {
     calendarContainerClassName?: string;
     isCalendarPositionComputed?: boolean;
     isSmallSize?:boolean,
+    dataTestId?: string,
     onChange?: (date: Date | undefined) => void;
     onBlur?: () => void;
     onCalendarVisibilityChange?: (isVisible: boolean) => void;
@@ -284,6 +285,7 @@ const DateTimePicker = React.forwardRef<HTMLInputElement, DateTimePickerProps>((
         <div ref={calendarWrapperRef} className={getCalendarWrapper()}>
             <div className={classNames('date-time-picker-container flex flex-wrap relative', {'open': isCalendarOpen}, {'error': !!props.error})}>
                 <input
+                    data-testid={name}
                     ref={ref}
                     name={name}
                     type={inputType}

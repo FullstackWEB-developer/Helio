@@ -71,6 +71,7 @@ const ControlledSelect = ({
         render={(controllerProps) => (
             <Select
                 {...controllerProps}
+                name={name}
                 onSelect={(option) => onSelected(controllerProps, option)}
                 data-test-id={`${name}-test-id`}
                 data-testid={`${name}-testid`}

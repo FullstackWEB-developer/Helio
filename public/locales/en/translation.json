@@ -76,7 +76,8 @@
     "overflow_value_1k": "1K+",
     "route_leaving_confirmation_message": "Leave without saving changes?",
     "route_leaving_leave_button": "Leave",
-    "insert": "Insert"
+    "insert": "Insert",
+      "date_input_assistive_text": "MM/DD/YYYY"
   },
   "app": {
     "error_loading_parameters": "Error loading parameters, please try again later",

@@ -20,7 +20,7 @@ exports[`Calendar tests renders calendar correctly 1`] = `
             class=""
           >
             <svg
-              class="icon-medium fill-default"
+              class="icon-medium "
               height="24"
               viewBox="0 0 24 24"
               width="24"
@@ -33,7 +33,7 @@ exports[`Calendar tests renders calendar correctly 1`] = `
                 width="24"
               />
               <path
-                class=""
+                class="arrow-disabled"
                 d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
                 transform="translate(8 5)"
               />
@@ -55,7 +55,7 @@ exports[`Calendar tests renders calendar correctly 1`] = `
             class=""
           >
             <svg
-              class="icon-medium fill-default"
+              class="icon-medium "
               height="24"
               viewBox="0 0 24 24"
               width="24"
@@ -68,7 +68,7 @@ exports[`Calendar tests renders calendar correctly 1`] = `
                 width="24"
               />
               <path
-                class=""
+                class="arrow-disabled"
                 d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
                 transform="translate(16.272 19) rotate(180)"
               />

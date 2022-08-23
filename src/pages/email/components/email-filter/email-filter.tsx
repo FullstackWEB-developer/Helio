@@ -167,8 +167,8 @@ const EmailFilter = ({ className, isUserFilterEnabled, value, ...props }: EmailF
                 </div>
             </div>
             <div className='flex flex-row pt-4'>
-                <Button data-test-id='apply-button' className='cursor-pointer mr-4' label='common.apply' buttonType='small' onClick={() => handleSubmit(onFilterClick)()} ></Button>
-                <Button data-test-id='reset-all-button' className='cursor-pointer' label='common.reset_all' buttonType='secondary' onClick={onClearFilter}></Button>
+                <Button data-testid='apply-button' data-test-id='apply-button' className='cursor-pointer mr-4' label='common.apply' buttonType='small' onClick={() => handleSubmit(onFilterClick)()} ></Button>
+                <Button data-testid='reset-all-button' data-test-id='reset-all-button' className='cursor-pointer' label='common.reset_all' buttonType='secondary' onClick={onClearFilter}></Button>
             </div>
         </div>
         <div className="flex flex-col pt-4 pl-5 pr-4">
@@ -183,6 +183,7 @@ const EmailFilter = ({ className, isUserFilterEnabled, value, ...props }: EmailF
                             truncate={true}
                             ref={radioProps.ref}
                             data-test-id='timePeriod-radio'
+                            data-testid='timePeriod-radio'
                             value={radioProps.value}
                             items={TimePeriodOptions}
                             onChange={radioProps.onChange}

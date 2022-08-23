@@ -1,5 +1,4 @@
 import Api from '../../../../shared/services/api';
-import Logger from '../../../../shared/services/logger';
 import { Dispatch } from '@reduxjs/toolkit';
 import {
     endGetMedicationRequest,
@@ -11,7 +10,6 @@ import {
 import {PatientCaseCreateProps} from '@pages/external-access/request-refill/models/patient-case-external.model';
 
 const patientsBaseUrl = '/patients';
-const logger = Logger.getInstance();
 
 export const getPatientsMedications = (patientId: string, departmentId: number) => {
     const getMedicationsUrl = `/patients/${patientId}/chart/medications?departmentId=${departmentId.toString()}`;
@@ -23,8 +21,7 @@ export const getPatientsMedications = (patientId: string, departmentId: number) 
                 dispatch(setMedications(response.data.medications));
                 dispatch(endGetMedicationRequest(''));
             })
-            .catch(error => {
-                logger.error('Failed getting RedirectLink', error);
+            .catch(() => {
                 dispatch(endGetMedicationRequest('request-refill.error'));
             })
     }
@@ -39,8 +36,7 @@ export const requestRefill = (patientId: string, departmentId: string, providerI
             .then(() => {
                 dispatch(endRequestRefillRequest(''));
             })
-            .catch(error => {
-                logger.error('Failed getting RedirectLink', error);
+            .catch(() => {
                 dispatch(endRequestRefillRequest('request-refill.error'));
             })
     }

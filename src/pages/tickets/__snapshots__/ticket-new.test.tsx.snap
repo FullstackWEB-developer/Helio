@@ -31,6 +31,8 @@ exports[`Ticket New tests renders new-ticket correctly 1`] = `
                 autocomplete="on"
                 autocorrect="on"
                 class="pl-4 pr-8 body2 select-trigger-pt h-14 relative truncate select-trigger   "
+                data-testid="type"
+                name="type"
                 spellcheck="true"
                 type="text"
                 value=""
@@ -107,6 +109,7 @@ exports[`Ticket New tests renders new-ticket correctly 1`] = `
                   autocomplete="off"
                   class=" pt-6 body2 h-14 flex-shrink flex-grow flex-auto leading-normal w-px flex-1 input-date-mask pl-4"
                   data-test-id="ticket-new-assignee"
+                  data-testid="subjectInput"
                   name="subjectInput"
                   placeholder=""
                   required=""
@@ -131,6 +134,8 @@ exports[`Ticket New tests renders new-ticket correctly 1`] = `
                 autocomplete="on"
                 autocorrect="on"
                 class="pl-4 pr-8 body2 select-trigger-pt h-14 relative truncate select-trigger   "
+                data-testid="assignee"
+                name="assignee"
                 spellcheck="true"
                 type="text"
                 value=""
@@ -205,6 +210,8 @@ exports[`Ticket New tests renders new-ticket correctly 1`] = `
                 autocomplete="on"
                 autocorrect="on"
                 class="pl-4 pr-8 body2 select-trigger-pt h-14 relative truncate select-trigger   "
+                data-testid="status"
+                name="status"
                 spellcheck="true"
                 type="text"
                 value=""
@@ -278,6 +285,8 @@ exports[`Ticket New tests renders new-ticket correctly 1`] = `
                 autocomplete="on"
                 autocorrect="on"
                 class="pl-4 pr-8 body2 select-trigger-pt h-14 relative truncate select-trigger   "
+                data-testid="priority"
+                name="priority"
                 spellcheck="true"
                 type="text"
                 value=""
@@ -354,11 +363,11 @@ exports[`Ticket New tests renders new-ticket correctly 1`] = `
                 <input
                   autocomplete="off"
                   class="relative truncate flex-shrink flex-grow flex-auto leading-normal w-px pl-4 body2 input-pt h-14 cursor-pointer"
+                  data-testid="dueDate"
                   max="9999-12-31"
-                  min="2022-08-02"
+                  min="2022-08-22"
                   name="dueDate"
-                  readonly=""
-                  type="text"
+                  type="date"
                   value=""
                 />
                 <label
@@ -435,6 +444,8 @@ exports[`Ticket New tests renders new-ticket correctly 1`] = `
                 autocomplete="on"
                 autocorrect="on"
                 class="pl-4 pr-8 body2 select-trigger-pt h-14 relative truncate select-trigger   "
+                data-testid="channel"
+                name="channel"
                 spellcheck="true"
                 type="text"
                 value=""
@@ -509,6 +520,8 @@ exports[`Ticket New tests renders new-ticket correctly 1`] = `
                 autocomplete="on"
                 autocorrect="on"
                 class="pl-4 pr-8 body2 select-trigger-pt h-14 relative truncate select-trigger   "
+                data-testid="department"
+                name="department"
                 spellcheck="true"
                 type="text"
                 value=""
@@ -577,6 +590,8 @@ exports[`Ticket New tests renders new-ticket correctly 1`] = `
                 autocomplete="on"
                 autocorrect="on"
                 class="pl-4 pr-8 body2 select-trigger-pt h-14 relative truncate select-trigger   "
+                data-testid="location"
+                name="location"
                 spellcheck="true"
                 type="text"
                 value=""
@@ -628,9 +643,20 @@ exports[`Ticket New tests renders new-ticket correctly 1`] = `
                 class="absolute py-2 options"
               >
                 <div
-                  class="w-full pt-2 text-center subtitle3-small"
+                  class="w-full select-cell justify-between flex items-center  body2   cursor-pointer  "
                 >
-                  common.autocomplete_search
+                  <div
+                    class="flex flex-col justify-center w-full"
+                    data-test-id="select-cell-icon-content"
+                  >
+                    <div
+                      class="flex items-center pl-4"
+                      data-test-id="select-cell-text-test"
+                      data-testid="select-cell-text-test"
+                    >
+                      test
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -647,6 +673,7 @@ exports[`Ticket New tests renders new-ticket correctly 1`] = `
                   autocomplete="off"
                   class=" pt-6 body2 h-14 flex-shrink flex-grow flex-auto leading-normal w-px flex-1 input-date-mask pl-4"
                   data-test-id="patientId"
+                  data-testid="patientId"
                   name="patientId"
                   placeholder=""
                   type="number"
@@ -671,6 +698,7 @@ exports[`Ticket New tests renders new-ticket correctly 1`] = `
                   autocomplete="off"
                   class=" pt-6 body2 h-14 flex-shrink flex-grow flex-auto leading-normal w-px flex-1 input-date-mask pl-4"
                   data-test-id="patientCaseNumber"
+                  data-testid="patientCaseNumber"
                   name="patientCaseNumber"
                   placeholder=""
                   type="number"
@@ -697,6 +725,8 @@ exports[`Ticket New tests renders new-ticket correctly 1`] = `
                     autocomplete="on"
                     autocorrect="on"
                     class="pl-4 pr-8 body2 select-trigger-pt h-14 relative truncate select-trigger   "
+                    data-testid="contactId"
+                    name="contactId"
                     spellcheck="true"
                     type="text"
                     value=""
@@ -772,6 +802,7 @@ exports[`Ticket New tests renders new-ticket correctly 1`] = `
                   autocomplete="off"
                   class=" pt-6 body2 h-14 flex-shrink flex-grow flex-auto leading-normal w-px flex-1 input-date-mask pl-4"
                   data-test-id="note"
+                  data-testid="note"
                   name="note"
                   placeholder=""
                   type="text"
@@ -871,7 +902,6 @@ exports[`Ticket New tests renders new-ticket correctly 1`] = `
             <button
               class="medium-button"
               data-test-id="ticket-new-create-button"
-              disabled=""
               type="submit"
             >
               <div

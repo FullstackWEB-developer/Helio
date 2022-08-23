@@ -316,10 +316,11 @@ const Reports = () => {
                     </div>
                     {selectedView === ViewTypes.CustomDates &&
                     <div className='flex flex-row'>
-                        <div className='w-48 h-14 pr-8'>
+                        <div className='w-48 h-14 mr-8'>
                             <ControlledDateInput
                                 name='startDate'
                                 control={control}
+                                assistiveText='common.date_input_assistive_text'
                                 max={dayjs().add(-1, 'd').toDate()}
                                 onChange={(value) => setSelectedStartDate(value)}
                                 label='reports.start_date'
@@ -328,6 +329,7 @@ const Reports = () => {
                         <div className='w-48 h-14'>
                             <ControlledDateInput
                                 name='endDate'
+                                assistiveText='common.date_input_assistive_text'
                                 control={control}
                                 disabled={!selectedStartDate}
                                 max={dayjs().toDate()}
