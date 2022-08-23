@@ -2346,7 +2346,11 @@
         "avg_idle_time": "Avg. Idle Time",
         "answer_rate": "Answer Rate",
         "missed_contact": "Missed Contact",
-        "acwt": "ACWT"
+        "acwt": "ACWT",
+        "total_chats": "Total Chats",
+        "average_chat_handle_time": "Avg. Handle Time",
+        "average_chat_duration": "Avg. Chat Duration",
+        "rating": "Rating"
       },
       "column_postfixes": {
         "days": "days",

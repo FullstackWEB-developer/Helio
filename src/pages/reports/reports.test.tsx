@@ -9,6 +9,8 @@ import Reports from '@pages/reports/reports';
 import TestWrapper from '@shared/test-utils/test-wrapper';
 import {ReportTypes} from '@pages/reports/models/report-types.enum';
 import {ViewTypes} from '@pages/reports/models/view-types.enum';
+import AgentReportsTable from './components/agent-reports-table';
+import {agentReportTableData} from './utils/mockTestData';
 
 describe("Reports tests", () => {
     let container: HTMLDivElement | null;
@@ -30,6 +32,17 @@ describe("Reports tests", () => {
         appState: {
             smsTemplates: [],
             emailTemplates: []
+        },
+        lookupsState: {
+            allProviderList: [],
+            providerList: [],
+            userList: [
+                {
+                    "id": "28680cab-766e-41dd-a986-89fc09d062ab",
+                    "firstName": "Amir",
+                    "lastName": "Lisovac"
+                }
+            ]
         }
     };
 
@@ -52,10 +65,14 @@ describe("Reports tests", () => {
     });
 
     it("renders reports correctly", async () => {
-        const {asFragment} = render(<TestWrapper mockState={mockState}>
-            <Reports/>
+        const {getByTestId} = render(<TestWrapper mockState={mockState}>
+            <Reports />
         </TestWrapper>);
-        expect(asFragment()).toMatchSnapshot();
+        fireEvent.click(await getByTestId('report-type'));
+        fireEvent.change(getByTestId('report-type'), { target: { value: ReportTypes.BotReports } });
+        fireEvent.change(getByTestId('view-type'), { target: { value: ViewTypes.CustomDates } });
+        expect(findByText(container!, 'startDate')).not.toBeNull();
+        expect(findByText(container!, 'endDate')).not.toBeNull();
     });
 
     it("Custom Date Range should be visible on Bot Reports", async () => {
@@ -77,5 +94,30 @@ describe("Reports tests", () => {
         fireEvent.change(getByTestId('view-type'), { target: { value: ViewTypes.CustomDates } });
         expect(findByText(container!, 'startDate')).not.toBeNull();
         expect(findByText(container!, 'endDate')).not.toBeNull();
+    });
+
+    it("renders agent report table on report screen", async () => {
+        const tableTitle = 'Agent KPIs';
+        const {findByText} = render(
+            <AgentReportsTable onSort={(sortField, sortDirection) => {console.log(`Sorty by ${sortField}`)}}
+                title={tableTitle} data={[]} />
+        );
+        expect((await findByText(tableTitle)).textContent).toBe(tableTitle);
+    });
+
+    it("renders chat tab in agent report table with correct data", async () => {
+        const {findByText, findByTestId } = render(
+            <TestWrapper mockState={mockState}>
+                <AgentReportsTable onSort={(sortField, sortDirection) => {console.log(`Sort by ${sortField}`)}}
+                    title={'Agent KPIs'} data={agentReportTableData} />
+            </TestWrapper>
+        );
+        const chatTab = await findByText('reports.agent_reports_tabs.chat');
+        chatTab.click();
+        const totalChatsCell = await findByTestId('agent-rpt-total-chats');
+        const  avgChatRatingCell = await findByTestId('average-chat-rating-percentage');
+        expect(totalChatsCell).toBeInTheDocument();
+        expect(totalChatsCell.textContent).toEqual(String(agentReportTableData[0].totalChats));
+        expect(avgChatRatingCell.textContent).toEqual(`${String(agentReportTableData[0].avgChatRating)}%`);
     });
 })
