@@ -3,4 +3,5 @@ export interface InternalCallDetails {
     queueArn: string;
     fromUserId: string;
     toUserId: string;
+    diallingUserFullname?: string;
 }

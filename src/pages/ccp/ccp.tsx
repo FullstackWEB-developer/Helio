@@ -120,6 +120,7 @@ const Ccp: React.FC<BoxProps> = ({
     const updateAttributesMutation = useMutation(updateConnectAttributes);
     const chatCounter = useSelector(selectChatCounter);
     const voiceCounter = useSelector(selectVoiceCounter);
+    const isInternalCallInitiated =  !!internalCallDetails;
 
     useEffect(() => {
         const activeConversations = chatCounter + voiceCounter;
@@ -249,7 +250,8 @@ const Ccp: React.FC<BoxProps> = ({
                 "FromUserId": internalCallDetails?.fromUserId,
                 "QueueType": internalCallDetails?.type,
                 "ToUserId": internalCallDetails?.toUserId,
-                "QueueArn": internalCallDetails?.queueArn
+                "QueueArn": internalCallDetails?.queueArn,
+                "IsInternalCall": true
             }
         })
     }
@@ -352,6 +354,7 @@ const Ccp: React.FC<BoxProps> = ({
                 const queueName = queue.name;
                 let ticketId = '';
                 let contactId = '';
+                let isInternalCall = false;
                 if (attributeMap.PatientId) {
                     const patientId = attributeMap.PatientId.value;
                     setPatientId(Number(patientId));
@@ -364,6 +367,10 @@ const Ccp: React.FC<BoxProps> = ({
                     }
                 }
 
+                if (attributeMap.IsInternalCall) {
+                    isInternalCall = attributeMap.IsInternalCall.value.toLowerCase() === "true";
+                }
+
                 if (attributeMap.TicketId) {
                     if (attributeMap.TicketId.value) {
                         ticketId = attributeMap.TicketId.value;
@@ -373,10 +380,11 @@ const Ccp: React.FC<BoxProps> = ({
                     setTicketId(ticketId);
                 }
 
-                if (contact.isInbound()) {
+                if (contact.isInbound() || isInternalCall) {
                     setIsInboundCall(true);
                     dispatch(setContextPanel(contextPanels.bot));
-                } else {
+                }                
+                else {
                     setIsInboundCall(false);
                     dispatch(setContextPanel(contextPanels.note));
                 }
@@ -717,7 +725,7 @@ const Ccp: React.FC<BoxProps> = ({
                         {ccpConnectionState === CCPConnectionStatus.Success &&
                             <div className={`flex justify-center items-center w-full p-0 box-content shadow-md border-t footer-ff ccp-bottom-bar block`}>
                                 {
-                                    isInboundCall &&
+                                    (isInboundCall || isInternalCallInitiated) &&
                                     <span className={`h-10 flex items-center justify-center w-12 ${applyProperIconClass(contextPanels.bot, 'background')}`}>
                                         <SvgIcon type={Icon.Bot}
                                             className='cursor-pointer icon-medium'

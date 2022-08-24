@@ -50,11 +50,13 @@ const ExtensionsContext = () => {
     });
 
     const onDoubleClick = (contact: InternalQueueStatus) => {
+        const diallingUser = users.find(u => u.id == contact.userId);
         dispatch(setInternalCallDetails({
             type: contact.queueType,
             fromUserId: currentUser.id,
             queueArn: contact.queueArn,
-            toUserId: contact.userId
+            toUserId: contact.userId,
+            diallingUserFullname: diallingUser ? `${diallingUser.firstName} ${diallingUser.lastName}` : ''
         }));
         let phone = utils.getAppParameter("InternalCallPhoneNumber");
         utils.initiateACall(phone);
