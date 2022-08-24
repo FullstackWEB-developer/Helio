@@ -9,6 +9,11 @@ import { PublicLinksPath } from "@app/paths";
 
 export const ConfigurationMenuItems = [
     {
+        id: "configuration-menu-item-12",
+        title: 'configuration.general',
+        url: "general",
+    },
+    {
         id: "configuration-menu-item-14",
         title: 'configuration.branding_menu',
         children: [{
@@ -21,6 +26,16 @@ export const ConfigurationMenuItems = [
             title: 'configuration.practice_email_template_menu',
             url: PracticeEmailTemplatePath,
         }]
+    },
+    {
+        id: "configuration-menu-item-11",
+        title: 'configuration.security_settings_menu',
+        url: SecuritySettingsPath,
+    },
+    {
+        id: "configuration-menu-item-4",
+        title: 'configuration.appointment_types_for_providers.menu_name',
+        url: 'provider-appointment-settings'
     },
     {
     id: "configuration-menu-item-0",
@@ -50,11 +65,6 @@ export const ConfigurationMenuItems = [
         title: 'configuration.sms_notification_templates',
         url: SMSTemplatesPath,
     }]
-},
-{
-    id: "configuration-menu-item-4",
-    title: 'configuration.appointment_types_for_providers.menu_name',
-    url: 'provider-appointment-settings'
 }, {
     id: "configuration-menu-item-7",
     title: 'configuration.tickets',
@@ -68,14 +78,6 @@ export const ConfigurationMenuItems = [
     id: "configuration-menu-item-10",
     title: 'configuration.contact_categories_menu',
     url: "contact-categories",
-}, {
-    id: "configuration-menu-item-11",
-    title: 'configuration.security_settings_menu',
-    url: SecuritySettingsPath,
-}, {
-    id: "configuration-menu-item-12",
-    title: 'configuration.general',
-    url: "general",
 },{
     id: "configuration-menu-item-13",
     title: 'configuration.public_links_menu',
