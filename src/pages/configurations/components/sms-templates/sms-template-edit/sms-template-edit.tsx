@@ -121,7 +121,9 @@ const SMSTemplateEdit = () => {
     const onSelected = (option: Option | undefined) => {
         if (option) {
             const templateBody = getValues('templateBody') as string;
-            setValue('templateBody', `${templateBody.slice(0, textAreaRef.current?.selectionStart)}{${option.value}}${templateBody.slice(textAreaRef.current?.selectionStart)}`);
+            setValue('templateBody', `${templateBody.slice(0, textAreaRef.current?.selectionStart)}{${option.value}}${templateBody.slice(textAreaRef.current?.selectionStart)}`, {
+                shouldDirty: true
+            });
         }
     }
 

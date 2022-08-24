@@ -8,6 +8,7 @@ import {
     selectBotContext,
     selectContextPanel,
     selectHasActiveContact,
+    selectInternalCallDetails,
 } from '../store/ccp.selectors';
 import SmsContext from '@pages/ccp/components/sms-context';
 import {ContextKeyValuePair} from '@pages/ccp/models/context-key-value-pair';
@@ -24,6 +25,8 @@ const CcpContext = () => {
     const hasActiveContact = useSelector(selectHasActiveContact);
     const botContext = useSelector(selectBotContext);
     const appUser = useSelector(selectAppUserDetails);
+    const internalCallDetails = useSelector(selectInternalCallDetails);
+    const isInternalCallInitiated =  !!internalCallDetails;
 
     const determineCallerName = () => {
         const patientFullNameAttribute = checkConnectAttributesForValue('PatientFullName');
@@ -32,6 +35,7 @@ const CcpContext = () => {
         const incomingPhoneNumber = checkConnectAttributesForValue('IncomingPhoneNumber');
         const isInternalCall = checkConnectAttributesForValue('IsInternalCall');
         const internalCallFromUserName = checkConnectAttributesForValue('FromUserName');
+        
 
         if (botContext?.patient) {
             return utils.stringJoin(' ', botContext.patient.firstName, botContext.patient.lastName);
@@ -50,6 +54,9 @@ const CcpContext = () => {
         }
         if (isInternalCall && Boolean(isInternalCall.toLowerCase()) === Boolean("true") && internalCallFromUserName) {
             return internalCallFromUserName;
+        }
+        if(isInternalCallInitiated && internalCallDetails?.diallingUserFullname){
+            return internalCallDetails.diallingUserFullname;
         }
         if (createdForName) {
             return createdForName;
@@ -125,7 +132,7 @@ const CcpContext = () => {
         if (callerName) {
             const callerType = determineCallerType();
             items.push({
-                label: 'ccp.bot_context.caller',
+                label: isInternalCallInitiated ? 'ccp.bot_context.calling' : 'ccp.bot_context.caller',
                 value: `${callerName}${callerType ? ` (${callerType})` : ''}`
             });
         }
