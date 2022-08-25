@@ -12,12 +12,15 @@ import {ViewTypes} from './models/view-types.enum';
 import {ReportTypes} from './models/report-types.enum';
 import {useMutation, useQuery} from 'react-query';
 import {
-    exportAgentReport, exportBotReport,
+    exportAgentReport,
+    exportBotReport,
     exportQueueReport,
+    exportSystemReport,
     getAgentReport,
     getAvailableMonths,
     getBotReport,
-    getQueueReport
+    getQueueReport,
+    getSystemReport
 } from '@pages/tickets/services/tickets.service';
 import {useDispatch} from 'react-redux';
 import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
@@ -25,7 +28,7 @@ import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
 import AgentReports from './components/agent-reports';
 import Spinner from '@components/spinner/Spinner';
 import dayjs from 'dayjs';
-import {GetAgentReport, GetBotReport, GetQueueReport} from '@constants/react-query-constants';
+import {GetAgentReport, GetBotReport, GetQueueReport, GetSystemReport} from '@constants/react-query-constants';
 import QueueReports from './components/queue-reports';
 import MonthList from './components/month-list';
 import {SortDirection} from '@shared/models/sort-direction';
@@ -100,12 +103,22 @@ const Reports = () => {
         }
     });
 
-    const botReport= useQuery<BotReport, AxiosError>([GetBotReport], () => getBotReport(selectedView, selectedStartDate, selectedEndDate),{
+    const botReport = useQuery<BotReport, AxiosError>([GetBotReport], () => getBotReport(selectedView, selectedStartDate, selectedEndDate),{
         enabled: false,
         onError: () => {
             dispatch(addSnackbarMessage({
                 type: SnackbarType.Error,
                 message: 'reports.get_bot_report.error'
+            }));
+        }
+    });
+
+    const systemReport = useQuery<BotReport, AxiosError>([GetSystemReport], () => getSystemReport(selectedView),{
+        enabled: false,
+        onError: () => {
+            dispatch(addSnackbarMessage({
+                type: SnackbarType.Error,
+                message: 'reports.get_system_report.error'
             }));
         }
     });
@@ -167,6 +180,21 @@ const Reports = () => {
         }
     });
 
+    const exportSystemReportMutation = useMutation(exportSystemReport,{
+        onSuccess: () => {
+            dispatch(addSnackbarMessage({
+                type: SnackbarType.Success,
+                message: 'reports.download_system_report.success'
+            }));
+        },
+        onError: () => {
+            dispatch(addSnackbarMessage({
+                type: SnackbarType.Error,
+                message: 'reports.download_system_report.error'
+            }));
+        }
+    });
+
     const onSubmit = async () => {
         if (selectedReport === ReportTypes.AgentReports && selectedView !== ViewTypes.MonthlyReports) {
             await refetchAgentData();
@@ -174,6 +202,8 @@ const Reports = () => {
             await queueReport.refetch();
         } else if (selectedReport === ReportTypes.BotReports && selectedView !== ViewTypes.MonthlyReports) {
             await botReport.refetch();
+        } else if (selectedReport === ReportTypes.SystemReports && selectedView !== ViewTypes.MonthlyReports) {
+            await systemReport.refetch();
         } else if (selectedView === ViewTypes.MonthlyReports) {
             await refetchAvailableMonths();
         }
@@ -203,27 +233,32 @@ const Reports = () => {
     }
 
     const onDownload = () => {
-        if(selectedReport === ReportTypes.AgentReports)
-        {
-            exportAgentReportMutation.mutate({
-                request: getViewTypeForDownload(),
-                selectedIds: selectedMonths
-            })
-        }
-        else if(selectedReport === ReportTypes.QueueReports)
-        {
-            exportQueueReportMutation.mutate({
-                request: getViewTypeForDownload(),
-                selectedIds: selectedMonths
-            })
-        }
-        else if(selectedReport === ReportTypes.BotReports)
-        {
-            exportBotReportMutation.mutate({
-                period: selectedView,
-                startDate : selectedStartDate,
-                endDate: selectedEndDate
-            })
+        switch (selectedReport) {
+            case ReportTypes.AgentReports:
+                exportAgentReportMutation.mutate({
+                    request: getViewTypeForDownload(),
+                    selectedIds: selectedMonths
+                });
+                break;
+            case ReportTypes.BotReports:
+                exportBotReportMutation.mutate({
+                    period: selectedView,
+                    startDate : selectedStartDate,
+                    endDate: selectedEndDate
+                });
+                break;
+            case ReportTypes.QueueReports:
+                exportQueueReportMutation.mutate({
+                    request: getViewTypeForDownload(),
+                    selectedIds: selectedMonths
+                });
+                break;
+            case ReportTypes.SystemReports:
+                exportSystemReportMutation.mutate({
+                    request: getViewTypeForDownload(),
+                    selectedIds: selectedMonths
+                });
+                break;
         }
     }
 
@@ -341,9 +376,9 @@ const Reports = () => {
                     </div>}
                     {
                         selectedTab === TabTypes.Reports && <div className='w-2/4 h-14 flex items-center'>
-                            <Button label='reports.view' type='submit' buttonType='medium' disabled={isViewDisabled()} />
+                            <Button label='reports.view' type='submit' buttonType='medium' data-testid='report-view-button' disabled={isViewDisabled()} />
                             {
-                                selectedView !== ViewTypes.MonthlyReports && <Button label='reports.download' isLoading={exportAgentReportMutation.isLoading || exportQueueReportMutation.isLoading} className='mx-6' buttonType='secondary-medium' icon={Icon.Download} onClick={() => onDownload()}/>
+                                selectedView !== ViewTypes.MonthlyReports && <Button data-testid='report-download-button' label='reports.download' isLoading={exportAgentReportMutation.isLoading || exportQueueReportMutation.isLoading} className='mx-6' buttonType='secondary-medium' icon={Icon.Download} onClick={() => onDownload()}/>
                             }
                         </div>
                     }

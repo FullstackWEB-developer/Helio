@@ -11,6 +11,11 @@ import {ReportTypes} from '@pages/reports/models/report-types.enum';
 import {ViewTypes} from '@pages/reports/models/view-types.enum';
 import AgentReportsTable from './components/agent-reports-table';
 import {agentReportTableData} from './utils/mockTestData';
+import axios from 'axios';
+import Api from '@shared/services/api';
+import {act} from 'react-dom/test-utils';
+import {MimeTypes} from '@shared/models/mime-types.enum';
+import utils from '@shared/utils/utils';
 
 describe("Reports tests", () => {
     let container: HTMLDivElement | null;
@@ -47,13 +52,13 @@ describe("Reports tests", () => {
     };
 
     beforeEach(async () => {
-
         await i18n.init();
         dayjs.extend(duration);
         dayjs.extend(utc);
         dayjs.extend(customParseFormat);
         container = document.createElement("div");
         document.body.appendChild(container);
+
     });
 
     afterEach(() => {
@@ -62,9 +67,10 @@ describe("Reports tests", () => {
             container.remove();
             container = null;
         }
+        jest.clearAllMocks();
     });
 
-    it("renders reports correctly", async () => {
+    it("renders date boxes on bot reports when custom dates is selected", async () => {
         const {getByTestId} = render(<TestWrapper mockState={mockState}>
             <Reports />
         </TestWrapper>);
@@ -99,7 +105,7 @@ describe("Reports tests", () => {
     it("renders agent report table on report screen", async () => {
         const tableTitle = 'Agent KPIs';
         const {findByText} = render(
-            <AgentReportsTable onSort={(sortField, sortDirection) => {console.log(`Sorty by ${sortField}`)}}
+            <AgentReportsTable onSort={() => {}}
                 title={tableTitle} data={[]} />
         );
         expect((await findByText(tableTitle)).textContent).toBe(tableTitle);
@@ -108,7 +114,7 @@ describe("Reports tests", () => {
     it("renders chat tab in agent report table with correct data", async () => {
         const {findByText, findByTestId } = render(
             <TestWrapper mockState={mockState}>
-                <AgentReportsTable onSort={(sortField, sortDirection) => {console.log(`Sort by ${sortField}`)}}
+                <AgentReportsTable onSort={() => {}}
                     title={'Agent KPIs'} data={agentReportTableData} />
             </TestWrapper>
         );
@@ -119,5 +125,51 @@ describe("Reports tests", () => {
         expect(totalChatsCell).toBeInTheDocument();
         expect(totalChatsCell.textContent).toEqual(String(agentReportTableData[0].totalChats));
         expect(avgChatRatingCell.textContent).toEqual(`${String(agentReportTableData[0].avgChatRating)}%`);
+    });
+
+    it("Should call system report service on view clicked", async () => {
+
+        jest.spyOn(Api, 'get').mockResolvedValue([]);
+
+        await act(async () => {
+            const {getByTestId} = render(<TestWrapper mockState={mockState}>
+                <Reports/>
+            </TestWrapper>);
+            fireEvent.click(await getByTestId('report-type'));
+            fireEvent.click(await getByTestId('select-cell-text-reports.report_options.system_reports'));
+
+            fireEvent.click(await getByTestId('view-type'));
+            fireEvent.click(await getByTestId('select-cell-text-reports.view_options.last_7_days'));
+
+            const button = await getByTestId('report-view-button');
+            fireEvent.click(button);
+        });
+
+        expect(Api.get).toHaveBeenCalledWith('/tickets/reports/system?period=3');
+    });
+
+    it("Should call system report download service on download clicked", async () => {
+        global.URL.createObjectURL = jest.fn();
+        global.URL.revokeObjectURL = jest.fn();
+        const blob = new Blob(["testing"], { type: MimeTypes.XlsX });
+        jest.spyOn(Api, 'get').mockResolvedValue( blob);
+
+        jest.spyOn(utils, 'downloadFileFromData').mockImplementation(() => {});
+        await act(async () => {
+            const {getByTestId} = render(<TestWrapper mockState={mockState}>
+                <Reports/>
+            </TestWrapper>);
+            fireEvent.click(await getByTestId('report-type'));
+            fireEvent.click(await getByTestId('select-cell-text-reports.report_options.system_reports'));
+
+            fireEvent.click(await getByTestId('view-type'));
+            fireEvent.click(await getByTestId('select-cell-text-reports.view_options.last_7_days'));
+
+            const button = await getByTestId('report-download-button');
+            fireEvent.click(button);
+        });
+
+        expect(Api.get).toHaveBeenCalled();
+
     });
 })

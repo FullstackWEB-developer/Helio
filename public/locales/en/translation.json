@@ -2312,12 +2312,19 @@
     "get_bot_report": {
       "error": "An error occurred. Please try again later."
     },
+    "get_system_report": {
+      "error": "An error occurred. Please try again later."
+    },
     "download_queue_report": {
       "success": "Queue report is downloaded.",
       "error": "An error occurred. Please try again later."
     },
     "download_bot_report": {
       "success": "Bot report is downloaded.",
+      "error": "An error occurred. Please try again later."
+    },
+    "download_system_report": {
+      "success": "System report is downloaded.",
       "error": "An error occurred. Please try again later."
     },
     "most_abandoned_queues": "Most Abandoned Queues",

@@ -5,10 +5,10 @@ import customParseFormat from 'dayjs/plugin/customParseFormat';
 import {unmountComponentAtNode} from 'react-dom';
 import {render} from '@testing-library/react';
 import TestWrapper from '@shared/test-utils/test-wrapper';
-import i18n from 'i18next';
 import BotReports from '@pages/reports/components/bot-reports';
 import {BotReport} from '@pages/reports/models/bot-report.model';
 import {TicketRate} from '@pages/reports/models/ticket-rate.enum';
+import i18n from '../../../i18nForTests';
 
 describe("Bot Report tests", () => {
     let container: HTMLDivElement | null;

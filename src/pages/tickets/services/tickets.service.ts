@@ -469,6 +469,12 @@ export const getQueueReport = async(request: ViewTypes) => {
     return response.data;
 }
 
+export const getSystemReport = async(request: ViewTypes) => {
+    const url = `${ticketsBaseUrl}/reports/system?period=${request}`;
+    const response = await Api.get(url);
+    return response.data;
+}
+
 export const getBotReport = async(period: ViewTypes, startDate?: Date, endDate?: Date) : Promise<BotReport> => {
     const url = `${ticketsBaseUrl}/reports/bot`;
     const params = period === ViewTypes.CustomDates ? {
@@ -522,5 +528,14 @@ export const exportQueueReport = async({request, selectedIds}: {request: ViewTyp
         responseType: 'arraybuffer'
     });
     utils.downloadFileFromData(response.data, `QueueReport`, MimeTypes.XlsX);
+    return response.data;
+}
+
+export const exportSystemReport = async({request, selectedIds} : {request: ViewTypes, selectedIds: string[]}) => {
+    const url = `${ticketsBaseUrl}/reports/system/export?period=${request}&${selectedIds.map((n) => `selectedIds=${n}`).join('&')}`;
+    const response = await Api.get(url, {
+        responseType: 'arraybuffer'
+    });
+    utils.downloadFileFromData(response.data, `SystemReport`, MimeTypes.XlsX);
     return response.data;
 }
