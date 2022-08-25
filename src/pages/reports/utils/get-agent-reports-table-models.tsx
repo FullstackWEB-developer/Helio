@@ -9,7 +9,6 @@ import {getFormattedTime} from './constants';
 import duration from 'dayjs/plugin/duration';
 import dayjs from 'dayjs';
 import SvgIcon, {Icon} from '@components/svg-icon';
-import {TicketRate} from '../models/ticket-rate.enum';
 
 export interface AgentReportsTableProps {
     data: AgentReport[],
@@ -36,14 +35,14 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
         return defaultTableModel;
     }
 
-    const displayPatientRating = (ratio: number) => {
-        if(ratio === 0){
+    const displayPatientRating = (ratio: number, count: number) => {
+        if(ratio === 0 && count === 0){
             return <SvgIcon
                     className='icon-medium'
                     fillClass='rating-widget-neutral'
                     wrapperClassName='cursor-pointer'
                     type={Icon.RatingSatisfied} />;
-        }else if(ratio > 0 && ratio < 40){
+        }else if(ratio >= 0 && ratio < 40){
             return <SvgIcon
                     className='icon-medium'
                     fillClass='rating-widget-unsatisfied'
@@ -269,18 +268,162 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
                 if(!row.chatRatingCount) return null;
                 return (<span className='h-full flex items-center'>
                     {
-                        displayPatientRating(row.chatRatingCount)
+                        displayPatientRating(row.avgChatRating, row.chatRatingCount)
                     }
                     <span data-testid="average-chat-rating-percentage" className='px-5'>{`${row.avgChatRating}%`}</span>
                     <span>{row.chatRatingCount}</span>
                 </span>)
             }
-        }  
+        }
     ];
+
+    const voiceModelColumns = [
+        {
+            title: 'reports.agent_reports.column_names.agent_name',
+            field: 'userFullName',
+            widthClass: 'w-5/24',
+            rowClassname: 'body2',
+            isSortable: true,
+            onClick: (field: string | undefined, direction: SortDirection) => {
+                onSort(field, direction);
+            },
+            render: (userFullName: string, row: AgentReport) => {
+                return (<div className='flex items-center h-full'>
+                    <div className={classnames('overflow-hidden overflow-ellipsis ellipsis-row body2')}>
+                        <TableAgentInfo agentId={row.userId}/>
+                    </div>
+                </div>)
+            }
+        },
+        {
+            title: 'reports.agent_reports.column_names.total_calls',
+            field: 'totalCalls',
+            widthClass: 'w-3/24',
+            rowClassname: 'body2',
+            isSortable: true,
+            onClick: (field: string | undefined, direction: SortDirection) => {
+                onSort(field, direction);
+            },
+            render: (totalCalls: string) => {
+                return (<div className='flex items-center h-full'>
+                    <div className={classnames('overflow-hidden overflow-ellipsis ellipsis-row body2')}>
+                        {totalCalls ? (totalCalls) : "0"}
+                    </div>
+                </div>)
+            }
+        },
+        {
+            title: 'reports.agent_reports.column_names.total_inbound',
+            field: 'totalInbound',
+            widthClass: 'w-3/24',
+            rowClassname: 'body2',
+            isSortable: true,
+            onClick: (field: string | undefined, direction: SortDirection) => {
+                onSort(field, direction);
+            },
+            render: (totalInbound: string) => {
+                return (<div className='flex items-center h-full'>
+                    <div className={classnames('overflow-hidden overflow-ellipsis ellipsis-row body2')}>
+                        {totalInbound ? (totalInbound) : "0"}
+                    </div>
+                </div>)
+            }
+        },
+        {
+            title: 'reports.agent_reports.column_names.total_outbound',
+            field: 'totalOutbound',
+            widthClass: 'w-3/24',
+            rowClassname: 'body2',
+            isSortable: true,
+            onClick: (field: string | undefined, direction: SortDirection) => {
+                onSort(field, direction);
+            },
+            render: (totalOutbound: string) => {
+                return (<div className='flex items-center h-full'>
+                    <div className={classnames('overflow-hidden overflow-ellipsis ellipsis-row body2')}>
+                        {totalOutbound ? `${totalOutbound}` : "0"}
+                    </div>
+                </div>)
+            }
+        },
+        {
+            title: 'reports.agent_reports.column_names.avg_handle_time',
+            field: 'avgVoiceHandleTime',
+            widthClass: 'w-3/24',
+            rowClassname: 'body2',
+            isSortable: true,
+            onClick: (field: string | undefined, direction: SortDirection) => {
+                onSort(field, direction);
+            },
+            render: (averageIdleTime: number) => {
+                return (<div className='flex items-center h-full'>
+                    <div className={classnames('overflow-hidden overflow-ellipsis ellipsis-row body2')}>
+                        {getFormattedTime(averageIdleTime, t('reports.agent_reports.column_postfixes.day'), t('reports.agent_reports.column_postfixes.days'))}
+                    </div>
+                </div>)
+            }
+        },
+        {
+            title: 'reports.agent_reports.column_names.avg_hold_time',
+            field: 'avgVoiceHoldTime',
+            widthClass: 'w-3/24',
+            rowClassname: 'body2',
+            isSortable: true,
+            onClick: (field: string | undefined, direction: SortDirection) => {
+                onSort(field, direction);
+            },
+            render: (avgVoiceHandleTime: number) => {
+                return (<div className='flex items-center h-full'>
+                    <div className={classnames('overflow-hidden overflow-ellipsis ellipsis-row body2')}>
+                        {getFormattedTime(avgVoiceHandleTime, t('reports.agent_reports.column_postfixes.day'), t('reports.agent_reports.column_postfixes.days'))}
+                    </div>
+                </div>)
+            }
+        },
+        {
+            title: 'reports.agent_reports.column_names.rating',
+            field: 'avgVoiceRating',
+            widthClass: 'w-16',
+            rowClassname: 'body2',
+            isSortable: true,
+            onClick: (field: string | undefined, direction: SortDirection) => {
+                onSort(field, direction);
+            },
+            render: (avgVoiceRating: number, row: AgentReport) => {
+                return (<div className='flex items-center h-full'>
+                    <div className={classnames('overflow-hidden overflow-ellipsis ellipsis-row body2')}>
+                        {displayPatientRating(avgVoiceRating, row.voiceChatRatingCount)}
+                    </div>
+                    <div className={'ml-4'}>
+                        {`${avgVoiceRating}%`}
+                    </div>
+                </div>)
+            }
+        },
+        {
+            title: '',
+            field: 'voiceRatingCount',
+            widthClass: 'w-8',
+            rowClassname: 'body2',
+            isSortable: true,
+            onClick: (field: string | undefined, direction: SortDirection) => {
+                onSort(field, direction);
+            },
+            render: (voiceRatingCount: string) => {
+                return (<div className='flex items-center h-full'>
+                    <div className={classnames('overflow-hidden overflow-ellipsis ellipsis-row body2')}>
+                        {voiceRatingCount ? `${voiceRatingCount}` : "0"}
+                    </div>
+                </div>)
+            }
+        }
+    ]
 
     switch (type) {
         case AgentReportTableType.VoiceAndChat:
             return getMutatedModel(voiceAndChatModelColumns);
+        case AgentReportTableType.Voice:
+            return getMutatedModel(voiceModelColumns);
         case AgentReportTableType.Chat:
             return getMutatedModel(chatModelColumns);
         default:

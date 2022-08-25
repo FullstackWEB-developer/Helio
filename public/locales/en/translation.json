@@ -77,7 +77,7 @@
     "route_leaving_confirmation_message": "Leave without saving changes?",
     "route_leaving_leave_button": "Leave",
     "insert": "Insert",
-      "date_input_assistive_text": "MM/DD/YYYY"
+    "date_input_assistive_text": "MM/DD/YYYY"
   },
   "app": {
     "error_loading_parameters": "Error loading parameters, please try again later",
@@ -2358,7 +2358,12 @@
         "total_chats": "Total Chats",
         "average_chat_handle_time": "Avg. Handle Time",
         "average_chat_duration": "Avg. Chat Duration",
-        "rating": "Rating"
+        "total_inbound": "Total Inbound",
+        "total_outbound": "Total Outbound",
+        "avg_handle_time": "AVG. Handle Time",
+        "avg_hold_time":  "AVG. Hold Time",
+        "rating": "Rating",
+        "total_calls": "Total Calls"
       },
       "column_postfixes": {
         "days": "days",
