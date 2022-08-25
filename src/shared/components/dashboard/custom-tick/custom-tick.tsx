@@ -29,13 +29,18 @@ const CustomTick = ({tick, tickRotation, volumeDataType, data = []}: CustomTickP
             let currentIndex = data[0].data.findIndex( x => findPoint(x, date));
             if(currentIndex > -1 && data[0].data[currentIndex + 1]){
                 if(data[0].data[currentIndex + 1].x){
-                    return dayjs(data[0].data[currentIndex + 1].x)
+                    if (isWeek) {
+                        return dayjs(data[0].data[currentIndex + 1].x).add(-1, 'd'); //Display Sunday as endDate instead of Monday
+                    } else {
+                        return dayjs(data[0].data[currentIndex + 1].x);
+                    }
+
                 }
             }
         }
         
-        if(isWeek && date.endOf('week').isBefore(dayjs(dashboardFilterEndDate))){
-            return date.endOf('week');
+        if(isWeek && date.endOf('week').add(-1, 'd').isBefore(dayjs(dashboardFilterEndDate))){
+            return date.endOf('week').add(-1, 'd');
         } else {
             return dayjs(dashboardFilterEndDate);
         }
