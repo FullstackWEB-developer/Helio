@@ -172,4 +172,18 @@ describe("Reports tests", () => {
         expect(Api.get).toHaveBeenCalled();
 
     });
+
+    it("renders tickets tab in agent report table with correct data", async () => {
+        const {findByText, findByTestId } = render(
+            <TestWrapper mockState={mockState}>
+                <AgentReportsTable onSort={() => {}}
+                    title={'Agent KPIs'} data={agentReportTableData} />
+            </TestWrapper>
+        );
+        const ticketsTab = await findByText('reports.agent_reports_tabs.tickets');
+        ticketsTab.click();
+        const totalTicketsCountCell = await findByTestId('agent-rpt-total-tickets');
+        expect(totalTicketsCountCell).toBeInTheDocument();
+        expect(totalTicketsCountCell.textContent).toEqual(String(agentReportTableData[0].totalTicketsCount));
+    });
 })

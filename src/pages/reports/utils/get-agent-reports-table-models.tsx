@@ -36,30 +36,30 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
     }
 
     const displayPatientRating = (ratio: number, count: number) => {
-        if(ratio === 0 && count === 0){
+        if (ratio === 0 && count === 0) {
             return <SvgIcon
-                    className='icon-medium'
-                    fillClass='rating-widget-neutral'
-                    wrapperClassName='cursor-pointer'
-                    type={Icon.RatingSatisfied} />;
-        }else if(ratio >= 0 && ratio < 40){
+                className='icon-medium'
+                fillClass='rating-widget-neutral'
+                wrapperClassName='cursor-pointer'
+                type={Icon.RatingSatisfied} />;
+        } else if (ratio >= 0 && ratio < 40) {
             return <SvgIcon
-                    className='icon-medium'
-                    fillClass='rating-widget-unsatisfied'
-                    wrapperClassName='cursor-pointer'
-                    type={Icon.RatingDissatisfied} />;
-        }else if(ratio >= 40 && ratio < 60){
+                className='icon-medium'
+                fillClass='rating-widget-unsatisfied'
+                wrapperClassName='cursor-pointer'
+                type={Icon.RatingDissatisfied} />;
+        } else if (ratio >= 40 && ratio < 60) {
             return <SvgIcon
-                    className='icon-medium'
-                    fillClass='rating-widget-neutral'
-                    wrapperClassName='cursor-pointer'
-                    type={Icon.RatingSatisfied} />;
-        }else{
+                className='icon-medium'
+                fillClass='rating-widget-neutral'
+                wrapperClassName='cursor-pointer'
+                type={Icon.RatingSatisfied} />;
+        } else {
             return <SvgIcon
-                    className='icon-medium'
-                    fillClass='rating-widget-satisfied'
-                    wrapperClassName='cursor-pointer'
-                    type={Icon.RatingVerySatisfied} />;
+                className='icon-medium'
+                fillClass='rating-widget-satisfied'
+                wrapperClassName='cursor-pointer'
+                type={Icon.RatingVerySatisfied} />;
         }
     }
 
@@ -186,6 +186,148 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
 
     ];
 
+    const ticketModelColumns = [
+        {
+            title: 'reports.agent_reports.column_names.agent_name',
+            field: 'userId',
+            widthClass: 'w-1/5',
+            rowClassname: 'body2',
+            isSortable: true,
+            onClick: (field: string | undefined, direction: SortDirection) => {
+                onSort(field, direction);
+            },
+            render: (userId: string) => {
+                return (<div className='flex items-center h-full'>
+                    <div className={classnames('overflow-hidden overflow-ellipsis ellipsis-row body2')}>
+                        <TableAgentInfo agentId={userId} />
+                    </div>
+                </div>)
+            }
+        },
+        {
+            title: 'reports.agent_reports.column_names.total_tickets',
+            field: 'totalTicketsCount',
+            widthClass: 'w-2/12',
+            rowClassname: 'body2',
+            isSortable: true,
+            onClick: (field: string | undefined, direction: SortDirection) => {
+                onSort(field, direction);
+            },
+            render: (totalTicketsCount: number) => {
+                return (<div className='flex items-center h-full'>
+                    <div data-testid='agent-rpt-total-tickets' className={classnames('overflow-hidden overflow-ellipsis ellipsis-row body2')}>
+                        {totalTicketsCount || 0}
+                    </div>
+                </div>)
+            }
+        },
+        {
+            title: 'reports.agent_reports.column_names.overdue_tickets',
+            field: 'overdueTicketCount',
+            widthClass: 'w-2/12',
+            rowClassname: 'body2',
+            isSortable: true,
+            onClick: (field: string | undefined, direction: SortDirection) => {
+                onSort(field, direction);
+            },
+            render: (overdueTicketCount: number) => {
+                return (<div className='flex items-center h-full'>
+                    <div className={classnames('overflow-hidden overflow-ellipsis ellipsis-row body2')}>
+                        {overdueTicketCount || 0}
+                    </div>
+                </div>)
+            }
+        },
+        {
+            title: 'reports.agent_reports.column_names.total_sms',
+            field: 'totalSmsCount',
+            widthClass: 'w-2/12',
+            rowClassname: 'body2',
+            isSortable: true,
+            onClick: (field: string | undefined, direction: SortDirection) => {
+                onSort(field, direction);
+            },
+            render: (totalSmsCount: number) => {
+                return (<div className='flex items-center h-full'>
+                    <div className={classnames('overflow-hidden overflow-ellipsis ellipsis-row body2')}>
+                        {totalSmsCount || 0}
+                    </div>
+                </div>)
+            }
+        },
+        {
+            title: 'reports.agent_reports.column_names.total_emails',
+            field: 'totalEmailCount',
+            widthClass: 'w-2/12',
+            rowClassname: 'body2',
+            isSortable: true,
+            onClick: (field: string | undefined, direction: SortDirection) => {
+                onSort(field, direction);
+            },
+            render: (totalEmailCount: number) => {
+                return (<div className='flex items-center h-full'>
+                    <div className={classnames('overflow-hidden overflow-ellipsis ellipsis-row body2')}>
+                        {totalEmailCount || 0}
+                    </div>
+                </div>)
+            }
+        },
+        {
+            title: 'reports.agent_reports.column_names.avg_sms_response',
+            field: 'avgSmsResponse',
+            widthClass: 'w-2/12',
+            rowClassname: 'body2',
+            isSortable: true,
+            onClick: (field: string | undefined, direction: SortDirection) => {
+                onSort(field, direction);
+            },
+            render: (avgSmsResponse: string) => {
+                return (<div className='flex items-center h-full'>
+                    <div className={classnames('overflow-hidden overflow-ellipsis ellipsis-row body2')}>
+                        {getFormattedTime(avgSmsResponse, t('reports.agent_reports.column_postfixes.day'), t('reports.agent_reports.column_postfixes.days'))}
+                    </div>
+                </div>)
+            }
+        },
+        {
+            title: 'reports.agent_reports.column_names.avg_email_response',
+            field: 'avgEmailResponse',
+            widthClass: 'w-2/12',
+            rowClassname: 'body2',
+            isSortable: true,
+            onClick: (field: string | undefined, direction: SortDirection) => {
+                onSort(field, direction);
+            },
+            render: (avgEmailResponse: string) => {
+                return (<div className='flex items-center h-full'>
+                    <div className={classnames('overflow-hidden overflow-ellipsis ellipsis-row body2')}>
+                        {getFormattedTime(avgEmailResponse, t('reports.agent_reports.column_postfixes.day'), t('reports.agent_reports.column_postfixes.days'))}
+                    </div>
+                </div>)
+            }
+        },
+        {
+            title: 'reports.agent_reports.column_names.rating',
+            field: 'voiceChatRatingCount',
+            widthClass: 'w-1/5',
+            rowClassname: 'body2',
+            isSortable: true,
+            onClick: (field: string | undefined, direction: SortDirection) => {
+                onSort(field, direction);
+            },
+            render: (_, row: AgentReport) => {
+                if (!row.voiceChatRatingCount) return null;
+                return (<span className='h-full flex items-center'>
+                    {
+                        displayPatientRating(row.avgVoiceChatRating, row.voiceChatRatingCount)
+                    }
+                    <span data-testid="average-chat-rating-percentage" className='px-5'>{`${row.avgVoiceChatRating}%`}</span>
+                    <span>{row.voiceChatRatingCount}</span>
+                </span>)
+            }
+        }
+    ];
+
     const chatModelColumns = [
         {
             title: 'reports.agent_reports.column_names.agent_name',
@@ -265,7 +407,7 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
                 onSort(field, direction);
             },
             render: (_, row: AgentReport) => {
-                if(!row.chatRatingCount) return null;
+                if (!row.chatRatingCount) return null;
                 return (<span className='h-full flex items-center'>
                     {
                         displayPatientRating(row.avgChatRating, row.chatRatingCount)
@@ -290,7 +432,7 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
             render: (userFullName: string, row: AgentReport) => {
                 return (<div className='flex items-center h-full'>
                     <div className={classnames('overflow-hidden overflow-ellipsis ellipsis-row body2')}>
-                        <TableAgentInfo agentId={row.userId}/>
+                        <TableAgentInfo agentId={row.userId} />
                     </div>
                 </div>)
             }
@@ -417,7 +559,7 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
                 </div>)
             }
         }
-    ]
+    ];
 
     switch (type) {
         case AgentReportTableType.VoiceAndChat:
@@ -426,6 +568,8 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
             return getMutatedModel(voiceModelColumns);
         case AgentReportTableType.Chat:
             return getMutatedModel(chatModelColumns);
+        case AgentReportTableType.Tickets:
+            return getMutatedModel(ticketModelColumns);
         default:
             return getMutatedModel([]);
     }

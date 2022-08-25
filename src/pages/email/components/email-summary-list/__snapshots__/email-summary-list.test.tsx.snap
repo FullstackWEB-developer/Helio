@@ -63,7 +63,7 @@ exports[`Email Summary List tests renders email-summary-list with messages 1`] =
                 <span
                   class="truncate"
                 >
-                  Aug 20, 2021
+                  Aug 22, 2021
                 </span>
               </div>
             </div>

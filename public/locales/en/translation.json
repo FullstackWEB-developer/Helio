@@ -2363,7 +2363,13 @@
         "avg_handle_time": "AVG. Handle Time",
         "avg_hold_time":  "AVG. Hold Time",
         "rating": "Rating",
-        "total_calls": "Total Calls"
+        "total_calls": "Total Calls",
+        "total_tickets": "Total Tickets",
+        "overdue_tickets": "Overdue Tickets",
+        "total_sms": "Total SMS",
+        "total_emails": "Total Emails",
+        "avg_sms_response": "Avg. SMS Response",
+        "avg_email_response": "Avg. Email Response"
       },
       "column_postfixes": {
         "days": "days",
