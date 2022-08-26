@@ -67,13 +67,6 @@ const Reports = () => {
     }, []);
 
     useEffect(() => {
-        if(selectedMonths.length > 0)
-        {
-            onDownload();
-        }
-    }, [selectedMonths]);
-
-    useEffect(() => {
         setSelectedMonths([]);
     }, [selectedViewForView, selectedReportForView]);
 
@@ -81,7 +74,7 @@ const Reports = () => {
         return selectedView === ViewTypes.MonthlyReports ? ViewTypes.LastMonth : selectedView;
     }
 
-    const {isLoading: getAgentReportIsLoading, isFetching: getAgentReportIsFetching, refetch: refetchAgentData} = useQuery([GetAgentReport], () => getAgentReport(selectedView),{
+    const {isLoading: getAgentReportIsLoading, isFetching: getAgentReportIsFetching, refetch: refetchAgentData} = useQuery([GetAgentReport], () => getAgentReport(selectedView), {
         enabled: false,
         onSuccess: (data) => {
             setAgentReportData(data);
@@ -95,7 +88,7 @@ const Reports = () => {
         }
     });
 
-    const queueReport= useQuery([GetQueueReport], () => getQueueReport(selectedView),{
+    const queueReport = useQuery([GetQueueReport], () => getQueueReport(selectedView), {
         enabled: false,
         onError: () => {
             dispatch(addSnackbarMessage({
@@ -105,7 +98,7 @@ const Reports = () => {
         }
     });
 
-    const botReport = useQuery<BotReport, AxiosError>([GetBotReport], () => getBotReport(selectedView, selectedStartDate, selectedEndDate),{
+    const botReport = useQuery<BotReport, AxiosError>([GetBotReport], () => getBotReport(selectedView, selectedStartDate, selectedEndDate), {
         enabled: false,
         onError: () => {
             dispatch(addSnackbarMessage({
@@ -125,7 +118,7 @@ const Reports = () => {
         }
     });
 
-    const {isLoading: getAvailableMonthsIsLoading, isFetching: getAvailableMonthsIsFetching, refetch: refetchAvailableMonths, data: availableMonths} = useQuery([GetQueueReport], () => getAvailableMonths(selectedReport),{
+    const {isLoading: getAvailableMonthsIsLoading, isFetching: getAvailableMonthsIsFetching, refetch: refetchAvailableMonths, data: availableMonths} = useQuery([GetQueueReport], () => getAvailableMonths(selectedReport), {
         enabled: false,
         onError: () => {
             dispatch(addSnackbarMessage({
@@ -134,8 +127,8 @@ const Reports = () => {
             }));
         }
     });
-        
-    const exportAgentReportMutation = useMutation(exportAgentReport,{
+
+    const exportAgentReportMutation = useMutation(exportAgentReport, {
         onSuccess: () => {
             setSelectedMonths([]);
             dispatch(addSnackbarMessage({
@@ -151,7 +144,7 @@ const Reports = () => {
         }
     });
 
-    const exportQueueReportMutation = useMutation(exportQueueReport,{
+    const exportQueueReportMutation = useMutation(exportQueueReport, {
         onSuccess: () => {
             setSelectedMonths([]);
             dispatch(addSnackbarMessage({
@@ -167,7 +160,7 @@ const Reports = () => {
         }
     });
 
-    const exportBotReportMutation = useMutation(exportBotReport,{
+    const exportBotReportMutation = useMutation(exportBotReport, {
         onSuccess: () => {
             dispatch(addSnackbarMessage({
                 type: SnackbarType.Success,
@@ -182,8 +175,9 @@ const Reports = () => {
         }
     });
 
-    const exportSystemReportMutation = useMutation(exportSystemReport,{
+    const exportSystemReportMutation = useMutation(exportSystemReport, {
         onSuccess: () => {
+            setSelectedMonths([]);
             dispatch(addSnackbarMessage({
                 type: SnackbarType.Success,
                 message: 'reports.download_system_report.success'
@@ -196,6 +190,9 @@ const Reports = () => {
             }));
         }
     });
+
+    const anyExportMutationActive = exportAgentReportMutation.isLoading || exportQueueReportMutation.isLoading
+        || exportSystemReportMutation.isLoading || exportBotReportMutation.isLoading;
 
     const onSubmit = async () => {
         if (selectedReport === ReportTypes.AgentReports && selectedView !== ViewTypes.MonthlyReports) {
@@ -216,13 +213,13 @@ const Reports = () => {
 
     const changeReportTitle = () => {
         const now = dayjs().utc();
-        if(selectedView === ViewTypes.Yesterday){
+        if (selectedView === ViewTypes.Yesterday) {
             setReportTitle(now.subtract(1, 'd').format('MMMM DD, YYYY'));
-        }else if(selectedView === ViewTypes.Last7Days){
+        } else if (selectedView === ViewTypes.Last7Days) {
             setReportTitle(`${now.subtract(8, 'd').format('MMMM DD, YYYY')} - ${now.subtract(1, 'd').format('MMMM DD, YYYY')}`);
-        }else if(selectedView === ViewTypes.LastWeek){
+        } else if (selectedView === ViewTypes.LastWeek) {
             setReportTitle(`${dayjs().weekday(-7).format('MMMM DD, YYYY')} - ${dayjs().weekday(-1).format('MMMM DD, YYYY')}`);
-        }else if(selectedView === ViewTypes.LastMonth){
+        } else if (selectedView === ViewTypes.LastMonth) {
             setReportTitle(now.subtract(1, 'M').format('MMMM, YYYY'));
         }
     }
@@ -245,7 +242,7 @@ const Reports = () => {
             case ReportTypes.BotReports:
                 exportBotReportMutation.mutate({
                     period: selectedView,
-                    startDate : selectedStartDate,
+                    startDate: selectedStartDate,
                     endDate: selectedEndDate
                 });
                 break;
@@ -300,7 +297,7 @@ const Reports = () => {
                         setValue('view-type', ViewTypes.Last7Days.toString());
                     }
                 }
-            } else{
+            } else {
                 if (customDateIndex) {
                     viewTypes.splice(customDateIndex, 1);
                     if (selectedView === ViewTypes.CustomDates) {
@@ -325,7 +322,7 @@ const Reports = () => {
     const isViewDisabled = () => {
         return selectedView === ViewTypes.CustomDates && (!selectedStartDate || !selectedEndDate);
     }
-    
+
     const settings = () => {
         return <div className='my-6'>
             {selectedViewForView === ViewTypes.MonthlyReports && <h6 className='pt-3 mb-1'>{t('reports.view_options.monthly_reports')}</h6>}
@@ -354,35 +351,36 @@ const Reports = () => {
                         />
                     </div>
                     {selectedView === ViewTypes.CustomDates &&
-                    <div className='flex flex-row'>
-                        <div className='w-48 h-14 mr-8'>
-                            <ControlledDateInput
-                                name='startDate'
-                                control={control}
-                                assistiveText='common.date_input_assistive_text'
-                                max={dayjs().add(-1, 'd').toDate()}
-                                onChange={(value) => setSelectedStartDate(value)}
-                                label='reports.start_date'
-                            />
-                        </div>
-                        <div className='w-48 h-14'>
-                            <ControlledDateInput
-                                name='endDate'
-                                assistiveText='common.date_input_assistive_text'
-                                control={control}
-                                disabled={!selectedStartDate}
-                                max={dayjs().toDate()}
-                                min={dayjs(selectedStartDate).add(1, 'd').toDate()}
-                                label='reports.end_date'
-                                onChange={(value) => setSelectedEndDate(value)}
-                            />
-                        </div>
-                    </div>}
+                        <div className='flex flex-row'>
+                            <div className='w-48 h-14 mr-8'>
+                                <ControlledDateInput
+                                    name='startDate'
+                                    control={control}
+                                    assistiveText='common.date_input_assistive_text'
+                                    max={dayjs().add(-1, 'd').toDate()}
+                                    onChange={(value) => setSelectedStartDate(value)}
+                                    label='reports.start_date'
+                                />
+                            </div>
+                            <div className='w-48 h-14'>
+                                <ControlledDateInput
+                                    name='endDate'
+                                    assistiveText='common.date_input_assistive_text'
+                                    control={control}
+                                    disabled={!selectedStartDate}
+                                    max={dayjs().toDate()}
+                                    min={dayjs(selectedStartDate).add(1, 'd').toDate()}
+                                    label='reports.end_date'
+                                    onChange={(value) => setSelectedEndDate(value)}
+                                />
+                            </div>
+                        </div>}
                     {
                         selectedTab === TabTypes.Reports && <div className='w-2/4 h-14 flex items-center'>
                             <Button label='reports.view' type='submit' buttonType='medium' data-testid='report-view-button' disabled={isViewDisabled()} />
                             {
-                                selectedView !== ViewTypes.MonthlyReports && <Button data-testid='report-download-button' label='reports.download' isLoading={exportAgentReportMutation.isLoading || exportQueueReportMutation.isLoading} className='mx-6' buttonType='secondary-medium' icon={Icon.Download} onClick={() => onDownload()}/>
+                                selectedView !== ViewTypes.MonthlyReports && <Button data-testid='report-download-button' label='reports.download' 
+                                isLoading={anyExportMutationActive} className='mx-6' buttonType='secondary-medium' icon={Icon.Download} onClick={() => onDownload()} />
                             }
                         </div>
                     }
@@ -390,7 +388,7 @@ const Reports = () => {
             </form>
         </div>
     };
-    
+
     return (
         <div className='reports w-full h-full overflow-y-auto p-6'>
             <h5>{t('reports.reports')}</h5>
@@ -402,19 +400,21 @@ const Reports = () => {
                             isLoading() && <Spinner size='large-40' className='pt-2' />
                         }
                         {
-                            (selectedReportForView === ReportTypes.AgentReports && selectedViewForView !== ViewTypes.MonthlyReports && !isLoading()) && <AgentReports title={reportTitle} data={agentReportData} onSort={onAgentReportSort}/>
+                            (selectedReportForView === ReportTypes.AgentReports && selectedViewForView !== ViewTypes.MonthlyReports && !isLoading()) && <AgentReports title={reportTitle} data={agentReportData} onSort={onAgentReportSort} />
                         }
                         {
-                            (selectedReportForView === ReportTypes.QueueReports && selectedViewForView !== ViewTypes.MonthlyReports && !isLoading()) && <QueueReports title={reportTitle} data={queueReport.data}/>
+                            (selectedReportForView === ReportTypes.QueueReports && selectedViewForView !== ViewTypes.MonthlyReports && !isLoading()) && <QueueReports title={reportTitle} data={queueReport.data} />
                         }
                         {
-                            (selectedReportForView === ReportTypes.BotReports && selectedViewForView !== ViewTypes.MonthlyReports && !isLoading()) && <BotReports title={reportTitle} data={botReport.data}/>
+                            (selectedReportForView === ReportTypes.BotReports && selectedViewForView !== ViewTypes.MonthlyReports && !isLoading()) && <BotReports title={reportTitle} data={botReport.data} />
                         }
                         {
                             (selectedReportForView === ReportTypes.SystemReports && selectedViewForView !== ViewTypes.MonthlyReports && !isLoading()) && <SystemReports title={reportTitle} data={systemReport?.data}/>
                         }
                         {
-                            (selectedViewForView === ViewTypes.MonthlyReports && !isLoading()) && <MonthList data={availableMonths} downloadReports={setSelectedMonths}/>
+                            (selectedViewForView === ViewTypes.MonthlyReports && !isLoading()) &&
+                            <MonthList data={availableMonths} setSelectedMonths={setSelectedMonths}
+                                selectedMonths={selectedMonths} exportReportDownload={onDownload} isDownloading={anyExportMutationActive} />
                         }
                     </Tab>
                     <Tab key={TabTypes.PerformanceCharts} title={t('reports.performance_charts')}>
