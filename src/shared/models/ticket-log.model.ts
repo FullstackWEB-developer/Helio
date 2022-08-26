@@ -40,8 +40,8 @@ export enum TicketLogContactStatus {
 
 export interface TicketLogRequestModel extends PagedRequest {
     searchTerm?: string;
-    fromDate?: Date;
-    toDate?: Date;
+    fromDate?: string;
+    toDate?: string;
     assignedTo?: string;
     reason?: string;
     contactStatus?: number[];

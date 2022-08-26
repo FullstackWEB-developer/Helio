@@ -108,7 +108,7 @@ const CallsLogFilter = ({ isOpen, value: propsValue, logType, ...props }: CallsL
                     toDate = formData.toDate;
                 }
             } else {
-                let date = dayjs().utc();
+                let date = dayjs();
                 switch (formData.timePeriod) {
                     case '0':
                         date = date.startOf('day');
@@ -160,8 +160,17 @@ const CallsLogFilter = ({ isOpen, value: propsValue, logType, ...props }: CallsL
         const filter: TicketLogRequestModel = {};
 
         const formDate = getFormDate(formData);
-        filter.toDate = formDate.toDate;
-        filter.fromDate = formDate.fromDate;
+        if (formDate.fromDate) {
+            filter.fromDate = utils.toShortISOLocalString(formDate.fromDate);
+        } else {
+            filter.fromDate = undefined;
+        }
+
+        if (formDate.toDate) {
+            filter.toDate = utils.toShortISOLocalString(formDate.toDate);
+        } else {
+            filter.toDate = undefined;
+        }
         filter.reason = formData.reason;
 
         if (formData.status) {
