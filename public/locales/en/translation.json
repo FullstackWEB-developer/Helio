@@ -1332,7 +1332,7 @@
       "title": "Tickets By Channel"
     },
     "by_reason": {
-      "title": "Tickets By Reason",
+      "title": "Top 5 Tickets By Reason",
       "label_others": "Other",
       "tooltip_title": "Reason"
     },
