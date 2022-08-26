@@ -39,6 +39,8 @@ import {AxiosError} from 'axios';
 import BotReports from '@pages/reports/components/bot-reports';
 import {Option} from '@components/option/option';
 import weekday from 'dayjs/plugin/weekday';
+import SystemReports from '@pages/reports/components/system-reports';
+import {SystemReport} from '@pages/reports/models/system-report.model';
 
 const Reports = () => {
     const {t} = useTranslation();
@@ -113,7 +115,7 @@ const Reports = () => {
         }
     });
 
-    const systemReport = useQuery<BotReport, AxiosError>([GetSystemReport], () => getSystemReport(selectedView),{
+    const systemReport = useQuery<SystemReport[], AxiosError>([GetSystemReport], () => getSystemReport(selectedView),{
         enabled: false,
         onError: () => {
             dispatch(addSnackbarMessage({
@@ -275,7 +277,9 @@ const Reports = () => {
             getAvailableMonthsIsLoading ||
             getAvailableMonthsIsFetching ||
             botReport.isLoading ||
-            botReport.isFetching
+            botReport.isFetching ||
+            systemReport.isLoading ||
+            systemReport.isFetching
     }
 
     const onReportTypeSelected = (option?: Option) => {
@@ -405,6 +409,9 @@ const Reports = () => {
                         }
                         {
                             (selectedReportForView === ReportTypes.BotReports && selectedViewForView !== ViewTypes.MonthlyReports && !isLoading()) && <BotReports title={reportTitle} data={botReport.data}/>
+                        }
+                        {
+                            (selectedReportForView === ReportTypes.SystemReports && selectedViewForView !== ViewTypes.MonthlyReports && !isLoading()) && <SystemReports title={reportTitle} data={systemReport?.data}/>
                         }
                         {
                             (selectedViewForView === ViewTypes.MonthlyReports && !isLoading()) && <MonthList data={availableMonths} downloadReports={setSelectedMonths}/>

@@ -59,6 +59,9 @@ const HelioResponsiveLine = ({data, tickRotation, tickValues = 'every 1 day', to
         }}
         enableGridX={false}
         animate={false}
+        axisLeft={{
+            tickPadding: 20
+        }}
         pointLabelYOffset={-12}
         tooltip={({ point }) => <ChartTooltip data={data} volumeDataType={volumeDataType} label={toolTipLabelGenerator(point)} point={point}/>}
         enableArea={true}

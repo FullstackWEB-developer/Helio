@@ -50,6 +50,7 @@ import {ViewTypes} from '@pages/reports/models/view-types.enum';
 import {MimeTypes} from '@shared/models/mime-types.enum';
 import {ReportTypes} from '@pages/reports/models/report-types.enum';
 import {BotReport} from '@pages/reports/models/bot-report.model';
+import {SystemReport} from '@pages/reports/models/system-report.model';
 
 const ticketsBaseUrl = "/tickets";
 
@@ -469,7 +470,7 @@ export const getQueueReport = async(request: ViewTypes) => {
     return response.data;
 }
 
-export const getSystemReport = async(request: ViewTypes) => {
+export const getSystemReport = async(request: ViewTypes) : Promise<SystemReport[]> => {
     const url = `${ticketsBaseUrl}/reports/system?period=${request}`;
     const response = await Api.get(url);
     return response.data;

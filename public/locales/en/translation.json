@@ -2404,6 +2404,14 @@
       "medical_history_requests": "Medical History Requests",
       "voice": "Voice",
       "chat": "Chat"
+    },
+    "system_reports" : {
+      "key_kpis": "Key KPIs",
+      "total_tickets_created": "Total Tickets Created",
+      "total_incoming_calls": "Total Incoming Calls",
+      "total_incoming_chats": "Total Incoming Chats",
+      "total_incoming_sms": "Total Incoming SMS",
+      "total_incoming_email": "Total Incoming Email"
     }
   }
 }
