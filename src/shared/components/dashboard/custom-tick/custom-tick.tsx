@@ -73,7 +73,11 @@ const CustomTick = ({tick, tickRotation, volumeDataType, data = []}: CustomTickP
                     <tspan x={"6"} dy="1.2em">{date.add(3, 'month').format('MMM')}</tspan>
                 </>;
             case TicketVolumeDataType.Annually:
-                return <tspan x="0" dy="1.2em">{date.format('YYYY')}</tspan>;
+                return <tspan x="0" dy="1.2em">{date.format('yyyy')}</tspan>;
+            case TicketVolumeDataType.Custom:
+                return <>
+                    <tspan x={"6"} dy="1.2em">{tick.value}</tspan>
+                </>
         }
     }, [tickRotation, tick, volumeDataType]);
     return (

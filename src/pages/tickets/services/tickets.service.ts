@@ -532,11 +532,16 @@ export const exportQueueReport = async({request, selectedIds}: {request: ViewTyp
     return response.data;
 }
 
+export const getPerformanceChart = async(request: ViewTypes) => {
+    const url = `${ticketsBaseUrl}/reports/performance-chart?period=${request}`;
+    const response = await Api.get(url);
+    return response.data;
+}
+
 export const exportSystemReport = async({request, selectedIds} : {request: ViewTypes, selectedIds: string[]}) => {
     const url = `${ticketsBaseUrl}/reports/system/export?period=${request}&${selectedIds.map((n) => `selectedIds=${n}`).join('&')}`;
     const response = await Api.get(url, {
         responseType: 'arraybuffer'
     });
     utils.downloadFileFromData(response.data, `SystemReport`, MimeTypes.XlsX);
-    return response.data;
 }

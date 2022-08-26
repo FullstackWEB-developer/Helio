@@ -2405,6 +2405,15 @@
       "voice": "Voice",
       "chat": "Chat"
     },
+    "performance_charts_page": {
+      "queues_inbound_volume_over_time_chat": "Queues Inbound Volume Over Time - Chat",
+      "queues_chats_volume_over_time": "Queues Chats Volume Over Time",
+      "top_5_by_volume": "Top 5 By Volume",
+      "custom": "Custom",
+      "select_up_to_5_queues": "Select up to 5 queues",
+      "selected_error_0": "You should choose at least one queue for custom view",
+      "selected_error_5": "You should choose at most five queues for custom view"
+    },
     "system_reports" : {
       "key_kpis": "Key KPIs",
       "total_tickets_created": "Total Tickets Created",

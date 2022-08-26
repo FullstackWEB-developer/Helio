@@ -95,4 +95,5 @@ export const GetGeneralSetting = 'get-general-setting';
 export const GetAgentReport = 'get-agent-report';
 export const GetQueueReport = 'get-queue-report';
 export const GetBotReport = 'get-bot-report';
+export const GetPerformanceChart = 'get-performance-charts';
 export const GetSystemReport = 'get-system-report';

@@ -19,6 +19,7 @@ import {
     getAgentReport,
     getAvailableMonths,
     getBotReport,
+    getPerformanceChart,
     getQueueReport,
     getSystemReport
 } from '@pages/tickets/services/tickets.service';
@@ -28,7 +29,7 @@ import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
 import AgentReports from './components/agent-reports';
 import Spinner from '@components/spinner/Spinner';
 import dayjs from 'dayjs';
-import {GetAgentReport, GetBotReport, GetQueueReport, GetSystemReport} from '@constants/react-query-constants';
+import {GetAgentReport, GetBotReport, GetQueueReport, GetSystemReport, GetPerformanceChart} from '@constants/react-query-constants';
 import QueueReports from './components/queue-reports';
 import MonthList from './components/month-list';
 import {SortDirection} from '@shared/models/sort-direction';
@@ -39,6 +40,8 @@ import {AxiosError} from 'axios';
 import BotReports from '@pages/reports/components/bot-reports';
 import {Option} from '@components/option/option';
 import weekday from 'dayjs/plugin/weekday';
+import PerformanceCharts from './components/performance-charts';
+import { PerformanceChartResponse } from './models/performance-chart.model';
 import SystemReports from '@pages/reports/components/system-reports';
 import {SystemReport} from '@pages/reports/models/system-report.model';
 
@@ -53,7 +56,9 @@ const Reports = () => {
     const [selectedStartDate, setSelectedStartDate] = useState<Date | undefined>();
     const [selectedEndDate, setSelectedEndDate] = useState<Date | undefined>();
     const [agentReportData, setAgentReportData] = useState<AgentReport[]>([]);
+    const [performanceChartData, setPerformanceChartData] = useState<PerformanceChartResponse[] | null>(null);
     const [reportTitle, setReportTitle] = useState<string>();
+    const [reportTitleForView, setReportTitleForView] = useState<string>();
     const [_, setOrderDate] = useState<Date | undefined>();
     const dispatch = useDispatch();
     const {control, handleSubmit, setValue} = useForm({
@@ -69,6 +74,10 @@ const Reports = () => {
     useEffect(() => {
         setSelectedMonths([]);
     }, [selectedViewForView, selectedReportForView]);
+
+    useEffect(() => {
+        changeReportTitle(true);
+    }, [selectedView, GetPerformanceChart]);
 
     const getViewTypeForDownload = () => {
         return selectedView === ViewTypes.MonthlyReports ? ViewTypes.LastMonth : selectedView;
@@ -98,7 +107,20 @@ const Reports = () => {
         }
     });
 
-    const botReport = useQuery<BotReport, AxiosError>([GetBotReport], () => getBotReport(selectedView, selectedStartDate, selectedEndDate), {
+    const performanceChart= useQuery([GetPerformanceChart, selectedView], () => getPerformanceChart(selectedView),{
+        enabled: selectedTab === TabTypes.PerformanceCharts,
+        onSuccess: (data) => {
+            setPerformanceChartData(data);
+        },
+        onError: () => {
+            dispatch(addSnackbarMessage({
+                type: SnackbarType.Error,
+                message: 'reports.get_queue_report.error'
+            }));
+        }
+    });
+
+    const botReport= useQuery<BotReport, AxiosError>([GetBotReport], () => getBotReport(selectedView, selectedStartDate, selectedEndDate),{
         enabled: false,
         onError: () => {
             dispatch(addSnackbarMessage({
@@ -211,16 +233,22 @@ const Reports = () => {
         changeReportTitle();
     }
 
-    const changeReportTitle = () => {
+    const changeReportTitle = (isForView: boolean = false) => {
         const now = dayjs().utc();
-        if (selectedView === ViewTypes.Yesterday) {
-            setReportTitle(now.subtract(1, 'd').format('MMMM DD, YYYY'));
-        } else if (selectedView === ViewTypes.Last7Days) {
-            setReportTitle(`${now.subtract(8, 'd').format('MMMM DD, YYYY')} - ${now.subtract(1, 'd').format('MMMM DD, YYYY')}`);
-        } else if (selectedView === ViewTypes.LastWeek) {
-            setReportTitle(`${dayjs().weekday(-7).format('MMMM DD, YYYY')} - ${dayjs().weekday(-1).format('MMMM DD, YYYY')}`);
-        } else if (selectedView === ViewTypes.LastMonth) {
-            setReportTitle(now.subtract(1, 'M').format('MMMM, YYYY'));
+        let reportTitle;
+        if(selectedView === ViewTypes.Yesterday){
+            reportTitle = (now.subtract(1, 'd').format('MMMM DD, YYYY'));
+        }else if(selectedView === ViewTypes.Last7Days){
+            reportTitle = (`${now.subtract(7, 'd').format('MMMM DD, YYYY')} - ${now.subtract(0, 'd').format('MMMM DD, YYYY')}`);
+        }else if(selectedView === ViewTypes.LastWeek){
+            reportTitle = (`${dayjs().utc().weekday(-6).format('MMMM DD, YYYY')} - ${dayjs().utc().weekday(0).format('MMMM DD, YYYY')}`);
+        }else if(selectedView === ViewTypes.LastMonth){
+            reportTitle = (now.subtract(1, 'M').format('MMMM, YYYY'));
+        }
+        if(isForView){
+            setReportTitleForView(reportTitle);
+        }else{
+            setReportTitle(reportTitle);
         }
     }
 
@@ -263,7 +291,24 @@ const Reports = () => {
 
     const onTabChange = (tab: number) => {
         setSelectedTab(tab);
+        setViewOptions(tab);
         setSelectedView(ViewTypes.Last7Days);
+    }
+
+    const setViewOptions = (tab: number) => {
+        const monthlyReportsIndex = viewTypes.findIndex(a => a.label === 'reports.view_options.monthly_reports');
+        if (tab === TabTypes.PerformanceCharts && monthlyReportsIndex > -1) {
+            viewTypes.splice(monthlyReportsIndex, 1);
+            if (selectedView === ViewTypes.MonthlyReports) {
+                setSelectedView(ViewTypes.Last7Days);
+                setValue('view-type', ViewTypes.Last7Days.toString());
+            }
+        } else {
+            viewTypes.push({
+                label: 'reports.view_options.monthly_reports',
+                value: ViewTypes.MonthlyReports.toString()
+            });
+        }
     }
 
     const isLoading = () => {
@@ -275,6 +320,8 @@ const Reports = () => {
             getAvailableMonthsIsFetching ||
             botReport.isLoading ||
             botReport.isFetching ||
+            performanceChart.isLoading ||
+            performanceChart.isFetching ||
             systemReport.isLoading ||
             systemReport.isFetching
     }
@@ -323,6 +370,10 @@ const Reports = () => {
         return selectedView === ViewTypes.CustomDates && (!selectedStartDate || !selectedEndDate);
     }
 
+    const onSelectedViewChange = (option: ViewTypes) => {
+        setSelectedView(option);
+    }
+    
     const settings = () => {
         return <div className='my-6'>
             {selectedViewForView === ViewTypes.MonthlyReports && <h6 className='pt-3 mb-1'>{t('reports.view_options.monthly_reports')}</h6>}
@@ -347,7 +398,7 @@ const Reports = () => {
                             control={control}
                             label='reports.view'
                             options={viewTypes}
-                            onSelect={(option) => setSelectedView(Number(option?.value) as ViewTypes)}
+                            onSelect={(option) => onSelectedViewChange(Number(option?.value) as ViewTypes)}
                         />
                     </div>
                     {selectedView === ViewTypes.CustomDates &&
@@ -419,6 +470,12 @@ const Reports = () => {
                     </Tab>
                     <Tab key={TabTypes.PerformanceCharts} title={t('reports.performance_charts')}>
                         {settings()}
+                        {
+                            isLoading() && <Spinner size='large-40' className='pt-2' />
+                        }
+                        {
+                            !isLoading() && <PerformanceCharts title={reportTitleForView} data={performanceChartData}/>
+                        }
                     </Tab>
                 </Tabs>
             </div>

@@ -4,5 +4,6 @@ export enum TicketVolumeDataType {
     Weekly,
     Monthly,
     Quarterly,
-    Annually
+    Annually,
+    Custom
 }
