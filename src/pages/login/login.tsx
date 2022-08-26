@@ -80,7 +80,7 @@ const Login = () => {
                         </div>
                     </div>
                     <div className='flex flex-row items-start justify-start flex-1 w-full just mt-14'>
-                        <Button data-test-id='login_button' data-testid='login_button' onClick={() => initiateLogin()} label='login.loginButton' />
+                        <Button data-test-id='login_button' onClick={() => initiateLogin()} label='login.loginButton' />
                     </div>
 
                 </div>
