@@ -32,7 +32,7 @@ const appUserSlice = createSlice({
         updateUserStatus(state, {payload}: PayloadAction<UserStatus | string>) {
             state.status = payload;
             let internalQueueIndex = state.internalQueueStatuses.findIndex(a => a.userId === state?.appUserDetails?.id);
-            if (internalQueueIndex > 1) {
+            if (internalQueueIndex > -1) {
                 state.internalQueueStatuses = state.internalQueueStatuses.map((item, index)=> {
                     return index === internalQueueIndex ? {...item, connectStatus : payload.toString()} : item
                 })

@@ -57,11 +57,11 @@ const DashboardPatientRatingsWidget = ({data}: PatientRatingsProps) => {
     const WidgetIcon = () => {
         if (!patientData || patientData.overallSatisfiedPercent === 0 || patientData.overallSatisfiedPercent === 50) {
             return <SvgIcon
-                fillClass='icon-medium'
+                fillClass='warning-icon'
                 type={Icon.RatingSatisfied}/>
         }
         return <SvgIcon
-            fillClass={classNames('icon-medium', {
+            fillClass={classNames('warning-icon', {
                 'rating-widget-satisfied': patientData.overallSatisfiedPercent > 50,
                 'rating-widget-unsatisfied': patientData.overallSatisfiedPercent <= 50
             })}
