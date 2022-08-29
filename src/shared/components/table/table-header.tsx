@@ -18,7 +18,7 @@ const TableHeaderColumn = ({header, allowMultiSort, setSortFields, currentSortFi
     const {t} = useTranslation();
     const [currentSortDirection, setSortDirection] = useState(header.sortDirection ?? SortDirection.None);
 
-    const {headerClassName, field, widthClass, alignment = 'start', title, isSortable} = header;
+    const {headerClassName, field, widthClass, alignment = 'start', title, isSortable, sortDirectionFillCalss = 'active-item-icon', sortIconSizeClass = 'icon-medium'} = header;
     const className = classnames('flex', `justify-${alignment}`, headerClassName, widthClass, {'cursor-pointer': isSortable});
 
     const onClicked = () => {
@@ -54,8 +54,8 @@ const TableHeaderColumn = ({header, allowMultiSort, setSortFields, currentSortFi
             <div key={field} className={className} onClick={onClicked}>{t(title)}
                 {isSortable && currentSortDirection !== SortDirection.None && currentSortFields && currentSortFields.filter(x => x === field).length === 1 &&
                     <SvgIcon type={SortIconMap[currentSortDirection]}
-                        className='pl-2 icon-medium'
-                        fillClass='active-item-icon' />
+                        className={`pl-2 ${sortIconSizeClass}`}
+                        fillClass={sortDirectionFillCalss} />
                 }
                 {isSortable && currentSortDirection !== SortDirection.None && header.sortOrder && currentSortFields && currentSortFields.filter(x => x === field).length === 1 &&
                     <span className='pl-0.5 body3-medium'>{header.sortOrder}</span>
@@ -65,8 +65,8 @@ const TableHeaderColumn = ({header, allowMultiSort, setSortFields, currentSortFi
     } else if (React.isValidElement(title)) {
         return <div key={field} className={className} onClick={onClicked}>{title}{isSortable && currentSortDirection !== SortDirection.None && currentSortFields && currentSortFields.filter(x => x === field).length === 1 &&
             <SvgIcon type={SortIconMap[currentSortDirection]}
-                className='pl-2 icon-medium'
-                fillClass='active-item-icon' />
+                className={`pl-2 ${sortIconSizeClass}`}
+                fillClass={sortDirectionFillCalss} />
         }
         {isSortable && currentSortDirection !== SortDirection.None && header.sortOrder && currentSortFields && currentSortFields.filter(x => x === field).length === 1 &&
             <span className='pl-0.5 body3-medium'>{header.sortOrder}</span>

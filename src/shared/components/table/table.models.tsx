@@ -33,6 +33,8 @@ export interface TableColumnModel {
     isSortable?: boolean;
     sortOrder?: number;
     sortDirection?: SortDirection;
+    sortDirectionFillCalss?: string;
+    sortIconSizeClass?: string;
     alignment?: 'start' | 'end' | 'center';
     onClick?: (field: string | undefined, sortDirection: SortDirection) => void
     render?: (field: any, row: any) => ReactNode;

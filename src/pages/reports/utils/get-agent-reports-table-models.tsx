@@ -358,7 +358,7 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
             render: (totalChats: string) => {
                 return (<div className='flex items-center h-full'>
                     <div data-testid='agent-rpt-total-chats' className={classnames('overflow-hidden overflow-ellipsis ellipsis-row body2')}>
-                        {totalChats ?? "0"}
+                        {totalChats.toLocaleString() ?? "0"}
                     </div>
                 </div>)
             }
@@ -426,6 +426,9 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
             widthClass: 'w-5/24',
             rowClassname: 'body2',
             isSortable: true,
+            sortDirectionFillCalss: "default-toolbar-icon",
+            sortIconSizeClass: 'icon-medium-18',
+            headerClassName: 'flex items-center',
             onClick: (field: string | undefined, direction: SortDirection) => {
                 onSort(field, direction);
             },
@@ -443,13 +446,16 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
             widthClass: 'w-3/24',
             rowClassname: 'body2',
             isSortable: true,
+            sortDirectionFillCalss: "default-toolbar-icon",
+            sortIconSizeClass: 'icon-medium-18',
+            headerClassName: 'flex items-center',
             onClick: (field: string | undefined, direction: SortDirection) => {
                 onSort(field, direction);
             },
             render: (totalCalls: string) => {
                 return (<div className='flex items-center h-full'>
                     <div className={classnames('overflow-hidden overflow-ellipsis ellipsis-row body2')}>
-                        {totalCalls ? (totalCalls) : "0"}
+                        {totalCalls ? (totalCalls.toLocaleString()) : "0"}
                     </div>
                 </div>)
             }
@@ -460,13 +466,16 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
             widthClass: 'w-3/24',
             rowClassname: 'body2',
             isSortable: true,
+            sortDirectionFillCalss: "default-toolbar-icon",
+            sortIconSizeClass: 'icon-medium-18',
+            headerClassName: 'flex items-center',
             onClick: (field: string | undefined, direction: SortDirection) => {
                 onSort(field, direction);
             },
             render: (totalInbound: string) => {
                 return (<div className='flex items-center h-full'>
                     <div className={classnames('overflow-hidden overflow-ellipsis ellipsis-row body2')}>
-                        {totalInbound ? (totalInbound) : "0"}
+                        {totalInbound ? (totalInbound.toLocaleString()) : "0"}
                     </div>
                 </div>)
             }
@@ -477,13 +486,16 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
             widthClass: 'w-3/24',
             rowClassname: 'body2',
             isSortable: true,
+            sortDirectionFillCalss: "default-toolbar-icon",
+            sortIconSizeClass: 'icon-medium-18',
+            headerClassName: 'flex items-center',
             onClick: (field: string | undefined, direction: SortDirection) => {
                 onSort(field, direction);
             },
             render: (totalOutbound: string) => {
                 return (<div className='flex items-center h-full'>
                     <div className={classnames('overflow-hidden overflow-ellipsis ellipsis-row body2')}>
-                        {totalOutbound ? `${totalOutbound}` : "0"}
+                        {totalOutbound ? `${totalOutbound.toLocaleString()}` : "0"}
                     </div>
                 </div>)
             }
@@ -494,6 +506,9 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
             widthClass: 'w-3/24',
             rowClassname: 'body2',
             isSortable: true,
+            sortDirectionFillCalss: "default-toolbar-icon",
+            sortIconSizeClass: 'icon-medium-18',
+            headerClassName: 'flex items-center',
             onClick: (field: string | undefined, direction: SortDirection) => {
                 onSort(field, direction);
             },
@@ -511,6 +526,9 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
             widthClass: 'w-3/24',
             rowClassname: 'body2',
             isSortable: true,
+            sortDirectionFillCalss: "default-toolbar-icon",
+            sortIconSizeClass: 'icon-medium-18',
+            headerClassName: 'flex items-center',
             onClick: (field: string | undefined, direction: SortDirection) => {
                 onSort(field, direction);
             },
@@ -528,13 +546,16 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
             widthClass: 'w-16',
             rowClassname: 'body2',
             isSortable: true,
+            sortDirectionFillCalss: "default-toolbar-icon",
+            sortIconSizeClass: 'icon-medium-18',
+            headerClassName: 'flex items-center',
             onClick: (field: string | undefined, direction: SortDirection) => {
                 onSort(field, direction);
             },
             render: (avgVoiceRating: number, row: AgentReport) => {
                 return (<div className='flex items-center h-full'>
                     <div className={classnames('overflow-hidden overflow-ellipsis ellipsis-row body2')}>
-                        {displayPatientRating(avgVoiceRating, row.voiceChatRatingCount)}
+                        {displayPatientRating(avgVoiceRating, row.voiceRatingCount)}
                     </div>
                     <div className={'ml-4'}>
                         {`${avgVoiceRating}%`}
@@ -554,7 +575,7 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
             render: (voiceRatingCount: string) => {
                 return (<div className='flex items-center h-full'>
                     <div className={classnames('overflow-hidden overflow-ellipsis ellipsis-row body2')}>
-                        {voiceRatingCount ? `${voiceRatingCount}` : "0"}
+                        {voiceRatingCount ? `${voiceRatingCount.toLocaleString()}` : "0"}
                     </div>
                 </div>)
             }
