@@ -1,6 +1,6 @@
 import {AgentReport} from "../models/agent-report.model";
 
-export const agentReportTableData : AgentReport[]  = [
+export const agentReportTableData: AgentReport[] = [
     {
         "timePeriod": 4,
         "reportId": "agent-monthly-20220731",

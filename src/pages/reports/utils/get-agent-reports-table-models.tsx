@@ -75,7 +75,7 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
             },
             render: (userFullName: string, row: AgentReport) => {
                 return (<div className='flex items-center h-full'>
-                    <div className={classnames('overflow-hidden overflow-ellipsis ellipsis-row body2')}>
+                    <div className={classnames('truncate body2')}>
                         <TableAgentInfo agentId={row.userId} />
                     </div>
                 </div>)
@@ -198,7 +198,7 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
             },
             render: (userId: string) => {
                 return (<div className='flex items-center h-full'>
-                    <div className={classnames('overflow-hidden overflow-ellipsis ellipsis-row body2')}>
+                    <div className={classnames('truncate body2')}>
                         <TableAgentInfo agentId={userId} />
                     </div>
                 </div>)
@@ -207,7 +207,7 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
         {
             title: 'reports.agent_reports.column_names.total_tickets',
             field: 'totalTicketsCount',
-            widthClass: 'w-2/12',
+            widthClass: 'w-1/12',
             rowClassname: 'body2',
             isSortable: true,
             onClick: (field: string | undefined, direction: SortDirection) => {
@@ -216,7 +216,7 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
             render: (totalTicketsCount: number) => {
                 return (<div className='flex items-center h-full'>
                     <div data-testid='agent-rpt-total-tickets' className={classnames('overflow-hidden overflow-ellipsis ellipsis-row body2')}>
-                        {totalTicketsCount || 0}
+                        {!!totalTicketsCount ? totalTicketsCount.toLocaleString() : 0}
                     </div>
                 </div>)
             }
@@ -224,7 +224,7 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
         {
             title: 'reports.agent_reports.column_names.overdue_tickets',
             field: 'overdueTicketCount',
-            widthClass: 'w-2/12',
+            widthClass: 'w-1/12',
             rowClassname: 'body2',
             isSortable: true,
             onClick: (field: string | undefined, direction: SortDirection) => {
@@ -241,7 +241,7 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
         {
             title: 'reports.agent_reports.column_names.total_sms',
             field: 'totalSmsCount',
-            widthClass: 'w-2/12',
+            widthClass: 'w-1/12',
             rowClassname: 'body2',
             isSortable: true,
             onClick: (field: string | undefined, direction: SortDirection) => {
@@ -258,7 +258,7 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
         {
             title: 'reports.agent_reports.column_names.total_emails',
             field: 'totalEmailCount',
-            widthClass: 'w-2/12',
+            widthClass: 'w-1/12',
             rowClassname: 'body2',
             isSortable: true,
             onClick: (field: string | undefined, direction: SortDirection) => {
@@ -275,7 +275,7 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
         {
             title: 'reports.agent_reports.column_names.avg_sms_response',
             field: 'avgSmsResponse',
-            widthClass: 'w-2/12',
+            widthClass: 'w-1/12',
             rowClassname: 'body2',
             isSortable: true,
             onClick: (field: string | undefined, direction: SortDirection) => {
@@ -292,7 +292,7 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
         {
             title: 'reports.agent_reports.column_names.avg_email_response',
             field: 'avgEmailResponse',
-            widthClass: 'w-2/12',
+            widthClass: 'w-1/12',
             rowClassname: 'body2',
             isSortable: true,
             onClick: (field: string | undefined, direction: SortDirection) => {
@@ -340,7 +340,7 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
             },
             render: (userId: string) => {
                 return (<div className='flex items-center h-full'>
-                    <div className={classnames('overflow-hidden overflow-ellipsis ellipsis-row body2')}>
+                    <div className={classnames('truncate body2')}>
                         <TableAgentInfo agentId={userId} />
                     </div>
                 </div>)
@@ -434,7 +434,7 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
             },
             render: (userFullName: string, row: AgentReport) => {
                 return (<div className='flex items-center h-full'>
-                    <div className={classnames('overflow-hidden overflow-ellipsis ellipsis-row body2')}>
+                    <div className={classnames('truncate body2')}>
                         <TableAgentInfo agentId={row.userId} />
                     </div>
                 </div>)

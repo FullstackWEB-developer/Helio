@@ -1,5 +1,5 @@
-import { ReportTypes } from '../models/report-types.enum'
-import { ViewTypes } from '../models/view-types.enum'
+import {ReportTypes} from '../models/report-types.enum'
+import {ViewTypes} from '../models/view-types.enum'
 import dayjs from 'dayjs';
 
 export const viewTypes = [
@@ -15,7 +15,7 @@ export const viewTypes = [
         label: 'reports.view_options.last_7_days',
         value: ViewTypes.Last7Days.toString()
     },
-    
+
     {
         label: 'reports.view_options.last_month',
         value: ViewTypes.LastMonth.toString()
@@ -51,14 +51,14 @@ const TIME_FORMAT = 'HH:mm:ss'
 
 export const getFormattedTime = (time, day, days) => {
     let innerText = "-";
-    if(time){
+    if (time) {
         let duration = dayjs.duration(time, 'seconds');
-        if(time < ONE_DAY_AS_SECOND){
+        if (time < ONE_DAY_AS_SECOND) {
             innerText = duration.format(TIME_FORMAT);
-        }else if(time >= ONE_DAY_AS_SECOND && time < TWO_DAY_AS_SECOND){
-            innerText = `${duration.format('DD')} ${day} ${duration.format(TIME_FORMAT)}`
-        }else{
-            innerText = `${duration.format('DD')} ${days} ${duration.format(TIME_FORMAT)}`
+        } else if (time >= ONE_DAY_AS_SECOND && time < TWO_DAY_AS_SECOND) {
+            innerText = `${duration.format('D')} ${day} ${duration.format(TIME_FORMAT)}`
+        } else {
+            innerText = `${duration.format('D')} ${days} ${duration.format(TIME_FORMAT)}`
         }
     }
     return innerText;
