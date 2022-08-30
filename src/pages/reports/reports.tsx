@@ -29,7 +29,13 @@ import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
 import AgentReports from './components/agent-reports';
 import Spinner from '@components/spinner/Spinner';
 import dayjs from 'dayjs';
-import {GetAgentReport, GetBotReport, GetQueueReport, GetSystemReport, GetPerformanceChart} from '@constants/react-query-constants';
+import {
+    GetAgentReport,
+    GetBotReport,
+    GetPerformanceChart,
+    GetQueueReport,
+    GetSystemReport
+} from '@constants/react-query-constants';
 import QueueReports from './components/queue-reports';
 import MonthList from './components/month-list';
 import {SortDirection} from '@shared/models/sort-direction';
@@ -41,7 +47,7 @@ import BotReports from '@pages/reports/components/bot-reports';
 import {Option} from '@components/option/option';
 import weekday from 'dayjs/plugin/weekday';
 import PerformanceCharts from './components/performance-charts';
-import { PerformanceChartResponse } from './models/performance-chart.model';
+import {PerformanceChartResponse} from './models/performance-chart.model';
 import SystemReports from '@pages/reports/components/system-reports';
 import {SystemReport} from '@pages/reports/models/system-report.model';
 
@@ -56,17 +62,25 @@ const Reports = () => {
     const [selectedStartDate, setSelectedStartDate] = useState<Date | undefined>();
     const [selectedEndDate, setSelectedEndDate] = useState<Date | undefined>();
     const [agentReportData, setAgentReportData] = useState<AgentReport[]>([]);
+    const [viewSelectOptions, setViewSelectOptions] = useState<Option[]>([]);
     const [performanceChartData, setPerformanceChartData] = useState<PerformanceChartResponse[] | null>(null);
     const [reportTitle, setReportTitle] = useState<string>();
     const [reportTitleForView, setReportTitleForView] = useState<string>();
     const [_, setOrderDate] = useState<Date | undefined>();
     const dispatch = useDispatch();
     const {control, handleSubmit, setValue} = useForm({
-        mode: 'all'
+        mode: 'all',
+        defaultValues: {
+            "view-type": ViewTypes.Last7Days.toString(),
+            "report-type" :ReportTypes.AgentReports.toString(),
+            "endDate" : undefined,
+            "startDate": undefined
+        }
     });
     dayjs.extend(weekday)
 
     useEffect(() => {
+        setSelectedReport(ReportTypes.AgentReports);
         refetchAgentData().then();
         changeReportTitle();
     }, []);
@@ -78,6 +92,36 @@ const Reports = () => {
     useEffect(() => {
         changeReportTitle(true);
     }, [selectedView, GetPerformanceChart]);
+
+    useEffect(() => {
+        if (!selectedReport) {
+            setViewSelectOptions(viewTypes);
+        }
+        let options: Option[] = [];
+        options.push(viewTypes.find(a => a.value === ViewTypes.Yesterday.toString())!);
+        options.push(viewTypes.find(a => a.value === ViewTypes.Last7Days.toString())!);
+        options.push(viewTypes.find(a => a.value === ViewTypes.LastWeek.toString())!);
+        options.push(viewTypes.find(a => a.value === ViewTypes.LastMonth.toString())!);
+
+        if (selectedReport === ReportTypes.BotReports && selectedTab !== TabTypes.PerformanceCharts) {
+            options.push(viewTypes.find(a => a.value === ViewTypes.CustomDates.toString())!);
+            if (selectedView === ViewTypes.MonthlyReports) {
+                setSelectedView(ViewTypes.LastWeek);
+                setValue('view-type', ViewTypes.Last7Days.toString());
+            }
+        } else if (selectedTab !== TabTypes.PerformanceCharts) {
+            options.push(viewTypes.find(a => a.value === ViewTypes.MonthlyReports.toString())!);
+            setSelectedEndDate(undefined);
+            setSelectedEndDate(undefined);
+            setValue('endDate', undefined);
+            setValue('startDate', undefined);
+            if (selectedView === ViewTypes.CustomDates) {
+                setSelectedView(ViewTypes.LastWeek);
+                setValue('view-type', ViewTypes.Last7Days.toString());
+            }
+        }
+        setViewSelectOptions(options);
+    }, [selectedReport, selectedTab]);
 
     const getViewTypeForDownload = () => {
         return selectedView === ViewTypes.MonthlyReports ? ViewTypes.LastMonth : selectedView;
@@ -330,39 +374,6 @@ const Reports = () => {
         if (!!option) {
             const reportType = Number(option?.value) as ReportTypes;
             setSelectedReport(reportType);
-            const customDateIndex = viewTypes.findIndex(a => a.label === 'reports.view_options.custom_date_range');
-            const monthlyReportsIndex = viewTypes.findIndex(a => a.label === 'reports.view_options.monthly_reports');
-            if (reportType === ReportTypes.BotReports && customDateIndex === -1) {
-                viewTypes.push({
-                    label: 'reports.view_options.custom_date_range',
-                    value: ViewTypes.CustomDates.toString()
-                });
-                if (monthlyReportsIndex > -1) {
-                    viewTypes.splice(monthlyReportsIndex, 1);
-                    if (selectedView === ViewTypes.MonthlyReports) {
-                        setSelectedView(ViewTypes.Last7Days);
-                        setValue('view-type', ViewTypes.Last7Days.toString());
-                    }
-                }
-            } else {
-                if (customDateIndex) {
-                    viewTypes.splice(customDateIndex, 1);
-                    if (selectedView === ViewTypes.CustomDates) {
-                        setSelectedView(ViewTypes.Last7Days);
-                        setValue('view-type', ViewTypes.Last7Days.toString());
-                    }
-                }
-                if (monthlyReportsIndex === -1) {
-                    viewTypes.push({
-                        label: 'reports.view_options.monthly_reports',
-                        value: ViewTypes.MonthlyReports.toString()
-                    });
-                }
-                setSelectedEndDate(undefined);
-                setSelectedEndDate(undefined);
-                setValue('endDate', ViewTypes.Last7Days.toString());
-                setValue('startDate', ViewTypes.Last7Days.toString());
-            }
         }
     }
 
@@ -382,7 +393,6 @@ const Reports = () => {
                     {
                         selectedTab === TabTypes.Reports && <div className='reports-select h-14'>
                             <ControlledSelect
-                                defaultValue={selectedReport.toString()}
                                 name='report-type'
                                 control={control}
                                 label='reports.report'
@@ -393,11 +403,10 @@ const Reports = () => {
                     }
                     <div className='w-48 h-14'>
                         <ControlledSelect
-                            defaultValue={selectedView.toString()}
                             name='view-type'
                             control={control}
                             label='reports.view'
-                            options={viewTypes}
+                            options={viewSelectOptions}
                             onSelect={(option) => onSelectedViewChange(Number(option?.value) as ViewTypes)}
                         />
                     </div>
@@ -474,7 +483,7 @@ const Reports = () => {
                             isLoading() && <Spinner size='large-40' className='pt-2' />
                         }
                         {
-                            !isLoading() && <PerformanceCharts title={reportTitleForView} data={performanceChartData}/>
+                            !isLoading() && <PerformanceCharts selectedView={selectedView} title={reportTitleForView} data={performanceChartData}/>
                         }
                     </Tab>
                 </Tabs>

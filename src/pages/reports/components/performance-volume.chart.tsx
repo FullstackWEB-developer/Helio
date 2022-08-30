@@ -3,16 +3,17 @@ import {useTranslation} from 'react-i18next';
 import dayjs from 'dayjs';
 import './performance-volume.chart.scss';
 import utc from 'dayjs/plugin/utc';
-import {TicketVolumeDataType} from '@pages/dashboard/models/ticket-volume-data-type.enum';
-import { PerformanceChartDisplayUnit } from '../models/performance-chart.model';
+import {PerformanceChartDisplayUnit} from '../models/performance-chart.model';
 import ReportResponsiveLine from './report-responsive-line';
+import {ViewTypes} from '@pages/reports/models/view-types.enum';
 
 export interface PerformanceVolumeChartProps {
     data: { queueName: string; queueData: PerformanceChartDisplayUnit[]; }[];
-    selectedQueues: string[] | null
+    selectedQueues: string[] | null;
+    selectedView: ViewTypes;
 }
 
-const PerformanceVolumeChart = ({data, selectedQueues}: PerformanceVolumeChartProps) => {
+const PerformanceVolumeChart = ({data, selectedQueues, selectedView}: PerformanceVolumeChartProps) => {
 
     const {t} = useTranslation();
     dayjs.extend(utc);
@@ -25,7 +26,7 @@ const PerformanceVolumeChart = ({data, selectedQueues}: PerformanceVolumeChartPr
                     id: item.queueName as string,
                     data: item.queueData.map(item => {
                         return {
-                            x: item.label,
+                            x: selectedView === ViewTypes.Yesterday ? item.label : dayjs.utc(item.label).format('MMM DD'),
                             y: item.value
                         }
                     })
@@ -37,7 +38,7 @@ const PerformanceVolumeChart = ({data, selectedQueues}: PerformanceVolumeChartPr
                     id: item.queueName as string,
                     data: item.queueData.map(item => {
                         return {
-                            x: item.label,
+                            x:  selectedView === ViewTypes.Yesterday ? item.label : dayjs.utc(item.label).format('MMM DD'),
                             y: item.value
                         }
                     })
@@ -66,6 +67,6 @@ const PerformanceVolumeChart = ({data, selectedQueues}: PerformanceVolumeChartPr
             className='w-full px-6 space-y-4 tickets-by-channel-body justify-center items-center flex'>{t('dashboard.no_data_found')}</div>
     }
 
-    return <ReportResponsiveLine data={getConvertedData()} tickRotation={0} toolTipLabelGenerator={(point) => `dashboard.tickets_volume.${point.serieId}_tickets`} volumeDataType={TicketVolumeDataType.Custom} />
+    return <ReportResponsiveLine data={getConvertedData()} selectedView={selectedView} />
 }
 export default PerformanceVolumeChart;

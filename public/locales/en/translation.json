@@ -77,7 +77,8 @@
     "route_leaving_confirmation_message": "Leave without saving changes?",
     "route_leaving_leave_button": "Leave",
     "insert": "Insert",
-    "date_input_assistive_text": "MM/DD/YYYY"
+    "date_input_assistive_text": "MM/DD/YYYY",
+    "update": "Update"
   },
   "app": {
     "error_loading_parameters": "Error loading parameters, please try again later",
@@ -2407,6 +2408,7 @@
     },
     "performance_charts_page": {
       "queues_inbound_volume_over_time_chat": "Queues Inbound Volume Over Time - Chat",
+      "queues_inbound_volume_over_time_voice": "Queues Inbound Volume Over Time - Voice",
       "queues_chats_volume_over_time": "Queues Chats Volume Over Time",
       "top_5_by_volume": "Top 5 By Volume",
       "custom": "Custom",

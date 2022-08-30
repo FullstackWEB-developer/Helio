@@ -1,19 +1,16 @@
 import {DashboardColors} from '@pages/dashboard/utils/dashboard-utils';
-import {ChartTooltip, CustomTick} from '@components/dashboard';
-import {Point, ResponsiveLine, Serie} from '@nivo/line'
-import {useEffect, useMemo, useState} from 'react';
+import {ResponsiveLine, Serie} from '@nivo/line'
+import React, {useEffect, useMemo, useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {TicketVolumeDataType} from '@pages/dashboard/models/ticket-volume-data-type.enum';
+import PerformanceVolumeChartTooltip from '@pages/reports/components/performance-volume-chart-tooltip';
+import ReportResponsiveLineCustomTick from '@pages/reports/components/report-responsive-line-custom-tick';
+import {ViewTypes} from '@pages/reports/models/view-types.enum';
 
 export interface ReportResponsiveLineProps {
-    data: Serie[];
-    tickRotation : number;
-    volumeDataType?: TicketVolumeDataType
-    tickValues?: string | Date[];
-    toolTipLabelGenerator: (point: Point) => string;
-
+    data: Serie[],
+    selectedView: ViewTypes
 }
-const ReportResponsiveLine = ({data, tickRotation, tickValues = 'every 1 day', toolTipLabelGenerator, volumeDataType = TicketVolumeDataType.Daily} : ReportResponsiveLineProps) => {
+const ReportResponsiveLine = ({data, selectedView} : ReportResponsiveLineProps) => {
 
     const [hasData, setHasData] = useState<boolean>(false);
     const {t} = useTranslation();
@@ -34,8 +31,6 @@ const ReportResponsiveLine = ({data, tickRotation, tickValues = 'every 1 day', t
         return <div className='flex h-full w-full items-center justify-center body3-medium'>{t('my_stats.calls_chats.no_data')}</div>
     }
 
-    const scaleFormat = (volumeDataType === TicketVolumeDataType.SingleDay) || (volumeDataType === TicketVolumeDataType.Custom) ? "%Y-%m-%d %H:%M:%S" : "%Y-%m-%d";
-    const xFormat = (volumeDataType === TicketVolumeDataType.SingleDay) || (volumeDataType === TicketVolumeDataType.Custom) ? "time:%Y-%m-%d %H:%M:%S" : "time:%Y-%m-%d";
     return <ResponsiveLine
         data={data}
         enableSlices={false}
@@ -44,13 +39,14 @@ const ReportResponsiveLine = ({data, tickRotation, tickValues = 'every 1 day', t
         yFormat=" >-.0f"
         enableCrosshair={false}
         curve='linear'
-        pointSize={14}
+        pointSize={10}
         colors={DashboardColors()}
         pointColor={{from: 'color'}}
         areaOpacity={0.3}
         pointBorderWidth={2.2}
         pointBorderColor='white'
-        lineWidth={4}
+        lineWidth={3}
+        tooltip={({ point }) => <PerformanceVolumeChartTooltip point={point} />}
         theme={{
             fontSize: Number(style.getPropertyValue('--dashboard-volume-chart-axis-label-fontSize')),
             fontFamily: style.getPropertyValue('--dashboard-volume-chart-axis-label-fontFamily'),
@@ -60,9 +56,9 @@ const ReportResponsiveLine = ({data, tickRotation, tickValues = 'every 1 day', t
         pointLabelYOffset={-12}
         enableArea={false}
         axisBottom={{
-            tickValues,
+            tickValues: 'every 1 day',
             legendPosition: "middle",
-            renderTick: (tick) =>  <CustomTick data={data} volumeDataType={volumeDataType} tick={tick} tickRotation={tickRotation} />,
+            renderTick: (tick) =>  <ReportResponsiveLineCustomTick isTime={selectedView === ViewTypes.Yesterday} tick={tick} />
         }}
         legends={[
             {
@@ -73,11 +69,11 @@ const ReportResponsiveLine = ({data, tickRotation, tickValues = 'every 1 day', t
                 translateY: 75,
                 itemWidth: 80,
                 itemHeight: 10,
-                itemsSpacing: 13,
+                itemsSpacing: 24,
                 symbolSize: 11,
                 symbolShape: 'circle',
                 itemDirection: 'left-to-right',
-                itemTextColor: '#777'
+                itemTextColor: '#777',
             }
         ]}
     />

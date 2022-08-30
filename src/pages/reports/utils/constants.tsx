@@ -15,7 +15,6 @@ export const viewTypes = [
         label: 'reports.view_options.last_7_days',
         value: ViewTypes.Last7Days.toString()
     },
-
     {
         label: 'reports.view_options.last_month',
         value: ViewTypes.LastMonth.toString()
@@ -23,6 +22,10 @@ export const viewTypes = [
     {
         label: 'reports.view_options.monthly_reports',
         value: ViewTypes.MonthlyReports.toString()
+    },
+    {
+        label: 'reports.view_options.custom_date_range',
+        value: ViewTypes.CustomDates.toString()
     }
 ]
 

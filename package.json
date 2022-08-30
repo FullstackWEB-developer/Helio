@@ -128,6 +128,7 @@
       "@pages/(.*)": "<rootDir>/src/pages/$1",
       "@shared/(.*)": "<rootDir>/src/shared/$1",
       "@app/(.*)": "<rootDir>/src/app/$1"
-    }
+    },
+    "testEnvironment": "node"
   }
 }

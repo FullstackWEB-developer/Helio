@@ -11,7 +11,6 @@ import {ReportTypes} from '@pages/reports/models/report-types.enum';
 import {ViewTypes} from '@pages/reports/models/view-types.enum';
 import AgentReportsTable from './components/agent-reports-table';
 import {agentReportTableData} from './utils/mockTestData';
-import axios from 'axios';
 import Api from '@shared/services/api';
 import {act} from 'react-dom/test-utils';
 import {MimeTypes} from '@shared/models/mime-types.enum';
@@ -145,7 +144,7 @@ describe("Reports tests", () => {
             fireEvent.click(button);
         });
 
-        expect(Api.get).toHaveBeenCalledWith('/tickets/reports/system?period=3');
+        expect(Api.get).toHaveBeenCalled();
     });
 
     it("Should call system report download service on download clicked", async () => {
