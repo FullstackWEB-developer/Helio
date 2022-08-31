@@ -57,7 +57,7 @@ const TicketDetailEventLog = ({ticket, control, isVisible, setIsVisible}: Ticket
     return <div className={'py-4 mx-auto flex flex-col'}>
         <div className='flex justify-between w-full'>
             <div className='flex flex-row items-center'>
-                <div className='body2-medium pr-2'>
+                <div className='body2-medium pr-1'>
                     {
                         t(dayjs(ticket.dueDate).isBefore(sysdate) ? 'ticket_detail.info_panel.overdue' : 'ticket_detail.info_panel.due')   
                     }

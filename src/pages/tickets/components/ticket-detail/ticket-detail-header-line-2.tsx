@@ -19,7 +19,7 @@ const TicketDetailHeaderLine2 = ({ticket, patientOrContactName}: {ticket: Ticket
         return (
             <div className='pl-6'>
                 <div className='flex flex-row'>
-                    <div className='body-medium pr-2'>{t(text)}</div>
+                    <div className='body-medium pr-1'>{t(text)}</div>
                     <div>{value}</div>
                 </div>
             </div>
