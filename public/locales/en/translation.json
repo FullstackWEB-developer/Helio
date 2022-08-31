@@ -2193,8 +2193,6 @@
       "deleted_departments": "Deleted Departments",
       "deleted_departments_info": "If a department is deleted in your EMR/EHR, please enter the department ID.",
       "deleted_departments_warning": "Deleted departments should contain only numbers separated by comma and numbers should be greater than -1",
-      "warning_info": "There are unsaved changes, are you sure to cancel?",
-      "warning_info_leaving": "There are unsaved changes, are you sure to leave?",
       "warning": "Warning",
       "save_error": "Error saving settings, please try again.",
       "save_success": "Settings saved successfully.",
