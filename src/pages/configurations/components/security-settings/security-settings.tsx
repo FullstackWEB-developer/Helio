@@ -11,21 +11,27 @@ import { SnackbarType } from "@components/snackbar/snackbar-type.enum";
 import Spinner from "@components/spinner/Spinner";
 import { useDispatch } from "react-redux";
 import { GetSecuritySettings } from "@constants/react-query-constants";
+import {useEffect, useState} from 'react';
+import utils from '@shared/utils/utils';
 
 const SecuritySettingsScreen = () => {
     const { t } = useTranslation();
     const dispatch = useDispatch();
-    const { control, handleSubmit, formState : {isValid, isDirty}, reset } = useForm({ mode: 'all' })
+    const [securitySettings, setSecuritySettings] = useState<SecuritySettings>();
+    const [isDirty, setDirty] = useState<boolean>(false);
+    const { control, handleSubmit, formState : {isValid}, reset, watch } = useForm({ mode: 'all' })
     const { isFetching } = useQuery<SecuritySettings>(GetSecuritySettings, getSecuritySettings, {
         onSuccess: (response) => {
-            reset({
+            const secSettings: SecuritySettings = {
                 hipaaVerificationRetryNumber: response.hipaaVerificationRetryNumber,
                 verifiedPatientExpiresInDays: response.verifiedPatientExpiresInDays,
                 medicalRecordsDownloadExpirationInDays: response.medicalRecordsDownloadExpirationInDays,
                 redirectLinkExpirationInHours: response.redirectLinkExpirationInHours,
                 verificationFailWaitInMinutes: response.verificationFailWaitInMinutes,
                 guestSmsExpirationInHours: response.guestSmsExpirationInHours
-            })
+            };
+            reset(secSettings);
+            setSecuritySettings(secSettings);
         },
         onError: () => {
             dispatch(addSnackbarMessage({
@@ -34,6 +40,27 @@ const SecuritySettingsScreen = () => {
             }))
         }
     })
+
+    useEffect(() => {
+        if (!securitySettings) {
+            return;
+        }
+        const watchedValues: SecuritySettings = {
+            hipaaVerificationRetryNumber: parseInt(watch('hipaaVerificationRetryNumber')),
+            guestSmsExpirationInHours: parseInt(watch('guestSmsExpirationInHours')),
+            medicalRecordsDownloadExpirationInDays: parseInt(watch('medicalRecordsDownloadExpirationInDays')),
+            redirectLinkExpirationInHours: parseInt(watch('redirectLinkExpirationInHours')),
+            verificationFailWaitInMinutes: parseInt(watch('verificationFailWaitInMinutes')),
+            verifiedPatientExpiresInDays: parseInt(watch('verifiedPatientExpiresInDays'))
+        }
+
+        if (!utils.deepEqual(watchedValues,securitySettings)) {
+            setDirty(true);
+        } else {
+            setDirty(false);
+        }
+    }, [watch, securitySettings]);
+
     const saveSecuritySettingsMutation = useMutation(saveSecuritySettings);
     const onSubmit = (form: SecuritySettings) => {
         const request: SecuritySettings = {
@@ -51,6 +78,7 @@ const SecuritySettingsScreen = () => {
                     message: 'configuration.security_settings.save_success'
                 }));
                 reset(request);
+                setSecuritySettings(request);
             },
             onError: () => {
                 dispatch(addSnackbarMessage({

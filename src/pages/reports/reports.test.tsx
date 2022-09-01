@@ -10,11 +10,12 @@ import TestWrapper from '@shared/test-utils/test-wrapper';
 import {ReportTypes} from '@pages/reports/models/report-types.enum';
 import {ViewTypes} from '@pages/reports/models/view-types.enum';
 import AgentReportsTable from './components/agent-reports-table';
-import {agentReportTableData} from './utils/mockTestData';
+import {agentReportTableData, systemReportData} from './utils/mockTestData';
 import Api from '@shared/services/api';
 import {act} from 'react-dom/test-utils';
 import {MimeTypes} from '@shared/models/mime-types.enum';
 import utils from '@shared/utils/utils';
+import SystemReportTable from './components/system-reports-table';
 
 describe("Reports tests", () => {
     let container: HTMLDivElement | null;
@@ -184,5 +185,13 @@ describe("Reports tests", () => {
         const totalTicketsCountCell = await findByTestId('agent-rpt-total-tickets');
         expect(totalTicketsCountCell).toBeInTheDocument();
         expect(totalTicketsCountCell.textContent).toEqual(String(agentReportTableData[0].totalTicketsCount));
+    });
+
+    it("should render system report grid", async () => {
+        const {findByTestId} = render(<TestWrapper mockState={mockState}>
+            <SystemReportTable data={systemReportData} />
+        </TestWrapper>);
+        const table = await findByTestId("system-report-grid");
+        expect(table).toBeInTheDocument();
     });
 })

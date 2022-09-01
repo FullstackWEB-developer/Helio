@@ -93,7 +93,9 @@ const FormattedTextarea = React.forwardRef<ReactQuill, FormattedTextareaProps>((
                 toolbar: '#toolbar'
             }}
             onBlur={(previousRange) => {
-                setPreviousCursorIndex(previousRange?.index);
+                if (previousRange?.index) {
+                    setPreviousCursorIndex(previousRange?.index);
+                }
             }}
         />
         {showSendIcon && content.replace(/<[^>]+>/g, '') && <div

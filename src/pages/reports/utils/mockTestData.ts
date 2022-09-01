@@ -1,4 +1,5 @@
 import {AgentReport} from "../models/agent-report.model";
+import {SystemReport} from "../models/system-report.model";
 
 export const agentReportTableData: AgentReport[] = [
     {
@@ -35,4 +36,39 @@ export const agentReportTableData: AgentReport[] = [
         "overdueTicketCount": 0,
         "totalTicketsCount": 18
     }
+];
+
+export const systemReportData: SystemReport[] = [
+    {
+        "timePeriod": 3,
+        "totalTickets": 88,
+        "ticketCountsByReason": [
+          {
+            "reason": "17",
+            "count": 88
+          }
+        ],
+        "ticketRatiosByReason": [
+          {
+            "reason": "22",
+            "count": 100
+          }
+        ],
+        "averagePatientSatisfactionRatingForTickets": 0,
+        "totalIncomingSms": 0,
+        "totalOutgoingSms": 0,
+        "averageSmsResponseTime": 0,
+        "averagePatientSatisfactionRatingForSms": 0,
+        "totalInboundChats": 0,
+        "averageChatResponseTime": 17,
+        "averagePatientSatisfactionRatingForChat": 0,
+        "totalInboundCalls": 7,
+        "averageCallResponseTime": 0,
+        "totalOutboundCalls": 26,
+        "averagePatientSatisfactionRatingForVoice": 0,
+        "totalInboundEmails": 1,
+        "averageEmailResponseTime": 0,
+        "averagePatientSatisfactionRatingForEmail": 0,
+        "channel": 0
+      }
 ];

@@ -134,6 +134,7 @@ const GeneralSettings = () => {
                                                 ]}
                                                 onChange={(e: string) => {
                                                     setForceRedirect(JSON.parse(e));
+                                                    control.setValue('forceToRedirect', e.toLowerCase(), {shouldDirty: e.toLowerCase() !=  String(data?.forceToRedirect).toLowerCase(), shouldValidate: true});
                                                     control.trigger().then();
                                                 }}
                                             />
@@ -235,7 +236,7 @@ const GeneralSettings = () => {
                         <RouteLeavingGuard
                             when={formState.isDirty && !formState.isSubmitSuccessful}
                             navigate={path => history.push(path)}
-                            message={'configuration.general_settings.warning_info_leaving'}
+                            message={'common.confirm_close'}
                             title={'configuration.general_settings.warning'}
                         />
                         <Confirmation
@@ -244,7 +245,7 @@ const GeneralSettings = () => {
                             okButtonLabel={'common.ok'}
                             onOk={() => {setWarning(false); refetch().then()}}
                             title={'configuration.general_settings.warning'}
-                            message={'configuration.general_settings.warning_info'}
+                            message={'common.confirm_close'}
                             isOpen={warning} />
                     </div>
                 </form>

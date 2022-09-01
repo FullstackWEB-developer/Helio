@@ -2196,8 +2196,6 @@
       "deleted_departments": "Deleted Departments",
       "deleted_departments_info": "If a department is deleted in your EMR/EHR, please enter the department ID.",
       "deleted_departments_warning": "Deleted departments should contain only numbers separated by comma and numbers should be greater than -1",
-      "warning_info": "There are unsaved changes, are you sure to cancel?",
-      "warning_info_leaving": "There are unsaved changes, are you sure to leave?",
       "warning": "Warning",
       "save_error": "Error saving settings, please try again.",
       "save_success": "Settings saved successfully.",
@@ -2417,12 +2415,29 @@
       "selected_error_5": "You should choose at most five queues for custom view"
     },
     "system_reports" : {
+      "title": "System KPI report",
       "key_kpis": "Key KPIs",
       "total_tickets_created": "Total Tickets Created",
       "total_incoming_calls": "Total Incoming Calls",
       "total_incoming_chats": "Total Incoming Chats",
       "total_incoming_sms": "Total Incoming SMS",
-      "total_incoming_email": "Total Incoming Email"
+      "total_incoming_email": "Total Incoming Email",
+      "channel": "Channel/Feature",
+      "kpi": "KPI",
+      "value": "Value",
+      "tickets": "Tickets",
+      "voice": "Voice",
+      "chat": "Chat",
+      "sms": "SMS",
+      "email": "Email",
+      "tickets_by_reason": "Tickets By Reason",
+      "average_patient_satisfaction_rating": "Average Patient Satisfaction Rating",
+      "total_inbound_calls": "Total Inbound Calls",
+      "total_outbound_calls": "Total Outbound Calls",
+      "average_response_time": "Average Response Time",
+      "total_inbound_chats": "Total Initial Inbound Chats",
+      "total_outgoing_sms": "Total Outgoing SMS",
+      "total_initial_inbound_emails": "Total Initial Inbound Emails"
     }
   }
 }
