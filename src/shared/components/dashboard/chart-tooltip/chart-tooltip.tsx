@@ -25,22 +25,17 @@ const ChartTooltip = ({point, label, volumeDataType = TicketVolumeDataType.Daily
         return point.x == date.format('YYYY-MM-DD');
     }
 
-    const getEndDate = (date: dayjs.Dayjs, isWeek: boolean) => {
+    const getEndDate = (date: dayjs.Dayjs) => {
         if(data && data.length > 1){
             let currentIndex = data[0].data.findIndex( x => findPoint(x, date));
             if(currentIndex > -1 && data[0].data[currentIndex + 1]){
                 if(data[0].data[currentIndex + 1].x){
-                    if (isWeek) {
-                        return dayjs(data[0].data[currentIndex + 1].x).add(-1, 'd');
-                    } else{
-                        return dayjs(data[0].data[currentIndex + 1].x);
-                    }
-
+                    return dayjs(data[0].data[currentIndex + 1].x).add(-1, 'd');
                 }
             }
         }
 
-        if(isWeek && date.endOf('week').add(-1, 'd').isBefore(dayjs(dashboardFilterEndDate))){
+        if(date.endOf('week').add(-1, 'd').isBefore(dayjs(dashboardFilterEndDate)) && dayjs(dashboardFilterEndDate).get('d') !== 0){
             return date.endOf('week').add(-1, 'd');
         } else {
             return dayjs(dashboardFilterEndDate);
@@ -55,7 +50,7 @@ const ChartTooltip = ({point, label, volumeDataType = TicketVolumeDataType.Daily
             case TicketVolumeDataType.SingleDay:
                 return date.format('hh:mm A') + " - " + date.add(2, 'hour').format('hh:mm A');
             case TicketVolumeDataType.Weekly:
-                return date.format('MMM D') + " - " + getEndDate(date, true).format('MMM DD');
+                return date.format('MMM D') + " - " + getEndDate(date).format('MMM DD');
             case TicketVolumeDataType.Quarterly:
                 return date.format('MMM D, YYYY') + " - " + date.add(3, 'month').format('MMM D, YYYY');
             case TicketVolumeDataType.Monthly:
