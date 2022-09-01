@@ -1,5 +1,5 @@
 import {AgentReport} from '../models/agent-report.model';
-import {TableModel} from '@components/table/table.models';
+import {TableColumnModel, TableModel} from '@components/table/table.models';
 import classnames from 'classnames';
 import TableAgentInfo from '../components/table-agent-info';
 import {SortDirection} from '@shared/models/sort-direction';
@@ -63,13 +63,16 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
         }
     }
 
-    const voiceAndChatModelColumns = [
+    const voiceAndChatModelColumns: TableColumnModel[] = [
         {
             title: 'reports.agent_reports.column_names.agent_name',
             field: 'userFullName',
             widthClass: 'w-5/24',
             rowClassname: 'body2',
+            headerClassName: 'items-center',
             isSortable: true,
+            sortDirectionFillCalss: "default-toolbar-icon",
+            sortIconSizeClass: 'icon-large',
             onClick: (field: string | undefined, direction: SortDirection) => {
                 onSort(field, direction);
             },
@@ -86,6 +89,9 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
             field: 'totalCalls',
             widthClass: 'w-3/24',
             rowClassname: 'body2',
+            headerClassName: 'items-center',
+            sortDirectionFillCalss: "default-toolbar-icon",
+            sortIconSizeClass: 'icon-large',
             isSortable: true,
             onClick: (field: string | undefined, direction: SortDirection) => {
                 onSort(field, direction);
@@ -102,6 +108,9 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
             title: 'reports.agent_reports.column_names.utilization',
             field: 'utilizationPercent',
             widthClass: 'w-3/24',
+            headerClassName: 'items-center',
+            sortDirectionFillCalss: "default-toolbar-icon",
+            sortIconSizeClass: 'icon-large',
             rowClassname: 'body2',
             isSortable: true,
             onClick: (field: string | undefined, direction: SortDirection) => {
@@ -119,6 +128,9 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
             title: 'reports.agent_reports.column_names.avg_idle_time',
             field: 'averageIdleTime',
             widthClass: 'w-3/24',
+            headerClassName: 'items-center',
+            sortDirectionFillCalss: "default-toolbar-icon",
+            sortIconSizeClass: 'icon-large',
             rowClassname: 'body2',
             isSortable: true,
             onClick: (field: string | undefined, direction: SortDirection) => {
@@ -136,6 +148,9 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
             title: 'reports.agent_reports.column_names.answer_rate',
             field: 'answerRate',
             widthClass: 'w-3/24',
+            headerClassName: 'items-center',
+            sortDirectionFillCalss: "default-toolbar-icon",
+            sortIconSizeClass: 'icon-large',
             rowClassname: 'body2',
             isSortable: true,
             onClick: (field: string | undefined, direction: SortDirection) => {
@@ -153,7 +168,10 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
             title: 'reports.agent_reports.column_names.missed_contact',
             field: 'missedContacts',
             widthClass: 'w-3/24',
+            sortDirectionFillCalss: "default-toolbar-icon",
+            sortIconSizeClass: 'icon-large',
             rowClassname: 'body2',
+            headerClassName: 'items-center',
             isSortable: true,
             onClick: (field: string | undefined, direction: SortDirection) => {
                 onSort(field, direction);
@@ -170,7 +188,10 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
             title: 'reports.agent_reports.column_names.acwt',
             field: 'avgAfterContactWorkTime',
             widthClass: 'w-3/24',
+            sortDirectionFillCalss: "default-toolbar-icon",
+            sortIconSizeClass: 'icon-large',
             rowClassname: 'body2',
+            headerClassName: 'items-center',
             isSortable: true,
             onClick: (field: string | undefined, direction: SortDirection) => {
                 onSort(field, direction);
@@ -191,7 +212,10 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
             title: 'reports.agent_reports.column_names.agent_name',
             field: 'userId',
             widthClass: 'w-1/5',
+            sortDirectionFillCalss: "default-toolbar-icon",
+            sortIconSizeClass: 'icon-large',
             rowClassname: 'body2',
+            headerClassName: 'items-center',
             isSortable: true,
             onClick: (field: string | undefined, direction: SortDirection) => {
                 onSort(field, direction);
@@ -208,6 +232,9 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
             title: 'reports.agent_reports.column_names.total_tickets',
             field: 'totalTicketsCount',
             widthClass: 'w-1/12',
+            sortDirectionFillCalss: "default-toolbar-icon",
+            sortIconSizeClass: 'icon-large',
+            headerClassName: 'items-center',
             rowClassname: 'body2',
             isSortable: true,
             onClick: (field: string | undefined, direction: SortDirection) => {
@@ -225,6 +252,9 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
             title: 'reports.agent_reports.column_names.overdue_tickets',
             field: 'overdueTicketCount',
             widthClass: 'w-1/12',
+            headerClassName: 'items-center',
+            sortDirectionFillCalss: "default-toolbar-icon",
+            sortIconSizeClass: 'icon-large',
             rowClassname: 'body2',
             isSortable: true,
             onClick: (field: string | undefined, direction: SortDirection) => {
@@ -241,6 +271,9 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
         {
             title: 'reports.agent_reports.column_names.total_sms',
             field: 'totalSmsCount',
+            sortDirectionFillCalss: "default-toolbar-icon",
+            sortIconSizeClass: 'icon-large',
+            headerClassName: 'items-center',
             widthClass: 'w-1/12',
             rowClassname: 'body2',
             isSortable: true,
@@ -259,6 +292,9 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
             title: 'reports.agent_reports.column_names.total_emails',
             field: 'totalEmailCount',
             widthClass: 'w-1/12',
+            headerClassName: 'items-center',
+            sortDirectionFillCalss: "default-toolbar-icon",
+            sortIconSizeClass: 'icon-large',
             rowClassname: 'body2',
             isSortable: true,
             onClick: (field: string | undefined, direction: SortDirection) => {
@@ -276,6 +312,9 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
             title: 'reports.agent_reports.column_names.avg_sms_response',
             field: 'avgSmsResponse',
             widthClass: 'w-1/12',
+            headerClassName: 'items-center',
+            sortDirectionFillCalss: "default-toolbar-icon",
+            sortIconSizeClass: 'icon-large',
             rowClassname: 'body2',
             isSortable: true,
             onClick: (field: string | undefined, direction: SortDirection) => {
@@ -293,6 +332,9 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
             title: 'reports.agent_reports.column_names.avg_email_response',
             field: 'avgEmailResponse',
             widthClass: 'w-1/12',
+            headerClassName: 'items-center',
+            sortDirectionFillCalss: "default-toolbar-icon",
+            sortIconSizeClass: 'icon-large',
             rowClassname: 'body2',
             isSortable: true,
             onClick: (field: string | undefined, direction: SortDirection) => {
@@ -311,6 +353,9 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
             field: 'voiceChatRatingCount',
             widthClass: 'w-1/5',
             rowClassname: 'body2',
+            headerClassName: 'items-center',
+            sortDirectionFillCalss: "default-toolbar-icon",
+            sortIconSizeClass: 'icon-large',
             isSortable: true,
             onClick: (field: string | undefined, direction: SortDirection) => {
                 onSort(field, direction);
@@ -333,6 +378,9 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
             title: 'reports.agent_reports.column_names.agent_name',
             field: 'userId',
             widthClass: 'w-1/5',
+            sortDirectionFillCalss: "default-toolbar-icon",
+            sortIconSizeClass: 'icon-large',
+            headerClassName: 'items-center',
             rowClassname: 'body2',
             isSortable: true,
             onClick: (field: string | undefined, direction: SortDirection) => {
@@ -350,6 +398,9 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
             title: 'reports.agent_reports.column_names.total_chats',
             field: 'totalChats',
             widthClass: 'w-1/5',
+            headerClassName: 'items-center',
+            sortDirectionFillCalss: "default-toolbar-icon",
+            sortIconSizeClass: 'icon-large',
             rowClassname: 'body2',
             isSortable: true,
             onClick: (field: string | undefined, direction: SortDirection) => {
@@ -366,7 +417,10 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
         {
             title: 'reports.agent_reports.column_names.average_chat_handle_time',
             field: 'avgChatHandleTime',
+            headerClassName: 'items-center',
             widthClass: 'w-1/5',
+            sortDirectionFillCalss: "default-toolbar-icon",
+            sortIconSizeClass: 'icon-large',
             rowClassname: 'body2',
             isSortable: true,
             onClick: (field: string | undefined, direction: SortDirection) => {
@@ -384,6 +438,9 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
             title: 'reports.agent_reports.column_names.average_chat_duration',
             field: 'avgChatDuration',
             widthClass: 'w-1/5',
+            sortDirectionFillCalss: "default-toolbar-icon",
+            sortIconSizeClass: 'icon-large',
+            headerClassName: 'items-center',
             rowClassname: 'body2',
             isSortable: true,
             onClick: (field: string | undefined, direction: SortDirection) => {
@@ -401,6 +458,9 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
             title: 'reports.agent_reports.column_names.rating',
             field: 'chatRatingCount',
             widthClass: 'w-1/5',
+            sortDirectionFillCalss: "default-toolbar-icon",
+            sortIconSizeClass: 'icon-large',
+            headerClassName: 'items-center',
             rowClassname: 'body2',
             isSortable: true,
             onClick: (field: string | undefined, direction: SortDirection) => {
@@ -424,11 +484,11 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
             title: 'reports.agent_reports.column_names.agent_name',
             field: 'userFullName',
             widthClass: 'w-5/24',
+            headerClassName: 'items-center',
             rowClassname: 'body2',
             isSortable: true,
             sortDirectionFillCalss: "default-toolbar-icon",
-            sortIconSizeClass: 'icon-medium-18',
-            headerClassName: 'flex items-center',
+            sortIconSizeClass: 'icon-large',
             onClick: (field: string | undefined, direction: SortDirection) => {
                 onSort(field, direction);
             },
@@ -444,11 +504,11 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
             title: 'reports.agent_reports.column_names.total_calls',
             field: 'totalCalls',
             widthClass: 'w-3/24',
+            headerClassName: 'items-center',
             rowClassname: 'body2',
             isSortable: true,
             sortDirectionFillCalss: "default-toolbar-icon",
-            sortIconSizeClass: 'icon-medium-18',
-            headerClassName: 'flex items-center',
+            sortIconSizeClass: 'icon-large',
             onClick: (field: string | undefined, direction: SortDirection) => {
                 onSort(field, direction);
             },
@@ -464,11 +524,11 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
             title: 'reports.agent_reports.column_names.total_inbound',
             field: 'totalInbound',
             widthClass: 'w-3/24',
+            headerClassName: 'items-center',
             rowClassname: 'body2',
             isSortable: true,
             sortDirectionFillCalss: "default-toolbar-icon",
-            sortIconSizeClass: 'icon-medium-18',
-            headerClassName: 'flex items-center',
+            sortIconSizeClass: 'icon-large',
             onClick: (field: string | undefined, direction: SortDirection) => {
                 onSort(field, direction);
             },
@@ -484,11 +544,11 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
             title: 'reports.agent_reports.column_names.total_outbound',
             field: 'totalOutbound',
             widthClass: 'w-3/24',
+            headerClassName: 'items-center',
             rowClassname: 'body2',
             isSortable: true,
             sortDirectionFillCalss: "default-toolbar-icon",
-            sortIconSizeClass: 'icon-medium-18',
-            headerClassName: 'flex items-center',
+            sortIconSizeClass: 'icon-large',
             onClick: (field: string | undefined, direction: SortDirection) => {
                 onSort(field, direction);
             },
@@ -504,11 +564,11 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
             title: 'reports.agent_reports.column_names.avg_handle_time',
             field: 'avgVoiceHandleTime',
             widthClass: 'w-3/24',
+            headerClassName: 'items-center',
             rowClassname: 'body2',
             isSortable: true,
             sortDirectionFillCalss: "default-toolbar-icon",
-            sortIconSizeClass: 'icon-medium-18',
-            headerClassName: 'flex items-center',
+            sortIconSizeClass: 'icon-large',
             onClick: (field: string | undefined, direction: SortDirection) => {
                 onSort(field, direction);
             },
@@ -524,11 +584,11 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
             title: 'reports.agent_reports.column_names.avg_hold_time',
             field: 'avgVoiceHoldTime',
             widthClass: 'w-3/24',
+            headerClassName: 'items-center',
             rowClassname: 'body2',
             isSortable: true,
             sortDirectionFillCalss: "default-toolbar-icon",
-            sortIconSizeClass: 'icon-medium-18',
-            headerClassName: 'flex items-center',
+            sortIconSizeClass: 'icon-large',
             onClick: (field: string | undefined, direction: SortDirection) => {
                 onSort(field, direction);
             },
@@ -545,10 +605,10 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
             field: 'avgVoiceRating',
             widthClass: 'w-16',
             rowClassname: 'body2',
+            headerClassName: 'items-center',
             isSortable: true,
             sortDirectionFillCalss: "default-toolbar-icon",
-            sortIconSizeClass: 'icon-medium-18',
-            headerClassName: 'flex items-center',
+            sortIconSizeClass: 'icon-large',
             onClick: (field: string | undefined, direction: SortDirection) => {
                 onSort(field, direction);
             },
@@ -567,6 +627,7 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
             title: '',
             field: 'voiceRatingCount',
             widthClass: 'w-8',
+            headerClassName: 'items-center',
             rowClassname: 'body2',
             isSortable: true,
             onClick: (field: string | undefined, direction: SortDirection) => {

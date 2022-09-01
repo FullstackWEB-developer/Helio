@@ -75,15 +75,15 @@ describe("Reports tests", () => {
             <Reports />
         </TestWrapper>);
         fireEvent.click(await getByTestId('report-type'));
-        fireEvent.change(getByTestId('report-type'), { target: { value: ReportTypes.BotReports } });
-        fireEvent.change(getByTestId('view-type'), { target: { value: ViewTypes.CustomDates } });
+        fireEvent.change(getByTestId('report-type'), {target: {value: ReportTypes.BotReports}});
+        fireEvent.change(getByTestId('view-type'), {target: {value: ViewTypes.CustomDates}});
         expect(findByText(container!, 'startDate')).not.toBeNull();
         expect(findByText(container!, 'endDate')).not.toBeNull();
     });
 
     it("Custom Date Range should be visible on Bot Reports", async () => {
         const {getByTestId} = render(<TestWrapper mockState={mockState}>
-            <Reports/>
+            <Reports />
         </TestWrapper>);
 
         fireEvent.click(getByTestId("select-cell-text-reports.report_options.bot_reports"));
@@ -92,12 +92,12 @@ describe("Reports tests", () => {
 
     it("Date boxes should be visible when custom dates are selected", async () => {
         const {getByTestId} = render(<TestWrapper mockState={mockState}>
-            <Reports/>
+            <Reports />
         </TestWrapper>);
 
         fireEvent.click(await getByTestId('report-type'));
-        fireEvent.change(getByTestId('report-type'), { target: { value: ReportTypes.BotReports } });
-        fireEvent.change(getByTestId('view-type'), { target: { value: ViewTypes.CustomDates } });
+        fireEvent.change(getByTestId('report-type'), {target: {value: ReportTypes.BotReports}});
+        fireEvent.change(getByTestId('view-type'), {target: {value: ViewTypes.CustomDates}});
         expect(findByText(container!, 'startDate')).not.toBeNull();
         expect(findByText(container!, 'endDate')).not.toBeNull();
     });
@@ -105,23 +105,23 @@ describe("Reports tests", () => {
     it("renders agent report table on report screen", async () => {
         const tableTitle = 'Agent KPIs';
         const {findByText} = render(
-            <AgentReportsTable onSort={() => {}}
+            <AgentReportsTable onSort={() => { }}
                 title={tableTitle} data={[]} />
         );
         expect((await findByText(tableTitle)).textContent).toBe(tableTitle);
     });
 
     it("renders chat tab in agent report table with correct data", async () => {
-        const {findByText, findByTestId } = render(
+        const {findByText, findByTestId} = render(
             <TestWrapper mockState={mockState}>
-                <AgentReportsTable onSort={() => {}}
+                <AgentReportsTable onSort={() => { }}
                     title={'Agent KPIs'} data={agentReportTableData} />
             </TestWrapper>
         );
         const chatTab = await findByText('reports.agent_reports_tabs.chat');
         chatTab.click();
         const totalChatsCell = await findByTestId('agent-rpt-total-chats');
-        const  avgChatRatingCell = await findByTestId('average-chat-rating-percentage');
+        const avgChatRatingCell = await findByTestId('average-chat-rating-percentage');
         expect(totalChatsCell).toBeInTheDocument();
         expect(totalChatsCell.textContent).toEqual(String(agentReportTableData[0].totalChats));
         expect(avgChatRatingCell.textContent).toEqual(`${String(agentReportTableData[0].avgChatRating)}%`);
@@ -133,7 +133,7 @@ describe("Reports tests", () => {
 
         await act(async () => {
             const {getByTestId} = render(<TestWrapper mockState={mockState}>
-                <Reports/>
+                <Reports />
             </TestWrapper>);
             fireEvent.click(await getByTestId('report-type'));
             fireEvent.click(await getByTestId('select-cell-text-reports.report_options.system_reports'));
@@ -151,13 +151,13 @@ describe("Reports tests", () => {
     it("Should call system report download service on download clicked", async () => {
         global.URL.createObjectURL = jest.fn();
         global.URL.revokeObjectURL = jest.fn();
-        const blob = new Blob(["testing"], { type: MimeTypes.XlsX });
-        jest.spyOn(Api, 'get').mockResolvedValue( blob);
+        const blob = new Blob(["testing"], {type: MimeTypes.XlsX});
+        jest.spyOn(Api, 'get').mockResolvedValue(blob);
 
-        jest.spyOn(utils, 'downloadFileFromData').mockImplementation(() => {});
+        jest.spyOn(utils, 'downloadFileFromData').mockImplementation(() => { });
         await act(async () => {
             const {getByTestId} = render(<TestWrapper mockState={mockState}>
-                <Reports/>
+                <Reports />
             </TestWrapper>);
             fireEvent.click(await getByTestId('report-type'));
             fireEvent.click(await getByTestId('select-cell-text-reports.report_options.system_reports'));
@@ -174,9 +174,9 @@ describe("Reports tests", () => {
     });
 
     it("renders tickets tab in agent report table with correct data", async () => {
-        const {findByText, findByTestId } = render(
+        const {findByText, findByTestId} = render(
             <TestWrapper mockState={mockState}>
-                <AgentReportsTable onSort={() => {}}
+                <AgentReportsTable onSort={() => { }}
                     title={'Agent KPIs'} data={agentReportTableData} />
             </TestWrapper>
         );

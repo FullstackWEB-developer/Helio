@@ -2289,7 +2289,9 @@
       "last_week": "Last Week (Mon - Sun)",
       "last_month": "Last Calendar Month",
       "monthly_reports": "Monthly Reports",
-      "custom_date_range": "Custom Date Range"
+      "custom_date_range": "Custom Date Range",
+      "current_week": "This Week",
+      "current_month": "This Month"
     },
     "voice": "Voice",
     "chat": "Chat",

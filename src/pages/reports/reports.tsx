@@ -6,7 +6,7 @@ import {useEffect, useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {useTranslation} from 'react-i18next';
 import './reports.scss';
-import {reportTypes, viewTypes} from './utils/constants';
+import {performanceChartViewTypes, reportTypes, viewTypes} from './utils/constants';
 import {TabTypes} from './models/tab-types.enum';
 import {ViewTypes} from './models/view-types.enum';
 import {ReportTypes} from './models/report-types.enum';
@@ -68,7 +68,7 @@ const Reports = () => {
     const [reportTitleForView, setReportTitleForView] = useState<string>();
     const [_, setOrderDate] = useState<Date | undefined>();
     const dispatch = useDispatch();
-    const {control, handleSubmit, setValue} = useForm({
+    const {control, handleSubmit, setValue, reset} = useForm({
         mode: 'all',
         defaultValues: {
             "view-type": ViewTypes.Last7Days.toString(),
@@ -121,6 +121,10 @@ const Reports = () => {
             }
         }
         setViewSelectOptions(options);
+        if(selectedTab === TabTypes.PerformanceCharts){
+            setViewSelectOptions(performanceChartViewTypes);
+            setValue('view-type', String(ViewTypes.LastWeek));
+        }
     }, [selectedReport, selectedTab]);
 
     const getViewTypeForDownload = () => {
@@ -336,16 +340,29 @@ const Reports = () => {
     const onTabChange = (tab: number) => {
         setSelectedTab(tab);
         setViewOptions(tab);
-        setSelectedView(ViewTypes.Last7Days);
+        const view = tab !== TabTypes.PerformanceCharts ? ViewTypes.Last7Days : ViewTypes.LastWeek;
+        setSelectedView(view);
+        reset({
+            "view-type": view.toString(),
+            "report-type" :selectedReport.toString(),
+            "endDate" : undefined,
+            "startDate": undefined
+        });
     }
+
+    useEffect(() => {
+        if(selectedTab === TabTypes.Reports){
+            onSubmit();
+        }
+    }, [selectedTab]);
 
     const setViewOptions = (tab: number) => {
         const monthlyReportsIndex = viewTypes.findIndex(a => a.label === 'reports.view_options.monthly_reports');
         if (tab === TabTypes.PerformanceCharts && monthlyReportsIndex > -1) {
             viewTypes.splice(monthlyReportsIndex, 1);
             if (selectedView === ViewTypes.MonthlyReports) {
-                setSelectedView(ViewTypes.Last7Days);
-                setValue('view-type', ViewTypes.Last7Days.toString());
+                setSelectedView(ViewTypes.LastWeek);
+                setValue('view-type', ViewTypes.LastWeek.toString());
             }
         } else {
             viewTypes.push({
@@ -410,7 +427,7 @@ const Reports = () => {
                             onSelect={(option) => onSelectedViewChange(Number(option?.value) as ViewTypes)}
                         />
                     </div>
-                    {selectedView === ViewTypes.CustomDates &&
+                    {selectedView === ViewTypes.CustomDates && selectedTab !== TabTypes.PerformanceCharts &&
                         <div className='flex flex-row'>
                             <div className='w-48 h-14 mr-8'>
                                 <ControlledDateInput

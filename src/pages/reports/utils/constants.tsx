@@ -29,6 +29,29 @@ export const viewTypes = [
     }
 ]
 
+export const performanceChartViewTypes = [
+    {
+        label: 'reports.view_options.yesterday',
+        value: ViewTypes.Yesterday.toString()
+    },
+    {
+        label: 'reports.view_options.current_week',
+        value: "7"
+    },
+    {
+        label: 'reports.view_options.last_week',
+        value: ViewTypes.LastWeek.toString()
+    },
+    {
+        label: 'reports.view_options.current_month',
+        value: "6"
+    },
+    {
+        label: 'reports.view_options.last_month',
+        value: ViewTypes.LastMonth.toString()
+    }
+];
+
 export const reportTypes = [
     {
         label: 'reports.report_options.agent_reports',
