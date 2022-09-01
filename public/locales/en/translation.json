@@ -394,6 +394,7 @@
       "recent_patient_cases": "EMR Patient Cases",
       "no_patient_cases": "There is no case for this patient.",
       "apt_number": "Apt. #",
+      "apt_number_no_#": "Apt.",
       "city": "City",
       "zip_code": "Zip Code",
       "state": "State",
