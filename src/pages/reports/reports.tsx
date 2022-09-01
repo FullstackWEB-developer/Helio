@@ -287,9 +287,9 @@ const Reports = () => {
         if(selectedView === ViewTypes.Yesterday){
             reportTitle = (now.subtract(1, 'd').format('MMMM DD, YYYY'));
         }else if(selectedView === ViewTypes.Last7Days){
-            reportTitle = (`${now.subtract(7, 'd').format('MMMM DD, YYYY')} - ${now.subtract(0, 'd').format('MMMM DD, YYYY')}`);
+            reportTitle = (`${now.subtract(7, 'd').format('MMM DD')} - ${now.subtract(0, 'd').format('MMMM DD')}`);
         }else if(selectedView === ViewTypes.LastWeek){
-            reportTitle = (`${dayjs().utc().weekday(-6).format('MMMM DD, YYYY')} - ${dayjs().utc().weekday(0).format('MMMM DD, YYYY')}`);
+            reportTitle = (`${dayjs().utc().weekday(-6).format('MMM DD')} - ${dayjs().utc().weekday(0).format('MMMM DD')}`);
         }else if(selectedView === ViewTypes.LastMonth){
             reportTitle = (now.subtract(1, 'M').format('MMMM, YYYY'));
         }

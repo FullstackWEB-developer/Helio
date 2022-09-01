@@ -42,7 +42,7 @@ const SystemReportTable = ({data}: {data: SystemReport[]}) => {
     }
 
     return (
-        <div data-testid="system-report-grid" className='mt-6 pt-4 bg-white rounded-lg'>
+        <div data-testid="system-report-grid" className='mt-6 pt-5 bg-white rounded-lg'>
             <div className='px-6 flex pb-3'>
                 <div className='h7 w-5/24'>{t('reports.system_reports.title')}</div>
             </div>

@@ -19,7 +19,7 @@ const SystemReports = ({title, data}: BotReports) => {
 
     return <div>
         <h6 className='my-7'>{t('reports.report_for', {title})}</h6>
-        <div className='space-y-8 pb-10'>
+        <div className='space-y-8 pb-4'>
             <Card title='reports.system_reports.key_kpis' hasBorderRadius={true} >
                 <div className='flex flex-row justify-between px-8 pb-4'>
                     <BasicStatistic title='reports.system_reports.total_tickets_created'
