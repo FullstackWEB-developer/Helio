@@ -58,7 +58,7 @@ const HorizontalStatisticWidget = ({data, title, description, wrapperClass = 'w-
             <div className='flex flex-row justify-between'>
                 <div>{item.label}</div>
                 <div className='flex flex-row'>
-                    <div className='w-10 flex justify-end'>{item.value !== undefined ? `${dayjs.duration(item.value, 'seconds').format('HH:mm:ss')}` : `${item.percentage}%`}</div>
+                    <div className='w-10 flex justify-end mr-4'>{item.value !== undefined ? `${dayjs.duration(item.value, 'seconds').format('HH:mm:ss')}` : `${item.percentage}%`}</div>
                 </div>
             </div>
             <div>

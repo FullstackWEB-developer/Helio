@@ -6,6 +6,7 @@ import classnames from 'classnames';
 import {SortDirection} from '@shared/models/sort-direction';
 import {SortIconMap} from '@shared/utils/sort-utils';
 import './table-header.scss';
+import TooltipWrapper from '@components/tooltip/tooltip-wrapper';
 
 export interface TableHeaderProps {
     headers?: TableColumnModel[];
@@ -18,7 +19,7 @@ const TableHeaderColumn = ({header, allowMultiSort, setSortFields, currentSortFi
     const {t} = useTranslation();
     const [currentSortDirection, setSortDirection] = useState(header.sortDirection ?? SortDirection.None);
 
-    const {headerClassName, field, widthClass, alignment = 'start', title, isSortable, sortDirectionFillCalss = 'active-item-icon', sortIconSizeClass = 'icon-medium'} = header;
+    const {headerClassName, field, widthClass, alignment = 'start', title, isSortable, sortDirectionFillCalss = 'active-item-icon', sortIconSizeClass = 'icon-medium', tooltip} = header;
     const className = classnames('flex', `justify-${alignment}`, headerClassName, widthClass, {'cursor-pointer': isSortable});
 
     const onClicked = () => {
@@ -51,15 +52,19 @@ const TableHeaderColumn = ({header, allowMultiSort, setSortFields, currentSortFi
 
     if (typeof title === 'string') {
         return (
-            <div key={field} className={className} onClick={onClicked}>{t(title)}
-                {isSortable && currentSortDirection !== SortDirection.None && currentSortFields && currentSortFields.filter(x => x === field).length === 1 &&
-                    <SvgIcon type={SortIconMap[currentSortDirection]}
-                        className={`pl-2 ${sortIconSizeClass}`}
-                        fillClass={sortDirectionFillCalss} />
-                }
-                {isSortable && currentSortDirection !== SortDirection.None && header.sortOrder && currentSortFields && currentSortFields.filter(x => x === field).length === 1 &&
-                    <span className='pl-0.5 body3-medium'>{header.sortOrder}</span>
-                }
+            <div key={field} className={className}>
+                <TooltipWrapper content={tooltip} placement='top'>
+                    <div className='flex items-center flex-row' onClick={onClicked}>{t(title)}
+                        {isSortable && currentSortDirection !== SortDirection.None && currentSortFields && currentSortFields.filter(x => x === field).length === 1 &&
+                            <SvgIcon type={SortIconMap[currentSortDirection]}
+                                className={`pl-2 ${sortIconSizeClass}`}
+                                fillClass={sortDirectionFillCalss} />
+                        }
+                        {isSortable && currentSortDirection !== SortDirection.None && header.sortOrder && currentSortFields && currentSortFields.filter(x => x === field).length === 1 &&
+                            <span className='pl-0.5 body3-medium'>{header.sortOrder}</span>
+                        }
+                    </div>
+                </TooltipWrapper>
             </div>
         );
     } else if (React.isValidElement(title)) {

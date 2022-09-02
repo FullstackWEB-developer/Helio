@@ -2357,6 +2357,7 @@
         "answer_rate": "Answer Rate",
         "missed_contact": "Missed Contact",
         "acwt": "ACWT",
+        "acwt_tooltip": "Average after contact work time",
         "total_chats": "Total Chats",
         "average_chat_handle_time": "Avg. Handle Time",
         "average_chat_duration": "Avg. Chat Duration",

@@ -191,6 +191,7 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
             sortDirectionFillCalss: "default-toolbar-icon",
             sortIconSizeClass: 'icon-large',
             rowClassname: 'body2',
+            tooltip: 'reports.agent_reports.column_names.acwt_tooltip',
             headerClassName: 'items-center',
             isSortable: true,
             onClick: (field: string | undefined, direction: SortDirection) => {

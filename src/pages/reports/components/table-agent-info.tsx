@@ -1,10 +1,8 @@
-import AvatarLabel from '@components/avatar-label';
 import React, {useMemo} from 'react';
 import {useSelector} from 'react-redux';
 import {selectUserList} from '@shared/store/lookups/lookups.selectors';
 import Avatar from '@components/avatar';
 import utils from '@shared/utils/utils';
-import dayjs from 'dayjs';
 import ElipsisTooltipTextbox from '@components/elipsis-tooltip-textbox/elipsis-tooltip-textbox';
 interface TableAgentInfoProps {
     agentId: string;
@@ -22,7 +20,7 @@ const TableAgentInfo = ({agentId}: TableAgentInfoProps) => {
             <div className='w-10 h-10'>
             <Avatar userFullName={utils.stringJoin(' ', user.firstName, user.lastName)}
                     userId={user?.id}
-                    displayStatus={true}
+                    displayStatus={false}
                     userPicture={user.profilePicture} />
             </div>
                 <ElipsisTooltipTextbox hasInlineBlock={true}

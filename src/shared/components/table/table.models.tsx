@@ -26,6 +26,7 @@ export interface TableModel {
 
 export interface TableColumnModel {
     title?: string | ReactNode;
+    tooltip?: string | ReactNode;
     headerClassName?: string;
     rowClassname?: string;
     widthClass: string;
