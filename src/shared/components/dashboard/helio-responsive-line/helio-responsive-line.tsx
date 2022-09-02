@@ -53,14 +53,15 @@ const HelioResponsiveLine = ({data, tickRotation, tickValues = 'every 1 day', to
         pointBorderColor='white'
         lineWidth={4}
         theme={{
-            fontSize: Number(style.getPropertyValue('--dashboard-volume-chart-axis-label-fontSize')),
+            fontSize: Number(style.getPropertyValue('--dashboard-volume-chart-axis-label-fontSizeInPx')),
             fontFamily: style.getPropertyValue('--dashboard-volume-chart-axis-label-fontFamily'),
             textColor: style.getPropertyValue('--dashboard-volume-chart-axis-label-color')
         }}
+
         enableGridX={false}
         animate={false}
         axisLeft={{
-            tickPadding: 20
+            tickPadding: 20,
         }}
         pointLabelYOffset={-12}
         tooltip={({ point }) => <ChartTooltip data={data} volumeDataType={volumeDataType} label={toolTipLabelGenerator(point)} point={point}/>}

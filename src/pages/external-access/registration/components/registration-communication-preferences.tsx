@@ -1,5 +1,5 @@
 import Radio from '@components/radio/radio';
-import React from 'react';
+import React, {useCallback} from 'react';
 import {Controller, useForm} from 'react-hook-form';
 import {useTranslation} from 'react-i18next';
 import {Option} from '@components/option/option';
@@ -34,16 +34,20 @@ const CommunicationPreferencesRegistrationStep = ({onPatientUpdate, goBack}: Com
         }
     ];
 
-    const contactPreferenceOptions: Option[] = [
-        {
+    const contactPreferenceOptions = useCallback(() => {
+        let options = [{
             value: 'MOBILEPHONE',
             label: 'patient.contact_preference.mobilephone',
-        },
-        {
-            value: 'MAIL',
-            label: 'patient.contact_preference.mail'
+        }];
+
+        if (patientData?.patient?.email) {
+            options.push({
+                value: 'MAIL',
+                label: 'patient.contact_preference.mail'
+            });
         }
-    ];
+        return options;
+    }, [patientData?.patient]);
 
     const updatePatientMutation = useMutation(upsertPatient);
 
@@ -133,7 +137,7 @@ const CommunicationPreferencesRegistrationStep = ({onPatientUpdate, goBack}: Com
                     name='preferredCommunication'
                     label='external_access.registration.communication_method'
                     className='md:w-1/2'
-                    options={contactPreferenceOptions}
+                    options={contactPreferenceOptions()}
                     defaultValue=''
                     control={control}
                 />
@@ -141,8 +145,8 @@ const CommunicationPreferencesRegistrationStep = ({onPatientUpdate, goBack}: Com
             <div className='flex pt-6'>
                 <Button label='common.back' buttonType='secondary-big' className='mr-8 w-36' onClick={() => goBack()} />
                 <Button type='submit' label='common.continue'
-                        disabled={!isValid || !isDirty || updatePatientMutation.isLoading}
-                        isLoading={updatePatientMutation.isLoading} className='w-36' />
+                    disabled={!isValid || !isDirty || updatePatientMutation.isLoading}
+                    isLoading={updatePatientMutation.isLoading} className='w-36' />
             </div>
         </form>
     );

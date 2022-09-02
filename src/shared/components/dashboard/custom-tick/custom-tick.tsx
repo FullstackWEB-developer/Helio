@@ -6,6 +6,7 @@ import weekday from 'dayjs/plugin/weekday';
 import {useSelector} from 'react-redux';
 import {selectDashboardFilterEndDate} from '@shared/store/app/app.selectors';
 import { Serie } from '@nivo/line';
+import './custom-tick.scss';
 
 export interface CustomTickProps {
     data?: Serie[];
@@ -15,7 +16,6 @@ export interface CustomTickProps {
 }
 
 const CustomTick = ({tick, tickRotation, volumeDataType, data = []}: CustomTickProps) => {
-    const style = getComputedStyle(document.body);
     dayjs.extend(utc);
     const dashboardFilterEndDate = useSelector(selectDashboardFilterEndDate);
     dayjs.extend(weekday);
@@ -24,22 +24,17 @@ const CustomTick = ({tick, tickRotation, volumeDataType, data = []}: CustomTickP
         return point.x == date.format('YYYY-MM-DD');
     }
 
-    const getEndDate = (date: dayjs.Dayjs, isWeek: boolean) => {
+    const getEndDate = (date: dayjs.Dayjs) => {
         if(data && data.length > 1){
             let currentIndex = data[0].data.findIndex( x => findPoint(x, date));
             if(currentIndex > -1 && data[0].data[currentIndex + 1]){
                 if(data[0].data[currentIndex + 1].x){
-                    if (isWeek) {
-                        return dayjs(data[0].data[currentIndex + 1].x).add(-1, 'd'); //Display Sunday as endDate instead of Monday
-                    } else {
-                        return dayjs(data[0].data[currentIndex + 1].x);
-                    }
-
+                    return dayjs(data[0].data[currentIndex + 1].x).add(-1, 'd');
                 }
             }
         }
-        
-        if(isWeek && date.endOf('week').add(-1, 'd').isBefore(dayjs(dashboardFilterEndDate))){
+
+        if(date.endOf('week').add(-1, 'd').isBefore(dayjs(dashboardFilterEndDate)) && dayjs(dashboardFilterEndDate).get('d') !== 0){
             return date.endOf('week').add(-1, 'd');
         } else {
             return dayjs(dashboardFilterEndDate);
@@ -64,7 +59,7 @@ const CustomTick = ({tick, tickRotation, volumeDataType, data = []}: CustomTickP
                 </>
             case TicketVolumeDataType.Weekly:
                 return <>
-                    <tspan x={"6"} dy="1.2em">{getEndDate(date, true).format('MMM DD')}</tspan>
+                    <tspan x={"6"} dy="1.2em">{getEndDate(date).format('MMM DD')}</tspan>
                 </>;
             case TicketVolumeDataType.Monthly:
                 return <tspan x="0" dy="1.2em">{date.format('MMM')}</tspan>;
@@ -80,16 +75,13 @@ const CustomTick = ({tick, tickRotation, volumeDataType, data = []}: CustomTickP
                 </>
         }
     }, [tickRotation, tick, volumeDataType]);
+
     return (
         <g transform={`translate(${tick.x  + (tickRotation ? 4 : -4) },${tick.y})` + (tickRotation ? ' rotate(45)' : '')}>
             <text
                 textAnchor='middle'
                 dominantBaseline="middle"
-                style={{
-                    fontSize: Number(style.getPropertyValue('--dashboard-volume-chart-axis-label-fontSize')),
-                    fontFamily: style.getPropertyValue('--dashboard-volume-chart-axis-label-fontFamily'),
-                    fill: style.getPropertyValue('--dashboard-volume-chart-axis-label-color')
-                }}
+                className='helio-responsive-tick'
             >
                 {calculatedLabel}
             </text>

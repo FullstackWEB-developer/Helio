@@ -36,7 +36,7 @@ const RegistrationReviewStep = ({goBack}: RegistrationReviewStepProps) => {
         const apt = patientData?.patient?.address2;
         let addressField = `${address}, ${city}, ${zip}`;
         if (apt) {
-            addressField = `${apt}, ${addressField}`;
+            addressField = `${addressField}, ${t(apt.includes('#') ? 'patient.summary.apt_number_no_#' : 'patient.summary.apt_number')}${apt}`;
         }
         return addressField;
     }
