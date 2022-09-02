@@ -1,5 +1,5 @@
 import Radio from '@components/radio/radio';
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {Controller, useForm} from 'react-hook-form';
 import {useTranslation} from 'react-i18next';
 import {Option} from '@components/option/option';
@@ -21,7 +21,7 @@ export interface CommunicationPreferencesRegistrationStepProps {
 const CommunicationPreferencesRegistrationStep = ({onPatientUpdate, goBack}: CommunicationPreferencesRegistrationStepProps) => {
     const patientData = useSelector(selectRegisteredPatient);
     const {t} = useTranslation();
-    const {control, formState: {isValid, isDirty}, handleSubmit} = useForm({mode: 'onChange'});
+    const {control, formState: {isValid, isDirty}, handleSubmit, reset} = useForm({mode: 'onChange'});
     const dispatch = useDispatch();
     const YesNoOptions: Option[] = [
         {
@@ -47,6 +47,12 @@ const CommunicationPreferencesRegistrationStep = ({onPatientUpdate, goBack}: Com
             });
         }
         return options;
+    }, [patientData?.patient]);
+
+    useEffect(()=> {
+        if(!patientData?.patient?.email && control.getValues('preferredCommunication') === 'MAIL'){
+            reset({'preferredCommunication': ''});
+        }
     }, [patientData?.patient]);
 
     const updatePatientMutation = useMutation(upsertPatient);
