@@ -5,7 +5,7 @@ import { getAppointmentNotes } from '@pages/appointments/services/appointments.s
 import { AppointmentNote, AppointmentNoteInfo } from '@pages/appointments/models/note.model';
 import { Appointment } from '@pages/external-access/appointment/models/appointment.model';
 import {ClinicalDetails} from '@pages/patients/models/clinical-details';
-import {GetAppointmentNotes, OneMinute} from '@constants/react-query-constants';
+import Spinner from '@components/spinner/Spinner';
 
 export interface AppointmentsProps {
     clinical: ClinicalDetails
@@ -13,11 +13,11 @@ export interface AppointmentsProps {
 const Appointments = ({clinical} : AppointmentsProps) => {
     const { t } = useTranslation();
 
-    const {data} = useQuery<AppointmentNoteInfo[], Error>([GetAppointmentNotes, clinical.upcomingAppointments], () =>
+    const {isLoading, error, data} = useQuery<AppointmentNoteInfo[], Error>("appointmentNotes", () =>
             getAppointmentNotes(clinical.upcomingAppointments),
         {
-            enabled: !!clinical,
-            refetchInterval: OneMinute
+            staleTime: 60000,
+            enabled: !!clinical
         }
     );
 
@@ -32,6 +32,14 @@ const Appointments = ({clinical} : AppointmentsProps) => {
     };
 
     const getContent = () => {
+        if (isLoading) {
+            return <Spinner fullScreen/>;
+        }
+        if (error) {
+            return <div data-test-id='appointment-notes-error'>
+                {error.message} - {t('appointment.notes.error')}
+            </div>;
+        }
         return upcomingAppointmentsView();
     }
 

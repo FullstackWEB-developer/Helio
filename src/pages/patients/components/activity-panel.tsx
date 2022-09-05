@@ -11,13 +11,13 @@ import PatientAddNote from '@pages/patients/components/patient-add-note';
 import './activity-panel.scss';
 import Spinner from '@components/spinner/Spinner';
 
-const ActivityPanel = ({isRefetching}: {isRefetching: boolean}) => {
+const ActivityPanel = () => {
     const {t} = useTranslation();
     const patient = useSelector(selectPatient);
     const [selectedTab, setSelectedTab] = useState<number>(0);
     const isLoading = useSelector(selectPatientLoading);
 
-    if (isLoading && !isRefetching) {
+    if (isLoading) {
         return <Spinner fullScreen />
     }
 

@@ -18,10 +18,9 @@ import PatientHeaderActions from '@pages/patients/components/patient-header-acti
 export interface PatientHeaderProps {
     patientChartSummary: PatientChartSummary;
     refreshPatient: () => void;
-    isRefetching: boolean;
 }
 
-const PatientHeader = ({patientChartSummary, refreshPatient, isRefetching}: PatientHeaderProps) => {
+const PatientHeader = ({patientChartSummary, refreshPatient}: PatientHeaderProps) => {
     const {t} = useTranslation();
     const patient: ExtendedPatient = useSelector(selectPatient);
     const chartAlertIcon = useRef(null);
@@ -115,7 +114,7 @@ const PatientHeader = ({patientChartSummary, refreshPatient, isRefetching}: Pati
                             }
                         </div>
                     </div>
-                    <PatientHeaderActions isRefetching={isRefetching} patient={patient} refreshPatient={() => refreshPatient()}/>
+                    <PatientHeaderActions patient={patient} refreshPatient={() => refreshPatient()}/>
                 </div>
             </div>
         </div>

@@ -234,7 +234,7 @@ const SmsChat = ({info, isLoading, isSending, isBottomFocus, messages = [], last
                                 </div>}
                                 {selectedMessageTemplate && <div className='pb-5' />}
                                 <TextArea
-                                    className='w-full pl-6 pr-0 body2 sms-chat-textarea'
+                                    className='w-full pl-6 pr-0 body2'
                                     data-test-id='ticket-send-email'
                                     placeHolder={t('ticket_detail.add_note')}
                                     rows={2}

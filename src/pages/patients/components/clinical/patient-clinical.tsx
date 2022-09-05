@@ -5,7 +5,7 @@ import {
     getPatientClinicalDetails,
 } from '@pages/patients/services/patients.service';
 import {useQuery} from 'react-query';
-import {GetPatientClinical, OneMinute} from '@constants/react-query-constants';
+import {GetPatientClinical} from '@constants/react-query-constants';
 import {ClinicalDetails} from '@pages/patients/models/clinical-details';
 import Spinner from '@components/spinner/Spinner';
 import ClinicalLabResults from '@pages/patients/components/clinical/clinical-lab-results';
@@ -19,16 +19,11 @@ export interface PatientClinicalProps {
 const PatientClinical = ({patientId, lastRefreshTime} : PatientClinicalProps) => {
     const { t } = useTranslation();
 
-    const {isLoading, isError, data, isRefetching} = useQuery<ClinicalDetails, Error>([GetPatientClinical, patientId, lastRefreshTime], () =>
-            getPatientClinicalDetails(patientId), {
-            refetchInterval: OneMinute
-        }
+    const {isLoading, isError, data} = useQuery<ClinicalDetails, Error>([GetPatientClinical, patientId, lastRefreshTime], () =>
+            getPatientClinicalDetails(patientId)
     );
 
-    if (!isRefetching && isLoading) {
-        return <Spinner fullScreen/>;
-    }
-    if (!data) {
+    if (isLoading || !data) {
         return <Spinner fullScreen/>;
     }
     if (isError) {

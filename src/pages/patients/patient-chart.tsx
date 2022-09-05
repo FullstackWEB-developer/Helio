@@ -30,7 +30,6 @@ const PatientChart = () => {
     const error = useSelector(selectIsPatientError);
     const patient = useSelector(selectPatient);
     const [lastRefreshTime, setLastRefreshTime] = useState<Date>(new Date());
-    const [isRefetching, setIsRefetching] = useState<boolean>(false);
 
     useEffect(() => {
         dispatch(getPatientById(patientId, {includeInsuranceInfo: true}));
@@ -63,24 +62,13 @@ const PatientChart = () => {
     );
 
     const refreshPatient = async () => {
-        setIsRefetching(true);
         setLastRefreshTime(new Date());
         dispatch(getPatientById(patientId, {includeInsuranceInfo: true}));
         await refetch();
-        setIsRefetching(false);
     }
 
-    useEffect(() => {
-        let refreshInterval = setInterval(async () => {
-            await refreshPatient();
-        }, OneMinute);
-        return () => {
-            clearInterval(refreshInterval);
-        };
-    }, [patientId]);
 
-
-    if ((isSummaryLoading || loading) && !isRefetching) {
+    if (isSummaryLoading || loading) {
         return <Spinner fullScreen />
     }
     if (error) {
@@ -96,14 +84,14 @@ const PatientChart = () => {
             <div className='w-2/3 overflow-y-auto'>
                 {patientChartSummary &&
                     <>
-                        <PatientHeader isRefetching={isRefetching} refreshPatient={refreshPatient} patientChartSummary={patientChartSummary} />
+                        <PatientHeader refreshPatient={refreshPatient} patientChartSummary={patientChartSummary} />
                         <PatientTabs lastRefreshTime={lastRefreshTime} patientChartSummary={patientChartSummary} patientId={patient.patientId} />
                     </>
                 }
 
             </div>
             <div className='activity-panel border-l w-1/3'>
-                <ActivityPanel isRefetching={isRefetching} />
+                <ActivityPanel />
             </div>
         </div>
     );
