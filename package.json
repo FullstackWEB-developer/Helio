@@ -11,13 +11,14 @@
     "@craco/craco": "^6.2.0",
     "@fingerprintjs/fingerprintjs": "^3.3.0",
     "@microsoft/signalr": "^5.0.7",
+    "@nivo/bar": "^0.74.1",
     "@nivo/core": "^0.74.0",
     "@nivo/line": "^0.74.0",
     "@nivo/pie": "^0.74.0",
     "@popperjs/core": "^2.9.1",
     "@react-leaflet/core": ">=1.0.0 <1.1.0 || ^1.1.1",
-    "@react-pdf/renderer": "2.0.16",
     "@react-pdf/font": "2.1.0",
+    "@react-pdf/renderer": "2.0.16",
     "@reduxjs/toolkit": "^1.5.0",
     "@tailwindcss/postcss7-compat": "^2.2.4",
     "@testing-library/jest-dom": "^5.14.1",
@@ -129,7 +130,6 @@
       "@pages/(.*)": "<rootDir>/src/pages/$1",
       "@shared/(.*)": "<rootDir>/src/shared/$1",
       "@app/(.*)": "<rootDir>/src/app/$1"
-    },
-    "testEnvironment": "node"
+    }
   }
 }

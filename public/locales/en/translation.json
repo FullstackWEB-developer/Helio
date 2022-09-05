@@ -2416,7 +2416,12 @@
       "custom": "Custom",
       "select_up_to_5_queues": "Select up to 5 queues",
       "selected_error_0": "You should choose at least one queue for custom view",
-      "selected_error_5": "You should choose at most five queues for custom view"
+      "selected_error_5": "You should choose at most five queues for custom view",
+      "bot_performance_chart_title": "Bot Calls and Chats Volume",
+      "bot_calls_key": "Calls",
+      "bot_chats_key": "Chats",
+      "total_chats": "Total Chats",
+      "total_calls":"Total Calls"
     },
     "system_reports" : {
       "title": "System KPI report",
