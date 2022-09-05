@@ -146,7 +146,7 @@ const TicketListItem = ({ item, isRowSelected, handleCheckboxChange }: TicketLis
         </div>
         <div className='w-1/24'>
             <div className='flex flex-col items-center justify-center mr-2'>
-                <TicketDetailRating patientRating={item.patientRating} ticketId={item.id!} />
+                <TicketDetailRating patientRating={item.patientRating} botRating={item.botRating} ticketId={item.id!} />
             </div>
         </div>
         <div className='w-1/24'>

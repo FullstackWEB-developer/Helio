@@ -262,7 +262,7 @@ const ChatsLogList = () => {
                 field: 'patientRating',
                 widthClass: 'w-1/12 flex flex-col items-center justify-center',
                 render: (_, data: TicketLogModel) => (
-                    <TicketDetailRating patientRating={data?.patientRating} ticketId={data?.id!} />
+                    <TicketDetailRating patientRating={data?.patientRating} botRating={data.botRating} ticketId={data?.id!} />
                 )
             }, {
                 title: 'ticket_log.review',
