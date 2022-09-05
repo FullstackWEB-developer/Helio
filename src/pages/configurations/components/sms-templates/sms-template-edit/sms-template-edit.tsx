@@ -116,7 +116,9 @@ const SMSTemplateEdit = () => {
         }
     }
 
-    const resetToDefaultBody = () => setValue('templateBody', smsTemplate?.defaultBody);
+    const resetToDefaultBody = () => setValue('templateBody', smsTemplate?.defaultBody, {
+        shouldDirty: smsTemplate?.defaultBody !== smsTemplate?.templateBody
+    });
 
     const onSelected = (option: Option | undefined) => {
         if (option) {
