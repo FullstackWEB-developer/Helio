@@ -48,7 +48,7 @@ const ReportResponsiveLine = ({data, selectedView} : ReportResponsiveLineProps) 
         lineWidth={3}
         tooltip={({ point }) => <PerformanceVolumeChartTooltip point={point} />}
         theme={{
-            fontSize: Number(style.getPropertyValue('--dashboard-volume-chart-axis-label-fontSize')),
+            fontSize: Number(style.getPropertyValue('--dashboard-volume-chart-axis-label-fontSizeInPx')),
             fontFamily: style.getPropertyValue('--dashboard-volume-chart-axis-label-fontFamily'),
             textColor: style.getPropertyValue('--dashboard-volume-chart-axis-label-color')
         }}
