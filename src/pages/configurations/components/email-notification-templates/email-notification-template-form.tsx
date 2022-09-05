@@ -18,7 +18,7 @@ const EmailNotificationTemplateForm = ({template}: {template: EmailTemplate}) =>
     const {t} = useTranslation();
     const history = useHistory();
     const dispatch = useDispatch();
-    const {control, reset, getValues, handleSubmit, formState: {isValid, isDirty}} = useForm({
+    const {control, getValues, handleSubmit, setValue, formState: {isValid, isDirty}} = useForm({
         mode: 'onChange', defaultValues: {
             subject: template.subject,
             title: template.title,
@@ -63,6 +63,10 @@ const EmailNotificationTemplateForm = ({template}: {template: EmailTemplate}) =>
         updateEmailTemplateMutation.mutate({body: data, id: template.id});
     }
 
+    const resetToDefaultBody = () => setValue('body', template?.defaultBody, {
+        shouldDirty: template?.defaultBody !== template?.templateBody
+    });
+
     return (
         <form className='w-full' onSubmit={handleSubmit(submitHandler)}>
             <div className='w-7/12'>
@@ -83,7 +87,7 @@ const EmailNotificationTemplateForm = ({template}: {template: EmailTemplate}) =>
             </div>
             <div className='flex justify-between items-center subtitle2 pb-2'>
                 {t('configuration.email_template_details.body')}
-                <Button label='configuration.email_template_details.reset_to_default' buttonType='secondary-medium' onClick={() => reset()} />
+                <Button label='configuration.email_template_details.reset_to_default' buttonType='secondary-medium' onClick={() => resetToDefaultBody()} />
             </div>
             <ControlledTextArea control={control}
                                 name='body'
