@@ -1,9 +1,10 @@
 import {ResponsiveBar} from '@nivo/bar';
 import dayjs from 'dayjs';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {PerformanceChartResponse} from '../models/performance-chart.model';
 import {ViewTypes} from '../models/view-types.enum';
+import './performance-bot-chart.scss';
 
 const PerformanceBotChart = ({data, selectedView}: {data: PerformanceChartResponse[], selectedView: ViewTypes}) => {
     const {t} = useTranslation();
@@ -29,13 +30,19 @@ const PerformanceBotChart = ({data, selectedView}: {data: PerformanceChartRespon
         for (let i = 0; i < chatAggregatedVolume.length; i++) {
             graphDataCombined.push(
                 {
-                    'xAxisData': selectedView != ViewTypes.Yesterday ? dayjs(chatAggregatedVolume[i].label, 'MMMM D').format('MMM D') : chatAggregatedVolume[i].label,
+                    'xAxisData': selectedView != ViewTypes.Yesterday ? dayjs(chatAggregatedVolume[i].label, 'MMMM D').format('MMM D') :
+                        dayjs(chatAggregatedVolume[i].label, 'hh:mm A').format('hh A'),
                     'Chats': chatAggregatedVolume[i].value,
                     'Calls': callsAggregatedVolume[i].value
                 })
         }
         setGraphData(graphDataCombined);
     }, [data]);
+
+    const style = useMemo(() => {
+        return getComputedStyle(document.body);
+    }, []);
+
     return (
         <div data-testid='bot-performance-report-container' className="bg-white rounded-lg w-full">
             <div className="h7 pl-6 pt-5 pb-4">
@@ -51,7 +58,7 @@ const PerformanceBotChart = ({data, selectedView}: {data: PerformanceChartRespon
                     valueScale={{type: 'linear'}}
                     indexScale={{type: 'band', round: true}}
                     margin={{top: 30, right: 50, bottom: 65, left: 60}}
-                    padding={0.3}
+                    padding={0.75}
                     enableLabel={false}
                     groupMode="grouped"
                     legends={[
@@ -69,6 +76,24 @@ const PerformanceBotChart = ({data, selectedView}: {data: PerformanceChartRespon
                         }
                     ]}
                     colors={['hsl(160, 100%, 40%)', 'hsl(219, 100%, 40%)']}
+                    theme={{
+                        fontSize: Number(style.getPropertyValue('--dashboard-volume-chart-axis-label-fontSizeInPx')),
+                        fontFamily: style.getPropertyValue('--dashboard-volume-chart-axis-label-fontFamily'),
+                        textColor: style.getPropertyValue('--dashboard-volume-chart-axis-label-color')
+                    }}
+                    tooltip={({id, value, color}) => (
+                        <div className='flex flex-col bg-white border rounded-md shadow-md bar-chart-tooltip'>
+                            <div className='flex items-center px-1 py-2'>
+                                <div className='body3-medium' style={{color}}>
+                                    {id}:
+                                </div>
+                                <div className='pl-2 body2'>
+                                    {value}
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
                 />
             </div>
             <div className='flex justify-center items-center pt-8 pb-7'>
