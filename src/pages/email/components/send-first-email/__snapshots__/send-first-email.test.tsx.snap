@@ -235,7 +235,9 @@ exports[`Send First Email tests renders send-first-email correctly with contact 
                     >
                       email.inbox.formatter.subheading
                     </option>
-                    <option />
+                    <option
+                      selected=""
+                    />
                   </select>
                   <button
                     class="ql-bold"

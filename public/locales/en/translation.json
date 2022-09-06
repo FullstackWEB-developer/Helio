@@ -76,7 +76,9 @@
     "overflow_value_1k": "1K+",
     "route_leaving_confirmation_message": "Leave without saving changes?",
     "route_leaving_leave_button": "Leave",
-    "insert": "Insert"
+    "insert": "Insert",
+    "date_input_assistive_text": "MM/DD/YYYY",
+    "update": "Update"
   },
   "app": {
     "error_loading_parameters": "Error loading parameters, please try again later",
@@ -119,7 +121,8 @@
     "users": "Users",
     "blacklists": "Blocked Access",
     "users_bulk": "Add Users In Bulk",
-    "configurations": "Configurations"
+    "configurations": "Configurations",
+    "reports": "Reports"
   },
   "footer": {
     "hotspots": "Hotspots",
@@ -2265,5 +2268,185 @@
     "chrome_settings": "Google Chrome browser settings",
     "firefox_settings": "Firefox browser settings",
     "edge_settings": "Microsoft Edge browser settings"
+  },
+  "reports": {
+    "performance_charts": "Performance Charts",
+    "reports": "Reports",
+    "report": "Report",
+    "view": "View",
+    "download": "Download",
+    "month": "Month",
+    "start_date": "Start Date",
+    "end_date": "End Date",
+    "report_options": {
+      "agent_reports": "Agent KPIs",
+      "bot_reports": "Bot Report",
+      "system_reports": "System Report",
+      "queue_reports": "Queues Report"
+    },
+    "view_options": {
+      "yesterday": "Yesterday",
+      "last_7_days": "Last 7 Days",
+      "last_week": "Last Week (Mon - Sun)",
+      "last_month": "Last Calendar Month",
+      "monthly_reports": "Monthly Reports",
+      "custom_date_range": "Custom Date Range",
+      "current_week": "This Week",
+      "current_month": "This Month"
+    },
+    "voice": "Voice",
+    "chat": "Chat",
+    "utilization": "Utilization",
+    "voice_average_hold_time": "Voice Average Hold Time",
+    "average_handle_time": "Average Handle Time",
+    "bottom_5_performers": "Bottom 5 Performers",
+    "report_for": "Report for {{title}}",
+    "get_agent_report": {
+      "error": "An error occurred. Please try again later."
+    },
+    "download_agent_report": {
+      "success": "Agent report is downloaded.",
+      "error": "An error occurred. Please try again later."
+    },
+    "get_queue_report": {
+      "error": "An error occurred. Please try again later."
+    },
+    "get_bot_report": {
+      "error": "An error occurred. Please try again later."
+    },
+    "get_system_report": {
+      "error": "An error occurred. Please try again later."
+    },
+    "download_queue_report": {
+      "success": "Queue report is downloaded.",
+      "error": "An error occurred. Please try again later."
+    },
+    "download_bot_report": {
+      "success": "Bot report is downloaded.",
+      "error": "An error occurred. Please try again later."
+    },
+    "download_system_report": {
+      "success": "System report is downloaded.",
+      "error": "An error occurred. Please try again later."
+    },
+    "most_abandoned_queues": "Most Abandoned Queues",
+    "queues_with_highest_average_wait_time": "Queues with Highest Average Wait Time",
+    "top_5_queues_by_inbound_volume": "Top 5 Queues By Inbound Volume",
+    "queues_performance": "Queues Performance",
+    "queues_report": "Queues Report",
+    "queue_reports": {
+      "column_names": {
+        "queue": "Queue",
+        "channel": "Channel",
+        "inbound": "Inbound",
+        "answered": "Answered",
+        "pertence_answered": "% Answered",
+        "abandoned": "Abandoned",
+        "pertence_abandoned": "% Abandoned",
+        "avg_duration": "Avrg. Duration",
+        "awt": "AWT"
+      }
+    },
+    "agent_report": "Agent KPIs",
+    "agent_reports": {
+      "column_names": {
+        "agent_name": "Agent Name",
+        "total_calls_and_chats": "Total Calls & Chats",
+        "utilization": "Utilization",
+        "avg_idle_time": "Avg. Idle Time",
+        "answer_rate": "Answer Rate",
+        "missed_contact": "Missed Contact",
+        "acwt": "ACWT",
+        "acwt_tooltip": "Average after contact work time",
+        "total_chats": "Total Chats",
+        "average_chat_handle_time": "Avg. Handle Time",
+        "average_chat_duration": "Avg. Chat Duration",
+        "total_inbound": "Total Inbound",
+        "total_outbound": "Total Outbound",
+        "avg_handle_time": "AVG. Handle Time",
+        "avg_hold_time":  "AVG. Hold Time",
+        "rating": "Rating",
+        "total_calls": "Total Calls",
+        "total_tickets": "Total Tickets",
+        "overdue_tickets": "Overdue Tickets",
+        "total_sms": "Total SMS",
+        "total_emails": "Total Emails",
+        "avg_sms_response": "Avg. SMS Response",
+        "avg_email_response": "Avg. Email Response"
+      },
+      "column_postfixes": {
+        "days": "days",
+        "day": "day"
+      }
+    },
+    "agent_reports_tabs": {
+      "voice_and_chat": "Voice & Chat",
+      "voice": "Voice",
+      "chat": "Chat",
+      "tickets": "Tickets"
+    },
+    "bot_reports": {
+      "key_kpis": "Key KPIs",
+      "total_calls": "Total Calls",
+      "total_chats": "Total Chats",
+      "appointments_scheduled": "Appointments Scheduled",
+      "new_patients_registered": "New Patients Registered",
+      "bot_kpis": "Bot KPIs",
+      "channel": "Channel",
+      "total_serviced": "Total Serviced",
+      "average_duration": "Average Duration",
+      "bot_ratings": "Bot Ratings",
+      "results": "Results",
+      "kpi": "KPI",
+      "value": "Value",
+      "appointments_rescheduled": "Appointments Rescheduled",
+      "appointments_canceled": "Appointments Canceled",
+      "appointment_information_requests": "Appointment Information Requests",
+      "medication_refill_requests": "Medication Refill Requests",
+      "test_results_requests": "Test Results Requests",
+      "medical_history_requests": "Medical History Requests",
+      "voice": "Voice",
+      "chat": "Chat"
+    },
+    "performance_charts_page": {
+      "queues_inbound_volume_over_time_chat": "Queues Inbound Volume Over Time - Chat",
+      "queues_inbound_volume_over_time_voice": "Queues Inbound Volume Over Time - Voice",
+      "queues_chats_volume_over_time": "Queues Chats Volume Over Time",
+      "top_5_by_volume": "Top 5 By Volume",
+      "custom": "Custom",
+      "select_up_to_5_queues": "Select up to 5 queues",
+      "selected_error_0": "You should choose at least one queue for custom view",
+      "selected_error_5": "You should choose at most five queues for custom view",
+      "bot_performance_chart_title": "Bot Calls and Chats Volume",
+      "bot_calls_key": "Calls",
+      "bot_chats_key": "Chats",
+      "total_chats": "Total Chats",
+      "total_calls":"Total Calls"
+    },
+    "system_reports" : {
+      "title": "System KPI report",
+      "key_kpis": "Key KPIs",
+      "total_tickets_created": "Total Tickets Created",
+      "total_incoming_calls": "Total Incoming Calls",
+      "total_incoming_chats": "Total Incoming Chats",
+      "total_incoming_sms": "Total Incoming SMS",
+      "total_incoming_email": "Total Incoming Email",
+      "channel": "Channel/Feature",
+      "kpi": "KPI",
+      "value": "Value",
+      "tickets": "Tickets",
+      "voice": "Voice",
+      "chat": "Chat",
+      "sms": "SMS",
+      "email": "Email",
+      "tickets_by_reason": "Tickets By Reason",
+      "average_patient_satisfaction_rating": "Average Patient Satisfaction Rating",
+      "total_inbound_calls": "Total Inbound Calls",
+      "total_outbound_calls": "Total Outbound Calls",
+      "average_response_time": "Average Response Time",
+      "total_inbound_chats": "Total Initial Inbound Chats",
+      "total_outgoing_sms": "Total Outgoing SMS",
+      "total_initial_inbound_emails": "Total Initial Inbound Emails"
+    }
   }
 }

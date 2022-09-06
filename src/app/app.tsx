@@ -46,7 +46,7 @@ import {
     AppointmentSchedulePatientStatusPathRouter,
     AppointmentConfirmationPath,
     AppointmentConfirmationShortPath,
-    EmailPath, TicketEmailPath, RequestMedicalRecordsSuccessPath, FeedbackPath, CancellationReasonsPath
+    EmailPath, TicketEmailPath, RequestMedicalRecordsSuccessPath, FeedbackPath, CancellationReasonsPath, ReportsPath
 } from './paths';
 import RealTimeUserStatusUpdate from '@shared/websockets/real-time-user-status-update';
 import ExternalAccessLayout from '@pages/external-access/layout/external-access-layout';
@@ -114,6 +114,7 @@ const NewAppointmentRouter = React.lazy(() => import('@pages/external-access/app
 const AppointmentConfirmation = React.lazy(() => import('@pages/external-access/appointment/appointment-confirmation/appointment-confirmation'));
 const AppointmentConfirmed = React.lazy(() => import('@pages/external-access/appointment/appointment-confirmed'));
 const Feedback = React.lazy(() => import('@pages/external-access/feedbacks/feedback'));
+const Reports = React.lazy(() => import('@pages/reports/reports'));
 
 function App() {
     const accessToken = useSelector(selectAccessToken);
@@ -235,6 +236,7 @@ function App() {
                     <GuardedRoute exact path={UsersBulkPath} component={withSuspense(BulkAddUser)} />
                     <GuardedRoute exact path={CallsLogPath} component={withSuspense(CallsLogList)} />
                     <GuardedRoute exact path={ChatsLogPath} component={withSuspense(ChatsLogList)} />
+                    <GuardedRoute exact path={ReportsPath} component={withSuspense(Reports)} />
                     <GuardedRoute exact path={NotAuthorizedPath} component={withSuspense(NotAuthorized)} />
                     <GuardedRoute exact path='/' component={Dashboard} />
 

@@ -383,7 +383,7 @@ exports[`Ticket List tests renders ticket-list correctly 1`] = `
                       autocomplete="off"
                       class="relative truncate flex-shrink flex-grow flex-auto leading-normal w-px pl-4 body2 input-pt h-14 cursor-pointer"
                       data-testid="fromDate"
-                      max="2022-08-19"
+                      max="2022-08-29"
                       min="0001-01-01"
                       name="fromDate"
                       readonly=""
@@ -439,7 +439,7 @@ exports[`Ticket List tests renders ticket-list correctly 1`] = `
                       class="relative truncate flex-shrink flex-grow flex-auto leading-normal w-px pl-4 body2 input-pt h-14 cursor-pointer"
                       data-testid="toDate"
                       disabled=""
-                      max="2022-08-19"
+                      max="2022-08-29"
                       min="0001-01-01"
                       name="toDate"
                       readonly=""
@@ -1059,6 +1059,7 @@ exports[`Ticket List tests renders ticket-list correctly 1`] = `
                           <div
                             class="flex items-center pl-4"
                             data-test-id="select-cell-text-common.all"
+                            data-testid="select-cell-text-common.all"
                           >
                             common.all
                           </div>
@@ -1074,6 +1075,7 @@ exports[`Ticket List tests renders ticket-list correctly 1`] = `
                           <div
                             class="flex items-center pl-4"
                             data-test-id="select-cell-text-last test"
+                            data-testid="select-cell-text-last test"
                           >
                             last test
                           </div>

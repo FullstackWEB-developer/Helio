@@ -66,8 +66,8 @@ describe("Email Left Menu tests", () => {
     });
 
     it("apply button", async () => {
-        let setEmailQueryTypeMock = (emailQueryType: EmailQueryType) => {};
-        let setQueryParamsMock = (emailQueryType: TicketMessageSummaryRequest) => {};
+        let setEmailQueryTypeMock = (_: EmailQueryType) => {};
+        let setQueryParamsMock = (_: TicketMessageSummaryRequest) => {};
         const providerValues = {
             emailQueryType: EmailQueryType.TeamEmail,
             setEmailQueryType: setEmailQueryTypeMock,
@@ -87,7 +87,7 @@ describe("Email Left Menu tests", () => {
             isFetchingContactNames: false
         }
         const {getByTestId} = render(<TestWrapper mockState={mockState}>
-            <EmailContext.Provider value={providerValues}>
+            <EmailContext.Provider value={providerValues as any}>
                 <EmailLeftMenu/>
             </EmailContext.Provider>            
         </TestWrapper>);
@@ -99,8 +99,8 @@ describe("Email Left Menu tests", () => {
     });
 
     it("onDropDownClick - to my email", async () => {
-        let setEmailQueryTypeMock = (emailQueryType: EmailQueryType) => {};
-        let setQueryParamsMock = (emailQueryType: TicketMessageSummaryRequest) => {};
+        let setEmailQueryTypeMock = (_: EmailQueryType) => {};
+        let setQueryParamsMock = (_: TicketMessageSummaryRequest) => {};
         const providerValues = {
             emailQueryType: EmailQueryType.TeamEmail,
             setEmailQueryType: setEmailQueryTypeMock,
@@ -120,7 +120,7 @@ describe("Email Left Menu tests", () => {
             isFetchingContactNames: false
         }
         const {getByTestId} = render(<TestWrapper mockState={mockState}>
-            <EmailContext.Provider value={providerValues}>
+            <EmailContext.Provider value={providerValues as any}>
                 <EmailLeftMenu/>
             </EmailContext.Provider>            
         </TestWrapper>);
@@ -129,8 +129,8 @@ describe("Email Left Menu tests", () => {
     });
 
     it("onDropDownClick - to team email", async () => {
-        let setEmailQueryTypeMock = (emailQueryType: EmailQueryType) => {};
-        let setQueryParamsMock = (emailQueryType: TicketMessageSummaryRequest) => {};
+        let setEmailQueryTypeMock = (_: EmailQueryType) => {};
+        let setQueryParamsMock = (_: TicketMessageSummaryRequest) => {};
         const providerValues = {
             emailQueryType: EmailQueryType.MyEmail,
             setEmailQueryType: setEmailQueryTypeMock,
@@ -150,7 +150,7 @@ describe("Email Left Menu tests", () => {
             isFetchingContactNames: false
         }
         const {getByTestId} = render(<TestWrapper mockState={mockState}>
-            <EmailContext.Provider value={providerValues}>
+            <EmailContext.Provider value={providerValues as any}>
                 <EmailLeftMenu/>
             </EmailContext.Provider>            
         </TestWrapper>);

@@ -50,7 +50,7 @@ exports[`EmailSummaryItemView tests renders email-summary-item-view last year 1`
               <span
                 class="truncate"
               >
-                Aug 16, 2021
+                Dec 29, 2020
               </span>
             </div>
           </div>
@@ -152,7 +152,7 @@ exports[`EmailSummaryItemView tests renders email-summary-item-view this year 1`
               <span
                 class="truncate"
               >
-                Aug 17
+                Dec 30, 2021
               </span>
             </div>
           </div>
@@ -254,7 +254,7 @@ exports[`EmailSummaryItemView tests renders email-summary-item-view today 1`] = 
               <span
                 class="truncate"
               >
-                12:16 PM
+                Jan 1, 2010
               </span>
             </div>
           </div>

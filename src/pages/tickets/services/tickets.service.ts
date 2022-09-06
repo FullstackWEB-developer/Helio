@@ -1,7 +1,6 @@
 import {ContactTicketsRequest, PatientTicketsRequest} from '../models/patient-tickets-request';
 import {Dispatch} from '@reduxjs/toolkit';
 import Api from '../../../shared/services/api';
-import Logger from '../../../shared/services/logger';
 import {LookupValue} from '../models/lookup-value';
 import {TicketNote} from '../models/ticket-note';
 import store from '../../../app/store';
@@ -31,13 +30,7 @@ import {ChatTranscript} from '@pages/tickets/models/chat-transcript.model';
 import {TicketBase} from '../models/ticket-base';
 import {FeedbackRequest} from '../models/feedback-request';
 import {FeedbackResponse} from '../models/feedback-response';
-import {
-    AgentStatus,
-    PagedList,
-    QueueCurrentMetricQuery,
-    QueueMetric,
-    QuickConnectExtension
-} from '@shared/models';
+import {AgentStatus, PagedList, QueueCurrentMetricQuery, QueueMetric, QuickConnectExtension} from '@shared/models';
 import {CallbackTicket} from '@pages/tickets/models/callback-ticket.model';
 import {PerformanceMetric} from '@pages/dashboard/models/performance-metric.model';
 import axios from 'axios';
@@ -47,14 +40,18 @@ import {AgentContactPerformanceResponse} from '@pages/application/models/agent-c
 import {TicketManagerReview} from '@pages/application/models/ticket-manager-review';
 import {ManagerRatingsMetricResponse} from '@pages/application/models/manager-ratings-metric-response';
 import {CreateTicketFeedbackRequest} from '@pages/tickets/models/create-ticket-feedback-request';
-import { PatientRatings } from '@pages/dashboard/models/patient-ratings.model';
+import {PatientRatings} from '@pages/dashboard/models/patient-ratings.model';
 import {TicketRatingAppliedRequest} from '../models/ticket-rating-applied-request';
 import {UpdateConnectAttributesRequest} from '@pages/tickets/models/update-connect-attributes-request';
-import { setUnreadSmsMessages, setUnreadTeamSms } from '@pages/sms/store/sms.slice';
-import { setUnreadEmailMessages, setUnreadTeamEmail } from '@pages/email/store/email-slice';
-import { BadgeValues } from '../models/badge-values.model';
+import {setUnreadSmsMessages, setUnreadTeamSms} from '@pages/sms/store/sms.slice';
+import {setUnreadEmailMessages, setUnreadTeamEmail} from '@pages/email/store/email-slice';
+import {BadgeValues} from '../models/badge-values.model';
+import {ViewTypes} from '@pages/reports/models/view-types.enum';
+import {MimeTypes} from '@shared/models/mime-types.enum';
+import {ReportTypes} from '@pages/reports/models/report-types.enum';
+import {BotReport} from '@pages/reports/models/bot-report.model';
+import {SystemReport} from '@pages/reports/models/system-report.model';
 
-const logger = Logger.getInstance();
 const ticketsBaseUrl = "/tickets";
 
 export function getList(ticketQuery: TicketQuery, resetPagination?: boolean) {
@@ -180,8 +177,7 @@ export const getEnumByType = (enumType: string) => {
                     dispatch(setTicketEnum({key: enumType, result: response.data}));
                     dispatch(endGetTicketEnumRequest(''));
                 })
-                .catch(error => {
-                    logger.error(`Failed getting ${enumType}`, error);
+                .catch(() => {
                     dispatch(endGetTicketEnumRequest('ticket-new.error'));
                 });
         }
@@ -466,4 +462,92 @@ export function getBadgeValues(badgeValues: BadgeValues, teamBadgeValues: boolea
             }
         });
     }
+}
+
+export const getAgentReport = async(request: ViewTypes) => {
+    const url = `${ticketsBaseUrl}/reports/agents?period=${request}`;
+    const response = await Api.get(url);
+    return response.data;
+}
+
+export const getQueueReport = async(request: ViewTypes) => {
+    const url = `${ticketsBaseUrl}/reports/queues?period=${request}`;
+    const response = await Api.get(url);
+    return response.data;
+}
+
+export const getSystemReport = async(request: ViewTypes) : Promise<SystemReport[]> => {
+    const url = `${ticketsBaseUrl}/reports/system?period=${request}`;
+    const response = await Api.get(url);
+    return response.data;
+}
+
+export const getBotReport = async(period: ViewTypes, startDate?: Date, endDate?: Date) : Promise<BotReport> => {
+    const url = `${ticketsBaseUrl}/reports/bot`;
+    const params = period === ViewTypes.CustomDates ? {
+        startDate,
+        endDate
+    } : {
+        period
+    };
+
+    const response = await Api.get(url, {
+        params
+    });
+    return response.data;
+}
+
+export const exportBotReport = async({period, startDate, endDate} : {period: ViewTypes, startDate?: Date, endDate?: Date}) : Promise<BotReport> => {
+    const url = `${ticketsBaseUrl}/reports/bot/export`;
+    const params = period === ViewTypes.CustomDates ? {
+        startDate,
+        endDate
+    } : {
+        period
+    };
+
+    const response = await Api.get(url, {
+        params,
+        responseType: 'arraybuffer'
+    });
+    utils.downloadFileFromData(response.data, `BotReport`, MimeTypes.XlsX);
+    return response.data;
+}
+
+export const getAvailableMonths = async(reportType: ReportTypes) => {
+    const url = `${ticketsBaseUrl}/reports/available-months?reportType=${reportType}`;
+    const response = await Api.get(url);
+    return response.data;
+}
+
+export const exportAgentReport = async({request, selectedIds} : {request: ViewTypes, selectedIds: string[]}) => {
+    const url = `${ticketsBaseUrl}/reports/agents/export?period=${request}&${selectedIds.map((n) => `selectedIds=${n}`).join('&')}`;
+    const response = await Api.get(url, {
+        responseType: 'arraybuffer'
+    });
+    utils.downloadFileFromData(response.data, `AgentReport`, MimeTypes.XlsX);
+    return response.data;
+}
+
+export const exportQueueReport = async({request, selectedIds}: {request: ViewTypes, selectedIds: string[]}) => {
+    const url = `${ticketsBaseUrl}/reports/queue/export?period=${request}&${selectedIds.map((n) => `selectedIds=${n}`).join('&')}`;
+    const response = await Api.get(url, {
+        responseType: 'arraybuffer'
+    });
+    utils.downloadFileFromData(response.data, `QueueReport`, MimeTypes.XlsX);
+    return response.data;
+}
+
+export const getPerformanceChart = async(request: ViewTypes) => {
+    const url = `${ticketsBaseUrl}/reports/performance-chart?period=${request}`;
+    const response = await Api.get(url);
+    return response.data;
+}
+
+export const exportSystemReport = async({request, selectedIds} : {request: ViewTypes, selectedIds: string[]}) => {
+    const url = `${ticketsBaseUrl}/reports/system/export?period=${request}&${selectedIds.map((n) => `selectedIds=${n}`).join('&')}`;
+    const response = await Api.get(url, {
+        responseType: 'arraybuffer'
+    });
+    utils.downloadFileFromData(response.data, `SystemReport`, MimeTypes.XlsX);
 }

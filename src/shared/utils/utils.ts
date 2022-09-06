@@ -561,8 +561,8 @@ const dynamicSort = (sortField: string, sortDirection: SortDirection) => {
             return -1;
         }
         else {
-            if(!a[sortField]) a[sortField] = '';
-            if(!b[sortField]) b[sortField] = '';
+            if(!a[sortField] && a[sortField] !== 0) a[sortField] = '';
+            if(!b[sortField] && a[sortField] !== 0) b[sortField] = '';
 
             if (a[sortField] < b[sortField]) {
                 return -1 * sortDirectionValue;

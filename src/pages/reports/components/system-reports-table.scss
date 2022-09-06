@@ -1,0 +1,30 @@
+.system-report {
+    &-grid {
+        grid-template-columns: 17% 34% 49%;
+        &-head-row {
+            height: 3rem;
+            align-items: center;
+            background-color: var(--color-secondary-100);
+            text-transform: uppercase;
+            color: var(--table-header-color);
+            > div {
+                padding-left: 1.5rem;
+            }
+        }
+        &-data-row {
+            border-bottom: 1px solid var(--rounded-border-color);
+            > div {
+                line-height: 2.5rem;
+                border-left: 1px solid var(--rounded-border-color);
+            }
+
+            & div > span {
+                padding-left: 1.5rem;
+            }
+
+            div.subtitle2  {
+                border-left: unset;
+            }
+        }
+    }
+}

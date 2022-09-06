@@ -1,0 +1,107 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Performance Chart Queue Dropdown Tests renders correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="relative z-10"
+  >
+    <div
+      class="flex flex-row items-center cursor-pointer"
+    >
+      <div
+        class="body2"
+      >
+        reports.performance_charts_page.top_5_by_volume
+      </div>
+      <div
+        class="pl-2"
+      >
+        <div
+          class=""
+        >
+          <svg
+            class="icon-medium "
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect
+              fill="none"
+              height="24"
+              width="24"
+            />
+            <path
+              class="dashboard-dropdown-arrows"
+              d="M7,14l1.273-1.273L2.545,7,8.273,1.273,7,0,0,7Z"
+              transform="translate(5 16.273) rotate(-90)"
+            />
+          </svg>
+        </div>
+      </div>
+    </div>
+    <div
+      class="z-10 pb-6 pt-8 px-4 bg-white dropdown-body w-80 hidden"
+      style="position: absolute; left: 0px; top: 0px;"
+    >
+      <div
+        class=""
+      >
+        <div
+          class="radio h-9 "
+        >
+          <input
+            checked=""
+            data-test-id="report-chart-radio-button-list"
+            data-testid="report-chart-radio-button-list-controller_chat_top_5_by_volume"
+            id="report-chart-radio-button-list-controller_chat_top_5_by_volume"
+            name="report-chart-radio-button-list-controller_chat"
+            type="radio"
+            value="top_5_by_volume"
+          />
+          <label
+            class="body2  truncate ticket-filter-radio"
+            for="report-chart-radio-button-list-controller_chat_top_5_by_volume"
+          >
+            <div
+              class="truncate relative w-full h-full inline-block"
+            >
+              <span
+                class="body2 labelClassName"
+              >
+                reports.performance_charts_page.top_5_by_volume
+              </span>
+            </div>
+          </label>
+        </div>
+        <div
+          class="radio h-9 "
+        >
+          <input
+            data-test-id="report-chart-radio-button-list"
+            data-testid="report-chart-radio-button-list-controller_chat_custom"
+            id="report-chart-radio-button-list-controller_chat_custom"
+            name="report-chart-radio-button-list-controller_chat"
+            type="radio"
+            value="custom"
+          />
+          <label
+            class="body2  truncate ticket-filter-radio"
+            for="report-chart-radio-button-list-controller_chat_custom"
+          >
+            <div
+              class="truncate relative w-full h-full inline-block"
+            >
+              <span
+                class="body2 labelClassName"
+              >
+                reports.performance_charts_page.custom
+              </span>
+            </div>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

@@ -1,7 +1,6 @@
 import withErrorLogging from '@shared/HOC/with-error-logging';
 import Collapsible from '@components/collapsible/collapsible';
 import React, { useEffect, useState } from 'react';
-import { getContacts } from '@shared/services/contacts.service';
 import { getLocations, getRatingOptions, getUserList } from '@shared/services/lookups.service';
 import { getEnumByType, getList } from '../services/tickets.service';
 import { getLookupValues } from '@shared/services/lookups.service';
@@ -66,7 +65,6 @@ const TicketFilter = ({ isOpen }: { isOpen: boolean }) => {
     const { id } = useSelector(selectAppUserDetails);
 
     useEffect(() => {
-        dispatch(getContacts());
         dispatch(getLocations());
         dispatch(getUserList());
         dispatch(getEnumByType('TicketChannel'));

@@ -66,7 +66,7 @@ const FormattedTextarea = React.forwardRef<ReactQuill, FormattedTextareaProps>((
             <div id="toolbar">
                 {
                     sizeSelectionEnabled &&
-                    <select className="ql-size">
+                    <select className="ql-size" defaultValue=''>
                         <option value="huge">{t('email.inbox.formatter.heading')}</option>
                         <option value="large">{t('email.inbox.formatter.subheading')}</option>
                         <option selected></option>

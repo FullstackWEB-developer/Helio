@@ -51,7 +51,7 @@ describe("EmailSummaryItemView tests", () => {
     });
 
     it("renders email-summary-item-view today", async () => {
-        jest.spyOn(Router, 'useParams').mockReturnValue({ id: '1234' })
+        jest.spyOn(Router, 'useParams').mockReturnValue({ id: '1234' });
         const {asFragment} = render(<TestWrapper mockState={mockState}>
             <EmailSummaryItemView emailInfo={{
                 ticketId: "1",
@@ -60,7 +60,7 @@ describe("EmailSummaryItemView tests", () => {
                 reason: "",
                 messageSummary: "",
                 unreadCount: 1,
-                messageCreatedOn: new Date(),
+                messageCreatedOn: dayjs('2010-01-01').toDate(),
                 messageCreatedByName: "",
                 createdForName: "",
                 createdForEndpoint: "",
@@ -71,7 +71,7 @@ describe("EmailSummaryItemView tests", () => {
 
     it("renders email-summary-item-view this year", async () => {
         jest.spyOn(Router, 'useParams').mockReturnValue({ id: '1234' })
-        let date = new Date();
+        let date = dayjs('2022-01-01').toDate();
         date.setDate(date.getDate() - 2)
         const {asFragment} = render(<TestWrapper mockState={mockState}>
             <EmailSummaryItemView emailInfo={{
@@ -91,8 +91,10 @@ describe("EmailSummaryItemView tests", () => {
     });
 
     it("renders email-summary-item-view last year", async () => {
-        jest.spyOn(Router, 'useParams').mockReturnValue({ id: '1234' })
-        let date = new Date();
+        jest.spyOn(Router, 'useParams').mockReturnValue({ id: '1234' });
+        Date.now = jest.fn(() => new Date(Date.UTC(2017, 7, 9, 8)).valueOf())
+
+        let date = dayjs('2022-01-01').toDate();
         date.setDate(date.getDate() - 368)
         const {asFragment} = render(<TestWrapper mockState={mockState}>
             <EmailSummaryItemView emailInfo={{
@@ -113,7 +115,7 @@ describe("EmailSummaryItemView tests", () => {
 
     it("renders email-summary-item-view email-summary-item-view click", async () => {
         jest.spyOn(Router, 'useParams').mockReturnValue({ id: '1234' })
-        let date = new Date();
+        let date = dayjs('2022-01-01').toDate();
         date.setDate(date.getDate() - 368)
         const {getByTestId} = render(<TestWrapper mockState={mockState}>
             <EmailSummaryItemView emailInfo={{

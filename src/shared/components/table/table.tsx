@@ -24,6 +24,8 @@ const Table = ({model}: TableProps) => {
         rowClass,
         pageSize = 10,
         onRowMouseLeave,
+        subColumns,
+        allowMultiSort = true
     } = model;
     const {t} = useTranslation();
     const [currentPage, setCurrentPage] = useState<number>(1);
@@ -40,8 +42,15 @@ const Table = ({model}: TableProps) => {
             data = rows;
         }
         return React.Children.toArray(data.filter(row => !!row).map(row => {
-            return <div className={hasRowsBottomBorder ? 'border-b' : ''} onMouseLeave={() => {onRowMouseLeave && onRowMouseLeave()}}>
-                <TableRow rowClass={classnames(rowClass, {'bg-gray-100': model.isSelected?.(row)})} size={size} columns={columns} data={row}/>
+            return <div>
+                <div className={hasRowsBottomBorder ? 'border-b' : ''} onMouseLeave={() => {onRowMouseLeave && onRowMouseLeave()}}>
+                    <TableRow rowClass={classnames(rowClass, {'bg-gray-100': model.isSelected?.(row)})} size={size} columns={columns} data={row}/>
+                </div>
+                {
+                    subColumns && <div className={hasRowsBottomBorder ? 'border-b' : ''} onMouseLeave={() => {onRowMouseLeave && onRowMouseLeave()}}>
+                    <TableRow rowClass={classnames(rowClass, {'bg-gray-100': model.isSelected?.(row)})} size={size} columns={subColumns} data={row}/>
+                </div>
+                }
             </div>
         }));
     }
@@ -78,7 +87,7 @@ const Table = ({model}: TableProps) => {
             <Pagination value={pagination} onChange={(data) => setCurrentPage(data.page)} />
         </div>}
         {title && <TableTitle model={title} size={size} />}
-        {!hideHeader && <TableHeader size={size} className={model.headerClassName} headers={columns} />}
+        {!hideHeader && <TableHeader size={size} className={model.headerClassName} headers={columns} allowMultiSort={allowMultiSort} />}
         {getContent()}
         {isPageable('bottom') && <div className='pt-4 flex justify-end'>
             <Pagination value={pagination} onChange={(data) => setCurrentPage(data.page)} />

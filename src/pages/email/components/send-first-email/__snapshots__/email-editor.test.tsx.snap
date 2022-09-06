@@ -82,7 +82,9 @@ exports[`Email Editor tests renders email-editor correctly 1`] = `
             >
               email.inbox.formatter.subheading
             </option>
-            <option />
+            <option
+              selected=""
+            />
           </select>
           <button
             class="ql-bold"

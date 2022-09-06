@@ -5,6 +5,7 @@ export type TableSize = 'compact' | 'normal' | 'large';
 
 export interface TableModel {
     columns: TableColumnModel[];
+    subColumns?: TableColumnModel[];
     rows: any[];
     pageSize?: number;
     pageable?: boolean;
@@ -20,10 +21,12 @@ export interface TableModel {
     size?: TableSize;
     paginationPosition?: 'top' | 'bottom' | 'both';
     onRowMouseLeave?: () => void;
+    allowMultiSort?: boolean;
 }
 
 export interface TableColumnModel {
     title?: string | ReactNode;
+    tooltip?: string | ReactNode;
     headerClassName?: string;
     rowClassname?: string;
     widthClass: string;
@@ -31,6 +34,8 @@ export interface TableColumnModel {
     isSortable?: boolean;
     sortOrder?: number;
     sortDirection?: SortDirection;
+    sortDirectionFillCalss?: string;
+    sortIconSizeClass?: string;
     alignment?: 'start' | 'end' | 'center';
     onClick?: (field: string | undefined, sortDirection: SortDirection) => void
     render?: (field: any, row: any) => ReactNode;
