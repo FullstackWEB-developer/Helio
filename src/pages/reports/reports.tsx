@@ -432,8 +432,8 @@ const Reports = () => {
                             <div className='w-48 h-14 mr-8'>
                                 <ControlledDateInput
                                     name='startDate'
+                                    isSmallSize={true}
                                     control={control}
-                                    assistiveText='common.date_input_assistive_text'
                                     max={dayjs().add(-1, 'd').toDate()}
                                     onChange={(value) => setSelectedStartDate(value)}
                                     label='reports.start_date'
@@ -442,11 +442,11 @@ const Reports = () => {
                             <div className='w-48 h-14'>
                                 <ControlledDateInput
                                     name='endDate'
-                                    assistiveText='common.date_input_assistive_text'
                                     control={control}
+                                    isSmallSize={true}
                                     disabled={!selectedStartDate}
                                     max={dayjs().toDate()}
-                                    min={dayjs(selectedStartDate).add(1, 'd').toDate()}
+                                    min={dayjs(selectedStartDate).toDate()}
                                     label='reports.end_date'
                                     onChange={(value) => setSelectedEndDate(value)}
                                 />
