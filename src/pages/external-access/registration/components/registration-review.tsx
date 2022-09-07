@@ -16,7 +16,7 @@ import {INSURANCE_PLAN} from '@pages/external-access/registration/components/reg
 import Button from '@components/button/button';
 import {useMutation} from 'react-query';
 import {upsertPatient} from '@pages/patients/services/patients.service';
-import { SnackbarPosition } from '@components/snackbar/snackbar-position.enum';
+import {SnackbarPosition} from '@components/snackbar/snackbar-position.enum';
 export interface RegistrationReviewStepProps {
     goBack: () => void;
 }
@@ -34,10 +34,12 @@ const RegistrationReviewStep = ({goBack}: RegistrationReviewStepProps) => {
         const address = patientData?.patient?.address;
         const zip = patientData?.patient?.zip;
         const apt = patientData?.patient?.address2;
-        let addressField = `${address}, ${city}, ${zip}`;
+        const state = patientData?.patient?.state;
+        let addressField = `${address || ''}, `;
         if (apt) {
-            addressField = `${addressField}, ${t(apt.includes('#') ? 'patient.summary.apt_number_no_#' : 'patient.summary.apt_number')}${apt}`;
+            addressField += `${apt}, `;
         }
+        addressField += `${city || ''}, ${state || ''} ${zip}`;
         return addressField;
     }
 
