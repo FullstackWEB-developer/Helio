@@ -440,6 +440,8 @@ const TicketFilter = ({ isOpen }: { isOpen: boolean }) => {
             patientRating: clearArray(fieldsValue.patientRating),
             botRating: clearArray(fieldsValue.botRating),
         });
+        setFromDate(undefined);
+        setToDate(undefined);
         fetchTickets({
             searchTerm: ""
         });
