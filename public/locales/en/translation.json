@@ -1904,6 +1904,7 @@
     "tags": "Tags",
     "ticket_department": "Departments/Groups",
     "public_links_menu": "Public Links",
+    "patient_chart_tabs_visibility": "Patient Chart Tab Visibility",
     "ticket_department_menu": "Departments/Groups",
     "appointment_type_list": {
       "title": "Appointment Type",
@@ -2185,6 +2186,16 @@
     "web_form_preview": {
       "title": "Please rate your recent experience with.",
       "paragraph_1": "Thinking about your interaction you had, how satisfied are you with the experience?"
+    },
+    "patient_chart_tabs": {
+      "title": "Patient Chart Tab Visibility",
+      "description": "You can enable / disable to display patient tabs in this page. Please select tabs you want to display below.",
+      "insurance": "Insurance",
+      "appointments": "Appointments",
+      "patient_cases": "Patient Cases",
+      "medications": "Medications",
+      "test_results": "Test Results",
+      "update_success": "Successfully saved. \n Please note that your changes will take effect in 30 minutes."
     },
     "general_settings": {
       "title": "General Settings",

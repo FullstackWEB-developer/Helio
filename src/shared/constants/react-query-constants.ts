@@ -97,3 +97,4 @@ export const GetQueueReport = 'get-queue-report';
 export const GetBotReport = 'get-bot-report';
 export const GetPerformanceChart = 'get-performance-charts';
 export const GetSystemReport = 'get-system-report';
+export const GetPatientChartTabSettings = 'get-patient-chart-tabs';

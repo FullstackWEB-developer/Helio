@@ -23,6 +23,7 @@ import PracticeBrandingEdit from './components/branding/practice-branding/practi
 import EditAppointmentType from './components/appointment-type/edit-appointment-type/edit-appointment-type'
 import GeneralSettings from './components/general-settings/general-settings';
 import PracticeEmailTemplateEdit from "@pages/configurations/components/branding/practice-email-template/practice-email-template";
+import PatientChartTabs from '@pages/configurations/components/patient-chart-tabs/patient-chart-tabs';
 interface ConfigurationUrlParams {
     type: string,
     id: string
@@ -61,6 +62,8 @@ const Configurations = () => {
                 return <EmailNotificationList />;
             case "general":
                 return <GeneralSettings />;
+            case "patient-tabs":
+                return <PatientChartTabs />;
             case PracticeEmailTemplatePath:
                 return <PracticeEmailTemplateEdit />;
             default:

@@ -19,6 +19,8 @@ import { TicketLookupValue } from '@pages/tickets/models/ticket-lookup-values.mo
 import { SecuritySettings } from '@pages/configurations/models/security-settings';
 import { PracticeBranding } from '@shared/models/practice-branding';
 import { GeneralSettingsModel } from '@pages/configurations/models/general-settings.model';
+import {PatientChartVisibility} from '@pages/configurations/models/patient-chart-visibility.model';
+
 const parametersUrl = '/lookups/parameters';
 const lookupsUrl = '/lookups';
 const lookupsValueUrl = '/lookups/values'
@@ -235,4 +237,12 @@ export const getGeneralSetting = async () => {
 }
 export const setGeneralSetting = async (payload: GeneralSettingsModel) => {
     await Api.post(`${parametersUrl}/general-settings`, payload);
+}
+
+export const getPatientChartTabSettings = async () : Promise<PatientChartVisibility>=> {
+    const { data } = await Api.get<PatientChartVisibility>(`${parametersUrl}/patient-tabs`);
+    return data;
+}
+export const savePatientChartTabSettings = async (payload: PatientChartVisibility) => {
+    await Api.post(`${parametersUrl}/patient-tabs`, payload);
 }
