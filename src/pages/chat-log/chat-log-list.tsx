@@ -10,7 +10,7 @@ import {ChatLogQueryType} from './models/chat-log-query';
 import {useDispatch, useSelector} from 'react-redux';
 import {selectAppUserDetails} from '@shared/store/app-user/appuser.selectors';
 import {useHistory} from 'react-router';
-import {TicketLogModel, TicketLogRequestModel} from '@shared/models/ticket-log.model';
+import {TicketLogContactStatus, TicketLogModel, TicketLogRequestModel} from '@shared/models/ticket-log.model';
 import {DEFAULT_PAGING} from '@shared/constants/table-constants';
 import {GetChatsLogs, QueryGetPatientById, QueryTickets} from '@constants/react-query-constants';
 import {getChatsLog} from './services/chats-log.services';
@@ -233,6 +233,10 @@ const ChatsLogList = () => {
                         <span className='body2'>
                             {data.agentInteractionDuration && data.agentInteractionDuration > 0 &&
                                 t('ticket_log.answered')
+                            }
+                            {
+                                data?.contactStatus === TicketLogContactStatus.ContactDisconnected &&
+                                t('ticket_log.handled_by_bot')
                             }
                         </span>
                     );

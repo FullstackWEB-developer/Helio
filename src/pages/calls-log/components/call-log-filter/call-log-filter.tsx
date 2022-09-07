@@ -75,7 +75,11 @@ const CallsLogFilter = ({ isOpen, value: propsValue, logType, ...props }: CallsL
         });
 
     const contactStatusItem = useMemo(() => {
-        return [DEFAULT_ALL_OPTION, ...enumToArray(ContactStatus, logType === 'Chat' ? [2, 3, 4, 5, 6, 7] : [])]
+        let options = [DEFAULT_ALL_OPTION, ...enumToArray(ContactStatus, logType === 'Chat' ? [2, 3, 4, 5, 6, 7] : [])];
+        if(logType === 'Chat'){
+            options.push({key: t('handled_by_bot'), value: "5", underscoredKey: 'handled_by_bot'})
+        }
+        return options;
     }, [logType]);
 
     const callLogDirectionItem = useMemo(() => [DEFAULT_ALL_OPTION, ...enumToArray(CommunicationDirection)], []);
