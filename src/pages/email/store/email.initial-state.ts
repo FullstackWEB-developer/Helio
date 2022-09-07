@@ -6,6 +6,7 @@ export interface EmailInitialState {
     lastEmailDate: Date;
     hasFilter: boolean;
     unreadTeamEmails: number;
+    newTicketId?: string;
 }
 
 const initialEmailState: EmailInitialState = {
@@ -13,7 +14,8 @@ const initialEmailState: EmailInitialState = {
     unreadEmails: 0,
     hasFilter: false,
     lastEmailDate: new Date(),
-    unreadTeamEmails: 0
+    unreadTeamEmails: 0,
+    newTicketId: undefined
 }
 
 export default initialEmailState;

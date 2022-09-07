@@ -28,6 +28,9 @@ const emailSlice = createSlice({
         setUnreadTeamEmail(state, {payload}: PayloadAction<number>){
             state.unreadTeamEmails = payload
         },
+        setEmailNewTicketId(state, {payload}: PayloadAction<string | undefined>){
+            state.newTicketId = payload
+        },
     }
 });
 
@@ -37,7 +40,8 @@ export const {
     setLastEmailDate,
     setEmailHasFilter,
     setUnreadEmailMessages,
-    setUnreadTeamEmail
+    setUnreadTeamEmail,
+    setEmailNewTicketId
 } = emailSlice.actions
 
 export default emailSlice.reducer

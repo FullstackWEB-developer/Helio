@@ -18,6 +18,7 @@ import SmsNewMessageExistingTicketList from './sms-new-message-existing-ticket-l
 import SmsNewMessageNewTicketForm from './sms-new-message-new-ticket-form';
 import Spinner from '@components/spinner/Spinner';
 import {NEW_MESSAGE_OPTION_CREATE_TICKET, NEW_MESSAGE_OPTION_SELECT_TICKET} from '@pages/sms/constants';
+import {setEmailNewTicketId} from '@pages/email/store/email-slice';
 
 interface SmsNewMessageExistingTicketProps {
     tickets: PagedList<TicketBase>,
@@ -72,6 +73,7 @@ const SmsNewMessageExistingTicket = ({tickets, patient, contact, ...props}: SmsN
             if (props.onClick) {
                 props.onClick(data as TicketBase);
             }
+            dispatch(setEmailNewTicketId(data.id));
         },
         onError: () => {
             dispatch(addSnackbarMessage({
@@ -97,7 +99,10 @@ const SmsNewMessageExistingTicket = ({tickets, patient, contact, ...props}: SmsN
             if (!!patient) {
                 newTicket.patientId = patient.patientId;
                 newTicket.createdForName = utils.stringJoin(' ', patient.firstName, patient.lastName);
-                newTicket.originationNumber = patient.mobilePhone
+                if (props.type === ChannelTypes.SMS) {
+                    newTicket.originationNumber = patient.mobilePhone
+                }
+
             }
 
             if (!!contact) {
@@ -105,7 +110,9 @@ const SmsNewMessageExistingTicket = ({tickets, patient, contact, ...props}: SmsN
                 newTicket.createdForName = contact.type === ContactType.Individual ?
                     utils.stringJoin(' ', contact.firstName, contact.lastName) :
                     contact.companyName;
-                newTicket.originationNumber = contact.mobilePhone
+                if (props.type === ChannelTypes.SMS) {
+                    newTicket.originationNumber = contact.mobilePhone
+                }
             }
 
             createTicketMutation.mutate(newTicket);

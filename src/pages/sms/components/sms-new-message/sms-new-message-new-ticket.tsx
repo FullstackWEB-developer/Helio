@@ -14,6 +14,7 @@ import {Ticket} from '@pages/tickets/models/ticket';
 import {ChannelTypes, ContactExtended, TicketType} from '@shared/models';
 import utils from "@shared/utils/utils";
 import {ContactType} from "@pages/contacts/models/ContactType";
+import {setEmailNewTicketId} from '@pages/email/store/email-slice';
 
 interface SmsNewMessageNewTicketProps {
     patient?: Patient;
@@ -40,6 +41,7 @@ const SmsNewMessageNewTicket = ({patient, contact, type, ...props}: SmsNewMessag
             if (props.onClick) {
                 props.onClick(data as TicketBase);
             }
+            dispatch(setEmailNewTicketId(data.id));
         },
         onError: () => {
             dispatch(addSnackbarMessage({
@@ -61,6 +63,9 @@ const SmsNewMessageNewTicket = ({patient, contact, type, ...props}: SmsNewMessag
                 newTicket.patientId = patient.patientId;
                 newTicket.createdForName = utils.stringJoin(' ', patient.firstName, patient.lastName);
                 newTicket.originationNumber = patient.mobilePhone
+                if (type === ChannelTypes.SMS) {
+                    newTicket.originationNumber = patient.mobilePhone
+                }
             }
 
             if (!!contact) {
@@ -68,7 +73,9 @@ const SmsNewMessageNewTicket = ({patient, contact, type, ...props}: SmsNewMessag
                 newTicket.createdForName = contact.type === ContactType.Individual ?
                     utils.stringJoin(' ', contact.firstName, contact.lastName) :
                     contact.companyName;
-                newTicket.originationNumber = contact.mobilePhone
+                if (type === ChannelTypes.SMS) {
+                    newTicket.originationNumber = contact.mobilePhone
+                }
             }
 
             createTicketMutation.mutate(newTicket);

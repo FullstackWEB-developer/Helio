@@ -1,6 +1,6 @@
 import NotificationTemplateSelect from '@components/notification-template-select/notification-template-select';
 import {NotificationTemplate, NotificationTemplateChannel} from '@shared/models/notification-template.model';
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import EmailEditor from '@pages/email/components/send-first-email/email-editor';
 import Button from '@components/button/button';
 import Input from '@components/input';
@@ -15,13 +15,15 @@ import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
 import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
 import {ChannelTypes, ContactExtended, TicketMessageBase, TicketMessagesDirection} from '@shared/models';
 import {selectAppUserDetails} from '@shared/store/app-user/appuser.selectors';
-import {setAssignee} from '@pages/tickets/services/tickets.service';
+import {setAssignee, setDelete} from '@pages/tickets/services/tickets.service';
 import {EmailPath} from '@app/paths';
 import {NEW_EMAIL} from '@pages/email/constants';
 import {useHistory} from 'react-router-dom';
 import {TemplateUsedFrom} from '@components/notification-template-select/template-used-from';
-import {setLastEmailDate} from '@pages/email/store/email-slice';
+import {setEmailNewTicketId, setLastEmailDate} from '@pages/email/store/email-slice';
 import {useTranslation} from 'react-i18next';
+import {selectEmailNewTicketId} from '@pages/email/store/email.selectors';
+import {EmailContext} from '@pages/email/context/email-context';
 
 export interface SendFirstEmailProps {
     ticket: Ticket;
@@ -36,9 +38,12 @@ const SendFirstEmail = ({ticket, patient, contact, onMailSend} : SendFirstEmailP
     const [emailAddress, setEmailAddress] = useState<string>();
     const [selectedTemplate, setSelectedTemplate] = useState<NotificationTemplate | undefined>();
     const dispatch = useDispatch();
+    const {getEmailsQuery} = useContext(EmailContext)!;
     const changeAssigneeMutation = useMutation(setAssignee);
     const history = useHistory();
     const {t} = useTranslation();
+    const emailNewTicketId = useSelector(selectEmailNewTicketId);
+
     useEffect(() => {
         if (patient?.emailAddress) {
             setEmailAddress(patient.emailAddress)
@@ -109,6 +114,34 @@ const SendFirstEmail = ({ticket, patient, contact, onMailSend} : SendFirstEmailP
         }
     }
 
+    const goBack = () => {
+        history.replace(`${EmailPath}/${NEW_EMAIL}`);
+    }
+
+    const archiveTicketMutation = useMutation(setDelete, {
+        onSuccess: () => {
+            dispatch(setEmailNewTicketId(undefined));
+            goBack();
+            getEmailsQuery.refetch().then();
+        },
+        onError: () => {
+            dispatch(addSnackbarMessage({
+                type: SnackbarType.Error,
+                message: t('email.inbox.archive_ticket.failure')
+            }));
+        }
+    });
+
+    const discard= () => {
+        if (ticket.id === emailNewTicketId) {
+            archiveTicketMutation.mutate({
+                id: ticket.id
+            });
+        } else {
+            goBack();
+        }
+    }
+
     return <div className='flex flex-col first-email'>
         {selectedTemplate &&<div className='flex flex-row pl-16 pt-4'>
             <div className='body2-medium pr-2'>{t('email.new_email.template_label')}</div>
@@ -135,7 +168,7 @@ const SendFirstEmail = ({ticket, patient, contact, onMailSend} : SendFirstEmailP
                 />
                 <EmailEditor showSendIcon={false} content={body} onChange={(content) => {setBody(content)}}  />
                 <div className='flex flex-row space-x-8 pt-10'>
-                    <Button label='email.new_email.discard' buttonType='secondary-big' onClick={() => history.replace(`${EmailPath}/${NEW_EMAIL}`)} />
+                    <Button label='email.new_email.discard' buttonType='secondary-big' onClick={() => discard()} />
                     <Button data-testid={"send-email"} label='email.new_email.send' isLoading={sendEmailMutation.isLoading} buttonType='big' disabled={!subject || !body} onClick={() => sendEmail()} />
                 </div>
             </div>
