@@ -82,7 +82,7 @@ const CallsLogFilter = ({ isOpen, value: propsValue, logType, ...props }: CallsL
         return options;
     }, [logType]);
 
-    const callLogDirectionItem = useMemo(() => [DEFAULT_ALL_OPTION, ...enumToArray(CommunicationDirection)], []);
+    const callLogDirectionItem = useMemo(() => [DEFAULT_ALL_OPTION, ...enumToArray(CommunicationDirection, [3])], []);
 
     const getTimePeriodOptions = (): Option[] => (
         [
