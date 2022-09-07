@@ -97,7 +97,9 @@
     "dismiss_re-login": "Dismiss",
     "re-login_now": "Re-Login Now",
     "re-login_required_header": "Re-Login Required",
-    "re-login_required_in": "in {{time}}"
+    "re-login_required_in": "in {{time}}",
+    "user_problem": "There is a problem with your user account. Please contact system administrator",
+    "user_inactive": "Your account is inactive. Please contact system administrator"
   },
   "user_profile": {
     "statuses": {

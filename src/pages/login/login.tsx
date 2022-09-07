@@ -1,8 +1,8 @@
 import Button from '@components/button/button';
-import {useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {AuthenticationInfo} from '@shared/store/app-user/app-user.models';
-import {setAuthentication, setLoginLoading, setAppUserDetails} from '@shared/store/app-user/appuser.slice';
+import {logOut, setAppUserDetails, setAuthentication, setLoginLoading} from '@shared/store/app-user/appuser.slice';
 import {Redirect, useHistory} from 'react-router-dom';
 import {AuthenticationResult} from '@azure/msal-browser';
 import {Dispatch} from '@reduxjs/toolkit';
@@ -21,6 +21,13 @@ import './login.scss';
 import {getMsalInstance} from '@pages/login/auth-config';
 import {getUserDetail} from '@shared/services/user.service';
 import useBrowserNotification from '@shared/hooks/useBrowserNotification';
+import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
+import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
+import i18n from 'i18next';
+import {UserDetail} from '@shared/models';
+import Snackbar from '@components/snackbar/snackbar';
+import {SnackbarPosition} from '@components/snackbar/snackbar-position.enum';
+
 dayjs.extend(utc);
 
 const Login = () => {
@@ -48,8 +55,8 @@ const Login = () => {
                 .then(async (info) => {
                     await SetAuthenticationInfo(info, dispatch, history, askNotificationPermission);
                 }).catch((err: any) => {
-                    Logger.getInstance().error('Error logging in', err);
-                }).finally(() => dispatch(setLoginLoading(false)))
+                Logger.getInstance().error('Error logging in', err);
+            }).finally(() => dispatch(setLoginLoading(false)))
         }
     }, [dispatch, history]);
 
@@ -88,6 +95,7 @@ const Login = () => {
                     <p className='body2-medium'>{t('common.copyright', {year: dayjs.utc().local().year()})}</p>
                 </div>
             </div>
+            <Snackbar position={SnackbarPosition.TopRight} />
         </div>
     );
 }
@@ -108,19 +116,45 @@ async function SetAuthenticationInfo(info: AuthenticationResult | null, dispatch
         };
         dispatch(setAuthentication(auth));
 
-        const userDetails = await getUserDetail();
-        if (userDetails) {
-            if (askNotificationPermission &&
-                (userDetails.callNotification || userDetails.smsNotification || userDetails.emailNotification || userDetails.chatNotification)) {
-                askNotificationPermission();
+        let userDetails: UserDetail | undefined = undefined;
+        let hasError = false;
+        try {
+            userDetails = await getUserDetail();
+        } catch (error : any) {
+            if (!!error) {
+                if (error.response.status === 404) {
+                    hasError = true;
+                    dispatch(addSnackbarMessage({
+                        type: SnackbarType.Error,
+                        message: i18n.t('login.user_problem')
+                    }));
+                } else if (error.response.status === 409) {
+                    hasError = true;
+                    dispatch(addSnackbarMessage({
+                        type: SnackbarType.Error,
+                        message: i18n.t('login.user_inactive'),
+                        autoClose: false
+                    }));
+                }
             }
-            dispatch(setAppUserDetails({
-                ...userDetails,
-                fullName: `${userDetails.firstName} ${userDetails.lastName}`
-            }));
+        }
+        if (hasError) {
+            dispatch(logOut());
+        } else {
+            if (userDetails) {
+                if (askNotificationPermission &&
+                    (userDetails.callNotification || userDetails.smsNotification || userDetails.emailNotification || userDetails.chatNotification)) {
+                    askNotificationPermission();
+                }
+                dispatch(setAppUserDetails({
+                    ...userDetails,
+                    fullName: `${userDetails.firstName} ${userDetails.lastName}`
+                }));
+            }
+
+            history.push('/dashboard');
         }
 
-        history.push('/dashboard');
     }
 }
 
