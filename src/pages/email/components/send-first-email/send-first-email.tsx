@@ -161,6 +161,7 @@ const SendFirstEmail = ({ticket, patient, contact, onMailSend} : SendFirstEmailP
                     name='subject'
                     type='text'
                     value={subject}
+                    maxLength={255}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSubject(e.target.value)}
                     label='email.new_email.subject'
                     containerClassName='w-full'

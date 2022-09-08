@@ -18,6 +18,8 @@ import {EmailPath} from '@app/paths';
 import {useHistory} from 'react-router-dom';
 import {MORE_MENU_OPTION_SPLIT_TICKET} from '@pages/sms/constants';
 import {EmailContext} from '@pages/email/context/email-context';
+import ElipsisTooltipTextbox from '@components/elipsis-tooltip-textbox/elipsis-tooltip-textbox';
+import './email-message-header.scss';
 
 interface EmailMessageHeaderProps {
     messageId: string;
@@ -110,10 +112,12 @@ const EmailMessageHeader = ({messageId, subject, date, from, fromPhoto, collapse
 
     return (
         <div className='flex items-center py-4'>
-            {getImage()}
+            <div className='w-10 h-10'>{getImage()}</div>
             <div className='flex flex-col px-4'>
                 <span className='subtitle'>{from}</span>
-                <span>{subject}</span>
+                <span className='email-message-subject'>
+                    <ElipsisTooltipTextbox value={subject} asSpan={true} classNames='truncate'/>
+                </span>
             </div>
             <div className="ml-auto flex justify-center items-center">
                 {

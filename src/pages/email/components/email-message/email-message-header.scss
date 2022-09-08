@@ -1,0 +1,14 @@
+.email-message-subject {
+  @media (max-width: 768px) {
+    max-width: 15rem;
+  }
+  @media (max-width: 1024px) {
+    max-width: 20rem;
+  }
+  @media (max-width: 1980px) {
+    max-width: 30rem;
+  }
+  @media (min-width: 1920px) {
+    max-width: 56rem;
+  }
+}
