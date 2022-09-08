@@ -7,6 +7,7 @@ import {DropdownItemModel, DropdownModel} from '@components/dropdown/dropdown.mo
 import customHooks from '@shared/hooks/customHooks';
 import {useEffect} from 'react';
 import SvgIcon, {Icon} from '@components/svg-icon';
+import dayjs from 'dayjs';
 
 interface TimePickerProps {
     name?: string,
@@ -20,6 +21,7 @@ interface TimePickerProps {
     autoComplete?: boolean;
     onChange?: (time: string | undefined) => void;
     onBlur?: () => void;
+    minTime?: string;
 }
 
 const TimePicker = React.forwardRef<HTMLInputElement, TimePickerProps>(({
@@ -29,6 +31,7 @@ const TimePicker = React.forwardRef<HTMLInputElement, TimePickerProps>(({
     dataTestId,
     onChange,
     onBlur,
+    minTime,
     ...props}: TimePickerProps, ref) => {
     const {t}: {t: any} = useTranslation();
     const [inputValue, setInputValue] = useState('');
@@ -81,7 +84,14 @@ const TimePicker = React.forwardRef<HTMLInputElement, TimePickerProps>(({
     const generateTimeOptions = (interval: number = 30): DropdownItemModel[] => {
         let times: DropdownItemModel[] = [];
         let meridiem = ['AM', 'PM'];
-        for (let startTime = 0; startTime < 24 * 60; startTime += interval) {
+        let startTime = 0;
+        if(minTime)
+        {
+            var hour = dayjs(minTime,"HH:mm:ss").hour() * 60;
+            var minute = dayjs(minTime, "HH:mm:ss").minute() + (30 - (dayjs(minTime, "HH:mm:ss").minute() % 30))
+            startTime = hour + minute;
+        }
+        for (startTime; startTime < 24 * 60; startTime += interval) {
             let hh = Math.floor(startTime / 60);
             let mm = startTime % 60;
             let timeOption = `${hh === 0 || hh === 12 ? '12' : (hh % 12).toString().slice(-2)}:${('0' + mm).slice(-2)} ${meridiem[hh < 12 ? 0 : 1]}`;

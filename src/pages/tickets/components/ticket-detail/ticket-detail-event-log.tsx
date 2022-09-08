@@ -16,7 +16,7 @@ import {selectTicketUpdateModel} from '@pages/tickets/store/tickets.selectors';
 import {setTicketUpdateModel} from '@pages/tickets/store/tickets.slice';
 import updateLocale from 'dayjs/plugin/updateLocale';
 import {DAYJS_LOCALE} from '@pages/email/constants';
-
+import isToday from 'dayjs/plugin/isToday';
 interface TicketDetailEventLogProps {
     ticket: Ticket,
     control: Control<TicketUpdateModel>,
@@ -33,7 +33,7 @@ const TicketDetailEventLog = ({ticket, control, isVisible, setIsVisible}: Ticket
     const sysdate = Date.now();
 
     dayjs.updateLocale('en', DAYJS_LOCALE);
-
+    dayjs.extend(isToday);
     const openCalendar = () => {
         setIsVisible(!isVisible);
     }
@@ -102,6 +102,7 @@ const TicketDetailEventLog = ({ticket, control, isVisible, setIsVisible}: Ticket
                     onChange={handleTimeChange}
                     defaultValue={updateModel.dueTime}
                     value={updateModel.dueTime}
+                    minTime={dayjs(updateModel.dueDate).isToday() ? dayjs(updateModel.dueDate).format("HH:mm:ss") : undefined}
                     autoComplete={false}
                 />
             </>

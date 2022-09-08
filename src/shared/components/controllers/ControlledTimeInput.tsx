@@ -14,6 +14,7 @@ export interface ControllerTimeInputProps {
     value?: string | undefined;
     autoComplete?: boolean;
     onChange?: (time: string | undefined) => void;
+    minTime?: string;
 }
 
 const ControlledTimeInput = ({control,
@@ -25,6 +26,7 @@ const ControlledTimeInput = ({control,
     defaultValue,
     value,
     autoComplete,
+    minTime,
     ...props
 }: ControllerTimeInputProps) => {
 
@@ -58,6 +60,7 @@ const ControlledTimeInput = ({control,
                 autoComplete={autoComplete}
                 error={control.formState.errors[name]?.message}
                 onChange={onChange}
+                minTime={minTime}
             />
         )}
     />);
