@@ -1,8 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import withErrorLogging from '../../../../shared/HOC/with-error-logging';
 import {Ticket} from '../../models/ticket';
 import Collapsible from '../../../../shared/components/collapsible/collapsible';
-import TicketDetailAssignee from './ticket-detail-assignee';
 import TicketDetailPatientInfo from './ticket-detail-patient-info';
 import TicketDetailAppointments from './ticket-detail-appointments';
 import TicketDetailAttachments from './ticket-detail-attachments';
@@ -35,7 +34,7 @@ import TicketReviews from '@pages/tickets/components/ticket-detail/ticket-review
 import PatientRatingSideBar from '../patient-rating-sidebar';
 import {ContactType} from '@shared/models';
 import {setAssignee} from '../../services/tickets.service';
-import {selectActiveUserOptions, selectUserList} from '@shared/store/lookups/lookups.selectors';
+import {selectActiveUserOptions} from '@shared/store/lookups/lookups.selectors';
 import {Option} from '@components/option/option';
 interface TicketDetailInfoPanelProps {
     ticket: Ticket,
@@ -49,7 +48,7 @@ const TicketDetailInfoPanel = ({ticket, patient, contact}: TicketDetailInfoPanel
     const userListOptions = useSelector(selectActiveUserOptions);
     const updateModel = useSelector(selectTicketUpdateModel);
     const storedUpdateModelHash = useSelector(selectTicketUpdateHash);
-    const {handleSubmit, control, formState: {isValid},setError, clearErrors, errors, reset, watch} = useForm({
+    const {handleSubmit, control, setError, clearErrors, errors, reset, watch} = useForm({
         defaultValues: updateModel,
         mode: 'onChange'
     });
@@ -216,8 +215,14 @@ const TicketDetailInfoPanel = ({ticket, patient, contact}: TicketDetailInfoPanel
         }
     }, [contact, patient, ticket]);
 
+    const ticketDetailEventLog = useMemo(() =>{
+        return <TicketDetailEventLog ticket={ticket} control={control}
+                              setIsVisible={setIsDueDateVisible} isVisible={isDueDateVisible} />
+    }, [ticket, isDueDateVisible]);
+
+
     return <>
-        <form className='relative flex flex-col' onSubmit={handleSubmit(onSubmit)}>
+        <form className='relative flex flex-col' onSubmit={handleSubmit(onSubmit)}>z
             <div className='sticky top-0 flex items-center justify-between px-6 ticket-details-info-header z-10'>
                 <h6>{t('ticket_detail.info_panel.details')}</h6>
                 {
@@ -271,8 +276,7 @@ const TicketDetailInfoPanel = ({ticket, patient, contact}: TicketDetailInfoPanel
             </div>
             <div className='px-6'>
                 <Collapsible title={'ticket_detail.info_panel.event_log'} isOpen={true}>
-                    <TicketDetailEventLog ticket={ticket} control={control}
-                        setIsVisible={setIsDueDateVisible} isVisible={isDueDateVisible} />
+                    {ticketDetailEventLog}
                 </Collapsible>
             </div>
         </form>

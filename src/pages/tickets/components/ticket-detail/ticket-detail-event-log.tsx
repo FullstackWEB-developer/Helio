@@ -59,7 +59,7 @@ const TicketDetailEventLog = ({ticket, control, isVisible, setIsVisible}: Ticket
             <div className='flex flex-row items-center'>
                 <div className='body2-medium pr-1'>
                     {
-                        t(dayjs(ticket.dueDate).isBefore(sysdate) ? 'ticket_detail.info_panel.overdue' : 'ticket_detail.info_panel.due')   
+                        t(dayjs.utc(ticket.dueDate).local().isBefore(sysdate) ? 'ticket_detail.info_panel.overdue' : 'ticket_detail.info_panel.due')
                     }
                 </div>
                 <div className='body2 flex flex-row'>
@@ -102,7 +102,7 @@ const TicketDetailEventLog = ({ticket, control, isVisible, setIsVisible}: Ticket
                     onChange={handleTimeChange}
                     defaultValue={updateModel.dueTime}
                     value={updateModel.dueTime}
-                    minTime={dayjs(updateModel.dueDate).isToday() ? dayjs(updateModel.dueDate).format("HH:mm:ss") : undefined}
+                    minTime={dayjs(updateModel.dueDate).isToday() ? dayjs().format("HH:mm:ss") : undefined}
                     autoComplete={false}
                 />
             </>

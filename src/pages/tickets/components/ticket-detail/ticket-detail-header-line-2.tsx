@@ -38,7 +38,7 @@ const TicketDetailHeaderLine2 = ({ticket, patientOrContactName}: {ticket: Ticket
         </div>
         <div>
             {ticket.dueDate &&
-                <SmallLabel text={dayjs(ticket.dueDate).isBefore(sysdate) ? 'ticket_detail.header.overdue': 'ticket_detail.header.due_in'} 
+                <SmallLabel text={dayjs.utc(ticket.dueDate).local().isBefore(sysdate) ? 'ticket_detail.header.overdue': 'ticket_detail.header.due_in'}
                 value={dayjs().to(dayjs.utc(ticket.dueDate).local())} />}
         </div>
         <div>
