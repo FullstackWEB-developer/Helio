@@ -25,7 +25,8 @@ const GeneralSettings = () => {
     const history = useHistory();
     const [forceRedirect, setForceRedirect] = useState<boolean>();
     const [warning, setWarning] = useState<boolean>(false);
-    const {handleSubmit, control, formState} = useForm({mode: 'all'});
+    const {handleSubmit, control, formState, watch} = useForm({mode: 'all'});
+    const forceRedirectWatch = watch('forceToRedirect');
 
     const onSubmit = (formData) => {
         if(checkDeletedDepartmentsField(formData.deletedDepartments))
@@ -149,9 +150,9 @@ const GeneralSettings = () => {
                             <ControlledInput name='redirectToExternalPhone' control={control}
                                 defaultValue={data?.redirectToExternalPhone === "-" ? "" : data?.redirectToExternalPhone}
                                 type='tel'
-                                disabled={!forceRedirect}
+                                disabled={!forceRedirectWatch}
                                 label={'configuration.general_settings.redirect_phone_number'}
-                                required={forceRedirect}
+                                required={forceRedirectWatch}
                             />
                         </div>
                         <ToolTipIcon
