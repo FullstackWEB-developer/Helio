@@ -42,7 +42,7 @@ const CompanyContactDetails = ({ editMode, contact, initiateACall, addNewContact
         const address = contact.addresses?.find(a => a.addressType === addressType);
         return address ?
             <ContactInfoField label={t(`contacts.contact_details.individual.${determineAddressTranslation(addressType)}`)}
-                value={`${displayValue(address.line)}\n${address.city || ''}${address.state ? ', ' : ''} ${address.state || ''} ${address.zipCode || ''}`} />
+                value={`${displayValue(address.line)}${address.apartmentNumber ? ', '+ address.apartmentNumber : ''}\n${address.city || ''}${address.state ? ', ' : ''} ${address.state || ''} ${address.zipCode || ''}`} />
             : null
     }
     const updateContactMutation = useMutation(updateContact,

@@ -61,7 +61,7 @@ export const mapContactFormModelToDto = (formModel: ContactFormModel, type: numb
 const createContactAddressArray = (formModel: ContactFormModel): Address[] => {
     const addresses: Address[] = [];
 
-    if (formModel?.primaryState) {
+    if (formModel?.primaryState || formModel?.primaryAddressLine || formModel?.primaryCity || formModel?.primaryZipCode || formModel?.primaryApt) {
         addresses.push({
             addressType: AddressType.PrimaryAddress,
             state: formModel.primaryState,
@@ -71,7 +71,7 @@ const createContactAddressArray = (formModel: ContactFormModel): Address[] => {
             ...(formModel.primaryApt && {apartmentNumber: formModel.primaryApt})
         })
     }
-    if (formModel?.shippingState) {
+    if (formModel?.shippingState || formModel?.shippingAddressLine || formModel?.shippingCity || formModel?.shippingZipCode || formModel?.shippingApt) {
         addresses.push({
             addressType: AddressType.ShippingAddress,
             state: formModel.shippingState,
@@ -81,7 +81,7 @@ const createContactAddressArray = (formModel: ContactFormModel): Address[] => {
             ...(formModel.shippingApt && {apartmentNumber: formModel.shippingApt})
         })
     }
-    if (formModel?.billingState) {
+    if (formModel?.billingState || formModel?.billingAddressLine || formModel?.billingCity || formModel?.billingZipCode || formModel?.billingApt) {
         addresses.push({
             addressType: AddressType.BillingAddress,
             state: formModel.billingState,
