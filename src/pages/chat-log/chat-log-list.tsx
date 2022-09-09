@@ -235,7 +235,7 @@ const ChatsLogList = () => {
                                 t('ticket_log.answered')
                             }
                             {
-                                data?.contactStatus === TicketLogContactStatus.ContactDisconnected &&
+                                data?.contactStatus === TicketLogContactStatus.HandledByBot &&
                                 t('ticket_log.handled_by_bot')
                             }
                         </span>
