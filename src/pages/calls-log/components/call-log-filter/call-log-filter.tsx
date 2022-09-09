@@ -22,7 +22,6 @@ import { CallsLogContext } from '@pages/calls-log/context/calls-log-context';
 import {DEFAULT_PAGING} from '@shared/constants/table-constants';
 import useCheckPermission from '@shared/hooks/useCheckPermission';
 import {selectAppUserDetails} from '@shared/store/app-user/appuser.selectors';
-import CheckboxList from '@components/checkbox-list/checkbox-list';
 const TIME_PERIOD_DATE_RANGE_OPTION = '3';
 const ALL_KEY = 0;
 const DEFAULT_ALL_OPTION = { key: 'all', value: ALL_KEY };
@@ -76,14 +75,14 @@ const CallsLogFilter = ({ isOpen, value: propsValue, logType, ...props }: CallsL
         });
 
     const contactStatusItem = useMemo(() => {
-        let options = [...enumToArray(ContactStatus, logType === 'Chat' ? [2, 3, 4, 5, 6, 7] : [])];
+        let options = [DEFAULT_ALL_OPTION, ...enumToArray(ContactStatus, logType === 'Chat' ? [2, 3, 4, 5, 6, 7] : [])];
         if(logType === 'Chat'){
-            options.push({key: t('ticket_log.handled_by_bot'), value: "5", underscoredKey: 'handled_by_bot'})
+            options.push({key: t('handled_by_bot'), value: "5", underscoredKey: 'handled_by_bot'})
         }
         return options;
     }, [logType]);
 
-    const callLogDirectionItem = useMemo(() => [...enumToArray(CommunicationDirection, [3])], []);
+    const callLogDirectionItem = useMemo(() => [DEFAULT_ALL_OPTION, ...enumToArray(CommunicationDirection, [3])], []);
 
     const getTimePeriodOptions = (): Option[] => (
         [
@@ -235,7 +234,18 @@ const CallsLogFilter = ({ isOpen, value: propsValue, logType, ...props }: CallsL
             title={title}
             isOpen={collapsibleState[name]}
             onClick={(isCollapsed) => setCollapsibleState({ ...collapsibleState, [name]: isCollapsed })}>
-            <CheckboxList items={items} name={name} control={control} label={(key) => {return (t(`ticket_log.${items.filter(x => x.key === key)[0].underscoredKey ?? items.filter(x => x.key === key)[0].key.toLocaleLowerCase()}`))}}/>
+            {
+                items.map((item) =>
+                    <ControlledCheckbox
+                        control={control}
+                        key={item.key}
+                        name={`${name}[${item.key}]`}
+                        labelClassName='body2'
+                        label={`ticket_log.${item.underscoredKey ?? item.key.toLowerCase()}`}
+                        value={item.value?.toString()}
+                    />
+                )
+            }
         </Collapsible>
     }
 
