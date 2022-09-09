@@ -181,12 +181,18 @@ button.small-button[disabled] {
   cursor: default;
 }
 
-button.secondary-button:disabled,
-button.secondary-button[disabled],
 button.secondary-medium-button:disabled,
 button.secondary-medium-button[disabled],
 button.secondary-big-button:disabled,
 button.secondary-big-button[disabled] {
+  background-color: var(--color-white);
+  cursor: default;
+  @extend .subtitle2-white;
+  color: var(--light-text-disabled);
+}
+
+button.secondary-button:disabled,
+button.secondary-button[disabled] {
   background-color: var(--color-white);
   cursor: default;
   @extend .subtitle3-white;
