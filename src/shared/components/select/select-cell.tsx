@@ -57,10 +57,10 @@ const SelectCell = ({item, isSelected, onClick, disabled, isMultiple = false, ..
     })
 
     return (
-        <div onClick={() => cellClicked()} onMouseDown={(e) => {e.preventDefault()}} onMouseOver={() => handleMouseOver()}
+        <div onMouseDown={(e) => {e.preventDefault()}} onMouseOver={() => handleMouseOver()}
             className={`w-full select-cell justify-between flex items-center ${calculateCss()} ${bgCssClass} ${props.className}`}>
-            {isMultiple && <Checkbox className='flex items-center justify-self-center pl-4' name={item.value} label='' checked={isChecked}/>}
-            <div className={classnames('flex flex-col justify-center w-full', {'py-2': !!item.assistiveText})} data-test-id='select-cell-icon-content' >
+            {isMultiple && <Checkbox className='flex items-center justify-self-center pl-4' name={item.value} label='' checked={isChecked} onChange={() => cellClicked()}/>}
+            <div className={classnames('flex flex-col justify-center w-full', {'py-2': !!item.assistiveText})} data-test-id='select-cell-icon-content' onClick={() => cellClicked()} >
                 <div className='flex items-center pl-4' data-test-id={`select-cell-text-${item.label}`} data-testid={`select-cell-text-${item.label}`}>{t(item.label)}</div>
                 {item.assistiveText &&
                     <span className={assistiveTextCss}>{item.assistiveText}</span>
