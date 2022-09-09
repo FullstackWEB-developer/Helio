@@ -129,9 +129,11 @@ const AppointmentReminders = () => {
                             onRemove={removeReminder}
                         ></AppointmentReminderEdit>
                     })}
-                    <div className="flex flex-row cursor-pointer items-center mb-10" onClick={() => addAnotherReminder()}>
-                        <SvgIcon type={Icon.Add} className={`icon-medium-18 rgba-038-fill`} />
-                        <span className="body2-primary  ml-4 py-auto"> {t('configuration.appointment_reminders.add_another_reminder_button')}</span>
+                    <div className="flex flex-row items-center mb-10">
+                        <div className="flex cursor-pointer" onClick={() => addAnotherReminder()}>
+                            <SvgIcon type={Icon.Add} className={`icon-medium-18 rgba-038-fill`} />
+                            <span className="body2-primary  ml-4 py-auto"> {t('configuration.appointment_reminders.add_another_reminder_button')}</span>
+                        </div>
                     </div>
                     <div className='flex'>
                         <Button
