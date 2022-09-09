@@ -51,6 +51,7 @@ const CheckboxList = ({ name, items, control, label }: CheckboxProps) => {
                                     control.setValue(name2, value, {
                                         shouldValidate: true
                                     });
+                                    props.onChange(value);
                                 });
                             } else {
                                 setSelectedKeys(new Array(items.length).fill(false));
@@ -63,6 +64,7 @@ const CheckboxList = ({ name, items, control, label }: CheckboxProps) => {
                                     control.setValue(name2, value, {
                                         shouldValidate: true
                                     });
+                                    props.onChange(value);
                                 });
                             }
                         }}
