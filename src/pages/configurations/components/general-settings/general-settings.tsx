@@ -14,7 +14,7 @@ import { addSnackbarMessage } from '@shared/store/snackbar/snackbar.slice';
 import { SnackbarType } from '@components/snackbar/snackbar-type.enum';
 import { useDispatch } from 'react-redux';
 import { GeneralSettingsModel } from '@pages/configurations/models/general-settings.model';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Confirmation from '@components/confirmation/confirmation';
 import { useHistory } from 'react-router';
 import RouteLeavingGuard from '@components/route-leaving-guard/route-leaving-guard';
@@ -24,17 +24,9 @@ const GeneralSettings = () => {
     const dispatch = useDispatch();
     const history = useHistory();
     const [forceRedirect, setForceRedirect] = useState<boolean>();
-    const [displayPhoneNumber, setDisplayPhoneNumber] = useState<boolean>(true);
     const [warning, setWarning] = useState<boolean>(false);
-    const {handleSubmit, control, formState, clearErrors} = useForm({mode: 'all'});
-
-    useEffect(() => {
-        if(forceRedirect)
-        {
-            setDisplayPhoneNumber(false);
-            setTimeout(() => setDisplayPhoneNumber(true), 0);
-        }
-    }, [forceRedirect]);
+    const {handleSubmit, control, formState, watch} = useForm({mode: 'all'});
+    const forceRedirectWatch = watch('forceToRedirect');
 
     const onSubmit = (formData) => {
         if(checkDeletedDepartmentsField(formData.deletedDepartments))
@@ -144,8 +136,6 @@ const GeneralSettings = () => {
                                                 onChange={(e: string) => {
                                                     setForceRedirect(JSON.parse(e));
                                                     control.setValue('forceToRedirect', e.toLowerCase(), {shouldDirty: e.toLowerCase() !=  String(data?.forceToRedirect).toLowerCase(), shouldValidate: true});
-                                                    clearErrors("redirectToExternalPhone");
-                                                    control.setValue('redirectToExternalPhone', "", {shouldDirty: true, shouldValidate: true});
                                                     control.trigger().then();
                                                 }}
                                             />
@@ -157,17 +147,13 @@ const GeneralSettings = () => {
                     </div>
                     <div className="mt-10 flex flex-row items-center">
                         <div className='input-row'>
-                            {
-                                displayPhoneNumber && 
-                                <ControlledInput name='redirectToExternalPhone' control={control}
-                                    defaultValue={data?.redirectToExternalPhone === "-" ? "" : data?.redirectToExternalPhone}
-                                    type='tel'
-                                    disabled={!forceRedirect}
-                                    label={'configuration.general_settings.redirect_phone_number'}
-                                    required={forceRedirect}
-                                />
-                            }
-                            
+                            <ControlledInput name='redirectToExternalPhone' control={control}
+                                defaultValue={data?.redirectToExternalPhone === "-" ? "" : data?.redirectToExternalPhone}
+                                type='tel'
+                                disabled={!forceRedirectWatch}
+                                label={'configuration.general_settings.redirect_phone_number'}
+                                required={forceRedirectWatch}
+                            />
                         </div>
                         <ToolTipIcon
                             icon={Icon.Info}
