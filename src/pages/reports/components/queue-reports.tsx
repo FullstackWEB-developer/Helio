@@ -22,6 +22,7 @@ interface BasicStatistic {
 
 const QueueReports = ({data, title}: QueueReportsProps) => {
     const {t} = useTranslation();
+    const minEdgeValue = 95;
     const [widgetType, setWidgetType] = useState<ChannelTypes>(ChannelTypes.PhoneCall);
     const typeDropdownRef = useRef<HTMLDivElement>(null);
     const [voiceAbandoned, setVoiceAbandoned] = useState<BasicStatistic[]>([]);
@@ -63,12 +64,12 @@ const QueueReports = ({data, title}: QueueReportsProps) => {
             setVoiceAverageWaitTime(data.sort(({averageInboundCallWaitTime:a}, {averageInboundCallWaitTime:b}) => a-b).slice(0,5).map((obj, i) => ({
                 label: obj.queueName,
                 value: obj.averageInboundCallWaitTime,
-                percentage: i === 0 ? (data[0].averageInboundCallWaitTime === 0 ? 0 : 80) : (obj.averageInboundCallWaitTime === 0 || data[0].averageInboundCallWaitTime === 0  ? 0 : obj.averageInboundCallWaitTime * 80 / data[0].averageInboundCallWaitTime),
+                percentage: i === data.length-1 ? (data[data.length-1].averageInboundCallWaitTime === 0 ? 0 : minEdgeValue) : (obj.averageInboundCallWaitTime === 0 || data[data.length-1].averageInboundCallWaitTime === 0  ? 0 : obj.averageInboundCallWaitTime * minEdgeValue / data[data.length-1].averageInboundCallWaitTime),
             })));
             setChatAverageWaitTime(data.sort(({averageIncomingChatWaitTime:a}, {averageIncomingChatWaitTime:b}) => a-b).slice(0,5).map((obj, i) => ({
                 label: obj.queueName,
                 value: obj.averageIncomingChatWaitTime,
-                percentage: i === 0 ? (data[0].averageIncomingChatWaitTime === 0 ? 0 : 80) : (obj.averageIncomingChatWaitTime === 0 || data[0].averageIncomingChatWaitTime === 0  ? 0 : obj.averageIncomingChatWaitTime * 80 / data[0].averageIncomingChatWaitTime),
+                percentage: i === data.length-1 ? (data[data.length-1].averageIncomingChatWaitTime === 0 ? 0 : minEdgeValue) : (obj.averageIncomingChatWaitTime === 0 || data[data.length-1].averageIncomingChatWaitTime === 0  ? 0 : obj.averageIncomingChatWaitTime * minEdgeValue / data[data.length-1].averageIncomingChatWaitTime),
             })));
         } else {
             setVoiceAbandoned([]);
@@ -113,9 +114,9 @@ const QueueReports = ({data, title}: QueueReportsProps) => {
                     </div>
                 </div>
                 <div className='flex gap-8'>
-                    <ReportPieChart wrapperClass='w-1/3 h-96' title={'reports.top_5_queues_by_inbound_volume'} data={widgetType === ChannelTypes.PhoneCall ? voiceInbound : chatInbound}/>
-                    <HorizontalStatisticWidget wrapperClass='w-1/3 h-96' title={'reports.most_abandoned_queues'} data={widgetType === ChannelTypes.PhoneCall ? voiceAbandoned : chatAbandoned}/>
-                    <HorizontalStatisticWidget wrapperClass='w-1/3 h-96' title={'reports.queues_with_highest_average_wait_time'} data={widgetType === ChannelTypes.PhoneCall ? voiceAverageWaitTime : chatAverageWaitTime}/>
+                    <ReportPieChart wrapperClass='w-1/3 horizontal-statistic-widget-wrapper' title={'reports.top_5_queues_by_inbound_volume'} data={widgetType === ChannelTypes.PhoneCall ? voiceInbound : chatInbound}/>
+                    <HorizontalStatisticWidget wrapperClass='w-1/3 horizontal-statistic-widget-wrapper' title={'reports.most_abandoned_queues'} data={widgetType === ChannelTypes.PhoneCall ? voiceAbandoned : chatAbandoned}/>
+                    <HorizontalStatisticWidget wrapperClass='w-1/3 horizontal-statistic-widget-wrapper' title={'reports.queues_with_highest_average_wait_time'} data={widgetType === ChannelTypes.PhoneCall ? voiceAverageWaitTime : chatAverageWaitTime}/>
                 </div>
             </div>
             <QueueReportsTable data={data} title={"reports.queues_report"}/>

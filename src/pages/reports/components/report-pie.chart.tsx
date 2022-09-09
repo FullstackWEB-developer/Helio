@@ -44,6 +44,7 @@ const ReportPieChart = ({data, title, wrapperClass}: PieChartProps) => {
     }
 
     return <div className={classnames('pt-4 bg-white rounded-lg', wrapperClass)}>
+        <div className='h7'>{t(title)}</div>
         <div className='h-48'>
             <DashboardPieChart data={convertedData} tooltipTitle={title}/>
         </div>
