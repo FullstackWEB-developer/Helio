@@ -22,6 +22,7 @@ import { setUserFilters } from "../store/users.slice";
 import { UserInvitationStatus } from "@shared/models";
 import utils from "@shared/utils/utils";
 import Button from '@components/button/button';
+import CheckboxList from "@components/checkbox-list/checkbox-list";
 
 const UserFilter = ({ isOpen }: { isOpen: boolean }) => {
 
@@ -55,43 +56,9 @@ const UserFilter = ({ isOpen }: { isOpen: boolean }) => {
         return [];
     }
 
-    const addAllOption = (list: any[]): TicketOptionsBase[] => {
-        return [{
-            key: allKey,
-            value: t('common.all')
-        }, ...list];
-    }
-
     const GetCollapsibleCheckboxControl = (title: string, name: string, items: TicketOptionsBase[]) => {
         return <Collapsible title={title} isOpen={collapsibleState[name] || true} onClick={(isCollapsed) => setCollapsibleState({ ...collapsibleState, [name]: isCollapsed })}>
-            {
-                items.map((item) => {
-                    return (
-                        <Controller
-                            control={control}
-                            name={`${name}[${item.key}]`}
-                            defaultValue=''
-                            key={item.key}
-                            render={(props) => {
-                                return (
-                                    <Checkbox
-                                        name={`${name}[${item.key}]`}
-                                        ref={props.ref}
-                                        checked={props.value?.checked ?? false}
-                                        truncate={true}
-                                        label={item.value}
-                                        data-test-id={`${name}-checkbox-${item.key}`}
-                                        value={item.key}
-                                        onChange={(e: CheckboxCheckEvent) => {
-                                            props.onChange(e);
-                                        }}
-                                    />
-                                )
-                            }}
-                        />
-                    );
-                })
-            }
+            <CheckboxList items={items} name={name} control={control}/>
         </Collapsible>
     }
 
@@ -247,11 +214,11 @@ const UserFilter = ({ isOpen }: { isOpen: boolean }) => {
                     </div>
                 </div>
                 <form>
-                    {GetCollapsibleCheckboxControl('users.filters.statuses', 'statuses', addAllOption(convertEnumToOptions(userStatusOptions)))}
-                    {GetCollapsibleCheckboxControl('users.filters.invites', 'invites', addAllOption(convertEnumToOptions(userInvitationStatusOptions)))}
-                    {GetCollapsibleCheckboxControl('users.filters.role', 'roles', addAllOption(roleOptions))}
-                    {GetCollapsibleCheckboxControl('users.filters.department', 'departments', addAllOption(departmentOptions))}
-                    {GetCollapsibleCheckboxControl('users.filters.job_title', 'titles', addAllOption(jobTitleOptions))}
+                    {GetCollapsibleCheckboxControl('users.filters.statuses', 'statuses', convertEnumToOptions(userStatusOptions))}
+                    {GetCollapsibleCheckboxControl('users.filters.invites', 'invites', convertEnumToOptions(userInvitationStatusOptions))}
+                    {GetCollapsibleCheckboxControl('users.filters.role', 'roles', roleOptions)}
+                    {GetCollapsibleCheckboxControl('users.filters.department', 'departments', departmentOptions)}
+                    {GetCollapsibleCheckboxControl('users.filters.job_title', 'titles', jobTitleOptions)}
                 </form>
             </div>
         </div>
