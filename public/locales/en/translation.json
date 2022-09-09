@@ -2365,7 +2365,7 @@
       "column_names": {
         "agent_name": "Agent Name",
         "total_calls_and_chats": "Total Calls & Chats",
-        "utilization": "Utilization",
+        "utilization": "Utilization%",
         "avg_idle_time": "Avg. Idle Time",
         "answer_rate": "Answer Rate",
         "missed_contact": "Missed Contact",
