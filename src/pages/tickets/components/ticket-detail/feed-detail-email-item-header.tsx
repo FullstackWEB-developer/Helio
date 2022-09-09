@@ -19,6 +19,7 @@ import {useHistory} from 'react-router-dom';
 import {MORE_MENU_OPTION_SPLIT_TICKET} from '@pages/sms/constants';
 import classnames from 'classnames';
 import {selectPatientPhoto} from '@pages/tickets/store/tickets.selectors';
+import ElipsisTooltipTextbox from '@components/elipsis-tooltip-textbox/elipsis-tooltip-textbox';
 
 interface FeedDetailEmailHeaderItemProps {
     message: EmailMessageDto;
@@ -143,7 +144,7 @@ const FeedDetailEmailHeaderItem = ({message, isHover, from, collapsed, collapseH
                     </div>
                     <div className="body3-medium">{feedTime}</div>
                 </div>
-                <div className='subtitle2 py-1'>{message.subject}</div>
+                <div className='subtitle2 py-1 truncate max-w-4xl'><ElipsisTooltipTextbox value={message.subject ? message.subject : ''} asSpan={true}/></div>
             </div>
         </div>
     )

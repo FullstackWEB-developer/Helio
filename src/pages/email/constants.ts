@@ -17,6 +17,8 @@ export const DEFAULT_FILTER_VALUE: EmailFilterModel = {
     timePeriod: '',
 }
 
+export const MaxEmailSubjectLength = 100;
+
 export const DAYJS_LOCALE = {
     relativeTime: {
         future: "in %s",

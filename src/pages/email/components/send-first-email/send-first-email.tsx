@@ -17,7 +17,7 @@ import {ChannelTypes, ContactExtended, TicketMessageBase, TicketMessagesDirectio
 import {selectAppUserDetails} from '@shared/store/app-user/appuser.selectors';
 import {setAssignee, setDelete} from '@pages/tickets/services/tickets.service';
 import {EmailPath} from '@app/paths';
-import {NEW_EMAIL} from '@pages/email/constants';
+import {MaxEmailSubjectLength, NEW_EMAIL} from '@pages/email/constants';
 import {useHistory} from 'react-router-dom';
 import {TemplateUsedFrom} from '@components/notification-template-select/template-used-from';
 import {setEmailNewTicketId, setLastEmailDate} from '@pages/email/store/email-slice';
@@ -161,7 +161,7 @@ const SendFirstEmail = ({ticket, patient, contact, onMailSend} : SendFirstEmailP
                     name='subject'
                     type='text'
                     value={subject}
-                    maxLength={255}
+                    maxLength={MaxEmailSubjectLength}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSubject(e.target.value)}
                     label='email.new_email.subject'
                     containerClassName='w-full'

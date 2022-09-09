@@ -40,6 +40,7 @@ import {selectAppUserDetails} from '@shared/store/app-user/appuser.selectors';
 import {CommonQueryData} from '@shared/models/query-data.model';
 import Input from '@components/input';
 import Alert from '@components/alert/alert';
+import {MaxEmailSubjectLength} from '@pages/email/constants';
 interface TicketDetailAddNoteProps {
     ticket: Ticket,
     patient?: ExtendedPatient;
@@ -444,6 +445,7 @@ const TicketDetailAddNote = ({ticket, patient, contact, emailMessages, smsMessag
                                     name='subject'
                                     type='text'
                                     value={emailSubject}
+                                    maxLength={MaxEmailSubjectLength}
                                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmailSubject(e.target.value)}
                                     label='email.new_email.subject'
                                     containerClassName='w-full pt-4'

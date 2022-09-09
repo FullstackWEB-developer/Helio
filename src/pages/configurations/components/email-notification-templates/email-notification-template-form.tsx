@@ -13,6 +13,7 @@ import {useTranslation} from 'react-i18next';
 import {useMutation} from 'react-query';
 import {useDispatch} from 'react-redux';
 import {useHistory} from 'react-router';
+import {MaxEmailSubjectLength} from '@pages/email/constants';
 
 const EmailNotificationTemplateForm = ({template}: {template: EmailTemplate}) => {
     const {t} = useTranslation();
@@ -70,7 +71,7 @@ const EmailNotificationTemplateForm = ({template}: {template: EmailTemplate}) =>
     return (
         <form className='w-full' onSubmit={handleSubmit(submitHandler)}>
             <div className='w-7/12'>
-                <ControlledInput control={control} label={'configuration.email_template_details.subject'} name='subject' required={true} />
+                <ControlledInput control={control} label={'configuration.email_template_details.subject'} maxLength={MaxEmailSubjectLength} name='subject' required={true} />
                 <div className='flex items-center'>
                     <div className='flex-1'>
                         <ControlledInput control={control} label={'configuration.email_template_details.title'} name='title' required={true} />
