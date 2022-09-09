@@ -192,7 +192,7 @@ const AppointmentCancel = () => {
                 {t('external_access.appointments.appointment_cancelation')}
             </h4>
         </div>
-        {appointmentType && canCancelable(true) &&
+        {appointmentType && canCancelable(true) ?
                 <div className='pt-9 xl:pt-8'>
                     <div className='p-4 warning-message body2'>
                         <Trans i18nKey="external_access.appointments.will_be_charged">
@@ -200,7 +200,7 @@ const AppointmentCancel = () => {
                             {appointmentType.cancelationFee?.toString()}
                         </Trans>
                     </div>
-                </div>
+                </div> : undefined
         }
 
         {canCancelable(false) &&
