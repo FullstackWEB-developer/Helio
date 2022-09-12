@@ -454,7 +454,8 @@ const Reports = () => {
                         </div>}
                     {
                         selectedTab === TabTypes.Reports && <div className='w-2/4 h-14 flex items-center'>
-                            <Button label='reports.view' type='submit' buttonType='medium' data-testid='report-view-button' disabled={isViewDisabled()} />
+                            <Button label='reports.view' type='submit' buttonType='medium' data-testid='report-view-button' disabled={isViewDisabled()}
+                            onClick={(e) => e.currentTarget.blur()} />
                             {
                                 selectedView !== ViewTypes.MonthlyReports && <Button data-testid='report-download-button' label='reports.download' 
                                 isLoading={anyExportMutationActive} className='mx-6' buttonType='secondary-medium' icon={Icon.Download} onClick={() => onDownload()} />
