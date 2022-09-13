@@ -366,7 +366,11 @@
       "patient_chart": "Patient Chart",
       "summary": "Summary",
       "clinical": "Clinical",
-      "insurance": "Insurance"
+      "insurance": "Insurances",
+      "appointments": "Appointments",
+      "patient_cases":"Patient Cases",
+      "medications": "Medications",
+      "lab_results": "Lab Results"
     },
     "summary": {
       "contact_information": "Contact information",
@@ -2195,7 +2199,7 @@
       "patient_cases": "Patient Cases",
       "medications": "Medications",
       "test_results": "Test Results",
-      "update_success": "Successfully saved. \n Please note that your changes will take effect in 30 minutes."
+      "update_success": "Successfully saved."
     },
     "general_settings": {
       "title": "General Settings",

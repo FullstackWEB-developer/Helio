@@ -19,7 +19,7 @@ const LabResults = () => {
     const verifiedPatient = useSelector(selectVerifiedPatent);
 
     const {isLoading, data, isError} = useQuery<LabResult[]>([GetLabResults, verifiedPatient?.patientId], () => {
-        return getPatientsLabResults(verifiedPatient?.patientId, verifiedPatient?.departmentId, RequestChannel.Web);
+        return getPatientsLabResults(verifiedPatient?.patientId, verifiedPatient?.departmentId, true, RequestChannel.Web);
     }, {enabled: !!verifiedPatient});
 
     if (!verifiedPatient) {

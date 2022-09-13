@@ -1,4 +1,4 @@
-import React, {ReactElement, useState} from 'react'
+import React, {ReactElement, useEffect, useState} from 'react'
 import withErrorLogging from '../../HOC/with-error-logging';
 import TabTitle from './TabTitle';
 import classnames from 'classnames';
@@ -10,9 +10,10 @@ type TabsProps = {
     asCard?: boolean;
     hasBorder?: boolean;
     onSelect?: (selectedTabIndex: number) => void;
+    activeTabIndex?: number;
 }
 
-const Tabs: React.FC<TabsProps> = ({onSelect, children, title, titleClass='', asCard= false, hasBorder= true}) => {
+const Tabs: React.FC<TabsProps> = ({onSelect, children, title, titleClass='', asCard= false, hasBorder= true, activeTabIndex}) => {
     const [selectedTab, setSelectedTab] = useState(0)
 
     const tabSelected = (index: number) => {
@@ -22,9 +23,16 @@ const Tabs: React.FC<TabsProps> = ({onSelect, children, title, titleClass='', as
         }
     }
 
-    const calculatedTitleClass = classnames('pb-1 pr-8 md:pr-32 pl-1 h7', {
+    useEffect(() => {
+        if((!!activeTabIndex || activeTabIndex === 0) && activeTabIndex >= 0 && activeTabIndex < children.length){
+            setSelectedTab(activeTabIndex);
+        }
+    }, [activeTabIndex]);
+
+    const calculatedTitleClass = classnames('pb-1 pl-1 h7', {
         'h-14 pt-5': asCard,
-        'pt-2.5': !asCard
+        'pt-2.5': !asCard,
+        'pr-8 md:pr-32': !titleClass
     }, titleClass);
 
     const wrapperClass = classnames('flex flex-row ', {

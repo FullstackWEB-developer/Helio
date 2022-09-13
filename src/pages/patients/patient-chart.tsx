@@ -1,6 +1,6 @@
 import PatientHeader from './components/patient-header';
 import {useParams} from 'react-router';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {selectIsPatientError, selectPatient, selectPatientLoading} from './store/patients.selectors';
 import {useTranslation} from 'react-i18next';
@@ -11,10 +11,7 @@ import PatientTabs from './components/patient-tabs';
 import {getAllProviders, getLocations} from '@shared/services/lookups.service';
 import ActivityPanel from './components/activity-panel';
 import './patient-chart.scss';
-import {getPatientById, getPatientSummary} from './services/patients.service';
-import {useQuery} from 'react-query';
-import {PatientChartSummary} from '@pages/patients/models/patient-chart-summary';
-import {GetPatientSummary, OneMinute} from '@constants/react-query-constants';
+import {getPatientById} from './services/patients.service';
 import Spinner from '@components/spinner/Spinner';
 import NoSearchResults from '@components/search-bar/components/no-search-results';
 
@@ -29,10 +26,9 @@ const PatientChart = () => {
     const loading = useSelector(selectPatientLoading);
     const error = useSelector(selectIsPatientError);
     const patient = useSelector(selectPatient);
-    const [lastRefreshTime, setLastRefreshTime] = useState<Date>(new Date());
 
     useEffect(() => {
-        dispatch(getPatientById(patientId, {includeInsuranceInfo: true}));
+        dispatch(getPatientById(patientId, {includeInsuranceInfo: false}));
     }, [dispatch, patientId]);
 
     useEffect(() => {
@@ -50,25 +46,8 @@ const PatientChart = () => {
         }
     }, [dispatch, patient]);
 
-    const {
-        isLoading: isSummaryLoading,
-        data: patientChartSummary,
-        refetch
-    } = useQuery<PatientChartSummary, Error>([GetPatientSummary, patientId], () =>
-        getPatientSummary(Number(patientId)),
-        {
-            staleTime: OneMinute
-        }
-    );
 
-    const refreshPatient = async () => {
-        setLastRefreshTime(new Date());
-        dispatch(getPatientById(patientId, {includeInsuranceInfo: true}));
-        await refetch();
-    }
-
-
-    if (isSummaryLoading || loading) {
+    if (loading) {
         return <Spinner fullScreen />
     }
     if (error) {
@@ -79,13 +58,17 @@ const PatientChart = () => {
         return <NoSearchResults />;
     }
 
+    const refreshPatient = () => {
+        dispatch(getPatientById(patientId, {includeInsuranceInfo: false}));
+    }
+
     return (
         <div className='flex w-full'>
             <div className='w-2/3 overflow-y-auto'>
-                {patientChartSummary &&
+                {patient &&
                     <>
-                        <PatientHeader refreshPatient={refreshPatient} patientChartSummary={patientChartSummary} />
-                        <PatientTabs lastRefreshTime={lastRefreshTime} patientChartSummary={patientChartSummary} patientId={patient.patientId} />
+                        <PatientHeader refreshPatient={refreshPatient} />
+                        <PatientTabs />
                     </>
                 }
 

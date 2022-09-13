@@ -3,6 +3,7 @@ import {CustomField} from './custom-field';
 import {Insurance} from './insurance';
 import {PortalStatus} from './portal-status';
 import {Note} from './note';
+import {PatientOutstandingBalance} from './patient-outstanding-balance';
 
 export interface ExtendedPatient {
     allPatientStatuses: [],
@@ -74,5 +75,6 @@ export interface ExtendedPatient {
     address: string,
     address2: string,
     homePhone: string,
-    workPhone: string
+    workPhone: string,
+    outstandingBalance: PatientOutstandingBalance
 }

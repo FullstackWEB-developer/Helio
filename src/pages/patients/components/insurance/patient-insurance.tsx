@@ -1,6 +1,6 @@
 import {useTranslation} from 'react-i18next';
 import PatientChartList from '@pages/patients/components/patient-chart-list';
-import { useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
 import {
     selectPatient,
 } from '../../store/patients.selectors';
@@ -8,11 +8,19 @@ import patientUtils from '@pages/patients/utils/utils';
 import utils from '../../../../shared/utils/utils';
 import {Insurance} from '@pages/patients/models/insurance';
 import {SelfPayInsuranceTypeName} from '@pages/patients/patient-constants';
+import {useQuery} from 'react-query';
+import {GetPatientInsurance} from '@constants/react-query-constants';
+import {getPatientInsurance} from '@pages/patients/services/patients.service';
+import Spinner from '@components/spinner/Spinner';
 
 const PatientInsurance = () => {
-    const { t } = useTranslation();
+    const {t} = useTranslation();
     const patient = useSelector(selectPatient);
 
+    const {data: insurances, isFetching: fetchingInsuranceData} = useQuery([GetPatientInsurance, patient.patientId], () => getPatientInsurance(patient.patientId),
+        {
+            enabled: !!patient.patientId
+        });
     const primaryInsuranceHeader = (insurance: Insurance) => patientUtils.getInsuranceHeader(insurance, t('common.not_available'));
 
     const getPolicyHolder = (insurance: Insurance) => {
@@ -28,11 +36,11 @@ const PatientInsurance = () => {
 
     const getPolicyInfoRows = (insurance: Insurance) => {
         return [
-            { label: t('patient.insurance.policy_holder'), values: [getPolicyHolder(insurance)] },
-            { label: t('patient.insurance.patients_relation'), values: [insurance.relationshipToInsured] },
-            { label: t('patient.insurance.dob'), values: [utils.formatDate(patient?.dateOfBirth.toString())] },
-            { label: t('patient.insurance.group'), values: [insurance.policyNumber] },
-            { label: t('patient.insurance.id_cert'), values: [insurance.insuranceIdNumber] }
+            {label: t('patient.insurance.policy_holder'), values: [getPolicyHolder(insurance)]},
+            {label: t('patient.insurance.patients_relation'), values: [insurance.relationshipToInsured]},
+            {label: t('patient.insurance.dob'), values: [utils.formatDate(patient?.dateOfBirth.toString())]},
+            {label: t('patient.insurance.group'), values: [insurance.policyNumber]},
+            {label: t('patient.insurance.id_cert'), values: [insurance.insuranceIdNumber]}
         ];
     }
 
@@ -53,7 +61,7 @@ const PatientInsurance = () => {
         ];
     }
 
-    const Insurance = ({insurance} : {insurance: Insurance}) => {
+    const Insurance = ({insurance}: {insurance: Insurance}) => {
         return <div>
             <div className='pt-4'>
                 <span>
@@ -66,28 +74,32 @@ const PatientInsurance = () => {
                     </>}
                 </span>
             </div>
-            {insurance?.insuranceType !== SelfPayInsuranceTypeName &&<div className='grid grid-cols-2 pt-4'>
-                <PatientChartList headings={[t('patient.insurance.policy_info')]} rows={getPolicyInfoRows(insurance)}/>
-                <PatientChartList headings={[t('patient.insurance.eligibility_info')]} rows={getEligibilityInfoRows(insurance)}/>
+            {insurance?.insuranceType !== SelfPayInsuranceTypeName && <div className='grid grid-cols-2 pt-4'>
+                <PatientChartList headings={[t('patient.insurance.policy_info')]} rows={getPolicyInfoRows(insurance)} />
+                <PatientChartList headings={[t('patient.insurance.eligibility_info')]} rows={getEligibilityInfoRows(insurance)} />
             </div>}
         </div>
     }
 
-    if (patient.insurances && patient.insurances.length === 0) {
+    if (insurances && insurances.length === 0) {
         return <div className='pt-4'>{t('patient.insurance.no_insurance')}</div>;
     }
 
-    const InsuranceTitle = ({title} : {title: string}) => {
+    const InsuranceTitle = ({title}: {title: string}) => {
         return <div className='grid grid-cols-1 border-b pb-1 pt-8'>
             <div>{t(title)}</div>
         </div>
     }
 
-    const primaryInsurance = patient.insurances.find(a => a.sequenceNumber === 1);
+    const primaryInsurance = insurances?.find(a => a.sequenceNumber === 1);
 
-    const nonSeqInsurances = patient.insurances.filter(a => a.sequenceNumber === 0);
+    const nonSeqInsurances = insurances?.filter(a => a.sequenceNumber === 0);
 
-    const secondaryInsurances = patient.insurances.filter(a => a.sequenceNumber > 1);
+    const secondaryInsurances = insurances?.filter(a => a.sequenceNumber > 1);
+
+    if (fetchingInsuranceData) {
+        return <Spinner fullScreen />
+    }
 
     return <div>
 
@@ -100,18 +112,18 @@ const PatientInsurance = () => {
             <>
                 <InsuranceTitle title='patient.summary.secondary_insurance_information' />
                 {
-                    secondaryInsurances.sort((a,b) => a.sequenceNumber - b.sequenceNumber)?.map((insurance) => {
+                    secondaryInsurances.sort((a, b) => a.sequenceNumber - b.sequenceNumber)?.map((insurance) => {
                         return <Insurance insurance={insurance} key={insurance.insuranceId} />
                     })}
             </>}
 
         {nonSeqInsurances && nonSeqInsurances.length > 0 &&
-        <>
-            {
-                nonSeqInsurances?.map((insurance) => {
-                    return <Insurance insurance={insurance} key={insurance.insuranceId} />
-                })}
-        </>}
+            <>
+                {
+                    nonSeqInsurances?.map((insurance) => {
+                        return <Insurance insurance={insurance} key={insurance.insuranceId} />
+                    })}
+            </>}
     </div>
 };
 

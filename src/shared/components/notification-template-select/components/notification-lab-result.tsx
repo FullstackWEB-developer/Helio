@@ -21,7 +21,7 @@ export interface NotificationLabResultProps {
 const NotificationLabResult = ({patientId, departmentId, parentType} : NotificationLabResultProps) => {
     const {t} = useTranslation();
     const {isLoading, data, isError} = useQuery<LabResult[]>([GetLabResults, patientId], () => {
-        return getPatientsLabResults(patientId, departmentId, RequestChannel.Agent);
+        return getPatientsLabResults(patientId, departmentId, true, RequestChannel.Agent);
     });
 
     if (isLoading) {

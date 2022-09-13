@@ -22,7 +22,8 @@ export const getHotSpots = async () => {
      return result.data;
 }
 
-export const getAppointmentNotes = async (appointments: Appointment[]) => {
+export const getAppointmentNotes = async (appointments: Appointment[] | undefined) => {
+     if (!appointments) {return;}
      const appointmentIds = appointments.map(appointment => {
           return `id=${appointment.appointmentId}`;
      }).join('&');
@@ -49,9 +50,9 @@ export const getAppointmentTypes = async (): Promise<AppointmentType[]> => {
      return result.data;
 }
 
-export const appointmentDisplayed = async ({patientId, appointmentId} : {patientId: number, appointmentId: number})=> {
+export const appointmentDisplayed = async ({patientId, appointmentId}: {patientId: number, appointmentId: number}) => {
      const url = `${appointmentsBaseUrl}/appointment-displayed`;
-     const result = await Api.post(url,null, {
+     const result = await Api.post(url, null, {
           params: {
                patientId,
                appointmentId

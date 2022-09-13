@@ -1,20 +1,17 @@
 import {useTranslation} from 'react-i18next';
 import PatientChartList, {Row} from '@pages/patients/components/patient-chart-list';
-import PrimaryInsuranceInformation from '@pages/patients/components/summary/primary-insurance-information';
-import {PatientChartSummary} from '@pages/patients/models/patient-chart-summary';
+import {useSelector} from 'react-redux';
+import {selectPatient} from '@pages/patients/store/patients.selectors';
 
-export interface OutstandingBalancesProps {
-    patientChartSummary: PatientChartSummary;
-}
-const OutstandingBalances = ({patientChartSummary}: OutstandingBalancesProps) => {
+const OutstandingBalances = () => {
     const {t} = useTranslation();
-
+    const patient = useSelector(selectPatient);
     const toDollars = (value: number) => {
         return '$' + value.toFixed(2);
     };
 
     const getComment = () => {
-        const patientCollectionsBalance = patientChartSummary.outstandingBalance.collectionsBalance
+        const patientCollectionsBalance = patient.outstandingBalance.collectionsBalance
         const collectionsBalance = toDollars(patientCollectionsBalance);
         if (collectionsBalance) {
             return <span className='body2 '>
@@ -29,10 +26,10 @@ const OutstandingBalances = ({patientChartSummary}: OutstandingBalancesProps) =>
     const outstandingBalanceRows: Row[] = [
         {
             label: t('patient.summary.statement'),
-            values: [toDollars(patientChartSummary.outstandingBalance.statement)],
+            values: [toDollars(patient.outstandingBalance.statement)],
             comment: getComment()
         },
-        { label: t('patient.summary.payment_plan'), values: [toDollars(patientChartSummary.outstandingBalance.paymentPlan)] }
+        { label: t('patient.summary.payment_plan'), values: [toDollars(patient.outstandingBalance.paymentPlan)] }
     ];
 
     return (
@@ -44,10 +41,7 @@ const OutstandingBalances = ({patientChartSummary}: OutstandingBalancesProps) =>
                 <div className='pt-3'>
                     <PatientChartList rows={outstandingBalanceRows} dividerLine={true}/>
                 </div>
-            </div>
-            <div>
-                <PrimaryInsuranceInformation patientChartSummary={patientChartSummary} />
-            </div>
+            </div>            
         </div>
     );
 };

@@ -1,8 +1,8 @@
 import Api from '../../../../shared/services/api';
 import {RequestChannel} from '@shared/models/request.channel.enum';
 
-export const getPatientsLabResults = async (patientId: number, departmentId: number, requestChannel: RequestChannel) => {
-    const getLabResultsUrl = `/patients/${patientId.toString()}/chart/labresults?departmentId=${departmentId.toString()}&showportalonly=true&requestChannel=${requestChannel}`;
+export const getPatientsLabResults = async (patientId: number, departmentId: number, portalOnly: boolean, requestChannel: RequestChannel) => {
+    const getLabResultsUrl = `/patients/${patientId.toString()}/chart/labresults?departmentId=${departmentId.toString()}&showportalonly=${[portalOnly]}&requestChannel=${requestChannel}`;
     const {data} = await Api.get(getLabResultsUrl);
     return data;
 }

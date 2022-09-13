@@ -17,6 +17,10 @@ import {VerifiedPatient} from '@pages/patients/models/verified-patient';
 import utils from '@shared/utils/utils';
 import {Appointment} from '@pages/external-access/appointment/models';
 import {CreatePatientResponseModel} from '@pages/external-access/layout/create-patient-response.model';
+import {ChartAlert} from '../models/chart-alert';
+import {PatientChartAppointments} from '../models/patient-chart-appointments.model';
+import {PatientCase} from '../models/patient-case';
+import {Insurance} from '../models/insurance';
 export interface AddNoteProps {
      patientId: number;
      note: Note;
@@ -69,7 +73,7 @@ export const getPatientClinicalDetails = async (patientId: number) => {
      return result.data;
 }
 
-export const getPatientInsurance = async (patientId: number) => {
+export const getPatientInsurance = async (patientId: number) : Promise<Insurance[]> => {
      const url = `${patientsUrl}/${patientId}/insurance`;
      const result = await Api.get(url);
      return result.data;
@@ -176,6 +180,22 @@ export const getAppointments = async (patientId: number): Promise<Appointment[]>
      return result.data;
 }
 
+export const getAppointmentsForPatientChart = async (patientId: number) : Promise<PatientChartAppointments> => {
+     const url = `${patientsUrl}/${patientId}/chart/appointments`;
+     const result = await Api.get(url);
+     return result.data;
+}
+
+export const getPatientCases = async ({patientId, departmentId}:{patientId: number, departmentId: number}) : Promise<PatientCase[]> => {
+     const url = `${patientsUrl}/${patientId}/cases`;
+     const result = await Api.get(url, {
+          params: {
+               departmentId
+          }
+     });
+     return result.data;
+}
+
 export const checkPatientVerification = async (request: CheckPatientVerification): Promise<PatientVerificationResponse> => {
      const url = `${patientsUrl}/verification/CheckPatientVerification`;
      const result = await Api.post(url, request);
@@ -214,6 +234,16 @@ export const verifyPatient = async (dob: string, mobilePhoneNumber: string, zip:
                "phoneNumber": mobilePhoneNumber,
                "zipCode": zip,
                "forceSingleReturn": "true"
+          }
+     });
+     return data;
+}
+
+export const getPatientChartAlert = async (patientId: number, departmentId: number) : Promise<ChartAlert> => {
+     const url = `${patientsUrl}/${patientId}/chartalert`;
+     const {data} = await Api.get(url, {
+          params: {
+               "departmentId": departmentId
           }
      });
      return data;

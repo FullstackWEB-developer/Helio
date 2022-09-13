@@ -4,7 +4,6 @@ import {useSelector} from 'react-redux';
 import {ExtendedPatient} from '../models/extended-patient';
 import React, {useEffect, useRef, useState} from 'react';
 import Tooltip from '@components/tooltip/tooltip';
-import {PatientChartSummary} from '../models/patient-chart-summary';
 import PatientChartAlert from './patient-chart-alert';
 import Button from '@components/button/button';
 import Avatar from '@components/avatar/avatar';
@@ -14,18 +13,32 @@ import {Icon} from '@components/svg-icon/icon';
 import SvgIcon from '@components/svg-icon/svg-icon';
 import customHooks from '@shared/hooks/customHooks';
 import PatientHeaderActions from '@pages/patients/components/patient-header-actions';
+import {useQuery} from 'react-query';
+import {GetPatientChartAlert, GetPatientPhoto} from '@constants/react-query-constants';
+import {getPatientChartAlert, getPatientPhoto} from '../services/patients.service';
+import Spinner from '@components/spinner/Spinner';
 
 export interface PatientHeaderProps {
-    patientChartSummary: PatientChartSummary;
     refreshPatient: () => void;
 }
 
-const PatientHeader = ({patientChartSummary, refreshPatient}: PatientHeaderProps) => {
+const PatientHeader = ({refreshPatient}: PatientHeaderProps) => {
     const {t} = useTranslation();
     const patient: ExtendedPatient = useSelector(selectPatient);
     const chartAlertIcon = useRef(null);
     const [displayChartAlert, setDisplayChartAlert] = useState<boolean>(false);
     const tooltipDiv = useRef<HTMLDivElement>(null);
+
+    const {data: patientPhoto, isFetching: fetchingPhoto} = useQuery([GetPatientPhoto, patient?.patientId], () => getPatientPhoto(patient.patientId),
+        {
+            enabled: !!patient.patientId
+        });
+
+    const {data: chartAlert, isFetching: fetchingChartAlert} = useQuery([GetPatientChartAlert, patient?.patientId], () => getPatientChartAlert(patient.patientId,
+        patient.departmentId > 0 ? patient.departmentId : patient.primaryDepartmentId),
+        {
+            enabled: !!patient.patientId && (!!patient.departmentId || !!patient.primaryDepartmentId)
+        })
 
     customHooks.useOutsideClick([tooltipDiv], () => {
         setDisplayChartAlert(false);
@@ -41,10 +54,10 @@ const PatientHeader = ({patientChartSummary, refreshPatient}: PatientHeaderProps
     }
 
     useEffect(() => {
-        if (patientChartSummary.chartAlert?.noteText && patientChartSummary.chartAlert.noteText.length > 0) {
+        if (chartAlert?.noteText && chartAlert.noteText.length > 0) {
             setDisplayChartAlert(true);
         }
-    }, [patientChartSummary.chartAlert?.noteText])
+    }, [chartAlert?.noteText])
 
     const viewInAthena = () => {
         const url = `${utils.getAppParameter('AthenaHealthUrl')}${utils.getAppParameter('AthenaPatientFormUrl')}${patient.patientId}`;
@@ -52,11 +65,13 @@ const PatientHeader = ({patientChartSummary, refreshPatient}: PatientHeaderProps
     }
 
     const getImage = () => {
-        if (patientChartSummary?.patientPicture && patientChartSummary.patientPicture.length > 0) {
-            return <img alt={t('patient.summary.profile_pic_alt_text')} className='w-24 h-24 rounded-full'
-                src={`data:image/jpeg;base64,${patientChartSummary.patientPicture}`} />
+        if (fetchingPhoto) {
+            return <Spinner className='w-24 h-24' />
         }
-
+        if (patientPhoto && patientPhoto.length > 0) {
+            return <img alt={t('patient.summary.profile_pic_alt_text')} className='w-24 h-24 rounded-full'
+                src={`data:image/jpeg;base64,${patientPhoto}`} />
+        }
         return <Avatar className='w-24 h-24 h3' userFullName={utils.stringJoin(' ', patient.firstName, patient.lastName)} />
     }
 
@@ -79,17 +94,19 @@ const PatientHeader = ({patientChartSummary, refreshPatient}: PatientHeaderProps
                                 <h5 className={'pl-1 pr-2'}>{patient.patientId}</h5>
                             </div>
                             {
-                                patientChartSummary?.chartAlert &&
-                                <div ref={tooltipDiv} className='pt-1'>
-                                    <div ref={chartAlertIcon} onClick={() => setDisplayChartAlert(!displayChartAlert)}
-                                        className='cursor-pointer'>
-                                        <SvgIcon type={Icon.Info} className='icon-medium' fillClass='warning-icon' />
+                                fetchingChartAlert ? <Spinner size='small' className='pt-1' /> : (
+                                    chartAlert &&
+                                    <div ref={tooltipDiv} className='pt-1'>
+                                        <div ref={chartAlertIcon} onClick={() => setDisplayChartAlert(!displayChartAlert)}
+                                            className='cursor-pointer'>
+                                            <SvgIcon type={Icon.Info} className='icon-medium' fillClass='warning-icon' />
+                                        </div>
+                                        <Tooltip targetRef={chartAlertIcon} isVisible={displayChartAlert}
+                                            placement='bottom-start'>
+                                            <PatientChartAlert chartAlert={chartAlert} />
+                                        </Tooltip>
                                     </div>
-                                    <Tooltip targetRef={chartAlertIcon} isVisible={displayChartAlert}
-                                        placement='bottom-start'>
-                                        <PatientChartAlert chartAlert={patientChartSummary.chartAlert} />
-                                    </Tooltip>
-                                </div>
+                                )
                             }
                         </div>
                         <Button data-test-id='patient-header-view-in-athena-button'
@@ -114,7 +131,7 @@ const PatientHeader = ({patientChartSummary, refreshPatient}: PatientHeaderProps
                             }
                         </div>
                     </div>
-                    <PatientHeaderActions patient={patient} refreshPatient={() => refreshPatient()}/>
+                    <PatientHeaderActions patient={patient} refreshPatient={() => refreshPatient()} />
                 </div>
             </div>
         </div>
