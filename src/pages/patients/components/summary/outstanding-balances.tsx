@@ -14,7 +14,7 @@ const OutstandingBalances = () => {
     };
 
     const getComment = () => {
-        const patientCollectionsBalance = patient.outstandingBalance.collectionsBalance
+        const patientCollectionsBalance = patient?.outstandingBalance?.collectionsBalance
         const collectionsBalance = toDollars(patientCollectionsBalance);
         if (collectionsBalance) {
             return <span className='body2 '>
