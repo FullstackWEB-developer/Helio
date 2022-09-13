@@ -80,7 +80,7 @@ export const ConfigurationMenuItems = [{
         title: 'configuration.public_links_menu',
         url: PublicLinksPath
     }, {
-        id: 'configuration-menu-item-14',
+        id: 'configuration-menu-item-17',
         title: 'configuration.patient_chart_tabs_visibility',
         url: 'patient-tabs'
     }

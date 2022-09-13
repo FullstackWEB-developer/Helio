@@ -67,12 +67,12 @@ const Configurations = () => {
             case PracticeEmailTemplatePath:
                 return <PracticeEmailTemplateEdit />;
             default:
-                return <AppointmentType />
+                return <GeneralSettings />
         }
     }, [type, id]);
     return (
         <div className="flex w-full h-full overflow-y-auto">
-            <ConfigurationsMenu activeUrl={type ? type : 'appointment-type'}></ConfigurationsMenu>
+            <ConfigurationsMenu activeUrl={type ? type : 'general'}></ConfigurationsMenu>
             {
                 renderBodyByActiveRoute()
             }
