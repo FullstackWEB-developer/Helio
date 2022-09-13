@@ -23,7 +23,7 @@ import {
     getQueueReport,
     getSystemReport
 } from '@pages/tickets/services/tickets.service';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
 import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
 import AgentReports from './components/agent-reports';
@@ -50,6 +50,7 @@ import PerformanceCharts from './components/performance-charts';
 import {PerformanceChartResponse} from './models/performance-chart.model';
 import SystemReports from '@pages/reports/components/system-reports';
 import {SystemReport} from '@pages/reports/models/system-report.model';
+import {isNavigationExpandedSelector} from '@shared/layout/store/layout.selectors';
 
 const Reports = () => {
     const {t} = useTranslation();
@@ -67,6 +68,7 @@ const Reports = () => {
     const [reportTitle, setReportTitle] = useState<string>();
     const [reportTitleForView, setReportTitleForView] = useState<string>();
     const [_, setOrderDate] = useState<Date | undefined>();
+    const isNavigationExpanded = useSelector(isNavigationExpandedSelector);
     const dispatch = useDispatch();
     const {control, handleSubmit, setValue, reset} = useForm({
         mode: 'all',
@@ -495,7 +497,7 @@ const Reports = () => {
                                 selectedMonths={selectedMonths} exportReportDownload={onDownload} isDownloading={anyExportMutationActive} />
                         }
                     </Tab>
-                    <Tab key={TabTypes.PerformanceCharts} title={t('reports.performance_charts')}>
+                    <Tab key={`${TabTypes.PerformanceCharts}-performance-when-navigation-expanded-${isNavigationExpanded}`} title={t('reports.performance_charts')}>
                         {settings()}
                         {
                             isLoading() && <Spinner size='large-40' className='pt-2' />

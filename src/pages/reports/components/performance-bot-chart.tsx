@@ -4,6 +4,7 @@ import React, {useEffect, useMemo, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {PerformanceChartResponse} from '../models/performance-chart.model';
 import {ViewTypes} from '../models/view-types.enum';
+import {performanceChartViewTypes} from '../utils/constants';
 import './performance-bot-chart.scss';
 
 const PerformanceBotChart = ({data, selectedView}: {data: PerformanceChartResponse[], selectedView: ViewTypes}) => {
@@ -30,14 +31,27 @@ const PerformanceBotChart = ({data, selectedView}: {data: PerformanceChartRespon
         for (let i = 0; i < chatAggregatedVolume.length; i++) {
             graphDataCombined.push(
                 {
-                    'xAxisData': selectedView != ViewTypes.Yesterday ? dayjs(chatAggregatedVolume[i].label, 'MMMM D').format('MMM D') :
-                        dayjs(chatAggregatedVolume[i].label, 'hh:mm A').format('hh A'),
+                    'xAxisData': determineXAxisLabelFormat(chatAggregatedVolume[i].label),
                     'Chats': chatAggregatedVolume[i].value,
-                    'Calls': callsAggregatedVolume[i].value
+                    'Calls': callsAggregatedVolume[i].value,
+                    'Month': [ViewTypes.LastMonth, Number(performanceChartViewTypes[3].value)].includes(selectedView) ?
+                        dayjs(chatAggregatedVolume[i].label, 'MMMM D').format('MMM') : ''
                 })
         }
         setGraphData(graphDataCombined);
     }, [data]);
+
+    const determineXAxisLabelFormat = (date: string) => {
+        switch (selectedView) {
+            case ViewTypes.Yesterday:
+                return dayjs(date, 'hh:mm A').format('hh A');
+            case ViewTypes.LastMonth:
+            case Number(performanceChartViewTypes[3].value):
+                return dayjs(date, 'MMMM D').format('D');
+            default:
+                return dayjs(date, 'MMMM D').format('MMM D');
+        }
+    }
 
     const style = useMemo(() => {
         return getComputedStyle(document.body);
@@ -82,7 +96,7 @@ const PerformanceBotChart = ({data, selectedView}: {data: PerformanceChartRespon
                         textColor: style.getPropertyValue('--dashboard-volume-chart-axis-label-color')
                     }}
                     tooltip={({id, value, color}) => (
-                        <div className='flex flex-col bg-white border rounded-md shadow-md bar-chart-tooltip'>
+                        <div key={`bot-chart-tooltip-${id}${value}`} className='flex flex-col bg-white border rounded-md shadow-md bar-chart-tooltip'>
                             <div className='flex items-center px-1 py-2'>
                                 <div className='body3-medium' style={{color}}>
                                     {id}:
@@ -93,7 +107,14 @@ const PerformanceBotChart = ({data, selectedView}: {data: PerformanceChartRespon
                             </div>
                         </div>
                     )}
-
+                    axisLeft={{
+                        format: (e) => Math.floor(e) === e && e
+                    }}
+                    axisBottom={{
+                        legendPosition: 'start',
+                        legendOffset: 18,
+                        legend: graphData && graphData[0] && graphData[0]['Month'] ? graphData[0]['Month'] : ''
+                    }}
                 />
             </div>
             <div className='flex justify-center items-center pt-8 pb-7'>
