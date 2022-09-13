@@ -14,16 +14,8 @@ const PerformanceBotChart = ({data, selectedView}: {data: PerformanceChartRespon
     const [graphData, setGraphData] = useState<any[]>([]);
 
     useEffect(() => {
-        let chatAggregatedVolume = [...data[0].queueData.botChat];
-        let callsAggregatedVolume = [...data[0].queueData.botVoice];
-        for (let i = 1; i < data.length; i++) {
-            const voiceBotDataOfQueue = [...data[i].queueData.botVoice];
-            const chatBotDataOfQueue = [...data[i].queueData.botChat];
-            for (let j = 0; j < chatAggregatedVolume.length; j++) {
-                callsAggregatedVolume[j].value += voiceBotDataOfQueue[j].value;
-                chatAggregatedVolume[j].value += chatBotDataOfQueue[j].value;
-            }
-        }
+        let chatAggregatedVolume = [...data[0].botData?.botChat];
+        let callsAggregatedVolume = [...data[0].botData?.botVoice];
         setTotalCalls(callsAggregatedVolume.reduce((sum, current) => sum + current.value, 0));
         setTotalChats(chatAggregatedVolume.reduce((sum, current) => sum + current.value, 0));
 

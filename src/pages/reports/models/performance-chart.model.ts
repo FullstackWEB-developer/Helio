@@ -2,6 +2,7 @@ export interface PerformanceChartResponse
 {
         queueName: string;
         queueData: PerformanceChart;
+        botData: PerformanceChart;
 }
 
 export interface PerformanceChart
