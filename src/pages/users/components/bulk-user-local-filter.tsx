@@ -13,12 +13,14 @@ import {UserQueryFilter} from '../models/user-filter-query.model';
 import {setBulkLocalUsersFiltered, setLocalBulkFilters} from '../store/users.slice';
 import {getRoleWithState} from '@shared/services/user.service';
 import {BulkAddStep} from '../models/bulk-add-step.enum';
+import CheckboxList from '@components/checkbox-list/checkbox-list';
 
 const BulkUserLocalFilter = ({currentStep}: {currentStep: BulkAddStep}) => {
 
     const [collapsibleState, setCollapsibleState] = useState<{[key: string]: boolean}>({});
     const {t} = useTranslation();
     const isLocalBulkFilterOpen = useSelector(selectIsLocalBulkFilterOpen);
+    const [formResetDateTime, setFormResetDateTime] = useState<Date>();
     const getClassNames = () => classNames({
         'w-72 transition-width transition-slowest ease top-0 bg-secondary-100 overflow-y-auto relative': isLocalBulkFilterOpen,
         'hidden': !isLocalBulkFilterOpen
@@ -49,43 +51,10 @@ const BulkUserLocalFilter = ({currentStep}: {currentStep: BulkAddStep}) => {
     const roleOptions = utils.convertStringArrayToOptions(availableRoles.map(r => r));
 
     const unassignedRoleFilterOptions = utils.convertStringArrayToOptions(['users.filters.unassigned_role']);
-    const addAllOption = (list: any[]): TicketOptionsBase[] => {
-        return [{
-            key: allKey,
-            value: t('common.all')
-        }, ...list];
-    }
 
     const GetCollapsibleCheckboxControl = (title: string, name: string, items: TicketOptionsBase[]) => {
         return <Collapsible title={title} isOpen={collapsibleState[name] || true} onClick={(isCollapsed) => setCollapsibleState({...collapsibleState, [name]: isCollapsed})}>
-            {
-                items.map((item) => {
-                    return (
-                        <Controller
-                            control={control}
-                            name={`${name}[${item.key}]`}
-                            defaultValue=''
-                            key={item.key}
-                            render={(props) => {
-                                return (
-                                    <Checkbox
-                                        name={`${name}[${item.key}]`}
-                                        ref={props.ref}
-                                        checked={props.value?.checked ?? false}
-                                        truncate={true}
-                                        label={item.value}
-                                        data-test-id={`${name}-checkbox-${item.key}`}
-                                        value={item.key}
-                                        onChange={(e: CheckboxCheckEvent) => {
-                                            props.onChange(e);
-                                        }}
-                                    />
-                                )
-                            }}
-                        />
-                    );
-                })
-            }
+            <CheckboxList items={items} name={name} control={control} resetDateTime={formResetDateTime}/>
         </Collapsible>
     }
 
@@ -188,6 +157,7 @@ const BulkUserLocalFilter = ({currentStep}: {currentStep: BulkAddStep}) => {
 
     const resetForm = () => {
         const fieldsValue = getValues();
+        setFormResetDateTime(new Date());
         const clearArray = (values: any) => Array.isArray(values) ? Array(values.length).fill('') : values;
         reset({
             roles: clearArray(fieldsValue.roles),
@@ -206,11 +176,11 @@ const BulkUserLocalFilter = ({currentStep}: {currentStep: BulkAddStep}) => {
                     <div className='body2 cursor-pointer' onClick={() => resetForm()} >{t('users.filters.clear_all')}</div>
                 </div>
                 <form>
-                    {GetCollapsibleCheckboxControl('users.filters.department', 'departments', addAllOption(departmentOptions))}
-                    {GetCollapsibleCheckboxControl('users.filters.job_title', 'titles', addAllOption(jobTitleOptions))}
+                    {GetCollapsibleCheckboxControl('users.filters.department', 'departments', (departmentOptions))}
+                    {GetCollapsibleCheckboxControl('users.filters.job_title', 'titles', (jobTitleOptions))}
                     {
                         currentStep > BulkAddStep.RolePicking &&
-                        GetCollapsibleCheckboxControl('users.filters.role', 'roles', addAllOption(roleOptions))
+                        GetCollapsibleCheckboxControl('users.filters.role', 'roles', (roleOptions))
                     }
                     {
                         currentStep === BulkAddStep.RolePicking &&

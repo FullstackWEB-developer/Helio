@@ -22,6 +22,7 @@ import { CallsLogContext } from '@pages/calls-log/context/calls-log-context';
 import {DEFAULT_PAGING} from '@shared/constants/table-constants';
 import useCheckPermission from '@shared/hooks/useCheckPermission';
 import {selectAppUserDetails} from '@shared/store/app-user/appuser.selectors';
+import CheckboxList from '@components/checkbox-list/checkbox-list';
 const TIME_PERIOD_DATE_RANGE_OPTION = '3';
 const ALL_KEY = 0;
 const DEFAULT_ALL_OPTION = { key: 'all', value: ALL_KEY };
@@ -41,6 +42,7 @@ const CallsLogFilter = ({ isOpen, value: propsValue, logType, ...props }: CallsL
     const [fromDateField, setFromDateField] = useState<Date | undefined>(propsValue?.fromDate ? dayjs(propsValue.fromDate).utc().toDate() : undefined);
     const { t } = useTranslation();
     const [collapsibleState, setCollapsibleState] = useState<{ [key: string]: boolean }>({});
+    const [formResetDateTime, setFormResetDateTime] = useState<Date>();
     const watchTimePeriod = watch('timePeriod');
     const ticketLookupValuesReason = useSelector((state) => selectLookupValues(state, 'TicketReason'));
     const isDefaultTeam = useCheckPermission('Calls.DefaultToTeamView');
@@ -71,15 +73,19 @@ const CallsLogFilter = ({ isOpen, value: propsValue, logType, ...props }: CallsL
         .filter(([_, value]) => !isNaN(Number(value)) && !exludes.includes(Number(value)))
         .map(([key, value]) => {
             const underscoredKey = utils.spaceBetweenCamelCaseWords(key).toLowerCase().replaceAll(' ', '_');
-            return { key, value, underscoredKey }
+            return { key: value, value: value, underscoredKey }
         });
 
     const contactStatusItem = useMemo(() => {
-        let options = [DEFAULT_ALL_OPTION, ...enumToArray(ContactStatus, logType === 'Chat' ? [2, 3, 4, 5, 7] : [])];
+        let options = [...enumToArray(ContactStatus, logType === 'Chat' ? [2, 3, 4, 5, 6, 7] : [])];
+        if(logType === 'Chat'){
+            let handledByBot = t('ticket_log.handled_by_bot') as string;
+            options.push({value: handledByBot, key: "5", underscoredKey: 'handled_by_bot'})
+        }
         return options;
     }, [logType]);
 
-    const callLogDirectionItem = useMemo(() => [DEFAULT_ALL_OPTION, ...enumToArray(CommunicationDirection, [3])], []);
+    const callLogDirectionItem = useMemo(() => [...enumToArray(CommunicationDirection, [3])], []);
 
     const getTimePeriodOptions = (): Option[] => (
         [
@@ -138,6 +144,7 @@ const CallsLogFilter = ({ isOpen, value: propsValue, logType, ...props }: CallsL
                 });
             return cloned;
         }
+        setFormResetDateTime(new Date());
         const defaults = {
             status: clearCheckboxValue(fieldsValue.status),
             callType: clearCheckboxValue(fieldsValue.callType),
@@ -226,23 +233,15 @@ const CallsLogFilter = ({ isOpen, value: propsValue, logType, ...props }: CallsL
         props.onSubmit?.(filter);
     };
 
-    const GetCollapsibleCheckboxControl = (title: string, name: string, items: { key: string; value: any, underscoredKey?: string }[]) => {
+    const GetCollapsibleCheckboxControl = (title: string, name: string, items: { key: any; value: any, underscoredKey?: string }[]) => {
         return <Collapsible
             title={title}
             isOpen={collapsibleState[name]}
             onClick={(isCollapsed) => setCollapsibleState({ ...collapsibleState, [name]: isCollapsed })}>
-            {
-                items.map((item) =>
-                    <ControlledCheckbox
-                        control={control}
-                        key={item.key}
-                        name={`${name}[${item.key}]`}
-                        labelClassName='body2'
-                        label={`ticket_log.${item.underscoredKey ?? item.key.toLowerCase()}`}
-                        value={item.value?.toString()}
-                    />
-                )
-            }
+            <CheckboxList items={items} name={name} control={control}
+                label={(key) => {return (t(`ticket_log.${items.filter(x => x.key === key)[0].underscoredKey ?? items.filter(x => x.key === key)[0].key.toLocaleLowerCase()}`))}}
+                resetDateTime={formResetDateTime}
+            />
         </Collapsible>
     }
 

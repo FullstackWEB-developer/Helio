@@ -35,6 +35,7 @@ import { DATE_ISO_FORMAT } from '@shared/constants/form-constants'
 import utils from '@shared/utils/utils';
 import './ticket-filter.scss';
 import Button from '@components/button/button';
+import CheckboxList from '@components/checkbox-list/checkbox-list';
 
 const TicketFilter = ({ isOpen }: { isOpen: boolean }) => {
     dayjs.extend(utc);
@@ -58,6 +59,7 @@ const TicketFilter = ({ isOpen }: { isOpen: boolean }) => {
     const { control, handleSubmit, watch, setValue, getValues, reset } = useForm({});
     const [fromDate, setFromDate] = useState<Date | undefined>();
     const [toDate, setToDate] = useState<Date | undefined>();
+    const [formResetDateTime, setFormResetDateTime] = useState<Date>();
     const ticketListQueryType = useSelector(selectTicketQueryType);
     const [collapsibleState, setCollapsibleState] = useState<{ [key: string]: boolean }>({});
     const watchTimePeriod = watch('timePeriod');
@@ -151,10 +153,7 @@ const TicketFilter = ({ isOpen }: { isOpen: boolean }) => {
 
     const getSelectedFromCheckbox = (items: CheckboxCheckEvent[], ignoreIsAllKeyCheck = false): string[] => {
         if (items) {
-            const isAll = items.find(a => a && parseInt(a.value) === parseInt(allKey) && a.checked);
-            if (!isAll || ignoreIsAllKeyCheck) {
-                return items.filter((a: CheckboxCheckEvent) => a.checked).map((b: CheckboxCheckEvent) => b.value);
-            }
+            return items.filter((a: CheckboxCheckEvent) => a.checked).map((b: CheckboxCheckEvent) => b.value);
         }
         return [];
     }
@@ -165,6 +164,7 @@ const TicketFilter = ({ isOpen }: { isOpen: boolean }) => {
             ...ticketQueryFilter,
             page: 1
         };
+        setFormResetDateTime(new Date());
         query.statuses = getSelectedFromCheckbox(values.statuses).map((a: string) => parseInt(a));
         query.channels = getSelectedFromCheckbox(values.channels).map((a: string) => parseInt(a));
         query.ticketTypes = getSelectedFromCheckbox(values.ticketTypes).map((a: string) => parseInt(a));
@@ -357,32 +357,7 @@ const TicketFilter = ({ isOpen }: { isOpen: boolean }) => {
 
     const GetCollapsibleCheckboxControl = (title: string, name: string, items: TicketOptionsBase[]) => {
         return <Collapsible title={title} isOpen={collapsibleState[name]} onClick={(isCollapsed) => setCollapsibleState({ ...collapsibleState, [name]: isCollapsed })}>
-            {
-                items.map((item) => {
-                    return <Controller
-                        control={control}
-                        name={`${name}[${parseInt(item.key) + 1000}]`}
-                        defaultValue=''
-                        key={item.key}
-                        render={(props) => {
-                            return (
-                                <Checkbox
-                                    name={`${name}[${item.key}]`}
-                                    ref={props.ref}
-                                    checked={props.value?.checked ?? false}
-                                    truncate={true}
-                                    label={item.value}
-                                    data-test-id={`${name}-checkbox-${item.key}`}
-                                    value={item.key}
-                                    onChange={(e: CheckboxCheckEvent) => {
-                                        props.onChange(e);
-                                    }}
-                                />
-                            )
-                        }}
-                    />
-                })
-            }
+                <CheckboxList items={items} name={name} control={control} resetDateTime={formResetDateTime}/>
         </Collapsible>
     }
 
@@ -494,15 +469,15 @@ const TicketFilter = ({ isOpen }: { isOpen: boolean }) => {
                 <Button data-test-id='reset-all-button' className='cursor-pointer' label='tickets.filter.reset_all' buttonType='secondary' onClick={() => resetForm()}></Button>
             </div>
             <form id='myForm'>
-                {GetCollapsibleCheckboxControl('tickets.filter.statuses', 'statuses', addAllOption(convertEnumToOptions(ticketStatuses)))}
-                {GetCollapsibleCheckboxControl('tickets.filter.state', 'states', addAllOption(convertEnumToOptions(statesFilter)))}
+                {GetCollapsibleCheckboxControl('tickets.filter.statuses', 'statuses', (convertEnumToOptions(ticketStatuses)))}
+                {GetCollapsibleCheckboxControl('tickets.filter.state', 'states', (convertEnumToOptions(statesFilter)))}
                 {GetRadioCollapsibleControl('tickets.filter.time_period', 'timePeriod', timePeriodList, dateFilters())}
                 {GetRadioCollapsibleControl('tickets.filter.priority', 'priority', addAllOption(convertEnumToOptions([...ticketPriorities].reverse())))}
-                {GetCollapsibleCheckboxControl('tickets.filter.channel', 'channels', addAllOption(convertEnumToOptions(ticketChannels)))}
-                {GetCollapsibleCheckboxControl('tickets.filter.ticket_type', 'ticketTypes', addAllOption(convertEnumToOptions(ticketTypes)))}
+                {GetCollapsibleCheckboxControl('tickets.filter.channel', 'channels', (convertEnumToOptions(ticketChannels)))}
+                {GetCollapsibleCheckboxControl('tickets.filter.ticket_type', 'ticketTypes', (convertEnumToOptions(ticketTypes)))}
                 {GetRadioCollapsibleControl('tickets.filter.reason', 'reasons', addAllOption(convertReasonsToOptions()))}
                 {GetRadioCollapsibleControl('tickets.filter.department', 'department', addAllOption(convertDepartmentsToOptions()))}
-                {GetCollapsibleCheckboxControl('tickets.filter.office_location', 'offices', addAllOption(convertOfficesToOptions()))}
+                {GetCollapsibleCheckboxControl('tickets.filter.office_location', 'offices', (convertOfficesToOptions()))}
                 {ticketListQueryType !== TicketListQueryType.MyTicket &&
                     <Collapsible title={'tickets.filter.assigned_to'}
                         isOpen={collapsibleState['assignedTo']}
