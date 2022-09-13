@@ -7,6 +7,9 @@ const OutstandingBalances = () => {
     const {t} = useTranslation();
     const patient = useSelector(selectPatient);
     const toDollars = (value: number) => {
+        if (!value) {
+            return '';
+        }
         return '$' + value.toFixed(2);
     };
 
@@ -26,10 +29,10 @@ const OutstandingBalances = () => {
     const outstandingBalanceRows: Row[] = [
         {
             label: t('patient.summary.statement'),
-            values: [toDollars(patient.outstandingBalance.statement)],
+            values: [toDollars(patient?.outstandingBalance?.statement)],
             comment: getComment()
         },
-        { label: t('patient.summary.payment_plan'), values: [toDollars(patient.outstandingBalance.paymentPlan)] }
+        { label: t('patient.summary.payment_plan'), values: [toDollars(patient?.outstandingBalance?.paymentPlan)] }
     ];
 
     return (

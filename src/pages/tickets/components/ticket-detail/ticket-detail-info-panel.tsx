@@ -3,7 +3,6 @@ import withErrorLogging from '../../../../shared/HOC/with-error-logging';
 import {Ticket} from '../../models/ticket';
 import Collapsible from '../../../../shared/components/collapsible/collapsible';
 import TicketDetailPatientInfo from './ticket-detail-patient-info';
-import TicketDetailAppointments from './ticket-detail-appointments';
 import TicketDetailAttachments from './ticket-detail-attachments';
 import TicketDetailEventLog from './ticket-detail-event-log';
 import {Patient} from '@pages/patients/models/patient';
@@ -36,6 +35,7 @@ import {ContactType} from '@shared/models';
 import {setAssignee} from '../../services/tickets.service';
 import {selectActiveUserOptions} from '@shared/store/lookups/lookups.selectors';
 import {Option} from '@components/option/option';
+import {Link} from 'react-router-dom';
 interface TicketDetailInfoPanelProps {
     ticket: Ticket,
     patient?: Patient,
@@ -144,19 +144,18 @@ const TicketDetailInfoPanel = ({ticket, patient, contact}: TicketDetailInfoPanel
 
         setPatientCaseNumberLoading(true);
         clearErrors('patientCaseNumber');
-        try {
-            if (patient && patient.patientId) {
-                const patientCase = await getPatientCaseDocument(patient.patientId, Number(updateModel.patientCaseNumber));
-                if (!patientCase) throw new Error();
-            } else {
-                const patientActionNotes = await getPatientActionNotes(Number(updateModel.patientCaseNumber));
-                if (!patientActionNotes) throw new Error();
+        if (patient && patient.patientId) {
+            const patientCase = await getPatientCaseDocument(patient.patientId, Number(updateModel.patientCaseNumber));
+            if (!patientCase) {
+                setError('patientCaseNumber', {type: 'validate', message: t('ticket_new.patient_case_id_not_found')});
             }
-        } catch (e) {
-            setError('patientCaseNumber', {type: 'validate', message: t('ticket_new.patient_case_id_not_found')});
-        } finally {
-            setPatientCaseNumberLoading(false);
+        } else {
+            const patientActionNotes = await getPatientActionNotes(Number(updateModel.patientCaseNumber));
+            if (!patientActionNotes) {
+                setError('patientCaseNumber', {type: 'validate', message: t('ticket_new.patient_case_id_not_found')});
+            }
         }
+        setPatientCaseNumberLoading(false);
     }
 
     const updateAssigneeMutation = useMutation(setAssignee, {
@@ -259,7 +258,9 @@ const TicketDetailInfoPanel = ({ticket, patient, contact}: TicketDetailInfoPanel
                         <TicketReviews ticket={{...ticket, createdForName: patientOrContactName}} />
                     </Collapsible>
                     {patient && <Collapsible title={'ticket_detail.info_panel.appointments'} isOpen={true}>
-                        <TicketDetailAppointments ticket={ticket} />
+                        <Link to={`/patients/${patient.patientId}?tab=1`}>
+                            <span className='body2-primary'>{t('ticket_detail.info_panel.open_patient_appointments')}</span>
+                        </Link>
                     </Collapsible>}
                     {contact &&
                         <Collapsible title={'ticket_detail.info_panel.contact_details.contact_info'} isOpen={true}>

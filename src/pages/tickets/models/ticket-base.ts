@@ -1,10 +1,11 @@
 import {ChannelTypes} from "@shared/models/ticket-channel";
 import {TicketType} from '@shared/models';
+import {TicketStatuses} from '@pages/tickets/models/ticket.status.enum';
 
 export interface TicketBase {
     id: string;
     ticketNumber: number;
-    status?: number;
+    status?: TicketStatuses;
     type: TicketType;
     priority?: number
     channel: ChannelTypes;

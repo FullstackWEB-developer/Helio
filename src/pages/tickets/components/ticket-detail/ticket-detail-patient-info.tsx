@@ -51,7 +51,7 @@ const TicketDetailPatientInfo = ({ticket, patient, control, isPatientCaseNumberL
                     <dl>
                         <div className='sm:grid sm:grid-cols-2'>
                             <dt className='subtitle2'>
-                                {t('ticket_detail.info_panel.contact_name')}
+                                {t('ticket_detail.info_panel.patient_name')}
                             </dt>
                             <dd className='body2'>
                                 {patient.firstName} {patient.lastName}

@@ -84,7 +84,7 @@ const PatientTickets: React.FC<PatientTicketProps> = ({patientId}) => {
                                                 )}
                                             </div>
                                             <div className='flex flex-row body2'>
-                                                {item.dueDate && (
+                                                {item.dueDate && (item.status !== TicketStatuses.Closed && item.status !== TicketStatuses.Solved)  && (
                                                     <PatientTicketLabel
                                                         labelText={dayjs(item.dueDate).isBefore(sysdate) ? t('tickets.overdue') :
                                                             t('tickets.due')}

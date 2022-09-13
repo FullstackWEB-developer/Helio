@@ -1,4 +1,4 @@
-import React, {useMemo, useEffect, useState} from 'react';
+import React, {useMemo} from 'react';
 import withErrorLogging from '@shared/HOC/with-error-logging';
 import {useDispatch, useSelector} from 'react-redux';
 import {
@@ -12,14 +12,13 @@ import {Control, Controller} from 'react-hook-form';
 import {setTicketUpdateModel} from '@pages/tickets/store/tickets.slice';
 import {selectLocationsAsOptions} from '@shared/store/lookups/lookups.selectors';
 import TagInput from '@components/tag-input/tag-input';
-import SvgIcon, {Icon} from '@components/svg-icon';
+import {Icon} from '@components/svg-icon';
 import Spinner from '@components/spinner/Spinner';
 import ControlledInput from '@components/controllers/ControlledInput';
 import {TicketUpdateModel} from '@pages/tickets/models/ticket-update.model';
 import utils from '@shared/utils/utils';
 import {Ticket} from '@pages/tickets/models/ticket';
-import {selectActiveUserOptions, selectUserList} from '@shared/store/lookups/lookups.selectors';
-import {User} from '@shared/models/user';
+import {selectActiveUserOptions} from '@shared/store/lookups/lookups.selectors';
 
 interface TicketInfoProps {
     ticket: Ticket,
