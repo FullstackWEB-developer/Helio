@@ -429,6 +429,9 @@ const Ccp: React.FC<BoxProps> = ({
             contact.onDestroy((contact) => {
                 dispatch(removeCurrentBotContext(contact.contactId));
                 dispatch(setInternalCallDetails(undefined));
+                if (isInboundCall) {
+                    setIsInboundCall(false);
+                }
             })
         });
         connect.agent((agent) => {
@@ -733,7 +736,7 @@ const Ccp: React.FC<BoxProps> = ({
                                             fillClass={applyProperIconClass(contextPanels.bot)} />
                                     </span>
                                 }
-                                {ticketId &&
+                                {botContext &&
                                     <>
                                         <span className={`h-10 flex items-center justify-center w-12 ${applyProperIconClass(contextPanels.note, 'background')}`}>
                                             <SvgIcon type={Icon.Note}

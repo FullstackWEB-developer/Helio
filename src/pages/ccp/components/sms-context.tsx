@@ -30,6 +30,8 @@ const SmsContext = () => {
     const [contactName, setContactName] = useState<string>('');
     const [refreshTemplate, setRefreshTemplate] = useState<number>(0);
     const [noteDisabledText, setNoteDisabledText] = useState<string>();
+    const [phoneNumber, setPhoneNumber] = useState<string>();
+    const [displayName, setDisplayName] = useState<string>();
 
     useEffect(() => {
         if (botContext?.patient) {
@@ -45,6 +47,25 @@ const SmsContext = () => {
         {
             enabled: false
         });
+
+    useEffect(() => {
+        let hipaaVerified = botContext?.attributes?.find(a => a.label === "HIPAAVerified")?.value === "true";
+        let callingPhoneNumber = botContext?.attributes?.find(a => a.label === "CallingPhoneNumber")?.value;
+        if (hipaaVerified && !!callingPhoneNumber && !!botContext?.patient) {
+            if (botContext.patient?.mobilePhone !== callingPhoneNumber) {
+                setPhoneNumber(callingPhoneNumber);
+                setDisplayName(utils.formatPhone(callingPhoneNumber));
+            }
+        } else if (!!patientName) {
+            if (!!botContext?.patient?.mobilePhone) {
+                setPhoneNumber(botContext.patient.mobilePhone);
+            }
+            setDisplayName(patientName);
+        }else if (!!contactName) {
+            setDisplayName(contactName);
+        }
+
+    }, [botContext?.attributes, contactName, patientName, contact, botContext?.patient])
 
     const {isFetching: isProcessing} = useQuery([ProcessTemplate, selectedTemplate?.id!], () =>
         processTemplate(selectedTemplate?.id!, botContext.ticket!, botContext.patient, contact),
@@ -93,12 +114,12 @@ const SmsContext = () => {
     });
 
     const sendSms = async () => {
-        if (botContext.ticket?.id && botContext.patient?.mobilePhone) {
+        if (botContext.ticket?.id && phoneNumber && botContext?.patient) {
             sendSmsMutation.mutate({
                 body: smsText,
                 ticketId: botContext.ticket?.id,
                 channel: ChannelTypes.SMS,
-                toAddress: botContext.patient.mobilePhone,
+                toAddress: phoneNumber,
                 patientId: botContext.patient.patientId,
                 recipientName: patientName,
                 direction: TicketMessagesDirection.Outgoing
@@ -122,7 +143,7 @@ const SmsContext = () => {
             <div className='flex items-center h7 h-12'>{t('ccp.sms_context.title')}</div>
             <div className='flex flex-col'>
                 <div className='pt-4 w-4/5'>
-                    <Input disabled={true} name='to' value={patientName || contactName} label='ccp.sms_context.to' />
+                    <Input disabled={true} name='to' value={displayName} label='ccp.sms_context.to' />
                 </div>
                 <div className='w-4/5'>
                     <NotificationTemplateSelect selectLabel='ccp.sms_context.select_template'
@@ -162,7 +183,7 @@ const SmsContext = () => {
                 <div className='flex flex-row space-x-4 pt-6'>
                     <div>
                         <Button buttonType='small' label='ccp.sms_context.send' onClick={sendSms}
-                            disabled={(!(!!botContext?.patient?.mobilePhone || !!contact?.mobilePhone) || !!noteDisabledText)
+                            disabled={(!(!!phoneNumber || !!contact?.mobilePhone) || !!noteDisabledText)
                                 || isProcessing || isFetchingContact}
                             isLoading={sendSmsMutation.isLoading || isProcessing} />
                     </div>
