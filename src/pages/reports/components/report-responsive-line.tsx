@@ -55,11 +55,6 @@ const ReportResponsiveLine = ({data, selectedView} : ReportResponsiveLineProps) 
         enableGridX={false}
         pointLabelYOffset={-12}
         enableArea={false}
-        axisBottom={{
-            tickValues: 'every 1 day',
-            legendPosition: "middle",
-            renderTick: (tick) =>  <ReportResponsiveLineCustomTick isTime={selectedView === ViewTypes.Yesterday} tick={tick} />
-        }}
         legends={[
             {
                 anchor: 'bottom',
