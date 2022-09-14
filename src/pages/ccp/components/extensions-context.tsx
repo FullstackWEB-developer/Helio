@@ -16,6 +16,7 @@ import Spinner from '@components/spinner/Spinner';
 import {InternalQueueStatus} from '@pages/ccp/models/internal-queue-status';
 import {setInternalQueueStatuses} from '@shared/store/app-user/appuser.slice';
 import {UserStatus} from '@shared/store/app-user/app-user.models';
+import {selectVoiceCounter} from '@pages/ccp/store/ccp.selectors';
 
 const ExtensionsContext = () => {
     const {t} = useTranslation();
@@ -27,6 +28,7 @@ const ExtensionsContext = () => {
     const dispatch = useDispatch();
     const currentUser = useSelector(selectAppUserDetails);
     const internalContacts = useSelector(selectInternalQueueStatuses);
+    const voiceCounter = useSelector(selectVoiceCounter);
 
     const {isLoading, isError} = useQuery(GetInternalQueues, () => getInternalQueues(), {
         onSuccess: (data) => {
@@ -36,7 +38,7 @@ const ExtensionsContext = () => {
                     return {
                         ...info,
                         user: user,
-                        displayName: utils.stringJoin(' ', user?.firstName, user?.lastName)
+                        displayName: user ? utils.stringJoin(' ', user?.firstName, user?.lastName) : info.queueName
                     }
                 } else {
                     return {
@@ -49,17 +51,37 @@ const ExtensionsContext = () => {
         }
     });
 
-    const onDoubleClick = (contact: InternalQueueStatus) => {
-        const diallingUser = users.find(u => u.id == contact.userId);
+    const startQuickConnect = (contact: InternalQueueStatus) => {
+        window.CCP?.contact?.addConnection({
+            type: contact.quickConnectEndPoint.type,
+            queue: contact.quickConnectEndPoint.queue,
+            name: contact.quickConnectEndPoint.name,
+            agentLogin: null,
+            phoneNumber: null,
+            endpointId: contact.quickConnectEndPoint.endpointId,
+            endpointARN: contact.quickConnectEndPoint.endpointARN
+        });
+    }
+
+    const startInternalCall = (contact: InternalQueueStatus) => {
+        const dialingUser = users.find(u => u.id == contact.userId);
         dispatch(setInternalCallDetails({
             type: contact.queueType,
             fromUserId: currentUser.id,
             queueArn: contact.queueArn,
             toUserId: contact.userId,
-            diallingUserFullname: diallingUser ? `${diallingUser.firstName} ${diallingUser.lastName}` : ''
+            diallingUserFullname: dialingUser ? `${dialingUser.firstName} ${dialingUser.lastName}` : ''
         }));
         let phone = utils.getAppParameter("InternalCallPhoneNumber");
         utils.initiateACall(phone);
+    }
+
+    const onDoubleClick = (contact: InternalQueueStatus) => {
+        if (voiceCounter > 0) {
+            startQuickConnect(contact);
+        } else {
+            startInternalCall(contact);
+        }
     }
 
     const sort = (items: InternalQueueStatus[]): InternalQueueStatus[] => {
@@ -93,7 +115,7 @@ const ExtensionsContext = () => {
         if (!!nonAvailableAgents && nonAvailableAgents.length > 0) {
             list = list.concat(nonAvailableAgents.sort((a, b) => a?.queueName?.localeCompare(b?.queueName)));
         }
-
+        list = list.filter((v,i,a)=>a.findIndex(v2=>(v.displayName === v2.displayName))===i);
         return list;
     }
 
