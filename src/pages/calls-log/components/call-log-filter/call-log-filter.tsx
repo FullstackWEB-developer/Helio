@@ -80,7 +80,7 @@ const CallsLogFilter = ({ isOpen, value: propsValue, logType, ...props }: CallsL
         let options = [...enumToArray(ContactStatus, logType === 'Chat' ? [2, 3, 4, 5, 6, 7] : [])];
         if(logType === 'Chat'){
             let handledByBot = t('ticket_log.handled_by_bot') as string;
-            options.push({value: handledByBot, key: "5", underscoredKey: 'handled_by_bot'})
+            options.push({value: handledByBot, key: "6", underscoredKey: 'handled_by_bot'})
         }
         return options;
     }, [logType]);
