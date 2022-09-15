@@ -75,8 +75,10 @@ const EmailMessage = ({message, ticketCreatedForName, ticketHeaderPhoto, index, 
                             <SvgIcon type={Icon.ArrowTrendDown} className='cursor-pointer' />
                         </div>
                     </div>
-                    <div className='links' dangerouslySetInnerHTML={{__html: linkifyHtml(message.body)}}>
+                    <div className='links'>
+                        <iframe srcDoc={linkifyHtml(message.body)}>
 
+                        </iframe>
                     </div>
                     {
                         message.attachments?.length > 0 &&
