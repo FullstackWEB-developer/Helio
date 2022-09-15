@@ -22,7 +22,7 @@ interface BasicStatistic {
 
 const QueueReports = ({data, title}: QueueReportsProps) => {
     const {t} = useTranslation();
-    const minEdgeValue = 95;
+    const maxEdgeValue = 95;
     const [widgetType, setWidgetType] = useState<ChannelTypes>(ChannelTypes.PhoneCall);
     const typeDropdownRef = useRef<HTMLDivElement>(null);
     const [voiceAbandoned, setVoiceAbandoned] = useState<BasicStatistic[]>([]);
@@ -43,33 +43,33 @@ const QueueReports = ({data, title}: QueueReportsProps) => {
     };
     useEffect(() => {
         if(data && data.length > 0){
-            setVoiceAbandoned(data.sort(({abandonedCallsPercent:a}, {abandonedCallsPercent:b}) => a-b).slice(0,5).map((obj) => ({
+            setVoiceAbandoned(data.sort(({abandonedCallsPercent:a}, {abandonedCallsPercent:b}) => b-a).slice(0,5).map((obj) => ({
                 label: obj.queueName,
                 percentage: obj.abandonedCallsPercent
             })));
-            setChatAbandoned(data.sort(({abandonedChatsPercent:a}, {abandonedChatsPercent:b}) => a-b).slice(0,5).map((obj) => ({
+            setChatAbandoned(data.sort(({abandonedChatsPercent:a}, {abandonedChatsPercent:b}) => b-a).slice(0,5).map((obj) => ({
                 label: obj.queueName,
                 percentage: obj.abandonedChatsPercent
             })));
-            setVoiceInbound(data.sort(({totalInboundCalls:a}, {totalInboundCalls:b}) => a-b).slice(0,5).map((obj) => ({
+            setVoiceInbound(data.sort(({totalInboundCalls:a}, {totalInboundCalls:b}) => b-a).slice(0,5).map((obj) => ({
                 label: obj.queueName,
                 percentage: obj.totalInboundCalls === 0 ? 0 : obj.totalInboundCalls * 100 / (data.reduce((n, {totalInboundCalls}) => n + totalInboundCalls, 0)),
                 value: obj.totalInboundCalls
             })));
-            setChatInbound(data.sort(({totalNumberOfIncomingChats:a}, {totalNumberOfIncomingChats:b}) => a-b).slice(0,5).map((obj) => ({
+            setChatInbound(data.sort(({totalNumberOfIncomingChats:a}, {totalNumberOfIncomingChats:b}) => b-a).slice(0,5).map((obj) => ({
                 label: obj.queueName,
                 percentage: obj.totalNumberOfIncomingChats === 0 ? 0 : obj.totalNumberOfIncomingChats * 100 / (data.reduce((n, {totalNumberOfIncomingChats}) => n + totalNumberOfIncomingChats, 0)),
                 value: obj.totalNumberOfIncomingChats
             })));
-            setVoiceAverageWaitTime(data.sort(({averageInboundCallWaitTime:a}, {averageInboundCallWaitTime:b}) => a-b).slice(0,5).map((obj, i) => ({
+            setVoiceAverageWaitTime(data.sort(({averageInboundCallWaitTime:a}, {averageInboundCallWaitTime:b}) => b-a).slice(0,5).map((obj, i) => ({
                 label: obj.queueName,
                 value: obj.averageInboundCallWaitTime,
-                percentage: i === data.length-1 ? (data[data.length-1].averageInboundCallWaitTime === 0 ? 0 : minEdgeValue) : (obj.averageInboundCallWaitTime === 0 || data[data.length-1].averageInboundCallWaitTime === 0  ? 0 : obj.averageInboundCallWaitTime * minEdgeValue / data[data.length-1].averageInboundCallWaitTime),
+                percentage: i === 0 ? (data[0].averageInboundCallWaitTime === 0 ? 0 : maxEdgeValue) : (obj.averageInboundCallWaitTime === 0 || data[0].averageInboundCallWaitTime === 0  ? 0 : obj.averageInboundCallWaitTime * maxEdgeValue / data[0].averageInboundCallWaitTime),
             })));
-            setChatAverageWaitTime(data.sort(({averageIncomingChatWaitTime:a}, {averageIncomingChatWaitTime:b}) => a-b).slice(0,5).map((obj, i) => ({
+            setChatAverageWaitTime(data.sort(({averageIncomingChatWaitTime:a}, {averageIncomingChatWaitTime:b}) => b-a).slice(0,5).map((obj, i) => ({
                 label: obj.queueName,
                 value: obj.averageIncomingChatWaitTime,
-                percentage: i === data.length-1 ? (data[data.length-1].averageIncomingChatWaitTime === 0 ? 0 : minEdgeValue) : (obj.averageIncomingChatWaitTime === 0 || data[data.length-1].averageIncomingChatWaitTime === 0  ? 0 : obj.averageIncomingChatWaitTime * minEdgeValue / data[data.length-1].averageIncomingChatWaitTime),
+                percentage: i === 0 ? (data[0].averageIncomingChatWaitTime === 0 ? 0 : maxEdgeValue) : (obj.averageIncomingChatWaitTime === 0 || data[0].averageIncomingChatWaitTime === 0  ? 0 : obj.averageIncomingChatWaitTime * maxEdgeValue / data[0].averageIncomingChatWaitTime),
             })));
         } else {
             setVoiceAbandoned([]);
