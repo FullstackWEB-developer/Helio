@@ -10,7 +10,7 @@ import {selectUserList} from '@shared/store/lookups/lookups.selectors';
 import {LiveAgentStatusInfo, LiveAgentStatusItemInfo} from '@shared/models/live-agent-status-info.model';
 import {getUserList} from '@shared/services/lookups.service';
 import './agent-status-table.scss';
-import AgentLiveItem, {AgentLivItemType} from './agent-live-item';
+import AgentLiveItem, {AgentLiveItemType} from './agent-live-item';
 import AgentStatusDuration from '@pages/dashboard/components/wallboard/agent-status-duration';
 import SvgIcon, {Icon} from '@components/svg-icon';
 import Dropdown from '@components/dropdown/dropdown';
@@ -121,7 +121,7 @@ const AgentStatusTable = () => {
         </div>
     }
 
-    const renderItems = (type: AgentLivItemType, items?: LiveAgentStatusItemInfo[]) => {
+    const renderItems = (type: AgentLiveItemType, items?: LiveAgentStatusItemInfo[]) => {
         if (!items) {
             return null;
         }
@@ -157,13 +157,13 @@ const AgentStatusTable = () => {
                 title:t('wallboard.agent_status.live_calls'),
                 field:'liveCalls',
                 widthClass:'w-56',
-                render: (item, record: LiveAgentStatusInfo) => renderItems(AgentLivItemType.Call, record.calls)
+                render: (item, record: LiveAgentStatusInfo) => renderItems(AgentLiveItemType.Call, record.calls)
             },
             {
                 title:t('wallboard.agent_status.live_chats'),
                 field:'liveChats',
                 widthClass:'w-48',
-                render: (item, record: LiveAgentStatusInfo) => renderItems(AgentLivItemType.Chat, record.chats)
+                render: (item, record: LiveAgentStatusInfo) => renderItems(AgentLiveItemType.Chat, record.chats)
             }
         ],
         rows: prepareData()

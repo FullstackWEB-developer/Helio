@@ -8,14 +8,14 @@ import classnames from 'classnames';
 import utils from '@shared/utils/utils';
 import ElipsisTooltipTextbox from '@components/elipsis-tooltip-textbox/elipsis-tooltip-textbox';
 
-export enum AgentLivItemType {
+export enum AgentLiveItemType {
     Chat =1,
     Call
 }
 
 export interface AgentLiveItemProps {
     data: LiveAgentStatusItemInfo,
-    type: AgentLivItemType;
+    type: AgentLiveItemType;
 }
 
 const AgentLiveItem = ({data, type} : AgentLiveItemProps) => {
@@ -36,16 +36,16 @@ const AgentLiveItem = ({data, type} : AgentLiveItemProps) => {
     }, [secondsPassed, data.timestamp]);
 
     const iconBackgroundClassName = classnames('flex justify-center items-center h-12 w-12 rounded-l-md', {
-        'agent-live-call-icon-background': type === AgentLivItemType.Call,
-        'agent-live-chat-icon-background': type === AgentLivItemType.Chat
+        'agent-live-call-icon-background': type === AgentLiveItemType.Call,
+        'agent-live-chat-icon-background': type === AgentLiveItemType.Chat
     });
 
     return <div className='flex flex-row'>
         <div className={iconBackgroundClassName}>
-            <SvgIcon fillClass='white-icon' type={type === AgentLivItemType.Call ? Icon.Phone : Icon.Chat}/>
+            <SvgIcon fillClass='white-icon' type={type === AgentLiveItemType.Call ? Icon.Phone : Icon.Chat}/>
         </div>
         <div className='flex flex-col h-12 pl-2 pt-1 agent-live-text-background rounded-r-md'>
-            <ElipsisTooltipTextbox value={type === AgentLivItemType.Call ? utils.formatPhone(data.customerData) : data.customerData} classNames={"w-16 subtitle3 truncate"} asSpan={true} />
+            <ElipsisTooltipTextbox value={type === AgentLiveItemType.Call ? utils.formatPhone(data.customerData) : data.customerData} classNames={"w-16 subtitle3 truncate"} asSpan={true} />
             <div className='caption-caps'>{dayjs.duration(secondsPassed, 'seconds').format('m:ss')}</div>
         </div>
     </div>

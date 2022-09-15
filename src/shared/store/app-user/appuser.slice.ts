@@ -107,22 +107,18 @@ const convertUserStatusUpdateToLiveAgentStatus = (payload: UserStatusUpdate): Li
         calls: []
     };
     if (payload.activities && payload.activities.length > 0) {
-        const activityType = payload.activities[0].channel;
-        if (activityType === 'CHAT') {
-            data.chats = payload.activities.map((a) => {
-                return {
-                    timestamp: a.timestamp,
-                    customerData: a.customerData
-                }
-            });
-        } else if (activityType === 'VOICE') {
-            data.calls = payload.activities.map((a) => {
-                return {
-                    timestamp: a.timestamp,
-                    customerData: a.customerData
-                }
-            });
-        }
+        data.chats = payload.activities.filter(a => a.channel === 'CHAT').map((a) => {
+            return {
+                timestamp: a.timestamp,
+                customerData: a.customerData
+            }
+        });
+        data.calls = payload.activities.filter(a => a.channel === 'VOICE').map((a) => {
+            return {
+                timestamp: a.timestamp,
+                customerData: a.customerData
+            }
+        });
     }
 
     return data;

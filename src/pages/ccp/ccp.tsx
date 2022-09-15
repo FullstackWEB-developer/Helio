@@ -163,9 +163,31 @@ const Ccp: React.FC<BoxProps> = ({
         const ccp = document.getElementById('ccpControl');
         if (ccp) {
             const elementRect = ccp.getBoundingClientRect();
-            if (!utils.isInBounds(elementRect.top, elementRect.left, elementRect.bottom, elementRect.right)) {
-                let windowCenter = utils.getWindowCenter();
-                moveBox(windowCenter.x - ccp.offsetWidth / 2, windowCenter.y - ccp.offsetHeight / 2);
+            const isHorizontallyInBounds = utils.isInBounds(elementRect.top, elementRect.left, elementRect.bottom, elementRect.right, 'horizontally');
+            const isVerticallyInBounds = utils.isInBounds(elementRect.top, elementRect.left, elementRect.bottom, elementRect.right, 'vertically');
+
+            if (!isHorizontallyInBounds && !isVerticallyInBounds) {
+                if (elementRect.left < 0 && elementRect.top < 0) {
+                    moveBox(0, 0);
+                } else if(elementRect.left < 0 && elementRect.bottom > elementRect.y) {
+                    moveBox(0, document.documentElement.clientHeight  - ccp.offsetHeight);
+                } else if (elementRect.right > elementRect.x && elementRect.top < 0) {
+                    moveBox(document.documentElement.clientWidth  - ccp.offsetWidth, 0);
+                } else if(elementRect.right > elementRect.x && elementRect.bottom > elementRect.y) {
+                    moveBox(document.documentElement.clientWidth  - ccp.offsetWidth, document.documentElement.clientHeight  - ccp.offsetHeight);
+                }
+            } else if (!isHorizontallyInBounds) {
+                if (elementRect.left < 0) {
+                    moveBox(0, elementRect.top);
+                } else if (elementRect.right > elementRect.x) {
+                    moveBox(document.documentElement.clientWidth  - ccp.offsetWidth, elementRect.top);
+                }
+            } else if (!isVerticallyInBounds) {
+                if (elementRect.top < 0) {
+                    moveBox(elementRect.left, 0);
+                } else if (elementRect.bottom > elementRect.y) {
+                    moveBox(elementRect.left, document.documentElement.clientHeight  - ccp.offsetHeight);
+                }
             }
         }
     }
