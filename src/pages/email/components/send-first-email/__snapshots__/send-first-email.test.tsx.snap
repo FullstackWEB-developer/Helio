@@ -142,6 +142,7 @@ exports[`Send First Email tests renders send-first-email correctly with contact 
                 autocomplete="off"
                 class=" pt-6 body2 h-14 flex-shrink flex-grow flex-auto leading-normal w-px flex-1 input-date-mask pl-4"
                 data-testid="subject"
+                maxlength="100"
                 name="subject"
                 placeholder=""
                 required=""

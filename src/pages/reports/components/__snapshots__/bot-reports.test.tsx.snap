@@ -152,22 +152,46 @@ exports[`Bot Report tests renders bot reports correctly with data 1`] = `
               <div
                 class="flex justify-start w-1/4"
               >
-                reports.bot_reports.channel
+                <div>
+                  <div
+                    class="flex items-center flex-row"
+                  >
+                    reports.bot_reports.channel
+                  </div>
+                </div>
               </div>
               <div
                 class="flex justify-start w-1/4"
               >
-                reports.bot_reports.total_serviced
+                <div>
+                  <div
+                    class="flex items-center flex-row"
+                  >
+                    reports.bot_reports.total_serviced
+                  </div>
+                </div>
               </div>
               <div
                 class="flex justify-start w-1/4"
               >
-                reports.bot_reports.average_duration
+                <div>
+                  <div
+                    class="flex items-center flex-row"
+                  >
+                    reports.bot_reports.average_duration
+                  </div>
+                </div>
               </div>
               <div
                 class="flex justify-start w-1/4"
               >
-                reports.bot_reports.bot_ratings
+                <div>
+                  <div
+                    class="flex items-center flex-row"
+                  >
+                    reports.bot_reports.bot_ratings
+                  </div>
+                </div>
               </div>
             </div>
             <div>
@@ -397,12 +421,24 @@ exports[`Bot Report tests renders bot reports correctly with data 1`] = `
               <div
                 class="flex justify-start w-1/2"
               >
-                reports.bot_reports.kpi
+                <div>
+                  <div
+                    class="flex items-center flex-row"
+                  >
+                    reports.bot_reports.kpi
+                  </div>
+                </div>
               </div>
               <div
                 class="flex justify-start w-1/2"
               >
-                reports.bot_reports.value
+                <div>
+                  <div
+                    class="flex items-center flex-row"
+                  >
+                    reports.bot_reports.value
+                  </div>
+                </div>
               </div>
             </div>
             <div>

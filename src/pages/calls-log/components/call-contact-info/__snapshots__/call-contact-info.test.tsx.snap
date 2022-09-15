@@ -1,0 +1,71 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Call Contact Info tests renders call-contact-info correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="flex flex-row items-center"
+  >
+    <div
+      class="avatar rounded-full flex items-center justify-center relative w-10 h-10"
+    >
+      <div
+        class="avatar-initial"
+      >
+        EH
+      </div>
+    </div>
+    <span
+      class="ml-4"
+    >
+      Emre Hanci
+    </span>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Call Contact Info tests renders call-contact-info inbound correctly 1`] = `
+<DocumentFragment>
+  <span
+    class="body2"
+  />
+</DocumentFragment>
+`;
+
+exports[`Call Contact Info tests renders call-contact-info to user correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="flex flex-row items-center"
+  >
+    <div
+      class="avatar rounded-full flex items-center justify-center relative w-10 h-10"
+    >
+      <div
+        class="avatar-initial"
+      >
+        EH
+      </div>
+    </div>
+    <span
+      class="ml-4"
+    >
+      Emre Hanci
+    </span>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Call Contact Info tests renders call-contact-info to witout-user correctly 1`] = `<DocumentFragment />`;
+
+exports[`Call Contact Info tests renders call-contact-info to-inbound correctly 1`] = `
+<DocumentFragment>
+  <span />
+</DocumentFragment>
+`;
+
+exports[`Call Contact Info tests renders call-contact-info to-outbound correctly 1`] = `
+<DocumentFragment>
+  <span
+    class="body2"
+  />
+</DocumentFragment>
+`;

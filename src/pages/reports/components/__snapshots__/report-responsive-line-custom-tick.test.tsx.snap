@@ -1,23 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Report Responsive Line Custom Tick Test renders bot reports correctly 1`] = `
-<DocumentFragment>
-  <svg>
-    <g
-      transform="translate(undefined,NaN)"
-    >
-      <text
-        dominant-baseline="middle"
-        style="font-size: 0px;"
-        text-anchor="middle"
-      >
-        Invalid Date
-      </text>
-    </g>
-  </svg>
-</DocumentFragment>
-`;
-
 exports[`Report Responsive Line Custom Tick Test renders correctly 1`] = `
 <DocumentFragment>
   <svg>
@@ -25,8 +7,8 @@ exports[`Report Responsive Line Custom Tick Test renders correctly 1`] = `
       transform="translate(undefined,NaN)"
     >
       <text
+        class="helio-responsive-tick"
         dominant-baseline="middle"
-        style="font-size: 0px;"
         text-anchor="middle"
       >
         Invalid Date
@@ -43,8 +25,8 @@ exports[`Report Responsive Line Custom Tick Test renders date if isTime != true 
       transform="translate(undefined,NaN)"
     >
       <text
+        class="helio-responsive-tick"
         dominant-baseline="middle"
-        style="font-size: 0px;"
         text-anchor="middle"
       >
         9 PM
@@ -61,8 +43,8 @@ exports[`Report Responsive Line Custom Tick Test renders time if isTime == true 
       transform="translate(undefined,NaN)"
     >
       <text
+        class="helio-responsive-tick"
         dominant-baseline="middle"
-        style="font-size: 0px;"
         text-anchor="middle"
       >
         Invalid Date

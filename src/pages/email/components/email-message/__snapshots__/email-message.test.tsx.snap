@@ -9,12 +9,16 @@ exports[`Email Message tests renders email-message correctly 1`] = `
       class="flex items-center py-4"
     >
       <div
-        class="avatar rounded-full flex items-center justify-center relative w-10 h-10"
+        class="w-10 h-10"
       >
         <div
-          class="avatar-initial"
+          class="avatar rounded-full flex items-center justify-center relative w-10 h-10"
         >
-          common.default_avatar
+          <div
+            class="avatar-initial"
+          >
+            common.default_avatar
+          </div>
         </div>
       </div>
       <div
@@ -23,7 +27,17 @@ exports[`Email Message tests renders email-message correctly 1`] = `
         <span
           class="subtitle"
         />
-        <span />
+        <span
+          class="email-message-subject"
+        >
+          <div
+            class="truncate relative w-full h-full inline-block"
+          >
+            <span
+              class="truncate"
+            />
+          </div>
+        </span>
       </div>
       <div
         class="ml-auto flex justify-center items-center"

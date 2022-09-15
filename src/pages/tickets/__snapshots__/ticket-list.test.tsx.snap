@@ -86,54 +86,57 @@ exports[`Ticket List tests renders ticket-list correctly 1`] = `
             <div
               hidden=""
             >
-              <div
-                class="h-9"
-              >
-                <label
-                  class="flex flex-row items-center checkbox-button"
+              <div>
+                <div
+                  class="h-9"
                 >
-                  <input
-                    class="checkbox"
-                    data-test-id="statuses-checkbox-0"
-                    id="statuses[0]_0"
-                    name="statuses[0]"
-                    type="checkbox"
-                  />
-                  <span
-                    class="checkbox-control"
+                  <label
+                    class="flex flex-row items-center checkbox-button"
                   >
-                    <div
-                      class=""
-                    >
-                      <svg
-                        class="icon-medium "
-                        height="24"
-                        viewBox="0 0 24 24"
-                        width="24"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <rect
-                          fill="none"
-                          height="24"
-                          width="24"
-                        />
-                        <path
-                          class="svg-checkbox"
-                          d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
-                        />
-                      </svg>
-                    </div>
-                  </span>
-                  <div
-                    class="truncate relative w-full h-full inline-block"
-                  >
+                    <input
+                      checked=""
+                      class="checkbox"
+                      data-test-id="statuses-checkbox-0"
+                      id="statuses[0]_0"
+                      name="statuses[0]"
+                      type="checkbox"
+                    />
                     <span
-                      class="w-60 w-60"
+                      class="checkbox-control"
                     >
-                      common.all
+                      <div
+                        class=""
+                      >
+                        <svg
+                          class="icon-medium "
+                          height="24"
+                          viewBox="0 0 24 24"
+                          width="24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <rect
+                            fill="none"
+                            height="24"
+                            width="24"
+                          />
+                          <path
+                            class="svg-checkbox"
+                            d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                          />
+                        </svg>
+                      </div>
                     </span>
-                  </div>
-                </label>
+                    <div
+                      class="truncate relative w-full h-full inline-block"
+                    >
+                      <span
+                        class="w-60 w-60"
+                      >
+                        common.all
+                      </span>
+                    </div>
+                  </label>
+                </div>
               </div>
             </div>
           </div>
@@ -174,54 +177,57 @@ exports[`Ticket List tests renders ticket-list correctly 1`] = `
             <div
               hidden=""
             >
-              <div
-                class="h-9"
-              >
-                <label
-                  class="flex flex-row items-center checkbox-button"
+              <div>
+                <div
+                  class="h-9"
                 >
-                  <input
-                    class="checkbox"
-                    data-test-id="states-checkbox-0"
-                    id="states[0]_0"
-                    name="states[0]"
-                    type="checkbox"
-                  />
-                  <span
-                    class="checkbox-control"
+                  <label
+                    class="flex flex-row items-center checkbox-button"
                   >
-                    <div
-                      class=""
-                    >
-                      <svg
-                        class="icon-medium "
-                        height="24"
-                        viewBox="0 0 24 24"
-                        width="24"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <rect
-                          fill="none"
-                          height="24"
-                          width="24"
-                        />
-                        <path
-                          class="svg-checkbox"
-                          d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
-                        />
-                      </svg>
-                    </div>
-                  </span>
-                  <div
-                    class="truncate relative w-full h-full inline-block"
-                  >
+                    <input
+                      checked=""
+                      class="checkbox"
+                      data-test-id="states-checkbox-0"
+                      id="states[0]_0"
+                      name="states[0]"
+                      type="checkbox"
+                    />
                     <span
-                      class="w-60 w-60"
+                      class="checkbox-control"
                     >
-                      common.all
+                      <div
+                        class=""
+                      >
+                        <svg
+                          class="icon-medium "
+                          height="24"
+                          viewBox="0 0 24 24"
+                          width="24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <rect
+                            fill="none"
+                            height="24"
+                            width="24"
+                          />
+                          <path
+                            class="svg-checkbox"
+                            d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                          />
+                        </svg>
+                      </div>
                     </span>
-                  </div>
-                </label>
+                    <div
+                      class="truncate relative w-full h-full inline-block"
+                    >
+                      <span
+                        class="w-60 w-60"
+                      >
+                        common.all
+                      </span>
+                    </div>
+                  </label>
+                </div>
               </div>
             </div>
           </div>
@@ -383,7 +389,7 @@ exports[`Ticket List tests renders ticket-list correctly 1`] = `
                       autocomplete="off"
                       class="relative truncate flex-shrink flex-grow flex-auto leading-normal w-px pl-4 body2 input-pt h-14 cursor-pointer"
                       data-testid="fromDate"
-                      max="2022-08-29"
+                      max="2022-09-15"
                       min="0001-01-01"
                       name="fromDate"
                       readonly=""
@@ -439,7 +445,7 @@ exports[`Ticket List tests renders ticket-list correctly 1`] = `
                       class="relative truncate flex-shrink flex-grow flex-auto leading-normal w-px pl-4 body2 input-pt h-14 cursor-pointer"
                       data-testid="toDate"
                       disabled=""
-                      max="2022-08-29"
+                      max="2022-09-15"
                       min="0001-01-01"
                       name="toDate"
                       readonly=""
@@ -593,54 +599,57 @@ exports[`Ticket List tests renders ticket-list correctly 1`] = `
             <div
               hidden=""
             >
-              <div
-                class="h-9"
-              >
-                <label
-                  class="flex flex-row items-center checkbox-button"
+              <div>
+                <div
+                  class="h-9"
                 >
-                  <input
-                    class="checkbox"
-                    data-test-id="channels-checkbox-0"
-                    id="channels[0]_0"
-                    name="channels[0]"
-                    type="checkbox"
-                  />
-                  <span
-                    class="checkbox-control"
+                  <label
+                    class="flex flex-row items-center checkbox-button"
                   >
-                    <div
-                      class=""
-                    >
-                      <svg
-                        class="icon-medium "
-                        height="24"
-                        viewBox="0 0 24 24"
-                        width="24"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <rect
-                          fill="none"
-                          height="24"
-                          width="24"
-                        />
-                        <path
-                          class="svg-checkbox"
-                          d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
-                        />
-                      </svg>
-                    </div>
-                  </span>
-                  <div
-                    class="truncate relative w-full h-full inline-block"
-                  >
+                    <input
+                      checked=""
+                      class="checkbox"
+                      data-test-id="channels-checkbox-0"
+                      id="channels[0]_0"
+                      name="channels[0]"
+                      type="checkbox"
+                    />
                     <span
-                      class="w-60 w-60"
+                      class="checkbox-control"
                     >
-                      common.all
+                      <div
+                        class=""
+                      >
+                        <svg
+                          class="icon-medium "
+                          height="24"
+                          viewBox="0 0 24 24"
+                          width="24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <rect
+                            fill="none"
+                            height="24"
+                            width="24"
+                          />
+                          <path
+                            class="svg-checkbox"
+                            d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                          />
+                        </svg>
+                      </div>
                     </span>
-                  </div>
-                </label>
+                    <div
+                      class="truncate relative w-full h-full inline-block"
+                    >
+                      <span
+                        class="w-60 w-60"
+                      >
+                        common.all
+                      </span>
+                    </div>
+                  </label>
+                </div>
               </div>
             </div>
           </div>
@@ -681,54 +690,57 @@ exports[`Ticket List tests renders ticket-list correctly 1`] = `
             <div
               hidden=""
             >
-              <div
-                class="h-9"
-              >
-                <label
-                  class="flex flex-row items-center checkbox-button"
+              <div>
+                <div
+                  class="h-9"
                 >
-                  <input
-                    class="checkbox"
-                    data-test-id="ticketTypes-checkbox-0"
-                    id="ticketTypes[0]_0"
-                    name="ticketTypes[0]"
-                    type="checkbox"
-                  />
-                  <span
-                    class="checkbox-control"
+                  <label
+                    class="flex flex-row items-center checkbox-button"
                   >
-                    <div
-                      class=""
-                    >
-                      <svg
-                        class="icon-medium "
-                        height="24"
-                        viewBox="0 0 24 24"
-                        width="24"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <rect
-                          fill="none"
-                          height="24"
-                          width="24"
-                        />
-                        <path
-                          class="svg-checkbox"
-                          d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
-                        />
-                      </svg>
-                    </div>
-                  </span>
-                  <div
-                    class="truncate relative w-full h-full inline-block"
-                  >
+                    <input
+                      checked=""
+                      class="checkbox"
+                      data-test-id="ticketTypes-checkbox-0"
+                      id="ticketTypes[0]_0"
+                      name="ticketTypes[0]"
+                      type="checkbox"
+                    />
                     <span
-                      class="w-60 w-60"
+                      class="checkbox-control"
                     >
-                      common.all
+                      <div
+                        class=""
+                      >
+                        <svg
+                          class="icon-medium "
+                          height="24"
+                          viewBox="0 0 24 24"
+                          width="24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <rect
+                            fill="none"
+                            height="24"
+                            width="24"
+                          />
+                          <path
+                            class="svg-checkbox"
+                            d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                          />
+                        </svg>
+                      </div>
                     </span>
-                  </div>
-                </label>
+                    <div
+                      class="truncate relative w-full h-full inline-block"
+                    >
+                      <span
+                        class="w-60 w-60"
+                      >
+                        common.all
+                      </span>
+                    </div>
+                  </label>
+                </div>
               </div>
             </div>
           </div>
@@ -907,54 +919,57 @@ exports[`Ticket List tests renders ticket-list correctly 1`] = `
             <div
               hidden=""
             >
-              <div
-                class="h-9"
-              >
-                <label
-                  class="flex flex-row items-center checkbox-button"
+              <div>
+                <div
+                  class="h-9"
                 >
-                  <input
-                    class="checkbox"
-                    data-test-id="offices-checkbox-0"
-                    id="offices[0]_0"
-                    name="offices[0]"
-                    type="checkbox"
-                  />
-                  <span
-                    class="checkbox-control"
+                  <label
+                    class="flex flex-row items-center checkbox-button"
                   >
-                    <div
-                      class=""
-                    >
-                      <svg
-                        class="icon-medium "
-                        height="24"
-                        viewBox="0 0 24 24"
-                        width="24"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <rect
-                          fill="none"
-                          height="24"
-                          width="24"
-                        />
-                        <path
-                          class="svg-checkbox"
-                          d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
-                        />
-                      </svg>
-                    </div>
-                  </span>
-                  <div
-                    class="truncate relative w-full h-full inline-block"
-                  >
+                    <input
+                      checked=""
+                      class="checkbox"
+                      data-test-id="offices-checkbox-0"
+                      id="offices[0]_0"
+                      name="offices[0]"
+                      type="checkbox"
+                    />
                     <span
-                      class="w-60 w-60"
+                      class="checkbox-control"
                     >
-                      common.all
+                      <div
+                        class=""
+                      >
+                        <svg
+                          class="icon-medium "
+                          height="24"
+                          viewBox="0 0 24 24"
+                          width="24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <rect
+                            fill="none"
+                            height="24"
+                            width="24"
+                          />
+                          <path
+                            class="svg-checkbox"
+                            d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                          />
+                        </svg>
+                      </div>
                     </span>
-                  </div>
-                </label>
+                    <div
+                      class="truncate relative w-full h-full inline-block"
+                    >
+                      <span
+                        class="w-60 w-60"
+                      >
+                        common.all
+                      </span>
+                    </div>
+                  </label>
+                </div>
               </div>
             </div>
           </div>

@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Table Header tests renders table-header correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="flex flex-row items-center content-center h-12 bg-gray-100 body2-medium"
+  >
+    <h2>
+      Test
+    </h2>
+  </div>
+</DocumentFragment>
+`;

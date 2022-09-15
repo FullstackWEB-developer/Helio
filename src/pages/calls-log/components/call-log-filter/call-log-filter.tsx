@@ -318,7 +318,7 @@ const CallsLogFilter = ({ isOpen, value: propsValue, logType, ...props }: CallsL
                 <div className='py-4 subtitle'>{t('common.filters')}</div>
                 <div className='flex flex-row pb-3'>
                     <Button data-test-id='apply-button' className='cursor-pointer mr-4' label='common.apply' buttonType='small' onClick={() => handleSubmit(onSubmit)()} ></Button>
-                    <Button data-test-id='reset-all-button' className='cursor-pointer' label='common.reset_all' buttonType='secondary' onClick={() => resetForm()}></Button>
+                    <Button data-testid='reset-all-button' data-test-id='reset-all-button' className='cursor-pointer' label='common.reset_all' buttonType='secondary' onClick={() => resetForm()}></Button>
                 </div>
                 <form>
                     {GetCollapsibleCheckboxControl('common.statuses', 'status', contactStatusItem)}

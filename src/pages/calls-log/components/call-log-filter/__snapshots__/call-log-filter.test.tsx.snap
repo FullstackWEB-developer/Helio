@@ -1,0 +1,1446 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Call Log Filter tests renders call-log-filter correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="transition-width transition-slowest ease top-0 bg-secondary-100 overflow-y-auto"
+  >
+    <div
+      class="min-h-full px-6 pb-20 bg-secondary-100 pt-4"
+    >
+      <div
+        class="py-4 subtitle"
+      >
+        common.filters
+      </div>
+      <div
+        class="flex flex-row pb-3"
+      >
+        <button
+          class="small-button cursor-pointer mr-4"
+          data-test-id="apply-button"
+          type="button"
+        >
+          <div
+            class="flex flex-row justify-center items-center space-x-2"
+          >
+            <div>
+              common.apply
+            </div>
+          </div>
+        </button>
+        <button
+          class="secondary-button cursor-pointer"
+          data-test-id="reset-all-button"
+          data-testid="reset-all-button"
+          type="button"
+        >
+          <div
+            class="flex flex-row justify-center items-center space-x-2"
+          >
+            <div>
+              common.reset_all
+            </div>
+          </div>
+        </button>
+      </div>
+      <form>
+        <div>
+          <div
+            class="cursor-pointer flex flex-row justify-between items-center h-12"
+          >
+            <div
+              class="subtitle"
+            >
+              common.statuses
+            </div>
+            <div>
+              <div
+                class=""
+              >
+                <svg
+                  class="cursor-pointer "
+                  height="24"
+                  viewBox="0 0 24 24"
+                  width="24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <rect
+                    fill="none"
+                    height="24"
+                    width="24"
+                  />
+                  <path
+                    class="active-item-icon"
+                    d="M7,14l1.273-1.273L2.545,7,8.273,1.273,7,0,0,7Z"
+                    transform="translate(5 16.273) rotate(-90)"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+          <div
+            hidden=""
+          >
+            <div>
+              <div
+                class="h-9"
+              >
+                <label
+                  class="flex flex-row items-center checkbox-button"
+                >
+                  <input
+                    class="checkbox"
+                    data-test-id="status-checkbox-0"
+                    id="status[0]_0"
+                    name="status[0]"
+                    type="checkbox"
+                  />
+                  <span
+                    class="checkbox-control"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium "
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="24"
+                          width="24"
+                        />
+                        <path
+                          class="svg-checkbox"
+                          d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                        />
+                      </svg>
+                    </div>
+                  </span>
+                  <div
+                    class="truncate relative w-full h-full inline-block"
+                  >
+                    <span
+                      class="w-60 w-60"
+                    >
+                      common.all
+                    </span>
+                  </div>
+                </label>
+              </div>
+              <div
+                class="h-9"
+              >
+                <label
+                  class="flex flex-row items-center checkbox-button"
+                >
+                  <input
+                    class="checkbox"
+                    data-test-id="status-checkbox-1"
+                    id="status[1]_1"
+                    name="status[1]"
+                    type="checkbox"
+                  />
+                  <span
+                    class="checkbox-control"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium "
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="24"
+                          width="24"
+                        />
+                        <path
+                          class="svg-checkbox"
+                          d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                        />
+                      </svg>
+                    </div>
+                  </span>
+                  <div
+                    class="truncate relative w-full h-full inline-block"
+                  >
+                    <span
+                      class="w-60 w-60"
+                    >
+                      ticket_log.answered
+                    </span>
+                  </div>
+                </label>
+              </div>
+              <div
+                class="h-9"
+              >
+                <label
+                  class="flex flex-row items-center checkbox-button"
+                >
+                  <input
+                    class="checkbox"
+                    data-test-id="status-checkbox-2"
+                    id="status[2]_2"
+                    name="status[2]"
+                    type="checkbox"
+                  />
+                  <span
+                    class="checkbox-control"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium "
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="24"
+                          width="24"
+                        />
+                        <path
+                          class="svg-checkbox"
+                          d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                        />
+                      </svg>
+                    </div>
+                  </span>
+                  <div
+                    class="truncate relative w-full h-full inline-block"
+                  >
+                    <span
+                      class="w-60 w-60"
+                    >
+                      ticket_log.abandoned
+                    </span>
+                  </div>
+                </label>
+              </div>
+              <div
+                class="h-9"
+              >
+                <label
+                  class="flex flex-row items-center checkbox-button"
+                >
+                  <input
+                    class="checkbox"
+                    data-test-id="status-checkbox-3"
+                    id="status[3]_3"
+                    name="status[3]"
+                    type="checkbox"
+                  />
+                  <span
+                    class="checkbox-control"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium "
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="24"
+                          width="24"
+                        />
+                        <path
+                          class="svg-checkbox"
+                          d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                        />
+                      </svg>
+                    </div>
+                  </span>
+                  <div
+                    class="truncate relative w-full h-full inline-block"
+                  >
+                    <span
+                      class="w-60 w-60"
+                    >
+                      ticket_log.missed
+                    </span>
+                  </div>
+                </label>
+              </div>
+              <div
+                class="h-9"
+              >
+                <label
+                  class="flex flex-row items-center checkbox-button"
+                >
+                  <input
+                    class="checkbox"
+                    data-test-id="status-checkbox-4"
+                    id="status[4]_4"
+                    name="status[4]"
+                    type="checkbox"
+                  />
+                  <span
+                    class="checkbox-control"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium "
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="24"
+                          width="24"
+                        />
+                        <path
+                          class="svg-checkbox"
+                          d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                        />
+                      </svg>
+                    </div>
+                  </span>
+                  <div
+                    class="truncate relative w-full h-full inline-block"
+                  >
+                    <span
+                      class="w-60 w-60"
+                    >
+                      ticket_log.agent_disconnected
+                    </span>
+                  </div>
+                </label>
+              </div>
+              <div
+                class="h-9"
+              >
+                <label
+                  class="flex flex-row items-center checkbox-button"
+                >
+                  <input
+                    class="checkbox"
+                    data-test-id="status-checkbox-5"
+                    id="status[5]_5"
+                    name="status[5]"
+                    type="checkbox"
+                  />
+                  <span
+                    class="checkbox-control"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium "
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="24"
+                          width="24"
+                        />
+                        <path
+                          class="svg-checkbox"
+                          d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                        />
+                      </svg>
+                    </div>
+                  </span>
+                  <div
+                    class="truncate relative w-full h-full inline-block"
+                  >
+                    <span
+                      class="w-60 w-60"
+                    >
+                      ticket_log.contact_disconnected
+                    </span>
+                  </div>
+                </label>
+              </div>
+              <div
+                class="h-9"
+              >
+                <label
+                  class="flex flex-row items-center checkbox-button"
+                >
+                  <input
+                    class="checkbox"
+                    data-test-id="status-checkbox-6"
+                    id="status[6]_6"
+                    name="status[6]"
+                    type="checkbox"
+                  />
+                  <span
+                    class="checkbox-control"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium "
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="24"
+                          width="24"
+                        />
+                        <path
+                          class="svg-checkbox"
+                          d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                        />
+                      </svg>
+                    </div>
+                  </span>
+                  <div
+                    class="truncate relative w-full h-full inline-block"
+                  >
+                    <span
+                      class="w-60 w-60"
+                    >
+                      ticket_log.handled_by_bot
+                    </span>
+                  </div>
+                </label>
+              </div>
+              <div
+                class="h-9"
+              >
+                <label
+                  class="flex flex-row items-center checkbox-button"
+                >
+                  <input
+                    class="checkbox"
+                    data-test-id="status-checkbox-7"
+                    id="status[7]_7"
+                    name="status[7]"
+                    type="checkbox"
+                  />
+                  <span
+                    class="checkbox-control"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium "
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="24"
+                          width="24"
+                        />
+                        <path
+                          class="svg-checkbox"
+                          d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                        />
+                      </svg>
+                    </div>
+                  </span>
+                  <div
+                    class="truncate relative w-full h-full inline-block"
+                  >
+                    <span
+                      class="w-60 w-60"
+                    >
+                      ticket_log.other
+                    </span>
+                  </div>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div
+            class="cursor-pointer flex flex-row justify-between items-center h-12"
+          >
+            <div
+              class="subtitle"
+            >
+              ticket_log.call_type
+            </div>
+            <div>
+              <div
+                class=""
+              >
+                <svg
+                  class="cursor-pointer "
+                  height="24"
+                  viewBox="0 0 24 24"
+                  width="24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <rect
+                    fill="none"
+                    height="24"
+                    width="24"
+                  />
+                  <path
+                    class="active-item-icon"
+                    d="M7,14l1.273-1.273L2.545,7,8.273,1.273,7,0,0,7Z"
+                    transform="translate(5 16.273) rotate(-90)"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+          <div
+            hidden=""
+          >
+            <div>
+              <div
+                class="h-9"
+              >
+                <label
+                  class="flex flex-row items-center checkbox-button"
+                >
+                  <input
+                    class="checkbox"
+                    data-test-id="callType-checkbox-0"
+                    id="callType[0]_0"
+                    name="callType[0]"
+                    type="checkbox"
+                  />
+                  <span
+                    class="checkbox-control"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium "
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="24"
+                          width="24"
+                        />
+                        <path
+                          class="svg-checkbox"
+                          d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                        />
+                      </svg>
+                    </div>
+                  </span>
+                  <div
+                    class="truncate relative w-full h-full inline-block"
+                  >
+                    <span
+                      class="w-60 w-60"
+                    >
+                      common.all
+                    </span>
+                  </div>
+                </label>
+              </div>
+              <div
+                class="h-9"
+              >
+                <label
+                  class="flex flex-row items-center checkbox-button"
+                >
+                  <input
+                    class="checkbox"
+                    data-test-id="callType-checkbox-1"
+                    id="callType[1]_1"
+                    name="callType[1]"
+                    type="checkbox"
+                  />
+                  <span
+                    class="checkbox-control"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium "
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="24"
+                          width="24"
+                        />
+                        <path
+                          class="svg-checkbox"
+                          d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                        />
+                      </svg>
+                    </div>
+                  </span>
+                  <div
+                    class="truncate relative w-full h-full inline-block"
+                  >
+                    <span
+                      class="w-60 w-60"
+                    >
+                      ticket_log.inbound
+                    </span>
+                  </div>
+                </label>
+              </div>
+              <div
+                class="h-9"
+              >
+                <label
+                  class="flex flex-row items-center checkbox-button"
+                >
+                  <input
+                    class="checkbox"
+                    data-test-id="callType-checkbox-2"
+                    id="callType[2]_2"
+                    name="callType[2]"
+                    type="checkbox"
+                  />
+                  <span
+                    class="checkbox-control"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium "
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="24"
+                          width="24"
+                        />
+                        <path
+                          class="svg-checkbox"
+                          d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                        />
+                      </svg>
+                    </div>
+                  </span>
+                  <div
+                    class="truncate relative w-full h-full inline-block"
+                  >
+                    <span
+                      class="w-60 w-60"
+                    >
+                      ticket_log.outbound
+                    </span>
+                  </div>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div
+            class="cursor-pointer flex flex-row justify-between items-center h-10 mb-1.5"
+          >
+            <div
+              class="subtitle"
+            >
+              common.time_period
+            </div>
+            <div>
+              <div
+                class=""
+              >
+                <svg
+                  class="cursor-pointer "
+                  height="24"
+                  viewBox="0 0 24 24"
+                  width="24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <rect
+                    fill="none"
+                    height="24"
+                    width="24"
+                  />
+                  <path
+                    class="active-item-icon"
+                    d="M7,14l1.273-1.273L2.545,7,8.273,1.273,7,0,0,7Z"
+                    transform="translate(5 16.273) rotate(-90)"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+          <div
+            hidden=""
+          >
+            <div
+              class=""
+            >
+              <div
+                class="radio h-9 "
+              >
+                <input
+                  data-test-id="timePeriod-radio"
+                  data-testid="timePeriod_0"
+                  id="timePeriod_0"
+                  name="timePeriod"
+                  type="radio"
+                  value="0"
+                />
+                <label
+                  class="body2  truncate "
+                  for="timePeriod_0"
+                >
+                  <div
+                    class="truncate relative w-full h-full inline-block"
+                  >
+                    <span
+                      class="body2"
+                    >
+                      common.time_periods.today
+                    </span>
+                  </div>
+                </label>
+              </div>
+              <div
+                class="radio h-9 "
+              >
+                <input
+                  data-test-id="timePeriod-radio"
+                  data-testid="timePeriod_1"
+                  id="timePeriod_1"
+                  name="timePeriod"
+                  type="radio"
+                  value="1"
+                />
+                <label
+                  class="body2  truncate "
+                  for="timePeriod_1"
+                >
+                  <div
+                    class="truncate relative w-full h-full inline-block"
+                  >
+                    <span
+                      class="body2"
+                    >
+                      common.time_periods.last_7_days
+                    </span>
+                  </div>
+                </label>
+              </div>
+              <div
+                class="radio h-9 "
+              >
+                <input
+                  data-test-id="timePeriod-radio"
+                  data-testid="timePeriod_2"
+                  id="timePeriod_2"
+                  name="timePeriod"
+                  type="radio"
+                  value="2"
+                />
+                <label
+                  class="body2  truncate "
+                  for="timePeriod_2"
+                >
+                  <div
+                    class="truncate relative w-full h-full inline-block"
+                  >
+                    <span
+                      class="body2"
+                    >
+                      common.time_periods.last_30_days
+                    </span>
+                  </div>
+                </label>
+              </div>
+              <div
+                class="radio h-9 "
+              >
+                <input
+                  data-test-id="timePeriod-radio"
+                  data-testid="timePeriod_3"
+                  id="timePeriod_3"
+                  name="timePeriod"
+                  type="radio"
+                  value="3"
+                />
+                <label
+                  class="body2  truncate "
+                  for="timePeriod_3"
+                >
+                  <div
+                    class="truncate relative w-full h-full inline-block"
+                  >
+                    <span
+                      class="body2"
+                    >
+                      common.time_periods.date_range
+                    </span>
+                  </div>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div
+            class="cursor-pointer flex flex-row justify-between items-center h-12"
+          >
+            <div
+              class="subtitle"
+            >
+              ticket_new.reason
+            </div>
+            <div>
+              <div
+                class=""
+              >
+                <svg
+                  class="cursor-pointer "
+                  height="24"
+                  viewBox="0 0 24 24"
+                  width="24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <rect
+                    fill="none"
+                    height="24"
+                    width="24"
+                  />
+                  <path
+                    class="active-item-icon"
+                    d="M7,14l1.273-1.273L2.545,7,8.273,1.273,7,0,0,7Z"
+                    transform="translate(5 16.273) rotate(-90)"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+          <div
+            hidden=""
+          >
+            <div
+              class="select-wrapper relative w-full flex flex-col h-20 "
+            >
+              <div
+                class="select relative flex flex-col "
+              >
+                <input
+                  autocomplete="on"
+                  autocorrect="on"
+                  class="pl-4 pr-8 body2 select-trigger-pt h-14 relative truncate select-trigger activated  "
+                  data-testid="reason"
+                  name="reason"
+                  spellcheck="true"
+                  type="text"
+                  value="common.any"
+                />
+                <label
+                  class="select-label absolute truncate"
+                >
+                  <span
+                    class="select-label-span body3"
+                  >
+                    ticket_new.reason
+                  </span>
+                </label>
+                <div
+                  class="absolute pt-4 right-4 "
+                >
+                  <div
+                    class="flex flex-row items-start"
+                  >
+                    <div
+                      class="cursor-pointer"
+                    >
+                      <div
+                        class=""
+                      >
+                        <svg
+                          class="icon-medium "
+                          height="24"
+                          viewBox="0 0 24 24"
+                          width="24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <rect
+                            fill="none"
+                            height="24"
+                            width="24"
+                          />
+                          <path
+                            class="select-arrow-fill"
+                            d="M7,14l1.273-1.273L2.545,7,8.273,1.273,7,0,0,7Z"
+                            transform="translate(5 16.273) rotate(-90)"
+                          />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="absolute py-2 options"
+                >
+                  <div
+                    class="w-full select-cell justify-between flex items-center  body2-white   is-selected  "
+                  >
+                    <div
+                      class="flex flex-col justify-center w-full"
+                      data-test-id="select-cell-icon-content"
+                    >
+                      <div
+                        class="flex items-center pl-4"
+                        data-test-id="select-cell-text-common.any"
+                        data-testid="select-cell-text-common.any"
+                      >
+                        common.any
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Call Log Filter tests renders chat-log-filter correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="transition-width transition-slowest ease top-0 bg-secondary-100 overflow-y-auto"
+  >
+    <div
+      class="min-h-full px-6 pb-20 bg-secondary-100 pt-4"
+    >
+      <div
+        class="py-4 subtitle"
+      >
+        common.filters
+      </div>
+      <div
+        class="flex flex-row pb-3"
+      >
+        <button
+          class="small-button cursor-pointer mr-4"
+          data-test-id="apply-button"
+          type="button"
+        >
+          <div
+            class="flex flex-row justify-center items-center space-x-2"
+          >
+            <div>
+              common.apply
+            </div>
+          </div>
+        </button>
+        <button
+          class="secondary-button cursor-pointer"
+          data-test-id="reset-all-button"
+          data-testid="reset-all-button"
+          type="button"
+        >
+          <div
+            class="flex flex-row justify-center items-center space-x-2"
+          >
+            <div>
+              common.reset_all
+            </div>
+          </div>
+        </button>
+      </div>
+      <form>
+        <div>
+          <div
+            class="cursor-pointer flex flex-row justify-between items-center h-12"
+          >
+            <div
+              class="subtitle"
+            >
+              common.statuses
+            </div>
+            <div>
+              <div
+                class=""
+              >
+                <svg
+                  class="cursor-pointer "
+                  height="24"
+                  viewBox="0 0 24 24"
+                  width="24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <rect
+                    fill="none"
+                    height="24"
+                    width="24"
+                  />
+                  <path
+                    class="active-item-icon"
+                    d="M7,14l1.273-1.273L2.545,7,8.273,1.273,7,0,0,7Z"
+                    transform="translate(5 16.273) rotate(-90)"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+          <div
+            hidden=""
+          >
+            <div>
+              <div
+                class="h-9"
+              >
+                <label
+                  class="flex flex-row items-center checkbox-button"
+                >
+                  <input
+                    class="checkbox"
+                    data-test-id="status-checkbox-0"
+                    id="status[0]_0"
+                    name="status[0]"
+                    type="checkbox"
+                  />
+                  <span
+                    class="checkbox-control"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium "
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="24"
+                          width="24"
+                        />
+                        <path
+                          class="svg-checkbox"
+                          d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                        />
+                      </svg>
+                    </div>
+                  </span>
+                  <div
+                    class="truncate relative w-full h-full inline-block"
+                  >
+                    <span
+                      class="w-60 w-60"
+                    >
+                      common.all
+                    </span>
+                  </div>
+                </label>
+              </div>
+              <div
+                class="h-9"
+              >
+                <label
+                  class="flex flex-row items-center checkbox-button"
+                >
+                  <input
+                    class="checkbox"
+                    data-test-id="status-checkbox-1"
+                    id="status[1]_1"
+                    name="status[1]"
+                    type="checkbox"
+                  />
+                  <span
+                    class="checkbox-control"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium "
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="24"
+                          width="24"
+                        />
+                        <path
+                          class="svg-checkbox"
+                          d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                        />
+                      </svg>
+                    </div>
+                  </span>
+                  <div
+                    class="truncate relative w-full h-full inline-block"
+                  >
+                    <span
+                      class="w-60 w-60"
+                    >
+                      ticket_log.answered
+                    </span>
+                  </div>
+                </label>
+              </div>
+              <div
+                class="h-9"
+              >
+                <label
+                  class="flex flex-row items-center checkbox-button"
+                >
+                  <input
+                    class="checkbox"
+                    data-test-id="status-checkbox-6"
+                    id="status[6]_6"
+                    name="status[6]"
+                    type="checkbox"
+                  />
+                  <span
+                    class="checkbox-control"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium "
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="24"
+                          width="24"
+                        />
+                        <path
+                          class="svg-checkbox"
+                          d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                        />
+                      </svg>
+                    </div>
+                  </span>
+                  <div
+                    class="truncate relative w-full h-full inline-block"
+                  >
+                    <span
+                      class="w-60 w-60"
+                    >
+                      ticket_log.handled_by_bot
+                    </span>
+                  </div>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div
+            class="cursor-pointer flex flex-row justify-between items-center h-10 mb-1.5"
+          >
+            <div
+              class="subtitle"
+            >
+              common.time_period
+            </div>
+            <div>
+              <div
+                class=""
+              >
+                <svg
+                  class="cursor-pointer "
+                  height="24"
+                  viewBox="0 0 24 24"
+                  width="24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <rect
+                    fill="none"
+                    height="24"
+                    width="24"
+                  />
+                  <path
+                    class="active-item-icon"
+                    d="M7,14l1.273-1.273L2.545,7,8.273,1.273,7,0,0,7Z"
+                    transform="translate(5 16.273) rotate(-90)"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+          <div
+            hidden=""
+          >
+            <div
+              class=""
+            >
+              <div
+                class="radio h-9 "
+              >
+                <input
+                  data-test-id="timePeriod-radio"
+                  data-testid="timePeriod_0"
+                  id="timePeriod_0"
+                  name="timePeriod"
+                  type="radio"
+                  value="0"
+                />
+                <label
+                  class="body2  truncate "
+                  for="timePeriod_0"
+                >
+                  <div
+                    class="truncate relative w-full h-full inline-block"
+                  >
+                    <span
+                      class="body2"
+                    >
+                      common.time_periods.today
+                    </span>
+                  </div>
+                </label>
+              </div>
+              <div
+                class="radio h-9 "
+              >
+                <input
+                  data-test-id="timePeriod-radio"
+                  data-testid="timePeriod_1"
+                  id="timePeriod_1"
+                  name="timePeriod"
+                  type="radio"
+                  value="1"
+                />
+                <label
+                  class="body2  truncate "
+                  for="timePeriod_1"
+                >
+                  <div
+                    class="truncate relative w-full h-full inline-block"
+                  >
+                    <span
+                      class="body2"
+                    >
+                      common.time_periods.last_7_days
+                    </span>
+                  </div>
+                </label>
+              </div>
+              <div
+                class="radio h-9 "
+              >
+                <input
+                  data-test-id="timePeriod-radio"
+                  data-testid="timePeriod_2"
+                  id="timePeriod_2"
+                  name="timePeriod"
+                  type="radio"
+                  value="2"
+                />
+                <label
+                  class="body2  truncate "
+                  for="timePeriod_2"
+                >
+                  <div
+                    class="truncate relative w-full h-full inline-block"
+                  >
+                    <span
+                      class="body2"
+                    >
+                      common.time_periods.last_30_days
+                    </span>
+                  </div>
+                </label>
+              </div>
+              <div
+                class="radio h-9 "
+              >
+                <input
+                  data-test-id="timePeriod-radio"
+                  data-testid="timePeriod_3"
+                  id="timePeriod_3"
+                  name="timePeriod"
+                  type="radio"
+                  value="3"
+                />
+                <label
+                  class="body2  truncate "
+                  for="timePeriod_3"
+                >
+                  <div
+                    class="truncate relative w-full h-full inline-block"
+                  >
+                    <span
+                      class="body2"
+                    >
+                      common.time_periods.date_range
+                    </span>
+                  </div>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div
+            class="cursor-pointer flex flex-row justify-between items-center h-12"
+          >
+            <div
+              class="subtitle"
+            >
+              ticket_new.reason
+            </div>
+            <div>
+              <div
+                class=""
+              >
+                <svg
+                  class="cursor-pointer "
+                  height="24"
+                  viewBox="0 0 24 24"
+                  width="24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <rect
+                    fill="none"
+                    height="24"
+                    width="24"
+                  />
+                  <path
+                    class="active-item-icon"
+                    d="M7,14l1.273-1.273L2.545,7,8.273,1.273,7,0,0,7Z"
+                    transform="translate(5 16.273) rotate(-90)"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+          <div
+            hidden=""
+          >
+            <div
+              class="select-wrapper relative w-full flex flex-col h-20 "
+            >
+              <div
+                class="select relative flex flex-col "
+              >
+                <input
+                  autocomplete="on"
+                  autocorrect="on"
+                  class="pl-4 pr-8 body2 select-trigger-pt h-14 relative truncate select-trigger activated  "
+                  data-testid="reason"
+                  name="reason"
+                  spellcheck="true"
+                  type="text"
+                  value="common.any"
+                />
+                <label
+                  class="select-label absolute truncate"
+                >
+                  <span
+                    class="select-label-span body3"
+                  >
+                    ticket_new.reason
+                  </span>
+                </label>
+                <div
+                  class="absolute pt-4 right-4 "
+                >
+                  <div
+                    class="flex flex-row items-start"
+                  >
+                    <div
+                      class="cursor-pointer"
+                    >
+                      <div
+                        class=""
+                      >
+                        <svg
+                          class="icon-medium "
+                          height="24"
+                          viewBox="0 0 24 24"
+                          width="24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <rect
+                            fill="none"
+                            height="24"
+                            width="24"
+                          />
+                          <path
+                            class="select-arrow-fill"
+                            d="M7,14l1.273-1.273L2.545,7,8.273,1.273,7,0,0,7Z"
+                            transform="translate(5 16.273) rotate(-90)"
+                          />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="absolute py-2 options"
+                >
+                  <div
+                    class="w-full select-cell justify-between flex items-center  body2-white   is-selected  "
+                  >
+                    <div
+                      class="flex flex-col justify-center w-full"
+                      data-test-id="select-cell-icon-content"
+                    >
+                      <div
+                        class="flex items-center pl-4"
+                        data-test-id="select-cell-text-common.any"
+                        data-testid="select-cell-text-common.any"
+                      >
+                        common.any
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</DocumentFragment>
+`;
