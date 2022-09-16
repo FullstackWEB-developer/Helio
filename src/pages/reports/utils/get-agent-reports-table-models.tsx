@@ -604,7 +604,7 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
         {
             title: 'reports.agent_reports.column_names.rating',
             field: 'avgVoiceRating',
-            widthClass: 'w-16',
+            widthClass: 'w-3/24',
             rowClassname: 'body2',
             headerClassName: 'items-center',
             isSortable: true,
@@ -613,31 +613,16 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
             onClick: (field: string | undefined, direction: SortDirection) => {
                 onSort(field, direction);
             },
-            render: (avgVoiceRating: number, row: AgentReport) => {
+            render: (_, row: AgentReport) => {
                 return (<div className='flex items-center h-full'>
                     <div className={classnames('overflow-hidden overflow-ellipsis ellipsis-row body2')}>
-                        {displayPatientRating(avgVoiceRating, row.voiceRatingCount)}
+                        {displayPatientRating(row.avgVoiceRating, row.voiceRatingCount)}
                     </div>
-                    <div className={'ml-4'}>
-                        {`${avgVoiceRating}%`}
+                    <div className={'px-5'}>
+                        {`${row.avgVoiceRating}%`}
                     </div>
-                </div>)
-            }
-        },
-        {
-            title: '',
-            field: 'voiceRatingCount',
-            widthClass: 'w-8',
-            headerClassName: 'items-center',
-            rowClassname: 'body2',
-            isSortable: true,
-            onClick: (field: string | undefined, direction: SortDirection) => {
-                onSort(field, direction);
-            },
-            render: (voiceRatingCount: string) => {
-                return (<div className='flex items-center h-full'>
                     <div className={classnames('overflow-hidden overflow-ellipsis ellipsis-row body2')}>
-                        {voiceRatingCount ? `${voiceRatingCount.toLocaleString()}` : "0"}
+                        {row.voiceRatingCount ? `${row.voiceRatingCount.toLocaleString()}` : "0"}
                     </div>
                 </div>)
             }
