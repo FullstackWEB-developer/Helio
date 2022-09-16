@@ -75,6 +75,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({
     const validateNumberValue = React.useCallback((event: any) => {
         if (!event.target.value || !InputTypes.Number.test(event.target.value)) {
             event.target.value = '';
+            onChange(event as React.ChangeEvent<HTMLInputElement>);
         }
     }, []);
 
