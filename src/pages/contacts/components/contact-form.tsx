@@ -399,7 +399,7 @@ const ContactForm = ({contact, contactType, submitHandler, closeHandler, editMod
                     <div className="col-span-12 lg:col-span-10">
                         <div className="flex items-center justify-center h-20 mb-4 full-w">
                             <Button buttonType='secondary' label={t('common.cancel')} className='h-10 secondary-contact-form-btn mr-8' onClick={closeButtonHandler} />
-                            <Button isLoading={isSaving} type='submit' buttonType='medium' label={t('common.save')} disabled={!isValid} />
+                            <Button isLoading={isSaving} type='submit' buttonType='medium' label={t('common.save')} disabled={!isValid || !isDirty} />
                         </div>
                     </div>
                 </div>
