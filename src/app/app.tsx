@@ -46,7 +46,7 @@ import {
     AppointmentSchedulePatientStatusPathRouter,
     AppointmentConfirmationPath,
     AppointmentConfirmationShortPath,
-    EmailPath, TicketEmailPath, RequestMedicalRecordsSuccessPath, FeedbackPath, CancellationReasonsPath, ReportsPath
+    EmailPath, TicketEmailPath, RequestMedicalRecordsSuccessPath, FeedbackPath, ReportsPath
 } from './paths';
 import RealTimeUserStatusUpdate from '@shared/websockets/real-time-user-status-update';
 import ExternalAccessLayout from '@pages/external-access/layout/external-access-layout';
@@ -64,6 +64,7 @@ import useBrowserNotification from '@shared/hooks/useBrowserNotification';
 import TicketMessageReadUpdate from '@shared/websockets/ticket-message-read';
 import TicketNotesUpdate from '@shared/websockets/ticket-notes-update';
 import TeamBadgeValueUpdate from '@shared/websockets/team-badge-value-update';
+import {Redirect} from 'react-router';
 const SearchResults = React.lazy(() => import('../shared/components/search-bar/components/search-results'));
 const PatientChart = React.lazy(() => import('@pages/patients/patient-chart'));
 const VerifyRedirectLink = React.lazy(() => import('@pages/external-access/verify-patient/verify-redirect-link'));
@@ -177,6 +178,12 @@ function App() {
                                 <Route path='/o/appointment-canceled' component={withSuspense(AppointmentCanceled)} />
                                 <Route path={`${AppointmentReschedulePath}/:appointmentId`} component={withSuspense(AppointmentReschedule)} />
                                 <Route path={`${AppointmentRescheduleShortPath}/:appointmentId`} component={withSuspense(AppointmentReschedule)} />
+                                <Route path={`${AppointmentReschedulePath}`}>
+                                        <Redirect to={AppointmentListPath}/>
+                                </Route>
+                                <Route path={`${AppointmentRescheduleShortPath}`} >
+                                    <Redirect to={AppointmentListShortPath}/>
+                                </Route>
                                 <Route path={AppointmentRescheduleConfirmPath} component={withSuspense(AppointmentRescheduleConfirm)} />
                                 <Route path={AppointmentRescheduledPath} component={withSuspense(AppointmentRescheduled)} />
                                 <Route path='/o/download-medical-records' component={withSuspense(DownloadMedicalRecords)} />
