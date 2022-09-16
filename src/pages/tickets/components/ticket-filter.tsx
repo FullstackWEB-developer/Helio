@@ -6,7 +6,7 @@ import { getEnumByType, getList } from '../services/tickets.service';
 import { getLookupValues } from '@shared/services/lookups.service';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import Checkbox, { CheckboxCheckEvent } from '@components/checkbox/checkbox';
+import { CheckboxCheckEvent } from '@components/checkbox/checkbox';
 import {
     selectEnumValues,
     selectLookupValues,
@@ -164,7 +164,6 @@ const TicketFilter = ({ isOpen }: { isOpen: boolean }) => {
             ...ticketQueryFilter,
             page: 1
         };
-        setFormResetDateTime(new Date());
         query.statuses = getSelectedFromCheckbox(values.statuses).map((a: string) => parseInt(a));
         query.channels = getSelectedFromCheckbox(values.channels).map((a: string) => parseInt(a));
         query.ticketTypes = getSelectedFromCheckbox(values.ticketTypes).map((a: string) => parseInt(a));
@@ -417,6 +416,7 @@ const TicketFilter = ({ isOpen }: { isOpen: boolean }) => {
         });
         setFromDate(undefined);
         setToDate(undefined);
+        setFormResetDateTime(new Date());
         fetchTickets({
             searchTerm: ""
         });
