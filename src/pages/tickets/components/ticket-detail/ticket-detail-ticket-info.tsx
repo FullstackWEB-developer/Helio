@@ -19,6 +19,8 @@ import {TicketUpdateModel} from '@pages/tickets/models/ticket-update.model';
 import utils from '@shared/utils/utils';
 import {Ticket} from '@pages/tickets/models/ticket';
 import {selectActiveUserOptions} from '@shared/store/lookups/lookups.selectors';
+import {TicketType} from '@shared/models';
+import {setParentTicketId} from '@pages/ccp/store/ccp.slice';
 
 interface TicketInfoProps {
     ticket: Ticket,
@@ -81,7 +83,12 @@ const TicketDetailTicketInfo = ({ticket, control, watch}: TicketInfoProps) => {
         return <Spinner size='medium' />
     }
 
-
+    const handleCallbackOutboundCall = () => {
+        if(ticket.type === TicketType.Callback && ticket.id && ticket.callbackPhoneNumber){
+            dispatch(setParentTicketId(ticket.id));
+        }
+        utils.initiateACall(updateModel.callbackPhoneNumber)
+    }
 
     return (
         <div className='pt-2'>
@@ -115,7 +122,7 @@ const TicketDetailTicketInfo = ({ticket, control, watch}: TicketInfoProps) => {
                     control={control}
                     onChange={(e) => handleCallbackNumberChange(e.target.value)}
                     dropdownIcon={Icon.Phone} label={'ticket_detail.info_panel.callback_number'}
-                    dropdownIconClickHandler={() => {utils.initiateACall(updateModel.callbackPhoneNumber)}} />
+                    dropdownIconClickHandler={handleCallbackOutboundCall} />
             }
             {(reasonFilteredOptions && reasonFilteredOptions.length > 0) &&
                 <ControlledSelect

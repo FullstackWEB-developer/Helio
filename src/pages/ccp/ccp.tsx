@@ -18,9 +18,10 @@ import {
     setInitiateInternalCall,
     setInternalCallDetails,
     setVoiceCounter,
-    upsertCurrentBotContext
+    upsertCurrentBotContext,
+    setParentTicketId
 } from './store/ccp.slice';
-import {getTicketById, setAssignee, updateConnectAttributes} from '../tickets/services/tickets.service';
+import {getTicketById, setAssignee, updateConnectAttributes, updateConnectAttributesForInternalCall} from '../tickets/services/tickets.service';
 import {selectAgentStates, selectAppUserDetails, selectUserStatus} from '@shared/store/app-user/appuser.selectors';
 import {DragPreviewImage, useDrag} from 'react-dnd';
 import {DndItemTypes} from '@shared/layout/dragndrop/dnd-item-types';
@@ -43,6 +44,7 @@ import {
     selectContextPanel,
     selectInitiateInternalCall,
     selectInternalCallDetails,
+    selectParentTicketId,
     selectVoiceCounter
 } from './store/ccp.selectors';
 import {useMutation, useQuery} from 'react-query';
@@ -93,7 +95,7 @@ const Ccp: React.FC<BoxProps> = ({
     headsetIconRef,
     moveBox
 }) => {
-    const { t } = useTranslation();
+    const {t} = useTranslation();
     const dispatch = useDispatch();
     const history = useHistory();
     const logger = Logger.getInstance();
@@ -118,9 +120,10 @@ const Ccp: React.FC<BoxProps> = ({
     const internalCallDetails = useSelector(selectInternalCallDetails);
     const initiateInternalCall = useSelector(selectInitiateInternalCall);
     const updateAttributesMutation = useMutation(updateConnectAttributes);
+    const updateAttributesForInternalMutation = useMutation(updateConnectAttributesForInternalCall);
     const chatCounter = useSelector(selectChatCounter);
     const voiceCounter = useSelector(selectVoiceCounter);
-    const isInternalCallInitiated =  !!internalCallDetails;
+    const isInternalCallInitiated = !!internalCallDetails;
 
     useEffect(() => {
         const activeConversations = chatCounter + voiceCounter;
@@ -147,7 +150,7 @@ const Ccp: React.FC<BoxProps> = ({
         }
     });
 
-    const { refetch: refetchTicket } = useQuery([QueryTickets, ticketId], () => getTicketById(ticketId), {
+    const {refetch: refetchTicket} = useQuery([QueryTickets, ticketId], () => getTicketById(ticketId), {
         enabled: !!ticketId,
         onSuccess: (data) => {
             dispatch(setBotContextTicket({
@@ -209,7 +212,7 @@ const Ccp: React.FC<BoxProps> = ({
 
     useEffect(() => {
         if (!!ticketId) {
-            updateAssigneeMutation.mutate({ ticketId: ticketId, assignee: user.id });
+            updateAssigneeMutation.mutate({ticketId: ticketId, assignee: user.id});
             refetchTicket();
         }
     }, [ticketId]);
@@ -257,7 +260,7 @@ const Ccp: React.FC<BoxProps> = ({
             }
         });
     }
-
+    const parentTicketId = useSelector(selectParentTicketId);
     useEffect(() => {
         if (initiateInternalCall) {
             updateContactForInternalCall();
@@ -266,7 +269,10 @@ const Ccp: React.FC<BoxProps> = ({
     }, [initiateInternalCall])
 
     const updateContactForInternalCall = () => {
-        updateAttributesMutation.mutate({
+        if(parentTicketId){
+            return;
+        }
+        updateAttributesForInternalMutation.mutate({
             contactId: window.CCP.contact.contactId,
             attributes: {
                 "FromUserId": internalCallDetails?.fromUserId,
@@ -277,6 +283,24 @@ const Ccp: React.FC<BoxProps> = ({
             }
         })
     }
+
+    const setParentTicketForOutboundCallWhenCallback = () => {
+        updateAttributesMutation.mutate({
+            contactId: window.CCP.contact.contactId,
+            attributes: {
+                ...(parentTicketId && {"ParentTicketId": parentTicketId})
+            }
+        }, {
+            onSettled: () => {
+                dispatch(setParentTicketId(''));
+            }
+        })
+    }
+    useEffect(() => {
+        if (parentTicketId && window?.CCP?.contact?.contactId) {
+            setParentTicketForOutboundCallWhenCallback();
+        }
+    }, [parentTicketId, window?.CCP?.contact?.contactId]);
 
     const initCCP = useCallback((isRetry: boolean = false) => {
         if (utils.isSessionExpired()) {
@@ -354,11 +378,11 @@ const Ccp: React.FC<BoxProps> = ({
                 }
                 const notificationTitle = prepareChatOrVoiceNotificationTitle(botAttributes);
                 const notificationBody = prepareChatOrVoiceNotificationContent(botAttributes, contact.getQueue()?.name);
-                dispatch(setCcpNotificationContent({ body: notificationBody, title: notificationTitle, type: contact.getType() }));
+                dispatch(setCcpNotificationContent({body: notificationBody, title: notificationTitle, type: contact.getType()}));
                 if (!isCcpVisibleRef.current) {
                     dispatch(toggleCcp());
                 }
-                if (!contact.isInbound()) {
+                if (!contact.isInbound() && !parentTicketId) {
                     dispatch(setInitiateInternalCall(true));
                 }
             });
@@ -512,8 +536,8 @@ const Ccp: React.FC<BoxProps> = ({
     }, []);
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [{ opacity }, drag, preview] = useDrag({
-        item: { id, left, top, type: DndItemTypes.BOX },
+    const [{opacity}, drag, preview] = useDrag({
+        item: {id, left, top, type: DndItemTypes.BOX},
         collect: (monitor) => ({
             opacity: monitor.isDragging() ? 0.3 : 1
         })
@@ -610,7 +634,7 @@ const Ccp: React.FC<BoxProps> = ({
             ccp.style.setProperty('--ccpAnimationFinalScale', '1');
             setAnimateToggle(true);
             setDelayCcpDisplaying(false);
-            setTimeout(() => { setAnimateToggle(false); moveBox(ccpBoundingClientRect.x, ccpBoundingClientRect.y) }, (animationDuration * 1000) - animationDurationOffset);
+            setTimeout(() => {setAnimateToggle(false); moveBox(ccpBoundingClientRect.x, ccpBoundingClientRect.y)}, (animationDuration * 1000) - animationDurationOffset);
         }
     }
 
@@ -657,7 +681,7 @@ const Ccp: React.FC<BoxProps> = ({
         }
     }, [isCcpVisibleRef.current]);
 
-    const { displayNotification } = useBrowserNotification();
+    const {displayNotification} = useBrowserNotification();
     const notificationContent = useSelector(selectCcpNotificationContent);
 
     useEffect(() => {
@@ -732,7 +756,7 @@ const Ccp: React.FC<BoxProps> = ({
             </div>
             <DragPreviewImage src={ccpImage} connect={preview} />
             <div className={`ccp-main ${animateToggle ? 'ccp-toggle-animate' : ''} ` + (isCcpVisibleRef.current ? 'block' : 'hidden')}
-                style={{ left, top, opacity: opacity, visibility: delayCcpDisplaying ? 'hidden' : 'visible' }}
+                style={{left, top, opacity: opacity, visibility: delayCcpDisplaying ? 'hidden' : 'visible'}}
                 onMouseEnter={() => setHover(true)}
                 onMouseLeave={() => setHover(false)}
                 ref={drag}

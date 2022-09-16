@@ -279,19 +279,19 @@ export interface setDeleteProps {
     undoDelete?: boolean;
 }
 
-export const setDelete = async ({id, undoDelete = false}: setDeleteProps) : Promise<Ticket> => {
+export const setDelete = async ({id, undoDelete = false}: setDeleteProps): Promise<Ticket> => {
     const url = `${ticketsBaseUrl}/${id}/delete`;
     const response = await Api.put(url, null, {
-            params: {
-                undoDelete: undoDelete
-            }
+        params: {
+            undoDelete: undoDelete
         }
+    }
     );
 
     return response.data;
 }
 
-export const getTicketByNumber = async (ticketNumber: number) : Promise<Ticket> => {
+export const getTicketByNumber = async (ticketNumber: number): Promise<Ticket> => {
     const url = `${ticketsBaseUrl}/${ticketNumber}`;
     const response = await Api.get(url);
     return response.data;
@@ -313,7 +313,7 @@ export const getDashboardData = async (type: DashboardTypes, timeFrame: Dashboar
 }
 
 
-export const getQueueStatus = async (query?: QueueCurrentMetricQuery) : Promise<QueueMetric[]> => {
+export const getQueueStatus = async (query?: QueueCurrentMetricQuery): Promise<QueueMetric[]> => {
     let url = `${ticketsBaseUrl}/dashboard/queue-metrics`;
     const response = await Api.get(url, {
         params: {
@@ -324,13 +324,13 @@ export const getQueueStatus = async (query?: QueueCurrentMetricQuery) : Promise<
     return response.data;
 };
 
-export const getAgentsStatus = async () : Promise<AgentStatus[]> => {
+export const getAgentsStatus = async (): Promise<AgentStatus[]> => {
     let url = `${ticketsBaseUrl}/dashboard/agents-status`;
     const response = await Api.get(url);
     return response.data;
 };
 
-export const GetTodaysPerformanceMetrics = async () : Promise<PerformanceMetric[]> => {
+export const GetTodaysPerformanceMetrics = async (): Promise<PerformanceMetric[]> => {
     let url = `${ticketsBaseUrl}/dashboard/queue-history`;
     const response = await Api.get(url);
     return response.data as PerformanceMetric[];
@@ -342,7 +342,7 @@ export const getQuickConnects = async () => {
     return response.data as QuickConnectExtension[];
 };
 
-export const getTicketPerformanceForUser = async (request?: AgentPerformanceRequest) : Promise<AgentPerformanceResponse> => {
+export const getTicketPerformanceForUser = async (request?: AgentPerformanceRequest): Promise<AgentPerformanceResponse> => {
     const url = `${ticketsBaseUrl}/dashboard/agent-ticket-performance`;
     const response = await Api.get(url, {
         params: request
@@ -350,7 +350,7 @@ export const getTicketPerformanceForUser = async (request?: AgentPerformanceRequ
     return response.data;
 };
 
-export const getContactPerformanceForUser = async (userId?: string) : Promise<AgentContactPerformanceResponse> => {
+export const getContactPerformanceForUser = async (userId?: string): Promise<AgentContactPerformanceResponse> => {
     const url = `${ticketsBaseUrl}/dashboard/agent-contact-performance`;
     const response = await Api.get(url, {
         params: {
@@ -360,7 +360,7 @@ export const getContactPerformanceForUser = async (userId?: string) : Promise<Ag
     return response.data;
 };
 
-export const getRecentManagerReviewsForUser = async (userId?: string, limit?: number) : Promise<TicketManagerReview[]> => {
+export const getRecentManagerReviewsForUser = async (userId?: string, limit?: number): Promise<TicketManagerReview[]> => {
     const url = `${ticketsBaseUrl}/review/latest-manager-reviews`;
     const response = await Api.get(url, {
         params: {
@@ -371,13 +371,13 @@ export const getRecentManagerReviewsForUser = async (userId?: string, limit?: nu
     return response.data;
 };
 
-export const getTicketReviews = async (ticketId?: string) : Promise<TicketManagerReview[]> => {
+export const getTicketReviews = async (ticketId?: string): Promise<TicketManagerReview[]> => {
     const url = `${ticketsBaseUrl}/review/${ticketId}`;
     const response = await Api.get(url);
     return response.data;
 };
 
-export const creteTicketFeedback = async (request: CreateTicketFeedbackRequest) : Promise<TicketManagerReview> => {
+export const creteTicketFeedback = async (request: CreateTicketFeedbackRequest): Promise<TicketManagerReview> => {
     const url = `${ticketsBaseUrl}/review`;
     const response = await Api.post(url, request);
     return response.data;
@@ -385,7 +385,7 @@ export const creteTicketFeedback = async (request: CreateTicketFeedbackRequest) 
 
 
 
-export const getOverallManagerRatingsForUser = async (userId?: string) : Promise<ManagerRatingsMetricResponse> => {
+export const getOverallManagerRatingsForUser = async (userId?: string): Promise<ManagerRatingsMetricResponse> => {
     const url = `${ticketsBaseUrl}/review/overall-manager-reviews`;
     const response = await Api.get(url, {
         params: {
@@ -402,13 +402,13 @@ export const getFileAsBlob = async (url: string) => {
     return response.data as Blob;
 }
 
-export const creteFeedback = async (request: FeedbackRequest) : Promise<FeedbackResponse> => {
+export const creteFeedback = async (request: FeedbackRequest): Promise<FeedbackResponse> => {
     const url = `${ticketsBaseUrl}/rating`;
     const response = await Api.post(url, request);
     return response.data;
 };
 
-export const getOverallPatientReviews = async (type: DashboardTypes) : Promise<PatientRatings> => {
+export const getOverallPatientReviews = async (type: DashboardTypes): Promise<PatientRatings> => {
     const url = `${ticketsBaseUrl}/rating/overall-patient-reviews`;
     const response = await Api.get(url, {
         params: {
@@ -424,19 +424,25 @@ export const getPatientTicketRating = async (ticketId: string) => {
     return response.data;
 }
 
-export const getLatestQuickConnectData = async () : Promise<QuickConnectExtension[]> => {
+export const getLatestQuickConnectData = async (): Promise<QuickConnectExtension[]> => {
     const url = `${ticketsBaseUrl}/dashboard/quick-connects`;
     const response = await Api.get(url);
     return response.data;
 }
 
-export const togglePatientRatingApplianceToTicket = async(reqBody: TicketRatingAppliedRequest) => {
+export const togglePatientRatingApplianceToTicket = async (reqBody: TicketRatingAppliedRequest) => {
     const url = `${ticketsBaseUrl}/rating/toggle-rating-applied`;
     const response = await Api.post(url, reqBody);
     return response.data;
 }
 
-export const updateConnectAttributes = async(request: UpdateConnectAttributesRequest) => {
+export const updateConnectAttributesForInternalCall = async (request: UpdateConnectAttributesRequest) => {
+    const url = `${ticketsBaseUrl}/connect/${request.contactId}/update-attributes/internal`;
+    const response = await Api.put(url, request.attributes);
+    return response.data;
+}
+
+export const updateConnectAttributes = async (request: UpdateConnectAttributesRequest) => {
     const url = `${ticketsBaseUrl}/connect/${request.contactId}/update-attributes`;
     const response = await Api.put(url, request.attributes);
     return response.data;
@@ -446,16 +452,16 @@ export function getBadgeValues(badgeValues: BadgeValues, teamBadgeValues: boolea
     let url = `${ticketsBaseUrl}/badge-values?badgeValue=${badgeValues}&teamBadgeValue=${teamBadgeValues}`;
     return async (dispatch: Dispatch) => {
         await Api.get(url).then((response) => {
-            if(badgeValues === BadgeValues.All){
+            if (badgeValues === BadgeValues.All) {
                 dispatch(setUnreadTicket(response.data.myValues.ticketBadgeCount));
             }
-            if(badgeValues !== BadgeValues.SMSOnly){
+            if (badgeValues !== BadgeValues.SMSOnly) {
                 dispatch(setUnreadEmailMessages(response.data.myValues.emailBadgeCount));
             }
-            if(badgeValues !== BadgeValues.EmailOnly){
+            if (badgeValues !== BadgeValues.EmailOnly) {
                 dispatch(setUnreadSmsMessages(response.data.myValues.smsBadgeCount));
             }
-            if(teamBadgeValues){
+            if (teamBadgeValues) {
                 dispatch(setUnreadTeamSms(response.data.teamValues.smsCount));
                 dispatch(setUnreadTeamEmail(response.data.teamValues.emailCount));
                 dispatch(setUnreadTeamTicket(response.data.teamValues.ticketCount));
@@ -464,25 +470,25 @@ export function getBadgeValues(badgeValues: BadgeValues, teamBadgeValues: boolea
     }
 }
 
-export const getAgentReport = async(request: ViewTypes) => {
+export const getAgentReport = async (request: ViewTypes) => {
     const url = `${ticketsBaseUrl}/reports/agents?period=${request}`;
     const response = await Api.get(url);
     return response.data;
 }
 
-export const getQueueReport = async(request: ViewTypes) => {
+export const getQueueReport = async (request: ViewTypes) => {
     const url = `${ticketsBaseUrl}/reports/queues?period=${request}`;
     const response = await Api.get(url);
     return response.data;
 }
 
-export const getSystemReport = async(request: ViewTypes) : Promise<SystemReport[]> => {
+export const getSystemReport = async (request: ViewTypes): Promise<SystemReport[]> => {
     const url = `${ticketsBaseUrl}/reports/system?period=${request}`;
     const response = await Api.get(url);
     return response.data;
 }
 
-export const getBotReport = async(period: ViewTypes, startDate?: Date, endDate?: Date) : Promise<BotReport> => {
+export const getBotReport = async (period: ViewTypes, startDate?: Date, endDate?: Date): Promise<BotReport> => {
     const url = `${ticketsBaseUrl}/reports/bot`;
     const params = period === ViewTypes.CustomDates ? {
         startDate,
@@ -497,7 +503,7 @@ export const getBotReport = async(period: ViewTypes, startDate?: Date, endDate?:
     return response.data;
 }
 
-export const exportBotReport = async({period, startDate, endDate} : {period: ViewTypes, startDate?: Date, endDate?: Date}) : Promise<BotReport> => {
+export const exportBotReport = async ({period, startDate, endDate}: {period: ViewTypes, startDate?: Date, endDate?: Date}): Promise<BotReport> => {
     const url = `${ticketsBaseUrl}/reports/bot/export`;
     const params = period === ViewTypes.CustomDates ? {
         startDate,
@@ -514,13 +520,13 @@ export const exportBotReport = async({period, startDate, endDate} : {period: Vie
     return response.data;
 }
 
-export const getAvailableMonths = async(reportType: ReportTypes) => {
+export const getAvailableMonths = async (reportType: ReportTypes) => {
     const url = `${ticketsBaseUrl}/reports/available-months?reportType=${reportType}`;
     const response = await Api.get(url);
     return response.data;
 }
 
-export const exportAgentReport = async({request, selectedIds} : {request: ViewTypes, selectedIds: string[]}) => {
+export const exportAgentReport = async ({request, selectedIds}: {request: ViewTypes, selectedIds: string[]}) => {
     const url = `${ticketsBaseUrl}/reports/agents/export?period=${request}&${selectedIds.map((n) => `selectedIds=${n}`).join('&')}`;
     const response = await Api.get(url, {
         responseType: 'arraybuffer'
@@ -529,7 +535,7 @@ export const exportAgentReport = async({request, selectedIds} : {request: ViewTy
     return response.data;
 }
 
-export const exportQueueReport = async({request, selectedIds}: {request: ViewTypes, selectedIds: string[]}) => {
+export const exportQueueReport = async ({request, selectedIds}: {request: ViewTypes, selectedIds: string[]}) => {
     const url = `${ticketsBaseUrl}/reports/queue/export?period=${request}&${selectedIds.map((n) => `selectedIds=${n}`).join('&')}`;
     const response = await Api.get(url, {
         responseType: 'arraybuffer'
@@ -538,16 +544,22 @@ export const exportQueueReport = async({request, selectedIds}: {request: ViewTyp
     return response.data;
 }
 
-export const getPerformanceChart = async(request: ViewTypes) => {
+export const getPerformanceChart = async (request: ViewTypes) => {
     const url = `${ticketsBaseUrl}/reports/performance-chart?period=${request}`;
     const response = await Api.get(url);
     return response.data;
 }
 
-export const exportSystemReport = async({request, selectedIds} : {request: ViewTypes, selectedIds: string[]}) => {
+export const exportSystemReport = async ({request, selectedIds}: {request: ViewTypes, selectedIds: string[]}) => {
     const url = `${ticketsBaseUrl}/reports/system/export?period=${request}&${selectedIds.map((n) => `selectedIds=${n}`).join('&')}`;
     const response = await Api.get(url, {
         responseType: 'arraybuffer'
     });
     utils.downloadFileFromData(response.data, `SystemReport`, MimeTypes.XlsX);
+}
+
+export const getChildrenTicketNumbers = async (ticketId: string): Promise<number[]> => {
+    const url = `${ticketsBaseUrl}/${ticketId}/children`;
+    const response = await Api.get(url);
+    return response.data;
 }

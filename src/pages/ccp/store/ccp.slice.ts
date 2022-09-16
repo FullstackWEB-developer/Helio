@@ -21,19 +21,19 @@ const ccpSlice = createSlice({
         setContextPanel: (state, {payload}: PayloadAction<string>) => {
             state.contextPanel = payload;
         },
-        setBotContextTicket: (state, {payload}: PayloadAction<{ ticket: Ticket }>) => {
+        setBotContextTicket: (state, {payload}: PayloadAction<{ticket: Ticket}>) => {
             const botContext = state.botContexts.find(a => a.initialContactId === payload.ticket.id);
             if (!!botContext) {
                 botContext.ticket = payload.ticket;
             }
         },
-        setBotContextPatient: (state, {payload}: PayloadAction<{ contactId: string, patient: ExtendedPatient }>) => {
+        setBotContextPatient: (state, {payload}: PayloadAction<{contactId: string, patient: ExtendedPatient}>) => {
             const botContext = state.botContexts.find(a => a.initialContactId === payload.contactId);
             if (!!botContext) {
                 botContext.patient = payload.patient;
             }
         },
-        upsertCurrentBotContext:(state, {payload}: PayloadAction<BotContext>) => {
+        upsertCurrentBotContext: (state, {payload}: PayloadAction<BotContext>) => {
             if (payload) {
                 const currentBotContextIndex = state.botContexts.findIndex(a => a.initialContactId === payload.initialContactId);
                 const index = currentBotContextIndex > -1 ? currentBotContextIndex : state.botContexts.length;
@@ -43,7 +43,7 @@ const ccpSlice = createSlice({
                 }
             }
         },
-        addNoteToTicket: (state, {payload}: PayloadAction<{ ticketId: string, note: TicketNote }>) => {
+        addNoteToTicket: (state, {payload}: PayloadAction<{ticketId: string, note: TicketNote}>) => {
             const botContextIndex = state.botContexts.findIndex(a => a.initialContactId === payload.ticketId);
             const botContext = state.botContexts[botContextIndex];
             const notes = botContext?.ticket?.notes || [];
@@ -63,7 +63,7 @@ const ccpSlice = createSlice({
                 state.contextPanel = "";
                 state.currentContactId = "";
             } else {
-                state.currentContactId = index === state.botContexts.length ? state.botContexts[index-1].currentContactId : state.botContexts[index].currentContactId;
+                state.currentContactId = index === state.botContexts.length ? state.botContexts[index - 1].currentContactId : state.botContexts[index].currentContactId;
             }
         },
         setConnectionStatus: (state, {payload}: PayloadAction<CCPConnectionStatus>) => {
@@ -72,7 +72,7 @@ const ccpSlice = createSlice({
         setCurrentContactId: (state, {payload}: PayloadAction<string>) => {
             state.currentContactId = payload;
         },
-        clearCCPContext:(state) => {
+        clearCCPContext: (state) => {
             state.currentContactId = "";
             state.botContexts = [];
             state.internalCallDetails = undefined;
@@ -85,13 +85,16 @@ const ccpSlice = createSlice({
         },
         setCcpNotificationContent: (state, {payload}: PayloadAction<CcpNotificationContent | undefined>) => {
             state.notificationContent = payload
+        },
+        setParentTicketId: (state, {payload}: PayloadAction<string>) => {
+            state.parentTicketId = payload
         }
     }
 });
 
 export const {
     setChatCounter,
-    setVoiceCounter, 
+    setVoiceCounter,
     setContextPanel,
     upsertCurrentBotContext,
     removeCurrentBotContext,
@@ -103,6 +106,7 @@ export const {
     setInternalCallDetails,
     setInitiateInternalCall,
     setCurrentContactId,
-    setCcpNotificationContent} = ccpSlice.actions;
+    setCcpNotificationContent,
+    setParentTicketId} = ccpSlice.actions;
 
 export default ccpSlice.reducer;

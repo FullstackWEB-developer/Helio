@@ -55,4 +55,5 @@ export interface Ticket {
     patientRating?: PatientRating;
     agentInteractionDuration?: number;
     connectEvents?: ConnectEventRecord[];
+    parentTicketId?: string;
 }

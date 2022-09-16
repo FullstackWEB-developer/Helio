@@ -13,8 +13,8 @@ import {useForm} from 'react-hook-form';
 import {setTicketUpdateModel, setTicketUpdateHash} from '@pages/tickets/store/tickets.slice';
 import {useDispatch, useSelector} from 'react-redux';
 import {selectEnumValuesAsOptions, selectLookupValuesAsOptions, selectTicketUpdateHash, selectTicketUpdateModel} from '@pages/tickets/store/tickets.selectors';
-import {useMutation} from 'react-query';
-import {addFeed, updateTicket} from '@pages/tickets/services/tickets.service';
+import {useMutation, useQuery} from 'react-query';
+import {addFeed, getChildrenTicketNumbers, updateTicket} from '@pages/tickets/services/tickets.service';
 import {setTicket} from '@pages/tickets/store/tickets.slice';
 import {FeedTypes, TicketFeed} from '@pages/tickets/models/ticket-feed';
 import {useTranslation} from 'react-i18next';
@@ -36,6 +36,9 @@ import {setAssignee} from '../../services/tickets.service';
 import {selectActiveUserOptions} from '@shared/store/lookups/lookups.selectors';
 import {Option} from '@components/option/option';
 import {Link} from 'react-router-dom';
+import TicketDetailRelatedTickets from './ticket-detail-related-tickets';
+import {GetChildrenTicketNumbers} from '@constants/react-query-constants';
+import Spinner from '@components/spinner/Spinner';
 interface TicketDetailInfoPanelProps {
     ticket: Ticket,
     patient?: Patient,
@@ -105,7 +108,7 @@ const TicketDetailInfoPanel = ({ticket, patient, contact}: TicketDetailInfoPanel
             const user = userListOptions ? userListOptions.find((o: Option) => o.value === updateModel["assignee"]?.value) : {} as any;
             if (ticket.id && user && ticket.assignee !== user.value) {
                 updateAssigneeMutation.mutate({ticketId: ticket.id, assignee: user.value});
-            }else{
+            } else {
                 dispatch(setTicket(data));
             }
             if (data.id && previousTicket?.status !== data.status) {
@@ -214,11 +217,15 @@ const TicketDetailInfoPanel = ({ticket, patient, contact}: TicketDetailInfoPanel
         }
     }, [contact, patient, ticket]);
 
-    const ticketDetailEventLog = useMemo(() =>{
+    const ticketDetailEventLog = useMemo(() => {
         return <TicketDetailEventLog ticket={ticket} control={control}
-                              setIsVisible={setIsDueDateVisible} isVisible={isDueDateVisible} />
+            setIsVisible={setIsDueDateVisible} isVisible={isDueDateVisible} />
     }, [ticket, isDueDateVisible]);
 
+    const {data: childrenTicketNumbers, isFetching: isFetchingChildTicketNumbers} = useQuery([GetChildrenTicketNumbers, ticket.id],
+        () => getChildrenTicketNumbers(ticket.id!), {
+        enabled: !!ticket.id
+    });
 
     return <>
         <form className='relative flex flex-col' onSubmit={handleSubmit(onSubmit)}>
@@ -234,6 +241,19 @@ const TicketDetailInfoPanel = ({ticket, patient, contact}: TicketDetailInfoPanel
                     </div>
                 }
             </div>
+            {
+                isFetchingChildTicketNumbers ? <Spinner size='small' /> :
+                    (
+                        (!!ticket?.parentTicketId || (childrenTicketNumbers && childrenTicketNumbers?.length > 0)) &&
+                        <div className='border-b'>
+                            <div className='px-6'>
+                                <Collapsible title={'ticket_detail.info_panel.related_tickets.title'} isOpen={true}>
+                                    <TicketDetailRelatedTickets ticket={ticket} childTickets={childrenTicketNumbers} />
+                                </Collapsible>
+                            </div>
+                        </div>
+                    )
+            }
             <div className='border-b'>
                 <div className='px-6'>
                     <Collapsible title={'ticket_detail.info_panel.ticket_info'} isOpen={true}>

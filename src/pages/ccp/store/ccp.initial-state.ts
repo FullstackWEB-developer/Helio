@@ -13,6 +13,7 @@ export interface CcpState {
     internalCallDetails?: InternalCallDetails;
     initiateInternalCall: boolean;
     notificationContent?: CcpNotificationContent;
+    parentTicketId: string;
 }
 
 const initialState: CcpState = {
@@ -24,7 +25,8 @@ const initialState: CcpState = {
     currentContactId: '',
     internalCallDetails: undefined,
     initiateInternalCall: false,
-    notificationContent: undefined
+    notificationContent: undefined,
+    parentTicketId: ''
 }
 
 export default initialState;

@@ -717,7 +717,12 @@
         "file_name_voice": "voice-recording"
       },
       "callback_number": "Callback Number",
-      "details": "Details"
+      "details": "Details",
+      "related_tickets":{
+        "title": "Related Tickets",
+        "parent_ticket": "Parent: <0>{{ticketNumber}}</0>",
+        "children_tickets": "Children"
+      }
     },
     "note": {
       "add_note": "Add Note",

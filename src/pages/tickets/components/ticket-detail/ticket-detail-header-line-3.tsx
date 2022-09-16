@@ -32,6 +32,8 @@ import {SnackbarPosition} from '@components/snackbar/snackbar-position.enum';
 import {Phone} from '@pages/tickets/models/phone.model';
 import {ContactPreference} from '@pages/patients/models/contact-preference.enum';
 import hash from 'object-hash';
+import {TicketType} from '@shared/models';
+import {setParentTicketId} from '@pages/ccp/store/ccp.slice';
 export interface TicketDetailHeaderLine3Props {
     ticket: Ticket,
     patient?: ExtendedPatient,
@@ -139,6 +141,9 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
         }
         if (window.CCP.agent) {
             const endpoint = connect.Endpoint.byPhoneNumber(phoneNumber);
+            if(ticket.type === TicketType.Callback && ticket.id && ticket.callbackPhoneNumber && phoneNumber == ticket.callbackPhoneNumber){
+                dispatch(setParentTicketId(ticket.id));
+            }
             window.CCP.agent.connect(endpoint, {
                 failure: (e: any) => {
                     dispatch(addSnackbarMessage({
