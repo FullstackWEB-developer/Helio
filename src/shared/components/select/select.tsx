@@ -36,7 +36,7 @@ interface SelectProps {
 const Select = React.forwardRef<HTMLDivElement, SelectProps>(({options, order, label, className, autoComplete = true, defaultValue = null, truncateAssistiveText=false, allowClear =false, isMultiple=false, defaultValues, ...props}: SelectProps, ref) => {
     const {t}: {t: any} = useTranslation();
     const [open, setOpen] = useState(false);
-    const [selectedOption, setSelectedOption] = useState<Option | null | undefined>(typeof defaultValue === 'string' ? options?.find(a => a.value === defaultValue) : defaultValue);
+    const [selectedOption, setSelectedOption] = useState<Option | null | undefined>(typeof defaultValue === 'string' ? options?.find(a => !!a && a.value === defaultValue) : defaultValue);
     const [searchQuery, setSearchQuery] = useState<string | null>(null);
     const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);
     const [cursor, setCursor] = useState<number>(-1);

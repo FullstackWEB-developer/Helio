@@ -36,7 +36,7 @@ const PerformanceBotChart = ({data, selectedView}: {data: PerformanceChartRespon
     const determineXAxisLabelFormat = (date: string) => {
         switch (selectedView) {
             case ViewTypes.Yesterday:
-                return dayjs(date, 'hh:mm A').format('hh A');
+                return dayjs(date, 'hh:mm A').format('h A');
             case ViewTypes.LastMonth:
             case Number(performanceChartViewTypes[3].value):
                 return dayjs(date, 'MMMM D').format('D');
