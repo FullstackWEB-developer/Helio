@@ -164,7 +164,7 @@ const Select = React.forwardRef<HTMLDivElement, SelectProps>(({options, order, l
             return (
                 <>
                     {
-                        currentOptions.map((option: Option, index) =>
+                        currentOptions.filter(a => !!a).map((option: Option, index) =>
                             <SelectCell item={option}
                                         isMultiple={isMultiple}
                                         truncateAssistiveText={truncateAssistiveText}

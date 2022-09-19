@@ -86,7 +86,7 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
         },
         {
             title: 'reports.agent_reports.column_names.total_calls_and_chats',
-            field: 'totalCalls',
+            field: 'totalCallsAndChats',
             widthClass: 'w-3/24',
             rowClassname: 'body2',
             headerClassName: 'items-center',
@@ -96,10 +96,10 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
             onClick: (field: string | undefined, direction: SortDirection) => {
                 onSort(field, direction);
             },
-            render: (totalCalls: string, row: AgentReport) => {
+            render: (totalCallsAndChats: string, row: AgentReport) => {
                 return (<div className='flex items-center h-full'>
                     <div className={classnames('overflow-hidden overflow-ellipsis ellipsis-row body2')}>
-                        {totalCalls || row.totalChats ? (totalCalls + row.totalChats) : "0"}
+                        {row.totalCallsAndChats > 0 ? row.totalCallsAndChats.toLocaleString() : "0"}
                     </div>
                 </div>)
             }
@@ -362,7 +362,7 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
                 onSort(field, direction);
             },
             render: (_, row: AgentReport) => {
-                if (!row.voiceChatRatingCount) return null;
+                if (!row.voiceChatRatingCount) return <div className='h-full items-center flex'>-</div>;
                 return (<span className='h-full flex items-center'>
                     {
                         displayPatientRating(row.avgVoiceChatRating, row.voiceChatRatingCount)
@@ -407,10 +407,10 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
             onClick: (field: string | undefined, direction: SortDirection) => {
                 onSort(field, direction);
             },
-            render: (totalChats: string) => {
+            render: (totalChats: number, row) => {
                 return (<div className='flex items-center h-full'>
                     <div data-testid='agent-rpt-total-chats' className={classnames('overflow-hidden overflow-ellipsis ellipsis-row body2')}>
-                        {totalChats.toLocaleString() ?? "0"}
+                        {row.totalChats > 0 ? row.totalChats.toLocaleString() : "0"}
                     </div>
                 </div>)
             }
@@ -468,7 +468,7 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
                 onSort(field, direction);
             },
             render: (_, row: AgentReport) => {
-                if (!row.chatRatingCount) return null;
+                if (!row.chatRatingCount) return <div className='h-full items-center flex'>-</div>;
                 return (<span className='h-full flex items-center'>
                     {
                         displayPatientRating(row.avgChatRating, row.chatRatingCount)
