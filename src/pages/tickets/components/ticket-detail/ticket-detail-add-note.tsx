@@ -29,7 +29,7 @@ import utils from '@shared/utils/utils';
 import {ExtendedPatient} from '@pages/patients/models/extended-patient';
 import NotificationTemplateSelect from '@components/notification-template-select/notification-template-select';
 import {NotificationTemplate, NotificationTemplateChannel} from '@shared/models/notification-template.model';
-import {ProcessTemplate, QueryTicketMessagesInfinite} from '@constants/react-query-constants';
+import {GetIsEmailBlocked, GetIsSMSBlocked, ProcessTemplate, QueryTicketMessagesInfinite} from '@constants/react-query-constants';
 import {processTemplate} from '@shared/services/notifications.service';
 import {SnackbarPosition} from '@components/snackbar/snackbar-position.enum';
 import ParentExtraTemplate from '@components/notification-template-select/components/parent-extra-template';
@@ -41,6 +41,7 @@ import {CommonQueryData} from '@shared/models/query-data.model';
 import Input from '@components/input';
 import Alert from '@components/alert/alert';
 import {MaxEmailSubjectLength} from '@pages/email/constants';
+import { isUserEmailBlocked, isUserPhoneBlocked } from '@pages/blacklists/services/blacklists.service';
 interface TicketDetailAddNoteProps {
     ticket: Ticket,
     patient?: ExtendedPatient;
@@ -74,6 +75,8 @@ const TicketDetailAddNote = ({ticket, patient, contact, emailMessages, smsMessag
     const [disabledTab, setDisabledTab] = useState<ChannelTabs>();
     const [emailDisabledText, setEmailDisabledText] = useState<string>();
     const [richTextMode, setRichTextMode] = useState(false);
+    const [lastEmailAddress, setLastEmailAddress] = useState<string>();
+    const [lastSMSAddress, setLastSMSAddress] = useState<string>();
     const [ticketHasEmailMessages, setTicketHasEmailMessages] = useState(!!queryClient.getQueryData<CommonQueryData>([QueryTicketMessagesInfinite, ChannelTypes.Email, ticket.id])?.results?.length);
     const {isLoading: isProcessing} = useQuery([ProcessTemplate, selectedMessageTemplate?.id!], () =>
         processTemplate(selectedMessageTemplate?.id!, ticket, patient, contact),
@@ -93,6 +96,13 @@ const TicketDetailAddNote = ({ticket, patient, contact, emailMessages, smsMessag
             }
         });
 
+    const {data: isEmailAddressBlocked} = useQuery([GetIsEmailBlocked, lastEmailAddress], () => isUserEmailBlocked(lastEmailAddress), {
+        enabled: !!lastEmailAddress,
+    });
+
+    const {data: isSMSAddressBlocked} = useQuery([GetIsSMSBlocked, lastSMSAddress], () => isUserPhoneBlocked(lastSMSAddress), {
+        enabled: !!lastSMSAddress,
+    });
 
     useEffect(() => {
         if (selectedTab === ChannelTabs.SmsTab) {
@@ -103,17 +113,26 @@ const TicketDetailAddNote = ({ticket, patient, contact, emailMessages, smsMessag
             }
             const lastMessage = smsMessages.results[smsMessages.results.length - 1];
             let lastSmsAddress = lastMessage.direction === TicketMessagesDirection.Outgoing ? lastMessage.toAddress : lastMessage.fromAddress;
+            setLastSMSAddress(lastSmsAddress);
             if(lastSmsAddress && lastSmsAddress.startsWith('+1')) {
                 lastSmsAddress = lastSmsAddress.substring(2);
             }
-            if (patient && (!patient.consentToText || patient.mobilePhone !== lastSmsAddress)) {
+            if (patient && (!patient.consentToText || patient.mobilePhone !== lastSmsAddress) && isSMSAddressBlocked?.isActive) {
+                setNoteDisabledText('sms.sms_not_available_patient_phone_blocked');
+                setDisabledTab(ChannelTabs.SmsTab);
+            } else if (patient && (!patient.consentToText || patient.mobilePhone !== lastSmsAddress)) {
                 setNoteDisabledText('sms.sms_not_available_patient');
+                setDisabledTab(ChannelTabs.SmsTab);
+            } else if (contact && contact.mobilePhone !== lastSmsAddress && isSMSAddressBlocked?.isActive) {
+                setNoteDisabledText('sms.sms_not_available_contact_phone_blocked');
                 setDisabledTab(ChannelTabs.SmsTab);
             } else if (contact && contact.mobilePhone !== lastSmsAddress) {
                 setNoteDisabledText('sms.sms_not_available_contact');
                 setDisabledTab(ChannelTabs.SmsTab);
-            }
-            else {
+            } else if (isSMSAddressBlocked?.isActive) {
+                setNoteDisabledText('sms.unknown_sms_blocked');
+                setDisabledTab(ChannelTabs.SmsTab);
+            } else {
                 setNoteDisabledText(undefined);
                 setDisabledTab(undefined);
             }
@@ -125,14 +144,27 @@ const TicketDetailAddNote = ({ticket, patient, contact, emailMessages, smsMessag
             }
             const lastMessage = emailMessages.results[emailMessages.results.length - 1];
             const lastEmailAddress = lastMessage.direction === TicketMessagesDirection.Outgoing ? lastMessage.toAddress : lastMessage.fromAddress;
+            setLastEmailAddress(lastEmailAddress);
             if (patient) {
-                if (patient.emailAddress !== lastEmailAddress) {
+                if(patient.emailAddress !== lastEmailAddress && isEmailAddressBlocked?.isActive) {
+                    setNoteDisabledText('email.inbox.email_not_available_patient_and_blocked');
+                    setDisabledTab(ChannelTabs.EmailTab);
+                } else if (patient.emailAddress !== lastEmailAddress) {
                     setNoteDisabledText('email.inbox.email_not_available_patient');
+                    setDisabledTab(ChannelTabs.EmailTab);
+                } else if(isEmailAddressBlocked?.isActive) {
+                    setNoteDisabledText('email.inbox.email_blocked_patient');
                     setDisabledTab(ChannelTabs.EmailTab);
                 }
             } else if (contact) {
-                if (contact.emailAddress !== lastEmailAddress) {
+                if(contact.emailAddress !== lastEmailAddress && isEmailAddressBlocked?.isActive) {
+                    setNoteDisabledText('email.inbox.email_not_available_contact_and_blocked');
+                    setDisabledTab(ChannelTabs.EmailTab);
+                } else if (contact.emailAddress !== lastEmailAddress) {
                     setNoteDisabledText('email.inbox.email_not_available_contact');
+                    setDisabledTab(ChannelTabs.EmailTab);
+                } else if(isEmailAddressBlocked?.isActive) {
+                    setNoteDisabledText('email.inbox.email_blocked_contact');
                     setDisabledTab(ChannelTabs.EmailTab);
                 }
             }
@@ -141,7 +173,7 @@ const TicketDetailAddNote = ({ticket, patient, contact, emailMessages, smsMessag
                 setDisabledTab(undefined);
             }
         }
-    }, [patient, ticket, contact, selectedTab, emailMessages])
+    }, [patient, ticket, contact, selectedTab, emailMessages, isEmailAddressBlocked, isSMSAddressBlocked])
 
     const determineEmailSubject = () => {
         if (ticketHasEmailMessages) {
@@ -343,7 +375,7 @@ const TicketDetailAddNote = ({ticket, patient, contact, emailMessages, smsMessag
     }, [noteDisabledText, disabledTab, selectedTab]);
 
     const isSendSmsDisabled = useMemo(() => {
-        return !mobileNumber || isTicketDisabled || isTabDisabled;
+        return !mobileNumber || isTicketDisabled || isTabDisabled || isSMSAddressBlocked?.isActive;
     }, [isTicketDisabled, mobileNumber, isTabDisabled]);
 
     const isSendEmailDisabled = useMemo(() => {
@@ -351,12 +383,18 @@ const TicketDetailAddNote = ({ticket, patient, contact, emailMessages, smsMessag
             setEmailDisabledText('');
             return true;
         }
-        if (!emailAddress || isTicketDisabled) {
+        if(isTicketDisabled && isEmailAddressBlocked?.isActive) {
+            setEmailDisabledText('email.inbox.ticket_closed_and_blocked');
+            return true;
+        } else if(isEmailAddressBlocked?.isActive) {
+            setEmailDisabledText('email.inbox.unknown_email_blocked');
+            return true;
+        } else if (!emailAddress || isTicketDisabled) {
             setEmailDisabledText('ticket_detail.reopen_or_create_to_send_email');
             return true;
         }
         return
-    }, [isTicketDisabled, emailAddress, selectedTab, noteDisabledText, isTabDisabled])
+    }, [isTicketDisabled, emailAddress, selectedTab, noteDisabledText, isTabDisabled, isEmailAddressBlocked])
 
 
     return <>

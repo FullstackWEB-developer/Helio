@@ -13,12 +13,13 @@ import {ChannelTypes, TicketMessagesDirection} from '@shared/models';
 import Button from '@components/button/button';
 import {selectBotContext} from '@pages/ccp/store/ccp.selectors';
 import ParentExtraTemplate from '@components/notification-template-select/components/parent-extra-template';
-import {GetContactById, ProcessTemplate} from '@constants/react-query-constants';
+import {GetContactById, GetIsSMSBlocked, ProcessTemplate} from '@constants/react-query-constants';
 import utils from '@shared/utils/utils';
 import {processTemplate} from '@shared/services/notifications.service';
 import {TemplateUsedFrom} from '@components/notification-template-select/template-used-from';
 import Alert from '@components/alert/alert';
 import {getContactById} from '@shared/services/contacts.service';
+import { isUserPhoneBlocked } from '@pages/blacklists/services/blacklists.service';
 
 const SmsContext = () => {
     const {t} = useTranslation();
@@ -30,16 +31,19 @@ const SmsContext = () => {
     const [contactName, setContactName] = useState<string>('');
     const [refreshTemplate, setRefreshTemplate] = useState<number>(0);
     const [noteDisabledText, setNoteDisabledText] = useState<string>();
+    const [lastSMSAddress, setLastSMSAddress] = useState<string>();
     const [phoneNumber, setPhoneNumber] = useState<string>();
     const [displayName, setDisplayName] = useState<string>();
 
     useEffect(() => {
         if (botContext?.patient) {
             setPatientName(utils.stringJoin(' ', botContext.patient.firstName, botContext.patient.lastName));
+            setLastSMSAddress(botContext.patient.mobilePhone);
         }
         if (botContext?.contactId && botContext?.ticket?.createdForName) {
             setContactName(botContext.ticket.createdForName);
             fetchContact();
+            setLastSMSAddress(botContext.ticket.originationNumber);
         }
     }, [botContext?.contactId, botContext?.patient]);
 
@@ -47,6 +51,10 @@ const SmsContext = () => {
         {
             enabled: false
         });
+
+    const {data: isSMSAddressBlocked} = useQuery([GetIsSMSBlocked, lastSMSAddress], () => isUserPhoneBlocked(lastSMSAddress), {
+        enabled: !!lastSMSAddress,
+    });
 
     useEffect(() => {
         let hipaaVerified = botContext?.attributes?.find(a => a.label === "HIPAAVerified")?.value === "true";
@@ -94,6 +102,20 @@ const SmsContext = () => {
             }
         }
     }, [botContext?.patient]);
+
+    useEffect(() => {
+        if (isSMSAddressBlocked?.isActive && botContext?.patient) {
+            setNoteDisabledText('ccp.sms_context.patient_number_blocked');
+        }else if (isSMSAddressBlocked?.isActive && botContext?.contactId) {
+            setNoteDisabledText('ccp.sms_context.contact_number_blocked');
+        }else if(isSMSAddressBlocked?.isActive) {
+            setNoteDisabledText('ccp.sms_context.unknown_number_blocked');
+        }
+    }, [isSMSAddressBlocked]);
+
+    useEffect(() => {
+        setLastSMSAddress(phoneNumber);
+    }, [phoneNumber]);
 
     const sendSmsMutation = useMutation(sendMessage, {
         onSuccess: () => {

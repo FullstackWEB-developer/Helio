@@ -17,3 +17,15 @@ export const createBlockAccess = async (model: BlockAccessModel) : Promise<Black
 export const unblockAccess = async (id: string) => {
     await Api.put(`${blackListUrl}/${id}`);
 }
+
+export const isUserEmailBlocked = async (email: string | undefined) => {
+    const url = `${blackListUrl}/email/${email}`;
+    const response = await Api.get(url);
+    return response.data;
+}
+
+export const isUserPhoneBlocked = async (phone: string | undefined) => {
+    const url = `${blackListUrl}/phone/${phone}`;
+    const response = await Api.get(url);
+    return response.data;
+}

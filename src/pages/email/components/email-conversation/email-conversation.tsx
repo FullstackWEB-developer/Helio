@@ -2,6 +2,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import Spinner from '@components/spinner/Spinner';
 import {
     GetContactById,
+    GetIsEmailBlocked,
     GetPatient,
     GetPatientPhoto,
     QueryTicketMessagesInfinite,
@@ -27,12 +28,14 @@ import NewEmailHeader from '@pages/email/components/new-email/components/new-ema
 import './email-conversation.scss'
 import { BadgeValues } from '@pages/tickets/models/badge-values.model';
 import { selectUnreadEmails } from '@pages/email/store/email.selectors';
+import { isUserEmailBlocked } from '@pages/blacklists/services/blacklists.service';
 
 const EmailConversation = () => {
     const {ticketId} = useParams<{ticketId: string}>();
     const dispatch = useDispatch();
     const unreadEmailIds = useSelector(selectUnreadEmails);
     const [emailDisabledText, setEmailDisabledText] = useState<string>();
+    const [lastEmailAddress, setLastEmailAddress] = useState<string>();
     const {data: ticket, refetch: refetchTicket} = useQuery([QueryTickets, ticketId], () => getTicketById(ticketId!), {
         enabled: !!ticketId
     });
@@ -49,6 +52,9 @@ const EmailConversation = () => {
         enabled: !!ticket?.contactId
     });
 
+    const {data: isEmailAddressBlocked} = useQuery([GetIsEmailBlocked, lastEmailAddress], () => isUserEmailBlocked(lastEmailAddress), {
+        enabled: !!lastEmailAddress,
+    });
 
     const [messages, setMessages] = useState<EmailMessageDto[]>([]);
     const messageListContainerRef = useRef<HTMLDivElement>(null);
@@ -66,20 +72,33 @@ const EmailConversation = () => {
         }
         const lastMessage = messages[messages.length - 1];
         const lastEmailAddress = lastMessage.direction === TicketMessagesDirection.Outgoing ? lastMessage.toAddress : lastMessage.fromAddress;
+        setLastEmailAddress(lastEmailAddress);
         if (patient) {
             if (patient.emailAddress !== lastEmailAddress) {
                 setEmailDisabledText('email.inbox.email_not_available_patient');
+            } else if(patient.emailAddress !== lastEmailAddress && isEmailAddressBlocked?.isActive) {
+                setEmailDisabledText('email.inbox.email_not_available_patient_and_blocked');
+            } else if(isEmailAddressBlocked?.isActive) {
+                setEmailDisabledText('email.inbox.email_blocked_patient');
             } else {
                 setEmailDisabledText(undefined);
             }
         } else if (contact) {
             if (contact.emailAddress !== lastEmailAddress) {
                 setEmailDisabledText('email.inbox.email_not_available_contact');
+            } else if(contact.emailAddress !== lastEmailAddress && isEmailAddressBlocked?.isActive) {
+                setEmailDisabledText('email.inbox.email_not_available_contact_and_blocked');
+            } else if(isEmailAddressBlocked?.isActive) {
+                setEmailDisabledText('email.inbox.email_blocked_contact');
             } else {
                 setEmailDisabledText(undefined);
             }
+        } else if(ticket?.isPassive && isEmailAddressBlocked?.isActive) {
+            setEmailDisabledText('email.inbox.ticket_closed_and_blocked');
         } else if(ticket?.isPassive) {
             setEmailDisabledText('email.inbox.ticket_closed');
+        } else if(isEmailAddressBlocked?.isActive){
+            setEmailDisabledText('email.inbox.unknown_email_blocked');
         } else {
             setEmailDisabledText(undefined);
         }

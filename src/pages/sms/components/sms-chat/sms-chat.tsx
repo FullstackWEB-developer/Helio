@@ -25,6 +25,7 @@ import {NotificationTemplate, NotificationTemplateChannel} from '@shared/models/
 import NotificationTemplateSelect from '@components/notification-template-select/notification-template-select';
 import {useQuery} from 'react-query';
 import {
+    GetIsSMSBlocked,
     GetPatientPhoto,
     ProcessTemplate,
     QueryContactsInfinite,
@@ -37,6 +38,7 @@ import {getContactById} from '@shared/services/contacts.service';
 import ConversationHeader from '@components/conversation-header/conversation-header';
 import {TemplateUsedFrom} from '@components/notification-template-select/template-used-from';
 import Alert from '@components/alert/alert';
+import { isUserPhoneBlocked } from '@pages/blacklists/services/blacklists.service';
 
 interface SmsChatProps {
     info: TicketMessageSummary;
@@ -56,6 +58,8 @@ const SmsChat = ({info, isLoading, isSending, isBottomFocus, messages = [], last
     const messageListContainerRef = useRef<HTMLDivElement>(null);
     const [smsText, setSmsText] = useState<string>();
     const topMessagePosition = useRef<number>();
+    
+    const [lastSMSAddress, setLastSMSAddress] = useState<string>();
     const [selectedMessageTemplate, setSelectedMessageTemplate] = useState<NotificationTemplate>();
 
     const {data: patient, isFetching: isFetchingPatient} = useQuery([QueryGetPatientById, info.patientId], () => getPatientByIdWithQuery(info.patientId!), {
@@ -72,6 +76,10 @@ const SmsChat = ({info, isLoading, isSending, isBottomFocus, messages = [], last
 
     const {data: ticket, refetch: refetchTicket, isFetching: isFetchingTicket} = useQuery([QueryTickets, info.ticketId], () => getTicketById(info.ticketId!), {
         enabled: !!info.ticketId
+    });
+
+    const {data: isSMSAddressBlocked} = useQuery([GetIsSMSBlocked, lastSMSAddress], () => isUserPhoneBlocked(lastSMSAddress), {
+        enabled: !!lastSMSAddress,
     });
 
     const sendToNumber = useMemo(() => {
@@ -93,16 +101,25 @@ const SmsChat = ({info, isLoading, isSending, isBottomFocus, messages = [], last
         if (originalNumber && originalNumber.startsWith('+1')) {
             originalNumber = originalNumber.substring(2);
         }
-        if (patient && (!patient.consentToText || patient.mobilePhone !== originalNumber)) {
+        setLastSMSAddress(originalNumber);
+        if (patient && (!patient.consentToText || patient.mobilePhone !== lastSmsAddress) && isSMSAddressBlocked?.isActive) {
+            setSmsDisabledText('sms.sms_not_available_patient_phone_blocked');
+        } else if (patient && (!patient.consentToText || patient.mobilePhone !== lastSmsAddress)) {
             setSmsDisabledText('sms.sms_not_available_patient');
-        } else if (contact && contact.mobilePhone !== originalNumber) {
+        } else if (contact && contact.mobilePhone !== lastSmsAddress && isSMSAddressBlocked?.isActive) {
+            setSmsDisabledText('sms.sms_not_available_contact_phone_blocked');
+        } else if (contact && contact.mobilePhone !== lastSmsAddress) {
             setSmsDisabledText('sms.sms_not_available_contact');
+        } else if (ticket?.isPassive && isSMSAddressBlocked?.isActive) {
+            setSmsDisabledText('sms.ticket_closed_and_sms_blocked');
         } else if (ticket?.isPassive) {
             setSmsDisabledText('sms.ticket_closed');
+        } else if (isSMSAddressBlocked?.isActive) {
+            setSmsDisabledText('sms.unknown_sms_blocked');
         } else {
-            setSmsDisabledText(undefined)
+            setSmsDisabledText(undefined);
         }
-    }, [patient, ticket, contact, info])
+    }, [patient, ticket, contact, info, isSMSAddressBlocked])
 
     useEffect(() => {
         dispatch(getLookupValues('TicketReason'));

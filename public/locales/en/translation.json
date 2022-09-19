@@ -288,7 +288,10 @@
       "select_template": "Select Template",
       "send": "Send",
       "message": "Message",
-      "no_consent": "Messaging to this patient is disabled. This patient did not consent to text messaging."
+      "no_consent": "Messaging to this patient is disabled. This patient did not consent to text messaging.",
+      "patient_number_blocked": "Patient's phone number is blocked.",
+      "contact_number_blocked": "Contact's phone number is blocked.",
+      "unknown_number_blocked": "This phone number is blocked."
     }
   },
   "error": {
@@ -1560,8 +1563,14 @@
         "normal": "Normal"
       },
       "email_not_available_patient": "Messaging to this patient is disabled. This patient has changed their email address.",
+      "email_not_available_patient_and_blocked": "Messaging to this patient is disabled. This patient has changed their email address, and their email address is blocked.",
       "email_not_available_contact": "Messaging to this contact is disabled. This contact has changed their email address.",
-      "ticket_closed": "This ticket is closed, to send a SMS reopen this ticket or create a new one."
+      "email_not_available_contact_and_blocked": "Messaging to this contact is disabled. This contact has changed their email address, and their email address is blocked.",
+      "email_blocked_contact": "Messaging to this contact is disabled. This contact's email address is blocked.",
+      "email_blocked_patient": "Messaging to this patient is disabled. This patient's email address is blocked.",
+      "ticket_closed": "This ticket is closed, to send a SMS reopen this ticket or create a new one.",
+      "ticket_closed_and_blocked": "This ticket is closed and email address is blocked, to send a SMS reopen this ticket or create a new one.",
+      "unknown_email_blocked": "This email address is blocked."
     },
     "new_email": {
       "title": "New Message",
@@ -1583,6 +1592,7 @@
     }
   },
   "sms": {
+    "unknown_sms_blocked": "This phone number is blocked.",
     "block_number": "Block Number",
     "agent_label": "{{name}} - Agent",
     "refresh_after": "Conversation will be refreshed in {{time}}",
@@ -1643,7 +1653,8 @@
     "messages": "Messages",
     "sms_not_available_patient": "Messaging to this patient is disabled. This patient has either changed their phone number or has changed their SMS texting preferences.",
     "sms_not_available_contact": "Messaging to this contact is disabled. This contact has changed their phone number.",
-    "ticket_closed": "This ticket is closed, to send a SMS reopen this ticket or create a new one."
+    "ticket_closed": "This ticket is closed, to send a SMS reopen this ticket or create a new one.",
+    "ticket_closed_and_sms_blocked": "This ticket is closed, and number is blocked, to send a SMS unblock the number and reopen this ticket or create a new one."
   },
   "users": {
     "not_found": "User not found",

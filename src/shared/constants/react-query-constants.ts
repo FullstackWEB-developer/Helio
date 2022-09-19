@@ -100,5 +100,7 @@ export const GetPerformanceChart = 'get-performance-charts';
 export const GetSystemReport = 'get-system-report';
 export const GetPatientChartTabSettings = 'get-patient-chart-tabs';
 export const GetPatientCases = 'get-patient-cases';
+export const GetIsEmailBlocked = 'get-is-email-blocked';
+export const GetIsSMSBlocked = 'get-is-sms-blocked';
 export const GetRelatedTicketParent = 'get-related-ticket-parent';
 export const GetChildrenTicketNumbers = 'get-children-ticket-numbers';
