@@ -26,7 +26,7 @@ const PerformanceVolumeChart = ({data, selectedQueues, selectedView}: Performanc
                     id: item.queueName as string,
                     data: item.queueData.map(item => {
                         return {
-                            x: selectedView === ViewTypes.Yesterday ? dayjs(item.label, 'HH:MM A').format('h A') : dayjs(item.label).format('MMM D'),
+                            x: selectedView === ViewTypes.Yesterday ? dayjs(item.label, 'HH:MM A').format('h A') : dayjs(item.label, 'MMMM D').format('MMM D'),
                             y: item.value
                         }
                     })
@@ -38,7 +38,7 @@ const PerformanceVolumeChart = ({data, selectedQueues, selectedView}: Performanc
                     id: item.queueName as string,
                     data: item.queueData.map(item => {
                         return {
-                            x:  selectedView === ViewTypes.Yesterday ? dayjs(item.label, 'HH:MM A').format('h A') : dayjs(item.label).format('MMM D'),
+                            x:  selectedView === ViewTypes.Yesterday ? dayjs(item.label, 'HH:MM A').format('h A') : dayjs(item.label, 'MMMM D').format('MMM D'),
                             y: item.value
                         }
                     })
