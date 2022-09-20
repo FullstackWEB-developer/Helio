@@ -23,15 +23,17 @@ const GeneralSettings = () => {
     const { t } = useTranslation();
     const dispatch = useDispatch();
     const history = useHistory();
-    const [forceRedirect, setForceRedirect] = useState<boolean>();
     const [warning, setWarning] = useState<boolean>(false);
-    const {handleSubmit, control, formState, watch} = useForm({mode: 'all'});
+    const {handleSubmit, control, formState, watch, reset, setValue, clearErrors} = useForm({mode: 'all'});
     const forceRedirectWatch = watch('forceToRedirect');
 
     const onSubmit = (formData) => {
         if(checkDeletedDepartmentsField(formData.deletedDepartments))
         {
-            formData.forceToRedirect = forceRedirect
+            formData = {
+                ...formData,
+                forceToRedirect : formData.forceToRedirect === 'true'
+            }
             saveGeneralSettings.mutate(formData);
         }else{
             dispatch(addSnackbarMessage({
@@ -46,7 +48,7 @@ const GeneralSettings = () => {
             return true;
         }
 
-        var alphanumericControl = data.split(',').filter(function(i){
+        const alphanumericControl = data.split(',').filter(function(i){
             return isNaN(i);
         }).length > 0;
 
@@ -62,7 +64,13 @@ const GeneralSettings = () => {
 
     const { isFetching, data, refetch } = useQuery<GeneralSettingsModel>(GetGeneralSetting, () => getGeneralSetting(), {
         onSuccess: (data) => {
-            setForceRedirect(data.forceToRedirect);
+            reset({
+                forceToRedirect: data.forceToRedirect.toString(),
+                redirectToExternalPhone: data.redirectToExternalPhone,
+                deletedDepartments: data.deletedDepartments,
+                infoEmailAddress: data.infoEmailAddress,
+                infoPhoneNumber: data.infoPhoneNumber
+            });
         },
         onError: () => {
             dispatch(addSnackbarMessage({
@@ -78,6 +86,7 @@ const GeneralSettings = () => {
                 type: SnackbarType.Success,
                 message: 'configuration.general_settings.save_success'
             }));
+            refetch().then();
         },
         onError: () => {
             dispatch(addSnackbarMessage({
@@ -87,172 +96,175 @@ const GeneralSettings = () => {
         }
     });
 
+    const onForceToRedirectChange = (value: string) => {
+        const isForceToRedirect = value === 'true';
+        setValue('forceToRedirect', isForceToRedirect.toString(), {
+            shouldValidate: true,
+            shouldDirty: true
+        });
+        if (!isForceToRedirect) {
+            clearErrors('redirectToExternalPhone');
+        }
+    }
+
     return (<>
-        <div className='general-settings px-6 pt-7'>
-            <h6>{t('configuration.general_settings.title')}</h6>
-            {isFetching ? (
-                <Spinner size='large-40' className='pt-2' />
-            ) : (
-                <form onSubmit={handleSubmit(onSubmit)} className='flex flex-1 flex-col group overflow-y-auto body2'>
-                    <div className="mt-11 flex flex-row items-center">
-                        <div className='input-row'>
-                            <Controller
-                                name='forceToRedirect'
-                                control={control}
-                                defaultValue={data?.forceToRedirect}
-                                render={(props) => (
-                                    <div>
-                                        <div className='flex body2'>
-                                            {t('configuration.general_settings.force_to_redirect')}
-                                            <ToolTipIcon
-                                                icon={Icon.Info}
-                                                iconFillClass='warning-icon'
-                                                placement='bottom'
-                                                iconClassName='cursor-pointer icon ml-2'
-                                            >
-                                                <div className='flex flex-col p-6 w-80 normal-case'>
-                                                    {t('configuration.general_settings.force_to_redirect_info')}
-                                                </div>
-                                            </ToolTipIcon>
+            <div className='general-settings px-6 pt-7'>
+                <h6>{t('configuration.general_settings.title')}</h6>
+                {isFetching ? (
+                    <Spinner size='large-40' className='pt-2' />
+                ) : (
+                    <form onSubmit={handleSubmit(onSubmit)} className='flex flex-1 flex-col group overflow-y-auto body2'>
+                        <div className="mt-11 flex flex-row items-center">
+                            <div className='input-row'>
+                                <Controller
+                                    name='forceToRedirect'
+                                    control={control}
+                                    render={(controllerProps) => (
+                                        <div>
+                                            <div className='flex body2'>
+                                                {t('configuration.general_settings.force_to_redirect')}
+                                                <ToolTipIcon
+                                                    icon={Icon.Info}
+                                                    iconFillClass='warning-icon'
+                                                    placement='bottom'
+                                                    iconClassName='cursor-pointer icon ml-2'
+                                                >
+                                                    <div className='flex flex-col p-6 w-80 normal-case'>
+                                                        {t('configuration.general_settings.force_to_redirect_info')}
+                                                    </div>
+                                                </ToolTipIcon>
+                                            </div>
+                                            <div className='pt-3'>
+                                                <Radio
+                                                    name={controllerProps.name}
+                                                    truncate={true}
+                                                    ref={controllerProps.ref}
+                                                    defaultValue={data?.forceToRedirect.toString()}
+                                                    data-test-id='force-to-redirect'
+                                                    className='flex flex-row space-x-8'
+                                                    items={[
+                                                        {
+                                                            value: 'true',
+                                                            label: 'common.yes'
+                                                        },
+                                                        {
+                                                            value: 'false',
+                                                            label: 'common.no'
+                                                        }
+                                                    ]}
+                                                    onChange={(value) => onForceToRedirectChange(value)}
+                                                />
+                                            </div>
                                         </div>
-                                        <div className='pt-3'>
-                                            <Radio
-                                                defaultValue={data?.forceToRedirect.toString()}
-                                                name={props.name}
-                                                truncate={true}
-                                                ref={props.ref}
-                                                data-test-id='consent-to-text'
-                                                className='flex flex-row space-x-8'
-                                                items={[
-                                                    {
-                                                        value: 'true',
-                                                        label: 'common.yes'
-                                                    },
-                                                    {
-                                                        value: 'false',
-                                                        label: 'common.no'
-                                                    }
-                                                ]}
-                                                onChange={(e: string) => {
-                                                    setForceRedirect(JSON.parse(e));
-                                                    control.setValue('forceToRedirect', e.toLowerCase(), {shouldDirty: e.toLowerCase() !=  String(data?.forceToRedirect).toLowerCase(), shouldValidate: true});
-                                                    control.trigger().then();
-                                                }}
-                                            />
-                                        </div>
-                                    </div>
-                                )}
-                            />
-                        </div>
-                    </div>
-                    <div className="mt-10 flex flex-row items-center">
-                        <div className='input-row'>
-                            <ControlledInput name='redirectToExternalPhone' control={control}
-                                defaultValue={data?.redirectToExternalPhone === "-" ? "" : data?.redirectToExternalPhone}
-                                type='tel'
-                                disabled={!forceRedirectWatch}
-                                label={'configuration.general_settings.redirect_phone_number'}
-                                required={forceRedirectWatch}
-                            />
-                        </div>
-                        <ToolTipIcon
-                            icon={Icon.Info}
-                            iconFillClass='warning-icon'
-                            placement='bottom'
-                            iconClassName='cursor-pointer icon ml-2'
-                        >
-                            <div className='flex flex-col p-6 w-80 normal-case'>
-                                {t('configuration.general_settings.redirect_phone_number_info')}
+                                    )}
+                                />
                             </div>
-                        </ToolTipIcon>
-                    </div>
-                    <div className="mt-10 flex flex-row items-center">
-                        <div className='input-row'>
-                            <ControlledInput name='infoPhoneNumber' control={control}
-                                defaultValue={data?.infoPhoneNumber}
-                                type='tel'
-                                label={'configuration.general_settings.call_us_phone_number'}
-                                required={false}
-                            />
                         </div>
-                        <ToolTipIcon
-                            icon={Icon.Info}
-                            iconFillClass='warning-icon'
-                            placement='bottom'
-                            iconClassName='cursor-pointer icon ml-2'
-                        >
-                            <div className='flex flex-col p-6 w-80 normal-case'>
-                                {t('configuration.general_settings.call_us_phone_number_info')}
+                        <div className="mt-10 flex flex-row items-center">
+                            <div className='input-row'>
+                                <ControlledInput name='redirectToExternalPhone' control={control}
+                                                 defaultValue={data?.redirectToExternalPhone === "-" ? "" : data?.redirectToExternalPhone}
+                                                 type='tel'
+                                                 disabled={forceRedirectWatch === 'false'}
+                                                 label={'configuration.general_settings.redirect_phone_number'}
+                                                 required={forceRedirectWatch === 'true'}
+                                />
                             </div>
-                        </ToolTipIcon>
-                    </div>
-                    <div className="mt-10 flex flex-row items-center">
-                        <div className='input-row'>
-                            <ControlledInput name='infoEmailAddress' control={control}
-                                defaultValue={data?.infoEmailAddress}
-                                type='email'
-                                label={'configuration.general_settings.support_email_address'}
-                                required={false}
-                            />
+                            <ToolTipIcon
+                                icon={Icon.Info}
+                                iconFillClass='warning-icon'
+                                placement='bottom'
+                                iconClassName='cursor-pointer icon ml-2'
+                            >
+                                <div className='flex flex-col p-6 w-80 normal-case'>
+                                    {t('configuration.general_settings.redirect_phone_number_info')}
+                                </div>
+                            </ToolTipIcon>
                         </div>
-                        <ToolTipIcon
-                            icon={Icon.Info}
-                            iconFillClass='warning-icon'
-                            placement='bottom'
-                            iconClassName='cursor-pointer icon ml-2'
-                        >
-                            <div className='flex flex-col p-6 w-80 normal-case'>
-                                {t('configuration.general_settings.support_email_address_info')}
+                        <div className="mt-10 flex flex-row items-center">
+                            <div className='input-row'>
+                                <ControlledInput name='infoPhoneNumber' control={control}
+                                                 type='tel'
+                                                 label={'configuration.general_settings.call_us_phone_number'}
+                                                 required={false}
+                                />
                             </div>
-                        </ToolTipIcon>
-                    </div>
-                    <div className="mt-10 flex flex-row items-center">
-                        <div className='input-row'>
-                            <ControlledInput name='deletedDepartments' control={control}
-                                defaultValue={data?.deletedDepartments}
-                                label={'configuration.general_settings.deleted_departments'}
-                                required={false}
-                            />
+                            <ToolTipIcon
+                                icon={Icon.Info}
+                                iconFillClass='warning-icon'
+                                placement='bottom'
+                                iconClassName='cursor-pointer icon ml-2'
+                            >
+                                <div className='flex flex-col p-6 w-80 normal-case'>
+                                    {t('configuration.general_settings.call_us_phone_number_info')}
+                                </div>
+                            </ToolTipIcon>
                         </div>
-                        <ToolTipIcon
-                            icon={Icon.Info}
-                            iconFillClass='warning-icon'
-                            placement='bottom'
-                            iconClassName='cursor-pointer icon ml-2'
-                        >
-                            <div className='flex flex-col p-6 w-80 normal-case'>
-                                {t('configuration.general_settings.deleted_departments_info')}
+                        <div className="mt-10 flex flex-row items-center">
+                            <div className='input-row'>
+                                <ControlledInput name='infoEmailAddress' control={control}
+                                                 type='email'
+                                                 label={'configuration.general_settings.support_email_address'}
+                                                 required={false}
+                                />
                             </div>
-                        </ToolTipIcon>
-                    </div>
-                    <div className='flex mt-10'>
-                        <Button
-                            type='submit'
-                            buttonType='medium'
-                            disabled={!formState.isValid && forceRedirect}
-                            label='common.save'
-                            isLoading={saveGeneralSettings.isLoading}
-                        />
-                        <Button label='common.cancel' className=' ml-8 mr-8' buttonType='secondary' onClick={() => formState.isDirty && setWarning(true)} />
-                        <RouteLeavingGuard
-                            when={formState.isDirty && !formState.isSubmitSuccessful}
-                            navigate={path => history.push(path)}
-                            message={'common.confirm_close'}
-                            title={'configuration.general_settings.warning'}
-                        />
-                        <Confirmation
-                            onClose={() => setWarning(false)}
-                            onCancel={() => setWarning(false)}
-                            okButtonLabel={'common.ok'}
-                            onOk={() => {setWarning(false); refetch().then()}}
-                            title={'configuration.general_settings.warning'}
-                            message={'common.confirm_close'}
-                            isOpen={warning} />
-                    </div>
-                </form>
-            )}
-        </div>
-    </>
+                            <ToolTipIcon
+                                icon={Icon.Info}
+                                iconFillClass='warning-icon'
+                                placement='bottom'
+                                iconClassName='cursor-pointer icon ml-2'
+                            >
+                                <div className='flex flex-col p-6 w-80 normal-case'>
+                                    {t('configuration.general_settings.support_email_address_info')}
+                                </div>
+                            </ToolTipIcon>
+                        </div>
+                        <div className="mt-10 flex flex-row items-center">
+                            <div className='input-row'>
+                                <ControlledInput name='deletedDepartments' control={control}
+                                                 label={'configuration.general_settings.deleted_departments'}
+                                                 required={false}
+                                />
+                            </div>
+                            <ToolTipIcon
+                                icon={Icon.Info}
+                                iconFillClass='warning-icon'
+                                placement='bottom'
+                                iconClassName='cursor-pointer icon ml-2'
+                            >
+                                <div className='flex flex-col p-6 w-80 normal-case'>
+                                    {t('configuration.general_settings.deleted_departments_info')}
+                                </div>
+                            </ToolTipIcon>
+                        </div>
+                        <div className='flex mt-10'>
+                            <Button
+                                type='submit'
+                                buttonType='medium'
+                                disabled={!formState.isValid || !formState.isDirty}
+                                label='common.save'
+                                isLoading={saveGeneralSettings.isLoading}
+                            />
+                            <Button label='common.cancel' className=' ml-8 mr-8' buttonType='secondary' onClick={() => formState.isDirty && setWarning(true)} />
+                            <RouteLeavingGuard
+                                when={formState.isDirty && !formState.isSubmitSuccessful}
+                                navigate={path => history.push(path)}
+                                message={'common.confirm_close'}
+                                title={'configuration.general_settings.warning'}
+                            />
+                            <Confirmation
+                                onClose={() => setWarning(false)}
+                                onCancel={() => setWarning(false)}
+                                okButtonLabel={'common.ok'}
+                                onOk={() => {setWarning(false); refetch().then()}}
+                                title={'configuration.general_settings.warning'}
+                                message={'common.confirm_close'}
+                                isOpen={warning} />
+                        </div>
+                    </form>
+                )}
+            </div>
+        </>
     )
 }
 export default GeneralSettings;
