@@ -21,7 +21,12 @@ import {
     upsertCurrentBotContext,
     setParentTicketId
 } from './store/ccp.slice';
-import {getTicketById, setAssignee, updateConnectAttributes, updateConnectAttributesForInternalCall} from '../tickets/services/tickets.service';
+import {
+    getTicketById,
+    setAssignee,
+    updateConnectAttributes,
+    updateConnectAttributesForInternalCall
+} from '../tickets/services/tickets.service';
 import {selectAgentStates, selectAppUserDetails, selectUserStatus} from '@shared/store/app-user/appuser.selectors';
 import {DragPreviewImage, useDrag} from 'react-dnd';
 import {DndItemTypes} from '@shared/layout/dragndrop/dnd-item-types';
@@ -140,6 +145,25 @@ const Ccp: React.FC<BoxProps> = ({
             setModelOpen(false);
         }
     }
+
+    useEffect(() => {
+        let isMounted = true;
+        const interval = setInterval(() => {
+            if (isMounted) {
+                if((connect.core as any).initialized && ccpConnectionState !== CCPConnectionStatus.Success) {
+                    setCcpConnectionState(CCPConnectionStatus.Success);
+                } else if(!((connect.core as any).initialized) && ccpConnectionState === CCPConnectionStatus.Success) {
+                    setCcpConnectionState(CCPConnectionStatus.Failed);
+                }
+                updateCallForwardingStatus();
+            }
+        }, 10 * 1000);
+
+        return () => {
+            clearInterval(interval);
+            isMounted = false;
+        };
+    }, [connect.core]);
 
     useQuery([QueryGetPatientById, patientId], () => getPatientByIdWithQuery(patientId!), {
         enabled: !!botContext?.ticket?.patientId,
@@ -520,12 +544,16 @@ const Ccp: React.FC<BoxProps> = ({
         });
     }, []);
 
-    useEffect(() => {
+    const updateCallForwardingStatus = () => {
         if(user.callForwardingEnabled && (currentUserStatus.toString() !== ForwardingEnabledStatus && currentUserStatus.toString() !== "Offline")) {
             utils.updateCCPForwardingEnabled(true);
         } else if (currentUserStatus.toString() === ForwardingEnabledStatus && !user.callForwardingEnabled) {
             utils.updateCCPForwardingEnabled(false);
         }
+    }
+
+    useEffect(() => {
+        updateCallForwardingStatus();
         const beforeUnload = () => {
             setLatestStatus(currentUserStatus);
             updateAgentStatus(UserStatus.Offline, agentStates);
