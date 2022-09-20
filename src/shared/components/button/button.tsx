@@ -53,7 +53,7 @@ const Button = ({label, type = 'button', disabled = false, buttonType = 'medium'
         }
 
     }
-    return (<><button disabled={disabled || isLoading} {...props} className={`${constructButtonClassString()}`} type={type}>
+    return (<><button disabled={disabled || isLoading} {...props} className={`${constructButtonClassString()}`} type={type} onMouseUp={(e:any) => e.currentTarget.blur()}>
         <div className={classNames('flex flex-row justify-center items-center', {'space-x-2': !isLoading})}>
             {
                 getIcon()
