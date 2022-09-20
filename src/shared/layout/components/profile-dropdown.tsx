@@ -3,29 +3,28 @@ import {useDispatch, useSelector} from 'react-redux';
 import {updateUserStatus} from '../../store/app-user/appuser.slice';
 import {UserStatus} from '../../store/app-user/app-user.models';
 import {DropdownItemModel, DropdownModel} from '@components/dropdown/dropdown.models';
-import {
-    selectAgentStates,
-    selectAppUserDetails,
-    selectUserStatus
-} from '../../store/app-user/appuser.selectors';
+import {selectAgentStates, selectAppUserDetails, selectUserStatus} from '../../store/app-user/appuser.selectors';
 import Logger from '../../services/logger';
 import Dropdown from '../../components/dropdown/dropdown';
 import StatusDot from '@components/status-dot/status-dot';
 import {AgentState} from '@shared/models/agent-state';
 import {Icon} from '@components/svg-icon/icon';
 import SvgIcon from '@components/svg-icon/svg-icon';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {toggleUserProfileMenu} from '@shared/layout/store/layout.slice';
 import {useHistory} from 'react-router-dom';
 import {MyStatsPath, UserDetailsPath} from '@app/paths';
-import {useEffect} from 'react';
 import {getUserList} from '@shared/services/lookups.service';
 import utils from '@shared/utils/utils';
+import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
+import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
+
 interface UserStatuses {
     label: string;
     value: string;
 }
 
+export const ForwardingEnabledStatus = "Forwarding Enabled";
 const ProfileDropdown = () => {
     const {t} = useTranslation();
     const dispatch = useDispatch();
@@ -34,7 +33,6 @@ const ProfileDropdown = () => {
     const logger = Logger.getInstance();
     const history = useHistory();
     const currentUserDetails = useSelector(selectAppUserDetails);
-
     useEffect(() => {
         dispatch(getUserList());
     }, [dispatch])
@@ -53,7 +51,7 @@ const ProfileDropdown = () => {
 
     const statusList: UserStatuses[] = [];
 
-    agentStates.forEach((agentState: AgentState) => {
+    agentStates.filter(a => a.name !== ForwardingEnabledStatus).forEach((agentState: AgentState) => {
         statusList.push(
             {
                 label: agentState.name,
@@ -70,16 +68,23 @@ const ProfileDropdown = () => {
     )
 
     const updateStatus = (status: string) => {
-        if (status === UserStatus.AfterWork) return;
-        if (window.CCP.agent) {
-            const state = agentStates.find((agentState: AgentState) => agentState.name === status);
-            window.CCP.agent.setState(state, {
-                failure: (e: any) => {
-                    logger.error('Cannot set state for agent ', e);
-                }
-            });
+        if (currentUserDetails.callForwardingEnabled && status !== "Offline") {
+            dispatch(addSnackbarMessage({
+                type: SnackbarType.Error,
+                message: 'ccp.cannot_update_status_fw_enabled'
+            }))
+        } else {
+            if (status === UserStatus.AfterWork) return;
+            if (window.CCP.agent) {
+                const state = agentStates.find((agentState: AgentState) => agentState.name === status);
+                window.CCP.agent.setState(state, {
+                    failure: (e: any) => {
+                        logger.error('Cannot set state for agent ', e);
+                    }
+                });
+            }
+            dispatch(updateUserStatus(status));
         }
-        dispatch(updateUserStatus(status));
     }
 
     const GetIconByStatus = (status: string) => {

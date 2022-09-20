@@ -14,6 +14,7 @@ import {
     getCallForwardingTypeWithState,
     getConnectUser,
     getRoleWithState,
+    getUserDetail,
     getUserDetailExtended,
     getUserMobilePhone,
     updateCallForwarding,
@@ -52,6 +53,8 @@ import UserNotificationPreference from "../components/user-notifications-toggle"
 import {UserNotificationPreferences} from "@shared/models/user-notification-preferences.enum";
 import {setAppUserDetails} from "@shared/store/app-user/appuser.slice";
 import {setUserList} from "@shared/store/lookups/lookups.slice";
+import {Icon} from '@components/svg-icon';
+import ToolTipIcon from '@components/tooltip-icon/tooltip-icon';
 
 dayjs.extend(utc);
 
@@ -270,7 +273,7 @@ const UserDetails = () => {
     });
 
     const updateCallForwardingMutation = useMutation(updateCallForwarding, {
-        onSuccess: () => {
+        onSuccess: async () => {
             if (userDetailExtended) {
                 userDetailExtended.user.callForwardingEnabled = getValues('enable_forward').checked;
                 const userCallForwardingType = getValues('forward_to');
@@ -288,6 +291,7 @@ const UserDetails = () => {
                 });
                 loadUserData(userDetailExtended);
             }
+            await updateAppUserDetails();
             showMessage(SnackbarType.Success, 'users.user_update_success');
         },
         onError: () => {
@@ -331,6 +335,15 @@ const UserDetails = () => {
         }
     }
 
+    const updateAppUserDetails = async () => {
+        let latestAppUserDetails = await getUserDetail();
+        utils.updateCCPForwardingEnabled(latestAppUserDetails.callForwardingEnabled);
+        dispatch(setAppUserDetails({
+            ...latestAppUserDetails,
+            fullName: `${latestAppUserDetails.firstName} ${latestAppUserDetails.lastName}`
+        }));
+    }
+
     const saveUser = (formData: any) => {
         if (!userDetailExtended) {
             return;
@@ -368,10 +381,11 @@ const UserDetails = () => {
         user.providerId = formData.provider && Number(formData.provider);
 
         updateMutation.mutate(user, {
-            onSuccess: () => {
+            onSuccess: async () => {
                 if (isRolesChanged) {
                     showMessage(SnackbarType.Info, 'users.user_update_role');
                 }
+                await updateAppUserDetails();
             }
         });
     }
@@ -571,13 +585,25 @@ const UserDetails = () => {
                         <div className='flex-1'>
                             <div className='w-80'>
                                 <label className='subtitle'>{t('users.call_forwarding')}</label>
-                                <ControlledCheckbox
-                                    control={control}
-                                    className='mt-6'
-                                    label={t('users.call_forwarding_enabled')}
-                                    name='enable_forward'
-                                    onChange={onChangeEnableForward}
-                                />
+                                <div className='flex flex-row space-x-2 items-center'>
+                                    <ControlledCheckbox
+                                        control={control}
+                                        className='mt-6'
+                                        label={t('users.call_forwarding_enabled')}
+                                        name='enable_forward'
+                                        onChange={onChangeEnableForward}
+                                    />
+                                    <ToolTipIcon
+                                        icon={Icon.Info}
+                                        iconFillClass='warning-icon'
+                                        placement='bottom-end'
+                                        iconClassName='icon-medium'
+                                    >
+                                        <div className='flex flex-col p-3'>
+                                            <span className=' whitespace-pre-wrap body2'>{t('ccp.call_chat_fw_explanation')}</span>
+                                        </div>
+                                    </ToolTipIcon>
+                                </div>
                                 <ControlledSelect
                                     name='forward_to'
                                     label='users.call_forwarding_type'

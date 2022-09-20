@@ -22,6 +22,7 @@ import utils from '@shared/utils/utils';
 import ComponentPermissionGuard from "@components/component-permission-guard";
 import ReLoginModal from '@shared/layout/components/relogin-modal';
 import classNames from 'classnames';
+import Alert from '@components/alert/alert';
 
 const Header = ({ headsetIconRef }: { headsetIconRef: React.RefObject<HTMLDivElement> }) => {
     const { t } = useTranslation();
@@ -95,6 +96,10 @@ const Header = ({ headsetIconRef }: { headsetIconRef: React.RefObject<HTMLDivEle
                     </div>
                     <div><ReLoginModal type='header' /></div>
                 </div>
+
+                {appUserDetails && appUserDetails?.callForwardingEnabled && <div className='flex w-full max-h-16 h-16 items-center justify-end pr-4'>
+                    <Alert message={'ccp.call_chat_fw_enabled_header'} type='info'/>
+                </div>}
                 <div className='flex flex-row items-center'>
                     <div ref={headsetIconRef} className='relative cursor-pointer mr-32'>
                         <div className={classNames({ 'ccp-incoming-pulse': isIncomingOrActiveCall, 'ccp-idle-border': !isIncomingOrActiveCall })} onClick={() => dispatch(toggleCcp())}>

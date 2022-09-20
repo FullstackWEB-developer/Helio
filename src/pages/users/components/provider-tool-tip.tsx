@@ -14,7 +14,7 @@ const ProviderMappingToolTip = () => {
         >
             <SvgIcon
                 type={Icon.ErrorFilled}
-                fillClass='rgba-05-fill'
+                fillClass='warning-icon'
                 className='cursor-pointer icon'
             />
             <Tooltip

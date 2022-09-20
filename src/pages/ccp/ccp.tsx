@@ -62,6 +62,7 @@ import {clearAppParameters} from '@shared/store/app/app.slice';
 import Spinner from '@components/spinner/Spinner';
 import useBrowserNotification from '@shared/hooks/useBrowserNotification';
 import {Intent} from './models/intent.enum';
+import {ForwardingEnabledStatus} from '@shared/layout/components/profile-dropdown';
 
 const ccpConfig = {
     region: utils.getAppParameter('AwsRegion'),
@@ -520,6 +521,11 @@ const Ccp: React.FC<BoxProps> = ({
     }, []);
 
     useEffect(() => {
+        if(user.callForwardingEnabled && (currentUserStatus.toString() !== ForwardingEnabledStatus && currentUserStatus.toString() !== "Offline")) {
+            utils.updateCCPForwardingEnabled(true);
+        } else if (currentUserStatus.toString() === ForwardingEnabledStatus && !user.callForwardingEnabled) {
+            utils.updateCCPForwardingEnabled(false);
+        }
         const beforeUnload = () => {
             setLatestStatus(currentUserStatus);
             updateAgentStatus(UserStatus.Offline, agentStates);

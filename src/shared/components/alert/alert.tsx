@@ -4,7 +4,7 @@ import './alert.scss';
 import SvgIcon, {Icon} from '@components/svg-icon';
 export interface AlertProps {
     message: string;
-    type: 'error'
+    type: 'error' | 'info'
 }
 const Alert = ({message, type}: AlertProps) => {
     const {t} = useTranslation();
@@ -12,6 +12,8 @@ const Alert = ({message, type}: AlertProps) => {
     const icon = useMemo(() => {
         if (type === 'error') {
             return <SvgIcon type={Icon.Error} fillClass='fill-red' />
+        } else if (type === 'info') {
+            return <SvgIcon type={Icon.Error} fillClass='fill-yellow' />
         }
     },[type])
 

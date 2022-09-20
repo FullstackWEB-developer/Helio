@@ -1,4 +1,4 @@
-import { PagedList } from '@shared/models';
+import {AgentState, PagedList} from '@shared/models';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc'
 import { InfiniteData } from 'react-query';
@@ -8,7 +8,7 @@ import { TicketOptionsBase } from '@pages/tickets/models/ticket-options-base.mod
 import store from '@app/store';
 import { getMsalInstance } from '@pages/login/auth-config';
 import { AppParameter } from '@shared/models/app-parameter.model';
-import { logOut } from '@shared/store/app-user/appuser.slice';
+import {logOut, updateUserStatus} from '@shared/store/app-user/appuser.slice';
 import duration from 'dayjs/plugin/duration';
 import { showCcp } from '@shared/layout/store/layout.slice';
 import { addSnackbarMessage } from '@shared/store/snackbar/snackbar.slice';
@@ -20,6 +20,7 @@ import { Icon } from '@components/svg-icon/icon';
 import axios from 'axios';
 import { clearAppParameters } from '@shared/store/app/app.slice';
 import { SortDirection } from '@shared/models/sort-direction';
+import {ForwardingEnabledStatus} from '@shared/layout/components/profile-dropdown';
 
 const getWindowCenter = () => {
     const { width, height } = getWindowDimensions();
@@ -632,6 +633,25 @@ export const deepEqual = (object1: any, object2: any) =>  {
     return true;
 }
 
+const updateCCPForwardingEnabled = (isForwardingEnabled: boolean) => {
+    const newStatus = isForwardingEnabled ? ForwardingEnabledStatus : "Available";
+    if (store.getState().appUserState.status === newStatus) {
+        return;
+    }
+    if (window.CCP.agent) {
+        const state = store.getState()?.appUserState?.agentStates.find((agentState: AgentState) => agentState.name === newStatus);
+        window.CCP.agent.setState(state, {
+            failure: () => {
+                store.dispatch(addSnackbarMessage({
+                    type: SnackbarType.Error,
+                    message:'ccp.could_not_update_to_fw_enabled'
+                }))
+            }
+        });
+    }
+    store.dispatch(updateUserStatus(newStatus));
+}
+
 
 const utils = {
     getWindowCenter,
@@ -685,7 +705,8 @@ const utils = {
     dynamicSort,
     addPracticeBranding,
     formatPhoneWithoutBrackets,
-    deepEqual
+    deepEqual,
+    updateCCPForwardingEnabled
 };
 
 export default utils;
