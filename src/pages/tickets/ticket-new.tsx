@@ -54,11 +54,14 @@ import './ticket-new.scss';
 import {TicketStatuses} from '@pages/tickets/models/ticket.status.enum';
 import {ChannelTypes} from '@shared/models';
 import Confirmation from '@components/confirmation/confirmation';
+import isToday from 'dayjs/plugin/isToday';
 
 const TicketNew = () => {
     dayjs.extend(utc);
 
+    dayjs.extend(isToday);
     const {handleSubmit, control, errors, setError, clearErrors, formState, setValue, watch} = useForm({mode: 'all'});
+    const dueDate = watch("dueDate", false);
     const {isValid, errors: stateError, isDirty, isSubmitted} = formState;
     const {t} = useTranslation();
     const history = useHistory();
@@ -522,6 +525,7 @@ const TicketNew = () => {
                             control={control}
                             dataTestId={'ticket-new-due-time'}
                             label='ticket_new.due_time'
+                            minTime={dayjs(dueDate).isToday() ? dayjs().format("HH:mm:ss") : undefined}
                         />
                     </div>
                     <ControlledSelect
