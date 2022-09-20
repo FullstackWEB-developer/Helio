@@ -312,7 +312,7 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
         {
             title: 'reports.agent_reports.column_names.avg_sms_response',
             field: 'avgSmsResponse',
-            widthClass: 'w-1/12',
+            widthClass: 'w-3/24',
             headerClassName: 'items-center',
             sortDirectionFillCalss: "default-toolbar-icon",
             sortIconSizeClass: 'icon-large',
@@ -332,7 +332,7 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
         {
             title: 'reports.agent_reports.column_names.avg_email_response',
             field: 'avgEmailResponse',
-            widthClass: 'w-1/12',
+            widthClass: 'w-3/24',
             headerClassName: 'items-center',
             sortDirectionFillCalss: "default-toolbar-icon",
             sortIconSizeClass: 'icon-large',
