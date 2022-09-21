@@ -212,7 +212,7 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
         {
             title: 'reports.agent_reports.column_names.agent_name',
             field: 'userId',
-            widthClass: 'w-1/5',
+            widthClass: 'w-5/24',
             sortDirectionFillCalss: "default-toolbar-icon",
             sortIconSizeClass: 'icon-large',
             rowClassname: 'body2',
@@ -232,7 +232,7 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
         {
             title: 'reports.agent_reports.column_names.total_tickets',
             field: 'totalTicketsCount',
-            widthClass: 'w-1/12',
+            widthClass: 'w-2/24',
             sortDirectionFillCalss: "default-toolbar-icon",
             sortIconSizeClass: 'icon-large',
             headerClassName: 'items-center',
@@ -252,7 +252,7 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
         {
             title: 'reports.agent_reports.column_names.overdue_tickets',
             field: 'overdueTicketCount',
-            widthClass: 'w-1/12',
+            widthClass: 'w-3/24',
             headerClassName: 'items-center',
             sortDirectionFillCalss: "default-toolbar-icon",
             sortIconSizeClass: 'icon-large',
@@ -275,7 +275,7 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
             sortDirectionFillCalss: "default-toolbar-icon",
             sortIconSizeClass: 'icon-large',
             headerClassName: 'items-center',
-            widthClass: 'w-1/12',
+            widthClass: 'w-2/24',
             rowClassname: 'body2',
             isSortable: true,
             onClick: (field: string | undefined, direction: SortDirection) => {
@@ -292,7 +292,7 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
         {
             title: 'reports.agent_reports.column_names.total_emails',
             field: 'totalEmailCount',
-            widthClass: 'w-1/12',
+            widthClass: 'w-2/24',
             headerClassName: 'items-center',
             sortDirectionFillCalss: "default-toolbar-icon",
             sortIconSizeClass: 'icon-large',
@@ -352,7 +352,7 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
         {
             title: 'reports.agent_reports.column_names.rating',
             field: 'voiceChatRatingCount',
-            widthClass: 'w-1/5',
+            widthClass: 'w-4/24',
             rowClassname: 'body2',
             headerClassName: 'items-center',
             sortDirectionFillCalss: "default-toolbar-icon",
