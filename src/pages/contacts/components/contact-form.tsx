@@ -108,44 +108,43 @@ const ContactForm = ({contact, contactType, submitHandler, closeHandler, editMod
     const defaultPrimaryStateOption = defaultPrimaryAddress ? options.find(o => o.value === defaultPrimaryAddress?.state)?.value : '';
     const defaultShippingStateOption = defaultShippingAddress ? options.find(o => o.value === defaultShippingAddress?.state)?.value : '';
     const defaultBillingStateOption = defaultBillingAddress ? options.find(o => o.value === defaultBillingAddress?.state)?.value : '';
-    const {handleSubmit, control, reset, formState, setValue} = useForm({
-        mode: 'onChange', defaultValues: {
-            ...(!isCompanyContact && {firstName: contact?.firstName || ''}),
-            ...(!isCompanyContact && {lastName: contact?.lastName || ''}),
-            companyName: contact?.companyName || '',
-            category: defaultCategory,
-            ...(!isCompanyContact && {jobTitle: contact?.jobTitle || ''}),
-            ...(!isCompanyContact && {department: contact?.department || ''}),
-            email: contact?.emailAddress || location?.state?.email || '',
-            workMainPhone: contact?.workMainPhone || '',
-            ...(!isCompanyContact && {workMainExtension: contact?.workMainExtension || ''}),
-            ...(!isCompanyContact && {workDirectPhone: contact?.workDirectPhone || ''}),
-            mobile: contact?.mobilePhone || '',
-            fax: contact?.fax || '',
-            website: contact?.website || '',
-            primaryAddressLine: defaultPrimaryAddress?.line,
-            primaryApt: defaultPrimaryAddress?.apartmentNumber,
-            primaryCity: defaultPrimaryAddress?.city,
-            primaryState: defaultPrimaryStateOption,
-            primaryZipCode: defaultPrimaryAddress?.zipCode,
-            ...(showAddressSection(shippingAddressOption.value) &&
-            {
-                shippingAddressLine: defaultShippingAddress?.line,
-                shippingApt: defaultShippingAddress?.apartmentNumber,
-                shippingCity: defaultShippingAddress?.city,
-                shippingState: defaultShippingStateOption,
-                shippingZipCode: defaultShippingAddress?.zipCode
-            }
-            ),
-            ...(showAddressSection(billingAddressOption.value) && {
-                billingAddressLine: defaultBillingAddress?.line,
-                billingApt: defaultBillingAddress?.apartmentNumber,
-                billingCity: defaultBillingAddress?.city,
-                billingState: defaultBillingStateOption,
-                billingZipCode: defaultBillingAddress?.zipCode
-            })
+    const defaultValues = {
+        ...(!isCompanyContact && {firstName: contact?.firstName || ''}),
+        ...(!isCompanyContact && {lastName: contact?.lastName || ''}),
+        companyName: contact?.companyName || '',
+        category: defaultCategory,
+        ...(!isCompanyContact && {jobTitle: contact?.jobTitle || ''}),
+        ...(!isCompanyContact && {department: contact?.department || ''}),
+        email: contact?.emailAddress || location?.state?.email || '',
+        workMainPhone: contact?.workMainPhone || '',
+        ...(!isCompanyContact && {workMainExtension: contact?.workMainExtension || ''}),
+        ...(!isCompanyContact && {workDirectPhone: contact?.workDirectPhone || ''}),
+        mobile: contact?.mobilePhone || '',
+        fax: contact?.fax || '',
+        website: contact?.website || '',
+        primaryAddressLine: defaultPrimaryAddress?.line,
+        primaryApt: defaultPrimaryAddress?.apartmentNumber,
+        primaryCity: defaultPrimaryAddress?.city,
+        primaryState: defaultPrimaryStateOption ?? '',
+        primaryZipCode: defaultPrimaryAddress?.zipCode,
+        ...(showAddressSection(shippingAddressOption.value) &&
+        {
+            shippingAddressLine: defaultShippingAddress?.line,
+            shippingApt: defaultShippingAddress?.apartmentNumber,
+            shippingCity: defaultShippingAddress?.city,
+            shippingState: defaultShippingStateOption ?? '',
+            shippingZipCode: defaultShippingAddress?.zipCode
         }
-    });
+        ),
+        ...(showAddressSection(billingAddressOption.value) && {
+            billingAddressLine: defaultBillingAddress?.line,
+            billingApt: defaultBillingAddress?.apartmentNumber,
+            billingCity: defaultBillingAddress?.city,
+            billingState: defaultBillingStateOption ?? '',
+            billingZipCode: defaultBillingAddress?.zipCode
+        })
+    }
+    const {handleSubmit, control, reset, formState, setValue, getValues} = useForm({ mode: 'onChange', defaultValues: defaultValues });
     const {isValid, isDirty, isSubmitted} = formState;
 
     const [closingPromptOpen, setClosingPromptOpen] = useState(false);
@@ -184,7 +183,7 @@ const ContactForm = ({contact, contactType, submitHandler, closeHandler, editMod
     }
 
     const closeButtonHandler = () => {
-        if (isDirty) {
+        if (hasChanges() || isDirty) {
             setClosingPromptOpen(true);
         }
         else {
@@ -260,9 +259,13 @@ const ContactForm = ({contact, contactType, submitHandler, closeHandler, editMod
         }
     };
 
+    const hasChanges = () => {
+        return JSON.stringify(getValues()) !== JSON.stringify(defaultValues);
+    }
+
     return (
         <div className={`flex flex-col relative ${editMode ? 'overflow-hidden' : ''}`}>
-            <form onSubmit={handleSubmit(onSubmit)} noValidate={true} onKeyDown={(e) => checkKeyDown(e)}>
+            <form onSubmit={handleSubmit(onSubmit)} noValidate={true} onKeyDown={(e) => checkKeyDown(e)} onChange={() => hasChanges()}>
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-x-8">
                     {
                         !isCompanyContact &&
@@ -399,7 +402,7 @@ const ContactForm = ({contact, contactType, submitHandler, closeHandler, editMod
                     <div className="col-span-12 lg:col-span-10">
                         <div className="flex items-center justify-center h-20 mb-4 full-w">
                             <Button buttonType='secondary' label={t('common.cancel')} className='h-10 secondary-contact-form-btn mr-8' onClick={closeButtonHandler} />
-                            <Button isLoading={isSaving} type='submit' buttonType='medium' label={t('common.save')} disabled={!isValid || !isDirty} />
+                            <Button isLoading={isSaving} type='submit' buttonType='medium' label={t('common.save')} disabled={!isValid || !hasChanges() || !isDirty} />
                         </div>
                     </div>
                 </div>
@@ -408,7 +411,7 @@ const ContactForm = ({contact, contactType, submitHandler, closeHandler, editMod
                 okButtonLabel={t('common.yes')} isOpen={closingPromptOpen}
                 onOk={onCloseConfirm} onCancel={onCloseCancel} onClose={onCloseCancel} closeableOnEscapeKeyPress={true} />
             <Prompt
-                when={isDirty && !closingPromptOpen && !isSubmitted}
+                when={hasChanges() && !closingPromptOpen && !isSubmitted && isDirty}
                 message={t('contacts.contact_details.confirm_close')}
             />
         </div>)
