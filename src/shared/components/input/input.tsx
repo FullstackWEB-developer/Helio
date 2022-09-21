@@ -195,7 +195,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({
             <div className={`input-group-container flex flex-wrap items-stretch w-full relative ${props.error ? 'input-error' : ''} ` + props.className}>
                 {component}
                 <label htmlFor={htmlFor}
-                    className={`absolute truncate ${props.required ? 'required' : ''} ${isFocused || props.value ? 'body3 label-small' : `body2${props.disabled ? '-medium' : ''}`} ${props.error ? 'text-danger' : ''}`}>
+                    className={`absolute truncate ${props.required ? 'required' : ''} ${isFocused || props.value || (!!props?.value?.toString() && props.value.toString().length) > 0 ? 'body3 label-small' : `body2${props.disabled ? '-medium' : ''}`} ${props.error ? 'text-danger' : ''}`}>
                     {t(label || placeholder || '')}
                 </label>
                 {props.prefix && <div className={`absolute pt-${!label ? '4' : '6'}  left-4 body2-medium`}>
