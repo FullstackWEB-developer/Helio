@@ -269,7 +269,14 @@
     "extensions_context": {
       "title": "Internal Contacts",
       "click_to_dial": "Double click on the name to dial.",
-      "error_loading_extensions": "Extensions could not be loaded. Please try again later"
+      "error_loading_extensions": "Extensions could not be loaded. Please try again later",
+      "cannot_redirect_calls": "You cannot transfer calls to this user!",
+      "cannot_redirect_chats_calls": "You cannot transfer chats or calls to this user!",
+      "call_transferred_from": "{{fromUserFirstName}} redirected a call to you. \nPlease end your current call/chat to get this call.",
+      "call_transferred": "You are redirected a call. \nPlease end your current call/chat to get this call.",
+      "chat_transferred_from": "{{fromUserFirstName}} redirected a chat to you. \nPlease end your current call/chat to get this chat.",
+      "chat_transferred": "You are redirected a chat. \nPlease end your current call/chat to get this chat.",
+      "transferred_person_not_available": "Your transfer succeeded, but {{userFirstName}} is on another call/chat. \n Agent will accept after current activity."
     },
     "modal": {
       "aws_connect": "Amazon Connect",

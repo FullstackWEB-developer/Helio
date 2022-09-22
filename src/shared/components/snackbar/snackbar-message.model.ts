@@ -1,5 +1,6 @@
 import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
 import {SnackbarPosition} from '@components/snackbar/snackbar-position.enum';
+import {Icon} from '@components/svg-icon';
 
 export interface SnackbarMessageModel {
     id?: string;
@@ -10,4 +11,6 @@ export interface SnackbarMessageModel {
     autoClose?: boolean;
     position?: SnackbarPosition;
     durationInSeconds?: number;
+    icon?: Icon,
+    iconFill?: string
 }

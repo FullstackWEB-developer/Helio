@@ -41,9 +41,13 @@ const SnackbarMessage = ({message, position}: SnackbarMessageProps) => {
                 className={`pl-4 py-3 snackbar-message-body overflow-hidden relative rounded-md snackbar-position-${position}`}>
         <div className='flex flex-row'>
 
-            {message.type && message.type !== SnackbarType.Info && <div className='pr-2'><SvgIcon
+            {!message.icon && message.type && message.type !== SnackbarType.Info && <div className='pr-2'><SvgIcon
                 fillClass={message.type === (SnackbarType.Success) ? 'success-icon' : 'danger-icon'}
                 type={message.type === SnackbarType.Success ? Icon.CheckmarkOutline : Icon.Error}/></div>}
+
+            {!!message.icon && <div className='pr-2'><SvgIcon
+                fillClass={message.iconFill}
+                type={message.icon}/></div>}
 
             <div className="flex items-center flex-1 body2-white pr-2">
                 {t(message.message)}

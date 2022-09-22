@@ -5,9 +5,7 @@ import {useMemo, useState} from 'react';
 import SearchInputField from '@components/search-input-field/search-input-field';
 import {selectUserList} from '@shared/store/lookups/lookups.selectors';
 import {useDispatch, useSelector} from 'react-redux';
-import Avatar from '@components/avatar';
-import {setInternalCallDetails} from '@pages/ccp/store/ccp.slice';
-import {selectAppUserDetails, selectInternalQueueStatuses} from '@shared/store/app-user/appuser.selectors';
+import {selectInternalQueueStatuses} from '@shared/store/app-user/appuser.selectors';
 import utils from '@shared/utils/utils';
 import {useQuery} from 'react-query';
 import {GetInternalQueues} from '@constants/react-query-constants';
@@ -16,8 +14,7 @@ import Spinner from '@components/spinner/Spinner';
 import {InternalQueueStatus} from '@pages/ccp/models/internal-queue-status';
 import {setInternalQueueStatuses} from '@shared/store/app-user/appuser.slice';
 import {UserStatus} from '@shared/store/app-user/app-user.models';
-import {selectVoiceCounter} from '@pages/ccp/store/ccp.selectors';
-
+import InternalContactItem from '@pages/ccp/components/internal-contact-item';
 const ExtensionsContext = () => {
     const {t} = useTranslation();
     const AgentType = 'AGENT';
@@ -26,9 +23,7 @@ const ExtensionsContext = () => {
     const [searchTerm, setSearchTerm] = useState<string>('');
     const users = useSelector(selectUserList);
     const dispatch = useDispatch();
-    const currentUser = useSelector(selectAppUserDetails);
     const internalContacts = useSelector(selectInternalQueueStatuses);
-    const voiceCounter = useSelector(selectVoiceCounter);
 
     const {isLoading, isError} = useQuery(GetInternalQueues, () => getInternalQueues(), {
         onSuccess: (data) => {
@@ -51,38 +46,6 @@ const ExtensionsContext = () => {
         }
     });
 
-    const startQuickConnect = (contact: InternalQueueStatus) => {
-        window.CCP?.contact?.addConnection({
-            type: contact.quickConnectEndPoint.type,
-            queue: contact.quickConnectEndPoint.queue,
-            name: contact.quickConnectEndPoint.name,
-            agentLogin: null,
-            phoneNumber: null,
-            endpointId: contact.quickConnectEndPoint.endpointId,
-            endpointARN: contact.quickConnectEndPoint.endpointARN
-        });
-    }
-
-    const startInternalCall = (contact: InternalQueueStatus) => {
-        const dialingUser = users.find(u => u.id == contact.userId);
-        dispatch(setInternalCallDetails({
-            type: contact.queueType,
-            fromUserId: currentUser.id,
-            queueArn: contact.queueArn,
-            toUserId: contact.userId,
-            diallingUserFullname: dialingUser ? `${dialingUser.firstName} ${dialingUser.lastName}` : ''
-        }));
-        let phone = utils.getAppParameter("InternalCallPhoneNumber");
-        utils.initiateACall(phone);
-    }
-
-    const onDoubleClick = (contact: InternalQueueStatus) => {
-        if (voiceCounter > 0) {
-            startQuickConnect(contact);
-        } else {
-            startInternalCall(contact);
-        }
-    }
 
     const sort = (items: InternalQueueStatus[]): InternalQueueStatus[] => {
         let list: InternalQueueStatus[] = [];
@@ -145,14 +108,8 @@ const ExtensionsContext = () => {
         <SearchInputField onChange={(value) => setSearchTerm(value)} />
         <div className={`overflow-y-auto ${displayDescription ? 'max-h-with-desc' : 'max-h-no-desc'}`}>
             <div className='flex flex-col'>
-                {list.map((queue, index) => {
-                    return <div key={index} className='border-b h-14 flex items-center px-4 cursor-pointer' onDoubleClick={() => onDoubleClick(queue)}>
-                        <div className='flex flex-row space items-center'>
-                            <Avatar displayStatus={true} userId={queue.userId} userPicture={queue.user?.profilePicture} userFullName={queue.displayName}
-                                    enlargedStatusDot={true} />
-                            <div className='pl-4 body3'>{queue.displayName}</div>
-                        </div>
-                    </div>
+                {list.map((item) => {
+                    return <InternalContactItem queue={item} key={item.queueName}/>
                 })}
             </div>
         </div>
