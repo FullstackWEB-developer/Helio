@@ -104,13 +104,12 @@ const TicketDetailInfoPanel = ({ticket, patient, contact}: TicketDetailInfoPanel
     }, []);
 
     const ticketUpdateMutation = useMutation(updateTicket, {
-        onSuccess: (data) => {
+        onSuccess: (data, variables) => {
             const user = userListOptions ? userListOptions.find((o: Option) => o.value === updateModel["assignee"]?.value) : {} as any;
-            if (ticket.id && user && ticket.assignee !== user.value) {
+            if (ticket.id && user && variables.ticketData.assignee !== user.value) {
                 updateAssigneeMutation.mutate({ticketId: ticket.id, assignee: user.value});
-            } else {
-                dispatch(setTicket(data));
             }
+            dispatch(setTicket(data));
             if (data.id && previousTicket?.status !== data.status) {
                 const feedData: TicketFeed = {
                     feedType: FeedTypes.StatusChange,
@@ -188,7 +187,8 @@ const TicketDetailInfoPanel = ({ticket, patient, contact}: TicketDetailInfoPanel
                 callbackPhoneNumber: updateModel.callbackPhoneNumber,
                 patientCaseNumber: updateModel.patientCaseNumber,
                 dueDate: dateTime ? dateTime.toDate() : undefined,
-                communicationDirection: ticket.communicationDirection
+                communicationDirection: ticket.communicationDirection,
+                assignee: updateModel.assignee?.value
             }
         });
     }
