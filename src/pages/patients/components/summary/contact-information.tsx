@@ -30,7 +30,7 @@ const ContactInformation = () => {
             patientAddressLine += patient.address;
         };
         if (patient.address2) {
-            patientAddressLine += `, ${t(patient.address2.includes('#') ? 'patient.summary.apt_number_no_#' : 'patient.summary.apt_number')} ${patient.address2}`;
+            patientAddressLine += `, ${t(patient.address2.includes('#') ? 'patient.summary.apt_number_no_#' : 'patient.summary.unit')} ${patient.address2}`;
         };
         return patientAddressLine;
     }, [patient]);

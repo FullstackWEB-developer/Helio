@@ -33,7 +33,7 @@ const RegistrationReviewStep = ({goBack}: RegistrationReviewStepProps) => {
         const city = patientData?.patient?.city;
         const address = patientData?.patient?.address;
         const zip = patientData?.patient?.zip;
-        const apt = patientData?.patient?.address2;
+        const apt = `${t(patientData?.patient?.address2.includes('#') ? 'patient.summary.apt_number_no_#' : 'patient.summary.unit')} ${patientData?.patient?.address2}`;
         const state = patientData?.patient?.state;
         let addressField = `${address || ''}, `;
         if (apt) {
