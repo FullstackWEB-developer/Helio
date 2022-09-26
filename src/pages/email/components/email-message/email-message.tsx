@@ -76,7 +76,7 @@ const EmailMessage = ({message, ticketCreatedForName, ticketHeaderPhoto, index, 
                         </div>
                     </div>
                     <div className='links'>
-                        <iframe srcDoc={linkifyHtml(message.body)}>
+                        <iframe srcDoc={linkifyHtml(message.body)} className='w-full'>
 
                         </iframe>
                     </div>
