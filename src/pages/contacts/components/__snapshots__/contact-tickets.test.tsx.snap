@@ -1,0 +1,88 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ContactTickets tests renders ContactTickets isDanger true correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="flex items-center justify-between py-3 border-b"
+  >
+    <div
+      class="flex items-center body2"
+    >
+      <div
+        class=""
+      >
+        <svg
+          class="pl-1 cursor-pointer icon-large "
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <rect
+            fill="none"
+          />
+          <path
+            class="active-item-icon"
+            d="M19,13H13v6H11V13H5V11h6V5h2v6h6Z"
+          />
+        </svg>
+      </div>
+      <span
+        class="pl-2 cursor-pointer contact-accent-color hover:underline"
+      >
+        contacts.contact_details.create_ticket
+      </span>
+    </div>
+  </div>
+  <div
+    class="flex flex-row items-center content-center w-full h-12 px-6 py-4 bg-gray-100 auto-cols-min body2-medium"
+  >
+    <div
+      class="uppercase flex items-center w-24 "
+    >
+      tickets.channel
+    </div>
+    <div
+      class="uppercase flex items-center w-2/12 cursor-pointer"
+    >
+      tickets.id
+    </div>
+    <div
+      class="uppercase flex items-center w-3/12 "
+    >
+      tickets.subject
+    </div>
+    <div
+      class="uppercase flex items-center w-3/12 cursor-pointer"
+    >
+      tickets.due_in
+    </div>
+    <div
+      class="uppercase flex items-center w-2/12 cursor-pointer"
+    >
+      tickets.status
+    </div>
+  </div>
+  <div
+    class="flex flex-col space-y-4 items-center h-full w-full justify-center pt-4"
+  >
+    <div>
+      <div
+        class=""
+      >
+        <svg
+          class="spinner icon-large-40 "
+          viewBox="0 0 40 40"
+        >
+          <circle
+            class="path"
+            cx="20"
+            cy="20"
+            fill="none"
+            r="16"
+            stroke-width="4"
+          />
+        </svg>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

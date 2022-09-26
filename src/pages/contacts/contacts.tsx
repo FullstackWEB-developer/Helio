@@ -5,7 +5,7 @@ import ContactCategory from './components/contact-category';
 import ContactList from './components/contact-list';
 import {ContactBase, ContactExtended} from '@shared/models/contact.model';
 import {useHistory, useLocation, useParams} from 'react-router-dom';
-import {ContactsPath} from 'src/app/paths';
+import {ContactsPath} from '@app/paths';
 import ContactDetails from './components/contact-details';
 import {useInfiniteQuery, useQuery, useQueryClient} from 'react-query';
 import AddNewContact from './components/add-new-contact';

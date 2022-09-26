@@ -786,7 +786,7 @@ const SvgIcon = ({ type, wrapperClassName = '', className = 'icon-medium', fillC
     }
 
     const getIconView = () => {
-        return <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className={mainClass}>
+        return <svg data-testid={dataTestId} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className={mainClass}>
             <g transform="translate(-1555 -621)">
                 <rect width="24" height="24" transform="translate(1555 621)" fill="none" />
                 <path

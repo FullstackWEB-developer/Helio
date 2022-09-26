@@ -4,7 +4,7 @@ import {TicketBase} from '@pages/tickets/models/ticket-base';
 import React, {Fragment, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {useHistory} from 'react-router';
-import {TicketsPath} from 'src/app/paths';
+import {TicketsPath} from '@app/paths';
 import ContactTicketLabel from './contact-ticket-label';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';

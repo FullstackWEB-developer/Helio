@@ -6,13 +6,15 @@ import customParseFormat from 'dayjs/plugin/customParseFormat';
 import {unmountComponentAtNode} from 'react-dom';
 import {fireEvent, render} from '@testing-library/react';
 import TestWrapper from '@shared/test-utils/test-wrapper';
-import Login from './login';
-jest.setTimeout(30000);
+import Contacts from './contacts';
+import Router from "react-router-dom";
+import Api from '@shared/services/api';
+import { act } from 'react-dom/test-utils';
 jest.mock("react-router-dom", () => ({
     ...jest.requireActual("react-router-dom"),
     useParams: jest.fn(),
    }));
-describe("Login tests", () => {
+describe("Contacts tests", () => {
     let container: HTMLDivElement | null;
     let mockState = {
         emailState: {
@@ -28,12 +30,12 @@ describe("Login tests", () => {
         lookupsState: {
 
         },
+        ticketState: {
+            lookupValues: []
+        },
         appState: {
             smsTemplates: [],
             emailTemplates: []
-        },
-        snackbarState: {
-            messages: []
         }
     };
 
@@ -54,17 +56,11 @@ describe("Login tests", () => {
         }
     });
 
-    it("renders login correctly", async () => {
+    it("renders contacts correctly", async () => {
+        jest.spyOn(Router, 'useParams').mockReturnValue({ id: '1234' })
         const {asFragment} = render(<TestWrapper mockState={mockState}>
-                <Login/>          
+            <Contacts/>
         </TestWrapper>);
         expect(asFragment()).toMatchSnapshot();
-    });
-
-    it("renders login login_button", async () => {
-        const {getByTestId} = render(<TestWrapper mockState={mockState}>
-            <Login/>
-        </TestWrapper>);
-        fireEvent.click(getByTestId("login_button"))
     });
 })

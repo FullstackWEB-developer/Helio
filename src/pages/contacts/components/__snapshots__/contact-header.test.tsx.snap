@@ -1,0 +1,781 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ContactHeader tests renders ContactHeader company return correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="w-full flex px-8 pt-6 pb-4 mt-4 justify-between"
+  >
+    <div
+      class="flex items-start"
+    >
+      <div
+        class="h-24 w-24 contact-avatar-icon"
+      >
+        <div
+          class=""
+        >
+          <svg
+            class="icon-large-40 "
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect
+              fill="none"
+              height="24"
+              width="24"
+            />
+            <path
+              class="company-avatar-color"
+              d="M12,7V3H2V21H22V7ZM6,19H4V17H6Zm0-4H4V13H6Zm0-4H4V9H6ZM6,7H4V5H6Zm4,12H8V17h2Zm0-4H8V13h2Zm0-4H8V9h2Zm0-4H8V5h2ZM20,19H12V17h2V15H12V13h2V11H12V9h8Zm-2-8H16v2h2Zm0,4H16v2h2Z"
+            />
+          </svg>
+        </div>
+      </div>
+      <div
+        class="flex flex-col pl-6"
+      >
+        <h4 />
+        <div
+          class="flex justify-center pt-5"
+        >
+          <span
+            class="pr-3 "
+          >
+            <div
+              class=""
+            >
+              <svg
+                class="icon-x-large "
+                height="48"
+                viewBox="0 0 48 48"
+                width="48"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="48"
+                  width="48"
+                />
+                <g
+                  class="contact-stroke-color"
+                  fill="none"
+                  transform="translate(4 4)"
+                >
+                  <circle
+                    cx="20"
+                    cy="20"
+                    r="20"
+                    stroke="none"
+                  />
+                  <circle
+                    cx="20"
+                    cy="20"
+                    fill="none"
+                    r="19.5"
+                  />
+                </g>
+                <path
+                  class="rgba-025-fill"
+                  d="M17.978.886,14.187.011a.881.881,0,0,0-1,.507L11.434,4.6a.873.873,0,0,0,.252,1.021l2.209,1.808a13.512,13.512,0,0,1-6.46,6.46L5.626,11.682a.874.874,0,0,0-1.021-.252L.522,13.18a.885.885,0,0,0-.51,1.006l.875,3.792a.875.875,0,0,0,.853.678A16.914,16.914,0,0,0,18.656,1.74.874.874,0,0,0,17.978.886Z"
+                  transform="translate(14.677 14.677)"
+                />
+              </svg>
+            </div>
+          </span>
+          <div
+            class="flex items-center"
+          >
+            <div
+              class="flex flex-row"
+            >
+              <div
+                class="contact-phone-type-disabled"
+              >
+                contacts.contact_details.individual.phone_types.1
+              </div>
+              <div
+                class="pl-1.5"
+              >
+                <div
+                  class=""
+                >
+                  <svg
+                    class="icon-medium "
+                    height="24"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <rect
+                      fill="none"
+                      height="24"
+                      width="24"
+                    />
+                    <path
+                      class="rgba-025-fill"
+                      d="M7,14l1.273-1.273L2.545,7,8.273,1.273,7,0,0,7Z"
+                      transform="translate(5 16.273) rotate(-90)"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+          <span
+            class="pl-10 pr-8"
+          >
+            <a
+              class="disabled-link"
+              href="#"
+            >
+              <div
+                class=""
+              >
+                <svg
+                  class="icon-x-large fill-default"
+                  height="48"
+                  viewBox="0 0 48 48"
+                  width="48"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <rect
+                    fill="none"
+                    height="48"
+                    width="48"
+                  />
+                  <g
+                    class="contact-stroke-color"
+                    fill="none"
+                    transform="translate(4 4)"
+                  >
+                    <circle
+                      cx="20"
+                      cy="20"
+                      r="20"
+                      stroke="none"
+                    />
+                    <circle
+                      cx="20"
+                      cy="20"
+                      fill="none"
+                      r="19.5"
+                    />
+                  </g>
+                  <g
+                    transform="translate(12.08 12)"
+                  >
+                    <rect
+                      fill="none"
+                      height="24"
+                      transform="translate(-0.08)"
+                      width="24"
+                    />
+                    <path
+                      class="rgba-025-fill"
+                      d="M10.625,0H1.875A1.875,1.875,0,0,0,0,1.875v16.25A1.875,1.875,0,0,0,1.875,20h8.75A1.875,1.875,0,0,0,12.5,18.125V1.875A1.875,1.875,0,0,0,10.625,0ZM6.25,18.75A1.25,1.25,0,1,1,7.5,17.5,1.249,1.249,0,0,1,6.25,18.75Zm4.375-4.219a.47.47,0,0,1-.469.469H2.344a.47.47,0,0,1-.469-.469V2.344a.47.47,0,0,1,.469-.469h7.812a.47.47,0,0,1,.469.469Z"
+                      transform="translate(6 2)"
+                    />
+                  </g>
+                </svg>
+              </div>
+            </a>
+          </span>
+          <span
+            class="pr-8"
+          >
+            <a
+              class="disabled-link"
+              href="#"
+            >
+              <div
+                class=""
+              >
+                <svg
+                  class="icon-x-large fill-default"
+                  height="48"
+                  viewBox="0 0 48 48"
+                  width="48"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <rect
+                    fill="none"
+                    height="48"
+                    width="48"
+                  />
+                  <g
+                    class="contact-stroke-color"
+                    fill="none"
+                    transform="translate(4 4)"
+                  >
+                    <circle
+                      cx="20"
+                      cy="20"
+                      r="20"
+                      stroke="none"
+                    />
+                    <circle
+                      cx="20"
+                      cy="20"
+                      fill="none"
+                      r="19.5"
+                    />
+                  </g>
+                  <g
+                    transform="translate(12.334 12)"
+                  >
+                    <rect
+                      fill="none"
+                      height="24"
+                      transform="translate(-0.334)"
+                      width="24"
+                    />
+                    <path
+                      class="rgba-025-fill"
+                      d="M18.125,64H1.875A1.875,1.875,0,0,0,0,65.875v11.25A1.875,1.875,0,0,0,1.875,79h16.25A1.875,1.875,0,0,0,20,77.125V65.875A1.875,1.875,0,0,0,18.125,64Zm0,1.875v1.594c-.876.713-2.272,1.822-5.257,4.16-.658.517-1.961,1.761-2.868,1.746-.907.015-2.21-1.229-2.868-1.746-2.985-2.337-4.381-3.446-5.257-4.16V65.875ZM1.875,77.125v-7.25c.9.713,2.164,1.713,4.1,3.228.854.672,2.349,2.156,4.026,2.147,1.669.009,3.145-1.453,4.026-2.146,1.935-1.515,3.2-2.516,4.1-3.229v7.25Z"
+                      transform="translate(2 -59)"
+                    />
+                  </g>
+                </svg>
+              </div>
+            </a>
+          </span>
+          <span
+            class="pr-8 cursor-pointer"
+          >
+            <div
+              class=""
+            >
+              <svg
+                class="icon-x-large "
+                height="48"
+                viewBox="0 0 48 48"
+                width="48"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="48"
+                  width="48"
+                />
+                <g
+                  class="contact-stroke-color"
+                  fill="none"
+                  transform="translate(4 4)"
+                >
+                  <circle
+                    cx="20"
+                    cy="20"
+                    r="20"
+                    stroke="none"
+                  />
+                  <circle
+                    cx="20"
+                    cy="20"
+                    fill="none"
+                    r="19.5"
+                  />
+                </g>
+                <g
+                  transform="translate(12.08 12)"
+                >
+                  <rect
+                    fill="none"
+                    height="24"
+                    transform="translate(-0.08)"
+                    width="24"
+                  />
+                  <path
+                    class="contact-subheader-quick-action-color"
+                    d="M3,15.665V19H6.333l9.83-9.83L12.83,5.835ZM18.74,6.59a.885.885,0,0,0,0-1.253l-2.08-2.08a.885.885,0,0,0-1.253,0L13.781,4.884l3.333,3.333L18.74,6.59Z"
+                    transform="translate(1 1)"
+                  />
+                </g>
+              </svg>
+            </div>
+          </span>
+          <span
+            class="pr-8 cursor-pointer"
+          >
+            <div
+              class=""
+            >
+              <svg
+                class="icon-x-large "
+                height="48"
+                viewBox="0 0 48 48"
+                width="48"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="48"
+                  width="48"
+                />
+                <g
+                  class="contact-stroke-color"
+                  fill="none"
+                  transform="translate(4 4)"
+                >
+                  <circle
+                    cx="20"
+                    cy="20"
+                    r="20"
+                    stroke="none"
+                  />
+                  <circle
+                    cx="20"
+                    cy="20"
+                    fill="none"
+                    r="19.5"
+                  />
+                </g>
+                <g
+                  transform="translate(12.08 12)"
+                >
+                  <rect
+                    fill="none"
+                    height="24"
+                    transform="translate(-0.08)"
+                    width="24"
+                  />
+                  <path
+                    class="contact-subheader-quick-action-color"
+                    d="M6,19a2.006,2.006,0,0,0,2,2h8a2.006,2.006,0,0,0,2-2V7H6ZM19,4H15.5l-1-1h-5l-1,1H5V6H19Z"
+                  />
+                </g>
+              </svg>
+            </div>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div
+      class="flex justify-center items-center w-10 h-10 cursor-pointer"
+    >
+      <div
+        class=""
+      >
+        <svg
+          class="icon-medium "
+          height="24"
+          viewBox="0 0 24 24"
+          width="24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g
+            transform="translate(-941 -212)"
+          >
+            <rect
+              fill="none"
+              height="24"
+              transform="translate(941 212)"
+              width="24"
+            />
+            <path
+              class="contact-header-quick-action-color"
+              d="M12,17.27,18.18,21l-1.64-7.03L22,9.24l-7.19-.61L12,2,9.19,8.63,2,9.24l5.46,4.73L5.82,21Z"
+              transform="translate(941 213)"
+            />
+          </g>
+        </svg>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`ContactHeader tests renders ContactHeader return correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="w-full flex px-8 pt-6 pb-4 mt-4 justify-between"
+  >
+    <div
+      class="flex items-start"
+    >
+      <svg
+        class="h-24 w-24"
+        viewBox="0 0 40 40"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <g
+          data-name="Avatar/40px/Letters"
+        >
+          <circle
+            cx="20"
+            cy="20"
+            fill="#9e9e9e"
+            r="20"
+          />
+          <text
+            dominant-baseline="middle"
+            fill="#fff"
+            text-anchor="middle"
+          >
+            <tspan
+              x="50%"
+              y="55%"
+            />
+          </text>
+        </g>
+      </svg>
+      <div
+        class="flex flex-col pl-6"
+      >
+        <h4>
+           
+        </h4>
+        <div
+          class="pt-3 contact-light"
+        >
+          Test
+        </div>
+        <div
+          class="flex justify-center pt-5"
+        >
+          <span
+            class="pr-3 "
+          >
+            <div
+              class=""
+            >
+              <svg
+                class="icon-x-large "
+                height="48"
+                viewBox="0 0 48 48"
+                width="48"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="48"
+                  width="48"
+                />
+                <g
+                  class="contact-stroke-color"
+                  fill="none"
+                  transform="translate(4 4)"
+                >
+                  <circle
+                    cx="20"
+                    cy="20"
+                    r="20"
+                    stroke="none"
+                  />
+                  <circle
+                    cx="20"
+                    cy="20"
+                    fill="none"
+                    r="19.5"
+                  />
+                </g>
+                <path
+                  class="rgba-025-fill"
+                  d="M17.978.886,14.187.011a.881.881,0,0,0-1,.507L11.434,4.6a.873.873,0,0,0,.252,1.021l2.209,1.808a13.512,13.512,0,0,1-6.46,6.46L5.626,11.682a.874.874,0,0,0-1.021-.252L.522,13.18a.885.885,0,0,0-.51,1.006l.875,3.792a.875.875,0,0,0,.853.678A16.914,16.914,0,0,0,18.656,1.74.874.874,0,0,0,17.978.886Z"
+                  transform="translate(14.677 14.677)"
+                />
+              </svg>
+            </div>
+          </span>
+          <div
+            class="flex items-center"
+          >
+            <div
+              class="flex flex-row"
+            >
+              <div
+                class="contact-phone-type-disabled"
+              >
+                contacts.contact_details.individual.phone_types.1
+              </div>
+              <div
+                class="pl-1.5"
+              >
+                <div
+                  class=""
+                >
+                  <svg
+                    class="icon-medium "
+                    height="24"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <rect
+                      fill="none"
+                      height="24"
+                      width="24"
+                    />
+                    <path
+                      class="rgba-025-fill"
+                      d="M7,14l1.273-1.273L2.545,7,8.273,1.273,7,0,0,7Z"
+                      transform="translate(5 16.273) rotate(-90)"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+          <span
+            class="pl-10 pr-8"
+          >
+            <a
+              class="disabled-link"
+              href="#"
+            >
+              <div
+                class=""
+              >
+                <svg
+                  class="icon-x-large fill-default"
+                  height="48"
+                  viewBox="0 0 48 48"
+                  width="48"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <rect
+                    fill="none"
+                    height="48"
+                    width="48"
+                  />
+                  <g
+                    class="contact-stroke-color"
+                    fill="none"
+                    transform="translate(4 4)"
+                  >
+                    <circle
+                      cx="20"
+                      cy="20"
+                      r="20"
+                      stroke="none"
+                    />
+                    <circle
+                      cx="20"
+                      cy="20"
+                      fill="none"
+                      r="19.5"
+                    />
+                  </g>
+                  <g
+                    transform="translate(12.08 12)"
+                  >
+                    <rect
+                      fill="none"
+                      height="24"
+                      transform="translate(-0.08)"
+                      width="24"
+                    />
+                    <path
+                      class="rgba-025-fill"
+                      d="M10.625,0H1.875A1.875,1.875,0,0,0,0,1.875v16.25A1.875,1.875,0,0,0,1.875,20h8.75A1.875,1.875,0,0,0,12.5,18.125V1.875A1.875,1.875,0,0,0,10.625,0ZM6.25,18.75A1.25,1.25,0,1,1,7.5,17.5,1.249,1.249,0,0,1,6.25,18.75Zm4.375-4.219a.47.47,0,0,1-.469.469H2.344a.47.47,0,0,1-.469-.469V2.344a.47.47,0,0,1,.469-.469h7.812a.47.47,0,0,1,.469.469Z"
+                      transform="translate(6 2)"
+                    />
+                  </g>
+                </svg>
+              </div>
+            </a>
+          </span>
+          <span
+            class="pr-8"
+          >
+            <a
+              class="disabled-link"
+              href="#"
+            >
+              <div
+                class=""
+              >
+                <svg
+                  class="icon-x-large fill-default"
+                  height="48"
+                  viewBox="0 0 48 48"
+                  width="48"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <rect
+                    fill="none"
+                    height="48"
+                    width="48"
+                  />
+                  <g
+                    class="contact-stroke-color"
+                    fill="none"
+                    transform="translate(4 4)"
+                  >
+                    <circle
+                      cx="20"
+                      cy="20"
+                      r="20"
+                      stroke="none"
+                    />
+                    <circle
+                      cx="20"
+                      cy="20"
+                      fill="none"
+                      r="19.5"
+                    />
+                  </g>
+                  <g
+                    transform="translate(12.334 12)"
+                  >
+                    <rect
+                      fill="none"
+                      height="24"
+                      transform="translate(-0.334)"
+                      width="24"
+                    />
+                    <path
+                      class="rgba-025-fill"
+                      d="M18.125,64H1.875A1.875,1.875,0,0,0,0,65.875v11.25A1.875,1.875,0,0,0,1.875,79h16.25A1.875,1.875,0,0,0,20,77.125V65.875A1.875,1.875,0,0,0,18.125,64Zm0,1.875v1.594c-.876.713-2.272,1.822-5.257,4.16-.658.517-1.961,1.761-2.868,1.746-.907.015-2.21-1.229-2.868-1.746-2.985-2.337-4.381-3.446-5.257-4.16V65.875ZM1.875,77.125v-7.25c.9.713,2.164,1.713,4.1,3.228.854.672,2.349,2.156,4.026,2.147,1.669.009,3.145-1.453,4.026-2.146,1.935-1.515,3.2-2.516,4.1-3.229v7.25Z"
+                      transform="translate(2 -59)"
+                    />
+                  </g>
+                </svg>
+              </div>
+            </a>
+          </span>
+          <span
+            class="pr-8 cursor-pointer"
+          >
+            <div
+              class=""
+            >
+              <svg
+                class="icon-x-large "
+                height="48"
+                viewBox="0 0 48 48"
+                width="48"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="48"
+                  width="48"
+                />
+                <g
+                  class="contact-stroke-color"
+                  fill="none"
+                  transform="translate(4 4)"
+                >
+                  <circle
+                    cx="20"
+                    cy="20"
+                    r="20"
+                    stroke="none"
+                  />
+                  <circle
+                    cx="20"
+                    cy="20"
+                    fill="none"
+                    r="19.5"
+                  />
+                </g>
+                <g
+                  transform="translate(12.08 12)"
+                >
+                  <rect
+                    fill="none"
+                    height="24"
+                    transform="translate(-0.08)"
+                    width="24"
+                  />
+                  <path
+                    class="contact-subheader-quick-action-color"
+                    d="M3,15.665V19H6.333l9.83-9.83L12.83,5.835ZM18.74,6.59a.885.885,0,0,0,0-1.253l-2.08-2.08a.885.885,0,0,0-1.253,0L13.781,4.884l3.333,3.333L18.74,6.59Z"
+                    transform="translate(1 1)"
+                  />
+                </g>
+              </svg>
+            </div>
+          </span>
+          <span
+            class="pr-8 cursor-pointer"
+          >
+            <div
+              class=""
+            >
+              <svg
+                class="icon-x-large "
+                height="48"
+                viewBox="0 0 48 48"
+                width="48"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="48"
+                  width="48"
+                />
+                <g
+                  class="contact-stroke-color"
+                  fill="none"
+                  transform="translate(4 4)"
+                >
+                  <circle
+                    cx="20"
+                    cy="20"
+                    r="20"
+                    stroke="none"
+                  />
+                  <circle
+                    cx="20"
+                    cy="20"
+                    fill="none"
+                    r="19.5"
+                  />
+                </g>
+                <g
+                  transform="translate(12.08 12)"
+                >
+                  <rect
+                    fill="none"
+                    height="24"
+                    transform="translate(-0.08)"
+                    width="24"
+                  />
+                  <path
+                    class="contact-subheader-quick-action-color"
+                    d="M6,19a2.006,2.006,0,0,0,2,2h8a2.006,2.006,0,0,0,2-2V7H6ZM19,4H15.5l-1-1h-5l-1,1H5V6H19Z"
+                  />
+                </g>
+              </svg>
+            </div>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div
+      class="flex justify-center items-center w-10 h-10 cursor-pointer"
+    >
+      <div
+        class=""
+      >
+        <svg
+          class="icon-medium "
+          height="24"
+          viewBox="0 0 24 24"
+          width="24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g
+            transform="translate(-941 -212)"
+          >
+            <rect
+              fill="none"
+              height="24"
+              transform="translate(941 212)"
+              width="24"
+            />
+            <path
+              class="contact-header-quick-action-color"
+              d="M12,17.27,18.18,21l-1.64-7.03L22,9.24l-7.19-.61L12,2,9.19,8.63,2,9.24l5.46,4.73L5.82,21Z"
+              transform="translate(941 213)"
+            />
+          </g>
+        </svg>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

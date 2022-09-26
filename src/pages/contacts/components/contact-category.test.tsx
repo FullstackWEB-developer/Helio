@@ -1,4 +1,4 @@
-import i18n from '../../i18nForTests';
+import i18n from '../../../i18nForTests';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 import utc from 'dayjs/plugin/utc';
@@ -6,13 +6,17 @@ import customParseFormat from 'dayjs/plugin/customParseFormat';
 import {unmountComponentAtNode} from 'react-dom';
 import {fireEvent, render} from '@testing-library/react';
 import TestWrapper from '@shared/test-utils/test-wrapper';
-import Login from './login';
-jest.setTimeout(30000);
+import ContactCategory from './contact-category';
+import Router from "react-router-dom";
+import { AddressType, AssociatedContact, ContactExtended, ContactType } from '@shared/models';
+import { Control, useForm } from 'react-hook-form';
+import { ContactAvatarModel } from '../models/contact-avatar-model';
+import { Icon } from '@components/svg-icon';
 jest.mock("react-router-dom", () => ({
     ...jest.requireActual("react-router-dom"),
     useParams: jest.fn(),
    }));
-describe("Login tests", () => {
+describe("ContactCategory tests", () => {
     let container: HTMLDivElement | null;
     let mockState = {
         emailState: {
@@ -28,12 +32,22 @@ describe("Login tests", () => {
         lookupsState: {
 
         },
+        ticketState: {
+            lookupValues: [{
+                label: "Test",
+                parentValue: "Test"
+            },{
+                label: "Test",
+                parentValue: "Test"
+            }]
+        },
         appState: {
             smsTemplates: [],
             emailTemplates: []
         },
-        snackbarState: {
-            messages: []
+        ccpState: {
+            chatCounter: 1,
+            voiceCounter: 2
         }
     };
 
@@ -54,17 +68,11 @@ describe("Login tests", () => {
         }
     });
 
-    it("renders login correctly", async () => {
+    it("renders ContactCategory return correctly", async () => {
+        jest.spyOn(Router, 'useParams').mockReturnValue({ id: '1234' })
         const {asFragment} = render(<TestWrapper mockState={mockState}>
-                <Login/>          
+            <ContactCategory selectedCategory={''} setSelectedCategory={() => {}} />
         </TestWrapper>);
         expect(asFragment()).toMatchSnapshot();
-    });
-
-    it("renders login login_button", async () => {
-        const {getByTestId} = render(<TestWrapper mockState={mockState}>
-            <Login/>
-        </TestWrapper>);
-        fireEvent.click(getByTestId("login_button"))
     });
 })

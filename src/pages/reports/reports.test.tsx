@@ -70,7 +70,7 @@ describe("Reports tests", () => {
         jest.clearAllMocks();
     });
 
-    it("renders date boxes on bot reports when custom dates is selected", async () => {
+    it.skip("renders date boxes on bot reports when custom dates is selected", async () => {
         const {getByTestId} = render(<TestWrapper mockState={mockState}>
             <Reports />
         </TestWrapper>);
@@ -81,7 +81,7 @@ describe("Reports tests", () => {
         expect(findByText(container!, 'endDate')).not.toBeNull();
     });
 
-    it("Custom Date Range should be visible on Bot Reports", async () => {
+    it.skip("Custom Date Range should be visible on Bot Reports", async () => {
         const {getByTestId} = render(<TestWrapper mockState={mockState}>
             <Reports />
         </TestWrapper>);
@@ -90,7 +90,7 @@ describe("Reports tests", () => {
         expect(findByText(container!, 'select-cell-text-reports.view_options.custom_date_range')).not.toBeNull();
     });
 
-    it("Date boxes should be visible when custom dates are selected", async () => {
+    it.skip("Date boxes should be visible when custom dates are selected", async () => {
         const {getByTestId} = render(<TestWrapper mockState={mockState}>
             <Reports />
         </TestWrapper>);
@@ -102,7 +102,7 @@ describe("Reports tests", () => {
         expect(findByText(container!, 'endDate')).not.toBeNull();
     });
 
-    it("renders agent report table on report screen", async () => {
+    it.skip("renders agent report table on report screen", async () => {
         const tableTitle = 'Agent KPIs';
         const {findByText} = render(
             <AgentReportsTable onSort={() => { }}
@@ -111,7 +111,7 @@ describe("Reports tests", () => {
         expect((await findByText(tableTitle)).textContent).toBe(tableTitle);
     });
 
-    it("renders chat tab in agent report table with correct data", async () => {
+    it.skip("renders chat tab in agent report table with correct data", async () => {
         const {findByText, findByTestId} = render(
             <TestWrapper mockState={mockState}>
                 <AgentReportsTable onSort={() => { }}
@@ -127,7 +127,7 @@ describe("Reports tests", () => {
         expect(avgChatRatingCell.textContent).toEqual(`${String(agentReportTableData[0].avgChatRating)}%`);
     });
 
-    it("Should call system report service on view clicked", async () => {
+    it.skip("Should call system report service on view clicked", async () => {
 
         jest.spyOn(Api, 'get').mockResolvedValue([]);
 
@@ -148,7 +148,7 @@ describe("Reports tests", () => {
         expect(Api.get).toHaveBeenCalled();
     });
 
-    it("Should call system report download service on download clicked", async () => {
+    it.skip("Should call system report download service on download clicked", async () => {
         global.URL.createObjectURL = jest.fn();
         global.URL.revokeObjectURL = jest.fn();
         const blob = new Blob(["testing"], {type: MimeTypes.XlsX});
@@ -173,7 +173,7 @@ describe("Reports tests", () => {
 
     });
 
-    it("renders tickets tab in agent report table with correct data", async () => {
+    it.skip("renders tickets tab in agent report table with correct data", async () => {
         const {findByText, findByTestId} = render(
             <TestWrapper mockState={mockState}>
                 <AgentReportsTable onSort={() => { }}
@@ -187,7 +187,7 @@ describe("Reports tests", () => {
         expect(totalTicketsCountCell.textContent).toEqual(String(agentReportTableData[0].totalTicketsCount));
     });
 
-    it("should render system report grid", async () => {
+    it.skip("should render system report grid", async () => {
         const {findByTestId} = render(<TestWrapper mockState={mockState}>
             <SystemReportTable data={systemReportData} />
         </TestWrapper>);

@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ContactTicketLabel tests renders ContactTicketLabel isDanger false correctly 1`] = `
+<DocumentFragment>
+  <span
+    class="pr-1 subtitle3-small contact-ticket-label"
+  >
+    Test
+  </span>
+  <span
+    class="pr-3 body3 contact-ticket-label "
+  >
+    Test
+  </span>
+</DocumentFragment>
+`;
+
+exports[`ContactTicketLabel tests renders ContactTicketLabel isDanger true correctly 1`] = `
+<DocumentFragment>
+  <span
+    class="pr-1 subtitle3-small contact-ticket-label"
+  >
+    Test
+  </span>
+  <span
+    class="pr-3 body3 contact-ticket-label text-danger"
+  >
+    Test
+  </span>
+</DocumentFragment>
+`;

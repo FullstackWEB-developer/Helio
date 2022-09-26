@@ -1,0 +1,239 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ContactList tests renders ContactList empty return correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="w-72 overflow-x-hidden relative flex flex-col contact-list-section"
+  >
+    <div
+      class="w-full"
+    >
+      <div
+        class="flex items-center pl-4 py-3 cursor-pointer align-middle border-b"
+      >
+        <div
+          class=""
+        >
+          <svg
+            class="icon-large pl-1 cursor-pointer "
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect
+              fill="none"
+              height="24"
+              width="24"
+            />
+            <path
+              class="active-item-icon"
+              d="M15,12a4,4,0,1,0-4-4A4,4,0,0,0,15,12ZM6,10V7H4v3H1v2H4v3H6V12H9V10Zm9,4c-2.67,0-8,1.34-8,4v2H23V18C23,15.34,17.67,14,15,14Z"
+            />
+          </svg>
+        </div>
+        <span
+          class="body2 pl-4 contact-accent-color"
+        >
+          contacts.contact-list.add
+        </span>
+      </div>
+    </div>
+    <div
+      class="relative h-10 w-full search-input-field flex items-center pl-2 py-6"
+    >
+      <div
+        class="absolute pl-4"
+      >
+        <div
+          class=""
+        >
+          <svg
+            class="cursor-pointer icon-small "
+            height="16"
+            viewBox="0 0 16 16"
+            width="16"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect
+              fill="none"
+              height="16"
+              width="16"
+            />
+            <path
+              class="search-icon-fill"
+              d="M12.7,11.23a6.777,6.777,0,0,0,1.4-4.174A7.02,7.02,0,0,0,7.1,0,7.105,7.105,0,0,0,0,7.056a7.105,7.105,0,0,0,7.1,7.056,6.667,6.667,0,0,0,4.2-1.391l3,2.981a.971.971,0,0,0,1.4,0,.957.957,0,0,0,0-1.391Zm-5.6.8A5.022,5.022,0,0,1,2,7.056a5.1,5.1,0,0,1,10.2,0A5.022,5.022,0,0,1,7.1,12.025Z"
+            />
+          </svg>
+        </div>
+      </div>
+      <input
+        autocomplete="off"
+        class="py-2.5 h-full w-full search-input-field body2 contact-search-input-field pl-12 border-b"
+        placeholder="contacts.contact-list.search"
+        type="text"
+        value=""
+      />
+    </div>
+    <div
+      class="relative max-w-full overflow-y-auto overflow-x-hidden h-full"
+    >
+      <div
+        class="subtitle3-small w-full text-center mt-5"
+      >
+        contacts.contact-list.no_results
+      </div>
+      <div
+        class="visible"
+      >
+        <div
+          class="flex flex-col space-y-4 items-center h-full w-full justify-center undefined"
+        >
+          <div>
+            <div
+              class=""
+            >
+              <svg
+                class="spinner icon-large-40 "
+                viewBox="0 0 40 40"
+              >
+                <circle
+                  class="path"
+                  cx="20"
+                  cy="20"
+                  fill="none"
+                  r="16"
+                  stroke-width="4"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`ContactList tests renders ContactList return correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="w-72 overflow-x-hidden relative flex flex-col contact-list-section"
+  >
+    <div
+      class="w-full"
+    >
+      <div
+        class="flex items-center pl-4 py-3 cursor-pointer align-middle border-b"
+      >
+        <div
+          class=""
+        >
+          <svg
+            class="icon-large pl-1 cursor-pointer "
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect
+              fill="none"
+              height="24"
+              width="24"
+            />
+            <path
+              class="active-item-icon"
+              d="M15,12a4,4,0,1,0-4-4A4,4,0,0,0,15,12ZM6,10V7H4v3H1v2H4v3H6V12H9V10Zm9,4c-2.67,0-8,1.34-8,4v2H23V18C23,15.34,17.67,14,15,14Z"
+            />
+          </svg>
+        </div>
+        <span
+          class="body2 pl-4 contact-accent-color"
+        >
+          contacts.contact-list.add
+        </span>
+      </div>
+    </div>
+    <div
+      class="relative h-10 w-full search-input-field flex items-center pl-2 py-6"
+    >
+      <div
+        class="absolute pl-4"
+      >
+        <div
+          class=""
+        >
+          <svg
+            class="cursor-pointer icon-small "
+            height="16"
+            viewBox="0 0 16 16"
+            width="16"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect
+              fill="none"
+              height="16"
+              width="16"
+            />
+            <path
+              class="search-icon-fill"
+              d="M12.7,11.23a6.777,6.777,0,0,0,1.4-4.174A7.02,7.02,0,0,0,7.1,0,7.105,7.105,0,0,0,0,7.056a7.105,7.105,0,0,0,7.1,7.056,6.667,6.667,0,0,0,4.2-1.391l3,2.981a.971.971,0,0,0,1.4,0,.957.957,0,0,0,0-1.391Zm-5.6.8A5.022,5.022,0,0,1,2,7.056a5.1,5.1,0,0,1,10.2,0A5.022,5.022,0,0,1,7.1,12.025Z"
+            />
+          </svg>
+        </div>
+      </div>
+      <input
+        autocomplete="off"
+        class="py-2.5 h-full w-full search-input-field body2 contact-search-input-field pl-12 border-b"
+        placeholder="contacts.contact-list.search"
+        type="text"
+        value=""
+      />
+    </div>
+    <div
+      class="relative max-w-full overflow-y-auto overflow-x-hidden h-full"
+    >
+      <div
+        class="w-full h-6 company-item-letter pl-6 body2"
+      />
+      <div
+        class="max-h-10 max-w-full truncate body2 py-2.5 relative border-b cursor-pointer pl-6"
+        data-testid=""
+      >
+        <div
+          class="pr-10 truncate "
+        >
+           
+        </div>
+      </div>
+      <div
+        class="visible"
+      >
+        <div
+          class="flex flex-col space-y-4 items-center h-full w-full justify-center undefined"
+        >
+          <div>
+            <div
+              class=""
+            >
+              <svg
+                class="spinner icon-large-40 "
+                viewBox="0 0 40 40"
+              >
+                <circle
+                  class="path"
+                  cx="20"
+                  cy="20"
+                  fill="none"
+                  r="16"
+                  stroke-width="4"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

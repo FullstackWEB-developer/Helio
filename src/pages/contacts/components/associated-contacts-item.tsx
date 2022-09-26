@@ -3,7 +3,7 @@ import SvgIcon from '@components/svg-icon/svg-icon';
 import {Icon} from '@components/svg-icon/icon';
 import {AssociatedContact} from '@shared/models/associated-contact.model';
 import {useHistory} from 'react-router';
-import {ContactsPath} from 'src/app/paths';
+import {ContactsPath} from '@app/paths';
 
 interface AsocciatedContactsItemProps {
     contact: AssociatedContact
@@ -15,7 +15,7 @@ const AsocciatedContactsItem = ({contact}: AsocciatedContactsItemProps) => {
             <span>{`${contact.firstName} ${contact.lastName}`}</span>
             <span>{contact.jobTitle || contact.department || ''}</span>
             <div className='justify-self-end pr-6 cursor-pointer'>
-                <SvgIcon type={Icon.View} fillClass='contact-light-fill' onClick={() => {history.push(`${ContactsPath}/${contact.id}`)}} />
+                <SvgIcon dataTestId={contact.id} type={Icon.View} fillClass='contact-light-fill' onClick={() => {history.push(`${ContactsPath}/${contact.id}`)}} />
             </div>
         </div>
     )

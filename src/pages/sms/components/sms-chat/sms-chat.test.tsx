@@ -101,13 +101,14 @@ describe("Sms-Chat tests", () => {
             />
         </TestWrapper>);
 
-        expect(spy).toHaveBeenCalledTimes(7);
+        expect(spy).toHaveBeenCalledTimes(8);
         expect(spy.mock.calls).toEqual([["/lookups/values/TicketReason"],
             ["/tickets/lookup/TicketType"],
             ["/patients/75086", {"params": undefined}],
             ["/patients/75086/photo"],
             ["/tickets/123"],
             ["/lookups/values/TicketReason"],
-            ["/tickets/lookup/TicketType"]]);
+            ["/tickets/lookup/TicketType"],
+            ["/security/blockedaccess/phone/8884441122"]]);
     });
 })

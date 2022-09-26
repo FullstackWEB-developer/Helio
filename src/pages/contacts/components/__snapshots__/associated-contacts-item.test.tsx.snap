@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AddNewContact tests renders AddNewContact correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="associated-contacts-item h-10 border-b contact-border-color-lighter body2 grid grid-cols-4 items-center"
+  >
+    <span>
+       
+    </span>
+    <span />
+    <div
+      class="justify-self-end pr-6 cursor-pointer"
+    >
+      <div
+        class=""
+      >
+        <svg
+          class="icon-medium "
+          data-testid="123"
+          height="24"
+          viewBox="0 0 24 24"
+          width="24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g
+            transform="translate(-1555 -621)"
+          >
+            <rect
+              fill="none"
+              height="24"
+              transform="translate(1555 621)"
+              width="24"
+            />
+            <path
+              class="contact-light-fill"
+              d="M12,4.5A11.827,11.827,0,0,0,1,12a11.817,11.817,0,0,0,22,0A11.827,11.827,0,0,0,12,4.5ZM12,17a5,5,0,1,1,5-5A5,5,0,0,1,12,17Zm0-8a3,3,0,1,0,3,3A3,3,0,0,0,12,9Z"
+              transform="translate(1555 620.5)"
+            />
+          </g>
+        </svg>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

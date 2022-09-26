@@ -14,7 +14,7 @@ import {SnackbarPosition} from '@components/snackbar/snackbar-position.enum';
 import {clearVerifiedPatient} from '@pages/patients/store/patients.slice';
 import {setVerifiedLink} from '@pages/external-access/verify-patient/store/verify-patient.slice';
 
-const logger = Logger.getInstance();
+const logger = Logger?.getInstance();
 const Api = axios.create({
     baseURL: process.env.REACT_APP_API_ENDPOINT
 });

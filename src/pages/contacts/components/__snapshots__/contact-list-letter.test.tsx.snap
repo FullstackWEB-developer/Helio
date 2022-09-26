@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ContactListLetter tests renders ContactListLetter return correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="w-full h-6 company-item-letter pl-6 body2"
+  >
+    TEST
+  </div>
+</DocumentFragment>
+`;

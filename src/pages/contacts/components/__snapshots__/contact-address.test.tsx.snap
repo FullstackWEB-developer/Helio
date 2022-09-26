@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ContactAddress tests renders ContactAddress-BillingAddress correctly 1`] = `<DocumentFragment />`;
+
+exports[`ContactAddress tests renders ContactAddress-PrimaryAddress correctly 1`] = `<DocumentFragment />`;
+
+exports[`ContactAddress tests renders ContactAddress-ShippingAddress correctly 1`] = `<DocumentFragment />`;

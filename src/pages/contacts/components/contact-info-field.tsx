@@ -43,13 +43,13 @@ const ContactInfoField = ({label, value, icon, appendix, appendixLabel, appendix
             <div className={valueWrapperClassName}>
                 {icon &&
                     <div className='pr-1'>
-                        <SvgIcon disabled={isIconDisabled}
+                        <SvgIcon dataTestId={label} disabled={isIconDisabled}
                             fillClass={iconFillClass}
                             className={value === t('common.not_available') || isIconDisabled ? '' : 'cursor-pointer'}
                             type={icon}
                             onClick={handleClick} />
                     </div>}
-                <div onClick={() => {if (isValueClickDisabled) return; if (onValueClick) {onValueClick();} }} className={valueClassName}>{value}</div>
+                <div data-testid={`contact-info-field-${label}`} onClick={() => {if (isValueClickDisabled) return; if (onValueClick) {onValueClick();} }} className={valueClassName}>{value}</div>
                 {
                     appendix && appendixLabel && appendixValue && <span className='contact-light pl-4'>{appendixLabel}</span>
                 }

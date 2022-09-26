@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ContactCategory tests renders ContactCategory return correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="pt-5 pl-5 min-h-full overflow-hidden w-62 contact-category-section flex flex-col"
+  >
+    <h5>
+      contacts.category.header
+    </h5>
+    <div
+      class="subtitle2 mt-8 h-10 pb-2"
+    >
+      contacts.category.subtitle
+    </div>
+    <ul>
+      <li
+        class="body2 pb-2 cursor-pointer contact-category"
+      >
+        contacts.category.all_contacts
+      </li>
+      <li
+        class="body2 pb-2 cursor-pointer contact-category"
+      >
+        contacts.category.starred_contacts
+      </li>
+    </ul>
+  </div>
+</DocumentFragment>
+`;

@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ContactAddressPicker tests renders ContactAddressPicker correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="relative py-2.5 cursor-pointer"
+  >
+    <div
+      class="flex items-center"
+    >
+      <div
+        class=""
+      >
+        <svg
+          class="icon-medium "
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <rect
+            fill="none"
+          />
+          <path
+            class="fill-default"
+            d="M19,13H13v6H11V13H5V11h6V5h2v6h6Z"
+          />
+        </svg>
+      </div>
+      <span
+        class="body2 pl-2 contact-accent-color"
+      >
+        contacts.new-contact.add_more
+      </span>
+    </div>
+  </div>
+</DocumentFragment>
+`;
