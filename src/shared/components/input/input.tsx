@@ -159,6 +159,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({
         'pl-7' : !!props.prefix,
         'pl-4' : !props.prefix
     })
+
     let component =
         props.applyTruncating && props.disabled ?
             <div className='flex pl-4 pt-6 h-14' style={elipsisTextboxWidthStyle}>
@@ -170,6 +171,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({
                 mask={mask}
                 type={type}
                 onFocus={onInputFocus}
+                onWheel={(e) => { if(type === 'number') {e.currentTarget.blur()}}}
                 onBlur={onBlur}
                 onChange={onChange}
                 className={inputMaskClassname}
