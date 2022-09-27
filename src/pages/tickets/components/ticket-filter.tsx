@@ -136,7 +136,7 @@ const TicketFilter = ({ isOpen }: { isOpen: boolean }) => {
         const getDefaultCheckboxValues = (name: string, values: any[] | any | undefined): void => {
             let items;
             let defaultValues;
-            if(values === undefined || values.length === 0){
+            if(!values || values.length === 0){
                 return;
             }
             switch (name) {

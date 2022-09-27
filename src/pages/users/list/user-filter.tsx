@@ -207,8 +207,7 @@ const UserFilter = ({ isOpen }: { isOpen: boolean }) => {
         const getDefaultCheckboxValues = (name: string, values: any[] | any | undefined): void => {
             let items;
             let defaultValues;
-            console.log(name, values);
-            if(values === undefined || values.length === 0){
+            if(!values || values.length === 0){
                 return;
             }
             switch (name) {
