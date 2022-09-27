@@ -26,6 +26,8 @@ import {getProviders} from '@shared/services/lookups.service';
 import {Provider} from '@shared/models';
 import Select from '@components/select/select';
 import utils from '@shared/utils/utils';
+import RouteLeavingGuard from '@components/route-leaving-guard/route-leaving-guard';
+import Confirmation from '@components/confirmation/confirmation';
 
 const EditAppointmentType = () => {
     const { t } = useTranslation();
@@ -41,6 +43,7 @@ const EditAppointmentType = () => {
     const [patientType, setPatientType] = useState<number>(1);
     const providers = useSelector(selectProviderList);
     const [selectedProviders, setSelectedProviders] = useState<Provider[]>([]);
+    const [warning, setWarning] = useState<boolean>(false);
     const YesNoOptions: Option[] = [
         {
             value: 'true',
@@ -151,7 +154,7 @@ const EditAppointmentType = () => {
         setSelectedProviders(apptProviders);
     }, [appointmentType, providers]);
 
-    const { handleSubmit, clearErrors, control, formState: { isValid, isDirty } } = useForm({ mode: 'all'});
+    const { handleSubmit, clearErrors, control, formState: { isValid, isDirty, isSubmitSuccessful } } = useForm({ mode: 'all'});
 
     const navigateBackToAppointmentTypeList = () => {
         const pathName = `${ConfigurationsPath}/appointment-type`;
@@ -344,6 +347,20 @@ const EditAppointmentType = () => {
                                 disabled={updateAppointmentTypeMutation.isLoading}
                         />
                     </div>
+                    <RouteLeavingGuard
+                        when={isDirty && !isSubmitSuccessful}
+                        navigate={path => history.push(path)}
+                        message={'configuration.appointment_type_details.warning_info_leaving'}
+                        title={'configuration.appointment_type_details.warning'}
+                    />
+                    <Confirmation
+                            onClose={() => setWarning(false)}
+                            onCancel={() => setWarning(false)}
+                            okButtonLabel={'common.ok'}
+                            onOk={() => {setWarning(false)}}
+                            title={'configuration.appointment_type_details.warning'}
+                            message={'configuration.appointment_type_details.warning_info'}
+                            isOpen={warning} />
                 </form>
             </div>
         }
