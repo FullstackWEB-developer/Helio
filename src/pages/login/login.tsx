@@ -56,6 +56,7 @@ const Login = () => {
                     await SetAuthenticationInfo(info, dispatch, history, askNotificationPermission);
                 }).catch((err: any) => {
                 Logger.getInstance().error('Error logging in', err);
+                dispatch(setLoginLoading(false))
             }).finally(() => dispatch(setLoginLoading(false)))
         }
     }, [dispatch, history]);
