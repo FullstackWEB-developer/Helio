@@ -133,6 +133,64 @@ const TicketFilter = ({ isOpen }: { isOpen: boolean }) => {
             }
         }
 
+        const getDefaultCheckboxValues = (name: string, values: any[] | any | undefined): void => {
+            let items;
+            let defaultValues;
+            if(values === undefined || values.length === 0){
+                return;
+            }
+            switch (name) {
+                case 'states':
+                    items = statesFilter
+                    defaultValues = new Array(items.length).fill(false);
+                    items.map((value, index) => {values.includes(parseInt(value.key)) ? defaultValues[index] = true : defaultValues[index] = false});
+                    setDefaultStatesValues(defaultValues);
+                    break;
+                case 'channels':
+                    items = ticketChannels
+                    defaultValues = new Array(items.length).fill(false);
+                    items.map((value, index) => {values.includes(parseInt(value.key)) ? defaultValues[index] = true : defaultValues[index] = false});
+                    setDefaultChannelsValues(defaultValues);
+                    break;
+                case 'statuses':
+                    items = convertEnumToOptions(ticketStatuses)
+                    defaultValues = new Array(items.length).fill(false);
+                    items.map((value, index) => {values.includes(parseInt(value.key)) ? defaultValues[index] = true : defaultValues[index] = false});
+                    setDefaultStatusValues(defaultValues);
+                    break;
+                case 'ticketTypes':
+                    items = ticketTypes
+                    defaultValues = new Array(items.length).fill(false);
+                    items.map((value, index) => {values.includes(parseInt(value.key)) ? defaultValues[index] = true : defaultValues[index] = false});
+                    setDefaultTicketTypesValues(defaultValues);
+                    break;
+                case 'offices':
+                    items = convertOfficesToOptions()
+                    defaultValues = new Array(items.length).fill(false);
+                    items.map((value, index) => {values.includes(parseInt(value.key)) ? defaultValues[index] = true : defaultValues[index] = false});
+                    setDefaultOfficesValues(defaultValues);
+                    break;
+                case 'patientRating':
+                    items = convertEnumToOptions([...ratings].sort((a, b) => b.key - a.key), true)
+                    defaultValues = new Array(items.length).fill(false);
+                    items.map((value, index) => {values.includes(parseInt(value.key)) ? defaultValues[index] = true : defaultValues[index] = false});
+                    setDefaultPatientRatingValues(defaultValues);
+                    break;
+                case 'botRating':
+                    items = convertEnumToOptions([...ratings].sort((a, b) => b.key - a.key), true)
+                    defaultValues = new Array(items.length).fill(false);
+                    items.map((value, index) => {values.includes(parseInt(value.key)) ? defaultValues[index] = true : defaultValues[index] = false});
+                    setDefaultBotRatingValues(defaultValues);
+                break;
+            }
+        }
+        getDefaultCheckboxValues('botRating', ticketQueryFilter.botRating);
+        getDefaultCheckboxValues('patientRating', ticketQueryFilter.patientRating);
+        getDefaultCheckboxValues('offices', ticketQueryFilter.locations);
+        getDefaultCheckboxValues('ticketTypes', ticketQueryFilter.ticketTypes);
+        getDefaultCheckboxValues('statuses', ticketQueryFilter.statuses);
+        getDefaultCheckboxValues('channels', ticketQueryFilter.channels);
+        getDefaultCheckboxValues('states', ticketQueryFilter.states);
         setCheckBoxControl('states', ticketQueryFilter.states);
         setCheckBoxControl('channels', ticketQueryFilter.channels);
         setCheckBoxControl('statuses', ticketQueryFilter.statuses);
@@ -354,9 +412,44 @@ const TicketFilter = ({ isOpen }: { isOpen: boolean }) => {
         }, ...list];
     }
 
+    const [defaultStatusValues, setDefaultStatusValues] = useState<boolean[]>(new Array(ticketStatuses.length).fill(false));
+    const [defaultStatesValues, setDefaultStatesValues] = useState<boolean[]>(new Array(statesFilter.length).fill(false));
+    const [defaultChannelsValues, setDefaultChannelsValues] = useState<boolean[]>(new Array(ticketChannels.length).fill(false));
+    const [defaultTicketTypesValues, setDefaultTicketTypesValues] = useState<boolean[]>(new Array(ticketTypes.length).fill(false));
+    const [defaultOfficesValues, setDefaultOfficesValues] = useState<boolean[]>(new Array(convertOfficesToOptions().length).fill(false));
+    const [defaultPatientRatingValues, setDefaultPatientRatingValues] = useState<boolean[]>(new Array((convertEnumToOptions([...ratings].sort((a, b) => b.key - a.key), true)).length).fill(false));
+    const [defaultBotRatingValues, setDefaultBotRatingValues] = useState<boolean[]>(new Array((convertEnumToOptions([...ratings].sort((a, b) => b.key - a.key), true)).length).fill(false));
+    const getDefaultCheckboxValues = (name: string): boolean[] => {
+        let value;
+        switch (name) {
+            case 'states':
+                value = defaultStatesValues
+                break;
+            case 'channels':
+                value = defaultChannelsValues
+                break;
+            case 'statuses':
+                value = defaultStatusValues;
+                break;
+            case 'ticketTypes':
+                value = defaultTicketTypesValues
+                break;
+            case 'offices':
+                value = defaultOfficesValues
+                break;
+            case 'patientRating':
+                value = defaultPatientRatingValues
+                break;
+            case 'botRating':
+                value = defaultBotRatingValues
+                break;
+        }
+        return value;
+    }
+
     const GetCollapsibleCheckboxControl = (title: string, name: string, items: TicketOptionsBase[]) => {
         return <Collapsible title={title} isOpen={collapsibleState[name]} onClick={(isCollapsed) => setCollapsibleState({ ...collapsibleState, [name]: isCollapsed })}>
-                <CheckboxList items={items} name={name} control={control} resetDateTime={formResetDateTime}/>
+                <CheckboxList items={items} name={name} control={control} resetDateTime={formResetDateTime} defaultValues={getDefaultCheckboxValues(name)}/>
         </Collapsible>
     }
 

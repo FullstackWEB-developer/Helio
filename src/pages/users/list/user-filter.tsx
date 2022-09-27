@@ -59,7 +59,7 @@ const UserFilter = ({ isOpen }: { isOpen: boolean }) => {
 
     const GetCollapsibleCheckboxControl = (title: string, name: string, items: TicketOptionsBase[]) => {
         return <Collapsible title={title} isOpen={collapsibleState[name] || true} onClick={(isCollapsed) => setCollapsibleState({ ...collapsibleState, [name]: isCollapsed })}>
-            <CheckboxList items={items} name={name} control={control} resetDateTime={formResetDateTime}/>
+            <CheckboxList items={items} name={name} control={control} resetDateTime={formResetDateTime} defaultValues={getDefaultCheckboxValues(name)}/>
         </Collapsible>
     }
 
@@ -203,7 +203,81 @@ const UserFilter = ({ isOpen }: { isOpen: boolean }) => {
         setCheckBoxControl('departments', departmentFilters);
         setCheckBoxControl('titles', jobTitleFilters);
         setCheckBoxControl('roles', roleFilters);
+        
+        const getDefaultCheckboxValues = (name: string, values: any[] | any | undefined): void => {
+            let items;
+            let defaultValues;
+            console.log(name, values);
+            if(values === undefined || values.length === 0){
+                return;
+            }
+            switch (name) {
+                case 'statuses':
+                    items = convertEnumToOptions(userStatusOptions)
+                    defaultValues = new Array(items.length).fill(false);
+                    items.map((value, index) => {values.includes(value.key) ? defaultValues[index] = true : defaultValues[index] = false});
+                    setDefaultUserStatusValues(defaultValues);
+                    break;
+                case 'invites':
+                    items = convertEnumToOptions(userInvitationStatusOptions)
+                    defaultValues = new Array(items.length).fill(false);
+                    items.map((value, index) => {values.includes(value.key) ? defaultValues[index] = true : defaultValues[index] = false});
+                    setDefaultInvitationStatusValues(defaultValues);
+                    break;
+                case 'departments':
+                    items = departmentOptions
+                    defaultValues = new Array(items.length).fill(false);
+                    items.map((value, index) => {values.includes(value.key) ? defaultValues[index] = true : defaultValues[index] = false});
+                    setDefaultDepartmentValues(defaultValues);
+                    break;
+                case 'titles':
+                    items = jobTitleOptions
+                    defaultValues = new Array(items.length).fill(false);
+                    items.map((value, index) => {values.includes(value.key) ? defaultValues[index] = true : defaultValues[index] = false});
+                    setDefaultJobTitleValues(defaultValues);
+                    break;
+                case 'roles':
+                    items = roleOptions
+                    defaultValues = new Array(items.length).fill(false);
+                    items.map((value, index) => {values.includes(value.key) ? defaultValues[index] = true : defaultValues[index] = false});
+                    setDefaultRoleValues(defaultValues);
+                    break;
+            }
+        }
+        getDefaultCheckboxValues('statuses', statuses);
+        getDefaultCheckboxValues('invites', invitationStatuses);
+        getDefaultCheckboxValues('departments', departmentFilters);
+        getDefaultCheckboxValues('titles', jobTitleFilters);
+        getDefaultCheckboxValues('roles', roleFilters);
     }, [setValue, storedFilters]);
+
+    const [defaultJobTitleValues, setDefaultJobTitleValues] = useState<boolean[]>(new Array(jobTitleOptions.length).fill(false));
+    const [defaultDepartmentValues, setDefaultDepartmentValues] = useState<boolean[]>(new Array(departmentOptions.length).fill(false));
+    const [defaultRoleValues, setDefaultRoleValues] = useState<boolean[]>(new Array(roleOptions.length).fill(false));
+    const [defaultUserStatusValues, setDefaultUserStatusValues] = useState<boolean[]>(new Array(convertEnumToOptions(userStatusOptions).length).fill(false));
+    const [defaultInvitationStatusValues, setDefaultInvitationStatusValues] = useState<boolean[]>(new Array(convertEnumToOptions(userInvitationStatusOptions).length).fill(false));
+
+    const getDefaultCheckboxValues = (name: string): boolean[] => {
+        let value;
+        switch (name) {
+            case 'statuses':
+                value = defaultUserStatusValues
+                break;
+            case 'invites':
+                value = defaultInvitationStatusValues
+                break;
+            case 'departments':
+                value = defaultDepartmentValues;
+                break;
+            case 'titles':
+                value = defaultJobTitleValues
+                break;
+            case 'roles':
+                value = defaultRoleValues
+                break;
+        }
+        return value;
+    }
 
     return (
         <div className={getClassNames()}>

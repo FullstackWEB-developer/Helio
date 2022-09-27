@@ -10,11 +10,12 @@ interface CheckboxProps {
     control: Control;
     label?: (key: string) => string;
     resetDateTime?: Date;
+    defaultValues?: boolean[];
 }
 
-const CheckboxList = ({ name, items, control, label, resetDateTime }: CheckboxProps) => {
+const CheckboxList = ({ name, items, control, label, resetDateTime, defaultValues }: CheckboxProps) => {
     const { t } = useTranslation();
-    const [selectedKeys, setSelectedKeys] = useState<boolean[]>(new Array(items.length).fill(false));
+    const [selectedKeys, setSelectedKeys] = useState<boolean[]>(defaultValues ?? new Array(items.length).fill(false));
     const allKey = '0';
 
     const isAllListSelected = () => {
@@ -28,6 +29,11 @@ const CheckboxList = ({ name, items, control, label, resetDateTime }: CheckboxPr
     useEffect(() => {
         setSelectedKeys(new Array(items.length).fill(false));
     }, [resetDateTime]);
+
+    useEffect(() => {
+        setSelectedKeys(defaultValues ?? new Array(items.length).fill(false));
+    }, [defaultValues]);
+
     return <div>
         <Controller
             control={control}
@@ -75,6 +81,7 @@ const CheckboxList = ({ name, items, control, label, resetDateTime }: CheckboxPr
                 )
             }}
         />
+        
         {
             items.map((item, index) => {
                 return <Controller
