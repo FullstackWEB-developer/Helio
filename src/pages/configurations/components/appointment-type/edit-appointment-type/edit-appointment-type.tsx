@@ -339,7 +339,7 @@ const EditAppointmentType = () => {
 
                     </div>
                     <div className='flex mt-10'>
-                        <Button type='submit' buttonType='medium' disabled={!isDirty && !isValid} label='common.save' isLoading={updateAppointmentTypeMutation.isLoading} />
+                        <Button type='submit' buttonType='medium' disabled={!isDirty || !isValid} label='common.save' isLoading={updateAppointmentTypeMutation.isLoading} />
                         <Button label='common.cancel' className=' mx-8' buttonType='secondary' onClick={() => navigateBackToAppointmentTypeList()}
                                 disabled={updateAppointmentTypeMutation.isLoading}
                         />
