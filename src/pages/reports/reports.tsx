@@ -459,7 +459,7 @@ const Reports = () => {
                             <Button label='reports.view' type='submit' buttonType='medium' data-testid='report-view-button' disabled={isViewDisabled()}
                             onClick={(e) => e.currentTarget.blur()} />
                             {
-                                selectedView !== ViewTypes.MonthlyReports && <Button data-testid='report-download-button' label='reports.download' 
+                                (selectedView !== ViewTypes.MonthlyReports && selectedViewForView !== ViewTypes.MonthlyReports) && <Button data-testid='report-download-button' label='reports.download' 
                                 isLoading={anyExportMutationActive} className='mx-6' buttonType='secondary-medium' icon={Icon.Download} onClick={() => onDownload()} />
                             }
                         </div>
