@@ -266,7 +266,7 @@ const Select = React.forwardRef<HTMLDivElement, SelectProps>(({options, order, l
                         </div>
                     </div>
                 </div>
-                <div className={classnames(`sabsolute py-2 options ${isMultiple ? 'multiple-select-options' : ''}`)}>
+                <div className={classnames(`absolute py-2 options${isMultiple ? ' multiple-select-options' : ''}`)}>
                     <OptionSection />
                 </div>
             </div>
