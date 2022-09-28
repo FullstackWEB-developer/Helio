@@ -9,7 +9,7 @@ import ToolTipIcon from '@components/tooltip-icon/tooltip-icon';
 import { addSnackbarMessage } from '@shared/store/snackbar/snackbar.slice';
 import { SnackbarType } from '@components/snackbar/snackbar-type.enum';
 import { AxiosError } from 'axios';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import Button from '@components/button/button';
 import Spinner from "@components/spinner/Spinner";
 import Radio from '@components/radio/radio';
@@ -229,7 +229,15 @@ const EditAppointmentType = () => {
                     <div className='flex flex-row mt-10'>
                         <div className='flex flex-col w-1/5'>
                             <div className='flex flex-row body2 space-x-2'><span>{t('configuration.appointment_type_details.selectable_by_patient')}</span> {displayToolTip(t('configuration.appointment_type_details.tooltip_selectable_by_patient'))}</div>
-                            <Radio name='selectableByPatient' className='flex space-x-8 mt-2' defaultValue={String(appointmentType.selectableByPatient)} items={YesNoOptions} onChange={onSelectableByPatientChange} />
+                            <Controller
+                                name='selectableByPatient'
+                                control={control}
+                                defaultValue={String(appointmentType.selectableByPatient)}
+                                onChange={onSelectableByPatientChange}
+                                render={(controllerProps) => (
+                                    <Radio name={controllerProps.name} ref={controllerProps.ref} className='flex space-x-8 mt-2' defaultValue={String(appointmentType.selectableByPatient)} items={YesNoOptions} onChange={(e: string) => { controllerProps.onChange(e); }} />
+                                )}
+                            />
                         </div>
                         <div className='w-1/4'>
                             <ControlledSelect
@@ -247,7 +255,15 @@ const EditAppointmentType = () => {
                     <div className='flex flex-row mt-10'>
                         <div className='w-1/5'>
                             <span className='body2'>{t('configuration.appointment_type_details.can_be_rescheduled')}</span>
-                            <Radio name='reschedulable' className='flex space-x-8 mt-2' defaultValue={String(appointmentType.reschedulable)} items={YesNoOptions} onChange={onIsReschedulableChange} />
+                            <Controller
+                                name='reschedulable'
+                                control={control}
+                                defaultValue={String(appointmentType.reschedulable)}
+                                onChange={onIsReschedulableChange}
+                                render={(controllerProps) => (
+                                    <Radio name={controllerProps.name} ref={controllerProps.ref} className='flex space-x-8 mt-2' defaultValue={String(appointmentType.reschedulable)} items={YesNoOptions} onChange={(e: string) => { controllerProps.onChange(e); }} />
+                                )}
+                            />
                         </div>
 
                         <div className="flex flex-row items-center">
@@ -260,7 +276,6 @@ const EditAppointmentType = () => {
                                                  type='timeframe'
                                                  required={isReschedulable}
                                                  disabled={!isReschedulable}
-
                                 />
                             </div>
                             {displayToolTip(t('configuration.appointment_type_details.tooltip_reschedule_timeframe'))}
@@ -270,7 +285,15 @@ const EditAppointmentType = () => {
                     <div className='flex flex-row mt-10'>
                         <div className='w-1/5'>
                             <span className='body2'>{t('configuration.appointment_type_details.can_be_canceled')}</span>
-                            <Radio name='cancelable' className='flex space-x-8 mt-2' defaultValue={String(appointmentType.cancelable)} items={YesNoOptions} onChange={onCancelableChange} />
+                            <Controller
+                                name='cancelable'
+                                control={control}
+                                defaultValue={String(appointmentType.cancelable)}
+                                onChange={onCancelableChange}
+                                render={(controllerProps) => (
+                                    <Radio name={controllerProps.name} ref={controllerProps.ref} className='flex space-x-8 mt-2' defaultValue={String(appointmentType.cancelable)} items={YesNoOptions} onChange={(e: string) => { controllerProps.onChange(e); }} />
+                                )}
+                            />
                         </div>
                         <div className="flex flex-row items-center mr-40">
                             <div className='w-48'>

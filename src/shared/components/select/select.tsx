@@ -142,7 +142,11 @@ const Select = React.forwardRef<HTMLDivElement, SelectProps>(({options, order, l
         }
     }
     const handleArrowClick = () => {
-        open ? inputRef.current?.blur() : inputRef.current?.focus();
+        if(!isMultiple){
+            open ? inputRef.current?.blur() : inputRef.current?.focus();
+        }else{
+            setOpen(!open)
+        }
     }
 
     const determineLabelTypography = () => {
@@ -262,7 +266,7 @@ const Select = React.forwardRef<HTMLDivElement, SelectProps>(({options, order, l
                         </div>
                     </div>
                 </div>
-                <div className="absolute py-2 options">
+                <div className={classnames(`sabsolute py-2 options ${isMultiple ? 'multiple-select-options' : ''}`)}>
                     <OptionSection />
                 </div>
             </div>
