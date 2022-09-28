@@ -865,6 +865,7 @@
       "select_appointment": "Please select appointment to view details.",
       "fetch_failed": "Could not retrieve appointments from server. Please try again later",
       "no_single_appointment_with_id": "It seems that your appointment has been canceled or rescheduled. Please contact us via phone or email so we can assist you.",
+      "cancel_failed": "Something went wrong. Please contact us via phone or email so we can assist you.",
       "appointment_details": "Appointment Details",
       "appointment_schedule": "Schedule Appointment",
       "see_appointment_details": "Please see your appointment details below.",

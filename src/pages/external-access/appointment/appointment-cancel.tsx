@@ -40,6 +40,8 @@ import {Location, Provider} from '@shared/models';
 import {getAppointments} from '@pages/patients/services/patients.service';
 import {AppointmentReschedulePath} from '@app/paths';
 import {CancellationReason} from '@shared/models/cancellation-reason.model';
+import { addSnackbarMessage } from '@shared/store/snackbar/snackbar.slice';
+import { SnackbarType } from '@components/snackbar/snackbar-type.enum';
 
 const AppointmentCancel = () => {
     dayjs.extend(utc);
@@ -132,6 +134,12 @@ const AppointmentCancel = () => {
     const cancelAppointmentMutation = useMutation(cancelAppointment, {
         onSuccess: () => {
             history.push(`/o/appointment-canceled`);
+        },
+        onError: () => {
+            dispatch(addSnackbarMessage({
+                message: 'external_access.appointments.cancel_failed',
+                type: SnackbarType.Error
+            }))
         }
     });
 
