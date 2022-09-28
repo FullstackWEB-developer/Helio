@@ -6,10 +6,12 @@ import {render} from '@testing-library/react';
 import TestWrapper from '@shared/test-utils/test-wrapper';
 import PerformanceChartQueueDropdown from '@pages/reports/components/performance-chart-queue-dropdown';
 import {QueueLabels} from '@pages/reports/components/performance-charts-graphic';
+import i18n from '../../../i18nForTests';
 
 describe("Performance Chart Queue Dropdown Tests", () => {
     let container: HTMLDivElement | null;
     beforeEach(async () => {
+        await i18n.init();
         dayjs.extend(duration);
         dayjs.extend(utc);
         container = document.createElement("div");

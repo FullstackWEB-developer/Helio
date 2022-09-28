@@ -9,6 +9,8 @@ import TestWrapper from '@shared/test-utils/test-wrapper';
 import EmailSummaryList from './email-summary-list';
 import Router from "react-router-dom";
 import EmailProvider from '@pages/email/context/email-context';
+import MockDate from 'mockdate';
+
 jest.mock("react-router-dom", () => ({
     ...jest.requireActual("react-router-dom"),
     useParams: jest.fn(),
@@ -37,6 +39,7 @@ describe("Email Summary List tests", () => {
 
     beforeEach(async () => {
         await i18n.init();
+        MockDate.set(dayjs('2018-04-04T16:00:00.000Z').toDate());
         dayjs.extend(duration);
         dayjs.extend(utc);
         dayjs.extend(customParseFormat);
@@ -50,6 +53,7 @@ describe("Email Summary List tests", () => {
             container.remove();
             container = null;
         }
+        MockDate.reset();
     });
 
     it("renders email-summary-list correctly", async () => {

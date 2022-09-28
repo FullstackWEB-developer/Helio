@@ -9,6 +9,7 @@ import React from 'react'
 import TestWrapper from '@shared/test-utils/test-wrapper';
 import TicketNew from '@pages/tickets/ticket-new';
 import {User} from '@shared/models';
+import MockDate from 'mockdate';
 
 describe("Ticket New tests", () => {
     let container: HTMLDivElement | null;
@@ -64,6 +65,7 @@ describe("Ticket New tests", () => {
 
     beforeEach(async () => {
         await i18n.init();
+        MockDate.set(dayjs('2018-04-04T16:00:00.000Z').toDate());
         dayjs.extend(duration);
         dayjs.extend(utc);
         dayjs.extend(customParseFormat);
@@ -77,6 +79,7 @@ describe("Ticket New tests", () => {
             container.remove();
             container = null;
         }
+        MockDate.reset();
     });
 
     it("renders new-ticket correctly", async () => {

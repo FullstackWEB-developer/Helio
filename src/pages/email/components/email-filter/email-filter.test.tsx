@@ -4,10 +4,12 @@ import duration from 'dayjs/plugin/duration';
 import utc from 'dayjs/plugin/utc';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import {unmountComponentAtNode} from 'react-dom';
-import {render,waitForElement,fireEvent} from '@testing-library/react';
+import {render, fireEvent} from '@testing-library/react';
 import TestWrapper from '@shared/test-utils/test-wrapper';
 import EmailFilter from './email-filter';
 import Router from "react-router-dom";
+import MockDate from 'mockdate';
+
 jest.mock("react-router-dom", () => ({
     ...jest.requireActual("react-router-dom"),
     useParams: jest.fn(),
@@ -35,6 +37,7 @@ describe("Email Filter tests", () => {
 
     beforeEach(async () => {
         await i18n.init();
+        MockDate.set(dayjs('2018-04-04T16:00:00.000Z').toDate());
         dayjs.extend(duration);
         dayjs.extend(utc);
         dayjs.extend(customParseFormat);
@@ -48,6 +51,7 @@ describe("Email Filter tests", () => {
             container.remove();
             container = null;
         }
+        MockDate.reset();
     });
 
     it("renders email-filter correctly", async () => {

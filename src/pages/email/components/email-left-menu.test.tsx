@@ -11,6 +11,8 @@ import Router from "react-router-dom";
 import EmailProvider, { EmailContext } from '@pages/email/context/email-context';
 import { EmailQueryType } from '../models/email-query-type';
 import { ChannelTypes, TicketMessageSummaryRequest } from '@shared/models';
+import MockDate from 'mockdate';
+
 jest.mock("react-router-dom", () => ({
     ...jest.requireActual("react-router-dom"),
     useParams: jest.fn(),
@@ -39,6 +41,7 @@ describe("Email Left Menu tests", () => {
 
     beforeEach(async () => {
         await i18n.init();
+        MockDate.set(dayjs('2018-04-04T16:00:00.000Z').toDate());
         dayjs.extend(duration);
         dayjs.extend(utc);
         dayjs.extend(customParseFormat);
@@ -52,6 +55,7 @@ describe("Email Left Menu tests", () => {
             container.remove();
             container = null;
         }
+        MockDate.reset();
     });
 
     it("renders email-left-menu correctly", async () => {
