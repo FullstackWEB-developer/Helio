@@ -16,6 +16,7 @@ import { SmsFilterParamModel } from './sms-filter.model';
 import classNames from 'classnames';
 import { setIsSmsFiltered } from '@pages/sms/store/sms.slice';
 import Button from '@components/button/button';
+import { selectAppUserDetails } from '@shared/store/app-user/appuser.selectors';
 const TIME_PERIOD_DATE_RANGE_OPTION = '3';
 
 interface SmsFilterProps {
@@ -32,6 +33,7 @@ const SmsFilter = ({ className, isUserFilterEnabled, value, defaultValue, ...pro
     const dispatch = useDispatch();
     const { t } = useTranslation();
     const userList = useSelector(selectUserOptions);
+    const appUser = useSelector(selectAppUserDetails);
     const [displayFilters, setDisplayFilters] = useState<boolean>(true);
     const [fromDateField, setFromDateField] = useState<Date | undefined>(value?.fromDate ? dayjs(value.fromDate).utc().toDate() : undefined);
     const { control, handleSubmit, watch, setValue, reset } = useForm<SmsFilterParamModel>({
@@ -130,7 +132,7 @@ const SmsFilter = ({ className, isUserFilterEnabled, value, defaultValue, ...pro
 
         if (filter.fromDate || filter.toDate) {
             dispatch(setIsSmsFiltered(true));
-        } else if(filter.assignedTo && isUserFilterEnabled){
+        } else if(filter.assignedTo !== appUser.id && filter.assignedTo && isUserFilterEnabled){
             dispatch(setIsSmsFiltered(true));
         }else {
             dispatch(setIsSmsFiltered(false));

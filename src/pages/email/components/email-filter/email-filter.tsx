@@ -40,6 +40,7 @@ const EmailFilter = ({ className, isUserFilterEnabled, value, ...props }: EmailF
     const dispatch = useDispatch();
     const [displayFilters, setDisplayFilters] = useState<boolean>(true);
     const isDefaultTeamView = useCheckPermission('Email.DefaultToTeamView');
+    const appUser = useSelector(selectAppUserDetails);
     const { id } = useSelector(selectAppUserDetails);
     const { t } = useTranslation();
     const userList = useSelector(selectUserOptions);
@@ -118,7 +119,9 @@ const EmailFilter = ({ className, isUserFilterEnabled, value, ...props }: EmailF
         };
 
         if (!!formData.assignedTo && isUserFilterEnabled) {
-            dispatch(setEmailHasFilter(true));
+            if(formData.assignedTo !== appUser.id){
+                dispatch(setEmailHasFilter(true));
+            }
             filter.assignedTo = formData.assignedTo;
         } else if (!isUserFilterEnabled) {
             filter.assignedTo = value?.assignedTo;
