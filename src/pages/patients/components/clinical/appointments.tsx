@@ -35,7 +35,7 @@ const Appointments = () => {
                 notes: data ? data.find(appointmentNote => appointmentNote.appointmentId.toString() === upcomingAppointment.appointmentId)?.notes : [] as AppointmentNote[]
             }
         });
-        return upcomingAppointments?.map((ua: Appointment) => <AppointmentDisplay key={ua.appointmentId} appointment={ua} border={true} isLast={false} isDetailed={true} />)
+        return upcomingAppointments?.map((ua: Appointment) => <AppointmentDisplay key={ua.appointmentId} appointment={ua} border={true} isLast={false} />)
     };
 
     const getContent = () => {

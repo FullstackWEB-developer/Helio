@@ -20,11 +20,10 @@ dayjs.extend(utc);
 interface AppointmentDisplayProps {
     appointment: Appointment,
     border?: boolean,
-    isLast?: boolean,
-    isDetailed?: boolean
+    isLast?: boolean
 }
 
-const AppointmentDisplay = ({ appointment, border, isLast, isDetailed }: AppointmentDisplayProps) => {
+const AppointmentDisplay = ({ appointment, border, isLast }: AppointmentDisplayProps) => {
     const department = useSelector((state: RootState) => selectDepartmentById(state, appointment.departmentId));
     const providers = useSelector(selectAllProviderList);
     const [appointmentTypeName, setAppointmentTypeName] = useState<string>('');
@@ -80,10 +79,7 @@ const AppointmentDisplay = ({ appointment, border, isLast, isDetailed }: Appoint
 
     return <Fragment>
         { isLast ? getAppointment() :
-            isDetailed ? <Fragment>
-                {getAppointment()}
-            </Fragment> :
-            <div className={`pt-2 ${getBorder()}`}>
+            <div className={`grid grid-cols-2 gap-4 pt-2 ${getBorder()}`}>
                 <div>
                     <div className='body2-medium'>{dateStr()}</div>
                     <div className={'subtitle2'}>{provider?.displayName}</div>
