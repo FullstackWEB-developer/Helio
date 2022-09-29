@@ -103,7 +103,6 @@ const EmailLeftMenu = () => {
                 <div className='pb-2 pl-5 border-b'>
                     <DropdownLabel
                         dataTestId='email-query-type-changer'
-                        title="email-query-type-changer"
                         items={[
                             {label: 'email.query_type.my_email', value: EmailQueryType.MyEmail},
                             {label: 'email.query_type.team_email', value: EmailQueryType.TeamEmail}
