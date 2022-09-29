@@ -294,7 +294,7 @@ const Ccp: React.FC<BoxProps> = ({
     }, [initiateInternalCall])
 
     const updateContactForInternalCall = () => {
-        if(parentTicketId){
+        if(parentTicketId || !internalCallDetails){
             return;
         }
         updateAttributesForInternalMutation.mutate({
@@ -497,7 +497,8 @@ const Ccp: React.FC<BoxProps> = ({
                 }
             });
 
-            contact.onDestroy((contact) => {
+            contact.onEnded((contact) => {
+                dispatch(setInitiateInternalCall(false));
                 dispatch(removeCurrentBotContext(contact.contactId));
                 dispatch(setInternalCallDetails(undefined));
                 if (isInboundCall) {
