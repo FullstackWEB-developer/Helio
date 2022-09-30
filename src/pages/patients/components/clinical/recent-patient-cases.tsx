@@ -7,7 +7,7 @@ import {useQuery} from 'react-query';
 import {ExtendedPatient} from '@pages/patients/models/extended-patient';
 import {useSelector} from 'react-redux';
 import {selectPatient} from '@pages/patients/store/patients.selectors';
-import {GetPatientCases} from '@constants/react-query-constants';
+import {FiveMinute, GetPatientCases} from '@constants/react-query-constants';
 import {getPatientCases} from '@pages/patients/services/patients.service';
 import Spinner from '@components/spinner/Spinner';
 
@@ -19,7 +19,9 @@ const RecentPatientCases = () => {
     const {data: cases, isFetching: fetchingPatientCases} = useQuery([GetPatientCases, patient.patientId],
         () => getPatientCases({patientId: patient.patientId, departmentId: patient.departmentId}),
         {
-            enabled: !!patient.patientId
+            enabled: !!patient.patientId,
+            cacheTime: FiveMinute,
+            staleTime: Infinity
         });
 
     const tableModel: TableModel = {

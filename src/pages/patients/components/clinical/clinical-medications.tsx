@@ -3,7 +3,7 @@ import {TableModel} from '@components/table/table.models';
 import {useTranslation} from 'react-i18next';
 import dayjs from 'dayjs';
 import {useQuery} from 'react-query';
-import {QueryPatientMedication} from '@constants/react-query-constants';
+import {FiveMinute, QueryPatientMedication} from '@constants/react-query-constants';
 import {ExtendedPatient} from '@pages/patients/models/extended-patient';
 import {useSelector} from 'react-redux';
 import {selectPatient} from '@pages/patients/store/patients.selectors';
@@ -15,7 +15,9 @@ const ClinicalMedications = () => {
     const patient: ExtendedPatient = useSelector(selectPatient);
     const {data: medications, isFetching} = useQuery([QueryPatientMedication, patient.patientId],
         () => getPatientMedications(patient.patientId), {
-        enabled: !!patient.patientId
+        enabled: !!patient.patientId,
+        cacheTime: FiveMinute,
+        staleTime: Infinity
     });
 
     const tableModel: TableModel = {

@@ -5,7 +5,7 @@ import {getAppointmentNotes} from '@pages/appointments/services/appointments.ser
 import {AppointmentNote, AppointmentNoteInfo} from '@pages/appointments/models/note.model';
 import {Appointment} from '@pages/external-access/appointment/models/appointment.model';
 import Spinner from '@components/spinner/Spinner';
-import {GetPatientAppointments} from '@constants/react-query-constants';
+import {FiveMinute, GetPatientAppointments} from '@constants/react-query-constants';
 import {ExtendedPatient} from '@pages/patients/models/extended-patient';
 import {selectPatient} from '@pages/patients/store/patients.selectors';
 import {useSelector} from 'react-redux';
@@ -18,13 +18,17 @@ const Appointments = () => {
     const {data: appointments, isFetching: isFetchingAppointments} = useQuery([GetPatientAppointments, patient.patientId],
         () => getAppointmentsForPatientChart(patient.patientId),
         {
-            enabled: !!patient.patientId
+            enabled: !!patient.patientId,
+            cacheTime: FiveMinute,
+            staleTime: Infinity
         });
 
     const {isLoading, error, data} = useQuery<AppointmentNoteInfo[], Error>("appointmentNotes", () =>
         getAppointmentNotes(appointments?.upcomingAppointments),
         {
-            enabled: !!appointments && appointments.upcomingAppointments && appointments.upcomingAppointments.length > 0
+            enabled: !!appointments && appointments.upcomingAppointments && appointments.upcomingAppointments.length > 0,
+            cacheTime: FiveMinute,
+            staleTime: Infinity
         }
     );
 

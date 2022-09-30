@@ -9,7 +9,7 @@ import utils from '../../../../shared/utils/utils';
 import {Insurance} from '@pages/patients/models/insurance';
 import {SelfPayInsuranceTypeName} from '@pages/patients/patient-constants';
 import {useQuery} from 'react-query';
-import {GetPatientInsurance} from '@constants/react-query-constants';
+import {FiveMinute, GetPatientInsurance} from '@constants/react-query-constants';
 import {getPatientInsurance} from '@pages/patients/services/patients.service';
 import Spinner from '@components/spinner/Spinner';
 
@@ -19,7 +19,9 @@ const PatientInsurance = () => {
 
     const {data: insurances, isFetching: fetchingInsuranceData} = useQuery([GetPatientInsurance, patient.patientId], () => getPatientInsurance(patient.patientId),
         {
-            enabled: !!patient.patientId
+            enabled: !!patient.patientId,
+            cacheTime: FiveMinute,
+            staleTime: Infinity
         });
     const primaryInsuranceHeader = (insurance: Insurance) => patientUtils.getInsuranceHeader(insurance, t('common.not_available'));
 

@@ -6,7 +6,7 @@ import {useQuery} from 'react-query';
 import {ExtendedPatient} from '@pages/patients/models/extended-patient';
 import {useSelector} from 'react-redux';
 import {selectPatient} from '@pages/patients/store/patients.selectors';
-import {GetLabResults} from '@constants/react-query-constants';
+import {FiveMinute, GetLabResults} from '@constants/react-query-constants';
 import {getPatientsLabResults} from '@pages/external-access/lab-results/services/lab-results.service';
 import {RequestChannel} from '@shared/models/request.channel.enum';
 import Spinner from '@components/spinner/Spinner';
@@ -17,7 +17,9 @@ const ClinicalLabResults = () => {
     const {data: labResults, isFetching} = useQuery([GetLabResults, patient.patientId],
         () => getPatientsLabResults(patient.patientId, patient.departmentId ? patient.departmentId : patient.primaryDepartmentId, false, RequestChannel.Agent),
         {
-            enabled: !!patient.patientId
+            enabled: !!patient.patientId,
+            cacheTime: FiveMinute,
+            staleTime: Infinity
         });
 
     const tableModel: TableModel = {

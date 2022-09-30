@@ -14,6 +14,7 @@ import './patient-chart.scss';
 import {getPatientById} from './services/patients.service';
 import Spinner from '@components/spinner/Spinner';
 import NoSearchResults from '@components/search-bar/components/no-search-results';
+import { useQueryClient } from 'react-query';
 
 interface PatientParams {
     patientId: string
@@ -22,6 +23,7 @@ interface PatientParams {
 const PatientChart = () => {
     const dispatch = useDispatch();
     const {t} = useTranslation();
+    const queryClient = useQueryClient()
     const {patientId} = useParams<PatientParams>();
     const loading = useSelector(selectPatientLoading);
     const error = useSelector(selectIsPatientError);
@@ -59,6 +61,7 @@ const PatientChart = () => {
     }
 
     const refreshPatient = () => {
+        queryClient.clear();
         dispatch(getPatientById(patientId, {includeInsuranceInfo: false}));
     }
 

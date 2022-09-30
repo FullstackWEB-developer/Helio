@@ -9,7 +9,7 @@ import utc from 'dayjs/plugin/utc';
 import {useQuery} from 'react-query';
 import {AppointmentType} from '@pages/external-access/appointment/models';
 import {AxiosError} from 'axios';
-import {GetAppointmentType, OneMinute} from '@constants/react-query-constants';
+import {FiveMinute, GetAppointmentType, OneMinute} from '@constants/react-query-constants';
 import {
     getAppointmentTypeById
 } from '@pages/appointments/services/appointments.service';
@@ -34,8 +34,8 @@ const AppointmentDisplay = ({ appointment, border, isLast }: AppointmentDisplayP
 
     useQuery<AppointmentType, AxiosError>([GetAppointmentType, appointment.appointmentTypeId], () => getAppointmentTypeById(appointment.appointmentTypeId), {
         enabled: !!appointment?.appointmentTypeId,
-        cacheTime: 5 * OneMinute,
-        staleTime: 0,
+        cacheTime: FiveMinute,
+        staleTime: Infinity,
         onSuccess: (data) => {
             if (data && data.name) {
                 setAppointmentTypeName(data.name);

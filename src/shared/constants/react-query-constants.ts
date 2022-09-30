@@ -34,6 +34,7 @@ export const GetDashboard = 'get-dashboard';
 export const QueryContactsInfinite = 'contacts';
 export const QueryContacts = 'query-contacts';
 export const OneMinute = 60000;
+export const FiveMinute = 5* OneMinute;
 export const QueryContactNotes = 'contact-notes';
 export const QueryCompanyContacts = 'company-contacts';
 export const QueryUserById = 'get-user'
