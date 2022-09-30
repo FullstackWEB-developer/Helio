@@ -736,7 +736,7 @@
       "related_tickets":{
         "title": "Related Tickets",
         "parent_ticket": "Parent: <0>{{ticketNumber}}</0>",
-        "children_tickets": "Children"
+        "children_tickets": "Linked Tickets"
       }
     },
     "note": {
