@@ -1,7 +1,16 @@
 import Checkbox, {CheckboxCheckEvent} from '@components/checkbox/checkbox';
 import Pagination from '@components/pagination/pagination';
 import {GetUserList} from '@constants/react-query-constants';
-import {ChangeUserStatusRequest, Dictionary, InviteUserRequest, PagedList, Paging, UserDetail, UserDetailStatus, UserInvitationStatus} from '@shared/models';
+import {
+    ChangeUserStatusRequest,
+    Dictionary,
+    InviteUserRequest,
+    PagedList,
+    Paging,
+    UserDetail,
+    UserDetailStatus,
+    UserInvitationStatus
+} from '@shared/models';
 import {changeUserStatus, getUsers, resendInvite} from '@shared/services/user.service';
 import {setGlobalLoading} from '@shared/store/app/app.slice';
 import {useEffect, useState} from 'react';
@@ -14,7 +23,7 @@ import UserListActions from './user-list-actions';
 import UserFilter from './user-filter';
 import './user-list.scss';
 import {selectIsUsersFilterOpen, selectUserFilters, selectUsersPaging} from '../store/users.selectors';
-import {setUsersPagination} from '../store/users.slice';
+import {setUserFilters, setUsersPagination} from '../store/users.slice';
 import queryString from 'query-string';
 import {useHistory} from 'react-router';
 import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
@@ -48,6 +57,14 @@ const UserList = () => {
                 }));
             }
         });
+
+    useEffect(() => {
+        history.listen((location) => {
+            if (!location.pathname.startsWith('/users')) {
+                dispatch(setUserFilters({filters: undefined, resetPagination: true}));
+            }
+        });
+    }, [history])
 
     useEffect(() => {
         dispatch(setGlobalLoading(isFetching));
@@ -235,13 +252,12 @@ const UserList = () => {
     const handleAllCheck = (e: CheckboxCheckEvent) => {
         const copy = {...userSelected};
         data?.results.forEach(user => {
-            const userChecked = {
+            copy[user.id] = {
                 checkboxCheckEvent: {value: user.id, checked: e.checked},
                 userInvitationStatus: user.invitationStatus,
                 userStatus: user.status,
                 userEmail: user.email
-            }
-            copy[user.id] = userChecked;
+            };
         });
         setUserSelected(copy);
         setCheckAll(e.checked);
@@ -371,7 +387,7 @@ const UserList = () => {
                                     <div className='truncate'></div>
                                 </div>
                                 {
-                                    data && data.results?.map((u: UserDetail, index: number) => (
+                                    data && data.results?.map((u: UserDetail) => (
                                         <div key={u.id}
                                             className={`user-list-grid data-row px-6 body2 group ${isRowChecked(u.id) ? 'checked' : ''}`} onMouseLeave={() => setForceMoreMenuClose(!forceMoreMenuClose)}>
                                             <div>
