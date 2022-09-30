@@ -300,7 +300,7 @@
       "contact_number_blocked": "Contact's phone number is blocked.",
       "unknown_number_blocked": "This phone number is blocked."
     },
-    "cannot_update_status_fw_enabled": "You cannot update your status, because your calls / chats are forwarded.\n Please turn forwarding off before changing status",
+    "cannot_update_status_fw_enabled": "To change your status, please turn of call forwarding on your profile.",
     "could_not_update_to_fw_enabled": "Could not update your status to 'Forwarding Enabled' on AWS Connect.  \n You can still get calls/chats",
     "call_chat_fw_enabled_header": "Calls & Chats are forwarded.",
     "call_chat_fw_explanation": "When you enable forwarding, you will not get any chats or calls."
