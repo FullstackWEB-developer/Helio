@@ -37,10 +37,6 @@ const EditAppointmentType = () => {
     const [appointmentType, setAppointmentType] = useState<AppointmentType>();
     const [currentLength, setCurrentLength] = useState<number>(0);
     const [currentCancelationFee, setCurrentCancelationFee] = useState<string>("");
-    const [selectableByPatient, setSelectableByPatient] = useState<boolean>(false);
-    const [isCancelable, setIsCancelable] = useState<boolean>(false);
-    const [isReschedulable, setIsReschedulable] = useState<boolean>(false);
-    const [patientType, setPatientType] = useState<number>(1);
     const providers = useSelector(selectProviderList);
     const [selectedProviders, setSelectedProviders] = useState<Provider[]>([]);
     const [warning, setWarning] = useState<boolean>(false);
@@ -62,20 +58,11 @@ const EditAppointmentType = () => {
         item => item
     ), [providers])
 
-    const PatientTypeOptions: Option[] = [
+    const patientTypeOptions: Option[] = [
         { value: String(PatientAppointmentType.Established), label: t('configuration.appointment_type_details.established_patient') },
         { value: String(PatientAppointmentType.New), label: t('configuration.appointment_type_details.new_patient') },
         { value: String(PatientAppointmentType.All), label: t('configuration.appointment_type_details.all') },
     ]
-
-    useEffect(() => {
-        control.trigger().then();
-    }, [isReschedulable, isCancelable]);
-
-    const onSelectableByPatientChange = () => setSelectableByPatient(!selectableByPatient);
-    const onCancelableChange = () => { setIsCancelable(!isCancelable); clearErrors(["cancelationFee", "cancelationTimeFrame"]); }
-    const onIsReschedulableChange = () => {setIsReschedulable(!isReschedulable); clearErrors(["rescheduleTimeFrame"]);};
-    const onSelectPatientTypeChange = (value: Option | undefined) => setPatientType(value?.value ? +value?.value : 0);
 
     useEffect(() => {
         dispatch(getProviders());
@@ -107,14 +94,14 @@ const EditAppointmentType = () => {
                 instructions: formData.instructions,
                 name: formData.name,
                 description: formData.description,
-                cancelable: isCancelable,
+                cancelable: formData.isCancelable === 'true',
                 cancelationTimeFrame: formData.cancelationTimeFrame ? parseInt(formData.cancelationTimeFrame) : 0,
                 cancelationFee: formData.cancelationFee ? parseInt(formData.cancelationFee) : 0,
-                reschedulable: isReschedulable,
+                reschedulable: formData.isReschedulable === 'true',
                 rescheduleTimeFrame: formData.rescheduleTimeFrame ? parseInt(formData.rescheduleTimeFrame) : 0,
-                selectableByPatient: selectableByPatient,
+                selectableByPatient: formData.selectableByPatient === 'true',
                 selectedProviders: selectedProviders.map(a => a.id),
-                patientType: patientType,
+                patientType: !!formData.patientType ? parseInt(formData.patientType) : 0,
                 createdByName: appointmentType.createdByName,
                 createdOn: appointmentType.createdOn
             })
@@ -124,12 +111,8 @@ const EditAppointmentType = () => {
         useQuery([GetAppointmentType], () => getAppointmentTypeById(parseInt(id)), {
             onSuccess: (data) => {
                 setAppointmentType(data);
-                setSelectableByPatient(data.selectableByPatient);
                 setCurrentCancelationFee(data.cancelationFee ? data.cancelationFee.toString() : "");
-                setIsCancelable(data.cancelable);
-                setIsReschedulable(data.reschedulable);
                 setCurrentLength(data.description?.length ?? 0);
-                setPatientType(data.patientType.valueOf())
             },
 
             onError: () => {
@@ -154,8 +137,10 @@ const EditAppointmentType = () => {
         setSelectedProviders(apptProviders);
     }, [appointmentType, providers]);
 
-    const { handleSubmit, clearErrors, control, formState: { isValid, isDirty, isSubmitSuccessful } } = useForm({ mode: 'all'});
+    const { handleSubmit, watch, control, formState: { isValid, isDirty, isSubmitSuccessful } } = useForm({ mode: 'all'});
 
+    const isReschedulable = watch('isReschedulable') === 'true';
+    const isCancelable = watch('isCancelable') === 'true';
     const navigateBackToAppointmentTypeList = () => {
         const pathName = `${ConfigurationsPath}/appointment-type`;
         history.push({
@@ -233,7 +218,6 @@ const EditAppointmentType = () => {
                                 name='selectableByPatient'
                                 control={control}
                                 defaultValue={String(appointmentType.selectableByPatient)}
-                                onChange={onSelectableByPatientChange}
                                 render={(controllerProps) => (
                                     <Radio name={controllerProps.name} ref={controllerProps.ref} className='flex space-x-8 mt-2' defaultValue={String(appointmentType.selectableByPatient)} items={YesNoOptions} onChange={(e: string) => { controllerProps.onChange(e); }} />
                                 )}
@@ -244,10 +228,9 @@ const EditAppointmentType = () => {
                                 name={`patientType`}
                                 label='configuration.appointment_type_details.patient_type'
                                 className='w-1/3'
-                                options={PatientTypeOptions}
+                                options={patientTypeOptions}
                                 control={control}
-                                defaultValue={PatientTypeOptions.find(x => x.value === appointmentType.patientType.valueOf().toString())}
-                                onSelect={onSelectPatientTypeChange}
+                                defaultValue={patientTypeOptions.find(x => x.value === appointmentType.patientType.valueOf().toString())?.value}
                             />
                         </div>
                     </div>
@@ -256,10 +239,9 @@ const EditAppointmentType = () => {
                         <div className='w-1/5'>
                             <span className='body2'>{t('configuration.appointment_type_details.can_be_rescheduled')}</span>
                             <Controller
-                                name='reschedulable'
+                                name='isReschedulable'
                                 control={control}
                                 defaultValue={String(appointmentType.reschedulable)}
-                                onChange={onIsReschedulableChange}
                                 render={(controllerProps) => (
                                     <Radio name={controllerProps.name} ref={controllerProps.ref} className='flex space-x-8 mt-2' defaultValue={String(appointmentType.reschedulable)} items={YesNoOptions} onChange={(e: string) => { controllerProps.onChange(e); }} />
                                 )}
@@ -286,10 +268,9 @@ const EditAppointmentType = () => {
                         <div className='w-1/5'>
                             <span className='body2'>{t('configuration.appointment_type_details.can_be_canceled')}</span>
                             <Controller
-                                name='cancelable'
+                                name='isCancelable'
                                 control={control}
                                 defaultValue={String(appointmentType.cancelable)}
-                                onChange={onCancelableChange}
                                 render={(controllerProps) => (
                                     <Radio name={controllerProps.name} ref={controllerProps.ref} className='flex space-x-8 mt-2' defaultValue={String(appointmentType.cancelable)} items={YesNoOptions} onChange={(e: string) => { controllerProps.onChange(e); }} />
                                 )}
