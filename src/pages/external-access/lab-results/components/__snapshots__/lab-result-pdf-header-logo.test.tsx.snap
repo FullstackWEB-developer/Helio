@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Lab Result Pdf Header logo tests renders Lab Result Pdf Header logo correctly 1`] = `
+<DocumentFragment>
+  <img
+    alt="Logo"
+    src="{\\"logoPath\\":\\"practice-logo.svg\\",\\"primaryColor\\":\\"#00cc88\\",\\"hoverColor\\":\\"#2dbe7e\\",\\"focusedColor\\":\\"#2ab378\\",\\"secondaryColor\\":\\"#00cc88\\",\\"tertiaryColor\\":\\"#212121\\"}practice-logo.svg"
+  />
+</DocumentFragment>
+`;

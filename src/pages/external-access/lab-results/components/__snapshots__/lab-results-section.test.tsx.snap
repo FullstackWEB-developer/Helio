@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Lab Results Section tests renders Lab Results Section correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="w-full pt-2"
+  >
+    <div
+      class="pb-2 lab-results-border-bottom h-10"
+    >
+      section
+    </div>
+    <div
+      class="py-4"
+    >
+      <div>
+        Burak
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

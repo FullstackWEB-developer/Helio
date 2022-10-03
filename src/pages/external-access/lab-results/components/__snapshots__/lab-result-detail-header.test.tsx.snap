@@ -1,0 +1,99 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Lab Result Detail Header tests renders Lab Result Detail Header correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="flex flex-col mb-6"
+  >
+    <div
+      class="flex justify-between items-center mb-4"
+    >
+      <div
+        class="flex items-center cursor-pointer"
+      >
+        <div
+          class=""
+        >
+          <svg
+            class="icon-medium "
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect
+              fill="none"
+              height="24"
+              width="24"
+            />
+            <path
+              class="lab-result-icons-fill"
+              d="M-1.408,10.085H-19.121l5.32,5.052a1.324,1.324,0,0,1,.419.96,1.324,1.324,0,0,1-.419.96,1.468,1.468,0,0,1-1.01.4,1.468,1.468,0,0,1-1.01-.4l-7.76-7.37a1.311,1.311,0,0,1,0-1.92L-15.822.4A1.463,1.463,0,0,1-14.811,0,1.462,1.462,0,0,1-13.8.4a1.324,1.324,0,0,1,.419.96,1.324,1.324,0,0,1-.419.96l-5.32,5.053H-1.408A1.394,1.394,0,0,1,0,8.727,1.394,1.394,0,0,1-1.408,10.085Z"
+              transform="translate(24 3)"
+            />
+          </svg>
+        </div>
+        <span
+          class="body2 pl-2"
+        >
+          external_access.lab_results.back_to_tests
+        </span>
+      </div>
+      <div
+        class="flex items-center cursor-pointer"
+      >
+        <div
+          class=""
+        >
+          <svg
+            class="icon-large "
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect
+              fill="none"
+              height="24"
+              width="24"
+            />
+            <path
+              class="lab-result-icons-fill"
+              d="M19,9H15V3H9V9H5l7,7ZM5,18v2H19V18Z"
+              transform="translate(0 1)"
+            />
+          </svg>
+        </div>
+        <span
+          class="pl-6"
+        />
+        <div
+          class=""
+        >
+          <svg
+            class="icon-large "
+            height="32"
+            viewBox="0 0 32 32"
+            width="32"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect
+              fill="none"
+              height="32"
+              width="32"
+            />
+            <path
+              class="lab-result-icons-fill"
+              d="M26.667,12.667H8a4,4,0,0,0-4,4v8H9.333V30h16V24.667h5.333v-8A4,4,0,0,0,26.667,12.667Zm-4,14.667H12V20.667H22.667Zm4-9.333A1.333,1.333,0,1,1,28,16.667,1.329,1.329,0,0,1,26.667,18ZM25.333,6h-16v5.333h16Z"
+              transform="translate(-1.333 -2)"
+            />
+          </svg>
+        </div>
+      </div>
+    </div>
+    <h4>
+      My Lab Result
+    </h4>
+  </div>
+</DocumentFragment>
+`;

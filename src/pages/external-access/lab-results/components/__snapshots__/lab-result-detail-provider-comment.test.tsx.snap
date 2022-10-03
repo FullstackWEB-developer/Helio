@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Lab Result Detail Provider Comment tests renders Lab Result Detail Provider Comment correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="w-full p-6 lab-results-border flex flex-col"
+  >
+    <span
+      class="subtitle pb-5"
+    >
+      external_access.lab_results.providers_comment
+    </span>
+    <div
+      class="flex flex-row items-start"
+    >
+      <div
+        class="flex flex-col"
+      >
+        <span
+          class="subtitle2 pb-3"
+        />
+        <span
+          class="body2"
+        >
+          patient Note
+        </span>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

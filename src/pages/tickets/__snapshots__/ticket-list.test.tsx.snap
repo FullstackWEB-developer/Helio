@@ -389,7 +389,7 @@ exports[`Ticket List tests renders ticket-list correctly 1`] = `
                       autocomplete="off"
                       class="relative truncate flex-shrink flex-grow flex-auto leading-normal w-px pl-4 body2 input-pt h-14 cursor-pointer"
                       data-testid="fromDate"
-                      max="2022-09-22"
+                      max="2022-10-03"
                       min="0001-01-01"
                       name="fromDate"
                       readonly=""
@@ -445,7 +445,7 @@ exports[`Ticket List tests renders ticket-list correctly 1`] = `
                       class="relative truncate flex-shrink flex-grow flex-auto leading-normal w-px pl-4 body2 input-pt h-14 cursor-pointer"
                       data-testid="toDate"
                       disabled=""
-                      max="2022-09-22"
+                      max="2022-10-03"
                       min="0001-01-01"
                       name="toDate"
                       readonly=""
@@ -1098,6 +1098,284 @@ exports[`Ticket List tests renders ticket-list correctly 1`] = `
                       </div>
                     </div>
                   </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div
+              class="cursor-pointer flex flex-row justify-between items-center h-12"
+            >
+              <div
+                class="subtitle"
+              >
+                tickets.filter.patient_ratings
+              </div>
+              <div>
+                <div
+                  class=""
+                >
+                  <svg
+                    class="cursor-pointer "
+                    height="24"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <rect
+                      fill="none"
+                      height="24"
+                      width="24"
+                    />
+                    <path
+                      class="active-item-icon"
+                      d="M7,14l1.273-1.273L2.545,7,8.273,1.273,7,0,0,7Z"
+                      transform="translate(5 16.273) rotate(-90)"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <div
+              hidden=""
+            >
+              <div>
+                <div
+                  class="h-9"
+                >
+                  <label
+                    class="flex flex-row items-center checkbox-button"
+                  >
+                    <input
+                      class="checkbox"
+                      data-test-id="patientRating-checkbox-0"
+                      id="patientRating[0]_0"
+                      name="patientRating[0]"
+                      type="checkbox"
+                    />
+                    <span
+                      class="checkbox-control"
+                    >
+                      <div
+                        class=""
+                      >
+                        <svg
+                          class="icon-medium "
+                          height="24"
+                          viewBox="0 0 24 24"
+                          width="24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <rect
+                            fill="none"
+                            height="24"
+                            width="24"
+                          />
+                          <path
+                            class="svg-checkbox"
+                            d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                          />
+                        </svg>
+                      </div>
+                    </span>
+                    <div
+                      class="truncate relative w-full h-full inline-block"
+                    >
+                      <span
+                        class="w-60 w-60"
+                      >
+                        common.all
+                      </span>
+                    </div>
+                  </label>
+                </div>
+                <div
+                  class="h-9"
+                >
+                  <label
+                    class="flex flex-row items-center checkbox-button"
+                  >
+                    <input
+                      class="checkbox"
+                      data-test-id="patientRating-checkbox-1"
+                      id="patientRating[1]_1"
+                      name="patientRating[1]"
+                      type="checkbox"
+                    />
+                    <span
+                      class="checkbox-control"
+                    >
+                      <div
+                        class=""
+                      >
+                        <svg
+                          class="icon-medium "
+                          height="24"
+                          viewBox="0 0 24 24"
+                          width="24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <rect
+                            fill="none"
+                            height="24"
+                            width="24"
+                          />
+                          <path
+                            class="svg-checkbox"
+                            d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                          />
+                        </svg>
+                      </div>
+                    </span>
+                    <div
+                      class="truncate relative w-full h-full inline-block"
+                    >
+                      <span
+                        class="w-60 w-60"
+                      >
+                        Happy
+                      </span>
+                    </div>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div
+              class="cursor-pointer flex flex-row justify-between items-center h-12"
+            >
+              <div
+                class="subtitle"
+              >
+                tickets.filter.bot_ratings
+              </div>
+              <div>
+                <div
+                  class=""
+                >
+                  <svg
+                    class="cursor-pointer "
+                    height="24"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <rect
+                      fill="none"
+                      height="24"
+                      width="24"
+                    />
+                    <path
+                      class="active-item-icon"
+                      d="M7,14l1.273-1.273L2.545,7,8.273,1.273,7,0,0,7Z"
+                      transform="translate(5 16.273) rotate(-90)"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <div
+              hidden=""
+            >
+              <div>
+                <div
+                  class="h-9"
+                >
+                  <label
+                    class="flex flex-row items-center checkbox-button"
+                  >
+                    <input
+                      class="checkbox"
+                      data-test-id="botRating-checkbox-0"
+                      id="botRating[0]_0"
+                      name="botRating[0]"
+                      type="checkbox"
+                    />
+                    <span
+                      class="checkbox-control"
+                    >
+                      <div
+                        class=""
+                      >
+                        <svg
+                          class="icon-medium "
+                          height="24"
+                          viewBox="0 0 24 24"
+                          width="24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <rect
+                            fill="none"
+                            height="24"
+                            width="24"
+                          />
+                          <path
+                            class="svg-checkbox"
+                            d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                          />
+                        </svg>
+                      </div>
+                    </span>
+                    <div
+                      class="truncate relative w-full h-full inline-block"
+                    >
+                      <span
+                        class="w-60 w-60"
+                      >
+                        common.all
+                      </span>
+                    </div>
+                  </label>
+                </div>
+                <div
+                  class="h-9"
+                >
+                  <label
+                    class="flex flex-row items-center checkbox-button"
+                  >
+                    <input
+                      class="checkbox"
+                      data-test-id="botRating-checkbox-1"
+                      id="botRating[1]_1"
+                      name="botRating[1]"
+                      type="checkbox"
+                    />
+                    <span
+                      class="checkbox-control"
+                    >
+                      <div
+                        class=""
+                      >
+                        <svg
+                          class="icon-medium "
+                          height="24"
+                          viewBox="0 0 24 24"
+                          width="24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <rect
+                            fill="none"
+                            height="24"
+                            width="24"
+                          />
+                          <path
+                            class="svg-checkbox"
+                            d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                          />
+                        </svg>
+                      </div>
+                    </span>
+                    <div
+                      class="truncate relative w-full h-full inline-block"
+                    >
+                      <span
+                        class="w-60 w-60"
+                      >
+                        Happy
+                      </span>
+                    </div>
+                  </label>
                 </div>
               </div>
             </div>

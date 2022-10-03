@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Lab Result Observation Item tests renders Lab Result Observation Item correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="px-4 observations-grid data-row body2 note-mode"
+  >
+    <div>
+      name
+    </div>
+    <div
+      class="flex items-center justify-start"
+    >
+      <span
+        class=""
+      >
+        3
+      </span>
+    </div>
+    <div>
+      3-10
+    </div>
+    <div>
+      day
+    </div>
+    <div />
+    <div
+      class="col-span-3"
+    >
+      <pre
+        class="whitespace-pre-wrap py-3 body3"
+      >
+        note
+      </pre>
+    </div>
+  </div>
+</DocumentFragment>
+`;

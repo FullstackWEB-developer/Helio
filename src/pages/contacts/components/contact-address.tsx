@@ -96,6 +96,7 @@ const ContactAddress = ({title, addressType, control, removeCTAClickHandler}: Co
                     <ControlledInput
                         name={`${determineFormNamePrefix()}AddressLine`}
                         control={control}
+                        defaultValue=''
                         disabled={disabledFields}
                         label={t('contacts.contact_details.individual.address')}
                         dataTestId={`contact-${determineFormNamePrefix()}-address-line`}
@@ -105,6 +106,7 @@ const ContactAddress = ({title, addressType, control, removeCTAClickHandler}: Co
                     <ControlledInput
                         name={`${determineFormNamePrefix()}Apt`}
                         control={control}
+                        defaultValue=''
                         disabled={disabledFields}
                         label={t('contacts.contact_details.individual.apt')}
                         dataTestId={`contact${determineFormNamePrefix()}-address-apt`}
@@ -115,6 +117,7 @@ const ContactAddress = ({title, addressType, control, removeCTAClickHandler}: Co
                         name={`${determineFormNamePrefix()}City`}
                         control={control}
                         disabled={disabledFields}
+                        defaultValue=''
                         label={t('contacts.contact_details.individual.city')}
                         dataTestId={`contact-${determineFormNamePrefix()}-address-city`}
                     />
@@ -123,6 +126,7 @@ const ContactAddress = ({title, addressType, control, removeCTAClickHandler}: Co
                     <ControlledSelect
                         name={`${determineFormNamePrefix()}State`}
                         disabled={disabledFields}
+                        defaultValue=''
                         control={control}
                         label={t('contacts.contact_details.individual.state')}
                         options={options}
@@ -139,6 +143,7 @@ const ContactAddress = ({title, addressType, control, removeCTAClickHandler}: Co
                         maxLength={5}
                         disabled={disabledFields}
                         control={control}
+                        defaultValue=''
                         label={t('contacts.contact_details.individual.zip_code')} dataTestId={`contact-${determineFormNamePrefix()}-zip-code`} />
                 </div>
             </div>

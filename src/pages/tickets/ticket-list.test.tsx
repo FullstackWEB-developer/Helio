@@ -12,6 +12,7 @@ import {Paging, User, UserDetail} from '@shared/models';
 import initialAppUserState from '@shared/store/app-user/appuser.initial-state';
 import {TicketQuery} from '@pages/tickets/models/ticket-query';
 import {Ticket} from '@pages/tickets/models/ticket';
+import {TicketEnumValue} from '@pages/tickets/models/ticket-enum-value.model';
 
 fdescribe("Ticket List tests", () => {
     let container: HTMLDivElement | null;
@@ -45,7 +46,13 @@ fdescribe("Ticket List tests", () => {
                 email:'asdasd@asdas.com',
                 latestConnectStatus: 'Available',
                 profilePicture: 'test'
-            }] as User[]
+            }] as User[],
+            ratingOptions: [
+                {
+                    key: 1,
+                    value: 'Happy'
+                }
+            ] as TicketEnumValue[]
         }
     };
 
