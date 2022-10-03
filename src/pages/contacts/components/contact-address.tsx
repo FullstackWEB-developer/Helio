@@ -45,14 +45,20 @@ const ContactAddress = ({title, addressType, control, removeCTAClickHandler}: Co
         setDisabledField(event.checked);
         const prefix = determineFormNamePrefix();
         if (!event.checked) {
-            control.setValue(`${prefix}AddressLine`, '');
+            control.setValue(`${prefix}AddressLine`, '', {
+                shouldValidate: true,
+                shouldDirty: true
+            });
             control.setValue(`${prefix}Apt`, '');
             control.setValue(`${prefix}City`, '');
             control.setValue(`${prefix}State`, '');
             control.setValue(`${prefix}ZipCode`, '');
         } else {
             const primaryName = 'primary';
-            control.setValue(`${prefix}AddressLine`, control.getValues(`${primaryName}AddressLine`));
+            control.setValue(`${prefix}AddressLine`, control.getValues(`${primaryName}AddressLine`), {
+                shouldValidate: true,
+                shouldDirty: true
+            });
             control.setValue(`${prefix}Apt`, control.getValues(`${primaryName}Apt`));
             control.setValue(`${prefix}City`, control.getValues(`${primaryName}City`));
             control.setValue(`${prefix}State`, control.getValues(`${primaryName}State`));
