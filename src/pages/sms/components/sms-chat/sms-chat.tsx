@@ -102,13 +102,13 @@ const SmsChat = ({info, isLoading, isSending, isBottomFocus, messages = [], last
             originalNumber = originalNumber.substring(2);
         }
         setLastSMSAddress(originalNumber);
-        if (patient && (!patient.consentToText || patient.mobilePhone !== lastSmsAddress) && isSMSAddressBlocked?.isActive) {
+        if (patient && (!patient.consentToText || patient.mobilePhone !== originalNumber) && isSMSAddressBlocked?.isActive) {
             setSmsDisabledText('sms.sms_not_available_patient_phone_blocked');
-        } else if (patient && (!patient.consentToText || patient.mobilePhone !== lastSmsAddress)) {
+        } else if (patient && (!patient.consentToText || patient.mobilePhone !== originalNumber)) {
             setSmsDisabledText('sms.sms_not_available_patient');
-        } else if (contact && contact.mobilePhone !== lastSmsAddress && isSMSAddressBlocked?.isActive) {
+        } else if (contact && contact.mobilePhone !== originalNumber && isSMSAddressBlocked?.isActive) {
             setSmsDisabledText('sms.sms_not_available_contact_phone_blocked');
-        } else if (contact && contact.mobilePhone !== lastSmsAddress) {
+        } else if (contact && contact.mobilePhone !== originalNumber) {
             setSmsDisabledText('sms.sms_not_available_contact');
         } else if (ticket?.isPassive && isSMSAddressBlocked?.isActive) {
             setSmsDisabledText('sms.ticket_closed_and_sms_blocked');
