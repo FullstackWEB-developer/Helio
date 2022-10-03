@@ -59,7 +59,6 @@ import Button from '@components/button/button';
 import {CCPConnectionStatus} from './models/connection-status.enum';
 import {QueryGetPatientById, QueryTickets} from '@constants/react-query-constants';
 import {getPatientByIdWithQuery} from '@pages/patients/services/patients.service';
-import useLocalStorage from '@shared/hooks/useLocalStorage';
 import utils from '@shared/utils/utils';
 import {ContextKeyValuePair} from '@pages/ccp/models/context-key-value-pair';
 import {getUserList} from '@shared/services/lookups.service';
@@ -116,7 +115,6 @@ const Ccp: React.FC<BoxProps> = ({
     const updateAssigneeMutation = useMutation(setAssignee);
     const isCcpVisibleRef = useRef();
     isCcpVisibleRef.current = useSelector(isCcpVisibleSelector);
-    const [latestStatus, setLatestStatus] = useLocalStorage('latestCCPStatus', '');
     const [animateToggle, setAnimateToggle] = useState(false);
     const [delayCcpDisplaying, setDelayCcpDisplaying] = useState(true);
     const [ccpConnectionState, setCcpConnectionState] = useState<CCPConnectionStatus>(CCPConnectionStatus.None);
@@ -520,9 +518,6 @@ const Ccp: React.FC<BoxProps> = ({
 
             agent.onStateChange(agentStateChange => {
                 let stateToSet = agentStateChange.newState;
-                if (agentStateChange.oldState.toLowerCase() === connect.AgentStateType.INIT && !!latestStatus) {
-                    stateToSet = latestStatus;
-                }
                 updateAgentStatus(stateToSet, agentStateList);
                 dispatch(updateUserStatus(stateToSet));
                 dispatch(addLiveAgentStatus({
@@ -556,7 +551,6 @@ const Ccp: React.FC<BoxProps> = ({
     useEffect(() => {
         updateCallForwardingStatus();
         const beforeUnload = () => {
-            setLatestStatus(currentUserStatus);
             updateAgentStatus(UserStatus.Offline, agentStates);
             dispatch(clearCCPContext());
         };

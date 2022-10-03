@@ -11,6 +11,7 @@ import SvgIcon, {Icon} from '@components/svg-icon';
 import TooltipWrapper from '@components/tooltip/tooltip-wrapper';
 import './internal-contact-item.scss';
 import {useTranslation} from 'react-i18next';
+import {ForwardingEnabledStatus} from '@shared/layout/components/profile-dropdown';
 
 export interface InternalContactItemProps {
     queue: InternalQueueStatus;
@@ -65,6 +66,12 @@ export const InternalContactItem = ({queue} : InternalContactItemProps) => {
         </div>;
     }
 
+    const CallForwardedIcon = () => {
+        return <div  className='flex justify-center items-center h-10 w-10 rounded-full internal-contact-fw-icon'>
+            <SvgIcon fillClass='white-icon' type={Icon.ArrowUpward}/>
+        </div>;
+    }
+
     const CallIcon = () => {
         return <div className='flex justify-center items-center h-10 w-10 rounded-full internal-contact-call-icon'>
             <SvgIcon fillClass='white-icon' type={Icon.Phone}/>
@@ -89,6 +96,12 @@ export const InternalContactItem = ({queue} : InternalContactItemProps) => {
                     <ChatIcon />
                 </TooltipWrapper>
             }));
+        }
+
+        if (liveAgentInfo.status === ForwardingEnabledStatus) {
+            items = items.concat(<TooltipWrapper placement='top' content={t('ccp.call_chat_fw_enabled_header')}>
+                <CallForwardedIcon />
+            </TooltipWrapper>);
         }
 
         return items;

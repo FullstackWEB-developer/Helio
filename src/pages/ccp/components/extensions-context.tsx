@@ -5,7 +5,7 @@ import {useMemo, useState} from 'react';
 import SearchInputField from '@components/search-input-field/search-input-field';
 import {selectUserList} from '@shared/store/lookups/lookups.selectors';
 import {useDispatch, useSelector} from 'react-redux';
-import {selectInternalQueueStatuses} from '@shared/store/app-user/appuser.selectors';
+import {selectAppUserDetails, selectInternalQueueStatuses} from '@shared/store/app-user/appuser.selectors';
 import utils from '@shared/utils/utils';
 import {useQuery} from 'react-query';
 import {GetInternalQueues} from '@constants/react-query-constants';
@@ -15,6 +15,7 @@ import {InternalQueueStatus} from '@pages/ccp/models/internal-queue-status';
 import {setInternalQueueStatuses} from '@shared/store/app-user/appuser.slice';
 import {UserStatus} from '@shared/store/app-user/app-user.models';
 import InternalContactItem from '@pages/ccp/components/internal-contact-item';
+import {ForwardingEnabledStatus} from '@shared/layout/components/profile-dropdown';
 const ExtensionsContext = () => {
     const {t} = useTranslation();
     const AgentType = 'AGENT';
@@ -23,6 +24,7 @@ const ExtensionsContext = () => {
     const [searchTerm, setSearchTerm] = useState<string>('');
     const users = useSelector(selectUserList);
     const dispatch = useDispatch();
+    const appUser = useSelector(selectAppUserDetails);
     const internalContacts = useSelector(selectInternalQueueStatuses);
 
     const {isLoading, isError} = useQuery(GetInternalQueues, () => getInternalQueues(), {
@@ -64,6 +66,11 @@ const ExtensionsContext = () => {
             list = list.concat(afterWorkAgents.sort((a, b) => a?.queueName?.localeCompare(b?.queueName)));
         }
 
+        let forwardingEnabledAgents = items.filter(a => a.queueType === AgentType && a.connectStatus === ForwardingEnabledStatus);
+        if (!!forwardingEnabledAgents && forwardingEnabledAgents.length > 0) {
+            list = list.concat(forwardingEnabledAgents.sort((a, b) => a?.queueName?.localeCompare(b?.queueName)));
+        }
+
         let queues = items.filter(a => a.queueType === QueueType);
         if (!!queues && queues.length > 0) {
             list = list.concat(queues.sort((a, b) => a?.queueName?.localeCompare(b?.queueName)));
@@ -83,10 +90,11 @@ const ExtensionsContext = () => {
     }
 
     const list = useMemo(() => {
+        const contacts = internalContacts.filter(a => a.user?.id !== appUser.id)
         if (!!searchTerm) {
-            return internalContacts.filter(a => a.displayName.toLowerCase().includes(searchTerm.toLowerCase()))
+            return contacts.filter(a => a.displayName.toLowerCase().includes(searchTerm.toLowerCase()))
         }
-        return sort(internalContacts);
+        return sort(contacts);
     }, [searchTerm, internalContacts]);
 
     if (isLoading) {

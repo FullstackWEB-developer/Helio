@@ -66,7 +66,8 @@ const RealTimeUserStatusUpdate = () => {
         if (index !== -1) {
             quickConnects[index] = {
                 ...quickConnects[index],
-                latestConnectStatus: statusChange.status
+                latestConnectStatus: statusChange.status,
+                timestamp: statusChange.timestamp
             }
 
             queryClient.setQueryData(QueryQuickConnects, quickConnects);

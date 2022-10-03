@@ -80,6 +80,13 @@ const appUserSlice = createSlice({
                     name: `${payload.firstName} ${(payload.lastName)}`
                 })
             }
+
+            let internalQueueIndex = state.internalQueueStatuses.findIndex(a => a.userId === payload.id);
+            if (internalQueueIndex > -1) {
+                state.internalQueueStatuses = state.internalQueueStatuses.map((item, index)=> {
+                    return index === internalQueueIndex ? {...item, connectStatus : payload.latestConnectStatus} : item
+                })
+            }
         },
         setLogStream(state, {payload}: PayloadAction<LogStream>) {
             state.logStream = payload;

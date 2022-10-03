@@ -21,6 +21,7 @@ import axios from 'axios';
 import { clearAppParameters } from '@shared/store/app/app.slice';
 import { SortDirection } from '@shared/models/sort-direction';
 import {ForwardingEnabledStatus} from '@shared/layout/components/profile-dropdown';
+import {UserStatus} from '@shared/store/app-user/app-user.models';
 
 const getWindowCenter = () => {
     const { width, height } = getWindowDimensions();
@@ -305,6 +306,17 @@ const isLoggedIn = (): boolean => {
 }
 
 const logout = async () => {
+    if(window.CCP?.agent) {
+        const offlineState = window.CCP.agent.getAgentStates().filter(a => a.name === UserStatus.Offline)[0];
+        try {
+            if (window.CCP.agent)
+            window.CCP.agent.setState(offlineState);
+        } catch(error: any) {
+            window.CCP.agent.setState(offlineState, undefined, {
+                enqueueNextState: true
+            });
+        }
+    }
     await axios.get(utils.getAppParameter('ConnectBaseUrl') + utils.getAppParameter('CcpLogoutUrl'), { withCredentials: true })
         .catch(() => {
         })
@@ -568,9 +580,9 @@ const dynamicSort = (sortField: string, sortDirection: SortDirection) => {
             if (a[sortField] < b[sortField]) {
                 return -1 * sortDirectionValue;
             } else if (a[sortField] > b[sortField]) {
-                return 1 * sortDirectionValue;
+                return sortDirectionValue;
             } else {
-                return 0 * sortDirectionValue;
+                return 0;
             }
         }
     }
