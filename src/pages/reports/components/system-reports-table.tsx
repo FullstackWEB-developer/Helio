@@ -8,6 +8,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {SystemReport} from '../models/system-report.model';
 import {getFormattedTime} from '../utils/constants';
 import './system-reports-table.scss';
+import ToolTipIcon from '@components/tooltip-icon/tooltip-icon';
 
 const SystemReportTable = ({data}: {data: SystemReport[]}) => {
 
@@ -94,7 +95,20 @@ const SystemReportTable = ({data}: {data: SystemReport[]}) => {
             <div className='grid grid-cols-3 system-report-grid system-report-grid-data-row'>
                 <div className='subtitle2'><span>{t('reports.system_reports.chat')}</span></div>
                 <div className='flex flex-col body2'>
-                    <div className='h-10 border-b'><span>{t('reports.system_reports.total_inbound_chats')}</span></div>
+                    <div className='h-10 border-b flex flex-row space-x-1 items-center'>
+                        <span>{t('reports.system_reports.total_inbound_chats')}</span>
+                        <ToolTipIcon
+                            icon={Icon.Info}
+                            iconFillClass='warning-icon'
+                            placement='right-start'
+                            className='pt-1'
+                            iconClassName='icon-medium'
+                        >
+                            <div className='flex flex-col p-3'>
+                                <span className=' whitespace-pre-wrap body2'>{t('reports.system_reports.total_inbound_chats_tooltip')}</span>
+                            </div>
+                        </ToolTipIcon>
+                    </div>
                     <div className='h-10 border-b'><span>{t('reports.system_reports.average_response_time')}</span></div>
                     <div className='h-10'><span>{t('reports.system_reports.average_patient_satisfaction_rating')}</span></div>
                 </div>

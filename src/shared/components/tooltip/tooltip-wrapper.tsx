@@ -51,7 +51,7 @@ const TooltipWrapper = ({content, children, placement = 'bottom'}: TooltipWrappe
                  {...attributes.popper}
             >
                 <div ref={setArrowRef} style={styles.arrow} className="arrow" data-test-id='tooltip-arrow' />
-                {typeof content === 'string' ? <div className='body3-small normal-case px-6 py-4 rounded-xl'>{t(content)}</div> : content}
+                {typeof content === 'string' ? <div className='body3-small normal-case px-6 py-4 rounded-xl whitespace-pre-line'>{t(content)}</div> : content}
             </span>
         </>
     );

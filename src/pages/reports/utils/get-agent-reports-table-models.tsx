@@ -93,6 +93,7 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
             sortDirectionFillCalss: "default-toolbar-icon",
             sortIconSizeClass: 'icon-large',
             isSortable: true,
+            tooltip: 'reports.agent_reports.column_names.total_calls_and_chats_tooltip',
             onClick: (field: string | undefined, direction: SortDirection) => {
                 onSort(field, direction);
             },
@@ -109,6 +110,7 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
             field: 'utilizationPercent',
             widthClass: 'w-3/24',
             headerClassName: 'items-center',
+            tooltip: 'reports.agent_reports.column_names.utilization_tooltip',
             sortDirectionFillCalss: "default-toolbar-icon",
             sortIconSizeClass: 'icon-large',
             rowClassname: 'body2',
@@ -126,6 +128,7 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
         },
         {
             title: 'reports.agent_reports.column_names.avg_idle_time',
+            tooltip: 'reports.agent_reports.column_names.avg_idle_time_tooltip',
             field: 'averageIdleTime',
             widthClass: 'w-3/24',
             headerClassName: 'items-center',
@@ -152,6 +155,7 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
             sortDirectionFillCalss: "default-toolbar-icon",
             sortIconSizeClass: 'icon-large',
             rowClassname: 'body2',
+            tooltip: 'reports.agent_reports.column_names.answer_rate_tooltip',
             isSortable: true,
             onClick: (field: string | undefined, direction: SortDirection) => {
                 onSort(field, direction);
@@ -171,6 +175,7 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
             sortDirectionFillCalss: "default-toolbar-icon",
             sortIconSizeClass: 'icon-large',
             rowClassname: 'body2',
+            tooltip: 'reports.agent_reports.column_names.missed_contact_tooltip',
             headerClassName: 'items-center',
             isSortable: true,
             onClick: (field: string | undefined, direction: SortDirection) => {
@@ -231,6 +236,7 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
         },
         {
             title: 'reports.agent_reports.column_names.total_tickets',
+            tooltip: 'reports.agent_reports.column_names.total_tickets_tooltip',
             field: 'totalTicketsCount',
             widthClass: 'w-2/24',
             sortDirectionFillCalss: "default-toolbar-icon",
@@ -251,6 +257,7 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
         },
         {
             title: 'reports.agent_reports.column_names.overdue_tickets',
+            tooltip: 'reports.agent_reports.column_names.overdue_tickets_tooltip',
             field: 'overdueTicketCount',
             widthClass: 'w-3/24',
             headerClassName: 'items-center',
@@ -271,6 +278,7 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
         },
         {
             title: 'reports.agent_reports.column_names.total_sms',
+            tooltip: 'reports.agent_reports.column_names.total_sms_tooltip',
             field: 'totalSmsCount',
             sortDirectionFillCalss: "default-toolbar-icon",
             sortIconSizeClass: 'icon-large',
@@ -291,6 +299,7 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
         },
         {
             title: 'reports.agent_reports.column_names.total_emails',
+            tooltip: 'reports.agent_reports.column_names.total_emails_tooltip',
             field: 'totalEmailCount',
             widthClass: 'w-2/24',
             headerClassName: 'items-center',
@@ -311,6 +320,7 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
         },
         {
             title: 'reports.agent_reports.column_names.avg_sms_response',
+            tooltip: 'reports.agent_reports.column_names.avg_sms_response_tooltip',
             field: 'avgSmsResponse',
             widthClass: 'w-3/24',
             headerClassName: 'items-center',
@@ -331,6 +341,7 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
         },
         {
             title: 'reports.agent_reports.column_names.avg_email_response',
+            tooltip: 'reports.agent_reports.column_names.avg_email_response_tooltip',
             field: 'avgEmailResponse',
             widthClass: 'w-3/24',
             headerClassName: 'items-center',
@@ -397,6 +408,7 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
         },
         {
             title: 'reports.agent_reports.column_names.total_chats',
+            tooltip: 'reports.agent_reports.column_names.total_chats_tooltip',
             field: 'totalChats',
             widthClass: 'w-1/5',
             headerClassName: 'items-center',
@@ -417,6 +429,7 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
         },
         {
             title: 'reports.agent_reports.column_names.average_chat_handle_time',
+            tooltip: 'reports.agent_reports.column_names.average_chat_handle_time_tooltip',
             field: 'avgChatHandleTime',
             headerClassName: 'items-center',
             widthClass: 'w-1/5',
@@ -437,6 +450,7 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
         },
         {
             title: 'reports.agent_reports.column_names.average_chat_duration',
+            tooltip: 'reports.agent_reports.column_names.average_chat_duration_tooltip',
             field: 'avgChatDuration',
             widthClass: 'w-1/5',
             sortDirectionFillCalss: "default-toolbar-icon",
@@ -507,6 +521,7 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
             widthClass: 'w-3/24',
             headerClassName: 'items-center',
             rowClassname: 'body2',
+            tooltip: 'reports.agent_reports.column_names.total_calls_tooltip',
             isSortable: true,
             sortDirectionFillCalss: "default-toolbar-icon",
             sortIconSizeClass: 'icon-large',
@@ -526,6 +541,7 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
             field: 'totalInbound',
             widthClass: 'w-3/24',
             headerClassName: 'items-center',
+            tooltip: 'reports.agent_reports.column_names.total_inbound_tooltip',
             rowClassname: 'body2',
             isSortable: true,
             sortDirectionFillCalss: "default-toolbar-icon",
@@ -547,6 +563,7 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
             widthClass: 'w-3/24',
             headerClassName: 'items-center',
             rowClassname: 'body2',
+            tooltip: 'reports.agent_reports.column_names.total_outbound_tooltip',
             isSortable: true,
             sortDirectionFillCalss: "default-toolbar-icon",
             sortIconSizeClass: 'icon-large',
@@ -563,6 +580,7 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
         },
         {
             title: 'reports.agent_reports.column_names.avg_handle_time',
+            tooltip: 'reports.agent_reports.column_names.avg_handle_time_tooltip',
             field: 'avgVoiceHandleTime',
             widthClass: 'w-3/24',
             headerClassName: 'items-center',
