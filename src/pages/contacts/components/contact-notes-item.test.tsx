@@ -4,14 +4,10 @@ import duration from 'dayjs/plugin/duration';
 import utc from 'dayjs/plugin/utc';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import {unmountComponentAtNode} from 'react-dom';
-import {fireEvent, render} from '@testing-library/react';
+import {render} from '@testing-library/react';
 import TestWrapper from '@shared/test-utils/test-wrapper';
 import ContactNoteItem from './contact-notes-item';
 import Router from "react-router-dom";
-import { AddressType, AssociatedContact, Contact, ContactExtended, ContactType } from '@shared/models';
-import { Control, useForm } from 'react-hook-form';
-import { ContactAvatarModel } from '../models/contact-avatar-model';
-import { Icon } from '@components/svg-icon';
 import { ContactNote } from '../models/contact-note.model';
 jest.mock("react-router-dom", () => ({
     ...jest.requireActual("react-router-dom"),

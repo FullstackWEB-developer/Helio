@@ -40,10 +40,10 @@ describe("tests for ReLogin modal", () => {
         }
     });
 
-    it("renders reLogin required", () => {
+    it("renders reLogin required", async () => {
         store = mockStore(mockState);
 
-        act(() => {
+        await act(async () => {
             render(<Provider store={store}><ReLoginModal type='modal'/></Provider>, container);
         });
 
@@ -51,7 +51,7 @@ describe("tests for ReLogin modal", () => {
         expect(container?.children.length).toEqual(1);
     });
 
-    it("renders reLogin required in header", () => {
+    it("renders reLogin required in header", async () => {
         store = mockStore({
             ...mockState,
             appState: {
@@ -60,7 +60,7 @@ describe("tests for ReLogin modal", () => {
             }
         });
 
-        act(() => {
+        await act(async () => {
             render(<Provider store={store}><ReLoginModal type='header'/></Provider>, container);
         });
 
@@ -68,7 +68,7 @@ describe("tests for ReLogin modal", () => {
         expect(container?.children.length).toEqual(1);
     });
 
-    it("does not render if display is false", () => {
+    it("does not render if display is false", async () => {
         store = mockStore({
             ...mockState,
             appState: {
@@ -77,7 +77,7 @@ describe("tests for ReLogin modal", () => {
             },
         });
 
-        act(() => {
+        await act(async () => {
             render(<Provider store={store}><ReLoginModal type='modal'/></Provider>, container);
         });
         expect(container?.textContent).toEqual("");

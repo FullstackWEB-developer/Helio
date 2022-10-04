@@ -4,7 +4,7 @@ import duration from 'dayjs/plugin/duration';
 import utc from 'dayjs/plugin/utc';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import {unmountComponentAtNode} from 'react-dom';
-import {render} from '@testing-library/react';
+import {act, render} from '@testing-library/react';
 import TestWrapper from '@shared/test-utils/test-wrapper';
 import AddNewContact from './add-new-contact';
 import Router from "react-router-dom";
@@ -55,10 +55,16 @@ describe("AddNewContact tests", () => {
     });
 
     it("renders AddNewContact correctly", async () => {
-        jest.spyOn(Router, 'useParams').mockReturnValue({ id: '1234' })
-        const {asFragment} = render(<TestWrapper mockState={mockState}>
-            <AddNewContact closeAddNewContactForm={() => {}} onContactAddSuccess={() => {}}/>
-        </TestWrapper>);
-        expect(asFragment()).toMatchSnapshot();
+        jest.spyOn(Router, 'useParams').mockReturnValue({ id: '1234' });
+        let fragment: any;
+        await act(async () => {
+            const {asFragment} = render(<TestWrapper mockState={mockState}>
+                <AddNewContact closeAddNewContactForm={() => {
+                }} onContactAddSuccess={() => {
+                }}/>
+            </TestWrapper>);
+            fragment = asFragment;
+        })
+        expect(fragment()).toMatchSnapshot();
     });
 })

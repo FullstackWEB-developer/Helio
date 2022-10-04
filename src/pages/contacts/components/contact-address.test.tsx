@@ -4,12 +4,11 @@ import duration from 'dayjs/plugin/duration';
 import utc from 'dayjs/plugin/utc';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import {unmountComponentAtNode} from 'react-dom';
-import {fireEvent, render} from '@testing-library/react';
+import {act, render} from '@testing-library/react';
 import TestWrapper from '@shared/test-utils/test-wrapper';
 import ContactAddress from './contact-address';
-import Router from "react-router-dom";
-import { AddressType, AssociatedContact, ContactExtended, ContactType } from '@shared/models';
-import { Control, useForm } from 'react-hook-form';
+import { AddressType } from '@shared/models';
+import { useForm } from 'react-hook-form';
 jest.mock("react-router-dom", () => ({
     ...jest.requireActual("react-router-dom"),
     useParams: jest.fn(),
@@ -63,40 +62,44 @@ describe("ContactAddress tests", () => {
     it("renders ContactAddress-PrimaryAddress correctly", async () => {
         const Component = () => {
             const { control } = useForm<{
-              test: string;
-              test1: { test: string }[];
+                test: string;
+                test1: { test: string }[];
             }>();
 
-            jest.spyOn(Router, 'useParams').mockReturnValue({ id: '1234' })
-            const {asFragment} = render(<TestWrapper mockState={mockState}>
+            return <TestWrapper mockState={mockState}>
                 <ContactAddress title='Test' addressType={AddressType.PrimaryAddress} control={control} />
+            </TestWrapper>
+        };
+        let fragment: any;
+        await act(async () => {
+            const {asFragment} = render(<TestWrapper mockState={mockState}>
+                <Component/>
             </TestWrapper>);
-            expect(asFragment()).toMatchSnapshot();
-      
-            return null;
-          };
-      
-        render(<Component />);
+            fragment = asFragment;
+        })
+        expect(fragment()).toMatchSnapshot();
         
     });
 
     it("renders ContactAddress-BillingAddress correctly", async () => {
         const Component = () => {
             const { control } = useForm<{
-              test: string;
-              test1: { test: string }[];
+                test: string;
+                test1: { test: string }[];
             }>();
 
-            jest.spyOn(Router, 'useParams').mockReturnValue({ id: '1234' })
-            const {asFragment} = render(<TestWrapper mockState={mockState}>
+            return <TestWrapper mockState={mockState}>
                 <ContactAddress title='Test' addressType={AddressType.BillingAddress} control={control} />
+            </TestWrapper>
+        };
+        let fragment: any;
+        await act(async () => {
+            const {asFragment} = render(<TestWrapper mockState={mockState}>
+                <Component/>
             </TestWrapper>);
-            expect(asFragment()).toMatchSnapshot();
-      
-            return null;
-          };
-      
-        render(<Component />);
+            fragment = asFragment;
+        })
+        expect(fragment()).toMatchSnapshot();
         
     });
 
@@ -106,17 +109,19 @@ describe("ContactAddress tests", () => {
               test: string;
               test1: { test: string }[];
             }>();
-
-            jest.spyOn(Router, 'useParams').mockReturnValue({ id: '1234' })
-            const {asFragment} = render(<TestWrapper mockState={mockState}>
+      
+            return <TestWrapper mockState={mockState}>
                 <ContactAddress title='Test' addressType={AddressType.ShippingAddress} control={control} />
-            </TestWrapper>);
-            expect(asFragment()).toMatchSnapshot();
-      
-            return null;
+            </TestWrapper>
           };
-      
-        render(<Component />);
+        let fragment: any;
+        await act(async () => {
+            const {asFragment} = render(<TestWrapper mockState={mockState}>
+                <Component/>
+            </TestWrapper>);
+            fragment = asFragment;
+        })
+        expect(fragment()).toMatchSnapshot();
         
     });
 })

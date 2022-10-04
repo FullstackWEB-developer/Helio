@@ -84,7 +84,7 @@ describe("Ticket New tests", () => {
 
     it("renders new-ticket correctly", async () => {
         let fragment;
-        act(() => {
+        await act(async () => {
             const {asFragment} = render(<TestWrapper mockState={mockState}>
                 <TicketNew/>
             </TestWrapper>);

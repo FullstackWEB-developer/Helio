@@ -176,6 +176,7 @@ exports[`Send First Email tests renders send-first-email correctly with contact 
                       aria-controls="ql-picker-options-0"
                       aria-expanded="false"
                       class="ql-picker-label"
+                      data-value="none"
                       role="button"
                       tabindex="0"
                     >
@@ -217,6 +218,7 @@ exports[`Send First Email tests renders send-first-email correctly with contact 
                       />
                       <span
                         class="ql-picker-item ql-selected"
+                        data-value="none"
                         role="button"
                         tabindex="0"
                       />
@@ -238,6 +240,7 @@ exports[`Send First Email tests renders send-first-email correctly with contact 
                     </option>
                     <option
                       selected=""
+                      value="none"
                     />
                   </select>
                   <button

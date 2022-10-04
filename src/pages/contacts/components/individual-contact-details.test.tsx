@@ -4,15 +4,12 @@ import duration from 'dayjs/plugin/duration';
 import utc from 'dayjs/plugin/utc';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import {unmountComponentAtNode} from 'react-dom';
-import {fireEvent, render} from '@testing-library/react';
+import {act, render} from '@testing-library/react';
 import TestWrapper from '@shared/test-utils/test-wrapper';
 import IndividualContactDetails from './individual-contact-details';
 import Router from "react-router-dom";
-import { AddressType, AssociatedContact, Contact, ContactExtended, ContactType } from '@shared/models';
-import { Control, useForm } from 'react-hook-form';
-import { ContactAvatarModel } from '../models/contact-avatar-model';
-import { Icon } from '@components/svg-icon';
-import { ContactNote } from '../models/contact-note.model';
+import { Contact, ContactType } from '@shared/models';
+
 jest.mock("react-router-dom", () => ({
     ...jest.requireActual("react-router-dom"),
     useParams: jest.fn(),
@@ -84,11 +81,16 @@ describe("IndividualContactDetails tests", () => {
             type: ContactType.Individual,
             workMainPhone: "",
         } as Contact;
-        jest.spyOn(Router, 'useParams').mockReturnValue({ id: '1234' })
-        const {asFragment} = render(<TestWrapper mockState={mockState}>
-            <IndividualContactDetails onUpdateSuccess={() => {}} contact={contact} editMode={true}/>
-        </TestWrapper>);
-        expect(asFragment()).toMatchSnapshot();
+        jest.spyOn(Router, 'useParams').mockReturnValue({ id: '1234' });
+        let fragment: any;
+        await act(async () => {
+            const {asFragment} = render(<TestWrapper mockState={mockState}>
+                <IndividualContactDetails onUpdateSuccess={() => {
+                }} contact={contact} editMode={true}/>
+            </TestWrapper>);
+            fragment = asFragment;
+        });
+        expect(fragment()).toMatchSnapshot();
     });
 
     it("renders IndividualContactDetails isEdit false correctly", async () => {
@@ -103,10 +105,15 @@ describe("IndividualContactDetails tests", () => {
             type: ContactType.Individual,
             workMainPhone: "",
         } as Contact;
-        jest.spyOn(Router, 'useParams').mockReturnValue({ id: '1234' })
-        const {asFragment} = render(<TestWrapper mockState={mockState}>
-            <IndividualContactDetails onUpdateSuccess={() => {}} contact={contact} editMode={false}/>
-        </TestWrapper>);
-        expect(asFragment()).toMatchSnapshot();
+        jest.spyOn(Router, 'useParams').mockReturnValue({ id: '1234' });
+        let fragment: any;
+        await act(async () => {
+            const {asFragment} = render(<TestWrapper mockState={mockState}>
+                <IndividualContactDetails onUpdateSuccess={() => {
+                }} contact={contact} editMode={false}/>
+            </TestWrapper>);
+            fragment = asFragment;
+        });
+        expect(fragment()).toMatchSnapshot();
     });
 })

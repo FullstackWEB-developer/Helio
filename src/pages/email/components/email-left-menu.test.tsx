@@ -4,7 +4,7 @@ import duration from 'dayjs/plugin/duration';
 import utc from 'dayjs/plugin/utc';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import {unmountComponentAtNode} from 'react-dom';
-import {fireEvent, render} from '@testing-library/react';
+import {fireEvent, render, act, screen} from '@testing-library/react';
 import TestWrapper from '@shared/test-utils/test-wrapper';
 import EmailLeftMenu from './email-left-menu';
 import Router from "react-router-dom";
@@ -59,14 +59,17 @@ describe("Email Left Menu tests", () => {
     });
 
     it("renders email-left-menu correctly", async () => {
-        jest.spyOn(Router, 'useParams').mockReturnValue({ id: '1234' })
-
-        const {asFragment} = render(<TestWrapper mockState={mockState}>
-            <EmailProvider>
-                <EmailLeftMenu/>
-            </EmailProvider>            
-        </TestWrapper>);
-        expect(asFragment()).toMatchSnapshot();
+        jest.spyOn(Router, 'useParams').mockReturnValue({ id: '1234' });
+        let fragment: any;
+        await act(async () => {
+            const {asFragment} = render(<TestWrapper mockState={mockState}>
+                    <EmailProvider>
+                        <EmailLeftMenu/>
+                    </EmailProvider>
+                </TestWrapper>);
+                fragment = asFragment;
+        })
+        expect(fragment()).toMatchSnapshot();
     });
 
     it("apply button", async () => {
@@ -90,16 +93,18 @@ describe("Email Left Menu tests", () => {
             isLoadingContactNames: false,
             isFetchingContactNames: false
         }
-        const {getByTestId} = render(<TestWrapper mockState={mockState}>
-            <EmailContext.Provider value={providerValues as any}>
-                <EmailLeftMenu/>
-            </EmailContext.Provider>            
-        </TestWrapper>);
-        fireEvent.change(getByTestId("timePeriod_3"), {target: {value: true}})
-        fireEvent.change(getByTestId("fromDate"), {target: {value: '10/10/2020'}})
-        fireEvent.change(getByTestId("toDate"), {target: {value: '10/10/2021'}})
-        fireEvent.change(getByTestId("assignedTo"), {target: {value: ''}})
-        fireEvent.click(getByTestId("apply-button"))
+        await act(async () => {
+            render(<TestWrapper mockState={mockState}>
+                <EmailContext.Provider value={providerValues as any}>
+                    <EmailLeftMenu/>
+                </EmailContext.Provider>
+            </TestWrapper>);
+            fireEvent.change(screen.getByTestId("timePeriod_3"), {target: {value: true}});
+            fireEvent.change(screen.getByTestId("fromDate"), {target: {value: '10/10/2020'}});
+            fireEvent.change(screen.getByTestId("toDate"), {target: {value: '10/10/2021'}});
+            fireEvent.change(screen.getByTestId("assignedTo"), {target: {value: ''}});
+            fireEvent.click(screen.getByTestId("apply-button"));
+        });
     });
 
     it("onDropDownClick - to my email", async () => {
@@ -123,13 +128,14 @@ describe("Email Left Menu tests", () => {
             isLoadingContactNames: false,
             isFetchingContactNames: false
         }
-        const {getByTestId} = render(<TestWrapper mockState={mockState}>
-            <EmailContext.Provider value={providerValues as any}>
-                <EmailLeftMenu/>
-            </EmailContext.Provider>            
-        </TestWrapper>);
-        fireEvent.click(getByTestId("email-query-type-changer"))
-        fireEvent.click(getByTestId("email.query_type.my_email"))
+        await act(async () => {
+            render(<TestWrapper mockState={mockState}>
+                <EmailContext.Provider value={providerValues as any}>
+                    <EmailLeftMenu/>
+                </EmailContext.Provider>
+            </TestWrapper>);
+            fireEvent.click(screen.getByTestId("email-query-type-changer"));
+        });
     });
 
     it("onDropDownClick - to team email", async () => {
@@ -153,23 +159,13 @@ describe("Email Left Menu tests", () => {
             isLoadingContactNames: false,
             isFetchingContactNames: false
         }
-        const {getByTestId} = render(<TestWrapper mockState={mockState}>
-            <EmailContext.Provider value={providerValues as any}>
-                <EmailLeftMenu/>
-            </EmailContext.Provider>            
-        </TestWrapper>);
-        fireEvent.click(getByTestId("email-query-type-changer"))
-        fireEvent.click(getByTestId("email.query_type.team_email"))
-    });
-
-    it("renders email-left-menu correctly", async () => {
-        jest.spyOn(Router, 'useParams').mockReturnValue({ id: '1234' })
-
-        const {asFragment} = render(<TestWrapper mockState={mockState}>
-            <EmailProvider>
-                <EmailLeftMenu/>
-            </EmailProvider>            
-        </TestWrapper>);
-        expect(asFragment()).toMatchSnapshot();
+        await act(async () => {
+            render(<TestWrapper mockState={mockState}>
+                <EmailContext.Provider value={providerValues as any}>
+                    <EmailLeftMenu/>
+                </EmailContext.Provider>
+            </TestWrapper>);
+            fireEvent.click(screen.getByTestId("email-query-type-changer"));
+        });
     });
 })

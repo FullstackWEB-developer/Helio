@@ -4,15 +4,13 @@ import duration from 'dayjs/plugin/duration';
 import utc from 'dayjs/plugin/utc';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import {unmountComponentAtNode} from 'react-dom';
-import {fireEvent, render} from '@testing-library/react';
+import {render} from '@testing-library/react';
 import TestWrapper from '@shared/test-utils/test-wrapper';
 import ContactTickets from './contact-tickets';
-import Router from "react-router-dom";
-import { AddressType, AssociatedContact, Contact, ContactExtended, ContactType } from '@shared/models';
-import { Control, useForm } from 'react-hook-form';
-import { ContactAvatarModel } from '../models/contact-avatar-model';
-import { Icon } from '@components/svg-icon';
-import { ContactNote } from '../models/contact-note.model';
+import Api from '@shared/services/api';
+import {TicketBase} from '@pages/tickets/models/ticket-base';
+import {ChannelTypes, TicketType} from '@shared/models';
+
 jest.mock("react-router-dom", () => ({
     ...jest.requireActual("react-router-dom"),
     useParams: jest.fn(),
@@ -73,7 +71,27 @@ describe("ContactTickets tests", () => {
     });
 
     it("renders ContactTickets isDanger true correctly", async () => {
-        jest.spyOn(Router, 'useParams').mockReturnValue({ id: '1234' })
+        jest.spyOn(Api, 'get').mockReturnValue({
+            data: {
+                pageSize: 1,
+                page: 1,
+                totalCount: 10,
+                totalPages: 10,
+                results: [
+                    {
+                        contactId: '123',
+                        id:'123',
+                        channel: ChannelTypes.Chat,
+                        type: TicketType.BusinessOffice,
+                        createdBy: 'burak',
+                        createdForName: 'burak',
+                        reason: 'reason',
+                        subject: 'subject',
+                        ticketNumber: 3
+                    }
+                ] as TicketBase[]
+            }
+        } as any);
         const {asFragment} = render(<TestWrapper mockState={mockState}>
             <ContactTickets contactId='123'/>
         </TestWrapper>);
