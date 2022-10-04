@@ -5,11 +5,12 @@ import FormattedTextarea from '@components/textarea/formatted-textarea';
 export interface EmailEditorProps {
     onChange:(content: string) => void;
     content: string;
-    showSendIcon?: boolean
+    showSendIcon?: boolean;
+    isDisabled?: boolean
 }
-const EmailEditor = ({onChange, content, showSendIcon = true} : EmailEditorProps) => {
+const EmailEditor = ({onChange, content, showSendIcon = true, isDisabled = false} : EmailEditorProps) => {
     return <div className='email-editor'>
-        <FormattedTextarea onChange={onChange} showSendIcon={showSendIcon} value={content}  />
+        <FormattedTextarea onChange={onChange} showSendIcon={showSendIcon} value={content} disabled={isDisabled} />
     </div>
 }
 

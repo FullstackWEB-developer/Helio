@@ -605,6 +605,8 @@
     "email_send_fail": "Email sent failed.",
     "template": "Template: ",
     "reopen_or_create_to_send_sms": "This ticket is closed or the recipient number is unknown. To send a SMS reopen this ticket or create a new one.",
+    "ticket_closed_and_sms_blocked": "This ticket is closed and phone number is blocked.",
+    "sms_blocked": "Related phone number is blocked.",
     "reopen_or_create_to_send_email": "This ticket is closed or the recipient email is not known. To send an email reopen this ticket or create a new one.",
     "chat_transcript": {
       "title": "Chat Transcript",
@@ -1601,7 +1603,8 @@
       "discard": "Discard",
       "email_sent_successfully": "Email sent successfully",
       "email_sent_failed": "Email could not be sent. Please try again",
-      "reply": "Reply"
+      "reply": "Reply",
+      "blocked": "Messaging to this patient is disabled. This patient's email address is blocked."
     }
   },
   "sms": {

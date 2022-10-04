@@ -5,7 +5,7 @@ import EmailEditor from '@pages/email/components/send-first-email/email-editor';
 import Button from '@components/button/button';
 import Input from '@components/input';
 import {useMutation, useQuery} from 'react-query';
-import {ProcessTemplate} from '@constants/react-query-constants';
+import {GetIsEmailBlocked, ProcessTemplate} from '@constants/react-query-constants';
 import {processTemplate} from '@shared/services/notifications.service';
 import {Ticket} from '@pages/tickets/models/ticket';
 import {ExtendedPatient} from '@pages/patients/models/extended-patient';
@@ -24,6 +24,8 @@ import {setEmailNewTicketId, setLastEmailDate} from '@pages/email/store/email-sl
 import {useTranslation} from 'react-i18next';
 import {selectEmailNewTicketId} from '@pages/email/store/email.selectors';
 import {EmailContext} from '@pages/email/context/email-context';
+import { isUserEmailBlocked } from '@pages/blacklists/services/blacklists.service';
+import Alert from '@components/alert/alert';
 
 export interface SendFirstEmailProps {
     ticket: Ticket;
@@ -52,6 +54,9 @@ const SendFirstEmail = ({ticket, patient, contact, onMailSend} : SendFirstEmailP
         }
     }, [contact, patient]);
 
+    const {data: isEmailAddressBlocked, isLoading: isEmailAddressBlockedLoading, isFetching: isEmailAddressBlockedFetching} = useQuery([GetIsEmailBlocked, emailAddress], () => isUserEmailBlocked(emailAddress), {
+        enabled: !!emailAddress,
+    });
 
     const sendEmailMutation = useMutation(sendMessage, {
         onSuccess: () => {
@@ -166,11 +171,15 @@ const SendFirstEmail = ({ticket, patient, contact, onMailSend} : SendFirstEmailP
                     label='email.new_email.subject'
                     containerClassName='w-full'
                     required={true}
+                    disabled={isEmailAddressBlocked?.isActive}
                 />
-                <EmailEditor showSendIcon={false} content={body} onChange={(content) => {setBody(content)}}  />
+                <EmailEditor showSendIcon={false} content={body} onChange={(content) => {setBody(content)}} isDisabled={isEmailAddressBlocked?.isActive} />
+                {isEmailAddressBlocked?.isActive && <div className='pt-4'>
+                                <Alert message={'email.new_email.blocked'} type='error'/>
+                </div>}
                 <div className='flex flex-row space-x-8 pt-10'>
                     <Button label='email.new_email.discard' buttonType='secondary-big' onClick={() => discard()} />
-                    <Button data-testid={"send-email"} label='email.new_email.send' isLoading={sendEmailMutation.isLoading} buttonType='big' disabled={!subject || !body} onClick={() => sendEmail()} />
+                    <Button data-testid={"send-email"} label='email.new_email.send' isLoading={sendEmailMutation.isLoading} buttonType='big' disabled={!subject || !body || isEmailAddressBlocked?.isActive || isEmailAddressBlockedLoading || isEmailAddressBlockedFetching} onClick={() => sendEmail()} />
                 </div>
             </div>
         </div>
