@@ -1,5 +1,5 @@
 import {Icon} from '@components/svg-icon/icon';
-import {Trans, useTranslation} from 'react-i18next';
+import {useTranslation} from 'react-i18next';
 import './basic-statistic.scss';
 import SvgIcon from '@components/svg-icon/svg-icon';
 import React from 'react';
@@ -19,20 +19,18 @@ const BasicStatistic = ({title, value = "0", icon, isPercentage, valueClass, wra
     const {t} = useTranslation();
     return <div className={`basic-statistic flex justify-center flex-col items-center ${wrapperClass}`}>
         <div className='flex flex-row px-1'>
-        <div className='body3-medium pt-2.5 pb-3'>{t(title)}</div>
-        {tooltip && <ToolTipIcon
-            icon={Icon.Info}
-            iconFillClass='warning-icon'
-            placement='right-start'
-            className='pt-1'
-            iconClassName='icon-medium'
-        >
-            <div className='flex flex-col p-3'>
-                <Trans i18nKey={tooltip}>
-                    <span className=' whitespace-pre-wrap body2'>{tooltip}</span>
-                </Trans>
-            </div>
-        </ToolTipIcon>}
+            <div className='body3-medium pt-2.5 pb-3'>{t(title)}</div>
+            {tooltip && <ToolTipIcon
+                icon={Icon.Info}
+                iconFillClass='warning-icon'
+                placement='right-start'
+                className='pt-1'
+                iconClassName='icon-medium'
+            >
+                <div className='flex flex-col p-3'>
+                    <span className=' whitespace-pre-wrap body2'>{t(tooltip)}</span>
+                </div>
+            </ToolTipIcon>}
         </div>
         <div className='flex flex-row'>
             <div>
@@ -40,8 +38,8 @@ const BasicStatistic = ({title, value = "0", icon, isPercentage, valueClass, wra
                     <h4>{value}{isPercentage ? '%' : ''}</h4>}
             </div>
             {icon &&
-            <div className='pl-2 pt-1'><SvgIcon className='icon-small' fillClass='danger-icon' type={icon}/>
-            </div>}
+                <div className='pl-2 pt-1'><SvgIcon className='icon-small' fillClass='danger-icon' type={icon}/>
+                </div>}
 
         </div>
     </div>

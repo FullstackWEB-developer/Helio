@@ -156,6 +156,7 @@ const BotReports = ({title,  data} : BotReports) => {
                 <div className='flex flex-row justify-between px-6 pb-4'>
                     <BasicStatistic title='reports.bot_reports.total_calls'
                                     wrapperClass='w-72'
+                                    tooltip='reports.bot_reports.total_calls_tooltip'
                                     value={data.totalCalls}/>
                     <BasicStatistic title='reports.bot_reports.total_chats'
                                     wrapperClass='w-72'
