@@ -84,7 +84,7 @@ const TicketDetailTicketInfo = ({ticket, control, watch}: TicketInfoProps) => {
     }
 
     const handleCallbackOutboundCall = () => {
-        if(ticket.type === TicketType.Callback && ticket.id && ticket.callbackPhoneNumber){
+        if(ticket.id){
             dispatch(setParentTicketId(ticket.id));
         }
         utils.initiateACall(updateModel.callbackPhoneNumber)

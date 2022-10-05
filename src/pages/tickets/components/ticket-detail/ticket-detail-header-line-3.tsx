@@ -141,7 +141,7 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
         }
         if (window.CCP.agent) {
             const endpoint = connect.Endpoint.byPhoneNumber(phoneNumber);
-            if(ticket.type === TicketType.Callback && ticket.id && ticket.callbackPhoneNumber && phoneNumber == ticket.callbackPhoneNumber){
+            if(ticket.id){
                 dispatch(setParentTicketId(ticket.id));
             }
             window.CCP.agent.connect(endpoint, {

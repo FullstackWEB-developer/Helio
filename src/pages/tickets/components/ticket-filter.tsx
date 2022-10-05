@@ -139,6 +139,9 @@ const TicketFilter = ({ isOpen }: { isOpen: boolean }) => {
             if(!values || values.length === 0){
                 return;
             }
+            if(!Array.isArray(values)){
+                values = [values];
+            }
             switch (name) {
                 case 'states':
                     items = statesFilter
