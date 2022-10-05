@@ -131,6 +131,7 @@ const ContactAddress = ({title, addressType, control, removeCTAClickHandler}: Co
                         label={t('contacts.contact_details.individual.state')}
                         options={options}
                         autoComplete={false}
+                        allowClear={true}
                     />
                 </div>
                 <div className="col-span-12 lg:col-span-2">
