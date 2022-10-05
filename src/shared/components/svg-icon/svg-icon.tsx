@@ -91,7 +91,7 @@ const SvgIcon = ({ type, wrapperClassName = '', className = 'icon-medium', fillC
     }
 
     const getIconArrowRight = () => {
-        return <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className={mainClass}>
+        return <svg data-testid={dataTestId} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className={mainClass}>
             <rect width="24" height="24" transform="translate(0 24) rotate(-90)" fill="none" />
             <path d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z" transform="translate(16.272 19) rotate(180)" className={fillClass} />
         </svg>
@@ -397,7 +397,7 @@ const SvgIcon = ({ type, wrapperClassName = '', className = 'icon-medium', fillC
     }
 
     const getIconEdit = () => {
-        return <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className={mainClass}>
+        return <svg data-testid={dataTestId} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className={mainClass}>
             <path d="M0,0H24V24H0Z" fill="none" />
             <path
                 d="M3,15.665V19H6.333l9.83-9.83L12.83,5.835ZM18.74,6.59a.885.885,0,0,0,0-1.253l-2.08-2.08a.885.885,0,0,0-1.253,0L13.781,4.884l3.333,3.333L18.74,6.59Z"

@@ -1,0 +1,98 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ProviderAppointmentTypes tests renders ProviderAppointmentTypes correctly 1`] = `
+<DocumentFragment>
+  <form
+    class="px-6 pt-7 flex flex-1 flex-col group overflow-y-auto"
+  >
+    <h6
+      class="pb-7"
+    >
+      configuration.appointment_types_for_providers.title
+    </h6>
+    <p
+      class="body2 w-4/6 whitespace-pre"
+    >
+      configuration.appointment_types_for_providers.description 
+    </p>
+    <div
+      class="flex flex-row mt-5"
+    >
+      <div
+        class="w-1/3"
+      >
+        <div
+          class="select-wrapper relative w-full flex flex-col h-20 "
+        >
+          <div
+            class="select relative flex flex-col "
+          >
+            <input
+              autocomplete="on"
+              autocorrect="on"
+              class="pl-4 pr-8 body2 select-trigger-pt h-14 relative truncate select-trigger   "
+              data-testid="providerId"
+              name="providerId"
+              spellcheck="true"
+              type="text"
+              value=""
+            />
+            <label
+              class="select-label absolute truncate"
+            >
+              <span
+                class="select-label-span body2"
+              >
+                configuration.appointment_types_for_providers.provider_dropdown_label
+              </span>
+            </label>
+            <div
+              class="absolute pt-4 right-4 "
+            >
+              <div
+                class="flex flex-row items-start"
+              >
+                <div
+                  class="cursor-pointer"
+                >
+                  <div
+                    class=""
+                  >
+                    <svg
+                      class="icon-medium "
+                      height="24"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <rect
+                        fill="none"
+                        height="24"
+                        width="24"
+                      />
+                      <path
+                        class="select-arrow-fill"
+                        d="M7,14l1.273-1.273L2.545,7,8.273,1.273,7,0,0,7Z"
+                        transform="translate(5 16.273) rotate(-90)"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="absolute py-2 options"
+            >
+              <div
+                class="w-full pt-2 text-center subtitle3-small"
+              >
+                common.autocomplete_search
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</DocumentFragment>
+`;

@@ -54,7 +54,7 @@ const TableHeaderColumn = ({header, allowMultiSort, setSortFields, currentSortFi
         return (
             <div key={field} className={className}>
                 <TooltipWrapper content={tooltip} placement='top'>
-                    <div className='flex items-center flex-row' onClick={onClicked}>{t(title)}
+                    <div data-testid={header.dataTestId} className='flex items-center flex-row' onClick={onClicked}>{t(title)}
                         {isSortable && currentSortDirection !== SortDirection.None && currentSortFields && currentSortFields.filter(x => x === field).length === 1 &&
                             <SvgIcon type={SortIconMap[currentSortDirection]}
                                 className={`pl-2 ${sortIconSizeClass}`}
@@ -68,7 +68,7 @@ const TableHeaderColumn = ({header, allowMultiSort, setSortFields, currentSortFi
             </div>
         );
     } else if (React.isValidElement(title)) {
-        return <div key={field} className={className} onClick={onClicked}>{title}{isSortable && currentSortDirection !== SortDirection.None && currentSortFields && currentSortFields.filter(x => x === field).length === 1 &&
+        return <div data-testid={header.dataTestId} key={field} className={className} onClick={onClicked}>{title}{isSortable && currentSortDirection !== SortDirection.None && currentSortFields && currentSortFields.filter(x => x === field).length === 1 &&
             <SvgIcon type={SortIconMap[currentSortDirection]}
                 className={`pl-2 ${sortIconSizeClass}`}
                 fillClass={sortDirectionFillCalss} />

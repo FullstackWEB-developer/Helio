@@ -1,0 +1,303 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ConfigurationsMenu tests renders ConfigurationsMenu correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="configuration-menu p-6 pr-4 h-full"
+  >
+    <h5
+      class="pb-6"
+    >
+      configuration.title
+    </h5>
+    <a
+      href="/configurations/general"
+    >
+      <div
+        class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+        id="configuration-menu-item-12"
+      >
+        configuration.general
+      </div>
+    </a>
+    <div>
+      <div
+        class="cursor-pointer flex flex-row justify-between items-center h-10"
+      >
+        <div
+          class="subtitle2"
+        >
+          configuration.branding_menu
+        </div>
+        <div>
+          <div
+            class=""
+          >
+            <svg
+              class="cursor-pointer "
+              height="24"
+              viewBox="0 0 24 24"
+              width="24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                fill="none"
+                height="24"
+                width="24"
+              />
+              <path
+                class="active-item-icon"
+                d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                transform="translate(19 8) rotate(90)"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div>
+        <a
+          href="/configurations/practice-branding"
+        >
+          <div
+            class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+            id="configuration-menu-item-15"
+          >
+            configuration.practice_branding_menu
+          </div>
+        </a>
+        <a
+          href="/configurations/practice-email-template"
+        >
+          <div
+            class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+            id="configuration-menu-item-16"
+          >
+            configuration.practice_email_template_menu
+          </div>
+        </a>
+      </div>
+    </div>
+    <a
+      href="/configurations/security"
+    >
+      <div
+        class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+        id="configuration-menu-item-11"
+      >
+        configuration.security_settings_menu
+      </div>
+    </a>
+    <a
+      href="/configurations/provider-appointment-settings"
+    >
+      <div
+        class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+        id="configuration-menu-item-4"
+      >
+        configuration.appointment_types_for_providers.menu_name
+      </div>
+    </a>
+    <div>
+      <div
+        class="cursor-pointer flex flex-row justify-between items-center h-10"
+      >
+        <div
+          class="subtitle2"
+        >
+          configuration.appointments
+        </div>
+        <div>
+          <div
+            class=""
+          >
+            <svg
+              class="cursor-pointer "
+              height="24"
+              viewBox="0 0 24 24"
+              width="24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                fill="none"
+                height="24"
+                width="24"
+              />
+              <path
+                class="active-item-icon"
+                d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                transform="translate(19 8) rotate(90)"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div>
+        <a
+          href="/configurations/appointment-type"
+        >
+          <div
+            class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+            id="configuration-menu-item-1"
+          >
+            configuration.appointment_type
+          </div>
+        </a>
+        <a
+          href="/configurations/cancelation-reasons"
+        >
+          <div
+            class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+            id="configuration-menu-item-2"
+          >
+            configuration.appointment_cancellation
+          </div>
+        </a>
+      </div>
+    </div>
+    <div>
+      <div
+        class="cursor-pointer flex flex-row justify-between items-center h-10"
+      >
+        <div
+          class="subtitle2"
+        >
+          configuration.notifications
+        </div>
+        <div>
+          <div
+            class=""
+          >
+            <svg
+              class="cursor-pointer "
+              height="24"
+              viewBox="0 0 24 24"
+              width="24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                fill="none"
+                height="24"
+                width="24"
+              />
+              <path
+                class="active-item-icon"
+                d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                transform="translate(19 8) rotate(90)"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div>
+        <a
+          href="/configurations/appointment-reminders"
+        >
+          <div
+            class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+            id="configuration-menu-item-4"
+          >
+            configuration.appointment_reminder
+          </div>
+        </a>
+        <a
+          href="/configurations/email-templates"
+        >
+          <div
+            class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+            id="configuration-menu-item-5"
+          >
+            configuration.email_notification_templates
+          </div>
+        </a>
+        <a
+          href="/configurations/sms-templates"
+        >
+          <div
+            class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+            id="configuration-menu-item-6"
+          >
+            configuration.sms_notification_templates
+          </div>
+        </a>
+      </div>
+    </div>
+    <div>
+      <div
+        class="cursor-pointer flex flex-row justify-between items-center h-10"
+      >
+        <div
+          class="subtitle2"
+        >
+          configuration.tickets
+        </div>
+        <div>
+          <div
+            class=""
+          >
+            <svg
+              class="cursor-pointer "
+              height="24"
+              viewBox="0 0 24 24"
+              width="24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                fill="none"
+                height="24"
+                width="24"
+              />
+              <path
+                class="active-item-icon"
+                d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                transform="translate(19 8) rotate(90)"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div>
+        <a
+          href="/configurations/ticket-department"
+        >
+          <div
+            class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+            id="configuration-menu-item-8"
+          >
+            configuration.ticket_department_menu
+          </div>
+        </a>
+      </div>
+    </div>
+    <a
+      href="/configurations/contact-categories"
+    >
+      <div
+        class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+        id="configuration-menu-item-10"
+      >
+        configuration.contact_categories_menu
+      </div>
+    </a>
+    <a
+      href="/configurations/public-links"
+    >
+      <div
+        class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+        id="configuration-menu-item-13"
+      >
+        configuration.public_links_menu
+      </div>
+    </a>
+    <a
+      href="/configurations/patient-tabs"
+    >
+      <div
+        class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+        id="configuration-menu-item-17"
+      >
+        configuration.patient_chart_tabs_visibility
+      </div>
+    </a>
+  </div>
+</DocumentFragment>
+`;

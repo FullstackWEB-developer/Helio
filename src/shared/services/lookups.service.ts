@@ -216,7 +216,7 @@ export const getPracticeBranding = async () => {
     return data
 }
 export const getAppointmentReminders = async () => {
-    const { data } = await Api.get<string>(`${parametersUrl}/appointment-reminder`);
+    const { data } = await Api.get<string>(`${parametersUrl}/appointment-reminder`) || {};
     return data;
 }
 export const setAppointmentReminders = async (newValue: string) => {

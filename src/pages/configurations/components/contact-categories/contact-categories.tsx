@@ -46,7 +46,7 @@ const ContactCategories = () => {
                 alignment: 'start',
                 widthClass: 'w-10 flex items-center justify-center h-full mr-4',
                 render: (value: string) => {
-                    return (<SvgIcon type={Icon.Edit} className='icon-medium cursor-pointer' fillClass='edit-icon' onClick={() => {
+                    return (<SvgIcon dataTestId={`edit-${value}`} type={Icon.Edit} className='icon-medium cursor-pointer' fillClass='edit-icon' onClick={() => {
                         setCategoryId(value);
                         setModalVisible(true);
                     }} />);
@@ -189,12 +189,13 @@ const ContactCategories = () => {
                             <div className='flex justify-end mt-10'>
                                 <Button label='common.cancel' className='mr-6' buttonType='secondary' onClick={() => onActionCompleted(false)} />
                                 {categoryId && (
-                                    <Button label='common.delete' className='mr-6' buttonType='secondary'
+                                    <Button data-testid='delete-contact-cat' label='common.delete' className='mr-6' buttonType='secondary'
                                         disabled={deleteCategoryMutation.isLoading || checkIfAnyContactExistsInCategoryMutation.isLoading}
                                         isLoading={deleteCategoryMutation.isLoading || checkIfAnyContactExistsInCategoryMutation.isLoading}
                                         onClick={() => { onDeleteCategory() }} />
                                 )}
                                 <Button
+                                    data-testid='upsert-contact-cat'
                                     type='submit'
                                     buttonType='small'
                                     disabled={!formState.isValid || upsertCategoryMutation.isLoading}

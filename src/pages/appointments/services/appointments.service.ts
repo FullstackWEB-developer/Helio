@@ -145,7 +145,7 @@ export const getCancellationReasons = async () => {
 
 export const getCancellationReasonsEditable = async () => {
      const url = `${appointmentsBaseUrl}/cancellationreason/editable-cancellation-reasons`;
-     const result = await Api.get(url);
+     const result = await Api.get(url) || { data: []};
      return result.data;
 }
 

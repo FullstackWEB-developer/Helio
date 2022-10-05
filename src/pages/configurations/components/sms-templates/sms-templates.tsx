@@ -81,13 +81,11 @@ const SMSTemplates = () => {
             iconClassName='cursor-pointer icon ml-2'
         >
             <div className='flex flex-col p-6 w-80 normal-case'>
-                {messages.map((message) => <>
-                    <div key={message} className='body2'>
-                        <Trans i18nKey={message}>
-                            <span className='subtitle2'></span>
-                        </Trans>
-                    </div>
-                </>)}
+                {messages.map((message) => <div key={message} className='body2'>
+                    <Trans i18nKey={message}>
+                        <span className='subtitle2'></span>
+                    </Trans>
+                </div>)}
             </div>
         </ToolTipIcon>
     }
@@ -96,6 +94,7 @@ const SMSTemplates = () => {
         columns: [
             {
                 title: 'configuration.sms_templates.grid_name',
+                dataTestId: 'configuration.sms_templates.grid_name',
                 field: 'name',
                 isSortable: true,
                 widthClass: 'w-4/12',
@@ -112,6 +111,7 @@ const SMSTemplates = () => {
                 }
             },
             {
+                dataTestId: 'configuration.sms_templates.grid_direction',
                 title: <>{t('configuration.sms_templates.grid_direction')}
                     {DisplayToolTip(
                         ['configuration.sms_templates.tool_tip_grid_direction_two_way',
@@ -133,6 +133,7 @@ const SMSTemplates = () => {
                 }
             },
             {
+                dataTestId: 'configuration.sms_templates.grid_modified_by',
                 title: 'configuration.sms_templates.grid_modified_by',
                 field: 'modifiedByName',
                 isSortable: true,
@@ -150,6 +151,7 @@ const SMSTemplates = () => {
                 }
             },
             {
+                dataTestId: 'configuration.sms_templates.grid_modified_on',
                 title: 'configuration.sms_templates.grid_modified_on',
                 field: 'modifiedOn',
                 isSortable: true,
@@ -167,6 +169,7 @@ const SMSTemplates = () => {
                 }
             },
             {
+                dataTestId: 'id',
                 title: '',
                 field: 'id',
                 isSortable: false,
@@ -178,7 +181,7 @@ const SMSTemplates = () => {
                 render: (value: string) => {
                     return (
                         <div>
-                            <SvgIcon type={Icon.Edit} fillClass={'rgba-038-fill'} onClick={() => onEditIconClick(value)} />
+                            <SvgIcon dataTestId={`edit-${value}`} type={Icon.Edit} fillClass={'rgba-038-fill'} onClick={() => onEditIconClick(value)} />
                         </div>
                     );
                 }

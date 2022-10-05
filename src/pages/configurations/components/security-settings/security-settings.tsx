@@ -142,6 +142,7 @@ const SecuritySettingsScreen = () => {
                     <div className="flex flex-col body3-medium">
                         <ControlledInput
                             name="medicalRecordsDownloadExpirationInDays"
+                            data-testid="medicalRecordsDownloadExpirationInDays"
                             label="configuration.security_settings.medical_records_download_expiration_in_days_label"
                             control={control}
                             type={'number'}
@@ -180,6 +181,7 @@ const SecuritySettingsScreen = () => {
                 </div>
                 <div className="flex flex-row">
                     <Button
+                        data-testid='submit'
                         type='submit'
                         buttonType='medium'
                         disabled={!isValid || !isDirty}
@@ -187,6 +189,7 @@ const SecuritySettingsScreen = () => {
                         isLoading={saveSecuritySettingsMutation.isLoading}
                     />
                     <Button label='common.cancel'
+                        data-testid='reset'
                         className=' ml-8'
                         buttonType='secondary'
                         onClick={() => reset()}

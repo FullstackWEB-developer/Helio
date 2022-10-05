@@ -37,7 +37,7 @@ const AppointmentReminderEdit = ({ index,
             </div>
 
             <span className="mr-8"> {t('configuration.appointment_reminders.days_dropdown_label_sufix')} </span>
-            <SvgIcon type={Icon.Close} className={`icon-medium-18 rgba-038-fill cursor-pointer`} onClick={() => onRemove(index)} />
+            <SvgIcon dataTestId={`${index}-close-icon`} type={Icon.Close} className={`icon-medium-18 rgba-038-fill cursor-pointer`} onClick={() => onRemove(index)} />
         </div>
     )
 }

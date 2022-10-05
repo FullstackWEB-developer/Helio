@@ -1,0 +1,434 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PublicLinks tests renders PublicLinks correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="w-10/12 overflow-auto h-full p-6 pr-4"
+  >
+    <h5
+      class="pb-6"
+    >
+      configuration.public_links.title
+    </h5>
+    <p
+      class="body2"
+    >
+      configuration.public_links.description
+    </p>
+    <div
+      class="body2 mb-6 flex whitespace-pre"
+    >
+      <a
+        class="body2-primary hover:underline flex items-center h-full"
+        href="/practice-branding"
+        target="_blank"
+      >
+        configuration.public_links.description_link_holder_center
+      </a>
+    </div>
+    <div>
+      <div
+        class="flex flex-col "
+      >
+        <div
+          class="flex flex-row caption-caps table-header h-8 items-center h-12 px-4"
+        >
+          <div
+            class="flex justify-start w-3/12"
+          >
+            <div>
+              <div
+                class="flex items-center flex-row"
+              >
+                configuration.public_links.grid_name
+              </div>
+            </div>
+          </div>
+          <div
+            class="flex justify-start w-7/12"
+          >
+            <div>
+              <div
+                class="flex items-center flex-row"
+              >
+                configuration.public_links.grid_link
+              </div>
+            </div>
+          </div>
+          <div
+            class="flex justify-start w-2/12"
+          >
+            <div>
+              <div
+                class="flex items-center flex-row"
+              >
+                configuration.public_links.grid_copy_link
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div
+            class="border-b"
+          >
+            <div
+              class="flex flex-row h-12 px-4"
+            >
+              <div
+                class="w-3/12"
+              >
+                <span
+                  class="flex items-center h-full ml-3"
+                >
+                  configuration.public_links.items.new_patient_registration
+                </span>
+              </div>
+              <div
+                class="w-7/12"
+              >
+                <a
+                  class="body2-primary hover:underline flex items-center h-full"
+                  href="/o/registration"
+                  target="_blank"
+                >
+                  http://localhost/o/registration
+                </a>
+              </div>
+              <div
+                class="w-2/12"
+              >
+                <span
+                  class="flex items-center h-full"
+                >
+                  <div
+                    class=""
+                  >
+                    <svg
+                      class="icon-medium cursor-pointer "
+                      data-testid="onCopy-1"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M0,0H24V24H0Z"
+                        fill="none"
+                      />
+                      <path
+                        class="edit-icon"
+                        d="M3,15.665V19H6.333l9.83-9.83L12.83,5.835ZM18.74,6.59a.885.885,0,0,0,0-1.253l-2.08-2.08a.885.885,0,0,0-1.253,0L13.781,4.884l3.333,3.333L18.74,6.59Z"
+                        transform="translate(1 1)"
+                      />
+                    </svg>
+                  </div>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div
+            class="border-b"
+          >
+            <div
+              class="flex flex-row h-12 px-4"
+            >
+              <div
+                class="w-3/12"
+              >
+                <span
+                  class="flex items-center h-full ml-3"
+                >
+                  configuration.public_links.items.schedule_appointment
+                </span>
+              </div>
+              <div
+                class="w-7/12"
+              >
+                <a
+                  class="body2-primary hover:underline flex items-center h-full"
+                  href="/o/new-appointment"
+                  target="_blank"
+                >
+                  http://localhost/o/new-appointment
+                </a>
+              </div>
+              <div
+                class="w-2/12"
+              >
+                <span
+                  class="flex items-center h-full"
+                >
+                  <div
+                    class=""
+                  >
+                    <svg
+                      class="icon-medium cursor-pointer "
+                      data-testid="onCopy-2"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M0,0H24V24H0Z"
+                        fill="none"
+                      />
+                      <path
+                        class="edit-icon"
+                        d="M3,15.665V19H6.333l9.83-9.83L12.83,5.835ZM18.74,6.59a.885.885,0,0,0,0-1.253l-2.08-2.08a.885.885,0,0,0-1.253,0L13.781,4.884l3.333,3.333L18.74,6.59Z"
+                        transform="translate(1 1)"
+                      />
+                    </svg>
+                  </div>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div
+            class="border-b"
+          >
+            <div
+              class="flex flex-row h-12 px-4"
+            >
+              <div
+                class="w-3/12"
+              >
+                <span
+                  class="flex items-center h-full ml-3"
+                >
+                  configuration.public_links.items.manage_upcoming_appointments
+                </span>
+              </div>
+              <div
+                class="w-7/12"
+              >
+                <a
+                  class="body2-primary hover:underline flex items-center h-full"
+                  href="/o/appointment-list"
+                  target="_blank"
+                >
+                  http://localhost/o/appointment-list
+                </a>
+              </div>
+              <div
+                class="w-2/12"
+              >
+                <span
+                  class="flex items-center h-full"
+                >
+                  <div
+                    class=""
+                  >
+                    <svg
+                      class="icon-medium cursor-pointer "
+                      data-testid="onCopy-3"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M0,0H24V24H0Z"
+                        fill="none"
+                      />
+                      <path
+                        class="edit-icon"
+                        d="M3,15.665V19H6.333l9.83-9.83L12.83,5.835ZM18.74,6.59a.885.885,0,0,0,0-1.253l-2.08-2.08a.885.885,0,0,0-1.253,0L13.781,4.884l3.333,3.333L18.74,6.59Z"
+                        transform="translate(1 1)"
+                      />
+                    </svg>
+                  </div>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div
+            class="border-b"
+          >
+            <div
+              class="flex flex-row h-12 px-4"
+            >
+              <div
+                class="w-3/12"
+              >
+                <span
+                  class="flex items-center h-full ml-3"
+                >
+                  configuration.public_links.items.request_prescription_refills
+                </span>
+              </div>
+              <div
+                class="w-7/12"
+              >
+                <a
+                  class="body2-primary hover:underline flex items-center h-full"
+                  href="/o/view-medications"
+                  target="_blank"
+                >
+                  http://localhost/o/view-medications
+                </a>
+              </div>
+              <div
+                class="w-2/12"
+              >
+                <span
+                  class="flex items-center h-full"
+                >
+                  <div
+                    class=""
+                  >
+                    <svg
+                      class="icon-medium cursor-pointer "
+                      data-testid="onCopy-4"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M0,0H24V24H0Z"
+                        fill="none"
+                      />
+                      <path
+                        class="edit-icon"
+                        d="M3,15.665V19H6.333l9.83-9.83L12.83,5.835ZM18.74,6.59a.885.885,0,0,0,0-1.253l-2.08-2.08a.885.885,0,0,0-1.253,0L13.781,4.884l3.333,3.333L18.74,6.59Z"
+                        transform="translate(1 1)"
+                      />
+                    </svg>
+                  </div>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div
+            class="border-b"
+          >
+            <div
+              class="flex flex-row h-12 px-4"
+            >
+              <div
+                class="w-3/12"
+              >
+                <span
+                  class="flex items-center h-full ml-3"
+                >
+                  configuration.public_links.items.medical_records
+                </span>
+              </div>
+              <div
+                class="w-7/12"
+              >
+                <a
+                  class="body2-primary hover:underline flex items-center h-full"
+                  href="/o/request-medical-records"
+                  target="_blank"
+                >
+                  http://localhost/o/request-medical-records
+                </a>
+              </div>
+              <div
+                class="w-2/12"
+              >
+                <span
+                  class="flex items-center h-full"
+                >
+                  <div
+                    class=""
+                  >
+                    <svg
+                      class="icon-medium cursor-pointer "
+                      data-testid="onCopy-5"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M0,0H24V24H0Z"
+                        fill="none"
+                      />
+                      <path
+                        class="edit-icon"
+                        d="M3,15.665V19H6.333l9.83-9.83L12.83,5.835ZM18.74,6.59a.885.885,0,0,0,0-1.253l-2.08-2.08a.885.885,0,0,0-1.253,0L13.781,4.884l3.333,3.333L18.74,6.59Z"
+                        transform="translate(1 1)"
+                      />
+                    </svg>
+                  </div>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div
+            class="border-b"
+          >
+            <div
+              class="flex flex-row h-12 px-4"
+            >
+              <div
+                class="w-3/12"
+              >
+                <span
+                  class="flex items-center h-full ml-3"
+                >
+                  configuration.public_links.items.recent_test_results
+                </span>
+              </div>
+              <div
+                class="w-7/12"
+              >
+                <a
+                  class="body2-primary hover:underline flex items-center h-full"
+                  href="/o/lab-results"
+                  target="_blank"
+                >
+                  http://localhost/o/lab-results
+                </a>
+              </div>
+              <div
+                class="w-2/12"
+              >
+                <span
+                  class="flex items-center h-full"
+                >
+                  <div
+                    class=""
+                  >
+                    <svg
+                      class="icon-medium cursor-pointer "
+                      data-testid="onCopy-6"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M0,0H24V24H0Z"
+                        fill="none"
+                      />
+                      <path
+                        class="edit-icon"
+                        d="M3,15.665V19H6.333l9.83-9.83L12.83,5.835ZM18.74,6.59a.885.885,0,0,0,0-1.253l-2.08-2.08a.885.885,0,0,0-1.253,0L13.781,4.884l3.333,3.333L18.74,6.59Z"
+                        transform="translate(1 1)"
+                      />
+                    </svg>
+                  </div>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

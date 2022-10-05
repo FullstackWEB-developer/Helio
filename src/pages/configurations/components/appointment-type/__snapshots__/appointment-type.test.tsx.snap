@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AppointmentType tests renders AppointmentType correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="appointment-type overflow-auto h-full p-6 pr-4"
+  >
+    <h5
+      class="appointment-type-header"
+    >
+      configuration.appointment_type_list.title
+    </h5>
+    <div
+      class="body2"
+    >
+      configuration.appointment_type_list.description
+    </div>
+    <div
+      class="flex flex-col space-y-4 items-center justify-center pt-2"
+    >
+      <div>
+        <div
+          class=""
+        >
+          <svg
+            class="spinner icon-large-40 "
+            viewBox="0 0 40 40"
+          >
+            <circle
+              class="path"
+              cx="20"
+              cy="20"
+              fill="none"
+              r="16"
+              stroke-width="4"
+            />
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

@@ -104,6 +104,7 @@ const Pagination = ({value, ...props}: PaginationProps) => {
             />
 
             <SvgIcon
+                data-testid='next-page'
                 type={Icon.ArrowRight}
                 className='cursor-pointer'
                 fillClass={`pagination-${hasNext ? 'active' : 'inactive'}-icon`}

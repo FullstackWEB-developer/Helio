@@ -71,7 +71,7 @@ const PatientChartTabs = () => {
                 {t('configuration.patient_chart_tabs.description')}
             </div>
                 <div className='grid grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 pb-10'>
-                    <Checkbox name='appointments'
+                    <Checkbox name='appointments' data-testid='appointments'
                               checked={settings?.isAppointmentsVisible}
                               onChange={(event) => setSettings(settings => {
                                   return {
@@ -80,7 +80,7 @@ const PatientChartTabs = () => {
                                   } as PatientChartVisibility
                               })}
                               label='configuration.patient_chart_tabs.appointments' />
-                    <Checkbox name='insurance'
+                    <Checkbox name='insurance' data-testid='insurance'
                               checked={settings?.isInsuranceVisible}
                               onChange={(event) => setSettings(settings => {
                                   return {
@@ -89,7 +89,7 @@ const PatientChartTabs = () => {
                                   } as PatientChartVisibility
                               })}
                               label='configuration.patient_chart_tabs.insurance' />
-                    <Checkbox name='patientCases'
+                    <Checkbox name='patientCases' data-testid='patientCases'
                               checked={settings?.isPatientCasesVisible}
                               onChange={(event) => setSettings(settings => {
                                   return {
@@ -98,7 +98,7 @@ const PatientChartTabs = () => {
                                   } as PatientChartVisibility
                               })}
                               label='configuration.patient_chart_tabs.patient_cases' />
-                    <Checkbox name='medications'
+                    <Checkbox name='medications' data-testid='medications'
                               checked={settings?.isMedicationsVisible}
                               onChange={(event) => setSettings(settings => {
                                   return {
@@ -107,7 +107,7 @@ const PatientChartTabs = () => {
                                   } as PatientChartVisibility
                               })}
                               label='configuration.patient_chart_tabs.medications' />
-                    <Checkbox name='testResults'
+                    <Checkbox name='testResults' data-testid='testResults'
                               checked={settings?.isTestResultsVisible}
                               onChange={(event) => setSettings(settings => {
                                   return {
@@ -119,6 +119,7 @@ const PatientChartTabs = () => {
                 </div>
                 <div className="flex flex-row w-full">
                     <Button
+                        data-testid='submit'
                         type='submit'
                         buttonType='medium'
                         label='common.save'
@@ -127,6 +128,7 @@ const PatientChartTabs = () => {
                         isLoading={savePatientChartTabSettingsMutation.isLoading}
                     />
                     <Button label='common.cancel'
+                            data-testid='reset'
                             className=' ml-8'
                             buttonType='secondary'
                             onClick={() => reset()}

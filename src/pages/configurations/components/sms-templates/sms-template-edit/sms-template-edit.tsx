@@ -166,7 +166,7 @@ const SMSTemplateEdit = () => {
                     </div>
                     <div className='flex pr-8 pb-4'>
                         <span className="mr-auto font-bold">{t('configuration.sms_templates.edit.template_body_field_name')}</span>
-                        <Button label='configuration.sms_templates.edit.reset_button' className='ml-auto' buttonType='secondary-medium' onClick={() => resetToDefaultBody()} />
+                        <Button data-testid='reset' label='configuration.sms_templates.edit.reset_button' className='ml-auto' buttonType='secondary-medium' onClick={() => resetToDefaultBody()} />
                     </div>
                     <div className='border-l border-r border-t mr-8'>
                         <Select
@@ -190,11 +190,12 @@ const SMSTemplateEdit = () => {
                             rows={4} />
                         <span className='body2 flex justify-end'>
                             <Trans i18nKey="configuration.sms_templates.edit.template_body_character" values={{currentLength: currentLength}}>
-                                <div className='body2-primary whitespace-pre'>{currentLength}</div>
+                                <div className='body2-primary whitespace-pre'>{{currentLength}}</div>
                             </Trans> <SmsTemplateTooltip  placement='bottom-end' messages={['configuration.sms_templates.edit.template_body_character_tooltip']}/></span>
                     </div>
                     <div className='flex mt-10'>
                         <Button
+                            data-testid='submit'
                             type='submit'
                             buttonType='medium'
                             disabled={!isValid || !isDirty}
@@ -202,6 +203,7 @@ const SMSTemplateEdit = () => {
                             isLoading={updateCancellationReasonMutation.isLoading}
                         />
                         <Button
+                            data-testid='cancel'
                             label='common.cancel'
                             className=' mx-8'
                             buttonType='secondary'

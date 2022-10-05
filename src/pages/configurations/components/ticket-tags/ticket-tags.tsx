@@ -90,6 +90,7 @@ const TicketTags = () => {
         if (tagId) {
             return tags.find(tag => tag.value === tagId)?.label;
         }
+        return ''
     }
 
     const handleCreateTagClick = () => {
@@ -145,7 +146,7 @@ const TicketTags = () => {
                 rowClassname: 'subtitle2',
                 render: (label: string, row: TicketLookupValue) => {
                     return (<span className='flex items-center h-full body2'>{label}
-                        {row.isReadOnly ? <p className='ml-2'>{displayToolTip(t('ticket_tags.tooltip_system_default'))}</p> : "  "}</span>)
+                        {row.isReadOnly ? <div className='ml-2'>{displayToolTip(t('ticket_tags.tooltip_system_default'))}</div> : "  "}</span>)
                 }
             },
             {
@@ -156,7 +157,7 @@ const TicketTags = () => {
                 render: (value: string, row: TicketLookupValue) => {
                     if (!row.isReadOnly) {
                         return (
-                            <SvgIcon type={Icon.Edit} className='icon-medium cursor-pointer' fillClass='edit-icon' onClick={() => {
+                            <SvgIcon dataTestId={`edit-${value}`} type={Icon.Edit} className='icon-medium cursor-pointer' fillClass='edit-icon' onClick={() => {
                                 setTagId(value);
                                 setTagModalOpen(true);
                             }} />)
@@ -185,15 +186,17 @@ const TicketTags = () => {
                             name='value'
                             type='text'
                             label='ticket_tags.modal.input_label'
+                            dataTestId='ticket_tags.modal.input_label'
                             containerClassName='w-2/3'
                             defaultValue={getTagLabel()}
                             required
                         />
                         <div className='flex justify-end mt-10'>
-                            <Button label='common.cancel' className='mr-6' buttonType='secondary' onClick={() => setTagModalOpen(false)} />
+                            <Button data-testid='cancel-tags' label='common.cancel' className='mr-6' buttonType='secondary' onClick={() => setTagModalOpen(false)} />
                             {tagId && (
-                                <Button label='common.delete' className='mr-6' buttonType='secondary' disabled={deleteTagMutation.isLoading} isLoading={deleteTagMutation.isLoading} onClick={() => handleDelete()} />
+                                <Button data-testid='delete-tags' label='common.delete' className='mr-6' buttonType='secondary' disabled={deleteTagMutation.isLoading} isLoading={deleteTagMutation.isLoading} onClick={() => handleDelete()} />
                             )}<Button
+                                data-testid='save-changes'
                                 type='submit'
                                 buttonType='small'
                                 disabled={!isValid}
@@ -220,7 +223,7 @@ const TicketTags = () => {
                     <div className='h7 pl-1 pb-2'>{t('ticket_tags.table_header')}</div>
                 </div>
                 <div className='flex flex-col justify-center mr-8'>
-                    <Button label='ticket_tags.create_tag' buttonType='small' onClick={() => handleCreateTagClick()} />
+                    <Button data-testid='add' label='ticket_tags.create_tag' buttonType='small' onClick={() => handleCreateTagClick()} />
                 </div>
             </div>
             {getTagsMutation.isLoading ? (

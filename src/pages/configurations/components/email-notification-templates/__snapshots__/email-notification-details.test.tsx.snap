@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EmailNotificationDetails tests renders EmailNotificationDetails without id correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="p-7"
+  >
+    configuration.email_template_details.not_found
+  </div>
+</DocumentFragment>
+`;

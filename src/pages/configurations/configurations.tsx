@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import React, { Suspense, useCallback } from 'react';
 import { useParams } from 'react-router';
 import AppointmentType from './components/appointment-type/appointment-type';
 import ConfigurationsMenu from './components/configurations-menu/configurations-menu';
@@ -19,15 +19,21 @@ import EmailNotificationDetails from './components/email-notification-templates/
 import EmailNotificationList from './components/email-notification-templates/email-notification-list'
 import { PracticeBrandingPath } from '@app/paths';
 import SecuritySettings from './components/security-settings/security-settings';
-import PracticeBrandingEdit from './components/branding/practice-branding/practice-branding';
 import EditAppointmentType from './components/appointment-type/edit-appointment-type/edit-appointment-type'
 import GeneralSettings from './components/general-settings/general-settings';
 import PracticeEmailTemplateEdit from "@pages/configurations/components/branding/practice-email-template/practice-email-template";
 import PatientChartTabs from '@pages/configurations/components/patient-chart-tabs/patient-chart-tabs';
+import SvgIcon, { Icon } from '@components/svg-icon';
+const PracticeBrandingEdit = React.lazy(() => import("./components/branding/practice-branding/practice-branding"));
 interface ConfigurationUrlParams {
     type: string,
     id: string
 }
+const spinner = (
+    <div className='flex flex-col space-y-4 items-center h-full w-full justify-center'>
+        <SvgIcon type={Icon.Spinner} className={`icon-large-40`}/>
+    </div>
+)
 const Configurations = () => {
     const { type, id } = useParams<ConfigurationUrlParams>();
     const renderBodyByActiveRoute = useCallback(() => {
@@ -56,7 +62,9 @@ const Configurations = () => {
             case SecuritySettingsPath:
                 return <SecuritySettings />
             case PracticeBrandingPath:
-                return <PracticeBrandingEdit />
+                return <Suspense fallback={spinner}>
+                    <PracticeBrandingEdit />
+                </Suspense>
             case "email-templates":
                 if (id) { return <EmailNotificationDetails /> }
                 return <EmailNotificationList />;

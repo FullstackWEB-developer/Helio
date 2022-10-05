@@ -1,0 +1,173 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TicketDepartment tests renders TicketDepartment correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="flex items-center justify-center w-full h-full z-10 absolute hidden"
+  />
+  <div
+    class="ticket-department overflow-auto h-full p-6 pr-4"
+  >
+    <h5
+      class="ticket-department-header"
+    >
+      ticket_department.title
+    </h5>
+    <div
+      class="body2 pb-6"
+    >
+      ticket_department.description
+    </div>
+    <div
+      class="w-full h-14 flex flex-row justify-between"
+    >
+      <div
+        class="flex flex-col justify-end ticket-department-table-header"
+      >
+        <div
+          class="h7"
+        >
+          ticket_department.table_header
+        </div>
+      </div>
+      <div
+        class="flex flex-col justify-center mr-8"
+      >
+        <button
+          class="small-button"
+          data-testid="add"
+          type="button"
+        >
+          <div
+            class="flex flex-row justify-center items-center space-x-2"
+          >
+            <div>
+              ticket_department.create_department
+            </div>
+          </div>
+        </button>
+      </div>
+    </div>
+    <div>
+      <div
+        class="flex flex-col "
+      >
+        <div
+          class="flex flex-row caption-caps table-header h-8 items-center h-12 px-4"
+        >
+          <div
+            class="flex justify-start w-full"
+          >
+            <div>
+              <div
+                class="flex items-center flex-row"
+              >
+                ticket_department.table.department_name
+              </div>
+            </div>
+          </div>
+          <div
+            class="flex justify-start w-10 flex items-center justify-center h-full mr-4"
+          >
+            <div>
+              <div
+                class="flex items-center flex-row"
+              />
+            </div>
+          </div>
+        </div>
+        <div>
+          <div
+            class="border-b"
+          >
+            <div
+              class="flex flex-row h-14 px-4"
+            >
+              <div
+                class="w-full"
+              >
+                <span
+                  class="flex items-center h-full ml-3"
+                >
+                  string1
+                </span>
+              </div>
+              <div
+                class="w-10 flex items-center justify-center h-full mr-4"
+              >
+                <div
+                  class=""
+                >
+                  <svg
+                    class="icon-medium cursor-pointer "
+                    data-testid="edit-1"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M0,0H24V24H0Z"
+                      fill="none"
+                    />
+                    <path
+                      class="edit-icon"
+                      d="M3,15.665V19H6.333l9.83-9.83L12.83,5.835ZM18.74,6.59a.885.885,0,0,0,0-1.253l-2.08-2.08a.885.885,0,0,0-1.253,0L13.781,4.884l3.333,3.333L18.74,6.59Z"
+                      transform="translate(1 1)"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div
+            class="border-b"
+          >
+            <div
+              class="flex flex-row h-14 px-4"
+            >
+              <div
+                class="w-full"
+              >
+                <span
+                  class="flex items-center h-full ml-3"
+                >
+                  string2
+                </span>
+              </div>
+              <div
+                class="w-10 flex items-center justify-center h-full mr-4"
+              >
+                <div
+                  class=""
+                >
+                  <svg
+                    class="icon-medium cursor-pointer "
+                    data-testid="edit-2"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M0,0H24V24H0Z"
+                      fill="none"
+                    />
+                    <path
+                      class="edit-icon"
+                      d="M3,15.665V19H6.333l9.83-9.83L12.83,5.835ZM18.74,6.59a.885.885,0,0,0,0-1.253l-2.08-2.08a.885.885,0,0,0-1.253,0L13.781,4.884l3.333,3.333L18.74,6.59Z"
+                      transform="translate(1 1)"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

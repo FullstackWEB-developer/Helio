@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EditCancellationReason tests renders EditCancellationReason correctly 1`] = `
+<DocumentFragment>
+   
+  <div
+    class="flex flex-col space-y-4 items-center h-full w-full justify-center flex-1"
+  >
+    <div>
+      <div
+        class=""
+      >
+        <svg
+          class="spinner icon-large-40 "
+          viewBox="0 0 40 40"
+        >
+          <circle
+            class="path"
+            cx="20"
+            cy="20"
+            fill="none"
+            r="16"
+            stroke-width="4"
+          />
+        </svg>
+      </div>
+    </div>
+  </div>
+  <div
+    class="flex items-center justify-center m-auto justify-self-center"
+  />
+  <div
+    class="flex items-center justify-center m-auto justify-self-center"
+  />
+</DocumentFragment>
+`;

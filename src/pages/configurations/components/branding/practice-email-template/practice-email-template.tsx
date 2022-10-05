@@ -151,6 +151,7 @@ const PracticeEmailTemplateEdit = () => {
                 <div className='body2 mb-8 flex whitespace-pre'>
                     <Trans i18nKey="configuration.practice_email_template.customize_color_description">
                         <Link to={PracticeBrandingPath}
+                              data-testid='configuration.practice_email_template.customize_color_description'
                               className='body2-primary hover:underline flex items-center h-full'
                               target={"_blank"}></Link>
                     </Trans>
@@ -159,6 +160,7 @@ const PracticeEmailTemplateEdit = () => {
                     <div
                         className='mb-3 subtitle'> {t('configuration.practice_email_template.email_footer_disclaimer')} </div>
                     <Button label='configuration.practice_email_template.reset_to_default_button'
+                            data-testid='configuration.practice_email_template.reset_to_default_button'
                             buttonType='secondary'
                             onClick={() => onRestoreDefaultData()}
                             isLoading={savePracticeEmailTemplateMutation.isLoading || uploadLogoMutation.isLoading}/>
@@ -166,6 +168,7 @@ const PracticeEmailTemplateEdit = () => {
 
                 <div className='mb-8'>
                     <ControlledTextArea control={control}
+                                        data-testid='practice-email-template-footer-disclaimer'
                                         name='footerDisclaimer'
                                         required={true}
                                         hyperLinkButton={true}
@@ -176,6 +179,7 @@ const PracticeEmailTemplateEdit = () => {
 
                 <div className='flex'>
                     <Button
+                        data-testid='save-practice-email-template'
                         type='submit'
                         buttonType='medium'
                         disabled={!formState.isValid}

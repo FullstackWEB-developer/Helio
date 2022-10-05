@@ -117,6 +117,7 @@ const GeneralSettings = () => {
                         <div className="mt-11 flex flex-row items-center">
                             <div className='input-row'>
                                 <Controller
+                                    data-testid='forceToRedirect'
                                     name='forceToRedirect'
                                     control={control}
                                     render={(controllerProps) => (
@@ -141,6 +142,7 @@ const GeneralSettings = () => {
                                                     ref={controllerProps.ref}
                                                     defaultValue={data?.forceToRedirect.toString()}
                                                     data-test-id='force-to-redirect'
+                                                    data-testid='force-to-redirect'
                                                     className='flex flex-row space-x-8'
                                                     items={[
                                                         {
@@ -162,7 +164,7 @@ const GeneralSettings = () => {
                         </div>
                         <div className="mt-10 flex flex-row items-center">
                             <div className='input-row'>
-                                <ControlledInput name='redirectToExternalPhone' control={control}
+                                <ControlledInput name='redirectToExternalPhone' control={control} data-testid='redirectToExternalPhone'
                                                  defaultValue={data?.redirectToExternalPhone === "-" ? "" : data?.redirectToExternalPhone}
                                                  type='tel'
                                                  disabled={forceRedirectWatch === 'false'}
@@ -239,6 +241,7 @@ const GeneralSettings = () => {
                         </div>
                         <div className='flex mt-10'>
                             <Button
+                                data-testid='submit'
                                 type='submit'
                                 buttonType='medium'
                                 disabled={!formState.isValid || !formState.isDirty}

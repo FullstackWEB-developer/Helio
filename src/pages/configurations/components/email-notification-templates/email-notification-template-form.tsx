@@ -88,7 +88,7 @@ const EmailNotificationTemplateForm = ({template}: {template: EmailTemplate}) =>
             </div>
             <div className='flex justify-between items-center subtitle2 pb-2'>
                 {t('configuration.email_template_details.body')}
-                <Button label='configuration.email_template_details.reset_to_default' buttonType='secondary-medium' onClick={() => resetToDefaultBody()} />
+                <Button data-testid='configuration.email_template_details.reset_to_default' label='configuration.email_template_details.reset_to_default' buttonType='secondary-medium' onClick={() => resetToDefaultBody()} />
             </div>
             <ControlledTextArea control={control}
                                 name='body'
@@ -101,9 +101,9 @@ const EmailNotificationTemplateForm = ({template}: {template: EmailTemplate}) =>
                                 formulaSelectionDropdown={true} />
             <div className='flex pt-10'>
                 <Button label='common.save' className='mr-8' type='submit' disabled={!isValid || !isDirty} isLoading={updateEmailTemplateMutation.isLoading} />
-                <Button label='configuration.email_template_details.preview' buttonType='secondary-medium' className='mr-6'
+                <Button data-testid='configuration.email_template_details.preview' label='configuration.email_template_details.preview' buttonType='secondary-medium' className='mr-6'
                         onClick={previewEmailTemplateHandler} isLoading={previewEmailTemplateMutation.isLoading} />
-                <Button label='common.cancel' buttonType='secondary-medium' onClick={() => history.push('/configurations/email-templates')} />
+                <Button data-testid='configuration.email_template_details.cancel' label='common.cancel' buttonType='secondary-medium' onClick={() => history.push('/configurations/email-templates')} />
             </div>
         </form>
     )

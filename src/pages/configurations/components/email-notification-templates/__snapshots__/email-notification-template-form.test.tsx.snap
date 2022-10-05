@@ -1,0 +1,454 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EmailNotificationTemplateForm tests renders EmailNotificationTemplateForm correctly 1`] = `
+<DocumentFragment>
+  <form
+    class="w-full"
+  >
+    <div
+      class="w-7/12"
+    >
+      <div
+        class="flex flex-col h-20 input-group"
+      >
+        <div
+          class="input-group-container flex flex-wrap items-stretch w-full relative  "
+        >
+          <input
+            autocomplete="off"
+            class=" pt-6 body2 h-14 flex-shrink flex-grow flex-auto leading-normal w-px flex-1 input-date-mask pl-4"
+            data-test-id="subject"
+            data-testid="subject"
+            maxlength="100"
+            name="subject"
+            placeholder=""
+            required=""
+            type="text"
+            value=""
+          />
+          <label
+            class="absolute truncate required body2 "
+          >
+            configuration.email_template_details.subject
+          </label>
+        </div>
+      </div>
+      <div
+        class="flex items-center"
+      >
+        <div
+          class="flex-1"
+        >
+          <div
+            class="flex flex-col h-20 input-group"
+          >
+            <div
+              class="input-group-container flex flex-wrap items-stretch w-full relative  "
+            >
+              <input
+                autocomplete="off"
+                class=" pt-6 body2 h-14 flex-shrink flex-grow flex-auto leading-normal w-px flex-1 input-date-mask pl-4"
+                data-test-id="title"
+                data-testid="title"
+                name="title"
+                placeholder=""
+                required=""
+                type="text"
+                value=""
+              />
+              <label
+                class="absolute truncate required body2 "
+              >
+                configuration.email_template_details.title
+              </label>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div
+            class=""
+          >
+            <svg
+              class="cursor-pointer "
+              data-name="Icon/Info/Outline/24px"
+              height="24"
+              id="Icon_Info_Outline_24px"
+              viewBox="0 0 24 24"
+              width="24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                fill="none"
+                height="24"
+                id="Container"
+                width="24"
+              />
+              <path
+                class="rgba-05-fill"
+                d="M11,17h2V11H11ZM12,2A10,10,0,1,0,22,12,10,10,0,0,0,12,2Zm0,18a8,8,0,1,1,8-8A8.011,8.011,0,0,1,12,20ZM11,9h2V7H11Z"
+                id="ic_info_outline_24px"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="flex justify-between items-center subtitle2 pb-2"
+    >
+      configuration.email_template_details.body
+      <button
+        class="secondary-medium-button"
+        data-testid="configuration.email_template_details.reset_to_default"
+        type="button"
+      >
+        <div
+          class="flex flex-row justify-center items-center space-x-2"
+        >
+          <div>
+            configuration.email_template_details.reset_to_default
+          </div>
+        </div>
+      </button>
+    </div>
+    <div
+      class="flex flex-row justify-between"
+    >
+      <label
+        class="block subtitle2 pb-2"
+      />
+    </div>
+    <div
+      class="text-area"
+    >
+      <div
+        class="relative formatted-text-area w-full quick-select-included"
+      >
+        <div
+          class="bg-white z-50 flex items-center w-full border-b-0 border"
+        >
+          <select
+            class="body3 pl-4 mr-20"
+          >
+            <option
+              disabled=""
+              hidden=""
+              selected=""
+              value="0"
+            >
+              common.insert
+            </option>
+            <option
+              label="First Name"
+              value="firstName"
+            />
+            <option
+              label="Last Name"
+              value="lastName"
+            />
+            <option
+              label="Full Name"
+              value="fullName"
+            />
+            <option
+              label="Short Name (eg. J.Smith)"
+              value="shortName"
+            />
+            <option
+              label="Ticket ID"
+              value="ticketId"
+            />
+            <option
+              label="Ticket Number"
+              value="ticketNumber"
+            />
+            <option
+              label="Ticket Link"
+              value="ticketLink"
+            />
+            <option
+              label="SMS Conversation Link"
+              value="smsConnversationLink"
+            />
+            <option
+              label="Email Conversation Link"
+              value="emailConversationLink"
+            />
+            <option
+              label="User First Name"
+              value="userFirstName"
+            />
+            <option
+              label="Blocked String"
+              value="blockedAccessTypeString"
+            />
+            <option
+              label="Blocked Link"
+              value="blockedAccessLink"
+            />
+            <option
+              label="Blocked Value Details"
+              value="blockedAccessValue"
+            />
+            <option
+              label="Helio Log In"
+              value="helioLink"
+            />
+            <option
+              label="New Patient Registration Form"
+              value="newPatientRegistrationLink"
+            />
+            <option
+              label="Test Results"
+              value="labResultLink"
+            />
+            <option
+              label="Department Address"
+              value="departmentAddress"
+            />
+            <option
+              label="Department Phone Number"
+              value="departmentPhone"
+            />
+            <option
+              label="Department Name"
+              value="department.patientDepartmentName"
+            />
+            <option
+              label="Department Address"
+              value="department.address"
+            />
+            <option
+              label="Department Address 2"
+              value="department.address2"
+            />
+            <option
+              label="Department City"
+              value="department.city"
+            />
+            <option
+              label="Department State"
+              value="department.state"
+            />
+            <option
+              label="Department ZIP"
+              value="department.zip"
+            />
+            <option
+              label="Department Parking Info"
+              value="department.parkingInformation"
+            />
+            <option
+              label="Department Directions Link"
+              value="department.directionsLink"
+            />
+          </select>
+          <div
+            class="ql-toolbar ql-snow"
+            id="toolbar"
+          >
+            <button
+              class="ql-bold"
+              type="button"
+            >
+              <svg
+                viewBox="0 0 18 18"
+              >
+                 
+                <path
+                  class="ql-stroke"
+                  d="M5,4H9.5A2.5,2.5,0,0,1,12,6.5v0A2.5,2.5,0,0,1,9.5,9H5A0,0,0,0,1,5,9V4A0,0,0,0,1,5,4Z"
+                />
+                 
+                <path
+                  class="ql-stroke"
+                  d="M5,9h5.5A2.5,2.5,0,0,1,13,11.5v0A2.5,2.5,0,0,1,10.5,14H5a0,0,0,0,1,0,0V9A0,0,0,0,1,5,9Z"
+                />
+                 
+              </svg>
+            </button>
+            <button
+              class="ql-italic"
+              type="button"
+            >
+              <svg
+                viewBox="0 0 18 18"
+              >
+                 
+                <line
+                  class="ql-stroke"
+                  x1="7"
+                  x2="13"
+                  y1="4"
+                  y2="4"
+                />
+                 
+                <line
+                  class="ql-stroke"
+                  x1="5"
+                  x2="11"
+                  y1="14"
+                  y2="14"
+                />
+                 
+                <line
+                  class="ql-stroke"
+                  x1="8"
+                  x2="10"
+                  y1="14"
+                  y2="4"
+                />
+                 
+              </svg>
+            </button>
+            <button
+              class="ql-underline"
+              type="button"
+            >
+              <svg
+                viewBox="0 0 18 18"
+              >
+                 
+                <path
+                  class="ql-stroke"
+                  d="M5,3V9a4.012,4.012,0,0,0,4,4H9a4.012,4.012,0,0,0,4-4V3"
+                />
+                 
+                <rect
+                  class="ql-fill"
+                  height="1"
+                  rx="0.5"
+                  ry="0.5"
+                  width="12"
+                  x="3"
+                  y="15"
+                />
+                 
+              </svg>
+            </button>
+            <button
+              class="ql-link"
+              type="button"
+            >
+              <svg
+                viewBox="0 0 18 18"
+              >
+                 
+                <line
+                  class="ql-stroke"
+                  x1="7"
+                  x2="11"
+                  y1="7"
+                  y2="11"
+                />
+                 
+                <path
+                  class="ql-even ql-stroke"
+                  d="M8.9,4.577a3.476,3.476,0,0,1,.36,4.679A3.476,3.476,0,0,1,4.577,8.9C3.185,7.5,2.035,6.4,4.217,4.217S7.5,3.185,8.9,4.577Z"
+                />
+                 
+                <path
+                  class="ql-even ql-stroke"
+                  d="M13.423,9.1a3.476,3.476,0,0,0-4.679-.36,3.476,3.476,0,0,0,.36,4.679c1.392,1.392,2.5,2.542,4.679.36S14.815,10.5,13.423,9.1Z"
+                />
+                 
+              </svg>
+            </button>
+          </div>
+          <div
+            id="editor"
+          />
+        </div>
+        <div
+          class="quill bg-white links"
+        >
+          <div
+            class="ql-container ql-snow"
+          >
+            <div
+              class="ql-editor ql-blank"
+              contenteditable="true"
+              data-gramm="false"
+              data-placeholder="common.enter_text"
+            >
+              <p>
+                <br />
+              </p>
+            </div>
+            <div
+              class="ql-clipboard"
+              contenteditable="true"
+              tabindex="-1"
+            />
+            <div
+              class="ql-tooltip ql-hidden"
+            >
+              <a
+                class="ql-preview"
+                href="about:blank"
+                rel="noopener noreferrer"
+                target="_blank"
+              />
+              <input
+                data-formula="e=mc^2"
+                data-link="https://quilljs.com"
+                data-video="Embed URL"
+                type="text"
+              />
+              <a
+                class="ql-action"
+              />
+              <a
+                class="ql-remove"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="flex pt-10"
+    >
+      <button
+        class="medium-button mr-8"
+        disabled=""
+        type="submit"
+      >
+        <div
+          class="flex flex-row justify-center items-center space-x-2"
+        >
+          <div>
+            common.save
+          </div>
+        </div>
+      </button>
+      <button
+        class="secondary-medium-button mr-6"
+        data-testid="configuration.email_template_details.preview"
+        type="button"
+      >
+        <div
+          class="flex flex-row justify-center items-center space-x-2"
+        >
+          <div>
+            configuration.email_template_details.preview
+          </div>
+        </div>
+      </button>
+      <button
+        class="secondary-medium-button"
+        data-testid="configuration.email_template_details.cancel"
+        type="button"
+      >
+        <div
+          class="flex flex-row justify-center items-center space-x-2"
+        >
+          <div>
+            common.cancel
+          </div>
+        </div>
+      </button>
+    </div>
+  </form>
+</DocumentFragment>
+`;

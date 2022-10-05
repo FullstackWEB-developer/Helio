@@ -103,7 +103,7 @@ export const updateEmailTemplate = async (payload: {body: EmailTemplateUpdateReq
 
 export const getEmailTemplateById = async(id: string) => {
     const url = `${notificationsUrl}/admin/email-templates/${id}`;
-    const {data} = await Api.get(url);
+    const {data} = await Api.get(url) || {};
     return data;
 }
 

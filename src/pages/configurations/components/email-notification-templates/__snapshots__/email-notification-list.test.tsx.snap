@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EmailNotificationList tests renders EmailNotificationList correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="flex flex-col flex-1 overflow-auto h-full p-6 pr-4"
+  >
+    <h6
+      class="pb-7"
+    >
+      configuration.email_template_list.title
+    </h6>
+    <div
+      class="body2"
+    >
+      configuration.email_template_list.description
+    </div>
+    <div
+      class="flex flex-col space-y-4 items-center justify-center pt-2 px-2"
+    >
+      <div>
+        <div
+          class=""
+        >
+          <svg
+            class="spinner icon-medium "
+            viewBox="0 0 40 40"
+          >
+            <circle
+              class="path"
+              cx="20"
+              cy="20"
+              fill="none"
+              r="16"
+              stroke-width="4"
+            />
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

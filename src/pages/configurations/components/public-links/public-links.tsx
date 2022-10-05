@@ -63,15 +63,15 @@ const PublicLinks = () => {
             },
             {
                 title: 'configuration.public_links.grid_copy_link',
-                field: 'relativePath',
+                field: 'id',
                 widthClass: 'w-2/12',
-                render: (relativePath: string, row: PublicLink) => {
+                render: (id: string, row: PublicLink) => {
                     return (
                         <span className='flex items-center h-full'>
                             {row.copied ?
                                 <span className='copied py-1 px-2'>{t('configuration.public_links.copied_badge')}</span> :
-                                <SvgIcon type={Icon.Edit} className='icon-medium cursor-pointer' fillClass='edit-icon' onClick={() => {
-                                    onCopy(row.id, `${window.origin}/${relativePath}`)
+                                <SvgIcon dataTestId={`onCopy-${row.id}`} type={Icon.Edit} className='icon-medium cursor-pointer' fillClass='edit-icon' onClick={() => {
+                                    onCopy(row.id, `${window.origin}/${row.relativePath}`)
                                 }} />
                             }
 

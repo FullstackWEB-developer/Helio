@@ -49,6 +49,7 @@ const EmailNotificationList = () => {
         pageable: true,
         paginationPosition: 'both',
         columns: [{
+            dataTestId: 'configuration.email_template_list.email_template_name',
             title: 'configuration.email_template_list.email_template_name',
             field: 'name',
             widthClass: 'w-2/5',
@@ -58,6 +59,7 @@ const EmailNotificationList = () => {
             }
         },
         {
+            dataTestId: 'configuration.email_template_list.email_subject',
             title: 'configuration.email_template_list.email_subject',
             field: 'subject',
             widthClass: 'w-2/5',
@@ -67,6 +69,7 @@ const EmailNotificationList = () => {
             }
         },
         {
+            dataTestId: 'configuration.email_template_list.email_template_modified_on',
             title: 'configuration.email_template_list.email_template_modified_on',
             field: 'modifiedOn',
             widthClass: 'w-1/6',
@@ -83,13 +86,14 @@ const EmailNotificationList = () => {
             }
         },
         {
+            dataTestId: 'configuration.email_template_list.edit',
             title: '',
             field: 'id',
             widthClass: 'w-1/12',
             render: (id: string) => {
                 return (
                     <div>
-                        <SvgIcon type={Icon.Edit} className={'cursor-pointer'} fillClass={'rgba-038-fill'} onClick={() => { history.push(`${ConfigurationsPath}/email-templates/${id}`) }} />
+                        <SvgIcon dataTestId={`edit-${id}`} type={Icon.Edit} className={'cursor-pointer'} fillClass={'rgba-038-fill'} onClick={() => { history.push(`${ConfigurationsPath}/email-templates/${id}`) }} />
                     </div>
                 );
             }

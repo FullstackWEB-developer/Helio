@@ -37,8 +37,8 @@ const QuickFormulaSelect = ({formulaSelectionHandler}:{formulaSelectionHandler: 
         e.target.value = "";
     }
     return (
-        <select className='body3 pl-4 mr-20' defaultValue='' onChange={handleFormulaSelect}>
-            <option value="" selected disabled hidden>{t('common.insert')}</option>
+        <select className='body3 pl-4 mr-20' defaultValue='0' onChange={handleFormulaSelect}>
+            <option value="0" disabled hidden>{t('common.insert')}</option>
             {
                 formulaOptions.map(o => <option key={o.key} value={o.key} label={o.label}></option>)
             }

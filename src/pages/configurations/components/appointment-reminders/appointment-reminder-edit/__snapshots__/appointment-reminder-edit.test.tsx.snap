@@ -1,0 +1,147 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AppointmentReminderEdit tests renders AppointmentReminderEdit correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="flex flex-row body2 items-center"
+  >
+    <span>
+       configuration.appointment_reminders.days_dropdown_label_prefix 
+    </span>
+    <div
+      class="w-48 mx-6 pt-4"
+    >
+      <div
+        class="select-wrapper relative w-full flex flex-col h-20 "
+      >
+        <div
+          class="select relative flex flex-col "
+        >
+          <input
+            autocomplete="on"
+            autocorrect="on"
+            class="pl-4 pr-8 body2 select-trigger-pt h-14 relative truncate select-trigger   "
+            data-testid="appointmentReminders.1.selectedDay"
+            name="appointmentReminders.1.selectedDay"
+            spellcheck="true"
+            type="text"
+            value=""
+          />
+          <label
+            class="select-label absolute truncate"
+          >
+            <span
+              class="text-danger"
+            >
+              *
+            </span>
+            <span
+              class="select-label-span body2"
+            >
+              configuration.appointment_reminders.days_dropdown_label
+            </span>
+          </label>
+          <div
+            class="absolute pt-4 right-4 "
+          >
+            <div
+              class="flex flex-row items-start"
+            >
+              <div
+                class="cursor-pointer"
+              >
+                <div
+                  class=""
+                >
+                  <svg
+                    class="icon-medium "
+                    height="24"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <rect
+                      fill="none"
+                      height="24"
+                      width="24"
+                    />
+                    <path
+                      class="select-arrow-fill"
+                      d="M7,14l1.273-1.273L2.545,7,8.273,1.273,7,0,0,7Z"
+                      transform="translate(5 16.273) rotate(-90)"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="absolute py-2 options"
+          >
+            <div
+              class="w-full select-cell justify-between flex items-center  body2   cursor-pointer  "
+            >
+              <div
+                class="flex flex-col justify-center w-full"
+                data-test-id="select-cell-icon-content"
+              >
+                <div
+                  class="flex items-center pl-4"
+                  data-test-id="select-cell-text-1"
+                  data-testid="select-cell-text-1"
+                >
+                  1
+                </div>
+              </div>
+            </div>
+            <div
+              class="w-full select-cell justify-between flex items-center  body2   cursor-pointer  "
+            >
+              <div
+                class="flex flex-col justify-center w-full"
+                data-test-id="select-cell-icon-content"
+              >
+                <div
+                  class="flex items-center pl-4"
+                  data-test-id="select-cell-text-2"
+                  data-testid="select-cell-text-2"
+                >
+                  2
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <span
+      class="mr-8"
+    >
+       configuration.appointment_reminders.days_dropdown_label_sufix 
+    </span>
+    <div
+      class=""
+    >
+      <svg
+        class="icon-medium-18 rgba-038-fill cursor-pointer "
+        data-testid="1-close-icon"
+        height="24"
+        viewBox="0 0 24 24"
+        width="24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <rect
+          fill="none"
+          height="24"
+          width="24"
+        />
+        <path
+          class="fill-default"
+          d="M16,1.409,14.591,0,8,6.566,1.409,0,0,1.409,6.566,8,0,14.591,1.409,16,8,9.434,14.591,16,16,14.591,9.434,8Z"
+          transform="translate(4 4)"
+        />
+      </svg>
+    </div>
+  </div>
+</DocumentFragment>
+`;

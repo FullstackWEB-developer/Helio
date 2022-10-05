@@ -1,0 +1,6447 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Configurations tests renders Configurations-Ticket Department correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="flex w-full h-full overflow-y-auto"
+  >
+    <div
+      class="configuration-menu p-6 pr-4 h-full"
+    >
+      <h5
+        class="pb-6"
+      >
+        configuration.title
+      </h5>
+      <a
+        href="/configurations/general"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+          id="configuration-menu-item-12"
+        >
+          configuration.general
+        </div>
+      </a>
+      <div>
+        <div
+          class="cursor-pointer flex flex-row justify-between items-center h-10"
+        >
+          <div
+            class="subtitle2"
+          >
+            configuration.branding_menu
+          </div>
+          <div>
+            <div
+              class=""
+            >
+              <svg
+                class="cursor-pointer "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="active-item-icon"
+                  d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                  transform="translate(19 8) rotate(90)"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div>
+          <a
+            href="/configurations/practice-branding"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-15"
+            >
+              configuration.practice_branding_menu
+            </div>
+          </a>
+          <a
+            href="/configurations/practice-email-template"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-16"
+            >
+              configuration.practice_email_template_menu
+            </div>
+          </a>
+        </div>
+      </div>
+      <a
+        href="/configurations/security"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+          id="configuration-menu-item-11"
+        >
+          configuration.security_settings_menu
+        </div>
+      </a>
+      <a
+        href="/configurations/provider-appointment-settings"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+          id="configuration-menu-item-4"
+        >
+          configuration.appointment_types_for_providers.menu_name
+        </div>
+      </a>
+      <div>
+        <div
+          class="cursor-pointer flex flex-row justify-between items-center h-10"
+        >
+          <div
+            class="subtitle2"
+          >
+            configuration.appointments
+          </div>
+          <div>
+            <div
+              class=""
+            >
+              <svg
+                class="cursor-pointer "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="active-item-icon"
+                  d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                  transform="translate(19 8) rotate(90)"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div>
+          <a
+            href="/configurations/appointment-type"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-1"
+            >
+              configuration.appointment_type
+            </div>
+          </a>
+          <a
+            href="/configurations/cancelation-reasons"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-2"
+            >
+              configuration.appointment_cancellation
+            </div>
+          </a>
+        </div>
+      </div>
+      <div>
+        <div
+          class="cursor-pointer flex flex-row justify-between items-center h-10"
+        >
+          <div
+            class="subtitle2"
+          >
+            configuration.notifications
+          </div>
+          <div>
+            <div
+              class=""
+            >
+              <svg
+                class="cursor-pointer "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="active-item-icon"
+                  d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                  transform="translate(19 8) rotate(90)"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div>
+          <a
+            href="/configurations/appointment-reminders"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-4"
+            >
+              configuration.appointment_reminder
+            </div>
+          </a>
+          <a
+            href="/configurations/email-templates"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-5"
+            >
+              configuration.email_notification_templates
+            </div>
+          </a>
+          <a
+            href="/configurations/sms-templates"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-6"
+            >
+              configuration.sms_notification_templates
+            </div>
+          </a>
+        </div>
+      </div>
+      <div>
+        <div
+          class="cursor-pointer flex flex-row justify-between items-center h-10"
+        >
+          <div
+            class="subtitle2"
+          >
+            configuration.tickets
+          </div>
+          <div>
+            <div
+              class=""
+            >
+              <svg
+                class="cursor-pointer "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="active-item-icon"
+                  d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                  transform="translate(19 8) rotate(90)"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div>
+          <a
+            href="/configurations/ticket-department"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item link body2 pl-6 h-8"
+              id="configuration-menu-item-8"
+            >
+              configuration.ticket_department_menu
+            </div>
+          </a>
+        </div>
+      </div>
+      <a
+        href="/configurations/contact-categories"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+          id="configuration-menu-item-10"
+        >
+          configuration.contact_categories_menu
+        </div>
+      </a>
+      <a
+        href="/configurations/public-links"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+          id="configuration-menu-item-13"
+        >
+          configuration.public_links_menu
+        </div>
+      </a>
+      <a
+        href="/configurations/patient-tabs"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+          id="configuration-menu-item-17"
+        >
+          configuration.patient_chart_tabs_visibility
+        </div>
+      </a>
+    </div>
+    <div
+      class="flex items-center justify-center w-full h-full z-10 absolute hidden"
+    />
+    <div
+      class="ticket-department overflow-auto h-full p-6 pr-4"
+    >
+      <h5
+        class="ticket-department-header"
+      >
+        ticket_department.title
+      </h5>
+      <div
+        class="body2 pb-6"
+      >
+        ticket_department.description
+      </div>
+      <div
+        class="w-full h-14 flex flex-row justify-between"
+      >
+        <div
+          class="flex flex-col justify-end ticket-department-table-header"
+        >
+          <div
+            class="h7"
+          >
+            ticket_department.table_header
+          </div>
+        </div>
+        <div
+          class="flex flex-col justify-center mr-8"
+        >
+          <button
+            class="small-button"
+            data-testid="add"
+            type="button"
+          >
+            <div
+              class="flex flex-row justify-center items-center space-x-2"
+            >
+              <div>
+                ticket_department.create_department
+              </div>
+            </div>
+          </button>
+        </div>
+      </div>
+      <div>
+        <div
+          class="flex flex-col "
+        >
+          <div
+            class="flex flex-row caption-caps table-header h-8 items-center h-12 px-4"
+          >
+            <div
+              class="flex justify-start w-full"
+            >
+              <div>
+                <div
+                  class="flex items-center flex-row"
+                >
+                  ticket_department.table.department_name
+                </div>
+              </div>
+            </div>
+            <div
+              class="flex justify-start w-10 flex items-center justify-center h-full mr-4"
+            >
+              <div>
+                <div
+                  class="flex items-center flex-row"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Configurations tests renders appointment-reminders correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="flex w-full h-full overflow-y-auto"
+  >
+    <div
+      class="configuration-menu p-6 pr-4 h-full"
+    >
+      <h5
+        class="pb-6"
+      >
+        configuration.title
+      </h5>
+      <a
+        href="/configurations/general"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+          id="configuration-menu-item-12"
+        >
+          configuration.general
+        </div>
+      </a>
+      <div>
+        <div
+          class="cursor-pointer flex flex-row justify-between items-center h-10"
+        >
+          <div
+            class="subtitle2"
+          >
+            configuration.branding_menu
+          </div>
+          <div>
+            <div
+              class=""
+            >
+              <svg
+                class="cursor-pointer "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="active-item-icon"
+                  d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                  transform="translate(19 8) rotate(90)"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div>
+          <a
+            href="/configurations/practice-branding"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-15"
+            >
+              configuration.practice_branding_menu
+            </div>
+          </a>
+          <a
+            href="/configurations/practice-email-template"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-16"
+            >
+              configuration.practice_email_template_menu
+            </div>
+          </a>
+        </div>
+      </div>
+      <a
+        href="/configurations/security"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+          id="configuration-menu-item-11"
+        >
+          configuration.security_settings_menu
+        </div>
+      </a>
+      <a
+        href="/configurations/provider-appointment-settings"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+          id="configuration-menu-item-4"
+        >
+          configuration.appointment_types_for_providers.menu_name
+        </div>
+      </a>
+      <div>
+        <div
+          class="cursor-pointer flex flex-row justify-between items-center h-10"
+        >
+          <div
+            class="subtitle2"
+          >
+            configuration.appointments
+          </div>
+          <div>
+            <div
+              class=""
+            >
+              <svg
+                class="cursor-pointer "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="active-item-icon"
+                  d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                  transform="translate(19 8) rotate(90)"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div>
+          <a
+            href="/configurations/appointment-type"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-1"
+            >
+              configuration.appointment_type
+            </div>
+          </a>
+          <a
+            href="/configurations/cancelation-reasons"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-2"
+            >
+              configuration.appointment_cancellation
+            </div>
+          </a>
+        </div>
+      </div>
+      <div>
+        <div
+          class="cursor-pointer flex flex-row justify-between items-center h-10"
+        >
+          <div
+            class="subtitle2"
+          >
+            configuration.notifications
+          </div>
+          <div>
+            <div
+              class=""
+            >
+              <svg
+                class="cursor-pointer "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="active-item-icon"
+                  d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                  transform="translate(19 8) rotate(90)"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div>
+          <a
+            href="/configurations/appointment-reminders"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item link body2 pl-6 h-8"
+              id="configuration-menu-item-4"
+            >
+              configuration.appointment_reminder
+            </div>
+          </a>
+          <a
+            href="/configurations/email-templates"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-5"
+            >
+              configuration.email_notification_templates
+            </div>
+          </a>
+          <a
+            href="/configurations/sms-templates"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-6"
+            >
+              configuration.sms_notification_templates
+            </div>
+          </a>
+        </div>
+      </div>
+      <div>
+        <div
+          class="cursor-pointer flex flex-row justify-between items-center h-10"
+        >
+          <div
+            class="subtitle2"
+          >
+            configuration.tickets
+          </div>
+          <div>
+            <div
+              class=""
+            >
+              <svg
+                class="cursor-pointer "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="active-item-icon"
+                  d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                  transform="translate(19 8) rotate(90)"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div>
+          <a
+            href="/configurations/ticket-department"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-8"
+            >
+              configuration.ticket_department_menu
+            </div>
+          </a>
+        </div>
+      </div>
+      <a
+        href="/configurations/contact-categories"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+          id="configuration-menu-item-10"
+        >
+          configuration.contact_categories_menu
+        </div>
+      </a>
+      <a
+        href="/configurations/public-links"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+          id="configuration-menu-item-13"
+        >
+          configuration.public_links_menu
+        </div>
+      </a>
+      <a
+        href="/configurations/patient-tabs"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+          id="configuration-menu-item-17"
+        >
+          configuration.patient_chart_tabs_visibility
+        </div>
+      </a>
+    </div>
+    <div
+      class="w-10/12 overflow-auto h-full p-6 pr-4"
+    >
+      <h5
+        class="pb-6"
+      >
+        configuration.appointment_reminders.title
+      </h5>
+      <div
+        class="flex flex-col space-y-4 items-center justify-center undefined"
+      >
+        <div>
+          <div
+            class=""
+          >
+            <svg
+              class="spinner icon-medium "
+              viewBox="0 0 40 40"
+            >
+              <circle
+                class="path"
+                cx="20"
+                cy="20"
+                fill="none"
+                r="16"
+                stroke-width="4"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Configurations tests renders contact-categories correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="flex w-full h-full overflow-y-auto"
+  >
+    <div
+      class="configuration-menu p-6 pr-4 h-full"
+    >
+      <h5
+        class="pb-6"
+      >
+        configuration.title
+      </h5>
+      <a
+        href="/configurations/general"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+          id="configuration-menu-item-12"
+        >
+          configuration.general
+        </div>
+      </a>
+      <div>
+        <div
+          class="cursor-pointer flex flex-row justify-between items-center h-10"
+        >
+          <div
+            class="subtitle2"
+          >
+            configuration.branding_menu
+          </div>
+          <div>
+            <div
+              class=""
+            >
+              <svg
+                class="cursor-pointer "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="active-item-icon"
+                  d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                  transform="translate(19 8) rotate(90)"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div>
+          <a
+            href="/configurations/practice-branding"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-15"
+            >
+              configuration.practice_branding_menu
+            </div>
+          </a>
+          <a
+            href="/configurations/practice-email-template"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-16"
+            >
+              configuration.practice_email_template_menu
+            </div>
+          </a>
+        </div>
+      </div>
+      <a
+        href="/configurations/security"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+          id="configuration-menu-item-11"
+        >
+          configuration.security_settings_menu
+        </div>
+      </a>
+      <a
+        href="/configurations/provider-appointment-settings"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+          id="configuration-menu-item-4"
+        >
+          configuration.appointment_types_for_providers.menu_name
+        </div>
+      </a>
+      <div>
+        <div
+          class="cursor-pointer flex flex-row justify-between items-center h-10"
+        >
+          <div
+            class="subtitle2"
+          >
+            configuration.appointments
+          </div>
+          <div>
+            <div
+              class=""
+            >
+              <svg
+                class="cursor-pointer "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="active-item-icon"
+                  d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                  transform="translate(19 8) rotate(90)"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div>
+          <a
+            href="/configurations/appointment-type"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-1"
+            >
+              configuration.appointment_type
+            </div>
+          </a>
+          <a
+            href="/configurations/cancelation-reasons"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-2"
+            >
+              configuration.appointment_cancellation
+            </div>
+          </a>
+        </div>
+      </div>
+      <div>
+        <div
+          class="cursor-pointer flex flex-row justify-between items-center h-10"
+        >
+          <div
+            class="subtitle2"
+          >
+            configuration.notifications
+          </div>
+          <div>
+            <div
+              class=""
+            >
+              <svg
+                class="cursor-pointer "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="active-item-icon"
+                  d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                  transform="translate(19 8) rotate(90)"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div>
+          <a
+            href="/configurations/appointment-reminders"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-4"
+            >
+              configuration.appointment_reminder
+            </div>
+          </a>
+          <a
+            href="/configurations/email-templates"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-5"
+            >
+              configuration.email_notification_templates
+            </div>
+          </a>
+          <a
+            href="/configurations/sms-templates"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-6"
+            >
+              configuration.sms_notification_templates
+            </div>
+          </a>
+        </div>
+      </div>
+      <div>
+        <div
+          class="cursor-pointer flex flex-row justify-between items-center h-10"
+        >
+          <div
+            class="subtitle2"
+          >
+            configuration.tickets
+          </div>
+          <div>
+            <div
+              class=""
+            >
+              <svg
+                class="cursor-pointer "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="active-item-icon"
+                  d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                  transform="translate(19 8) rotate(90)"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div>
+          <a
+            href="/configurations/ticket-department"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-8"
+            >
+              configuration.ticket_department_menu
+            </div>
+          </a>
+        </div>
+      </div>
+      <a
+        href="/configurations/contact-categories"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item link subtitle2 h-10"
+          id="configuration-menu-item-10"
+        >
+          configuration.contact_categories_menu
+        </div>
+      </a>
+      <a
+        href="/configurations/public-links"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+          id="configuration-menu-item-13"
+        >
+          configuration.public_links_menu
+        </div>
+      </a>
+      <a
+        href="/configurations/patient-tabs"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+          id="configuration-menu-item-17"
+        >
+          configuration.patient_chart_tabs_visibility
+        </div>
+      </a>
+    </div>
+    <div
+      class="flex items-center justify-center w-full h-full z-10 absolute hidden"
+    />
+    <div
+      class="w-10/12 overflow-auto h-full p-6 pr-4"
+    >
+      <h5
+        class="pb-6"
+      >
+        configuration.contact_categories.title
+      </h5>
+      <div
+        class="body2"
+      >
+        configuration.contact_categories.description
+      </div>
+      <div
+        class="w-full h-10 flex flex-row my-4"
+      >
+        <button
+          class="small-button ml-auto"
+          type="button"
+        >
+          <div
+            class="flex flex-row justify-center items-center space-x-2"
+          >
+            <div>
+              configuration.contact_categories.add_category_button
+            </div>
+          </div>
+        </button>
+      </div>
+      <div>
+        <div
+          class="flex flex-col "
+        >
+          <div
+            class="flex flex-row caption-caps table-header h-8 items-center h-12 px-4"
+          >
+            <div
+              class="flex justify-start w-full"
+            >
+              <div>
+                <div
+                  class="flex items-center flex-row"
+                >
+                  configuration.contact_categories.grid_name
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Configurations tests renders default correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="flex w-full h-full overflow-y-auto"
+  >
+    <div
+      class="configuration-menu p-6 pr-4 h-full"
+    >
+      <h5
+        class="pb-6"
+      >
+        configuration.title
+      </h5>
+      <a
+        href="/configurations/general"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item link subtitle2 h-10"
+          id="configuration-menu-item-12"
+        >
+          configuration.general
+        </div>
+      </a>
+      <div>
+        <div
+          class="cursor-pointer flex flex-row justify-between items-center h-10"
+        >
+          <div
+            class="subtitle2"
+          >
+            configuration.branding_menu
+          </div>
+          <div>
+            <div
+              class=""
+            >
+              <svg
+                class="cursor-pointer "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="active-item-icon"
+                  d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                  transform="translate(19 8) rotate(90)"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div>
+          <a
+            href="/configurations/practice-branding"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-15"
+            >
+              configuration.practice_branding_menu
+            </div>
+          </a>
+          <a
+            href="/configurations/practice-email-template"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-16"
+            >
+              configuration.practice_email_template_menu
+            </div>
+          </a>
+        </div>
+      </div>
+      <a
+        href="/configurations/security"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+          id="configuration-menu-item-11"
+        >
+          configuration.security_settings_menu
+        </div>
+      </a>
+      <a
+        href="/configurations/provider-appointment-settings"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+          id="configuration-menu-item-4"
+        >
+          configuration.appointment_types_for_providers.menu_name
+        </div>
+      </a>
+      <div>
+        <div
+          class="cursor-pointer flex flex-row justify-between items-center h-10"
+        >
+          <div
+            class="subtitle2"
+          >
+            configuration.appointments
+          </div>
+          <div>
+            <div
+              class=""
+            >
+              <svg
+                class="cursor-pointer "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="active-item-icon"
+                  d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                  transform="translate(19 8) rotate(90)"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div>
+          <a
+            href="/configurations/appointment-type"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-1"
+            >
+              configuration.appointment_type
+            </div>
+          </a>
+          <a
+            href="/configurations/cancelation-reasons"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-2"
+            >
+              configuration.appointment_cancellation
+            </div>
+          </a>
+        </div>
+      </div>
+      <div>
+        <div
+          class="cursor-pointer flex flex-row justify-between items-center h-10"
+        >
+          <div
+            class="subtitle2"
+          >
+            configuration.notifications
+          </div>
+          <div>
+            <div
+              class=""
+            >
+              <svg
+                class="cursor-pointer "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="active-item-icon"
+                  d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                  transform="translate(19 8) rotate(90)"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div>
+          <a
+            href="/configurations/appointment-reminders"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-4"
+            >
+              configuration.appointment_reminder
+            </div>
+          </a>
+          <a
+            href="/configurations/email-templates"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-5"
+            >
+              configuration.email_notification_templates
+            </div>
+          </a>
+          <a
+            href="/configurations/sms-templates"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-6"
+            >
+              configuration.sms_notification_templates
+            </div>
+          </a>
+        </div>
+      </div>
+      <div>
+        <div
+          class="cursor-pointer flex flex-row justify-between items-center h-10"
+        >
+          <div
+            class="subtitle2"
+          >
+            configuration.tickets
+          </div>
+          <div>
+            <div
+              class=""
+            >
+              <svg
+                class="cursor-pointer "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="active-item-icon"
+                  d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                  transform="translate(19 8) rotate(90)"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div>
+          <a
+            href="/configurations/ticket-department"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-8"
+            >
+              configuration.ticket_department_menu
+            </div>
+          </a>
+        </div>
+      </div>
+      <a
+        href="/configurations/contact-categories"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+          id="configuration-menu-item-10"
+        >
+          configuration.contact_categories_menu
+        </div>
+      </a>
+      <a
+        href="/configurations/public-links"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+          id="configuration-menu-item-13"
+        >
+          configuration.public_links_menu
+        </div>
+      </a>
+      <a
+        href="/configurations/patient-tabs"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+          id="configuration-menu-item-17"
+        >
+          configuration.patient_chart_tabs_visibility
+        </div>
+      </a>
+    </div>
+    <div
+      class="general-settings px-6 pt-7"
+    >
+      <h6>
+        configuration.general_settings.title
+      </h6>
+      <div
+        class="flex flex-col space-y-4 items-center justify-center pt-2"
+      >
+        <div>
+          <div
+            class=""
+          >
+            <svg
+              class="spinner icon-large-40 "
+              viewBox="0 0 40 40"
+            >
+              <circle
+                class="path"
+                cx="20"
+                cy="20"
+                fill="none"
+                r="16"
+                stroke-width="4"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Configurations tests renders email-templates correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="flex w-full h-full overflow-y-auto"
+  >
+    <div
+      class="configuration-menu p-6 pr-4 h-full"
+    >
+      <h5
+        class="pb-6"
+      >
+        configuration.title
+      </h5>
+      <a
+        href="/configurations/general"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+          id="configuration-menu-item-12"
+        >
+          configuration.general
+        </div>
+      </a>
+      <div>
+        <div
+          class="cursor-pointer flex flex-row justify-between items-center h-10"
+        >
+          <div
+            class="subtitle2"
+          >
+            configuration.branding_menu
+          </div>
+          <div>
+            <div
+              class=""
+            >
+              <svg
+                class="cursor-pointer "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="active-item-icon"
+                  d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                  transform="translate(19 8) rotate(90)"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div>
+          <a
+            href="/configurations/practice-branding"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-15"
+            >
+              configuration.practice_branding_menu
+            </div>
+          </a>
+          <a
+            href="/configurations/practice-email-template"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-16"
+            >
+              configuration.practice_email_template_menu
+            </div>
+          </a>
+        </div>
+      </div>
+      <a
+        href="/configurations/security"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+          id="configuration-menu-item-11"
+        >
+          configuration.security_settings_menu
+        </div>
+      </a>
+      <a
+        href="/configurations/provider-appointment-settings"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+          id="configuration-menu-item-4"
+        >
+          configuration.appointment_types_for_providers.menu_name
+        </div>
+      </a>
+      <div>
+        <div
+          class="cursor-pointer flex flex-row justify-between items-center h-10"
+        >
+          <div
+            class="subtitle2"
+          >
+            configuration.appointments
+          </div>
+          <div>
+            <div
+              class=""
+            >
+              <svg
+                class="cursor-pointer "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="active-item-icon"
+                  d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                  transform="translate(19 8) rotate(90)"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div>
+          <a
+            href="/configurations/appointment-type"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-1"
+            >
+              configuration.appointment_type
+            </div>
+          </a>
+          <a
+            href="/configurations/cancelation-reasons"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-2"
+            >
+              configuration.appointment_cancellation
+            </div>
+          </a>
+        </div>
+      </div>
+      <div>
+        <div
+          class="cursor-pointer flex flex-row justify-between items-center h-10"
+        >
+          <div
+            class="subtitle2"
+          >
+            configuration.notifications
+          </div>
+          <div>
+            <div
+              class=""
+            >
+              <svg
+                class="cursor-pointer "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="active-item-icon"
+                  d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                  transform="translate(19 8) rotate(90)"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div>
+          <a
+            href="/configurations/appointment-reminders"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-4"
+            >
+              configuration.appointment_reminder
+            </div>
+          </a>
+          <a
+            href="/configurations/email-templates"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item link body2 pl-6 h-8"
+              id="configuration-menu-item-5"
+            >
+              configuration.email_notification_templates
+            </div>
+          </a>
+          <a
+            href="/configurations/sms-templates"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-6"
+            >
+              configuration.sms_notification_templates
+            </div>
+          </a>
+        </div>
+      </div>
+      <div>
+        <div
+          class="cursor-pointer flex flex-row justify-between items-center h-10"
+        >
+          <div
+            class="subtitle2"
+          >
+            configuration.tickets
+          </div>
+          <div>
+            <div
+              class=""
+            >
+              <svg
+                class="cursor-pointer "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="active-item-icon"
+                  d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                  transform="translate(19 8) rotate(90)"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div>
+          <a
+            href="/configurations/ticket-department"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-8"
+            >
+              configuration.ticket_department_menu
+            </div>
+          </a>
+        </div>
+      </div>
+      <a
+        href="/configurations/contact-categories"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+          id="configuration-menu-item-10"
+        >
+          configuration.contact_categories_menu
+        </div>
+      </a>
+      <a
+        href="/configurations/public-links"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+          id="configuration-menu-item-13"
+        >
+          configuration.public_links_menu
+        </div>
+      </a>
+      <a
+        href="/configurations/patient-tabs"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+          id="configuration-menu-item-17"
+        >
+          configuration.patient_chart_tabs_visibility
+        </div>
+      </a>
+    </div>
+    <div
+      class="flex flex-col flex-1 overflow-auto h-full p-6 pr-4"
+    >
+      <h6
+        class="pb-7"
+      >
+        configuration.email_template_list.title
+      </h6>
+      <div
+        class="body2"
+      >
+        configuration.email_template_list.description
+      </div>
+      <div>
+        <div
+          class="flex flex-col "
+        >
+          <div
+            class="flex flex-row caption-caps table-header h-8 items-center h-12 px-4"
+          >
+            <div
+              class="flex justify-start w-2/5 cursor-pointer"
+            >
+              <div>
+                <div
+                  class="flex items-center flex-row"
+                  data-testid="configuration.email_template_list.email_template_name"
+                >
+                  configuration.email_template_list.email_template_name
+                </div>
+              </div>
+            </div>
+            <div
+              class="flex justify-start w-2/5 cursor-pointer"
+            >
+              <div>
+                <div
+                  class="flex items-center flex-row"
+                  data-testid="configuration.email_template_list.email_subject"
+                >
+                  configuration.email_template_list.email_subject
+                </div>
+              </div>
+            </div>
+            <div
+              class="flex justify-start w-1/6 cursor-pointer"
+            >
+              <div>
+                <div
+                  class="flex items-center flex-row"
+                  data-testid="configuration.email_template_list.email_template_modified_on"
+                >
+                  configuration.email_template_list.email_template_modified_on
+                </div>
+              </div>
+            </div>
+            <div
+              class="flex justify-start w-1/12"
+            >
+              <div>
+                <div
+                  class="flex items-center flex-row"
+                  data-testid="configuration.email_template_list.edit"
+                />
+              </div>
+            </div>
+          </div>
+          <div>
+            <div
+              class="border-b"
+            >
+              <div
+                class="flex flex-row h-14 items-center body2 px-4"
+              >
+                <div
+                  class="table-row-content items-center flex body2 w-2/5 justify-start"
+                >
+                  <div
+                    class=""
+                  >
+                    string
+                  </div>
+                </div>
+                <div
+                  class="table-row-content items-center flex body2 w-2/5 justify-start"
+                >
+                  <div
+                    class=""
+                  >
+                    string
+                  </div>
+                </div>
+                <div
+                  class="w-1/6"
+                >
+                  <span>
+                    Oct 04, 2022
+                  </span>
+                </div>
+                <div
+                  class="w-1/12"
+                >
+                  <div>
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="cursor-pointer "
+                        data-testid="edit-string1"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M0,0H24V24H0Z"
+                          fill="none"
+                        />
+                        <path
+                          class="rgba-038-fill"
+                          d="M3,15.665V19H6.333l9.83-9.83L12.83,5.835ZM18.74,6.59a.885.885,0,0,0,0-1.253l-2.08-2.08a.885.885,0,0,0-1.253,0L13.781,4.884l3.333,3.333L18.74,6.59Z"
+                          transform="translate(1 1)"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div
+              class="border-b"
+            >
+              <div
+                class="flex flex-row h-14 items-center body2 px-4"
+              >
+                <div
+                  class="table-row-content items-center flex body2 w-2/5 justify-start"
+                >
+                  <div
+                    class=""
+                  >
+                    string
+                  </div>
+                </div>
+                <div
+                  class="table-row-content items-center flex body2 w-2/5 justify-start"
+                >
+                  <div
+                    class=""
+                  >
+                    string
+                  </div>
+                </div>
+                <div
+                  class="w-1/6"
+                >
+                  <span>
+                    Oct 04, 2022
+                  </span>
+                </div>
+                <div
+                  class="w-1/12"
+                >
+                  <div>
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="cursor-pointer "
+                        data-testid="edit-string2"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M0,0H24V24H0Z"
+                          fill="none"
+                        />
+                        <path
+                          class="rgba-038-fill"
+                          d="M3,15.665V19H6.333l9.83-9.83L12.83,5.835ZM18.74,6.59a.885.885,0,0,0,0-1.253l-2.08-2.08a.885.885,0,0,0-1.253,0L13.781,4.884l3.333,3.333L18.74,6.59Z"
+                          transform="translate(1 1)"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Configurations tests renders email-templates with id correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="flex w-full h-full overflow-y-auto"
+  >
+    <div
+      class="configuration-menu p-6 pr-4 h-full"
+    >
+      <h5
+        class="pb-6"
+      >
+        configuration.title
+      </h5>
+      <a
+        href="/configurations/general"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+          id="configuration-menu-item-12"
+        >
+          configuration.general
+        </div>
+      </a>
+      <div>
+        <div
+          class="cursor-pointer flex flex-row justify-between items-center h-10"
+        >
+          <div
+            class="subtitle2"
+          >
+            configuration.branding_menu
+          </div>
+          <div>
+            <div
+              class=""
+            >
+              <svg
+                class="cursor-pointer "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="active-item-icon"
+                  d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                  transform="translate(19 8) rotate(90)"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div>
+          <a
+            href="/configurations/practice-branding"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-15"
+            >
+              configuration.practice_branding_menu
+            </div>
+          </a>
+          <a
+            href="/configurations/practice-email-template"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-16"
+            >
+              configuration.practice_email_template_menu
+            </div>
+          </a>
+        </div>
+      </div>
+      <a
+        href="/configurations/security"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+          id="configuration-menu-item-11"
+        >
+          configuration.security_settings_menu
+        </div>
+      </a>
+      <a
+        href="/configurations/provider-appointment-settings"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+          id="configuration-menu-item-4"
+        >
+          configuration.appointment_types_for_providers.menu_name
+        </div>
+      </a>
+      <div>
+        <div
+          class="cursor-pointer flex flex-row justify-between items-center h-10"
+        >
+          <div
+            class="subtitle2"
+          >
+            configuration.appointments
+          </div>
+          <div>
+            <div
+              class=""
+            >
+              <svg
+                class="cursor-pointer "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="active-item-icon"
+                  d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                  transform="translate(19 8) rotate(90)"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div>
+          <a
+            href="/configurations/appointment-type"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-1"
+            >
+              configuration.appointment_type
+            </div>
+          </a>
+          <a
+            href="/configurations/cancelation-reasons"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-2"
+            >
+              configuration.appointment_cancellation
+            </div>
+          </a>
+        </div>
+      </div>
+      <div>
+        <div
+          class="cursor-pointer flex flex-row justify-between items-center h-10"
+        >
+          <div
+            class="subtitle2"
+          >
+            configuration.notifications
+          </div>
+          <div>
+            <div
+              class=""
+            >
+              <svg
+                class="cursor-pointer "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="active-item-icon"
+                  d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                  transform="translate(19 8) rotate(90)"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div>
+          <a
+            href="/configurations/appointment-reminders"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-4"
+            >
+              configuration.appointment_reminder
+            </div>
+          </a>
+          <a
+            href="/configurations/email-templates"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item link body2 pl-6 h-8"
+              id="configuration-menu-item-5"
+            >
+              configuration.email_notification_templates
+            </div>
+          </a>
+          <a
+            href="/configurations/sms-templates"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-6"
+            >
+              configuration.sms_notification_templates
+            </div>
+          </a>
+        </div>
+      </div>
+      <div>
+        <div
+          class="cursor-pointer flex flex-row justify-between items-center h-10"
+        >
+          <div
+            class="subtitle2"
+          >
+            configuration.tickets
+          </div>
+          <div>
+            <div
+              class=""
+            >
+              <svg
+                class="cursor-pointer "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="active-item-icon"
+                  d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                  transform="translate(19 8) rotate(90)"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div>
+          <a
+            href="/configurations/ticket-department"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-8"
+            >
+              configuration.ticket_department_menu
+            </div>
+          </a>
+        </div>
+      </div>
+      <a
+        href="/configurations/contact-categories"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+          id="configuration-menu-item-10"
+        >
+          configuration.contact_categories_menu
+        </div>
+      </a>
+      <a
+        href="/configurations/public-links"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+          id="configuration-menu-item-13"
+        >
+          configuration.public_links_menu
+        </div>
+      </a>
+      <a
+        href="/configurations/patient-tabs"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+          id="configuration-menu-item-17"
+        >
+          configuration.patient_chart_tabs_visibility
+        </div>
+      </a>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Configurations tests renders general correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="flex w-full h-full overflow-y-auto"
+  >
+    <div
+      class="configuration-menu p-6 pr-4 h-full"
+    >
+      <h5
+        class="pb-6"
+      >
+        configuration.title
+      </h5>
+      <a
+        href="/configurations/general"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item link subtitle2 h-10"
+          id="configuration-menu-item-12"
+        >
+          configuration.general
+        </div>
+      </a>
+      <div>
+        <div
+          class="cursor-pointer flex flex-row justify-between items-center h-10"
+        >
+          <div
+            class="subtitle2"
+          >
+            configuration.branding_menu
+          </div>
+          <div>
+            <div
+              class=""
+            >
+              <svg
+                class="cursor-pointer "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="active-item-icon"
+                  d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                  transform="translate(19 8) rotate(90)"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div>
+          <a
+            href="/configurations/practice-branding"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-15"
+            >
+              configuration.practice_branding_menu
+            </div>
+          </a>
+          <a
+            href="/configurations/practice-email-template"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-16"
+            >
+              configuration.practice_email_template_menu
+            </div>
+          </a>
+        </div>
+      </div>
+      <a
+        href="/configurations/security"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+          id="configuration-menu-item-11"
+        >
+          configuration.security_settings_menu
+        </div>
+      </a>
+      <a
+        href="/configurations/provider-appointment-settings"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+          id="configuration-menu-item-4"
+        >
+          configuration.appointment_types_for_providers.menu_name
+        </div>
+      </a>
+      <div>
+        <div
+          class="cursor-pointer flex flex-row justify-between items-center h-10"
+        >
+          <div
+            class="subtitle2"
+          >
+            configuration.appointments
+          </div>
+          <div>
+            <div
+              class=""
+            >
+              <svg
+                class="cursor-pointer "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="active-item-icon"
+                  d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                  transform="translate(19 8) rotate(90)"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div>
+          <a
+            href="/configurations/appointment-type"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-1"
+            >
+              configuration.appointment_type
+            </div>
+          </a>
+          <a
+            href="/configurations/cancelation-reasons"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-2"
+            >
+              configuration.appointment_cancellation
+            </div>
+          </a>
+        </div>
+      </div>
+      <div>
+        <div
+          class="cursor-pointer flex flex-row justify-between items-center h-10"
+        >
+          <div
+            class="subtitle2"
+          >
+            configuration.notifications
+          </div>
+          <div>
+            <div
+              class=""
+            >
+              <svg
+                class="cursor-pointer "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="active-item-icon"
+                  d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                  transform="translate(19 8) rotate(90)"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div>
+          <a
+            href="/configurations/appointment-reminders"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-4"
+            >
+              configuration.appointment_reminder
+            </div>
+          </a>
+          <a
+            href="/configurations/email-templates"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-5"
+            >
+              configuration.email_notification_templates
+            </div>
+          </a>
+          <a
+            href="/configurations/sms-templates"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-6"
+            >
+              configuration.sms_notification_templates
+            </div>
+          </a>
+        </div>
+      </div>
+      <div>
+        <div
+          class="cursor-pointer flex flex-row justify-between items-center h-10"
+        >
+          <div
+            class="subtitle2"
+          >
+            configuration.tickets
+          </div>
+          <div>
+            <div
+              class=""
+            >
+              <svg
+                class="cursor-pointer "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="active-item-icon"
+                  d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                  transform="translate(19 8) rotate(90)"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div>
+          <a
+            href="/configurations/ticket-department"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-8"
+            >
+              configuration.ticket_department_menu
+            </div>
+          </a>
+        </div>
+      </div>
+      <a
+        href="/configurations/contact-categories"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+          id="configuration-menu-item-10"
+        >
+          configuration.contact_categories_menu
+        </div>
+      </a>
+      <a
+        href="/configurations/public-links"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+          id="configuration-menu-item-13"
+        >
+          configuration.public_links_menu
+        </div>
+      </a>
+      <a
+        href="/configurations/patient-tabs"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+          id="configuration-menu-item-17"
+        >
+          configuration.patient_chart_tabs_visibility
+        </div>
+      </a>
+    </div>
+    <div
+      class="general-settings px-6 pt-7"
+    >
+      <h6>
+        configuration.general_settings.title
+      </h6>
+      <form
+        class="flex flex-1 flex-col group overflow-y-auto body2"
+      >
+        <div
+          class="mt-11 flex flex-row items-center"
+        >
+          <div
+            class="input-row"
+          >
+            <div>
+              <div
+                class="flex body2"
+              >
+                configuration.general_settings.force_to_redirect
+                <div>
+                  <div
+                    class=""
+                  >
+                    <svg
+                      class="cursor-pointer cursor-pointer icon ml-2 "
+                      height="24"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <rect
+                        fill="none"
+                        height="24"
+                        width="24"
+                      />
+                      <path
+                        class="warning-icon"
+                        d="M10,20A10,10,0,0,1,2.928,2.929,10,10,0,0,1,17.072,17.071,9.935,9.935,0,0,1,10,20ZM9.988,7.778a1.028,1.028,0,0,0-1.1,1.142v5.473a1.163,1.163,0,0,0,.305.862,1.085,1.085,0,0,0,.793.3,1.145,1.145,0,0,0,.806-.295,1.131,1.131,0,0,0,.317-.868V8.863a1.029,1.029,0,0,0-.317-.8A1.164,1.164,0,0,0,9.988,7.778Zm.025-3.333a1.144,1.144,0,0,0-.786.305,1,1,0,0,0-.337.777,1.012,1.012,0,0,0,.329.806,1.179,1.179,0,0,0,.794.285,1.132,1.132,0,0,0,.773-.29,1.02,1.02,0,0,0,.326-.8.992.992,0,0,0-.334-.806A1.171,1.171,0,0,0,10.012,4.444Z"
+                        transform="translate(2 2)"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="pt-3"
+              >
+                <div
+                  class="flex flex-row space-x-8"
+                >
+                  <div
+                    class="radio h-9 "
+                  >
+                    <input
+                      data-test-id="force-to-redirect"
+                      data-testid="forceToRedirect_true"
+                      id="forceToRedirect_true"
+                      name="forceToRedirect"
+                      type="radio"
+                      value="true"
+                    />
+                    <label
+                      class="body2  truncate "
+                      for="forceToRedirect_true"
+                    >
+                      <div
+                        class="truncate relative w-full h-full inline-block"
+                      >
+                        <span
+                          class="body2"
+                        >
+                          common.yes
+                        </span>
+                      </div>
+                    </label>
+                  </div>
+                  <div
+                    class="radio h-9 "
+                  >
+                    <input
+                      checked=""
+                      data-test-id="force-to-redirect"
+                      data-testid="forceToRedirect_false"
+                      id="forceToRedirect_false"
+                      name="forceToRedirect"
+                      type="radio"
+                      value="false"
+                    />
+                    <label
+                      class="body2  truncate "
+                      for="forceToRedirect_false"
+                    >
+                      <div
+                        class="truncate relative w-full h-full inline-block"
+                      >
+                        <span
+                          class="body2"
+                        >
+                          common.no
+                        </span>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="mt-10 flex flex-row items-center"
+        >
+          <div
+            class="input-row"
+          >
+            <div
+              class="flex flex-col h-20 input-group"
+            >
+              <div
+                class="input-group-container flex flex-wrap items-stretch w-full relative  "
+              >
+                <input
+                  autocomplete="off"
+                  class=" pt-6 body2 h-14 flex-shrink flex-grow flex-auto leading-normal w-px flex-1 input-date-mask pl-4"
+                  data-test-id="redirectToExternalPhone"
+                  data-testid="redirectToExternalPhone"
+                  disabled=""
+                  name="redirectToExternalPhone"
+                  placeholder=""
+                  type="tel"
+                  value="(844) 637-0052"
+                />
+                <label
+                  class="absolute truncate  body3 label-small "
+                >
+                  configuration.general_settings.redirect_phone_number
+                </label>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div
+              class=""
+            >
+              <svg
+                class="cursor-pointer cursor-pointer icon ml-2 "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="warning-icon"
+                  d="M10,20A10,10,0,0,1,2.928,2.929,10,10,0,0,1,17.072,17.071,9.935,9.935,0,0,1,10,20ZM9.988,7.778a1.028,1.028,0,0,0-1.1,1.142v5.473a1.163,1.163,0,0,0,.305.862,1.085,1.085,0,0,0,.793.3,1.145,1.145,0,0,0,.806-.295,1.131,1.131,0,0,0,.317-.868V8.863a1.029,1.029,0,0,0-.317-.8A1.164,1.164,0,0,0,9.988,7.778Zm.025-3.333a1.144,1.144,0,0,0-.786.305,1,1,0,0,0-.337.777,1.012,1.012,0,0,0,.329.806,1.179,1.179,0,0,0,.794.285,1.132,1.132,0,0,0,.773-.29,1.02,1.02,0,0,0,.326-.8.992.992,0,0,0-.334-.806A1.171,1.171,0,0,0,10.012,4.444Z"
+                  transform="translate(2 2)"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div
+          class="mt-10 flex flex-row items-center"
+        >
+          <div
+            class="input-row"
+          >
+            <div
+              class="flex flex-col h-20 input-group"
+            >
+              <div
+                class="input-group-container flex flex-wrap items-stretch w-full relative  "
+              >
+                <input
+                  autocomplete="off"
+                  class=" pt-6 body2 h-14 flex-shrink flex-grow flex-auto leading-normal w-px flex-1 input-date-mask pl-4"
+                  data-test-id="infoPhoneNumber"
+                  data-testid="infoPhoneNumber"
+                  name="infoPhoneNumber"
+                  placeholder=""
+                  type="tel"
+                  value="(212) 212-1212"
+                />
+                <label
+                  class="absolute truncate  body3 label-small "
+                >
+                  configuration.general_settings.call_us_phone_number
+                </label>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div
+              class=""
+            >
+              <svg
+                class="cursor-pointer cursor-pointer icon ml-2 "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="warning-icon"
+                  d="M10,20A10,10,0,0,1,2.928,2.929,10,10,0,0,1,17.072,17.071,9.935,9.935,0,0,1,10,20ZM9.988,7.778a1.028,1.028,0,0,0-1.1,1.142v5.473a1.163,1.163,0,0,0,.305.862,1.085,1.085,0,0,0,.793.3,1.145,1.145,0,0,0,.806-.295,1.131,1.131,0,0,0,.317-.868V8.863a1.029,1.029,0,0,0-.317-.8A1.164,1.164,0,0,0,9.988,7.778Zm.025-3.333a1.144,1.144,0,0,0-.786.305,1,1,0,0,0-.337.777,1.012,1.012,0,0,0,.329.806,1.179,1.179,0,0,0,.794.285,1.132,1.132,0,0,0,.773-.29,1.02,1.02,0,0,0,.326-.8.992.992,0,0,0-.334-.806A1.171,1.171,0,0,0,10.012,4.444Z"
+                  transform="translate(2 2)"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div
+          class="mt-10 flex flex-row items-center"
+        >
+          <div
+            class="input-row"
+          >
+            <div
+              class="flex flex-col h-20 input-group"
+            >
+              <div
+                class="input-group-container flex flex-wrap items-stretch w-full relative  "
+              >
+                <input
+                  autocomplete="off"
+                  class=" pt-6 body2 h-14 flex-shrink flex-grow flex-auto leading-normal w-px flex-1 input-date-mask pl-4"
+                  data-test-id="infoEmailAddress"
+                  data-testid="infoEmailAddress"
+                  name="infoEmailAddress"
+                  placeholder=""
+                  type="email"
+                  value="abc@def.com"
+                />
+                <label
+                  class="absolute truncate  body3 label-small "
+                >
+                  configuration.general_settings.support_email_address
+                </label>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div
+              class=""
+            >
+              <svg
+                class="cursor-pointer cursor-pointer icon ml-2 "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="warning-icon"
+                  d="M10,20A10,10,0,0,1,2.928,2.929,10,10,0,0,1,17.072,17.071,9.935,9.935,0,0,1,10,20ZM9.988,7.778a1.028,1.028,0,0,0-1.1,1.142v5.473a1.163,1.163,0,0,0,.305.862,1.085,1.085,0,0,0,.793.3,1.145,1.145,0,0,0,.806-.295,1.131,1.131,0,0,0,.317-.868V8.863a1.029,1.029,0,0,0-.317-.8A1.164,1.164,0,0,0,9.988,7.778Zm.025-3.333a1.144,1.144,0,0,0-.786.305,1,1,0,0,0-.337.777,1.012,1.012,0,0,0,.329.806,1.179,1.179,0,0,0,.794.285,1.132,1.132,0,0,0,.773-.29,1.02,1.02,0,0,0,.326-.8.992.992,0,0,0-.334-.806A1.171,1.171,0,0,0,10.012,4.444Z"
+                  transform="translate(2 2)"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div
+          class="mt-10 flex flex-row items-center"
+        >
+          <div
+            class="input-row"
+          >
+            <div
+              class="flex flex-col h-20 input-group"
+            >
+              <div
+                class="input-group-container flex flex-wrap items-stretch w-full relative  "
+              >
+                <input
+                  autocomplete="off"
+                  class=" pt-6 body2 h-14 flex-shrink flex-grow flex-auto leading-normal w-px flex-1 input-date-mask pl-4"
+                  data-test-id="deletedDepartments"
+                  data-testid="deletedDepartments"
+                  name="deletedDepartments"
+                  placeholder=""
+                  type="text"
+                  value=""
+                />
+                <label
+                  class="absolute truncate  body2 "
+                >
+                  configuration.general_settings.deleted_departments
+                </label>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div
+              class=""
+            >
+              <svg
+                class="cursor-pointer cursor-pointer icon ml-2 "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="warning-icon"
+                  d="M10,20A10,10,0,0,1,2.928,2.929,10,10,0,0,1,17.072,17.071,9.935,9.935,0,0,1,10,20ZM9.988,7.778a1.028,1.028,0,0,0-1.1,1.142v5.473a1.163,1.163,0,0,0,.305.862,1.085,1.085,0,0,0,.793.3,1.145,1.145,0,0,0,.806-.295,1.131,1.131,0,0,0,.317-.868V8.863a1.029,1.029,0,0,0-.317-.8A1.164,1.164,0,0,0,9.988,7.778Zm.025-3.333a1.144,1.144,0,0,0-.786.305,1,1,0,0,0-.337.777,1.012,1.012,0,0,0,.329.806,1.179,1.179,0,0,0,.794.285,1.132,1.132,0,0,0,.773-.29,1.02,1.02,0,0,0,.326-.8.992.992,0,0,0-.334-.806A1.171,1.171,0,0,0,10.012,4.444Z"
+                  transform="translate(2 2)"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div
+          class="flex mt-10"
+        >
+          <button
+            class="medium-button"
+            data-testid="submit"
+            disabled=""
+            type="submit"
+          >
+            <div
+              class="flex flex-row justify-center items-center space-x-2"
+            >
+              <div>
+                common.save
+              </div>
+            </div>
+          </button>
+          <button
+            class="secondary-button  ml-8 mr-8"
+            type="button"
+          >
+            <div
+              class="flex flex-row justify-center items-center space-x-2"
+            >
+              <div>
+                common.cancel
+              </div>
+            </div>
+          </button>
+          <div
+            class="flex items-center justify-center m-auto justify-self-center"
+          />
+          <div
+            class="flex items-center justify-center m-auto justify-self-center"
+          />
+        </div>
+      </form>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Configurations tests renders patient-tabs correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="flex w-full h-full overflow-y-auto"
+  >
+    <div
+      class="configuration-menu p-6 pr-4 h-full"
+    >
+      <h5
+        class="pb-6"
+      >
+        configuration.title
+      </h5>
+      <a
+        href="/configurations/general"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+          id="configuration-menu-item-12"
+        >
+          configuration.general
+        </div>
+      </a>
+      <div>
+        <div
+          class="cursor-pointer flex flex-row justify-between items-center h-10"
+        >
+          <div
+            class="subtitle2"
+          >
+            configuration.branding_menu
+          </div>
+          <div>
+            <div
+              class=""
+            >
+              <svg
+                class="cursor-pointer "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="active-item-icon"
+                  d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                  transform="translate(19 8) rotate(90)"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div>
+          <a
+            href="/configurations/practice-branding"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-15"
+            >
+              configuration.practice_branding_menu
+            </div>
+          </a>
+          <a
+            href="/configurations/practice-email-template"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-16"
+            >
+              configuration.practice_email_template_menu
+            </div>
+          </a>
+        </div>
+      </div>
+      <a
+        href="/configurations/security"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+          id="configuration-menu-item-11"
+        >
+          configuration.security_settings_menu
+        </div>
+      </a>
+      <a
+        href="/configurations/provider-appointment-settings"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+          id="configuration-menu-item-4"
+        >
+          configuration.appointment_types_for_providers.menu_name
+        </div>
+      </a>
+      <div>
+        <div
+          class="cursor-pointer flex flex-row justify-between items-center h-10"
+        >
+          <div
+            class="subtitle2"
+          >
+            configuration.appointments
+          </div>
+          <div>
+            <div
+              class=""
+            >
+              <svg
+                class="cursor-pointer "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="active-item-icon"
+                  d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                  transform="translate(19 8) rotate(90)"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div>
+          <a
+            href="/configurations/appointment-type"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-1"
+            >
+              configuration.appointment_type
+            </div>
+          </a>
+          <a
+            href="/configurations/cancelation-reasons"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-2"
+            >
+              configuration.appointment_cancellation
+            </div>
+          </a>
+        </div>
+      </div>
+      <div>
+        <div
+          class="cursor-pointer flex flex-row justify-between items-center h-10"
+        >
+          <div
+            class="subtitle2"
+          >
+            configuration.notifications
+          </div>
+          <div>
+            <div
+              class=""
+            >
+              <svg
+                class="cursor-pointer "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="active-item-icon"
+                  d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                  transform="translate(19 8) rotate(90)"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div>
+          <a
+            href="/configurations/appointment-reminders"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-4"
+            >
+              configuration.appointment_reminder
+            </div>
+          </a>
+          <a
+            href="/configurations/email-templates"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-5"
+            >
+              configuration.email_notification_templates
+            </div>
+          </a>
+          <a
+            href="/configurations/sms-templates"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-6"
+            >
+              configuration.sms_notification_templates
+            </div>
+          </a>
+        </div>
+      </div>
+      <div>
+        <div
+          class="cursor-pointer flex flex-row justify-between items-center h-10"
+        >
+          <div
+            class="subtitle2"
+          >
+            configuration.tickets
+          </div>
+          <div>
+            <div
+              class=""
+            >
+              <svg
+                class="cursor-pointer "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="active-item-icon"
+                  d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                  transform="translate(19 8) rotate(90)"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div>
+          <a
+            href="/configurations/ticket-department"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-8"
+            >
+              configuration.ticket_department_menu
+            </div>
+          </a>
+        </div>
+      </div>
+      <a
+        href="/configurations/contact-categories"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+          id="configuration-menu-item-10"
+        >
+          configuration.contact_categories_menu
+        </div>
+      </a>
+      <a
+        href="/configurations/public-links"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+          id="configuration-menu-item-13"
+        >
+          configuration.public_links_menu
+        </div>
+      </a>
+      <a
+        href="/configurations/patient-tabs"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item link subtitle2 h-10"
+          id="configuration-menu-item-17"
+        >
+          configuration.patient_chart_tabs_visibility
+        </div>
+      </a>
+    </div>
+    <div
+      class="w-10/12 overflow-auto h-full p-6 pr-4"
+    >
+      <h5
+        class="pb-6"
+      >
+        configuration.patient_chart_tabs.title
+      </h5>
+      <div
+        class="body2 pb-8"
+      >
+        configuration.patient_chart_tabs.description
+      </div>
+      <div
+        class="grid grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 pb-10"
+      >
+        <div
+          class="h-9"
+        >
+          <label
+            class="flex flex-row items-center checkbox-button"
+          >
+            <input
+              checked=""
+              class="checkbox"
+              data-testid="appointments"
+              id="appointments_"
+              name="appointments"
+              type="checkbox"
+            />
+            <span
+              class="checkbox-control"
+            >
+              <div
+                class=""
+              >
+                <svg
+                  class="icon-medium "
+                  height="24"
+                  viewBox="0 0 24 24"
+                  width="24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <rect
+                    fill="none"
+                    height="24"
+                    width="24"
+                  />
+                  <path
+                    class="svg-checkbox"
+                    d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                  />
+                </svg>
+              </div>
+            </span>
+            <div
+              class="truncate relative w-full h-full inline-block"
+            >
+              <span
+                class="w-60 w-60"
+              >
+                configuration.patient_chart_tabs.appointments
+              </span>
+            </div>
+          </label>
+        </div>
+        <div
+          class="h-9"
+        >
+          <label
+            class="flex flex-row items-center checkbox-button"
+          >
+            <input
+              checked=""
+              class="checkbox"
+              data-testid="insurance"
+              id="insurance_"
+              name="insurance"
+              type="checkbox"
+            />
+            <span
+              class="checkbox-control"
+            >
+              <div
+                class=""
+              >
+                <svg
+                  class="icon-medium "
+                  height="24"
+                  viewBox="0 0 24 24"
+                  width="24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <rect
+                    fill="none"
+                    height="24"
+                    width="24"
+                  />
+                  <path
+                    class="svg-checkbox"
+                    d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                  />
+                </svg>
+              </div>
+            </span>
+            <div
+              class="truncate relative w-full h-full inline-block"
+            >
+              <span
+                class="w-60 w-60"
+              >
+                configuration.patient_chart_tabs.insurance
+              </span>
+            </div>
+          </label>
+        </div>
+        <div
+          class="h-9"
+        >
+          <label
+            class="flex flex-row items-center checkbox-button"
+          >
+            <input
+              checked=""
+              class="checkbox"
+              data-testid="patientCases"
+              id="patientCases_"
+              name="patientCases"
+              type="checkbox"
+            />
+            <span
+              class="checkbox-control"
+            >
+              <div
+                class=""
+              >
+                <svg
+                  class="icon-medium "
+                  height="24"
+                  viewBox="0 0 24 24"
+                  width="24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <rect
+                    fill="none"
+                    height="24"
+                    width="24"
+                  />
+                  <path
+                    class="svg-checkbox"
+                    d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                  />
+                </svg>
+              </div>
+            </span>
+            <div
+              class="truncate relative w-full h-full inline-block"
+            >
+              <span
+                class="w-60 w-60"
+              >
+                configuration.patient_chart_tabs.patient_cases
+              </span>
+            </div>
+          </label>
+        </div>
+        <div
+          class="h-9"
+        >
+          <label
+            class="flex flex-row items-center checkbox-button"
+          >
+            <input
+              checked=""
+              class="checkbox"
+              data-testid="medications"
+              id="medications_"
+              name="medications"
+              type="checkbox"
+            />
+            <span
+              class="checkbox-control"
+            >
+              <div
+                class=""
+              >
+                <svg
+                  class="icon-medium "
+                  height="24"
+                  viewBox="0 0 24 24"
+                  width="24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <rect
+                    fill="none"
+                    height="24"
+                    width="24"
+                  />
+                  <path
+                    class="svg-checkbox"
+                    d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                  />
+                </svg>
+              </div>
+            </span>
+            <div
+              class="truncate relative w-full h-full inline-block"
+            >
+              <span
+                class="w-60 w-60"
+              >
+                configuration.patient_chart_tabs.medications
+              </span>
+            </div>
+          </label>
+        </div>
+        <div
+          class="h-9"
+        >
+          <label
+            class="flex flex-row items-center checkbox-button"
+          >
+            <input
+              checked=""
+              class="checkbox"
+              data-testid="testResults"
+              id="testResults_"
+              name="testResults"
+              type="checkbox"
+            />
+            <span
+              class="checkbox-control"
+            >
+              <div
+                class=""
+              >
+                <svg
+                  class="icon-medium "
+                  height="24"
+                  viewBox="0 0 24 24"
+                  width="24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <rect
+                    fill="none"
+                    height="24"
+                    width="24"
+                  />
+                  <path
+                    class="svg-checkbox"
+                    d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                  />
+                </svg>
+              </div>
+            </span>
+            <div
+              class="truncate relative w-full h-full inline-block"
+            >
+              <span
+                class="w-60 w-60"
+              >
+                configuration.patient_chart_tabs.test_results
+              </span>
+            </div>
+          </label>
+        </div>
+      </div>
+      <div
+        class="flex flex-row w-full"
+      >
+        <button
+          class="medium-button"
+          data-testid="submit"
+          disabled=""
+          type="submit"
+        >
+          <div
+            class="flex flex-row justify-center items-center space-x-2"
+          >
+            <div>
+              common.save
+            </div>
+          </div>
+        </button>
+        <button
+          class="secondary-button  ml-8"
+          data-testid="reset"
+          disabled=""
+          type="button"
+        >
+          <div
+            class="flex flex-row justify-center items-center space-x-2"
+          >
+            <div>
+              common.cancel
+            </div>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Configurations tests renders practice-email-template correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="flex w-full h-full overflow-y-auto"
+  >
+    <div
+      class="configuration-menu p-6 pr-4 h-full"
+    >
+      <h5
+        class="pb-6"
+      >
+        configuration.title
+      </h5>
+      <a
+        href="/configurations/general"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+          id="configuration-menu-item-12"
+        >
+          configuration.general
+        </div>
+      </a>
+      <div>
+        <div
+          class="cursor-pointer flex flex-row justify-between items-center h-10"
+        >
+          <div
+            class="subtitle2"
+          >
+            configuration.branding_menu
+          </div>
+          <div>
+            <div
+              class=""
+            >
+              <svg
+                class="cursor-pointer "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="active-item-icon"
+                  d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                  transform="translate(19 8) rotate(90)"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div>
+          <a
+            href="/configurations/practice-branding"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-15"
+            >
+              configuration.practice_branding_menu
+            </div>
+          </a>
+          <a
+            href="/configurations/practice-email-template"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item link body2 pl-6 h-8"
+              id="configuration-menu-item-16"
+            >
+              configuration.practice_email_template_menu
+            </div>
+          </a>
+        </div>
+      </div>
+      <a
+        href="/configurations/security"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+          id="configuration-menu-item-11"
+        >
+          configuration.security_settings_menu
+        </div>
+      </a>
+      <a
+        href="/configurations/provider-appointment-settings"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+          id="configuration-menu-item-4"
+        >
+          configuration.appointment_types_for_providers.menu_name
+        </div>
+      </a>
+      <div>
+        <div
+          class="cursor-pointer flex flex-row justify-between items-center h-10"
+        >
+          <div
+            class="subtitle2"
+          >
+            configuration.appointments
+          </div>
+          <div>
+            <div
+              class=""
+            >
+              <svg
+                class="cursor-pointer "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="active-item-icon"
+                  d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                  transform="translate(19 8) rotate(90)"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div>
+          <a
+            href="/configurations/appointment-type"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-1"
+            >
+              configuration.appointment_type
+            </div>
+          </a>
+          <a
+            href="/configurations/cancelation-reasons"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-2"
+            >
+              configuration.appointment_cancellation
+            </div>
+          </a>
+        </div>
+      </div>
+      <div>
+        <div
+          class="cursor-pointer flex flex-row justify-between items-center h-10"
+        >
+          <div
+            class="subtitle2"
+          >
+            configuration.notifications
+          </div>
+          <div>
+            <div
+              class=""
+            >
+              <svg
+                class="cursor-pointer "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="active-item-icon"
+                  d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                  transform="translate(19 8) rotate(90)"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div>
+          <a
+            href="/configurations/appointment-reminders"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-4"
+            >
+              configuration.appointment_reminder
+            </div>
+          </a>
+          <a
+            href="/configurations/email-templates"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-5"
+            >
+              configuration.email_notification_templates
+            </div>
+          </a>
+          <a
+            href="/configurations/sms-templates"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-6"
+            >
+              configuration.sms_notification_templates
+            </div>
+          </a>
+        </div>
+      </div>
+      <div>
+        <div
+          class="cursor-pointer flex flex-row justify-between items-center h-10"
+        >
+          <div
+            class="subtitle2"
+          >
+            configuration.tickets
+          </div>
+          <div>
+            <div
+              class=""
+            >
+              <svg
+                class="cursor-pointer "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="active-item-icon"
+                  d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                  transform="translate(19 8) rotate(90)"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div>
+          <a
+            href="/configurations/ticket-department"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-8"
+            >
+              configuration.ticket_department_menu
+            </div>
+          </a>
+        </div>
+      </div>
+      <a
+        href="/configurations/contact-categories"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+          id="configuration-menu-item-10"
+        >
+          configuration.contact_categories_menu
+        </div>
+      </a>
+      <a
+        href="/configurations/public-links"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+          id="configuration-menu-item-13"
+        >
+          configuration.public_links_menu
+        </div>
+      </a>
+      <a
+        href="/configurations/patient-tabs"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+          id="configuration-menu-item-17"
+        >
+          configuration.patient_chart_tabs_visibility
+        </div>
+      </a>
+    </div>
+     
+    <form
+      class="px-6 py-6 flex flex-1 flex-col overflow-y-auto body2"
+    >
+      <h5
+        class="mb-4"
+      >
+         configuration.practice_email_template.title 
+      </h5>
+      <p
+        class="mb-6"
+      >
+        configuration.practice_email_template.description
+      </p>
+      <div
+        class="subtitle mb-3"
+      >
+         configuration.practice_email_template.logo_title 
+      </div>
+      <p
+        class="mb-4"
+      >
+        configuration.practice_email_template.logo_description
+      </p>
+      <div
+        class="mb-6"
+      >
+        <div
+          class="flex flex-row mb-4 items-center"
+        >
+          <label
+            class="mr-6"
+          >
+            configuration.practice_email_template.header_logo_label
+          </label>
+          <div
+            class="flex flex-row items-center"
+          >
+            <div>
+              <button
+                class="secondary-big-button"
+                type="button"
+              >
+                <div
+                  class="flex flex-row justify-center items-center space-x-2"
+                >
+                  <div>
+                    configuration.practice_email_template.logo_picker_button
+                  </div>
+                </div>
+              </button>
+            </div>
+            <div
+              class="flex flex-col ml-6"
+            >
+              <div
+                class="flex items-center"
+              >
+                <img
+                  alt="upload-preview-string"
+                  class="image-preview-pane"
+                  src="undefinedstring"
+                />
+                <div
+                  class="pl-5"
+                >
+                  <div
+                    class=""
+                  >
+                    <svg
+                      class=" "
+                      data-testid="svg-icon"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <rect
+                        fill="none"
+                        height="24"
+                        width="24"
+                      />
+                      <path
+                        class="rgba-025-fill"
+                        d="M16,1.409,14.591,0,8,6.566,1.409,0,0,1.409,6.566,8,0,14.591,1.409,16,8,9.434,14.591,16,16,14.591,9.434,8Z"
+                        transform="translate(4 4)"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="pt-3 body3"
+              >
+                string
+              </div>
+            </div>
+            <input
+              accept=".jpg, .jpeg, .png"
+              style="display: none;"
+              title=""
+              type="file"
+              value=""
+            />
+          </div>
+        </div>
+        <div
+          class="flex flex-row mb-6 items-center"
+        >
+          <label
+            class="mr-6"
+          >
+            configuration.practice_email_template.footer_logo_label
+          </label>
+          <div
+            class="flex flex-row items-center"
+          >
+            <div>
+              <button
+                class="secondary-big-button"
+                type="button"
+              >
+                <div
+                  class="flex flex-row justify-center items-center space-x-2"
+                >
+                  <div>
+                    configuration.practice_email_template.logo_picker_button
+                  </div>
+                </div>
+              </button>
+            </div>
+            <div
+              class="flex flex-col ml-6"
+            >
+              <div
+                class="flex items-center"
+              >
+                <img
+                  alt="upload-preview-string"
+                  class="image-preview-pane"
+                  src="undefinedstring"
+                />
+                <div
+                  class="pl-5"
+                >
+                  <div
+                    class=""
+                  >
+                    <svg
+                      class=" "
+                      data-testid="svg-icon"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <rect
+                        fill="none"
+                        height="24"
+                        width="24"
+                      />
+                      <path
+                        class="rgba-025-fill"
+                        d="M16,1.409,14.591,0,8,6.566,1.409,0,0,1.409,6.566,8,0,14.591,1.409,16,8,9.434,14.591,16,16,14.591,9.434,8Z"
+                        transform="translate(4 4)"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="pt-3 body3"
+              >
+                string
+              </div>
+            </div>
+            <input
+              accept=".jpg, .jpeg, .png"
+              style="display: none;"
+              title=""
+              type="file"
+              value=""
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="mb-3 subtitle"
+      >
+         configuration.practice_email_template.customize_color_title 
+      </div>
+      <div
+        class="body2 mb-8 flex whitespace-pre"
+      >
+        <a
+          class="body2-primary hover:underline flex items-center h-full"
+          data-testid="configuration.practice_email_template.customize_color_description"
+          href="/practice-branding"
+          target="_blank"
+        />
+      </div>
+      <div
+        class="flex flex-row justify-between mb-2"
+      >
+        <div
+          class="mb-3 subtitle"
+        >
+           configuration.practice_email_template.email_footer_disclaimer 
+        </div>
+        <button
+          class="secondary-button"
+          data-testid="configuration.practice_email_template.reset_to_default_button"
+          type="button"
+        >
+          <div
+            class="flex flex-row justify-center items-center space-x-2"
+          >
+            <div>
+              configuration.practice_email_template.reset_to_default_button
+            </div>
+          </div>
+        </button>
+      </div>
+      <div
+        class="mb-8"
+      >
+        <div
+          class="flex flex-row justify-between"
+        >
+          <label
+            class="block subtitle2 pb-2"
+          />
+        </div>
+        <div
+          class="text-area"
+        >
+          <div
+            class="relative formatted-text-area w-full"
+          >
+            <div
+              class="bg-white z-50"
+            >
+              <div
+                class="ql-toolbar ql-snow"
+                id="toolbar"
+              >
+                <span
+                  class="ql-size ql-picker"
+                >
+                  <span
+                    aria-controls="ql-picker-options-0"
+                    aria-expanded="false"
+                    class="ql-picker-label"
+                    data-value="none"
+                    role="button"
+                    tabindex="0"
+                  >
+                    <svg
+                      viewBox="0 0 18 18"
+                    >
+                       
+                      <polygon
+                        class="ql-stroke"
+                        points="7 11 9 13 11 11 7 11"
+                      />
+                       
+                      <polygon
+                        class="ql-stroke"
+                        points="7 7 9 5 11 7 7 7"
+                      />
+                       
+                    </svg>
+                  </span>
+                  <span
+                    aria-hidden="true"
+                    class="ql-picker-options"
+                    id="ql-picker-options-0"
+                    tabindex="-1"
+                  >
+                    <span
+                      class="ql-picker-item"
+                      data-label="email.inbox.formatter.heading"
+                      data-value="huge"
+                      role="button"
+                      tabindex="0"
+                    />
+                    <span
+                      class="ql-picker-item"
+                      data-label="email.inbox.formatter.subheading"
+                      data-value="large"
+                      role="button"
+                      tabindex="0"
+                    />
+                    <span
+                      class="ql-picker-item"
+                      data-value="none"
+                      role="button"
+                      tabindex="0"
+                    />
+                  </span>
+                </span>
+                <select
+                  class="ql-size"
+                  style="display: none;"
+                >
+                  <option
+                    value="huge"
+                  >
+                    email.inbox.formatter.heading
+                  </option>
+                  <option
+                    value="large"
+                  >
+                    email.inbox.formatter.subheading
+                  </option>
+                  <option
+                    selected=""
+                    value="none"
+                  />
+                </select>
+                <button
+                  class="ql-bold"
+                  type="button"
+                >
+                  <svg
+                    viewBox="0 0 18 18"
+                  >
+                     
+                    <path
+                      class="ql-stroke"
+                      d="M5,4H9.5A2.5,2.5,0,0,1,12,6.5v0A2.5,2.5,0,0,1,9.5,9H5A0,0,0,0,1,5,9V4A0,0,0,0,1,5,4Z"
+                    />
+                     
+                    <path
+                      class="ql-stroke"
+                      d="M5,9h5.5A2.5,2.5,0,0,1,13,11.5v0A2.5,2.5,0,0,1,10.5,14H5a0,0,0,0,1,0,0V9A0,0,0,0,1,5,9Z"
+                    />
+                     
+                  </svg>
+                </button>
+                <button
+                  class="ql-italic"
+                  type="button"
+                >
+                  <svg
+                    viewBox="0 0 18 18"
+                  >
+                     
+                    <line
+                      class="ql-stroke"
+                      x1="7"
+                      x2="13"
+                      y1="4"
+                      y2="4"
+                    />
+                     
+                    <line
+                      class="ql-stroke"
+                      x1="5"
+                      x2="11"
+                      y1="14"
+                      y2="14"
+                    />
+                     
+                    <line
+                      class="ql-stroke"
+                      x1="8"
+                      x2="10"
+                      y1="14"
+                      y2="4"
+                    />
+                     
+                  </svg>
+                </button>
+                <button
+                  class="ql-underline"
+                  type="button"
+                >
+                  <svg
+                    viewBox="0 0 18 18"
+                  >
+                     
+                    <path
+                      class="ql-stroke"
+                      d="M5,3V9a4.012,4.012,0,0,0,4,4H9a4.012,4.012,0,0,0,4-4V3"
+                    />
+                     
+                    <rect
+                      class="ql-fill"
+                      height="1"
+                      rx="0.5"
+                      ry="0.5"
+                      width="12"
+                      x="3"
+                      y="15"
+                    />
+                     
+                  </svg>
+                </button>
+                <button
+                  class="ql-link"
+                  type="button"
+                >
+                  <svg
+                    viewBox="0 0 18 18"
+                  >
+                     
+                    <line
+                      class="ql-stroke"
+                      x1="7"
+                      x2="11"
+                      y1="7"
+                      y2="11"
+                    />
+                     
+                    <path
+                      class="ql-even ql-stroke"
+                      d="M8.9,4.577a3.476,3.476,0,0,1,.36,4.679A3.476,3.476,0,0,1,4.577,8.9C3.185,7.5,2.035,6.4,4.217,4.217S7.5,3.185,8.9,4.577Z"
+                    />
+                     
+                    <path
+                      class="ql-even ql-stroke"
+                      d="M13.423,9.1a3.476,3.476,0,0,0-4.679-.36,3.476,3.476,0,0,0,.36,4.679c1.392,1.392,2.5,2.542,4.679.36S14.815,10.5,13.423,9.1Z"
+                    />
+                     
+                  </svg>
+                </button>
+              </div>
+              <div
+                id="editor"
+              />
+            </div>
+            <div
+              class="quill bg-white links"
+            >
+              <div
+                class="ql-container ql-snow"
+              >
+                <div
+                  class="ql-editor"
+                  contenteditable="true"
+                  data-gramm="false"
+                  data-placeholder="common.enter_text"
+                >
+                  <p>
+                    string
+                  </p>
+                </div>
+                <div
+                  class="ql-clipboard"
+                  contenteditable="true"
+                  tabindex="-1"
+                />
+                <div
+                  class="ql-tooltip ql-hidden"
+                >
+                  <a
+                    class="ql-preview"
+                    href="about:blank"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  />
+                  <input
+                    data-formula="e=mc^2"
+                    data-link="https://quilljs.com"
+                    data-video="Embed URL"
+                    type="text"
+                  />
+                  <a
+                    class="ql-action"
+                  />
+                  <a
+                    class="ql-remove"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="flex"
+      >
+        <button
+          class="medium-button"
+          data-testid="save-practice-email-template"
+          type="submit"
+        >
+          <div
+            class="flex flex-row justify-center items-center space-x-2"
+          >
+            <div>
+              common.save
+            </div>
+          </div>
+        </button>
+        <button
+          class="secondary-button  ml-8"
+          type="button"
+        >
+          <div
+            class="flex flex-row justify-center items-center space-x-2"
+          >
+            <div>
+              configuration.practice_email_template.button_preview
+            </div>
+          </div>
+        </button>
+        <button
+          class="secondary-button  ml-8"
+          type="button"
+        >
+          <div
+            class="flex flex-row justify-center items-center space-x-2"
+          >
+            <div>
+              common.cancel
+            </div>
+          </div>
+        </button>
+      </div>
+    </form>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Configurations tests renders public-links correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="flex w-full h-full overflow-y-auto"
+  >
+    <div
+      class="configuration-menu p-6 pr-4 h-full"
+    >
+      <h5
+        class="pb-6"
+      >
+        configuration.title
+      </h5>
+      <a
+        href="/configurations/general"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+          id="configuration-menu-item-12"
+        >
+          configuration.general
+        </div>
+      </a>
+      <div>
+        <div
+          class="cursor-pointer flex flex-row justify-between items-center h-10"
+        >
+          <div
+            class="subtitle2"
+          >
+            configuration.branding_menu
+          </div>
+          <div>
+            <div
+              class=""
+            >
+              <svg
+                class="cursor-pointer "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="active-item-icon"
+                  d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                  transform="translate(19 8) rotate(90)"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div>
+          <a
+            href="/configurations/practice-branding"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-15"
+            >
+              configuration.practice_branding_menu
+            </div>
+          </a>
+          <a
+            href="/configurations/practice-email-template"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-16"
+            >
+              configuration.practice_email_template_menu
+            </div>
+          </a>
+        </div>
+      </div>
+      <a
+        href="/configurations/security"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+          id="configuration-menu-item-11"
+        >
+          configuration.security_settings_menu
+        </div>
+      </a>
+      <a
+        href="/configurations/provider-appointment-settings"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+          id="configuration-menu-item-4"
+        >
+          configuration.appointment_types_for_providers.menu_name
+        </div>
+      </a>
+      <div>
+        <div
+          class="cursor-pointer flex flex-row justify-between items-center h-10"
+        >
+          <div
+            class="subtitle2"
+          >
+            configuration.appointments
+          </div>
+          <div>
+            <div
+              class=""
+            >
+              <svg
+                class="cursor-pointer "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="active-item-icon"
+                  d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                  transform="translate(19 8) rotate(90)"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div>
+          <a
+            href="/configurations/appointment-type"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-1"
+            >
+              configuration.appointment_type
+            </div>
+          </a>
+          <a
+            href="/configurations/cancelation-reasons"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-2"
+            >
+              configuration.appointment_cancellation
+            </div>
+          </a>
+        </div>
+      </div>
+      <div>
+        <div
+          class="cursor-pointer flex flex-row justify-between items-center h-10"
+        >
+          <div
+            class="subtitle2"
+          >
+            configuration.notifications
+          </div>
+          <div>
+            <div
+              class=""
+            >
+              <svg
+                class="cursor-pointer "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="active-item-icon"
+                  d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                  transform="translate(19 8) rotate(90)"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div>
+          <a
+            href="/configurations/appointment-reminders"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-4"
+            >
+              configuration.appointment_reminder
+            </div>
+          </a>
+          <a
+            href="/configurations/email-templates"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-5"
+            >
+              configuration.email_notification_templates
+            </div>
+          </a>
+          <a
+            href="/configurations/sms-templates"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-6"
+            >
+              configuration.sms_notification_templates
+            </div>
+          </a>
+        </div>
+      </div>
+      <div>
+        <div
+          class="cursor-pointer flex flex-row justify-between items-center h-10"
+        >
+          <div
+            class="subtitle2"
+          >
+            configuration.tickets
+          </div>
+          <div>
+            <div
+              class=""
+            >
+              <svg
+                class="cursor-pointer "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="active-item-icon"
+                  d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                  transform="translate(19 8) rotate(90)"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div>
+          <a
+            href="/configurations/ticket-department"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-8"
+            >
+              configuration.ticket_department_menu
+            </div>
+          </a>
+        </div>
+      </div>
+      <a
+        href="/configurations/contact-categories"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+          id="configuration-menu-item-10"
+        >
+          configuration.contact_categories_menu
+        </div>
+      </a>
+      <a
+        href="/configurations/public-links"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item link subtitle2 h-10"
+          id="configuration-menu-item-13"
+        >
+          configuration.public_links_menu
+        </div>
+      </a>
+      <a
+        href="/configurations/patient-tabs"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+          id="configuration-menu-item-17"
+        >
+          configuration.patient_chart_tabs_visibility
+        </div>
+      </a>
+    </div>
+    <div
+      class="w-10/12 overflow-auto h-full p-6 pr-4"
+    >
+      <h5
+        class="pb-6"
+      >
+        configuration.public_links.title
+      </h5>
+      <p
+        class="body2"
+      >
+        configuration.public_links.description
+      </p>
+      <div
+        class="body2 mb-6 flex whitespace-pre"
+      >
+        <a
+          class="body2-primary hover:underline flex items-center h-full"
+          href="/practice-branding"
+          target="_blank"
+        >
+          configuration.public_links.description_link_holder_center
+        </a>
+      </div>
+      <div>
+        <div
+          class="flex flex-col "
+        >
+          <div
+            class="flex flex-row caption-caps table-header h-8 items-center h-12 px-4"
+          >
+            <div
+              class="flex justify-start w-3/12"
+            >
+              <div>
+                <div
+                  class="flex items-center flex-row"
+                >
+                  configuration.public_links.grid_name
+                </div>
+              </div>
+            </div>
+            <div
+              class="flex justify-start w-7/12"
+            >
+              <div>
+                <div
+                  class="flex items-center flex-row"
+                >
+                  configuration.public_links.grid_link
+                </div>
+              </div>
+            </div>
+            <div
+              class="flex justify-start w-2/12"
+            >
+              <div>
+                <div
+                  class="flex items-center flex-row"
+                >
+                  configuration.public_links.grid_copy_link
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div
+              class="border-b"
+            >
+              <div
+                class="flex flex-row h-12 px-4"
+              >
+                <div
+                  class="w-3/12"
+                >
+                  <span
+                    class="flex items-center h-full ml-3"
+                  >
+                    configuration.public_links.items.new_patient_registration
+                  </span>
+                </div>
+                <div
+                  class="w-7/12"
+                >
+                  <a
+                    class="body2-primary hover:underline flex items-center h-full"
+                    href="/o/registration"
+                    target="_blank"
+                  >
+                    http://localhost/o/registration
+                  </a>
+                </div>
+                <div
+                  class="w-2/12"
+                >
+                  <span
+                    class="flex items-center h-full"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium cursor-pointer "
+                        data-testid="onCopy-1"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M0,0H24V24H0Z"
+                          fill="none"
+                        />
+                        <path
+                          class="edit-icon"
+                          d="M3,15.665V19H6.333l9.83-9.83L12.83,5.835ZM18.74,6.59a.885.885,0,0,0,0-1.253l-2.08-2.08a.885.885,0,0,0-1.253,0L13.781,4.884l3.333,3.333L18.74,6.59Z"
+                          transform="translate(1 1)"
+                        />
+                      </svg>
+                    </div>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div
+              class="border-b"
+            >
+              <div
+                class="flex flex-row h-12 px-4"
+              >
+                <div
+                  class="w-3/12"
+                >
+                  <span
+                    class="flex items-center h-full ml-3"
+                  >
+                    configuration.public_links.items.schedule_appointment
+                  </span>
+                </div>
+                <div
+                  class="w-7/12"
+                >
+                  <a
+                    class="body2-primary hover:underline flex items-center h-full"
+                    href="/o/new-appointment"
+                    target="_blank"
+                  >
+                    http://localhost/o/new-appointment
+                  </a>
+                </div>
+                <div
+                  class="w-2/12"
+                >
+                  <span
+                    class="flex items-center h-full"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium cursor-pointer "
+                        data-testid="onCopy-2"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M0,0H24V24H0Z"
+                          fill="none"
+                        />
+                        <path
+                          class="edit-icon"
+                          d="M3,15.665V19H6.333l9.83-9.83L12.83,5.835ZM18.74,6.59a.885.885,0,0,0,0-1.253l-2.08-2.08a.885.885,0,0,0-1.253,0L13.781,4.884l3.333,3.333L18.74,6.59Z"
+                          transform="translate(1 1)"
+                        />
+                      </svg>
+                    </div>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div
+              class="border-b"
+            >
+              <div
+                class="flex flex-row h-12 px-4"
+              >
+                <div
+                  class="w-3/12"
+                >
+                  <span
+                    class="flex items-center h-full ml-3"
+                  >
+                    configuration.public_links.items.manage_upcoming_appointments
+                  </span>
+                </div>
+                <div
+                  class="w-7/12"
+                >
+                  <a
+                    class="body2-primary hover:underline flex items-center h-full"
+                    href="/o/appointment-list"
+                    target="_blank"
+                  >
+                    http://localhost/o/appointment-list
+                  </a>
+                </div>
+                <div
+                  class="w-2/12"
+                >
+                  <span
+                    class="flex items-center h-full"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium cursor-pointer "
+                        data-testid="onCopy-3"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M0,0H24V24H0Z"
+                          fill="none"
+                        />
+                        <path
+                          class="edit-icon"
+                          d="M3,15.665V19H6.333l9.83-9.83L12.83,5.835ZM18.74,6.59a.885.885,0,0,0,0-1.253l-2.08-2.08a.885.885,0,0,0-1.253,0L13.781,4.884l3.333,3.333L18.74,6.59Z"
+                          transform="translate(1 1)"
+                        />
+                      </svg>
+                    </div>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div
+              class="border-b"
+            >
+              <div
+                class="flex flex-row h-12 px-4"
+              >
+                <div
+                  class="w-3/12"
+                >
+                  <span
+                    class="flex items-center h-full ml-3"
+                  >
+                    configuration.public_links.items.request_prescription_refills
+                  </span>
+                </div>
+                <div
+                  class="w-7/12"
+                >
+                  <a
+                    class="body2-primary hover:underline flex items-center h-full"
+                    href="/o/view-medications"
+                    target="_blank"
+                  >
+                    http://localhost/o/view-medications
+                  </a>
+                </div>
+                <div
+                  class="w-2/12"
+                >
+                  <span
+                    class="flex items-center h-full"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium cursor-pointer "
+                        data-testid="onCopy-4"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M0,0H24V24H0Z"
+                          fill="none"
+                        />
+                        <path
+                          class="edit-icon"
+                          d="M3,15.665V19H6.333l9.83-9.83L12.83,5.835ZM18.74,6.59a.885.885,0,0,0,0-1.253l-2.08-2.08a.885.885,0,0,0-1.253,0L13.781,4.884l3.333,3.333L18.74,6.59Z"
+                          transform="translate(1 1)"
+                        />
+                      </svg>
+                    </div>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div
+              class="border-b"
+            >
+              <div
+                class="flex flex-row h-12 px-4"
+              >
+                <div
+                  class="w-3/12"
+                >
+                  <span
+                    class="flex items-center h-full ml-3"
+                  >
+                    configuration.public_links.items.medical_records
+                  </span>
+                </div>
+                <div
+                  class="w-7/12"
+                >
+                  <a
+                    class="body2-primary hover:underline flex items-center h-full"
+                    href="/o/request-medical-records"
+                    target="_blank"
+                  >
+                    http://localhost/o/request-medical-records
+                  </a>
+                </div>
+                <div
+                  class="w-2/12"
+                >
+                  <span
+                    class="flex items-center h-full"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium cursor-pointer "
+                        data-testid="onCopy-5"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M0,0H24V24H0Z"
+                          fill="none"
+                        />
+                        <path
+                          class="edit-icon"
+                          d="M3,15.665V19H6.333l9.83-9.83L12.83,5.835ZM18.74,6.59a.885.885,0,0,0,0-1.253l-2.08-2.08a.885.885,0,0,0-1.253,0L13.781,4.884l3.333,3.333L18.74,6.59Z"
+                          transform="translate(1 1)"
+                        />
+                      </svg>
+                    </div>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div
+              class="border-b"
+            >
+              <div
+                class="flex flex-row h-12 px-4"
+              >
+                <div
+                  class="w-3/12"
+                >
+                  <span
+                    class="flex items-center h-full ml-3"
+                  >
+                    configuration.public_links.items.recent_test_results
+                  </span>
+                </div>
+                <div
+                  class="w-7/12"
+                >
+                  <a
+                    class="body2-primary hover:underline flex items-center h-full"
+                    href="/o/lab-results"
+                    target="_blank"
+                  >
+                    http://localhost/o/lab-results
+                  </a>
+                </div>
+                <div
+                  class="w-2/12"
+                >
+                  <span
+                    class="flex items-center h-full"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium cursor-pointer "
+                        data-testid="onCopy-6"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M0,0H24V24H0Z"
+                          fill="none"
+                        />
+                        <path
+                          class="edit-icon"
+                          d="M3,15.665V19H6.333l9.83-9.83L12.83,5.835ZM18.74,6.59a.885.885,0,0,0,0-1.253l-2.08-2.08a.885.885,0,0,0-1.253,0L13.781,4.884l3.333,3.333L18.74,6.59Z"
+                          transform="translate(1 1)"
+                        />
+                      </svg>
+                    </div>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Configurations tests renders security correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="flex w-full h-full overflow-y-auto"
+  >
+    <div
+      class="configuration-menu p-6 pr-4 h-full"
+    >
+      <h5
+        class="pb-6"
+      >
+        configuration.title
+      </h5>
+      <a
+        href="/configurations/general"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+          id="configuration-menu-item-12"
+        >
+          configuration.general
+        </div>
+      </a>
+      <div>
+        <div
+          class="cursor-pointer flex flex-row justify-between items-center h-10"
+        >
+          <div
+            class="subtitle2"
+          >
+            configuration.branding_menu
+          </div>
+          <div>
+            <div
+              class=""
+            >
+              <svg
+                class="cursor-pointer "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="active-item-icon"
+                  d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                  transform="translate(19 8) rotate(90)"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div>
+          <a
+            href="/configurations/practice-branding"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-15"
+            >
+              configuration.practice_branding_menu
+            </div>
+          </a>
+          <a
+            href="/configurations/practice-email-template"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-16"
+            >
+              configuration.practice_email_template_menu
+            </div>
+          </a>
+        </div>
+      </div>
+      <a
+        href="/configurations/security"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item link subtitle2 h-10"
+          id="configuration-menu-item-11"
+        >
+          configuration.security_settings_menu
+        </div>
+      </a>
+      <a
+        href="/configurations/provider-appointment-settings"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+          id="configuration-menu-item-4"
+        >
+          configuration.appointment_types_for_providers.menu_name
+        </div>
+      </a>
+      <div>
+        <div
+          class="cursor-pointer flex flex-row justify-between items-center h-10"
+        >
+          <div
+            class="subtitle2"
+          >
+            configuration.appointments
+          </div>
+          <div>
+            <div
+              class=""
+            >
+              <svg
+                class="cursor-pointer "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="active-item-icon"
+                  d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                  transform="translate(19 8) rotate(90)"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div>
+          <a
+            href="/configurations/appointment-type"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-1"
+            >
+              configuration.appointment_type
+            </div>
+          </a>
+          <a
+            href="/configurations/cancelation-reasons"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-2"
+            >
+              configuration.appointment_cancellation
+            </div>
+          </a>
+        </div>
+      </div>
+      <div>
+        <div
+          class="cursor-pointer flex flex-row justify-between items-center h-10"
+        >
+          <div
+            class="subtitle2"
+          >
+            configuration.notifications
+          </div>
+          <div>
+            <div
+              class=""
+            >
+              <svg
+                class="cursor-pointer "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="active-item-icon"
+                  d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                  transform="translate(19 8) rotate(90)"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div>
+          <a
+            href="/configurations/appointment-reminders"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-4"
+            >
+              configuration.appointment_reminder
+            </div>
+          </a>
+          <a
+            href="/configurations/email-templates"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-5"
+            >
+              configuration.email_notification_templates
+            </div>
+          </a>
+          <a
+            href="/configurations/sms-templates"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-6"
+            >
+              configuration.sms_notification_templates
+            </div>
+          </a>
+        </div>
+      </div>
+      <div>
+        <div
+          class="cursor-pointer flex flex-row justify-between items-center h-10"
+        >
+          <div
+            class="subtitle2"
+          >
+            configuration.tickets
+          </div>
+          <div>
+            <div
+              class=""
+            >
+              <svg
+                class="cursor-pointer "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="active-item-icon"
+                  d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                  transform="translate(19 8) rotate(90)"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div>
+          <a
+            href="/configurations/ticket-department"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-8"
+            >
+              configuration.ticket_department_menu
+            </div>
+          </a>
+        </div>
+      </div>
+      <a
+        href="/configurations/contact-categories"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+          id="configuration-menu-item-10"
+        >
+          configuration.contact_categories_menu
+        </div>
+      </a>
+      <a
+        href="/configurations/public-links"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+          id="configuration-menu-item-13"
+        >
+          configuration.public_links_menu
+        </div>
+      </a>
+      <a
+        href="/configurations/patient-tabs"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+          id="configuration-menu-item-17"
+        >
+          configuration.patient_chart_tabs_visibility
+        </div>
+      </a>
+    </div>
+    <form
+      class="w-10/12 overflow-auto h-full p-6"
+    >
+      <h5
+        class="pb-8"
+      >
+        configuration.security_settings.title
+      </h5>
+      <div
+        class="security-settings-grid mb-8"
+      >
+        <div>
+          <p
+            class="subtitle2"
+          >
+            configuration.security_settings.hipaa_verification_retry_number_title
+          </p>
+          <p
+            class="body2-medium"
+          >
+            configuration.security_settings.hipaa_verification_retry_number_description
+          </p>
+        </div>
+        <div
+          class="flex flex-col body3-medium"
+        >
+          <div
+            class="flex flex-col h-20 input-group"
+          >
+            <div
+              class="input-group-container flex flex-wrap items-stretch w-full relative  "
+            >
+              <input
+                autocomplete="off"
+                class=" pt-6 body2 h-14 flex-shrink flex-grow flex-auto leading-normal w-px flex-1 input-date-mask pl-4"
+                data-test-id="hipaaVerificationRetryNumber"
+                data-testid="hipaaVerificationRetryNumber"
+                name="hipaaVerificationRetryNumber"
+                placeholder=""
+                type="number"
+                value="0"
+              />
+              <label
+                class="absolute truncate  body3 label-small "
+              >
+                configuration.security_settings.hipaa_verification_retry_number_label
+              </label>
+            </div>
+          </div>
+          <label
+            class="-mt-4 ml-4"
+          >
+            configuration.security_settings.hipaa_verification_retry_number_type
+          </label>
+        </div>
+        <div>
+          <p
+            class="subtitle2"
+          >
+            configuration.security_settings.verified_patient_expires_in_days_title
+          </p>
+          <p
+            class="body2-medium"
+          >
+            configuration.security_settings.verified_patient_expires_in_days_description
+          </p>
+        </div>
+        <div
+          class="flex flex-col body3-medium"
+        >
+          <div
+            class="flex flex-col h-20 input-group"
+          >
+            <div
+              class="input-group-container flex flex-wrap items-stretch w-full relative  "
+            >
+              <input
+                autocomplete="off"
+                class=" pt-6 body2 h-14 flex-shrink flex-grow flex-auto leading-normal w-px flex-1 input-date-mask pl-4"
+                data-test-id="verifiedPatientExpiresInDays"
+                data-testid="verifiedPatientExpiresInDays"
+                name="verifiedPatientExpiresInDays"
+                placeholder=""
+                type="number"
+                value="0"
+              />
+              <label
+                class="absolute truncate  body3 label-small "
+              >
+                configuration.security_settings.verified_patient_expires_in_days_label
+              </label>
+            </div>
+          </div>
+          <label
+            class="-mt-4 ml-4"
+          >
+            configuration.security_settings.verified_patient_expires_in_days_type
+          </label>
+        </div>
+        <div>
+          <p
+            class="subtitle2"
+          >
+            configuration.security_settings.verification_fail_wait_in_minutes_title
+          </p>
+          <p
+            class="body2-medium"
+          >
+            configuration.security_settings.verification_fail_wait_in_minutes_description
+          </p>
+        </div>
+        <div
+          class="flex flex-col body3-medium"
+        >
+          <div
+            class="flex flex-col h-20 input-group"
+          >
+            <div
+              class="input-group-container flex flex-wrap items-stretch w-full relative  "
+            >
+              <input
+                autocomplete="off"
+                class=" pt-6 body2 h-14 flex-shrink flex-grow flex-auto leading-normal w-px flex-1 input-date-mask pl-4"
+                data-test-id="verificationFailWaitInMinutes"
+                data-testid="verificationFailWaitInMinutes"
+                name="verificationFailWaitInMinutes"
+                placeholder=""
+                type="number"
+                value="0"
+              />
+              <label
+                class="absolute truncate  body3 label-small "
+              >
+                configuration.security_settings.verification_fail_wait_in_minutes_label
+              </label>
+            </div>
+          </div>
+          <label
+            class="-mt-4 ml-4"
+          >
+            configuration.security_settings.verification_fail_wait_in_minutes_type
+          </label>
+        </div>
+        <div>
+          <p
+            class="subtitle2"
+          >
+            configuration.security_settings.medical_records_download_expiration_in_days_title
+          </p>
+          <p
+            class="body2-medium"
+          >
+            configuration.security_settings.medical_records_download_expiration_in_days_description
+          </p>
+        </div>
+        <div
+          class="flex flex-col body3-medium"
+        >
+          <div
+            class="flex flex-col h-20 input-group"
+          >
+            <div
+              class="input-group-container flex flex-wrap items-stretch w-full relative  "
+            >
+              <input
+                autocomplete="off"
+                class=" pt-6 body2 h-14 flex-shrink flex-grow flex-auto leading-normal w-px flex-1 input-date-mask pl-4"
+                data-test-id="medicalRecordsDownloadExpirationInDays"
+                data-testid="medicalRecordsDownloadExpirationInDays"
+                name="medicalRecordsDownloadExpirationInDays"
+                placeholder=""
+                type="number"
+                value="0"
+              />
+              <label
+                class="absolute truncate  body3 label-small "
+              >
+                configuration.security_settings.medical_records_download_expiration_in_days_label
+              </label>
+            </div>
+          </div>
+          <label
+            class="-mt-4 ml-4"
+          >
+            configuration.security_settings.medical_records_download_expiration_in_days_type
+          </label>
+        </div>
+        <div>
+          <p
+            class="subtitle2"
+          >
+            configuration.security_settings.redirect_link_expiration_in_hours_title
+          </p>
+          <p
+            class="body2-medium"
+          >
+            configuration.security_settings.redirect_link_expiration_in_hours_description
+          </p>
+        </div>
+        <div
+          class="flex flex-col body3-medium"
+        >
+          <div
+            class="flex flex-col h-20 input-group"
+          >
+            <div
+              class="input-group-container flex flex-wrap items-stretch w-full relative  "
+            >
+              <input
+                autocomplete="off"
+                class=" pt-6 body2 h-14 flex-shrink flex-grow flex-auto leading-normal w-px flex-1 input-date-mask pl-4"
+                data-test-id="redirectLinkExpirationInHours"
+                data-testid="redirectLinkExpirationInHours"
+                name="redirectLinkExpirationInHours"
+                placeholder=""
+                type="number"
+                value="0"
+              />
+              <label
+                class="absolute truncate  body3 label-small "
+              >
+                configuration.security_settings.redirect_link_expiration_in_hours_label
+              </label>
+            </div>
+          </div>
+          <label
+            class="-mt-4 ml-4"
+          >
+            configuration.security_settings.redirect_link_expiration_in_hours_type
+          </label>
+        </div>
+        <div>
+          <p
+            class="subtitle2"
+          >
+            configuration.security_settings.guest_sms_expiration_in_hours_title
+          </p>
+          <p
+            class="body2-medium"
+          >
+            configuration.security_settings.guest_sms_expiration_in_hours_description
+          </p>
+        </div>
+        <div
+          class="flex flex-col body3-medium"
+        >
+          <div
+            class="flex flex-col h-20 input-group"
+          >
+            <div
+              class="input-group-container flex flex-wrap items-stretch w-full relative  "
+            >
+              <input
+                autocomplete="off"
+                class=" pt-6 body2 h-14 flex-shrink flex-grow flex-auto leading-normal w-px flex-1 input-date-mask pl-4"
+                data-test-id="guestSmsExpirationInHours"
+                data-testid="guestSmsExpirationInHours"
+                name="guestSmsExpirationInHours"
+                placeholder=""
+                type="number"
+                value="0"
+              />
+              <label
+                class="absolute truncate  body3 label-small "
+              >
+                configuration.security_settings.guest_sms_expiration_in_hours_label
+              </label>
+            </div>
+          </div>
+          <label
+            class="-mt-4 ml-4"
+          >
+            configuration.security_settings.guest_sms_expiration_in_hours_type
+          </label>
+        </div>
+      </div>
+      <div
+        class="flex flex-row"
+      >
+        <button
+          class="medium-button"
+          data-testid="submit"
+          type="submit"
+        >
+          <div
+            class="flex flex-row justify-center items-center space-x-2"
+          >
+            <div>
+              common.save
+            </div>
+          </div>
+        </button>
+        <button
+          class="secondary-button  ml-8"
+          data-testid="reset"
+          type="button"
+        >
+          <div
+            class="flex flex-row justify-center items-center space-x-2"
+          >
+            <div>
+              common.cancel
+            </div>
+          </div>
+        </button>
+      </div>
+    </form>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Configurations tests renders ticket-department correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="flex w-full h-full overflow-y-auto"
+  >
+    <div
+      class="configuration-menu p-6 pr-4 h-full"
+    >
+      <h5
+        class="pb-6"
+      >
+        configuration.title
+      </h5>
+      <a
+        href="/configurations/general"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+          id="configuration-menu-item-12"
+        >
+          configuration.general
+        </div>
+      </a>
+      <div>
+        <div
+          class="cursor-pointer flex flex-row justify-between items-center h-10"
+        >
+          <div
+            class="subtitle2"
+          >
+            configuration.branding_menu
+          </div>
+          <div>
+            <div
+              class=""
+            >
+              <svg
+                class="cursor-pointer "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="active-item-icon"
+                  d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                  transform="translate(19 8) rotate(90)"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div>
+          <a
+            href="/configurations/practice-branding"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-15"
+            >
+              configuration.practice_branding_menu
+            </div>
+          </a>
+          <a
+            href="/configurations/practice-email-template"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-16"
+            >
+              configuration.practice_email_template_menu
+            </div>
+          </a>
+        </div>
+      </div>
+      <a
+        href="/configurations/security"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+          id="configuration-menu-item-11"
+        >
+          configuration.security_settings_menu
+        </div>
+      </a>
+      <a
+        href="/configurations/provider-appointment-settings"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+          id="configuration-menu-item-4"
+        >
+          configuration.appointment_types_for_providers.menu_name
+        </div>
+      </a>
+      <div>
+        <div
+          class="cursor-pointer flex flex-row justify-between items-center h-10"
+        >
+          <div
+            class="subtitle2"
+          >
+            configuration.appointments
+          </div>
+          <div>
+            <div
+              class=""
+            >
+              <svg
+                class="cursor-pointer "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="active-item-icon"
+                  d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                  transform="translate(19 8) rotate(90)"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div>
+          <a
+            href="/configurations/appointment-type"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-1"
+            >
+              configuration.appointment_type
+            </div>
+          </a>
+          <a
+            href="/configurations/cancelation-reasons"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-2"
+            >
+              configuration.appointment_cancellation
+            </div>
+          </a>
+        </div>
+      </div>
+      <div>
+        <div
+          class="cursor-pointer flex flex-row justify-between items-center h-10"
+        >
+          <div
+            class="subtitle2"
+          >
+            configuration.notifications
+          </div>
+          <div>
+            <div
+              class=""
+            >
+              <svg
+                class="cursor-pointer "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="active-item-icon"
+                  d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                  transform="translate(19 8) rotate(90)"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div>
+          <a
+            href="/configurations/appointment-reminders"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-4"
+            >
+              configuration.appointment_reminder
+            </div>
+          </a>
+          <a
+            href="/configurations/email-templates"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-5"
+            >
+              configuration.email_notification_templates
+            </div>
+          </a>
+          <a
+            href="/configurations/sms-templates"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-6"
+            >
+              configuration.sms_notification_templates
+            </div>
+          </a>
+        </div>
+      </div>
+      <div>
+        <div
+          class="cursor-pointer flex flex-row justify-between items-center h-10"
+        >
+          <div
+            class="subtitle2"
+          >
+            configuration.tickets
+          </div>
+          <div>
+            <div
+              class=""
+            >
+              <svg
+                class="cursor-pointer "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="active-item-icon"
+                  d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                  transform="translate(19 8) rotate(90)"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div>
+          <a
+            href="/configurations/ticket-department"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item link body2 pl-6 h-8"
+              id="configuration-menu-item-8"
+            >
+              configuration.ticket_department_menu
+            </div>
+          </a>
+        </div>
+      </div>
+      <a
+        href="/configurations/contact-categories"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+          id="configuration-menu-item-10"
+        >
+          configuration.contact_categories_menu
+        </div>
+      </a>
+      <a
+        href="/configurations/public-links"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+          id="configuration-menu-item-13"
+        >
+          configuration.public_links_menu
+        </div>
+      </a>
+      <a
+        href="/configurations/patient-tabs"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+          id="configuration-menu-item-17"
+        >
+          configuration.patient_chart_tabs_visibility
+        </div>
+      </a>
+    </div>
+    <div
+      class="flex items-center justify-center w-full h-full z-10 absolute hidden"
+    />
+    <div
+      class="ticket-department overflow-auto h-full p-6 pr-4"
+    >
+      <h5
+        class="ticket-department-header"
+      >
+        ticket_department.title
+      </h5>
+      <div
+        class="body2 pb-6"
+      >
+        ticket_department.description
+      </div>
+      <div
+        class="w-full h-14 flex flex-row justify-between"
+      >
+        <div
+          class="flex flex-col justify-end ticket-department-table-header"
+        >
+          <div
+            class="h7"
+          >
+            ticket_department.table_header
+          </div>
+        </div>
+        <div
+          class="flex flex-col justify-center mr-8"
+        >
+          <button
+            class="small-button"
+            data-testid="add"
+            type="button"
+          >
+            <div
+              class="flex flex-row justify-center items-center space-x-2"
+            >
+              <div>
+                ticket_department.create_department
+              </div>
+            </div>
+          </button>
+        </div>
+      </div>
+      <div>
+        <div
+          class="flex flex-col "
+        >
+          <div
+            class="flex flex-row caption-caps table-header h-8 items-center h-12 px-4"
+          >
+            <div
+              class="flex justify-start w-full"
+            >
+              <div>
+                <div
+                  class="flex items-center flex-row"
+                >
+                  ticket_department.table.department_name
+                </div>
+              </div>
+            </div>
+            <div
+              class="flex justify-start w-10 flex items-center justify-center h-full mr-4"
+            >
+              <div>
+                <div
+                  class="flex items-center flex-row"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Configurations tests renders ticket-tags correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="flex w-full h-full overflow-y-auto"
+  >
+    <div
+      class="configuration-menu p-6 pr-4 h-full"
+    >
+      <h5
+        class="pb-6"
+      >
+        configuration.title
+      </h5>
+      <a
+        href="/configurations/general"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+          id="configuration-menu-item-12"
+        >
+          configuration.general
+        </div>
+      </a>
+      <div>
+        <div
+          class="cursor-pointer flex flex-row justify-between items-center h-10"
+        >
+          <div
+            class="subtitle2"
+          >
+            configuration.branding_menu
+          </div>
+          <div>
+            <div
+              class=""
+            >
+              <svg
+                class="cursor-pointer "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="active-item-icon"
+                  d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                  transform="translate(19 8) rotate(90)"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div>
+          <a
+            href="/configurations/practice-branding"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-15"
+            >
+              configuration.practice_branding_menu
+            </div>
+          </a>
+          <a
+            href="/configurations/practice-email-template"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-16"
+            >
+              configuration.practice_email_template_menu
+            </div>
+          </a>
+        </div>
+      </div>
+      <a
+        href="/configurations/security"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+          id="configuration-menu-item-11"
+        >
+          configuration.security_settings_menu
+        </div>
+      </a>
+      <a
+        href="/configurations/provider-appointment-settings"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+          id="configuration-menu-item-4"
+        >
+          configuration.appointment_types_for_providers.menu_name
+        </div>
+      </a>
+      <div>
+        <div
+          class="cursor-pointer flex flex-row justify-between items-center h-10"
+        >
+          <div
+            class="subtitle2"
+          >
+            configuration.appointments
+          </div>
+          <div>
+            <div
+              class=""
+            >
+              <svg
+                class="cursor-pointer "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="active-item-icon"
+                  d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                  transform="translate(19 8) rotate(90)"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div>
+          <a
+            href="/configurations/appointment-type"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-1"
+            >
+              configuration.appointment_type
+            </div>
+          </a>
+          <a
+            href="/configurations/cancelation-reasons"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-2"
+            >
+              configuration.appointment_cancellation
+            </div>
+          </a>
+        </div>
+      </div>
+      <div>
+        <div
+          class="cursor-pointer flex flex-row justify-between items-center h-10"
+        >
+          <div
+            class="subtitle2"
+          >
+            configuration.notifications
+          </div>
+          <div>
+            <div
+              class=""
+            >
+              <svg
+                class="cursor-pointer "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="active-item-icon"
+                  d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                  transform="translate(19 8) rotate(90)"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div>
+          <a
+            href="/configurations/appointment-reminders"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-4"
+            >
+              configuration.appointment_reminder
+            </div>
+          </a>
+          <a
+            href="/configurations/email-templates"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-5"
+            >
+              configuration.email_notification_templates
+            </div>
+          </a>
+          <a
+            href="/configurations/sms-templates"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-6"
+            >
+              configuration.sms_notification_templates
+            </div>
+          </a>
+        </div>
+      </div>
+      <div>
+        <div
+          class="cursor-pointer flex flex-row justify-between items-center h-10"
+        >
+          <div
+            class="subtitle2"
+          >
+            configuration.tickets
+          </div>
+          <div>
+            <div
+              class=""
+            >
+              <svg
+                class="cursor-pointer "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="active-item-icon"
+                  d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                  transform="translate(19 8) rotate(90)"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div>
+          <a
+            href="/configurations/ticket-department"
+          >
+            <div
+              class="flex items-center cursor-pointer menu-item body2 pl-6 h-8"
+              id="configuration-menu-item-8"
+            >
+              configuration.ticket_department_menu
+            </div>
+          </a>
+        </div>
+      </div>
+      <a
+        href="/configurations/contact-categories"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+          id="configuration-menu-item-10"
+        >
+          configuration.contact_categories_menu
+        </div>
+      </a>
+      <a
+        href="/configurations/public-links"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+          id="configuration-menu-item-13"
+        >
+          configuration.public_links_menu
+        </div>
+      </a>
+      <a
+        href="/configurations/patient-tabs"
+      >
+        <div
+          class="flex items-center cursor-pointer menu-item subtitle2 h-10"
+          id="configuration-menu-item-17"
+        >
+          configuration.patient_chart_tabs_visibility
+        </div>
+      </a>
+    </div>
+    <div
+      class="flex items-center justify-center w-full h-full z-10 absolute hidden"
+    />
+    <div
+      class="ticket-tags overflow-auto h-full px-6 pt-7"
+    >
+      <h6
+        class="pb-7"
+      >
+        ticket_tags.title
+      </h6>
+      <div
+        class="body2 pb-6"
+      >
+        ticket_tags.description
+      </div>
+      <div
+        class="w-full h-14 flex flex-row justify-between"
+      >
+        <div
+          class="flex flex-col justify-end ticket-tags-table-header"
+        >
+          <div
+            class="h7 pl-1 pb-2"
+          >
+            ticket_tags.table_header
+          </div>
+        </div>
+        <div
+          class="flex flex-col justify-center mr-8"
+        >
+          <button
+            class="small-button"
+            data-testid="add"
+            type="button"
+          >
+            <div
+              class="flex flex-row justify-center items-center space-x-2"
+            >
+              <div>
+                ticket_tags.create_tag
+              </div>
+            </div>
+          </button>
+        </div>
+      </div>
+      <div>
+        <div
+          class="flex flex-col "
+        >
+          <div
+            class="flex flex-row caption-caps table-header h-8 items-center h-12 px-4"
+          >
+            <div
+              class="flex justify-start w-full"
+            >
+              <div>
+                <div
+                  class="flex items-center flex-row"
+                >
+                  ticket_tags.table.tag_name
+                </div>
+              </div>
+            </div>
+            <div
+              class="flex justify-start w-10 flex items-center justify-center h-full mr-4"
+            >
+              <div>
+                <div
+                  class="flex items-center flex-row"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

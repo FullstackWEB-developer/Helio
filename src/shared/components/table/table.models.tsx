@@ -39,7 +39,8 @@ export interface TableColumnModel {
     alignment?: 'start' | 'end' | 'center';
     onClick?: (field: string | undefined, sortDirection: SortDirection) => void
     render?: (field: any, row: any) => ReactNode;
-    disableNoneSort?: boolean
+    disableNoneSort?: boolean,
+    dataTestId?: string
 }
 
 export interface TableTitleModel {

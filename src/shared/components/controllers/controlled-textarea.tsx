@@ -98,6 +98,7 @@ const ControlledTextArea = ({
                         {...controllerProps}
                         id={id}
                         name={name}
+                        data-testid={name}
                         className={className}
                         disabled={disabled}
                         error={error}

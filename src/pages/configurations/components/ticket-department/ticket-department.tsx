@@ -47,7 +47,7 @@ const TicketDepartment = () => {
                 alignment: 'start',
                 widthClass: 'w-10 flex items-center justify-center h-full mr-4',
                 render: (value: string) => {
-                    return (<SvgIcon type={Icon.Edit} className='icon-medium cursor-pointer' fillClass='edit-icon' onClick={() => {
+                    return (<SvgIcon dataTestId={`edit-${value}`} type={Icon.Edit} className='icon-medium cursor-pointer' fillClass='edit-icon' onClick={() => {
                         setDepartmentId(value);
                         setDepartmentModalOpen(true);
                     }}/>);
@@ -95,6 +95,7 @@ const TicketDepartment = () => {
         if(departmentId){
             return departments.find(d => d.value === departmentId)?.label;
         }
+        return ''
     }
 
     const getDepartmentMutation = useMutation(getLookupValues(key, true), {
@@ -157,6 +158,7 @@ const TicketDepartment = () => {
                         <div className='flex flex-col pb-6 ticket-department-modal-title'>
                             <Fragment>
                                 <ControlledInput
+                                    dataTestId='ticket_department.input_label'
                                     control={control}
                                     name='value'
                                     type='text'
@@ -167,11 +169,12 @@ const TicketDepartment = () => {
                                 />
                             </Fragment>
                             <div className='flex justify-end mt-10'>
-                                <Button label='common.cancel' className='mr-6' buttonType='secondary' onClick={() => setDepartmentModalOpen(false)} />
+                                <Button data-testid='cancel-department' label='common.cancel' className='mr-6' buttonType='secondary' onClick={() => setDepartmentModalOpen(false)} />
                                 {departmentId && (
-                                    <Button label='common.delete' className='mr-6' buttonType='secondary' disabled={deleteDepartmentMutation.isLoading} isLoading={deleteDepartmentMutation.isLoading} onClick={() => onDeleteDepartment()} />
+                                    <Button data-testid='delete-department' label='common.delete' className='mr-6' buttonType='secondary' disabled={deleteDepartmentMutation.isLoading} isLoading={deleteDepartmentMutation.isLoading} onClick={() => onDeleteDepartment()} />
                                 )}
                                 <Button
+                                    data-testid='save-changes'
                                     type='submit'
                                     buttonType='small'
                                     disabled={!isValid || upsertDepartmentMutation.isLoading}
@@ -198,7 +201,7 @@ const TicketDepartment = () => {
                         <div className='h7'>{t('ticket_department.table_header')}</div>
                     </div>
                     <div className='flex flex-col justify-center mr-8'>
-                        <Button label='ticket_department.create_department' buttonType='small' onClick={() => {
+                        <Button data-testid='add' label='ticket_department.create_department' buttonType='small' onClick={() => {
                             setDepartmentId(undefined);
                             setDepartmentModalOpen(true);
                         }} />
