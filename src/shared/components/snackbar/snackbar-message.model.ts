@@ -12,5 +12,6 @@ export interface SnackbarMessageModel {
     position?: SnackbarPosition;
     durationInSeconds?: number;
     icon?: Icon,
-    iconFill?: string
+    iconFill?: string;
+    supportRichText?: boolean;
 }

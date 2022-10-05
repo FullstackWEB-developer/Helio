@@ -272,11 +272,9 @@
       "error_loading_extensions": "Extensions could not be loaded. Please try again later",
       "cannot_redirect_calls": "You cannot transfer calls to this user!",
       "cannot_redirect_chats_calls": "You cannot transfer chats or calls to this user!",
-      "call_transferred_from": "{{fromUserFirstName}} redirected a call to you. \nPlease end your current call/chat to get this call.",
-      "call_transferred": "You are redirected a call. \nPlease end your current call/chat to get this call.",
-      "chat_transferred_from": "{{fromUserFirstName}} redirected a chat to you. \nPlease end your current call/chat to get this chat.",
-      "chat_transferred": "You are redirected a chat. \nPlease end your current call/chat to get this chat.",
-      "transferred_person_not_available": "Your transfer succeeded, but {{userFirstName}} is on another call/chat. \n Agent will accept after current activity."
+      "call_transferred": "<strong>New transfer: CALL</strong> <br/>To accept close current contact.",
+      "chat_transferred": "<strong>New transfer: CHAT</strong> <br/>To accept close current contact.",
+      "transferred_person_not_available": "<strong>Transfer status: Successful</strong> <br/>Agent availability: Will accept transfer after closing current contact."
     },
     "modal": {
       "aws_connect": "Amazon Connect",

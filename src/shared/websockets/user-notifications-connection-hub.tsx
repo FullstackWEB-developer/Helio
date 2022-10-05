@@ -23,6 +23,7 @@ const UserNotificationsConnectionHub = () => {
 
     useEffect(() => {
         const hubUrl = `${utils.getAppParameter('RealtimeEventsEndpoint')}user-notifications`;
+
         const newConnection = new HubConnectionBuilder()
             .withUrl(hubUrl,
                 {
@@ -43,28 +44,9 @@ const UserNotificationsConnectionHub = () => {
         let message = '';
         if (appUser.email === data.toUserEmail) {
             if (data.channel === 'CHAT') {
-                if (!data.fromUserEmail) {
-                    message = 'ccp.extensions_context.chat_transferred';
-                } else {
-                    const fromUser = users.find(a => a.email.toLowerCase() === data.fromUserEmail.toLowerCase());
-                    if (!!fromUser) {
-                        message = t('ccp.extensions_context.chat_transferred_from', {'fromUserFirstName' : fromUser.firstName});
-                    } else {
-                        message = 'ccp.extensions_context.chat_transferred';
-                    }
-                }
-
+                message = 'ccp.extensions_context.chat_transferred';
             } else if (data.channel === 'VOICE') {
-                if (!data.fromUserEmail) {
-                    message = 'ccp.extensions_context.call_transferred';
-                } else {
-                    const fromUser = users.find(a => a.email.toLowerCase() === data.fromUserEmail.toLowerCase());
-                    if (!!fromUser) {
-                        message = t('ccp.extensions_context.call_transferred_from', {'fromUserFirstName' : fromUser.firstName});
-                    } else {
-                        message = 'ccp.extensions_context.call_transferred';
-                    }
-                }
+                message = 'ccp.extensions_context.call_transferred';
             }
         } else if (appUser.email === data.fromUserEmail) {
             const toUser = users.find(a => a.email.toLowerCase() === data.toUserEmail.toLowerCase());
@@ -77,6 +59,7 @@ const UserNotificationsConnectionHub = () => {
                 autoClose: false,
                 icon: data.channel === 'CHAT' ? Icon.Chat : Icon.Phone,
                 iconFill: data.channel === 'CHAT' ? 'info-icon' : 'success-icon',
+                supportRichText: true
             }));
         }
     }

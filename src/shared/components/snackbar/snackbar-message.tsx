@@ -9,6 +9,7 @@ import {removeSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
 import {useEffect} from 'react';
 import './snackbar-message.scss';
 import {SnackbarPosition} from '@components/snackbar/snackbar-position.enum';
+import { Trans } from 'react-i18next'
 
 export interface SnackbarMessageProps {
     message: SnackbarMessageModel;
@@ -50,7 +51,7 @@ const SnackbarMessage = ({message, position}: SnackbarMessageProps) => {
                 type={message.icon}/></div>}
 
             <div className="flex items-center flex-1 body2-white pr-2">
-                {t(message.message)}
+                {message.supportRichText ? <div><Trans i18nKey={message.message} /></div> : t(message.message)}
             </div>
 
             {message.onButtonClick && message.buttonTitle && <div className='px-4'>
