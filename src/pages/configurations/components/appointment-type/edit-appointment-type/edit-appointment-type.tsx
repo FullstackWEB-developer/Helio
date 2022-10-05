@@ -28,6 +28,7 @@ import Select from '@components/select/select';
 import utils from '@shared/utils/utils';
 import RouteLeavingGuard from '@components/route-leaving-guard/route-leaving-guard';
 import Confirmation from '@components/confirmation/confirmation';
+import { EMPTY_LINE } from '@constants/form-constants';
 
 const EditAppointmentType = () => {
     const { t } = useTranslation();
@@ -110,6 +111,9 @@ const EditAppointmentType = () => {
     const { isFetching } =
         useQuery([GetAppointmentType], () => getAppointmentTypeById(parseInt(id)), {
             onSuccess: (data) => {
+                if (data.instructions && data.instructions.includes(EMPTY_LINE)) {
+                    data.instructions = data.instructions.replaceAll(EMPTY_LINE, "");
+                }
                 setAppointmentType(data);
                 setCurrentCancelationFee(data.cancelationFee ? data.cancelationFee.toString() : "");
                 setCurrentLength(data.description?.length ?? 0);
@@ -137,7 +141,7 @@ const EditAppointmentType = () => {
         setSelectedProviders(apptProviders);
     }, [appointmentType, providers]);
 
-    const { handleSubmit, watch, control, formState: { isValid, isDirty, isSubmitSuccessful } } = useForm({ mode: 'all'});
+    const { handleSubmit, watch, control, formState: { isValid, isDirty, isSubmitSuccessful }, setValue, getValues } = useForm({ mode: 'all'});
 
     const isReschedulable = watch('isReschedulable') === 'true';
     const isCancelable = watch('isCancelable') === 'true';
@@ -316,6 +320,7 @@ const EditAppointmentType = () => {
                                 } as Option
                             })}
                             onSelect={option => providerSelected(option?.object)}
+                            onClose={() => {setValue('name', getValues('name'), { shouldDirty: true });}}
                         />{displayToolTip(t('configuration.appointment_type_details.tooltip_selected_providers'))}
                     </div>
                     <div className='flex flex-row items-center mt-4 space-x-2'>

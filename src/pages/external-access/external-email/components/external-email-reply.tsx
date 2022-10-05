@@ -21,6 +21,7 @@ import {
     GetContactById,
     GetPatient
 } from '@constants/react-query-constants';
+import { EMPTY_LINE } from '@constants/form-constants';
 
 interface ExternalEmailReply {
     message: EmailMessageDto;
@@ -30,7 +31,6 @@ interface ExternalEmailReply {
 const ExternalEmailReply = ({message, setReplyMode, setSelectedMessage}: ExternalEmailReply) => {
     const {t} = useTranslation();
     const dispatch = useDispatch();
-    const emptyHtml = '<p><br></p>';
     const discardCompose = () => {
         setEmailContent('');
         setReplyMode(false);
@@ -112,7 +112,7 @@ const ExternalEmailReply = ({message, setReplyMode, setSelectedMessage}: Externa
     });
 
 
-    const displaySendButton = emailContent && emailContent !== emptyHtml;
+    const displaySendButton = emailContent && emailContent !== EMPTY_LINE;
     return (
         <div className='flex flex-col flex-1 h-full overflow-hidden'>
             <div className='flex h-14 reply-header items-center px-4 subtitle justify-between'>

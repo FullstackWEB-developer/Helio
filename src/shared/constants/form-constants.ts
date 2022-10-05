@@ -9,3 +9,4 @@ export const CCP_ANIMATION_DURATION = 0.3;
 export const ALPHABETICAL_REGEX = '^[a-z, A-Z, \\s]+$';
 export const ALPHABETICAL_NUMERICAL_REGEX = '^[a-z,A-Z,0-9, \\s]+$';
 export const INPUT_DATE_FORMAT = 'mm/dd/yyyy';
+export const EMPTY_LINE = '<p><br></p>';

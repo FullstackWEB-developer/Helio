@@ -32,6 +32,7 @@ interface SelectProps {
     allowClear?: boolean;
     isMultiple?: boolean;
     name?: string;
+    onClose?: () => void;
 }
 const Select = React.forwardRef<HTMLDivElement, SelectProps>(({options, order, label, className, autoComplete = true, defaultValue = null, truncateAssistiveText=false, allowClear =false, isMultiple=false, defaultValues, ...props}: SelectProps, ref) => {
     const {t}: {t: any} = useTranslation();
@@ -47,7 +48,9 @@ const Select = React.forwardRef<HTMLDivElement, SelectProps>(({options, order, l
     const innerRef = customHooks.useCombinedForwardAndInnerRef(ref);
     const inputRef = useRef<HTMLInputElement>(null);
     customHooks.useOutsideClick([innerRef], () => {
-        setOpen(false);
+        if(open){
+            onClose();
+        }
     });
 
     const searchOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -55,6 +58,13 @@ const Select = React.forwardRef<HTMLDivElement, SelectProps>(({options, order, l
         setCursor(0);
         if (props.onTextChange) {
             props.onTextChange(e.target.value);
+        }
+    }
+
+    const onClose = () => {
+        setOpen(false);
+        if(props.onClose){
+            props.onClose();
         }
     }
 
@@ -144,8 +154,10 @@ const Select = React.forwardRef<HTMLDivElement, SelectProps>(({options, order, l
     const handleArrowClick = () => {
         if(!isMultiple){
             open ? inputRef.current?.blur() : inputRef.current?.focus();
+        }else if(!open){
+            onClose()
         }else{
-            setOpen(!open)
+            setOpen(true)
         }
     }
 
@@ -208,7 +220,7 @@ const Select = React.forwardRef<HTMLDivElement, SelectProps>(({options, order, l
 
     const onBlur = (e: React.FocusEvent<HTMLInputElement>) => {
         if (!isMultiple) {
-            setOpen( false);
+            onClose();
             e.target.value = '';
             setSearchQuery(null);
             setCursor(-1);

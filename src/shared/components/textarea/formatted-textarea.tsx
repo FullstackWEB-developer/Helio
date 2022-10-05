@@ -6,6 +6,7 @@ import 'react-quill/dist/quill.snow.css';
 import SvgIcon, {Icon} from '@components/svg-icon';
 import classnames from 'classnames';
 import QuickFormulaSelect from '@components/quick-formula-select/quick-formula-select';
+import { EMPTY_LINE } from '@constants/form-constants';
 export interface FormattedTextareaProps {
     isLoading?: boolean;
     iconFill?: string;
@@ -23,7 +24,6 @@ export interface FormattedTextareaProps {
 const FormattedTextarea = React.forwardRef<ReactQuill, FormattedTextareaProps>(({isLoading, iconFill, onClick, value = '', onChange, disabled, showSendIcon = true,
     placeHolder = 'common.enter_text', hyperLinkButton = false, sizeSelectionEnabled = true, formulaSelectionDropdown = false}: FormattedTextareaProps, ref: any) => {
     const {t} = useTranslation();
-    const emptyHtml = '<p><br></p>';
     const [content, setContent] = useState(value);
 
     const Link = Quill.import('formats/link');
@@ -40,7 +40,7 @@ const FormattedTextarea = React.forwardRef<ReactQuill, FormattedTextareaProps>((
     }, [value])
 
     const handleChange = (value: string) => {
-        if (value === emptyHtml) {
+        if (value === EMPTY_LINE) {
             value = '';
         }
         setContent(value);
