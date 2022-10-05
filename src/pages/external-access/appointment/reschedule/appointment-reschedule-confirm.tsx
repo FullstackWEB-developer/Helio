@@ -91,7 +91,7 @@ const AppointmentRescheduleConfirm = () => {
             {t('external_access.appointments.new_appointment_date_time')}
         </div>
         <h5 className='pb-7'>
-            {utils.formatUtcDate(appointmentSlot.date, 'dddd, MMM DD, YYYY')} {dayjs(appointmentSlot.startTime, 'HH:mm').format('[at] h:mm A')}
+            {dayjs(appointmentSlot.date).format('dddd, MMMM DD, YYYY')} {dayjs(appointmentSlot.startTime, 'HH:mm').format('[at] h:mm A')}
         </h5>
         <div className='2xl:whitespace-pre 2xl:h-12 2xl:my-3 flex w-full items-center pb-2'>
             <div className='h7'>
