@@ -154,7 +154,7 @@ const Select = React.forwardRef<HTMLDivElement, SelectProps>(({options, order, l
     const handleArrowClick = () => {
         if(!isMultiple){
             open ? inputRef.current?.blur() : inputRef.current?.focus();
-        }else if(!open){
+        }else if(open){
             onClose()
         }else{
             setOpen(true)
