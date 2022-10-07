@@ -84,7 +84,7 @@
   "scripts": {
     "start": "craco start",
     "build": "craco build",
-    "test": "react-scripts test --runInBand --env=jsdom --testResultsProcessor ./node_modules/jest-sonar-reporter/index.js",
+    "test": "craco test --runInBand --coverage --reporters=default --reporters=jest-junit",
     "eject": "react-scripts eject",
     "test:debug": "react-scripts --inspect-brk test --runInBand --no-cache",
     "test:coverage": "npm test -- --coverage --watchAll=false"
