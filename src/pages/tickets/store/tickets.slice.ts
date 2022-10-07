@@ -117,8 +117,12 @@ const ticketsSlice = createSlice({
         ...DefaultPagination
       }
     },
-    toggleChatTranscriptWindowVisible(state) {
-      state.isChatTranscriptModalVisible = !state.isChatTranscriptModalVisible;
+    toggleChatTranscriptWindowVisible(state, { payload }: PayloadAction<boolean | undefined>) {
+      if(payload !== undefined){
+        state.isChatTranscriptModalVisible = payload;
+      }else{
+        state.isChatTranscriptModalVisible = !state.isChatTranscriptModalVisible;
+      }
     },
     toggleCallLogPlayerVisible(state) {
       state.isCallLogPlayerVisible = !state.isCallLogPlayerVisible;

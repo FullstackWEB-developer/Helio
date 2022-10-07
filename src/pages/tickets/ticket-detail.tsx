@@ -65,6 +65,7 @@ const TicketDetail = () => {
     useEffect(() => {
         return () => {
             dispatch(setPatientPhoto(''));
+            dispatch(toggleChatTranscriptWindowVisible(false));
         }
     }, []);
 
