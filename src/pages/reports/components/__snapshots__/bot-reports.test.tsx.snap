@@ -59,9 +59,39 @@ exports[`Bot Report tests renders bot reports correctly with data 1`] = `
               class="basic-statistic flex justify-center flex-col items-center w-72"
             >
               <div
-                class="body3-medium pt-2.5 pb-3"
+                class="flex flex-row px-1"
               >
-                reports.bot_reports.total_calls
+                <div
+                  class="body3-medium pt-2.5 pb-3"
+                >
+                  reports.bot_reports.total_calls
+                </div>
+                <div
+                  class="pt-1"
+                >
+                  <div
+                    class=""
+                  >
+                    <svg
+                      class="cursor-pointer icon-medium "
+                      height="24"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <rect
+                        fill="none"
+                        height="24"
+                        width="24"
+                      />
+                      <path
+                        class="warning-icon"
+                        d="M10,20A10,10,0,0,1,2.928,2.929,10,10,0,0,1,17.072,17.071,9.935,9.935,0,0,1,10,20ZM9.988,7.778a1.028,1.028,0,0,0-1.1,1.142v5.473a1.163,1.163,0,0,0,.305.862,1.085,1.085,0,0,0,.793.3,1.145,1.145,0,0,0,.806-.295,1.131,1.131,0,0,0,.317-.868V8.863a1.029,1.029,0,0,0-.317-.8A1.164,1.164,0,0,0,9.988,7.778Zm.025-3.333a1.144,1.144,0,0,0-.786.305,1,1,0,0,0-.337.777,1.012,1.012,0,0,0,.329.806,1.179,1.179,0,0,0,.794.285,1.132,1.132,0,0,0,.773-.29,1.02,1.02,0,0,0,.326-.8.992.992,0,0,0-.334-.806A1.171,1.171,0,0,0,10.012,4.444Z"
+                        transform="translate(2 2)"
+                      />
+                    </svg>
+                  </div>
+                </div>
               </div>
               <div
                 class="flex flex-row"
@@ -77,9 +107,13 @@ exports[`Bot Report tests renders bot reports correctly with data 1`] = `
               class="basic-statistic flex justify-center flex-col items-center w-72"
             >
               <div
-                class="body3-medium pt-2.5 pb-3"
+                class="flex flex-row px-1"
               >
-                reports.bot_reports.total_chats
+                <div
+                  class="body3-medium pt-2.5 pb-3"
+                >
+                  reports.bot_reports.total_chats
+                </div>
               </div>
               <div
                 class="flex flex-row"
@@ -95,9 +129,13 @@ exports[`Bot Report tests renders bot reports correctly with data 1`] = `
               class="basic-statistic flex justify-center flex-col items-center w-72"
             >
               <div
-                class="body3-medium pt-2.5 pb-3"
+                class="flex flex-row px-1"
               >
-                reports.bot_reports.appointments_scheduled
+                <div
+                  class="body3-medium pt-2.5 pb-3"
+                >
+                  reports.bot_reports.appointments_scheduled
+                </div>
               </div>
               <div
                 class="flex flex-row"
@@ -113,9 +151,13 @@ exports[`Bot Report tests renders bot reports correctly with data 1`] = `
               class="basic-statistic flex justify-center flex-col items-center w-72"
             >
               <div
-                class="body3-medium pt-2.5 pb-3"
+                class="flex flex-row px-1"
               >
-                reports.bot_reports.new_patients_registered
+                <div
+                  class="body3-medium pt-2.5 pb-3"
+                >
+                  reports.bot_reports.new_patients_registered
+                </div>
               </div>
               <div
                 class="flex flex-row"

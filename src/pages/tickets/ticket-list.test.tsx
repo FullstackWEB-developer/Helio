@@ -13,6 +13,7 @@ import initialAppUserState from '@shared/store/app-user/appuser.initial-state';
 import {TicketQuery} from '@pages/tickets/models/ticket-query';
 import {Ticket} from '@pages/tickets/models/ticket';
 import {TicketEnumValue} from '@pages/tickets/models/ticket-enum-value.model';
+import MockDate from 'mockdate';
 
 fdescribe("Ticket List tests", () => {
     let container: HTMLDivElement | null;
@@ -58,6 +59,7 @@ fdescribe("Ticket List tests", () => {
 
     beforeEach(async () => {
         await i18n.init();
+        MockDate.set(dayjs('2018-04-04T16:00:00.000Z').toDate());
         dayjs.extend(duration);
         dayjs.extend(utc);
         dayjs.extend(customParseFormat);
@@ -71,6 +73,7 @@ fdescribe("Ticket List tests", () => {
             container.remove();
             container = null;
         }
+        MockDate.reset();
     });
 
     it("renders ticket-list correctly", async () => {
