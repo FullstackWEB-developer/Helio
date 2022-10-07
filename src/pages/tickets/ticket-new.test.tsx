@@ -13,7 +13,7 @@ import MockDate from 'mockdate';
 
 describe("Ticket New tests", () => {
     let container: HTMLDivElement | null;
-    let mockState = {
+    const mockState = {
         ticketState: {
             lookupValues: []
         },

@@ -13,7 +13,7 @@ import {LabResultObservation} from '@pages/external-access/lab-results/models/la
 describe("Lab Result Observation Item tests", () => {
 
     let container: HTMLDivElement | null;
-    let mockState = {
+    const mockState = {
         ticketState: {
             lookupValues: [],
             enumValues: [

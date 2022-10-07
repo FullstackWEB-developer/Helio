@@ -1,0 +1,372 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Request Refill tests renders Request Refill correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="2xl:px-48 pt-7 without-default-padding"
+  >
+    <div
+      class="flex flex-row pb-5 cursor-pointer"
+    >
+      <div
+        class=""
+      >
+        <svg
+          class="icon-medium "
+          height="24"
+          viewBox="0 0 24 24"
+          width="24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <rect
+            fill="none"
+            height="24"
+            width="24"
+          />
+          <path
+            class="fill-default"
+            d="M-1.408,10.085H-19.121l5.32,5.052a1.324,1.324,0,0,1,.419.96,1.324,1.324,0,0,1-.419.96,1.468,1.468,0,0,1-1.01.4,1.468,1.468,0,0,1-1.01-.4l-7.76-7.37a1.311,1.311,0,0,1,0-1.92L-15.822.4A1.463,1.463,0,0,1-14.811,0,1.462,1.462,0,0,1-13.8.4a1.324,1.324,0,0,1,.419.96,1.324,1.324,0,0,1-.419.96l-5.32,5.053H-1.408A1.394,1.394,0,0,1,0,8.727,1.394,1.394,0,0,1-1.408,10.085Z"
+            transform="translate(24 3)"
+          />
+        </svg>
+      </div>
+      <div
+        class="body2 pl-4"
+      >
+        external_access.medication_refill.back_to_medications
+      </div>
+    </div>
+    <div
+      class="2xl:whitespace-pre 2xl:h-12 flex w-full items-center"
+    >
+      <h4>
+        external_access.medication_refill.refill_request
+      </h4>
+    </div>
+    <div
+      class="pt-8 pb-10"
+    >
+      external_access.medication_refill.refill_request_send_message
+      <br />
+      external_access.medication_refill.refill_request_send_message_note
+    </div>
+    <div
+      class="pt-2 request-refill-form"
+    >
+      <form>
+        <div
+          class="max-w-md"
+        >
+          <div
+            class="select-wrapper relative w-full flex flex-col h-20 "
+          >
+            <div
+              class="select relative flex flex-col "
+            >
+              <input
+                autocomplete="on"
+                autocorrect="on"
+                class="pl-4 pr-8 body2 select-trigger-pt h-14 relative truncate select-trigger   "
+                data-testid="medication"
+                name="medication"
+                spellcheck="true"
+                type="text"
+                value=""
+              />
+              <label
+                class="select-label absolute truncate"
+              >
+                <span
+                  class="text-danger"
+                >
+                  *
+                </span>
+                <span
+                  class="select-label-span body2"
+                >
+                  external_access.medication_refill.select_prescription
+                </span>
+              </label>
+              <div
+                class="absolute pt-4 right-4 "
+              >
+                <div
+                  class="flex flex-row items-start"
+                >
+                  <div
+                    class="cursor-pointer"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium "
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="24"
+                          width="24"
+                        />
+                        <path
+                          class="select-arrow-fill"
+                          d="M7,14l1.273-1.273L2.545,7,8.273,1.273,7,0,0,7Z"
+                          transform="translate(5 16.273) rotate(-90)"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="absolute py-2 options"
+              >
+                <div
+                  class="w-full select-cell justify-between flex items-center  body2   cursor-pointer  "
+                >
+                  <div
+                    class="flex flex-col justify-center w-full"
+                    data-test-id="select-cell-icon-content"
+                  >
+                    <div
+                      class="flex items-center pl-4"
+                      data-test-id="select-cell-text-Medication 1"
+                      data-testid="select-cell-text-Medication 1"
+                    >
+                      Medication 1
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="select-wrapper relative w-full flex flex-col h-20 "
+          >
+            <div
+              class="select relative flex flex-col "
+            >
+              <input
+                autocomplete="on"
+                autocorrect="on"
+                class="pl-4 pr-8 body2 select-trigger-pt h-14 relative truncate select-trigger   "
+                data-testid="providerId"
+                name="providerId"
+                spellcheck="true"
+                type="text"
+                value=""
+              />
+              <label
+                class="select-label absolute truncate"
+              >
+                <span
+                  class="text-danger"
+                >
+                  *
+                </span>
+                <span
+                  class="select-label-span body2"
+                >
+                  external_access.medication_refill.select_provider
+                </span>
+              </label>
+              <div
+                class="absolute pt-4 right-4 "
+              >
+                <div
+                  class="flex flex-row items-start"
+                >
+                  <div
+                    class="cursor-pointer"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium "
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="24"
+                          width="24"
+                        />
+                        <path
+                          class="select-arrow-fill"
+                          d="M7,14l1.273-1.273L2.545,7,8.273,1.273,7,0,0,7Z"
+                          transform="translate(5 16.273) rotate(-90)"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="absolute py-2 options"
+              >
+                <div
+                  class="w-full select-cell justify-between flex items-center  body2   cursor-pointer  "
+                >
+                  <div
+                    class="flex flex-col justify-center w-full"
+                    data-test-id="select-cell-icon-content"
+                  >
+                    <div
+                      class="flex items-center pl-4"
+                      data-test-id="select-cell-text-undefined"
+                      data-testid="select-cell-text-undefined"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="flex flex-row justify-between"
+        >
+          <label
+            class="block subtitle2 pb-2"
+          />
+        </div>
+        <div
+          class="w-full h-full"
+        >
+          <div
+            class="undefined relative bg-white flex flex-row w-full h-full items-center p-4 border"
+          >
+            <textarea
+              class="shadow-none pl-4 pt-2 pb-11 pr-8 body2 w-full h-full rounded resize-none mt-1"
+              data-test-id="send-us-message-text"
+              maxlength="1000"
+              placeholder="common.enter_message"
+              rows="2"
+              style="height: 0px;"
+              wrap="hard"
+            />
+          </div>
+          <div
+            class="flex justify-end pt-1 pr-4 body3"
+          >
+            external_access.characters
+          </div>
+        </div>
+        <div
+          class="border mt-7 pb-0.5 rounded"
+        >
+          <div
+            class="p-6"
+          >
+            <div
+              class="flex justify-between"
+            >
+              <div
+                class="subtitle pb-4.5"
+              >
+                external_access.medication_refill.pharmacy_information
+              </div>
+            </div>
+            <div
+              class="subtitle2"
+            >
+              bb
+            </div>
+            <div
+              class="body2"
+            >
+              address, city 
+              <br />
+              external_access.medication_refill.pharmacy_information_ph (222) 222-2222, 
+                          external_access.medication_refill.pharmacy_information_fax 223232323
+            </div>
+          </div>
+        </div>
+        <div
+          class="pt-6"
+        >
+          <div
+            class="h-9"
+          >
+            <label
+              class="flex flex-row items-center checkbox-button"
+            >
+              <input
+                class="checkbox"
+                id="use-different-pharmacy_"
+                name="use-different-pharmacy"
+                type="checkbox"
+              />
+              <span
+                class="checkbox-control"
+              >
+                <div
+                  class=""
+                >
+                  <svg
+                    class="icon-medium "
+                    height="24"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <rect
+                      fill="none"
+                      height="24"
+                      width="24"
+                    />
+                    <path
+                      class="svg-checkbox"
+                      d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                    />
+                  </svg>
+                </div>
+              </span>
+              <div
+                class="truncate relative w-full h-full inline-block"
+              >
+                <span
+                  class="w-60 w-60"
+                >
+                  external_access.medication_refill.use_different_pharmacy
+                </span>
+              </div>
+            </label>
+          </div>
+        </div>
+        <div
+          class="flex justify-start items-center full-w mt-8  mb-10"
+        >
+          <button
+            class="big-button"
+            type="submit"
+          >
+            <div
+              class="flex flex-row justify-center items-center space-x-2"
+            >
+              <div>
+                common.send
+              </div>
+            </div>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Request Refill tests renders Request Refill correctly when there is no medications 1`] = `
+<DocumentFragment>
+  <div
+    data-test-id="request-refill-no-medication-found"
+  >
+    request-refill.no_medication_found
+  </div>
+</DocumentFragment>
+`;

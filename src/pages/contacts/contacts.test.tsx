@@ -15,7 +15,7 @@ jest.mock("react-router-dom", () => ({
    }));
 describe("Contacts tests", () => {
     let container: HTMLDivElement | null;
-    let mockState = {
+    const mockState = {
         emailState: {
             unreadEmails: 0,
             messageSummaries: []
@@ -57,14 +57,24 @@ describe("Contacts tests", () => {
 
     it("renders contacts correctly", async () => {
         jest.spyOn(Router, 'useParams').mockReturnValue({ id: '1234' });
-        jest.spyOn(Api, 'get').mockResolvedValue({
-            data: [
-                {
-                    stateCode: 'AL',
-                    name: 'Alabama'
-                },
+        jest.spyOn(Api, 'get').mockImplementation((url:string) => {
+            if (url.includes('states')) {
+                return new Promise((resolve) =>
+                    resolve({data: [
+                        {
+                            stateCode: 'AL',
+                            name: 'Alabama'
+                        },
 
-            ]
+                    ]
+                }))
+            } else {
+                return new Promise((resolve) =>
+                    resolve({
+                        data: []
+                    })
+                )
+            }
         });
         const {asFragment} = render(<TestWrapper mockState={mockState}>
             <Contacts/>

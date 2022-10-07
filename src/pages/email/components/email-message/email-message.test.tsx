@@ -15,7 +15,7 @@ jest.mock("react-router-dom", () => ({
    }));
 describe("Email Message tests", () => {
     let container: HTMLDivElement | null;
-    let mockState = {
+    const mockState = {
         emailState: {
             unreadEmails: 0
         },
@@ -70,7 +70,9 @@ describe("Email Message tests", () => {
                     ticketId: "1234",
                     channel: 0,
                     body: "",
-                    direction: 0
+                    direction: 0,
+                    createdBy: 'asd',
+                    createdOn: dayjs('11-11-2022').toDate()
                 }}
                 ticketCreatedForName={''}
                 ticketHeaderPhoto={''}
@@ -99,7 +101,9 @@ describe("Email Message tests", () => {
                     ticketId: "1234",
                     channel: 0,
                     body: "",
-                    direction: 0
+                    direction: 0,
+                    createdBy: 'asd',
+                    createdOn: dayjs('11-11-2022').toDate()
                 }}
                 ticketCreatedForName={''}
                 ticketHeaderPhoto={''}

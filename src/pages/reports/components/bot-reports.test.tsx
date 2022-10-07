@@ -12,7 +12,7 @@ import i18n from '../../../i18nForTests';
 
 describe("Bot Report tests", () => {
     let container: HTMLDivElement | null;
-    let mockState = {
+    const mockState = {
         ticketState: {
             lookupValues: [],
             enumValues: [

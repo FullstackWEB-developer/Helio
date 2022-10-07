@@ -19,7 +19,7 @@ Object.assign(navigator, {
 });
 describe("PublicLinks tests", () => {
     let container: HTMLDivElement | null;
-    let mockState = {
+    const mockState = {
         emailState: {
             unreadEmails: 0,
             messageSummaries: []

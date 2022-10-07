@@ -1,0 +1,401 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Medication List Item tests renders Medication List Item with no refills correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="px-6 py-4 flex border-b"
+  >
+    <div
+      class="flex w-11/12 xl:w-4/12 items-center"
+    >
+      Medication 3
+    </div>
+    <div
+      class="hidden xl:flex flex-none w-8"
+    >
+       
+    </div>
+    <div
+      class="xl:hidden ml-6 w-1/12"
+    >
+      <div
+        class=""
+      >
+        <svg
+          class="icon-medium "
+          data-testid="svg-icon"
+          height="24"
+          viewBox="0 0 24 24"
+          width="24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <rect
+            fill="none"
+            height="24"
+            transform="translate(0 24) rotate(-90)"
+            width="24"
+          />
+          <path
+            class="rgba-05-fill"
+            d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+            transform="translate(16.272 19) rotate(180)"
+          />
+        </svg>
+      </div>
+    </div>
+    <div
+      class="hidden xl:flex items-center w-6"
+    >
+      <div
+        class="pt-1"
+      >
+        <div>
+          <div
+            class=""
+          >
+            <svg
+              class="cursor-pointer "
+              height="24"
+              viewBox="0 0 24 24"
+              width="24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                fill="none"
+                height="24"
+                width="24"
+              />
+              <path
+                class="rgba-05-fill"
+                d="M10,20A10,10,0,0,1,2.928,2.929,10,10,0,0,1,17.072,17.071,9.935,9.935,0,0,1,10,20ZM9.988,7.778a1.028,1.028,0,0,0-1.1,1.142v5.473a1.163,1.163,0,0,0,.305.862,1.085,1.085,0,0,0,.793.3,1.145,1.145,0,0,0,.806-.295,1.131,1.131,0,0,0,.317-.868V8.863a1.029,1.029,0,0,0-.317-.8A1.164,1.164,0,0,0,9.988,7.778Zm.025-3.333a1.144,1.144,0,0,0-.786.305,1,1,0,0,0-.337.777,1.012,1.012,0,0,0,.329.806,1.179,1.179,0,0,0,.794.285,1.132,1.132,0,0,0,.773-.29,1.02,1.02,0,0,0,.326-.8.992.992,0,0,0-.334-.806A1.171,1.171,0,0,0,10.012,4.444Z"
+                transform="translate(2 2)"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="hidden xl:flex flex-none w-8 items-center"
+    >
+       
+    </div>
+    <div
+      class="hidden xl:flex w-3/12 items-center"
+    >
+      bbolek
+    </div>
+    <div
+      class="hidden xl:flex flex-none w-8 items-center"
+    >
+       
+    </div>
+    <div
+      class="hidden xl:flex w-1/12 items-center"
+    />
+    <div
+      class="hidden xl:flex flex-none w-8 items-center"
+    >
+       
+    </div>
+    <div
+      class="hidden xl:flex w-1/12 items-center"
+    >
+      common.none
+    </div>
+    <div
+      class="hidden xl:flex flex-none w-8 items-center"
+    >
+       
+    </div>
+    <div
+      class="hidden xl:flex w-2/12 items-center justify-center"
+    >
+      <div
+        class="flex items-center"
+      >
+        <div
+          class="pt-1"
+        >
+          external_access.medication_refill.medication_list.refill_not_available
+        </div>
+        <div
+          class="pt-1 pl-2.5"
+        >
+          <div>
+            <div
+              class=""
+            >
+              <svg
+                class="cursor-pointer "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="rgba-05-fill"
+                  d="M10,20A10,10,0,0,1,2.928,2.929,10,10,0,0,1,17.072,17.071,9.935,9.935,0,0,1,10,20ZM9.988,7.778a1.028,1.028,0,0,0-1.1,1.142v5.473a1.163,1.163,0,0,0,.305.862,1.085,1.085,0,0,0,.793.3,1.145,1.145,0,0,0,.806-.295,1.131,1.131,0,0,0,.317-.868V8.863a1.029,1.029,0,0,0-.317-.8A1.164,1.164,0,0,0,9.988,7.778Zm.025-3.333a1.144,1.144,0,0,0-.786.305,1,1,0,0,0-.337.777,1.012,1.012,0,0,0,.329.806,1.179,1.179,0,0,0,.794.285,1.132,1.132,0,0,0,.773-.29,1.02,1.02,0,0,0,.326-.8.992.992,0,0,0-.334-.806A1.171,1.171,0,0,0,10.012,4.444Z"
+                  transform="translate(2 2)"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Medication List Item tests renders Medication List Item with refills correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="px-6 py-4 flex border-b"
+  >
+    <div
+      class="flex w-11/12 xl:w-4/12 items-center"
+    >
+      Medication 3
+    </div>
+    <div
+      class="hidden xl:flex flex-none w-8"
+    >
+       
+    </div>
+    <div
+      class="xl:hidden ml-6 w-1/12"
+    >
+      <div
+        class=""
+      >
+        <svg
+          class="icon-medium "
+          data-testid="svg-icon"
+          height="24"
+          viewBox="0 0 24 24"
+          width="24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <rect
+            fill="none"
+            height="24"
+            transform="translate(0 24) rotate(-90)"
+            width="24"
+          />
+          <path
+            class="rgba-05-fill"
+            d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+            transform="translate(16.272 19) rotate(180)"
+          />
+        </svg>
+      </div>
+    </div>
+    <div
+      class="hidden xl:flex items-center w-6"
+    >
+      <div
+        class="pt-1"
+      >
+        <div>
+          <div
+            class=""
+          >
+            <svg
+              class="cursor-pointer "
+              height="24"
+              viewBox="0 0 24 24"
+              width="24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                fill="none"
+                height="24"
+                width="24"
+              />
+              <path
+                class="rgba-05-fill"
+                d="M10,20A10,10,0,0,1,2.928,2.929,10,10,0,0,1,17.072,17.071,9.935,9.935,0,0,1,10,20ZM9.988,7.778a1.028,1.028,0,0,0-1.1,1.142v5.473a1.163,1.163,0,0,0,.305.862,1.085,1.085,0,0,0,.793.3,1.145,1.145,0,0,0,.806-.295,1.131,1.131,0,0,0,.317-.868V8.863a1.029,1.029,0,0,0-.317-.8A1.164,1.164,0,0,0,9.988,7.778Zm.025-3.333a1.144,1.144,0,0,0-.786.305,1,1,0,0,0-.337.777,1.012,1.012,0,0,0,.329.806,1.179,1.179,0,0,0,.794.285,1.132,1.132,0,0,0,.773-.29,1.02,1.02,0,0,0,.326-.8.992.992,0,0,0-.334-.806A1.171,1.171,0,0,0,10.012,4.444Z"
+                transform="translate(2 2)"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="hidden xl:flex flex-none w-8 items-center"
+    >
+       
+    </div>
+    <div
+      class="hidden xl:flex w-3/12 items-center"
+    >
+      bbolek
+    </div>
+    <div
+      class="hidden xl:flex flex-none w-8 items-center"
+    >
+       
+    </div>
+    <div
+      class="hidden xl:flex w-1/12 items-center"
+    />
+    <div
+      class="hidden xl:flex flex-none w-8 items-center"
+    >
+       
+    </div>
+    <div
+      class="hidden xl:flex w-1/12 items-center"
+    >
+      common.none
+    </div>
+    <div
+      class="hidden xl:flex flex-none w-8 items-center"
+    >
+       
+    </div>
+    <div
+      class="hidden xl:flex w-2/12 items-center justify-center"
+    >
+      <button
+        class="medium-button"
+        type="button"
+      >
+        <div
+          class="flex flex-row justify-center items-center space-x-2"
+        >
+          <div>
+            external_access.medication_refill.medication_list.request_refill
+          </div>
+        </div>
+      </button>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Medication List Item tests renders Medication List Item with refills correctly when refill requested 1`] = `
+<DocumentFragment>
+  <div
+    class="px-6 py-4 flex border-b"
+  >
+    <div
+      class="flex w-11/12 xl:w-4/12 items-center"
+    >
+      Medication 1
+    </div>
+    <div
+      class="hidden xl:flex flex-none w-8"
+    >
+       
+    </div>
+    <div
+      class="xl:hidden ml-6 w-1/12"
+    >
+      <div
+        class=""
+      >
+        <svg
+          class="icon-medium "
+          data-testid="svg-icon"
+          height="24"
+          viewBox="0 0 24 24"
+          width="24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <rect
+            fill="none"
+            height="24"
+            transform="translate(0 24) rotate(-90)"
+            width="24"
+          />
+          <path
+            class="rgba-05-fill"
+            d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+            transform="translate(16.272 19) rotate(180)"
+          />
+        </svg>
+      </div>
+    </div>
+    <div
+      class="hidden xl:flex items-center w-6"
+    >
+      <div
+        class="pt-1"
+      >
+        <div>
+          <div
+            class=""
+          >
+            <svg
+              class="cursor-pointer "
+              height="24"
+              viewBox="0 0 24 24"
+              width="24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                fill="none"
+                height="24"
+                width="24"
+              />
+              <path
+                class="rgba-05-fill"
+                d="M10,20A10,10,0,0,1,2.928,2.929,10,10,0,0,1,17.072,17.071,9.935,9.935,0,0,1,10,20ZM9.988,7.778a1.028,1.028,0,0,0-1.1,1.142v5.473a1.163,1.163,0,0,0,.305.862,1.085,1.085,0,0,0,.793.3,1.145,1.145,0,0,0,.806-.295,1.131,1.131,0,0,0,.317-.868V8.863a1.029,1.029,0,0,0-.317-.8A1.164,1.164,0,0,0,9.988,7.778Zm.025-3.333a1.144,1.144,0,0,0-.786.305,1,1,0,0,0-.337.777,1.012,1.012,0,0,0,.329.806,1.179,1.179,0,0,0,.794.285,1.132,1.132,0,0,0,.773-.29,1.02,1.02,0,0,0,.326-.8.992.992,0,0,0-.334-.806A1.171,1.171,0,0,0,10.012,4.444Z"
+                transform="translate(2 2)"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="hidden xl:flex flex-none w-8 items-center"
+    >
+       
+    </div>
+    <div
+      class="hidden xl:flex w-3/12 items-center"
+    >
+      bbolek
+    </div>
+    <div
+      class="hidden xl:flex flex-none w-8 items-center"
+    >
+       
+    </div>
+    <div
+      class="hidden xl:flex w-1/12 items-center"
+    />
+    <div
+      class="hidden xl:flex flex-none w-8 items-center"
+    >
+       
+    </div>
+    <div
+      class="hidden xl:flex w-1/12 items-center"
+    >
+      common.none
+    </div>
+    <div
+      class="hidden xl:flex flex-none w-8 items-center"
+    >
+       
+    </div>
+    <div
+      class="hidden xl:flex w-2/12 items-center justify-center"
+    >
+      <div>
+        external_access.medication_refill.medication_list.refill_requested
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

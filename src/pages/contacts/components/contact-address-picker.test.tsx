@@ -4,18 +4,17 @@ import duration from 'dayjs/plugin/duration';
 import utc from 'dayjs/plugin/utc';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import {unmountComponentAtNode} from 'react-dom';
-import {fireEvent, render} from '@testing-library/react';
+import {render} from '@testing-library/react';
 import TestWrapper from '@shared/test-utils/test-wrapper';
 import ContactAddressPicker from './contact-address-picker';
 import Router from "react-router-dom";
-import { AssociatedContact, ContactExtended, ContactType } from '@shared/models';
 jest.mock("react-router-dom", () => ({
     ...jest.requireActual("react-router-dom"),
     useParams: jest.fn(),
    }));
 describe("ContactAddressPicker tests", () => {
     let container: HTMLDivElement | null;
-    let mockState = {
+    const mockState = {
         emailState: {
             unreadEmails: 0,
             messageSummaries: []

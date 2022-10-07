@@ -31,7 +31,7 @@ const ContactListItem = ({contact, selected, onSelect, previousContact, isSearch
 
     return (
         <div
-            data-testid={`${contact.id}`}
+            data-testid={`${contact?.id}`}
             onMouseOver={() => setHovered(true)}
             onMouseOut={() => setHovered(false)}
             onClick={onClick}

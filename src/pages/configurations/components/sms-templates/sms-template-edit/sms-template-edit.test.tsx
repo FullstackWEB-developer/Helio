@@ -4,7 +4,7 @@ import duration from 'dayjs/plugin/duration';
 import utc from 'dayjs/plugin/utc';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import {unmountComponentAtNode} from 'react-dom';
-import {act, screen, fireEvent, render, waitFor} from '@testing-library/react';
+import {act, fireEvent, render, waitFor} from '@testing-library/react';
 import TestWrapper from '@shared/test-utils/test-wrapper';
 import SmsTemplateEdit from './sms-template-edit';
 import Router from "react-router";
@@ -16,7 +16,7 @@ jest.mock('react-router', () => ({
   }))
 describe("SmsTemplateEdit tests", () => {
     let container: HTMLDivElement | null;
-    let mockState = {
+    const mockState = {
         emailState: {
             unreadEmails: 0,
             messageSummaries: []

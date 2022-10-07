@@ -526,6 +526,7 @@ const TicketFilter = ({ isOpen }: { isOpen: boolean }) => {
                 name='fromDate'
                 dataTestId='ticket-filter-from-date'
                 value={fromDate}
+                defaultValue={null}
                 max={new Date(new Date().toDateString())}
                 isSmallSize={true}
                 isCalendarPositionComputed
@@ -534,6 +535,7 @@ const TicketFilter = ({ isOpen }: { isOpen: boolean }) => {
             <ControlledDateInput
                 control={control}
                 type='date'
+                defaultValue={null}
                 disabled={!fromDate}
                 min={fromDate}
                 value={toDate}

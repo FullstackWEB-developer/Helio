@@ -4,7 +4,7 @@ import duration from 'dayjs/plugin/duration';
 import utc from 'dayjs/plugin/utc';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import {unmountComponentAtNode} from 'react-dom';
-import {fireEvent, render, waitFor} from '@testing-library/react';
+import {render} from '@testing-library/react';
 import TestWrapper from '@shared/test-utils/test-wrapper';
 import CancellationReasonConfig from './cancellation-reason-config';
 import { act } from 'react-dom/test-utils';
@@ -17,7 +17,7 @@ jest.mock("react-router-dom", () => ({
    }));
 describe("CancellationReasonConfig tests", () => {
     let container: HTMLDivElement | null;
-    let mockState = {
+    const mockState = {
         emailState: {
             unreadEmails: 0,
             messageSummaries: []

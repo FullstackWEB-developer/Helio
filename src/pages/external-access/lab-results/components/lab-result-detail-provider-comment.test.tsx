@@ -14,7 +14,7 @@ import LabResultDetailProviderComment
 describe("Lab Result Detail Provider Comment tests", () => {
 
     let container: HTMLDivElement | null;
-    let mockState = {
+    const mockState = {
         ticketState: {
             lookupValues: [],
             enumValues: [

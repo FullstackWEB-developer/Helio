@@ -17,7 +17,7 @@ jest.mock("react-router-dom", () => ({
    }));
 describe("Email Filter Bar tests", () => {
     let container: HTMLDivElement | null;
-    let mockState = {
+    const mockState = {
         emailState: {
             unreadEmails: 0
         },

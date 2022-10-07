@@ -10,19 +10,13 @@ import Configurations from './configurations';
 import Router from "react-router";
 import Api from '@shared/services/api';
 import { PracticeEmailTemplate } from './models/practice-email-template';
-import { AppointmentTypeSummary } from '@pages/appointments/models/appointment-type-summary';
-import { PatientAppointmentType } from '@shared/models/patient-appointment-type.enum';
-import { AppointmentType } from '@pages/external-access/appointment/models';
-import { SMSDirection } from '@shared/models/sms-direction';
-import { CancellationReasonTypes } from '@pages/external-access/models/cancellation-reason-types.enum';
-import { CancellationReasonExtended } from './models/CancellationReasonExtended';
 jest.mock('react-router', () => ({
     ...jest.requireActual('react-router'),
     useParams: jest.fn().mockReturnValue({ type: "ticket-department" }),
   }))
 describe("Configurations tests", () => {
     let container: HTMLDivElement | null;
-    let mockState = {
+    const mockState = {
         emailState: {
             unreadEmails: 0,
             messageSummaries: []

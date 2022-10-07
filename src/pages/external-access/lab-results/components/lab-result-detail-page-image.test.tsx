@@ -13,7 +13,7 @@ import Api from '@shared/services/api';
 describe("Lab Result Detail Page Image tests", () => {
 
     let container: HTMLDivElement | null;
-    let mockState = {
+    const mockState = {
         ticketState: {
             lookupValues: [],
             enumValues: [

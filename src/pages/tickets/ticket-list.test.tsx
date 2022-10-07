@@ -17,7 +17,7 @@ import MockDate from 'mockdate';
 
 fdescribe("Ticket List tests", () => {
     let container: HTMLDivElement | null;
-    let mockState = {
+    const mockState = {
         layoutState: {
             lastNavigationDate: dayjs('2022-12-12').toDate()
         },

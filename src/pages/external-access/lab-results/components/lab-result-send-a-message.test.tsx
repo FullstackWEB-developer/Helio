@@ -12,7 +12,7 @@ import LabResultSendAMessage from '@pages/external-access/lab-results/components
 describe("Lab Result Send a Message tests", () => {
 
     let container: HTMLDivElement | null;
-    let mockState = {
+    const mockState = {
         ticketState: {
             lookupValues: [],
             enumValues: [

@@ -4,7 +4,7 @@ import duration from 'dayjs/plugin/duration';
 import utc from 'dayjs/plugin/utc';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import {unmountComponentAtNode} from 'react-dom';
-import {render,fireEvent,waitForElement} from '@testing-library/react';
+import {render, fireEvent} from '@testing-library/react';
 import TestWrapper from '@shared/test-utils/test-wrapper';
 import EmailAttachment from './email-attachment';
 import Router from "react-router-dom";
@@ -14,7 +14,7 @@ jest.mock("react-router-dom", () => ({
    }));
 describe("Email Attachment tests", () => {
     let container: HTMLDivElement | null;
-    let mockState = {
+    const mockState = {
         emailState: {
             unreadEmails: 0
         },

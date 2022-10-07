@@ -12,7 +12,7 @@ import {VerifiedPatient} from '@pages/patients/models/verified-patient';
 describe("Lab Result Detail Header tests", () => {
 
     let container: HTMLDivElement | null;
-    let mockState = {
+    const mockState = {
         ticketState: {
             lookupValues: [],
             enumValues: [

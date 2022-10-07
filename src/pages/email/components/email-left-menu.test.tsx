@@ -19,7 +19,7 @@ jest.mock("react-router-dom", () => ({
    }));
 describe("Email Left Menu tests", () => {
     let container: HTMLDivElement | null;
-    let mockState = {
+    const mockState = {
         emailState: {
             unreadEmails: 0,
             messageSummaries: []

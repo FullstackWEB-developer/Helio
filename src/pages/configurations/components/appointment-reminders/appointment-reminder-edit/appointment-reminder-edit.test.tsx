@@ -4,10 +4,9 @@ import duration from 'dayjs/plugin/duration';
 import utc from 'dayjs/plugin/utc';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import {unmountComponentAtNode} from 'react-dom';
-import {fireEvent, render} from '@testing-library/react';
+import {render} from '@testing-library/react';
 import TestWrapper from '@shared/test-utils/test-wrapper';
 import AppointmentReminderEdit from './appointment-reminder-edit';
-import EmailProvider from '@pages/email/context/email-context';
 import { useForm } from 'react-hook-form';
 import { act } from 'react-dom/test-utils';
 jest.mock("react-router-dom", () => ({
@@ -16,7 +15,7 @@ jest.mock("react-router-dom", () => ({
    }));
 describe("AppointmentReminderEdit tests", () => {
     let container: HTMLDivElement | null;
-    let mockState = {
+    const mockState = {
         emailState: {
             unreadEmails: 0,
             messageSummaries: []

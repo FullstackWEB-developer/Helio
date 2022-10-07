@@ -8,7 +8,6 @@ import {fireEvent, render} from '@testing-library/react';
 import TestWrapper from '@shared/test-utils/test-wrapper';
 import CallLogFilter from './call-log-filter';
 import CallsLogProvider  from '@pages/calls-log/context/calls-log-context';
-import { TicketLookupValue } from '@pages/tickets/models/ticket-lookup-values.model';
 
 jest.mock("react-router-dom", () => ({
     ...jest.requireActual("react-router-dom"),
@@ -16,7 +15,7 @@ jest.mock("react-router-dom", () => ({
    }));
 describe("Call Log Filter tests", () => {
     let container: HTMLDivElement | null;
-    let mockState = {
+    const mockState = {
         emailState: {
             unreadEmails: 0,
             messageSummaries: []

@@ -8,17 +8,14 @@ import {fireEvent, render} from '@testing-library/react';
 import TestWrapper from '@shared/test-utils/test-wrapper';
 import ContactListItem from './contact-list-item';
 import Router from "react-router-dom";
-import { AddressType, AssociatedContact, Contact, ContactExtended, ContactType } from '@shared/models';
-import { Control, useForm } from 'react-hook-form';
-import { ContactAvatarModel } from '../models/contact-avatar-model';
-import { Icon } from '@components/svg-icon';
+import { Contact, ContactType } from '@shared/models';
 jest.mock("react-router-dom", () => ({
     ...jest.requireActual("react-router-dom"),
     useParams: jest.fn(),
    }));
 describe("ContactListItem tests", () => {
     let container: HTMLDivElement | null;
-    let mockState = {
+    const mockState = {
         emailState: {
             unreadEmails: 0,
             messageSummaries: []

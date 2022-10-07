@@ -15,7 +15,7 @@ jest.mock("react-router-dom", () => ({
    }));
 describe("ContactAddress tests", () => {
     let container: HTMLDivElement | null;
-    let mockState = {
+    const mockState = {
         emailState: {
             unreadEmails: 0,
             messageSummaries: []

@@ -12,7 +12,7 @@ import LabResultDetailed from '@pages/external-access/lab-results/lab-result-det
 describe("Lab Result Detailed tests", () => {
 
     let container: HTMLDivElement | null;
-    let mockState = {
+    const mockState = {
         ticketState: {
             lookupValues: [],
             enumValues: [

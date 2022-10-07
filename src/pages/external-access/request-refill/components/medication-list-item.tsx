@@ -1,5 +1,5 @@
 import { useHistory } from 'react-router-dom';
-import React, { useRef, useState } from 'react';
+import React from 'react';
 import Button from '@components/button/button';
 import { Medication } from '@pages/external-access/request-refill/models/medication.model';
 import { Icon } from '@components/svg-icon/icon';

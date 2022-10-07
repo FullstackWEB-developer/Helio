@@ -8,7 +8,6 @@ import {fireEvent, render, waitFor} from '@testing-library/react';
 import TestWrapper from '@shared/test-utils/test-wrapper';
 import EmailNotificationList from './email-notification-list';
 import Api from '@shared/services/api';
-import { Router } from 'react-router';
 import { act } from 'react-dom/test-utils';
 jest.mock("react-router-dom", () => ({
     ...jest.requireActual("react-router-dom"),
@@ -16,7 +15,7 @@ jest.mock("react-router-dom", () => ({
    }));
 describe("EmailNotificationList tests", () => {
     let container: HTMLDivElement | null;
-    let mockState = {
+    const mockState = {
         emailState: {
             unreadEmails: 0,
             messageSummaries: []

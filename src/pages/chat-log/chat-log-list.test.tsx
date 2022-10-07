@@ -6,11 +6,9 @@ import customParseFormat from 'dayjs/plugin/customParseFormat';
 import {unmountComponentAtNode} from 'react-dom';
 import {render} from '@testing-library/react';
 import TestWrapper from '@shared/test-utils/test-wrapper';
-import ChatLogList from './chat-log-list';
 import ChatLogListWithProvider from './chat-log-list-with-provider';
 import Api from '@shared/services/api';
-import { TicketLogModel } from '@shared/models/ticket-log.model';
-import { CommunicationDirection, PagedList } from '@shared/models';
+import { CommunicationDirection } from '@shared/models';
 import { act } from 'react-dom/test-utils';
 jest.mock("react-router-dom", () => ({
     ...jest.requireActual("react-router-dom"),
@@ -18,7 +16,7 @@ jest.mock("react-router-dom", () => ({
    }));
 describe("Chat tests", () => {
     let container: HTMLDivElement | null;
-    let mockState = {
+    const mockState = {
         emailState: {
             unreadEmails: 0,
             messageSummaries: []

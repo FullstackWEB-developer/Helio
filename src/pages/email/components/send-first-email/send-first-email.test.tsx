@@ -4,19 +4,18 @@ import duration from 'dayjs/plugin/duration';
 import utc from 'dayjs/plugin/utc';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import {unmountComponentAtNode} from 'react-dom';
-import {render, fireEvent, getByTitle, getByPlaceholderText} from '@testing-library/react';
+import {render, fireEvent} from '@testing-library/react';
 import TestWrapper from '@shared/test-utils/test-wrapper';
 import SendFirstEmail from './send-first-email';
 import Router from "react-router-dom";
 import EmailProvider from '@pages/email/context/email-context';
-import { ExtendedPatient } from '@pages/patients/models/extended-patient';
 jest.mock("react-router-dom", () => ({
     ...jest.requireActual("react-router-dom"),
     useParams: jest.fn(),
    }));
 describe("Send First Email tests", () => {
     let container: HTMLDivElement | null;
-    let mockState = {
+    const mockState = {
         emailState: {
             unreadEmails: 0,
             messageSummaries: []

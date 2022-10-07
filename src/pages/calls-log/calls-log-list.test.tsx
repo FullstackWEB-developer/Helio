@@ -6,7 +6,6 @@ import customParseFormat from 'dayjs/plugin/customParseFormat';
 import {unmountComponentAtNode} from 'react-dom';
 import {render} from '@testing-library/react';
 import TestWrapper from '@shared/test-utils/test-wrapper';
-import CallsLogList from './calls-log-list';
 import CallsLogListWithProvider from './calls-log-list-with-provider';
 jest.mock("react-router-dom", () => ({
     ...jest.requireActual("react-router-dom"),
@@ -14,7 +13,7 @@ jest.mock("react-router-dom", () => ({
    }));
 describe("Email tests", () => {
     let container: HTMLDivElement | null;
-    let mockState = {
+    const mockState = {
         emailState: {
             unreadEmails: 0,
             messageSummaries: []
@@ -59,10 +58,7 @@ describe("Email tests", () => {
 
     it("renders calls-log-list correctly", async () => {
         const {asFragment} = render(<TestWrapper mockState={mockState}>
-            <CallsLogListWithProvider>
-                
-                <CallsLogList/>
-            </CallsLogListWithProvider>            
+            <CallsLogListWithProvider/>
         </TestWrapper>);
         expect(asFragment()).toMatchSnapshot();
     });

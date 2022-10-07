@@ -7,7 +7,7 @@ import {unmountComponentAtNode} from 'react-dom';
 import {render} from '@testing-library/react';
 import React from 'react';
 import {SmsChat} from '@pages/sms/components';
-import {TicketMessage, TicketMessageSummary, TicketType} from '@shared/models';
+import {TicketMessageSummary, TicketType} from '@shared/models';
 import TestWrapper from '@shared/test-utils/test-wrapper';
 import api from '@shared/services/api';
 
@@ -25,7 +25,7 @@ describe("Sms-Chat tests", () => {
         messageCreatedByName:'Agent',
         ticketNumber: 220125010101,
     };
-    let mockState = {
+    const mockState = {
         ticketState: {
             lookupValues: [],
             enumValues: [
@@ -66,7 +66,6 @@ describe("Sms-Chat tests", () => {
 
     it("renders sms-chat correctly", async () => {
 
-        const messages: TicketMessage[] = [];
         const {asFragment} = render(<TestWrapper mockState={mockState}>
             <SmsChat
                 info={info}
@@ -74,7 +73,7 @@ describe("Sms-Chat tests", () => {
                 isBottomFocus={false}
                 isSending={false}
                 lastMessageSendTime={dayjs('2022-01-25').toDate()}
-                messages={messages}
+                messages={[]}
                 onSendClick={() =>{}}
             />
         </TestWrapper>);
@@ -82,7 +81,6 @@ describe("Sms-Chat tests", () => {
     });
 
     it("should get patient data if there is patientId", async () => {
-        const messages: TicketMessage[] = [];
         const patientId = 75086;
         const infoWithPatientId = {
             ...info,
@@ -96,7 +94,7 @@ describe("Sms-Chat tests", () => {
                 isBottomFocus={false}
                 isSending={false}
                 lastMessageSendTime={dayjs('2022-01-25').toDate()}
-                messages={messages}
+                messages={[]}
                 onSendClick={() =>{}}
             />
         </TestWrapper>);

@@ -7,7 +7,6 @@ import {unmountComponentAtNode} from 'react-dom';
 import {render} from '@testing-library/react';
 import TestWrapper from '@shared/test-utils/test-wrapper';
 import CallContactAgentInfo from './call-contact-agent-info';
-import { CommunicationDirection } from '@shared/models';
 
 jest.mock("react-router-dom", () => ({
     ...jest.requireActual("react-router-dom"),
@@ -15,7 +14,7 @@ jest.mock("react-router-dom", () => ({
    }));
 describe("Call Contact Agent Info tests", () => {
     let container: HTMLDivElement | null;
-    let mockState = {
+    const mockState = {
         emailState: {
             unreadEmails: 0,
             messageSummaries: []
@@ -91,7 +90,7 @@ describe("Call Contact Agent Info tests", () => {
     });
 
     it("renders call-contact-agent-info-without-user-name correctly", async () => {
-        let mockState = {
+        const mockState = {
             emailState: {
                 unreadEmails: 0,
                 messageSummaries: []

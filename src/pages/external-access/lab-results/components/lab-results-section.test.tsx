@@ -13,7 +13,7 @@ import utils from '@shared/utils/utils';
 describe("Lab Results Section tests", () => {
 
     let container: HTMLDivElement | null;
-    let mockState = {
+    const mockState = {
         ticketState: {
             lookupValues: [],
             enumValues: [

@@ -1,0 +1,210 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Request Refill Send Us Message tests renders Request Refill Send Us Message correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="border mb-12"
+  >
+    <div
+      class="flex flex-row justify-between px-6 py-4 lg:pr-28"
+    >
+      <div
+        class="flex flex-row"
+      >
+        <div
+          class=""
+        >
+          <svg
+            class="icon-medium "
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect
+              fill="none"
+              height="24"
+              width="24"
+            />
+            <path
+              class="rgba-05-fill"
+              d="M18.464,44.3a4.781,4.781,0,0,0,1.528-3.409c0-2.777-2.656-5.072-6.117-5.482A7.5,7.5,0,0,0,7.215,32C3.226,32-.007,34.486-.007,37.555a4.793,4.793,0,0,0,1.528,3.409A9.09,9.09,0,0,1,.212,42.87.8.8,0,0,0,.8,44.224a7.98,7.98,0,0,0,4.347-1.347,9.894,9.894,0,0,0,.986.17,7.481,7.481,0,0,0,6.642,3.4,9.19,9.19,0,0,0,2.076-.236,8,8,0,0,0,4.347,1.347.8.8,0,0,0,.583-1.354A8.848,8.848,0,0,1,18.464,44.3Zm-13.637-3.2-.594.385a7.064,7.064,0,0,1-1.5.743c.094-.163.187-.337.278-.514l.538-1.08-.861-.851A3.183,3.183,0,0,1,1.66,37.555c0-2.107,2.545-3.888,5.555-3.888s5.555,1.781,5.555,3.888-2.545,3.888-5.555,3.888a7.565,7.565,0,0,1-1.7-.194l-.687-.156ZM17.294,43.11l-.858.847.538,1.08c.09.177.184.351.278.514a7.065,7.065,0,0,1-1.5-.743l-.594-.385-.691.16a7.565,7.565,0,0,1-1.7.194,6.46,6.46,0,0,1-4.558-1.725c3.517-.375,6.225-2.687,6.225-5.5,0-.118-.014-.233-.024-.347,2.236.5,3.913,1.972,3.913,3.68A3.183,3.183,0,0,1,17.294,43.11Z"
+              transform="translate(2.007 -28)"
+            />
+          </svg>
+        </div>
+        <div
+          class="subtitle pl-4.5"
+        >
+          external_access.medication_refill.have_questions
+        </div>
+      </div>
+      <div
+        class="body2 message-link cursor-pointer lg:pr-2"
+      >
+        common.close
+      </div>
+    </div>
+    <div
+      class="body2 px-6"
+    >
+      external_access.medication_refill.message_your_provider
+    </div>
+    <div
+      class="mx-6 my-6"
+    >
+      <form
+        class="w-full send-message"
+      >
+        <div
+          class="flex flex-col mt-9 w-full xl:w-7/12 h-28"
+        >
+          <div
+            class="select-wrapper relative w-full flex flex-col h-20 "
+          >
+            <div
+              class="select relative flex flex-col "
+            >
+              <input
+                autocomplete="on"
+                autocorrect="on"
+                class="pl-4 pr-8 body2 select-trigger-pt h-14 relative truncate select-trigger   "
+                data-testid="providerId"
+                name="providerId"
+                spellcheck="true"
+                type="text"
+                value=""
+              />
+              <label
+                class="select-label absolute truncate"
+              >
+                <span
+                  class="text-danger"
+                >
+                  *
+                </span>
+                <span
+                  class="select-label-span body2"
+                >
+                  external_access.lab_results.select_provider
+                </span>
+              </label>
+              <div
+                class="absolute pt-4 right-4 "
+              >
+                <div
+                  class="flex flex-row items-start"
+                >
+                  <div
+                    class="cursor-pointer"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium "
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="24"
+                          width="24"
+                        />
+                        <path
+                          class="select-arrow-fill"
+                          d="M7,14l1.273-1.273L2.545,7,8.273,1.273,7,0,0,7Z"
+                          transform="translate(5 16.273) rotate(-90)"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="absolute py-2 options"
+              >
+                <div
+                  class="w-full select-cell justify-between flex items-center  body2   cursor-pointer  "
+                >
+                  <div
+                    class="flex flex-col justify-center w-full"
+                    data-test-id="select-cell-icon-content"
+                  >
+                    <div
+                      class="flex items-center pl-4"
+                      data-test-id="select-cell-text-undefined"
+                      data-testid="select-cell-text-undefined"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="flex flex-row justify-between"
+        >
+          <label
+            class="block subtitle2 pb-2"
+          />
+        </div>
+        <div
+          class="w-full h-full"
+        >
+          <div
+            class="undefined relative bg-white flex flex-row w-full h-full items-center p-4 border"
+          >
+            <textarea
+              class="shadow-none pl-4 pt-2 pb-11 pr-8 body2 w-full h-full resize-none mt-1"
+              data-test-id="send-us-message-text"
+              maxlength="1000"
+              placeholder="common.enter_your_message"
+              required=""
+              rows="5"
+              style="height: 0px;"
+              wrap="hard"
+            />
+          </div>
+          <div
+            class="flex justify-end pt-1 pr-4 body3"
+          >
+            external_access.characters
+          </div>
+        </div>
+        <div
+          class="flex justify-start items-center full-w mt-3  mb-10"
+        >
+          <button
+            class="secondary-button h-10 secondary-contact-form-btn"
+            type="button"
+          >
+            <div
+              class="flex flex-row justify-center items-center space-x-2"
+            >
+              <div>
+                common.cancel
+              </div>
+            </div>
+          </button>
+          <button
+            class="medium-button ml-6"
+            disabled=""
+            type="submit"
+          >
+            <div
+              class="flex flex-row justify-center items-center space-x-2"
+            >
+              <div>
+                common.send
+              </div>
+            </div>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</DocumentFragment>
+`;

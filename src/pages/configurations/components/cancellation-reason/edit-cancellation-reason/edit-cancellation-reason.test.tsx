@@ -18,7 +18,7 @@ jest.mock('react-router', () => ({
   }))
 describe("EditCancellationReason tests", () => {
     let container: HTMLDivElement | null;
-    let mockState = {
+    const mockState = {
         emailState: {
             unreadEmails: 0,
             messageSummaries: []

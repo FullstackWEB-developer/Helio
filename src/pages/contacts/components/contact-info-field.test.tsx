@@ -8,9 +8,6 @@ import {fireEvent, render} from '@testing-library/react';
 import TestWrapper from '@shared/test-utils/test-wrapper';
 import ContactInfoField from './contact-info-field';
 import Router from "react-router-dom";
-import { AddressType, AssociatedContact, Contact, ContactExtended, ContactType } from '@shared/models';
-import { Control, useForm } from 'react-hook-form';
-import { ContactAvatarModel } from '../models/contact-avatar-model';
 import { Icon } from '@components/svg-icon';
 jest.mock("react-router-dom", () => ({
     ...jest.requireActual("react-router-dom"),
@@ -18,7 +15,7 @@ jest.mock("react-router-dom", () => ({
    }));
 describe("ContactInfoField tests", () => {
     let container: HTMLDivElement | null;
-    let mockState = {
+    const mockState = {
         emailState: {
             unreadEmails: 0,
             messageSummaries: []

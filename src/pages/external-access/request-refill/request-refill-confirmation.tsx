@@ -9,8 +9,6 @@ import HipaaWarningModal from '../shared/hipaa-warning-modal';
 const RequestRefillConfirmation = () => {
     const {t} = useTranslation();
 
-
-
     return <div className='2xl:px-48 pt-7 without-default-padding'>
         <Link to={ViewMedicationsPath}>
             <div className='flex flex-row pb-5 cursor-pointer'>

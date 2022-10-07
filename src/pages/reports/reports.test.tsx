@@ -19,7 +19,7 @@ import SystemReportTable from './components/system-reports-table';
 
 describe("Reports tests", () => {
     let container: HTMLDivElement | null;
-    let mockState = {
+    const mockState = {
         ticketState: {
             lookupValues: [],
             enumValues: [
