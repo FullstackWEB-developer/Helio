@@ -1986,8 +1986,8 @@
       "tooltip_selected_providers": "Select all applicable providers for this appointment type.",
       "tooltip_appointment_instructions": "Enter any specific instructions for this appointment type to be shared with patient. \n<1>(i.e. arrival timing, parking, forms to be filled out etc.)</1>",
       "selected_providers": "Selected Providers",
-      "warning_info": "There are unsaved chages, are you sure to cancel?",
-      "warning_info_leaving": "There are unsaved chages, are you sure to leave?",
+      "warning_info": "There are unsaved changes, are you sure to cancel?",
+      "warning_info_leaving": "There are unsaved changes, are you sure to leave?",
       "warning": "Warning"
     },
     "cancellation_reason": {
