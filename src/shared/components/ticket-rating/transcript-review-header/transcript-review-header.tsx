@@ -35,18 +35,18 @@ const TranscriptReviewHeader = ({patient, ticket} : TranscriptReviewHeaderProps)
 
     return <div className='flex flex-row justify-between pt-2.5'>
         <div className='w-1/2'>
-            {patient ? <div className='flex flex-col pb-7'>
+            {patient || ticket.createdForName ? <div className='flex flex-col pb-7'>
                 <div className='body3-medium'>
-                    {t('ticket_detail.chat_transcript.patient')}
+                    {t(patient ? 'ticket_detail.chat_transcript.patient' : 'ticket_detail.chat_transcript.guest')}
                 </div>
                 <div className='h7'>
-                    {patient ? utils.stringJoin(' ', patient.firstName, patient.lastName) : ''}
+                    {patient ? utils.stringJoin(' ', patient.firstName, patient.lastName) : ticket.createdForName}
                 </div>
             </div> : <>{agent ? <div className='pt-1 pb-16' /> : <span />}</>}
             <LabelledInfo label='ticket_detail.chat_transcript.queue' isFirstColumn={true}
                           value={ticket.queueName ? ticket.queueName : t('common.not_available')} />
             <LabelledInfo label='ticket_detail.chat_transcript.reason' isFirstColumn={true}
-                          value={ticket.conversationMainIntent ? ticket.conversationMainIntent : t('common.not_available')} />
+                          value={ticket.conversationMainIntent ? utils.spaceBetweenCamelCaseWords(ticket.conversationMainIntent) : t('common.not_available')} />
         </div>
         <div className='w-1/2'>
             {agent ? <div className='flex flex-row space-x-4 pb-7'>

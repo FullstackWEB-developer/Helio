@@ -616,6 +616,7 @@
       "queue": "Queue",
       "reason": "Reason",
       "date_time": "Date & Time",
+      "guest": "Guest",
       "agent": "Agent",
       "file_uploaded": "File uploaded : {{fileName}}",
       "transcript": "Transcript",
