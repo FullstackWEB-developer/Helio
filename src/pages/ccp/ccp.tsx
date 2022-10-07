@@ -551,7 +551,6 @@ const Ccp: React.FC<BoxProps> = ({
     useEffect(() => {
         updateCallForwardingStatus();
         const beforeUnload = () => {
-            updateAgentStatus(UserStatus.Offline, agentStates);
             dispatch(clearCCPContext());
         };
         window.addEventListener('beforeunload', () => beforeUnload());
