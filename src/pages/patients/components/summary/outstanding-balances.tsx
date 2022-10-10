@@ -10,6 +10,11 @@ const OutstandingBalances = () => {
         if (!value) {
             return '';
         }
+
+        if(value < 0){
+            return value.toFixed(2).replace("-", "-$");
+        }
+
         return '$' + value.toFixed(2);
     };
 
