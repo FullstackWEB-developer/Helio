@@ -407,7 +407,8 @@ const TicketNew = () => {
                 return !(type === TicketType.BusinessOffice ||
                     type === TicketType.Facility ||
                     type === TicketType.Lab ||
-                    type === TicketType.Pharmacy);
+                    type === TicketType.Pharmacy) &&
+                    (queryContactId === undefined || queryContactId === null);
             }
             case 'reason': {
                 if (!reasonOptions || reasonOptions.length === 0) {
