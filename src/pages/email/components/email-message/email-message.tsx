@@ -7,7 +7,7 @@ import {Trans, useTranslation} from 'react-i18next';
 import EmailMessageHeader from './email-message-header';
 import EmailAttachment from './email-attachment';
 import linkifyHtml from 'linkifyjs/html';
-
+import './email-message.scss';
 export interface EmailMessageProps {
     message: EmailMessageDto;
     ticketCreatedForName: string;
@@ -75,10 +75,8 @@ const EmailMessage = ({message, ticketCreatedForName, ticketHeaderPhoto, index, 
                             <SvgIcon type={Icon.ArrowTrendDown} className='cursor-pointer' />
                         </div>
                     </div>
-                    <div className='links'>
-                        <iframe srcDoc={linkifyHtml(message.body)} className='w-full'>
+                    <div className='links' dangerouslySetInnerHTML={{__html: linkifyHtml(message.body)}}>
 
-                        </iframe>
                     </div>
                     {
                         message.attachments?.length > 0 &&
