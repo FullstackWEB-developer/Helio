@@ -24,6 +24,7 @@ import utc from 'dayjs/plugin/utc';
 import isoWeek from 'dayjs/plugin/isoWeek';
 import {getAppointments} from '@pages/patients/services/patients.service';
 import {AppointmentFoundPath} from '@app/paths';
+import {selectAppointmentSlotRequest} from './store/appointments.selectors';
 
 const AppointmentSchedule = () => {
     dayjs.extend(utc);
@@ -43,9 +44,10 @@ const AppointmentSchedule = () => {
 
     const verifiedPatient = useSelector(selectVerifiedPatent);
 
+    const appointmentSlotRequest = useSelector(selectAppointmentSlotRequest);
     const providers = useSelector(selectProviderList);
     const locations = useSelector(selectLocationList);
-    const [timePreference, setTimePreference] = useState<TimePreference>(TimePreference.FirstAvailable);
+    const [timePreference, setTimePreference] = useState<TimePreference>(appointmentSlotRequest?.firstAvailable === undefined || appointmentSlotRequest?.firstAvailable ? TimePreference.FirstAvailable : TimePreference.PreferredDate);
 
     const {handleSubmit, control, formState} = useForm({mode: 'all'});
     const {isValid} = formState;
@@ -157,24 +159,28 @@ const AppointmentSchedule = () => {
                     truncateAssistiveText={true}
                     control={control}
                     required={true}
+                    defaultValue={appointmentSlotRequest?.appointmentTypeId?.toString()}
                 />
                 <ControlledSelect
                     name='provider'
                     label='external_access.schedule_appointment.provider'
                     options={providerOptions}
                     control={control}
+                    defaultValue={appointmentSlotRequest?.providerId?.toString()}
                 />
                 <ControlledSelect
                     name='location'
                     label='external_access.schedule_appointment.location'
                     options={locationOptions}
                     control={control}
+                    defaultValue={appointmentSlotRequest?.departmentId?.toString()}
                 />
                 <div className='pt-6'>
                     <div className='pb-5 body2'>{t('external_access.schedule_appointment.select_preference')}</div>
                     <Radio
                         name='time_preference'
                         items={timePreferences}
+                        defaultValue={appointmentSlotRequest?.firstAvailable === undefined || appointmentSlotRequest?.firstAvailable ? TimePreference.FirstAvailable.toString() : TimePreference.PreferredDate.toString()}
                         onChange={(_, obj) => setTimePreference(obj)} />
                 </div>
 
@@ -184,6 +190,7 @@ const AppointmentSchedule = () => {
                             label='external_access.schedule_appointment.select_date'
                             control={control}
                             name='date'
+                            value={appointmentSlotRequest?.startDate}
                             isSmallSize={true} />
                     </div>}
 
