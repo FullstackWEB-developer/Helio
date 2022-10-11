@@ -58,7 +58,7 @@ const Modal = ({isOpen, children, title = '', isClosable, className, contentClas
                                     'cursor-move': isDraggable
                                 })}>
                                     <h6 className={titleClassName}>{t(title)}</h6>
-                                    {isClosable && <div className='pt-4 pr-4 cursor-pointer' onClick={onClose}>
+                                    {isClosable && <div data-testid='close' className='pt-4 pr-4 cursor-pointer' onClick={onClose}>
                                         <SvgIcon type={Icon.Close} className='icon-medium' fillClass='active-item-icon' />
                                     </div>}
                                 </div>

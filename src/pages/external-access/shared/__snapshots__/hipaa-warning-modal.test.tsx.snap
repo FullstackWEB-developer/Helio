@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HipaaWarningModal tests renders HipaaWarningModal correctly cancel 1`] = `
+<DocumentFragment>
+  <div
+    class="flex items-center justify-center m-auto justify-self-center"
+  />
+</DocumentFragment>
+`;
+
+exports[`HipaaWarningModal tests renders HipaaWarningModal correctly ok 1`] = `
+<DocumentFragment>
+  <div
+    class="flex items-center justify-center m-auto justify-self-center"
+  />
+</DocumentFragment>
+`;
