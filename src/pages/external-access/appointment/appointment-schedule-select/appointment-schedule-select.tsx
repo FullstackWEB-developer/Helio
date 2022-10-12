@@ -317,7 +317,6 @@ const AppointmentScheduleSelect = () => {
                             className='lg:mr-8'
                             name='selectedDate'
                             value={selectedDate}
-                            isWeekendDisabled
                             min={new Date(new Date().toDateString())}
                             onChange={(event) => onDateChange(event)}
                             dataTestId='external-access-appointments-reschedule-date'

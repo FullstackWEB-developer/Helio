@@ -190,6 +190,7 @@ const AppointmentSchedule = () => {
                             label='external_access.schedule_appointment.select_date'
                             control={control}
                             name='date'
+                            min={new Date(new Date().toDateString())}
                             value={appointmentSlotRequest?.startDate}
                             isSmallSize={true} />
                     </div>}
