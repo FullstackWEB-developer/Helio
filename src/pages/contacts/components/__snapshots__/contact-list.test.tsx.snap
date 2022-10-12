@@ -70,6 +70,7 @@ exports[`ContactList tests renders ContactList empty return correctly 1`] = `
       <input
         autocomplete="off"
         class="py-2.5 h-full w-full search-input-field body2 contact-search-input-field pl-12 border-b"
+        data-testid="search"
         placeholder="contacts.contact-list.search"
         type="text"
         value=""
@@ -185,6 +186,7 @@ exports[`ContactList tests renders ContactList return correctly 1`] = `
       <input
         autocomplete="off"
         class="py-2.5 h-full w-full search-input-field body2 contact-search-input-field pl-12 border-b"
+        data-testid="search"
         placeholder="contacts.contact-list.search"
         type="text"
         value=""

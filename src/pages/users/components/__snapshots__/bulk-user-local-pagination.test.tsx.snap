@@ -1,0 +1,893 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BulkUserLocalPagination tests renders BulkUserLocalPagination correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="flex justify-end items-baseline pb-3 h-14"
+  >
+    <div
+      class="flex items-baseline mr-24"
+    >
+      <div
+        class="body2 pr-3"
+      >
+        users.bulk_section.rows_per_page
+      </div>
+      <div
+        class="w-20"
+      >
+        <div
+          class="select-wrapper relative w-full flex flex-col h-20 "
+        >
+          <div
+            class="select relative flex flex-col "
+          >
+            <input
+              autocomplete="on"
+              autocorrect="on"
+              class="pl-4 pr-8 body2 pt-2.5 h-10 relative truncate select-trigger   "
+              spellcheck="true"
+              type="text"
+              value=""
+            />
+            <div
+              class="absolute pt-3 right-4 "
+            >
+              <div
+                class="flex flex-row items-start"
+              >
+                <div
+                  class="cursor-pointer"
+                >
+                  <div
+                    class=""
+                  >
+                    <svg
+                      class="icon-medium "
+                      height="24"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <rect
+                        fill="none"
+                        height="24"
+                        width="24"
+                      />
+                      <path
+                        class="select-arrow-fill"
+                        d="M7,14l1.273-1.273L2.545,7,8.273,1.273,7,0,0,7Z"
+                        transform="translate(5 16.273) rotate(-90)"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="absolute py-2 options"
+            >
+              <div
+                class="w-full select-cell justify-between flex items-center  body2   cursor-pointer  "
+              >
+                <div
+                  class="flex flex-col justify-center w-full"
+                  data-test-id="select-cell-icon-content"
+                >
+                  <div
+                    class="flex items-center pl-4"
+                    data-test-id="select-cell-text-5"
+                    data-testid="select-cell-text-5"
+                  >
+                    5
+                  </div>
+                </div>
+              </div>
+              <div
+                class="w-full select-cell justify-between flex items-center  body2   cursor-pointer  "
+              >
+                <div
+                  class="flex flex-col justify-center w-full"
+                  data-test-id="select-cell-icon-content"
+                >
+                  <div
+                    class="flex items-center pl-4"
+                    data-test-id="select-cell-text-10"
+                    data-testid="select-cell-text-10"
+                  >
+                    10
+                  </div>
+                </div>
+              </div>
+              <div
+                class="w-full select-cell justify-between flex items-center  body2   cursor-pointer  "
+              >
+                <div
+                  class="flex flex-col justify-center w-full"
+                  data-test-id="select-cell-icon-content"
+                >
+                  <div
+                    class="flex items-center pl-4"
+                    data-test-id="select-cell-text-25"
+                    data-testid="select-cell-text-25"
+                  >
+                    25
+                  </div>
+                </div>
+              </div>
+              <div
+                class="w-full select-cell justify-between flex items-center  body2   cursor-pointer  "
+              >
+                <div
+                  class="flex flex-col justify-center w-full"
+                  data-test-id="select-cell-icon-content"
+                >
+                  <div
+                    class="flex items-center pl-4"
+                    data-test-id="select-cell-text-50"
+                    data-testid="select-cell-text-50"
+                  >
+                    50
+                  </div>
+                </div>
+              </div>
+              <div
+                class="w-full select-cell justify-between flex items-center  body2   cursor-pointer  "
+              >
+                <div
+                  class="flex flex-col justify-center w-full"
+                  data-test-id="select-cell-icon-content"
+                >
+                  <div
+                    class="flex items-center pl-4"
+                    data-test-id="select-cell-text-100"
+                    data-testid="select-cell-text-100"
+                  >
+                    100
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="w-72"
+    >
+      <div
+        class="flex flex-row items-center"
+      >
+        <div
+          class="pr-8 text-sm text-gray-400"
+        >
+          <span>
+            tickets.pagination
+          </span>
+        </div>
+        <div
+          class=""
+        >
+          <svg
+            class="cursor-pointer "
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect
+              fill="none"
+              height="24"
+              transform="translate(0 24) rotate(-90)"
+              width="24"
+            />
+            <path
+              class="pagination-inactive-icon"
+              d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+              transform="translate(8 5)"
+            />
+          </svg>
+        </div>
+        <input
+          class="ml-4 mr-4 text-center border rounded-md w-11"
+          type="text"
+          value="1"
+        />
+        <div
+          class=""
+        >
+          <svg
+            class="cursor-pointer "
+            data-testid="next-page"
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect
+              fill="none"
+              height="24"
+              transform="translate(0 24) rotate(-90)"
+              width="24"
+            />
+            <path
+              class="pagination-active-icon"
+              d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+              transform="translate(16.272 19) rotate(180)"
+            />
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`BulkUserLocalPagination tests renders BulkUserLocalPagination-ProviderMapping correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="flex justify-end items-baseline pb-3 h-14"
+  >
+    <div
+      class="flex items-baseline mr-24"
+    >
+      <div
+        class="body2 pr-3"
+      >
+        users.bulk_section.rows_per_page
+      </div>
+      <div
+        class="w-20"
+      >
+        <div
+          class="select-wrapper relative w-full flex flex-col h-20 "
+        >
+          <div
+            class="select relative flex flex-col "
+          >
+            <input
+              autocomplete="on"
+              autocorrect="on"
+              class="pl-4 pr-8 body2 pt-2.5 h-10 relative truncate select-trigger   "
+              spellcheck="true"
+              type="text"
+              value=""
+            />
+            <div
+              class="absolute pt-3 right-4 "
+            >
+              <div
+                class="flex flex-row items-start"
+              >
+                <div
+                  class="cursor-pointer"
+                >
+                  <div
+                    class=""
+                  >
+                    <svg
+                      class="icon-medium "
+                      height="24"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <rect
+                        fill="none"
+                        height="24"
+                        width="24"
+                      />
+                      <path
+                        class="select-arrow-fill"
+                        d="M7,14l1.273-1.273L2.545,7,8.273,1.273,7,0,0,7Z"
+                        transform="translate(5 16.273) rotate(-90)"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="absolute py-2 options"
+            >
+              <div
+                class="w-full select-cell justify-between flex items-center  body2   cursor-pointer  "
+              >
+                <div
+                  class="flex flex-col justify-center w-full"
+                  data-test-id="select-cell-icon-content"
+                >
+                  <div
+                    class="flex items-center pl-4"
+                    data-test-id="select-cell-text-5"
+                    data-testid="select-cell-text-5"
+                  >
+                    5
+                  </div>
+                </div>
+              </div>
+              <div
+                class="w-full select-cell justify-between flex items-center  body2   cursor-pointer  "
+              >
+                <div
+                  class="flex flex-col justify-center w-full"
+                  data-test-id="select-cell-icon-content"
+                >
+                  <div
+                    class="flex items-center pl-4"
+                    data-test-id="select-cell-text-10"
+                    data-testid="select-cell-text-10"
+                  >
+                    10
+                  </div>
+                </div>
+              </div>
+              <div
+                class="w-full select-cell justify-between flex items-center  body2   cursor-pointer  "
+              >
+                <div
+                  class="flex flex-col justify-center w-full"
+                  data-test-id="select-cell-icon-content"
+                >
+                  <div
+                    class="flex items-center pl-4"
+                    data-test-id="select-cell-text-25"
+                    data-testid="select-cell-text-25"
+                  >
+                    25
+                  </div>
+                </div>
+              </div>
+              <div
+                class="w-full select-cell justify-between flex items-center  body2   cursor-pointer  "
+              >
+                <div
+                  class="flex flex-col justify-center w-full"
+                  data-test-id="select-cell-icon-content"
+                >
+                  <div
+                    class="flex items-center pl-4"
+                    data-test-id="select-cell-text-50"
+                    data-testid="select-cell-text-50"
+                  >
+                    50
+                  </div>
+                </div>
+              </div>
+              <div
+                class="w-full select-cell justify-between flex items-center  body2   cursor-pointer  "
+              >
+                <div
+                  class="flex flex-col justify-center w-full"
+                  data-test-id="select-cell-icon-content"
+                >
+                  <div
+                    class="flex items-center pl-4"
+                    data-test-id="select-cell-text-100"
+                    data-testid="select-cell-text-100"
+                  >
+                    100
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="w-72"
+    >
+      <div
+        class="flex flex-row items-center"
+      >
+        <div
+          class="pr-8 text-sm text-gray-400"
+        >
+          <span>
+            tickets.pagination
+          </span>
+        </div>
+        <div
+          class=""
+        >
+          <svg
+            class="cursor-pointer "
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect
+              fill="none"
+              height="24"
+              transform="translate(0 24) rotate(-90)"
+              width="24"
+            />
+            <path
+              class="pagination-inactive-icon"
+              d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+              transform="translate(8 5)"
+            />
+          </svg>
+        </div>
+        <input
+          class="ml-4 mr-4 text-center border rounded-md w-11"
+          type="text"
+          value="1"
+        />
+        <div
+          class=""
+        >
+          <svg
+            class="cursor-pointer "
+            data-testid="next-page"
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect
+              fill="none"
+              height="24"
+              transform="translate(0 24) rotate(-90)"
+              width="24"
+            />
+            <path
+              class="pagination-active-icon"
+              d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+              transform="translate(16.272 19) rotate(180)"
+            />
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`BulkUserLocalPagination tests renders BulkUserLocalPagination-Review correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="flex justify-end items-baseline pb-3 h-14"
+  >
+    <div
+      class="flex items-baseline mr-24"
+    >
+      <div
+        class="body2 pr-3"
+      >
+        users.bulk_section.rows_per_page
+      </div>
+      <div
+        class="w-20"
+      >
+        <div
+          class="select-wrapper relative w-full flex flex-col h-20 "
+        >
+          <div
+            class="select relative flex flex-col "
+          >
+            <input
+              autocomplete="on"
+              autocorrect="on"
+              class="pl-4 pr-8 body2 pt-2.5 h-10 relative truncate select-trigger   "
+              spellcheck="true"
+              type="text"
+              value=""
+            />
+            <div
+              class="absolute pt-3 right-4 "
+            >
+              <div
+                class="flex flex-row items-start"
+              >
+                <div
+                  class="cursor-pointer"
+                >
+                  <div
+                    class=""
+                  >
+                    <svg
+                      class="icon-medium "
+                      height="24"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <rect
+                        fill="none"
+                        height="24"
+                        width="24"
+                      />
+                      <path
+                        class="select-arrow-fill"
+                        d="M7,14l1.273-1.273L2.545,7,8.273,1.273,7,0,0,7Z"
+                        transform="translate(5 16.273) rotate(-90)"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="absolute py-2 options"
+            >
+              <div
+                class="w-full select-cell justify-between flex items-center  body2   cursor-pointer  "
+              >
+                <div
+                  class="flex flex-col justify-center w-full"
+                  data-test-id="select-cell-icon-content"
+                >
+                  <div
+                    class="flex items-center pl-4"
+                    data-test-id="select-cell-text-5"
+                    data-testid="select-cell-text-5"
+                  >
+                    5
+                  </div>
+                </div>
+              </div>
+              <div
+                class="w-full select-cell justify-between flex items-center  body2   cursor-pointer  "
+              >
+                <div
+                  class="flex flex-col justify-center w-full"
+                  data-test-id="select-cell-icon-content"
+                >
+                  <div
+                    class="flex items-center pl-4"
+                    data-test-id="select-cell-text-10"
+                    data-testid="select-cell-text-10"
+                  >
+                    10
+                  </div>
+                </div>
+              </div>
+              <div
+                class="w-full select-cell justify-between flex items-center  body2   cursor-pointer  "
+              >
+                <div
+                  class="flex flex-col justify-center w-full"
+                  data-test-id="select-cell-icon-content"
+                >
+                  <div
+                    class="flex items-center pl-4"
+                    data-test-id="select-cell-text-25"
+                    data-testid="select-cell-text-25"
+                  >
+                    25
+                  </div>
+                </div>
+              </div>
+              <div
+                class="w-full select-cell justify-between flex items-center  body2   cursor-pointer  "
+              >
+                <div
+                  class="flex flex-col justify-center w-full"
+                  data-test-id="select-cell-icon-content"
+                >
+                  <div
+                    class="flex items-center pl-4"
+                    data-test-id="select-cell-text-50"
+                    data-testid="select-cell-text-50"
+                  >
+                    50
+                  </div>
+                </div>
+              </div>
+              <div
+                class="w-full select-cell justify-between flex items-center  body2   cursor-pointer  "
+              >
+                <div
+                  class="flex flex-col justify-center w-full"
+                  data-test-id="select-cell-icon-content"
+                >
+                  <div
+                    class="flex items-center pl-4"
+                    data-test-id="select-cell-text-100"
+                    data-testid="select-cell-text-100"
+                  >
+                    100
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="w-72"
+    >
+      <div
+        class="flex flex-row items-center"
+      >
+        <div
+          class="pr-8 text-sm text-gray-400"
+        >
+          <span>
+            tickets.pagination
+          </span>
+        </div>
+        <div
+          class=""
+        >
+          <svg
+            class="cursor-pointer "
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect
+              fill="none"
+              height="24"
+              transform="translate(0 24) rotate(-90)"
+              width="24"
+            />
+            <path
+              class="pagination-inactive-icon"
+              d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+              transform="translate(8 5)"
+            />
+          </svg>
+        </div>
+        <input
+          class="ml-4 mr-4 text-center border rounded-md w-11"
+          type="text"
+          value="1"
+        />
+        <div
+          class=""
+        >
+          <svg
+            class="cursor-pointer "
+            data-testid="next-page"
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect
+              fill="none"
+              height="24"
+              transform="translate(0 24) rotate(-90)"
+              width="24"
+            />
+            <path
+              class="pagination-active-icon"
+              d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+              transform="translate(16.272 19) rotate(180)"
+            />
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`BulkUserLocalPagination tests renders BulkUserLocalPagination-RolePicking correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="flex justify-end items-baseline pb-3 h-14"
+  >
+    <div
+      class="flex items-baseline mr-24"
+    >
+      <div
+        class="body2 pr-3"
+      >
+        users.bulk_section.rows_per_page
+      </div>
+      <div
+        class="w-20"
+      >
+        <div
+          class="select-wrapper relative w-full flex flex-col h-20 "
+        >
+          <div
+            class="select relative flex flex-col "
+          >
+            <input
+              autocomplete="on"
+              autocorrect="on"
+              class="pl-4 pr-8 body2 pt-2.5 h-10 relative truncate select-trigger   "
+              spellcheck="true"
+              type="text"
+              value=""
+            />
+            <div
+              class="absolute pt-3 right-4 "
+            >
+              <div
+                class="flex flex-row items-start"
+              >
+                <div
+                  class="cursor-pointer"
+                >
+                  <div
+                    class=""
+                  >
+                    <svg
+                      class="icon-medium "
+                      height="24"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <rect
+                        fill="none"
+                        height="24"
+                        width="24"
+                      />
+                      <path
+                        class="select-arrow-fill"
+                        d="M7,14l1.273-1.273L2.545,7,8.273,1.273,7,0,0,7Z"
+                        transform="translate(5 16.273) rotate(-90)"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="absolute py-2 options"
+            >
+              <div
+                class="w-full select-cell justify-between flex items-center  body2   cursor-pointer  "
+              >
+                <div
+                  class="flex flex-col justify-center w-full"
+                  data-test-id="select-cell-icon-content"
+                >
+                  <div
+                    class="flex items-center pl-4"
+                    data-test-id="select-cell-text-5"
+                    data-testid="select-cell-text-5"
+                  >
+                    5
+                  </div>
+                </div>
+              </div>
+              <div
+                class="w-full select-cell justify-between flex items-center  body2   cursor-pointer  "
+              >
+                <div
+                  class="flex flex-col justify-center w-full"
+                  data-test-id="select-cell-icon-content"
+                >
+                  <div
+                    class="flex items-center pl-4"
+                    data-test-id="select-cell-text-10"
+                    data-testid="select-cell-text-10"
+                  >
+                    10
+                  </div>
+                </div>
+              </div>
+              <div
+                class="w-full select-cell justify-between flex items-center  body2   cursor-pointer  "
+              >
+                <div
+                  class="flex flex-col justify-center w-full"
+                  data-test-id="select-cell-icon-content"
+                >
+                  <div
+                    class="flex items-center pl-4"
+                    data-test-id="select-cell-text-25"
+                    data-testid="select-cell-text-25"
+                  >
+                    25
+                  </div>
+                </div>
+              </div>
+              <div
+                class="w-full select-cell justify-between flex items-center  body2   cursor-pointer  "
+              >
+                <div
+                  class="flex flex-col justify-center w-full"
+                  data-test-id="select-cell-icon-content"
+                >
+                  <div
+                    class="flex items-center pl-4"
+                    data-test-id="select-cell-text-50"
+                    data-testid="select-cell-text-50"
+                  >
+                    50
+                  </div>
+                </div>
+              </div>
+              <div
+                class="w-full select-cell justify-between flex items-center  body2   cursor-pointer  "
+              >
+                <div
+                  class="flex flex-col justify-center w-full"
+                  data-test-id="select-cell-icon-content"
+                >
+                  <div
+                    class="flex items-center pl-4"
+                    data-test-id="select-cell-text-100"
+                    data-testid="select-cell-text-100"
+                  >
+                    100
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="w-72"
+    >
+      <div
+        class="flex flex-row items-center"
+      >
+        <div
+          class="pr-8 text-sm text-gray-400"
+        >
+          <span>
+            tickets.pagination
+          </span>
+        </div>
+        <div
+          class=""
+        >
+          <svg
+            class="cursor-pointer "
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect
+              fill="none"
+              height="24"
+              transform="translate(0 24) rotate(-90)"
+              width="24"
+            />
+            <path
+              class="pagination-inactive-icon"
+              d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+              transform="translate(8 5)"
+            />
+          </svg>
+        </div>
+        <input
+          class="ml-4 mr-4 text-center border rounded-md w-11"
+          type="text"
+          value="1"
+        />
+        <div
+          class=""
+        >
+          <svg
+            class="cursor-pointer "
+            data-testid="next-page"
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect
+              fill="none"
+              height="24"
+              transform="translate(0 24) rotate(-90)"
+              width="24"
+            />
+            <path
+              class="pagination-active-icon"
+              d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+              transform="translate(16.272 19) rotate(180)"
+            />
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

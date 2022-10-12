@@ -443,6 +443,7 @@ exports[`Email Filter Bar tests renders email-filter-bar correctly 1`] = `
         <input
           autocomplete="off"
           class="py-2.5 h-full w-full search-input-field body2 pl-12 border-b"
+          data-testid="search"
           placeholder="email.filter.search_placeholder"
           type="text"
           value=""

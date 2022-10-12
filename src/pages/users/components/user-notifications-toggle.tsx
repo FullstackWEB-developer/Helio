@@ -11,9 +11,10 @@ interface UserNotificationPreferenceProps {
     mutationRunningForType?: UserNotificationPreferences;
     isLoading: boolean;
     hasBottomBorder?: boolean;
+    name?: string;
 }
 
-const UserNotificationPreference = ({isChecked, onSwitch, notificationType, mutationRunningForType, isLoading, hasBottomBorder = false}: UserNotificationPreferenceProps) => {
+const UserNotificationPreference = ({isChecked, onSwitch, notificationType, mutationRunningForType, isLoading, hasBottomBorder = false, name = "switch"}: UserNotificationPreferenceProps) => {
     const {t} = useTranslation();
     const handleToggleSwitch = (checked: boolean) => {
         onSwitch(checked, notificationType);
@@ -24,7 +25,7 @@ const UserNotificationPreference = ({isChecked, onSwitch, notificationType, muta
         <div className={className}>
             <span>{t(`browser_notifications.${notificationType}`)}</span>
             <div className='flex'>
-                <ToggleSwitch isChecked={isChecked} onSwitch={handleToggleSwitch} disabled={isLoading} />
+                <ToggleSwitch name={name} isChecked={isChecked} onSwitch={handleToggleSwitch} disabled={isLoading} />
                 {
                     showSpinner && <Spinner className='px-4' size='small' />
                 }

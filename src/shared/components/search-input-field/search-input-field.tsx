@@ -31,6 +31,7 @@ interface SearchInputProps {
     autoSuggestDropdownClose?: boolean,
     hasBorderBottom?: boolean;
     onPressEnter?: (value: string) => void;
+    dataTestId?: string;
 }
 const SearchInputField = React.forwardRef<HTMLInputElement, SearchInputProps>(({
     autosuggestOptions,
@@ -41,6 +42,7 @@ const SearchInputField = React.forwardRef<HTMLInputElement, SearchInputProps>(({
     autoSuggestDropdownClose,
     hasBorderBottom = true,
     onPressEnter,
+    dataTestId = "search",
     ...props
 }: SearchInputProps, ref) => {
     const {t} = useTranslation();
@@ -127,7 +129,7 @@ const SearchInputField = React.forwardRef<HTMLInputElement, SearchInputProps>(({
             {!props.disableSearchIcon && <div className={classnames("absolute pl-4", props.iconWrapperClassName)}>
                 <SvgIcon type={Icon.Search} className="cursor-pointer icon-small" fillClass="search-icon-fill" onClick={props?.iconOnClick} />
             </div>}
-            <input ref={innerRef} type='text'
+            <input ref={innerRef} type='text' data-testid={dataTestId}
                 className={classnames('py-2.5 h-full w-full search-input-field body2', props.inputClassNames, 
                 {'pl-12': !props.disableSearchIcon, 'border-b': hasBorderBottom, 'pr-11': isFocused && value})}
                 placeholder={!props.placeholder ? t('common.search') : t(props.placeholder)}
@@ -140,7 +142,7 @@ const SearchInputField = React.forwardRef<HTMLInputElement, SearchInputProps>(({
                 autoComplete={props.shouldDisplayAutocomplete ? 'on' : 'off'} />
             {
                 isFocused && value && (
-                    <span onClick={onTextClear} onMouseDown={(e) => {e.preventDefault()}} className="absolute cursor-pointer right-4">
+                    <span data-testid='clear-tetxt' onClick={onTextClear} onMouseDown={(e) => {e.preventDefault()}} className="absolute cursor-pointer right-4">
                         <SvgIcon type={Icon.Clear} fillClass="clear-input-icon-fill" />
                     </span>
                 )

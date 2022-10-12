@@ -1,0 +1,3005 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UserFilter tests renders UserFilter correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="w-80 transition-width transition-slowest ease top-0 bg-secondary-100 overflow-y-auto overflow-x-hidden relative"
+  >
+    <div
+      class="pt-4 px-6 flex flex-col"
+    >
+      <div
+        class="flex-col items-center pb-2"
+      >
+        <div
+          class="py-3 subtitle"
+        >
+          users.filters.title
+        </div>
+        <div
+          class="flex flex-row pb-3"
+        >
+          <button
+            class="small-button cursor-pointer mr-4"
+            data-test-id="apply-button"
+            data-testid="apply-button"
+            type="button"
+          >
+            <div
+              class="flex flex-row justify-center items-center space-x-2"
+            >
+              <div>
+                users.filters.apply
+              </div>
+            </div>
+          </button>
+          <button
+            class="secondary-button cursor-pointer"
+            data-test-id="reset-all-button"
+            data-testid="reset-all-button"
+            type="button"
+          >
+            <div
+              class="flex flex-row justify-center items-center space-x-2"
+            >
+              <div>
+                users.filters.reset_all
+              </div>
+            </div>
+          </button>
+        </div>
+      </div>
+      <form>
+        <div>
+          <div
+            class="cursor-pointer flex flex-row justify-between items-center h-12"
+          >
+            <div
+              class="subtitle"
+            >
+              users.filters.statuses
+            </div>
+            <div>
+              <div
+                class=""
+              >
+                <svg
+                  class="cursor-pointer "
+                  height="24"
+                  viewBox="0 0 24 24"
+                  width="24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <rect
+                    fill="none"
+                    height="24"
+                    width="24"
+                  />
+                  <path
+                    class="active-item-icon"
+                    d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                    transform="translate(19 8) rotate(90)"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div>
+              <div
+                class="h-9"
+              >
+                <label
+                  class="flex flex-row items-center checkbox-button"
+                >
+                  <input
+                    class="checkbox"
+                    data-test-id="statuses-checkbox-0"
+                    data-testid="statuses-checkbox-0"
+                    id="statuses[0]_0"
+                    name="statuses[0]"
+                    type="checkbox"
+                  />
+                  <span
+                    class="checkbox-control"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium "
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="24"
+                          width="24"
+                        />
+                        <path
+                          class="svg-checkbox"
+                          d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                        />
+                      </svg>
+                    </div>
+                  </span>
+                  <div
+                    class="truncate relative w-full h-full inline-block"
+                  >
+                    <span
+                      class="w-60 w-60"
+                    >
+                      common.all
+                    </span>
+                  </div>
+                </label>
+              </div>
+              <div
+                class="h-9"
+              >
+                <label
+                  class="flex flex-row items-center checkbox-button"
+                >
+                  <input
+                    class="checkbox"
+                    data-test-id="statuses-checkbox-1"
+                    data-testid="statuses-checkbox-1"
+                    id="statuses[1]_1"
+                    name="statuses[1]"
+                    type="checkbox"
+                    value="checked"
+                  />
+                  <span
+                    class="checkbox-control"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium "
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="24"
+                          width="24"
+                        />
+                        <path
+                          class="svg-checkbox"
+                          d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                        />
+                      </svg>
+                    </div>
+                  </span>
+                  <div
+                    class="truncate relative w-full h-full inline-block"
+                  >
+                    <span
+                      class="w-60 w-60"
+                    >
+                      users.list_section.status_enabled
+                    </span>
+                  </div>
+                </label>
+              </div>
+              <div
+                class="h-9"
+              >
+                <label
+                  class="flex flex-row items-center checkbox-button"
+                >
+                  <input
+                    class="checkbox"
+                    data-test-id="statuses-checkbox-2"
+                    data-testid="statuses-checkbox-2"
+                    id="statuses[2]_2"
+                    name="statuses[2]"
+                    type="checkbox"
+                  />
+                  <span
+                    class="checkbox-control"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium "
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="24"
+                          width="24"
+                        />
+                        <path
+                          class="svg-checkbox"
+                          d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                        />
+                      </svg>
+                    </div>
+                  </span>
+                  <div
+                    class="truncate relative w-full h-full inline-block"
+                  >
+                    <span
+                      class="w-60 w-60"
+                    >
+                      users.list_section.status_disabled
+                    </span>
+                  </div>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div
+            class="cursor-pointer flex flex-row justify-between items-center h-12"
+          >
+            <div
+              class="subtitle"
+            >
+              users.filters.invites
+            </div>
+            <div>
+              <div
+                class=""
+              >
+                <svg
+                  class="cursor-pointer "
+                  height="24"
+                  viewBox="0 0 24 24"
+                  width="24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <rect
+                    fill="none"
+                    height="24"
+                    width="24"
+                  />
+                  <path
+                    class="active-item-icon"
+                    d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                    transform="translate(19 8) rotate(90)"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div>
+              <div
+                class="h-9"
+              >
+                <label
+                  class="flex flex-row items-center checkbox-button"
+                >
+                  <input
+                    class="checkbox"
+                    data-test-id="invites-checkbox-0"
+                    data-testid="invites-checkbox-0"
+                    id="invites[0]_0"
+                    name="invites[0]"
+                    type="checkbox"
+                  />
+                  <span
+                    class="checkbox-control"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium "
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="24"
+                          width="24"
+                        />
+                        <path
+                          class="svg-checkbox"
+                          d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                        />
+                      </svg>
+                    </div>
+                  </span>
+                  <div
+                    class="truncate relative w-full h-full inline-block"
+                  >
+                    <span
+                      class="w-60 w-60"
+                    >
+                      common.all
+                    </span>
+                  </div>
+                </label>
+              </div>
+              <div
+                class="h-9"
+              >
+                <label
+                  class="flex flex-row items-center checkbox-button"
+                >
+                  <input
+                    class="checkbox"
+                    data-test-id="invites-checkbox-1"
+                    data-testid="invites-checkbox-1"
+                    id="invites[1]_1"
+                    name="invites[1]"
+                    type="checkbox"
+                  />
+                  <span
+                    class="checkbox-control"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium "
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="24"
+                          width="24"
+                        />
+                        <path
+                          class="svg-checkbox"
+                          d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                        />
+                      </svg>
+                    </div>
+                  </span>
+                  <div
+                    class="truncate relative w-full h-full inline-block"
+                  >
+                    <span
+                      class="w-60 w-60"
+                    >
+                      users.list_section.invitation_no_invite
+                    </span>
+                  </div>
+                </label>
+              </div>
+              <div
+                class="h-9"
+              >
+                <label
+                  class="flex flex-row items-center checkbox-button"
+                >
+                  <input
+                    class="checkbox"
+                    data-test-id="invites-checkbox-2"
+                    data-testid="invites-checkbox-2"
+                    id="invites[2]_2"
+                    name="invites[2]"
+                    type="checkbox"
+                  />
+                  <span
+                    class="checkbox-control"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium "
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="24"
+                          width="24"
+                        />
+                        <path
+                          class="svg-checkbox"
+                          d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                        />
+                      </svg>
+                    </div>
+                  </span>
+                  <div
+                    class="truncate relative w-full h-full inline-block"
+                  >
+                    <span
+                      class="w-60 w-60"
+                    >
+                      users.list_section.invitation_sent
+                    </span>
+                  </div>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div
+            class="cursor-pointer flex flex-row justify-between items-center h-12"
+          >
+            <div
+              class="subtitle"
+            >
+              users.filters.role
+            </div>
+            <div>
+              <div
+                class=""
+              >
+                <svg
+                  class="cursor-pointer "
+                  height="24"
+                  viewBox="0 0 24 24"
+                  width="24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <rect
+                    fill="none"
+                    height="24"
+                    width="24"
+                  />
+                  <path
+                    class="active-item-icon"
+                    d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                    transform="translate(19 8) rotate(90)"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div>
+              <div
+                class="h-9"
+              >
+                <label
+                  class="flex flex-row items-center checkbox-button"
+                >
+                  <input
+                    class="checkbox"
+                    data-test-id="roles-checkbox-0"
+                    data-testid="roles-checkbox-0"
+                    id="roles[0]_0"
+                    name="roles[0]"
+                    type="checkbox"
+                  />
+                  <span
+                    class="checkbox-control"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium "
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="24"
+                          width="24"
+                        />
+                        <path
+                          class="svg-checkbox"
+                          d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                        />
+                      </svg>
+                    </div>
+                  </span>
+                  <div
+                    class="truncate relative w-full h-full inline-block"
+                  >
+                    <span
+                      class="w-60 w-60"
+                    >
+                      common.all
+                    </span>
+                  </div>
+                </label>
+              </div>
+              <div
+                class="h-9"
+              >
+                <label
+                  class="flex flex-row items-center checkbox-button"
+                >
+                  <input
+                    class="checkbox"
+                    data-test-id="roles-checkbox-1"
+                    data-testid="roles-checkbox-1"
+                    id="roles[1]_1"
+                    name="roles[1]"
+                    type="checkbox"
+                  />
+                  <span
+                    class="checkbox-control"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium "
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="24"
+                          width="24"
+                        />
+                        <path
+                          class="svg-checkbox"
+                          d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                        />
+                      </svg>
+                    </div>
+                  </span>
+                  <div
+                    class="truncate relative w-full h-full inline-block"
+                  >
+                    <span
+                      class="w-60 w-60"
+                    >
+                      string0
+                    </span>
+                  </div>
+                </label>
+              </div>
+              <div
+                class="h-9"
+              >
+                <label
+                  class="flex flex-row items-center checkbox-button"
+                >
+                  <input
+                    class="checkbox"
+                    data-test-id="roles-checkbox-2"
+                    data-testid="roles-checkbox-2"
+                    id="roles[2]_2"
+                    name="roles[2]"
+                    type="checkbox"
+                  />
+                  <span
+                    class="checkbox-control"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium "
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="24"
+                          width="24"
+                        />
+                        <path
+                          class="svg-checkbox"
+                          d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                        />
+                      </svg>
+                    </div>
+                  </span>
+                  <div
+                    class="truncate relative w-full h-full inline-block"
+                  >
+                    <span
+                      class="w-60 w-60"
+                    >
+                      string1
+                    </span>
+                  </div>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div
+            class="cursor-pointer flex flex-row justify-between items-center h-12"
+          >
+            <div
+              class="subtitle"
+            >
+              users.filters.department
+            </div>
+            <div>
+              <div
+                class=""
+              >
+                <svg
+                  class="cursor-pointer "
+                  height="24"
+                  viewBox="0 0 24 24"
+                  width="24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <rect
+                    fill="none"
+                    height="24"
+                    width="24"
+                  />
+                  <path
+                    class="active-item-icon"
+                    d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                    transform="translate(19 8) rotate(90)"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div>
+              <div
+                class="h-9"
+              >
+                <label
+                  class="flex flex-row items-center checkbox-button"
+                >
+                  <input
+                    class="checkbox"
+                    data-test-id="departments-checkbox-0"
+                    data-testid="departments-checkbox-0"
+                    id="departments[0]_0"
+                    name="departments[0]"
+                    type="checkbox"
+                  />
+                  <span
+                    class="checkbox-control"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium "
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="24"
+                          width="24"
+                        />
+                        <path
+                          class="svg-checkbox"
+                          d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                        />
+                      </svg>
+                    </div>
+                  </span>
+                  <div
+                    class="truncate relative w-full h-full inline-block"
+                  >
+                    <span
+                      class="w-60 w-60"
+                    >
+                      common.all
+                    </span>
+                  </div>
+                </label>
+              </div>
+              <div
+                class="h-9"
+              >
+                <label
+                  class="flex flex-row items-center checkbox-button"
+                >
+                  <input
+                    class="checkbox"
+                    data-test-id="departments-checkbox-1"
+                    data-testid="departments-checkbox-1"
+                    id="departments[1]_1"
+                    name="departments[1]"
+                    type="checkbox"
+                  />
+                  <span
+                    class="checkbox-control"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium "
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="24"
+                          width="24"
+                        />
+                        <path
+                          class="svg-checkbox"
+                          d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                        />
+                      </svg>
+                    </div>
+                  </span>
+                  <div
+                    class="truncate relative w-full h-full inline-block"
+                  >
+                    <span
+                      class="w-60 w-60"
+                    >
+                      A
+                    </span>
+                  </div>
+                </label>
+              </div>
+              <div
+                class="h-9"
+              >
+                <label
+                  class="flex flex-row items-center checkbox-button"
+                >
+                  <input
+                    class="checkbox"
+                    data-test-id="departments-checkbox-2"
+                    data-testid="departments-checkbox-2"
+                    id="departments[2]_2"
+                    name="departments[2]"
+                    type="checkbox"
+                  />
+                  <span
+                    class="checkbox-control"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium "
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="24"
+                          width="24"
+                        />
+                        <path
+                          class="svg-checkbox"
+                          d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                        />
+                      </svg>
+                    </div>
+                  </span>
+                  <div
+                    class="truncate relative w-full h-full inline-block"
+                  >
+                    <span
+                      class="w-60 w-60"
+                    >
+                      B
+                    </span>
+                  </div>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div
+            class="cursor-pointer flex flex-row justify-between items-center h-12"
+          >
+            <div
+              class="subtitle"
+            >
+              users.filters.job_title
+            </div>
+            <div>
+              <div
+                class=""
+              >
+                <svg
+                  class="cursor-pointer "
+                  height="24"
+                  viewBox="0 0 24 24"
+                  width="24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <rect
+                    fill="none"
+                    height="24"
+                    width="24"
+                  />
+                  <path
+                    class="active-item-icon"
+                    d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                    transform="translate(19 8) rotate(90)"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div>
+              <div
+                class="h-9"
+              >
+                <label
+                  class="flex flex-row items-center checkbox-button"
+                >
+                  <input
+                    class="checkbox"
+                    data-test-id="titles-checkbox-0"
+                    data-testid="titles-checkbox-0"
+                    id="titles[0]_0"
+                    name="titles[0]"
+                    type="checkbox"
+                  />
+                  <span
+                    class="checkbox-control"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium "
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="24"
+                          width="24"
+                        />
+                        <path
+                          class="svg-checkbox"
+                          d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                        />
+                      </svg>
+                    </div>
+                  </span>
+                  <div
+                    class="truncate relative w-full h-full inline-block"
+                  >
+                    <span
+                      class="w-60 w-60"
+                    >
+                      common.all
+                    </span>
+                  </div>
+                </label>
+              </div>
+              <div
+                class="h-9"
+              >
+                <label
+                  class="flex flex-row items-center checkbox-button"
+                >
+                  <input
+                    class="checkbox"
+                    data-test-id="titles-checkbox-1"
+                    data-testid="titles-checkbox-1"
+                    id="titles[1]_1"
+                    name="titles[1]"
+                    type="checkbox"
+                  />
+                  <span
+                    class="checkbox-control"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium "
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="24"
+                          width="24"
+                        />
+                        <path
+                          class="svg-checkbox"
+                          d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                        />
+                      </svg>
+                    </div>
+                  </span>
+                  <div
+                    class="truncate relative w-full h-full inline-block"
+                  >
+                    <span
+                      class="w-60 w-60"
+                    >
+                      A
+                    </span>
+                  </div>
+                </label>
+              </div>
+              <div
+                class="h-9"
+              >
+                <label
+                  class="flex flex-row items-center checkbox-button"
+                >
+                  <input
+                    class="checkbox"
+                    data-test-id="titles-checkbox-2"
+                    data-testid="titles-checkbox-2"
+                    id="titles[2]_2"
+                    name="titles[2]"
+                    type="checkbox"
+                  />
+                  <span
+                    class="checkbox-control"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium "
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="24"
+                          width="24"
+                        />
+                        <path
+                          class="svg-checkbox"
+                          d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                        />
+                      </svg>
+                    </div>
+                  </span>
+                  <div
+                    class="truncate relative w-full h-full inline-block"
+                  >
+                    <span
+                      class="w-60 w-60"
+                    >
+                      B
+                    </span>
+                  </div>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`UserFilter tests renders UserFilter correctly without filter 1`] = `
+<DocumentFragment>
+  <div
+    class="w-80 transition-width transition-slowest ease top-0 bg-secondary-100 overflow-y-auto overflow-x-hidden relative"
+  >
+    <div
+      class="pt-4 px-6 flex flex-col"
+    >
+      <div
+        class="flex-col items-center pb-2"
+      >
+        <div
+          class="py-3 subtitle"
+        >
+          users.filters.title
+        </div>
+        <div
+          class="flex flex-row pb-3"
+        >
+          <button
+            class="small-button cursor-pointer mr-4"
+            data-test-id="apply-button"
+            data-testid="apply-button"
+            type="button"
+          >
+            <div
+              class="flex flex-row justify-center items-center space-x-2"
+            >
+              <div>
+                users.filters.apply
+              </div>
+            </div>
+          </button>
+          <button
+            class="secondary-button cursor-pointer"
+            data-test-id="reset-all-button"
+            data-testid="reset-all-button"
+            type="button"
+          >
+            <div
+              class="flex flex-row justify-center items-center space-x-2"
+            >
+              <div>
+                users.filters.reset_all
+              </div>
+            </div>
+          </button>
+        </div>
+      </div>
+      <form>
+        <div>
+          <div
+            class="cursor-pointer flex flex-row justify-between items-center h-12"
+          >
+            <div
+              class="subtitle"
+            >
+              users.filters.statuses
+            </div>
+            <div>
+              <div
+                class=""
+              >
+                <svg
+                  class="cursor-pointer "
+                  height="24"
+                  viewBox="0 0 24 24"
+                  width="24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <rect
+                    fill="none"
+                    height="24"
+                    width="24"
+                  />
+                  <path
+                    class="active-item-icon"
+                    d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                    transform="translate(19 8) rotate(90)"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div>
+              <div
+                class="h-9"
+              >
+                <label
+                  class="flex flex-row items-center checkbox-button"
+                >
+                  <input
+                    class="checkbox"
+                    data-test-id="statuses-checkbox-0"
+                    data-testid="statuses-checkbox-0"
+                    id="statuses[0]_0"
+                    name="statuses[0]"
+                    type="checkbox"
+                  />
+                  <span
+                    class="checkbox-control"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium "
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="24"
+                          width="24"
+                        />
+                        <path
+                          class="svg-checkbox"
+                          d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                        />
+                      </svg>
+                    </div>
+                  </span>
+                  <div
+                    class="truncate relative w-full h-full inline-block"
+                  >
+                    <span
+                      class="w-60 w-60"
+                    >
+                      common.all
+                    </span>
+                  </div>
+                </label>
+              </div>
+              <div
+                class="h-9"
+              >
+                <label
+                  class="flex flex-row items-center checkbox-button"
+                >
+                  <input
+                    class="checkbox"
+                    data-test-id="statuses-checkbox-1"
+                    data-testid="statuses-checkbox-1"
+                    id="statuses[1]_1"
+                    name="statuses[1]"
+                    type="checkbox"
+                  />
+                  <span
+                    class="checkbox-control"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium "
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="24"
+                          width="24"
+                        />
+                        <path
+                          class="svg-checkbox"
+                          d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                        />
+                      </svg>
+                    </div>
+                  </span>
+                  <div
+                    class="truncate relative w-full h-full inline-block"
+                  >
+                    <span
+                      class="w-60 w-60"
+                    >
+                      users.list_section.status_enabled
+                    </span>
+                  </div>
+                </label>
+              </div>
+              <div
+                class="h-9"
+              >
+                <label
+                  class="flex flex-row items-center checkbox-button"
+                >
+                  <input
+                    class="checkbox"
+                    data-test-id="statuses-checkbox-2"
+                    data-testid="statuses-checkbox-2"
+                    id="statuses[2]_2"
+                    name="statuses[2]"
+                    type="checkbox"
+                  />
+                  <span
+                    class="checkbox-control"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium "
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="24"
+                          width="24"
+                        />
+                        <path
+                          class="svg-checkbox"
+                          d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                        />
+                      </svg>
+                    </div>
+                  </span>
+                  <div
+                    class="truncate relative w-full h-full inline-block"
+                  >
+                    <span
+                      class="w-60 w-60"
+                    >
+                      users.list_section.status_disabled
+                    </span>
+                  </div>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div
+            class="cursor-pointer flex flex-row justify-between items-center h-12"
+          >
+            <div
+              class="subtitle"
+            >
+              users.filters.invites
+            </div>
+            <div>
+              <div
+                class=""
+              >
+                <svg
+                  class="cursor-pointer "
+                  height="24"
+                  viewBox="0 0 24 24"
+                  width="24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <rect
+                    fill="none"
+                    height="24"
+                    width="24"
+                  />
+                  <path
+                    class="active-item-icon"
+                    d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                    transform="translate(19 8) rotate(90)"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div>
+              <div
+                class="h-9"
+              >
+                <label
+                  class="flex flex-row items-center checkbox-button"
+                >
+                  <input
+                    class="checkbox"
+                    data-test-id="invites-checkbox-0"
+                    data-testid="invites-checkbox-0"
+                    id="invites[0]_0"
+                    name="invites[0]"
+                    type="checkbox"
+                  />
+                  <span
+                    class="checkbox-control"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium "
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="24"
+                          width="24"
+                        />
+                        <path
+                          class="svg-checkbox"
+                          d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                        />
+                      </svg>
+                    </div>
+                  </span>
+                  <div
+                    class="truncate relative w-full h-full inline-block"
+                  >
+                    <span
+                      class="w-60 w-60"
+                    >
+                      common.all
+                    </span>
+                  </div>
+                </label>
+              </div>
+              <div
+                class="h-9"
+              >
+                <label
+                  class="flex flex-row items-center checkbox-button"
+                >
+                  <input
+                    class="checkbox"
+                    data-test-id="invites-checkbox-1"
+                    data-testid="invites-checkbox-1"
+                    id="invites[1]_1"
+                    name="invites[1]"
+                    type="checkbox"
+                  />
+                  <span
+                    class="checkbox-control"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium "
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="24"
+                          width="24"
+                        />
+                        <path
+                          class="svg-checkbox"
+                          d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                        />
+                      </svg>
+                    </div>
+                  </span>
+                  <div
+                    class="truncate relative w-full h-full inline-block"
+                  >
+                    <span
+                      class="w-60 w-60"
+                    >
+                      users.list_section.invitation_no_invite
+                    </span>
+                  </div>
+                </label>
+              </div>
+              <div
+                class="h-9"
+              >
+                <label
+                  class="flex flex-row items-center checkbox-button"
+                >
+                  <input
+                    class="checkbox"
+                    data-test-id="invites-checkbox-2"
+                    data-testid="invites-checkbox-2"
+                    id="invites[2]_2"
+                    name="invites[2]"
+                    type="checkbox"
+                  />
+                  <span
+                    class="checkbox-control"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium "
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="24"
+                          width="24"
+                        />
+                        <path
+                          class="svg-checkbox"
+                          d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                        />
+                      </svg>
+                    </div>
+                  </span>
+                  <div
+                    class="truncate relative w-full h-full inline-block"
+                  >
+                    <span
+                      class="w-60 w-60"
+                    >
+                      users.list_section.invitation_sent
+                    </span>
+                  </div>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div
+            class="cursor-pointer flex flex-row justify-between items-center h-12"
+          >
+            <div
+              class="subtitle"
+            >
+              users.filters.role
+            </div>
+            <div>
+              <div
+                class=""
+              >
+                <svg
+                  class="cursor-pointer "
+                  height="24"
+                  viewBox="0 0 24 24"
+                  width="24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <rect
+                    fill="none"
+                    height="24"
+                    width="24"
+                  />
+                  <path
+                    class="active-item-icon"
+                    d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                    transform="translate(19 8) rotate(90)"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div>
+              <div
+                class="h-9"
+              >
+                <label
+                  class="flex flex-row items-center checkbox-button"
+                >
+                  <input
+                    class="checkbox"
+                    data-test-id="roles-checkbox-0"
+                    data-testid="roles-checkbox-0"
+                    id="roles[0]_0"
+                    name="roles[0]"
+                    type="checkbox"
+                  />
+                  <span
+                    class="checkbox-control"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium "
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="24"
+                          width="24"
+                        />
+                        <path
+                          class="svg-checkbox"
+                          d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                        />
+                      </svg>
+                    </div>
+                  </span>
+                  <div
+                    class="truncate relative w-full h-full inline-block"
+                  >
+                    <span
+                      class="w-60 w-60"
+                    >
+                      common.all
+                    </span>
+                  </div>
+                </label>
+              </div>
+              <div
+                class="h-9"
+              >
+                <label
+                  class="flex flex-row items-center checkbox-button"
+                >
+                  <input
+                    class="checkbox"
+                    data-test-id="roles-checkbox-1"
+                    data-testid="roles-checkbox-1"
+                    id="roles[1]_1"
+                    name="roles[1]"
+                    type="checkbox"
+                  />
+                  <span
+                    class="checkbox-control"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium "
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="24"
+                          width="24"
+                        />
+                        <path
+                          class="svg-checkbox"
+                          d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                        />
+                      </svg>
+                    </div>
+                  </span>
+                  <div
+                    class="truncate relative w-full h-full inline-block"
+                  >
+                    <span
+                      class="w-60 w-60"
+                    >
+                      string0
+                    </span>
+                  </div>
+                </label>
+              </div>
+              <div
+                class="h-9"
+              >
+                <label
+                  class="flex flex-row items-center checkbox-button"
+                >
+                  <input
+                    class="checkbox"
+                    data-test-id="roles-checkbox-2"
+                    data-testid="roles-checkbox-2"
+                    id="roles[2]_2"
+                    name="roles[2]"
+                    type="checkbox"
+                  />
+                  <span
+                    class="checkbox-control"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium "
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="24"
+                          width="24"
+                        />
+                        <path
+                          class="svg-checkbox"
+                          d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                        />
+                      </svg>
+                    </div>
+                  </span>
+                  <div
+                    class="truncate relative w-full h-full inline-block"
+                  >
+                    <span
+                      class="w-60 w-60"
+                    >
+                      string1
+                    </span>
+                  </div>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div
+            class="cursor-pointer flex flex-row justify-between items-center h-12"
+          >
+            <div
+              class="subtitle"
+            >
+              users.filters.department
+            </div>
+            <div>
+              <div
+                class=""
+              >
+                <svg
+                  class="cursor-pointer "
+                  height="24"
+                  viewBox="0 0 24 24"
+                  width="24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <rect
+                    fill="none"
+                    height="24"
+                    width="24"
+                  />
+                  <path
+                    class="active-item-icon"
+                    d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                    transform="translate(19 8) rotate(90)"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div>
+              <div
+                class="h-9"
+              >
+                <label
+                  class="flex flex-row items-center checkbox-button"
+                >
+                  <input
+                    class="checkbox"
+                    data-test-id="departments-checkbox-0"
+                    data-testid="departments-checkbox-0"
+                    id="departments[0]_0"
+                    name="departments[0]"
+                    type="checkbox"
+                  />
+                  <span
+                    class="checkbox-control"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium "
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="24"
+                          width="24"
+                        />
+                        <path
+                          class="svg-checkbox"
+                          d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                        />
+                      </svg>
+                    </div>
+                  </span>
+                  <div
+                    class="truncate relative w-full h-full inline-block"
+                  >
+                    <span
+                      class="w-60 w-60"
+                    >
+                      common.all
+                    </span>
+                  </div>
+                </label>
+              </div>
+              <div
+                class="h-9"
+              >
+                <label
+                  class="flex flex-row items-center checkbox-button"
+                >
+                  <input
+                    class="checkbox"
+                    data-test-id="departments-checkbox-1"
+                    data-testid="departments-checkbox-1"
+                    id="departments[1]_1"
+                    name="departments[1]"
+                    type="checkbox"
+                  />
+                  <span
+                    class="checkbox-control"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium "
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="24"
+                          width="24"
+                        />
+                        <path
+                          class="svg-checkbox"
+                          d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                        />
+                      </svg>
+                    </div>
+                  </span>
+                  <div
+                    class="truncate relative w-full h-full inline-block"
+                  >
+                    <span
+                      class="w-60 w-60"
+                    >
+                      A
+                    </span>
+                  </div>
+                </label>
+              </div>
+              <div
+                class="h-9"
+              >
+                <label
+                  class="flex flex-row items-center checkbox-button"
+                >
+                  <input
+                    class="checkbox"
+                    data-test-id="departments-checkbox-2"
+                    data-testid="departments-checkbox-2"
+                    id="departments[2]_2"
+                    name="departments[2]"
+                    type="checkbox"
+                  />
+                  <span
+                    class="checkbox-control"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium "
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="24"
+                          width="24"
+                        />
+                        <path
+                          class="svg-checkbox"
+                          d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                        />
+                      </svg>
+                    </div>
+                  </span>
+                  <div
+                    class="truncate relative w-full h-full inline-block"
+                  >
+                    <span
+                      class="w-60 w-60"
+                    >
+                      B
+                    </span>
+                  </div>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div
+            class="cursor-pointer flex flex-row justify-between items-center h-12"
+          >
+            <div
+              class="subtitle"
+            >
+              users.filters.job_title
+            </div>
+            <div>
+              <div
+                class=""
+              >
+                <svg
+                  class="cursor-pointer "
+                  height="24"
+                  viewBox="0 0 24 24"
+                  width="24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <rect
+                    fill="none"
+                    height="24"
+                    width="24"
+                  />
+                  <path
+                    class="active-item-icon"
+                    d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                    transform="translate(19 8) rotate(90)"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div>
+              <div
+                class="h-9"
+              >
+                <label
+                  class="flex flex-row items-center checkbox-button"
+                >
+                  <input
+                    class="checkbox"
+                    data-test-id="titles-checkbox-0"
+                    data-testid="titles-checkbox-0"
+                    id="titles[0]_0"
+                    name="titles[0]"
+                    type="checkbox"
+                  />
+                  <span
+                    class="checkbox-control"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium "
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="24"
+                          width="24"
+                        />
+                        <path
+                          class="svg-checkbox"
+                          d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                        />
+                      </svg>
+                    </div>
+                  </span>
+                  <div
+                    class="truncate relative w-full h-full inline-block"
+                  >
+                    <span
+                      class="w-60 w-60"
+                    >
+                      common.all
+                    </span>
+                  </div>
+                </label>
+              </div>
+              <div
+                class="h-9"
+              >
+                <label
+                  class="flex flex-row items-center checkbox-button"
+                >
+                  <input
+                    class="checkbox"
+                    data-test-id="titles-checkbox-1"
+                    data-testid="titles-checkbox-1"
+                    id="titles[1]_1"
+                    name="titles[1]"
+                    type="checkbox"
+                  />
+                  <span
+                    class="checkbox-control"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium "
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="24"
+                          width="24"
+                        />
+                        <path
+                          class="svg-checkbox"
+                          d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                        />
+                      </svg>
+                    </div>
+                  </span>
+                  <div
+                    class="truncate relative w-full h-full inline-block"
+                  >
+                    <span
+                      class="w-60 w-60"
+                    >
+                      A
+                    </span>
+                  </div>
+                </label>
+              </div>
+              <div
+                class="h-9"
+              >
+                <label
+                  class="flex flex-row items-center checkbox-button"
+                >
+                  <input
+                    class="checkbox"
+                    data-test-id="titles-checkbox-2"
+                    data-testid="titles-checkbox-2"
+                    id="titles[2]_2"
+                    name="titles[2]"
+                    type="checkbox"
+                  />
+                  <span
+                    class="checkbox-control"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium "
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="24"
+                          width="24"
+                        />
+                        <path
+                          class="svg-checkbox"
+                          d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                        />
+                      </svg>
+                    </div>
+                  </span>
+                  <div
+                    class="truncate relative w-full h-full inline-block"
+                  >
+                    <span
+                      class="w-60 w-60"
+                    >
+                      B
+                    </span>
+                  </div>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`UserFilter tests renders UserFilter correctly-false 1`] = `
+<DocumentFragment>
+  <div
+    class="hidden"
+  >
+    <div
+      class="pt-4 px-6 flex flex-col"
+    >
+      <div
+        class="flex-col items-center pb-2"
+      >
+        <div
+          class="py-3 subtitle"
+        >
+          users.filters.title
+        </div>
+        <div
+          class="flex flex-row pb-3"
+        >
+          <button
+            class="small-button cursor-pointer mr-4"
+            data-test-id="apply-button"
+            data-testid="apply-button"
+            type="button"
+          >
+            <div
+              class="flex flex-row justify-center items-center space-x-2"
+            >
+              <div>
+                users.filters.apply
+              </div>
+            </div>
+          </button>
+          <button
+            class="secondary-button cursor-pointer"
+            data-test-id="reset-all-button"
+            data-testid="reset-all-button"
+            type="button"
+          >
+            <div
+              class="flex flex-row justify-center items-center space-x-2"
+            >
+              <div>
+                users.filters.reset_all
+              </div>
+            </div>
+          </button>
+        </div>
+      </div>
+      <form>
+        <div>
+          <div
+            class="cursor-pointer flex flex-row justify-between items-center h-12"
+          >
+            <div
+              class="subtitle"
+            >
+              users.filters.statuses
+            </div>
+            <div>
+              <div
+                class=""
+              >
+                <svg
+                  class="cursor-pointer "
+                  height="24"
+                  viewBox="0 0 24 24"
+                  width="24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <rect
+                    fill="none"
+                    height="24"
+                    width="24"
+                  />
+                  <path
+                    class="active-item-icon"
+                    d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                    transform="translate(19 8) rotate(90)"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div>
+              <div
+                class="h-9"
+              >
+                <label
+                  class="flex flex-row items-center checkbox-button"
+                >
+                  <input
+                    class="checkbox"
+                    data-test-id="statuses-checkbox-0"
+                    data-testid="statuses-checkbox-0"
+                    id="statuses[0]_0"
+                    name="statuses[0]"
+                    type="checkbox"
+                  />
+                  <span
+                    class="checkbox-control"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium "
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="24"
+                          width="24"
+                        />
+                        <path
+                          class="svg-checkbox"
+                          d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                        />
+                      </svg>
+                    </div>
+                  </span>
+                  <div
+                    class="truncate relative w-full h-full inline-block"
+                  >
+                    <span
+                      class="w-60 w-60"
+                    >
+                      common.all
+                    </span>
+                  </div>
+                </label>
+              </div>
+              <div
+                class="h-9"
+              >
+                <label
+                  class="flex flex-row items-center checkbox-button"
+                >
+                  <input
+                    class="checkbox"
+                    data-test-id="statuses-checkbox-1"
+                    data-testid="statuses-checkbox-1"
+                    id="statuses[1]_1"
+                    name="statuses[1]"
+                    type="checkbox"
+                  />
+                  <span
+                    class="checkbox-control"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium "
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="24"
+                          width="24"
+                        />
+                        <path
+                          class="svg-checkbox"
+                          d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                        />
+                      </svg>
+                    </div>
+                  </span>
+                  <div
+                    class="truncate relative w-full h-full inline-block"
+                  >
+                    <span
+                      class="w-60 w-60"
+                    >
+                      users.list_section.status_enabled
+                    </span>
+                  </div>
+                </label>
+              </div>
+              <div
+                class="h-9"
+              >
+                <label
+                  class="flex flex-row items-center checkbox-button"
+                >
+                  <input
+                    class="checkbox"
+                    data-test-id="statuses-checkbox-2"
+                    data-testid="statuses-checkbox-2"
+                    id="statuses[2]_2"
+                    name="statuses[2]"
+                    type="checkbox"
+                  />
+                  <span
+                    class="checkbox-control"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium "
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="24"
+                          width="24"
+                        />
+                        <path
+                          class="svg-checkbox"
+                          d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                        />
+                      </svg>
+                    </div>
+                  </span>
+                  <div
+                    class="truncate relative w-full h-full inline-block"
+                  >
+                    <span
+                      class="w-60 w-60"
+                    >
+                      users.list_section.status_disabled
+                    </span>
+                  </div>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div
+            class="cursor-pointer flex flex-row justify-between items-center h-12"
+          >
+            <div
+              class="subtitle"
+            >
+              users.filters.invites
+            </div>
+            <div>
+              <div
+                class=""
+              >
+                <svg
+                  class="cursor-pointer "
+                  height="24"
+                  viewBox="0 0 24 24"
+                  width="24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <rect
+                    fill="none"
+                    height="24"
+                    width="24"
+                  />
+                  <path
+                    class="active-item-icon"
+                    d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                    transform="translate(19 8) rotate(90)"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div>
+              <div
+                class="h-9"
+              >
+                <label
+                  class="flex flex-row items-center checkbox-button"
+                >
+                  <input
+                    class="checkbox"
+                    data-test-id="invites-checkbox-0"
+                    data-testid="invites-checkbox-0"
+                    id="invites[0]_0"
+                    name="invites[0]"
+                    type="checkbox"
+                  />
+                  <span
+                    class="checkbox-control"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium "
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="24"
+                          width="24"
+                        />
+                        <path
+                          class="svg-checkbox"
+                          d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                        />
+                      </svg>
+                    </div>
+                  </span>
+                  <div
+                    class="truncate relative w-full h-full inline-block"
+                  >
+                    <span
+                      class="w-60 w-60"
+                    >
+                      common.all
+                    </span>
+                  </div>
+                </label>
+              </div>
+              <div
+                class="h-9"
+              >
+                <label
+                  class="flex flex-row items-center checkbox-button"
+                >
+                  <input
+                    class="checkbox"
+                    data-test-id="invites-checkbox-1"
+                    data-testid="invites-checkbox-1"
+                    id="invites[1]_1"
+                    name="invites[1]"
+                    type="checkbox"
+                  />
+                  <span
+                    class="checkbox-control"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium "
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="24"
+                          width="24"
+                        />
+                        <path
+                          class="svg-checkbox"
+                          d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                        />
+                      </svg>
+                    </div>
+                  </span>
+                  <div
+                    class="truncate relative w-full h-full inline-block"
+                  >
+                    <span
+                      class="w-60 w-60"
+                    >
+                      users.list_section.invitation_no_invite
+                    </span>
+                  </div>
+                </label>
+              </div>
+              <div
+                class="h-9"
+              >
+                <label
+                  class="flex flex-row items-center checkbox-button"
+                >
+                  <input
+                    class="checkbox"
+                    data-test-id="invites-checkbox-2"
+                    data-testid="invites-checkbox-2"
+                    id="invites[2]_2"
+                    name="invites[2]"
+                    type="checkbox"
+                  />
+                  <span
+                    class="checkbox-control"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium "
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="24"
+                          width="24"
+                        />
+                        <path
+                          class="svg-checkbox"
+                          d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                        />
+                      </svg>
+                    </div>
+                  </span>
+                  <div
+                    class="truncate relative w-full h-full inline-block"
+                  >
+                    <span
+                      class="w-60 w-60"
+                    >
+                      users.list_section.invitation_sent
+                    </span>
+                  </div>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div
+            class="cursor-pointer flex flex-row justify-between items-center h-12"
+          >
+            <div
+              class="subtitle"
+            >
+              users.filters.role
+            </div>
+            <div>
+              <div
+                class=""
+              >
+                <svg
+                  class="cursor-pointer "
+                  height="24"
+                  viewBox="0 0 24 24"
+                  width="24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <rect
+                    fill="none"
+                    height="24"
+                    width="24"
+                  />
+                  <path
+                    class="active-item-icon"
+                    d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                    transform="translate(19 8) rotate(90)"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div>
+              <div
+                class="h-9"
+              >
+                <label
+                  class="flex flex-row items-center checkbox-button"
+                >
+                  <input
+                    class="checkbox"
+                    data-test-id="roles-checkbox-0"
+                    data-testid="roles-checkbox-0"
+                    id="roles[0]_0"
+                    name="roles[0]"
+                    type="checkbox"
+                  />
+                  <span
+                    class="checkbox-control"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium "
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="24"
+                          width="24"
+                        />
+                        <path
+                          class="svg-checkbox"
+                          d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                        />
+                      </svg>
+                    </div>
+                  </span>
+                  <div
+                    class="truncate relative w-full h-full inline-block"
+                  >
+                    <span
+                      class="w-60 w-60"
+                    >
+                      common.all
+                    </span>
+                  </div>
+                </label>
+              </div>
+              <div
+                class="h-9"
+              >
+                <label
+                  class="flex flex-row items-center checkbox-button"
+                >
+                  <input
+                    class="checkbox"
+                    data-test-id="roles-checkbox-1"
+                    data-testid="roles-checkbox-1"
+                    id="roles[1]_1"
+                    name="roles[1]"
+                    type="checkbox"
+                  />
+                  <span
+                    class="checkbox-control"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium "
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="24"
+                          width="24"
+                        />
+                        <path
+                          class="svg-checkbox"
+                          d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                        />
+                      </svg>
+                    </div>
+                  </span>
+                  <div
+                    class="truncate relative w-full h-full inline-block"
+                  >
+                    <span
+                      class="w-60 w-60"
+                    >
+                      string0
+                    </span>
+                  </div>
+                </label>
+              </div>
+              <div
+                class="h-9"
+              >
+                <label
+                  class="flex flex-row items-center checkbox-button"
+                >
+                  <input
+                    class="checkbox"
+                    data-test-id="roles-checkbox-2"
+                    data-testid="roles-checkbox-2"
+                    id="roles[2]_2"
+                    name="roles[2]"
+                    type="checkbox"
+                  />
+                  <span
+                    class="checkbox-control"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium "
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="24"
+                          width="24"
+                        />
+                        <path
+                          class="svg-checkbox"
+                          d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                        />
+                      </svg>
+                    </div>
+                  </span>
+                  <div
+                    class="truncate relative w-full h-full inline-block"
+                  >
+                    <span
+                      class="w-60 w-60"
+                    >
+                      string1
+                    </span>
+                  </div>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div
+            class="cursor-pointer flex flex-row justify-between items-center h-12"
+          >
+            <div
+              class="subtitle"
+            >
+              users.filters.department
+            </div>
+            <div>
+              <div
+                class=""
+              >
+                <svg
+                  class="cursor-pointer "
+                  height="24"
+                  viewBox="0 0 24 24"
+                  width="24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <rect
+                    fill="none"
+                    height="24"
+                    width="24"
+                  />
+                  <path
+                    class="active-item-icon"
+                    d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                    transform="translate(19 8) rotate(90)"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div>
+              <div
+                class="h-9"
+              >
+                <label
+                  class="flex flex-row items-center checkbox-button"
+                >
+                  <input
+                    class="checkbox"
+                    data-test-id="departments-checkbox-0"
+                    data-testid="departments-checkbox-0"
+                    id="departments[0]_0"
+                    name="departments[0]"
+                    type="checkbox"
+                  />
+                  <span
+                    class="checkbox-control"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium "
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="24"
+                          width="24"
+                        />
+                        <path
+                          class="svg-checkbox"
+                          d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                        />
+                      </svg>
+                    </div>
+                  </span>
+                  <div
+                    class="truncate relative w-full h-full inline-block"
+                  >
+                    <span
+                      class="w-60 w-60"
+                    >
+                      common.all
+                    </span>
+                  </div>
+                </label>
+              </div>
+              <div
+                class="h-9"
+              >
+                <label
+                  class="flex flex-row items-center checkbox-button"
+                >
+                  <input
+                    class="checkbox"
+                    data-test-id="departments-checkbox-1"
+                    data-testid="departments-checkbox-1"
+                    id="departments[1]_1"
+                    name="departments[1]"
+                    type="checkbox"
+                  />
+                  <span
+                    class="checkbox-control"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium "
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="24"
+                          width="24"
+                        />
+                        <path
+                          class="svg-checkbox"
+                          d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                        />
+                      </svg>
+                    </div>
+                  </span>
+                  <div
+                    class="truncate relative w-full h-full inline-block"
+                  >
+                    <span
+                      class="w-60 w-60"
+                    >
+                      A
+                    </span>
+                  </div>
+                </label>
+              </div>
+              <div
+                class="h-9"
+              >
+                <label
+                  class="flex flex-row items-center checkbox-button"
+                >
+                  <input
+                    class="checkbox"
+                    data-test-id="departments-checkbox-2"
+                    data-testid="departments-checkbox-2"
+                    id="departments[2]_2"
+                    name="departments[2]"
+                    type="checkbox"
+                  />
+                  <span
+                    class="checkbox-control"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium "
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="24"
+                          width="24"
+                        />
+                        <path
+                          class="svg-checkbox"
+                          d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                        />
+                      </svg>
+                    </div>
+                  </span>
+                  <div
+                    class="truncate relative w-full h-full inline-block"
+                  >
+                    <span
+                      class="w-60 w-60"
+                    >
+                      B
+                    </span>
+                  </div>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div
+            class="cursor-pointer flex flex-row justify-between items-center h-12"
+          >
+            <div
+              class="subtitle"
+            >
+              users.filters.job_title
+            </div>
+            <div>
+              <div
+                class=""
+              >
+                <svg
+                  class="cursor-pointer "
+                  height="24"
+                  viewBox="0 0 24 24"
+                  width="24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <rect
+                    fill="none"
+                    height="24"
+                    width="24"
+                  />
+                  <path
+                    class="active-item-icon"
+                    d="M7,0,8.273,1.273,2.545,7l5.727,5.727L7,14,0,7Z"
+                    transform="translate(19 8) rotate(90)"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div>
+              <div
+                class="h-9"
+              >
+                <label
+                  class="flex flex-row items-center checkbox-button"
+                >
+                  <input
+                    class="checkbox"
+                    data-test-id="titles-checkbox-0"
+                    data-testid="titles-checkbox-0"
+                    id="titles[0]_0"
+                    name="titles[0]"
+                    type="checkbox"
+                  />
+                  <span
+                    class="checkbox-control"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium "
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="24"
+                          width="24"
+                        />
+                        <path
+                          class="svg-checkbox"
+                          d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                        />
+                      </svg>
+                    </div>
+                  </span>
+                  <div
+                    class="truncate relative w-full h-full inline-block"
+                  >
+                    <span
+                      class="w-60 w-60"
+                    >
+                      common.all
+                    </span>
+                  </div>
+                </label>
+              </div>
+              <div
+                class="h-9"
+              >
+                <label
+                  class="flex flex-row items-center checkbox-button"
+                >
+                  <input
+                    class="checkbox"
+                    data-test-id="titles-checkbox-1"
+                    data-testid="titles-checkbox-1"
+                    id="titles[1]_1"
+                    name="titles[1]"
+                    type="checkbox"
+                  />
+                  <span
+                    class="checkbox-control"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium "
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="24"
+                          width="24"
+                        />
+                        <path
+                          class="svg-checkbox"
+                          d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                        />
+                      </svg>
+                    </div>
+                  </span>
+                  <div
+                    class="truncate relative w-full h-full inline-block"
+                  >
+                    <span
+                      class="w-60 w-60"
+                    >
+                      A
+                    </span>
+                  </div>
+                </label>
+              </div>
+              <div
+                class="h-9"
+              >
+                <label
+                  class="flex flex-row items-center checkbox-button"
+                >
+                  <input
+                    class="checkbox"
+                    data-test-id="titles-checkbox-2"
+                    data-testid="titles-checkbox-2"
+                    id="titles[2]_2"
+                    name="titles[2]"
+                    type="checkbox"
+                  />
+                  <span
+                    class="checkbox-control"
+                  >
+                    <div
+                      class=""
+                    >
+                      <svg
+                        class="icon-medium "
+                        height="24"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          fill="none"
+                          height="24"
+                          width="24"
+                        />
+                        <path
+                          class="svg-checkbox"
+                          d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                        />
+                      </svg>
+                    </div>
+                  </span>
+                  <div
+                    class="truncate relative w-full h-full inline-block"
+                  >
+                    <span
+                      class="w-60 w-60"
+                    >
+                      B
+                    </span>
+                  </div>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</DocumentFragment>
+`;

@@ -21,9 +21,10 @@ interface MoreMenuProps {
     horizontalOffset?: number;
     closeOnMouseLeave?: boolean;
     forceToClose?: boolean;
+    dataTestId?: string;
 }
 
-const MoreMenu = ({value, items, menuClassName, iconClassName, iconFillClassname, containerClassName, menuPlacement = 'bottom', verticalOffset = 0, horizontalOffset = 0, closeOnMouseLeave = false, forceToClose = false, ...props}: MoreMenuProps) => {
+const MoreMenu = ({value, items, menuClassName, iconClassName, iconFillClassname, containerClassName, menuPlacement = 'bottom', verticalOffset = 0, horizontalOffset = 0, closeOnMouseLeave = false, forceToClose = false, dataTestId ='more-menu-toggle' , ...props}: MoreMenuProps) => {
     const [isVisible, setIsVisible, elementRef] = useComponentVisibility<HTMLDivElement>(false);
     const [valueSelected, setValueSelected] = useState(value);
     const iconContainerRef = useRef<HTMLDivElement>(null);
@@ -83,6 +84,7 @@ const MoreMenu = ({value, items, menuClassName, iconClassName, iconFillClassname
 
     return (<div ref={elementRef} className={containerClassName}>
         <div
+            data-testid={dataTestId}
             className="relative flex flex-row items-center cursor-pointer flex-nowrap"
             onClick={() => setIsVisible(!isVisible)}
             ref={iconContainerRef}

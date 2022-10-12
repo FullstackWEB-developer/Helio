@@ -97,6 +97,7 @@ exports[`Ticket List tests renders ticket-list correctly 1`] = `
                       checked=""
                       class="checkbox"
                       data-test-id="statuses-checkbox-0"
+                      data-testid="statuses-checkbox-0"
                       id="statuses[0]_0"
                       name="statuses[0]"
                       type="checkbox"
@@ -188,6 +189,7 @@ exports[`Ticket List tests renders ticket-list correctly 1`] = `
                       checked=""
                       class="checkbox"
                       data-test-id="states-checkbox-0"
+                      data-testid="states-checkbox-0"
                       id="states[0]_0"
                       name="states[0]"
                       type="checkbox"
@@ -610,6 +612,7 @@ exports[`Ticket List tests renders ticket-list correctly 1`] = `
                       checked=""
                       class="checkbox"
                       data-test-id="channels-checkbox-0"
+                      data-testid="channels-checkbox-0"
                       id="channels[0]_0"
                       name="channels[0]"
                       type="checkbox"
@@ -701,6 +704,7 @@ exports[`Ticket List tests renders ticket-list correctly 1`] = `
                       checked=""
                       class="checkbox"
                       data-test-id="ticketTypes-checkbox-0"
+                      data-testid="ticketTypes-checkbox-0"
                       id="ticketTypes[0]_0"
                       name="ticketTypes[0]"
                       type="checkbox"
@@ -930,6 +934,7 @@ exports[`Ticket List tests renders ticket-list correctly 1`] = `
                       checked=""
                       class="checkbox"
                       data-test-id="offices-checkbox-0"
+                      data-testid="offices-checkbox-0"
                       id="offices[0]_0"
                       name="offices[0]"
                       type="checkbox"
@@ -1149,6 +1154,7 @@ exports[`Ticket List tests renders ticket-list correctly 1`] = `
                     <input
                       class="checkbox"
                       data-test-id="patientRating-checkbox-0"
+                      data-testid="patientRating-checkbox-0"
                       id="patientRating[0]_0"
                       name="patientRating[0]"
                       type="checkbox"
@@ -1198,6 +1204,7 @@ exports[`Ticket List tests renders ticket-list correctly 1`] = `
                     <input
                       class="checkbox"
                       data-test-id="patientRating-checkbox-1"
+                      data-testid="patientRating-checkbox-1"
                       id="patientRating[1]_1"
                       name="patientRating[1]"
                       type="checkbox"
@@ -1288,6 +1295,7 @@ exports[`Ticket List tests renders ticket-list correctly 1`] = `
                     <input
                       class="checkbox"
                       data-test-id="botRating-checkbox-0"
+                      data-testid="botRating-checkbox-0"
                       id="botRating[0]_0"
                       name="botRating[0]"
                       type="checkbox"
@@ -1337,6 +1345,7 @@ exports[`Ticket List tests renders ticket-list correctly 1`] = `
                     <input
                       class="checkbox"
                       data-test-id="botRating-checkbox-1"
+                      data-testid="botRating-checkbox-1"
                       id="botRating[1]_1"
                       name="botRating[1]"
                       type="checkbox"
@@ -1452,6 +1461,7 @@ exports[`Ticket List tests renders ticket-list correctly 1`] = `
                   <input
                     autocomplete="off"
                     class="py-2.5 h-full w-full search-input-field body2 pl-12 border-b"
+                    data-testid="search"
                     placeholder="tickets.search_tag"
                     type="text"
                     value=""
@@ -1733,6 +1743,7 @@ exports[`Ticket List tests renders ticket-list correctly 1`] = `
           <input
             autocomplete="off"
             class="py-2.5 h-full w-full search-input-field body2 border-b-0 pl-12"
+            data-testid="search"
             placeholder="common.search"
             type="text"
             value=""
@@ -2264,6 +2275,7 @@ exports[`Ticket List tests renders ticket-list correctly 1`] = `
                       <input
                         autocomplete="off"
                         class="py-2.5 h-full w-full search-input-field body2 pl-12 border-b"
+                        data-testid="search"
                         placeholder="common.search"
                         type="text"
                         value=""
@@ -2292,6 +2304,7 @@ exports[`Ticket List tests renders ticket-list correctly 1`] = `
                 <div>
                   <div
                     class="relative flex flex-row items-center cursor-pointer flex-nowrap"
+                    data-testid="more-menu-toggle"
                   >
                     <div
                       class=""

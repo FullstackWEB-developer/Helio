@@ -29,8 +29,8 @@ import {useHistory} from 'react-router';
 import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
 import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
 import {UserListCheckedState} from '../models/user-list-checked-state.model';
-import utils from '@shared/utils/utils';
 import {setUserList} from '@shared/store/lookups/lookups.slice';
+import useCheckPermission from '@shared/hooks/useCheckPermission';
 
 const UserList = () => {
     const {t} = useTranslation();
@@ -43,7 +43,7 @@ const UserList = () => {
     const [userSelected, setUserSelected] = useState<Dictionary<UserListCheckedState>>({});
     const [checkAll, setCheckAll] = useState(false);
     const [forceMoreMenuClose, setForceMoreMenuClose] = useState(false);
-    const isEditAccess = utils.hasPermission('Users.EditUserDetail');
+    const isEditAccess = useCheckPermission('Users.EditUserDetail');
 
     const {data, isFetching, refetch} = useQuery<PagedList<UserDetail>>([GetUserList, filters],
         () => getUsers(filters, paginationProperties.page, paginationProperties.pageSize),

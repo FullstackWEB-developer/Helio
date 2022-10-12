@@ -1,0 +1,68 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ProviderToolTip tests renders ProviderToolTip correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="provider-mapping-tool-tip"
+    data-testid="toggle"
+  >
+    <div
+      class=""
+    >
+      <svg
+        class="cursor-pointer icon "
+        height="16"
+        version="1.1"
+        viewBox="0 0 16 16"
+        width="16"
+        xmlns="https://www.w3.org/2000/svg"
+      >
+        <g
+          transform="translate(-16.988 -15.519)"
+        >
+          <circle
+            class="warning-icon"
+            cx="24.988"
+            cy="23.519"
+            r="8"
+          />
+          <rect
+            fill="#fff"
+            height="5"
+            width="2"
+            x="23.988"
+            y="19.519"
+          />
+          <rect
+            fill="#fff"
+            height="2"
+            width="2"
+            x="23.988"
+            y="25.519"
+          />
+        </g>
+      </svg>
+    </div>
+    <div
+      class="z-10 tooltip-container"
+      data-popper-escaped="true"
+      data-popper-placement="bottom-start"
+      data-popper-reference-hidden="true"
+      data-test-id="tooltip-container"
+      style="position: absolute; left: 0px; top: 0px; transform: translate(0px, 10px);"
+    >
+      <div
+        class="arrow"
+        data-test-id="tooltip-arrow"
+        style="position: absolute; left: 0px; transform: translate(0px, 0px);"
+      />
+      <div
+        class="flex flex-col p-6 body2 w-80"
+      >
+        <span />
+        <span />
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

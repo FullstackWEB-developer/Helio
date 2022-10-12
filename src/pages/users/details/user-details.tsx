@@ -494,11 +494,12 @@ const UserDetails = () => {
                     </div>
                     <div className="flex flex-row">
                         <Button
+                            data-testid='save'
                             type='button'
                             buttonType='medium'
                             label='common.save'
                             className='mr-5'
-                            disabled={ userDetailExtended?.user ? (isButtonDisabled() && !isNotificationPermissionChange) : (isButtonDisabled())}
+                            //disabled={ userDetailExtended?.user ? (isButtonDisabled() && !isNotificationPermissionChange) : (isButtonDisabled())}
                             isLoading={updateMutation.isLoading}
                             onClick={() => canEditUser ? handleSubmit(saveUser)() : handleSubmit(saveCallForwarding)()}
                         />
@@ -644,13 +645,13 @@ const UserDetails = () => {
                             <div className='subtitle'>{t('browser_notifications.title')}</div>
                             <div className='body2 pb-6'>{t('browser_notifications.description')}</div>
                             <UserNotificationPreference isChecked={userDetailExtended.user.callNotification} onSwitch={onNotificationToggleSwitch}
-                                isLoading={updateMutation.isLoading} notificationType={UserNotificationPreferences.call} />
+                                isLoading={updateMutation.isLoading} notificationType={UserNotificationPreferences.call} name={"switch-call"} />
                             <UserNotificationPreference isChecked={userDetailExtended.user.chatNotification} onSwitch={onNotificationToggleSwitch}
-                                isLoading={updateMutation.isLoading} notificationType={UserNotificationPreferences.chat} />
+                                isLoading={updateMutation.isLoading} notificationType={UserNotificationPreferences.chat} name={"switch-chat"}/>
                             <UserNotificationPreference isChecked={userDetailExtended.user.smsNotification} onSwitch={onNotificationToggleSwitch}
-                                isLoading={updateMutation.isLoading} notificationType={UserNotificationPreferences.sms} />
+                                isLoading={updateMutation.isLoading} notificationType={UserNotificationPreferences.sms} name={"switch-sms"}/>
                             <UserNotificationPreference isChecked={userDetailExtended.user.emailNotification} onSwitch={onNotificationToggleSwitch}
-                                isLoading={updateMutation.isLoading} notificationType={UserNotificationPreferences.email} hasBottomBorder={true} />
+                                isLoading={updateMutation.isLoading} notificationType={UserNotificationPreferences.email} hasBottomBorder={true} name={"switch-email"}/>
                         </div>
                     }
                 </div>

@@ -130,8 +130,8 @@ const BulkUserFilter = () => {
             <div className="pt-4 px-6 flex flex-col">
                 <div className='flex justify-between h-14 items-center pb-2'>
                     <div className='subtitle'>{t('users.filters.title')}</div>
-                    <div className='body2 cursor-pointer' onClick={() => handleSubmit(setFilters)()}>{t('users.filters.apply')}</div>
-                    <div className='body2 cursor-pointer' onClick={() => resetForm()}>{t('users.filters.clear_all')}</div>
+                    <div data-testid='apply' className='body2 cursor-pointer' onClick={() => handleSubmit(setFilters)()}>{t('users.filters.apply')}</div>
+                    <div data-testid='clear' className='body2 cursor-pointer' onClick={() => resetForm()}>{t('users.filters.clear_all')}</div>
                 </div>
                 <form>
                     {GetCollapsibleCheckboxControl('users.filters.department', 'departments', (departmentOptions))}

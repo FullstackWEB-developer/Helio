@@ -1,0 +1,709 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UserListActions tests renders UserListActions correctly cancel 1`] = `
+<DocumentFragment>
+  <div>
+    <div
+      class="relative flex flex-row items-center cursor-pointer flex-nowrap"
+      data-testid="user-list-0-more-menu-toggle"
+    >
+      <div
+        class=""
+      >
+        <svg
+          class="opacity-0 group-hover:opacity-100 "
+          height="24"
+          viewBox="0 0 24 24"
+          width="24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g
+            transform="translate(-416 -52)"
+          >
+            <rect
+              fill="none"
+              height="24"
+              transform="translate(416 52)"
+              width="24"
+            />
+            <path
+              class="fill-default"
+              d="M12,8a2,2,0,1,0-2-2A2.006,2.006,0,0,0,12,8Zm0,2a2,2,0,1,0,2,2A2.006,2.006,0,0,0,12,10Zm0,6a2,2,0,1,0,2,2A2.006,2.006,0,0,0,12,16Z"
+              transform="translate(416 52)"
+            />
+          </g>
+        </svg>
+      </div>
+    </div>
+    <div
+      class="absolute z-10 more-menu-shadow hidden"
+      data-popper-escaped="true"
+      data-popper-placement="bottom"
+      data-popper-reference-hidden="true"
+      style="position: fixed; left: 0px; top: 0px; transform: translate(0px, 0px);"
+    >
+      <div
+        class="py-2 bg-white dropdown-body"
+        data-test-id="dropdown-undefined"
+        data-testid="dropdown-undefined"
+      >
+        <div
+          class="overflow-y-auto overflow-x-hidden dropdown-max-height "
+        >
+          <span>
+            <div
+              class="w-full px-4 dropdown-cell justify-between flex items-center  body2    cursor-pointer "
+              data-testid="users.list_section.edit"
+            >
+              <div
+                class="flex flex-row w-full items-center"
+                data-test-id="dropdown-cell-icon-content"
+              >
+                <div
+                  class="flex items-center "
+                  data-test-id="dropdown-cell-text-users.list_section.edit"
+                >
+                  users.list_section.edit
+                </div>
+              </div>
+            </div>
+          </span>
+          <span>
+            <div
+              class="w-full px-4 dropdown-cell justify-between flex items-center  body2    cursor-pointer "
+              data-testid="users.list_section.resend_invite"
+            >
+              <div
+                class="flex flex-row w-full items-center"
+                data-test-id="dropdown-cell-icon-content"
+              >
+                <div
+                  class="flex items-center "
+                  data-test-id="dropdown-cell-text-users.list_section.resend_invite"
+                >
+                  users.list_section.resend_invite
+                </div>
+              </div>
+            </div>
+          </span>
+          <span>
+            <div
+              class="w-full px-4 dropdown-cell justify-between flex items-center  body2-white    is-selected "
+              data-testid="users.list_section.disable"
+            >
+              <div
+                class="flex flex-row w-full items-center"
+                data-test-id="dropdown-cell-icon-content"
+              >
+                <div
+                  class="flex items-center "
+                  data-test-id="dropdown-cell-text-users.list_section.disable"
+                >
+                  users.list_section.disable
+                </div>
+              </div>
+            </div>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="absolute top-0 w-1/3 left-1/3"
+  >
+    <div
+      class="flex items-center justify-center m-auto justify-self-center"
+    />
+  </div>
+</DocumentFragment>
+`;
+
+exports[`UserListActions tests renders UserListActions correctly close 1`] = `
+<DocumentFragment>
+  <div>
+    <div
+      class="relative flex flex-row items-center cursor-pointer flex-nowrap"
+      data-testid="user-list-0-more-menu-toggle"
+    >
+      <div
+        class=""
+      >
+        <svg
+          class="opacity-0 group-hover:opacity-100 "
+          height="24"
+          viewBox="0 0 24 24"
+          width="24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g
+            transform="translate(-416 -52)"
+          >
+            <rect
+              fill="none"
+              height="24"
+              transform="translate(416 52)"
+              width="24"
+            />
+            <path
+              class="fill-default"
+              d="M12,8a2,2,0,1,0-2-2A2.006,2.006,0,0,0,12,8Zm0,2a2,2,0,1,0,2,2A2.006,2.006,0,0,0,12,10Zm0,6a2,2,0,1,0,2,2A2.006,2.006,0,0,0,12,16Z"
+              transform="translate(416 52)"
+            />
+          </g>
+        </svg>
+      </div>
+    </div>
+    <div
+      class="absolute z-10 more-menu-shadow hidden"
+      data-popper-escaped="true"
+      data-popper-placement="bottom"
+      data-popper-reference-hidden="true"
+      style="position: fixed; left: 0px; top: 0px; transform: translate(0px, 0px);"
+    >
+      <div
+        class="py-2 bg-white dropdown-body"
+        data-test-id="dropdown-undefined"
+        data-testid="dropdown-undefined"
+      >
+        <div
+          class="overflow-y-auto overflow-x-hidden dropdown-max-height "
+        >
+          <span>
+            <div
+              class="w-full px-4 dropdown-cell justify-between flex items-center  body2    cursor-pointer "
+              data-testid="users.list_section.edit"
+            >
+              <div
+                class="flex flex-row w-full items-center"
+                data-test-id="dropdown-cell-icon-content"
+              >
+                <div
+                  class="flex items-center "
+                  data-test-id="dropdown-cell-text-users.list_section.edit"
+                >
+                  users.list_section.edit
+                </div>
+              </div>
+            </div>
+          </span>
+          <span>
+            <div
+              class="w-full px-4 dropdown-cell justify-between flex items-center  body2    cursor-pointer "
+              data-testid="users.list_section.resend_invite"
+            >
+              <div
+                class="flex flex-row w-full items-center"
+                data-test-id="dropdown-cell-icon-content"
+              >
+                <div
+                  class="flex items-center "
+                  data-test-id="dropdown-cell-text-users.list_section.resend_invite"
+                >
+                  users.list_section.resend_invite
+                </div>
+              </div>
+            </div>
+          </span>
+          <span>
+            <div
+              class="w-full px-4 dropdown-cell justify-between flex items-center  body2-white    is-selected "
+              data-testid="users.list_section.disable"
+            >
+              <div
+                class="flex flex-row w-full items-center"
+                data-test-id="dropdown-cell-icon-content"
+              >
+                <div
+                  class="flex items-center "
+                  data-test-id="dropdown-cell-text-users.list_section.disable"
+                >
+                  users.list_section.disable
+                </div>
+              </div>
+            </div>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="absolute top-0 w-1/3 left-1/3"
+  >
+    <div
+      class="flex items-center justify-center m-auto justify-self-center"
+    />
+  </div>
+</DocumentFragment>
+`;
+
+exports[`UserListActions tests renders UserListActions correctly edit 1`] = `
+<DocumentFragment>
+  <div>
+    <div
+      class="relative flex flex-row items-center cursor-pointer flex-nowrap"
+      data-testid="user-list-0-more-menu-toggle"
+    >
+      <div
+        class=""
+      >
+        <svg
+          class="opacity-0 group-hover:opacity-100 "
+          height="24"
+          viewBox="0 0 24 24"
+          width="24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g
+            transform="translate(-416 -52)"
+          >
+            <rect
+              fill="none"
+              height="24"
+              transform="translate(416 52)"
+              width="24"
+            />
+            <path
+              class="fill-default"
+              d="M12,8a2,2,0,1,0-2-2A2.006,2.006,0,0,0,12,8Zm0,2a2,2,0,1,0,2,2A2.006,2.006,0,0,0,12,10Zm0,6a2,2,0,1,0,2,2A2.006,2.006,0,0,0,12,16Z"
+              transform="translate(416 52)"
+            />
+          </g>
+        </svg>
+      </div>
+    </div>
+    <div
+      class="absolute z-10 more-menu-shadow hidden"
+      data-popper-escaped="true"
+      data-popper-placement="bottom"
+      data-popper-reference-hidden="true"
+      style="position: fixed; left: 0px; top: 0px; transform: translate(0px, 0px);"
+    >
+      <div
+        class="py-2 bg-white dropdown-body"
+        data-test-id="dropdown-undefined"
+        data-testid="dropdown-undefined"
+      >
+        <div
+          class="overflow-y-auto overflow-x-hidden dropdown-max-height "
+        >
+          <span>
+            <div
+              class="w-full px-4 dropdown-cell justify-between flex items-center  body2-white    is-selected "
+              data-testid="users.list_section.edit"
+            >
+              <div
+                class="flex flex-row w-full items-center"
+                data-test-id="dropdown-cell-icon-content"
+              >
+                <div
+                  class="flex items-center "
+                  data-test-id="dropdown-cell-text-users.list_section.edit"
+                >
+                  users.list_section.edit
+                </div>
+              </div>
+            </div>
+          </span>
+          <span>
+            <div
+              class="w-full px-4 dropdown-cell justify-between flex items-center  body2    cursor-pointer "
+              data-testid="users.list_section.resend_invite"
+            >
+              <div
+                class="flex flex-row w-full items-center"
+                data-test-id="dropdown-cell-icon-content"
+              >
+                <div
+                  class="flex items-center "
+                  data-test-id="dropdown-cell-text-users.list_section.resend_invite"
+                >
+                  users.list_section.resend_invite
+                </div>
+              </div>
+            </div>
+          </span>
+          <span>
+            <div
+              class="w-full px-4 dropdown-cell justify-between flex items-center  body2    cursor-pointer "
+              data-testid="users.list_section.disable"
+            >
+              <div
+                class="flex flex-row w-full items-center"
+                data-test-id="dropdown-cell-icon-content"
+              >
+                <div
+                  class="flex items-center "
+                  data-test-id="dropdown-cell-text-users.list_section.disable"
+                >
+                  users.list_section.disable
+                </div>
+              </div>
+            </div>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="absolute top-0 w-1/3 left-1/3"
+  >
+    <div
+      class="flex items-center justify-center m-auto justify-self-center"
+    />
+  </div>
+</DocumentFragment>
+`;
+
+exports[`UserListActions tests renders UserListActions correctly enable 1`] = `
+<DocumentFragment>
+  <div>
+    <div
+      class="relative flex flex-row items-center cursor-pointer flex-nowrap"
+      data-testid="user-list-0-more-menu-toggle"
+    >
+      <div
+        class=""
+      >
+        <svg
+          class="opacity-0 group-hover:opacity-100 "
+          height="24"
+          viewBox="0 0 24 24"
+          width="24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g
+            transform="translate(-416 -52)"
+          >
+            <rect
+              fill="none"
+              height="24"
+              transform="translate(416 52)"
+              width="24"
+            />
+            <path
+              class="fill-default"
+              d="M12,8a2,2,0,1,0-2-2A2.006,2.006,0,0,0,12,8Zm0,2a2,2,0,1,0,2,2A2.006,2.006,0,0,0,12,10Zm0,6a2,2,0,1,0,2,2A2.006,2.006,0,0,0,12,16Z"
+              transform="translate(416 52)"
+            />
+          </g>
+        </svg>
+      </div>
+    </div>
+    <div
+      class="absolute z-10 more-menu-shadow hidden"
+      data-popper-escaped="true"
+      data-popper-placement="bottom"
+      data-popper-reference-hidden="true"
+      style="position: fixed; left: 0px; top: 0px; transform: translate(0px, 0px);"
+    >
+      <div
+        class="py-2 bg-white dropdown-body"
+        data-test-id="dropdown-undefined"
+        data-testid="dropdown-undefined"
+      >
+        <div
+          class="overflow-y-auto overflow-x-hidden dropdown-max-height "
+        >
+          <span>
+            <div
+              class="w-full px-4 dropdown-cell justify-between flex items-center  body2    cursor-pointer "
+              data-testid="users.list_section.edit"
+            >
+              <div
+                class="flex flex-row w-full items-center"
+                data-test-id="dropdown-cell-icon-content"
+              >
+                <div
+                  class="flex items-center "
+                  data-test-id="dropdown-cell-text-users.list_section.edit"
+                >
+                  users.list_section.edit
+                </div>
+              </div>
+            </div>
+          </span>
+          <span>
+            <div
+              class="w-full px-4 dropdown-cell justify-between flex items-center  body2    cursor-pointer "
+              data-testid="users.list_section.resend_invite"
+            >
+              <div
+                class="flex flex-row w-full items-center"
+                data-test-id="dropdown-cell-icon-content"
+              >
+                <div
+                  class="flex items-center "
+                  data-test-id="dropdown-cell-text-users.list_section.resend_invite"
+                >
+                  users.list_section.resend_invite
+                </div>
+              </div>
+            </div>
+          </span>
+          <span>
+            <div
+              class="w-full px-4 dropdown-cell justify-between flex items-center  body2-white    is-selected "
+              data-testid="users.list_section.enable"
+            >
+              <div
+                class="flex flex-row w-full items-center"
+                data-test-id="dropdown-cell-icon-content"
+              >
+                <div
+                  class="flex items-center "
+                  data-test-id="dropdown-cell-text-users.list_section.enable"
+                >
+                  users.list_section.enable
+                </div>
+              </div>
+            </div>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="absolute top-0 w-1/3 left-1/3"
+  >
+    <div
+      class="flex items-center justify-center m-auto justify-self-center"
+    />
+  </div>
+</DocumentFragment>
+`;
+
+exports[`UserListActions tests renders UserListActions correctly ok 1`] = `
+<DocumentFragment>
+  <div>
+    <div
+      class="relative flex flex-row items-center cursor-pointer flex-nowrap"
+      data-testid="user-list-0-more-menu-toggle"
+    >
+      <div
+        class=""
+      >
+        <svg
+          class="opacity-0 group-hover:opacity-100 "
+          height="24"
+          viewBox="0 0 24 24"
+          width="24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g
+            transform="translate(-416 -52)"
+          >
+            <rect
+              fill="none"
+              height="24"
+              transform="translate(416 52)"
+              width="24"
+            />
+            <path
+              class="fill-default"
+              d="M12,8a2,2,0,1,0-2-2A2.006,2.006,0,0,0,12,8Zm0,2a2,2,0,1,0,2,2A2.006,2.006,0,0,0,12,10Zm0,6a2,2,0,1,0,2,2A2.006,2.006,0,0,0,12,16Z"
+              transform="translate(416 52)"
+            />
+          </g>
+        </svg>
+      </div>
+    </div>
+    <div
+      class="absolute z-10 more-menu-shadow hidden"
+      data-popper-escaped="true"
+      data-popper-placement="bottom"
+      data-popper-reference-hidden="true"
+      style="position: fixed; left: 0px; top: 0px; transform: translate(0px, 0px);"
+    >
+      <div
+        class="py-2 bg-white dropdown-body"
+        data-test-id="dropdown-undefined"
+        data-testid="dropdown-undefined"
+      >
+        <div
+          class="overflow-y-auto overflow-x-hidden dropdown-max-height "
+        >
+          <span>
+            <div
+              class="w-full px-4 dropdown-cell justify-between flex items-center  body2    cursor-pointer "
+              data-testid="users.list_section.edit"
+            >
+              <div
+                class="flex flex-row w-full items-center"
+                data-test-id="dropdown-cell-icon-content"
+              >
+                <div
+                  class="flex items-center "
+                  data-test-id="dropdown-cell-text-users.list_section.edit"
+                >
+                  users.list_section.edit
+                </div>
+              </div>
+            </div>
+          </span>
+          <span>
+            <div
+              class="w-full px-4 dropdown-cell justify-between flex items-center  body2    cursor-pointer "
+              data-testid="users.list_section.resend_invite"
+            >
+              <div
+                class="flex flex-row w-full items-center"
+                data-test-id="dropdown-cell-icon-content"
+              >
+                <div
+                  class="flex items-center "
+                  data-test-id="dropdown-cell-text-users.list_section.resend_invite"
+                >
+                  users.list_section.resend_invite
+                </div>
+              </div>
+            </div>
+          </span>
+          <span>
+            <div
+              class="w-full px-4 dropdown-cell justify-between flex items-center  body2-white    is-selected "
+              data-testid="users.list_section.disable"
+            >
+              <div
+                class="flex flex-row w-full items-center"
+                data-test-id="dropdown-cell-icon-content"
+              >
+                <div
+                  class="flex items-center "
+                  data-test-id="dropdown-cell-text-users.list_section.disable"
+                >
+                  users.list_section.disable
+                </div>
+              </div>
+            </div>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="absolute top-0 w-1/3 left-1/3"
+  >
+    <div
+      class="flex items-center justify-center m-auto justify-self-center"
+    />
+  </div>
+</DocumentFragment>
+`;
+
+exports[`UserListActions tests renders UserListActions correctly resend_invite 1`] = `
+<DocumentFragment>
+  <div>
+    <div
+      class="relative flex flex-row items-center cursor-pointer flex-nowrap"
+      data-testid="user-list-0-more-menu-toggle"
+    >
+      <div
+        class=""
+      >
+        <svg
+          class="opacity-0 group-hover:opacity-100 "
+          height="24"
+          viewBox="0 0 24 24"
+          width="24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g
+            transform="translate(-416 -52)"
+          >
+            <rect
+              fill="none"
+              height="24"
+              transform="translate(416 52)"
+              width="24"
+            />
+            <path
+              class="fill-default"
+              d="M12,8a2,2,0,1,0-2-2A2.006,2.006,0,0,0,12,8Zm0,2a2,2,0,1,0,2,2A2.006,2.006,0,0,0,12,10Zm0,6a2,2,0,1,0,2,2A2.006,2.006,0,0,0,12,16Z"
+              transform="translate(416 52)"
+            />
+          </g>
+        </svg>
+      </div>
+    </div>
+    <div
+      class="absolute z-10 more-menu-shadow hidden"
+      data-popper-escaped="true"
+      data-popper-placement="bottom"
+      data-popper-reference-hidden="true"
+      style="position: fixed; left: 0px; top: 0px; transform: translate(0px, 0px);"
+    >
+      <div
+        class="py-2 bg-white dropdown-body"
+        data-test-id="dropdown-undefined"
+        data-testid="dropdown-undefined"
+      >
+        <div
+          class="overflow-y-auto overflow-x-hidden dropdown-max-height "
+        >
+          <span>
+            <div
+              class="w-full px-4 dropdown-cell justify-between flex items-center  body2    cursor-pointer "
+              data-testid="users.list_section.edit"
+            >
+              <div
+                class="flex flex-row w-full items-center"
+                data-test-id="dropdown-cell-icon-content"
+              >
+                <div
+                  class="flex items-center "
+                  data-test-id="dropdown-cell-text-users.list_section.edit"
+                >
+                  users.list_section.edit
+                </div>
+              </div>
+            </div>
+          </span>
+          <span>
+            <div
+              class="w-full px-4 dropdown-cell justify-between flex items-center  body2-white    is-selected "
+              data-testid="users.list_section.resend_invite"
+            >
+              <div
+                class="flex flex-row w-full items-center"
+                data-test-id="dropdown-cell-icon-content"
+              >
+                <div
+                  class="flex items-center "
+                  data-test-id="dropdown-cell-text-users.list_section.resend_invite"
+                >
+                  users.list_section.resend_invite
+                </div>
+              </div>
+            </div>
+          </span>
+          <span>
+            <div
+              class="w-full px-4 dropdown-cell justify-between flex items-center  body2    cursor-pointer "
+              data-testid="users.list_section.disable"
+            >
+              <div
+                class="flex flex-row w-full items-center"
+                data-test-id="dropdown-cell-icon-content"
+              >
+                <div
+                  class="flex items-center "
+                  data-test-id="dropdown-cell-text-users.list_section.disable"
+                >
+                  users.list_section.disable
+                </div>
+              </div>
+            </div>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="absolute top-0 w-1/3 left-1/3"
+  >
+    <div
+      class="flex items-center justify-center m-auto justify-self-center"
+    />
+  </div>
+</DocumentFragment>
+`;

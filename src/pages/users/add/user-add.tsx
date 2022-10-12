@@ -69,6 +69,7 @@ const UserAdd = () => {
             <div className='mt-8'>
                 <label className='ml-4 subtitle2'>{t('users.add_section.personalize_message_title')}</label>
                 <TextArea
+                    data-testid='users.add_section.personalize_message_placeholder'
                     placeHolder={t('users.add_section.personalize_message_placeholder')}
                     overwriteDefaultContainerClasses
                     rows={3}
@@ -81,6 +82,7 @@ const UserAdd = () => {
             </div>
             <div className='mt-10'>
                 <Button
+                    data-testid='users.add_section.add_button'
                     label='users.add_section.add_button'
                     disabled={userList.length < 1}
                     isLoading={sendUserInvitationsMutation.isLoading}

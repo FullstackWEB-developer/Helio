@@ -72,7 +72,7 @@ const UserBulkReviewStep = ({handleInvitationMessageChange, invitationMessage}: 
             <div className='flex flex-col'>
                 <span className='subtitle2 pb-1 pt-10'>{t('users.bulk_section.personalized_message')}</span>
                 <div className='h-24 w-full md:w-2/3 body2 flex'>
-                    <TextArea overwriteDefaultContainerClasses={true} textareaContainerClasses='w-full h-full py-2 px-4'
+                    <TextArea data-testid='personal-message' overwriteDefaultContainerClasses={true} textareaContainerClasses='w-full h-full py-2 px-4'
                         onChange={handleInvitationMessageChange} value={invitationMessage} className='w-full h-full' resizable={false} rows={2} minRows={2} maxRows={2} />
                 </div>
             </div>

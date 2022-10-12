@@ -49,6 +49,7 @@ const CheckboxList = ({ name, items, control, label, resetDateTime, defaultValue
                         truncate={true}
                         label={t('common.all')}
                         data-test-id={`${name}-checkbox-${allKey}`}
+                        data-testid={`${name}-checkbox-${allKey}`}
                         value={allKey}
                         onChange={(e: CheckboxCheckEvent) => {
                             if(e.checked){
@@ -98,6 +99,7 @@ const CheckboxList = ({ name, items, control, label, resetDateTime, defaultValue
                                 truncate={true}
                                 label={label ? label(item.key) : item.value}
                                 data-test-id={`${name}-checkbox-${item.key}`}
+                                data-testid={`${name}-checkbox-${item.key}`}
                                 value={item.key}
                                 onChange={(e: CheckboxCheckEvent) => {
                                     updatedCheckedState(index);

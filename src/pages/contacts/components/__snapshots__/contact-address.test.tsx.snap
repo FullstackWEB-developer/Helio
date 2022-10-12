@@ -27,6 +27,7 @@ exports[`ContactAddress tests renders ContactAddress-BillingAddress correctly 1`
           >
             <svg
               class="icon-medium "
+              data-testid="svg-icon"
               height="24"
               viewBox="0 0 24 24"
               width="24"
@@ -526,6 +527,7 @@ exports[`ContactAddress tests renders ContactAddress-ShippingAddress correctly 1
           >
             <svg
               class="icon-medium "
+              data-testid="svg-icon"
               height="24"
               viewBox="0 0 24 24"
               width="24"

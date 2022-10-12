@@ -38,7 +38,7 @@ const UserBulkSelectStep = ({externalUsers}: {externalUsers: ExternalUser[]}) =>
                         <div>
                             {
                                 u.azureId && u.mail &&
-                                <Checkbox checked={selectedExternalUsers.findIndex(user => user.id === u.azureId) !== -1} onChange={(e) => {handleCheckboxChange(e, u)}} label='' value={u.azureId} className='pt-2' name={`${u.azureId}-check`} />
+                                <Checkbox data-testid={`external-user-${index}`} checked={selectedExternalUsers.findIndex(user => user.id === u.azureId) !== -1} onChange={(e) => {handleCheckboxChange(e, u)}} label='' value={u.azureId} className='pt-2' name={`${u.azureId}-check`} />
                             }
                         </div>
                         <div className='flex flex-col truncate'>

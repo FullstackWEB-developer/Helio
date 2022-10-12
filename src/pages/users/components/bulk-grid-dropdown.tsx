@@ -106,7 +106,7 @@ const BulkGridDropdown = ({userId, purpose, storedRole, storedProviderMapping}: 
     }
 
     return (
-        <div ref={elementRef} onClick={(e) => {e.stopPropagation(); setIsVisible(!isVisible)}}
+        <div data-testid="dropdown" ref={elementRef} onClick={(e) => {e.stopPropagation(); setIsVisible(!isVisible)}}
             className='col-span-1 cursor-pointer'>
             <div ref={dropdownSelectedItemRef} className='flex flex-row'>
                 {
@@ -116,14 +116,14 @@ const BulkGridDropdown = ({userId, purpose, storedRole, storedProviderMapping}: 
                 }
                 <div className='pl-3' ref={chevronPosition} >
                     {
-                        displayProviderName() ? <SvgIcon type={Icon.Clear} className='cursor-pointer' fillClass='active-item-icon' onClick={clearProviderMapping} /> :
+                        displayProviderName() ? <SvgIcon dataTestId='clear' type={Icon.Clear} className='cursor-pointer' fillClass='active-item-icon' onClick={clearProviderMapping} /> :
                             <SvgIcon type={!isVisible ? Icon.ArrowDown : Icon.ArrowUp} className='cursor-pointer' fillClass='active-item-icon' />
                     }
                 </div>
             </div>
 
             {
-                <div onClick={e => e.stopPropagation()}
+                <div data-testid="dropdown-position" onClick={e => e.stopPropagation()}
                     className={classnames('absolute z-10 w-48', {'hidden': !isVisible})}
                     style={{...position, ...determineDropdownPosition()}}
                     ref={dropdownRef}

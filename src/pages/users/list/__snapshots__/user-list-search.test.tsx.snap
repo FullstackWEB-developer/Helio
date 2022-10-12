@@ -1,0 +1,921 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UserListSearch tests renders UserListSearch correctly disable 1`] = `
+<DocumentFragment>
+  <div
+    class="flex w-full mt-4 border-t border-b h-14 user-list-search-stripe"
+  >
+    <div
+      class="flex flex-row items-center border-r"
+    >
+      <div
+        class="h-9 w-5 pt-2 mx-6"
+      >
+        <label
+          class="flex flex-row items-center checkbox-button"
+        >
+          <input
+            class="checkbox"
+            id="select-all-users_"
+            name="select-all-users"
+            type="checkbox"
+          />
+          <span
+            class="checkbox-control"
+          >
+            <div
+              class=""
+            >
+              <svg
+                class="icon-medium "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="svg-checkbox"
+                  d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                />
+              </svg>
+            </div>
+          </span>
+          <div
+            class="truncate relative w-full h-full inline-block"
+          >
+            <span
+              class="w-60 w-60"
+            />
+          </div>
+        </label>
+      </div>
+      <span
+        class="subtitle2 mr-9"
+      >
+        users.list_section.selected_count
+      </span>
+    </div>
+    <div
+      class="w-1/6 border-r"
+    >
+      <div
+        class="relative h-10 w-full search-input-field flex items-center relative h-full"
+      >
+        <div
+          class="absolute pl-4"
+        >
+          <div
+            class=""
+          >
+            <svg
+              class="cursor-pointer icon-small "
+              height="16"
+              viewBox="0 0 16 16"
+              width="16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                fill="none"
+                height="16"
+                width="16"
+              />
+              <path
+                class="search-icon-fill"
+                d="M12.7,11.23a6.777,6.777,0,0,0,1.4-4.174A7.02,7.02,0,0,0,7.1,0,7.105,7.105,0,0,0,0,7.056a7.105,7.105,0,0,0,7.1,7.056,6.667,6.667,0,0,0,4.2-1.391l3,2.981a.971.971,0,0,0,1.4,0,.957.957,0,0,0,0-1.391Zm-5.6.8A5.022,5.022,0,0,1,2,7.056a5.1,5.1,0,0,1,10.2,0A5.022,5.022,0,0,1,7.1,12.025Z"
+              />
+            </svg>
+          </div>
+        </div>
+        <input
+          autocomplete="off"
+          class="py-2.5 h-full w-full search-input-field body2 pl-12"
+          data-testid="search"
+          placeholder="users.list_section.placeholder_search"
+          type="text"
+          value="Test"
+        />
+      </div>
+    </div>
+    <div
+      class="flex flex-row items-center ml-6"
+    >
+      <div
+        class="relative flex flex-row items-center"
+      >
+        <div
+          class=""
+        >
+          <svg
+            class="mr-6 cursor-pointer icon-medium "
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect
+              fill="none"
+              height="24"
+              width="24"
+            />
+            <path
+              class="filter-icon"
+              d="M10,18h4V16H10ZM3,6V8H21V6Zm3,7H18V11H6Z"
+            />
+          </svg>
+        </div>
+      </div>
+      <div
+        class="flex flex-row items-center h-full px-6 border-l"
+      >
+        <button
+          class="secondary-button mr-6 whitespace-nowrap"
+          data-testid="users.list_section.resend_invite"
+          type="button"
+        >
+          <div
+            class="flex flex-row justify-center items-center space-x-2"
+          >
+            <div>
+              users.list_section.resend_invite
+            </div>
+          </div>
+        </button>
+        <button
+          class="secondary-button mr-6"
+          data-testid="users.list_section.disable"
+          type="button"
+        >
+          <div
+            class="flex flex-row justify-center items-center space-x-2"
+          >
+            <div>
+              users.list_section.disable
+            </div>
+          </div>
+        </button>
+        <button
+          class="secondary-button mr-6"
+          data-testid="users.list_section.enable"
+          type="button"
+        >
+          <div
+            class="flex flex-row justify-center items-center space-x-2"
+          >
+            <div>
+              users.list_section.enable
+            </div>
+          </div>
+        </button>
+      </div>
+    </div>
+    <div
+      class="absolute top-0 w-1/3 left-1/3"
+    >
+      <div
+        class="flex items-center justify-center m-auto justify-self-center"
+      />
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`UserListSearch tests renders UserListSearch correctly disable-cancel 1`] = `
+<DocumentFragment>
+  <div
+    class="flex w-full mt-4 border-t border-b h-14 user-list-search-stripe"
+  >
+    <div
+      class="flex flex-row items-center border-r"
+    >
+      <div
+        class="h-9 w-5 pt-2 mx-6"
+      >
+        <label
+          class="flex flex-row items-center checkbox-button"
+        >
+          <input
+            class="checkbox"
+            id="select-all-users_"
+            name="select-all-users"
+            type="checkbox"
+          />
+          <span
+            class="checkbox-control"
+          >
+            <div
+              class=""
+            >
+              <svg
+                class="icon-medium "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="svg-checkbox"
+                  d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                />
+              </svg>
+            </div>
+          </span>
+          <div
+            class="truncate relative w-full h-full inline-block"
+          >
+            <span
+              class="w-60 w-60"
+            />
+          </div>
+        </label>
+      </div>
+      <span
+        class="subtitle2 mr-9"
+      >
+        users.list_section.selected_count
+      </span>
+    </div>
+    <div
+      class="w-1/6 border-r"
+    >
+      <div
+        class="relative h-10 w-full search-input-field flex items-center relative h-full"
+      >
+        <div
+          class="absolute pl-4"
+        >
+          <div
+            class=""
+          >
+            <svg
+              class="cursor-pointer icon-small "
+              height="16"
+              viewBox="0 0 16 16"
+              width="16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                fill="none"
+                height="16"
+                width="16"
+              />
+              <path
+                class="search-icon-fill"
+                d="M12.7,11.23a6.777,6.777,0,0,0,1.4-4.174A7.02,7.02,0,0,0,7.1,0,7.105,7.105,0,0,0,0,7.056a7.105,7.105,0,0,0,7.1,7.056,6.667,6.667,0,0,0,4.2-1.391l3,2.981a.971.971,0,0,0,1.4,0,.957.957,0,0,0,0-1.391Zm-5.6.8A5.022,5.022,0,0,1,2,7.056a5.1,5.1,0,0,1,10.2,0A5.022,5.022,0,0,1,7.1,12.025Z"
+              />
+            </svg>
+          </div>
+        </div>
+        <input
+          autocomplete="off"
+          class="py-2.5 h-full w-full search-input-field body2 pl-12"
+          data-testid="search"
+          placeholder="users.list_section.placeholder_search"
+          type="text"
+          value="Test"
+        />
+      </div>
+    </div>
+    <div
+      class="flex flex-row items-center ml-6"
+    >
+      <div
+        class="relative flex flex-row items-center"
+      >
+        <div
+          class=""
+        >
+          <svg
+            class="mr-6 cursor-pointer icon-medium "
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect
+              fill="none"
+              height="24"
+              width="24"
+            />
+            <path
+              class="filter-icon"
+              d="M10,18h4V16H10ZM3,6V8H21V6Zm3,7H18V11H6Z"
+            />
+          </svg>
+        </div>
+      </div>
+      <div
+        class="flex flex-row items-center h-full px-6 border-l"
+      >
+        <button
+          class="secondary-button mr-6 whitespace-nowrap"
+          data-testid="users.list_section.resend_invite"
+          type="button"
+        >
+          <div
+            class="flex flex-row justify-center items-center space-x-2"
+          >
+            <div>
+              users.list_section.resend_invite
+            </div>
+          </div>
+        </button>
+        <button
+          class="secondary-button mr-6"
+          data-testid="users.list_section.disable"
+          type="button"
+        >
+          <div
+            class="flex flex-row justify-center items-center space-x-2"
+          >
+            <div>
+              users.list_section.disable
+            </div>
+          </div>
+        </button>
+        <button
+          class="secondary-button mr-6"
+          data-testid="users.list_section.enable"
+          type="button"
+        >
+          <div
+            class="flex flex-row justify-center items-center space-x-2"
+          >
+            <div>
+              users.list_section.enable
+            </div>
+          </div>
+        </button>
+      </div>
+    </div>
+    <div
+      class="absolute top-0 w-1/3 left-1/3"
+    >
+      <div
+        class="flex items-center justify-center m-auto justify-self-center"
+      />
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`UserListSearch tests renders UserListSearch correctly disable-close 1`] = `
+<DocumentFragment>
+  <div
+    class="flex w-full mt-4 border-t border-b h-14 user-list-search-stripe"
+  >
+    <div
+      class="flex flex-row items-center border-r"
+    >
+      <div
+        class="h-9 w-5 pt-2 mx-6"
+      >
+        <label
+          class="flex flex-row items-center checkbox-button"
+        >
+          <input
+            class="checkbox"
+            id="select-all-users_"
+            name="select-all-users"
+            type="checkbox"
+          />
+          <span
+            class="checkbox-control"
+          >
+            <div
+              class=""
+            >
+              <svg
+                class="icon-medium "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="svg-checkbox"
+                  d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                />
+              </svg>
+            </div>
+          </span>
+          <div
+            class="truncate relative w-full h-full inline-block"
+          >
+            <span
+              class="w-60 w-60"
+            />
+          </div>
+        </label>
+      </div>
+      <span
+        class="subtitle2 mr-9"
+      >
+        users.list_section.selected_count
+      </span>
+    </div>
+    <div
+      class="w-1/6 border-r"
+    >
+      <div
+        class="relative h-10 w-full search-input-field flex items-center relative h-full"
+      >
+        <div
+          class="absolute pl-4"
+        >
+          <div
+            class=""
+          >
+            <svg
+              class="cursor-pointer icon-small "
+              height="16"
+              viewBox="0 0 16 16"
+              width="16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                fill="none"
+                height="16"
+                width="16"
+              />
+              <path
+                class="search-icon-fill"
+                d="M12.7,11.23a6.777,6.777,0,0,0,1.4-4.174A7.02,7.02,0,0,0,7.1,0,7.105,7.105,0,0,0,0,7.056a7.105,7.105,0,0,0,7.1,7.056,6.667,6.667,0,0,0,4.2-1.391l3,2.981a.971.971,0,0,0,1.4,0,.957.957,0,0,0,0-1.391Zm-5.6.8A5.022,5.022,0,0,1,2,7.056a5.1,5.1,0,0,1,10.2,0A5.022,5.022,0,0,1,7.1,12.025Z"
+              />
+            </svg>
+          </div>
+        </div>
+        <input
+          autocomplete="off"
+          class="py-2.5 h-full w-full search-input-field body2 pl-12"
+          data-testid="search"
+          placeholder="users.list_section.placeholder_search"
+          type="text"
+          value="Test"
+        />
+      </div>
+    </div>
+    <div
+      class="flex flex-row items-center ml-6"
+    >
+      <div
+        class="relative flex flex-row items-center"
+      >
+        <div
+          class=""
+        >
+          <svg
+            class="mr-6 cursor-pointer icon-medium "
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect
+              fill="none"
+              height="24"
+              width="24"
+            />
+            <path
+              class="filter-icon"
+              d="M10,18h4V16H10ZM3,6V8H21V6Zm3,7H18V11H6Z"
+            />
+          </svg>
+        </div>
+      </div>
+      <div
+        class="flex flex-row items-center h-full px-6 border-l"
+      >
+        <button
+          class="secondary-button mr-6 whitespace-nowrap"
+          data-testid="users.list_section.resend_invite"
+          type="button"
+        >
+          <div
+            class="flex flex-row justify-center items-center space-x-2"
+          >
+            <div>
+              users.list_section.resend_invite
+            </div>
+          </div>
+        </button>
+        <button
+          class="secondary-button mr-6"
+          data-testid="users.list_section.disable"
+          type="button"
+        >
+          <div
+            class="flex flex-row justify-center items-center space-x-2"
+          >
+            <div>
+              users.list_section.disable
+            </div>
+          </div>
+        </button>
+        <button
+          class="secondary-button mr-6"
+          data-testid="users.list_section.enable"
+          type="button"
+        >
+          <div
+            class="flex flex-row justify-center items-center space-x-2"
+          >
+            <div>
+              users.list_section.enable
+            </div>
+          </div>
+        </button>
+      </div>
+    </div>
+    <div
+      class="absolute top-0 w-1/3 left-1/3"
+    >
+      <div
+        class="flex items-center justify-center m-auto justify-self-center"
+      />
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`UserListSearch tests renders UserListSearch correctly enable 1`] = `
+<DocumentFragment>
+  <div
+    class="flex w-full mt-4 border-t border-b h-14 user-list-search-stripe"
+  >
+    <div
+      class="flex flex-row items-center border-r"
+    >
+      <div
+        class="h-9 w-5 pt-2 mx-6"
+      >
+        <label
+          class="flex flex-row items-center checkbox-button"
+        >
+          <input
+            class="checkbox"
+            id="select-all-users_"
+            name="select-all-users"
+            type="checkbox"
+          />
+          <span
+            class="checkbox-control"
+          >
+            <div
+              class=""
+            >
+              <svg
+                class="icon-medium "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="svg-checkbox"
+                  d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                />
+              </svg>
+            </div>
+          </span>
+          <div
+            class="truncate relative w-full h-full inline-block"
+          >
+            <span
+              class="w-60 w-60"
+            />
+          </div>
+        </label>
+      </div>
+      <span
+        class="subtitle2 mr-9"
+      >
+        users.list_section.selected_count
+      </span>
+    </div>
+    <div
+      class="w-1/6 border-r"
+    >
+      <div
+        class="relative h-10 w-full search-input-field flex items-center relative h-full"
+      >
+        <div
+          class="absolute pl-4"
+        >
+          <div
+            class=""
+          >
+            <svg
+              class="cursor-pointer icon-small "
+              height="16"
+              viewBox="0 0 16 16"
+              width="16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                fill="none"
+                height="16"
+                width="16"
+              />
+              <path
+                class="search-icon-fill"
+                d="M12.7,11.23a6.777,6.777,0,0,0,1.4-4.174A7.02,7.02,0,0,0,7.1,0,7.105,7.105,0,0,0,0,7.056a7.105,7.105,0,0,0,7.1,7.056,6.667,6.667,0,0,0,4.2-1.391l3,2.981a.971.971,0,0,0,1.4,0,.957.957,0,0,0,0-1.391Zm-5.6.8A5.022,5.022,0,0,1,2,7.056a5.1,5.1,0,0,1,10.2,0A5.022,5.022,0,0,1,7.1,12.025Z"
+              />
+            </svg>
+          </div>
+        </div>
+        <input
+          autocomplete="off"
+          class="py-2.5 h-full w-full search-input-field body2 pl-12"
+          data-testid="search"
+          placeholder="users.list_section.placeholder_search"
+          type="text"
+          value=""
+        />
+      </div>
+    </div>
+    <div
+      class="flex flex-row items-center ml-6"
+    >
+      <div
+        class="relative flex flex-row items-center"
+      >
+        <div
+          class=""
+        >
+          <svg
+            class="mr-6 cursor-pointer icon-medium "
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect
+              fill="none"
+              height="24"
+              width="24"
+            />
+            <path
+              class="filter-icon"
+              d="M10,18h4V16H10ZM3,6V8H21V6Zm3,7H18V11H6Z"
+            />
+          </svg>
+        </div>
+      </div>
+      <div
+        class="flex flex-row items-center h-full px-6 border-l"
+      >
+        <button
+          class="secondary-button mr-6 whitespace-nowrap"
+          data-testid="users.list_section.resend_invite"
+          type="button"
+        >
+          <div
+            class="flex flex-row justify-center items-center space-x-2"
+          >
+            <div>
+              users.list_section.resend_invite
+            </div>
+          </div>
+        </button>
+        <button
+          class="secondary-button mr-6"
+          data-testid="users.list_section.disable"
+          type="button"
+        >
+          <div
+            class="flex flex-row justify-center items-center space-x-2"
+          >
+            <div>
+              users.list_section.disable
+            </div>
+          </div>
+        </button>
+        <button
+          class="secondary-button mr-6"
+          data-testid="users.list_section.enable"
+          type="button"
+        >
+          <div
+            class="flex flex-row justify-center items-center space-x-2"
+          >
+            <div>
+              users.list_section.enable
+            </div>
+          </div>
+        </button>
+      </div>
+    </div>
+    <div
+      class="absolute top-0 w-1/3 left-1/3"
+    >
+      <div
+        class="flex items-center justify-center m-auto justify-self-center"
+      />
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`UserListSearch tests renders UserListSearch correctly resend_invite 1`] = `
+<DocumentFragment>
+  <div
+    class="flex w-full mt-4 border-t border-b h-14 user-list-search-stripe"
+  >
+    <div
+      class="flex flex-row items-center border-r"
+    >
+      <div
+        class="h-9 w-5 pt-2 mx-6"
+      >
+        <label
+          class="flex flex-row items-center checkbox-button"
+        >
+          <input
+            class="checkbox"
+            id="select-all-users_"
+            name="select-all-users"
+            type="checkbox"
+          />
+          <span
+            class="checkbox-control"
+          >
+            <div
+              class=""
+            >
+              <svg
+                class="icon-medium "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="svg-checkbox"
+                  d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                />
+              </svg>
+            </div>
+          </span>
+          <div
+            class="truncate relative w-full h-full inline-block"
+          >
+            <span
+              class="w-60 w-60"
+            />
+          </div>
+        </label>
+      </div>
+      <span
+        class="subtitle2 mr-9"
+      >
+        users.list_section.selected_count
+      </span>
+    </div>
+    <div
+      class="w-1/6 border-r"
+    >
+      <div
+        class="relative h-10 w-full search-input-field flex items-center relative h-full"
+      >
+        <div
+          class="absolute pl-4"
+        >
+          <div
+            class=""
+          >
+            <svg
+              class="cursor-pointer icon-small "
+              height="16"
+              viewBox="0 0 16 16"
+              width="16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                fill="none"
+                height="16"
+                width="16"
+              />
+              <path
+                class="search-icon-fill"
+                d="M12.7,11.23a6.777,6.777,0,0,0,1.4-4.174A7.02,7.02,0,0,0,7.1,0,7.105,7.105,0,0,0,0,7.056a7.105,7.105,0,0,0,7.1,7.056,6.667,6.667,0,0,0,4.2-1.391l3,2.981a.971.971,0,0,0,1.4,0,.957.957,0,0,0,0-1.391Zm-5.6.8A5.022,5.022,0,0,1,2,7.056a5.1,5.1,0,0,1,10.2,0A5.022,5.022,0,0,1,7.1,12.025Z"
+              />
+            </svg>
+          </div>
+        </div>
+        <input
+          autocomplete="off"
+          class="py-2.5 h-full w-full search-input-field body2 pl-12"
+          data-testid="search"
+          placeholder="users.list_section.placeholder_search"
+          type="text"
+          value="Test"
+        />
+      </div>
+    </div>
+    <div
+      class="flex flex-row items-center ml-6"
+    >
+      <div
+        class="relative flex flex-row items-center"
+      >
+        <div
+          class=""
+        >
+          <svg
+            class="mr-6 cursor-pointer icon-medium "
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect
+              fill="none"
+              height="24"
+              width="24"
+            />
+            <path
+              class="filter-icon"
+              d="M10,18h4V16H10ZM3,6V8H21V6Zm3,7H18V11H6Z"
+            />
+          </svg>
+        </div>
+      </div>
+      <div
+        class="flex flex-row items-center h-full px-6 border-l"
+      >
+        <button
+          class="secondary-button mr-6 whitespace-nowrap"
+          data-testid="users.list_section.resend_invite"
+          type="button"
+        >
+          <div
+            class="flex flex-row justify-center items-center space-x-2"
+          >
+            <div>
+              users.list_section.resend_invite
+            </div>
+          </div>
+        </button>
+        <button
+          class="secondary-button mr-6"
+          data-testid="users.list_section.disable"
+          type="button"
+        >
+          <div
+            class="flex flex-row justify-center items-center space-x-2"
+          >
+            <div>
+              users.list_section.disable
+            </div>
+          </div>
+        </button>
+        <button
+          class="secondary-button mr-6"
+          data-testid="users.list_section.enable"
+          type="button"
+        >
+          <div
+            class="flex flex-row justify-center items-center space-x-2"
+          >
+            <div>
+              users.list_section.enable
+            </div>
+          </div>
+        </button>
+      </div>
+    </div>
+    <div
+      class="absolute top-0 w-1/3 left-1/3"
+    >
+      <div
+        class="flex items-center justify-center m-auto justify-self-center"
+      />
+    </div>
+  </div>
+</DocumentFragment>
+`;

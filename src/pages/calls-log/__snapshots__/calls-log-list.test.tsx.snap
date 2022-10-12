@@ -95,6 +95,7 @@ exports[`Email tests renders calls-log-list correctly 1`] = `
                     <input
                       class="checkbox"
                       data-test-id="status-checkbox-0"
+                      data-testid="status-checkbox-0"
                       id="status[0]_0"
                       name="status[0]"
                       type="checkbox"
@@ -144,6 +145,7 @@ exports[`Email tests renders calls-log-list correctly 1`] = `
                     <input
                       class="checkbox"
                       data-test-id="status-checkbox-1"
+                      data-testid="status-checkbox-1"
                       id="status[1]_1"
                       name="status[1]"
                       type="checkbox"
@@ -193,6 +195,7 @@ exports[`Email tests renders calls-log-list correctly 1`] = `
                     <input
                       class="checkbox"
                       data-test-id="status-checkbox-2"
+                      data-testid="status-checkbox-2"
                       id="status[2]_2"
                       name="status[2]"
                       type="checkbox"
@@ -242,6 +245,7 @@ exports[`Email tests renders calls-log-list correctly 1`] = `
                     <input
                       class="checkbox"
                       data-test-id="status-checkbox-3"
+                      data-testid="status-checkbox-3"
                       id="status[3]_3"
                       name="status[3]"
                       type="checkbox"
@@ -291,6 +295,7 @@ exports[`Email tests renders calls-log-list correctly 1`] = `
                     <input
                       class="checkbox"
                       data-test-id="status-checkbox-4"
+                      data-testid="status-checkbox-4"
                       id="status[4]_4"
                       name="status[4]"
                       type="checkbox"
@@ -340,6 +345,7 @@ exports[`Email tests renders calls-log-list correctly 1`] = `
                     <input
                       class="checkbox"
                       data-test-id="status-checkbox-5"
+                      data-testid="status-checkbox-5"
                       id="status[5]_5"
                       name="status[5]"
                       type="checkbox"
@@ -389,6 +395,7 @@ exports[`Email tests renders calls-log-list correctly 1`] = `
                     <input
                       class="checkbox"
                       data-test-id="status-checkbox-6"
+                      data-testid="status-checkbox-6"
                       id="status[6]_6"
                       name="status[6]"
                       type="checkbox"
@@ -438,6 +445,7 @@ exports[`Email tests renders calls-log-list correctly 1`] = `
                     <input
                       class="checkbox"
                       data-test-id="status-checkbox-7"
+                      data-testid="status-checkbox-7"
                       id="status[7]_7"
                       name="status[7]"
                       type="checkbox"
@@ -528,6 +536,7 @@ exports[`Email tests renders calls-log-list correctly 1`] = `
                     <input
                       class="checkbox"
                       data-test-id="callType-checkbox-0"
+                      data-testid="callType-checkbox-0"
                       id="callType[0]_0"
                       name="callType[0]"
                       type="checkbox"
@@ -577,6 +586,7 @@ exports[`Email tests renders calls-log-list correctly 1`] = `
                     <input
                       class="checkbox"
                       data-test-id="callType-checkbox-1"
+                      data-testid="callType-checkbox-1"
                       id="callType[1]_1"
                       name="callType[1]"
                       type="checkbox"
@@ -626,6 +636,7 @@ exports[`Email tests renders calls-log-list correctly 1`] = `
                     <input
                       class="checkbox"
                       data-test-id="callType-checkbox-2"
+                      data-testid="callType-checkbox-2"
                       id="callType[2]_2"
                       name="callType[2]"
                       type="checkbox"
@@ -1032,7 +1043,7 @@ exports[`Email tests renders calls-log-list correctly 1`] = `
             >
               <svg
                 class="cursor-pointer "
-                data-testid="svg-icon"
+                data-testid="next-page"
                 height="24"
                 viewBox="0 0 24 24"
                 width="24"
@@ -1113,6 +1124,7 @@ exports[`Email tests renders calls-log-list correctly 1`] = `
           <input
             autocomplete="off"
             class="py-2.5 h-full w-full search-input-field body2 border-b-0 pl-12"
+            data-testid="search"
             placeholder="ticket_log.search_calls_placeholder"
             type="text"
             value=""

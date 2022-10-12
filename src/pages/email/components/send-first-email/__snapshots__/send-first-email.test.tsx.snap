@@ -113,6 +113,7 @@ exports[`Send First Email tests renders send-first-email correctly with contact 
                   <input
                     autocomplete="off"
                     class="py-2.5 h-full w-full search-input-field body2 pl-12 border-b"
+                    data-testid="search"
                     placeholder="common.search"
                     type="text"
                     value=""

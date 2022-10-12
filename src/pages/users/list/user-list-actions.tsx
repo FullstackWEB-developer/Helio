@@ -86,6 +86,7 @@ const UserListActions = ({user, handleStatusChange, handleResendInvite, forceToC
     return (
         <>
             <MoreMenu
+                dataTestId={`user-list-${user.id}-more-menu-toggle`}
                 items={generateDropdownModelOptions().items}
                 iconClassName='opacity-0 group-hover:opacity-100'
                 onClick={(item) => handleDropdownClick(item.value)}

@@ -29,6 +29,7 @@ const ControlledCheckbox = ({control, name, label, value, assistiveText, classNa
                     label={label}
                     assistiveText={assistiveText}
                     data-test-id={`${name}-checkbox-${value}`}
+                    data-testid={`${name}-checkbox-${value}`}
                     labelClassName={labelClassName}
                     hasTooltip={hasTooltip}
                     value={value}

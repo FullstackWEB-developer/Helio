@@ -1,0 +1,382 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UserAdd tests renders UserAdd correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="flex flex-col w-full px-6 py-8 overflow-y-auto user-add"
+  >
+    <h5>
+      users.add_section.title
+    </h5>
+    <span
+      class="mt-10"
+    >
+      <a
+        class="link"
+        href="/users/bulk"
+      />
+    </span>
+    <div>
+      <div
+        class="flex flex-col"
+      >
+        <div
+          class="flex flex-row items-center mt-3.5"
+        >
+          <div
+            class="mr-8 w-80"
+          >
+            <div
+              class="flex flex-col h-20 input-group"
+            >
+              <div
+                class="input-group-container flex flex-wrap items-stretch w-full relative  "
+              >
+                <input
+                  autocomplete="off"
+                  class=" pt-6 body2 h-14 flex-shrink flex-grow flex-auto leading-normal w-px flex-1 input-date-mask pl-4"
+                  data-test-id="email"
+                  data-testid="email"
+                  name="email"
+                  placeholder=""
+                  type="text"
+                  value=""
+                />
+                <label
+                  class="absolute truncate  body2 "
+                >
+                  users.add_section.name_or_email
+                </label>
+              </div>
+            </div>
+          </div>
+          <div
+            class="mr-8"
+          >
+            <div
+              class="select-wrapper relative w-full flex flex-col h-20 "
+            >
+              <div
+                class="select relative flex flex-col "
+              >
+                <input
+                  autocomplete="on"
+                  autocorrect="on"
+                  class="pl-4 pr-8 body2 select-trigger-pt h-14 relative truncate select-trigger   "
+                  data-testid="role"
+                  name="role"
+                  spellcheck="true"
+                  type="text"
+                  value=""
+                />
+                <label
+                  class="select-label absolute truncate"
+                >
+                  <span
+                    class="select-label-span body2"
+                  >
+                    users.add_section.role
+                  </span>
+                </label>
+                <div
+                  class="absolute pt-4 right-4 "
+                >
+                  <div
+                    class="flex flex-row items-start"
+                  >
+                    <div
+                      class="cursor-pointer"
+                    >
+                      <div
+                        class=""
+                      >
+                        <svg
+                          class="icon-medium "
+                          height="24"
+                          viewBox="0 0 24 24"
+                          width="24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <rect
+                            fill="none"
+                            height="24"
+                            width="24"
+                          />
+                          <path
+                            class="select-arrow-fill"
+                            d="M7,14l1.273-1.273L2.545,7,8.273,1.273,7,0,0,7Z"
+                            transform="translate(5 16.273) rotate(-90)"
+                          />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="absolute py-2 options"
+                >
+                  <div
+                    class="w-full select-cell justify-between flex items-center  body2   cursor-pointer  "
+                  >
+                    <div
+                      class="flex flex-col justify-center w-full"
+                      data-test-id="select-cell-icon-content"
+                    >
+                      <div
+                        class="flex items-center pl-4"
+                        data-test-id="select-cell-text-string0"
+                        data-testid="select-cell-text-string0"
+                      >
+                        string0
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="w-full select-cell justify-between flex items-center  body2   cursor-pointer  "
+                  >
+                    <div
+                      class="flex flex-col justify-center w-full"
+                      data-test-id="select-cell-icon-content"
+                    >
+                      <div
+                        class="flex items-center pl-4"
+                        data-test-id="select-cell-text-string1"
+                        data-testid="select-cell-text-string1"
+                      >
+                        string1
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="flex flex-row items-center w-80"
+          >
+            <div
+              class="select-wrapper relative w-full flex flex-col h-20 "
+            >
+              <div
+                class="select relative flex flex-col "
+              >
+                <input
+                  autocomplete="on"
+                  autocorrect="on"
+                  class="pl-4 pr-8 body2 select-trigger-pt h-14 relative truncate select-trigger   "
+                  data-testid="providerId"
+                  name="providerId"
+                  spellcheck="true"
+                  type="text"
+                  value=""
+                />
+                <label
+                  class="select-label absolute truncate"
+                >
+                  <span
+                    class="select-label-span body2"
+                  >
+                    users.ehr_provider_mapping
+                  </span>
+                </label>
+                <div
+                  class="absolute pt-4 right-4 "
+                >
+                  <div
+                    class="flex flex-row items-start"
+                  >
+                    <div
+                      class="cursor-pointer"
+                    >
+                      <div
+                        class=""
+                      >
+                        <svg
+                          class="icon-medium "
+                          height="24"
+                          viewBox="0 0 24 24"
+                          width="24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <rect
+                            fill="none"
+                            height="24"
+                            width="24"
+                          />
+                          <path
+                            class="select-arrow-fill"
+                            d="M7,14l1.273-1.273L2.545,7,8.273,1.273,7,0,0,7Z"
+                            transform="translate(5 16.273) rotate(-90)"
+                          />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="absolute py-2 options"
+                >
+                  <div
+                    class="w-full select-cell justify-between flex items-center  body2   cursor-pointer  "
+                  >
+                    <div
+                      class="flex flex-col justify-center w-full"
+                      data-test-id="select-cell-icon-content"
+                    >
+                      <div
+                        class="flex items-center pl-4"
+                        data-test-id="select-cell-text-string string"
+                        data-testid="select-cell-text-string string"
+                      >
+                        string string
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="w-full select-cell justify-between flex items-center  body2   cursor-pointer  "
+                  >
+                    <div
+                      class="flex flex-col justify-center w-full"
+                      data-test-id="select-cell-icon-content"
+                    >
+                      <div
+                        class="flex items-center pl-4"
+                        data-test-id="select-cell-text-string string"
+                        data-testid="select-cell-text-string string"
+                      >
+                        string string
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="h-6 max-h-6 pl-4  body3 pt-1 truncate"
+              >
+                <span
+                  class="assistive-text-color-inactive"
+                >
+                  users.ehr_provider_mapping_assistive_text
+                </span>
+              </div>
+            </div>
+          </div>
+          <div
+            class="pb-6 ml-2"
+          >
+            <div
+              class="provider-mapping-tool-tip"
+              data-testid="toggle"
+            >
+              <div
+                class=""
+              >
+                <svg
+                  class="cursor-pointer icon "
+                  height="16"
+                  version="1.1"
+                  viewBox="0 0 16 16"
+                  width="16"
+                  xmlns="https://www.w3.org/2000/svg"
+                >
+                  <g
+                    transform="translate(-16.988 -15.519)"
+                  >
+                    <circle
+                      class="warning-icon"
+                      cx="24.988"
+                      cy="23.519"
+                      r="8"
+                    />
+                    <rect
+                      fill="#fff"
+                      height="5"
+                      width="2"
+                      x="23.988"
+                      y="19.519"
+                    />
+                    <rect
+                      fill="#fff"
+                      height="2"
+                      width="2"
+                      x="23.988"
+                      y="25.519"
+                    />
+                  </g>
+                </svg>
+              </div>
+            </div>
+          </div>
+          <div
+            class="pb-6 ml-8"
+          >
+            <button
+              class="medium-button"
+              data-testid="add-user"
+              disabled=""
+              type="button"
+            >
+              <div
+                class="flex flex-row justify-center items-center space-x-2"
+              >
+                <div>
+                  common.add
+                </div>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="mt-8"
+    >
+      <label
+        class="ml-4 subtitle2"
+      >
+        users.add_section.personalize_message_title
+      </label>
+      <div
+        class="flex flex-row justify-between"
+      >
+        <label
+          class="block subtitle2 pb-2"
+        />
+      </div>
+      <div
+        class="w-full h-full"
+      >
+        <div
+          class="body2 pl-4 pt-2 relative bg-white border"
+        >
+          <textarea
+            class="shadow-none invitation-message-text-area resize-none mt-1"
+            data-testid="users.add_section.personalize_message_placeholder"
+            placeholder="users.add_section.personalize_message_placeholder"
+            rows="3"
+            wrap="hard"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="mt-10"
+    >
+      <button
+        class="medium-button"
+        data-testid="users.add_section.add_button"
+        disabled=""
+        type="button"
+      >
+        <div
+          class="flex flex-row justify-center items-center space-x-2"
+        >
+          <div>
+            users.add_section.add_button
+          </div>
+        </div>
+      </button>
+    </div>
+  </div>
+</DocumentFragment>
+`;

@@ -80,26 +80,6 @@ const UserAddRow = ({
     }, [index, value])
 
     useEffect(() => {
-        setValue('providerId', value?.providerId ?? '');
-
-        if (value?.email && value?.name) {
-            setValue('email', value.name);
-            setEmailOptionSelected({label: value.name, value: value.email});
-        } else {
-            setEmailOption([]);
-            setValue('email', '');
-            setEmailOptionSelected(undefined);
-        }
-
-        if (value?.roles && value.roles.length > 0) {
-            setValue('role', value.roles[0]);
-        } else {
-            setValue('role', '');
-        }
-
-    }, [index, value])
-
-    useEffect(() => {
         dispatch(getProviders());
         dispatch(getRoleWithState);
     }, [dispatch])
@@ -188,6 +168,7 @@ const UserAddRow = ({
                 name="role"
                 control={control}
                 label='users.add_section.role'
+                data-testid='users.add_section.role'
                 options={rolesOptions}
                 onSelect={() => submit(false)}
             />
@@ -221,6 +202,7 @@ const UserAddRow = ({
         {isLast &&
             <div className="pb-6 ml-8">
                 <Button
+                    data-testid='add-user'
                     label='common.add'
                     buttonType='medium'
                     disabled={!isValid()}

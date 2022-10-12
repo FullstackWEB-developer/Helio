@@ -1,0 +1,534 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UserBulkActionStripe tests renders UserBulkActionStripe-ProviderMapping correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="flex h-14 px-4 border-t border-b"
+  >
+    <div
+      class="md:w-1/6 truncate"
+    >
+      <div
+        class="subtitle2 pt-4"
+      >
+        users.bulk_section.x_users_selected_singular
+      </div>
+    </div>
+    <div
+      class="md:w-1/6 border-r border-l"
+    >
+      <div
+        class="relative h-10 w-full search-input-field flex items-center relative h-full w-1/6"
+      >
+        <div
+          class="absolute pl-4"
+        >
+          <div
+            class=""
+          >
+            <svg
+              class="cursor-pointer icon-small "
+              height="16"
+              viewBox="0 0 16 16"
+              width="16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                fill="none"
+                height="16"
+                width="16"
+              />
+              <path
+                class="search-icon-fill"
+                d="M12.7,11.23a6.777,6.777,0,0,0,1.4-4.174A7.02,7.02,0,0,0,7.1,0,7.105,7.105,0,0,0,0,7.056a7.105,7.105,0,0,0,7.1,7.056,6.667,6.667,0,0,0,4.2-1.391l3,2.981a.971.971,0,0,0,1.4,0,.957.957,0,0,0,0-1.391Zm-5.6.8A5.022,5.022,0,0,1,2,7.056a5.1,5.1,0,0,1,10.2,0A5.022,5.022,0,0,1,7.1,12.025Z"
+              />
+            </svg>
+          </div>
+        </div>
+        <input
+          autocomplete="off"
+          class="py-2.5 h-full w-full search-input-field body2 pl-12"
+          data-testid="search"
+          placeholder="users.search"
+          type="text"
+          value=""
+        />
+      </div>
+    </div>
+    <div
+      class="flex items-center pl-6 body2"
+    >
+      <div
+        class="relative"
+      >
+        <div
+          class=""
+        >
+          <svg
+            class="icon-medium cursor-pointer mr-4 "
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect
+              fill="none"
+              height="24"
+              width="24"
+            />
+            <path
+              class="filter-icon"
+              d="M10,18h4V16H10ZM3,6V8H21V6Zm3,7H18V11H6Z"
+            />
+          </svg>
+        </div>
+      </div>
+      common.filters
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`UserBulkActionStripe tests renders UserBulkActionStripe-Review correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="flex h-14 px-4 border-t border-b"
+  >
+    <div
+      class="md:w-1/6 truncate"
+    >
+      <div
+        class="subtitle2 pt-4"
+      >
+        users.bulk_section.x_users_selected_singular
+      </div>
+    </div>
+    <div
+      class="md:w-1/6 border-r border-l"
+    >
+      <div
+        class="relative h-10 w-full search-input-field flex items-center relative h-full w-1/6"
+      >
+        <div
+          class="absolute pl-4"
+        >
+          <div
+            class=""
+          >
+            <svg
+              class="cursor-pointer icon-small "
+              height="16"
+              viewBox="0 0 16 16"
+              width="16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                fill="none"
+                height="16"
+                width="16"
+              />
+              <path
+                class="search-icon-fill"
+                d="M12.7,11.23a6.777,6.777,0,0,0,1.4-4.174A7.02,7.02,0,0,0,7.1,0,7.105,7.105,0,0,0,0,7.056a7.105,7.105,0,0,0,7.1,7.056,6.667,6.667,0,0,0,4.2-1.391l3,2.981a.971.971,0,0,0,1.4,0,.957.957,0,0,0,0-1.391Zm-5.6.8A5.022,5.022,0,0,1,2,7.056a5.1,5.1,0,0,1,10.2,0A5.022,5.022,0,0,1,7.1,12.025Z"
+              />
+            </svg>
+          </div>
+        </div>
+        <input
+          autocomplete="off"
+          class="py-2.5 h-full w-full search-input-field body2 pl-12"
+          data-testid="search"
+          placeholder="users.search"
+          type="text"
+          value=""
+        />
+      </div>
+    </div>
+    <div
+      class="flex items-center pl-6 body2"
+    >
+      <div
+        class="relative"
+      >
+        <div
+          class=""
+        >
+          <svg
+            class="icon-medium cursor-pointer mr-4 "
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect
+              fill="none"
+              height="24"
+              width="24"
+            />
+            <path
+              class="filter-icon"
+              d="M10,18h4V16H10ZM3,6V8H21V6Zm3,7H18V11H6Z"
+            />
+          </svg>
+        </div>
+      </div>
+      common.filters
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`UserBulkActionStripe tests renders UserBulkActionStripe-RolePicking correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="flex h-14 px-4 border-t border-b"
+  >
+    <div
+      class="md:w-1/6 truncate"
+    >
+      <div
+        class="subtitle2 pt-4"
+      >
+        users.bulk_section.x_users_selected_singular
+      </div>
+    </div>
+    <div
+      class="md:w-1/6 border-r border-l"
+    >
+      <div
+        class="relative h-10 w-full search-input-field flex items-center relative h-full w-1/6"
+      >
+        <div
+          class="absolute pl-4"
+        >
+          <div
+            class=""
+          >
+            <svg
+              class="cursor-pointer icon-small "
+              height="16"
+              viewBox="0 0 16 16"
+              width="16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                fill="none"
+                height="16"
+                width="16"
+              />
+              <path
+                class="search-icon-fill"
+                d="M12.7,11.23a6.777,6.777,0,0,0,1.4-4.174A7.02,7.02,0,0,0,7.1,0,7.105,7.105,0,0,0,0,7.056a7.105,7.105,0,0,0,7.1,7.056,6.667,6.667,0,0,0,4.2-1.391l3,2.981a.971.971,0,0,0,1.4,0,.957.957,0,0,0,0-1.391Zm-5.6.8A5.022,5.022,0,0,1,2,7.056a5.1,5.1,0,0,1,10.2,0A5.022,5.022,0,0,1,7.1,12.025Z"
+              />
+            </svg>
+          </div>
+        </div>
+        <input
+          autocomplete="off"
+          class="py-2.5 h-full w-full search-input-field body2 pl-12"
+          data-testid="search"
+          placeholder="users.search"
+          type="text"
+          value=""
+        />
+      </div>
+    </div>
+    <div
+      class="flex items-center pl-6 body2"
+    >
+      <div
+        class="relative"
+      >
+        <div
+          class=""
+        >
+          <svg
+            class="icon-medium cursor-pointer mr-4 "
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect
+              fill="none"
+              height="24"
+              width="24"
+            />
+            <path
+              class="filter-icon"
+              d="M10,18h4V16H10ZM3,6V8H21V6Zm3,7H18V11H6Z"
+            />
+          </svg>
+        </div>
+      </div>
+      common.filters
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`UserBulkActionStripe tests renders UserBulkActionStripe-Selection correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="flex h-14 px-4 border-t border-b"
+  >
+    <div
+      class="md:w-1/6 truncate"
+    >
+      <div
+        class="h-9 pt-4"
+      >
+        <label
+          class="flex flex-row items-center checkbox-button"
+        >
+          <input
+            class="checkbox"
+            data-testid="bulk-check-all"
+            id="bulk-check-all_"
+            name="bulk-check-all"
+            type="checkbox"
+          />
+          <span
+            class="checkbox-control"
+          >
+            <div
+              class=""
+            >
+              <svg
+                class="icon-medium "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="svg-checkbox"
+                  d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                />
+              </svg>
+            </div>
+          </span>
+          <div
+            class="truncate relative w-full h-full inline-block"
+          >
+            <span
+              class="w-60 w-60"
+            >
+              users.bulk_section.x_users_selected_singular
+            </span>
+          </div>
+        </label>
+      </div>
+    </div>
+    <div
+      class="md:w-1/6 border-r border-l"
+    >
+      <div
+        class="relative h-10 w-full search-input-field flex items-center relative h-full w-1/6"
+      >
+        <div
+          class="absolute pl-4"
+        >
+          <div
+            class=""
+          >
+            <svg
+              class="cursor-pointer icon-small "
+              height="16"
+              viewBox="0 0 16 16"
+              width="16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                fill="none"
+                height="16"
+                width="16"
+              />
+              <path
+                class="search-icon-fill"
+                d="M12.7,11.23a6.777,6.777,0,0,0,1.4-4.174A7.02,7.02,0,0,0,7.1,0,7.105,7.105,0,0,0,0,7.056a7.105,7.105,0,0,0,7.1,7.056,6.667,6.667,0,0,0,4.2-1.391l3,2.981a.971.971,0,0,0,1.4,0,.957.957,0,0,0,0-1.391Zm-5.6.8A5.022,5.022,0,0,1,2,7.056a5.1,5.1,0,0,1,10.2,0A5.022,5.022,0,0,1,7.1,12.025Z"
+              />
+            </svg>
+          </div>
+        </div>
+        <input
+          autocomplete="off"
+          class="py-2.5 h-full w-full search-input-field body2 pl-12"
+          data-testid="search"
+          placeholder="users.search"
+          type="text"
+          value=""
+        />
+      </div>
+    </div>
+    <div
+      class="flex items-center pl-6 body2"
+    >
+      <div
+        class="relative"
+      >
+        <div
+          class=""
+        >
+          <svg
+            class="icon-medium cursor-pointer mr-4 "
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect
+              fill="none"
+              height="24"
+              width="24"
+            />
+            <path
+              class="filter-icon"
+              d="M10,18h4V16H10ZM3,6V8H21V6Zm3,7H18V11H6Z"
+            />
+          </svg>
+        </div>
+      </div>
+      common.filters
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`UserBulkActionStripe tests renders UserBulkActionStripe-Selection correctly checked 1`] = `
+<DocumentFragment>
+  <div
+    class="flex h-14 px-4 border-t border-b"
+  >
+    <div
+      class="md:w-1/6 truncate"
+    >
+      <div
+        class="h-9 pt-4"
+      >
+        <label
+          class="flex flex-row items-center checkbox-button"
+        >
+          <input
+            class="checkbox"
+            data-testid="bulk-check-all"
+            id="bulk-check-all_"
+            name="bulk-check-all"
+            type="checkbox"
+          />
+          <span
+            class="checkbox-control"
+          >
+            <div
+              class=""
+            >
+              <svg
+                class="icon-medium "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="svg-checkbox"
+                  d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,1,2,0H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18ZM3.41,7.59h0L2,9l5,5,9-9L14.59,3.58,7,11.17,3.41,7.59Z"
+                />
+              </svg>
+            </div>
+          </span>
+          <div
+            class="truncate relative w-full h-full inline-block"
+          >
+            <span
+              class="w-60 w-60"
+            >
+              users.bulk_section.x_users_selected_singular
+            </span>
+          </div>
+        </label>
+      </div>
+    </div>
+    <div
+      class="md:w-1/6 border-r border-l"
+    >
+      <div
+        class="relative h-10 w-full search-input-field flex items-center relative h-full w-1/6"
+      >
+        <div
+          class="absolute pl-4"
+        >
+          <div
+            class=""
+          >
+            <svg
+              class="cursor-pointer icon-small "
+              height="16"
+              viewBox="0 0 16 16"
+              width="16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                fill="none"
+                height="16"
+                width="16"
+              />
+              <path
+                class="search-icon-fill"
+                d="M12.7,11.23a6.777,6.777,0,0,0,1.4-4.174A7.02,7.02,0,0,0,7.1,0,7.105,7.105,0,0,0,0,7.056a7.105,7.105,0,0,0,7.1,7.056,6.667,6.667,0,0,0,4.2-1.391l3,2.981a.971.971,0,0,0,1.4,0,.957.957,0,0,0,0-1.391Zm-5.6.8A5.022,5.022,0,0,1,2,7.056a5.1,5.1,0,0,1,10.2,0A5.022,5.022,0,0,1,7.1,12.025Z"
+              />
+            </svg>
+          </div>
+        </div>
+        <input
+          autocomplete="off"
+          class="py-2.5 h-full w-full search-input-field body2 pl-12"
+          data-testid="search"
+          placeholder="users.search"
+          type="text"
+          value=""
+        />
+      </div>
+    </div>
+    <div
+      class="flex items-center pl-6 body2"
+    >
+      <div
+        class="relative"
+      >
+        <div
+          class=""
+        >
+          <svg
+            class="icon-medium cursor-pointer mr-4 "
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect
+              fill="none"
+              height="24"
+              width="24"
+            />
+            <path
+              class="filter-icon"
+              d="M10,18h4V16H10ZM3,6V8H21V6Zm3,7H18V11H6Z"
+            />
+          </svg>
+        </div>
+      </div>
+      common.filters
+    </div>
+  </div>
+</DocumentFragment>
+`;

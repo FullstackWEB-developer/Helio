@@ -71,6 +71,7 @@ const UserListSearch = ({handleAllCheck,
             {displayResendInviteAction &&
                 <Button
                     label='users.list_section.resend_invite'
+                    data-testid='users.list_section.resend_invite'
                     buttonType='secondary'
                     className='mr-6 whitespace-nowrap'
                     onClick={handleMultiselectionInvite}
@@ -79,6 +80,7 @@ const UserListSearch = ({handleAllCheck,
             {displayDisableAction &&
                 <Button
                     label='users.list_section.disable'
+                    data-testid='users.list_section.disable'
                     buttonType='secondary'
                     className='mr-6'
                     onClick={() => {setDisableConfirmationOpen(true);}}
@@ -87,6 +89,7 @@ const UserListSearch = ({handleAllCheck,
             {displayEnableAction &&
                 <Button
                     label='users.list_section.enable'
+                    data-testid='users.list_section.enable'
                     buttonType='secondary'
                     className='mr-6'
                     onClick={() => handleMultiselectionStatusChange(UserDetailStatus.Active)}
@@ -106,6 +109,7 @@ const UserListSearch = ({handleAllCheck,
             </div>
             <div className='w-1/6 border-r'>
                 <SearchInputField
+                    dataTestId='search'
                     wrapperClassNames='relative h-full'
                     hasBorderBottom={false}
                     onChange={(value: string) => {setSearchText(value)}}

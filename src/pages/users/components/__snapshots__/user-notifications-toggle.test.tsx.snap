@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UserNotificationsToggle tests renders UserNotificationsToggle correctly checked 1`] = `
+<DocumentFragment>
+  <div
+    class="border-t flex justify-between py-3 border-b pr-12"
+  >
+    <span>
+      browser_notifications.call
+    </span>
+    <div
+      class="flex"
+    >
+      <label
+        class="toggle-switch"
+      >
+        <input
+          checked=""
+          data-testid="switch"
+          type="checkbox"
+          value="checked"
+        />
+        <span
+          class="slider round"
+        />
+      </label>
+    </div>
+  </div>
+</DocumentFragment>
+`;

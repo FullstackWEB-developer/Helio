@@ -122,6 +122,7 @@ exports[`Email Reply tests renders email-filter contact-email-address 1`] = `
                   <input
                     autocomplete="off"
                     class="py-2.5 h-full w-full search-input-field body2 pl-12 border-b"
+                    data-testid="search"
                     placeholder="common.search"
                     type="text"
                     value=""
@@ -318,6 +319,7 @@ exports[`Email Reply tests renders email-filter correctly 1`] = `
                   <input
                     autocomplete="off"
                     class="py-2.5 h-full w-full search-input-field body2 pl-12 border-b"
+                    data-testid="search"
                     placeholder="common.search"
                     type="text"
                     value=""
@@ -514,6 +516,7 @@ exports[`Email Reply tests renders email-filter patient-email-address 1`] = `
                   <input
                     autocomplete="off"
                     class="py-2.5 h-full w-full search-input-field body2 pl-12 border-b"
+                    data-testid="search"
                     placeholder="common.search"
                     type="text"
                     value=""
@@ -710,6 +713,7 @@ exports[`Email Reply tests renders email-filter ticket-email-address 1`] = `
                   <input
                     autocomplete="off"
                     class="py-2.5 h-full w-full search-input-field body2 pl-12 border-b"
+                    data-testid="search"
                     placeholder="common.search"
                     type="text"
                     value=""

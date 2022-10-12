@@ -94,8 +94,6 @@ const BulkAddUser = () => {
                 return <UserBulkProviderStep />
             case BulkAddStep.Review:
                 return <UserBulkReviewStep handleInvitationMessageChange={(message) => setInvitationMessage(message)} invitationMessage={invitationMessage} />
-            default:
-                return null;
         }
     }
 
@@ -118,8 +116,6 @@ const BulkAddUser = () => {
                 return false;
             case BulkAddStep.Review:
                 return sendUserInvitationsMutation.isLoading;
-            default:
-                return false;
         }
     }
 
@@ -214,9 +210,9 @@ const BulkAddUser = () => {
                     displayProperStepContent()
                 }
                 <div className='flex pt-7'>
-                    {deselectButtonAvailable && <Button className='mr-8' label={'users.bulk_section.deselect_all'} buttonType='secondary-medium' onClick={() => {dispatch(clearAllSelectedUsers())}} />}
-                    {currentStep > 1 && !inviteSuccess && <Button buttonType='secondary-medium' label={'common.back'} onClick={goStepBack} className='mr-8' />}
-                    {!inviteSuccess && <Button buttonType='medium' label={currentStep !== BulkAddStep.Review ? 'common.continue' : 'users.bulk_section.add_users'}
+                    {deselectButtonAvailable && <Button data-testid='deselect' className='mr-8' label={'users.bulk_section.deselect_all'} buttonType='secondary-medium' onClick={() => {dispatch(clearAllSelectedUsers())}} />}
+                    {currentStep > 1 && !inviteSuccess && <Button data-testid='back' buttonType='secondary-medium' label={'common.back'} onClick={goStepBack} className='mr-8' />}
+                    {!inviteSuccess && <Button data-testid='continue' buttonType='medium' label={currentStep !== BulkAddStep.Review ? 'common.continue' : 'users.bulk_section.add_users'}
                         onClick={currentStep !== BulkAddStep.Review ? goStepForward : inviteUsers} disabled={determineDisabledNextButtonState()}
                         isLoading={sendUserInvitationsMutation.isLoading} />}
                 </div>

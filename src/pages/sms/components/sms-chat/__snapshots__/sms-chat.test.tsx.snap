@@ -40,6 +40,7 @@ exports[`Sms-Chat tests renders sms-chat correctly 1`] = `
             <div>
               <div
                 class="relative flex flex-row items-center cursor-pointer flex-nowrap"
+                data-testid="more-menu-toggle"
               >
                 <div
                   class=""

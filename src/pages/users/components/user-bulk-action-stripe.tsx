@@ -114,7 +114,7 @@ const UserBulkActionStripe = ({currentStep}: {currentStep: BulkAddStep}) => {
                 {
                     currentStep > BulkAddStep.Selection ?
                         <div className='subtitle2 pt-4'>{determineProperCountWording()}</div> :
-                        <Checkbox name='bulk-check-all' truncate={true}
+                        <Checkbox data-testid='bulk-check-all' name='bulk-check-all' truncate={true}
                             label={determineProperCountWording()}
                             className='pt-4'
                             checked={areAllSelectedOnPage}
@@ -123,6 +123,7 @@ const UserBulkActionStripe = ({currentStep}: {currentStep: BulkAddStep}) => {
             </div>
             <div className='md:w-1/6 border-r border-l'>
                 <SearchInputField
+                    dataTestId='search'
                     wrapperClassNames='relative h-full w-1/6'
                     hasBorderBottom={false}
                     placeholder={'users.search'}

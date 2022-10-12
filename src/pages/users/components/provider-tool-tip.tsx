@@ -8,7 +8,7 @@ const ProviderMappingToolTip = () => {
     const [isToolTipVisible, setToolTipVisible, containerRef] = useComponentVisibility<HTMLDivElement>(false);
 
     return (
-        <div ref={containerRef}
+        <div ref={containerRef} data-testid='toggle'
             className='provider-mapping-tool-tip'
             onClick={() => setToolTipVisible(!isToolTipVisible)}
         >

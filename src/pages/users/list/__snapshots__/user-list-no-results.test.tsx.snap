@@ -1,0 +1,281 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UserListNoResult tests renders UserListNoResult correctly add-bulk-user 1`] = `
+<DocumentFragment>
+  <div
+    class="pt-10 px-6 flex flex-col"
+  >
+    <span
+      class="mb-4 h-11"
+    >
+      users.list_section.no_results
+    </span>
+    <div
+      class="flex"
+    >
+      <button
+        class="medium-button mr-6"
+        data-testid="add-user"
+        type="button"
+      >
+        <div
+          class="flex flex-row justify-center items-center space-x-2"
+        >
+          <div>
+            users.list_section.add_users
+          </div>
+        </div>
+      </button>
+      <button
+        class="medium-button mr-6"
+        data-testid="add-bulk-user"
+        type="button"
+      >
+        <div
+          class="flex flex-row justify-center items-center space-x-2"
+        >
+          <div>
+            users.list_section.add_users_bulk
+          </div>
+        </div>
+      </button>
+      <button
+        class="medium-button mr-6"
+        data-testid="reset"
+        type="button"
+      >
+        <div
+          class="flex flex-row justify-center items-center space-x-2"
+        >
+          <div>
+            users.list_section.reset_results
+          </div>
+        </div>
+      </button>
+      <button
+        class="secondary-button"
+        data-testid="back"
+        type="button"
+      >
+        <div
+          class="flex flex-row justify-center items-center space-x-2"
+        >
+          <div>
+            users.list_section.back
+          </div>
+        </div>
+      </button>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`UserListNoResult tests renders UserListNoResult correctly add-user 1`] = `
+<DocumentFragment>
+  <div
+    class="pt-10 px-6 flex flex-col"
+  >
+    <span
+      class="mb-4 h-11"
+    >
+      users.list_section.no_results
+    </span>
+    <div
+      class="flex"
+    >
+      <button
+        class="medium-button mr-6"
+        data-testid="add-user"
+        type="button"
+      >
+        <div
+          class="flex flex-row justify-center items-center space-x-2"
+        >
+          <div>
+            users.list_section.add_users
+          </div>
+        </div>
+      </button>
+      <button
+        class="medium-button mr-6"
+        data-testid="add-bulk-user"
+        type="button"
+      >
+        <div
+          class="flex flex-row justify-center items-center space-x-2"
+        >
+          <div>
+            users.list_section.add_users_bulk
+          </div>
+        </div>
+      </button>
+      <button
+        class="medium-button mr-6"
+        data-testid="reset"
+        type="button"
+      >
+        <div
+          class="flex flex-row justify-center items-center space-x-2"
+        >
+          <div>
+            users.list_section.reset_results
+          </div>
+        </div>
+      </button>
+      <button
+        class="secondary-button"
+        data-testid="back"
+        type="button"
+      >
+        <div
+          class="flex flex-row justify-center items-center space-x-2"
+        >
+          <div>
+            users.list_section.back
+          </div>
+        </div>
+      </button>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`UserListNoResult tests renders UserListNoResult correctly back 1`] = `
+<DocumentFragment>
+  <div
+    class="pt-10 px-6 flex flex-col"
+  >
+    <span
+      class="mb-4 h-11"
+    >
+      users.list_section.no_results
+    </span>
+    <div
+      class="flex"
+    >
+      <button
+        class="medium-button mr-6"
+        data-testid="add-user"
+        type="button"
+      >
+        <div
+          class="flex flex-row justify-center items-center space-x-2"
+        >
+          <div>
+            users.list_section.add_users
+          </div>
+        </div>
+      </button>
+      <button
+        class="medium-button mr-6"
+        data-testid="add-bulk-user"
+        type="button"
+      >
+        <div
+          class="flex flex-row justify-center items-center space-x-2"
+        >
+          <div>
+            users.list_section.add_users_bulk
+          </div>
+        </div>
+      </button>
+      <button
+        class="medium-button mr-6"
+        data-testid="reset"
+        type="button"
+      >
+        <div
+          class="flex flex-row justify-center items-center space-x-2"
+        >
+          <div>
+            users.list_section.reset_results
+          </div>
+        </div>
+      </button>
+      <button
+        class="secondary-button"
+        data-testid="back"
+        type="button"
+      >
+        <div
+          class="flex flex-row justify-center items-center space-x-2"
+        >
+          <div>
+            users.list_section.back
+          </div>
+        </div>
+      </button>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`UserListNoResult tests renders UserListNoResult correctly reset 1`] = `
+<DocumentFragment>
+  <div
+    class="pt-10 px-6 flex flex-col"
+  >
+    <span
+      class="mb-4 h-11"
+    >
+      users.list_section.no_results
+    </span>
+    <div
+      class="flex"
+    >
+      <button
+        class="medium-button mr-6"
+        data-testid="add-user"
+        type="button"
+      >
+        <div
+          class="flex flex-row justify-center items-center space-x-2"
+        >
+          <div>
+            users.list_section.add_users
+          </div>
+        </div>
+      </button>
+      <button
+        class="medium-button mr-6"
+        data-testid="add-bulk-user"
+        type="button"
+      >
+        <div
+          class="flex flex-row justify-center items-center space-x-2"
+        >
+          <div>
+            users.list_section.add_users_bulk
+          </div>
+        </div>
+      </button>
+      <button
+        class="medium-button mr-6"
+        data-testid="reset"
+        type="button"
+      >
+        <div
+          class="flex flex-row justify-center items-center space-x-2"
+        >
+          <div>
+            users.list_section.reset_results
+          </div>
+        </div>
+      </button>
+      <button
+        class="secondary-button"
+        data-testid="back"
+        type="button"
+      >
+        <div
+          class="flex flex-row justify-center items-center space-x-2"
+        >
+          <div>
+            users.list_section.back
+          </div>
+        </div>
+      </button>
+    </div>
+  </div>
+</DocumentFragment>
+`;

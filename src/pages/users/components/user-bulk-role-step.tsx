@@ -61,7 +61,7 @@ const UserBulkRoleStep = ({rolePickerBehavior}: {rolePickerBehavior: BulkRolePic
             <div className='flex flex-col'>
                 <div className='body2 group-role-description'>{t('users.bulk_section.group_role_description')}</div>
                 <div className='md:w-1/4 pt-3'>
-                    <Select options={roleOptions} defaultValue={selectedRole} label={'users.bulk_section.pick_a_role'} onSelect={handleRoleSelectChange} />
+                    <Select name='users.bulk_section.pick_a_role' options={roleOptions} defaultValue={selectedRole} label={'users.bulk_section.pick_a_role'} onSelect={handleRoleSelectChange} />
                 </div>
             </div> :
             (

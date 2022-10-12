@@ -25,6 +25,7 @@ exports[`New Email No Search Result tests renders new-email-no-search-result cor
             <input
               autocomplete="off"
               class="py-2.5 h-full w-full search-input-field body2 border-none border-b"
+              data-testid="search"
               placeholder="email.new_email.search_placeholder"
               type="text"
               value=""
@@ -62,6 +63,7 @@ exports[`New Email No Search Result tests renders new-email-no-search-result wit
         >
           <svg
             class="icon-medium "
+            data-testid="svg-icon"
             height="24"
             viewBox="0 0 24 24"
             width="24"

@@ -1,0 +1,238 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BulkGridDropdown tests renders BulkGridDropdown correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="col-span-1 cursor-pointer"
+    data-testid="dropdown"
+  >
+    <div
+      class="flex flex-row"
+    >
+      <div
+        class="bulk-user-grid-ehr-value"
+      >
+        users.bulk_section.select_mapping
+      </div>
+      <div
+        class="pl-3"
+      >
+        <div
+          class=""
+        >
+          <svg
+            class="cursor-pointer "
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect
+              fill="none"
+              height="24"
+              width="24"
+            />
+            <path
+              class="active-item-icon"
+              d="M7,14l1.273-1.273L2.545,7,8.273,1.273,7,0,0,7Z"
+              transform="translate(5 16.273) rotate(-90)"
+            />
+          </svg>
+        </div>
+      </div>
+    </div>
+    <div
+      class="absolute z-10 w-48 hidden"
+      data-testid="dropdown-position"
+      style="right: 0px; top: 0px; left: 0px;"
+    >
+      <div
+        class="py-2 bg-white dropdown-body"
+        data-test-id="dropdown-undefined"
+        data-testid="dropdown-undefined"
+      >
+        <div
+          class="relative h-10 w-full search-input-field flex items-center "
+        >
+          <div
+            class="absolute pl-4"
+          >
+            <div
+              class=""
+            >
+              <svg
+                class="cursor-pointer icon-small "
+                height="16"
+                viewBox="0 0 16 16"
+                width="16"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="16"
+                  width="16"
+                />
+                <path
+                  class="search-icon-fill"
+                  d="M12.7,11.23a6.777,6.777,0,0,0,1.4-4.174A7.02,7.02,0,0,0,7.1,0,7.105,7.105,0,0,0,0,7.056a7.105,7.105,0,0,0,7.1,7.056,6.667,6.667,0,0,0,4.2-1.391l3,2.981a.971.971,0,0,0,1.4,0,.957.957,0,0,0,0-1.391Zm-5.6.8A5.022,5.022,0,0,1,2,7.056a5.1,5.1,0,0,1,10.2,0A5.022,5.022,0,0,1,7.1,12.025Z"
+                />
+              </svg>
+            </div>
+          </div>
+          <input
+            autocomplete="off"
+            class="py-2.5 h-full w-full search-input-field body2 pl-12 border-b"
+            data-testid="search"
+            placeholder="common.search"
+            type="text"
+            value=""
+          />
+        </div>
+        <div
+          class="overflow-y-auto overflow-x-hidden dropdown-max-height "
+        >
+          <span>
+            <div
+              class="w-full px-4 dropdown-cell justify-between flex items-center  body2    cursor-pointer "
+              data-testid="string string"
+            >
+              <div
+                class="flex flex-row w-full items-center"
+                data-test-id="dropdown-cell-icon-content"
+              >
+                <div
+                  class="flex items-center "
+                  data-test-id="dropdown-cell-text-string string"
+                >
+                  string string
+                </div>
+              </div>
+            </div>
+          </span>
+          <span>
+            <div
+              class="w-full px-4 dropdown-cell justify-between flex items-center  body2    cursor-pointer "
+              data-testid="string string"
+            >
+              <div
+                class="flex flex-row w-full items-center"
+                data-test-id="dropdown-cell-icon-content"
+              >
+                <div
+                  class="flex items-center "
+                  data-test-id="dropdown-cell-text-string string"
+                >
+                  string string
+                </div>
+              </div>
+            </div>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`BulkGridDropdown tests renders BulkGridDropdown correctly role 1`] = `
+<DocumentFragment>
+  <div
+    class="col-span-1 cursor-pointer"
+    data-testid="dropdown"
+  >
+    <div
+      class="flex flex-row"
+    >
+      <div
+        class="bulk-user-grid-role-value"
+      >
+        0
+      </div>
+      <div
+        class="pl-3"
+      >
+        <div
+          class=""
+        >
+          <svg
+            class="cursor-pointer "
+            data-testid="clear"
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <g
+              transform="translate(-889 -16)"
+            >
+              <rect
+                fill="none"
+                height="24"
+                transform="translate(889 16)"
+                width="24"
+              />
+              <path
+                class="active-item-icon"
+                d="M12,2A10,10,0,1,0,22,12,9.991,9.991,0,0,0,12,2Zm5,13.59L15.59,17,12,13.41,8.41,17,7,15.59,10.59,12,7,8.41,8.41,7,12,10.59,15.59,7,17,8.41,13.41,12Z"
+                transform="translate(889 16)"
+              />
+            </g>
+          </svg>
+        </div>
+      </div>
+    </div>
+    <div
+      class="absolute z-10 w-48 hidden"
+      data-testid="dropdown-position"
+      style="right: 0px; top: 0px; left: 0px;"
+    >
+      <div
+        class="py-2 bg-white dropdown-body"
+        data-test-id="dropdown-undefined"
+        data-testid="dropdown-undefined"
+      >
+        <div
+          class="overflow-y-auto overflow-x-hidden dropdown-max-height "
+        >
+          <span>
+            <div
+              class="w-full px-4 dropdown-cell justify-between flex items-center  body2    cursor-pointer "
+              data-testid="string0"
+            >
+              <div
+                class="flex flex-row w-full items-center"
+                data-test-id="dropdown-cell-icon-content"
+              >
+                <div
+                  class="flex items-center "
+                  data-test-id="dropdown-cell-text-string0"
+                >
+                  string0
+                </div>
+              </div>
+            </div>
+          </span>
+          <span>
+            <div
+              class="w-full px-4 dropdown-cell justify-between flex items-center  body2    cursor-pointer "
+              data-testid="string1"
+            >
+              <div
+                class="flex flex-row w-full items-center"
+                data-test-id="dropdown-cell-icon-content"
+              >
+                <div
+                  class="flex items-center "
+                  data-test-id="dropdown-cell-text-string1"
+                >
+                  string1
+                </div>
+              </div>
+            </div>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

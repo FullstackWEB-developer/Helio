@@ -95,6 +95,7 @@ exports[`Chat tests renders chat-log-list correctly 1`] = `
                     <input
                       class="checkbox"
                       data-test-id="status-checkbox-0"
+                      data-testid="status-checkbox-0"
                       id="status[0]_0"
                       name="status[0]"
                       type="checkbox"
@@ -144,6 +145,7 @@ exports[`Chat tests renders chat-log-list correctly 1`] = `
                     <input
                       class="checkbox"
                       data-test-id="status-checkbox-1"
+                      data-testid="status-checkbox-1"
                       id="status[1]_1"
                       name="status[1]"
                       type="checkbox"
@@ -193,6 +195,7 @@ exports[`Chat tests renders chat-log-list correctly 1`] = `
                     <input
                       class="checkbox"
                       data-test-id="status-checkbox-6"
+                      data-testid="status-checkbox-6"
                       id="status[6]_6"
                       name="status[6]"
                       type="checkbox"
@@ -599,7 +602,7 @@ exports[`Chat tests renders chat-log-list correctly 1`] = `
             >
               <svg
                 class="cursor-pointer "
-                data-testid="svg-icon"
+                data-testid="next-page"
                 height="24"
                 viewBox="0 0 24 24"
                 width="24"
@@ -680,6 +683,7 @@ exports[`Chat tests renders chat-log-list correctly 1`] = `
           <input
             autocomplete="off"
             class="py-2.5 h-full w-full search-input-field body2 border-b-0 pl-12"
+            data-testid="search"
             placeholder="ticket_log.search_chats_placeholder"
             type="text"
             value=""
