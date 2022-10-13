@@ -1667,7 +1667,9 @@
     "phone": "Phone",
     "messages": "Messages",
     "sms_not_available_patient": "Messaging to this patient is disabled. This patient has either changed their phone number or has changed their SMS texting preferences.",
+    "sms_not_available_patient_phone_blocked": "Messaging to this patient is disabled. This patient's phone number is blocked.",
     "sms_not_available_contact": "Messaging to this contact is disabled. This contact has changed their phone number.",
+    "sms_not_available_contact_phone_blocked": "Messaging to this contact is disabled. This contact's phone number is blocked.",
     "ticket_closed": "This ticket is closed, to send a SMS reopen this ticket or create a new one.",
     "ticket_closed_and_sms_blocked": "This ticket is closed, and number is blocked, to send a SMS unblock the number and reopen this ticket or create a new one."
   },

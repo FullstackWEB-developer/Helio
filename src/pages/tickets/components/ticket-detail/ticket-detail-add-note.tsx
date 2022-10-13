@@ -74,7 +74,6 @@ const TicketDetailAddNote = ({ticket, patient, contact, emailMessages, smsMessag
     const [noteDisabledText, setNoteDisabledText] = useState<string>();
     const [disabledTab, setDisabledTab] = useState<ChannelTabs>();
     const [emailDisabledText, setEmailDisabledText] = useState<string>();
-    const [smsDisabledText, setSmsDisabledText] = useState<string>();
     const [richTextMode, setRichTextMode] = useState(false);
     const [lastEmailAddress, setLastEmailAddress] = useState<string>();
     const [lastSMSAddress, setLastSMSAddress] = useState<string>();
@@ -97,24 +96,31 @@ const TicketDetailAddNote = ({ticket, patient, contact, emailMessages, smsMessag
             }
         });
 
-    const {data: isLastEmailAddressBlocked} = useQuery([GetIsEmailBlocked, lastEmailAddress], () => isUserEmailBlocked(lastEmailAddress), {
+    const {data: isEmailAddressBlocked} = useQuery([GetIsEmailBlocked, lastEmailAddress], () => isUserEmailBlocked(lastEmailAddress), {
         enabled: !!lastEmailAddress,
     });
 
-    const {data: isEmailAddressBlocked} = useQuery([GetIsEmailBlocked, emailAddress], () => isUserEmailBlocked(emailAddress), {
-        enabled: !!emailAddress,
-    });
-
-    const {data: isLastSMSAddressBlocked} = useQuery([GetIsSMSBlocked, lastSMSAddress], () => isUserPhoneBlocked(lastSMSAddress), {
+    const {data: isSMSAddressBlocked} = useQuery([GetIsSMSBlocked, lastSMSAddress], () => isUserPhoneBlocked(lastSMSAddress), {
         enabled: !!lastSMSAddress,
-    });
-
-    const {data: isSMSAddressBlocked} = useQuery([GetIsSMSBlocked, mobileNumber], () => isUserPhoneBlocked(mobileNumber), {
-        enabled: !!mobileNumber,
     });
 
     useEffect(() => {
         if (selectedTab === ChannelTabs.SmsTab) {
+            if (patient && !patient.consentToText) {
+                setNoteDisabledText('sms.sms_patient_no_consent');
+                setDisabledTab(ChannelTabs.SmsTab);
+                return;
+            }
+            if (patient && isSMSAddressBlocked?.isActive) {
+                setNoteDisabledText('sms.sms_patient_blocked');
+                setDisabledTab(ChannelTabs.SmsTab);
+                return;
+            }
+            if (contact && isSMSAddressBlocked?.isActive) {
+                setNoteDisabledText('sms.sms_contact_blocked');
+                setDisabledTab(ChannelTabs.SmsTab);
+                return;
+            }
             if (!smsMessages?.results || smsMessages.results.length === 0) {
                 setNoteDisabledText(undefined);
                 setDisabledTab(undefined);
@@ -126,19 +132,19 @@ const TicketDetailAddNote = ({ticket, patient, contact, emailMessages, smsMessag
             if(lastSmsAddress && lastSmsAddress.startsWith('+1')) {
                 lastSmsAddress = lastSmsAddress.substring(2);
             }
-            if (patient && (!patient.consentToText || patient.mobilePhone !== lastSmsAddress) && (isLastSMSAddressBlocked?.isActive || isSMSAddressBlocked?.isActive)) {
+            if (patient && (!patient.consentToText || patient.mobilePhone !== lastSmsAddress) && isSMSAddressBlocked?.isActive) {
                 setNoteDisabledText('sms.sms_not_available_patient_phone_blocked');
                 setDisabledTab(ChannelTabs.SmsTab);
             } else if (patient && (!patient.consentToText || patient.mobilePhone !== lastSmsAddress)) {
                 setNoteDisabledText('sms.sms_not_available_patient');
                 setDisabledTab(ChannelTabs.SmsTab);
-            } else if (contact && contact.mobilePhone !== lastSmsAddress && (isLastSMSAddressBlocked?.isActive || isSMSAddressBlocked?.isActive)) {
+            } else if (contact && contact.mobilePhone !== lastSmsAddress && isSMSAddressBlocked?.isActive) {
                 setNoteDisabledText('sms.sms_not_available_contact_phone_blocked');
                 setDisabledTab(ChannelTabs.SmsTab);
             } else if (contact && contact.mobilePhone !== lastSmsAddress) {
                 setNoteDisabledText('sms.sms_not_available_contact');
                 setDisabledTab(ChannelTabs.SmsTab);
-            } else if ((isLastSMSAddressBlocked?.isActive || isSMSAddressBlocked?.isActive)) {
+            } else if (isSMSAddressBlocked?.isActive) {
                 setNoteDisabledText('sms.unknown_sms_blocked');
                 setDisabledTab(ChannelTabs.SmsTab);
             } else {
@@ -151,29 +157,28 @@ const TicketDetailAddNote = ({ticket, patient, contact, emailMessages, smsMessag
                 setDisabledTab(undefined);
                 return;
             }
-            
             const lastMessage = emailMessages.results[emailMessages.results.length - 1];
             const lastEmailAddress = lastMessage.direction === TicketMessagesDirection.Outgoing ? lastMessage.toAddress : lastMessage.fromAddress;
             setLastEmailAddress(lastEmailAddress);
             if (patient) {
-                if(patient.emailAddress !== lastEmailAddress && (isLastEmailAddressBlocked?.isActive || isEmailAddressBlocked?.isActive)) {
+                if(patient.emailAddress !== lastEmailAddress && isEmailAddressBlocked?.isActive) {
                     setNoteDisabledText('email.inbox.email_not_available_patient_and_blocked');
                     setDisabledTab(ChannelTabs.EmailTab);
                 } else if (patient.emailAddress !== lastEmailAddress) {
                     setNoteDisabledText('email.inbox.email_not_available_patient');
                     setDisabledTab(ChannelTabs.EmailTab);
-                } else if((isLastEmailAddressBlocked?.isActive || isEmailAddressBlocked?.isActive)) {
+                } else if(isEmailAddressBlocked?.isActive) {
                     setNoteDisabledText('email.inbox.email_blocked_patient');
                     setDisabledTab(ChannelTabs.EmailTab);
                 }
             } else if (contact) {
-                if(contact.emailAddress !== lastEmailAddress && (isLastEmailAddressBlocked?.isActive || isEmailAddressBlocked?.isActive)) {
+                if(contact.emailAddress !== lastEmailAddress && isEmailAddressBlocked?.isActive) {
                     setNoteDisabledText('email.inbox.email_not_available_contact_and_blocked');
                     setDisabledTab(ChannelTabs.EmailTab);
                 } else if (contact.emailAddress !== lastEmailAddress) {
                     setNoteDisabledText('email.inbox.email_not_available_contact');
                     setDisabledTab(ChannelTabs.EmailTab);
-                } else if((isLastEmailAddressBlocked?.isActive || isEmailAddressBlocked?.isActive)) {
+                } else if(isEmailAddressBlocked?.isActive) {
                     setNoteDisabledText('email.inbox.email_blocked_contact');
                     setDisabledTab(ChannelTabs.EmailTab);
                 }
@@ -183,7 +188,7 @@ const TicketDetailAddNote = ({ticket, patient, contact, emailMessages, smsMessag
                 setDisabledTab(undefined);
             }
         }
-    }, [patient, ticket, contact, selectedTab, emailMessages, isLastEmailAddressBlocked, isEmailAddressBlocked, isLastSMSAddressBlocked, isSMSAddressBlocked])
+    }, [patient, ticket, contact, selectedTab, emailMessages, isEmailAddressBlocked, isSMSAddressBlocked])
 
     const determineEmailSubject = () => {
         if (ticketHasEmailMessages) {
@@ -239,6 +244,9 @@ const TicketDetailAddNote = ({ticket, patient, contact, emailMessages, smsMessag
             }
         }
         else {
+            if (!!ticket.originationNumber) {
+                setMobileNumber(ticket.originationNumber);
+            }
             if (ticket?.incomingEmailAddress) {
                 setEmailAddress(ticket.incomingEmailAddress);
             }
@@ -385,28 +393,18 @@ const TicketDetailAddNote = ({ticket, patient, contact, emailMessages, smsMessag
     }, [noteDisabledText, disabledTab, selectedTab]);
 
     const isSendSmsDisabled = useMemo(() => {
-        if(!mobileNumber || isTicketDisabled || isTabDisabled && (isLastSMSAddressBlocked?.isActive || isSMSAddressBlocked?.isActive)) {
-            setSmsDisabledText('ticket_detail.ticket_closed_and_sms_blocked');
-            return true;
-        } else if((isLastSMSAddressBlocked?.isActive || isSMSAddressBlocked?.isActive)) {
-            setSmsDisabledText('ticket_detail.sms_blocked');
-            return true;
-        } else if (!mobileNumber || isTicketDisabled || isTabDisabled) {
-            setSmsDisabledText('ticket_detail.reopen_or_create_to_send_sms');
-            return true;
-        }
-        return
-    }, [isTicketDisabled, mobileNumber, isTabDisabled, isLastSMSAddressBlocked, isSMSAddressBlocked]);
+        return !mobileNumber || isTicketDisabled || isTabDisabled || isSMSAddressBlocked?.isActive;
+    }, [isTicketDisabled, mobileNumber, isTabDisabled]);
 
     const isSendEmailDisabled = useMemo(() => {
         if (selectedTab === ChannelTabs.EmailTab && isTabDisabled) {
             setEmailDisabledText('');
             return true;
         }
-        if(isTicketDisabled && (isLastEmailAddressBlocked?.isActive || isEmailAddressBlocked?.isActive)) {
+        if(isTicketDisabled && isEmailAddressBlocked?.isActive) {
             setEmailDisabledText('email.inbox.ticket_closed_and_blocked');
             return true;
-        } else if((isLastEmailAddressBlocked?.isActive || isEmailAddressBlocked?.isActive)) {
+        } else if(isEmailAddressBlocked?.isActive) {
             setEmailDisabledText('email.inbox.unknown_email_blocked');
             return true;
         } else if (!emailAddress || isTicketDisabled) {
@@ -414,7 +412,7 @@ const TicketDetailAddNote = ({ticket, patient, contact, emailMessages, smsMessag
             return true;
         }
         return
-    }, [isTicketDisabled, emailAddress, selectedTab, noteDisabledText, isTabDisabled, isLastEmailAddressBlocked, isEmailAddressBlocked])
+    }, [isTicketDisabled, emailAddress, selectedTab, noteDisabledText, isTabDisabled, isEmailAddressBlocked])
 
 
     return <>
@@ -468,7 +466,7 @@ const TicketDetailAddNote = ({ticket, patient, contact, emailMessages, smsMessag
                             <TextArea
                                 className='w-full pl-2 pr-0 body2'
                                 data-test-id='ticket-send-sms'
-                                placeHolder={isSendSmsDisabled ? smsDisabledText : 'ticket_detail.add_note'}
+                                placeHolder={t(isSendSmsDisabled ? noteDisabledText ?? 'ticket_detail.reopen_or_create_to_send_sms' : 'ticket_detail.add_note')}
                                 required={true}
                                 rows={2}
                                 maxRows={5}
