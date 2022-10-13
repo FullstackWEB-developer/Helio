@@ -2516,7 +2516,7 @@
       "total_outbound_calls": "Total Outbound Calls",
       "average_response_time": "Average Response Time",
       "total_inbound_chats": "Total Initial Inbound Chats",
-      "total_inbound_chats_tooltip": "Number of chats started. Includes chats, even if user did not write anything and ticket not created!",
+      "total_inbound_chats_tooltip": "Total number of initiated chats (incl. chats without content & ticket)",
       "total_outgoing_sms": "Total Outgoing SMS",
       "total_initial_inbound_emails": "Total Initial Inbound Emails"
     }
