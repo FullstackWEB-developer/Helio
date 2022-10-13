@@ -257,7 +257,6 @@ export function useAgentReportsTableModel({data, type, onSort}: AgentReportsTabl
         },
         {
             title: 'reports.agent_reports.column_names.overdue_tickets',
-            tooltip: 'reports.agent_reports.column_names.overdue_tickets_tooltip',
             field: 'overdueTicketCount',
             widthClass: 'w-3/24',
             headerClassName: 'items-center',
