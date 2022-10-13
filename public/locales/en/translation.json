@@ -2458,7 +2458,7 @@
     "bot_reports": {
       "key_kpis": "Key KPIs",
       "total_calls": "Total Calls",
-      "total_calls_tooltip": "These number includes calls made to Helio when force to redirect is enabled.",
+      "total_calls_tooltip": "Total inbound calls (incl. inbound calls when \"Force to redirect\" is enabled)",
       "total_chats": "Total Chats",
       "appointments_scheduled": "Appointments Scheduled",
       "new_patients_registered": "New Patients Registered",
