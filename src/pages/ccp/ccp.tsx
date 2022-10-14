@@ -801,17 +801,14 @@ const Ccp: React.FC<BoxProps> = ({
                             className={`h-full overflow-hidden ccp-drag-background ${ccpConnectionState === CCPConnectionStatus.Loading ? 'hidden' : 'block'}`} />
                         {ccpConnectionState === CCPConnectionStatus.Success &&
                             <div className={`flex justify-center items-center w-full p-0 box-content shadow-md border-t footer-ff ccp-bottom-bar block`}>
-                                {
-                                    (isInboundCall || isInternalCallInitiated) &&
-                                    <span className={`h-10 flex items-center justify-center w-12 ${applyProperIconClass(contextPanels.bot, 'background')}`}>
-                                        <SvgIcon type={Icon.Bot}
-                                            className='cursor-pointer icon-medium'
-                                            onClick={() => dispatch(setContextPanel(contextPanels.bot))}
-                                            fillClass={applyProperIconClass(contextPanels.bot)} />
-                                    </span>
-                                }
                                 {botContext &&
                                     <>
+                                        <span className={`h-10 flex items-center justify-center w-12 ${applyProperIconClass(contextPanels.bot, 'background')}`}>
+                                            <SvgIcon type={Icon.Bot}
+                                                className='cursor-pointer icon-medium'
+                                                onClick={() => dispatch(setContextPanel(contextPanels.bot))}
+                                                fillClass={applyProperIconClass(contextPanels.bot)} />
+                                        </span>
                                         <span className={`h-10 flex items-center justify-center w-12 ${applyProperIconClass(contextPanels.note, 'background')}`}>
                                             <SvgIcon type={Icon.Note}
                                                 className='cursor-pointer icon-medium'

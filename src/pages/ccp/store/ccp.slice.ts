@@ -58,6 +58,9 @@ const ccpSlice = createSlice({
         removeCurrentBotContext: (state, {payload}: PayloadAction<string>) => {
             const contextLength = state.botContexts.length;
             const index = state.botContexts.findIndex(a => a.currentContactId === payload);
+            if(index < 0){
+                return;
+            }
             state.botContexts = state.botContexts.filter(a => a.currentContactId !== payload);
             if (contextLength === 1) {
                 state.contextPanel = "";
