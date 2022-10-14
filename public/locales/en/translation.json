@@ -196,6 +196,7 @@
       "pharmacy": "Pharmacy"
     },
     "filter": {
+      "callbacks": "Callbacks",
       "filter_tickets": "Filters",
       "reset_all": "Reset All",
       "statuses": "Statuses",

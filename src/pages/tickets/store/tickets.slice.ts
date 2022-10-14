@@ -36,14 +36,6 @@ const ticketsSlice = createSlice({
         ticket.assignee = payload.assigneeId;
       }
     },
-    changeTicket(state, {payload}: PayloadAction<Ticket>) {
-      const {id, subject, status} = payload;
-      let ticket = state.tickets.find((t) => t.id === id);
-      if (ticket) {
-        ticket.subject = subject;
-        ticket.status = status;
-      }
-    },
     setTicket(state, {payload}: PayloadAction<Ticket>) {
       state.selectedTicket = payload;
 
@@ -141,6 +133,12 @@ const ticketsSlice = createSlice({
     },
     setUnreadTeamTicket(state, {payload}: PayloadAction<number>) {
       state.unreadTeamTickets = payload;
+    },
+    setTeamCallbackTicketCount(state, {payload}: PayloadAction<number>) {
+      state.teamCallbackTicketCount  = payload;
+    },
+    setMyCallbackTicketCount(state, {payload}: PayloadAction<number>) {
+      state.myCallbackTicketCount  = payload;
     }
   },
 });
@@ -149,7 +147,6 @@ export const {
   add,
   addPaging,
   changeStatus,
-  changeTicket,
   changeAssignee,
   setTicket,
   setFailure,
@@ -172,7 +169,9 @@ export const {
   setTicketsFiltered,
   setPatientPhoto,
   setUnreadTicket,
-  setUnreadTeamTicket
+  setUnreadTeamTicket,
+  setTeamCallbackTicketCount,
+  setMyCallbackTicketCount
 } = ticketsSlice.actions;
 
 export default ticketsSlice.reducer;

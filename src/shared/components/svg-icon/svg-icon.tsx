@@ -1297,6 +1297,16 @@ const SvgIcon = ({ type, wrapperClassName = '', className = 'icon-medium', fillC
         )
     }
 
+    const getCallbackCountIcon = () => {
+        return(
+            <svg id="Icon_Callback_32px" data-name="Icon/Callback/32px" xmlns="http://www.w3.org/2000/svg" width="36" height="32" viewBox="0 0 36 32" className={mainClass}>
+                <rect id="Bound" width="32" height="32" fill="none"/>
+                <path id="Phone" d="M1.007,1.335,6.694.023a1.321,1.321,0,0,1,1.5.76l2.625,6.125a1.309,1.309,0,0,1-.377,1.531L7.132,11.151a20.267,20.267,0,0,0,9.69,9.69l2.712-3.314a1.311,1.311,0,0,1,1.531-.377l6.125,2.625a1.328,1.328,0,0,1,.766,1.509l-1.312,5.687a1.312,1.312,0,0,1-1.28,1.017A25.372,25.372,0,0,1-.01,2.615,1.311,1.311,0,0,1,1.007,1.335Z" transform="translate(2.01 2.011)" className={fillClass}/>
+                <path id="ic_call_missed_outgoing_24px" d="M3,8.41l9,9,7-7V15h2V7H13V9h4.59L12,14.59,4.41,7Z" transform="translate(25.811 27.321) rotate(-135)" className={fillClass}/>
+            </svg>
+        )
+    }
+
     const icons = {
         [Icon.Add]: getIconAdd,
         [Icon.AddBlack]: getIconAddBlack,
@@ -1416,6 +1426,7 @@ const SvgIcon = ({ type, wrapperClassName = '', className = 'icon-medium', fillC
         [Icon.IncomingEmail]: getIconIncomingEmail,
         [Icon.OutgoingEmail]: getIconOutgoingEmail,
         [Icon.Reports]: getIconReports,
+        [Icon.CallbackTicketCount]: getCallbackCountIcon
     }
 
     const iconClicked = (e: React.MouseEvent<HTMLDivElement>) => {

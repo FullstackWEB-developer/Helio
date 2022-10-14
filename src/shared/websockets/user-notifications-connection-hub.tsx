@@ -11,6 +11,7 @@ import {ContactTransferUnavailableMessage} from '@shared/models/contact-transfer
 import {useTranslation} from 'react-i18next';
 import {Icon} from '@components/svg-icon';
 import utils from '@shared/utils/utils';
+import {setMyCallbackTicketCount, setTeamCallbackTicketCount} from '@pages/tickets/store/tickets.slice';
 
 const UserNotificationsConnectionHub = () => {
     const dispatch = useDispatch();
@@ -64,6 +65,15 @@ const UserNotificationsConnectionHub = () => {
         }
     }
 
+    const callbackTicketCountUpdated = (value: string) => {
+        const data = JSON.parse(value);
+        if(data.assignedTo === appUser.id) {
+            dispatch(setMyCallbackTicketCount(data.count));
+        } else if(!data.assignedTo) {
+            dispatch(setTeamCallbackTicketCount(data.count));
+        }
+    }
+
     useEffect(() => {
         if (connection) {
             connection.start()
@@ -72,6 +82,9 @@ const UserNotificationsConnectionHub = () => {
                         switch (data.userNotificationType) {
                             case 'AgentUnavailable' :
                                 agentUnavailable(data.value);
+                                break;
+                            case 'CallbackTicketCountUpdated' :
+                                callbackTicketCountUpdated(data.value);
                                 break;
                         }
                     });

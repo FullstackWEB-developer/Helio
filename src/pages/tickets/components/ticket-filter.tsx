@@ -36,10 +36,15 @@ import utils from '@shared/utils/utils';
 import './ticket-filter.scss';
 import Button from '@components/button/button';
 import CheckboxList from '@components/checkbox-list/checkbox-list';
+import TicketFilterCallbackCount from '@pages/tickets/components/ticket-filter-callback-count';
+import {useLocation} from 'react-router';
+import {DefaultPagination, TicketType} from '@shared/models';
+import {TicketStatuses} from '@pages/tickets/models/ticket.status.enum';
 
 const TicketFilter = ({ isOpen }: { isOpen: boolean }) => {
     dayjs.extend(utc);
     const dispatch = useDispatch();
+    const { state } = useLocation<{callbackRefresh: boolean, assignedTo: string}>();
     const { t } = useTranslation();
     const allKey = '0';
     const timePeriod_DateRange = '4';
@@ -79,6 +84,19 @@ const TicketFilter = ({ isOpen }: { isOpen: boolean }) => {
         dispatch(getLookupValues('TicketTags'));
         dispatch(getLookupValues('TicketReason'));
     }, [dispatch]);
+
+    useEffect(() => {
+        if (state && state.callbackRefresh) {
+            dispatch(setTicketsFiltered(true));
+            const query: TicketQuery = {
+                ...DefaultPagination,
+                assignedTo: [state.assignedTo],
+                statuses: [TicketStatuses.Open, TicketStatuses.OnHold, TicketStatuses.InProgress],
+                ticketTypes: [TicketType.Callback]
+            };
+            dispatch(getList(query, true));
+        }
+    }, [state]);
 
     useEffect(() => {
         const setCheckBoxControl = (name: string, values: any[] | any | undefined) => {
@@ -323,7 +341,6 @@ const TicketFilter = ({ isOpen }: { isOpen: boolean }) => {
         }
         dispatch(setTicketsFiltered(hasFilter));
         dispatch(getList(query, true));
-
     }
 
     const convertOfficesToOptions = (): TicketOptionsBase[] => {
@@ -567,6 +584,7 @@ const TicketFilter = ({ isOpen }: { isOpen: boolean }) => {
                 <Button data-test-id='reset-all-button' className='cursor-pointer' label='tickets.filter.reset_all' buttonType='secondary' onClick={() => resetForm()}></Button>
             </div>
             <form id='myForm'>
+                <TicketFilterCallbackCount />
                 {GetCollapsibleCheckboxControl('tickets.filter.statuses', 'statuses', (convertEnumToOptions(ticketStatuses)))}
                 {GetCollapsibleCheckboxControl('tickets.filter.state', 'states', (convertEnumToOptions(statesFilter)))}
                 {GetRadioCollapsibleControl('tickets.filter.time_period', 'timePeriod', timePeriodList, dateFilters())}

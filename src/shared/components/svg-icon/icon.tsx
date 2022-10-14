@@ -115,5 +115,6 @@ export enum Icon {
     RatingVerySatisfiedComment = 'RatingVerySatisfiedComment',
     Indicator = 'Indicator',
     AddPhone = 'AddPhone',
-    Reports = 'Reports'
+    Reports = 'Reports',
+    CallbackTicketCount = 'CallbackTicketCount'
 }

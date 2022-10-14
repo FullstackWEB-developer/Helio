@@ -105,3 +105,4 @@ export const GetIsEmailBlocked = 'get-is-email-blocked';
 export const GetIsSMSBlocked = 'get-is-sms-blocked';
 export const GetRelatedTicketParent = 'get-related-ticket-parent';
 export const GetChildrenTicketNumbers = 'get-children-ticket-numbers';
+export const GetCallbackTicketCount = 'get-callback-ticket-count';

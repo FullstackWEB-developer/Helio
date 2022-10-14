@@ -34,6 +34,8 @@ export interface TicketState {
     patientPhoto?: string;
     unreadTickets: number;
     unreadTeamTickets: number;
+    teamCallbackTicketCount: number;
+    myCallbackTicketCount: number;
 }
 
 const initialTicketState: TicketState = {
@@ -69,6 +71,8 @@ const initialTicketState: TicketState = {
     isTicketsFiltered: false,
     unreadTickets: 0,
     unreadTeamTickets: 0,
+    myCallbackTicketCount: 0,
+    teamCallbackTicketCount: 0
 }
 
 export default initialTicketState;

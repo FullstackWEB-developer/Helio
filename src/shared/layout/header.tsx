@@ -23,6 +23,7 @@ import ComponentPermissionGuard from "@components/component-permission-guard";
 import ReLoginModal from '@shared/layout/components/relogin-modal';
 import classNames from 'classnames';
 import Alert from '@components/alert/alert';
+import CallbackTicketCount from '@shared/layout/components/callback-ticket-count';
 
 const Header = ({ headsetIconRef }: { headsetIconRef: React.RefObject<HTMLDivElement> }) => {
     const { t } = useTranslation();
@@ -101,6 +102,8 @@ const Header = ({ headsetIconRef }: { headsetIconRef: React.RefObject<HTMLDivEle
                     <Alert message={'ccp.call_chat_fw_enabled_header'} type='info'/>
                 </div>}
                 <div className='flex flex-row items-center'>
+
+                    <CallbackTicketCount />
                     <div ref={headsetIconRef} className='relative cursor-pointer mr-32'>
                         <div className={classNames({ 'ccp-incoming-pulse': isIncomingOrActiveCall, 'ccp-idle-border': !isIncomingOrActiveCall })} onClick={() => dispatch(toggleCcp())}>
                             <SvgIcon type={Icon.Ccp} data-test-id='toggle-ccp'

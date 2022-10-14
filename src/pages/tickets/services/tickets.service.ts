@@ -51,6 +51,7 @@ import {MimeTypes} from '@shared/models/mime-types.enum';
 import {ReportTypes} from '@pages/reports/models/report-types.enum';
 import {BotReport} from '@pages/reports/models/bot-report.model';
 import {SystemReport} from '@pages/reports/models/system-report.model';
+import {CallbackTicketCountType} from '@pages/tickets/models/callback-ticket-count-type.enum';
 
 const ticketsBaseUrl = "/tickets";
 
@@ -561,5 +562,15 @@ export const exportSystemReport = async ({request, selectedIds}: {request: ViewT
 export const getChildrenTicketNumbers = async (ticketId: string): Promise<number[]> => {
     const url = `${ticketsBaseUrl}/${ticketId}/children`;
     const response = await Api.get(url);
+    return response.data;
+}
+
+export const getCallbackTicketCount = async (type :CallbackTicketCountType) : Promise<number> => {
+    const url = `${ticketsBaseUrl}/callback-ticket-count`;
+    const response = await Api.get(url, {
+        params: {
+            type
+        }
+    });
     return response.data;
 }
