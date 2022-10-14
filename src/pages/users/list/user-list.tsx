@@ -23,7 +23,7 @@ import UserListActions from './user-list-actions';
 import UserFilter from './user-filter';
 import './user-list.scss';
 import {selectIsUsersFilterOpen, selectUserFilters, selectUsersPaging} from '../store/users.selectors';
-import {setUserFilters, setUsersPagination} from '../store/users.slice';
+import {setIsFilterOpen, setUserFilters, setUsersPagination} from '../store/users.slice';
 import queryString from 'query-string';
 import {useHistory} from 'react-router';
 import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
@@ -62,6 +62,7 @@ const UserList = () => {
         history.listen((location) => {
             if (!location.pathname.startsWith('/users')) {
                 dispatch(setUserFilters({filters: undefined, resetPagination: true}));
+                dispatch(setIsFilterOpen(false));
             }
         });
     }, [history])
