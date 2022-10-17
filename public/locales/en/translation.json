@@ -1979,7 +1979,7 @@
       "modified_date": "Modified Date:",
       "template_body_character": "{{currentLength}} characters",
       "update_error": "Updating of appointment type failed. Please try again.",
-      "update_success": "Appointment type updated successfully.",
+      "update_success": "Appointment type updated successfully. \n Please note that your changes will take effect in an hour.",
       "error_fetching": "Fetching appointment type details failed. Please try again.",
       "tooltip_helio_appointment_name": "Enter appointment name as displayed to patient. \n<1>(i.e. WWE in EMR/EHR can be entered here as “Well Woman Exam\")</1>",
       "tooltip_helio_appointment_description": "Enter appointment description as displayed to patient. \n<1>(i.e. This appointment includes a physical exam and all necessary labs . It is fully covered by most insurances etc.</1>)",
@@ -2141,7 +2141,7 @@
     "security_settings": {
       "title": "Security Settings",
       "get_error": "Error while getting data, please try again later.",
-      "save_success": "Successfully saved. \n Please note that your changes will take effect in an hour.",
+      "save_success": "Successfully saved. \n Please note that your changes will take effect in 30 minutes.",
       "save_error": "Error while saving data, please try again later.",
       "hipaa_verification_retry_number_title": "HIPAA Verification Retry Count",
       "hipaa_verification_retry_number_description": "Number of identity verification retries allowed. If exceeded patient will have to call the office.",
