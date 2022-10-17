@@ -208,7 +208,7 @@ const Sms = () => {
             enabled: !!newMessageId,
             onSuccess: (result) => {
                 const isTicketSummarySelected = summaryMessages && selectedTicketSummary?.ticketId === result.ticketId;
-                if (isTicketSummarySelected && result.direction === TicketMessagesDirection.Incoming) {
+                if (isTicketSummarySelected && result.createdBy !== id) {
                     pushMessage(result);
                 }
             },
