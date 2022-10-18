@@ -36,7 +36,9 @@ export const getChats = async (request: TicketMessageSummaryRequest) => {
 }
 
 export const sendMessage = async (message: TicketMessageBase) => {
-    message.body = message.body.replaceAll("\n", "<br/>");
+    if(message.channel === ChannelTypes.Email){
+        message.body = message.body.replaceAll("\n", "<br/>");
+    }
     const response = await Api.post<TicketMessage>(ticketMessageUrl, message);
     return response.data;
 }
