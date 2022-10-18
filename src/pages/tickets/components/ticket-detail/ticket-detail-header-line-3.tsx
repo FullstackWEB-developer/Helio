@@ -130,6 +130,9 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
             else if (contact) {
                 phoneNumber = contact.mobilePhone;
             }
+            else if (ticket.originationNumber) {
+                phoneNumber = ticket.originationNumber;
+            }
         } else if (type === PhoneType.Home && !!patient) {
             phoneNumber = patient.homePhone;
         } else if (type === PhoneType.Work && !!contact) {
