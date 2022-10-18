@@ -15,7 +15,7 @@ const NoteDetailItem = ({item, displayBottomBorder}: NoteDetailProps) => {
     const userFullName = useMemo(() => {
         if (!!item.createdBy && !!userList) {
             const user = userList.find(a => a.id === item.createdBy);
-            return user ? utils.stringJoin(',', user.firstName, user.lastName ) : '';
+            return user ? `${user.firstName} ${user.lastName}` : '';
         }
 
         return '';
