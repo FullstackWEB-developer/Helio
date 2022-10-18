@@ -15,11 +15,7 @@ const DashboardDateForm = ({onDatesSelected}: DashboardDateFormProps) => {
     const [selectedEndDate, setSelectedEndDate] = useState<Date | undefined>(new Date());
     const {t} = useTranslation();
     const {handleSubmit, control, formState, watch} = useForm({
-        mode: 'onBlur',
-        defaultValues: {
-            startDate: selectedStartDate,
-            endDate: selectedEndDate
-        }
+        mode: 'onBlur'
     });
     const watchStartDate = watch('startDate');
     const watchEndDate = watch('endDate');
@@ -27,8 +23,6 @@ const DashboardDateForm = ({onDatesSelected}: DashboardDateFormProps) => {
 
     const onSubmit = (values: {startDate: Date, endDate: Date}) => {
         if (isValid()) {
-            setSelectedStartDate(values.startDate);
-            setSelectedEndDate(values.endDate);
             onDatesSelected(values.startDate, values.endDate);
         }
     }
@@ -48,8 +42,7 @@ const DashboardDateForm = ({onDatesSelected}: DashboardDateFormProps) => {
                 calendarHorizontalAlign={CalendarHorizontalAlign.Left}
                 required={true}
                 control={control}
-                value={selectedStartDate}
-                max={new Date()}
+                max={selectedEndDate ?? new Date()}
                 name='startDate'
                 onChange={(value) => setSelectedStartDate(value)}
                 dataTestId='dashboard-start-date'
@@ -58,10 +51,10 @@ const DashboardDateForm = ({onDatesSelected}: DashboardDateFormProps) => {
                 label='dashboard.timeframes.end_date'
                 calendarHorizontalAlign={CalendarHorizontalAlign.Left}
                 required={true}
-                value={selectedEndDate}
                 onChange={(value) => setSelectedEndDate(value)}
                 control={control}
                 max={new Date()}
+                min={selectedStartDate}
                 name='endDate'
                 dataTestId='dashboard-end-date'
                 isSmallSize={true} />
