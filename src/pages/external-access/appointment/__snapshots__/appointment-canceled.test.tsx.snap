@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AppointmentCanceled tests renders AppointmentCanceled correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="2xl:px-48"
+  >
+    <div
+      class="2xl:whitespace-pre 2xl:h-12 2xl:my-3 flex w-full items-center"
+    >
+      <h4>
+        external_access.appointments.appointment_canceled
+      </h4>
+    </div>
+    <div
+      class="pt-6"
+    >
+      <a
+        href="/o/appointment-schedule"
+        rel="noreferrer"
+        target="_self"
+      >
+        here
+      </a>
+      <a
+        rel="noreferrer"
+        target="_self"
+      >
+        Chat
+      </a>
+    </div>
+    <div
+      class="flex items-center justify-center m-auto justify-self-center"
+    />
+  </div>
+</DocumentFragment>
+`;

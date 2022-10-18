@@ -1179,6 +1179,7 @@ exports[`UserList tests renders UserList correctly disable 1`] = `
             >
               <svg
                 class="mr-6 cursor-pointer icon-medium "
+                data-testid="svg-icon"
                 height="24"
                 viewBox="0 0 24 24"
                 width="24"
@@ -2657,6 +2658,7 @@ exports[`UserList tests renders UserList correctly edit 1`] = `
             >
               <svg
                 class="mr-6 cursor-pointer icon-medium "
+                data-testid="svg-icon"
                 height="24"
                 viewBox="0 0 24 24"
                 width="24"
@@ -4129,6 +4131,7 @@ exports[`UserList tests renders UserList correctly enable 1`] = `
             >
               <svg
                 class="mr-6 cursor-pointer icon-medium "
+                data-testid="svg-icon"
                 height="24"
                 viewBox="0 0 24 24"
                 width="24"
@@ -5601,6 +5604,7 @@ exports[`UserList tests renders UserList correctly multiple 1`] = `
             >
               <svg
                 class="mr-6 cursor-pointer icon-medium "
+                data-testid="svg-icon"
                 height="24"
                 viewBox="0 0 24 24"
                 width="24"
@@ -7459,6 +7463,7 @@ exports[`UserList tests renders UserList correctly resend_invite 1`] = `
             >
               <svg
                 class="mr-6 cursor-pointer icon-medium "
+                data-testid="svg-icon"
                 height="24"
                 viewBox="0 0 24 24"
                 width="24"

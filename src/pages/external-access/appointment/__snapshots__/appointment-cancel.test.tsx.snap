@@ -1,0 +1,81 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AppointmentCancel tests renders AppointmentCancel correctly cancelable 1`] = `
+<DocumentFragment>
+  <div>
+    <div
+      class="flex items-center w-full 2xl:whitespace-pre 2xl:h-12 2xl:my-3"
+    >
+      <h4>
+        external_access.appointments.appointment_cancelation
+      </h4>
+    </div>
+    <div>
+      <form>
+        <div
+          class="pt-6"
+        >
+          external_access.appointments.cancel_appointment_reach_us
+        </div>
+        <div
+          class="pt-6"
+        >
+          <button
+            class="big-button"
+            disabled=""
+            type="submit"
+          >
+            <div
+              class="flex flex-row justify-center items-center space-x-2"
+            >
+              <div>
+                external_access.appointments.cancel_appointment
+              </div>
+            </div>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`AppointmentCancel tests renders AppointmentCancel correctly not cancelable 1`] = `
+<DocumentFragment>
+  <div>
+    <div
+      class="flex items-center w-full 2xl:whitespace-pre 2xl:h-12 2xl:my-3"
+    >
+      <h4>
+        external_access.appointments.appointment_cancelation
+      </h4>
+    </div>
+    <div>
+      <form>
+        <div
+          class="pt-6"
+        >
+          external_access.appointments.cancel_appointment_reach_us
+        </div>
+        <div
+          class="pt-6"
+        >
+          <button
+            class="big-button"
+            disabled=""
+            type="submit"
+          >
+            <div
+              class="flex flex-row justify-center items-center space-x-2"
+            >
+              <div>
+                external_access.appointments.cancel_appointment
+              </div>
+            </div>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</DocumentFragment>
+`;

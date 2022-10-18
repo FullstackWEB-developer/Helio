@@ -344,6 +344,7 @@ const AppointmentScheduleSelect = () => {
                             </div>
                             <div className='relative flex flex-row items-center'>
                                 <SvgIcon
+                                    dataTestId='schedule-select-filter'
                                     type={Icon.FilterList}
                                     wrapperClassName='pb-6 cursor-pointer flex justify-center'
                                     fillClass='rgba-05-fill'

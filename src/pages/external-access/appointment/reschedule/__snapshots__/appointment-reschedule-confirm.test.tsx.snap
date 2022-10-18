@@ -1,0 +1,177 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AppointmentRescheduleConfirm tests renders AppointmentRescheduleConfirm correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="px-6"
+  >
+    <div
+      class="2xl:whitespace-pre 2xl:h-12 2xl:my-3 flex w-full items-center"
+    >
+      <h4>
+        external_access.appointments.reschedule_appointment_title
+      </h4>
+    </div>
+    <div
+      class="pt-7"
+    >
+      external_access.appointments.new_appointment_date_time
+    </div>
+    <h5
+      class="pb-7"
+    >
+      Invalid Date Invalid Date
+    </h5>
+    <div
+      class="2xl:whitespace-pre 2xl:h-12 2xl:my-3 flex w-full items-center pb-2"
+    >
+      <div
+        class="h7"
+      >
+        external_access.appointments.appointment_details
+      </div>
+    </div>
+    <div
+      class="flex"
+    >
+      <div>
+        <div>
+          external_access.appointments.appointment_date
+        </div>
+        <div>
+          string
+        </div>
+        <div
+          class="subtitle"
+        >
+          string
+        </div>
+        <div>
+          string
+        </div>
+        <div>
+           string string, string
+        </div>
+      </div>
+    </div>
+    <div
+      class="pt-12 flex flex-col xl:flex-row xl:space-x-6 space-x-0 space-y-6 xl:space-y-0"
+    >
+      <button
+        class="secondary-big-button"
+        data-testid="go-back"
+        type="button"
+      >
+        <div
+          class="flex flex-row justify-center items-center space-x-2"
+        >
+          <div>
+            common.back
+          </div>
+        </div>
+      </button>
+      <button
+        class="big-button"
+        data-testid="submit"
+        type="button"
+      >
+        <div
+          class="flex flex-row justify-center items-center space-x-2"
+        >
+          <div>
+            external_access.appointments.confirm_reschedule_appointment
+          </div>
+        </div>
+      </button>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`AppointmentRescheduleConfirm tests renders AppointmentRescheduleConfirm correctly go-back 1`] = `
+<DocumentFragment>
+  <div
+    class="px-6"
+  >
+    <div
+      class="2xl:whitespace-pre 2xl:h-12 2xl:my-3 flex w-full items-center"
+    >
+      <h4>
+        external_access.appointments.reschedule_appointment_title
+      </h4>
+    </div>
+    <div
+      class="pt-7"
+    >
+      external_access.appointments.new_appointment_date_time
+    </div>
+    <h5
+      class="pb-7"
+    >
+      Invalid Date Invalid Date
+    </h5>
+    <div
+      class="2xl:whitespace-pre 2xl:h-12 2xl:my-3 flex w-full items-center pb-2"
+    >
+      <div
+        class="h7"
+      >
+        external_access.appointments.appointment_details
+      </div>
+    </div>
+    <div
+      class="flex"
+    >
+      <div>
+        <div>
+          external_access.appointments.appointment_date
+        </div>
+        <div>
+          string
+        </div>
+        <div
+          class="subtitle"
+        >
+          string
+        </div>
+        <div>
+          string
+        </div>
+        <div>
+           string string, string
+        </div>
+      </div>
+    </div>
+    <div
+      class="pt-12 flex flex-col xl:flex-row xl:space-x-6 space-x-0 space-y-6 xl:space-y-0"
+    >
+      <button
+        class="secondary-big-button"
+        data-testid="go-back"
+        type="button"
+      >
+        <div
+          class="flex flex-row justify-center items-center space-x-2"
+        >
+          <div>
+            common.back
+          </div>
+        </div>
+      </button>
+      <button
+        class="big-button"
+        data-testid="submit"
+        type="button"
+      >
+        <div
+          class="flex flex-row justify-center items-center space-x-2"
+        >
+          <div>
+            external_access.appointments.confirm_reschedule_appointment
+          </div>
+        </div>
+      </button>
+    </div>
+  </div>
+</DocumentFragment>
+`;

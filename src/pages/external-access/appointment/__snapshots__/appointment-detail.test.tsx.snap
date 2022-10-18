@@ -1,0 +1,655 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AppointmentDetail tests renders AppointmentDetail correctly 1`] = `
+<DocumentFragment>
+  <div>
+    <div
+      class="2xl:whitespace-pre 2xl:h-12 2xl:my-3 flex w-full items-center"
+    >
+      <h4>
+        external_access.appointments.appointment_details
+      </h4>
+    </div>
+    <div
+      class="pt-6 pb-9"
+    >
+      external_access.appointments.see_appointment_details
+    </div>
+    <div
+      class="pb-2"
+    >
+      <h5>
+        external_access.appointments.appointment_date
+      </h5>
+    </div>
+    <div
+      class="flex"
+    >
+      <div>
+        <h6
+          class="pb-2"
+        >
+          string
+        </h6>
+        <div
+          class="subtitle"
+        >
+          string
+        </div>
+        <div>
+          string
+        </div>
+        <div>
+          string string string, string
+        </div>
+      </div>
+    </div>
+    <div
+      class="pt-12 flex flex-col xl:flex-row xl:space-x-6 space-x-0 space-y-6 xl:space-y-0"
+    >
+      <button
+        class="big-button"
+        data-testid="reschedule"
+        type="button"
+      >
+        <div
+          class="flex flex-row justify-center items-center space-x-2"
+        >
+          <div>
+            external_access.appointments.reschedule
+          </div>
+        </div>
+      </button>
+      <button
+        class="secondary-big-button"
+        data-testid="cancel"
+        type="button"
+      >
+        <div
+          class="flex flex-row justify-center items-center space-x-2"
+        >
+          <div>
+            common.cancel
+          </div>
+        </div>
+      </button>
+    </div>
+    <div
+      class="pt-20"
+    >
+      external_access.appointments.parking_information
+    </div>
+    <div
+      class="border-b pt-2"
+    />
+    <div
+      class="pt-4 body2"
+    >
+      string
+    </div>
+    <div
+      class="pt-8"
+    >
+      external_access.appointments.directions
+    </div>
+    <div
+      class="border-b pt-2"
+    />
+    <div
+      class="pt-4 body2"
+    >
+      <a
+        href="https://maps.google.com/?q=1,1"
+        rel="noreferrer"
+        target="_blank"
+      >
+        Get directions
+      </a>
+       to your appointment location.
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`AppointmentDetail tests renders AppointmentDetail correctly cancel 1`] = `
+<DocumentFragment>
+  <div>
+    <div
+      class="2xl:whitespace-pre 2xl:h-12 2xl:my-3 flex w-full items-center"
+    >
+      <h4>
+        external_access.appointments.appointment_details
+      </h4>
+    </div>
+    <div
+      class="pt-6 pb-9"
+    >
+      external_access.appointments.see_appointment_details
+    </div>
+    <div
+      class="pb-2"
+    >
+      <h5>
+        external_access.appointments.appointment_date
+      </h5>
+    </div>
+    <div
+      class="flex"
+    >
+      <div>
+        <h6
+          class="pb-2"
+        >
+          string
+        </h6>
+        <div
+          class="subtitle"
+        >
+          string
+        </div>
+        <div>
+          string
+        </div>
+        <div>
+          string string string, string
+        </div>
+      </div>
+    </div>
+    <div
+      class="pt-12 flex flex-col xl:flex-row xl:space-x-6 space-x-0 space-y-6 xl:space-y-0"
+    >
+      <button
+        class="big-button"
+        data-testid="reschedule"
+        type="button"
+      >
+        <div
+          class="flex flex-row justify-center items-center space-x-2"
+        >
+          <div>
+            external_access.appointments.reschedule
+          </div>
+        </div>
+      </button>
+      <button
+        class="secondary-big-button"
+        data-testid="cancel"
+        type="button"
+      >
+        <div
+          class="flex flex-row justify-center items-center space-x-2"
+        >
+          <div>
+            common.cancel
+          </div>
+        </div>
+      </button>
+    </div>
+    <div
+      class="pt-20"
+    >
+      external_access.appointments.instructions
+    </div>
+    <div
+      class="border-b pt-2"
+    />
+    <div
+      class="pt-4 body2"
+    >
+      string
+    </div>
+    <div
+      class="pt-8"
+    >
+      external_access.appointments.parking_information
+    </div>
+    <div
+      class="border-b pt-2"
+    />
+    <div
+      class="pt-4 body2"
+    >
+      string
+    </div>
+    <div
+      class="pt-8"
+    >
+      external_access.appointments.directions
+    </div>
+    <div
+      class="border-b pt-2"
+    />
+    <div
+      class="pt-4 body2"
+    >
+      <a
+        href="https://maps.google.com/?q=1,1"
+        rel="noreferrer"
+        target="_blank"
+      >
+        Get directions
+      </a>
+       to your appointment location.
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`AppointmentDetail tests renders AppointmentDetail correctly cancelable not reshcedule 1`] = `
+<DocumentFragment>
+  <div>
+    <div
+      class="2xl:whitespace-pre 2xl:h-12 2xl:my-3 flex w-full items-center"
+    >
+      <h4>
+        external_access.appointments.appointment_details
+      </h4>
+    </div>
+    <div
+      class="pt-6 pb-9"
+    >
+      external_access.appointments.see_appointment_details
+    </div>
+    <div
+      class="pb-2"
+    >
+      <h5>
+        external_access.appointments.appointment_date
+      </h5>
+    </div>
+    <div
+      class="flex"
+    >
+      <div>
+        <h6
+          class="pb-2"
+        >
+          string
+        </h6>
+        <div
+          class="subtitle"
+        >
+          string
+        </div>
+        <div>
+          string
+        </div>
+        <div>
+          string string string, string
+        </div>
+      </div>
+    </div>
+    <div
+      class="pt-12 flex flex-col xl:flex-row xl:space-x-6 space-x-0 space-y-6 xl:space-y-0"
+    >
+      <button
+        class="big-button"
+        data-testid="reschedule"
+        disabled=""
+        type="button"
+      >
+        <div
+          class="flex flex-row justify-center items-center space-x-2"
+        >
+          <div>
+            external_access.appointments.reschedule
+          </div>
+        </div>
+      </button>
+      <button
+        class="secondary-big-button"
+        data-testid="cancel"
+        type="button"
+      >
+        <div
+          class="flex flex-row justify-center items-center space-x-2"
+        >
+          <div>
+            common.cancel
+          </div>
+        </div>
+      </button>
+    </div>
+    <div
+      class="pt-6 pb-2 w-full"
+    >
+      <div
+        class="warning-message body2 px-6 py-3.5 rounded border border-solid"
+      >
+        external_access.appointments.can_not_be_rescheduled
+      </div>
+    </div>
+    <div
+      class="pt-20"
+    >
+      external_access.appointments.instructions
+    </div>
+    <div
+      class="border-b pt-2"
+    />
+    <div
+      class="pt-4 body2"
+    >
+      string
+    </div>
+    <div
+      class="pt-8"
+    >
+      external_access.appointments.parking_information
+    </div>
+    <div
+      class="border-b pt-2"
+    />
+    <div
+      class="pt-4 body2"
+    >
+      string
+    </div>
+    <div
+      class="pt-8"
+    >
+      external_access.appointments.directions
+    </div>
+    <div
+      class="border-b pt-2"
+    />
+    <div
+      class="pt-4 body2"
+    >
+      <a
+        href="https://maps.google.com/?q=1,1"
+        rel="noreferrer"
+        target="_blank"
+      >
+        Get directions
+      </a>
+       to your appointment location.
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`AppointmentDetail tests renders AppointmentDetail correctly error 1`] = `
+<DocumentFragment>
+  <div>
+    external_access.appointments.fetch_failed
+  </div>
+</DocumentFragment>
+`;
+
+exports[`AppointmentDetail tests renders AppointmentDetail correctly no appointment 1`] = `
+<DocumentFragment>
+  <div>
+    external_access.appointments.no_single_appointment_with_id
+  </div>
+</DocumentFragment>
+`;
+
+exports[`AppointmentDetail tests renders AppointmentDetail correctly not cancelable not reshcedule 1`] = `
+<DocumentFragment>
+  <div>
+    <div
+      class="2xl:whitespace-pre 2xl:h-12 2xl:my-3 flex w-full items-center"
+    >
+      <h4>
+        external_access.appointments.appointment_details
+      </h4>
+    </div>
+    <div
+      class="pt-6 pb-9"
+    >
+      external_access.appointments.see_appointment_details
+    </div>
+    <div
+      class="pb-2"
+    >
+      <h5>
+        external_access.appointments.appointment_date
+      </h5>
+    </div>
+    <div
+      class="flex"
+    >
+      <div>
+        <h6
+          class="pb-2"
+        >
+          string
+        </h6>
+        <div
+          class="subtitle"
+        >
+          string
+        </div>
+        <div>
+          string
+        </div>
+        <div>
+          string string string, string
+        </div>
+      </div>
+    </div>
+    <div
+      class="pt-12 flex flex-col xl:flex-row xl:space-x-6 space-x-0 space-y-6 xl:space-y-0"
+    >
+      <button
+        class="big-button"
+        data-testid="reschedule"
+        disabled=""
+        type="button"
+      >
+        <div
+          class="flex flex-row justify-center items-center space-x-2"
+        >
+          <div>
+            external_access.appointments.reschedule
+          </div>
+        </div>
+      </button>
+      <button
+        class="secondary-big-button"
+        data-testid="cancel"
+        disabled=""
+        type="button"
+      >
+        <div
+          class="flex flex-row justify-center items-center space-x-2"
+        >
+          <div>
+            common.cancel
+          </div>
+        </div>
+      </button>
+    </div>
+    <div
+      class="pt-6 pb-2 w-full"
+    >
+      <div
+        class="warning-message body2 px-6 py-3.5 rounded border border-solid"
+      >
+        external_access.appointments.can_not_be_rescheduled_canceled
+      </div>
+    </div>
+    <div
+      class="pt-20"
+    >
+      external_access.appointments.instructions
+    </div>
+    <div
+      class="border-b pt-2"
+    />
+    <div
+      class="pt-4 body2"
+    >
+      string
+    </div>
+    <div
+      class="pt-8"
+    >
+      external_access.appointments.parking_information
+    </div>
+    <div
+      class="border-b pt-2"
+    />
+    <div
+      class="pt-4 body2"
+    >
+      string
+    </div>
+    <div
+      class="pt-8"
+    >
+      external_access.appointments.directions
+    </div>
+    <div
+      class="border-b pt-2"
+    />
+    <div
+      class="pt-4 body2"
+    >
+      <a
+        href="https://maps.google.com/?q=1,1"
+        rel="noreferrer"
+        target="_blank"
+      >
+        Get directions
+      </a>
+       to your appointment location.
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`AppointmentDetail tests renders AppointmentDetail correctly not cancelable reshcedule 1`] = `
+<DocumentFragment>
+  <div>
+    <div
+      class="2xl:whitespace-pre 2xl:h-12 2xl:my-3 flex w-full items-center"
+    >
+      <h4>
+        external_access.appointments.appointment_details
+      </h4>
+    </div>
+    <div
+      class="pt-6 pb-9"
+    >
+      external_access.appointments.see_appointment_details
+    </div>
+    <div
+      class="pb-2"
+    >
+      <h5>
+        external_access.appointments.appointment_date
+      </h5>
+    </div>
+    <div
+      class="flex"
+    >
+      <div>
+        <h6
+          class="pb-2"
+        >
+          string
+        </h6>
+        <div
+          class="subtitle"
+        >
+          string
+        </div>
+        <div>
+          string
+        </div>
+        <div>
+          string string string, string
+        </div>
+      </div>
+    </div>
+    <div
+      class="pt-12 flex flex-col xl:flex-row xl:space-x-6 space-x-0 space-y-6 xl:space-y-0"
+    >
+      <button
+        class="big-button"
+        data-testid="reschedule"
+        type="button"
+      >
+        <div
+          class="flex flex-row justify-center items-center space-x-2"
+        >
+          <div>
+            external_access.appointments.reschedule
+          </div>
+        </div>
+      </button>
+      <button
+        class="secondary-big-button"
+        data-testid="cancel"
+        disabled=""
+        type="button"
+      >
+        <div
+          class="flex flex-row justify-center items-center space-x-2"
+        >
+          <div>
+            common.cancel
+          </div>
+        </div>
+      </button>
+    </div>
+    <div
+      class="pt-6 pb-2 w-full"
+    >
+      <div
+        class="warning-message body2 px-6 py-3.5 rounded border border-solid"
+      >
+        external_access.appointments.can_not_be_canceled
+      </div>
+    </div>
+    <div
+      class="pt-20"
+    >
+      external_access.appointments.instructions
+    </div>
+    <div
+      class="border-b pt-2"
+    />
+    <div
+      class="pt-4 body2"
+    >
+      string
+    </div>
+    <div
+      class="pt-8"
+    >
+      external_access.appointments.parking_information
+    </div>
+    <div
+      class="border-b pt-2"
+    />
+    <div
+      class="pt-4 body2"
+    >
+      string
+    </div>
+    <div
+      class="pt-8"
+    >
+      external_access.appointments.directions
+    </div>
+    <div
+      class="border-b pt-2"
+    />
+    <div
+      class="pt-4 body2"
+    >
+      <a
+        href="https://maps.google.com/?q=1,1"
+        rel="noreferrer"
+        target="_blank"
+      >
+        Get directions
+      </a>
+       to your appointment location.
+    </div>
+  </div>
+</DocumentFragment>
+`;

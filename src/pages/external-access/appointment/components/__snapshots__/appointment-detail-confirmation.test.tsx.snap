@@ -1,0 +1,303 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AppointmentDetailConfirmation tests renders AppointmentDetailConfirmation correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="pb-2"
+  >
+    <h5>
+      external_access.appointments.appointment_date
+    </h5>
+  </div>
+  <div
+    class="flex pt-2"
+  >
+    <div>
+      <h6
+        class="pb-2"
+      >
+        string
+      </h6>
+      <div
+        class="subtitle"
+      >
+        string
+      </div>
+      <div>
+        string
+      </div>
+      <div>
+        string string string, string
+      </div>
+    </div>
+  </div>
+  <div
+    class="flex my-12 flex-col xl:flex-row xl:space-x-6 space-x-0 space-y-6 xl:space-y-0"
+  >
+    <div
+      class="flex items-center"
+    >
+      <button
+        class="big-button w-48"
+        disabled=""
+        type="button"
+      >
+        <div
+          class="flex flex-row justify-center items-center space-x-2"
+        >
+          <div>
+            external_access.appointments.confirmation.confirm
+          </div>
+        </div>
+      </button>
+      <div
+        class="block"
+        data-testid="tooltip"
+      >
+        <div
+          class="px-1"
+        >
+          <svg
+            class="cursor-pointer "
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect
+              fill="none"
+              height="24"
+              width="24"
+            />
+            <path
+              class="rgba-05-fill"
+              d="M10,20A10,10,0,0,1,2.928,2.929,10,10,0,0,1,17.072,17.071,9.935,9.935,0,0,1,10,20ZM9.988,7.778a1.028,1.028,0,0,0-1.1,1.142v5.473a1.163,1.163,0,0,0,.305.862,1.085,1.085,0,0,0,.793.3,1.145,1.145,0,0,0,.806-.295,1.131,1.131,0,0,0,.317-.868V8.863a1.029,1.029,0,0,0-.317-.8A1.164,1.164,0,0,0,9.988,7.778Zm.025-3.333a1.144,1.144,0,0,0-.786.305,1,1,0,0,0-.337.777,1.012,1.012,0,0,0,.329.806,1.179,1.179,0,0,0,.794.285,1.132,1.132,0,0,0,.773-.29,1.02,1.02,0,0,0,.326-.8.992.992,0,0,0-.334-.806A1.171,1.171,0,0,0,10.012,4.444Z"
+              transform="translate(2 2)"
+            />
+          </svg>
+        </div>
+      </div>
+    </div>
+    <button
+      class="secondary-big-button w-40"
+      data-testid="reschedule"
+      type="button"
+    >
+      <div
+        class="flex flex-row justify-center items-center space-x-2"
+      >
+        <div>
+          external_access.appointments.reschedule
+        </div>
+      </div>
+    </button>
+    <button
+      class="secondary-big-button w-32"
+      data-testid="cancel"
+      type="button"
+    >
+      <div
+        class="flex flex-row justify-center items-center space-x-2"
+      >
+        <div>
+          common.cancel
+        </div>
+      </div>
+    </button>
+  </div>
+  <div
+    class="pt-20"
+  >
+    external_access.appointments.instructions
+  </div>
+  <div
+    class="border-b pt-2"
+  />
+  <div
+    class="pt-4 body2"
+  >
+    string
+  </div>
+  <div
+    class="pt-8"
+  >
+    external_access.appointments.parking_information
+  </div>
+  <div
+    class="border-b pt-2"
+  />
+  <div
+    class="pt-4 body2"
+  >
+    string
+  </div>
+  <div
+    class="pt-8"
+  >
+    external_access.appointments.directions
+  </div>
+  <div
+    class="border-b pt-2"
+  />
+  <div
+    class="pt-4 body2"
+  >
+    <a
+      href="https://maps.google.com/?q=1,1"
+      rel="noreferrer"
+      target="_blank"
+    />
+  </div>
+</DocumentFragment>
+`;
+
+exports[`AppointmentDetailConfirmation tests renders AppointmentDetailConfirmation correctly cancel 1`] = `
+<DocumentFragment>
+  <div
+    class="pb-2"
+  >
+    <h5>
+      external_access.appointments.appointment_date
+    </h5>
+  </div>
+  <div
+    class="flex pt-2"
+  >
+    <div>
+      <h6
+        class="pb-2"
+      >
+        string
+      </h6>
+      <div
+        class="subtitle"
+      >
+        string
+      </div>
+      <div>
+        string
+      </div>
+      <div>
+        string string string, string
+      </div>
+    </div>
+  </div>
+  <div
+    class="flex my-12 flex-col xl:flex-row xl:space-x-6 space-x-0 space-y-6 xl:space-y-0"
+  >
+    <div
+      class="flex items-center"
+    >
+      <button
+        class="big-button w-48"
+        disabled=""
+        type="button"
+      >
+        <div
+          class="flex flex-row justify-center items-center space-x-2"
+        >
+          <div>
+            external_access.appointments.confirmation.confirm
+          </div>
+        </div>
+      </button>
+      <div
+        class="block"
+        data-testid="tooltip"
+      >
+        <div
+          class="px-1"
+        >
+          <svg
+            class="cursor-pointer "
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect
+              fill="none"
+              height="24"
+              width="24"
+            />
+            <path
+              class="rgba-05-fill"
+              d="M10,20A10,10,0,0,1,2.928,2.929,10,10,0,0,1,17.072,17.071,9.935,9.935,0,0,1,10,20ZM9.988,7.778a1.028,1.028,0,0,0-1.1,1.142v5.473a1.163,1.163,0,0,0,.305.862,1.085,1.085,0,0,0,.793.3,1.145,1.145,0,0,0,.806-.295,1.131,1.131,0,0,0,.317-.868V8.863a1.029,1.029,0,0,0-.317-.8A1.164,1.164,0,0,0,9.988,7.778Zm.025-3.333a1.144,1.144,0,0,0-.786.305,1,1,0,0,0-.337.777,1.012,1.012,0,0,0,.329.806,1.179,1.179,0,0,0,.794.285,1.132,1.132,0,0,0,.773-.29,1.02,1.02,0,0,0,.326-.8.992.992,0,0,0-.334-.806A1.171,1.171,0,0,0,10.012,4.444Z"
+              transform="translate(2 2)"
+            />
+          </svg>
+        </div>
+      </div>
+    </div>
+    <button
+      class="secondary-big-button w-40"
+      data-testid="reschedule"
+      type="button"
+    >
+      <div
+        class="flex flex-row justify-center items-center space-x-2"
+      >
+        <div>
+          external_access.appointments.reschedule
+        </div>
+      </div>
+    </button>
+    <button
+      class="secondary-big-button w-32"
+      data-testid="cancel"
+      type="button"
+    >
+      <div
+        class="flex flex-row justify-center items-center space-x-2"
+      >
+        <div>
+          common.cancel
+        </div>
+      </div>
+    </button>
+  </div>
+  <div
+    class="pt-20"
+  >
+    external_access.appointments.instructions
+  </div>
+  <div
+    class="border-b pt-2"
+  />
+  <div
+    class="pt-4 body2"
+  >
+    string
+  </div>
+  <div
+    class="pt-8"
+  >
+    external_access.appointments.parking_information
+  </div>
+  <div
+    class="border-b pt-2"
+  />
+  <div
+    class="pt-4 body2"
+  >
+    string
+  </div>
+  <div
+    class="pt-8"
+  >
+    external_access.appointments.directions
+  </div>
+  <div
+    class="border-b pt-2"
+  />
+  <div
+    class="pt-4 body2"
+  >
+    <a
+      href="https://maps.google.com/?q=1,1"
+      rel="noreferrer"
+      target="_blank"
+    />
+  </div>
+</DocumentFragment>
+`;

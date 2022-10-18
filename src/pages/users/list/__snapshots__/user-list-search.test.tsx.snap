@@ -112,6 +112,7 @@ exports[`UserListSearch tests renders UserListSearch correctly disable 1`] = `
         >
           <svg
             class="mr-6 cursor-pointer icon-medium "
+            data-testid="svg-icon"
             height="24"
             viewBox="0 0 24 24"
             width="24"
@@ -296,6 +297,7 @@ exports[`UserListSearch tests renders UserListSearch correctly disable-cancel 1`
         >
           <svg
             class="mr-6 cursor-pointer icon-medium "
+            data-testid="svg-icon"
             height="24"
             viewBox="0 0 24 24"
             width="24"
@@ -480,6 +482,7 @@ exports[`UserListSearch tests renders UserListSearch correctly disable-close 1`]
         >
           <svg
             class="mr-6 cursor-pointer icon-medium "
+            data-testid="svg-icon"
             height="24"
             viewBox="0 0 24 24"
             width="24"
@@ -664,6 +667,7 @@ exports[`UserListSearch tests renders UserListSearch correctly enable 1`] = `
         >
           <svg
             class="mr-6 cursor-pointer icon-medium "
+            data-testid="svg-icon"
             height="24"
             viewBox="0 0 24 24"
             width="24"
@@ -848,6 +852,7 @@ exports[`UserListSearch tests renders UserListSearch correctly resend_invite 1`]
         >
           <svg
             class="mr-6 cursor-pointer icon-medium "
+            data-testid="svg-icon"
             height="24"
             viewBox="0 0 24 24"
             width="24"

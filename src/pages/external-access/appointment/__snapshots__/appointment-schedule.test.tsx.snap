@@ -1,0 +1,771 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AppointmentSchedule tests renders AppointmentSchedule correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="flex flex-col"
+  >
+    <h4
+      class="pb-9"
+    >
+      external_access.schedule_appointment.what_you_are_coming_for
+    </h4>
+    <div
+      class="pb-10"
+    >
+      external_access.schedule_appointment.what_you_are_coming_for_desc
+    </div>
+    <div
+      class="w-88"
+    >
+      <form
+        novalidate=""
+      >
+        <div
+          class="select-wrapper relative w-full flex flex-col h-20 "
+        >
+          <div
+            class="select relative flex flex-col "
+          >
+            <input
+              autocomplete="on"
+              autocorrect="on"
+              class="pl-4 pr-8 body2 select-trigger-pt h-14 relative truncate select-trigger   "
+              data-testid="appointment_type"
+              name="appointment_type"
+              spellcheck="true"
+              type="text"
+              value=""
+            />
+            <label
+              class="select-label absolute truncate"
+            >
+              <span
+                class="text-danger"
+              >
+                *
+              </span>
+              <span
+                class="select-label-span body2"
+              >
+                external_access.schedule_appointment.appointment_type
+              </span>
+            </label>
+            <div
+              class="absolute pt-4 right-4 "
+            >
+              <div
+                class="flex flex-row items-start"
+              >
+                <div
+                  class="cursor-pointer"
+                >
+                  <div
+                    class=""
+                  >
+                    <svg
+                      class="icon-medium "
+                      height="24"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <rect
+                        fill="none"
+                        height="24"
+                        width="24"
+                      />
+                      <path
+                        class="select-arrow-fill"
+                        d="M7,14l1.273-1.273L2.545,7,8.273,1.273,7,0,0,7Z"
+                        transform="translate(5 16.273) rotate(-90)"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="absolute py-2 options"
+            >
+              <div
+                class="w-full select-cell justify-between flex items-center  body2   cursor-pointer  "
+              >
+                <div
+                  class="flex flex-col justify-center w-full py-2"
+                  data-test-id="select-cell-icon-content"
+                >
+                  <div
+                    class="flex items-center pl-4"
+                    data-test-id="select-cell-text-string"
+                    data-testid="select-cell-text-string"
+                  >
+                    string
+                  </div>
+                  <span
+                    class="pl-4 body3-small assistive-text select-cell-assistive-text-line-clamped"
+                  >
+                    string
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="select-wrapper relative w-full flex flex-col h-20 "
+        >
+          <div
+            class="select relative flex flex-col "
+          >
+            <input
+              autocomplete="on"
+              autocorrect="on"
+              class="pl-4 pr-8 body2 select-trigger-pt h-14 relative truncate select-trigger   "
+              data-testid="provider"
+              name="provider"
+              spellcheck="true"
+              type="text"
+              value=""
+            />
+            <label
+              class="select-label absolute truncate"
+            >
+              <span
+                class="select-label-span body2"
+              >
+                external_access.schedule_appointment.provider
+              </span>
+            </label>
+            <div
+              class="absolute pt-4 right-4 "
+            >
+              <div
+                class="flex flex-row items-start"
+              >
+                <div
+                  class="cursor-pointer"
+                >
+                  <div
+                    class=""
+                  >
+                    <svg
+                      class="icon-medium "
+                      height="24"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <rect
+                        fill="none"
+                        height="24"
+                        width="24"
+                      />
+                      <path
+                        class="select-arrow-fill"
+                        d="M7,14l1.273-1.273L2.545,7,8.273,1.273,7,0,0,7Z"
+                        transform="translate(5 16.273) rotate(-90)"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="absolute py-2 options"
+            >
+              <div
+                class="w-full select-cell justify-between flex items-center  body2   cursor-pointer  "
+              >
+                <div
+                  class="flex flex-col justify-center w-full"
+                  data-test-id="select-cell-icon-content"
+                >
+                  <div
+                    class="flex items-center pl-4"
+                    data-test-id="select-cell-text-common.any"
+                    data-testid="select-cell-text-common.any"
+                  >
+                    common.any
+                  </div>
+                </div>
+              </div>
+              <div
+                class="w-full select-cell justify-between flex items-center  body2   cursor-pointer  "
+              >
+                <div
+                  class="flex flex-col justify-center w-full"
+                  data-test-id="select-cell-icon-content"
+                >
+                  <div
+                    class="flex items-center pl-4"
+                    data-test-id="select-cell-text-provider lastname"
+                    data-testid="select-cell-text-provider lastname"
+                  >
+                    provider lastname
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="select-wrapper relative w-full flex flex-col h-20 "
+        >
+          <div
+            class="select relative flex flex-col "
+          >
+            <input
+              autocomplete="on"
+              autocorrect="on"
+              class="pl-4 pr-8 body2 select-trigger-pt h-14 relative truncate select-trigger   "
+              data-testid="location"
+              name="location"
+              spellcheck="true"
+              type="text"
+              value=""
+            />
+            <label
+              class="select-label absolute truncate"
+            >
+              <span
+                class="select-label-span body2"
+              >
+                external_access.schedule_appointment.location
+              </span>
+            </label>
+            <div
+              class="absolute pt-4 right-4 "
+            >
+              <div
+                class="flex flex-row items-start"
+              >
+                <div
+                  class="cursor-pointer"
+                >
+                  <div
+                    class=""
+                  >
+                    <svg
+                      class="icon-medium "
+                      height="24"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <rect
+                        fill="none"
+                        height="24"
+                        width="24"
+                      />
+                      <path
+                        class="select-arrow-fill"
+                        d="M7,14l1.273-1.273L2.545,7,8.273,1.273,7,0,0,7Z"
+                        transform="translate(5 16.273) rotate(-90)"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="absolute py-2 options"
+            >
+              <div
+                class="w-full select-cell justify-between flex items-center  body2   cursor-pointer  "
+              >
+                <div
+                  class="flex flex-col justify-center w-full"
+                  data-test-id="select-cell-icon-content"
+                >
+                  <div
+                    class="flex items-center pl-4"
+                    data-test-id="select-cell-text-common.any"
+                    data-testid="select-cell-text-common.any"
+                  >
+                    common.any
+                  </div>
+                </div>
+              </div>
+              <div
+                class="w-full select-cell justify-between flex items-center  body2   cursor-pointer  "
+              >
+                <div
+                  class="flex flex-col justify-center w-full"
+                  data-test-id="select-cell-icon-content"
+                >
+                  <div
+                    class="flex items-center pl-4"
+                    data-test-id="select-cell-text-String"
+                    data-testid="select-cell-text-String"
+                  >
+                    String
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pt-6"
+        >
+          <div
+            class="pb-5 body2"
+          >
+            external_access.schedule_appointment.select_preference
+          </div>
+          <div
+            class=""
+          >
+            <div
+              class="radio h-9 "
+            >
+              <input
+                checked=""
+                data-testid="time_preference_1"
+                id="time_preference_1"
+                name="time_preference"
+                type="radio"
+                value="1"
+              />
+              <label
+                class="body2  "
+                for="time_preference_1"
+              >
+                <div
+                  class="truncate relative w-full h-full inline-block"
+                >
+                  <span
+                    class="body2"
+                  >
+                    external_access.schedule_appointment.first_available
+                  </span>
+                </div>
+              </label>
+            </div>
+            <div
+              class="radio h-9 "
+            >
+              <input
+                data-testid="time_preference_2"
+                id="time_preference_2"
+                name="time_preference"
+                type="radio"
+                value="2"
+              />
+              <label
+                class="body2  "
+                for="time_preference_2"
+              >
+                <div
+                  class="truncate relative w-full h-full inline-block"
+                >
+                  <span
+                    class="body2"
+                  >
+                    external_access.schedule_appointment.select_preferred
+                  </span>
+                </div>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div
+          class="flex justify-start pt-8"
+        >
+          <button
+            class="big-button"
+            disabled=""
+            type="submit"
+          >
+            <div
+              class="flex flex-row justify-center items-center space-x-2"
+            >
+              <div>
+                external_access.schedule_appointment.find_appointment
+              </div>
+            </div>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`AppointmentSchedule tests renders AppointmentSchedule correctly api return empty array 1`] = `
+<DocumentFragment>
+  <div
+    class="flex flex-col"
+  >
+    <h4
+      class="pb-9"
+    >
+      external_access.schedule_appointment.what_you_are_coming_for
+    </h4>
+    <div
+      class="pb-10"
+    >
+      external_access.schedule_appointment.what_you_are_coming_for_desc
+    </div>
+    <div
+      class="w-88"
+    >
+      <form
+        novalidate=""
+      >
+        <div
+          class="select-wrapper relative w-full flex flex-col h-20 "
+        >
+          <div
+            class="select relative flex flex-col "
+          >
+            <input
+              autocomplete="on"
+              autocorrect="on"
+              class="pl-4 pr-8 body2 select-trigger-pt h-14 relative truncate select-trigger   "
+              data-testid="appointment_type"
+              name="appointment_type"
+              spellcheck="true"
+              type="text"
+              value=""
+            />
+            <label
+              class="select-label absolute truncate"
+            >
+              <span
+                class="text-danger"
+              >
+                *
+              </span>
+              <span
+                class="select-label-span body2"
+              >
+                external_access.schedule_appointment.appointment_type
+              </span>
+            </label>
+            <div
+              class="absolute pt-4 right-4 "
+            >
+              <div
+                class="flex flex-row items-start"
+              >
+                <div
+                  class="cursor-pointer"
+                >
+                  <div
+                    class=""
+                  >
+                    <svg
+                      class="icon-medium "
+                      height="24"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <rect
+                        fill="none"
+                        height="24"
+                        width="24"
+                      />
+                      <path
+                        class="select-arrow-fill"
+                        d="M7,14l1.273-1.273L2.545,7,8.273,1.273,7,0,0,7Z"
+                        transform="translate(5 16.273) rotate(-90)"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="absolute py-2 options"
+            >
+              <div
+                class="w-full pt-2 text-center subtitle3-small"
+              >
+                common.autocomplete_search
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="select-wrapper relative w-full flex flex-col h-20 "
+        >
+          <div
+            class="select relative flex flex-col "
+          >
+            <input
+              autocomplete="on"
+              autocorrect="on"
+              class="pl-4 pr-8 body2 select-trigger-pt h-14 relative truncate select-trigger   "
+              data-testid="provider"
+              name="provider"
+              spellcheck="true"
+              type="text"
+              value=""
+            />
+            <label
+              class="select-label absolute truncate"
+            >
+              <span
+                class="select-label-span body2"
+              >
+                external_access.schedule_appointment.provider
+              </span>
+            </label>
+            <div
+              class="absolute pt-4 right-4 "
+            >
+              <div
+                class="flex flex-row items-start"
+              >
+                <div
+                  class="cursor-pointer"
+                >
+                  <div
+                    class=""
+                  >
+                    <svg
+                      class="icon-medium "
+                      height="24"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <rect
+                        fill="none"
+                        height="24"
+                        width="24"
+                      />
+                      <path
+                        class="select-arrow-fill"
+                        d="M7,14l1.273-1.273L2.545,7,8.273,1.273,7,0,0,7Z"
+                        transform="translate(5 16.273) rotate(-90)"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="absolute py-2 options"
+            >
+              <div
+                class="w-full select-cell justify-between flex items-center  body2   cursor-pointer  "
+              >
+                <div
+                  class="flex flex-col justify-center w-full"
+                  data-test-id="select-cell-icon-content"
+                >
+                  <div
+                    class="flex items-center pl-4"
+                    data-test-id="select-cell-text-common.any"
+                    data-testid="select-cell-text-common.any"
+                  >
+                    common.any
+                  </div>
+                </div>
+              </div>
+              <div
+                class="w-full select-cell justify-between flex items-center  body2   cursor-pointer  "
+              >
+                <div
+                  class="flex flex-col justify-center w-full"
+                  data-test-id="select-cell-icon-content"
+                >
+                  <div
+                    class="flex items-center pl-4"
+                    data-test-id="select-cell-text-provider lastname"
+                    data-testid="select-cell-text-provider lastname"
+                  >
+                    provider lastname
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="select-wrapper relative w-full flex flex-col h-20 "
+        >
+          <div
+            class="select relative flex flex-col "
+          >
+            <input
+              autocomplete="on"
+              autocorrect="on"
+              class="pl-4 pr-8 body2 select-trigger-pt h-14 relative truncate select-trigger   "
+              data-testid="location"
+              name="location"
+              spellcheck="true"
+              type="text"
+              value=""
+            />
+            <label
+              class="select-label absolute truncate"
+            >
+              <span
+                class="select-label-span body2"
+              >
+                external_access.schedule_appointment.location
+              </span>
+            </label>
+            <div
+              class="absolute pt-4 right-4 "
+            >
+              <div
+                class="flex flex-row items-start"
+              >
+                <div
+                  class="cursor-pointer"
+                >
+                  <div
+                    class=""
+                  >
+                    <svg
+                      class="icon-medium "
+                      height="24"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <rect
+                        fill="none"
+                        height="24"
+                        width="24"
+                      />
+                      <path
+                        class="select-arrow-fill"
+                        d="M7,14l1.273-1.273L2.545,7,8.273,1.273,7,0,0,7Z"
+                        transform="translate(5 16.273) rotate(-90)"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="absolute py-2 options"
+            >
+              <div
+                class="w-full select-cell justify-between flex items-center  body2   cursor-pointer  "
+              >
+                <div
+                  class="flex flex-col justify-center w-full"
+                  data-test-id="select-cell-icon-content"
+                >
+                  <div
+                    class="flex items-center pl-4"
+                    data-test-id="select-cell-text-common.any"
+                    data-testid="select-cell-text-common.any"
+                  >
+                    common.any
+                  </div>
+                </div>
+              </div>
+              <div
+                class="w-full select-cell justify-between flex items-center  body2   cursor-pointer  "
+              >
+                <div
+                  class="flex flex-col justify-center w-full"
+                  data-test-id="select-cell-icon-content"
+                >
+                  <div
+                    class="flex items-center pl-4"
+                    data-test-id="select-cell-text-String"
+                    data-testid="select-cell-text-String"
+                  >
+                    String
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pt-6"
+        >
+          <div
+            class="pb-5 body2"
+          >
+            external_access.schedule_appointment.select_preference
+          </div>
+          <div
+            class=""
+          >
+            <div
+              class="radio h-9 "
+            >
+              <input
+                checked=""
+                data-testid="time_preference_1"
+                id="time_preference_1"
+                name="time_preference"
+                type="radio"
+                value="1"
+              />
+              <label
+                class="body2  "
+                for="time_preference_1"
+              >
+                <div
+                  class="truncate relative w-full h-full inline-block"
+                >
+                  <span
+                    class="body2"
+                  >
+                    external_access.schedule_appointment.first_available
+                  </span>
+                </div>
+              </label>
+            </div>
+            <div
+              class="radio h-9 "
+            >
+              <input
+                data-testid="time_preference_2"
+                id="time_preference_2"
+                name="time_preference"
+                type="radio"
+                value="2"
+              />
+              <label
+                class="body2  "
+                for="time_preference_2"
+              >
+                <div
+                  class="truncate relative w-full h-full inline-block"
+                >
+                  <span
+                    class="body2"
+                  >
+                    external_access.schedule_appointment.select_preferred
+                  </span>
+                </div>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div
+          class="flex justify-start pt-8"
+        >
+          <button
+            class="big-button"
+            disabled=""
+            type="submit"
+          >
+            <div
+              class="flex flex-row justify-center items-center space-x-2"
+            >
+              <div>
+                external_access.schedule_appointment.find_appointment
+              </div>
+            </div>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</DocumentFragment>
+`;

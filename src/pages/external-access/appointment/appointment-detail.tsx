@@ -177,8 +177,8 @@ const AppointmentDetail = () => {
         </div>
 
         <div className='pt-12 flex flex-col xl:flex-row xl:space-x-6 space-x-0 space-y-6 xl:space-y-0'>
-            <Button disabled={!displayReschedule()} onClick={() => redirectToReschedule()} buttonType='big' label='external_access.appointments.reschedule' />
-            <Button disabled={!displayCancel()} onClick={() => redirectToCancel()} buttonType='secondary-big' label='common.cancel' />
+            <Button data-testid='reschedule' disabled={!displayReschedule()} onClick={() => redirectToReschedule()} buttonType='big' label='external_access.appointments.reschedule' />
+            <Button data-testid='cancel' disabled={!displayCancel()} onClick={() => redirectToCancel()} buttonType='secondary-big' label='common.cancel' />
         </div>
 
         {!!cancelRescheduleMessage && <div className='pt-6 pb-2 w-full'>

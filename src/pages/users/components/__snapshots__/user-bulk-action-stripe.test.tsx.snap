@@ -66,6 +66,7 @@ exports[`UserBulkActionStripe tests renders UserBulkActionStripe-ProviderMapping
         >
           <svg
             class="icon-medium cursor-pointer mr-4 "
+            data-testid="svg-icon"
             height="24"
             viewBox="0 0 24 24"
             width="24"
@@ -155,6 +156,7 @@ exports[`UserBulkActionStripe tests renders UserBulkActionStripe-Review correctl
         >
           <svg
             class="icon-medium cursor-pointer mr-4 "
+            data-testid="svg-icon"
             height="24"
             viewBox="0 0 24 24"
             width="24"
@@ -244,6 +246,7 @@ exports[`UserBulkActionStripe tests renders UserBulkActionStripe-RolePicking cor
         >
           <svg
             class="icon-medium cursor-pointer mr-4 "
+            data-testid="svg-icon"
             height="24"
             viewBox="0 0 24 24"
             width="24"
@@ -377,6 +380,7 @@ exports[`UserBulkActionStripe tests renders UserBulkActionStripe-Selection corre
         >
           <svg
             class="icon-medium cursor-pointer mr-4 "
+            data-testid="svg-icon"
             height="24"
             viewBox="0 0 24 24"
             width="24"
@@ -510,6 +514,7 @@ exports[`UserBulkActionStripe tests renders UserBulkActionStripe-Selection corre
         >
           <svg
             class="icon-medium cursor-pointer mr-4 "
+            data-testid="svg-icon"
             height="24"
             viewBox="0 0 24 24"
             width="24"

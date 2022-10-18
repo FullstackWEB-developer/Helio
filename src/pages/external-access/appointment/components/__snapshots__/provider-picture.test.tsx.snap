@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ProviderPicture tests renders ProviderPicture correctly 1`] = `<DocumentFragment />`;
+
+exports[`ProviderPicture tests renders ProviderPicture correctly with id 1`] = `<DocumentFragment />`;
+
+exports[`ProviderPicture tests renders ProviderPicture correctly with id return undefined 1`] = `<DocumentFragment />`;

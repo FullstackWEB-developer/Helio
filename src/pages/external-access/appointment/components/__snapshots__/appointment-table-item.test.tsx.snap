@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AppointmentTableItem tests renders AppointmentTableItem correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="appointment-table-row px-6 py-3.5 flex border-b body2 h-12 cursor-pointer hover:bg-gray-100"
+    data-testid="data-test-1"
+  >
+    <div
+      class="flex w-11/12 xl:w-4/12 items-center subtitle2 appointment-date"
+    >
+      Tue, Nov 15, 2022 string AM
+    </div>
+    <div
+      class="hidden xl:flex w-3/12 pr-1 items-center"
+    >
+      string
+    </div>
+    <div
+      class="hidden xl:flex w-3/12 pr-1 items-center"
+    />
+    <div
+      class="hidden xl:flex w-3/12 pr-1 items-center"
+    >
+      string
+    </div>
+    <div
+      class="hidden xl:flex w-3/12 items-center"
+    >
+      <button
+        class="link-button"
+        type="button"
+      >
+        <div
+          class="flex flex-row justify-center items-center space-x-2"
+        >
+          <div>
+            external_access.appointments.reschedule
+          </div>
+        </div>
+      </button>
+    </div>
+  </div>
+</DocumentFragment>
+`;

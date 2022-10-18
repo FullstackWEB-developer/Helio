@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AppointmentConfirmed tests renders AppointmentConfirmed correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="flex flex-col without-default-padding without-default-padding-right without-default-padding-bottom"
+  >
+    <h4
+      class="pt-16"
+    >
+      external_access.appointments.confirmation.confirmed_title
+    </h4>
+    <div
+      class="pt-6 whitespace-pre-line"
+    >
+      <a
+        rel="noreferrer"
+        target="_self"
+      >
+        Chat
+      </a>
+    </div>
+  </div>
+</DocumentFragment>
+`;

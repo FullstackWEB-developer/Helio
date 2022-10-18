@@ -1,0 +1,173 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AppointmentFound tests renders AppointmentFound correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="flex flex-col"
+  >
+    <h4
+      class="pb-9"
+    >
+      external_access.schedule_appointment.appointment_found
+    </h4>
+    <div
+      class="pb-10"
+    >
+      external_access.schedule_appointment.appointment_found_desc
+    </div>
+    <div
+      class="pb-10 border-b"
+    >
+      <div
+        class="pb-5"
+      >
+        <h5>
+          external_access.appointments.appointment_date
+        </h5>
+      </div>
+      <div
+        class="flex"
+      >
+        <div>
+          <h6
+            class="pb-2 appointment-type"
+          >
+            string
+          </h6>
+          <div
+            class="subtitle"
+          >
+            string
+          </div>
+          <div>
+            string
+          </div>
+          <div>
+            string string string, string
+          </div>
+          <div
+            class="pt-4"
+          >
+            <button
+              class="secondary-big-button"
+              data-testid="reschedule"
+              type="button"
+            >
+              <div
+                class="flex flex-row justify-center items-center space-x-2"
+              >
+                <div>
+                  external_access.appointments.reschedule
+                </div>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="pt-16 pb-12"
+    >
+      <button
+        class="medium-button"
+        data-testid="schedule"
+        type="button"
+      >
+        <div
+          class="flex flex-row justify-center items-center space-x-2"
+        >
+          <div>
+            external_access.schedule_new_appointment
+          </div>
+        </div>
+      </button>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`AppointmentFound tests renders AppointmentFound correctly schedule 1`] = `
+<DocumentFragment>
+  <div
+    class="flex flex-col"
+  >
+    <h4
+      class="pb-9"
+    >
+      external_access.schedule_appointment.appointment_found
+    </h4>
+    <div
+      class="pb-10"
+    >
+      external_access.schedule_appointment.appointment_found_desc
+    </div>
+    <div
+      class="pb-10 border-b"
+    >
+      <div
+        class="pb-5"
+      >
+        <h5>
+          external_access.appointments.appointment_date
+        </h5>
+      </div>
+      <div
+        class="flex"
+      >
+        <div>
+          <h6
+            class="pb-2 appointment-type"
+          >
+            string
+          </h6>
+          <div
+            class="subtitle"
+          >
+            string
+          </div>
+          <div>
+            string
+          </div>
+          <div>
+            string string string, string
+          </div>
+          <div
+            class="pt-4"
+          >
+            <button
+              class="secondary-big-button"
+              data-testid="reschedule"
+              type="button"
+            >
+              <div
+                class="flex flex-row justify-center items-center space-x-2"
+              >
+                <div>
+                  external_access.appointments.reschedule
+                </div>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="pt-16 pb-12"
+    >
+      <button
+        class="medium-button"
+        data-testid="schedule"
+        type="button"
+      >
+        <div
+          class="flex flex-row justify-center items-center space-x-2"
+        >
+          <div>
+            external_access.schedule_new_appointment
+          </div>
+        </div>
+      </button>
+    </div>
+  </div>
+</DocumentFragment>
+`;

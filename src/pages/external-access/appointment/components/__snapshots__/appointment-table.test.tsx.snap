@@ -1,0 +1,145 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AppointmentTable tests renders AppointmentTableItem correctly 1`] = `
+<DocumentFragment>
+  <div>
+    <div
+      class="px-6 py-4 flex caption-caps appointment-list-header h-12"
+    >
+      <div
+        class="flex w-11/12 xl:w-4/12 items-center"
+      >
+        external_access.appointments.appointment_list.appointment_date
+      </div>
+      <div
+        class="hidden xl:flex w-3/12 items-center"
+      >
+        external_access.appointments.appointment_list.details
+      </div>
+      <div
+        class="hidden xl:flex w-3/12 items-center"
+      >
+        external_access.appointments.appointment_list.provider
+      </div>
+      <div
+        class="hidden xl:flex w-3/12 items-center"
+      >
+        external_access.appointments.appointment_list.location
+      </div>
+      <div
+        class="hidden xl:flex w-3/12 items-center"
+      />
+    </div>
+    <div
+      class="appointment-table-row px-6 py-3.5 flex border-b body2 h-12 cursor-pointer hover:bg-gray-100"
+      data-testid="data-test-1"
+    >
+      <div
+        class="flex w-11/12 xl:w-4/12 items-center subtitle2 appointment-date"
+      >
+        Tue, Nov 15, 2022 string AM
+      </div>
+      <div
+        class="hidden xl:flex w-3/12 pr-1 items-center"
+      >
+        string
+      </div>
+      <div
+        class="hidden xl:flex w-3/12 pr-1 items-center"
+      />
+      <div
+        class="hidden xl:flex w-3/12 pr-1 items-center"
+      >
+        string
+      </div>
+      <div
+        class="hidden xl:flex w-3/12 items-center"
+      >
+        <button
+          class="link-button"
+          type="button"
+        >
+          <div
+            class="flex flex-row justify-center items-center space-x-2"
+          >
+            <div>
+              external_access.appointments.reschedule
+            </div>
+          </div>
+        </button>
+      </div>
+    </div>
+    <div
+      class="appointment-table-row px-6 py-3.5 flex border-b body2 h-12 cursor-pointer hover:bg-gray-100"
+      data-testid="data-test-2"
+    >
+      <div
+        class="flex w-11/12 xl:w-4/12 items-center subtitle2 appointment-date"
+      >
+        Tue, Nov 15, 2022 string AM
+      </div>
+      <div
+        class="hidden xl:flex w-3/12 pr-1 items-center"
+      >
+        string
+      </div>
+      <div
+        class="hidden xl:flex w-3/12 pr-1 items-center"
+      />
+      <div
+        class="hidden xl:flex w-3/12 pr-1 items-center"
+      />
+      <div
+        class="hidden xl:flex w-3/12 items-center"
+      >
+        <button
+          class="link-button"
+          type="button"
+        >
+          <div
+            class="flex flex-row justify-center items-center space-x-2"
+          >
+            <div>
+              external_access.appointments.reschedule
+            </div>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`AppointmentTable tests renders AppointmentTableItem correctly with null 1`] = `
+<DocumentFragment>
+  <div>
+    <div
+      class="px-6 py-4 flex caption-caps appointment-list-header h-12"
+    >
+      <div
+        class="flex w-11/12 xl:w-4/12 items-center"
+      >
+        external_access.appointments.appointment_list.appointment_date
+      </div>
+      <div
+        class="hidden xl:flex w-3/12 items-center"
+      >
+        external_access.appointments.appointment_list.details
+      </div>
+      <div
+        class="hidden xl:flex w-3/12 items-center"
+      >
+        external_access.appointments.appointment_list.provider
+      </div>
+      <div
+        class="hidden xl:flex w-3/12 items-center"
+      >
+        external_access.appointments.appointment_list.location
+      </div>
+      <div
+        class="hidden xl:flex w-3/12 items-center"
+      />
+    </div>
+  </div>
+</DocumentFragment>
+`;

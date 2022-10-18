@@ -91,7 +91,7 @@ const AppointmentList = () => {
                         isActionColumnVisible={false}
                         data={appointmentList}
                         onRowClick={(appointment) => selectAppointment(appointment as Appointment)} /> :
-                    <Button label='external_access.appointments.appointment_schedule' onClick={() => history.push(AppointmentSchedulePath)}/>
+                    <Button data-testid='schedule' label='external_access.appointments.appointment_schedule' onClick={() => history.push(AppointmentSchedulePath)}/>
                 }
             </div>
         );

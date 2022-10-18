@@ -444,6 +444,7 @@ exports[`Email Left Menu tests renders email-left-menu correctly 1`] = `
                   >
                     <svg
                       class="cursor-pointer icon-medium "
+                      data-testid="svg-icon"
                       height="24"
                       viewBox="0 0 24 24"
                       width="24"

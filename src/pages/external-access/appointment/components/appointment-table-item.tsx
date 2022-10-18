@@ -56,7 +56,7 @@ const AppointmentTableItem = ({data,
 
     }
     return (
-        <div className={getClassName()} onClick={() => onClick && onClick(data)}>
+        <div data-testid={`data-test-${data.appointmentId}`} className={getClassName()} onClick={() => onClick && onClick(data)}>
             <div className={classnames('flex w-11/12 xl:w-4/12 items-center subtitle2', {'appointment-date': !isRowHoverDisabled})}>
                 {getAppointmentDate(data)}
             </div>

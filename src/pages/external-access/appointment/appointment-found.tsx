@@ -82,6 +82,7 @@ const AppointmentFound = () => {
                         </div>
                         <div className='pt-4'>
                             <Button
+                                data-testid='reschedule'
                                 buttonType="secondary-big"
                                 label='external_access.appointments.reschedule'
                                 onClick={() => navigateToReschedule()}
@@ -94,6 +95,7 @@ const AppointmentFound = () => {
             </div>
             <div className='pt-16 pb-12'>
                 <Button
+                    data-testid='schedule'
                     buttonType='medium'
                     label='external_access.schedule_new_appointment'
                     onClick={() => navigateToSchedule()}

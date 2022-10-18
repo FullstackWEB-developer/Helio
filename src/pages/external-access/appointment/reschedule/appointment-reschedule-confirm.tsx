@@ -131,9 +131,9 @@ const AppointmentRescheduleConfirm = () => {
             {t('external_access.appointments.reschedule_appointment_error')} {errorMessage}
         </div>}
         <div className='pt-12 flex flex-col xl:flex-row xl:space-x-6 space-x-0 space-y-6 xl:space-y-0'>
-            <Button onClick={() => history.goBack()} buttonType='secondary-big' label='common.back' />
+            <Button data-testid={'go-back'} onClick={() => history.goBack()} buttonType='secondary-big' label='common.back' />
 
-            <Button onClick={() => confirmAppointment()}
+            <Button data-testid={'submit'} onClick={() => confirmAppointment()}
                 buttonType='big'
                 isLoading={rescheduleAppointmentMutation.isLoading}
                 disabled={isAppointmentRescheduled}

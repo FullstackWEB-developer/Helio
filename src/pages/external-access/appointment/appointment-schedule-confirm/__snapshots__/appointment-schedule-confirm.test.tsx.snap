@@ -1,0 +1,306 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AppointmentScheduleConfirm tests renders AppointmentScheduleConfirm correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="px-6"
+  >
+    <div
+      class="flex items-center w-full 2xl:whitespace-pre 2xl:h-12 2xl:my-3"
+    >
+      <h4>
+        Tuesday, Nov 15, 2022
+      </h4>
+    </div>
+    <h5
+      class="pt-7"
+    >
+      Invalid Date
+    </h5>
+    <div
+      class="flex pt-6"
+    >
+      <img
+        alt="provider"
+        class="w-24 h-24 mr-6 rounded-full"
+        src="[object Object]"
+      />
+      <div>
+        <h6
+          class="my-1"
+        />
+        <div
+          class="pb-2 body1"
+        >
+          external_access.appointments.with_doctor
+        </div>
+        <div
+          class="mt-7"
+        >
+          <div
+            class="subtitle"
+          >
+            string
+          </div>
+          <div>
+            string
+          </div>
+          <div>
+            string string string, string
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="flex flex-col pt-12 space-x-0 space-y-6 xl:flex-row xl:space-x-6 xl:space-y-0"
+    >
+      <button
+        class="secondary-big-button"
+        data-testid="go-back"
+        type="button"
+      >
+        <div
+          class="flex flex-row justify-center items-center space-x-2"
+        >
+          <div>
+            common.back
+          </div>
+        </div>
+      </button>
+      <button
+        class="big-button"
+        data-testid="confirm"
+        type="button"
+      >
+        <div
+          class="flex flex-row justify-center items-center space-x-2"
+        >
+          <div>
+            external_access.appointments.confirm_schedule_appointment
+          </div>
+        </div>
+      </button>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`AppointmentScheduleConfirm tests renders AppointmentScheduleConfirm correctly back 1`] = `
+<DocumentFragment>
+  <div
+    class="px-6"
+  >
+    <div
+      class="flex items-center w-full 2xl:whitespace-pre 2xl:h-12 2xl:my-3"
+    >
+      <h4>
+        Tuesday, Nov 15, 2022
+      </h4>
+    </div>
+    <h5
+      class="pt-7"
+    >
+      Invalid Date
+    </h5>
+    <div
+      class="flex pt-6"
+    >
+      <img
+        alt="provider"
+        class="w-24 h-24 mr-6 rounded-full"
+        src="[object Object]"
+      />
+      <div>
+        <h6
+          class="my-1"
+        />
+        <div
+          class="pb-2 body1"
+        >
+          external_access.appointments.with_doctor
+        </div>
+        <div
+          class="mt-7"
+        >
+          <div
+            class="subtitle"
+          >
+            string
+          </div>
+          <div>
+            string
+          </div>
+          <div>
+            string string string, string
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="flex flex-col pt-12 space-x-0 space-y-6 xl:flex-row xl:space-x-6 xl:space-y-0"
+    >
+      <button
+        class="secondary-big-button"
+        data-testid="go-back"
+        type="button"
+      >
+        <div
+          class="flex flex-row justify-center items-center space-x-2"
+        >
+          <div>
+            common.back
+          </div>
+        </div>
+      </button>
+      <button
+        class="big-button"
+        data-testid="confirm"
+        type="button"
+      >
+        <div
+          class="flex flex-row justify-center items-center space-x-2"
+        >
+          <div>
+            external_access.appointments.confirm_schedule_appointment
+          </div>
+        </div>
+      </button>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`AppointmentScheduleConfirm tests renders AppointmentScheduleConfirm correctly error 1`] = `
+<DocumentFragment>
+  <div
+    class="px-6"
+  >
+    <div
+      class="flex items-center w-full 2xl:whitespace-pre 2xl:h-12 2xl:my-3"
+    >
+      <h4>
+        Tuesday, Nov 15, 2022
+      </h4>
+    </div>
+    <h5
+      class="pt-7"
+    >
+      Invalid Date
+    </h5>
+    <div
+      class="flex pt-6"
+    >
+      <img
+        alt="provider"
+        class="w-24 h-24 mr-6 rounded-full"
+        src="[object Object]"
+      />
+      <div>
+        <h6
+          class="my-1"
+        />
+        <div
+          class="pb-2 body1"
+        >
+          external_access.appointments.with_doctor
+        </div>
+        <div
+          class="mt-7"
+        >
+          <div
+            class="subtitle"
+          >
+            string
+          </div>
+          <div>
+            string
+          </div>
+          <div>
+            string string string, string
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="flex flex-col pt-12 space-x-0 space-y-6 xl:flex-row xl:space-x-6 xl:space-y-0"
+    >
+      <button
+        class="secondary-big-button"
+        data-testid="go-back"
+        type="button"
+      >
+        <div
+          class="flex flex-row justify-center items-center space-x-2"
+        >
+          <div>
+            common.back
+          </div>
+        </div>
+      </button>
+      <button
+        class="big-button loading"
+        data-testid="confirm"
+        disabled=""
+        type="button"
+      >
+        <div
+          class="flex flex-row justify-center items-center"
+        >
+          <div
+            class="flex flex-col space-y-4 items-center justify-center undefined"
+          >
+            <div>
+              <div
+                class=""
+              >
+                <svg
+                  class="spinner icon-large-40 "
+                  viewBox="0 0 40 40"
+                >
+                  <circle
+                    class="path"
+                    cx="20"
+                    cy="20"
+                    fill="none"
+                    r="16"
+                    stroke-width="4"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+          <div />
+        </div>
+      </button>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`AppointmentScheduleConfirm tests renders AppointmentScheduleConfirm correctly spinning 1`] = `
+<DocumentFragment>
+  <div
+    class="flex flex-col space-y-4 items-center h-full w-full justify-center undefined"
+  >
+    <div>
+      <div
+        class=""
+      >
+        <svg
+          class="spinner icon-large-40 "
+          viewBox="0 0 40 40"
+        >
+          <circle
+            class="path"
+            cx="20"
+            cy="20"
+            fill="none"
+            r="16"
+            stroke-width="4"
+          />
+        </svg>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

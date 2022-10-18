@@ -444,6 +444,7 @@ exports[`Email tests renders email correctly 1`] = `
                   >
                     <svg
                       class="cursor-pointer icon-medium "
+                      data-testid="svg-icon"
                       height="24"
                       viewBox="0 0 24 24"
                       width="24"
@@ -957,6 +958,7 @@ exports[`Email tests renders new-email with ticketId correctly 1`] = `
                   >
                     <svg
                       class="cursor-pointer icon-medium "
+                      data-testid="svg-icon"
                       height="24"
                       viewBox="0 0 24 24"
                       width="24"

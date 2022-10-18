@@ -1,0 +1,83 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AppointmentRescheduled tests renders AppointmentRescheduled correctly 1`] = `
+<DocumentFragment>
+  <div>
+    <div
+      class="flex items-center w-full 2xl:whitespace-pre 2xl:h-12 2xl:my-3"
+    >
+      <h4>
+        external_access.appointments.appointment_scheduled
+      </h4>
+    </div>
+    <div
+      class="pt-6 pb-8"
+    >
+      external_access.appointments.see_appointment_details
+    </div>
+    <div
+      class="pb-2"
+    >
+      <h5>
+        external_access.appointments.appointment_date
+      </h5>
+    </div>
+    <div
+      class="flex pt-6"
+    >
+      <div>
+        <h6
+          class="pb-2 appointment-type"
+        />
+        <div
+          class="subtitle"
+        >
+          string
+        </div>
+        <div>
+          string
+        </div>
+        <div>
+           string string, string
+        </div>
+      </div>
+    </div>
+    <div
+      class="pt-8"
+    >
+      external_access.appointments.parking_information
+    </div>
+    <div
+      class="pt-2 border-b"
+    />
+    <div
+      class="pt-4 body2"
+    >
+      string
+    </div>
+    <div
+      class="pt-6"
+    >
+      external_access.appointments.directions
+    </div>
+    <div
+      class="pt-2 border-b"
+    />
+    <div
+      class="pt-4 body2"
+    >
+      <a
+        href="https://maps.google.com/?q=1,1"
+        rel="noreferrer"
+        target="_blank"
+      >
+        Get directions
+      </a>
+       to your appointment location.
+    </div>
+    <div
+      class="flex items-center justify-center m-auto justify-self-center"
+    />
+  </div>
+</DocumentFragment>
+`;

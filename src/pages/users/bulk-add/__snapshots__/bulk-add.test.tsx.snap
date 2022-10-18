@@ -589,6 +589,7 @@ exports[`BulkAdd tests renders BulkAdd correctly 1`] = `
               >
                 <svg
                   class="icon-medium cursor-pointer mr-4 "
+                  data-testid="svg-icon"
                   height="24"
                   viewBox="0 0 24 24"
                   width="24"

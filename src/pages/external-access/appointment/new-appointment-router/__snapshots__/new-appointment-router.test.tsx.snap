@@ -1,0 +1,115 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NewAppointmentRouter tests renders AppointmentCancel correctly not cancelable 1`] = `
+<DocumentFragment>
+  <div
+    class="flex flex-col appointment-schedule-select without-default-padding without-default-padding-right without-default-padding-bottom"
+  >
+    <h4
+      class="pt-16"
+    >
+      external_access.appointments.new_appointment.title
+    </h4>
+    <div
+      class="pt-12 pb-7"
+    >
+      external_access.appointments.new_appointment.patient_status_question
+    </div>
+    <div
+      class=""
+    >
+      <div
+        class="radio h-9 "
+      >
+        <input
+          data-testid="patient-status_Existing"
+          id="patient-status_Existing"
+          name="patient-status"
+          type="radio"
+          value="Existing"
+        />
+        <label
+          class="body2  truncate "
+          for="patient-status_Existing"
+        >
+          <div
+            class="truncate relative w-full h-full inline-block"
+          >
+            <span
+              class="body2"
+            >
+              external_access.appointments.new_appointment.existing_patient
+            </span>
+          </div>
+        </label>
+      </div>
+      <div
+        class="radio h-9 "
+      >
+        <input
+          data-testid="patient-status_New"
+          id="patient-status_New"
+          name="patient-status"
+          type="radio"
+          value="New"
+        />
+        <label
+          class="body2  truncate "
+          for="patient-status_New"
+        >
+          <div
+            class="truncate relative w-full h-full inline-block"
+          >
+            <span
+              class="body2"
+            >
+              external_access.appointments.new_appointment.new_patient
+            </span>
+          </div>
+        </label>
+      </div>
+    </div>
+    <button
+      class="big-button my-12 w-36"
+      disabled=""
+      type="button"
+    >
+      <div
+        class="flex flex-row justify-center items-center space-x-2"
+      >
+        <div>
+          common.continue
+        </div>
+      </div>
+    </button>
+    <div
+      class="flex flex-row space-x-6 items-center pt-16"
+    >
+      <div
+        class=""
+      >
+        <svg
+          class="icon-x-large "
+          height="48"
+          viewBox="0 0 48 48"
+          width="48"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <rect
+            fill="none"
+            height="48"
+            width="48"
+          />
+          <path
+            class="rgba-038-fill"
+            d="M38,6H10a3.982,3.982,0,0,0-3.98,4L6,38a4,4,0,0,0,4,4H38a4,4,0,0,0,4-4V10A4,4,0,0,0,38,6ZM36,28H28v8H20V28H12V20h8V12h8v8h8Z"
+          />
+        </svg>
+      </div>
+      <div>
+        external_access.emergency_note
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

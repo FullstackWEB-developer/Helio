@@ -108,7 +108,7 @@ const AppointmentDetailConfirmation = ({appointment, appointmentType}: {appointm
                     <div className='flex items-center'>
                         <Button label='external_access.appointments.confirmation.confirm' className='w-48' buttonType='big'
                             onClick={confirmAppointmentClickHandler} isLoading={confirmAppointmentMutation.isLoading} disabled={!isAppointmentInNextSevenDays()} />
-                        <div ref={infoIcon} className={!isAppointmentInNextSevenDays() ? 'block' : 'hidden'}
+                        <div data-testid='tooltip' ref={infoIcon} className={!isAppointmentInNextSevenDays() ? 'block' : 'hidden'}
                             onMouseEnter={() => setTooltipVisible(true)} onMouseLeave={() => setTooltipVisible(false)}>
                             <SvgIcon type={Icon.Info} wrapperClassName='px-1' className='cursor-pointer' fillClass='rgba-05-fill' />
                         </div>
@@ -117,12 +117,12 @@ const AppointmentDetailConfirmation = ({appointment, appointmentType}: {appointm
                         </Tooltip>
                     </div>
                     {
-                        appointmentType?.reschedulable && <Button buttonType='secondary-big' className='w-40' label='external_access.appointments.reschedule' disabled={isAppointmentInPast()}
+                        appointmentType?.reschedulable && <Button data-testid='reschedule' buttonType='secondary-big' className='w-40' label='external_access.appointments.reschedule' disabled={isAppointmentInPast()}
                             onClick={() => redirectToReschedule()} />
                     }
 
                     {
-                        appointmentType?.cancelable && <Button buttonType='secondary-big' className='w-32' label='common.cancel'
+                        appointmentType?.cancelable && <Button data-testid='cancel' buttonType='secondary-big' className='w-32' label='common.cancel'
                             onClick={() => redirectToCancel()} />
                     }
                     {

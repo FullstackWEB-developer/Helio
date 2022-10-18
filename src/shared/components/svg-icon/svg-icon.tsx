@@ -465,7 +465,7 @@ const SvgIcon = ({ type, wrapperClassName = '', className = 'icon-medium', fillC
     }
 
     const getIconFilterList = () => {
-        return <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className={mainClass}>
+        return <svg data-testid={dataTestId} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className={mainClass}>
             <rect width="24" height="24" fill="none" />
             <path d="M10,18h4V16H10ZM3,6V8H21V6Zm3,7H18V11H6Z" className={fillClass} />
         </svg>

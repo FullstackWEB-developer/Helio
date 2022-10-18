@@ -1076,6 +1076,7 @@ exports[`Email tests renders calls-log-list correctly 1`] = `
           >
             <svg
               class="icon-medium "
+              data-testid="svg-icon"
               height="24"
               viewBox="0 0 24 24"
               width="24"
