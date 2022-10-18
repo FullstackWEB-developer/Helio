@@ -24,9 +24,9 @@ import {useQuery} from 'react-query';
 import {QueryQuickConnects} from '@constants/react-query-constants';
 import {getLatestQuickConnectData} from '@pages/tickets/services/tickets.service';
 import {updateLiveAgentStatus} from '@shared/store/app-user/appuser.slice';
+import dayjs from 'dayjs';
 
 const AgentStatusTable = () => {
-
     const {t} = useTranslation();
     const AllStatuses: Option = {
         value: 'show_all',
@@ -64,9 +64,6 @@ const AgentStatusTable = () => {
     customHooks.useOutsideClick([dropdownRef], () => {
         setAgentStatusDropdownOpen(!agentStatusDropdownOpen);
     });
-
-
-
 
     const prepareData = () => {
         if (!liveAgentStatuses || liveAgentStatuses.length === 0) {
@@ -126,7 +123,13 @@ const AgentStatusTable = () => {
             return null;
         }
         return <div className='flex flex-row space-x-4'>
-            {items.map((item) => <AgentLiveItem type={type} data={item} key={item.customerData} />)}
+            {[...items].sort((a, b) => {
+                if (dayjs(a.timestamp).isAfter(b.timestamp)) {
+                    return 1;
+                } else {
+                    return -1;
+                }
+            }).map((item) => <AgentLiveItem type={type} data={item} key={item.customerData} />)}
         </div>
     }
 
@@ -151,7 +154,7 @@ const AgentStatusTable = () => {
                 title:t('wallboard.agent_status.duration'),
                 field:'duration',
                 widthClass:'w-48',
-                render: (field, record: LiveAgentStatusInfo) => record.timestamp && record.status !== "Offline" ? AgentStatusDuration({date: record.timestamp}) : null
+                render: (field, record: LiveAgentStatusInfo) => record.timestamp && AgentStatusDuration({record})
             },
             {
                 title:t('wallboard.agent_status.live_calls'),

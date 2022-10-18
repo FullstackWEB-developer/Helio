@@ -24,16 +24,25 @@ const AgentLiveItem = ({data, type} : AgentLiveItemProps) => {
 
     useEffect(() => {
         let isMounted = true;
-        setTimeout(() => {
+        const timeOut = setTimeout(() => {
             if (isMounted) {
-                setSecondsPassed(dayjs(new Date()).diff(dayjs(data.timestamp), 'second'));
+                setSecondsPassed(dayjs().diff(dayjs.utc(data.timestamp), 'second'));
             }
         }, 1000);
 
         return () => {
             isMounted = false;
+            clearTimeout(timeOut);
         };
     }, [secondsPassed, data.timestamp]);
+
+    const getTime = () => {
+        if (secondsPassed > 3600) {
+            return Math.floor(dayjs.duration(secondsPassed, 'seconds').asHours()) + dayjs.duration(secondsPassed, 'seconds').format(':mm:ss');
+        } else {
+            return dayjs.duration(secondsPassed, 'seconds').format('mm:ss')
+        }
+    }
 
     const iconBackgroundClassName = classnames('flex justify-center items-center h-12 w-12 rounded-l-md', {
         'agent-live-call-icon-background': type === AgentLiveItemType.Call,
@@ -46,7 +55,7 @@ const AgentLiveItem = ({data, type} : AgentLiveItemProps) => {
         </div>
         <div className='flex flex-col h-12 pl-2 pt-1 agent-live-text-background rounded-r-md'>
             <ElipsisTooltipTextbox value={type === AgentLiveItemType.Call ? utils.formatPhone(data.customerData) : data.customerData} classNames={"w-16 subtitle3 truncate"} asSpan={true} />
-            <div className='caption-caps'>{dayjs.duration(secondsPassed, 'seconds').format('m:ss')}</div>
+            <div className='caption-caps'>{getTime()}</div>
         </div>
     </div>
 }

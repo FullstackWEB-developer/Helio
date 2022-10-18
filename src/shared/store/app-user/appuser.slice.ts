@@ -50,7 +50,7 @@ const appUserSlice = createSlice({
             if (!currentAgent) {
                 const agentInfo = convertUserStatusUpdateToLiveAgentStatus(payload);
                 if (agentInfo) {
-                    state.liveAgentStatuses.push(agentInfo);
+                    state.liveAgentStatuses = [...state.liveAgentStatuses, agentInfo];
                 }
             }
             let internalQueueIndex = state.internalQueueStatuses.findIndex(a => a.userId === payload.userId);
@@ -67,18 +67,18 @@ const appUserSlice = createSlice({
             const item = state.liveAgentStatuses.find(a => a.userId === payload.id);
             if (!!item) {
                 state.liveAgentStatuses = state.liveAgentStatuses.filter(a => a.userId !== payload.id);
-                state.liveAgentStatuses.push({
+                state.liveAgentStatuses = [...state.liveAgentStatuses, {
                     ...item,
                     status: payload.latestConnectStatus,
                     timestamp: payload.timestamp
-                });
+                }];
             } else {
-                state.liveAgentStatuses.push({
+                state.liveAgentStatuses = [...state.liveAgentStatuses, {
                     status: payload.latestConnectStatus,
                     userId: payload.id,
                     timestamp: dayjs.utc(payload.timestamp).local().toDate(),
                     name: `${payload.firstName} ${(payload.lastName)}`
-                })
+                }]
             }
 
             let internalQueueIndex = state.internalQueueStatuses.findIndex(a => a.userId === payload.id);
