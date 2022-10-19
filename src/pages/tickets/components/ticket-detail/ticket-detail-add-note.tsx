@@ -105,22 +105,27 @@ const TicketDetailAddNote = ({ticket, patient, contact, emailMessages, smsMessag
     });
 
     useEffect(() => {
-        if (selectedTab === ChannelTabs.SmsTab) {
-            if (patient && !patient.consentToText) {
-                setNoteDisabledText('sms.sms_patient_no_consent');
+        const handleSmsDisable = () => {
+            if (isSMSAddressBlocked?.isActive) {
+                if (!!contact) {
+                    setNoteDisabledText('sms.sms_not_available_contact_phone_blocked');
+                } else if (!!patient) {
+                    setNoteDisabledText('sms.sms_not_available_patient_phone_blocked');
+                } else {
+                    setNoteDisabledText('sms.sms_not_available_user_phone_blocked');
+                }
                 setDisabledTab(ChannelTabs.SmsTab);
                 return;
             }
-            if (patient && isSMSAddressBlocked?.isActive) {
-                setNoteDisabledText('sms.sms_patient_blocked');
-                setDisabledTab(ChannelTabs.SmsTab);
-                return;
+
+            if (patient) {
+                if (!patient.consentToText) {
+                    setNoteDisabledText('sms.sms_patient_no_consent');
+                    setDisabledTab(ChannelTabs.SmsTab);
+                    return;
+                }
             }
-            if (contact && isSMSAddressBlocked?.isActive) {
-                setNoteDisabledText('sms.sms_contact_blocked');
-                setDisabledTab(ChannelTabs.SmsTab);
-                return;
-            }
+
             if (!smsMessages?.results || smsMessages.results.length === 0) {
                 setNoteDisabledText(undefined);
                 setDisabledTab(undefined);
@@ -132,26 +137,26 @@ const TicketDetailAddNote = ({ticket, patient, contact, emailMessages, smsMessag
             if(lastSmsAddress && lastSmsAddress.startsWith('+1')) {
                 lastSmsAddress = lastSmsAddress.substring(2);
             }
-            if (patient && (!patient.consentToText || patient.mobilePhone !== lastSmsAddress) && isSMSAddressBlocked?.isActive) {
-                setNoteDisabledText('sms.sms_not_available_patient_phone_blocked');
-                setDisabledTab(ChannelTabs.SmsTab);
-            } else if (patient && (!patient.consentToText || patient.mobilePhone !== lastSmsAddress)) {
-                setNoteDisabledText('sms.sms_not_available_patient');
-                setDisabledTab(ChannelTabs.SmsTab);
-            } else if (contact && contact.mobilePhone !== lastSmsAddress && isSMSAddressBlocked?.isActive) {
-                setNoteDisabledText('sms.sms_not_available_contact_phone_blocked');
-                setDisabledTab(ChannelTabs.SmsTab);
-            } else if (contact && contact.mobilePhone !== lastSmsAddress) {
-                setNoteDisabledText('sms.sms_not_available_contact');
-                setDisabledTab(ChannelTabs.SmsTab);
-            } else if (isSMSAddressBlocked?.isActive) {
-                setNoteDisabledText('sms.unknown_sms_blocked');
-                setDisabledTab(ChannelTabs.SmsTab);
-            } else {
-                setNoteDisabledText(undefined);
-                setDisabledTab(undefined);
+
+            if (patient) {
+                if (patient.mobilePhone !== lastSmsAddress && patient.mobilePhone !== ticket.originationNumber) {
+                    setNoteDisabledText('sms.sms_not_available_patient');
+                    setDisabledTab(ChannelTabs.SmsTab);
+                    return;
+                }
+            } else if(contact) {
+                if (contact.mobilePhone !== lastSmsAddress) {
+                    setNoteDisabledText('sms.sms_not_available_contact');
+                    setDisabledTab(ChannelTabs.SmsTab);
+                    return;
+                }
             }
-        } if (selectedTab === ChannelTabs.EmailTab) {
+
+            setNoteDisabledText(undefined);
+            setDisabledTab(undefined);
+        }
+
+        const handleEmailDisable = () => {
             if (!emailMessages?.results || emailMessages.results.length === 0) {
                 setNoteDisabledText(undefined);
                 setDisabledTab(undefined);
@@ -187,6 +192,11 @@ const TicketDetailAddNote = ({ticket, patient, contact, emailMessages, smsMessag
                 setNoteDisabledText(undefined);
                 setDisabledTab(undefined);
             }
+        }
+        if (selectedTab === ChannelTabs.SmsTab) {
+            handleSmsDisable();
+        } if (selectedTab === ChannelTabs.EmailTab) {
+           handleEmailDisable();
         }
     }, [patient, ticket, contact, selectedTab, emailMessages, isEmailAddressBlocked, isSMSAddressBlocked])
 
