@@ -73,7 +73,8 @@ const CcpContext = () => {
     const determineCallerType = () => {
         const isInternalCall = checkConnectAttributesForValue('IsInternalCall');
         const internalCallFromUserName = checkConnectAttributesForValue('FromUserName');
-        if (botContext?.patient) {
+        const patientId = checkConnectAttributesForValue('PatientId');
+        if (patientId) {
             return t('ccp.bot_context.patient');
         }
         if (botContext?.contactId) {

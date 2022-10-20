@@ -109,7 +109,6 @@ const Ccp: React.FC<BoxProps> = ({
     const [isHover, setHover] = useState(false);
     const [isInboundCall, setIsInboundCall] = useState(false);
     const [ticketId, setTicketId] = useState('');
-    const [patientId, setPatientId] = useState<number>();
     const botContext = useSelector(selectBotContext);
     const currentContext = useSelector(selectContextPanel);
     const updateAssigneeMutation = useMutation(setAssignee);
@@ -127,7 +126,6 @@ const Ccp: React.FC<BoxProps> = ({
     const updateAttributesForInternalMutation = useMutation(updateConnectAttributesForInternalCall);
     const chatCounter = useSelector(selectChatCounter);
     const voiceCounter = useSelector(selectVoiceCounter);
-    const isInternalCallInitiated = !!internalCallDetails;
 
     useEffect(() => {
         const activeConversations = chatCounter + voiceCounter;
@@ -163,13 +161,15 @@ const Ccp: React.FC<BoxProps> = ({
         };
     }, [connect.core]);
 
-    useQuery([QueryGetPatientById, patientId], () => getPatientByIdWithQuery(patientId!), {
-        enabled: !!botContext?.ticket?.patientId,
+    useQuery([QueryGetPatientById, botContext?.ticket?.patientId], () => getPatientByIdWithQuery(botContext?.ticket?.patientId!), {
+        enabled: !!botContext?.ticket?.patientId && !botContext?.patient,
         onSuccess: (data) => {
-            dispatch(setBotContextPatient({
-                patient: data,
-                contactId: ticketId
-            }));
+            if (botContext?.ticket?.patientId === data.patientId) {
+                dispatch(setBotContextPatient({
+                    patient: data,
+                    contactId: ticketId
+                }));
+            }
         }
     });
 
@@ -242,7 +242,6 @@ const Ccp: React.FC<BoxProps> = ({
 
     useEffect(() => {
         if (!!botContext?.ticket?.patientId) {
-            setPatientId(botContext?.ticket?.patientId);
             history.push('/patients/' + botContext?.ticket?.patientId);
         }
     }, [botContext?.ticket?.patientId, history]);
@@ -424,10 +423,6 @@ const Ccp: React.FC<BoxProps> = ({
                 let ticketId = '';
                 let contactId = '';
                 let isInternalCall = false;
-                if (attributeMap.PatientId) {
-                    const patientId = attributeMap.PatientId.value;
-                    setPatientId(Number(patientId));
-                }
 
                 if (attributeMap.HelioContactId) {
                     contactId = attributeMap.HelioContactId.value;
