@@ -66,9 +66,11 @@ const CallbackTicketCount = () => {
         });
     }
 
-    return <div className='flex flex-row pr-14 cursor-pointer' onClick={() => gotoTickets()}>
-        <SvgIcon className='icon-medium-18' fillClass='rgba-062-fill' type={Icon.CallbackTicketCount} />
-        <BadgeNumber type='red' number={hasTeamView ? teamCallbackTicketCount : myCallbackTicketCount} />
+    return <div className='flex flex-row pr-14' >
+        <SvgIcon className='icon-medium-18  cursor-pointer' fillClass='rgba-062-fill' type={Icon.CallbackTicketCount} onClick={() => gotoTickets()}/>
+        <div className='cursor-pointer' onClick={() => gotoTickets()}>
+            <BadgeNumber type='red' number={hasTeamView ? teamCallbackTicketCount : myCallbackTicketCount} />
+        </div>
     </div>
 }
 
