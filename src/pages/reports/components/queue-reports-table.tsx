@@ -129,6 +129,7 @@ const QueueReportsTable = ({data, title}: QueueReportsTableProps) => {
             },
             {
                 title: 'reports.queue_reports.column_names.awt',
+                tooltip: 'reports.queue_reports.awt',
                 field: 'averageInboundCallWaitTime',
                 widthClass: 'w-1/12',
                 rowClassname: 'body2',

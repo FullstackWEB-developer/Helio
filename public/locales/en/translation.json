@@ -2403,7 +2403,8 @@
         "pertence_abandoned": "% Abandoned",
         "avg_duration": "Avg. Duration",
         "awt": "AWT"
-      }
+      },
+      "awt": "Average Wait Time"
     },
     "agent_report": "Agent KPIs",
     "agent_reports": {
