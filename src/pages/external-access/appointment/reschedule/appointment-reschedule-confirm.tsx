@@ -34,9 +34,9 @@ const AppointmentRescheduleConfirm = () => {
     const dispatch = useDispatch();
     const verifiedPatient = useSelector(selectVerifiedPatent);
     const appointment = useSelector(selectSelectedAppointment);
-    const appointmentTypes = useSelector(selectAppointmentTypes);
-    const appointmentType = appointmentTypes.find(a => a.id === Number(appointment.appointmentTypeId));
     const appointmentSlot = useSelector(selectSelectedAppointmentSlot);
+    const appointmentTypes = useSelector(selectAppointmentTypes);
+    const appointmentType = appointmentTypes.find(a => a.id === Number(appointmentSlot.appointmentTypeId));
     const departments = useSelector(selectLocationList);
     const isAppointmentRescheduled = useSelector(selectIsAppointmentRescheduled);
     const providers = useSelector(selectProviderList);
@@ -104,12 +104,12 @@ const AppointmentRescheduleConfirm = () => {
             <div>
                 <div>
                     {t('external_access.appointments.appointment_date', {
-                        date: dayjs(appointment.startDateTime).format('dddd, MMM DD, YYYY'),
-                        time: dayjs(appointment.startTime, 'hh:mm').format('hh:mm A')
+                        date: dayjs(appointmentSlot.date).format('dddd, MMMM DD, YYYY'),
+                        time: dayjs(appointmentSlot.startTime, 'HH:mm').format('h:mm A')
                     })}
                 </div>
                 <div>
-                    {appointmentType?.name ?? appointment.appointmentType}
+                    {appointmentType?.name ?? appointmentSlot.appointmentType}
                 </div>
                 {provider && <div className='pb-2'>
                     {t('external_access.appointments.with_doctor', {
