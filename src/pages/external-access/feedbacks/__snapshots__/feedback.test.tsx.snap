@@ -1,0 +1,275 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Feedback tests renders Feedback correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="feedback-body w-full h-full"
+  >
+    <h4
+      class="mb-10"
+    >
+      external_access.feedbacks.result_title
+    </h4>
+    <div
+      class="flex flex-col body2 w-full"
+    >
+      <div
+        class="mb-9 w-full"
+      >
+        <span
+          class="body2-primary"
+        >
+          external_access.feedbacks.result_paragraph_1 
+        </span>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Feedback tests renders Feedback not-verified 1`] = `
+<DocumentFragment>
+  <div>
+    external_access.not_verified_link
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Feedback tests renders Feedback preview correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="feedback-body w-full h-full"
+  >
+    <h4
+      class="mb-10"
+    >
+      configuration.web_form_preview.title
+    </h4>
+    <div
+      class="flex flex-col body2 w-full"
+    >
+      <div
+        class="mb-9 w-full"
+      >
+        <span
+          class="subtitle"
+        >
+          configuration.web_form_preview.paragraph_1
+        </span>
+      </div>
+      <div
+        class="mb-9 w-full"
+      >
+        <div
+          class="flex"
+        >
+          <div
+            class="feedback bg-white border-2 w-40 py-4 rounded-lg cursor-pointer mr-6 false"
+          >
+            <div
+              class="flex justify-center items-center mb-2"
+            >
+              <svg
+                class="w-10 h-10 "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <circle
+                  class="unsatify-color"
+                  cx="1.5"
+                  cy="1.5"
+                  r="1.5"
+                  transform="translate(14 8)"
+                />
+                <circle
+                  class="unsatify-color"
+                  cx="1.5"
+                  cy="1.5"
+                  r="1.5"
+                  transform="translate(7 8)"
+                />
+                <path
+                  class="unsatify-color"
+                  d="M12,2A10,10,0,1,0,22,12,10.029,10.029,0,0,0,12,2Zm0,18a8,8,0,1,1,8-8A8.024,8.024,0,0,1,12,20Zm0-6a5.426,5.426,0,0,0-5.1,3.5H8.6a3.994,3.994,0,0,1,3.4-2,3.871,3.871,0,0,1,3.4,2h1.7A5.426,5.426,0,0,0,12,14Z"
+                />
+              </svg>
+            </div>
+            <div
+              class="subtitle flex justify-center items-center text-center"
+            >
+              external_access.feedbacks.unsatisfied
+            </div>
+          </div>
+          <div
+            class="feedback bg-white border-2 w-40 py-4 rounded-lg cursor-pointer mr-6 false"
+          >
+            <div
+              class="flex justify-center items-center mb-2"
+            >
+              <svg
+                class="w-10 h-10 "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <circle
+                  class="warning-icon"
+                  cx="1.5"
+                  cy="1.5"
+                  r="1.5"
+                  transform="translate(14 8)"
+                />
+                <circle
+                  class="warning-icon"
+                  cx="1.5"
+                  cy="1.5"
+                  r="1.5"
+                  transform="translate(7 8)"
+                />
+                <path
+                  class="warning-icon"
+                  d="M11.99,2A10,10,0,1,0,22,12,10,10,0,0,0,11.99,2ZM12,20a8,8,0,1,1,8-8A8,8,0,0,1,12,20Zm0-4a3.8,3.8,0,0,1-1.96-.52c-.12.14-.86.98-1.01,1.15a5.5,5.5,0,0,0,5.95-.01c-.97-1.09-.01-.02-1.01-1.15A3.775,3.775,0,0,1,12,16Z"
+                />
+              </svg>
+            </div>
+            <div
+              class="subtitle flex justify-center items-center text-center"
+            >
+              external_access.feedbacks.satisfied
+            </div>
+          </div>
+          <div
+            class="feedback bg-white border-2 w-40 py-4 rounded-lg cursor-pointer undefined false"
+          >
+            <div
+              class="flex justify-center items-center mb-2"
+            >
+              <svg
+                class="w-10 h-10 "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <circle
+                  class="success-icon"
+                  cx="1.5"
+                  cy="1.5"
+                  r="1.5"
+                  transform="translate(14 8)"
+                />
+                <circle
+                  class="success-icon"
+                  cx="1.5"
+                  cy="1.5"
+                  r="1.5"
+                  transform="translate(7 8)"
+                />
+                <path
+                  class="success-icon"
+                  d="M11.99,2A10,10,0,1,0,22,12,10,10,0,0,0,11.99,2ZM12,20a8,8,0,1,1,8-8A8,8,0,0,1,12,20ZM7,14a5.458,5.458,0,0,0,5,4,5.458,5.458,0,0,0,5-4Z"
+                />
+              </svg>
+            </div>
+            <div
+              class="subtitle flex justify-center items-center text-center"
+            >
+              external_access.feedbacks.very_satisfied
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="mb-4 w-full"
+      >
+        <span
+          class="subtitle"
+        >
+          external_access.feedbacks.paragraph_2
+        </span>
+      </div>
+      <div
+        class="mb-4 w-full"
+      >
+        <div
+          class="flex flex-row justify-between"
+        >
+          <label
+            class="block subtitle2 pb-2"
+          />
+        </div>
+        <div
+          class="w-full h-full"
+        >
+          <div
+            class="pl-4 h-full w-full rounded relative bg-white border"
+          >
+            <textarea
+              class="shadow-none h-full pb-0 pr-0 body2 w-full resize-none mt-1"
+              data-test-id="note-context-notes"
+              data-testid="note-context-notes"
+              maxlength="4000"
+              placeholder="external_access.feedbacks.enter_your_message"
+              required=""
+              rows="4"
+              style="height: 0px;"
+              wrap="hard"
+            />
+          </div>
+          <div
+            class="flex justify-end pt-1 pr-4 body3"
+          >
+            external_access.characters
+          </div>
+        </div>
+      </div>
+      <div
+        class="mb-4 w-full"
+      >
+        <span
+          class="body3-medium"
+        >
+          external_access.feedbacks.warning
+        </span>
+      </div>
+      <div
+        class="mb-4 w-full"
+      >
+        <button
+          class="big-button w-full md:w-auto"
+          data-test-id="submit-button"
+          data-testid="submit-button"
+          disabled=""
+          type="submit"
+        >
+          <div
+            class="flex flex-row justify-center items-center space-x-2"
+          >
+            <div>
+              external_access.feedbacks.submit
+            </div>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

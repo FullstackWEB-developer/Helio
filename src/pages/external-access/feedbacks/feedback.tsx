@@ -109,6 +109,7 @@ const Feedback = () => {
                                 className='w-full md:w-auto'
                                 type='submit'
                                 data-test-id='submit-button'
+                                data-testid='submit-button-redirect'
                                 buttonType='big'
                                 onClick={() => redirect(feedbackResponse.url)} />
                         </div>
@@ -140,6 +141,7 @@ const Feedback = () => {
                     className='h-full pb-0 pr-0 body2 w-full'
                     textareaContainerClasses='pl-4 h-full w-full rounded'
                     data-test-id='note-context-notes'
+                    data-testid='note-context-notes'
                     placeHolder={t('external_access.feedbacks.enter_your_message')}
                     required={true}
                     overwriteDefaultContainerClasses={true}
@@ -163,6 +165,7 @@ const Feedback = () => {
                     isLoading={createReview.isLoading}
                     type='submit'
                     data-test-id='submit-button'
+                    data-testid='submit-button'
                     buttonType='big'
                     onClick={() => sendReview()} />
             </div>
