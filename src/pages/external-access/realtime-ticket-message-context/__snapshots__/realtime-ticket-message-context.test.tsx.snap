@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HipaaWarningModal tests renders RealtimeTicketMessageContext correctly 1`] = `<DocumentFragment />`;
+
+exports[`HipaaWarningModal tests renders RealtimeTicketMessageContext correctly ok 1`] = `<DocumentFragment />`;
