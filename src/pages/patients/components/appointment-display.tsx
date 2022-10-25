@@ -1,5 +1,5 @@
-import React, {Fragment, useMemo, useState} from 'react';
-import {useSelector} from 'react-redux';
+import React, {Fragment, useEffect, useMemo, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import {Appointment} from '@pages/external-access/appointment/models';
 import {selectAllProviderList, selectDepartmentById} from '@shared/store/lookups/lookups.selectors';
 import {RootState} from '@app/store';
@@ -9,10 +9,10 @@ import utc from 'dayjs/plugin/utc';
 import {useQuery} from 'react-query';
 import {AppointmentType} from '@pages/external-access/appointment/models';
 import {AxiosError} from 'axios';
-import {FiveMinute, GetAppointmentType, OneMinute} from '@constants/react-query-constants';
-import {
-    getAppointmentTypeById
-} from '@pages/appointments/services/appointments.service';
+import {FiveMinute, GetAppointmentTypes} from '@constants/react-query-constants';
+import { getAppointmentTypes } from '@pages/appointments/services/appointments.service';
+import {selectAppointmentTypes} from '@pages/patients/store/patients.selectors';
+import {setAppointmentTypes} from '@pages/patients/store/patients.slice';
 
 dayjs.extend(customParseFormat);
 dayjs.extend(utc);
@@ -27,21 +27,32 @@ const AppointmentDisplay = ({ appointment, border, isLast }: AppointmentDisplayP
     const department = useSelector((state: RootState) => selectDepartmentById(state, appointment.departmentId));
     const providers = useSelector(selectAllProviderList);
     const [appointmentTypeName, setAppointmentTypeName] = useState<string>('');
+    const appointmentTypes = useSelector(selectAppointmentTypes);
+    const dispatch = useDispatch();
+
 
     const provider = useMemo(() => {
         return providers?.find(a => a.id === appointment.providerId);
     }, [providers, appointment.providerId]);
 
-    useQuery<AppointmentType, AxiosError>([GetAppointmentType, appointment.appointmentTypeId], () => getAppointmentTypeById(appointment.appointmentTypeId), {
-        enabled: !!appointment?.appointmentTypeId,
+    useEffect(() => {
+        if (!appointmentTypes || !appointment) {
+            return;
+        }
+        const type = appointmentTypes.find(a => a?.id?.toString() === appointment?.appointmentTypeId?.toString());
+        if (type && type.name) {
+            setAppointmentTypeName(type.name);
+        } else {
+            setAppointmentTypeName(appointment.patientAppointmentTypeName);
+        }
+    }, [appointment, appointmentTypes])
+
+    useQuery<AppointmentType[], AxiosError>([GetAppointmentTypes], () => getAppointmentTypes(), {
+        enabled: !!appointment?.appointmentTypeId && (!appointmentTypes || appointmentTypes.length === 0),
         cacheTime: FiveMinute,
         staleTime: Infinity,
         onSuccess: (data) => {
-            if (data && data.name) {
-                setAppointmentTypeName(data.name);
-            } else {
-                setAppointmentTypeName(appointment.patientAppointmentTypeName);
-            }
+            dispatch(setAppointmentTypes(data));
         },
         onError: () => {
             setAppointmentTypeName(appointment.patientAppointmentTypeName);
