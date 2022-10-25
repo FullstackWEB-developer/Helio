@@ -35,28 +35,12 @@ const CancellationReasonDefaults = () => {
     }, [cancellationReasons]);
     const cancellationDropdownItems = getCancellationReasonsOptions(cancellationReasons);
 
-    const getReschedulingReasonsOptions = useCallback((reasons: CancellationReason[] | undefined) => {
-        return reasons ? reasons
-            .filter(r => r.type === CancellationReasonTypes.Reschedule)
-            .map((item: CancellationReason) => {
-                return {
-                    value: item.id.toString(),
-                    label: item.name,
-                    object: item
-                } as Option;
-            }) : [];
-    }, [cancellationReasons]);
-    const rescheduleDropdownItems = getReschedulingReasonsOptions(cancellationReasons);
-
     const {control, getValues} = useForm();
 
-    const onSelect = (option?: Option) => {
+    const onSelect = () => {
         const defaultIdForCancelType = getValues('DefaultIdForCancelType');
-        const defaultIdForRescheduleType = getValues('DefaultIdForRescheduleType');
         saveDefaultCancellationReasonsMutation.mutate({
-            defaultIdForCancelType: utils.isString(defaultIdForCancelType) ? Number(defaultIdForCancelType) : defaultIdForCancelType.object.id,
-            defaultIdForRescheduleType: utils.isString(defaultIdForRescheduleType) ? Number(defaultIdForRescheduleType) : defaultIdForRescheduleType.object.id
-        });
+            defaultIdForCancelType: utils.isString(defaultIdForCancelType) ? Number(defaultIdForCancelType) : defaultIdForCancelType.object.id});
     }
     const saveDefaultCancellationReasonsMutation = useMutation(saveCancellationReasonDefaults, {
         onSuccess: () => {
@@ -100,30 +84,6 @@ const CancellationReasonDefaults = () => {
                         <span>{t('configuration.cancellation_reason.as_default')}</span>
                     </div>
 
-                }
-                {
-                    rescheduleDropdownItems && rescheduleDropdownItems.length > 0 &&
-                    <div className='flex items-center body2 pt-4'>
-                        <Trans i18nKey="configuration.cancellation_reason.set_default"
-                            values={{reason: t('configuration.cancellation_reason.reschedule_reason_option')}}>
-                            <span className='subtitle2 px-1'></span>
-                        </Trans>
-                        <div className='w-80 p-4 flex items-center'>
-                            {
-                                saveDefaultCancellationReasonsMutation.isLoading && <Spinner size='small' />
-                            }
-                            <ControlledSelect
-                                disabled={saveDefaultCancellationReasonsMutation.isLoading}
-                                options={rescheduleDropdownItems}
-                                label='configuration.cancellation_reason.default_reason_label'
-                                defaultValue={rescheduleDropdownItems.find(r => r.object?.isDefault)}
-                                name='DefaultIdForRescheduleType'
-                                control={control}
-                                onSelect={onSelect}
-                            />
-                        </div>
-                        <span>{t('configuration.cancellation_reason.as_default')}</span>
-                    </div>
                 }
             </div> : null
     );
