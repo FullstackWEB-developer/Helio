@@ -3,7 +3,7 @@ import {selectPatient} from '../../store/patients.selectors';
 import {useTranslation} from 'react-i18next';
 import withErrorLogging from '@shared/HOC/with-error-logging';
 import {Controller, useForm} from 'react-hook-form';
-import React from 'react';
+import React, { useEffect } from 'react';
 import Select from '@components/select/select';
 import {Option} from '@components/option/option';
 import Radio from '@components/radio/radio';
@@ -36,6 +36,21 @@ const PatientContactInfoUpdate = ({onUpdateComplete} : PatientInformationUpdateP
     const states = useSelector(selectStates);
     const requiredText = t('common.required');
 
+    useEffect(() => {
+        setValue('workPhone', watchWorkPhone, {
+            shouldValidate: true,
+            shouldDirty: true
+        });
+        setValue('homePhone', watchHomePhone, {
+            shouldValidate: true,
+            shouldDirty: true
+        });
+        setValue('mobilePhone', watchMobilePhone, {
+            shouldValidate: true,
+            shouldDirty: true
+        });
+    }, []);
+
     useQuery(QueryStates, () => getStates(),
         {
                 onSuccess:(data: any)=> {
@@ -58,8 +73,8 @@ const PatientContactInfoUpdate = ({onUpdateComplete} : PatientInformationUpdateP
     });
 
     const {handleSubmit, control, errors, watch,
-        clearErrors,
-        formState: { isDirty, isSubmitSuccessful },} = useForm({
+        clearErrors, setValue,
+        formState: { isDirty, isSubmitSuccessful, isValid },} = useForm({
         mode: 'onBlur',
         defaultValues: {
             mobilePhone: patient.mobilePhone,
@@ -78,6 +93,7 @@ const PatientContactInfoUpdate = ({onUpdateComplete} : PatientInformationUpdateP
 
     const watchMobilePhone = watch('mobilePhone');
     const watchHomePhone = watch('homePhone');
+    const watchWorkPhone = watch('workPhone');
     const watchEmail = watch('email');
     const watchContactPreference: string = watch('contactPreference');
 
@@ -332,7 +348,7 @@ const PatientContactInfoUpdate = ({onUpdateComplete} : PatientInformationUpdateP
                     </div>
                 </div>
                 <div className='pt-4'>
-                    <Button isLoading={updatePatientContactInfoMutation.isLoading} disabled={!isDirty} label={t('common.save')} buttonType='small' type='submit'/>
+                    <Button isLoading={updatePatientContactInfoMutation.isLoading} disabled={!isDirty || !isValid} label={t('common.save')} buttonType='small' type='submit'/>
                 </div>
                 <RouteLeavingGuard
                     when={isDirty && !isSubmitSuccessful}
