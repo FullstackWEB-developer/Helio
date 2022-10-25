@@ -2403,7 +2403,7 @@
         "abandoned": "Abandoned",
         "pertence_abandoned": "% Abandoned",
         "avg_duration": "Avg. Duration",
-        "awt": "AWT"
+        "awt": "AWT*"
       },
       "awt": "Average Wait Time"
     },
@@ -2423,7 +2423,7 @@
         "missed_contact_tooltip": "Calls and chats routed to agent but not answered including:\n- One call/chat missed multiple times (each missed counts)\n- Calls and chats abandoned by customers\n- Calls and chats that resulted in callback requests",
         "acwt": "ACWT*",
         "acwt_tooltip": "Average time spent in after \"After work\" mode",
-        "total_chats": "Total Chats",
+        "total_chats": "Total Chats*",
         "total_chats_tooltip": "Total number of chats handled by agent",
         "average_chat_handle_time": "Avg. Handle Time*",
         "average_chat_handle_time_tooltip": "Average handle time from chat acceptance to closing the contact (includes after call work mode)",
@@ -2441,15 +2441,15 @@
         "total_calls_tooltip" : "Total inbound and outbound call volume including internal calls",
         "total_tickets": "Total Tickets*",
         "total_tickets_tooltip": "Total tickets assigned to agent (excludes archived tickets)",
-        "overdue_tickets": "Overdue Tickets*",
+        "overdue_tickets": "Overdue Tickets",
         "total_sms": "Total SMS*",
-        "total_sms_tooltip": "Total SMS tickets assigns to agent.",
+        "total_sms_tooltip": "Total SMS tickets assigned to agent",
         "total_emails": "Total Emails*",
-        "total_emails_tooltip": "Total Email tickets assigns to agent.",
+        "total_emails_tooltip": "Total Email tickets assigned to agent",
         "avg_sms_response": "Avg. SMS Response*",
-        "avg_sms_response_tooltip": "Average time needed for first response to new SMS.",
+        "avg_sms_response_tooltip": "Average time needed for first response to new SMS",
         "avg_email_response": "Avg. Email Response*",
-        "avg_email_response_tooltip": "Average time needed for first response to new Email."
+        "avg_email_response_tooltip": "Average time needed for first response to new Email"
       },
       "column_postfixes": {
         "days": "days",
