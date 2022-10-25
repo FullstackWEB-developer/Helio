@@ -45,13 +45,14 @@ interface SmsChatProps {
     messages?: TicketMessage[];
     isLoading?: boolean;
     isSending?: boolean;
+    isError?: boolean;
     isBottomFocus?: boolean;
     onSendClick: (toAddress: string, text: string) => void;
     onFetchMore?: () => void;
     lastMessageSendTime?: Date;
 }
 
-const SmsChat = ({info, isLoading, isSending, isBottomFocus, messages = [], lastMessageSendTime, ...props}: SmsChatProps) => {
+const SmsChat = ({info, isLoading, isSending, isBottomFocus, messages = [], lastMessageSendTime, isError, ...props}: SmsChatProps) => {
     const dispatch = useDispatch();
     const {t} = useTranslation();
     const [smsDisabledText, setSmsDisabledText] = useState<string>();
@@ -177,7 +178,13 @@ const SmsChat = ({info, isLoading, isSending, isBottomFocus, messages = [], last
         </div>);
     }
 
-
+    const ErrorMessage = () => {
+        return (<div className="flex flex-col flex-1 pl-6 overflow-y-auto">
+            <div className='flex flex-col mt-7'>
+                <h6 className='mb-4'>{t('sms.chat.error')}</h6>
+            </div>
+        </div>);
+    }
 
     const onSend = () => {
         if (!smsText) {
@@ -213,7 +220,7 @@ const SmsChat = ({info, isLoading, isSending, isBottomFocus, messages = [], last
             refetchTicket={refetchTicket}
             info={info} forNewTicketMessagePurpose={false} patientPhoto={patientPhoto} conversationChannel={ChannelTypes.SMS} userFullName={getUserFullName()} />
         {
-             showBodyLoader ? <Spinner fullScreen /> :
+             isError ? <ErrorMessage /> : showBodyLoader ? <Spinner fullScreen /> :
                 <>
                     <div className="flex flex-col flex-1 pl-6 overflow-y-auto">
                         {messages && messages.length > 0 &&

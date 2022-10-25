@@ -173,7 +173,8 @@ const Sms = () => {
         isFetchingNextPage: isMessageQueryFetchingNextPage,
         fetchNextPage: messageNextPage,
         hasNextPage: messageHasNextPage,
-        data: messagePages
+        data: messagePages,
+        isError: messageHasError
     }
         = useInfiniteQuery([QueryTicketMessagesInfinite],
             ({pageParam = 1}) => getMessages(selectedTicketSummary?.ticketId || '', ChannelTypes.SMS, {...DEFAULT_MESSAGE_QUERY_PARAMS, page: pageParam}),
@@ -182,7 +183,8 @@ const Sms = () => {
                 getNextPageParam: (lastPage) => getNextPage(lastPage),
                 onSuccess: (result) => {
                     setMessages(utils.accumulateInfiniteData(result));
-                }
+                },
+                onError: () => {setMessages([])}
             });
 
     const pushMessage = (newMessage: TicketMessage) => {
@@ -258,6 +260,7 @@ const Sms = () => {
 
     useEffect(() => {
         if (selectedTicketSummary) {
+            setMessages([]);
             messageQueryRefetch().then();
         }
     }, [selectedTicketSummary, messageQueryRefetch]);
@@ -418,6 +421,7 @@ const Sms = () => {
                 <SmsChat
                     info={selectedTicketSummary}
                     messages={messages}
+                    isError={messageHasError}
                     isLoading={isMessageQueryFetchingNextPage || isTicketFetching}
                     isSending={sendMessageMutation.isLoading}
                     isBottomFocus={sendMessageMutation.isLoading || !!newMessageId}
