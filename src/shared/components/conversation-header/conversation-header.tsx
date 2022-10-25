@@ -312,7 +312,7 @@ const ConversationHeader = ({ info, forNewTicketMessagePurpose, patientPhoto, co
                     </div>
                 </div>
                 <div className="flex flex-row pt-2.5">
-                    <div className="mr-6">
+                    <div className="mr-6 email-header-content">
                         <span className="body2-medium mr-1.5">{t(`${displayPatientOrContentLabel()}`)}</span>
                         {getPatientOrContactId()}
 
@@ -320,15 +320,15 @@ const ConversationHeader = ({ info, forNewTicketMessagePurpose, patientPhoto, co
                     {
                         !forNewTicketMessagePurpose &&
                         <>
-                            <div className="mr-6">
+                            <div className="mr-6 email-header-content">
                                 <span className="body2-medium mr-1.5">{t('sms.chat.header.ticket_id')}</span>
                                 <Link className='body2-primary hover:underline' to={`${TicketsPath}/${info.ticketNumber}`}>{info.ticketNumber}</Link>
                             </div>
-                            <div className="mr-6">
+                            <div className="mr-6 email-header-content">
                                 <span className="body2-medium mr-1.5">{t('sms.chat.header.ticket_type')}</span>
                                 <span className="body2">{getTicketType()}</span>
                             </div>
-                            <div>
+                            <div className='email-header-content'>
                                 <span className="body2-medium mr-1.5">{t('sms.chat.header.reason')}</span>
                                 <span className="body2">{getTicketReasons()}</span>
                             </div>

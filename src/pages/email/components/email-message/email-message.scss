@@ -1,4 +1,9 @@
-a:link, span.MsoHyperlink{
+.MsoNormal > a:link, span.MsoHyperlink{
+  color: var(--body2-primary-color) !important;
+  text-decoration: inherit !important;
+}
+
+.email-header-content > a:link, span.MsoHyperlink{
   color: var(--body2-primary-color) !important;
   text-decoration: inherit !important;
 }
