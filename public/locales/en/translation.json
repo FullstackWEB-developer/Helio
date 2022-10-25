@@ -904,6 +904,7 @@
       "confirm_reschedule_appointment": "Reschedule Appointment",
       "confirm_schedule_appointment": "Schedule Appointment",
       "reschedule_appointment_error": "Appointment could not be rescheduled.",
+      "schedule_appointment_error": "Appointment could not be scheduled.",
       "no_slots_found": "No open slot found for this range, please select any other date range.",
       "no_day_slots_found": "No open slot found for this day, please select any other date.",
       "appointment_scheduled": "Thank you. Your appointment is scheduled.",

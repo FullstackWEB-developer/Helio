@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import utils from '@shared/utils/utils';
 import {useMutation} from 'react-query';
 import {AxiosError} from 'axios';
 import {getLocations, getProviders} from '@shared/services/lookups.service';
@@ -68,7 +67,9 @@ const AppointmentRescheduleConfirm = () => {
         onError: (error: AxiosError) => {
             const prefix = 'Error Message: ';
             let errMsg = error.response?.data.message;
-            errMsg = errMsg.slice(errMsg.indexOf(prefix) + prefix.length);
+            if (errMsg.indexOf(prefix) > -1) {
+                errMsg = errMsg.slice(errMsg.indexOf(prefix) + prefix.length);
+            }
             setErrorMessage(errMsg);
         }
     });
@@ -132,7 +133,6 @@ const AppointmentRescheduleConfirm = () => {
         </div>}
         <div className='pt-12 flex flex-col xl:flex-row xl:space-x-6 space-x-0 space-y-6 xl:space-y-0'>
             <Button data-testid={'go-back'} onClick={() => history.goBack()} buttonType='secondary-big' label='common.back' />
-
             <Button data-testid={'submit'} onClick={() => confirmAppointment()}
                 buttonType='big'
                 isLoading={rescheduleAppointmentMutation.isLoading}

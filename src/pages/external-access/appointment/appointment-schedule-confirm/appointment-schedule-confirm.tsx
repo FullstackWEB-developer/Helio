@@ -75,7 +75,9 @@ const AppointmentScheduleConfirm = () => {
         onError: (error: AxiosError) => {
             const prefix = t('external_access.prefix_error_message');
             let errMsg = error.response?.data.message;
-            errMsg = errMsg.slice(errMsg.indexOf(prefix) + prefix.length);
+            if (errMsg.indexOf(prefix) > -1) {
+                errMsg = errMsg.slice(errMsg.indexOf(prefix) + prefix.length);
+            }
             setErrorMessage(errMsg);
         }
     });
@@ -137,7 +139,7 @@ const AppointmentScheduleConfirm = () => {
                 </div>
             </div>
             {scheduleAppointmentMutation.isError && <div className='pt-12 text-danger'>
-                {t('external_access.appointments.reschedule_appointment_error')} {errorMessage}
+                {t('external_access.appointments.schedule_appointment_error')} {errorMessage}
             </div>}
             <div className='flex flex-col pt-12 space-x-0 space-y-6 xl:flex-row xl:space-x-6 xl:space-y-0'>
                 <Button data-testid='go-back' onClick={() => history.goBack()} buttonType='secondary-big' label='common.back' />
