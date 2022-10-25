@@ -209,7 +209,7 @@ const Sms = () => {
         {
             enabled: !!newMessageId,
             onSuccess: (result) => {
-                const isTicketSummarySelected = summaryMessages && selectedTicketSummary?.ticketId === result.ticketId;
+                const isTicketSummarySelected = summaryMessages && selectedTicketSummary?.ticketId === result.ticketId && result.channel === ChannelTypes.SMS;
                 if (isTicketSummarySelected && result.createdBy !== id) {
                     pushMessage(result);
                 }
