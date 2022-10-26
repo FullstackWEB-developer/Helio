@@ -159,7 +159,7 @@ const Ccp: React.FC<BoxProps> = ({
             clearInterval(interval);
             isMounted = false;
         };
-    }, [connect.core]);
+    }, [connect.core, user, currentUserStatus]);
 
     useQuery([QueryGetPatientById, botContext?.ticket?.patientId], () => getPatientByIdWithQuery(botContext?.ticket?.patientId!), {
         enabled: !!botContext?.ticket?.patientId && !botContext?.patient,
@@ -552,7 +552,7 @@ const Ccp: React.FC<BoxProps> = ({
         return () => {
             window.removeEventListener('beforeunload', () => beforeUnload());
         }
-    }, [currentUserStatus]);
+    }, [user, currentUserStatus]);
 
     useEffect(() => {
         return initCCP();
