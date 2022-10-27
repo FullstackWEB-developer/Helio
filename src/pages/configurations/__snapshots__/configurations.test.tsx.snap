@@ -1815,7 +1815,7 @@ exports[`Configurations tests renders email-templates correctly 1`] = `
                   class="w-1/6"
                 >
                   <span>
-                    Oct 12, 2022
+                    Oct 21, 2022
                   </span>
                 </div>
                 <div
@@ -1878,7 +1878,7 @@ exports[`Configurations tests renders email-templates correctly 1`] = `
                   class="w-1/6"
                 >
                   <span>
-                    Oct 12, 2022
+                    Oct 21, 2022
                   </span>
                 </div>
                 <div

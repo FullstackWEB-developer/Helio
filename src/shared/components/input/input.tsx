@@ -44,6 +44,7 @@ interface InputProps extends React.HTMLAttributes<HTMLInputElement> {
     maxLength?: number;
     max?: number;
     applyTruncating?: boolean;
+    dataTestId?: string;
 }
 const Input = React.forwardRef<HTMLInputElement, InputProps>(({
     label,
@@ -66,6 +67,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({
     containerClassName,
     onDropdownSuggestionClick,
     onChangeDate,
+    dataTestId,
     ...props
 }: InputProps, ref) => {
     const {t} = useTranslation();
@@ -183,6 +185,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({
         component = <ReactInputDateMask {...props}
             mask={INPUT_DATE_FORMAT}
             type={type}
+            dataTestId={dataTestId}
             showMaskOnFocus={true}
             onFocus={onInputFocus}
             onBlur={onBlur}

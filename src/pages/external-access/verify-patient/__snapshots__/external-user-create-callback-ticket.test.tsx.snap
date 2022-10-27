@@ -1,0 +1,214 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ExternalUserCreateCallbackTicket tests renders ExternalUserCreateCallbackTicket not-verified 1`] = `
+<DocumentFragment>
+  <div
+    class="md:px-12 xl:px-48 without-default-padding pt-4 xl:pt-16"
+  >
+    <div
+      class="md:whitespace-pre md:h-24 my-1 md:pb-10 w-full items-center"
+    >
+      <h4>
+        external_access.could_not_verify_header
+      </h4>
+    </div>
+    <div
+      class="pt-10 xl:pt-2"
+    >
+      external_access.could_not_verify_description_1
+    </div>
+    <div>
+      external_access.could_not_verify_description_2
+    </div>
+    <div
+      class="flex flex-col"
+    >
+      <form>
+        <div
+          class="flex flex-col h-20 input-group"
+        >
+          <div
+            class="input-group-container flex flex-wrap items-stretch w-full relative  w-full md:w-88"
+          >
+            <input
+              autocomplete="off"
+              class=" pt-6 body2 h-14 flex-shrink flex-grow flex-auto leading-normal w-px flex-1 input-date-mask pl-4"
+              data-test-id="firstName"
+              data-testid="firstName"
+              name="firstName"
+              placeholder=""
+              required=""
+              type="text"
+              value=""
+            />
+            <label
+              class="absolute truncate required body2 "
+            >
+              external_access.first_name
+            </label>
+          </div>
+        </div>
+        <div
+          class="flex flex-col h-20 input-group"
+        >
+          <div
+            class="input-group-container flex flex-wrap items-stretch w-full relative  w-full md:w-88"
+          >
+            <input
+              autocomplete="off"
+              class=" pt-6 body2 h-14 flex-shrink flex-grow flex-auto leading-normal w-px flex-1 input-date-mask pl-4"
+              data-test-id="lastName"
+              data-testid="lastName"
+              name="lastName"
+              placeholder=""
+              required=""
+              type="text"
+              value="checked"
+            />
+            <label
+              class="absolute truncate required body3 label-small "
+            >
+              external_access.last_name
+            </label>
+          </div>
+        </div>
+        <div
+          class="date-time-picker w-full flex flex-col h-20 w-full md:w-88 relative"
+        >
+          <div
+            class="date-time-picker-container flex flex-wrap relative error"
+          >
+            <input
+              autocomplete="off"
+              class="relative truncate flex-shrink flex-grow flex-auto leading-normal w-px pl-4 body2 input-pt h-14 activated error"
+              data-testid="dateOfBirth"
+              max="2022-10-26"
+              min="0001-01-01"
+              name="dateOfBirth"
+              type="text"
+              value="15/10/1995"
+            />
+            <label
+              class="absolute truncate"
+            >
+              <span
+                class="label-span body3"
+              >
+                external_access.dob
+              </span>
+              <span
+                class="text-danger"
+              >
+                *
+              </span>
+            </label>
+          </div>
+          <div
+            class="pt-1 pl-4 truncate h6 body3 text-danger"
+          >
+            common.required
+          </div>
+        </div>
+        <div
+          class="flex flex-col h-20 input-group"
+        >
+          <div
+            class="input-group-container flex flex-wrap items-stretch w-full relative  w-full md:w-88"
+          >
+            <input
+              autocomplete="off"
+              class=" pt-6 body2 h-14 flex-shrink flex-grow flex-auto leading-normal w-px flex-1 input-date-mask pl-4"
+              data-test-id="mobileNumber"
+              data-testid="mobileNumber"
+              name="mobileNumber"
+              placeholder=""
+              required=""
+              type="tel"
+              value="(551) 528-3307"
+            />
+            <label
+              class="absolute truncate required body3 label-small "
+            >
+              external_access.mobile
+            </label>
+          </div>
+        </div>
+        <div
+          class="flex flex-col h-20 input-group"
+        >
+          <div
+            class="input-group-container flex flex-wrap items-stretch w-full relative  w-full md:w-88"
+          >
+            <input
+              autocomplete="off"
+              class=" pt-6 body2 h-14 flex-shrink flex-grow flex-auto leading-normal w-px flex-1 input-date-mask pl-4"
+              data-test-id="zip"
+              data-testid="zip"
+              maxlength="5"
+              name="zip"
+              placeholder=""
+              required=""
+              type="zip"
+              value="90002"
+            />
+            <label
+              class="absolute truncate required body3 label-small "
+            >
+              external_access.zip_code
+            </label>
+          </div>
+        </div>
+        <div
+          class="pb-2 pt-6 flex justify-start"
+        >
+          <div>
+            <button
+              class="big-button w-full md:w-auto"
+              data-test-id="mobile-phone-submit-button"
+              data-testid="mobile-phone-submit-button"
+              disabled=""
+              type="submit"
+            >
+              <div
+                class="flex flex-row justify-center items-center space-x-2"
+              >
+                <div>
+                  common.continue
+                </div>
+              </div>
+            </button>
+          </div>
+        </div>
+      </form>
+      <div
+        class="flex flex-row space-x-6 items-center pt-16"
+      >
+        <div
+          class=""
+        >
+          <svg
+            class="icon-x-large "
+            height="48"
+            viewBox="0 0 48 48"
+            width="48"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect
+              fill="none"
+              height="48"
+              width="48"
+            />
+            <path
+              class="rgba-038-fill"
+              d="M38,6H10a3.982,3.982,0,0,0-3.98,4L6,38a4,4,0,0,0,4,4H38a4,4,0,0,0,4-4V10A4,4,0,0,0,38,6ZM36,28H28v8H20V28H12V20h8V12h8v8h8Z"
+            />
+          </svg>
+        </div>
+        <div>
+          external_access.emergency_note
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GetExternalUserHeader tests renders GetExternalUserHeader not-verified 1`] = `
+<DocumentFragment>
+  <div
+    class="md:whitespace-pre md:h-24 my-1 md:pb-10 w-full items-center"
+  >
+    <h4>
+      Test
+    </h4>
+  </div>
+  <div
+    class="pt-10 pb-6 xl:pt-2 xl:pb-10"
+  >
+    Test
+  </div>
+</DocumentFragment>
+`;

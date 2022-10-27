@@ -15,6 +15,7 @@ interface ReactInputDateMaskProps {
     onFocus?: (event: any) => void;
     onBlur?: (event: any) => void;
     type: string;
+    dataTestId?: string;
 }
 const ReactInputDateMask = ({
     onChange,
@@ -25,6 +26,7 @@ const ReactInputDateMask = ({
     className = '',
     disabled = false,
     readOnly = false,
+    dataTestId,
     ...props
 }: ReactInputDateMaskProps) => {
     const [value, setValue] = useState<any>('')
@@ -341,7 +343,7 @@ const ReactInputDateMask = ({
 
     const newState = Object.keys(value)?.length > 0 ? Object.values(value).join('') : value
     return (
-        <input ref={myRef} placeholder={statePlaceholder} type='tel'
+        <input ref={myRef} placeholder={statePlaceholder} type='tel' data-testid={dataTestId}
             onClick={onClick} className={className} spellCheck="false" onInput={onInput} onTouchStart={onTouchStart}
             onFocus={onFocus} value={maskOnFocus ? newState : ''} onKeyDown={onKeyDown}
             autoComplete='off' onPaste={onHandlePaste} onMouseEnter={onHandleMouseEnter}

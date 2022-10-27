@@ -186,6 +186,7 @@ const ControlledInput = ({
                 isLoading={props.isLoading}
                 disabled={props.disabled}
                 data-test-id={dataTestId}
+                dataTestId={dataTestId}
                 onKeyDown={inputKeyDown}
                 onBlur={(e) => onBlur(e, controllerProps)}
                 onChange={(event) => onInputChanged(event, controllerProps)}

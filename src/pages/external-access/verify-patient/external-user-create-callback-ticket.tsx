@@ -149,6 +149,7 @@ const ExternalUserCreateCallbackTicket = () => {
                         onClick={() => history.go(-2)}
                         disabled={retryPrevented}
                         data-test-id='mobile-phone-submit-button'
+                        data-testid='mobile-phone-back-button'
                         buttonType='secondary-big'/>
                             <ResendTimeout message='external_access.go_back_and_retry_in_seconds'
                                        countdownSeconds={calculateSeconds()}
@@ -162,6 +163,7 @@ const ExternalUserCreateCallbackTicket = () => {
                         isLoading={createCallbackTicketMutation.isLoading}
                         disabled={!isDirty || !isValid || ticketSubmitted}
                         data-test-id='mobile-phone-submit-button'
+                        data-testid='mobile-phone-submit-button'
                         buttonType='big'/>
                     }
                     </div>

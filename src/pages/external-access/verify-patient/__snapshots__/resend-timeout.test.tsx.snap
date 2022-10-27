@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ResendTimeout tests renders ResendTimeout verified 1`] = `
+<DocumentFragment>
+  <div
+    class="body2-medium"
+  >
+    Test
+  </div>
+</DocumentFragment>
+`;

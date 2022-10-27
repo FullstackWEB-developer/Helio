@@ -116,6 +116,7 @@ const GetExternalUserMobileNumber = () => {
                                 type='submit'
                                 isLoading={checkPatientVerificationLoading}
                                 data-test-id='mobile-phone-submit-button'
+                                data-testid='mobile-phone-submit-button'
                                 buttonType='big' />
                         </div>
                     </div>

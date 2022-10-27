@@ -1,0 +1,65 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`VerifyRedirectLink tests renders VerifyRedirectLink 404 1`] = `
+<DocumentFragment>
+  <div>
+    redirect_link.is_error
+  </div>
+</DocumentFragment>
+`;
+
+exports[`VerifyRedirectLink tests renders VerifyRedirectLink 409 1`] = `
+<DocumentFragment>
+  <div>
+    redirect_link.is_error
+  </div>
+</DocumentFragment>
+`;
+
+exports[`VerifyRedirectLink tests renders VerifyRedirectLink 500 1`] = `
+<DocumentFragment>
+  <div>
+    redirect_link.is_error
+  </div>
+</DocumentFragment>
+`;
+
+exports[`VerifyRedirectLink tests renders VerifyRedirectLink AppointmentConfirmation 1`] = `
+<DocumentFragment>
+  <div>
+    <span>
+      redirect_link.link_not_active
+    </span>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`VerifyRedirectLink tests renders VerifyRedirectLink DownloadMedicalRecords 1`] = `
+<DocumentFragment>
+  <div>
+    <span>
+      redirect_link.link_not_active
+    </span>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`VerifyRedirectLink tests renders VerifyRedirectLink FeedbackRating 1`] = `
+<DocumentFragment>
+  <div>
+    <span>
+      redirect_link.link_not_active
+    </span>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`VerifyRedirectLink tests renders VerifyRedirectLink RegisterNewPatient 1`] = `
+<DocumentFragment>
+  <div>
+    <span>
+      redirect_link.link_not_active
+    </span>
+  </div>
+</DocumentFragment>
+`;

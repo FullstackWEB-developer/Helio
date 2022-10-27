@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ExternalUserCreateEmergencyNote tests renders ExternalUserCreateEmergencyNote not-verified 1`] = `
+<DocumentFragment>
+  <div
+    class="flex flex-row space-x-6 items-center pt-16"
+  >
+    <div
+      class=""
+    >
+      <svg
+        class="icon-x-large "
+        height="48"
+        viewBox="0 0 48 48"
+        width="48"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <rect
+          fill="none"
+          height="48"
+          width="48"
+        />
+        <path
+          class="rgba-038-fill"
+          d="M38,6H10a3.982,3.982,0,0,0-3.98,4L6,38a4,4,0,0,0,4,4H38a4,4,0,0,0,4-4V10A4,4,0,0,0,38,6ZM36,28H28v8H20V28H12V20h8V12h8v8h8Z"
+        />
+      </svg>
+    </div>
+    <div>
+      external_access.emergency_note
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`ExternalUserCreateEmergencyNote tests renders ExternalUserCreateEmergencyNote verified 1`] = `<DocumentFragment />`;

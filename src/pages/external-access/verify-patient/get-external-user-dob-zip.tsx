@@ -119,7 +119,7 @@ const GetExternalUserDobZip = () => {
                         control={control}
                         name='dob'
                         className='w-full md:w-88'
-                        dataTestId='hipaa-dob' />
+                        data-testid='hipaa-dob' />
                     <ControlledInput
                         type='zip'
                         required={true}
@@ -128,7 +128,8 @@ const GetExternalUserDobZip = () => {
                         className='w-full md:w-88'
                         label={t('external_access.zip_code')}
                         control={control}
-                        name='zip' />
+                        name='zip'
+                        data-testid='zip' />
                 </div>
                 <div className='flex justify-start pb-2'>
                     <div>
@@ -139,6 +140,7 @@ const GetExternalUserDobZip = () => {
                             type='submit'
                             isLoading={checkIfPatientExistsLoading}
                             data-test-id='mobile-phone-submit-button'
+                            data-testid='mobile-phone-submit-button'
                             buttonType='big' />
                     </div>
                 </div>

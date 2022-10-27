@@ -62,6 +62,7 @@ const GetExternalUserSelectChannel = () => {
                         object={VerificationType.Sms}
                         label={'external_access.send_verification_via_mobile'}
                         name={'verificationChannel'}
+                        data-testid={'verificationChannel'}
                         defaultChecked={true}
                         checked={selectedChannel === VerificationType.Sms}
                         className='flex flex-row space-x-8'
@@ -78,6 +79,7 @@ const GetExternalUserSelectChannel = () => {
                         object={VerificationType.Email}
                         label='external_access.send_verification_via_email'
                         name={'verificationChannel'}
+                        data-testid={'verificationChannelEmail'}
                         checked={selectedChannel === VerificationType.Email}
                         className='flex flex-row space-x-8'
                         onChange={(value, obj: VerificationType) => onChannelSelect(obj)}
@@ -95,6 +97,7 @@ const GetExternalUserSelectChannel = () => {
                         type='submit'
                         onClick={() => channelSelected(selectedChannel)}
                         data-test-id='select-channel-submit-button'
+                        data-testid='select-channel-submit-button'
                         buttonType='big' />
                 </div>
             </div>
