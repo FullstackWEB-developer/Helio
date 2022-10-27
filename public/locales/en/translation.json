@@ -2236,7 +2236,7 @@
     },
     "patient_chart_tabs": {
       "title": "Patient Chart Tab Visibility",
-      "description": "You can enable / disable to display patient tabs in this page. Please select tabs you want to display below.",
+      "description": "Select which tabs users will see on patient's charts.",
       "insurance": "Insurance",
       "appointments": "Appointments",
       "patient_cases": "Patient Cases",
