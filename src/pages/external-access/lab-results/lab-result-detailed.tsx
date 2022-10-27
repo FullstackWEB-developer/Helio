@@ -19,6 +19,7 @@ import LabResultsSection from './components/lab-results-section';
 import {LabResultDetailPage} from './models/lab-result-detail-page.model';
 import LabResultDetailPageImage from './components/lab-result-detail-page-image';
 import Spinner from '@components/spinner/Spinner';
+import { isMobile } from 'react-device-detect';
 
 const LabResultDetailed = () => {
     const verifiedPatient = useSelector(selectVerifiedPatent);
@@ -56,15 +57,18 @@ const LabResultDetailed = () => {
                         </div>
                     }
                 </div>
-                <div className="px-4 observations-grid caption-caps head-row">
-                    <div className='truncate'>{t('external_access.lab_results.analytes')}</div>
-                    <div className='truncate'>{t('external_access.lab_results.value')}</div>
-                    <div className='truncate'>{t('external_access.lab_results.ref_range')}</div>
-                    <div className='truncate'>{t('external_access.lab_results.units')}</div>
-                </div>
+                {   !isMobile &&
+                    <>
+                        <div className="px-4 observations-grid caption-caps head-row">
+                            <div className='truncate'>{t('external_access.lab_results.analytes')}</div>
+                            <div className='truncate'>{t('external_access.lab_results.value')}</div>
+                            <div className='truncate'>{t('external_access.lab_results.ref_range')}</div>
+                            <div className='truncate'>{t('external_access.lab_results.units')}</div>
+                        </div>
+                    </>
+                }
                 {
-                    data.observations && data.observations.length > 0 ? data.observations.map(observation => <LabResultObservationItem observation={observation}
-                        key={observation.observationIdentifier} />)
+                    data.observations && data.observations.length > 0 ? data.observations.map((observation, index) => <LabResultObservationItem isMobile={isMobile} index={index + 1} totalCount={2} observation={observation} key={observation.observationIdentifier} />)
                         : <div className='pt-4 text-center subtitle3'>{t('external_access.lab_results.no_observations')}</div>
                 }
                 <div className='mt-8' />
@@ -74,7 +78,7 @@ const LabResultDetailed = () => {
                 }
                 <div className="mt-8" />
                 <LabResultsSection title={t('external_access.lab_results.test_information')}>
-                    <div className='grid grid-cols-2 gap-x-8 body2'>
+                    <div className={`grid gap-x-8 body2 ${isMobile ? 'grid-cols-1' : 'grid-cols-2'}`}>
                         <div>
                             <span className='lab-results-grayed-label'>
                                 {t('external_access.lab_results.patient_name')}
