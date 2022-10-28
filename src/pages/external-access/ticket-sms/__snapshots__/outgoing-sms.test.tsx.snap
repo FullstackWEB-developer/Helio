@@ -1,0 +1,153 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`OutgoingSms tests renders OutgoingSms correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="flex flex-row space-x-2"
+  >
+    <div
+      class="pt-7 pl-4"
+    >
+      <div
+        class="avatar rounded-full flex items-center justify-center relative w-10 h-10"
+      >
+        <img
+          alt="user"
+          class="w-full h-full rounded-full"
+          src="string"
+        />
+      </div>
+    </div>
+    <div
+      class="flex flex-col w-60"
+    >
+      <div
+        class="flex flex-row pb-1 items-center pl-2"
+      >
+        <div
+          class="body2 pr-4"
+        >
+          external_access.ticket_sms.helio_name
+        </div>
+        <div
+          class="body3-small"
+        >
+          12:00 AM
+        </div>
+      </div>
+      <div
+        class="outgoing_sms pl-4 pr-2 pt-3 pb-4 rounded-b-md rounded-tr-md body2-white break-words"
+      >
+        string 
+        <a
+          href="https://google.com"
+          target="blank"
+        >
+          <span
+            class="break-all"
+          >
+            https://google.com
+          </span>
+        </a>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`OutgoingSms tests renders OutgoingSms correctly without username 1`] = `
+<DocumentFragment>
+  <div
+    class="flex flex-row space-x-2"
+  >
+    <div
+      class="pt-7 pl-4"
+    >
+      <div
+        class="avatar rounded-full flex items-center justify-center relative w-10 h-10"
+      >
+        <img
+          alt="user"
+          class="w-full h-full rounded-full"
+          src="string"
+        />
+      </div>
+    </div>
+    <div
+      class="flex flex-col w-60"
+    >
+      <div
+        class="flex flex-row pb-1 items-center pl-2"
+      >
+        <div
+          class="body2 pr-4"
+        >
+          external_access.ticket_sms.helio_name
+        </div>
+        <div
+          class="body3-small"
+        >
+          12:00 AM
+        </div>
+      </div>
+      <div
+        class="outgoing_sms pl-4 pr-2 pt-3 pb-4 rounded-b-md rounded-tr-md body2-white break-words"
+      >
+        string 
+        <a
+          href="https://google.com"
+          target="blank"
+        >
+          <span
+            class="break-all"
+          >
+            https://google.com
+          </span>
+        </a>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`OutgoingSms tests renders OutgoingSms without users 1`] = `
+<DocumentFragment>
+  <div
+    class="flex flex-row space-x-2"
+  >
+    <div
+      class="flex flex-col w-60"
+    >
+      <div
+        class="flex flex-row pb-1 items-center pl-2"
+      >
+        <div
+          class="body2 pr-4"
+        >
+          external_access.ticket_sms.helio_only
+        </div>
+        <div
+          class="body3-small"
+        >
+          12:00 AM
+        </div>
+      </div>
+      <div
+        class="outgoing_sms pl-4 pr-2 pt-3 pb-4 rounded-b-md rounded-tr-md body2-white break-words"
+      >
+        string 
+        <a
+          href="https://google.com"
+          target="blank"
+        >
+          <span
+            class="break-all"
+          >
+            https://google.com
+          </span>
+        </a>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

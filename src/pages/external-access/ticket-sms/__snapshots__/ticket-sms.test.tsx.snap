@@ -1,0 +1,79 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TicketSms tests renders TicketSms correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="flex flex-col"
+  >
+    <div
+      class="h7 border-b w-ful flex items-center justify-center h-14 flex-none"
+    >
+      external_access.ticket_sms.conversation_history
+    </div>
+    <div
+      class="overflow-y-auto space-y-4 message_wrapper flex-grow pb-6"
+    >
+      <div
+        class="pt-4 body2-medium flex justify-center"
+      >
+        external_access.ticket_sms.no_messages
+      </div>
+      <div />
+    </div>
+    <div
+      class="border-t flex flex-none fixed left-0 bottom-0 w-full"
+    >
+      <div
+        class="flex flex-row justify-between"
+      >
+        <label
+          class="block subtitle2 pb-2"
+        />
+      </div>
+      <div
+        class="w-full h-full"
+      >
+        <div
+          class="undefined relative bg-white flex flex-row w-full h-full items-center p-4 border-b"
+        >
+          <textarea
+            class="shadow-none body2 w-full overflow-y-hidden resize-none mt-1 pr-14"
+            icon="Send"
+            placeholder="external_access.ticket_sms.type"
+            required=""
+            rows="1"
+            style="height: 0px;"
+            wrap="hard"
+          />
+          <div
+            class="absolute right-8   bottom-4 cursor-pointer"
+          >
+            <div
+              class=""
+            >
+              <svg
+                class="icon-medium "
+                data-testid="svg-icon"
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="rgba-06-fill"
+                  d="M23.883.117a.4.4,0,0,0-.419-.093l-23.2,8.4a.4.4,0,0,0-.037.737l8.354,4.01,7.546-5.578a.2.2,0,0,1,.28.28L10.83,15.419l4.01,8.354A.4.4,0,0,0,15.2,24h.02a.4.4,0,0,0,.356-.263l8.4-23.2A.4.4,0,0,0,23.883.117Z"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

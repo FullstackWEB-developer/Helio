@@ -1,0 +1,127 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`IncomingSms tests renders IncomingSms correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="flex"
+  >
+    <div
+      class="flex flex-col w-60 px-4"
+    >
+      <div
+        class="flex flex-row items-center w-full justify-end px-4"
+      >
+        <div
+          class="body2 pr-1"
+        >
+          external_access.ticket_sms.me
+        </div>
+        <div
+          class="body3-small"
+        >
+          12:00 AM
+        </div>
+      </div>
+      <div
+        class="incoming_sms pl-4 pr-4 pt-3 pb-4 body2 rounded-b-md rounded-tl-md break-words"
+      >
+        string 
+        <a
+          href="https://google.com"
+          target="blank"
+        >
+          <span
+            class="break-all"
+          >
+            https://google.com
+          </span>
+        </a>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`IncomingSms tests renders IncomingSms correctly without username 1`] = `
+<DocumentFragment>
+  <div
+    class="flex"
+  >
+    <div
+      class="flex flex-col w-60 px-4"
+    >
+      <div
+        class="flex flex-row items-center w-full justify-end px-4"
+      >
+        <div
+          class="body2 pr-1"
+        >
+          external_access.ticket_sms.me
+        </div>
+        <div
+          class="body3-small"
+        >
+          12:00 AM
+        </div>
+      </div>
+      <div
+        class="incoming_sms pl-4 pr-4 pt-3 pb-4 body2 rounded-b-md rounded-tl-md break-words"
+      >
+        string 
+        <a
+          href="https://google.com"
+          target="blank"
+        >
+          <span
+            class="break-all"
+          >
+            https://google.com
+          </span>
+        </a>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`IncomingSms tests renders IncomingSms without users 1`] = `
+<DocumentFragment>
+  <div
+    class="flex"
+  >
+    <div
+      class="flex flex-col w-60 px-4"
+    >
+      <div
+        class="flex flex-row items-center w-full justify-end px-4"
+      >
+        <div
+          class="body2 pr-1"
+        >
+          external_access.ticket_sms.me
+        </div>
+        <div
+          class="body3-small"
+        >
+          12:00 AM
+        </div>
+      </div>
+      <div
+        class="incoming_sms pl-4 pr-4 pt-3 pb-4 body2 rounded-b-md rounded-tl-md break-words"
+      >
+        string 
+        <a
+          href="https://google.com"
+          target="blank"
+        >
+          <span
+            class="break-all"
+          >
+            https://google.com
+          </span>
+        </a>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
