@@ -1,0 +1,132 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RequestMedicalRecordDateSelection tests renders RequestMedicalRecordDateSelection correctly 1`] = `
+<DocumentFragment>
+  <form>
+    <div
+      class="flex flex-col bg-white w-80 px-4 pt-4"
+    >
+      <div
+        class="date-time-picker w-full flex flex-col h-20 relative"
+      >
+        <div
+          class="date-time-picker-container flex flex-wrap relative"
+        >
+          <input
+            autocomplete="off"
+            class="relative truncate flex-shrink flex-grow flex-auto leading-normal w-px pl-4 body2 input-pt h-14 activated cursor-pointer"
+            data-testid="startDate"
+            max="2022-10-27"
+            min="0001-01-01"
+            name="startDate"
+            readonly=""
+            type="text"
+            value="Tue, Sep 27 2022"
+          />
+          <label
+            class="absolute truncate"
+          >
+            <span
+              class="label-span body3"
+            >
+              external_access.medical_records_request.start_date
+            </span>
+            <span
+              class="text-danger"
+            >
+              *
+            </span>
+          </label>
+          <div
+            class="input-addon px-3 pt-4"
+            role="button"
+          >
+            <div
+              class=""
+            >
+              <svg
+                class="icon-medium "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="date-time-picker-arrow"
+                  d="M7,14l1.273-1.273L2.545,7,8.273,1.273,7,0,0,7Z"
+                  transform="translate(5 16.273) rotate(-90)"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="date-time-picker w-full flex flex-col h-20 relative"
+      >
+        <div
+          class="date-time-picker-container flex flex-wrap relative"
+        >
+          <input
+            autocomplete="off"
+            class="relative truncate flex-shrink flex-grow flex-auto leading-normal w-px pl-4 body2 input-pt h-14 activated cursor-pointer"
+            data-testid="endDate"
+            max="2022-10-27"
+            min="2022-09-27"
+            name="endDate"
+            readonly=""
+            type="text"
+            value="Thu, Oct 27 2022"
+          />
+          <label
+            class="absolute truncate"
+          >
+            <span
+              class="label-span body3"
+            >
+              external_access.medical_records_request.end_date
+            </span>
+            <span
+              class="text-danger"
+            >
+              *
+            </span>
+          </label>
+          <div
+            class="input-addon px-3 pt-4"
+            role="button"
+          >
+            <div
+              class=""
+            >
+              <svg
+                class="icon-medium "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="date-time-picker-arrow"
+                  d="M7,14l1.273-1.273L2.545,7,8.273,1.273,7,0,0,7Z"
+                  transform="translate(5 16.273) rotate(-90)"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</DocumentFragment>
+`;
