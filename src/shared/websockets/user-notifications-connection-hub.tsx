@@ -57,7 +57,6 @@ const UserNotificationsConnectionHub = () => {
             dispatch(addSnackbarMessage({
                 message: message,
                 type: SnackbarType.Error,
-                autoClose: false,
                 icon: data.channel === 'CHAT' ? Icon.Chat : Icon.Phone,
                 iconFill: data.channel === 'CHAT' ? 'info-icon' : 'success-icon',
                 supportRichText: true
