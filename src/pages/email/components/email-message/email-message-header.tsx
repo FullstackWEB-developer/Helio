@@ -71,8 +71,7 @@ const EmailMessageHeader = ({messageId, subject, date, from, fromPhoto, collapse
         return [{
             label: 'email.inbox.split_ticket',
             value: MORE_MENU_OPTION_SPLIT_TICKET,
-            className: commonClassName,
-            disabled: !displaySplitMessageMenu
+            className: commonClassName
         }] as DropdownItemModel[];
     }
 
@@ -134,7 +133,7 @@ const EmailMessageHeader = ({messageId, subject, date, from, fromPhoto, collapse
                 }
                 <div className="mb-auto body3-medium">{parsedDate}</div>
                 <div className="px-7">
-                    <MoreMenu
+                    {displaySplitMessageMenu && <MoreMenu
                         data-testid={"more-menu-icon"}
                         iconClassName='default-toolbar-icon'
                         iconFillClassname='cursor-pointer icon-medium'
@@ -143,7 +142,7 @@ const EmailMessageHeader = ({messageId, subject, date, from, fromPhoto, collapse
                         onClick={onMoreMenuClick}
                         menuPlacement='bottom-start'
                         verticalOffset={8}
-                    />
+                    />}
                 </div>
                 <div data-testid={"collapse-handler"} className='flex justify-center items-center rounded-full h-10 w-10 leading-10 collapsible-button cursor-pointer' onClick={() => collapseHandler()}>
                     <SvgIcon type={collapsedBody ? Icon.ArrowDown : Icon.ArrowUp} fillClass='collapsible-arrow-icon' />
