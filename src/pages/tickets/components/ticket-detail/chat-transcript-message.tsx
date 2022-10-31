@@ -68,11 +68,11 @@ const ChatTranscriptMessage = ({message, previousMessageDisplayName= '', previou
         }
     }
 
-    return  <div className='grid grid-cols-8 gap-2'>
-        <div className='body2-medium'>
-            {`(${dayjs(message.AbsoluteTime).local().format('HH:mm:ss')})`}
+    return  <div className='flex flex-row'>
+        <div className='chat-transcript-modal-time body2-medium mr-2'>
+            {`(${dayjs(message.AbsoluteTime).local().format('hh:mm:ss A')})`}
         </div>
-        <span className='col-span-7 pl-5 pr-1'>
+        <span className='chat-transcript-modal-text pl-3 pr-1'>
             {showDisplayName() && <span className='subtitle2'>
                 {`${message.DisplayName}:`}
             </span>}
