@@ -2,7 +2,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {selectVerifiedPatent} from '../../patients/store/patients.selectors';
 import Button from '../../../shared/components/button/button';
 import withErrorLogging from '../../../shared/HOC/with-error-logging';
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import Radio from '@components/radio/radio';
 import {Option} from '@components/option/option';
@@ -13,7 +13,8 @@ import Tab from '@components/tab/Tab';
 import ControlledInput from '@components/controllers/ControlledInput';
 import {Controller, useForm} from 'react-hook-form';
 import {
-    checkMedicalRecordJobStatus, downloadMedicalRecords,
+    checkMedicalRecordJobStatus,
+    downloadMedicalRecords,
     DownloadMedicalRecordsProps,
     prepareAndDownloadMedicalRecords
 } from '@pages/patients/services/patients.service';
@@ -30,7 +31,8 @@ import {selectRedirectLink} from '@pages/external-access/verify-patient/store/ve
 import Confirmation from '@components/confirmation/confirmation';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import {useHistory} from 'react-router-dom';
-import { RequestMedicalRecordsSuccessPath } from '@app/paths';
+import {RequestMedicalRecordsSuccessPath} from '@app/paths';
+
 const RequestMedicalRecords = () => {
     enum DateOptions {
         AllTime = 1,
@@ -46,8 +48,8 @@ const RequestMedicalRecords = () => {
     dayjs.extend(customParseFormat);
     const patient = useSelector(selectVerifiedPatent);
     const [selectedDateOption, setSelectedDateOption] = useState<DateOptions>(DateOptions.AllTime);
-    const [selectedStartDate, setSelectedStartDate] = useState<Date>(dayjs().add(-1, 'month').toDate());
-    const [selectedEndDate, setSelectedEndDate] = useState<Date>(new Date());
+    const [selectedStartDate, setSelectedStartDate] = useState<Date | undefined>(dayjs().add(-1, 'month').toDate());
+    const [selectedEndDate, setSelectedEndDate] = useState<Date | undefined>(new Date());
     const [requestType, setRequestType] = useState<RequestType>();
     const [request, setRequest] = useState<DownloadMedicalRecordsProps>();
     const [jobInformation, setJobInformation] = useState<AsyncJobInfo>();
@@ -78,13 +80,26 @@ const RequestMedicalRecords = () => {
         }
     ]
 
-    const datesSelected = (fieldName: string, date: Date) => {
+    const datesSelected = (fieldName: string, date?: Date) => {
         if (fieldName === 'startDate') {
             setSelectedStartDate(date);
         } else if (fieldName === 'endDate') {
             setSelectedEndDate(date);
         }
     }
+
+    const isValidDate = useMemo(() => {
+        if (selectedDateOption !== DateOptions.DateRange) {
+            return true;
+        }
+        if (!selectedStartDate || !selectedEndDate) {
+            return false;
+        }
+
+        return selectedStartDate <= selectedEndDate;
+
+
+    }, [selectedEndDate, selectedStartDate, selectedDateOption]);
 
     const shouldCheckStatus= () => {
         return jobInformation !== undefined &&
@@ -107,9 +122,8 @@ const RequestMedicalRecords = () => {
                             downloadMedicalRecordsMutation.mutate({linkId: downloadRequestId});
                             break;
                         case RequestType.Share:
-                            const pathName = RequestMedicalRecordsSuccessPath;
                             history.push({
-                                pathname: pathName,
+                                pathname: RequestMedicalRecordsSuccessPath,
                                 state: {
                                     emailAddress: request?.emailAddress
                                 }
@@ -163,8 +177,8 @@ const RequestMedicalRecords = () => {
         if (selectedDateOption === DateOptions.DateRange) {
             request = {
                 ...request,
-                startDate: selectedStartDate,
-                endDate: selectedEndDate,
+                startDate: dayjs(selectedStartDate).format('YYYY-MM-DD'),
+                endDate: dayjs(selectedEndDate).format('YYYY-MM-DD'),
             }
         }
         startPreparationMutation.mutate(request,
@@ -251,12 +265,12 @@ const RequestMedicalRecords = () => {
                         </div>
                         <div className='flex flex-row pt-6 space-x-6'>
                             <Button buttonType='secondary-big'
-                                    disabled={isLoading}
+                                    disabled={!isValidDate || isLoading}
                                     isLoading={isLoading && requestType === RequestType.Preview}
                                     label='external_access.medical_records_request.preview_button_title'
                                     onClick={(e) => startRequest(e, RequestType.Preview)}/>
                             <Button label='external_access.medical_records_request.download_button_title'
-                                    disabled={isLoading}
+                                    disabled={!isValidDate || isLoading}
                                     isLoading={isLoading && requestType === RequestType.Download}
                                     buttonType='big'
                                     onClick={(e) => startRequest(e, RequestType.Download)}/>
@@ -318,10 +332,9 @@ const RequestMedicalRecords = () => {
                                     buttonType='big'
                                     onClick={(e) => startRequest(e, RequestType.Share)}
                                     isLoading={isLoading && requestType === RequestType.Share}
-                                    disabled={!isDirty || email !== emailConfirm || isLoading || !isValid}
+                                    disabled={!isValidDate || !isDirty || email !== emailConfirm || isLoading || !isValid}
                                     label={t('external_access.medical_records_request.share_button_title')}
                                     type='submit'/>
-
                                 </div>
                             </form>
                     </div>

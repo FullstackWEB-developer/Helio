@@ -97,8 +97,8 @@ export interface DownloadMedicalRecordsProps {
      downloadLink: string;
      emailAddress?: string;
      isDownload: boolean;
-     startDate?: Date;
-     endDate?: Date;
+     startDate?: string;
+     endDate?: string;
      asHtml: boolean;
      note?: string;
 }
