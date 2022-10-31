@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ExternalEmail tests renders ExternalEmail correctly sms 1`] = `
+<DocumentFragment>
+  <div
+    class="h-full w-full"
+  >
+    <div
+      class="flex flex-col space-y-4 items-center h-full w-full justify-center undefined"
+    >
+      <div>
+        <div
+          class=""
+        >
+          <svg
+            class="spinner icon-large-40 "
+            viewBox="0 0 40 40"
+          >
+            <circle
+              class="path"
+              cx="20"
+              cy="20"
+              fill="none"
+              r="16"
+              stroke-width="4"
+            />
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

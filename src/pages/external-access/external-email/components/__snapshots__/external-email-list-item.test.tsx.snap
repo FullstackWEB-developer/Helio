@@ -1,0 +1,477 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ExternalEmailListItem tests renders ExternalEmailListItem Incoming correctly sms 1`] = `
+<DocumentFragment>
+  <div
+    class="flex flex-row items-center border-b space-x-4 external-email-list-item cursor-pointer"
+  >
+    <div>
+      <div
+        class="avatar rounded-full flex items-center justify-center relative w-10 h-10"
+      >
+        <div
+          class="avatar-initial"
+        >
+          S
+        </div>
+      </div>
+    </div>
+    <div
+      class="flex flex-col w-full"
+    >
+      <div
+        class="flex flex-row justify-between items-center w-full"
+      >
+        <div
+          class="subtitle2"
+        >
+          <span
+            class=""
+          >
+            string
+          </span>
+        </div>
+        <div
+          class="flex flex-row"
+        >
+          <div
+            class="mr-2"
+          >
+            <div
+              class=""
+            >
+              <svg
+                class="rgba-06-fill"
+                height="16"
+                viewBox="0 0 16 16"
+                width="16"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g
+                  transform="translate(-2 -2)"
+                >
+                  <rect
+                    fill="none"
+                    height="16"
+                    transform="translate(2 2)"
+                    width="16"
+                  />
+                  <path
+                    d="M18,8.893,10,2,2,8.893l8,5.6ZM8.766,8.059V4.286h2.467V8.062h1.347L10,10.9,7.419,8.062H8.766Z"
+                  />
+                  <path
+                    d="M50.436,39.018a.971.971,0,0,0,.1-.423V31.15L45.85,34.433Z"
+                    transform="translate(-32.534 -21.627)"
+                  />
+                  <path
+                    d="M11.217,47.051,8.332,45.03,3.64,49.719a1.025,1.025,0,0,0,.609.206H18.185a1.008,1.008,0,0,0,.609-.206L14.1,45.03Z"
+                    transform="translate(-1.217 -31.925)"
+                  />
+                  <path
+                    d="M2,31.15V38.6a.971.971,0,0,0,.1.423L6.686,34.43Z"
+                    transform="translate(0 -21.627)"
+                  />
+                </g>
+              </svg>
+            </div>
+          </div>
+          <div>
+            <div
+              class=""
+            >
+              <svg
+                class="icon-small "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="rgba-06-fill"
+                  d="M2,12.5A5.5,5.5,0,0,1,7.5,7H18a4,4,0,0,1,0,8H9.5a2.5,2.5,0,0,1,0-5H17v2H9.41c-.55,0-.55,1,0,1H18a2,2,0,0,0,0-4H7.5a3.5,3.5,0,0,0,0,7H17v2H7.5A5.5,5.5,0,0,1,2,12.5Z"
+                />
+              </svg>
+            </div>
+          </div>
+          <div
+            class="body3-medium flex items-center w-16 justify-end"
+          >
+            Oct 10
+          </div>
+        </div>
+      </div>
+      <div
+        class="body2 w-60 md:w-96 xl:w-full break-words"
+      >
+        string
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`ExternalEmailListItem tests renders ExternalEmailListItem Incoming with patient photo correctly sms 1`] = `
+<DocumentFragment>
+  <div
+    class="flex flex-row items-center border-b space-x-4 external-email-list-item cursor-pointer"
+  >
+    <div>
+      <img
+        alt="patient.summary.profile_pic_alt_text"
+        class="w-10 h-10 rounded-full"
+        src="data:image/jpeg;base64,Test"
+      />
+    </div>
+    <div
+      class="flex flex-col w-full"
+    >
+      <div
+        class="flex flex-row justify-between items-center w-full"
+      >
+        <div
+          class="subtitle2"
+        >
+          <span
+            class=""
+          >
+            string
+          </span>
+        </div>
+        <div
+          class="flex flex-row"
+        >
+          <div
+            class="mr-2"
+          >
+            <div
+              class=""
+            >
+              <svg
+                class="rgba-06-fill"
+                height="16"
+                viewBox="0 0 16 16"
+                width="16"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g
+                  transform="translate(-2 -2)"
+                >
+                  <rect
+                    fill="none"
+                    height="16"
+                    transform="translate(2 2)"
+                    width="16"
+                  />
+                  <path
+                    d="M18,8.893,10,2,2,8.893l8,5.6ZM8.766,8.059V4.286h2.467V8.062h1.347L10,10.9,7.419,8.062H8.766Z"
+                  />
+                  <path
+                    d="M50.436,39.018a.971.971,0,0,0,.1-.423V31.15L45.85,34.433Z"
+                    transform="translate(-32.534 -21.627)"
+                  />
+                  <path
+                    d="M11.217,47.051,8.332,45.03,3.64,49.719a1.025,1.025,0,0,0,.609.206H18.185a1.008,1.008,0,0,0,.609-.206L14.1,45.03Z"
+                    transform="translate(-1.217 -31.925)"
+                  />
+                  <path
+                    d="M2,31.15V38.6a.971.971,0,0,0,.1.423L6.686,34.43Z"
+                    transform="translate(0 -21.627)"
+                  />
+                </g>
+              </svg>
+            </div>
+          </div>
+          <div>
+            <div
+              class=""
+            >
+              <svg
+                class="icon-small "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="rgba-06-fill"
+                  d="M2,12.5A5.5,5.5,0,0,1,7.5,7H18a4,4,0,0,1,0,8H9.5a2.5,2.5,0,0,1,0-5H17v2H9.41c-.55,0-.55,1,0,1H18a2,2,0,0,0,0-4H7.5a3.5,3.5,0,0,0,0,7H17v2H7.5A5.5,5.5,0,0,1,2,12.5Z"
+                />
+              </svg>
+            </div>
+          </div>
+          <div
+            class="body3-medium flex items-center w-16 justify-end"
+          >
+            Oct 10
+          </div>
+        </div>
+      </div>
+      <div
+        class="body2 w-60 md:w-96 xl:w-full break-words"
+      >
+        string
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`ExternalEmailListItem tests renders ExternalEmailListItem Outgoing correctly sms 1`] = `
+<DocumentFragment>
+  <div
+    class="flex flex-row items-center border-b space-x-4 external-email-list-item cursor-pointer"
+  >
+    <div>
+      <div
+        class="avatar rounded-full flex items-center justify-center relative w-10 h-10"
+      >
+        <div
+          class="avatar-initial"
+        >
+          S
+        </div>
+        <div
+          class="absolute bottom-0 right-0"
+        >
+          <svg
+            fill="none"
+            height="14"
+            viewBox="0 0 16 16"
+            width="14"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <g
+              class="fill-blue"
+              data-name="Status indicator with border"
+              stroke="#fff"
+              stroke-width="2"
+            >
+              <circle
+                cx="8"
+                cy="8"
+                r="8"
+                stroke="none"
+              />
+              <circle
+                cx="8"
+                cy="8"
+                fill="none"
+                r="7"
+              />
+            </g>
+          </svg>
+        </div>
+      </div>
+    </div>
+    <div
+      class="flex flex-col w-full"
+    >
+      <div
+        class="flex flex-row justify-between items-center w-full"
+      >
+        <div
+          class="subtitle2"
+        >
+          <span
+            class="font-black"
+          >
+            string
+          </span>
+        </div>
+        <div
+          class="flex flex-row"
+        >
+          <div
+            class="mr-2"
+          >
+            <div
+              class=""
+            >
+              <svg
+                class="rgba-06-fill"
+                height="16"
+                viewBox="0 0 16 16"
+                width="16"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g
+                  transform="translate(-960 -728)"
+                >
+                  <rect
+                    fill="none"
+                    height="16"
+                    transform="translate(960 728)"
+                    width="16"
+                  />
+                  <path
+                    d="M9.222,8.556V5L3,11.222l6.222,6.222V13.8c4.444,0,7.556,1.422,9.778,4.533C18.111,13.889,15.444,9.444,9.222,8.556Z"
+                    transform="translate(957 724)"
+                  />
+                </g>
+              </svg>
+            </div>
+          </div>
+          <div>
+            <div
+              class=""
+            >
+              <svg
+                class="icon-small "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="rgba-06-fill"
+                  d="M2,12.5A5.5,5.5,0,0,1,7.5,7H18a4,4,0,0,1,0,8H9.5a2.5,2.5,0,0,1,0-5H17v2H9.41c-.55,0-.55,1,0,1H18a2,2,0,0,0,0-4H7.5a3.5,3.5,0,0,0,0,7H17v2H7.5A5.5,5.5,0,0,1,2,12.5Z"
+                />
+              </svg>
+            </div>
+          </div>
+          <div
+            class="body3-medium flex items-center w-16 justify-end"
+          >
+            Oct 10
+          </div>
+        </div>
+      </div>
+      <div
+        class="body2 w-60 md:w-96 xl:w-full break-words"
+      >
+        string
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`ExternalEmailListItem tests renders ExternalEmailListItem neither incoming nor outgoin 1`] = `
+<DocumentFragment>
+  <div
+    class="flex flex-row items-center border-b space-x-4 external-email-list-item cursor-pointer"
+  >
+    <div>
+      <div
+        class="avatar rounded-full flex items-center justify-center relative w-10 h-10"
+      >
+        <div
+          class="avatar-initial"
+        >
+          #
+        </div>
+      </div>
+    </div>
+    <div
+      class="flex flex-col w-full"
+    >
+      <div
+        class="flex flex-row justify-between items-center w-full"
+      >
+        <div
+          class="subtitle2"
+        >
+          <span
+            class=""
+          >
+            string
+          </span>
+        </div>
+        <div
+          class="flex flex-row"
+        >
+          <div
+            class="mr-2"
+          >
+            <div
+              class=""
+            >
+              <svg
+                class="rgba-06-fill"
+                height="16"
+                viewBox="0 0 16 16"
+                width="16"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g
+                  transform="translate(-2 -2)"
+                >
+                  <rect
+                    fill="none"
+                    height="16"
+                    transform="translate(2 2)"
+                    width="16"
+                  />
+                  <path
+                    d="M18,8.893,10,2,2,8.893l8,5.6ZM8.766,8.059V4.286h2.467V8.062h1.347L10,10.9,7.419,8.062H8.766Z"
+                  />
+                  <path
+                    d="M50.436,39.018a.971.971,0,0,0,.1-.423V31.15L45.85,34.433Z"
+                    transform="translate(-32.534 -21.627)"
+                  />
+                  <path
+                    d="M11.217,47.051,8.332,45.03,3.64,49.719a1.025,1.025,0,0,0,.609.206H18.185a1.008,1.008,0,0,0,.609-.206L14.1,45.03Z"
+                    transform="translate(-1.217 -31.925)"
+                  />
+                  <path
+                    d="M2,31.15V38.6a.971.971,0,0,0,.1.423L6.686,34.43Z"
+                    transform="translate(0 -21.627)"
+                  />
+                </g>
+              </svg>
+            </div>
+          </div>
+          <div>
+            <div
+              class=""
+            >
+              <svg
+                class="icon-small "
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  fill="none"
+                  height="24"
+                  width="24"
+                />
+                <path
+                  class="rgba-06-fill"
+                  d="M2,12.5A5.5,5.5,0,0,1,7.5,7H18a4,4,0,0,1,0,8H9.5a2.5,2.5,0,0,1,0-5H17v2H9.41c-.55,0-.55,1,0,1H18a2,2,0,0,0,0-4H7.5a3.5,3.5,0,0,0,0,7H17v2H7.5A5.5,5.5,0,0,1,2,12.5Z"
+                />
+              </svg>
+            </div>
+          </div>
+          <div
+            class="body3-medium flex items-center w-16 justify-end"
+          >
+            Oct 10
+          </div>
+        </div>
+      </div>
+      <div
+        class="body2 w-60 md:w-96 xl:w-full break-words"
+      >
+        string
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
