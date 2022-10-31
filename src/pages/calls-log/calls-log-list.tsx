@@ -215,7 +215,7 @@ const CallsLogList = () => {
             {
                 title: 'ticket_log.duration',
                 field: 'agentInteractionDuration',
-                widthClass: 'w-1/12',
+                widthClass: 'w-1/12 mr-2',
                 render: (field: number) => {
                     return (
                         <span className='body2'>{utils.formatTime(field)}</span>
@@ -225,7 +225,7 @@ const CallsLogList = () => {
             {
                 title: 'ticket_log.status',
                 field: 'contactStatus',
-                widthClass: 'w-1/12',
+                widthClass: 'w-3/24',
                 render: (value?: TicketLogContactStatus) => {
                     if (!value) {
                         return (<></>);
@@ -245,7 +245,7 @@ const CallsLogList = () => {
             {
                 title: 'ticket_log.call_type',
                 field: 'communicationDirection',
-                widthClass: 'w-1/12',
+                widthClass: 'w-3/24',
                 render: (value: CommunicationDirection) =>
                     (<span className='body2'>{t(`ticket_log.${CommunicationDirection[value]?.toString()?.toLowerCase()}`)}</span>)
             },
