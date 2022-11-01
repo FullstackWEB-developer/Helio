@@ -1469,8 +1469,8 @@
       "on_contact": "On Contact",
       "in_queue": "In Queue",
       "lwt": "LWT",
-      "unavailable": "Unavailable",
-      "available": "Available"
+      "unavailable": "Unavailable Slots",
+      "available": "Available Slots"
     },
     "realtime_status": {
       "title": "Real-Time Status",
