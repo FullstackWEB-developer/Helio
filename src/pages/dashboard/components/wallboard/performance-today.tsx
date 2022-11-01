@@ -38,13 +38,13 @@ const ChannelPerformance = ({data, channel}: {data?: PerformanceMetric, channel:
             <WallboardBasicStatistic title={t('wallboard.performance_today.inbound')} data={data.inbound}/>
             <WallboardBasicStatistic title={t('wallboard.performance_today.outbound')} data={data.outbound}/>
             <WallboardBasicStatistic title={t('wallboard.performance_today.callbacks')} data={data.callbacks}/>
-            <WallboardBasicStatistic title={t('wallboard.performance_today.aht')} data={data.handledTime}/>
+            <WallboardBasicStatistic tooltip='wallboard.performance_today.aht_tooltip' title={t('wallboard.performance_today.aht')} data={data.handledTime}/>
         </div>
         <div className='flex flex-col xl:flex-row border-t'>
             <WallboardBasicStatistic title={t('wallboard.performance_today.answered')} data={data.answered}/>
             <WallboardBasicStatistic title={t('wallboard.performance_today.missed')} data={data.missed} dataClassName={missedClassName}/>
             <WallboardBasicStatistic title={t('wallboard.performance_today.abandoned')} data={data.abandoned}/>
-            <WallboardBasicStatistic title={t('wallboard.performance_today.awt')} data={data.answerTime}/>
+            <WallboardBasicStatistic tooltip='wallboard.performance_today.awt_tooltip' title={t('wallboard.performance_today.awt')} data={data.answerTime}/>
             <WallboardBasicStatistic title={t('wallboard.performance_today.hold_time')} data={data.holdTime}/>
         </div>
     </div>

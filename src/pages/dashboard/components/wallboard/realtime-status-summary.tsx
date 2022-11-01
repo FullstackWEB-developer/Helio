@@ -74,7 +74,7 @@ const RealtimeStatusSummary = ({lastUpdateTime}: RealtimeStatusSummaryProps) => 
                             {callStatistics && <>
                             <WallboardBasicStatistic title={t('wallboard.realtime_status_summary.on_contact')} data={callStatistics.onContact}/>
                             <WallboardBasicStatistic title={t('wallboard.realtime_status_summary.in_queue')} data={callStatistics.inQueue}/>
-                            <WallboardBasicStatistic dataClassName={callStatistics.lwt >0 ? 'text-danger' : ''} title={t('wallboard.realtime_status_summary.lwt')} data={formatTime(callStatistics.lwt)}/>
+                            <WallboardBasicStatistic tooltip='wallboard.realtime_status_summary.lwt_tooltip' dataClassName={callStatistics.lwt >0 ? 'text-danger' : ''} title={t('wallboard.realtime_status_summary.lwt')} data={formatTime(callStatistics.lwt)}/>
                             <WallboardBasicStatistic title={t('wallboard.realtime_status_summary.unavailable')} data={callStatistics.unAvailable}/>
                             <WallboardBasicStatistic title={t('wallboard.realtime_status_summary.available')} data={callStatistics.available}/>
                             </>
@@ -89,7 +89,7 @@ const RealtimeStatusSummary = ({lastUpdateTime}: RealtimeStatusSummaryProps) => 
                             {chatStatistics && <>
                             <WallboardBasicStatistic title={t('wallboard.realtime_status_summary.on_contact')} data={chatStatistics.onContact}/>
                             <WallboardBasicStatistic title={t('wallboard.realtime_status_summary.in_queue')} data={chatStatistics.inQueue}/>
-                            <WallboardBasicStatistic dataClassName={chatStatistics.lwt >0 ? 'text-danger' : ''} title={t('wallboard.realtime_status_summary.lwt')} data={formatTime(chatStatistics.lwt)}/>
+                            <WallboardBasicStatistic tooltip='wallboard.realtime_status_summary.lwt_tooltip' dataClassName={chatStatistics.lwt >0 ? 'text-danger' : ''} title={t('wallboard.realtime_status_summary.lwt')} data={formatTime(chatStatistics.lwt)}/>
                             <WallboardBasicStatistic title={t('wallboard.realtime_status_summary.unavailable')} data={chatStatistics.unAvailable}/>
                             <WallboardBasicStatistic title={t('wallboard.realtime_status_summary.available')} data={chatStatistics.available}/>
                             </>

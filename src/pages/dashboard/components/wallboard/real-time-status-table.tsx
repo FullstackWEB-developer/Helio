@@ -69,7 +69,7 @@ const RealTimeStatusTable = ({lastUpdateTime}:RealTimeStatusTableProps) => {
                 queueName: key,
                 agentsAvailable: getDataByMetricName(data, "AGENTS_AVAILABLE"),
                 acw: getDataByMetricName(data, "AGENTS_AFTER_CONTACT_WORK"),
-                awt: getDataByMetricName(data, "AGENTS_AFTER_CONTACT_WORK").toString(),
+                awt: getDataByMetricName(data, "QUEUE_ANSWER_TIME").toString(),
                 lwt: getDataByMetricName(data, "OLDEST_CONTACT_AGE").toString(),
                 agentsOnline: getDataByMetricName(data, "AGENTS_ONLINE"),
                 inQueue: getDataByMetricName(data, "CONTACTS_IN_QUEUE"),
@@ -103,6 +103,7 @@ const RealTimeStatusTable = ({lastUpdateTime}:RealTimeStatusTableProps) => {
                 alignment:'center'
             }, {
                 title:t('wallboard.realtime_status.lwt'),
+                tooltip: 'wallboard.realtime_status.lwt_tooltip',
                 field:'lwt',
                 widthClass:'w-1/6',
                 alignment:'center',
@@ -110,6 +111,7 @@ const RealTimeStatusTable = ({lastUpdateTime}:RealTimeStatusTableProps) => {
             }, {
                 title:t('wallboard.realtime_status.awt'),
                 field:'awt',
+                tooltip: 'wallboard.realtime_status.awt_tooltip',
                 widthClass:'w-1/6',
                 alignment:'center',
                 render:(field, record: QueueRealtimeStatus) => formatTime(record.awt)
@@ -126,11 +128,13 @@ const RealTimeStatusTable = ({lastUpdateTime}:RealTimeStatusTableProps) => {
             }, {
                 title:t('wallboard.realtime_status.npt'),
                 field:'npt',
+                tooltip: 'wallboard.realtime_status.npt_tooltip',
                 widthClass:'w-1/12',
                 alignment:'center'
             }, {
                 title:t('wallboard.realtime_status.acw'),
                 field:'acw',
+                tooltip: 'wallboard.realtime_status.acw_tooltip',
                 widthClass:'w-1/12',
                 alignment:'center'
             }
