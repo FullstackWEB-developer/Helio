@@ -78,7 +78,8 @@
     "route_leaving_leave_button": "Leave",
     "insert": "Insert",
     "date_input_assistive_text": "MM/DD/YYYY",
-    "update": "Update"
+    "update": "Update",
+    "idle_warning": "You will be automatically logged out in a minute..."
   },
   "app": {
     "error_loading_parameters": "Error loading parameters, please try again later",

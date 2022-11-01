@@ -16,13 +16,17 @@ const snackbarSlice = createSlice({
         },
         removeSnackbarMessage(state, {payload}: PayloadAction<string>) {
             state.messages = state.messages.filter(a => a.id !== payload);
+        },
+        removeAllSnackbarMessages(state) {
+            state.messages = [];
         }
     }
 });
 
 export const {
     addSnackbarMessage,
-    removeSnackbarMessage
+    removeSnackbarMessage,
+    removeAllSnackbarMessages
 } = snackbarSlice.actions
 
 export default snackbarSlice.reducer

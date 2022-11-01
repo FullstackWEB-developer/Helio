@@ -17,6 +17,7 @@ import {selectGlobalLoading} from '@shared/store/app/app.selectors';
 import ReLoginModal from '@shared/layout/components/relogin-modal';
 import EmailSmsNotifications from '@shared/layout/components/email-sms-notifications';
 import BlockedPopup from '@components/blocked-popup/blocked-popup';
+import IdleControl from './components/idle-control';
 
 interface LayoutProps {
     children: React.ReactNode
@@ -33,6 +34,7 @@ const Layout = (props: LayoutProps) => {
     const isGlobalLoading = useSelector(selectGlobalLoading);
     return (
         <Fragment>
+            <IdleControl/>
             <SpinnerOverlay isActive={isGlobalLoading}>
                 <div>
                     <DndProvider backend={HTML5Backend}>
