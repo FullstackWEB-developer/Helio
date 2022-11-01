@@ -153,12 +153,13 @@ const EditAppointmentType = () => {
     }
     const updateLength = (value: string) => setCurrentLength(value ? value.length : 0);
 
-    const displayToolTip = (message: string) => {
+    const displayToolTip = (message: string, className?: string) => {
         return <ToolTipIcon
             icon={Icon.Info}
             iconFillClass='warning-icon'
             placement='right-start'
             iconClassName='icon-medium'
+            className={className}
         >
             <div className='flex flex-col p-3'>
                 <Trans i18nKey={message}>
@@ -196,7 +197,7 @@ const EditAppointmentType = () => {
                                              required={true}
                             />
                         </div>
-                        {displayToolTip(t('configuration.appointment_type_details.tooltip_helio_appointment_name'))}
+                        {displayToolTip(t('configuration.appointment_type_details.tooltip_helio_appointment_name'),'ml-2')}
                     </div>
                     <div className='flex flex-row items-center mt-4'>
                         <span className='body2 mr-2'>{t('configuration.appointment_type_details.appointment_description')}</span>
@@ -264,7 +265,7 @@ const EditAppointmentType = () => {
                                                  disabled={!isReschedulable}
                                 />
                             </div>
-                            {displayToolTip(t('configuration.appointment_type_details.tooltip_reschedule_timeframe'))}
+                            {displayToolTip(t('configuration.appointment_type_details.tooltip_reschedule_timeframe'),'ml-3')}
                         </div>
                     </div>
 
@@ -293,7 +294,7 @@ const EditAppointmentType = () => {
                                     type='timeframe'
                                 />
                             </div>
-                            {displayToolTip(t('configuration.appointment_type_details.tooltip_cancelation_timeframe'))}
+                            {displayToolTip(t('configuration.appointment_type_details.tooltip_cancelation_timeframe'),'ml-3')}
                         </div>
                         <div className='w-48 ml-3'>
                             <ControlledInput name='cancelationFee'
@@ -321,7 +322,7 @@ const EditAppointmentType = () => {
                             })}
                             onSelect={option => providerSelected(option?.object)}
                             onClose={() => {setValue('name', getValues('name'), { shouldDirty: true });}}
-                        />{displayToolTip(t('configuration.appointment_type_details.tooltip_selected_providers'))}
+                        />{displayToolTip(t('configuration.appointment_type_details.tooltip_selected_providers'),'ml-2')}
                     </div>
                     <div className='flex flex-row items-center mt-4 space-x-2'>
                         <span className='body2'>{t('configuration.appointment_type_details.appointment_instructions')}</span>
