@@ -32,6 +32,8 @@ const TicketDetailHeader = ({ticket, patient, contact}: TicketDetailHeaderProps)
     const dispatch = useDispatch();
     const history = useHistory();
     const [patientOrContactName, setPatientOrContactName] = useState<string>('');
+    const [createdForType, setCreatedForType] = useState<'Contact' | 'Patient' | undefined>(undefined);
+    const [userId, setUserId] = useState<string>('');
 
     useEffect(() => {
         dispatch(getEnumByType('TicketStatus'));
@@ -40,8 +42,12 @@ const TicketDetailHeader = ({ticket, patient, contact}: TicketDetailHeaderProps)
     useEffect(() => {
         if (contact) {
             setPatientOrContactName(contact.type === ContactType.Company ? contact.companyName : utils.stringJoin(' ', contact.firstName, contact.lastName));
+            setCreatedForType('Contact');
+            setUserId(contact.id);
         } else if (patient) {
             setPatientOrContactName(`${patient.firstName} ${patient.lastName}`);
+            setCreatedForType('Patient');
+            setUserId(patient.patientId.toString());
         }
     }, [contact, patient]);
 
@@ -66,7 +72,7 @@ const TicketDetailHeader = ({ticket, patient, contact}: TicketDetailHeaderProps)
                 className='ml-auto mr-8' iconSize='icon-small'
             onClick={returnToTicketScreen} />
         </div>
-        <TicketDetailHeaderLine2 ticket={ticket} patientOrContactName={patientOrContactName} />
+        <TicketDetailHeaderLine2 ticket={ticket} patientOrContactName={patientOrContactName} createdForType={createdForType} userId={userId} />
         <div className='pt-6'>
             <TicketDetailHeaderLine3 ticket={ticket} patient={patient} contact={contact} />
         </div>

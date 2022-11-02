@@ -630,6 +630,8 @@
     "header": {
       "id": "ID",
       "created_for": "Created for",
+      "created_for_contact": "Created for Contact",
+      "created_for_patient": "Created for Patient",
       "due_in": "Due",
       "overdue": "Overdue",
       "last_activity": "Last activity",
