@@ -172,13 +172,13 @@ const CallsLogList = () => {
             {
                 title: '',
                 field: 'id',
-                widthClass: 'w-24',
+                widthClass: 'w-1/24',
                 render: (_: string, data: TicketLogModel) => getDirectionIcon(data.communicationDirection, data.contactStatus)
             },
             {
                 title: 'ticket_log.from',
                 field: 'from',
-                widthClass: 'w-2/12',
+                widthClass: 'w-3/24',
                 render: (_: string, data: TicketLogModel) => (
                     <CallContactInfo type='from' value={data} />
                 )
@@ -186,7 +186,7 @@ const CallsLogList = () => {
             {
                 title: 'ticket_log.to',
                 field: 'to',
-                widthClass: 'w-2/12',
+                widthClass: 'w-3/24',
                 render: (_: string, data: TicketLogModel) => (
                     <CallContactInfo type='to' value={data} />
                 )
@@ -195,7 +195,7 @@ const CallsLogList = () => {
                 title: 'ticket_log.date_and_time',
                 field: 'createdOn',
                 isSortable: true,
-                widthClass: 'w-2/12',
+                widthClass: 'w-4/24',
                 sortDirection: getSortDirection(callsLogFilter.sorts, 'createdOn'),
                 sortOrder: getSortOrder(callsLogFilter.sorts, 'createdOn'),
                 disableNoneSort: true,
@@ -215,7 +215,7 @@ const CallsLogList = () => {
             {
                 title: 'ticket_log.duration',
                 field: 'agentInteractionDuration',
-                widthClass: 'w-1/12 mr-2',
+                widthClass: 'w-2/24 mr-2',
                 render: (field: number) => {
                     return (
                         <span className='body2'>{utils.formatTime(field)}</span>
@@ -252,7 +252,7 @@ const CallsLogList = () => {
             {
                 title: 'ticket_log.recording',
                 field: 'recordedConversationLink',
-                widthClass: 'w-1/12 flex items-center justify-center',
+                widthClass: 'w-2/24 flex items-center justify-center',
                 render: (value: string, data: TicketLogModel) => (
                     <>
                         {!!value &&
@@ -271,20 +271,20 @@ const CallsLogList = () => {
             {
                 title: 'ticket_log.rating',
                 field: 'patientRating',
-                widthClass: 'w-1/12 flex flex-col items-center justify-center',
+                widthClass: 'w-1/24 mr-2 flex flex-col items-center justify-center',
                 render: (_, data: TicketLogModel) => (
                     <TicketDetailRating patientRating={data?.patientRating} botRating={data.botRating} ticketId={data?.id!} />
                 )
             }, {
                 title: 'ticket_log.review',
                 field: 'hasManagerReview',
-                widthClass: 'w-1/12 flex items-center justify-center',
+                widthClass: 'w-1/24 flex items-center justify-center',
                 render: (value: boolean, record: TicketLogModel) => (value && canViewAnyReview) ? <SvgIcon onClick={() => setDisplayRatingsForTicket(record.ticketNumber)} type={Icon.Comment} className='cursor-pointer' fillClass='rgba-062-fill' /> : null
             },
             {
                 title: '',
                 field: '',
-                widthClass: 'w-8 h-full items-center justify-center',
+                widthClass: 'w-1/24 h-full items-center justify-center',
                 render: (_: any, data: TicketLogModel) => {
                     return (<>
                         <MoreMenu
