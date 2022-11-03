@@ -38,13 +38,13 @@ const TicketListContainer = ({ dataSource, isRowSelected, handleCheckboxChange }
                     <TicketListHeaderCell className='w-1/24'></TicketListHeaderCell>
                     <TicketListHeaderCell className='w-1/24 mr-2'>{t('tickets.channel')}</TicketListHeaderCell>
                     <TicketListHeaderCell
-                        className='w-2/24 mr-2 flex justify-center'
+                        className='w-2/24 mr-2'
                         field={'Id'}
                         isSortable
                         sortDirection={getSortDirection(ticketFilter.sorts, 'Id')}
                         sortOrder={getSortOrder(ticketFilter.sorts, 'Id')}
                         onClick={applySort}
-                    >{t('tickets.id')}
+                    >{t('tickets.created_for')}
                     </TicketListHeaderCell>
                     <TicketListHeaderCell className='w-2/24 mr-2'>{t('tickets.subject')}</TicketListHeaderCell>
                     <TicketListHeaderCell
