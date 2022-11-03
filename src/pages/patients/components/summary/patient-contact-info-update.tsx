@@ -171,6 +171,10 @@ const PatientContactInfoUpdate = ({onUpdateComplete} : PatientInformationUpdateP
         }
     }
 
+    const isEmpty = (obj) => {
+        return Object.keys(obj).length === 0
+    }
+
     return (
         <div>
             <form onSubmit={handleSubmit(onSubmit)} noValidate={true}>
@@ -348,7 +352,7 @@ const PatientContactInfoUpdate = ({onUpdateComplete} : PatientInformationUpdateP
                     </div>
                 </div>
                 <div className='pt-4'>
-                    <Button isLoading={updatePatientContactInfoMutation.isLoading} disabled={!isDirty || !isValid} label={t('common.save')} buttonType='small' type='submit'/>
+                    <Button isLoading={updatePatientContactInfoMutation.isLoading} disabled={!isDirty || !isEmpty(control.formState.errors)} label={t('common.save')} buttonType='small' type='submit'/>
                 </div>
                 <RouteLeavingGuard
                     when={isDirty && !isSubmitSuccessful}

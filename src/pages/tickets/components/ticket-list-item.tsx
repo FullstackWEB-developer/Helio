@@ -20,6 +20,7 @@ import TicketListItemActions from './ticket-list-item-actions';
 import Checkbox, { CheckboxCheckEvent } from '@components/checkbox/checkbox';
 import ElipsisTooltipTextbox from '@components/elipsis-tooltip-textbox/elipsis-tooltip-textbox';
 import './ticket-list-item.scss';
+import TooltipWrapper from '@components/tooltip/tooltip-wrapper';
 interface TicketListItemProps {
     item: Ticket,
     isRowSelected: (ticketId: string) => boolean,
@@ -49,6 +50,22 @@ const TicketListItem = ({ item, isRowSelected, handleCheckboxChange }: TicketLis
 
     const getTicketPath = () => {
         return `${TicketsPath}/${item.ticketNumber}`;
+    }
+
+    const getCreatedForName = () => {
+        if(!!item.createdForName){
+            return item.createdForName
+        }else if(!!item.originationNumber){
+            return item.originationNumber
+        }else if(!!item.incomingEmailAddress){
+            return item.incomingEmailAddress
+        }else if(!!item.callbackPhoneNumber){
+            return item.callbackPhoneNumber
+        }else if(!!item.ticketNumber){
+            return item.ticketNumber
+        }else {
+            return '';
+        }
     }
 
     const priorityOptions = convertEnumToOptions(ticketPriorities);
@@ -101,10 +118,12 @@ const TicketListItem = ({ item, isRowSelected, handleCheckboxChange }: TicketLis
             </Link>
         </div>
 
-        <div className='w-2/24 mr-2 flex justify-center'>
-            <Link to={getTicketPath()}>
-                {item.ticketNumber}
-            </Link>
+        <div className='w-2/24 mr-2'>
+            <TooltipWrapper placement='bottom-start' content={item.ticketNumber?.toString()}>
+                <Link to={getTicketPath()}>
+                    <ElipsisTooltipTextbox classNames='truncate' hasInlineBlock={false} asSpan={true} value={getCreatedForName().toString()} isDefaultTextClass={false} />
+                </Link>
+            </TooltipWrapper>
         </div>
         <div className={classnames('w-2/24 mr-2', { 'subtitle2': !!item.subject, 'body2': !item.subject })}>
             <Link to={getTicketPath()}>
