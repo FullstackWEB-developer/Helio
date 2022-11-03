@@ -98,12 +98,12 @@ const TicketSmsSendMessage = ({ticketId, patientId, contactId, onMessageSend}: T
 
     return <div className='border-t flex flex-none fixed left-0 bottom-0 w-full'>
         <TextArea
-            className='body2 w-full overflow-y-hidden'
+            className='body2 w-full'
             placeHolder={t('external_access.ticket_sms.type')}
             value={smsText}
             required={true}
             minRows={1}
-            maxRows={1}
+            maxRows={3}
             isLoading={createTicketSmsMutation.isLoading || isPatientLoading || isContactLoading || isPatientFetching || isContactFetching}
             resizable={false}
             hasBorder={false}
