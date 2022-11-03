@@ -90,6 +90,10 @@ const TicketDetailTicketInfo = ({ticket, control, watch}: TicketInfoProps) => {
         utils.initiateACall(updateModel.callbackPhoneNumber)
     }
 
+    const handleCall = () => {
+        utils.initiateACall(ticket.originationNumber)
+    }
+
     return (
         <div className='pt-2'>
             <ControlledSelect
@@ -123,6 +127,16 @@ const TicketDetailTicketInfo = ({ticket, control, watch}: TicketInfoProps) => {
                     onChange={(e) => handleCallbackNumberChange(e.target.value)}
                     dropdownIcon={Icon.Phone} label={'ticket_detail.info_panel.callback_number'}
                     dropdownIconClickHandler={handleCallbackOutboundCall} />
+            }
+            {
+                !ticket.callbackPhoneNumber && ticket.originationNumber &&
+                <ControlledInput
+                    name='originationNumber'
+                    type='text'
+                    control={control}
+                    disabled
+                    dropdownIcon={Icon.Phone} label={'ticket_detail.info_panel.phone_number'} defaultValue={utils.applyPhoneMask(ticket.originationNumber)}
+                    dropdownIconClickHandler={handleCall} />
             }
             {(reasonFilteredOptions && reasonFilteredOptions.length > 0) &&
                 <ControlledSelect

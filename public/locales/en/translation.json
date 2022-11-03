@@ -738,6 +738,7 @@
         "file_name_voice": "voice-recording"
       },
       "callback_number": "Callback Number",
+      "phone_number": "Phone Number",
       "details": "Details",
       "related_tickets":{
         "title": "Related Tickets",
