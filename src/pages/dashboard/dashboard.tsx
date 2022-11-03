@@ -236,6 +236,11 @@ export const Dashboard = () => {
         'block': selectedDashboardTime === DashboardTimeframes.custom
     });
 
+    const displayTimeFrameDropdownClass = classNames('absolute right-12', {
+        'hidden':!displayTimeFrameDropdown,
+        'block':displayTimeFrameDropdown
+    });
+
     const wrapperClassName = classNames('w-full px-6 pb-10 overflow-y-auto dashboard', {
         'opacity-40 pointer-events-none': isFetching || isLoading
     });
@@ -273,13 +278,12 @@ export const Dashboard = () => {
                                 </div>
                             </div>}
                         <div>
-                            {displayTimeFrameDropdown && <div className='absolute right-12'>
+                            <div className={displayTimeFrameDropdownClass}>
                                 <div className='flex flex-col'>
-                                    <Dropdown model={dashboardTimeFrameDropdownModel}/>
-                                    <span className={dashboardDateFormClass}><DashboardDateForm
-                                        onDatesSelected={datesSelected}/></span>
+                                    <Dropdown model={dashboardTimeFrameDropdownModel} />
+                                    <span className={dashboardDateFormClass}><DashboardDateForm onDatesSelected={datesSelected} /></span>
                                 </div>
-                            </div>}
+                            </div>
                         </div>
                         <div>
                             <CountdownTimer
