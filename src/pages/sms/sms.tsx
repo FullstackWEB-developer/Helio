@@ -48,6 +48,7 @@ import FilterDot from '@components/filter-dot/filter-dot';
 import { BadgeValues } from '@pages/tickets/models/badge-values.model';
 import {getContactsNames} from '@shared/services/contacts.service';
 import {GetContactsNames} from '@constants/react-query-constants';
+import { selectBotContext } from '@pages/ccp/store/ccp.selectors';
 
 interface SmsLocationState {
     contact?: ContactExtended,
@@ -59,6 +60,7 @@ const Sms = () => {
     const {id, fullName} = useSelector(selectAppUserDetails);
     const [isFilterVisible, setFilterVisible] = useState(false);
     const isFiltered = useSelector(selectIsSmsFiltered);
+    const botContext = useSelector(selectBotContext);
     const [queryParams, setQueryParams] = useState<TicketMessageSummaryRequest>({
         channel: ChannelTypes.SMS,
         assignedTo: !isDefaultTeamView ? id : '',
@@ -78,6 +80,7 @@ const Sms = () => {
     const [newMessageId, setNewMessageId] = useState('');
     const {ticketId} = useParams<{ticketId?: string}>();
     const [lastMessageSendTime, setLastMessageSendTime] = useState<Date>();
+    const [isSMSSentFromChatPage, setIsSMSSentFromChatPage] = useState<boolean>();
     const [contactIds, setContactIds] = useState<string[]>([]);
     const [pageResult, setPageResult] = useState<TicketMessageSummary[]>([]);
     const history = useHistory();
@@ -210,9 +213,10 @@ const Sms = () => {
             enabled: !!newMessageId,
             onSuccess: (result) => {
                 const isTicketSummarySelected = summaryMessages && selectedTicketSummary?.ticketId === result.ticketId && result.channel === ChannelTypes.SMS;
-                if (isTicketSummarySelected && result.createdBy !== id) {
+                if (isTicketSummarySelected && (!isSMSSentFromChatPage && (botContext?.ticket?.id === selectedTicketSummary?.ticketId))) {
                     pushMessage(result);
                 }
+                setIsSMSSentFromChatPage(false);
             },
             onSettled: () => {
                 setNewMessageId('');
@@ -332,6 +336,7 @@ const Sms = () => {
             changeAssigneeMutation.mutate({assignee: id, ticketId: selectedTicketSummary.ticketId});
         }
         sendMessageMutation.mutate(message);
+        setIsSMSSentFromChatPage(true);
     }
 
     const getTimePeriodLabel = (value: string) => {
