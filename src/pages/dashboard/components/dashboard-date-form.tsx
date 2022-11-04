@@ -1,6 +1,6 @@
 import ControlledDateInput from '@components/controllers/ControlledDateInput';
 import Button from '@components/button/button';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import dayjs from 'dayjs';
 import {useForm} from 'react-hook-form';
 import {useTranslation} from 'react-i18next';
@@ -8,11 +8,12 @@ import {CalendarHorizontalAlign} from "@components/date-time-picker";
 
 export interface DashboardDateFormProps {
     onDatesSelected: (startDate: Date, endDate: Date) => void;
+    resetTrigger?: Date;
 }
 
-const DashboardDateForm = ({onDatesSelected}: DashboardDateFormProps) => {
-    const [selectedStartDate, setSelectedStartDate] = useState<Date | undefined>(dayjs().add(-1, 'day').toDate());
-    const [selectedEndDate, setSelectedEndDate] = useState<Date | undefined>(new Date());
+const DashboardDateForm = ({onDatesSelected, resetTrigger}: DashboardDateFormProps) => {
+    const [selectedStartDate, setSelectedStartDate] = useState<Date | undefined>();
+    const [selectedEndDate, setSelectedEndDate] = useState<Date | undefined>();
     const {t} = useTranslation();
     const {handleSubmit, control, formState, watch} = useForm({
         mode: 'onBlur',
@@ -21,6 +22,12 @@ const DashboardDateForm = ({onDatesSelected}: DashboardDateFormProps) => {
             endDate: selectedEndDate
         }
     });
+
+    useEffect(() => {
+        setSelectedStartDate(undefined);
+        setSelectedEndDate(undefined);
+    }, [resetTrigger])
+
     const watchStartDate = watch('startDate');
     const watchEndDate = watch('endDate');
 

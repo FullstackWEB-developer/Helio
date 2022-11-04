@@ -48,6 +48,7 @@ export const Dashboard = () => {
     const [selectedStartDate, setSelectedStartDate] = useState<Date>(new Date());
     const [selectedEndDate, setSelectedEndDate] = useState<Date>(new Date());
     const [lastUpdateTime, setLastUpdateTime] = useState<Date>(new Date());
+    const [dateResetTrigger, setDateResetTrigger] = useState<Date | undefined>();
     const isWallboard: boolean = selectedDashboardType === DashboardTypes.wallboard;
     const dispatch = useDispatch();
 
@@ -147,6 +148,7 @@ export const Dashboard = () => {
         if (id !== DashboardTimeframes.custom) {
             setDisplayTimeFrameDropdown(false);
             refreshDashboard();
+            setDateResetTrigger(new Date());
         }
         if( id === DashboardTimeframes.week) {
             dispatch(setDashboardFilterEndDate(dayjs().endOf('week').toDate()));
@@ -281,7 +283,7 @@ export const Dashboard = () => {
                             <div className={displayTimeFrameDropdownClass}>
                                 <div className='flex flex-col'>
                                     <Dropdown model={dashboardTimeFrameDropdownModel} />
-                                    <span className={dashboardDateFormClass}><DashboardDateForm onDatesSelected={datesSelected} /></span>
+                                    <span className={dashboardDateFormClass}><DashboardDateForm resetTrigger={dateResetTrigger} onDatesSelected={datesSelected} /></span>
                                 </div>
                             </div>
                         </div>
