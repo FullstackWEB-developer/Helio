@@ -101,6 +101,7 @@ const RequestRefill = () => {
                 return {
                     value: item.facilityId.toString(),
                     label: item.name,
+                    assistiveText: item.address + ", " + item.city + ", " + item.state + " " + item.zipCode,
                     object: item
                 };
             }) : [] as Option[];
@@ -343,6 +344,7 @@ const RequestRefill = () => {
             onTextChange={(value: string) => setPharmaciesSearchTerm(value || '')}
             onSelect={(option) => onPharmacySelectChange(option)}
             isLoading={isFetchingPharmacies}
+            truncateAssistiveText={true}
         />;
     }
 
