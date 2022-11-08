@@ -589,24 +589,26 @@ const dynamicSort = (sortField: string, sortDirection: SortDirection) => {
 }
 const addPracticeBranding = (practiceBranding) => {
     const root = document.body;
+    const hasDash = practiceBranding.primaryColor.startsWith('#');
+    const primaryWithoutDash = hasDash ? practiceBranding.primaryColor.substring(1): practiceBranding.primaryColor;
 
     //Primary
-    root.style.setProperty('--color-primary-default', `#${practiceBranding.primaryColor}`);
-    root.style.setProperty('--color-primary-900', `#${practiceBranding.primaryColor}`);
-    root.style.setProperty('--color-primary-800', `#${practiceBranding.primaryColor}`);
-    root.style.setProperty('--color-primary-600', `#${practiceBranding.primaryColor}`);
-    root.style.setProperty('--color-primary-500', `#${practiceBranding.primaryColor}`);
-    root.style.setProperty('--color-primary-500-rgb', `${hexToRGB(practiceBranding.primaryColor)}`);
+    root.style.setProperty('--color-primary-default', `${hasDash ? '' : '#'}${practiceBranding.primaryColor}`);
+    root.style.setProperty('--color-primary-900', `${hasDash ? '' : '#'}${practiceBranding.primaryColor}`);
+    root.style.setProperty('--color-primary-800', `${hasDash ? '' : '#'}${practiceBranding.primaryColor}`);
+    root.style.setProperty('--color-primary-600', `${hasDash ? '' : '#'}${practiceBranding.primaryColor}`);
+    root.style.setProperty('--color-primary-500', `${hasDash ? '' : '#'}${practiceBranding.primaryColor}`);
+    root.style.setProperty('--color-primary-500-rgb', `${hexToRGB(primaryWithoutDash)}`);
 
     //Hover
-    root.style.setProperty('--color-primary-700', `#${practiceBranding.hoverColor}`);
+    root.style.setProperty('--color-primary-700', `${hasDash ? '' : '#'}${practiceBranding.hoverColor}`);
 
     //Focus
-    root.style.setProperty('--color-primary-400', `#${practiceBranding.focusedColor}`);
+    root.style.setProperty('--color-primary-400', `${hasDash ? '' : '#'}${practiceBranding.focusedColor}`);
 
     //Secondary
-    root.style.setProperty('--color-primary-300', `#${practiceBranding.secondaryColor}`);
-    root.style.setProperty('--color-primary-200', `#${practiceBranding.secondaryColor}`);
+    root.style.setProperty('--color-primary-300', `${hasDash ? '' : '#'}${practiceBranding.secondaryColor}`);
+    root.style.setProperty('--color-primary-200', `${hasDash ? '' : '#'}${practiceBranding.secondaryColor}`);
 
     //Tertiary Color
     root.style.setProperty('--color-burgundy', `#${practiceBranding.tertiaryColor}`);
