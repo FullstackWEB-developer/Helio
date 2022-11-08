@@ -771,6 +771,21 @@
       "all_queues": "All Queues",
       "my_queues": "My Queues",
       "loading_error": "Error Loading Queue Metrics"
+    },
+    "options": {
+      "1": "Agents After Contact Work",
+      "2": "Available Agents",
+      "3": "Agent Error",
+      "4": "Busy",
+      "5": "On Call",
+      "6": "Online Agents",
+      "7": "Available",
+      "8": "Contacts In Queue",
+      "9": "Scheduled Contacts",
+      "10": "Active Contacts",
+      "11": "Available Contacts",
+      "12": "Longest Wait Time",
+      "13": "Average Answer Time"
     }
   },
   "components": {

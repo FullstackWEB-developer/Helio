@@ -20,6 +20,7 @@ import { SecuritySettings } from '@pages/configurations/models/security-settings
 import { PracticeBranding } from '@shared/models/practice-branding';
 import { GeneralSettingsModel } from '@pages/configurations/models/general-settings.model';
 import {PatientChartVisibility} from '@pages/configurations/models/patient-chart-visibility.model';
+import i18n from 'i18next';
 
 const parametersUrl = '/lookups/parameters';
 const lookupsUrl = '/lookups';
@@ -135,8 +136,18 @@ export const getMetricOptions = () => {
         if (!metricOptions || metricOptions.length === 0) {
             try {
                 const response = await Api.get(url);
-                const list = response.data as KeyValuePair[];
-                dispatch(setMetricOptions(list));
+                let list = response.data as KeyValuePair[];
+                if (list && list.length > 0) {
+                    const removedOptionKeys = [2, 3, 9, 12, 13];
+                    list = list.filter(a => !removedOptionKeys.includes(+a.key));
+                    list = list.map(a => {
+                        return {
+                            ...a,
+                            value: i18n.t(`statuses.options.${a.key}`)
+                        }
+                    })
+                    dispatch(setMetricOptions(list));
+                }
             } catch (error: any) {
                 dispatch(setFailure(error.message));
             }

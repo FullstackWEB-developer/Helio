@@ -124,6 +124,7 @@ const QueueStatus = ({ queueType, queueTitle }: QueueStatusProps) => {
                 });
             });
         }
+        ddModel.items = ddModel.items?.sort((a,b) => a.label.localeCompare(b.label));
         return ddModel;
     };
 
