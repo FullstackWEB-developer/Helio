@@ -142,7 +142,7 @@ const TicketsSearch = ({selectedTickets, isAssignModalOpen, setAssignModalOpen, 
         />
         <Modal
             isDraggable={true}
-            className='w-1/4 h-1/2'
+            className='ticket-assign-modal'
             isOpen={isAssignModalOpen}
             title={"tickets.assign_tickets"}
             onClose={() => {setAssignModalOpen(false)}}
@@ -150,8 +150,8 @@ const TicketsSearch = ({selectedTickets, isAssignModalOpen, setAssignModalOpen, 
             closeableOnEscapeKeyPress={true}
             hasOverlay={true}
             titleClassName="px-6 pb-2 pt-9 h7"
-            contentClassName='px-6 h-3/4'>
-            <form className='flex flex-col h-full' onSubmit={handleSubmit(handleMultipleAssignAction)}>
+            contentClassName='px-6'>
+            <form className='flex flex-col ticket-form-modal' onSubmit={handleSubmit(handleMultipleAssignAction)}>
                 <span className='body2 pt-6 pb-4'>{t('tickets.assign_tickets_modal_text')} </span>
                 <div className='w-3/4'>
                     <ControlledSelect
@@ -162,7 +162,7 @@ const TicketsSearch = ({selectedTickets, isAssignModalOpen, setAssignModalOpen, 
                         control={control}
                     />
                 </div>
-                <div className='flex justify-end'>
+                <div className='flex justify-end ticket-assign-modal-button'>
                     <Button
                         type='submit'
                         buttonType='small'

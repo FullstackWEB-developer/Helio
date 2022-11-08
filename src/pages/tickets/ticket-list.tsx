@@ -114,6 +114,7 @@ const TicketList = () => {
     const changeAsigneeForMultipleTicketsMutation = useMutation(setMultipleTicketsAssignee, {
         onSuccess: (data: Ticket[]) => {
             setAssignModalOpen(false);
+            setSelectedTickets({});
             if (data && data.length > 0) {
                 data.forEach((t: Ticket) => dispatch(changeAssignee({ ticketId: t.id!, assigneeId: t.assignee! })))
             }
