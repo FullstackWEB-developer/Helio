@@ -246,6 +246,7 @@
   "ccp": {
     "title": "Contact Control Panel",
     "logging_in": "Logging in...",
+    "personal_call": "Personal Call",
     "bot_context": {
       "header": "Bot Context",
       "queue": "Queue",

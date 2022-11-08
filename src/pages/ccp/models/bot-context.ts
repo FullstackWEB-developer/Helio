@@ -12,4 +12,5 @@ export interface BotContext {
     currentContactId: string;
     initialContactId: string;
     attributes?: ContextKeyValuePair[];
+    isInBound?: boolean;
 }

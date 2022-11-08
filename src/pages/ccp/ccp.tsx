@@ -67,6 +67,7 @@ import Spinner from '@components/spinner/Spinner';
 import useBrowserNotification from '@shared/hooks/useBrowserNotification';
 import {Intent} from './models/intent.enum';
 import {ForwardingEnabledStatus} from '@shared/layout/components/profile-dropdown';
+import Checkbox from '@components/checkbox/checkbox';
 
 const ccpConfig = {
     region: utils.getAppParameter('AwsRegion'),
@@ -467,7 +468,8 @@ const Ccp: React.FC<BoxProps> = ({
                         initialContactId: getInitialContactId(contact),
                         attributes: botAttributes,
                         currentContactId: contact.getContactId(),
-                        contactId
+                        contactId,
+                        isInBound: contact.isInbound()
                     })
                     );
                 } else {
@@ -485,7 +487,8 @@ const Ccp: React.FC<BoxProps> = ({
                         initialContactId: getInitialContactId(contact),
                         attributes: botAttributes,
                         currentContactId: contact.getContactId(),
-                        contactId
+                        contactId,
+                        isInBound: contact.isInbound()
                     }));
                 }
             });

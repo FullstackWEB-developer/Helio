@@ -12,7 +12,7 @@ export interface CheckboxCheckEvent {
 
 interface CheckboxProps {
     name: string,
-    label: string,
+    label?: string,
     defaultChecked?: boolean,
     checked?: boolean,
     value?: string,
@@ -21,6 +21,7 @@ interface CheckboxProps {
     truncate?: boolean;
     assistiveText?: string;
     hasTooltip?: boolean;
+    heightClass?: string;
     onChange?: (event: CheckboxCheckEvent) => void;
 }
 
@@ -35,12 +36,13 @@ const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(({
     truncate = false,
     assistiveText,
     hasTooltip = true,
+    heightClass = 'h-9',
     onChange,
     ...props
 }: CheckboxProps, ref) => {
     const {t} = useTranslation();
 
-    return <div className={classnames('h-9', className)}>
+    return <div className={classnames(heightClass, className)}>
         <label className="flex flex-row items-center checkbox-button">
             <input
                 {...props}
@@ -56,10 +58,10 @@ const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(({
             <span className="checkbox-control">
                 <SvgIcon type={Icon.LightCheckBoxOn} fillClass='svg-checkbox'></SvgIcon>
             </span>
-            {hasTooltip &&
+            {hasTooltip && label &&
                 <ElipsisTooltipTextbox value={t(label)} classNames={classnames(labelClassName, {'w-60': !assistiveText})} asSpan={true} />
             }
-            {!hasTooltip &&
+            {!hasTooltip && label &&
                 <div className={labelClassName}>{t(label)}</div>
             }
             {!!assistiveText &&
