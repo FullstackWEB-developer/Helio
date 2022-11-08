@@ -285,7 +285,7 @@ export const getElementPosition = (element: HTMLElement | Element, scrolledEleme
         scrollLeft = scrolledElement.scrollLeft;
         scrollTop = scrolledElement.scrollTop;
     }
-    return { top: rect.top + scrollTop, left: rect.left + scrollLeft }
+    return {top: rect.top + scrollTop, left: rect.left + scrollLeft}
 }
 
 const accumulateInfiniteData = <T extends unknown>(infiniteData: InfiniteData<PagedList<T>> | undefined): T[] => {
@@ -310,7 +310,7 @@ const logout = async () => {
         const offlineState = window.CCP.agent.getAgentStates().filter(a => a.name === UserStatus.Offline)[0];
         try {
             if (window.CCP.agent)
-            window.CCP.agent.setState(offlineState);
+                window.CCP.agent.setState(offlineState);
         } catch(error: any) {
             window.CCP.agent.setState(offlineState, undefined, {
                 enqueueNextState: true
@@ -346,10 +346,10 @@ const isSessionExpired = (): boolean => {
 }
 
 const parseOptions = <T extends any>(data: T[],
-    labelExpression: (item: T) => string,
-    valueExpression: (item: T) => string,
-    assistiveTextExpression?: (item: T) => string,
-    objectExpression?: (item: T) => any): Option[] => {
+                                     labelExpression: (item: T) => string,
+                                     valueExpression: (item: T) => string,
+                                     assistiveTextExpression?: (item: T) => string,
+                                     objectExpression?: (item: T) => any): Option[] => {
     if (!data) {
         return [];
     }
@@ -433,7 +433,7 @@ const isValidDobByAthenaMaxAgeConstraint = (date: Date) => {
 const convertBlobToBase64 = (file: Blob) => {
     return new Promise<string | ArrayBuffer | null>(function (resolve, reject) {
         const reader = new FileReader();
-        reader.onload = function () { resolve(reader.result); };
+        reader.onload = function () {resolve(reader.result);};
         reader.onerror = reject;
         reader.readAsDataURL(file);
     });
@@ -588,28 +588,28 @@ const dynamicSort = (sortField: string, sortDirection: SortDirection) => {
     }
 }
 const addPracticeBranding = (practiceBranding) => {
-    const root = document.documentElement;
+    const root = document.body;
 
     //Primary
-    root.style.setProperty('--color-primary-default', `#${practiceBranding.primaryColor.replace('#', '')}`);
-    root.style.setProperty('--color-primary-900', `#${practiceBranding.primaryColor.replace('#', '')}`);
-    root.style.setProperty('--color-primary-800', `#${practiceBranding.primaryColor.replace('#', '')}`);
-    root.style.setProperty('--color-primary-600', `#${practiceBranding.primaryColor.replace('#', '')}`);
-    root.style.setProperty('--color-primary-500', `#${practiceBranding.primaryColor.replace('#', '')}`);
-    root.style.setProperty('--color-primary-500-rgb', `${hexToRGB(practiceBranding.primaryColor.replace('#', ''))}`);
+    root.style.setProperty('--color-primary-default', `#${practiceBranding.primaryColor}`);
+    root.style.setProperty('--color-primary-900', `#${practiceBranding.primaryColor}`);
+    root.style.setProperty('--color-primary-800', `#${practiceBranding.primaryColor}`);
+    root.style.setProperty('--color-primary-600', `#${practiceBranding.primaryColor}`);
+    root.style.setProperty('--color-primary-500', `#${practiceBranding.primaryColor}`);
+    root.style.setProperty('--color-primary-500-rgb', `${hexToRGB(practiceBranding.primaryColor)}`);
 
     //Hover
-    root.style.setProperty('--color-primary-700', `#${practiceBranding.hoverColor.replace('#', '')}`);
+    root.style.setProperty('--color-primary-700', `#${practiceBranding.hoverColor}`);
 
     //Focus
-    root.style.setProperty('--color-primary-400', `#${practiceBranding.focusedColor.replace('#', '')}`);
+    root.style.setProperty('--color-primary-400', `#${practiceBranding.focusedColor}`);
 
     //Secondary
-    root.style.setProperty('--color-primary-300', `#${practiceBranding.secondaryColor.replace('#', '')}`);
-    root.style.setProperty('--color-primary-200', `#${practiceBranding.secondaryColor.replace('#', '')}`);
+    root.style.setProperty('--color-primary-300', `#${practiceBranding.secondaryColor}`);
+    root.style.setProperty('--color-primary-200', `#${practiceBranding.secondaryColor}`);
 
     //Tertiary Color
-    root.style.setProperty('--color-burgundy', `#${practiceBranding.tertiaryColor.replace('#', '')}`);
+    root.style.setProperty('--color-burgundy', `#${practiceBranding.tertiaryColor}`);
 }
 const hexToRGB = (hex) => {
     hex = '0x' + hex
