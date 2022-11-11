@@ -21,6 +21,7 @@ import Checkbox, { CheckboxCheckEvent } from '@components/checkbox/checkbox';
 import ElipsisTooltipTextbox from '@components/elipsis-tooltip-textbox/elipsis-tooltip-textbox';
 import './ticket-list-item.scss';
 import TooltipWrapper from '@components/tooltip/tooltip-wrapper';
+import utils from '@shared/utils/utils';
 interface TicketListItemProps {
     item: Ticket,
     isRowSelected: (ticketId: string) => boolean,
@@ -56,11 +57,11 @@ const TicketListItem = ({ item, isRowSelected, handleCheckboxChange }: TicketLis
         if(!!item.createdForName){
             return item.createdForName
         }else if(!!item.originationNumber){
-            return item.originationNumber
+            return utils.formatPhone(item.originationNumber)
         }else if(!!item.incomingEmailAddress){
             return item.incomingEmailAddress
         }else if(!!item.callbackPhoneNumber){
-            return item.callbackPhoneNumber
+            return utils.formatPhone(item.callbackPhoneNumber)
         }else if(!!item.ticketNumber){
             return item.ticketNumber
         }else {
