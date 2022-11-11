@@ -1,6 +1,7 @@
 import './tickets-by-channels-widget.scss';
 import {BasicStatistic} from '@pages/dashboard/models/basic-statistic.model';
 import {useTranslation} from 'react-i18next';
+import utils from '@shared/utils/utils';
 
 export interface TicketsByChannelsWidgetProps {
     data: BasicStatistic[];
@@ -33,7 +34,7 @@ const TicketsByChannelsWidget = ({data}: TicketsByChannelsWidgetProps) => {
     }
 
     return <div className='w-full px-6 tickets-by-channel-body pt-4'>{
-        data.map(item => <Item key={item.label.toString()} label={item.label} percentage={item.percentage}
+        data.map(item => <Item key={item.label.toString()} label={typeof item.label === 'string' ? utils.spaceBetweenCamelCaseWords(item.label): item.label} percentage={item.percentage}
                                value={item.value}/>)
     }</div>
 }

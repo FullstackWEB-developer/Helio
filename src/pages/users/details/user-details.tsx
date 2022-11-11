@@ -1,7 +1,6 @@
 import Avatar from "@components/avatar";
 import Button from "@components/button/button";
 import StatusDotLabel from '@components/status-dot-label';
-import {UserStatus} from "@shared/store/app-user/app-user.models";
 import {useForm} from "react-hook-form";
 import {ControlledCheckbox, ControlledInput, ControlledSelect} from "@components/controllers";
 import React, {useEffect, useMemo, useState} from "react";
@@ -39,7 +38,7 @@ import {DATE_LONG_FORMAT} from "@constants/form-constants";
 import {
     authenticationSelector,
     selectAppUserDetails,
-    selectLiveAgentStatuses
+    selectUserStatus
 } from "@shared/store/app-user/appuser.selectors";
 import {addSnackbarMessage} from "@shared/store/snackbar/snackbar.slice";
 import {SnackbarType} from "@components/snackbar/snackbar-type.enum";
@@ -70,9 +69,9 @@ const UserDetails = () => {
     const providers = useSelector(selectProviderList);
     const forwardToTypes = useSelector(selectForwardToOptions);
     const rolesList = useSelector(selectRoleList);
-    const usersLiveStatus = useSelector(selectLiveAgentStatuses);
-    const [userLiveStatus, setUserLiveStatus] = useState(UserStatus.Offline);
     const {userId} = useParams<{userId: string}>();
+    const userStatus = useSelector(selectUserStatus);
+
     const [userDetailExtended, setUserDetailExtended] = useState<UserDetailExtended>();
     const forwardToSelected = Number(watch('forward_to')) as CallForwardingType;
     const [isForwardEnabled, setIsForwardEnabled] = useState(false);
@@ -147,20 +146,13 @@ const UserDetails = () => {
     useEffect(() => {
         const phone = getValues('forward_to_value_phone');
         if (forwardToSelected === CallForwardingType.Phone && !phone) {
-            mobilePhoneRefetch();
+            mobilePhoneRefetch().then();
         }
     }, [forwardToSelected, getValues, mobilePhoneRefetch]);
 
-    useEffect(() => {
-        let newStatus = usersLiveStatus.find(x => x.userId === storedUserData.id);
-        if (!!newStatus) {
-            setUserLiveStatus(newStatus.status as UserStatus ?? UserStatus.Offline);
-        }
-    }, [usersLiveStatus]);
 
     const loadUserData = (data: UserDetailExtended) => {
         const user = data.user;
-        const statusResult = usersLiveStatus.find(x => x.userId === user.id);
 
         if (user.providerId) {
             setValue('provider', user.providerId.toString());
@@ -170,10 +162,6 @@ const UserDetails = () => {
                     setUserProvider(currentProvider);
                 }
             }
-        }
-
-        if (statusResult) {
-            setUserLiveStatus(user.latestConnectStatus as UserStatus ?? UserStatus.Offline);
         }
         if (user.callForwardingEnabled) {
             setValue('enable_forward', {value: undefined, checked: true});
@@ -459,8 +447,8 @@ const UserDetails = () => {
                 />
 
                 <StatusDotLabel
-                    status={userLiveStatus}
-                    label={userLiveStatus.toString()}
+                    status={userStatus}
+                    label={userStatus.toString()}
                     className='mt-4'
                 />
 
@@ -499,7 +487,7 @@ const UserDetails = () => {
                             buttonType='medium'
                             label='common.save'
                             className='mr-5'
-                            //disabled={ userDetailExtended?.user ? (isButtonDisabled() && !isNotificationPermissionChange) : (isButtonDisabled())}
+                            disabled={ userDetailExtended?.user ? (isButtonDisabled() && !isNotificationPermissionChange) : (isButtonDisabled())}
                             isLoading={updateMutation.isLoading}
                             onClick={() => canEditUser ? handleSubmit(saveUser)() : handleSubmit(saveCallForwarding)()}
                         />

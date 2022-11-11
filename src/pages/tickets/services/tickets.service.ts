@@ -58,7 +58,7 @@ const ticketsBaseUrl = "/tickets";
 export function getList(ticketQuery: TicketQuery, resetPagination?: boolean) {
     return async (dispatch: Dispatch) => {
         dispatch(setGlobalLoading(true));
-        const query: any = ticketQuery;
+        const query: any = {...ticketQuery};
         if (!isNaN(Number(ticketQuery.searchTerm))) {
             query.ticketNumber = ticketQuery.searchTerm;
         }

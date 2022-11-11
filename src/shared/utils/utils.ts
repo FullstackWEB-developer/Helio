@@ -621,7 +621,7 @@ const hexToRGB = (hex) => {
     return r + ", " + g + ", " + b;
 }
 export const spaceBetweenCamelCaseWords = (phrase: string) => {
-    return phrase.replace(/([A-Z])/g, ' $1').trim();
+    return phrase.replace(/([A-Z])([A-Z])([a-z])|([a-z])([A-Z])/g, '$1$4 $2$3$5').trim();
 }
 const isObject = (object) => {
     return object != null && typeof object === 'object';

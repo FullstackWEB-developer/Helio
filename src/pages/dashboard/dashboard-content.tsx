@@ -41,6 +41,7 @@ const DashboardContent = (dataInput: DashboardContentProps) => {
                         </div>
                         <div>
                             <BasicStatistic title='dashboard.ticket_stats.closed'
+                                            tooltip='dashboard.ticket_stats.closed_tooltip'
                                             value={data.statusStats.closed}/>
                         </div>
                         <div>

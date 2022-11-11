@@ -1375,6 +1375,7 @@
       "open": "Open",
       "on_hold": "On Hold",
       "closed": "Closed",
+      "closed_tooltip": "Number of Closed and Solved tickets",
       "total": "Total"
     },
     "tickets_volume": {
