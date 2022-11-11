@@ -68,13 +68,15 @@ const ProfileDropdown = () => {
     )
 
     const updateStatus = (status: string) => {
-        if (currentUserDetails.callForwardingEnabled && status !== "Offline") {
+        if (currentUserDetails.callForwardingEnabled) {
             dispatch(addSnackbarMessage({
                 type: SnackbarType.Error,
                 message: 'ccp.cannot_update_status_fw_enabled'
             }))
         } else {
-            if (status === UserStatus.AfterWork) return;
+            if (status === UserStatus.AfterWork) {
+                return;
+            }
             if (window.CCP.agent) {
                 const state = agentStates.find((agentState: AgentState) => agentState.name === status);
                 window.CCP.agent.setState(state, {
