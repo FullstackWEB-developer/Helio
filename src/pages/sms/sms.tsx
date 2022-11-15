@@ -213,7 +213,10 @@ const Sms = () => {
             enabled: !!newMessageId,
             onSuccess: (result) => {
                 const isTicketSummarySelected = summaryMessages && selectedTicketSummary?.ticketId === result.ticketId && result.channel === ChannelTypes.SMS;
-                if (isTicketSummarySelected && (!isSMSSentFromChatPage && (botContext?.ticket?.id === selectedTicketSummary?.ticketId))) {
+                if (isTicketSummarySelected && !isSMSSentFromChatPage) {
+                    pushMessage(result);
+                }
+                if (!!botContext && !isSMSSentFromChatPage && (botContext?.ticket?.id === selectedTicketSummary?.ticketId)) {
                     pushMessage(result);
                 }
                 setIsSMSSentFromChatPage(false);
