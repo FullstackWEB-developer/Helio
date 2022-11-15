@@ -819,6 +819,12 @@ const Ccp: React.FC<BoxProps> = ({
                                                 fillClass={applyProperIconClass(contextPanels.sms)}
                                                 onClick={() => dispatch(setContextPanel(contextPanels.sms))} />
                                         </span>
+                                        <span className={`h-10 flex items-center justify-center w-12 ccp-botom-icon-background`}>
+                                            <SvgIcon type={Icon.Tickets}
+                                                className='cursor-pointer icon-medium'
+                                                fillClass={applyProperIconClass('')}
+                                                onClick={() => history.push('/tickets/' + botContext?.ticket?.ticketNumber)} />
+                                        </span>
                                     </>
                                 }
                                 <span className={`h-10 flex items-center justify-center w-12 ${applyProperIconClass(contextPanels.extensions, 'background')}`}>
