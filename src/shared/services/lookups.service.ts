@@ -21,6 +21,7 @@ import { PracticeBranding } from '@shared/models/practice-branding';
 import { GeneralSettingsModel } from '@pages/configurations/models/general-settings.model';
 import {PatientChartVisibility} from '@pages/configurations/models/patient-chart-visibility.model';
 import i18n from 'i18next';
+import { ChatWidgetModel } from '@pages/configurations/models/chat-widget.model';
 
 const parametersUrl = '/lookups/parameters';
 const lookupsUrl = '/lookups';
@@ -256,4 +257,17 @@ export const getPatientChartTabSettings = async () : Promise<PatientChartVisibil
 }
 export const savePatientChartTabSettings = async (payload: PatientChartVisibility) => {
     await Api.post(`${parametersUrl}/patient-tabs`, payload);
+}
+
+export const getChatWidget = async () : Promise<ChatWidgetModel>=> {
+    const { data } = await Api.get<ChatWidgetModel>(`${parametersUrl}/chat-widget`);
+    return data;
+}
+export const saveChatWidget = async (payload: any) => {
+    await Api.post(`${parametersUrl}/chat-widget`, {
+        autoStartDelay: payload.timeDelay,
+        autoStartEnabled: payload.autoStart,
+        displayPosition: Number(payload.displayPosition),
+        domains: payload.webChat.length > 0 ? payload.webChat.map( x => x.domain ) : []
+    } as ChatWidgetModel);
 }

@@ -76,6 +76,10 @@ export const ConfigurationMenuItems = [{
         title: 'configuration.contact_categories_menu',
         url: "contact-categories",
     }, {
+        id: "configuration-menu-item-18",
+        title: 'configuration.web_chat_menu',
+        url: "chat-widget",
+    }, {
         id: "configuration-menu-item-13",
         title: 'configuration.public_links_menu',
         url: PublicLinksPath

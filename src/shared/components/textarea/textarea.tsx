@@ -45,6 +45,7 @@ interface TextAreaProps {
     hideFormattingButton?: boolean;
     sizeSelectionEnabled?: boolean;
     formulaSelectionDropdown?: boolean;
+    isReadOnly?: boolean;
 }
 
 const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(({
@@ -73,6 +74,7 @@ const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(({
    hideFormattingButton = false,
    sizeSelectionEnabled = true,
    formulaSelectionDropdown = false,
+   isReadOnly = false,
     ...props
 }: TextAreaProps, ref) => {
 
@@ -194,6 +196,7 @@ const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(({
                               rows={rows}
                               wrap='hard'
                               onKeyPress={onKeyPress}
+                              readOnly={isReadOnly}
                     />
                     {
                         props.icon && (alwaysDisplayIcon || (textAreaValue && textAreaValue?.trim()?.length > 0)) &&

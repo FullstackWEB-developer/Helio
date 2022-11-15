@@ -24,6 +24,7 @@ import GeneralSettings from './components/general-settings/general-settings';
 import PracticeEmailTemplateEdit from "@pages/configurations/components/branding/practice-email-template/practice-email-template";
 import PatientChartTabs from '@pages/configurations/components/patient-chart-tabs/patient-chart-tabs';
 import SvgIcon, { Icon } from '@components/svg-icon';
+import WebChat from './components/web-chat/web-chat';
 const PracticeBrandingEdit = React.lazy(() => import("./components/branding/practice-branding/practice-branding"));
 interface ConfigurationUrlParams {
     type: string,
@@ -74,6 +75,8 @@ const Configurations = () => {
                 return <PatientChartTabs />;
             case PracticeEmailTemplatePath:
                 return <PracticeEmailTemplateEdit />;
+            case "chat-widget":
+                return <WebChat />;
             default:
                 return <GeneralSettings />
         }
