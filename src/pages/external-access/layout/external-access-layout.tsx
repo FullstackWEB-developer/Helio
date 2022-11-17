@@ -8,7 +8,7 @@ import '../../../themes/helio-theme.scss';
 import {useRouteMatch} from 'react-router';
 import classNames from 'classnames';
 import {useLocation} from 'react-router-dom';
-import {TicketEmailPath, TicketSmsPath} from '@app/paths';
+import {AppointmentSchedulePath, TicketEmailPath, TicketSmsPath} from '@app/paths';
 import utils from '@shared/utils/utils';
 import {useDispatch, useSelector} from 'react-redux';
 import {logOut} from '@shared/store/app-user/appuser.slice';
@@ -18,6 +18,7 @@ import { SnackbarType } from '@components/snackbar/snackbar-type.enum';
 import {clearVerifiedPatient} from '@pages/patients/store/patients.slice';
 import {setVerifiedLink} from '@pages/external-access/verify-patient/store/verify-patient.slice';
 import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
+import { isMobile } from 'react-device-detect';
 
 export interface ExternalAccessLayoutProps {
     children: ReactNode;
@@ -46,6 +47,7 @@ const ExternalAccessLayout = ({children}: ExternalAccessLayoutProps) => {
 
     const isSmsTicketPage = location && location.pathname === TicketSmsPath;
     const isEmailPage = location && location.pathname === TicketEmailPath;
+    const isScheduleConfirmationPage = location && isMobile && location.pathname === `${AppointmentSchedulePath}/confirm`;
 
     useEffect(() => {
         if(isPreview){
@@ -87,8 +89,9 @@ const ExternalAccessLayout = ({children}: ExternalAccessLayoutProps) => {
         'hidden': isSmsTicketPage || isEmailPage
     });
 
-    const childrenWrapperClass = classNames('flex-grow xl:px-40 external-access-container', {
-        'px-4 pb-36 padding-top': !isSmsTicketPage && !isEmailPage
+    const childrenWrapperClass = classNames('flex-grow xl:px-40', {
+        'px-4 pb-36 padding-top': !isSmsTicketPage && !isEmailPage,
+        'external-access-container': !isScheduleConfirmationPage
     });
 
     const footerWrapperClass = classNames('h-16 xl:px-40 external-access-layout-footer body3-medium', {
