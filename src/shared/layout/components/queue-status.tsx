@@ -71,6 +71,8 @@ const QueueStatus = ({ queueType, queueTitle }: QueueStatusProps) => {
                 setSelectedOption(metricOptions.find(a => Number(a.key) === defaultDropdownKey))
             }
             setMetric(metrics);
+        } else if(!isLoading && (!quickConnectExtensions || quickConnectExtensions.length === 0)) {
+            setSelectedOption(metricOptions.find(a => Number(a.key) === defaultDropdownKey));
         }
     }, [dispatch, isLoading, queueType, quickConnectExtensions, selectedOption, displayMetricDropdown]);
 
@@ -133,6 +135,7 @@ const QueueStatus = ({ queueType, queueTitle }: QueueStatusProps) => {
             hasRowsBottomBorder: false,
             headerClassName: 'mb-2',
             size: 'compact',
+            emptyMessage: 'statuses.queuestatus.no_agent_online',
             columns: [
                 {
                     field: 'queueName',

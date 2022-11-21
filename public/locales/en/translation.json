@@ -771,7 +771,8 @@
       "queue": "Queue",
       "all_queues": "All Queues",
       "my_queues": "My Queues",
-      "loading_error": "Error Loading Queue Metrics"
+      "loading_error": "Error Loading Queue Metrics",
+      "no_agent_online": "There is no online agent now"
     },
     "options": {
       "1": "Agents After Contact Work",
