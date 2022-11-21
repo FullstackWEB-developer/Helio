@@ -49,8 +49,12 @@
   fill: var(--navigation-inactive-item-icon);
 }
 
-.active-item-icon {
+.navigation-active-item-icon {
   fill: var(--navigation-active-item-icon);
+}
+
+.active-item-icon {
+  fill: var(--active-item-icon);
 }
 
 .status-bar-inactive-item-icon {

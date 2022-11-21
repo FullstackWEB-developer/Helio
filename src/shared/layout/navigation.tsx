@@ -56,12 +56,12 @@ const Navigation = () => {
             title: t('navigation.dashboard'),
             link: '/dashboard',
             id: 'navigation-dashboard',
-            icon: <SvgIcon type={Icon.Dashboard} fillClass='active-item-icon' />
+            icon: <SvgIcon type={Icon.Dashboard} fillClass='navigation-active-item-icon' />
         }, {
             title: t('navigation.tickets'),
             link: TicketsPath,
             id: 'navigation-tickets',
-            icon: <SvgIcon type={Icon.Tickets} fillClass='active-item-icon' />,
+            icon: <SvgIcon type={Icon.Tickets} fillClass='navigation-active-item-icon' />,
             displayBadge: unreadTicketsCount > 0 || unreadTeamTicketsCount > 0,
             badgeValue: unreadTicketsCount,
             teamValue: unreadTeamTicketsCount,
@@ -71,22 +71,22 @@ const Navigation = () => {
             title: t('navigation.contacts'),
             link: '/contacts',
             id: 'navigation-contacts',
-            icon: <SvgIcon type={Icon.Contacts} fillClass='active-item-icon' />
+            icon: <SvgIcon type={Icon.Contacts} fillClass='navigation-active-item-icon' />
         }, {
             title: t('navigation.calls'),
             link: '/calls',
             id: 'navigation-calls',
-            icon: <SvgIcon type={Icon.Phone} fillClass='active-item-icon' />
+            icon: <SvgIcon type={Icon.Phone} fillClass='navigation-active-item-icon' />
         }, {
             title: t('navigation.chat'),
             link: '/chats',
             id: 'navigation-chat',
-            icon: <SvgIcon type={Icon.Chat} fillClass='active-item-icon' />
+            icon: <SvgIcon type={Icon.Chat} fillClass='navigation-active-item-icon' />
         }, {
             title: t('navigation.sms'),
             link: '/sms',
             id: 'navigation-sms',
-            icon: <SvgIcon type={Icon.Sms} fillClass='active-item-icon' />,
+            icon: <SvgIcon type={Icon.Sms} fillClass='navigation-active-item-icon' />,
             displayBadge: unreadSMSListCount > 0 || unreadTeamSMSListCount > 0,
             badgeValue: unreadSMSListCount,
             teamValue: unreadTeamSMSListCount,
@@ -97,7 +97,7 @@ const Navigation = () => {
              title: t('navigation.email'),
              link: '/email',
              id: 'navigation-email',
-             icon: <SvgIcon type={Icon.Email} fillClass='active-item-icon' />,
+             icon: <SvgIcon type={Icon.Email} fillClass='navigation-active-item-icon' />,
              displayBadge: unreadEmailCount > 0 || unreadTeamEmailCount > 0,
              badgeValue: unreadEmailCount,
              teamValue: unreadTeamEmailCount,
@@ -108,26 +108,26 @@ const Navigation = () => {
             title: t('navigation.reports'),
             link: ReportsPath,
             id: 'navigation-reports',
-            icon: <SvgIcon type={Icon.Reports} fillClass='active-item-icon' />,
+            icon: <SvgIcon type={Icon.Reports} fillClass='navigation-active-item-icon' />,
             permission: 'Reports.Access'
         },
         {
             title: t('navigation.users'),
             link: UsersPath,
             id: 'navigation-users',
-            icon: <SvgIcon type={Icon.Users} fillClass='active-item-icon' />,
+            icon: <SvgIcon type={Icon.Users} fillClass='navigation-active-item-icon' />,
             permission: 'Users.Access'
         }, {
             title: t('navigation.blacklists'),
             link: BlackListsPath,
             id: 'navigation-blacklists',
-            icon: <SvgIcon type={Icon.Blacklist} fillClass='active-item-icon' />,
+            icon: <SvgIcon type={Icon.Blacklist} fillClass='navigation-active-item-icon' />,
             permission: 'BlockedAccess.Access'
         }, {
             title: t('navigation.configurations'),
             link: `${ConfigurationsPath}`,
             id: 'navigation-configurations',
-            icon: <SvgIcon type={Icon.Configurations} fillClass='active-item-icon' />,
+            icon: <SvgIcon type={Icon.Configurations} fillClass='navigation-active-item-icon' />,
             permission: 'Configurations.Access'
         }
     ];
