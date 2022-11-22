@@ -52,6 +52,7 @@ import {ReportTypes} from '@pages/reports/models/report-types.enum';
 import {BotReport} from '@pages/reports/models/bot-report.model';
 import {SystemReport} from '@pages/reports/models/system-report.model';
 import {CallbackTicketCountType} from '@pages/tickets/models/callback-ticket-count-type.enum';
+import { TicketTypes } from '../models/ticket-types.model';
 
 const ticketsBaseUrl = "/tickets";
 
@@ -572,5 +573,23 @@ export const getCallbackTicketCount = async (type :CallbackTicketCountType) : Pr
             type
         }
     });
+    return response.data;
+}
+
+export const getTicketTypes = async (): Promise<TicketTypes[]> => {
+    const url = `${ticketsBaseUrl}/ticket-type`;
+    const response = await Api.get(url);
+    return response.data;
+}
+
+export const saveTicketTypes = async (request: TicketTypes) => {
+    const url = `${ticketsBaseUrl}/ticket-type`;
+    const response = await Api.put(url, request);
+    return response.data;
+}
+
+export const getIntents = async () => {
+    const url = `${ticketsBaseUrl}/connect/intents`;
+    const response = await Api.get(url);
     return response.data;
 }

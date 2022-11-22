@@ -1981,6 +1981,7 @@
     "tickets": "Tickets",
     "tags": "Tags",
     "ticket_department": "Departments/Groups",
+    "ticket_configuration": "Tickets Configurations",
     "public_links_menu": "Public Links",
     "patient_chart_tabs_visibility": "Patient Chart Tab Visibility",
     "ticket_department_menu": "Departments/Groups",
@@ -2383,6 +2384,39 @@
       "edit_tag": "Edit Tag",
       "input_label": "Tag Name"
     }
+  },
+  "ticket_configuration": {
+    "title": "Tickets Configurations",
+    "description": "Please select ticket type to view or modify ticket configuration.",
+    "table_reason_header": "Ticket Reason",
+    "add_reason": "Add Reason",
+    "table_subject_header": "Ticket Subjects",
+    "add_subject": "Add Subject",
+    "ticket_type": "Ticket Type",
+    "reason_table": {
+      "reason_label": "Reason Label",
+      "voice_bot_name": "Voice Bot Name Label",
+      "voice_bot_tooltip": "Voice Bot Name Tooltip"
+    },
+    "subject_table": {
+      "reason_label": "Subject Label",
+      "voice_bot_name": "Voice Bot Name Label",
+      "voice_bot_tooltip": "Voice Bot Name Tooltip"
+    },
+    "duration": "Ticket Duration",
+    "hours": "Hours",
+    "edit_subject": "Update Ticket Subject",
+    "edit_reason": "Update Ticket Reason",
+    "reason_label": "Reason Label",
+    "subject_label": "Subject Label",
+    "voice_intent": "Voice Bot Label",
+    "create_success": "Successfully added.",
+    "update_success": "Successfully updated.",
+    "delete_success": "Successfully deleted.",
+    "get_error": "Error while getting records, please try again later.",
+    "delete_error": "Error while deleting record, please try again later.",
+    "create_error": "Error while adding record, please try again later.",
+    "update_error": "Error while updating record, please try again later."
   },
   "blocked_popup": {
     "title": "Pop-ups blocked.",

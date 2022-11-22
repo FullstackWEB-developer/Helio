@@ -107,3 +107,5 @@ export const GetRelatedTicketParent = 'get-related-ticket-parent';
 export const GetChildrenTicketNumbers = 'get-children-ticket-numbers';
 export const GetCallbackTicketCount = 'get-callback-ticket-count';
 export const GetChatWidget = 'get-chat-widget';
+export const GetTicketTypes = 'get-ticket-types';
+export const GetIntents = 'get-intents';

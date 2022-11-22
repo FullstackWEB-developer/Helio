@@ -69,6 +69,10 @@ export const ConfigurationMenuItems = [{
             id: "configuration-menu-item-8",
             title: 'configuration.ticket_department_menu',
             url: "ticket-department",
+        },{
+            id: "configuration-menu-item-19",
+            title: 'configuration.ticket_configuration',
+            url: "tickets",
         }
         ]
     }, {

@@ -190,13 +190,14 @@ export const getLookupValues = (key: string, forceUpdate: boolean = false) => {
     }
 }
 
-export const upsertLookupValue = async (label: string, value: string, key: string, isUpdate: boolean, isReadOnly: boolean = false) => {
+export const upsertLookupValue = async (label: string, value: string, key: string, isUpdate: boolean, isReadOnly: boolean = false, intentName: string | undefined = undefined, parentValue: string = "") => {
     let request: TicketLookupValue = {
         label: label,
         value: value,
         key: key,
-        parentValue: "",
-        isReadOnly: isReadOnly
+        parentValue: parentValue,
+        isReadOnly: isReadOnly,
+        intentName: intentName
     }
 
     if (isUpdate) {
