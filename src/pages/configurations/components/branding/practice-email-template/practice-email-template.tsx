@@ -25,7 +25,7 @@ const PracticeEmailTemplateEdit = () => {
     const {t} = useTranslation();
     const dispatch = useDispatch();
     const queryClient = useQueryClient()
-    const {handleSubmit, control, formState, reset} = useForm<PracticeEmailTemplateInterface>({mode: 'onChange'});
+    const {handleSubmit, control, formState, reset, setValue} = useForm<PracticeEmailTemplateInterface>({mode: 'onChange'});
     const [headerImageName, setHeaderImageName] = useState<string>()
     const [footerImageName, setFooterImageName] = useState<string>()
     const {
@@ -75,9 +75,13 @@ const PracticeEmailTemplateEdit = () => {
     }
 
     const onRestoreDefaultData = () => {
+        setValue("footerDisclaimer",data?.defaultFooterDisclaimer);
+    }
+
+    const onCancel = () => {
         setFooterImageName(data?.footerImage);
         setHeaderImageName(data?.headerImage);
-        reset();
+        setValue("footerDisclaimer",data?.footerDisclaimer);
     }
     const previewEmailTemplateMutation = useMutation(getPracticeEmailTemplatePreview, {
         onSuccess: (data) => {
@@ -163,7 +167,7 @@ const PracticeEmailTemplateEdit = () => {
                             data-testid='configuration.practice_email_template.reset_to_default_button'
                             buttonType='secondary'
                             onClick={() => onRestoreDefaultData()}
-                            isLoading={savePracticeEmailTemplateMutation.isLoading || uploadLogoMutation.isLoading}/>
+                            disabled={savePracticeEmailTemplateMutation.isLoading || uploadLogoMutation.isLoading}/>
                 </div>
 
                 <div className='mb-8'>
@@ -190,11 +194,11 @@ const PracticeEmailTemplateEdit = () => {
                             className=' ml-8'
                             buttonType='secondary'
                             onClick={() => previewEmailTemplate()}
-                            isLoading={savePracticeEmailTemplateMutation.isLoading || uploadLogoMutation.isLoading}/>
+                            disabled={savePracticeEmailTemplateMutation.isLoading || uploadLogoMutation.isLoading}/>
                     <Button label='common.cancel'
                             className=' ml-8'
                             buttonType='secondary'
-                            onClick={() => onRestoreDefaultData()}
+                            onClick={() => onCancel()}
                             disabled={savePracticeEmailTemplateMutation.isLoading || uploadLogoMutation.isLoading}/>
                 </div>
             </form>
