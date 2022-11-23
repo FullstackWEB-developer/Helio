@@ -69,6 +69,8 @@ const EditAppointmentType = () => {
         dispatch(getProviders());
     }, [dispatch]);
 
+
+
     const updateAppointmentTypeMutation = useMutation(saveAppointmentType, {
         onSuccess: (_) => {
             dispatch(addSnackbarMessage({
@@ -145,6 +147,14 @@ const EditAppointmentType = () => {
 
     const isReschedulable = watch('isReschedulable') === 'true';
     const isCancelable = watch('isCancelable') === 'true';
+
+    useEffect(() => {
+        control.trigger('rescheduleTimeFrame');
+        control.trigger('cancelationTimeFrame');
+        control.trigger('cancelationFee');
+    }, [isReschedulable, isCancelable])
+
+
     const navigateBackToAppointmentTypeList = () => {
         const pathName = `${ConfigurationsPath}/appointment-type`;
         history.push({

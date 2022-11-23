@@ -213,9 +213,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({
                         <SvgIcon type={dropdownIcon} onClick={dropdownIconClickHandler} fillClass={dropdownIconFill ?? 'select-arrow-fill'} />
                     }
                 </div>}
-                {isFocused &&
-                    props.value &&
-                    <span
+                {(isFocused && props.value) ?  <span
                         className="flex items-center px-3 leading-normal rounded rounded-l-none input-addon clear-input-icon"
                         onMouseDown={(e) => preventMousedownTriggerBlur(e)}
                         onClick={(e) => {
@@ -223,7 +221,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({
                         }}
                     >
                         <SvgIcon type={Icon.Clear} fillClass="clear-input-icon-fill" />
-                    </span>}
+                    </span> : null}
                 {isLoading &&
                     <span className="flex items-center px-3 leading-normal rounded rounded-l-none input-addon">
                         <Spinner size='small' />
