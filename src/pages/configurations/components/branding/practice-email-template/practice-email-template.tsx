@@ -51,8 +51,10 @@ const PracticeEmailTemplateEdit = () => {
 
     const onSubmit = (formData: PracticeEmailTemplateInterface) => {
         if (headerImageName && footerImageName) {
+            let disclaimer = formData.footerDisclaimer.replaceAll('<p>', '<tr><td>')
+            disclaimer = disclaimer.replaceAll('</p>', '</td></tr>')
             const request: PracticeEmailTemplate = {
-                footerDisclaimer: formData.footerDisclaimer,
+                footerDisclaimer: disclaimer,
                 headerImage: headerImageName,
                 footerImage: footerImageName,
             }
@@ -97,10 +99,12 @@ const PracticeEmailTemplateEdit = () => {
     });
     const previewEmailTemplate = () => {
         if (data && headerImageName && footerImageName) {
+            let disclaimer = data.footerDisclaimer.replaceAll('<p>', '<tr><td>')
+            disclaimer = disclaimer.replaceAll('</p>', '</td></tr>')
             previewEmailTemplateMutation.mutate({
                 headerImage: headerImageName,
                 footerImage: footerImageName,
-                footerDisclaimer: data?.footerDisclaimer
+                footerDisclaimer: disclaimer
             })
         }
     }
