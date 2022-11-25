@@ -72,13 +72,14 @@ const PracticeBrandingEdit = () => {
         }
     });
     const previewEmailTemplate = () => {
-        if (data) {
+        if (colors && logoPath) {
             previewEmailTemplateMutation.mutate({
-                hoverColor: data.hoverColor,
-                focusedColor: data.focusedColor,
-                primaryColor: data.primaryColor,
-                secondaryColor: data.secondaryColor,
-                tertiaryColor: data.tertiaryColor
+                hoverColor: colors.hoverColor,
+                focusedColor: colors.focusedColor,
+                primaryColor: colors.primaryColor,
+                secondaryColor: colors.secondaryColor,
+                tertiaryColor: colors.tertiaryColor,
+                headerImage: logoPath
             })
         }
     }

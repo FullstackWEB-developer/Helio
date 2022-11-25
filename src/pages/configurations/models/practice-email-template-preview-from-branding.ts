@@ -4,4 +4,5 @@ export interface  PracticeEmailTemplatePreviewFromBranding {
     focusedColor: string;
     secondaryColor: string;
     tertiaryColor: string;
+    headerImage: string;
 }
