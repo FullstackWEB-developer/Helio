@@ -67,7 +67,6 @@ import Spinner from '@components/spinner/Spinner';
 import useBrowserNotification from '@shared/hooks/useBrowserNotification';
 import {Intent} from './models/intent.enum';
 import {ForwardingEnabledStatus} from '@shared/layout/components/profile-dropdown';
-import Checkbox from '@components/checkbox/checkbox';
 
 const ccpConfig = {
     region: utils.getAppParameter('AwsRegion'),
@@ -500,6 +499,11 @@ const Ccp: React.FC<BoxProps> = ({
                 if (isInboundCall) {
                     setIsInboundCall(false);
                 }
+            });
+
+            contact.onError(contact => {
+                Logger.getInstance().error("CCP - Contact Error" , contact);
+                Logger.getInstance().error("CCP - Contact Error" , contact.getDescription());
             })
         });
         connect.agent((agent) => {
@@ -534,6 +538,20 @@ const Ccp: React.FC<BoxProps> = ({
                 dispatch(setChatCounter(numberOfChats));
                 const numberOfVoices = ag.getContacts(connect.ContactType.VOICE).length;
                 dispatch(setVoiceCounter(numberOfVoices));
+            });
+
+            agent.onSoftphoneError(error => {
+                Logger.getInstance().error("CCP - Softphone Error", error);
+            });
+
+            // @ts-ignore
+            agent.onWebSocketConnectionLost((agent) => {
+                Logger.getInstance().error("CCP - Agent Lost Websocket Connection", agent);
+            });
+
+            // @ts-ignore
+            agent.onWebSocketConnectionGained((agent) => {
+                Logger.getInstance().error("CCP - Agent Gained Websocket Connection", agent);
             });
         });
     }, []);

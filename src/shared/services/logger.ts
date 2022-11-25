@@ -91,7 +91,9 @@ class Logger {
             return data?.$metadata.httpStatusCode;
         }
         catch (error: any) {
-            console.log(error);
+            if (!!error && error.__type !== "ResourceAlreadyExistsException") {
+                console.log(error);
+            }
         }
     }
 
@@ -162,34 +164,34 @@ class Logger {
         return appUserState?.isLoading;
     }
 
-    info = (message: string, data?: object) => {
+    info = async (message: string, data?: object) => {
         const log: Log = {
             message: message,
             level: LogLevel.Info,
             data: data
         }
 
-        this.putEvent(log);
+        await this.putEvent(log);
     }
 
-    error = (message: string, data?: object | unknown) => {
+    error = async (message: string, data?: object | unknown) => {
         const log: Log = {
             message: message,
             level: LogLevel.Error,
             data: data as any
         }
 
-        this.putEvent(log);
+        await this.putEvent(log);
     }
 
-    warn = (message: string, data?: object) => {
+    warn = async (message: string, data?: object) => {
         const log: Log = {
             message: message,
             level: LogLevel.Warning,
             data: data
         }
 
-        this.putEvent(log);
+        await this.putEvent(log);
     }
 }
 
