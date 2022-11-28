@@ -126,7 +126,7 @@ const ExternalAccessLayout = ({children}: ExternalAccessLayoutProps) => {
     })
 
     return <>
-        <div className={externalAccessLayoutClassnames}>
+        <div id="external-access-layout" className={externalAccessLayoutClassnames}>
             {<div className={iconWrapperClass}>
                 <div className='flex items-center justify-center h-full md:justify-start'>
                     <img src={logoPath}></img>

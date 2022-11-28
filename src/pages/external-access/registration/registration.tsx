@@ -58,6 +58,14 @@ const Registration = () => {
         dispatch(logOut());
     }, [dispatch]);
 
+    useEffect(() => {
+        let externalAccessLayout = document.getElementById("external-access-layout");
+        
+        if(externalAccessLayout){
+            externalAccessLayout.scroll({top: 0, behavior: 'smooth'});
+        }
+    }, [currentStep]);
+
     const displayStepDescription = () => {
         switch (currentStep) {
             case RegistrationStep.PersonalInformation:
