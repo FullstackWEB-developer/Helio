@@ -7,7 +7,7 @@ import Button from '@components/button/button';
 import Radio from '@components/radio/radio';
 import SvgIcon, { Icon } from '@components/svg-icon';
 import { useDispatch } from 'react-redux';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Confirmation from '@components/confirmation/confirmation';
 import { useHistory } from 'react-router';
 import RouteLeavingGuard from '@components/route-leaving-guard/route-leaving-guard';
@@ -22,6 +22,7 @@ import { SnackbarType } from '@components/snackbar/snackbar-type.enum';
 import { DisplayPosition } from '@pages/configurations/models/display-position.enum';
 import TextArea from '@components/textarea/textarea';
 import { ChatWidgetModel } from '@pages/configurations/models/chat-widget.model';
+import utils from '@shared/utils/utils';
 interface DomainControl {
     domain: string
 }
@@ -53,7 +54,7 @@ const WebChat = () => {
         return getChatWidget();
     }, {
         onSuccess: (data) => {
-            setScript(`<script src='./ACChat.js'></script>\n<script>\n\tAmazonCustomChatWidget.ChatInterface.init({\n\t\tapiGateway: 'https://dev-api.helio.clinic/chats/chat/start',\n\t\tcontactFlowId: 'd9d742e7-8de2-4116-b283-d0a6534907f9',\n\t\tinstanceId: '823b8553-3220-483a-967f-41608703a7c2',\n\t\ttenantId: 'cwc',\n\t\tdescription: 'Complete Women Care',\n\t\tchatStartTimeOut: ${data.autoStartDelay}\n\t});\n</script>`);
+            setScript(`<script src='https://${utils.getAppParameter('EnvironmentName')?.toLowerCase()}-helio-assets.s3.us-west-2.amazonaws.com/chat.js'></script>\n<script>AmazonCustomChatWidget.ChatInterface.init({tenantId: '${utils.getAppParameter('ShortEnvironmentName')}'});</script>`);
             setValue('webChat', data.domains.map(domain => {
                 return { domain }
             }));
