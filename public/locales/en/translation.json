@@ -2091,6 +2091,7 @@
       "copy_to_clipboard": "Copy To Clipboard",
       "add_domain": "Add Domain",
       "domain": "Domain",
+      "save_success": "Settings saved successfully",
       "save_failed": "There is an error, please try again later",
       "get_failed": "There is an error, please try again later",
       "copied": "Script has been copied to clipboard"

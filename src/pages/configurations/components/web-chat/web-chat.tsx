@@ -1,35 +1,36 @@
-import { useTranslation } from 'react-i18next';
+import {useTranslation} from 'react-i18next';
 import Spinner from '@components/spinner/Spinner';
 import './web-chat.scss';
-import { Controller, useFieldArray, useForm } from 'react-hook-form';
-import { ControlledInput } from '@components/controllers';
+import {Controller, useFieldArray, useForm} from 'react-hook-form';
+import {ControlledInput} from '@components/controllers';
 import Button from '@components/button/button';
 import Radio from '@components/radio/radio';
-import SvgIcon, { Icon } from '@components/svg-icon';
-import { useDispatch } from 'react-redux';
-import { useState } from 'react';
+import SvgIcon, {Icon} from '@components/svg-icon';
+import {useDispatch} from 'react-redux';
+import {useEffect, useState} from 'react';
 import Confirmation from '@components/confirmation/confirmation';
-import { useHistory } from 'react-router';
+import {useHistory} from 'react-router';
 import RouteLeavingGuard from '@components/route-leaving-guard/route-leaving-guard';
 import ToggleSwitch from '@components/toggle-switch/toggle-switch';
-import { Option } from '@components/option/option';
+import {Option} from '@components/option/option';
 import WebChatDomain from './components/web-chat-domain';
-import { useMutation, useQuery } from 'react-query';
-import { GetChatWidget } from '@constants/react-query-constants';
-import { getChatWidget, saveChatWidget } from '@shared/services/lookups.service';
-import { addSnackbarMessage } from '@shared/store/snackbar/snackbar.slice';
-import { SnackbarType } from '@components/snackbar/snackbar-type.enum';
-import { DisplayPosition } from '@pages/configurations/models/display-position.enum';
+import {useMutation, useQuery} from 'react-query';
+import {GetChatWidget} from '@constants/react-query-constants';
+import {getChatWidget, saveChatWidget} from '@shared/services/lookups.service';
+import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
+import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
+import {DisplayPosition} from '@pages/configurations/models/display-position.enum';
 import TextArea from '@components/textarea/textarea';
-import { ChatWidgetModel } from '@pages/configurations/models/chat-widget.model';
+import {ChatWidgetModel} from '@pages/configurations/models/chat-widget.model';
 import utils from '@shared/utils/utils';
+
 interface DomainControl {
     domain: string
 }
 interface WebChatForm {
     domains: DomainControl[];
     autoStart: boolean;
-    timeDelay: number;
+    autoStartDelay: number;
     displayPosition: DisplayPosition
 }
 const WebChat = () => {
@@ -49,6 +50,10 @@ const WebChat = () => {
     const { isDirty } = formState;
     const { fields, append, remove } = useFieldArray<DomainControl>({ name: 'webChat', control });
     const autoStartWatch = watch('autoStart', false);
+
+    useEffect(() => {
+        trigger('autoStartDelay').then()
+    }, [autoStartWatch])
 
     const {isLoading, isFetching, data, refetch} = useQuery([GetChatWidget], () => {
         return getChatWidget();
@@ -72,6 +77,10 @@ const WebChat = () => {
 
     const saveChatWidgetMutation = useMutation(saveChatWidget, {
         onSuccess: () => {
+            dispatch(addSnackbarMessage({
+                message: 'configuration.web_chat.save_success',
+                type: SnackbarType.Success
+            }));
             refetch();
         },
         onError: () => {
@@ -83,6 +92,9 @@ const WebChat = () => {
     });
 
     const onSubmit = (formData) => {
+        if (!formData.autoStartDelay) {
+            formData.autoStartDelay = 0;
+        }
         saveChatWidgetMutation.mutate(formData as ChatWidgetModel);
     }
 
@@ -138,7 +150,7 @@ const WebChat = () => {
                             <div className='flex flex-col input-row'>
                                 <div className='w-48'>
                                     <ControlledInput
-                                        name='timeDelay'
+                                        name='autoStartDelay'
                                         control={control}
                                         defaultValue={data?.autoStartDelay}
                                         label={'configuration.web_chat.time_delay'}
