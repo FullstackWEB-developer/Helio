@@ -59,7 +59,7 @@ const ConversationHeaderQuickActionsStripe = ({patient, contact}: {patient?: Ext
         if (!options.find(a => a.value === selectedPhoneType.toString()) && options[0]) {
             setSelectedPhoneType(Number(options[0].value))
         }
-    }, [contact, patient, t]);
+    }, [contact, patient, t, selectedPhoneType]);
 
     const phoneTypeDropdownModel: DropdownModel = {
         defaultValue: selectedPhoneType?.toString(),

@@ -133,6 +133,7 @@ const usersSlice = createSlice({
                             if (u?.inviteUserModel?.roles && u.inviteUserModel?.roles.length > 0) {
                                 return roles.split(';').includes(u.inviteUserModel?.roles[0]);
                             }
+                            return [];
                         })
                     }
                     if(rolesUnassigned){

@@ -43,11 +43,11 @@ const Calendar = ({
         const reEvaluateNavigationEnabled = (valueDate: dayjs.Dayjs) => {
             if (min) {
                 const valueMin = valueDate.set('date', min.getDate()).set('hour', min.getHours()).set('minute', min.getMinutes()).set('second', min.getSeconds()).toDate();
-                setDisabledBackward(valueMin < min || valueMin.toDateString() == min?.toDateString());
+                setDisabledBackward(valueMin < min || valueMin.toDateString() === min?.toDateString());
             }
             if (max) {
                 const valueMax = valueDate.set('date', max.getDate()).set('hour', max.getHours()).set('minute', max.getMinutes()).set('second', max.getSeconds()).toDate();
-                setDisabledForward(valueMax > max || valueMax.toDateString() == max?.toDateString());
+                setDisabledForward(valueMax > max || valueMax.toDateString() === max?.toDateString());
             }
 
         }

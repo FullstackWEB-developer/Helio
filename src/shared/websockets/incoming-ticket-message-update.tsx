@@ -19,6 +19,17 @@ const IncomingTicketMessageUpdate = () => {
         if (!smsIncoming) {
             return () => { };
         }
+        const onTicketMessageReceived = (data: SmsNotificationData) => {
+            if (data.messageDirection === TicketMessagesDirection.Incoming && data.channelId === ChannelTypes[ChannelTypes.SMS]) {
+                dispatch(getBadgeValues(BadgeValues.SMSOnly))
+                dispatch(setLastSmsDate());
+                refreshCache(ChannelTypes.SMS, data.ticketId);
+            } else if (data.messageDirection === TicketMessagesDirection.Incoming && data.channelId === ChannelTypes[ChannelTypes.Email]) {
+                dispatch(getBadgeValues(BadgeValues.EmailOnly))
+                dispatch(setLastEmailDate());
+                refreshCache(ChannelTypes.Email, data.ticketId);
+            }
+        }
 
         smsIncoming.on('ReceiveSmsMessage', onTicketMessageReceived);
         return () => {
@@ -30,18 +41,6 @@ const IncomingTicketMessageUpdate = () => {
         client.invalidateQueries([QueryTicketMessagesInfinite, channel, id], {
             exact: true
         }).then();
-    }
-
-    const onTicketMessageReceived = (data: SmsNotificationData) => {
-        if (data.messageDirection === TicketMessagesDirection.Incoming && data.channelId === ChannelTypes[ChannelTypes.SMS]) {
-            dispatch(getBadgeValues(BadgeValues.SMSOnly))
-            dispatch(setLastSmsDate());
-            refreshCache(ChannelTypes.SMS, data.ticketId);
-        } else if (data.messageDirection === TicketMessagesDirection.Incoming && data.channelId === ChannelTypes[ChannelTypes.Email]) {
-            dispatch(getBadgeValues(BadgeValues.EmailOnly))
-            dispatch(setLastEmailDate());
-            refreshCache(ChannelTypes.Email, data.ticketId);
-        }
     }
 
     return null;

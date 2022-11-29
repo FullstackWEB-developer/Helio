@@ -57,7 +57,7 @@ const SimpleImageUploader = ({
         if(typeof imageSrc !== 'string' || !defaultImageSrc){
             setImageSrc(initialSrc);
             onClearImage();
-        }else if(defaultImageSrc && imageSrc == initialSrc){
+        }else if(defaultImageSrc && imageSrc === initialSrc){
             setImageSrc(defaultImageSrc);
             onClearImage(true);
         }
@@ -101,7 +101,7 @@ const SimpleImageUploader = ({
                                 fillClass='clear-icon-fill'
                                 className={classNames('',{'cursor-pointer' : defaultImageSrc ? imageSrc !== defaultImageSrc : src !== initialSrc})}
                                 onClick={clearUpload}
-                                disabled={defaultImageSrc ? imageSrc == defaultImageSrc : src == initialSrc} />
+                                disabled={defaultImageSrc ? imageSrc === defaultImageSrc : src === initialSrc} />
                         </div>
 
                     </div>

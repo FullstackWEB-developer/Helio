@@ -81,7 +81,7 @@ const NavigationItem = ({title, link, icon, isSelected, displayBadge, badgeValue
             <Tooltip targetRef={menuItem} isVisible={tooltipVisible && !isNavigationExpanded && !displayBadge} placement='right'>
                 <div className='p-3'>{t(title)}</div>
             </Tooltip>
-            <Tooltip targetRef={menuItem} isVisible={tooltipVisible && !isNavigationExpanded && displayBadge == true} placement='right'>
+            <Tooltip targetRef={menuItem} isVisible={tooltipVisible && !isNavigationExpanded && displayBadge === true} placement='right'>
                 <div className='p-3 h-16 w-44 px-4 py-4'>
                     <div className='flex flex-row items-center justify-between w-full'>
                         <div className='body3-medium w-36'>

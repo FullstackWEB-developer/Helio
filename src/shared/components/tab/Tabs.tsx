@@ -27,7 +27,7 @@ const Tabs: React.FC<TabsProps> = ({onSelect, children, title, titleClass='', as
         if((!!activeTabIndex || activeTabIndex === 0) && activeTabIndex >= 0 && activeTabIndex < children.length){
             setSelectedTab(activeTabIndex);
         }
-    }, [activeTabIndex]);
+    }, [activeTabIndex, children.length]);
 
     const calculatedTitleClass = classnames('pb-1 pl-1 h7', {
         'h-14 pt-5': asCard,

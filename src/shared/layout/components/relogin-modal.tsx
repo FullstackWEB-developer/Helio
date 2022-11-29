@@ -47,7 +47,7 @@ const ReLoginModal = ({type} : ReLoginModalProps) => {
                 dispatch(setDisplayLoginRequired(false));
             }
         }
-    }, [auth.firstLoginTime, lastRunTime, display]);
+    }, [auth.firstLoginTime, lastRunTime, display, DISPLAY_BEFORE_LOGOUT_IN_MINUTES, dispatch, LOG_OUT_IN_MINUTES]);
 
     const setDismissed = (value= true) => {
         dispatch(setLoginRequiredDismissed(value));

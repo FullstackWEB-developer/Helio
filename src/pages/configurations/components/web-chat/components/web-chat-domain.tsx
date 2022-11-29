@@ -1,4 +1,4 @@
-import { Control, Controller } from "react-hook-form";
+import { Control } from "react-hook-form";
 import SvgIcon, { Icon } from "@components/svg-icon";
 import { ControlledInput } from "@components/controllers";
 import './web-chat-domain.scss';

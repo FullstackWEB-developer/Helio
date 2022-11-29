@@ -39,13 +39,14 @@ interface VerifiedPatientGuardProps {
 const VerifiedPatientGuard = ({children}: VerifiedPatientGuardProps) => {
     const hasVerifiedPatient = useVerifiedPatient();
     const history = useHistory();
+    const dispatch = useDispatch();
     const {isGuestLogin, accessToken} = useSelector(authenticationSelector);
 
     useEffect(() => {
         if (!isGuestLogin && !!accessToken) {
             dispatch(logOut());
         }
-    }, [isGuestLogin, accessToken]);
+    }, [isGuestLogin, accessToken, dispatch]);
 
     const rescheduleAppointmentMatch = matchPath(history.location.pathname, {
         path: `${AppointmentReschedulePath}/:appointmentId`,
@@ -213,7 +214,6 @@ const VerifiedPatientGuard = ({children}: VerifiedPatientGuardProps) => {
         requestType = ExternalAccessRequestTypes.AppointmentConfirmation
     }
 
-    const dispatch = useDispatch();
     if (requestType === ExternalAccessRequestTypes.None) {
         return <>{children}</>;
     }

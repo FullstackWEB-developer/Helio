@@ -21,7 +21,7 @@ const CustomTick = ({tick, tickRotation, volumeDataType, data = []}: CustomTickP
     dayjs.extend(weekday);
 
     const findPoint = (point, date) => {
-        return point.x == date.format('YYYY-MM-DD');
+        return point.x === date.format('YYYY-MM-DD');
     }
 
     const getEndDate = (date: dayjs.Dayjs) => {

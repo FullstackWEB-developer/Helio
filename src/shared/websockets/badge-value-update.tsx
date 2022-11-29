@@ -27,14 +27,17 @@ const BadgeValueUpdate = () => {
             .build();
 
         setConnection(newConnection);
-    }, []);
+        return () => {
+            newConnection?.stop().then()
+        }
+    }, [accessToken]);
 
     useEffect(() => {
         if (connection) {
             connection.start()
                 .then(_ => {
                     connection.on('ReceiveBadgeValueUpdateEvent', (data: TicketAssignedNotification) => {
-                        if(data.fromUser === currentUser.id || data.toUser === currentUser.id)
+                        if(data.fromUser === currentUser?.id || data.toUser === currentUser?.id)
                         {
                             dispatch(getBadgeValues(BadgeValues.All))
                         }
@@ -46,7 +49,7 @@ const BadgeValueUpdate = () => {
             connection?.stop();
         }
 
-    }, [connection]);
+    }, [connection, currentUser?.id, dispatch]);
 
     return null;
 }

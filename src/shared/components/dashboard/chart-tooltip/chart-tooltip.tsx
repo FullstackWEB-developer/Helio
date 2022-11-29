@@ -22,7 +22,7 @@ const ChartTooltip = ({point, label, volumeDataType = TicketVolumeDataType.Daily
     const {t} = useTranslation();
 
     const findPoint = (point, date) => {
-        return point.x == date.format('YYYY-MM-DD');
+        return point.x === date.format('YYYY-MM-DD');
     }
 
     const getEndDate = (date: dayjs.Dayjs) => {

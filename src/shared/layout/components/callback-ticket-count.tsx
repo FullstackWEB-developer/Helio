@@ -57,7 +57,7 @@ const CallbackTicketCount = () => {
         };
         dispatch(setTicketFilter(query));
         history.push({
-            pathname: 'tickets',
+            pathname: '/tickets',
             search: `ticketTypes=${TicketType.Callback}&assignedTo=${assignedTo}&statuses=${TicketStatuses.Open}&statuses=${TicketStatuses.OnHold}&statuses=${TicketStatuses.InProgress}`,
             state: {
                 callbackRefresh: true,

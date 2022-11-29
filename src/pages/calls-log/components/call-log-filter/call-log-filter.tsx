@@ -4,7 +4,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import Collapsible from '@components/collapsible/collapsible';
 import { ContactStatus } from '@pages/calls-log/models/call-log.model';
-import { ControlledCheckbox, ControlledDateInput, ControlledSelect } from '@components/controllers';
+import { ControlledDateInput, ControlledSelect } from '@components/controllers';
 import { Option } from '@components/option/option';
 import Radio from '@components/radio/radio';
 import utc from 'dayjs/plugin/utc';
@@ -25,7 +25,6 @@ import {selectAppUserDetails} from '@shared/store/app-user/appuser.selectors';
 import CheckboxList from '@components/checkbox-list/checkbox-list';
 const TIME_PERIOD_DATE_RANGE_OPTION = '3';
 const ALL_KEY = 0;
-const DEFAULT_ALL_OPTION = { key: 'all', value: ALL_KEY };
 const DEFAULT_ANY_KEY = '';
 
 interface CallsLogFilterProps {

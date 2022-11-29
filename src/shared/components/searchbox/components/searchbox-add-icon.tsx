@@ -49,14 +49,14 @@ const SearchboxAddIcon = ({onClick, type, patient, contact}: SearchboxAddIconPro
 
     const getUnavailableMessage = () => {
         if (patient) {
-            if (type == ChannelTypes.SMS) {
+            if (type === ChannelTypes.SMS) {
                 return 'searchbox_result.tooltip_unavailable_sms_message';
             } else {
                 return 'searchbox_result.tooltip_unavailable_email_message';
             }
         }
         if (contact) {
-            if (type == ChannelTypes.SMS) {
+            if (type === ChannelTypes.SMS) {
                 return 'searchbox_result.tooltip_unavailable_sms_message_contact';
             } else {
                 return 'searchbox_result.tooltip_unavailable_email_message_contact';

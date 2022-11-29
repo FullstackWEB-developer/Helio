@@ -74,7 +74,7 @@ const QueueStatus = ({ queueType, queueTitle }: QueueStatusProps) => {
         } else if(!isLoading && (!quickConnectExtensions || quickConnectExtensions.length === 0)) {
             setSelectedOption(metricOptions.find(a => Number(a.key) === defaultDropdownKey));
         }
-    }, [dispatch, isLoading, queueType, quickConnectExtensions, selectedOption, displayMetricDropdown]);
+    }, [dispatch, isLoading, queueType, quickConnectExtensions, selectedOption, displayMetricDropdown, metricOptions]);
 
     const selectOption = (key: string) => {
         if (quickConnectExtensions) {

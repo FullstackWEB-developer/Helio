@@ -36,10 +36,10 @@ const UserNotificationsConnectionHub = () => {
         setConnection(newConnection);
         return () => {
             if (newConnection.state === HubConnectionState.Connected) {
-                newConnection.stop().then()
+                newConnection?.stop().then()
             }
         }
-    }, []);
+    }, [accessToken]);
 
     const agentUnavailable = (data: ContactTransferUnavailableMessage) => {
         let message = '';

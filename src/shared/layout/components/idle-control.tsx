@@ -1,4 +1,3 @@
-import React from 'react';
 import { useIdleTimer } from 'react-idle-timer';
 import { addSnackbarMessage, removeAllSnackbarMessages } from '@shared/store/snackbar/snackbar.slice';
 import { SnackbarType } from '@components/snackbar/snackbar-type.enum';
