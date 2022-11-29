@@ -11,8 +11,10 @@ export interface Contact {
     lastName: string;
     companyName: string;
     workMainPhone: string;
+    workDirectPhone?: string;
     mobilePhone: string;
     description?: string;
+    workMainExtension?: string;
     primaryEmailAddress?: string;
     secondaryEmailAddress?: string;
     landLineNumber?: string;
@@ -22,6 +24,8 @@ export interface Contact {
     contactPeople?: ContactPerson[];
     isCompany?: boolean
     emailAddress?: string;
+    fax?: string;
+    website?: string;
 }
 
 export interface ContactBase {
@@ -37,8 +41,6 @@ export interface ContactExtended extends ContactBase {
     jobTitle?: string;
     mobilePhone?: string;
     workDirectPhone?: string;
-    website?: string;
-    fax?: string;
     workMainPhone?: string;
     workMainExtension?: string;
     emailAddress?: string;
@@ -49,4 +51,6 @@ export interface ContactExtended extends ContactBase {
     addresses?: Address[],
     addToFavorites?: boolean;
     associatedContacts?: AssociatedContact[]
+    fax?: string;
+    website?: string;
 }

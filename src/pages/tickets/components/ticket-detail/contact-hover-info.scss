@@ -1,0 +1,16 @@
+.contact-hover-info{
+  &-wrapper {
+    width: 30rem;
+    border-radius: 4px;
+    box-shadow: var(--modal-shadow);
+  }
+  &-header {
+    height: 9rem;
+  }
+  &-button-wrapper {
+    background-color: var(--ticket-patient-contact-hover-background);
+  }
+}
+.avatar-contact {
+  background-color: var(--avatar-contact-color);
+}

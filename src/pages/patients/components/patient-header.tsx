@@ -115,7 +115,7 @@ const PatientHeader = ({refreshPatient}: PatientHeaderProps) => {
                             className=""
                             label={'patient.header.view_in_athena'} />
                     </div>
-                    <div className='flex flex-row justify-between pt-4'>
+                    <div className='flex flex-row justify-between pt-4 pb-5'>
                         <div className='flex flex-row'>
                             {
                                 SmallLabel(t('patient.header.age'), patientUtils.getAge(patient.dateOfBirth).toString())
@@ -131,7 +131,9 @@ const PatientHeader = ({refreshPatient}: PatientHeaderProps) => {
                             }
                         </div>
                     </div>
-                    <PatientHeaderActions patient={patient} refreshPatient={() => refreshPatient()} />
+                    <div>
+                        <PatientHeaderActions patient={patient} refreshPatient={() => refreshPatient()} />
+                    </div>
                 </div>
             </div>
         </div>

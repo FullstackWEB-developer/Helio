@@ -116,5 +116,7 @@ export enum Icon {
     Indicator = 'Indicator',
     AddPhone = 'AddPhone',
     Reports = 'Reports',
-    CallbackTicketCount = 'CallbackTicketCount'
+    CallbackTicketCount = 'CallbackTicketCount',
+    Patient = 'Patient',
+    User = 'User'
 }

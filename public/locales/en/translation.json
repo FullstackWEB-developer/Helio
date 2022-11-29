@@ -241,6 +241,25 @@
       "patient_details": "Patient Details",
       "contact_details": "Contact Details",
       "add_review": "Add review"
+    },
+    "hover_info": {
+      "patient_title": "Patient",
+      "contact_title": "Contact",
+      "view_patient": "View Patient Chart",
+      "view_contact": "View Contact Chart",
+      "mobile_phone": "Mobile Phone",
+      "home_phone": "Home Phone",
+      "category": "Category",
+      "work_main_phone": "Work Main Phone",
+      "work_direct_phone": "Work Direct Phone",
+      "email": "Email",
+      "fax": "Fax",
+      "website": "Website",
+      "address": "Address",
+      "ext": "Ext.",
+      "shipping_address": "Shipping Address",
+      "error_getting_patient_details": "Could not fetch patient details. Please try again later",
+      "error_getting_contact_details": "Could not fetch contact details. Please try again later"
     }
   },
   "ccp": {
@@ -1287,6 +1306,7 @@
       "confirm_delete_yes": "Delete",
       "error_favorite_contact": "Error (un)favoriting contact",
       "error_adding_note": "Error adding note for contact",
+      "error_dialing_phone_with_message": "Error dialing phone, {{message}}",
       "error_dialing_phone": "Error dialing phone",
       "company_search_placeholder": "Start typing a company name to see available companies.\nIf company is not available, please choose “Company” instead of “Individual contact” above",
       "contact_deleted": "Contact has been deleted",

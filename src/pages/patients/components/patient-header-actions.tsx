@@ -16,7 +16,7 @@ import { ContactPreference } from '../models/contact-preference.enum';
 
 export interface PatientHeaderActionsProps {
     patient: ExtendedPatient;
-    refreshPatient: () => void;
+    refreshPatient?: () => void;
 }
 
 const PatientHeaderActions = ({patient, refreshPatient} : PatientHeaderActionsProps) => {
@@ -96,7 +96,7 @@ const PatientHeaderActions = ({patient, refreshPatient} : PatientHeaderActionsPr
         }
     }
 
-    return <div className='flex flex-row justify-between pt-5'>
+    return <div className='flex flex-row justify-between'>
         <div className='flex'>
             <span className={`pr-3`} >
                 <SvgIcon type={Icon.ChannelPhone}
@@ -148,7 +148,7 @@ const PatientHeaderActions = ({patient, refreshPatient} : PatientHeaderActionsPr
                          </span>
                 }
             </div>
-        <div className='flex flex-row'>
+        {refreshPatient && <div className='flex flex-row'>
             <div className='body2-primary pr-2 cursor-pointer' onClick={() => refreshPatient()}>
                 {t('patient.summary.refresh')}
             </div>
@@ -161,7 +161,7 @@ const PatientHeaderActions = ({patient, refreshPatient} : PatientHeaderActionsPr
                     />
                 </span>
             </div>
-        </div>
+        </div>}
     </div>
 }
 

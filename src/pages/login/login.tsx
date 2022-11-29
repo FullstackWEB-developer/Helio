@@ -71,7 +71,7 @@ const Login = () => {
 
     return (
         <div className='flex flex-row items-center justify-center h-full login'>
-            <div className='flex flex-col items-center flex-1 h-full p-10 logo-section'>
+            <div className='flex-col items-center flex-1 h-full p-10 logo-section hidden md:flex'>
                 <div className='flex items-end flex-1 pb-28'>
                     <SvgIcon type={Icon.HelioLogo} fillClass='white-icon' className='logo' />
                 </div>
@@ -79,21 +79,21 @@ const Login = () => {
                     <LoginPatternDots />
                 </div>
             </div>
-            <div className='flex flex-col items-start justify-center flex-1 h-full pt-10 pl-36'>
+            <div className='flex flex-col items-start justify-center flex-1 h-full pt-10 md:pl-36'>
                 <div className='flex flex-col items-center flex-1'>
                     <div className='flex items-end flex-1'>
-                        <div className='content-section'>
+                        <div className='content-section pl-4 md:pl-0'>
                             <h2 className='mb-1.5'>{t('login.title')}</h2>
                             <p className='body-medium '>{t('login.subtitle')}</p>
                         </div>
                     </div>
-                    <div className='flex flex-row items-start justify-start flex-1 w-full just mt-14'>
+                    <div className='flex flex-row items-start justify-center md:justify-start flex-1 w-full just mt-14'>
                         <Button data-test-id='login_button' data-testid='login_button' onClick={() => initiateLogin()} label='login.loginButton' />
                     </div>
 
                 </div>
-                <div className='flex flex-initial pb-3.5'>
-                    <p className='body2-medium'>{t('common.copyright', {year: dayjs.utc().local().year()})}</p>
+                <div className='flex flex-initial pb-3.5 md:justify-start justify-center w-full'>
+                    <p className='body2-medium w-full flex md:justify-start justify-center w-full'>{t('common.copyright', {year: dayjs().year()})}</p>
                 </div>
             </div>
             <Snackbar position={SnackbarPosition.TopRight} />

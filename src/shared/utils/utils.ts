@@ -36,7 +36,7 @@ const getWindowDimensions = () => {
     };
 }
 
-const formatPhone = (phone: string) => {
+const formatPhone = (phone: string | undefined) => {
     if (!phone) {
         return '';
     }
@@ -74,9 +74,11 @@ const initiateACall = (phoneToDial?: string) => {
         const endpoint = connect.Endpoint.byPhoneNumber(phoneToDial);
         window.CCP.agent.connect(endpoint, {
             failure: (e: any) => {
+                const error = JSON.parse(e);
+
                 store.dispatch(addSnackbarMessage({
                     type: SnackbarType.Error,
-                    message: 'contacts.contact_details.error_dialing_phone'
+                    message: !!error ? i18n.t('contacts.contact_details.error_dialing_phone_with_message', {message: error.message}) : 'contacts.contact_details.error_dialing_phone'
                 }));
 
                 Logger.getInstance().error(i18n.t('contacts.contact_details.error_dialing_phone'), e);

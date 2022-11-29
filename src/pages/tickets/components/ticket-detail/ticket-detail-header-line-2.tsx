@@ -1,20 +1,33 @@
 import TicketStatusDot from '@pages/tickets/components/ticket-status-dot';
 import dayjs from 'dayjs';
 import TicketDetailRating from '@pages/tickets/components/ticket-detail/ticket-detail-rating';
-import React from 'react';
+import React, {useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {useSelector} from 'react-redux';
 import {selectFeedLastMessageOn} from '@pages/tickets/store/tickets.selectors';
 import {Ticket} from '@pages/tickets/models/ticket';
 import updateLocale from 'dayjs/plugin/updateLocale';
 import {DAYJS_LOCALE} from '@pages/email/constants';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import './ticket-detail-header-line-2.scss';
+import SvgIcon, {Icon} from '@components/svg-icon';
+import PatientHoverInfo from '@pages/tickets/components/ticket-detail/patient-hover-info';
+import {Contact} from '@shared/models';
+import {Patient} from '@pages/patients/models/patient';
+import ContactHoverInfo from '@pages/tickets/components/ticket-detail/contact-hover-info';
 
-const TicketDetailHeaderLine2 = ({ticket, patientOrContactName, createdForType, userId}: {ticket: Ticket, patientOrContactName: string, createdForType: 'Contact' | 'Patient' | undefined, userId: string}) => {
+export interface TicketDetailHeaderLine2Props {
+    ticket: Ticket;
+    patientOrContactName: string;
+    createdForType: 'Contact' | 'Patient' | undefined;
+    userId: string;
+}
+
+const TicketDetailHeaderLine2 = ({ticket, patientOrContactName, createdForType, userId}: TicketDetailHeaderLine2Props) => {
     dayjs.extend(updateLocale);
     dayjs.updateLocale('en', DAYJS_LOCALE);
     const {t} = useTranslation();
+    const [isHoverCreatedFor, setHoverCreatedFor] = useState<boolean>(false);
     const feedLastMessageOn = useSelector(selectFeedLastMessageOn);
     const sysdate = Date.now();
     const SmallLabel = ({text, value, link}: {text: string, value: string | undefined, link?: boolean}) => {
@@ -52,9 +65,27 @@ const TicketDetailHeaderLine2 = ({ticket, patientOrContactName, createdForType, 
         <div className='pl-4 body'>
             {ticket.status && t(`tickets.statuses.${(ticket.status)}`)}
         </div>
-        <div>
+        <div className='relative' onMouseEnter={() => setHoverCreatedFor(true)} onMouseLeave={() => setHoverCreatedFor(false)}>
             {patientOrContactName &&
-                <SmallLabel text={getCreatedForLabel()} value={`${patientOrContactName}`} link={true} />}
+                <><div className='flex flex-row pl-6 items-center'>
+                    <div  className='pr-2'>
+                        {t(getCreatedForLabel())}
+                    </div>
+                    {ticket.patientId && ticket.patientId > 0 && <div className='pr-2'>
+                        <Link to={getURL()}><SvgIcon className='icon-small' fillClass='success-icon' type={Icon.Patient}/></Link>
+                    </div>}
+                    {!!ticket.contactId && <div className='pr-2'>
+                        <Link to={getURL()}><SvgIcon className='icon-small' fillClass='rgba-038-fill' type={Icon.User}/></Link>
+                    </div>}
+                    <div>
+                        <Link className='ticket-detail-header-line-2-created-for-link body-medium' to={getURL()}>{patientOrContactName}</Link>
+                        {ticket.patientId && <div className={isHoverCreatedFor ? 'block -ml-6' : 'hidden'}><PatientHoverInfo patientId={ticket.patientId}/></div>}
+                        {ticket.contactId && <div className={isHoverCreatedFor ? 'block' : 'hidden'}><ContactHoverInfo isVisible={isHoverCreatedFor} contactId={ticket.contactId}/></div>}
+                    </div>
+
+                </div>
+                </>
+                }
         </div>
         <div>
             {ticket.dueDate &&

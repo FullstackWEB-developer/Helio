@@ -1307,6 +1307,27 @@ const SvgIcon = ({ type, wrapperClassName = '', className = 'icon-medium', fillC
         )
     }
 
+    const getIconPatient = () => {
+        return <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" className={mainClass}>
+            <g transform="translate(0 -8)">
+                <path d="M0,0H16V16H0Z" transform="translate(0 8)" fill="none"/>
+                <g transform="translate(0 9.333)">
+                    <circle cx="3.5" cy="3.5" r="3.5" transform="translate(4 -0.333)" className={fillClass}/>
+                    <path d="M9,13.016C8.818,13.008,8.64,13,8.455,13a10.389,10.389,0,0,0-5.333,1.468A2.358,2.358,0,0,0,2,16.51v2.138H9.471a5.618,5.618,0,0,1-1.017-3.227A5.706,5.706,0,0,1,9,13.016Z" transform="translate(-2 -4.788)" className={fillClass}/>
+                    <path xmlns="http://www.w3.org/2000/svg" d="M5.82,0A1.98,1.98,0,0,0,4,1.208,1.979,1.979,0,0,0,2.18,0,2.322,2.322,0,0,0,0,2.366C0,4.158,4,6.889,4,6.889s4-2.73,4-4.522A2.322,2.322,0,0,0,5.82,0Z" transform="translate(8 7.778)" className={fillClass}/>
+                </g>
+            </g>
+        </svg>
+    }
+
+    const getIconUser = () => {
+        return <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" className={mainClass}>
+            <g transform="translate(-504 -632)">
+                <path d="M0,0H16V16H0Z" transform="translate(504 632)" fill='none'/>
+                <path d="M13.667,10.667a3.333,3.333,0,1,0-3.333-3.333A3.332,3.332,0,0,0,13.667,10.667Zm0,1.667C11.442,12.333,7,13.45,7,15.667v1.667H20.333V15.667C20.333,13.45,15.892,12.333,13.667,12.333Z" transform="translate(498.333 629.333)"  className={fillClass}/>
+        </g></svg>
+    }
+
     const icons = {
         [Icon.Add]: getIconAdd,
         [Icon.AddBlack]: getIconAddBlack,
@@ -1426,7 +1447,9 @@ const SvgIcon = ({ type, wrapperClassName = '', className = 'icon-medium', fillC
         [Icon.IncomingEmail]: getIconIncomingEmail,
         [Icon.OutgoingEmail]: getIconOutgoingEmail,
         [Icon.Reports]: getIconReports,
-        [Icon.CallbackTicketCount]: getCallbackCountIcon
+        [Icon.CallbackTicketCount]: getCallbackCountIcon,
+        [Icon.Patient]: getIconPatient,
+        [Icon.User]: getIconUser
     }
 
     const iconClicked = (e: React.MouseEvent<HTMLDivElement>) => {
