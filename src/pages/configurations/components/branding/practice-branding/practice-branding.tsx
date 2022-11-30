@@ -266,13 +266,13 @@ const PracticeBrandingEdit = () => {
                         buttonType='medium'
                         disabled={!formState.isValid || uploadLogoMutation.isLoading}
                         label='common.save'
-                        isLoading={savePracticeBrandingMutation.isLoading }
+                        isLoading={savePracticeBrandingMutation.isLoading || previewEmailTemplateMutation.isLoading}
                     />
                     <Button label='common.cancel'
                         className=' ml-8'
                         buttonType='secondary'
                         onClick={() => formState.isDirty && setWarning(true)}
-                        disabled={savePracticeBrandingMutation.isLoading} />
+                        disabled={savePracticeBrandingMutation.isLoading || previewEmailTemplateMutation.isLoading} />
                     <RouteLeavingGuard
                         when={formState.isDirty && !formState.isSubmitSuccessful}
                         navigate={path => history.push(path)}
