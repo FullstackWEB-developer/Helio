@@ -227,10 +227,15 @@ const WebChat = () => {
                                 data-testid='submit'
                                 type='submit'
                                 buttonType='medium'
+                                isLoading={saveChatWidgetMutation.isLoading}
                                 disabled={!isEmpty(control.formState.errors) || !isDirty}
                                 label='common.save'
                             />
-                            <Button label='common.cancel' className=' ml-8 mr-8' buttonType='secondary' onClick={() => formState.isDirty && setWarning(true)} />
+                            <Button label='common.cancel'
+                                    className=' ml-8 mr-8'
+                                    buttonType='secondary'
+                                    disabled={saveChatWidgetMutation.isLoading}
+                                    onClick={() => formState.isDirty && setWarning(true)} />
                             <RouteLeavingGuard
                                 when={formState.isDirty && !formState.isSubmitSuccessful}
                                 navigate={path => history.push(path)}
