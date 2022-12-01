@@ -33,15 +33,15 @@ const TeamBadgeValueUpdate = () => {
             connection.start()
                 .then(_ => {
                     connection.on('ReceiveTeamBadgeValueUpdateEvent', (data: TeamBadgeValue) => {
-                        if(data.emailCount !== undefined){
+                        if(data.emailCount !== undefined && data.emailCount >= 0){
                             dispatch(setUnreadTeamEmail(data.emailCount));
                         }
 
-                        if(data.smsCount !== undefined){
+                        if(data.smsCount !== undefined && data.smsCount >= 0){
                             dispatch(setUnreadTeamSms(data.smsCount));
                         }
 
-                        if(data.ticketCount !== undefined){
+                        if(data.ticketCount !== undefined && data.ticketCount >= 0){
                             dispatch(setUnreadTeamTicket(data.ticketCount));
                         }
                     });
