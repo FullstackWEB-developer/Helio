@@ -4,6 +4,8 @@ import React from 'react';
 import {ContextKeyValuePair} from '@pages/ccp/models/context-key-value-pair';
 import classnames from 'classnames';
 import PersonalCallChanger from './personal-call-changer';
+import {useSelector} from 'react-redux';
+import {selectBotContext} from '@pages/ccp/store/ccp.selectors';
 
 export interface BotContextProps {
     items: ContextKeyValuePair[];
@@ -11,6 +13,7 @@ export interface BotContextProps {
 
 const BotContext = ({items} : BotContextProps) => {
     const { t } = useTranslation();
+    const botContext = useSelector(selectBotContext);
     
     return (
         <div className='py-3.5 pl-6 h7'>
@@ -23,7 +26,7 @@ const BotContext = ({items} : BotContextProps) => {
                 return <div className={containerClass} key={item.value}>
                     {isStringLabel && <div className='body2-medium col-span-1'>{t(item.label as string)}</div>}
                     {!isStringLabel && item.label}
-                    <div className='col-span-2 subtitle2'>{t(item.value)}</div>
+                    <div className={`${botContext.isInBound ? 'col-span-4' : 'col-span-2'} subtitle2`}>{t(item.value)}</div>
                     {index === 0 && (<PersonalCallChanger/>)}
                 </div>
             })}
