@@ -245,6 +245,8 @@
     "hover_info": {
       "patient_title": "Patient",
       "contact_title": "Contact",
+      "department": "Department",
+      "contact_position": "{{title}} at {{company}}",
       "view_patient": "View Patient Chart",
       "view_contact": "View Contact Chart",
       "mobile_phone": "Mobile Phone",

@@ -19,6 +19,7 @@ import {getLookupValues} from '@shared/services/lookups.service';
 import {useDispatch, useSelector} from 'react-redux';
 import {selectLookupValues} from '@pages/tickets/store/tickets.selectors';
 import ContactCommunicationPanel from '@pages/contacts/components/contact-communication-panel';
+import ElipsisTooltipTextbox from '@components/elipsis-tooltip-textbox/elipsis-tooltip-textbox';
 
 export interface ContactHoverInfoProps {
     contactId: string;
@@ -105,7 +106,13 @@ const ContactHoverInfo= ({contactId, isVisible}: ContactHoverInfoProps) => {
                                 {getContactName()}
                             </div>
                             {contact.type === ContactType.Individual && <div className='body2 absolute w-full'>
-                                {contact.companyName}
+                                <ElipsisTooltipTextbox value={!!contact.jobTitle ? t('tickets.hover_info.contact_position', {
+                                    title: contact.jobTitle,
+                                    company: contact.companyName
+                                }) : contact.companyName} asSpan={false}
+                                                       classNames='ticket-created-for-hover-label-text body2-medium'
+                                                       isDefaultTextClass={false} />
+
                             </div>}
 
                         </div>
@@ -123,6 +130,12 @@ const ContactHoverInfo= ({contactId, isVisible}: ContactHoverInfoProps) => {
                 label='tickets.hover_info.category'
                 isActive={false}
                 linkText={contactCategory}
+            />
+
+            <TicketCreatedForHoverLabel
+                label='tickets.hover_info.department'
+                isActive={false}
+                linkText={contact.department}
             />
 
             <TicketCreatedForHoverLabel

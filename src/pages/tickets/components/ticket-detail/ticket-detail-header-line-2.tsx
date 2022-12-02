@@ -80,7 +80,7 @@ const TicketDetailHeaderLine2 = ({ticket, patientOrContactName, createdForType, 
                     <div>
                         <Link className='ticket-detail-header-line-2-created-for-link body-medium' to={getURL()}>{patientOrContactName}</Link>
                         {ticket.patientId && <div className={isHoverCreatedFor ? 'block -ml-6' : 'hidden'}><PatientHoverInfo patientId={ticket.patientId}/></div>}
-                        {ticket.contactId && <div className={isHoverCreatedFor ? 'block' : 'hidden'}><ContactHoverInfo isVisible={isHoverCreatedFor} contactId={ticket.contactId}/></div>}
+                        {ticket.contactId && <div className={isHoverCreatedFor ? 'block' : 'block'}><ContactHoverInfo isVisible={isHoverCreatedFor} contactId={ticket.contactId}/></div>}
                     </div>
 
                 </div>

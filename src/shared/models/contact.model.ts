@@ -26,6 +26,8 @@ export interface Contact {
     emailAddress?: string;
     fax?: string;
     website?: string;
+    jobTitle?: string;
+    department?: string;
 }
 
 export interface ContactBase {
