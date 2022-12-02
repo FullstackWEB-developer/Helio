@@ -1,4 +1,4 @@
-import {ChannelTypes, PagedRequest} from "..";
+import { ChannelTypes, PagedRequest } from "..";
 
 export interface TicketMessageSummaryRequest extends PagedRequest {
     searchTerm?: string;
@@ -7,4 +7,5 @@ export interface TicketMessageSummaryRequest extends PagedRequest {
     toDate?: string;
     assignedTo?: string;
     ticketId?: string;
+    unread?: boolean;
 }

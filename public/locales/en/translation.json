@@ -199,6 +199,8 @@
     },
     "filter": {
       "callbacks": "Callbacks",
+      "unread_email": "Unread Email",
+      "unread_sms": "Unread SMS",
       "filter_tickets": "Filters",
       "reset_all": "Reset All",
       "statuses": "Statuses",
@@ -405,7 +407,7 @@
       "clinical": "Clinical",
       "insurance": "Insurances",
       "appointments": "Appointments",
-      "patient_cases":"Patient Cases",
+      "patient_cases": "Patient Cases",
       "medications": "Medications",
       "lab_results": "Lab Results"
     },
@@ -762,7 +764,7 @@
       "callback_number": "Callback Number",
       "phone_number": "Phone Number",
       "details": "Details",
-      "related_tickets":{
+      "related_tickets": {
         "title": "Related Tickets",
         "parent_ticket": "Parent: <0>{{ticketNumber}}</0>",
         "children_tickets": "Linked Tickets"
@@ -2022,9 +2024,9 @@
       "appointment_type_name": "Helio Appointment Name",
       "appointment_description": "Appointment Description",
       "selectable_by_patient": "Selectable By Patient",
-      "established_patient":"Established Patient",
+      "established_patient": "Established Patient",
       "new_patient": "New Patient",
-      "all":"All",
+      "all": "All",
       "patient_type": "Patient Type",
       "can_be_rescheduled": "Can Be Rescheduled",
       "reschedule_timeframe": "Reschedule Time-frame",
@@ -2555,10 +2557,10 @@
         "total_outbound_tooltip": "Total outbound call volume including internal calls ",
         "avg_handle_time": "AVG. Handle Time*",
         "avg_handle_time_tooltip": "Average handle time from call acceptance to closing the contact (includes hold times & after call work mode)",
-        "avg_hold_time":  "AVG. Hold Time",
+        "avg_hold_time": "AVG. Hold Time",
         "rating": "Rating",
         "total_calls": "Total Calls*",
-        "total_calls_tooltip" : "Total inbound and outbound call volume including internal calls",
+        "total_calls_tooltip": "Total inbound and outbound call volume including internal calls",
         "total_tickets": "Total Tickets*",
         "total_tickets_tooltip": "Total tickets assigned to agent (excludes archived tickets)",
         "overdue_tickets": "Overdue Tickets",
@@ -2619,9 +2621,9 @@
       "bot_calls_key": "Calls",
       "bot_chats_key": "Chats",
       "total_chats": "Total Chats",
-      "total_calls":"Total Calls"
+      "total_calls": "Total Calls"
     },
-    "system_reports" : {
+    "system_reports": {
       "title": "System KPI report",
       "key_kpis": "Key KPIs",
       "total_tickets_created": "Total Tickets Created",
