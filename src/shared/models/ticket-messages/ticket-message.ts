@@ -15,6 +15,7 @@ export interface TicketMessage extends TicketMessageBase {
     createdByName?: string;
     createdOn: Date;
     createdForName?: string;
+    id?: string;
 }
 export interface PhoneCallActivity {
     callDirection?: CommunicationDirection;

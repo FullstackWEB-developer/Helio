@@ -21,6 +21,9 @@ const SmsChatMessageList = ({messages, patientPhoto}: MessageListProps) => {
     const getAgentInfo = (userId: string) => {
         return users.find(user => user.id === userId);
     }
+    //Sometimes websocket can send same message twice, this is a safety net for that.
+    const map = new Map(messages.map(pos => [pos.id, pos]));
+    messages = [...map.values()];
 
     const messagesSorted = messageSort(messages);
 
