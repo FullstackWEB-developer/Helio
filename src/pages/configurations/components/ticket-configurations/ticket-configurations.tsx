@@ -147,9 +147,11 @@ const TicketConfigurations = () => {
     
     const onAddLookupValue = (formData: any) => {
         if(!!selectedLookupType && selectedTicketTypeId){
+            const ids = ticketReasonKey ? ticketLookupValuesReason.map(a => parseInt(a.value)) : ticketLookupValuesSubject.map(a => parseInt(a.value));
+            const max = Math.max(...ids) + 1;
             upsertLookupMutation.mutate({
                 label: formData.value,
-                value: selectedLookupType === ticketReasonKey ? (ticketLookupValuesReason.length + 1).toString() : (ticketLookupValuesSubject.length + 1).toString(),
+                value: max.toString(),
                 key: selectedLookupType,
                 isUpdate: false,
                 intentName: formData.intentName,
