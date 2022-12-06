@@ -66,6 +66,7 @@ import TicketNotesUpdate from '@shared/websockets/ticket-notes-update';
 import TeamBadgeValueUpdate from '@shared/websockets/team-badge-value-update';
 import {Redirect} from 'react-router';
 import UserNotificationsConnectionHub from '@shared/websockets/user-notifications-connection-hub';
+import {MittProvider} from '@shared/utils/mitt';
 const SearchResults = React.lazy(() => import('../shared/components/search-bar/components/search-results'));
 const PatientChart = React.lazy(() => import('@pages/patients/patient-chart'));
 const VerifyRedirectLink = React.lazy(() => import('@pages/external-access/verify-patient/verify-redirect-link'));
@@ -135,6 +136,7 @@ function App() {
     }, []);
 
     return <BrowserRouter>
+        <MittProvider>
         <Switch>
             <Route path='/o/'>
                 <ExternalAccessLayout>
@@ -252,6 +254,7 @@ function App() {
                 </Layout>
             </SignalRProvider>
         </Switch>
+        </MittProvider>
     </BrowserRouter>;
 }
 
