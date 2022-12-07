@@ -35,7 +35,7 @@ const TicketsReasonChart = ({data}: TicketsReasonChartProps) => {
             return t('dashboard.by_reason.label_others').toString();
         }
 
-        return ticketLookupValuesReason.find(a => a.value === id)?.label || '';
+        return ticketLookupValuesReason.find(a => a.value === id)?.label ||  t('dashboard.by_reason.no_reason').toString();
     }
 
     const convertedData = data.map((item, index) => {
