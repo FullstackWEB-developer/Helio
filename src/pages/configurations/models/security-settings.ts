@@ -1,8 +1,9 @@
 export interface SecuritySettings {
-    hipaaVerificationRetryNumber: number;
-    verifiedPatientExpiresInDays: number;
-    medicalRecordsDownloadExpirationInDays: number;
-    redirectLinkExpirationInHours: number;
-    verificationFailWaitInMinutes: number;
-    guestSmsExpirationInHours: number;
+  hipaaVerificationRetryNumber: number;
+  verifiedPatientExpiresInDays: number;
+  medicalRecordsDownloadExpirationInDays: number;
+  redirectLinkExpirationInHours: number;
+  verificationFailWaitInMinutes: number;
+  guestSmsExpirationInHours: number;
+  userTimeoutDueInactivity: number;
 }

@@ -2261,7 +2261,11 @@
       "guest_sms_expiration_in_hours_title": "SMS Link Expiration (Non-Patient)",
       "guest_sms_expiration_in_hours_description": "SMS conversations with Contacts (users other than patients). Conversation history link expiration time.",
       "guest_sms_expiration_in_hours_label": "Expiration Time",
-      "guest_sms_expiration_in_hours_type": "Hours"
+      "guest_sms_expiration_in_hours_type": "Hours",
+      "user_timeout_inactivity_in_minutes_title": "User Timeout Due to Inactivity",
+      "user_timeout_inactivity_in_minutes_description": "Number of minutes before Helio users will be automatically signed out due to inactivity.",
+      "user_timeout_inactivity_in_minutes_type": "Minutes",
+      "user_timeout_inactivity_in_minutes_label": "Timeout"
     },
     "practice_branding": {
       "title": "Practice Branding",
