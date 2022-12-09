@@ -331,7 +331,21 @@ const TicketConfigurations = () => {
             dispatch(addSnackbarMessage({
                 type:SnackbarType.Success,
                 message: 'ticket_configuration.update_success'
-            }))
+            }));
+                        
+            const selectedTicketType = ticketTypes.filter(x => x.id.toString() === selectedTicketTypeId);
+            if(selectedTicketType.length > 0){
+                setTicketTypes(ticketTypes.map(ticketType => {
+                    if (ticketType.id === selectedTicketType[0].id) {
+                        return {
+                            id: selectedTicketType[0].id,
+                            dueDuration: ticketTypeControl.getValues('duration'),
+                            name: selectedTicketType[0].name
+                        }
+                    }
+                    return ticketType;
+                }));
+            }
         },
         onError: () => {
             onActionCompleted();
