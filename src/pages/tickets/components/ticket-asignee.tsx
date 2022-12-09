@@ -23,6 +23,7 @@ import {setGlobalLoading} from '@shared/store/app/app.slice';
 import {useSmartPosition} from '@shared/hooks';
 import classnames from 'classnames';
 import { usePopper } from 'react-popper';
+import ElipsisTooltipTextbox from '@components/elipsis-tooltip-textbox/elipsis-tooltip-textbox';
 interface TicketAssigneeProps {
     ticketId: string,
     assignee?: string
@@ -130,15 +131,13 @@ const TicketAssignee = ({ticketId, assignee}: TicketAssigneeProps) => {
     }
 
     return <div className='col-span-2 flex items-center' ref={elementRef}>
-        <div className='flex items-center'>
+        <div className='flex w-full items-center'>
             {selectedUser?.id ?
-                <div className='inline-flex flex-row items-center flex-none cursor-pointer' onClick={openSearchAssignee}>
+                <div className='inline-flex w-full flex-row items-center flex-none cursor-pointer' onClick={openSearchAssignee}>
                     <div className='mr-4'>
                         <Avatar displayStatus={true} userId={selectedUser.id} userFullName={utils.stringJoin(' ', selectedUser.firstName, selectedUser.lastName)} userPicture={selectedUser.profilePicture} />
                     </div>
-                    <div ref={chevronPosition} className='pr-2 truncate'>
-                        <div>{selectedUser.firstName} {selectedUser.lastName}</div>
-                    </div>
+                    <ElipsisTooltipTextbox classNames='truncate' hasInlineBlock={false} asSpan={true} value={utils.stringJoin(' ', selectedUser.firstName, selectedUser.lastName)} />                    
                     <SvgIcon type={isVisible ? Icon.ArrowUp : Icon.ArrowDown} fillClass={'select-arrow-fill'} />
                 </div>
                 :
