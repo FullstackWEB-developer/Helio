@@ -47,20 +47,20 @@ button.secondary-big-button:after {
 button.big-button:enabled,
 button.medium-button:enabled,
 button.small-button:enabled {
-  background-color: var(--color-primary-500);
+  background-color: var(--button-primary-background-color);
 }
 
 button.big-button:focus:enabled,
 button.medium-button:focus:enabled,
 button.small-button:focus:enabled {
-  background-color: var(--color-primary-900);
+  background-color:var(--button-focused-background-color);
   outline: none;
 }
 
 button.secondary-button:hover:enabled,
 button.secondary-medium-button:hover:enabled,
 button.secondary-big-button:hover:enabled {
-  background-color: rgba(var(--color-primary-500-rgb), 0.04);
+  background-color: rgba(var(--button-hover-background-color), 0.04);
 }
 
 button.secondary-button:focus:enabled,

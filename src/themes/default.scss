@@ -398,6 +398,7 @@
   --button-primary-big-font-family: var(--subtitle2-font-family);
   --button-primary-medium-padding: 0 1.5rem;
   --button-primary-medium-font-size: var(--subtitle2-font-size);
+  --button-primary-background-color:var(--color-primary-default);
 
   --button-secondary-big-padding: 0 2rem;
   --button-secondary-big-font-size: var(--subtitle3-font-size);
@@ -412,6 +413,9 @@
   --button-secondary-medium-font-size: var(--subtitle2-font-size);
 
   --loading-button-background: var(--light-divider-7);
+
+  --button-hover-background-color: var(--color-primary-700);
+  --button-focused-background-color: var(--color-primary-400);
 
   --badge-default-color: rgba(0, 0, 0, 0.6);
   --badge-danger-color: var(--color-red);

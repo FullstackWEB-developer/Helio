@@ -601,12 +601,15 @@ const addPracticeBranding = (practiceBranding) => {
     root.style.setProperty('--color-primary-600', `${hasDash ? '' : '#'}${practiceBranding.primaryColor}`);
     root.style.setProperty('--color-primary-500', `${hasDash ? '' : '#'}${practiceBranding.primaryColor}`);
     root.style.setProperty('--color-primary-500-rgb', `${hexToRGB(primaryWithoutDash)}`);
+    root.style.setProperty('--button-primary-background-color', `${hasDash ? '' : '#'}${practiceBranding.primaryColor}`);
 
     //Hover
     root.style.setProperty('--color-primary-700', `${hasDash ? '' : '#'}${practiceBranding.hoverColor}`);
+    root.style.setProperty('--button-hover-background-color', `${hasDash ? '' : '#'}${practiceBranding.hoverColor}`);
 
     //Focus
     root.style.setProperty('--color-primary-400', `${hasDash ? '' : '#'}${practiceBranding.focusedColor}`);
+    root.style.setProperty('--button-focused-background-color', `${hasDash ? '' : '#'}${practiceBranding.focusedColor}`);
 
     //Secondary
     root.style.setProperty('--color-primary-300', `${hasDash ? '' : '#'}${practiceBranding.secondaryColor}`);

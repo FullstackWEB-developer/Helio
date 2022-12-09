@@ -318,6 +318,7 @@
 
   --button-primary-medium-padding: 0 1.5rem;
   --button-primary-medium-font-size: var(--subtitle2-font-size);
+  --button-primary-background-color:var(--color-primary-default);
 
   --button-secondary-big-padding: 0 2.1875rem;
   --button-secondary-big-font-size: var(--subtitle1-font-size);
@@ -328,6 +329,9 @@
   --highlight-text-background-color: rgba(--color-primary-500-rgb, 0.3);
   
   --loading-button-background: var(--light-divider-7);
+
+  --button-hover-background-color: var(---color-primary-700);
+  --button-focused-background-color: var(--color-primary-400);
 
   --pagination-active-item: rgba(0, 0, 0, 0.5);
   --pagination-inactive-item: rgba(0, 0, 0, 0.38);
