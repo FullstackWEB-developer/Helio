@@ -20,10 +20,7 @@ import { selectAppUserDetails } from '@shared/store/app-user/appuser.selectors';
 import { BadgeNumber } from '@icons/BadgeNumber';
 import { TicketListQueryType } from '@pages/tickets/models/ticket-list-type';
 import { selectTicketQueryType } from '@pages/tickets/store/tickets.selectors';
-import {
-  selectUnreadSmsMessages,
-  selectUnreadTeamSms,
-} from '@pages/sms/store/sms.selectors';
+import { selectUnreadSmsMessages, selectUnreadTeamSms } from '@pages/sms/store/sms.selectors';
 const TIME_PERIOD_DATE_RANGE_OPTION = '3';
 
 interface SmsFilterProps {
@@ -34,13 +31,7 @@ interface SmsFilterProps {
   onFilterClick?: (param: SmsFilterParamModel) => void;
   isUserFilterEnabled?: boolean;
 }
-const SmsFilter = ({
-  className,
-  isUserFilterEnabled,
-  value,
-  defaultValue,
-  ...props
-}: SmsFilterProps) => {
+const SmsFilter = ({ className, isUserFilterEnabled, value, defaultValue, ...props }: SmsFilterProps) => {
   dayjs.extend(utc);
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -50,13 +41,10 @@ const SmsFilter = ({
   const unreadSmsMessages = useSelector(selectUnreadSmsMessages);
   const unreadTeamSmsMessage = useSelector(selectUnreadTeamSms);
   const [displayFilters, setDisplayFilters] = useState<boolean>(true);
-  const [fromDateField, setFromDateField] = useState<Date | undefined>(
-    value?.fromDate ? dayjs(value.fromDate).utc().toDate() : undefined,
-  );
-  const { control, handleSubmit, watch, setValue, reset } =
-    useForm<SmsFilterParamModel>({
-      defaultValues: defaultValue,
-    });
+  const [fromDateField, setFromDateField] = useState<Date | undefined>(value?.fromDate ? dayjs(value.fromDate).utc().toDate() : undefined);
+  const { control, handleSubmit, watch, setValue, reset } = useForm<SmsFilterParamModel>({
+    defaultValues: defaultValue,
+  });
   const watchTimePeriod = watch('timePeriod');
 
   useEffect(() => {
@@ -148,11 +136,7 @@ const SmsFilter = ({
 
     if (filter.fromDate || filter.toDate) {
       dispatch(setIsSmsFiltered(true));
-    } else if (
-      filter.assignedTo !== appUser.id &&
-      filter.assignedTo &&
-      isUserFilterEnabled
-    ) {
+    } else if (filter.assignedTo !== appUser.id && filter.assignedTo && isUserFilterEnabled) {
       dispatch(setIsSmsFiltered(true));
     } else {
       dispatch(setIsSmsFiltered(false));
@@ -169,9 +153,7 @@ const SmsFilter = ({
   };
 
   const onUnreadClick = () => {
-    const unread = !value?.unread ? true : undefined;
-    console.log('value:', value);
-    onFilterClick({ ...value, unread: unread });
+    onFilterClick({ ...value, unread: true });
   };
 
   if (!displayFilters) {
@@ -185,12 +167,7 @@ const SmsFilter = ({
           <div className='subtitle'>{t('common.filters')}</div>
           <div className='flex flex-row items-center'>
             <div>
-              <SvgIcon
-                type={Icon.Close}
-                onClick={props.onCloseClick}
-                className='icon-small'
-                wrapperClassName='pl-7 pr-4 cursor-pointer'
-              />
+              <SvgIcon type={Icon.Close} onClick={props.onCloseClick} className='icon-small' wrapperClassName='pl-7 pr-4 cursor-pointer' />
             </div>
           </div>
         </div>
@@ -202,40 +179,17 @@ const SmsFilter = ({
             buttonType='small'
             onClick={() => handleSubmit(onFilterClick)()}
           ></Button>
-          <Button
-            data-test-id='reset-all-button'
-            className='cursor-pointer'
-            label='common.reset_all'
-            buttonType='secondary'
-            onClick={onClearFilter}
-          ></Button>
+          <Button data-test-id='reset-all-button' className='cursor-pointer' label='common.reset_all' buttonType='secondary' onClick={onClearFilter}></Button>
         </div>
       </div>
       <div className='flex flex-col pt-4 pl-5 pr-4'>
-        <div
-          role='button'
-          className='flex flex-row items-center h-10 mb-4 cursor-pointer pr-14'
-          onClick={onUnreadClick}
-        >
-          <div className='pr-3 cursor-pointer subtitle'>
-            {t('tickets.filter.unread_sms')}
-          </div>
+        <div role='button' className='flex flex-row items-center h-10 mb-4 cursor-pointer pr-14' onClick={onUnreadClick}>
+          <div className='pr-3 cursor-pointer subtitle'>{t('tickets.filter.unread_sms')}</div>
           <div>
-            <BadgeNumber
-              type='red'
-              number={
-                ticketListQueryType === TicketListQueryType.AllTicket
-                  ? unreadTeamSmsMessage
-                  : unreadSmsMessages
-              }
-            />
+            <BadgeNumber type='red' number={ticketListQueryType === TicketListQueryType.AllTicket ? unreadTeamSmsMessage : unreadSmsMessages} />
           </div>
         </div>
-        <Collapsible
-          title={t('sms.filter.time_section')}
-          isOpen
-          headerClassName='h-10 mb-1.5'
-        >
+        <Collapsible title={t('sms.filter.time_section')} isOpen headerClassName='h-10 mb-1.5'>
           <Controller
             control={control}
             name='timePeriod'
@@ -288,18 +242,8 @@ const SmsFilter = ({
           </div>
         </Collapsible>
         {isUserFilterEnabled && (
-          <Collapsible
-            title={t('sms.filter.team_section')}
-            isOpen
-            className='pt-4'
-            headerClassName='h-10 mb-1.5'
-          >
-            <ControlledSelect
-              control={control}
-              name='assignedTo'
-              defaultValue=''
-              options={getUserOptions()}
-            />
+          <Collapsible title={t('sms.filter.team_section')} isOpen className='pt-4' headerClassName='h-10 mb-1.5'>
+            <ControlledSelect control={control} name='assignedTo' defaultValue='' options={getUserOptions()} />
           </Collapsible>
         )}
       </div>
