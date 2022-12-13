@@ -15,7 +15,7 @@ import { ControlledInput } from '@components/controllers';
 import { useForm } from 'react-hook-form';
 import Button from '@components/button/button';
 import Spinner from '@components/spinner/Spinner';
-
+import './contact-categories.scss';
 
 const ContactCategories = () => {
     const { t } = useTranslation();
@@ -25,6 +25,8 @@ const ContactCategories = () => {
     const [anyContactExistInCategoryText, setAnyContactExistInCategoryText] = useState<boolean>(false);
     const contactCategoriesKey = 'ContactCategory';
     const categories = useSelector((state) => selectLookupValues(state, contactCategoriesKey));
+
+    const { control, handleSubmit,  formState: {isValid, isDirty} } = useForm({ mode: 'all' });
     useEffect(() => { getCategoriesMutation.mutate(dispatch) }, [])
     const tableModel: TableModel = {
         hasRowsBottomBorder: true,
@@ -54,6 +56,11 @@ const ContactCategories = () => {
             }
         ]
     }
+
+    useEffect(() => {
+        setAnyContactExistInCategoryText(false);
+    }, [categoryId]);
+
     const getCategoryLabel = () => {
         if (categoryId) {
             return categories.find(d => d.value === categoryId)?.label;
@@ -92,9 +99,10 @@ const ContactCategories = () => {
         }
     })
     const onAddCategory = (formData: { value: string }) => {
+        let ids = categories.map(a => parseInt(a.value));
         upsertCategoryMutation.mutate({
             label: formData.value,
-            value: (categories.length + 1).toString(),
+            value: (Math.max(...ids) + 1).toString(),
             key: contactCategoriesKey,
             isUpdate: false
         })
@@ -155,23 +163,21 @@ const ContactCategories = () => {
         }
     })
 
-    const { control, handleSubmit, formState } = useForm({ mode: 'all' });
     return (
 
         <>
             <div className='flex items-center justify-center w-full h-full z-10 absolute hidden'>
                 <Modal
                     isDraggable={true}
-                    className='w-96'
                     isOpen={modalVisible}
                     title={categoryId ? 'configuration.contact_categories.edit_title' : 'configuration.contact_categories.add_title'}
                     onClose={() => onActionCompleted(false)}
                     isClosable={true}
                     hasOverlay={true}>
-                    <div className='flex flex-col pb-11'>
+                    <div className='flex flex-col  contact-categories-edit'>
                         <div className='flex flex-col pb-6 pt-6'>
                             {anyContactExistInCategoryText &&
-                                <span className='text-red-600 font-light text-sm mb-2 -mt-4'>
+                                <span className='text-danger font-light text-sm mb-2 -mt-4'>
                                     {t('configuration.contact_categories.any_contact_exists_in_category')}
                                 </span>}
 
@@ -181,16 +187,16 @@ const ContactCategories = () => {
                                     name='value'
                                     type='text'
                                     label='configuration.contact_categories.category_name_label'
-                                    containerClassName='w-full'
+                                    containerClassName='w-72'
                                     defaultValue={getCategoryLabel()}
                                     required
                                 />
                             </Fragment>
-                            <div className='flex justify-end mt-10'>
+                            <div className='flex justify-end mt-12'>
                                 <Button label='common.cancel' className='mr-6' buttonType='secondary' onClick={() => onActionCompleted(false)} />
                                 {categoryId && (
                                     <Button data-testid='delete-contact-cat' label='common.delete' className='mr-6' buttonType='secondary'
-                                        disabled={deleteCategoryMutation.isLoading || checkIfAnyContactExistsInCategoryMutation.isLoading}
+                                        disabled={!isValid || anyContactExistInCategoryText || deleteCategoryMutation.isLoading || checkIfAnyContactExistsInCategoryMutation.isLoading}
                                         isLoading={deleteCategoryMutation.isLoading || checkIfAnyContactExistsInCategoryMutation.isLoading}
                                         onClick={() => { onDeleteCategory() }} />
                                 )}
@@ -198,7 +204,7 @@ const ContactCategories = () => {
                                     data-testid='upsert-contact-cat'
                                     type='submit'
                                     buttonType='small'
-                                    disabled={!formState.isValid || upsertCategoryMutation.isLoading}
+                                    disabled={!isValid || upsertCategoryMutation.isLoading || !isDirty}
                                     isLoading={upsertCategoryMutation.isLoading}
                                     label='common.save'
                                     onClick={() => {
@@ -215,9 +221,10 @@ const ContactCategories = () => {
                 </Modal>
             </div>
             <div className='w-10/12 overflow-auto h-full p-6 pr-4'>
-                <h5 className='pb-6'>{t('configuration.contact_categories.title')}</h5>
+                <h6 className='pb-6'>{t('configuration.contact_categories.title')}</h6>
                 <div className='body2'>{t('configuration.contact_categories.description')}</div>
-                <div className='w-full h-10 flex flex-row my-4'>
+                <div className='w-full h-10 flex flex-row mb-2.5 mt-11 items-center'>
+                    <div className='h7'>{t('configuration.contact_categories.title')}</div>
                     <Button className='ml-auto' label='configuration.contact_categories.add_category_button' buttonType='small' onClick={() => {
                         setCategoryId(undefined);
                         setModalVisible(true);

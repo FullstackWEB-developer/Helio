@@ -80,103 +80,108 @@ const Header = ({ headsetIconRef }: { headsetIconRef: React.RefObject<HTMLDivEle
         }
     });
     return (
-        <header className='flex flex-row items-center border-b md:pl-6 bg-primary text-primary'>
-            <div className='flex flex-row justify-between w-full'>
-                <div className='flex flex-row'>
-                    <div className='flex items-center w-full h-16 md:w-auto'>
-                        <div className='pl-7 md:pl-0 pr-36'>
-                            <Link to='/dashboard' className='cursor-pointer'>
-                                <div>
-                                    <HelioLogo className='fill-current text-primary-600' />
-                                </div>
-                            </Link>
-                        </div>
-                    </div>
-                    <div className='pl-2'>
-                        <SearchBar />
-                    </div>
-                    <div><ReLoginModal type='header' /></div>
-                </div>
-
-                {appUserDetails && appUserDetails?.callForwardingEnabled && <div className='flex w-full max-h-16 h-16 items-center justify-end pr-4'>
-                    <Alert message={'ccp.call_chat_fw_enabled_header'} type='info'/>
-                </div>}
-                <div className='flex flex-row items-center'>
-
-                    <CallbackTicketCount />
-                    <div ref={headsetIconRef} className='relative cursor-pointer mr-32'>
-                        <div className={classNames({ 'ccp-incoming-pulse': isIncomingOrActiveCall, 'ccp-idle-border': !isIncomingOrActiveCall })} onClick={() => dispatch(toggleCcp())}>
-                            <SvgIcon type={Icon.Ccp} data-test-id='toggle-ccp'
-                                className={classNames('icon-large-40', { 'animate-pulse': animate })}
-                                fillClass2={`${isIncomingOrActiveCall ? 'ccp-icon-active-headset' : 'ccp-icon-idle-headset'}`}
-                                fillClass={`${isIncomingOrActiveCall ? 'ccp-icon-active-background' : 'ccp-icon-idle-background'}`} />
-                        </div>
-                        {ccpConnectionState === CCPConnectionStatus.Failed &&
-                            <div ref={iconContainerRef}
-                                onClick={() => setErrorToolTipVisible(!isErrorToolTipVisible)}
-                                className='absolute bottom-0 left-7'>
-                                <SvgIcon
-                                    type={Icon.ErrorFilled}
-                                    className='icon-small'
-                                    fillClass='danger-icon'
-                                />
-                                <Tooltip
-                                    targetRef={iconContainerRef}
-                                    isVisible={isErrorToolTipVisible}
-                                    placement='bottom-start'>
-                                    <div className="flex flex-col p-6 body2 w-80">
-                                        <span>{t('ccp.modal.desc_fail')}</span>
-                                        <span>
-                                            <Trans i18nKey="ccp.modal.desc_fail_try" values={{ email: utils.getAppParameter('SupportEmailAddress') }}>
-                                                <a rel='noreferrer' className='link' href={`mailto:${utils.getAppParameter('SupportEmailAddress')}`}> </a>
-                                            </Trans>
-                                        </span>
-                                    </div>
-                                </Tooltip>
-                            </div>
-                        }
-                    </div>
-                    <div className='flex flex-row items-center'>
-                        <div data-test-id='help-icon' className='hidden pr-6 md:block'>
-                            <SvgIcon type={Icon.Help} className='cursor-pointer header-icon' onClick={() => openUrl(`#`)} />
-                        </div>
-                        <ComponentPermissionGuard permission='Home.AWSConnectButton'>
-                            <div className='hidden pr-6 md:block'>
-                                <SvgIcon
-                                    type={Icon.AwsConnect}
-                                    className='cursor-pointer header-icon'
-                                    onClick={() => openUrl(`${utils.getAppParameter('ConnectBaseUrl')}connect/home`)}
-                                />
-                            </div>
-                        </ComponentPermissionGuard>
-                        <div className='hidden pr-6 md:block'>
-                            <SvgIcon type={Icon.Office365} className='cursor-pointer header-icon'  onClick={()=>openUrl('https://www.office.com/')} />
-                        </div>
-                        <div data-test-id='athena-icon' className='hidden pr-10 md:block'>
-                            <SvgIcon type={Icon.Athena} className='cursor-pointer header-icon' onClick={() => openUrl(utils.getAppParameter('AthenaHealthUrl'))} />
-                        </div>
-
-                        <div>
-                            <div ref={dropdownRef} className='relative hidden h-full md:block'>
-                                <div ref={avatarRef} data-test-id='letter-avatar' className='pr-6 cursor-pointer'
-                                    onClick={() => displayProfileMenu()}>
-                                    <Avatar userFullName={auth.isLoggedIn && appUserDetails ? appUserDetails.fullName : ''}
-                                        userId={appUserDetails?.id}
-                                        displayStatus={true}
-                                        status={userStatus}
-                                        userPicture={appUserDetails?.profilePicture} />
-                                </div>
-                                <div>
-                                    {isProfileMenuOpen &&
-                                        <div ref={dropdownRef} className='absolute right-0.5 top-14 z-20 profile-dropdown'>
-                                            <ProfileDropdown /></div>}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+      <header className='flex flex-row items-center border-b md:pl-6 bg-primary text-primary'>
+        <div className='flex flex-row justify-between w-full'>
+          <div className='flex flex-row'>
+            <div className='flex items-center w-full h-16 md:w-auto'>
+              <div className='pl-7 md:pl-0 pr-36'>
+                <Link to='/dashboard' className='cursor-pointer'>
+                  <div>
+                    <HelioLogo className='fill-current text-primary-600' />
+                  </div>
+                </Link>
+              </div>
             </div>
-        </header>
+            <div className='pl-2'>
+              <SearchBar />
+            </div>
+            <div>
+              <ReLoginModal type='header' />
+            </div>
+          </div>
+
+          {appUserDetails && appUserDetails?.callForwardingEnabled && (
+            <div className='flex w-full max-h-16 h-16 items-center justify-end pr-4'>
+              <Alert message={'ccp.call_chat_fw_enabled_header'} type='info' />
+            </div>
+          )}
+          <div className='flex flex-row items-center'>
+            {appUserDetails && <CallbackTicketCount />}
+            <div ref={headsetIconRef} className='relative cursor-pointer mr-32'>
+              <div
+                className={classNames({ 'ccp-incoming-pulse': isIncomingOrActiveCall, 'ccp-idle-border': !isIncomingOrActiveCall })}
+                onClick={() => dispatch(toggleCcp())}
+              >
+                <SvgIcon
+                  type={Icon.Ccp}
+                  data-test-id='toggle-ccp'
+                  className={classNames('icon-large-40', { 'animate-pulse': animate })}
+                  fillClass2={`${isIncomingOrActiveCall ? 'ccp-icon-active-headset' : 'ccp-icon-idle-headset'}`}
+                  fillClass={`${isIncomingOrActiveCall ? 'ccp-icon-active-background' : 'ccp-icon-idle-background'}`}
+                />
+              </div>
+              {ccpConnectionState === CCPConnectionStatus.Failed && (
+                <div ref={iconContainerRef} onClick={() => setErrorToolTipVisible(!isErrorToolTipVisible)} className='absolute bottom-0 left-7'>
+                  <SvgIcon type={Icon.ErrorFilled} className='icon-small' fillClass='danger-icon' />
+                  <Tooltip targetRef={iconContainerRef} isVisible={isErrorToolTipVisible} placement='bottom-start'>
+                    <div className='flex flex-col p-6 body2 w-80'>
+                      <span>{t('ccp.modal.desc_fail')}</span>
+                      <span>
+                        <Trans i18nKey='ccp.modal.desc_fail_try' values={{ email: utils.getAppParameter('SupportEmailAddress') }}>
+                          <a rel='noreferrer' className='link' href={`mailto:${utils.getAppParameter('SupportEmailAddress')}`}>
+                            {' '}
+                          </a>
+                        </Trans>
+                      </span>
+                    </div>
+                  </Tooltip>
+                </div>
+              )}
+            </div>
+            <div className='flex flex-row items-center'>
+              <div data-test-id='help-icon' className='hidden pr-6 md:block'>
+                <SvgIcon type={Icon.Help} className='cursor-pointer header-icon' onClick={() => openUrl(`#`)} />
+              </div>
+              <ComponentPermissionGuard permission='Home.AWSConnectButton'>
+                <div className='hidden pr-6 md:block'>
+                  <SvgIcon
+                    type={Icon.AwsConnect}
+                    className='cursor-pointer header-icon'
+                    onClick={() => openUrl(`${utils.getAppParameter('ConnectBaseUrl')}connect/home`)}
+                  />
+                </div>
+              </ComponentPermissionGuard>
+              <div className='hidden pr-6 md:block'>
+                <SvgIcon type={Icon.Office365} className='cursor-pointer header-icon' onClick={() => openUrl('https://www.office.com/')} />
+              </div>
+              <div data-test-id='athena-icon' className='hidden pr-10 md:block'>
+                <SvgIcon type={Icon.Athena} className='cursor-pointer header-icon' onClick={() => openUrl(utils.getAppParameter('AthenaHealthUrl'))} />
+              </div>
+
+              <div>
+                <div ref={dropdownRef} className='relative hidden h-full md:block'>
+                  <div ref={avatarRef} data-test-id='letter-avatar' className='pr-6 cursor-pointer' onClick={() => displayProfileMenu()}>
+                    <Avatar
+                      userFullName={auth.isLoggedIn && appUserDetails ? appUserDetails.fullName : ''}
+                      userId={appUserDetails?.id}
+                      displayStatus={true}
+                      status={userStatus}
+                      userPicture={appUserDetails?.profilePicture}
+                    />
+                  </div>
+                  <div>
+                    {isProfileMenuOpen && (
+                      <div ref={dropdownRef} className='absolute right-0.5 top-14 z-20 profile-dropdown'>
+                        <ProfileDropdown />
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
     );
 }
 
