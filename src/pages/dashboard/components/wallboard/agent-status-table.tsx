@@ -122,7 +122,7 @@ const AgentStatusTable = () => {
         if (!items) {
             return null;
         }
-        return <div className='flex flex-row space-x-4'>
+        return <div className='flex flex-row gap-y-2 gap-x-4 flex-wrap'>
             {[...items].sort((a, b) => {
                 if (dayjs(a.timestamp).isAfter(b.timestamp)) {
                     return 1;
@@ -165,7 +165,7 @@ const AgentStatusTable = () => {
             {
                 title:t('wallboard.agent_status.live_chats'),
                 field:'liveChats',
-                widthClass:'w-48',
+                widthClass:'w-96',
                 render: (item, record: LiveAgentStatusInfo) => renderItems(AgentLiveItemType.Chat, record.chats)
             }
         ],
