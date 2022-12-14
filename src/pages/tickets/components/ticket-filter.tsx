@@ -188,7 +188,7 @@ const TicketFilter = ({ isOpen }: { isOpen: boolean }) => {
                 case 'offices':
                     items = convertOfficesToOptions()
                     defaultValues = new Array(items.length).fill(false);
-                    items.map((value, index) => {values.includes(parseInt(value.key)) ? defaultValues[index] = true : defaultValues[index] = false});
+                    items.map((value, index) => {values.includes(value.key) ? defaultValues[index] = true : defaultValues[index] = false});
                     setDefaultOfficesValues(defaultValues);
                     break;
                 case 'patientRating':
