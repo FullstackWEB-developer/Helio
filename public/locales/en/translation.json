@@ -1866,7 +1866,7 @@
     "user_update_success": "User has been updated",
     "user_update_role": "Role changes will take effect from the user's next login.",
     "user_update_error": "Error updating user",
-    "provider_tooltip": "<0>Please match that user if s/he is a provider in the EHR/EMR system.</0><1>We will use this to show the right information about the provider to the patients.</1>"
+    "provider_tooltip": "If this user is a provider, please match with the provider's credentials in the EMR/EHR system."
   },
   "ticket_log": {
     "answered": "Answered",
