@@ -1,11 +1,11 @@
-import {useDispatch, useSelector} from 'react-redux';
-import {selectVerifiedPatent} from '@pages/patients/store/patients.selectors';
-import React, {useContext, useEffect, useMemo, useState} from 'react';
-import {useTranslation} from 'react-i18next';
-import {useQuery} from 'react-query';
-import {QueryTicketMessagesInfinite, UserListBaseData} from '@constants/react-query-constants';
-import {ChannelTypes, PagedList, TicketMessage, TicketMessagesDirection} from '@shared/models';
-import {getMessages} from '@pages/sms/services/ticket-messages.service';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectVerifiedPatent } from '@pages/patients/store/patients.selectors';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useMutation, useQuery } from 'react-query';
+import { QueryTicketMessagesInfinite, UserListBaseData } from '@constants/react-query-constants';
+import { ChannelTypes, PagedList, TicketMessage, TicketMessagesDirection } from '@shared/models';
+import { getMessages, markRead } from '@pages/sms/services/ticket-messages.service';
 import Spinner from '@components/spinner/Spinner';
 import IncomingSms from '@pages/external-access/ticket-sms/incoming-sms';
 import OutgoingSms from '@pages/external-access/ticket-sms/outgoing-sms';
@@ -16,20 +16,20 @@ import isToday from 'dayjs/plugin/isToday';
 import AlwaysScrollToBottom from '@components/scroll-to-bottom';
 import TicketSmsSendMessage from '@pages/external-access/ticket-sms/ticket-sms-send-message';
 import utils from '@shared/utils/utils';
-import {getUserBaseData} from '@shared/services/user.service';
-import {selectRedirectLink} from '@pages/external-access/verify-patient/store/verify-patient.selectors';
-import {selectTicketSmsMessages} from '@pages/external-access/ticket-sms/store/ticket-sms.selectors';
-import {setTicketSmsMessages} from '@pages/external-access/ticket-sms/store/ticket-sms.slice';
-import {
-    RealtimeTicketMessageContext
-} from '@pages/external-access/realtime-ticket-message-context/realtime-ticket-message-context';
+import { getUserBaseData } from '@shared/services/user.service';
+import { selectRedirectLink } from '@pages/external-access/verify-patient/store/verify-patient.selectors';
+import { selectTicketSmsMessages } from '@pages/external-access/ticket-sms/store/ticket-sms.selectors';
+import { setTicketSmsMessages } from '@pages/external-access/ticket-sms/store/ticket-sms.slice';
+import { RealtimeTicketMessageContext } from '@pages/external-access/realtime-ticket-message-context/realtime-ticket-message-context';
 import classnames from 'classnames';
 import { isMobile } from 'react-device-detect';
+import usePageVisibility from '@shared/hooks/usePageVisibility';
 
 const TicketSms = () => {
     dayjs.extend(isToday);
     dayjs.extend(isYesterday);
     const {t} = useTranslation();
+    const isPageVisible = usePageVisibility();
     const {lastMessageDate} = useContext(RealtimeTicketMessageContext)!;
     const verifiedPatient = useSelector(selectVerifiedPatent);
     const request = useSelector(selectRedirectLink);
@@ -49,6 +49,24 @@ const TicketSms = () => {
     useEffect(() => {
         refetch().then();
     }, [lastMessageDate]);
+
+    const markReadMutation = useMutation(
+      ({ ticketId, channel }: { ticketId: string; channel: ChannelTypes }) =>
+        markRead(ticketId, channel, TicketMessagesDirection.Outgoing),
+    );
+
+    useEffect(() => {
+        if (!isPageVisible) {
+            return;
+        }
+        const unreadMessage = messages.find(a => !a.isRead);
+        if (!!unreadMessage && unreadMessage.direction === TicketMessagesDirection.Outgoing) {
+            markReadMutation.mutate({
+                ticketId: request.ticketId,
+                channel: ChannelTypes.SMS,
+            });
+        }
+    }, [messages, isPageVisible]);
 
     const {isLoading, refetch} = useQuery([QueryTicketMessagesInfinite, ChannelTypes.SMS, request?.ticketId, page],
         () => getMessages(request.ticketId, ChannelTypes.SMS, {
