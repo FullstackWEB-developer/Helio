@@ -78,6 +78,14 @@ const Select = React.forwardRef<HTMLDivElement, SelectProps>(
       }
     });
 
+    useEffect(()=>{
+      setSelectedOption(
+        typeof defaultValue === 'string'
+        ? options?.find(a => !!a && a?.value === defaultValue)
+        : defaultValue
+      );
+    },[defaultValue]);
+
     const searchOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       setSearchQuery(e.target.value);
       setCursor(0);
