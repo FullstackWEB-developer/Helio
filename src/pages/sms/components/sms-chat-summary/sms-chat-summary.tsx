@@ -106,7 +106,7 @@ const SmsChatSummary = ({
     }
 
     return (<div className={classnames('border-b sms-summary cursor-pointer', {'sms-summary-selected': isSelected})} onClick={() => props.onClick && props.onClick(ticketId)}>
-        <div className='flex flex-row pl-5 pt-2.5 pb-1.5 pr-4'>
+        <div className='flex flex-row pl-6 pt-4 pb-1.5 pr-4'>
             <div className="pr-4">
                 {userImage}
             </div>
