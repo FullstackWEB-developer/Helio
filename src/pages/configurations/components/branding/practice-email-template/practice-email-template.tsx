@@ -131,7 +131,11 @@ const PracticeEmailTemplateEdit = () => {
                 <h5 className='mb-4'> {t('configuration.practice_email_template.title')} </h5>
                 <p className='mb-6'>{t('configuration.practice_email_template.description')}</p>
                 <div className='subtitle mb-3'> {t('configuration.practice_email_template.logo_title')} </div>
-                <p className='mb-4'>{t('configuration.practice_email_template.logo_description')}</p>
+                <p className='mb-4'>
+                    <Trans i18nKey="configuration.practice_email_template.logo_description">
+                        <span className='text-danger'></span>
+                    </Trans>
+                </p>
                 <div className='mb-6'>
                     <div className='flex flex-row mb-4 items-center'>
                         <label className='mr-6'>{t('configuration.practice_email_template.header_logo_label')}</label>

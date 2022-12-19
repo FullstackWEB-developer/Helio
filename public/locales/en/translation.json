@@ -2361,7 +2361,7 @@
       "title": "Practice Email Template",
       "description": "Use the settings below to customize branding for your email templates. Updates will be applied for all email notifications.",
       "logo_title": "Customize Header and Footer Logo Images",
-      "logo_description": "Please upload your logo image in PNG or GIF file format (72 dpi resolution). Maximum logo image height is 40 px. \nUploading GIF or PNG file with transparency will achieve best results with logo blending seamlessly with header background.",
+      "logo_description": "Please upload your logo image in PNG or GIF file format (<0>maximum</0> 72 dpi resolution). Maximum logo image height is 40 px. Uploading GIF or PNG file with transparency will achieve best results with logo blending seamlessly with header background.",
       "header_logo_label": "Header Logo Image:",
       "footer_logo_label": "Footer Logo Image:",
       "customize_color_title": "Customizing Template Colors",
