@@ -79,7 +79,9 @@
     "insert": "Insert",
     "date_input_assistive_text": "MM/DD/YYYY",
     "update": "Update",
-    "idle_warning": "You will be automatically logged out in a minute..."
+    "idle_warning": "You will be automatically logged out in a minute...",
+    "see_more": "See More",
+    "see_less": "See Less"
   },
   "app": {
     "error_loading_parameters": "Error loading parameters, please try again later",
@@ -1423,7 +1425,7 @@
       "title": "Top 5 Tickets By Reason",
       "label_others": "Other",
       "tooltip_title": "Reason",
-      "no_reason":"No Reason"
+      "no_reason": "No Reason"
     },
     "response_time": {
       "title": "Response Time",
@@ -2004,6 +2006,7 @@
     "contact_categories_menu": "Contact Categories",
     "security_settings_menu": "Security",
     "web_chat_menu": "Web Chat",
+    "business_hours_menu": "Business Hours",
     "general": "General",
     "tickets": "Tickets",
     "tags": "Tags",
@@ -2299,6 +2302,41 @@
       "warning_info": "There are unsaved chages, are you sure to cancel?",
       "warning_info_leaving": "There are unsaved chages, are you sure to leave?",
       "warning": "Warning"
+    },
+    "business_hours": {
+      "title": "Business Hours",
+      "description": "Set your business hours.",
+      "enter_hours_title": "Enter your business hours",
+      "enter_hours_description": "If call routing is enabled, calls during non-working hours will be routed. To prevent call routing during short breaks do not include breaks in your daily schedule.\n\nExample:\n\nWorking hours start at 9 am, lunch break is from 12 pm - 1 pm, work hours end at 5 pm.\n\nTo prevent routing from 8 am to 9 am and from 12 pm - 1 pm, working hours should be set from 8 am to 5 pm. Those hours pretend only for the voice and chat channels. SMS and Email channel will function in their normal mode.",
+      "tab_general_settings_title": "General Settings",
+      "tab_set_business_hours_title": "Set Business Hours",
+      "tab_set_holidays": "Set Holidays",
+      "add_date_time": "Add Day and Time",
+      "types": {
+        "24_7": "24/7",
+        "custom_business_hours": "Custom business hours"
+      },
+      "table": {
+        "day_name": "Day",
+        "start_time_name": "Start Time",
+        "end_time_name": "End Time"
+      },
+      "dayOfWeek": {
+        "sunday": "Sunday",
+        "monday": "Monday",
+        "tuesday": "Tuesday",
+        "wednesday": "Wednesday",
+        "thursday": "Thursday",
+        "friday": "Friday",
+        "saturday": "Saturday"
+      },
+      "add_day_hour_title": "Add Day and Time",
+      "edit_day_hour_title": "Edit Day and Time",
+      "day_select_label": "Day",
+      "start_time_select_label": "Start Time",
+      "end_time_select_label": "End Time",
+      "save_success": "Successfully updated.",
+      "save_error": "Error saving settings, please try again."
     },
     "email_template_details": {
       "not_found": "Specified template not found.",

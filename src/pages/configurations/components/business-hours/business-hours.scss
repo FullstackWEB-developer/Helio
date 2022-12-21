@@ -1,0 +1,17 @@
+.business-hours {
+  width: calc(100% - 16.5rem);
+
+  .more-less-text {
+    max-width: 58.5rem;
+  }
+}
+.business-hours-add {
+  width: 29rem;
+
+  .day-select {
+    width: 19rem;
+  }
+  .time-select {
+    width: 8.5rem;
+  }
+}
