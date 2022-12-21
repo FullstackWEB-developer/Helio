@@ -4,7 +4,7 @@ import { Controller, useForm } from "react-hook-form";
 import Radio from "@components/radio/radio";
 import { Option } from "@components/option/option";
 import ControlledSelect from "@components/controllers/controlled-select";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from 'react';
 import { getUserList } from "@shared/services/lookups.service";
 import { selectUserOptions } from "@shared/store/lookups/lookups.selectors";
 import { useDispatch, useSelector } from "react-redux";
@@ -33,6 +33,8 @@ import {
   selectUnreadEmails,
   selectUnreadTeamEmails,
 } from "@pages/email/store/email.selectors";
+import { EmailContext } from '@pages/email/context/email-context';
+import { EmailQueryType } from '@pages/email/models/email-query-type';
 
 interface EmailFilterProps {
   className?: string;
@@ -50,10 +52,8 @@ const EmailFilter = ({
   dayjs.extend(utc);
   const dispatch = useDispatch();
   const [displayFilters, setDisplayFilters] = useState<boolean>(true);
-  const isDefaultTeamView = useCheckPermission("Email.DefaultToTeamView");
   const appUser = useSelector(selectAppUserDetails);
   const { id } = useSelector(selectAppUserDetails);
-  const ticketListQueryType = useSelector(selectTicketQueryType);
   const unreadEmails = useSelector(selectUnreadEmails);
   const unreadTeamEmails = useSelector(selectUnreadTeamEmails);
   const { t } = useTranslation();
@@ -61,6 +61,12 @@ const EmailFilter = ({
   const [fromDateField, setFromDateField] = useState<Date | undefined>(
     value?.fromDate ? dayjs(value.fromDate).utc().toDate() : undefined,
   );
+
+  const {
+    emailQueryType,
+    isDefaultTeamView
+  } = useContext(EmailContext)!;
+
   const { control, handleSubmit, watch, setValue, reset } =
     useForm<EmailFilterModel>();
   const watchTimePeriod = watch("timePeriod");
@@ -221,7 +227,7 @@ const EmailFilter = ({
             <BadgeNumber
               type='red'
               number={
-                ticketListQueryType === TicketListQueryType.AllTicket
+                emailQueryType === EmailQueryType.TeamEmail
                   ? unreadTeamEmails
                   : unreadEmails
               }

@@ -186,7 +186,7 @@ const SmsFilter = ({ className, isUserFilterEnabled, value, defaultValue, ...pro
         <div role='button' className='flex flex-row items-center h-10 mb-4 cursor-pointer pr-14' onClick={onUnreadClick}>
           <div className='pr-3 cursor-pointer subtitle'>{t('tickets.filter.unread_sms')}</div>
           <div>
-            <BadgeNumber type='red' number={ticketListQueryType === TicketListQueryType.AllTicket ? unreadTeamSmsMessage : unreadSmsMessages} />
+            <BadgeNumber type='red' number={isUserFilterEnabled ? unreadTeamSmsMessage : unreadSmsMessages} />
           </div>
         </div>
         <Collapsible title={t('sms.filter.time_section')} isOpen headerClassName='h-10 mb-1.5'>
