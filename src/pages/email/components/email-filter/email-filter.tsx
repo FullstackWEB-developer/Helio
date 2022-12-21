@@ -166,8 +166,7 @@ const EmailFilter = ({
   };
 
   const onUnreadClick = () => {
-    const unread = !value?.unread ? true : undefined;
-    onFilterClick({ ...value, unread: unread });
+    onFilterClick({ ...value, unread: true });
   };
 
   if (!displayFilters) {
