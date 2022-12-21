@@ -10,6 +10,7 @@ import { getTicketById } from '@pages/tickets/services/tickets.service';
 import { setBotContextTicket } from '@pages/ccp/store/ccp.slice';
 import {selectSelectedTicket} from '@pages/tickets/store/tickets.selectors';
 import { selectBotContext } from '@pages/ccp/store/ccp.selectors';
+
 const TicketNotesUpdate = () => {
     const dispatch = useDispatch();
     const [connection, setConnection] = useState<HubConnection | null>(null);
@@ -36,7 +37,12 @@ const TicketNotesUpdate = () => {
                 {
                     accessTokenFactory: () => accessToken
                 })
-            .withAutomaticReconnect()
+              .withAutomaticReconnect({
+                  nextRetryDelayInMilliseconds: (retryContext) => {
+                      realtimeConnectionLogger.log(LogLevel.Error, `Reconnecting to TicketNotesUpdate Websocket: ${JSON.stringify(retryContext?.retryReason)}.`);
+                      return 5000;
+                  }
+              })
             .configureLogging(realtimeConnectionLogger)
             .build();
 
@@ -50,7 +56,9 @@ const TicketNotesUpdate = () => {
         if (connection) {
             connection.start()
                 .then(_ => {
+                    realtimeConnectionLogger.log(LogLevel.Error, `Connection to TicketNotesUpdate Websocket succeeded.`);
                     connection.on('TicketNoteUpdateEventHub', (webSocketData: TicketNotesUpdateModal) => {
+                        realtimeConnectionLogger.log(LogLevel.Error, `New Message Received From TicketNotesUpdate Websocket ${JSON.stringify(webSocketData)}`);
                         if(ticketId === webSocketData.ticketId || ccpTicketId === webSocketData.ticketId){
                             getTicketById(webSocketData.ticketId).then((data) => {
                                 if(ticketId === webSocketData.ticketId){
@@ -65,7 +73,12 @@ const TicketNotesUpdate = () => {
                         }
                     });
                 })
-                .catch(error => realtimeConnectionLogger.log(LogLevel.Error, `Connection to TicketMessageReadHub failed: ${error}.`))
+                .catch(error => realtimeConnectionLogger.log(LogLevel.Error, `Connection to TicketNotesUpdate failed: ${error}.`));
+            connection.onclose(error => {
+                if (error) {
+                    realtimeConnectionLogger.log(LogLevel.Error, `Connection to TicketNotesUpdate failed: ${JSON.stringify(error)}.`)
+                }
+            });
         }
         return () => {
             connection?.stop();

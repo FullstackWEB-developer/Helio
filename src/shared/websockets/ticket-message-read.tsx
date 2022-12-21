@@ -23,7 +23,12 @@ const TicketMessageReadUpdate = () => {
                 {
                     accessTokenFactory: () => accessToken
                 })
-            .withAutomaticReconnect()
+          .withAutomaticReconnect({
+              nextRetryDelayInMilliseconds: (retryContext) => {
+                  realtimeConnectionLogger.log(LogLevel.Error, `Reconnecting to TicketMessageReadUpdate Websocket: ${JSON.stringify(retryContext?.retryReason)}.`);
+                  return 5000;
+              }
+          })
             .configureLogging(realtimeConnectionLogger)
             .build();
 
@@ -34,9 +39,10 @@ const TicketMessageReadUpdate = () => {
         if (connection) {
             connection.start()
                 .then(_ => {
+                    realtimeConnectionLogger.log(LogLevel.Error, `Connection to TicketMessageReadUpdate Websocket succeeded.`);
                     connection.on('TicketMessageMarkedRead', (data: any) => {
+                        realtimeConnectionLogger.log(LogLevel.Error, `New Message Received From TicketMessageReadUpdate Websocket ${JSON.stringify(data)}`);
                         if (data?.ticketId && data?.channel) {
-                            
                             if(data.channel === ChannelTypes.Email){
                                 dispatch(removeUnreadEmailTicketId(data.ticketId));
                                 dispatch(getBadgeValues(BadgeValues.EmailOnly))
@@ -47,7 +53,13 @@ const TicketMessageReadUpdate = () => {
                         }
                     });
                 })
-                .catch(error => realtimeConnectionLogger.log(LogLevel.Error, `Connection to TicketMessageReadHub failed: ${error}.`))
+                .catch(error => realtimeConnectionLogger.log(LogLevel.Error, `Connection to TicketMessageReadUpdate failed: ${error}.`));
+
+            connection.onclose(error => {
+                if (error) {
+                    realtimeConnectionLogger.log(LogLevel.Error, `Connection to TicketMessageReadUpdate failed: ${JSON.stringify(error)}.`)
+                }
+            });
         }
         return () => {
             connection?.stop();

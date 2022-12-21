@@ -30,10 +30,16 @@ const UserNotificationsConnectionHub = () => {
                 {
                     accessTokenFactory: () => accessToken
                 })
-            .withAutomaticReconnect()
+            .withAutomaticReconnect({
+                nextRetryDelayInMilliseconds: (retryContext) => {
+                    realtimeConnectionLogger.log(LogLevel.Error, `Reconnecting to UserNotificationsConnectionHub Websocket: ${JSON.stringify(retryContext?.retryReason)}.`);
+                    return 5000;
+                }
+            })
             .configureLogging(realtimeConnectionLogger)
             .build();
         setConnection(newConnection);
+
         return () => {
             if (newConnection.state === HubConnectionState.Connected) {
                 newConnection?.stop().then()
@@ -77,7 +83,9 @@ const UserNotificationsConnectionHub = () => {
         if (connection) {
             connection.start()
                 .then(_ => {
+                    realtimeConnectionLogger.log(LogLevel.Error, `Connection to NewUserNotification Websocket succeeded.`);
                     connection.on('NewUserNotification', (data: UserNotificationMessage) => {
+                        realtimeConnectionLogger.log(LogLevel.Error, `New Message Received From UserNotificationsConnectionHub Websocket ${JSON.stringify(data)}`);
                         switch (data.userNotificationType) {
                             case 'AgentUnavailable' :
                                 agentUnavailable(data.value);
@@ -87,11 +95,16 @@ const UserNotificationsConnectionHub = () => {
                                 break;
                         }
                     });
+                    connection.onclose(error => {
+                        if (error) {
+                            realtimeConnectionLogger.log(LogLevel.Error, `Connection to UserNotificationsConnectionHub failed: ${JSON.stringify(error)}.`);
+                        }
+                    });
                 })
                 .catch(error => realtimeConnectionLogger.log(LogLevel.Error, `Connection to UserNotificationsConnectionHub failed: ${error}.`))
         }
         return () => {
-            connection?.stop();
+          connection?.stop();
         }
 
     }, [connection]);

@@ -27,7 +27,12 @@ const RealTimeUserStatusUpdate = () => {
                 {
                     accessTokenFactory: () => accessToken
                 })
-            .withAutomaticReconnect()
+          .withAutomaticReconnect({
+              nextRetryDelayInMilliseconds: (retryContext) => {
+                  realtimeConnectionLogger.log(LogLevel.Error, `Reconnecting to RealTimeUserStatusUpdate Websocket: ${JSON.stringify(retryContext?.retryReason)}.`);
+                  return 5000;
+              }
+          })
             .configureLogging(realtimeConnectionLogger)
             .build();
 
@@ -38,12 +43,20 @@ const RealTimeUserStatusUpdate = () => {
         if (connection) {
             connection.start()
                 .then(_ => {
+                    realtimeConnectionLogger.log(LogLevel.Error, `Connection to RealTimeUserStatusUpdate Websocket succeeded.`);
                     connection.on('UserStatusChange', (data: UserStatusUpdate) => {
+                        realtimeConnectionLogger.log(LogLevel.Error, `New Message Received From RealTimeUserStatusUpdate Websocket ${JSON.stringify(data)}`);
                         propagateStatusChangeValue(data);
                         dispatch(updateLatestUsersStatusUpdateTime());
                     });
                 })
-                .catch(error => realtimeConnectionLogger.log(LogLevel.Error, `Connection to UserStatusChangeHub failed: ${error}.`))
+                .catch(error => realtimeConnectionLogger.log(LogLevel.Error, `Connection to RealTimeUserStatusUpdate failed: ${error}.`));
+
+            connection.onclose(error => {
+                if (error) {
+                    realtimeConnectionLogger.log(LogLevel.Error, `Connection to RealTimeUserStatusUpdate failed: ${JSON.stringify(error)}.`)
+                }
+            });
         }
 
         return () => {

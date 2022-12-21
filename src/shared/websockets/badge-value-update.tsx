@@ -6,7 +6,7 @@ import {selectAccessToken, selectAppUserDetails} from "@shared/store/app-user/ap
 import utils from "@shared/utils/utils";
 import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import RealTimeConnectionLogger from "./real-time-connection-logger";
+import RealTimeConnectionLogger from './real-time-connection-logger';
 
 const BadgeValueUpdate = () => {
     const dispatch = useDispatch();
@@ -22,7 +22,12 @@ const BadgeValueUpdate = () => {
                 {
                     accessTokenFactory: () => accessToken
                 })
-            .withAutomaticReconnect()
+          .withAutomaticReconnect({
+              nextRetryDelayInMilliseconds: (retryContext) => {
+                  realtimeConnectionLogger.log(LogLevel.Error, `Reconnecting to ReceiveBadgeValueUpdateEvent Websocket: ${JSON.stringify(retryContext?.retryReason)}.`);
+                  return 5000;
+              }
+          })
             .configureLogging(realtimeConnectionLogger)
             .build();
 
@@ -36,14 +41,22 @@ const BadgeValueUpdate = () => {
         if (connection) {
             connection.start()
                 .then(_ => {
+                    realtimeConnectionLogger.log(LogLevel.Error, `Connection to ReceiveBadgeValueUpdateEvent Websocket succeeded.`);
                     connection.on('ReceiveBadgeValueUpdateEvent', (data: TicketAssignedNotification) => {
+                        realtimeConnectionLogger.log(LogLevel.Error, `New Message Received From ReceiveBadgeValueUpdateEvent Websocket ${JSON.stringify(data)}`);
                         if(data.fromUser === currentUser?.id || data.toUser === currentUser?.id)
                         {
                             dispatch(getBadgeValues(BadgeValues.All))
                         }
                     });
                 })
-                .catch(error => realtimeConnectionLogger.log(LogLevel.Error, `Connection to TicketMessageReadHub failed: ${error}.`))
+                .catch(error => realtimeConnectionLogger.log(LogLevel.Error, `Connection to ReceiveBadgeValueUpdateEvent failed: ${error}.`));
+
+            connection.onclose(error => {
+                if (error) {
+                    realtimeConnectionLogger.log(LogLevel.Error, `Connection to ReceiveBadgeValueUpdateEvent failed: ${JSON.stringify(error)}.`)
+                }
+            });
         }
         return () => {
             connection?.stop();

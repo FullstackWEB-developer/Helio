@@ -9,9 +9,12 @@ import {QueryTicketMessagesInfinite} from '@constants/react-query-constants';
 import {useQueryClient} from 'react-query';
 import { getBadgeValues } from '@pages/tickets/services/tickets.service';
 import { BadgeValues } from '@pages/tickets/models/badge-values.model';
+import { LogLevel } from '@microsoft/signalr';
+import RealTimeConnectionLogger from '@shared/websockets/real-time-connection-logger';
 
 const IncomingTicketMessageUpdate = () => {
 
+    const realtimeConnectionLogger = new RealTimeConnectionLogger();
     const {smsIncoming} = useSignalRConnectionContext();
     const dispatch = useDispatch();
     const client = useQueryClient();
@@ -20,6 +23,7 @@ const IncomingTicketMessageUpdate = () => {
             return () => { };
         }
         const onTicketMessageReceived = (data: SmsNotificationData) => {
+            realtimeConnectionLogger.log(LogLevel.Error, `New Message Received From IncomingTicketMessageUpdate Websocket ${JSON.stringify(data)}`);
             if (data.messageDirection === TicketMessagesDirection.Incoming && data.channelId === ChannelTypes[ChannelTypes.SMS]) {
                 dispatch(getBadgeValues(BadgeValues.SMSOnly))
                 dispatch(setLastSmsDate());
@@ -31,11 +35,17 @@ const IncomingTicketMessageUpdate = () => {
             }
         }
 
+        realtimeConnectionLogger.log(LogLevel.Error, `Connection to IncomingTicketMessageUpdate Websocket succeeded.`);
         smsIncoming.on('ReceiveSmsMessage', onTicketMessageReceived);
+        smsIncoming.onclose(error => {
+            if (error) {
+                realtimeConnectionLogger.log(LogLevel.Error, `Connection to IncomingTicketMessageUpdate failed: ${JSON.stringify(error)}.`);
+            }
+        });
         return () => {
             smsIncoming?.off('ReceiveSmsMessage', onTicketMessageReceived);
         }
-    }, [smsIncoming]);
+    }, [smsIncoming, realtimeConnectionLogger]);
 
     const refreshCache = (channel: ChannelTypes, id: string) => {
         client.invalidateQueries([QueryTicketMessagesInfinite, channel, id], {

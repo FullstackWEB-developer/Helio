@@ -22,7 +22,12 @@ const TeamBadgeValueUpdate = () => {
                 {
                     accessTokenFactory: () => accessToken
                 })
-            .withAutomaticReconnect()
+          .withAutomaticReconnect({
+              nextRetryDelayInMilliseconds: (retryContext) => {
+                  realtimeConnectionLogger.log(LogLevel.Error, `Reconnecting to TeamBadgeValueUpdate Websocket: ${JSON.stringify(retryContext?.retryReason)}.`);
+                  return 5000;
+              }
+          })
             .configureLogging(realtimeConnectionLogger)
             .build();
         setConnection(newConnection);
@@ -32,7 +37,9 @@ const TeamBadgeValueUpdate = () => {
         if (connection) {
             connection.start()
                 .then(_ => {
+                    realtimeConnectionLogger.log(LogLevel.Error, `Connection to TeamBadgeValueUpdate Websocket succeeded.`);
                     connection.on('ReceiveTeamBadgeValueUpdateEvent', (data: TeamBadgeValue) => {
+                        realtimeConnectionLogger.log(LogLevel.Error, `New Message Received From TeamBadgeValueUpdate Websocket ${JSON.stringify(data)}`);
                         if(data.emailCount !== undefined && data.emailCount >= 0){
                             dispatch(setUnreadTeamEmail(data.emailCount));
                         }
@@ -46,7 +53,13 @@ const TeamBadgeValueUpdate = () => {
                         }
                     });
                 })
-                .catch(error => realtimeConnectionLogger.log(LogLevel.Error, `Connection to TicketMessageReadHub failed: ${error}.`))
+                .catch(error => realtimeConnectionLogger.log(LogLevel.Error, `Connection to TeamBadgeValueUpdate failed: ${error}.`));
+
+            connection.onclose(error => {
+                if (error) {
+                    realtimeConnectionLogger.log(LogLevel.Error, `Connection to TeamBadgeValueUpdate failed: ${JSON.stringify(error)}.`)
+                }
+            });
         }
         return () => {
             connection?.stop();
