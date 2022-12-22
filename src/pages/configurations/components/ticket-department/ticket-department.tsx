@@ -33,7 +33,7 @@ const TicketDepartment = () => {
     rows: departments,
     wrapperClassName: '',
     headerClassName: 'h-12',
-    rowClass: 'h-14',
+    rowClass: 'h-10',
     columns: [
       {
         title: 'ticket_department.table.department_name',
@@ -41,7 +41,7 @@ const TicketDepartment = () => {
         widthClass: 'w-full',
         rowClassname: 'subtitle2',
         render: (label: string) => {
-          return <span className='flex items-center h-full ml-3'>{label}</span>;
+          return <span className='flex items-center h-full ml-3 body2'>{label}</span>;
         },
       },
       {
@@ -234,7 +234,7 @@ const TicketDepartment = () => {
         </Modal>
       </div>
       <div className='ticket-department overflow-auto h-full p-6 pr-4'>
-        <h5 className='ticket-department-header'>{t('ticket_department.title')}</h5>
+        <div className='ticket-department-header h6'>{t('ticket_department.title')}</div>
         <div className='body2 pb-6'>{t('ticket_department.description')}</div>
         <div className='w-full h-14 flex flex-row justify-between'>
           <div className='flex flex-col justify-end ticket-department-table-header'>
@@ -245,6 +245,7 @@ const TicketDepartment = () => {
               data-testid='add'
               label='ticket_department.create_department'
               buttonType='small'
+              className='w-40'
               onClick={() => {
                 setDepartmentId(undefined);
                 setDepartmentModalOpen(true);
