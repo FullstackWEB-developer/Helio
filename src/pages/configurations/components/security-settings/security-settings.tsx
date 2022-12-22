@@ -16,16 +16,19 @@ import { useDispatch } from "react-redux";
 import { GetSecuritySettings } from "@constants/react-query-constants";
 import { useEffect, useState } from "react";
 import utils from "@shared/utils/utils";
+import RouteLeavingGuard from "@components/route-leaving-guard/route-leaving-guard";
+import { useHistory } from "react-router";
 
 const SecuritySettingsScreen = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const [securitySettings, setSecuritySettings] = useState<SecuritySettings>();
+  const history = useHistory();
   const [isDirty, setDirty] = useState<boolean>(false);
   const {
     control,
     handleSubmit,
-    formState: { isValid },
+    formState: { isValid, isSubmitSuccessful },
     reset,
     watch,
   } = useForm({ mode: "all" });
@@ -346,6 +349,11 @@ const SecuritySettingsScreen = () => {
           buttonType="secondary"
           onClick={() => reset()}
           disabled={saveSecuritySettingsMutation.isLoading}
+        />
+        <RouteLeavingGuard
+            when={isDirty && !isSubmitSuccessful}
+            navigate={path => history.push(path)}
+            title={'configuration.security_settings.warning_info_leaving'}
         />
       </div>
     </form>

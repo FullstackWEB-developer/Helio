@@ -58,7 +58,10 @@ const RouteLeavingGuard = ({
                 isLoading={isLoading}
                 onAssistive={() => onAssistive && onAssistive()}
                 displayAssistiveButton={displayAssistiveButton}
-                assistiveButtonLabel={assistiveButtonLabel} />
+                isCloseButtonDisabled={true}
+                assistiveButtonLabel={assistiveButtonLabel}
+                cancelButtonLabel= 'common.return'
+                className='w-90 h-44 flex flex-col justify-between' />
         </>
     );
 };

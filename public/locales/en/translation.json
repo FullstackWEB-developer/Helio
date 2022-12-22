@@ -23,6 +23,7 @@
     "search": "Search",
     "processing": "Processing",
     "remove": "Remove",
+    "return": "Return",
     "back": "Back",
     "system_name": "System",
     "autocomplete_search": "Start typing to see the results...",
@@ -2058,8 +2059,8 @@
       "tooltip_selected_providers": "Select all applicable providers for this appointment type.",
       "tooltip_appointment_instructions": "Enter any specific instructions for this appointment type to be shared with patient. \n<1>(i.e. arrival timing, parking, forms to be filled out etc.)</1>",
       "selected_providers": "Selected Providers",
-      "warning_info": "There are unsaved changes, are you sure you want to cancel?",
-      "warning_info_leaving": "There are unsaved changes, are you sure you want to leave?",
+      "warning_info": "There are unsaved chages, are you sure you want to cancel?",
+      "warning_info_leaving": "Leave without saving changes?",
       "warning": "Warning"
     },
     "cancellation_reason": {
@@ -2153,6 +2154,8 @@
       "tool_tip_grid_direction_one_way": "<strong>One way</strong>: Notification, no response needed.",
       "save_success": "SMS template saved successfully.",
       "save_error": "Operation failed. Please try again later.",
+      "warning_info_leaving": "Leave without saving changes?",
+      "warning": "Warning",
       "edit": {
         "template_body_field_name": "SMS Notification Text",
         "insert_drowpdown": "Insert",
@@ -2200,7 +2203,9 @@
       "add_reminder_button": "Add Reminder",
       "get_error": "Error while getting records, please try again later.",
       "set_success": "Successfully set.",
-      "set_error": "Error while setting record, please try again later."
+      "set_error": "Error while setting record, please try again later.",
+      "warning_info_leaving": "Leave without saving changes?",
+      "warning": "Warning"
     },
     "public_links": {
       "title": "Public Links",
@@ -2268,7 +2273,9 @@
       "user_timeout_inactivity_in_minutes_title": "User Timeout Due to Inactivity",
       "user_timeout_inactivity_in_minutes_description": "Number of minutes before Helio users will be automatically signed out due to inactivity.",
       "user_timeout_inactivity_in_minutes_type": "Minutes",
-      "user_timeout_inactivity_in_minutes_label": "Timeout"
+      "user_timeout_inactivity_in_minutes_label": "Timeout",
+      "warning_info_leaving": "Leave without saving changes?",
+      "warning": "Warning"
     },
     "practice_branding": {
       "title": "Practice Branding",
@@ -2299,8 +2306,8 @@
       "returned_to_default_logo": "Current image has been removed, and default image is being used now, You need to save your changes.",
       "returned_to_current_logo": "New image has been removed.",
       "uploaded_new_logo": "New image has been uploaded, You need to save your changes.",
-      "warning_info": "There are unsaved chages, are you sure to cancel?",
-      "warning_info_leaving": "There are unsaved chages, are you sure to leave?",
+      "warning_info": "There are unsaved chages, are you sure you want to cancel?",
+      "warning_info_leaving": "Leave without saving changes?",
       "warning": "Warning"
     },
     "business_hours": {
@@ -2353,7 +2360,9 @@
       "preview_error": "Previewing failed. Please try again.",
       "update_error": "Updating of {{templateName}} template failed. Please try again.",
       "update_success": "{{templateName}} template updated successfully.",
-      "title_tooltip": "Add a title/headline that will be displayed in the email body."
+      "title_tooltip": "Add a title/headline that will be displayed in the email body.",
+      "warning_info_leaving": "Leave without saving changes?",
+      "warning": "Warning"
     },
     "email_template_list": {
       "title": "Email Templates",
@@ -2375,7 +2384,9 @@
       "patient_cases": "Patient Cases",
       "medications": "Medications",
       "test_results": "Test Results",
-      "update_success": "Successfully saved."
+      "update_success": "Successfully saved.",
+      "warning_info_leaving": "Leave without saving changes?",
+      "warning": "Warning"
     },
     "general_settings": {
       "title": "General Settings",
@@ -2411,7 +2422,9 @@
       "save_error": "Error while updating data, please try again later.",
       "logo_upload_error": "Error while uploading logo, please try again later.",
       "get_error": "Error while getting data, please try again later.",
-      "logo_picker_button": "Choose File"
+      "logo_picker_button": "Choose File",
+      "warning_info_leaving": "Leave without saving changes?",
+      "warning": "Warning"
     }
   },
   "ticket_department": {
@@ -2463,6 +2476,8 @@
     "table_subject_header": "Ticket Subjects",
     "add_subject": "Add Subject",
     "ticket_type": "Ticket Type",
+    "warning_info_leaving": "Leave without saving changes?",
+    "warning": "Warning",
     "reason_table": {
       "reason_label": "Reason Label",
       "voice_bot_name": "Voice Bot Name Label",

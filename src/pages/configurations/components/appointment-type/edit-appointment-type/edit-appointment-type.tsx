@@ -370,8 +370,7 @@ const EditAppointmentType = () => {
                     <RouteLeavingGuard
                         when={isDirty && !isSubmitSuccessful}
                         navigate={path => history.push(path)}
-                        message={'configuration.appointment_type_details.warning_info_leaving'}
-                        title={'configuration.appointment_type_details.warning'}
+                        title={'configuration.appointment_type_details.warning_info_leaving'}
                     />
                     <Confirmation
                             onClose={() => setWarning(false)}

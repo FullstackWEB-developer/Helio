@@ -16,8 +16,9 @@ module.exports = {
       spacing: {
         '4.5':'1.125rem',
         '8.5':'2.125rem',
-         '62': '15.5rem',
-        '88': '22rem'
+        '62': '15.5rem',
+        '88': '22rem',
+        '90': '29rem'
       },
       textColor: {
         primary : {

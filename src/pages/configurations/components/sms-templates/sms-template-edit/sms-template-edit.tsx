@@ -21,6 +21,7 @@ import React from "react";
 import Spinner from "@components/spinner/Spinner";
 import './sms-template-edit.scss';
 import SmsTemplateTooltip from '@pages/configurations/components/sms-templates/sms-template-edit/sms-template-tooltip';
+import RouteLeavingGuard from "@components/route-leaving-guard/route-leaving-guard";
 interface SMSTemplateForm {
     templateBody: string
 }
@@ -76,7 +77,7 @@ const SMSTemplateEdit = () => {
         }
     });
 
-    const { handleSubmit, control, watch, setValue, getValues, formState: {isValid, isDirty} } = useForm({ mode: 'all' });
+    const { handleSubmit, control, watch, setValue, getValues, formState: {isValid, isDirty, isSubmitSuccessful} } = useForm({ mode: 'all' });
     const watchTemplateBody = watch('templateBody', smsTemplate?.templateBody);
 
     useEffect(() => {
@@ -209,6 +210,11 @@ const SMSTemplateEdit = () => {
                             buttonType='secondary'
                             onClick={() => navigateBackToList()}
                             disabled={updateCancellationReasonMutation.isLoading} />
+                            <RouteLeavingGuard
+                                when={isDirty && !isSubmitSuccessful}
+                                navigate={path => history.push(path)}
+                                title={'configuration.sms_templates.warning_info_leaving'}
+                            />
                     </div>
                 </form>
             }

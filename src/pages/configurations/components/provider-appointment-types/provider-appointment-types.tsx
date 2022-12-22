@@ -171,7 +171,9 @@ const ProviderAppointmentType = () => {
   };
 
   const isDirty = () => {
-    return JSON.stringify(resultsForUpdate) !== initialData;
+    const resultsForUpdateStr = JSON.stringify(resultsForUpdate);
+    const result = (resultsForUpdateStr === undefined ?  "" : resultsForUpdateStr) !== initialData;
+    return result;
   };
 
   return (
@@ -248,8 +250,7 @@ const ProviderAppointmentType = () => {
       <RouteLeavingGuard
         when={isDirty() && !isSubmitSuccessful}
         navigate={path => history.push(path)}
-        message={'configuration.appointment_type_details.warning_info_leaving'}
-        title={'configuration.appointment_type_details.warning'}
+        title={'configuration.appointment_type_details.warning_info_leaving'}
       />
     </>
   );

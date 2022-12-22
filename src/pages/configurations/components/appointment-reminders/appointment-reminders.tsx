@@ -1,5 +1,6 @@
 import Button from "@components/button/button";
 import { Option } from "@components/option/option";
+import RouteLeavingGuard from "@components/route-leaving-guard/route-leaving-guard";
 import { SnackbarType } from "@components/snackbar/snackbar-type.enum";
 import Spinner from "@components/spinner/Spinner";
 import SvgIcon, { Icon } from "@components/svg-icon";
@@ -11,6 +12,7 @@ import { useForm, useFieldArray } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useMutation, useQuery } from "react-query";
 import { useDispatch } from "react-redux";
+import { useHistory } from "react-router";
 import AppointmentReminderEdit from "./appointment-reminder-edit/appointment-reminder-edit";
 interface AppointmentReminderControl {
     selectedDay: string
@@ -21,6 +23,7 @@ interface AppointmentRemindersForm {
 const AppointmentReminders = () => {
     const { t } = useTranslation();
     const dispatch = useDispatch();
+    const history = useHistory();
     const NoRemindersString = "-";
     const availableDaysInitialState = Array(14).fill(0).map<Option>((_, i: number) => {
         return { value: (i + 1).toString(), label: (i + 1).toString() }
@@ -144,6 +147,11 @@ const AppointmentReminders = () => {
                             isLoading={isFetching || setAppointmentRemindersMutation.isLoading}
                         />
                         <Button label='common.cancel' className=' ml-8 mr-8' buttonType='secondary' onClick={() => onCancel()} disabled={isFetching || setAppointmentRemindersMutation.isLoading} />
+                        <RouteLeavingGuard
+                            when={formState.isDirty && !formState.isSubmitSuccessful}
+                            navigate={path => history.push(path)}
+                            title={'configuration.appointment_reminders.warning_info_leaving'}
+                        />
                     </div>
                 </form >
                 :

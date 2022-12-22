@@ -17,17 +17,19 @@ import {
 import {PracticeEmailTemplate} from "@pages/configurations/models/practice-email-template";
 import {PracticeEmailTemplateInterface} from "@pages/configurations/models/PracticeEmailTemplateInterface";
 import {ControlledTextArea} from "@components/controllers";
-import {Link} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import {PracticeBrandingPath} from "@app/paths";
 import {AxiosError} from "axios";
+import RouteLeavingGuard from '@components/route-leaving-guard/route-leaving-guard';
 
 const PracticeEmailTemplateEdit = () => {
     const {t} = useTranslation();
     const dispatch = useDispatch();
-    const queryClient = useQueryClient()
+    const queryClient = useQueryClient();
+    const history = useHistory();
     const {handleSubmit, control, formState, reset, setValue} = useForm<PracticeEmailTemplateInterface>({mode: 'onChange'});
-    const [headerImageName, setHeaderImageName] = useState<string>()
-    const [footerImageName, setFooterImageName] = useState<string>()
+    const [headerImageName, setHeaderImageName] = useState<string>();
+    const [footerImageName, setFooterImageName] = useState<string>();
     const {
         isFetching,
         data
@@ -35,9 +37,7 @@ const PracticeEmailTemplateEdit = () => {
         onSuccess: (data) => {
             setHeaderImageName(data.headerImage);
             setFooterImageName(data.footerImage);
-            reset({
-                footerDisclaimer: data.footerDisclaimer
-            });
+            reset({...data});
         },
         onError: () => {
             dispatch(addSnackbarMessage({
@@ -113,6 +113,7 @@ const PracticeEmailTemplateEdit = () => {
             uploadLogoMutation.mutate(image, {
                 onSuccess: (response) => {
                     setImageFunc(response.fileName);
+                    formState.isDirty = true;
                 },
                 onError: () => {
                     setImageFunc(onErrorImageName);
@@ -142,7 +143,7 @@ const PracticeEmailTemplateEdit = () => {
                         <SimpleImageUploader
                             buttonText='configuration.practice_email_template.logo_picker_button'
                             uploadedImage={(image) => handleImageUpload(image, setHeaderImageName, data?.headerImage)}
-                            onClearImage={() => setHeaderImageName(data?.headerImage)}
+                            onClearImage={() => {setHeaderImageName(data?.headerImage); formState.isDirty = true;}}
                             initialSrc={data?.headerImage}
                             src={headerImageName}
                         />
@@ -152,7 +153,7 @@ const PracticeEmailTemplateEdit = () => {
                         <SimpleImageUploader
                             buttonText='configuration.practice_email_template.logo_picker_button'
                             uploadedImage={(image) => handleImageUpload(image, setFooterImageName, data?.footerImage)}
-                            onClearImage={() => setFooterImageName(data?.footerImage)}
+                            onClearImage={() => {setFooterImageName(data?.footerImage); formState.isDirty = true;}}
                             initialSrc={data?.footerImage}
                             src={footerImageName}
                         />
@@ -186,6 +187,7 @@ const PracticeEmailTemplateEdit = () => {
                                         hyperLinkButton={true}
                                         showSendIconInRichTextMode={false}
                                         toggleRichTextMode={true}
+                                        overwriteDefaultContainerClasses={false}
                                         hideFormattingButton={true}/>
                 </div>
 
@@ -208,6 +210,11 @@ const PracticeEmailTemplateEdit = () => {
                             buttonType='secondary'
                             onClick={() => onCancel()}
                             disabled={savePracticeEmailTemplateMutation.isLoading || uploadLogoMutation.isLoading}/>
+                    <RouteLeavingGuard
+                        when={formState.isDirty && !formState.isSubmitSuccessful}
+                        navigate={path => history.push(path)}
+                        title={'configuration.practice_email_template.warning_info_leaving'}
+                    />
                 </div>
             </form>
         }

@@ -20,6 +20,8 @@ import { getIntents, getTicketTypes, saveTicketTypes } from '@pages/tickets/serv
 import { Option } from '@components/option/option';
 import { TicketTypes } from '@pages/tickets/models/ticket-types.model';
 import { GetIntents, GetTicketTypes } from '@constants/react-query-constants';
+import RouteLeavingGuard from '@components/route-leaving-guard/route-leaving-guard';
+import { useHistory } from 'react-router';
 
 const TicketConfigurations = () => {
     const {t} = useTranslation(); 
@@ -39,6 +41,7 @@ const TicketConfigurations = () => {
     const {control: ticketTypeControl, handleSubmit: ticketTypeHandleSubmit, formState: ticketTypeFormState} = useForm({mode: 'all'});
     const {isValid: ticketTypeIsValid} = ticketTypeFormState;
     const dispatch = useDispatch();
+    const history = useHistory();
     
     useEffect(() => {
         refetchTicketTypes();
@@ -491,6 +494,11 @@ const TicketConfigurations = () => {
                                     onClick={() => ticketTypeHandleSubmit(onTicketTypeUpdate)()}
                                 />
                                 <Button data-testid='cancel-configurations' label='common.cancel' className='ml-6' buttonType='secondary' onClick={() => getTicketTypeValues()} />
+                                <RouteLeavingGuard
+                                    when={ticketTypeFormState.isDirty && !ticketTypeFormState.isSubmitSuccessful}
+                                    navigate={path => history.push(path)}
+                                    title={'ticket_configuration.warning_info_leaving'}
+                                />
                         </div>
                     </>
                 )}

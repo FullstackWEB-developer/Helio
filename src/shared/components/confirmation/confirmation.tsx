@@ -49,16 +49,17 @@ const Confirmation = ({title, onOk, onCancel, onClose, message = '', className, 
             isClosable={!isCloseButtonDisabled}
             closeableOnEscapeKeyPress={closeableOnEscapeKeyPress}
             onClose={() => close()}
+			titleClassName='text-lg m-5'
         >
             <div className='w-full h-32 h-full py-4'>
                 {message && <div className={classnames('pb-6', messageClassName)}>{t(message)}</div>}
                 <div className='flex items-end justify-end w-full'>
                     <div className='flex flex-col justify-end w-full px-2 space-x-0 space-y-6 md:flex-row md:space-y-0 md:space-x-6'>
                         {displayCancel &&
-                            <Button data-testid='cancel' buttonType='secondary' label={t(cancelButtonLabel)} onClick={() => cancel()} />}
-                        <Button data-testid='ok' label={t(okButtonLabel)} onClick={() => onOk()} isLoading={isLoading} />
+                            <Button className='h-8' data-testid='cancel' buttonType='secondary' label={t(cancelButtonLabel)} onClick={() => cancel()} />}
+                        <Button className='h-8' data-testid='ok' buttonType='small' label={t(okButtonLabel)} onClick={() => onOk()} isLoading={isLoading} />
                         {displayAssistiveButton &&
-                            <Button data-testid='assistive' isLoading={isLoading} label={t(assistiveButtonLabel)} onClick={() => onAssistive && onAssistive()} />}
+                            <Button className='h-8' buttonType='small' data-testid='assistive' isLoading={isLoading} label={t(assistiveButtonLabel)} onClick={() => onAssistive && onAssistive()} />}
                     </div>
                 </div>
             </div>

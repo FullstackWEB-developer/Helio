@@ -14,12 +14,13 @@ import {useMutation} from 'react-query';
 import {useDispatch} from 'react-redux';
 import {useHistory} from 'react-router';
 import {MaxEmailSubjectLength} from '@pages/email/constants';
+import RouteLeavingGuard from '@components/route-leaving-guard/route-leaving-guard';
 
 const EmailNotificationTemplateForm = ({template}: {template: EmailTemplate}) => {
     const {t} = useTranslation();
     const history = useHistory();
     const dispatch = useDispatch();
-    const {control, getValues, handleSubmit, setValue, formState: {isValid, isDirty}} = useForm({
+    const {control, getValues, handleSubmit, setValue, formState: {isValid, isDirty, isSubmitSuccessful}} = useForm({
         mode: 'onChange', defaultValues: {
             subject: template.subject,
             title: template.title,
@@ -104,6 +105,11 @@ const EmailNotificationTemplateForm = ({template}: {template: EmailTemplate}) =>
                 <Button data-testid='configuration.email_template_details.preview' label='configuration.email_template_details.preview' buttonType='secondary-medium' className='mr-6'
                         onClick={previewEmailTemplateHandler} isLoading={previewEmailTemplateMutation.isLoading} />
                 <Button data-testid='configuration.email_template_details.cancel' label='common.cancel' buttonType='secondary-medium' onClick={() => history.push('/configurations/email-templates')} />
+                <RouteLeavingGuard
+                    when={isDirty && !isSubmitSuccessful}
+                    navigate={path => history.push(path)}
+                    title={'configuration.email_template_details.warning_info_leaving'}
+                />
             </div>
         </form>
     )

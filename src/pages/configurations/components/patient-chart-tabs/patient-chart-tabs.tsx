@@ -11,6 +11,8 @@ import {PatientChartVisibility} from '@pages/configurations/models/patient-chart
 import Checkbox from '@components/checkbox/checkbox';
 import {useEffect, useState} from 'react';
 import utils from '@shared/utils/utils';
+import RouteLeavingGuard from '@components/route-leaving-guard/route-leaving-guard';
+import { useHistory } from 'react-router';
 
 const PatientChartTabs = () => {
     const { t } = useTranslation();
@@ -18,6 +20,7 @@ const PatientChartTabs = () => {
     const [defaultSettings, setDefaultSettings] = useState<PatientChartVisibility>();
     const [settings, setSettings] = useState<PatientChartVisibility>();
     const [isDirty, setDirty] = useState<boolean>();
+    const history = useHistory();
 
     useEffect(() => {
         if (!settings || !defaultSettings) {
@@ -133,6 +136,11 @@ const PatientChartTabs = () => {
                             buttonType='secondary'
                             onClick={() => reset()}
                             disabled={!isDirty || savePatientChartTabSettingsMutation.isLoading}
+                    />
+                    <RouteLeavingGuard
+                        when={isDirty}
+                        navigate={path => history.push(path)}
+                        title={'configuration.patient_chart_tabs.warning_info_leaving'}
                     />
                 </div>
         </div>

@@ -138,6 +138,7 @@ const PracticeBrandingEdit = () => {
       );
       setLogoPath(data?.logoPath);
     }
+	formState.isDirty = true;
   };
   const onRestoreDefaultData = () => {
     if (data) {
@@ -157,6 +158,7 @@ const PracticeBrandingEdit = () => {
             }),
           );
           setLogoPath(response.fileName);
+		  formState.isDirty = true;
         },
         onError: () => {
           setLogoPath(data?.logoPath);
@@ -289,8 +291,7 @@ const PracticeBrandingEdit = () => {
             <RouteLeavingGuard
               when={formState.isDirty && !formState.isSubmitSuccessful}
               navigate={path => history.push(path)}
-              message={'configuration.practice_branding.warning_info_leaving'}
-              title={'configuration.practice_branding.warning'}
+              title={'configuration.practice_branding.warning_info_leaving'}
             />
             <Confirmation
               onClose={() => setWarning(false)}
