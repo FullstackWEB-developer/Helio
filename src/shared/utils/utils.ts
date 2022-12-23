@@ -689,7 +689,7 @@ const getListOfHours = (isTime24 = false, from: string = '00:00', to: string = '
         return Number(h) * 60 + +Number(m);
       });
 
-  const toString = (min: number) => {
+  const toTimeString = (min: number) => {
     const time24 = (Math.floor(min / 60) + ':' + (min % 60).toString().padEnd(2, '0')).replace(/\b\d\b/, '0$&');
     return isTime24 ? time24 : convertTime24To12(time24);
   };
@@ -697,7 +697,7 @@ const getListOfHours = (isTime24 = false, from: string = '00:00', to: string = '
   const start = toMinutes(from);
   const end = toMinutes(to);
 
-  return Array.from({ length: Math.floor((end - start) / minInterval) + 1 }, (_, i) => toString(start + i * minInterval));
+  return Array.from({ length: Math.floor((end - start) / minInterval) + 1 }, (_, i) => toTimeString(start + i * minInterval));
 };
 
 const utils = {

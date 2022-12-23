@@ -49,7 +49,7 @@ const PublicLinks = () => {
                 widthClass: 'w-3/12',
                 rowClassname: 'subtitle2',
                 render: (name: string) => {
-                    return (<span className='flex items-center h-full ml-3'>{name}</span>)
+                    return (<span className='flex items-center h-full'>{name}</span>)
                 }
             },
             {
@@ -64,13 +64,13 @@ const PublicLinks = () => {
             {
                 title: 'configuration.public_links.grid_copy_link',
                 field: 'id',
-                widthClass: 'w-2/12',
+                widthClass: 'w-2/12 justify-center',
                 render: (id: string, row: PublicLink) => {
                     return (
-                        <span className='flex items-center h-full'>
+                        <span className='flex items-center h-full justify-center'>
                             {row.copied ?
-                                <span className='copied py-1 px-2'>{t('configuration.public_links.copied_badge')}</span> :
-                                <SvgIcon dataTestId={`onCopy-${row.id}`} type={Icon.Edit} className='icon-medium cursor-pointer' fillClass='edit-icon' onClick={() => {
+                                <span className='copied py-0.5 px-2 w-40 h-7'>{t('configuration.public_links.copied_badge')}</span> :
+                                <SvgIcon dataTestId={`onCopy-${row.id}`} type={Icon.Copy} className='icon-medium cursor-pointer' fillClass='rgba-062-fill' onClick={() => {
                                     onCopy(row.id, `${window.origin}/${row.relativePath}`)
                                 }} />
                             }

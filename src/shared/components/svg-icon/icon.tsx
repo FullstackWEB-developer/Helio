@@ -29,6 +29,7 @@ export enum Icon {
     Close = 'Close',
     Company = 'Company',
     Contacts = 'Contacts',
+	  Copy = 'Copy',
     Dashboard = 'Dashboard',
     Download = 'Download',
     Delete = 'Delete',
