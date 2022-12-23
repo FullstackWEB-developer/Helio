@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Ticket } from '../models/ticket';
 import { SortDirection } from '@shared/models/sort-direction';
 import TicketListItem from './ticket-list-item';
@@ -30,6 +30,10 @@ const TicketListContainer = ({ dataSource, isRowSelected, handleCheckboxChange }
         const query = { ...ticketFilter, sorts: [...sorts] };
         dispatch(getList(query));
     }
+
+    useEffect(() => {
+        document.getElementsByClassName("overflow-scroll")[0].scrollTo(0,0);
+    }, [dataSource]);
 
     return (
         <div className='overflow-scroll'>
