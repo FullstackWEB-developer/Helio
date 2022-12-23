@@ -13,6 +13,7 @@ import './business-hours.scss';
 import { useDispatch } from 'react-redux';
 import { addSnackbarMessage } from '@shared/store/snackbar/snackbar.slice';
 import { SnackbarType } from '@components/snackbar/snackbar-type.enum';
+import { TabSetHolidays } from './tab-set-holidays';
 import RouteLeavingGuard from '@components/route-leaving-guard/route-leaving-guard';
 import { useHistory } from 'react-router';
 import Confirmation from '@components/confirmation/confirmation';
@@ -26,6 +27,7 @@ const BusinessHours: FC = () => {
   const { isDirty, isValid } = formState;
 
   const workingHoursWatch = watch('workingHours');
+  const offDatesWatch = watch('offDates');
 
   const { data, isLoading } = useQuery([GetOperationSettings], () => getOperationSettings(), {
     enabled: true,
@@ -66,7 +68,8 @@ const BusinessHours: FC = () => {
 
   const onSubmit = (formData: OperationSettingModel) => {
     formData.workingHours = workingHoursWatch;
-    const newData: OperationSettingModel = { ...data, ...formData, workingHours: workingHoursWatch };
+    formData.offDates = offDatesWatch;
+    const newData: OperationSettingModel = { ...data, ...formData, workingHours: workingHoursWatch, offDates: offDatesWatch };
     saveOperationSettingsMutation.mutate(newData);
   };
 
@@ -98,7 +101,7 @@ const BusinessHours: FC = () => {
               <TabSetBusinessHours control={control} />
             </Tab>
             <Tab title={t("configuration.business_hours.tab_set_holidays")}>
-              <div />
+              <TabSetHolidays control={control} />
             </Tab>
           </Tabs>
           <div className="flex justify-start mt-10">

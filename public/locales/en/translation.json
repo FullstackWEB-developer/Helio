@@ -2316,6 +2316,7 @@
     "business_hours": {
       "title": "Business Hours",
       "description": "Set your business hours.",
+      "description_holiday": "Set your holiday hours.",
       "enter_hours_title": "Enter your business hours",
       "enter_hours_description": "If call routing is enabled, calls during non-working hours will be routed. To prevent call routing during short breaks do not include breaks in your daily schedule.\n\nExample:\n\nWorking hours start at 9 am, lunch break is from 12 pm - 1 pm, work hours end at 5 pm.\n\nTo prevent routing from 8 am to 9 am and from 12 pm - 1 pm, working hours should be set from 8 am to 5 pm. Those hours pretend only for the voice and chat channels. SMS and Email channel will function in their normal mode.",
       "tab_general_settings_title": "General Settings",
@@ -2345,8 +2346,23 @@
       "day_select_label": "Day",
       "start_time_select_label": "Start Time",
       "end_time_select_label": "End Time",
+      "start_date_select_label": "Start Date",
+      "end_date_select_label": "End Date",
       "save_success": "Successfully updated.",
-      "save_error": "Error saving settings, please try again."
+      "save_error": "Error saving settings, please try again.",
+      "add_holiday": "Add Holiday",
+      "holidays_schedule": "Holidays Schedule",
+      "add_holiday_title": "Add Holiday",
+      "edit_holiday_title": "Edit Holiday",
+      "holiday_table": {
+        "name": "Name",
+        "start_date_name": "Start Date",
+        "end_date_name": "End Date",
+        "start_time_name": "Start Time",
+        "end_time_name": "End Time"
+      },
+      "holiday_name": "Holiday Name",
+      "end_date_cannot_be_before_start_date": "Start date can not be later then end date."
     },
     "email_template_details": {
       "not_found": "Specified template not found.",
