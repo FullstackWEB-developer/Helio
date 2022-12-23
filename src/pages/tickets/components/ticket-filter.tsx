@@ -321,7 +321,7 @@ const TicketFilter = ({ isOpen }: { isOpen: boolean }) => {
             }
         }
 
-        if (!!values.assignedTo) {
+        if (!!values.assignedTo && values.assignedTo !== 'all') {
             hasFilter = true;
             query.assignedTo.push(values.assignedTo);
         }
@@ -503,7 +503,7 @@ const TicketFilter = ({ isOpen }: { isOpen: boolean }) => {
         const cloned = [...userList];
         cloned.unshift({
             label: t('common.all'),
-            value: ''
+            value: 'all'
         });
         return cloned;
     }
@@ -518,7 +518,7 @@ const TicketFilter = ({ isOpen }: { isOpen: boolean }) => {
             offices: clearArray(fieldsValue.offices),
             states: clearArray(fieldsValue.states),
             ticketTypes: clearArray(fieldsValue.ticketTypes),
-            assignedTo: '',
+            assignedTo: 'all',
             department: '',
             reasons: '',
             priority: '',
@@ -602,8 +602,9 @@ const TicketFilter = ({ isOpen }: { isOpen: boolean }) => {
                             <ControlledSelect
                                 name='assignedTo'
                                 control={control}
-                                defaultValue=''
+                                defaultValue='all'
                                 options={getUserOptions()}
+                                onTextChange={(e) => { if(e === '') setValue('assignedTo','');}}
                             />
                         </div>
                     </Collapsible>

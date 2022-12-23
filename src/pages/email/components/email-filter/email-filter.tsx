@@ -61,7 +61,7 @@ const EmailFilter = ({
   const [fromDateField, setFromDateField] = useState<Date | undefined>(
     value?.fromDate ? dayjs(value.fromDate).utc().toDate() : undefined,
   );
-
+  
   const {
     emailQueryType,
     isDefaultTeamView
@@ -94,7 +94,7 @@ const EmailFilter = ({
     const cloned = [...userList];
     cloned.unshift({
       label: t("common.all"),
-      value: "",
+      value: "all",
     });
     return cloned;
   };
@@ -139,7 +139,7 @@ const EmailFilter = ({
       unread: formData?.unread,
     };
 
-    if (!!formData.assignedTo && isUserFilterEnabled) {
+    if (!!formData.assignedTo && formData.assignedTo !== 'all' && isUserFilterEnabled) {
       if (formData.assignedTo !== appUser.id) {
         dispatch(setEmailHasFilter(true));
       }
@@ -302,8 +302,9 @@ const EmailFilter = ({
             <ControlledSelect
               control={control}
               name='assignedTo'
-              defaultValue=''
+              defaultValue='all'
               options={getUserOptions()}
+              onTextChange={(e) => { if(e === '') setValue('assignedTo','');}}
             />
           </Collapsible>
         )}

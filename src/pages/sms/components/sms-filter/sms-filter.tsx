@@ -77,7 +77,7 @@ const SmsFilter = ({ className, isUserFilterEnabled, value, defaultValue, ...pro
     const cloned = [...userList];
     cloned.unshift({
       label: t('common.all'),
-      value: '',
+      value: 'all',
     });
     return cloned;
   };
@@ -120,7 +120,7 @@ const SmsFilter = ({ className, isUserFilterEnabled, value, defaultValue, ...pro
       unread: formData?.unread,
     };
 
-    if (!!formData.assignedTo && isUserFilterEnabled) {
+    if (!!formData.assignedTo && formData.assignedTo !== 'all' && isUserFilterEnabled) {
       filter.assignedTo = formData.assignedTo;
     } else if (!isUserFilterEnabled) {
       filter.assignedTo = value?.assignedTo;
@@ -243,7 +243,13 @@ const SmsFilter = ({ className, isUserFilterEnabled, value, defaultValue, ...pro
         </Collapsible>
         {isUserFilterEnabled && (
           <Collapsible title={t('sms.filter.team_section')} isOpen className='pt-4' headerClassName='h-10 mb-1.5'>
-            <ControlledSelect control={control} name='assignedTo' defaultValue='' options={getUserOptions()} />
+            <ControlledSelect 
+                control={control} 
+                name='assignedTo' 
+                defaultValue='all' 
+                options={getUserOptions()} 
+                onTextChange={(e) => { if(e === '') setValue('assignedTo','');}}
+            />
           </Collapsible>
         )}
       </div>
