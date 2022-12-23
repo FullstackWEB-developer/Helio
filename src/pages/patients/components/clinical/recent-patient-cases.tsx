@@ -26,9 +26,6 @@ const RecentPatientCases = () => {
 
     const tableModel: TableModel = {
         rows: cases?.filter(a => a.status !== DeletedPatientCaseStatus) || [],
-        title: {
-            title: t('patient.clinical.recent_patient_cases')
-        },
         showEmptyMessage: true,
         hasRowsBottomBorder: true,
         columns: [
@@ -50,11 +47,14 @@ const RecentPatientCases = () => {
         ]
     }
 
-    return <div className='pt-9' >
+    return <div className='pb-2 pt-8'>
+        <div className='pb-5'>{t('patient.clinical.recent_patient_cases')}</div>
+        <div>
         {
             fetchingPatientCases ? <Spinner /> :
                 <Table model={tableModel} />
         }
+        </div>
     </div>
 };
 

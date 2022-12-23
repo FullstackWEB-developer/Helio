@@ -25,9 +25,6 @@ const ClinicalLabResults = () => {
     const tableModel: TableModel = {
         rows: labResults,
         pageable: true,
-        title: {
-            title: t('patient.clinical.lab_results.title')
-        },
         showEmptyMessage: true,
         hasRowsBottomBorder: true,
         columns: [
@@ -60,11 +57,14 @@ const ClinicalLabResults = () => {
             }
         ]
     }
-    return <div className='pt-9' >
+    return <div className='pb-2 pt-8'>
+        <div className='pb-5'>{t('patient.clinical.lab_results.title')}</div>
+        <div>
         {
             isFetching ? <Spinner /> :
                 <Table model={tableModel} />
         }
+        </div>
     </div>
 }
 

@@ -24,9 +24,6 @@ const ClinicalMedications = () => {
         rows: medications,
         hasRowsBottomBorder: true,
         showEmptyMessage: true,
-        title: {
-            title: t('patient.clinical.medications.title')
-        },
         columns: [
             {
                 title: 'patient.clinical.medications.medication',
@@ -48,11 +45,14 @@ const ClinicalMedications = () => {
             }
         ]
     }
-    return <div className='pt-9'>
-        {
-            isFetching ? <Spinner /> :
-                <Table model={tableModel} />
-        }
+    return <div className='pb-2 pt-8'>
+        <div className='pb-5'>{t('patient.clinical.medications.title')}</div>
+        <div>
+            {
+                isFetching ? <Spinner /> :
+                    <Table model={tableModel} />
+            }
+        </div>
     </div>
 }
 
