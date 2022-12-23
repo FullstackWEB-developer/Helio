@@ -21,13 +21,17 @@ interface DayTimeModalProps {
 }
 
 export const DayTimeModal: FC<DayTimeModalProps> = ({ data, isVisible = false, onClose, onDelete, onSave, onUpdate }) => {
-  const { control, handleSubmit, reset, setValue } = useForm<WorkingHourModel>({});
+  const { control, handleSubmit, reset, setValue, formState } = useForm<WorkingHourModel>({
+    mode: 'all',
+    defaultValues: {},
+  });
+  const { isDirty, isValid } = formState;
 
   const { t } = useTranslation();
 
   useEffect(() => {
     if (!data) {
-      reset({});
+      reset({}, { errors: false, isDirty: false });
     } else {
       reset(data?.value);
     }
@@ -61,6 +65,12 @@ export const DayTimeModal: FC<DayTimeModalProps> = ({ data, isVisible = false, o
     onDelete(data);
   };
 
+  const handleClose = () => {
+    if(onClose){
+      onClose();
+    }
+  };
+
   return (
     <Modal
       title={!data ? t('configuration.business_hours.add_day_hour_title') : t('configuration.business_hours.edit_day_hour_title')}
@@ -70,12 +80,13 @@ export const DayTimeModal: FC<DayTimeModalProps> = ({ data, isVisible = false, o
       isClosable
       hasOverlay
       isDraggable
-      onClose={onClose}
+      onClose={handleClose}
     >
       <div className='flex flex-col pb-6 pt-4'>
         <ControlledSelect
           className='day-select'
           name='day'
+          required
           control={control}
           label={t('configuration.business_hours.day_select_label')}
           options={daysOfWeek}
@@ -91,6 +102,7 @@ export const DayTimeModal: FC<DayTimeModalProps> = ({ data, isVisible = false, o
           <div className='flex flex-col mr-8'>
             <ControlledSelect
               name='startTime'
+              required
               control={control}
               className='time-select'
               label={t('configuration.business_hours.start_time_select_label')}
@@ -100,6 +112,7 @@ export const DayTimeModal: FC<DayTimeModalProps> = ({ data, isVisible = false, o
           <div className='flex flex-col'>
             <ControlledSelect
               name='endTime'
+              required
               control={control}
               className='time-select'
               label={t('configuration.business_hours.end_time_select_label')}
@@ -110,7 +123,14 @@ export const DayTimeModal: FC<DayTimeModalProps> = ({ data, isVisible = false, o
         <div className='flex justify-end mt-10'>
           <Button data-testid='cancel-department' label='common.cancel' className='mr-6' buttonType='secondary' onClick={onClose} />
           {!!data && <Button data-testid='delete-department' label='common.delete' className='mr-6' buttonType='secondary' onClick={handleDelete} />}
-          <Button data-testid='save-changes' type='button' buttonType='small' label='common.save' onClick={handleSubmit(!data ? onSave : handleUpdate)} />
+          <Button
+            data-testid='save-changes'
+            type='button'
+            buttonType='small'
+            label='common.save'
+            onClick={handleSubmit(!data ? onSave : handleUpdate)}
+            disabled={!isDirty || !isValid}
+          />
         </div>
       </div>
     </Modal>

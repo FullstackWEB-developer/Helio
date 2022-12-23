@@ -82,7 +82,8 @@
     "update": "Update",
     "idle_warning": "You will be automatically logged out in a minute...",
     "see_more": "See More",
-    "see_less": "See Less"
+    "see_less": "See Less",
+    "warning": "Warning"
   },
   "app": {
     "error_loading_parameters": "Error loading parameters, please try again later",
@@ -2016,6 +2017,8 @@
     "public_links_menu": "Public Links",
     "patient_chart_tabs_visibility": "Patient Chart Tab Visibility",
     "ticket_department_menu": "Departments/Groups",
+    "confirm_cancel": "Changes have been made. If you cancel they will be discarded. Proceed with cancelling?",
+
     "appointment_type_list": {
       "title": "Appointment Type",
       "description": "You need to map and configure EHR/EMR appointment types to Helio appointment types. You need at least 1 Helio appointment type in order for patients to be able to select and schedule appointments through Helio application.",
