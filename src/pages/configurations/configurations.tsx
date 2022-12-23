@@ -27,7 +27,7 @@ import SvgIcon, { Icon } from '@components/svg-icon';
 import TicketConfigurations from './components/ticket-configurations/ticket-configurations';
 import WebChat from './components/web-chat/web-chat';
 import BusinessHours from './components/business-hours/business-hours';
-const PracticeBrandingEdit = React.lazy(() => import('./components/branding/practice-branding/practice-branding'));
+const PracticeBrandingEdit = React.lazy(() => import("./components/branding/practice-branding/practice-branding"));
 interface ConfigurationUrlParams {
   type: string;
   id: string;

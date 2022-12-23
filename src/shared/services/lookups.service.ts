@@ -14,7 +14,7 @@ import { GeneralSettingsModel } from '@pages/configurations/models/general-setti
 import { PatientChartVisibility } from '@pages/configurations/models/patient-chart-visibility.model';
 import i18n from 'i18next';
 import { ChatWidgetModel } from '@pages/configurations/models/chat-widget.model';
-import { OperationSettingModel } from '@pages/configurations/models/business-hours-type.model';
+import { OperationSettingModel, TimeZoneModel } from '@pages/configurations/models/business-hours-type.model';
 
 const parametersUrl = '/lookups/parameters';
 const lookupsUrl = '/lookups';
@@ -265,12 +265,17 @@ export const getChatWidget = async (): Promise<ChatWidgetModel> => {
   return data;
 };
 export const saveChatWidget = async (payload: any) => {
-  await Api.post(`${parametersUrl}/chat-widget`, {
-    autoStartDelay: payload.timeDelay,
-    autoStartEnabled: payload.autoStart,
-    displayPosition: Number(payload.displayPosition),
-    domains: payload.webChat.length > 0 ? payload.webChat.map(x => x.domain) : [],
-  } as ChatWidgetModel);
+    await Api.post(`${parametersUrl}/chat-widget`, {
+        autoStartDelay: payload.timeDelay,
+        autoStartEnabled: payload.autoStart,
+        displayPosition: Number(payload.displayPosition),
+        domains: payload.webChat.length > 0 ? payload.webChat.map( x => x.domain ) : []
+    } as ChatWidgetModel);
+}
+
+export const getTimeZones = async () : Promise<TimeZoneModel[]> => {
+    const result = await Api.get(`${operationUrl}/timezones`);
+    return result.data;
 };
 
 export const getOperationSettings = async () => {

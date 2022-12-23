@@ -4,7 +4,14 @@ export enum WorkingHoursType {
   _24_7 = 1,
   Custom = 2,
 }
-
+export interface TimeZoneModel
+{
+  abbr: string,
+  isDst: boolean,
+  offset: number,
+  text: string,
+  value: string
+}
 export interface OperationSettingModel {
   id: number;
   timeZone: string;

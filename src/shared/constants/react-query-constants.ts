@@ -109,4 +109,5 @@ export const GetCallbackTicketCount = 'get-callback-ticket-count';
 export const GetChatWidget = 'get-chat-widget';
 export const GetTicketTypes = 'get-ticket-types';
 export const GetIntents = 'get-intents';
+export const GetTimeZones = 'get-timezones';
 export const GetOperationSettings = 'get-operation-settings';

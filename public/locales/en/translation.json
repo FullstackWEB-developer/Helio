@@ -2062,8 +2062,8 @@
       "tooltip_selected_providers": "Select all applicable providers for this appointment type.",
       "tooltip_appointment_instructions": "Enter any specific instructions for this appointment type to be shared with patient. \n<1>(i.e. arrival timing, parking, forms to be filled out etc.)</1>",
       "selected_providers": "Selected Providers",
-      "warning_info": "There are unsaved chages, are you sure you want to cancel?",
-      "warning_info_leaving": "Leave without saving changes?",
+      "warning_info": "There are unsaved changes, are you sure you want to cancel?",
+      "warning_info_leaving": "There are unsaved changes, are you sure you want to leave?",
       "warning": "Warning"
     },
     "cancellation_reason": {
@@ -2320,6 +2320,8 @@
       "enter_hours_title": "Enter your business hours",
       "enter_hours_description": "If call routing is enabled, calls during non-working hours will be routed. To prevent call routing during short breaks do not include breaks in your daily schedule.\n\nExample:\n\nWorking hours start at 9 am, lunch break is from 12 pm - 1 pm, work hours end at 5 pm.\n\nTo prevent routing from 8 am to 9 am and from 12 pm - 1 pm, working hours should be set from 8 am to 5 pm. Those hours pretend only for the voice and chat channels. SMS and Email channel will function in their normal mode.",
       "tab_general_settings_title": "General Settings",
+      "error_fetching_timezones": "Timezones could not be fetched. Please try again.",
+      "error_fetching_settings": "Settings could not be fetched. Please try again.",
       "tab_set_business_hours_title": "Set Business Hours",
       "tab_set_holidays": "Set Holidays",
       "add_date_time": "Add Day and Time",
@@ -2349,7 +2351,6 @@
       "start_date_select_label": "Start Date",
       "end_date_select_label": "End Date",
       "save_success": "Successfully updated.",
-      "save_error": "Error saving settings, please try again.",
       "add_holiday": "Add Holiday",
       "holidays_schedule": "Holidays Schedule",
       "add_holiday_title": "Add Holiday",
@@ -2362,7 +2363,34 @@
         "end_time_name": "End Time"
       },
       "holiday_name": "Holiday Name",
-      "end_date_cannot_be_before_start_date": "Start date can not be later then end date."
+      "end_date_cannot_be_before_start_date": "Start date can not be later then end date.",
+      "save_error": "Error saving settings, please try again.",
+      "general_setting":{
+        "title":"Set call routing and auto-reply rules for holidays and non-working hours.",
+        "time_zone":"Time Zone",
+        "set_rule_title":"Set Rules for Non-Working and Holiday Hours",
+        "call_forwarding_title":"Call Forwarding(Routing)",
+        "call_forwarding_description":"Route all incoming calls to an external number.",
+        "routing_number":"Routing Number",
+        "voice_bot_inactive" : "Turn on call routing to an external number when out of business hours.",
+        "sms_inactive" : "Turn on SMS auto-reply when out of business hours.",
+        "email_inactive" : "Turn on Email auto-reply when out of business hours.",
+        "routing_bullet_1":"Voice bot is active. Calls are routed only when live support is needed.",
+        "routing_bullet_2":"Chat bot is active. A notice will appear that no live agents are available.",
+        "voice":"Voice",
+        "voice_bullet_1":"Voice bot is active.",
+        "voice_bullet_2":"Calls are routed to the routing number/service. Caller will be notified about routing to an external number.",
+        "chat":"Chat",
+        "chat_bullet_1":"Chat bot is active.",
+        "chat_bullet_2":"User is notified that live support is not available.",
+        "chat_bullet_3":"Call-back is offered if live support is requested.",
+        "sms_auto_reply":"SMS auto-reply",
+        "sms_auto_reply_description":"Sender will receive the following automated message:",
+        "edit_and_view_sms_auto_reply_message":"View and Edit Automated SMS Reply Message",
+        "email_auto_reply":"Email auto-reply",
+        "email_auto_reply_description":"Sender will receive the following automated message:",
+        "edit_and_view_email_auto_reply_message":"View and Edit Automated Email Reply Message"
+      }
     },
     "email_template_details": {
       "not_found": "Specified template not found.",
