@@ -37,7 +37,11 @@ const PracticeEmailTemplateEdit = () => {
         onSuccess: (data) => {
             setHeaderImageName(data.headerImage);
             setFooterImageName(data.footerImage);
-            reset({...data});
+            let disclaimer = data.footerDisclaimer.replaceAll('<tr><td>', '<p>')
+            disclaimer = disclaimer.replaceAll('</td></tr>', '</p>');
+            reset({
+                ...data,
+                footerDisclaimer : disclaimer});
         },
         onError: () => {
             dispatch(addSnackbarMessage({
