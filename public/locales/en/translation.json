@@ -2364,7 +2364,6 @@
       },
       "holiday_name": "Holiday Name",
       "end_date_cannot_be_before_start_date": "Start date can not be later then end date.",
-      "save_error": "Error saving settings, please try again.",
       "general_setting":{
         "title":"Set call routing and auto-reply rules for holidays and non-working hours.",
         "time_zone":"Time Zone",
