@@ -252,8 +252,7 @@ const GeneralSettings = () => {
                             <RouteLeavingGuard
                                 when={formState.isDirty && !formState.isSubmitSuccessful}
                                 navigate={path => history.push(path)}
-                                message={'common.confirm_close'}
-                                title={'configuration.general_settings.warning'}
+                                title={'configuration.practice_branding.warning_info_leaving'}
                             />
                             <Confirmation
                                 onClose={() => setWarning(false)}
