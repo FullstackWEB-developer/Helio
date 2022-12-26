@@ -1,6 +1,7 @@
 import { HubConnection, HubConnectionBuilder, LogLevel } from '@microsoft/signalr';
 import RealTimeConnectionLogger from './real-time-connection-logger';
 import utils from '@shared/utils/utils';
+import { refreshAccessToken } from '@shared/services/api';
 
 export const createTicketMessageConnectionHub = (accessToken?: string): HubConnection => {
     const realtimeConnectionLogger = new RealTimeConnectionLogger();
@@ -11,7 +12,7 @@ export const createTicketMessageConnectionHub = (accessToken?: string): HubConne
 
     return new HubConnectionBuilder()
         .withUrl(provideTicketMessageHubUrl(), {
-            accessTokenFactory: !!accessToken ? () => accessToken : undefined
+            accessTokenFactory: !!accessToken ? async () => await refreshAccessToken() : undefined
         })
       .withAutomaticReconnect({
           nextRetryDelayInMilliseconds: (retryContext) => {

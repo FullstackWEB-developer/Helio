@@ -290,7 +290,7 @@
       "on_behalf_of": "On Behalf Of"
     },
     "note_context": {
-      "header": "Add Note",
+      "header": "Add Ticket Notes",
       "error": "Failed to add Note",
       "no_ticket_id": "There is no ticket",
       "copy_note": "Copy Note",
@@ -533,7 +533,7 @@
     "activity": {
       "title": "Activity",
       "notes": {
-        "enter_your_note": "Enter your note",
+        "enter_your_note": "Enter your EMR note",
         "cannot_send_empty": "Cannot send empty note",
         "note_add_error": "Error adding note",
         "add-note": "Add note",

@@ -2,6 +2,7 @@ import {HubConnection, HubConnectionBuilder, LogLevel} from "@microsoft/signalr"
 import { BadgeValues } from "@pages/tickets/models/badge-values.model";
 import { TicketAssignedNotification } from "@pages/tickets/models/ticket-assigned-notification.model";
 import { getBadgeValues } from "@pages/tickets/services/tickets.service";
+import { refreshAccessToken } from "@shared/services/api";
 import {selectAccessToken, selectAppUserDetails} from "@shared/store/app-user/appuser.selectors";
 import utils from "@shared/utils/utils";
 import {useEffect, useState} from "react";
@@ -18,10 +19,9 @@ const BadgeValueUpdate = () => {
     useEffect(() => {
         const hubUrl = `${utils.getAppParameter('RealtimeEventsEndpoint')}ticket/badge-value-update`;
         const newConnection = new HubConnectionBuilder()
-            .withUrl(hubUrl,
-                {
-                    accessTokenFactory: () => accessToken
-                })
+          .withUrl(hubUrl, {
+            accessTokenFactory: async () => await refreshAccessToken(),
+          })
           .withAutomaticReconnect({
               nextRetryDelayInMilliseconds: (retryContext) => {
                   realtimeConnectionLogger.log(LogLevel.Error, `Reconnecting to ReceiveBadgeValueUpdateEvent Websocket: ${JSON.stringify(retryContext?.retryReason)}.`);

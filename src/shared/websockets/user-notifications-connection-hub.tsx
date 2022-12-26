@@ -12,6 +12,7 @@ import {useTranslation} from 'react-i18next';
 import {Icon} from '@components/svg-icon';
 import utils from '@shared/utils/utils';
 import {setMyCallbackTicketCount, setTeamCallbackTicketCount} from '@pages/tickets/store/tickets.slice';
+import { refreshAccessToken } from "@shared/services/api";
 
 const UserNotificationsConnectionHub = () => {
     const dispatch = useDispatch();
@@ -26,18 +27,22 @@ const UserNotificationsConnectionHub = () => {
         const hubUrl = `${utils.getAppParameter('RealtimeEventsEndpoint')}user-notifications`;
 
         const newConnection = new HubConnectionBuilder()
-            .withUrl(hubUrl,
-                {
-                    accessTokenFactory: () => accessToken
-                })
-            .withAutomaticReconnect({
-                nextRetryDelayInMilliseconds: (retryContext) => {
-                    realtimeConnectionLogger.log(LogLevel.Error, `Reconnecting to UserNotificationsConnectionHub Websocket: ${JSON.stringify(retryContext?.retryReason)}.`);
-                    return 5000;
-                }
-            })
-            .configureLogging(realtimeConnectionLogger)
-            .build();
+          .withUrl(hubUrl, {
+            accessTokenFactory: async () => await refreshAccessToken(),
+          })
+          .withAutomaticReconnect({
+            nextRetryDelayInMilliseconds: (retryContext) => {
+              realtimeConnectionLogger.log(
+                LogLevel.Error,
+                `Reconnecting to UserNotificationsConnectionHub Websocket: ${JSON.stringify(
+                  retryContext?.retryReason
+                )}.`
+              );
+              return 5000;
+            },
+          })
+          .configureLogging(realtimeConnectionLogger)
+          .build();
         setConnection(newConnection);
 
         return () => {
