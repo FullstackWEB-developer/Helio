@@ -122,7 +122,7 @@ const AgentStatusTable = () => {
         if (!items) {
             return null;
         }
-        return <div className='flex flex-row gap-y-2 gap-x-4 flex-wrap'>
+        return <div className='2xl:flex 2xl:flex-row 2xl:space-x-4 grid grid-cols-2 gap-4 py-4 2xl:py-0'>
             {[...items].sort((a, b) => {
                 if (dayjs(a.timestamp).isAfter(b.timestamp)) {
                     return 1;
