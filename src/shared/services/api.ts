@@ -75,7 +75,7 @@ export const refreshAccessToken = async () => {
                     return response.idToken;
                 }
             } catch (error: any) {
-                debugger;
+
                 if (error instanceof InteractionRequiredAuthError) {
                     if (getMsalInstance() !== undefined) {
                         let errResponse =  await getMsalInstance()!

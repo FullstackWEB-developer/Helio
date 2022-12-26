@@ -3,6 +3,7 @@ import { setUnreadTeamEmail } from "@pages/email/store/email-slice";
 import { setUnreadTeamSms } from "@pages/sms/store/sms.slice";
 import { TeamBadgeValue } from "@pages/tickets/models/team-badge-values.model";
 import { setUnreadTeamTicket } from "@pages/tickets/store/tickets.slice";
+import { refreshAccessToken } from "@shared/services/api";
 import {selectAccessToken} from "@shared/store/app-user/appuser.selectors";
 import utils from "@shared/utils/utils";
 import {useEffect, useState} from "react";
@@ -12,16 +13,13 @@ import RealTimeConnectionLogger from "./real-time-connection-logger";
 const TeamBadgeValueUpdate = () => {
     const dispatch = useDispatch();
     const [connection, setConnection] = useState<HubConnection | null>(null);
-    const accessToken = useSelector(selectAccessToken);
     const realtimeConnectionLogger = new RealTimeConnectionLogger();
-
     useEffect(() => {
         const hubUrl = `${utils.getAppParameter('RealtimeEventsEndpoint')}ticket/team-badge-value-update`;
         const newConnection = new HubConnectionBuilder()
-            .withUrl(hubUrl,
-                {
-                    accessTokenFactory: () => accessToken
-                })
+          .withUrl(hubUrl, {
+            accessTokenFactory: async () => await refreshAccessToken(),
+          })
           .withAutomaticReconnect({
               nextRetryDelayInMilliseconds: (retryContext) => {
                   realtimeConnectionLogger.log(LogLevel.Error, `Reconnecting to TeamBadgeValueUpdate Websocket: ${JSON.stringify(retryContext?.retryReason)}.`);
