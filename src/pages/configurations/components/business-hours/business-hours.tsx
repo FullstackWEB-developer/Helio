@@ -47,7 +47,7 @@ const BusinessHours: FC = () => {
 
   const { isFetching } = useQuery<TimeZoneModel[]>(GetTimeZones, () => getTimeZones(), {
     onSuccess: (data) => {
-      setTimeZones(data.map((item, index)=>({value:index.toString(), label: item.text})))
+      setTimeZones(data.map((item)=>({value:item.abbr, label: item.text})))
     },
     onError: () => {
       dispatch(
