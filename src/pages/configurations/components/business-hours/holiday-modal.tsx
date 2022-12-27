@@ -22,7 +22,7 @@ interface HolidayModalProps {
 }
 
 export const HolidayModal: FC<HolidayModalProps> = ({ data, isVisible = false, onClose, onDelete, onSave, onUpdate }) => {
-  const { control, handleSubmit, reset, watch, formState } = useForm({ mode: 'onChange' });
+  const { control, handleSubmit, reset, watch, formState, setValue } = useForm({ mode: 'onChange' });
   const { isDirty, isValid: isFormValid } = formState;
   const [startDate, setStartDate] = useState<Date | undefined>(data ? data.value.startDateTime as unknown as Date : undefined);
   const [endDate, setEndDate] = useState<Date | undefined>(data ? data.value.endDateTime as unknown as Date : undefined);
@@ -55,8 +55,8 @@ export const HolidayModal: FC<HolidayModalProps> = ({ data, isVisible = false, o
     if(isValid()){
       let data: WorkingOffDateModel = {
         description: formData.description,
-        startDateTime: formData.startDate,
-        endDateTime: formData.endDate
+        startDateTime: getDateTime(formData.startDate, formData.startTime),
+        endDateTime: getDateTime(formData.endDate, formData.endTime),
       }
       setStartDate(undefined)
       setEndDate(undefined)
@@ -149,6 +149,7 @@ export const HolidayModal: FC<HolidayModalProps> = ({ data, isVisible = false, o
           type='text'
           defaultValue={data ? data.value.description?.toString() : undefined}
           label='configuration.business_hours.holiday_name'
+          errorMessage={dayjs(watchStartDate).isAfter(watchEndDate) ? t('configuration.business_hours.end_date_cannot_be_before_start_date') : ''}
           required
         />
         <div className='flex flex-row'>
@@ -172,8 +173,9 @@ export const HolidayModal: FC<HolidayModalProps> = ({ data, isVisible = false, o
               control={control}
               className='holiday-date-select'
               label={t('configuration.business_hours.start_time_select_label')}
-              defaultValue={data ? utils.formatUtcDate((data.value.startDateTime as unknown as Date), 'hh:mm') : undefined}
+              defaultValue={data ? utils.formatUtcDate((data.value.startDateTime as unknown as Date), 'HH:mm') : undefined}
               options={hours}
+              onTextChange={(e) => {if(e === '') setValue('startTime','');}}
               required
             />
           </div>
@@ -199,8 +201,9 @@ export const HolidayModal: FC<HolidayModalProps> = ({ data, isVisible = false, o
               control={control}
               className='holiday-date-select'
               label={t('configuration.business_hours.end_time_select_label')}
-              defaultValue={data ? utils.formatUtcDate((data.value.endDateTime as unknown as Date), 'hh:mm') : undefined}
+              defaultValue={data ? utils.formatUtcDate((data.value.endDateTime as unknown as Date), 'HH:mm') : undefined}
               options={hours}
+              onTextChange={(e) => {if(e === '') setValue('endTime','');}}
               required
             />
           </div>

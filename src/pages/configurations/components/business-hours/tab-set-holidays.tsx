@@ -5,7 +5,7 @@ import { Control, useFieldArray } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import Button from '@components/button/button';
 import Table from '@components/table/table';
-import { OperationSettingModel, WorkingHourModel, WorkingOffDateModel } from '@pages/configurations/models/business-hours-type.model';
+import { OperationSettingModel, WorkingOffDateModel } from '@pages/configurations/models/business-hours-type.model';
 import utils from '@shared/utils/utils';
 import { HolidayModal } from './holiday-modal';
 import { CurrentHolidayType } from './holiday.types';
@@ -143,7 +143,7 @@ export const TabSetHolidays: FC<TabSetHolidaysProps> = ({ control }) => {
               <div className='h7'>{t('configuration.business_hours.holidays_schedule')}</div>
             </div>
             <div className='flex flex-col justify-center mr-8'>
-              <Button data-testid='add' type='button' label='configuration.business_hours.add_holiday' buttonType='small' onClick={handleAddHoursClick} />
+              <Button data-testid='add' className='w-32' type='button' label='configuration.business_hours.add_holiday' buttonType='small' onClick={handleAddHoursClick} />
             </div>
           </div>
           <Table model={tableModel} />
