@@ -1427,7 +1427,7 @@
       "title": "Top 5 Tickets By Reason",
       "label_others": "Other",
       "tooltip_title": "Reason",
-      "no_reason": "No Reason"
+      "removed_reason": "Removed Reason"
     },
     "response_time": {
       "title": "Response Time",
