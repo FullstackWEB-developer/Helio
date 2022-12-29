@@ -170,16 +170,20 @@ const AppointmentCancel = () => {
 
     const canCancelable = (hasChargeControl: boolean) => {
         if(hasChargeControl)
-            return appointmentType?.cancelable &&
-                appointmentType?.cancelationFee &&
-                (appointmentType?.cancelationTimeFrame && dayjs.utc(appointment!.startDateTime).diff(dayjs.utc(), 'hour') < appointmentType?.cancelationTimeFrame);
+            return !!(appointmentType?.cancelable &&
+              appointmentType?.cancelationFee && appointmentType?.cancelationFee > 0 &&
+              (!!appointmentType?.cancelationTimeFrame
+                  && appointmentType?.cancelationTimeFrame > 0 && dayjs.utc(appointment!.startDateTime).diff(dayjs.utc(), 'hour') >= appointmentType?.cancelationTimeFrame)
+              || !appointmentType?.cancelationTimeFrame);
 
-        return appointmentType?.cancelable &&
-            (appointmentType?.cancelationTimeFrame && dayjs.utc(appointment!.startDateTime).diff(dayjs.utc(), 'hour') >= appointmentType?.cancelationTimeFrame);
+        return !!(appointmentType?.cancelable &&
+          (!!appointmentType?.cancelationTimeFrame
+            && appointmentType?.cancelationTimeFrame > 0
+            && dayjs.utc(appointment!.startDateTime).diff(dayjs.utc(), 'hour') >= appointmentType?.cancelationTimeFrame) || !appointmentType?.cancelationTimeFrame);
     }
 
-    const canReschedulable = (minLenght: number) => {
-        return appointmentType?.reschedulable && appointmentSlots && appointmentSlots?.length > minLenght
+    const canReschedulable = (minLength: number) => {
+        return appointmentType?.reschedulable && appointmentSlots && appointmentSlots?.length > minLength
     }
 
     if (!isFetchedAfterMount || isAppointmentTypesLoading || isAppointmentSlotsLoading || isGetCancellationReasonsLoading || isAppointmentsLoading) {
@@ -273,7 +277,6 @@ const AppointmentCancel = () => {
                                     data-test-id={'external-access-appointments-cancellation-reasons'}
                                     error={errors.appointmentCancelReasonId?.message}
                                     required={true}
-                                    value={props.value}
                                     onSelect={(option?: Option) => {
                                         if (option) {
                                             props.onChange(option.value);
