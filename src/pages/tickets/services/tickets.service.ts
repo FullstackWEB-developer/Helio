@@ -594,3 +594,9 @@ export const getIntents = async () => {
   const response = await Api.get(url);
   return response.data;
 };
+
+export const getPossiblePatientIds = async (ticketNumber: string): Promise<number[]> => {
+  const url = `${ticketsBaseUrl}/possibble-patients-for-email/${ticketNumber}`;
+  const response = await Api.get(url);
+  return response.data;
+};

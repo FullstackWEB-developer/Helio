@@ -288,11 +288,13 @@ const ConversationHeader = ({ info, forNewTicketMessagePurpose, patientPhoto, co
                         {
                             conversationChannel === ChannelTypes.Email &&
                             <ConversationHeaderPopup
-                                anonymous={!info.patientId && !info.contactId}
+                                isAnonymous={!info.patientId && !info.contactId}
                                 name={displayName()}
                                 photo={info?.createdForName ? getImage() : <Avatar icon={Icon.UserUnknown} userPicture={patientPhoto} />}
                                 contact={contact}
                                 patient={patient}
+                                ticketId={ticket?.id}
+                                refetchTicket={refetchTicket}
                             />
                         }
                     </div>
