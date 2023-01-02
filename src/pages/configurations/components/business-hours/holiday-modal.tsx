@@ -22,10 +22,12 @@ interface HolidayModalProps {
 }
 
 export const HolidayModal: FC<HolidayModalProps> = ({ data, isVisible = false, onClose, onDelete, onSave, onUpdate }) => {
-  const { control, handleSubmit, reset, watch, formState, setValue } = useForm({ mode: 'onChange' });
+  const { control, handleSubmit, reset, formState, setValue } = useForm({ mode: 'onChange' });
   const { isDirty, isValid: isFormValid } = formState;
   const [startDate, setStartDate] = useState<Date | undefined>(data ? data.value.startDateTime as unknown as Date : undefined);
+  const [startTime, setStartTime] = useState<string | undefined>(data ? utils.formatUtcDate((data.value.startDateTime as unknown as Date), 'HH:mm') : undefined);
   const [endDate, setEndDate] = useState<Date | undefined>(data ? data.value.endDateTime as unknown as Date : undefined);
+  const [endTime, setEndTime] = useState<string | undefined>(data ? utils.formatUtcDate((data.value.endDateTime as unknown as Date), 'HH:mm') : undefined);
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
@@ -100,6 +102,21 @@ export const HolidayModal: FC<HolidayModalProps> = ({ data, isVisible = false, o
      return dayjs(formattedDate).add(Number(timeArray[0]), 'hours').add(Number(timeArray[1]), 'minutes').utc().format()
   }
 
+  const getDateTimeObject = (date: any, time: string = '00:00') => {
+    if(!date)
+        return undefined;
+    let timeArray = time.split(':');
+    let formattedDate: string; 
+    
+    if(date instanceof Date){
+       formattedDate = dayjs(date).format('YYYY-MM-DD')
+    }else{
+       formattedDate = date.split('T')[0]
+    }
+    
+    return dayjs(formattedDate).add(Number(timeArray[0]), 'hours').add(Number(timeArray[1]), 'minutes').utc().toDate()
+ }
+
   const handleDelete = () => {
     if (!data) {
       return;
@@ -115,19 +132,15 @@ export const HolidayModal: FC<HolidayModalProps> = ({ data, isVisible = false, o
     onClose && onClose();
   }
 
-  const watchStartDate = watch('startDate');
-  const watchEndDate = watch('endDate');
-
   const isValid = () => {
-    if (!watchStartDate || !watchEndDate) {
+    if (!startDate || !endDate) {
         return true;
     }
 
-    if (dayjs(watchStartDate).isSame(watchEndDate)){
+    if (dayjs(startDate).isSame(endDate)){
       return true
     }
-
-    return dayjs(watchStartDate).isBefore(watchEndDate);
+    return dayjs(startDate).isBefore(endDate);
   }
 
   return (
@@ -149,7 +162,7 @@ export const HolidayModal: FC<HolidayModalProps> = ({ data, isVisible = false, o
           type='text'
           defaultValue={data ? data.value.description?.toString() : undefined}
           label='configuration.business_hours.holiday_name'
-          errorMessage={dayjs(watchStartDate).isAfter(watchEndDate) ? t('configuration.business_hours.end_date_cannot_be_before_start_date') : ''}
+          errorMessage={dayjs(startDate).isAfter(endDate) ? t('configuration.business_hours.end_date_cannot_be_before_start_date') : ''}
           required
         />
         <div className='flex flex-row'>
@@ -159,7 +172,7 @@ export const HolidayModal: FC<HolidayModalProps> = ({ data, isVisible = false, o
               className='holiday-date-select'
               type='date'
               value={startDate}
-              onChange={setStartDate}
+              onChange={(e) => {setStartDate(getDateTimeObject(e, startTime ? startTime : '00:00'));}}
               isCalendarPositionComputed
               label={t('configuration.business_hours.start_date_select_label')}
               name='startDate'
@@ -173,9 +186,10 @@ export const HolidayModal: FC<HolidayModalProps> = ({ data, isVisible = false, o
               control={control}
               className='holiday-date-select'
               label={t('configuration.business_hours.start_time_select_label')}
+              onSelect={(e) => {setStartTime(e ? e.value : undefined); setStartDate(getDateTimeObject(startDate, e ? e.value : '00:00'));}}
               defaultValue={data ? utils.formatUtcDate((data.value.startDateTime as unknown as Date), 'HH:mm') : undefined}
               options={hours}
-              onTextChange={(e) => {if(e === '') setValue('startTime','');}}
+              onTextChange={(e) => {if(e === '') {setValue('startTime',''); setStartTime(undefined); setStartDate(getDateTimeObject(startDate, '00:00'));}}}
               required
             />
           </div>
@@ -187,7 +201,7 @@ export const HolidayModal: FC<HolidayModalProps> = ({ data, isVisible = false, o
               className='holiday-date-select'
               type='date'
               value={endDate}
-              onChange={setEndDate}
+              onChange={(e) => {setEndDate(getDateTimeObject(e, endTime ? endTime : '00:00'));}}
               isCalendarPositionComputed
               label={t('configuration.business_hours.end_date_select_label')}
               name='endDate'
@@ -203,7 +217,8 @@ export const HolidayModal: FC<HolidayModalProps> = ({ data, isVisible = false, o
               label={t('configuration.business_hours.end_time_select_label')}
               defaultValue={data ? utils.formatUtcDate((data.value.endDateTime as unknown as Date), 'HH:mm') : undefined}
               options={hours}
-              onTextChange={(e) => {if(e === '') setValue('endTime','');}}
+              onTextChange={(e) => {if(e === '') {setValue('endTime',''); setEndTime(undefined); setEndDate(getDateTimeObject(endDate, '00:00'));}}}
+              onSelect={(e) => {setEndTime(e ? e.value : undefined); setEndDate(getDateTimeObject(endDate, e ? e.value : '00:00'));}}
               required
             />
           </div>
