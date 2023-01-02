@@ -1,6 +1,7 @@
 export interface ConnectEventRecord {
     userEmail: string;
     numberOfHolds: number;
+    belongsToTicket: number;
     afterContactWorkStartTimestamp?: Date;
     agentInteractionDuration: number;
     connectedToAgentTimestamp?: Date;

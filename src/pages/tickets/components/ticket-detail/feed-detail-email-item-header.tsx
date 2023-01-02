@@ -28,8 +28,10 @@ interface FeedDetailEmailHeaderItemProps {
     collapsed: boolean,
     feedTime: string;
     isHover: boolean;
+    belongsToTicket?: string;
+    isRelatedTicketFeed?: boolean;
 }
-const FeedDetailEmailHeaderItem = ({message, isHover, from, collapsed, collapseHandler, feedTime}: FeedDetailEmailHeaderItemProps) => {
+const FeedDetailEmailHeaderItem = ({message, isHover, from, collapsed, collapseHandler, feedTime, isRelatedTicketFeed, belongsToTicket}: FeedDetailEmailHeaderItemProps) => {
     const dispatch = useDispatch();
     const attachmentsCount = message.attachments?.length ?? 0;
     dayjs.extend(relativeTime);
@@ -110,7 +112,10 @@ const FeedDetailEmailHeaderItem = ({message, isHover, from, collapsed, collapseH
             </div>
             <div className={headerClass}>
                 <div className='flex flex-row justify-between w-full items-center h-10'>
-                    <div className='subtitle2'>{from}</div>
+                    <div className='subtitle2 mr-2'>{from}</div>
+                    {
+                      !isRelatedTicketFeed && <div className='body2-primary cursor-pointer hover:underline' onClick={() => history.push(`${TicketsPath}/${belongsToTicket}`)}>{belongsToTicket}</div>
+                    }
                     <div className="ml-auto flex justify-center items-center h-full">
                         {
                             attachmentsCount > 0 &&

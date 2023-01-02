@@ -24,7 +24,7 @@ import {
 import { useMutation, useQuery } from 'react-query';
 import {
   addFeed,
-  getChildrenTicketNumbers,
+  getTicketByNumber,
   updateTicket,
 } from '@pages/tickets/services/tickets.service';
 import { setTicket } from '@pages/tickets/store/tickets.slice';
@@ -34,10 +34,6 @@ import { addSnackbarMessage } from '@shared/store/snackbar/snackbar.slice';
 import { SnackbarType } from '@components/snackbar/snackbar-type.enum';
 import Button from '@components/button/button';
 import { selectLocationsAsOptions } from '@shared/store/lookups/lookups.selectors';
-import {
-  getPatientActionNotes,
-  getPatientCaseDocument,
-} from '@pages/patients/services/patient-document.service';
 import utils from '@shared/utils/utils';
 import { TicketUpdateModel } from '@pages/tickets/models/ticket-update.model';
 import hash from 'object-hash';
@@ -51,13 +47,11 @@ import { setAssignee } from '../../services/tickets.service';
 import { selectActiveUserOptions } from '@shared/store/lookups/lookups.selectors';
 import { Option } from '@components/option/option';
 import { Link } from 'react-router-dom';
-import TicketDetailRelatedTickets from './ticket-detail-related-tickets';
 import {
   FiveMinute,
-  GetChildrenTicketNumbers,
   GetPatientCases,
+  QueryTickets,
 } from '@constants/react-query-constants';
-import Spinner from '@components/spinner/Spinner';
 import { getPatientCases } from '@pages/patients/services/patients.service';
 interface TicketDetailInfoPanelProps {
   ticket: Ticket;
@@ -155,7 +149,15 @@ const TicketDetailInfoPanel = ({
   useEffect(() => {
     control.trigger();
   }, []);
-
+  const {refetch: refetchTicket} = useQuery<Ticket, Error>([QueryTickets, ticket.ticketNumber], () =>
+  getTicketByNumber(Number(ticket.ticketNumber), true),
+  {
+      enabled: false,
+      onSuccess: data => {
+          dispatch(setTicket(data))
+      }
+  }
+);
   const ticketUpdateMutation = useMutation(updateTicket, {
     onSuccess: (data, variables) => {
       const user = userListOptions
@@ -169,7 +171,7 @@ const TicketDetailInfoPanel = ({
           assignee: user.value,
         });
       }
-      dispatch(setTicket(data));
+      refetchTicket()
       if (data.id && previousTicket?.status !== data.status) {
         const feedData: TicketFeed = {
           feedType: FeedTypes.StatusChange,
@@ -199,7 +201,7 @@ const TicketDetailInfoPanel = ({
 
   const addFeedMutation = useMutation(addFeed, {
     onSuccess: data => {
-      dispatch(setTicket(data));
+      refetchTicket()
     },
   });
 
@@ -238,7 +240,7 @@ const TicketDetailInfoPanel = ({
 
   const updateAssigneeMutation = useMutation(setAssignee, {
     onSuccess: data => {
-      dispatch(setTicket(data));
+      refetchTicket()
     },
     onError: (error: any) => {
       dispatch(
@@ -322,17 +324,6 @@ const TicketDetailInfoPanel = ({
     );
   }, [ticket, isDueDateVisible]);
 
-  const {
-    data: childrenTicketNumbers,
-    isFetching: isFetchingChildTicketNumbers,
-  } = useQuery(
-    [GetChildrenTicketNumbers, ticket.id],
-    () => getChildrenTicketNumbers(ticket.id!),
-    {
-      enabled: !!ticket.id,
-    },
-  );
-
   return (
     <>
       <form
@@ -361,26 +352,6 @@ const TicketDetailInfoPanel = ({
             </div>
           )}
         </div>
-        {isFetchingChildTicketNumbers ? (
-          <Spinner size='small' />
-        ) : (
-          (!!ticket?.parentTicketId ||
-            (childrenTicketNumbers && childrenTicketNumbers?.length > 0)) && (
-            <div className='border-b'>
-              <div className='px-6'>
-                <Collapsible
-                  title={'ticket_detail.info_panel.related_tickets.title'}
-                  isOpen={true}
-                >
-                  <TicketDetailRelatedTickets
-                    ticket={ticket}
-                    childTickets={childrenTicketNumbers}
-                  />
-                </Collapsible>
-              </div>
-            </div>
-          )
-        )}
         <div className='border-b'>
           <div className='px-6'>
             <Collapsible

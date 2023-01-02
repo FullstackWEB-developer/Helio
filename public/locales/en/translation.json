@@ -772,7 +772,8 @@
         "title": "Related Tickets",
         "parent_ticket": "Parent: <0>{{ticketNumber}}</0>",
         "children_tickets": "Linked Tickets"
-      }
+      },
+      "system_message_for_callback": "System Message: {{callerName}} called {{phoneNumber}}"
     },
     "note": {
       "add_note": "Add Note",
@@ -785,6 +786,7 @@
       "description_prefix": "Ticket status was changed to",
       "title": "Recent Activity",
       "all_activity": "All Activity",
+      "only_this_ticket": "Only This Ticket",
       "internal_notes": "Internal Notes",
       "outbound": "Outbound call",
       "inbound": "Inbound call",

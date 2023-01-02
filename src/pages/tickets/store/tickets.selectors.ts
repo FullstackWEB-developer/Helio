@@ -136,3 +136,13 @@ export const selectTeamCallbackTicketCount = createSelector(
     ticketState,
     state => state.teamCallbackTicketCount as number
 )
+
+export const selectPlayVoiceTicketId = createSelector(
+    ticketState,
+    state => state.playVoiceTicketId as string
+)
+
+export const selectShowChatTicketId = createSelector(
+    ticketState,
+    state => state.showChatTicketId as string
+)

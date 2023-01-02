@@ -8,6 +8,8 @@ import Spinner from '@components/spinner/Spinner';
 import {GetRecordedConversationLink} from '@constants/react-query-constants';
 import './call-log-player.scss';
 import Modal from '@components/modal/modal';
+import { useSelector } from 'react-redux';
+import { selectPlayVoiceTicketId } from '@pages/tickets/store/tickets.selectors';
 
 interface CallLogAudioPlayer {
     ticketId: string;
@@ -28,9 +30,9 @@ const CallLogPlayer = (
         agentId,
         ...props
     }: CallLogAudioPlayer) => {
-
+    const playVoiceTicketId = useSelector(selectPlayVoiceTicketId);
     const [audioUrl, setAudioUrl] = useState('');
-    const {isLoading, isFetching} = useQuery([GetRecordedConversationLink, ticketId], () => getRecordedConversationLink(ticketId), {
+    const {isLoading, isFetching} = useQuery([GetRecordedConversationLink, ticketId], () => getRecordedConversationLink(playVoiceTicketId ? playVoiceTicketId : ticketId), {
         enabled: isOpen,
         onSuccess: (data) => {
             setAudioUrl(data);

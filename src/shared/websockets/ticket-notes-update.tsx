@@ -6,7 +6,7 @@ import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import RealTimeConnectionLogger from "./real-time-connection-logger";
 import { setTicket } from '@pages/tickets/store/tickets.slice';
-import { getTicketById } from '@pages/tickets/services/tickets.service';
+import { getTicketById, getTicketByNumber } from '@pages/tickets/services/tickets.service';
 import { setBotContextTicket } from '@pages/ccp/store/ccp.slice';
 import {selectSelectedTicket} from '@pages/tickets/store/tickets.selectors';
 import { selectBotContext } from '@pages/ccp/store/ccp.selectors';
@@ -60,7 +60,7 @@ const TicketNotesUpdate = () => {
                     connection.on('TicketNoteUpdateEventHub', (webSocketData: TicketNotesUpdateModal) => {
                         realtimeConnectionLogger.log(LogLevel.Error, `New Message Received From TicketNotesUpdate Websocket ${JSON.stringify(webSocketData)}`);
                         if(ticketId === webSocketData.ticketId || ccpTicketId === webSocketData.ticketId){
-                            getTicketById(webSocketData.ticketId).then((data) => {
+                            getTicketByNumber(webSocketData.ticketNumber).then((data) => {
                                 if(ticketId === webSocketData.ticketId){
                                     dispatch(setTicket(data))
                                 }

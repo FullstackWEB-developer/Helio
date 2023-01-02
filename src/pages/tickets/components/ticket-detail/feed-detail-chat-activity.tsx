@@ -6,8 +6,10 @@ import Avatar from '@components/avatar';
 import dayjs from 'dayjs';
 import updateLocale from 'dayjs/plugin/updateLocale';
 import { useDispatch } from 'react-redux';
-import { toggleChatTranscriptWindowVisible } from '@pages/tickets/store/tickets.slice';
+import { setShowChatTicketId } from '@pages/tickets/store/tickets.slice';
 import {DAYJS_LOCALE} from '@pages/email/constants';
+import { useHistory } from 'react-router';
+import { TicketsPath } from '@app/paths';
 
 interface FeedDetailChatActivityProps {
     message?: ChatActivity,
@@ -15,11 +17,12 @@ interface FeedDetailChatActivityProps {
 }
 const FeedDetailChatActivity = ({message, feed}: FeedDetailChatActivityProps) => {
     const dispatch = useDispatch();
+    const history = useHistory();
     dayjs.extend(updateLocale);
     const formatTemplate = 'ddd, MMM DD, YYYY [at] h:mm a';
 
     dayjs.updateLocale('en', DAYJS_LOCALE);
-    const itemDateTime = feed.dateTime ? `${dayjs().to(dayjs.utc(feed.dateTime).local())} (${utils.formatUtcDate(feed.dateTime, formatTemplate)})` : '';
+    const itemDateTime = feed.createdOn ? `${dayjs().to(dayjs.utc(feed.createdOn).local())} (${utils.formatUtcDate(feed.createdOn, formatTemplate)})` : '';
 
     return (
         <div className={'flex flex-row pl-6 py-4 border-b'}>
@@ -28,7 +31,10 @@ const FeedDetailChatActivity = ({message, feed}: FeedDetailChatActivityProps) =>
                 </div>
                 <div className='pl-6'>
                     <div className='flex flex-row'>
-                        <div className='subtitle2'>{feed.userFullName} {feed.title}</div>
+                        <div className='subtitle2 mr-2'>{feed.userFullName} {feed.title}</div>
+                        {
+                            !feed.isRelatedTicketFeed && <div className='body2-primary cursor-pointer hover:underline' onClick={() => history.push(`${TicketsPath}/${feed.belongsToTicket}`)}>{feed.belongsToTicket}</div>
+                        }
                     </div>
                     <div className='pt-1 flex flex-col text-xl'>
                         <div className='flex flex-row space-x-2'>
@@ -48,7 +54,7 @@ const FeedDetailChatActivity = ({message, feed}: FeedDetailChatActivityProps) =>
                             <div className='subtitle3 truncate'>{feed.userFullName ?? ''}</div>
                         </div>
                         <div className='w-12 h-12 rounded-r justify-center items-center flex cursor-pointer'>
-                            <SvgIcon className='icon-medium' type={Icon.View} disabled={!message?.canViewAnyTranscript} onClick={() => dispatch(toggleChatTranscriptWindowVisible())} />
+                            <SvgIcon className='icon-medium' type={Icon.View} disabled={!message?.canViewAnyTranscript} onClick={() => dispatch(setShowChatTicketId(feed.belongsToTicketId!))} />
                         </div>
                     </div>
                 </div>

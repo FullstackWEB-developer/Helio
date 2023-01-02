@@ -14,6 +14,9 @@ import linkifyHtml from 'linkifyjs/html'
 import FeedDetailPhoneCallActivity from './feed-detail-phone-call-activity';
 import FeedDetailChatActivity from './feed-detail-chat-activity';
 import {DAYJS_LOCALE} from '@pages/email/constants';
+import { useHistory } from 'react-router';
+import { TicketsPath } from '@app/paths';
+import classname from 'classnames';
 interface FeedDetailItemProps {
     feed: FeedDetailDisplayItem,
     index: number;
@@ -21,9 +24,10 @@ interface FeedDetailItemProps {
 
 const FeedDetailItem = ({feed, index}: FeedDetailItemProps) => {
     dayjs.extend(updateLocale);
+    const history = useHistory();
     const formatTemplate = 'ddd, MMM DD, YYYY [at] h:mm a';
     dayjs.updateLocale('en', DAYJS_LOCALE);
-    const itemDateTime = feed.dateTime ? `${dayjs().to(dayjs.utc(feed.dateTime).local())} (${utils.formatUtcDate(feed.dateTime, formatTemplate)})` : '';
+    const itemDateTime = feed.createdOn ? `${dayjs().to(dayjs.utc(feed.createdOn).local())} (${utils.formatUtcDate(feed.createdOn, formatTemplate)})` : '';
     let icon;
     switch (feed.feedType) {
         case FeedTypes.Note:
@@ -44,18 +48,24 @@ const FeedDetailItem = ({feed, index}: FeedDetailItemProps) => {
     }
 
     if (feed.feedType === FeedTypes.Email) {
-        const email = feed.item as EmailMessageDto;
+        const email = feed.ticketMessage as EmailMessageDto;
         return <FeedDetailEmailItem
             userFullName={feed.userFullName}
             message= {email}
             key={email.id}
             isCollapsed={index > 0}
             feedTime={itemDateTime}
+            belongsToTicket={feed.belongsToTicket}
+            isRelatedTicketFeed={feed.isRelatedTicketFeed}
         />
     }
 
     if (feed.feedType === FeedTypes.PhoneCall) {
-        const activity = feed.item as PhoneCallActivity;
+        const activity = {
+            canListenAnyRecording: feed.canListenAnyRecording,
+            callDirection: feed.communicationDirection,
+            callDuration: feed.callDuration
+        } as PhoneCallActivity;
         return(
             <FeedDetailPhoneCallActivity
                 feed={feed}
@@ -64,7 +74,9 @@ const FeedDetailItem = ({feed, index}: FeedDetailItemProps) => {
     }
 
     if (feed.feedType === FeedTypes.ChatActiviy) {
-        const activity = feed.item as ChatActivity;
+        const activity = {
+            canViewAnyTranscript: feed.canViewAnyTranscript
+        } as ChatActivity;
         return(
             <FeedDetailChatActivity
                 feed={feed}
@@ -78,8 +90,11 @@ const FeedDetailItem = ({feed, index}: FeedDetailItemProps) => {
                 <Avatar userFullName={feed.userFullName ?? ''} userPicture={feed.userPicture} />
             </div>
             <div className='pl-6'>
-                <div className='flex flex-row'>
+                <div className='flex flex-row gap-2'>
                     <div className='subtitle2'>{feed.userFullName} {feed.title}</div>
+                    {
+                      !feed.isRelatedTicketFeed && <div className='body2-primary cursor-pointer hover:underline' onClick={() => history.push(`${TicketsPath}/${feed.belongsToTicket}`)}>{feed.belongsToTicket}</div>
+                    }
                 </div>
                 <div className='pt-1 flex flex-col text-xl'>
                     <div className='flex flex-row space-x-2'>
@@ -90,7 +105,7 @@ const FeedDetailItem = ({feed, index}: FeedDetailItemProps) => {
                             {itemDateTime}
                         </span>
                     </div>
-                    {feed.feedText && <p className='pt-3 body2 break-words pr-8' dangerouslySetInnerHTML={{__html: linkifyHtml(feed.feedText)}}/>}
+                    {feed.description && <p className='pt-3 body2 break-words pr-8' dangerouslySetInnerHTML={{__html: linkifyHtml(feed.description)}}/>}
                 </div>
             </div>
         </div>

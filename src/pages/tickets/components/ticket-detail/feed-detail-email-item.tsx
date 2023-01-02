@@ -15,8 +15,10 @@ interface FeedDetailEmailItemProps {
   isCollapsed: boolean;
   feedTime: string;
   userFullName?: string;
+  belongsToTicket?: string;
+  isRelatedTicketFeed?: boolean;
 }
-const FeedDetailEmailItem = ({ message, isCollapsed, feedTime, userFullName }: FeedDetailEmailItemProps) => {
+const FeedDetailEmailItem = ({ message, isCollapsed, feedTime, userFullName, belongsToTicket, isRelatedTicketFeed }: FeedDetailEmailItemProps) => {
   const { t } = useTranslation();
   const ticket = useSelector(selectSelectedTicket);
   const [hover, setHover] = useState<boolean>(false);
@@ -73,6 +75,8 @@ const FeedDetailEmailItem = ({ message, isCollapsed, feedTime, userFullName }: F
         collapsed={collapsed}
         isHover={hover}
         feedTime={feedTime}
+        isRelatedTicketFeed={isRelatedTicketFeed}
+        belongsToTicket={belongsToTicket}
       />
       {!collapsed && (
         <div className='ml-10 pl-4 flex flex-col'>

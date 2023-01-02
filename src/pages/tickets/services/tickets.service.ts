@@ -291,8 +291,8 @@ export const setDelete = async ({ id, undoDelete = false }: setDeleteProps): Pro
   return response.data;
 };
 
-export const getTicketByNumber = async (ticketNumber: number): Promise<Ticket> => {
-  const url = `${ticketsBaseUrl}/${ticketNumber}`;
+export const getTicketByNumber = async (ticketNumber: number, includeRelatedFeeds: boolean = false): Promise<Ticket> => {
+  const url = `${ticketsBaseUrl}/${ticketNumber}/?includeRelatedFeeds=${includeRelatedFeeds}`;
   const response = await Api.get(url);
   return response.data;
 };

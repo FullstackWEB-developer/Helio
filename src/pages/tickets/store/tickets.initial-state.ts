@@ -30,6 +30,8 @@ export interface TicketState {
     ticketUpdate?: TicketUpdateModel;
     isChatTranscriptModalVisible: boolean;
     isCallLogPlayerVisible: boolean;
+    playVoiceTicketId?: string;
+    showChatTicketId?: string;
     ticketUpdateHash?: string;
     patientPhoto?: string;
     unreadTickets: number;
@@ -68,6 +70,8 @@ const initialTicketState: TicketState = {
     ticketUpdate: undefined,
     ticketUpdateHash: undefined,
     isCallLogPlayerVisible: false,
+    playVoiceTicketId: undefined,
+    showChatTicketId: undefined,
     isTicketsFiltered: false,
     unreadTickets: 0,
     unreadTeamTickets: 0,

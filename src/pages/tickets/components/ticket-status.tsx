@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { addFeed, setStatus } from '../services/tickets.service';
+import { addFeed, getTicketByNumber, setStatus } from '../services/tickets.service';
 import { statusTranslationKeyMap } from '../utils/statusUtils';
 import { Icon } from '@components/svg-icon/icon';
 import SvgIcon from '@components/svg-icon/svg-icon';
@@ -9,7 +9,7 @@ import Dropdown from '@components/dropdown/dropdown';
 import {  DropdownModel } from '@components/dropdown/dropdown.models';
 import useComponentVisibility from '@shared/hooks/useComponentVisibility';
 import { TicketStatuses } from '@pages/tickets/models/ticket.status.enum';
-import { useMutation } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 import { addSnackbarMessage } from '@shared/store/snackbar/snackbar.slice';
 import { SnackbarType } from '@components/snackbar/snackbar-type.enum';
 import { changeStatus, setTicket } from '@pages/tickets/store/tickets.slice';
@@ -23,6 +23,7 @@ import { selectEnumValuesAsOptions, selectTicketFilter, selectTicketUpdateModel 
 import { usePrevious } from '@shared/hooks/usePrevious';
 import {getList} from '../services/tickets.service';
 import { TicketQuery } from '../models/ticket-query';
+import { QueryTickets } from '@constants/react-query-constants';
 interface TicketStatusProps {
     ticket: Ticket,
     isExpired?: boolean,
@@ -54,13 +55,22 @@ const TicketStatus = ({ ticket, isArrow = true, onUpdated }: TicketStatusProps) 
         }
     }, [update, isVisible]);
     const addFeedMutation = useMutation(addFeed);
+    const {refetch: refetchTicket} = useQuery<Ticket, Error>([QueryTickets, ticket.ticketNumber], () =>
+        getTicketByNumber(Number(ticket.ticketNumber), true),
+        {
+            enabled: false,
+            onSuccess: data => {
+                dispatch(setTicket(data))
+            }
+        }
+    );
     const updateStatusMutation = useMutation(setStatus, {
         onSuccess: (data) => {
             dispatch(addSnackbarMessage({
                 type: SnackbarType.Success,
                 message: 'ticket_detail.ticket_status_updated'
             }));
-            dispatch(setTicket(data));
+            refetchTicket();
             dispatch(changeStatus({
                 id: data.id,
                 status: data.status

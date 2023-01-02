@@ -5,7 +5,7 @@ import {useTranslation} from 'react-i18next';
 import withErrorLogging from '../../../../shared/HOC/with-error-logging';
 import {Ticket} from '../../models/ticket';
 import {TicketNote} from '../../models/ticket-note';
-import {addNote, setAssignee} from '../../services/tickets.service';
+import {addNote, getTicketByNumber, setAssignee} from '../../services/tickets.service';
 import {useMutation, useQuery, useQueryClient} from 'react-query';
 import {setTicket} from '@pages/tickets/store/tickets.slice';
 import {Icon} from '@components/svg-icon/icon';
@@ -29,7 +29,7 @@ import utils from '@shared/utils/utils';
 import {ExtendedPatient} from '@pages/patients/models/extended-patient';
 import NotificationTemplateSelect from '@components/notification-template-select/notification-template-select';
 import {NotificationTemplate, NotificationTemplateChannel} from '@shared/models/notification-template.model';
-import {GetIsEmailBlocked, GetIsSMSBlocked, ProcessTemplate, QueryTicketMessagesInfinite} from '@constants/react-query-constants';
+import {GetIsEmailBlocked, GetIsSMSBlocked, ProcessTemplate, QueryTicketMessagesInfinite, QueryTickets} from '@constants/react-query-constants';
 import {processTemplate} from '@shared/services/notifications.service';
 import {SnackbarPosition} from '@components/snackbar/snackbar-position.enum';
 import ParentExtraTemplate from '@components/notification-template-select/components/parent-extra-template';
@@ -212,10 +212,18 @@ const TicketDetailAddNote = ({ticket, patient, contact, emailMessages, smsMessag
             return t('ticket_detail.email_subject', {'ticketNumber': ticket.ticketNumber});
         }
     }
-
+    const {refetch: refetchTicket} = useQuery<Ticket, Error>([QueryTickets, ticket.ticketNumber], () =>
+    getTicketByNumber(Number(ticket.ticketNumber), true),
+    {
+        enabled: false,
+        onSuccess: data => {
+            dispatch(setTicket(data))
+        }
+    }
+);
     const addNoteMutation = useMutation(addNote, {
         onSuccess: (data) => {
-            dispatch(setTicket(data));
+            refetchTicket();
             clear();
         }
     });
@@ -270,7 +278,7 @@ const TicketDetailAddNote = ({ticket, patient, contact, emailMessages, smsMessag
                 message: 'ticket_detail.sms_send_success',
                 position: SnackbarPosition.TopCenter
             }));
-
+            refetchTicket();
             clear();
         },
         onError: () => {
@@ -308,6 +316,7 @@ const TicketDetailAddNote = ({ticket, patient, contact, emailMessages, smsMessag
                 position: SnackbarPosition.TopCenter
             }));
             setTicketHasEmailMessages(true);
+            refetchTicket();
             clear();
         },
         onError: () => {

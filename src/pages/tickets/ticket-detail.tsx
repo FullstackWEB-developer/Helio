@@ -10,7 +10,7 @@ import TicketDetailFeed from './components/ticket-detail/ticket-detail-feed';
 import TicketDetailAddNote from './components/ticket-detail/ticket-detail-add-note';
 import {Ticket} from './models/ticket';
 import {useQuery} from 'react-query';
-import {getPatientTicketRating, getTicketByNumber} from './services/tickets.service';
+import {getPatientTicketRating, getTicketById, getTicketByNumber} from './services/tickets.service';
 import {
     GetContactById,
     GetPatientPhoto,
@@ -53,7 +53,7 @@ const TicketDetail = () => {
     const isCallLogPlayerVisible = useSelector(selectIsCallLogPlayerVisible);
     const ticket = useSelector(selectSelectedTicket);
     const {isLoading, error, isFetching} = useQuery<Ticket, Error>([QueryTickets, ticketNumber], () =>
-        getTicketByNumber(Number(ticketNumber)),
+        getTicketByNumber(Number(ticketNumber), true),
         {
             refetchOnMount: 'always',
             onSuccess: data => {
@@ -80,8 +80,7 @@ const TicketDetail = () => {
 
 
     const {
-        data: emailMessages,
-        isLoading: emailLoading
+        data: emailMessages
     } = useQuery([QueryTicketMessagesInfinite, ChannelTypes.Email, ticket?.id], () => getMessages(ticket.id!, ChannelTypes.Email, {
         page: 1,
         pageSize: 50
@@ -90,8 +89,7 @@ const TicketDetail = () => {
     });
 
     const {
-        data: smsMessages,
-        isLoading: smsLoading
+        data: smsMessages
     } = useQuery([QueryTicketMessagesInfinite, ChannelTypes.SMS, ticket?.id], () => getMessages(ticket.id!, ChannelTypes.SMS, {
         page: 1,
         pageSize: 50
@@ -176,7 +174,7 @@ const TicketDetail = () => {
                         />
                     </div>
                     <div className='flex-1 mb-auto'>
-                        <TicketDetailFeed smsMessages={smsMessages} smsLoading={smsLoading} emailLoading={emailLoading} emailMessages={emailMessages} ticket={ticket} contact={contact} />
+                        <TicketDetailFeed ticket={ticket} contact={contact} />
                     </div>
                     <div className='absolute bottom-0 w-full'>
                         <TicketDetailAddNote smsMessages={smsMessages} emailMessages={emailMessages} patient={patient} contact={contact} ticket={ticket} />

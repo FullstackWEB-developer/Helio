@@ -1,4 +1,5 @@
 export interface TicketNote {
+    belongsToTicket?: string;
     id?: number;
     noteText: string;
     isVisibleToPatient?: boolean;

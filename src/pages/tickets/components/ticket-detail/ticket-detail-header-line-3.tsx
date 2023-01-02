@@ -6,10 +6,10 @@ import {Ticket} from '@pages/tickets/models/ticket';
 import {ExtendedPatient} from '@pages/patients/models/extended-patient';
 import SvgIcon from '@components/svg-icon/svg-icon';
 import {Icon} from '@components/svg-icon/icon';
-import {addFeed, setDelete, setStatus} from '@pages/tickets/services/tickets.service';
+import {addFeed, getTicketByNumber, setDelete, setStatus} from '@pages/tickets/services/tickets.service';
 import {changeStatus, setTicket, setTicketUpdateModel} from '@pages/tickets/store/tickets.slice';
 import {FeedTypes, TicketFeed} from '@pages/tickets/models/ticket-feed';
-import {useMutation} from 'react-query';
+import {useMutation, useQuery} from 'react-query';
 import {useDispatch, useSelector} from 'react-redux';
 import {selectEnumValues, selectTicketUpdateModel, selectTicketUpdateHash} from '@pages/tickets/store/tickets.selectors';
 import Button from '@components/button/button';
@@ -34,6 +34,7 @@ import {ContactPreference} from '@pages/patients/models/contact-preference.enum'
 import hash from 'object-hash';
 import {TicketType} from '@shared/models';
 import {setParentTicketId} from '@pages/ccp/store/ccp.slice';
+import { QueryTickets } from '@constants/react-query-constants';
 export interface TicketDetailHeaderLine3Props {
     ticket: Ticket,
     patient?: ExtendedPatient,
@@ -177,12 +178,20 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
             }));
         }
     });
-
+    const {refetch: refetchTicket, isLoading: isRefetchTicketLoading, isFetching: isRefetchTicketFetching} = useQuery<Ticket, Error>([QueryTickets, ticket.ticketNumber], () =>
+    getTicketByNumber(Number(ticket.ticketNumber), true),
+    {
+        enabled: false,
+        onSuccess: data => {
+            dispatch(setTicket(data))
+        }
+    }
+);
     const handleMarkAsArchived = () => {
         if (ticket && ticket.id) {
             archiveTicketMutation.mutate({id: ticket.id, undoDelete: ticket.isDeleted}, {
                 onSuccess: data => {
-                    dispatch(setTicket(data));
+                    refetchTicket()
                 }
             });
         }
@@ -190,7 +199,7 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
 
     const addFeedMutation = useMutation(addFeed, {
         onSuccess: (data) => {
-            dispatch(setTicket(data));
+            refetchTicket()
         }
     });
 
@@ -200,7 +209,7 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
                 type: SnackbarType.Success,
                 message: 'ticket_detail.ticket_status_updated'
             }));
-            dispatch(setTicket(data));
+            refetchTicket()
             dispatch(changeStatus({
                 id: data.id,
                 status: data.status
@@ -546,7 +555,7 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
                     <Button disabled={ticket.status === TicketStatuses.Solved || updateStatusMutation.isLoading || isDirty()}
                         data-test-id='ticket-detail-header-solved-button'
                         buttonType='small'
-                        isLoading={updateStatusMutation.isLoading && updateStatusMutation.variables?.status === TicketStatuses.Solved}
+                        isLoading={(updateStatusMutation.isLoading || isRefetchTicketFetching || isRefetchTicketLoading) && updateStatusMutation.variables?.status === TicketStatuses.Solved}
                         onClick={() => updateStatus('Solved')}
                         label={'ticket_detail.header.solved'} />
                 </div>
@@ -554,7 +563,7 @@ const TicketDetailHeaderLine3 = ({ticket, patient, contact}: TicketDetailHeaderL
                     <Button disabled={ticket.status === TicketStatuses.Closed || updateStatusMutation.isLoading || isDirty()}
                         data-test-id='ticket-detail-header-close-button'
                         buttonType='small'
-                        isLoading={updateStatusMutation.isLoading && updateStatusMutation.variables?.status === TicketStatuses.Closed}
+                        isLoading={(updateStatusMutation.isLoading || isRefetchTicketFetching || isRefetchTicketLoading) && updateStatusMutation.variables?.status === TicketStatuses.Closed}
                         onClick={() => updateStatus('Closed')}
                         label={'ticket_detail.header.close'} />
                 </div>

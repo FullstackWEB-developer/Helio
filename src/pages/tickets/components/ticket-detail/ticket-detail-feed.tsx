@@ -20,6 +20,7 @@ import utc from 'dayjs/plugin/utc';
 import { selectAppUserDetails } from '@shared/store/app-user/appuser.selectors';
 import useCheckPermission from '@shared/hooks/useCheckPermission';
 import { ContactType } from '@pages/contacts/models/ContactType';
+import Checkbox from '@components/checkbox/checkbox';
 
 export enum FeedFilter {
     AllActivity = 'ALL_ACTIVITY',
@@ -28,20 +29,17 @@ export enum FeedFilter {
 
 interface TicketDetailFeedProps {
     ticket: Ticket,
-    emailLoading: boolean;
-    emailMessages?: PagedList<TicketMessage | EmailMessageDto>;
-    smsMessages?: PagedList<TicketMessage | EmailMessageDto>;
-    smsLoading: boolean;
     contact?: Contact;
 }
 
-const TicketDetailFeed = ({ticket, emailLoading, emailMessages, smsMessages, smsLoading, contact}: TicketDetailFeedProps) => {
+const TicketDetailFeed = ({ticket, contact}: TicketDetailFeedProps) => {
     const {t} = useTranslation();
     dayjs.extend(utc);
     const dispatch = useDispatch();
     const users = useSelector(selectUserList);
     const [feeds, setFeeds] = useState<FeedDetailDisplayItem[]>([]);
     const [scrollToBottom, setScrollToBottom] = useState<boolean>(true);
+    const [isOnlyThisTicket, setIsOnlyThisTicket] = useState<boolean>(false);
     const [selectedFeedFilter, setSelectedFeedFilter] = useState<FeedFilter>(FeedFilter.AllActivity);
     const [hasAnyFeed, setHasAnyFeed] = useState<boolean>(false);
     const {email} = useSelector(selectAppUserDetails);
@@ -75,94 +73,108 @@ const TicketDetailFeed = ({ticket, emailLoading, emailMessages, smsMessages, sms
     }
 
     useEffect(() => {
-        if (smsLoading || emailLoading) {
-            return;
-        }
         let feedItems: FeedDetailDisplayItem[] = [];
         ticket.notes?.forEach(note => {
+            if(isOnlyThisTicket && Number(note.belongsToTicket) !== ticket.ticketNumber){
+                return;
+            }
             const user = getUser(note.createdBy);
             feedItems.push({
+                isRelatedTicketFeed: note.belongsToTicket === ticket.ticketNumber,
+                belongsToTicket: note.belongsToTicket,
                 userFullName: getUsername(user),
                 userPicture: user?.profilePicture,
-                dateTime: note.createdOn,
-                feedText: note.noteText,
+                createdOn: note.createdOn,
+                description: note.noteText,
                 feedType: FeedTypes.Note,
-                item: note
             });
         });
+
         if (selectedFeedFilter === FeedFilter.AllActivity) {
             ticket.feeds?.forEach(feed => {
-                const user = getUser(feed.createdBy);
-                feedItems.push({
-                    userFullName: getUsername(user),
-                    userPicture: user?.profilePicture,
-                    dateTime: feed.createdOn,
-                    feedType: feed.feedType,
-                    feedText: feed.description
-                });
-            });
-            smsMessages?.results.forEach(message => {
-                const user = getUser(message.createdBy);
-                feedItems.push({
-                    userFullName: message.direction === TicketMessagesDirection.Incoming ? getContactUsername() : getUsername(user),
-                    userPicture: user?.profilePicture,
-                    dateTime: message.createdOn,
-                    feedType: FeedTypes.Sms,
-                    feedText: message.body,
-                    item: message
-                });
-            });
-
-            emailMessages?.results.forEach(message => {
-                const user = getUser(message.createdBy);
-                feedItems.push({
-                    userFullName: message.direction === TicketMessagesDirection.Incoming ? getContactUsername() : getUsername(user),
-                    userPicture: user?.profilePicture,
-                    dateTime: message.createdOn,
-                    feedType: FeedTypes.Email,
-                    feedText: message.body,
-                    item: message
-                });
-            });
-
-            if(ticket.recordedConversationLink){
-                const user = getUserByEmail(ticket.contactAgent);
-
-                let callActivity: Partial<FeedDetailDisplayItem> = {
-                    userFullName: getContactUsername(),
-                    userPicture: user?.profilePicture,
-                    dateTime: ticket.createdOn,
-                };
-
-                if(ticket.channel === ChannelTypes.PhoneCall){
-                    callActivity.feedType = FeedTypes.PhoneCall;
-                    callActivity.item = {
-                        callDirection: ticket.communicationDirection,
-                        canListenAnyRecording: !!ticket.connectEvents?.find(a => a.userEmail === email) || hasListenAnyRecordingPermission,
-                        callDuration: ticket.agentInteractionDuration
-                    }
-                }else if(ticket.channel === ChannelTypes.Chat){
-                    callActivity.feedType = FeedTypes.ChatActiviy;
-                    callActivity.item = {
-                        canViewAnyTranscript: !!ticket.connectEvents?.find(a => a.userEmail === email)  || hasViewAnyTranscriptPermission,
-                    }
+                if(isOnlyThisTicket && Number(feed.belongsToTicket) !== ticket.ticketNumber){
+                    return;
                 }
-
-                feedItems = [callActivity, ...feedItems]
-            }
+                const user = getUser(feed.createdBy);
+                if(feed.feedType === FeedTypes.Sms){
+                    feedItems.push({
+                        isRelatedTicketFeed: Number(feed.belongsToTicket) === ticket.ticketNumber || Number(feed.belongsToTicket) === 0,
+                        belongsToTicket: feed.belongsToTicket,
+                        userFullName: getUsername(user),
+                        userPicture: user?.profilePicture,
+                        createdOn: feed.createdOn,
+                        feedType: feed.feedType,
+                        description: feed.ticketMessage?.body
+                    });
+                }else if(feed.feedType === FeedTypes.PhoneCall){
+                    const user = getUserByEmail(ticket.contactAgent);
+                    feedItems.push({
+                        belongsToTicketId: feed.belongsToTicketId,
+                        isRelatedTicketFeed: Number(feed.belongsToTicket) === ticket.ticketNumber || Number(feed.belongsToTicket) === 0,
+                        belongsToTicket: feed.belongsToTicket,
+                        userFullName: getContactUsername(),
+                        userPicture: user?.profilePicture,
+                        createdOn: feed.createdOn,
+                        feedType: feed.feedType,
+                        description: feed.ticketMessage?.body,
+                        communicationDirection: feed.communicationDirection,
+                        canListenAnyRecording: !!ticket.connectEvents?.find(a => a.userEmail === email && a.belongsToTicket === Number(feed.belongsToTicket)) || hasListenAnyRecordingPermission,
+                        callDuration: feed.callDuration,
+                        voiceLink: feed.voiceLink
+                    });
+                }else if(feed.feedType === FeedTypes.ChatActiviy){
+                    const user = getUserByEmail(ticket.contactAgent);
+                    feedItems.push({
+                        belongsToTicketId: feed.belongsToTicketId,
+                        isRelatedTicketFeed: Number(feed.belongsToTicket) === ticket.ticketNumber || Number(feed.belongsToTicket) === 0,
+                        belongsToTicket: feed.belongsToTicket,
+                        userFullName: getContactUsername(),
+                        userPicture: user?.profilePicture,
+                        createdOn: feed.createdOn,
+                        feedType: feed.feedType,
+                        description: feed.ticketMessage?.body,
+                        canViewAnyTranscript: !!ticket.connectEvents?.find(a => a.userEmail === email && a.belongsToTicket === Number(feed.belongsToTicket))  || hasViewAnyTranscriptPermission,
+                    });
+                }else if(feed.feedType === FeedTypes.Email){
+                    const user = getUser(feed.ticketMessage?.createdBy);
+                    feedItems.push({
+                        belongsToTicketId: feed.belongsToTicketId,
+                        isRelatedTicketFeed: Number(feed.belongsToTicket) === ticket.ticketNumber || Number(feed.belongsToTicket) === 0,
+                        belongsToTicket: feed.belongsToTicket,
+                        userFullName: feed.ticketMessage?.direction === TicketMessagesDirection.Incoming ? getContactUsername() : getUsername(user),
+                        userPicture: user?.profilePicture,
+                        createdOn: feed.createdOn,
+                        feedType: feed.feedType,
+                        description: feed.ticketMessage?.body,
+                        ticketMessage: feed.ticketMessage
+                    });
+                }else{
+                    feedItems.push({
+                        isRelatedTicketFeed: Number(feed.belongsToTicket) === ticket.ticketNumber || Number(feed.belongsToTicket) === 0,
+                        belongsToTicket: feed.belongsToTicket,
+                        userFullName: getUsername(user),
+                        userPicture: user?.profilePicture,
+                        createdOn: feed.createdOn,
+                        feedType: feed.feedType,
+                        description: feed.description,
+                        callDuration: feed.callDuration,
+                        chatLink: feed.chatLink,
+                        communicationDirection: feed.communicationDirection,
+                        createdBy: feed.createdBy,
+                        voiceLink: feed.voiceLink
+                    });
+                }
+            });
         }
 
-        const hasAnyFeed = emailMessages?.results && emailMessages.results.length > 0 ||
-            smsMessages?.results && smsMessages.results.length > 0 ||
-            ticket?.feeds && ticket.feeds.length > 0 ||
-            ticket?.notes && ticket.notes.length > 0;
+        const hasAnyFeed = ticket?.feeds && ticket.feeds.length > 0 || ticket?.notes && ticket.notes.length > 0;
         setHasAnyFeed(hasAnyFeed || false);
 
         if (feedItems.length > 0) {
             const sorted = feedItems.sort((a: FeedDetailDisplayItem, b: FeedDetailDisplayItem) => {
-                return getTime(b.dateTime) - getTime(a.dateTime);
+                return getTime(b.createdOn) - getTime(a.createdOn);
             });
-            dispatch(setFeedLastMessageOn(sorted[0].dateTime as Date));
+            dispatch(setFeedLastMessageOn(sorted[0].createdOn as Date));
             setFeeds(sorted);
         } else {
             setFeeds([]);
@@ -175,37 +187,41 @@ const TicketDetailFeed = ({ticket, emailLoading, emailMessages, smsMessages, sms
         return () => {
             dispatch(setFeedLastMessageOn());
         }
-    }, [dispatch, ticket.feeds, ticket.notes, smsMessages, emailMessages, selectedFeedFilter, contact]);
-
-    if (emailLoading || smsLoading) {
-        return <Spinner fullScreen/>
-    }
+    }, [dispatch, ticket.feeds, ticket.notes, selectedFeedFilter, isOnlyThisTicket, contact]);
 
     return <div>
         <div className='flex flex-row justify-between items-center pr-6 pt-6'>
             <div className='pb-1 h7 pl-20'>
                 {t('ticket_detail.feed.title')}
             </div>
-            <DropdownLabel
-                items={[
-                    {label: 'ticket_detail.feed.all_activity', value: FeedFilter.AllActivity, object: FeedFilter.AllActivity},
-                    {label: 'ticket_detail.feed.internal_notes', value: FeedFilter.InternalNotes, object: FeedFilter.InternalNotes}
-                ]}
-                labelClassName='body2'
-                value={selectedFeedFilter}
-                onClick={(item) => setSelectedFeedFilter(item.object)}
-            />
+            <div className='flex flex-row'>
+                {
+                    (ticket.feeds && ticket.feeds?.filter(x => x.belongsToTicket !== ticket.ticketNumber).length > 0 ||
+                    ticket.notes && ticket.notes?.filter(x => x.belongsToTicket !== ticket.ticketNumber).length > 0) &&
+                        <div className='mr-8'>
+                            <Checkbox name='isOnylThisTicket' labelClassName='body2' data-testid='isOnylThisTicket' checked={isOnlyThisTicket} onChange={(event) => setIsOnlyThisTicket(event.checked)} label='ticket_detail.feed.only_this_ticket' />
+                        </div>
+                }
+                <div>
+                    <DropdownLabel
+                        items={[
+                            {label: 'ticket_detail.feed.all_activity', value: FeedFilter.AllActivity, object: FeedFilter.AllActivity},
+                            {label: 'ticket_detail.feed.internal_notes', value: FeedFilter.InternalNotes, object: FeedFilter.InternalNotes}
+                        ]}
+                        labelClassName='body2'
+                        value={selectedFeedFilter}
+                        onClick={(item) => setSelectedFeedFilter(item.object)}
+                    />
+                </div>
+            </div>
         </div>
         <AlwaysScrollToBottom enabled={scrollToBottom}/>
         <div className={'overflow-y-auto h-full-minus-34'}>
             {feeds?.length < 1 && !hasAnyFeed &&
-                <div className='pt-4 h7 pl-20 body2'
-                     data-test-id='ticket-detail-feed-not-found'>{t('ticket_detail.feed.not_found')}</div>
+                <div className='pt-4 h7 pl-20 body2' data-test-id='ticket-detail-feed-not-found'>{t('ticket_detail.feed.not_found')}</div>
             }
             {
-                feeds.map((feedItem: FeedDetailDisplayItem, index) => <FeedDetailItem key={index}
-                                                                                      index={index}
-                                                                                      feed={feedItem}/>)
+                feeds.map((feedItem: FeedDetailDisplayItem, index) => <FeedDetailItem key={index} index={index} feed={feedItem}/>)
             }
         </div>
     </div>

@@ -115,8 +115,15 @@ const ticketsSlice = createSlice({
       }else{
         state.isChatTranscriptModalVisible = !state.isChatTranscriptModalVisible;
       }
+
+      if(!state.isCallLogPlayerVisible){
+        state.showChatTicketId = undefined;
+      }
     },
     toggleCallLogPlayerVisible(state) {
+      if(!state.isCallLogPlayerVisible){
+        state.playVoiceTicketId = undefined;
+      }
       state.isCallLogPlayerVisible = !state.isCallLogPlayerVisible;
     },
     setTicketListQueryType(
@@ -127,6 +134,14 @@ const ticketsSlice = createSlice({
     },
     setPatientPhoto(state, { payload }: PayloadAction<string>) {
       state.patientPhoto = payload;
+    },
+    setPlayVoiceTicketId(state, { payload }: PayloadAction<string>) {
+      state.isCallLogPlayerVisible = true;
+      state.playVoiceTicketId = payload;
+    },
+    setShowChatTicketId(state, { payload }: PayloadAction<string>) {
+      state.isChatTranscriptModalVisible = true;
+      state.showChatTicketId = payload;
     },
     setUnreadTicket(state, {payload}: PayloadAction<number>) {
       state.unreadTickets = payload;
@@ -171,7 +186,9 @@ export const {
   setUnreadTicket,
   setUnreadTeamTicket,
   setTeamCallbackTicketCount,
-  setMyCallbackTicketCount
+  setMyCallbackTicketCount,
+  setPlayVoiceTicketId,
+  setShowChatTicketId
 } = ticketsSlice.actions;
 
 export default ticketsSlice.reducer;

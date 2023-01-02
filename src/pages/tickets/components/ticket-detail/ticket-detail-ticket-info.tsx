@@ -9,7 +9,7 @@ import {
 import ControlledSelect from '@components/controllers/controlled-select';
 import {Option} from '@components/option/option';
 import {Control, Controller} from 'react-hook-form';
-import {setTicketUpdateModel} from '@pages/tickets/store/tickets.slice';
+import {setTicket, setTicketUpdateModel} from '@pages/tickets/store/tickets.slice';
 import {selectLocationsAsOptions} from '@shared/store/lookups/lookups.selectors';
 import TagInput from '@components/tag-input/tag-input';
 import {Icon} from '@components/svg-icon';
@@ -21,6 +21,12 @@ import {Ticket} from '@pages/tickets/models/ticket';
 import {selectActiveUserOptions} from '@shared/store/lookups/lookups.selectors';
 import {TicketType} from '@shared/models';
 import {setParentTicketId} from '@pages/ccp/store/ccp.slice';
+import { TicketNote } from '@pages/tickets/models/ticket-note';
+import { useMutation, useQuery } from 'react-query';
+import { addNote, getTicketByNumber } from '@pages/tickets/services/tickets.service';
+import { QueryTickets } from '@constants/react-query-constants';
+import { useTranslation } from 'react-i18next';
+import { selectAppUserDetails } from '@shared/store/app-user/appuser.selectors';
 
 interface TicketInfoProps {
     ticket: Ticket,
@@ -32,6 +38,8 @@ const TicketDetailTicketInfo = ({ticket, control, watch}: TicketInfoProps) => {
 
     const updateModel = useSelector(selectTicketUpdateModel);
     const dispatch = useDispatch();
+    const {t} = useTranslation();
+    const appUserDetails = useSelector(selectAppUserDetails);
     const statusOptions = useSelector((state => selectEnumValuesAsOptions(state, 'TicketStatus')));
     const locationOptions = useSelector(selectLocationsAsOptions);
     const priorityOptions = useSelector((state => selectEnumValuesAsOptions(state, 'TicketPriority')));
@@ -48,6 +56,22 @@ const TicketDetailTicketInfo = ({ticket, control, watch}: TicketInfoProps) => {
             [fieldName]: value
         }));
     }
+
+    const {refetch: refetchTicket} = useQuery<Ticket, Error>([QueryTickets, ticket?.ticketNumber], () =>
+        getTicketByNumber(Number(ticket?.ticketNumber), true),
+        {
+            enabled: false,
+            onSuccess: data => {
+                dispatch(setTicket(data))
+            }
+        }
+    );
+
+    const addNoteMutation = useMutation(addNote, {
+        onSuccess: () => {
+            refetchTicket();
+        }
+    });
 
     const ticketType = watch('type');
     const reasonFilteredOptions = useMemo(() => {
@@ -87,13 +111,43 @@ const TicketDetailTicketInfo = ({ticket, control, watch}: TicketInfoProps) => {
         if(ticket.id){
             dispatch(setParentTicketId(ticket.id));
         }
+        if(updateModel.callbackPhoneNumber){
+            const note: TicketNote = {
+                noteText: t('ticket_detail.info_panel.system_message_for_callback', {
+                    callerName: appUserDetails ? appUserDetails.fullName : '',
+                    phoneNumber: utils.applyPhoneMask(updateModel.callbackPhoneNumber)
+                }),
+                isVisibleToPatient: false
+            };
+            if (ticket.id) {
+                addNoteMutation.mutate({
+                    ticketId: ticket.id,
+                    note
+                });
+            }
+        }
         utils.initiateACall(updateModel.callbackPhoneNumber)
     }
 
     const handleCall = () => {
+        if(ticket.originationNumber){
+            const note: TicketNote = {
+                noteText: t('ticket_detail.info_panel.system_message_for_callback', {
+                    callerName: appUserDetails ? appUserDetails.fullName : '',
+                    phoneNumber: utils.applyPhoneMask(ticket.originationNumber)
+                }),
+                isVisibleToPatient: false
+            };
+            if (ticket.id) {
+                addNoteMutation.mutate({
+                    ticketId: ticket.id,
+                    note
+                });
+            }
+        }
         utils.initiateACall(ticket.originationNumber)
     }
-
+    
     return (
         <div className='pt-2'>
             <ControlledSelect
