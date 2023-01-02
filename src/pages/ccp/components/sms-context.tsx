@@ -9,7 +9,7 @@ import {sendMessage} from '@pages/sms/services/ticket-messages.service';
 import {addSnackbarMessage} from '@shared/store/snackbar/snackbar.slice';
 import {SnackbarType} from '@components/snackbar/snackbar-type.enum';
 import {useDispatch, useSelector} from 'react-redux';
-import {ChannelTypes, TicketMessagesDirection} from '@shared/models';
+import {ChannelTypes, CommunicationDirection, TicketMessagesDirection} from '@shared/models';
 import Button from '@components/button/button';
 import {selectBotContext} from '@pages/ccp/store/ccp.selectors';
 import ParentExtraTemplate from '@components/notification-template-select/components/parent-extra-template';
@@ -95,13 +95,6 @@ const SmsContext = () => {
         }
     }
 
-    useEffect(() => {
-        if (botContext?.patient) {
-            if (!botContext.patient.consentToText) {
-                setNoteDisabledText('ccp.sms_context.no_consent');
-            }
-        }
-    }, [botContext?.patient]);
 
     useEffect(() => {
         if (isSMSAddressBlocked?.isActive && botContext?.patient) {
@@ -135,6 +128,18 @@ const SmsContext = () => {
         }
     });
 
+      useEffect(() => {
+        if (
+          botContext?.ticket &&
+          botContext.ticket.communicationDirection ===
+            CommunicationDirection.Outbound &&
+          botContext?.patient &&
+          !botContext.patient.consentToText
+        ) {
+          setNoteDisabledText("ccp.sms_context.no_consent");
+        }
+      }, [botContext?.patient, botContext?.ticket]);
+    
     const sendSms = async () => {
         if (botContext.ticket?.id && phoneNumber && botContext?.patient) {
             sendSmsMutation.mutate({

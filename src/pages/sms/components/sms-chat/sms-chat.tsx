@@ -3,6 +3,7 @@ import AlwaysScrollToBottom from '@components/scroll-to-bottom';
 import SmsChatMessageList from '../sms-chat-message/sms-chat-message-list';
 import {
     ChannelTypes,
+    CommunicationDirection,
     ContactExtended,
     ContactType,
     TicketMessage,
@@ -59,7 +60,7 @@ const SmsChat = ({info, isLoading, isSending, isBottomFocus, messages = [], last
     const messageListContainerRef = useRef<HTMLDivElement>(null);
     const [smsText, setSmsText] = useState<string>();
     const topMessagePosition = useRef<number>();
-    
+
     const [lastSMSAddress, setLastSMSAddress] = useState<string>();
     const [selectedMessageTemplate, setSelectedMessageTemplate] = useState<NotificationTemplate>();
 
@@ -103,22 +104,32 @@ const SmsChat = ({info, isLoading, isSending, isBottomFocus, messages = [], last
             originalNumber = originalNumber.substring(2);
         }
         setLastSMSAddress(originalNumber);
-        if (patient && (!patient.consentToText || patient.mobilePhone !== originalNumber) && isSMSAddressBlocked?.isActive) {
-            setSmsDisabledText('sms.sms_not_available_patient_phone_blocked');
-        } else if (patient && (!patient.consentToText || patient.mobilePhone !== originalNumber)) {
-            setSmsDisabledText('sms.sms_not_available_patient');
-        } else if (contact && contact.mobilePhone !== originalNumber && isSMSAddressBlocked?.isActive) {
-            setSmsDisabledText('sms.sms_not_available_contact_phone_blocked');
+        if (
+          patient &&
+          !patient.consentToText &&
+          patient.mobilePhone !== originalNumber &&
+          ticket?.communicationDirection === CommunicationDirection.Outbound &&
+          isSMSAddressBlocked?.isActive
+        ) {
+          setSmsDisabledText("sms.sms_not_available_patient_phone_blocked");
+        } else if (patient && patient.mobilePhone !== originalNumber) {
+          setSmsDisabledText("sms.sms_not_available_patient");
+        } else if (
+          contact &&
+          contact.mobilePhone !== originalNumber &&
+          isSMSAddressBlocked?.isActive
+        ) {
+          setSmsDisabledText("sms.sms_not_available_contact_phone_blocked");
         } else if (contact && contact.mobilePhone !== originalNumber) {
-            setSmsDisabledText('sms.sms_not_available_contact');
+          setSmsDisabledText("sms.sms_not_available_contact");
         } else if (ticket?.isPassive && isSMSAddressBlocked?.isActive) {
-            setSmsDisabledText('sms.ticket_closed_and_sms_blocked');
+          setSmsDisabledText("sms.ticket_closed_and_sms_blocked");
         } else if (ticket?.isPassive) {
-            setSmsDisabledText('sms.ticket_closed');
+          setSmsDisabledText("sms.ticket_closed");
         } else if (isSMSAddressBlocked?.isActive) {
-            setSmsDisabledText('sms.unknown_sms_blocked');
+          setSmsDisabledText("sms.unknown_sms_blocked");
         } else {
-            setSmsDisabledText(undefined);
+          setSmsDisabledText(undefined);
         }
     }, [patient, ticket, contact, info, isSMSAddressBlocked])
 
