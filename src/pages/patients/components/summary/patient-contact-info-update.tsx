@@ -141,7 +141,8 @@ const PatientContactInfoUpdate = ({onUpdateComplete} : PatientInformationUpdateP
             disabled: !(watchHomePhone && watchHomePhone.length > 0)
         },{
             value: ContactPreference.WORKPHONE,
-            label: 'patient.contact_preference.workphone'
+            label: 'patient.contact_preference.workphone',
+            disabled: !(watchWorkPhone && watchWorkPhone.length > 0)
         },{
             value: ContactPreference.MAIL,
             label: 'patient.contact_preference.mail',
@@ -156,15 +157,23 @@ const PatientContactInfoUpdate = ({onUpdateComplete} : PatientInformationUpdateP
         if (option) {
             if (option.value === ContactPreference.MOBILEPHONE) {
                 clearErrors('homePhone');
+                clearErrors('workPhone');
                 clearErrors('email');
             } else if (option.value === ContactPreference.HOMEPHONE) {
                 clearErrors('mobilePhone');
+                clearErrors('workPhone');
+                clearErrors('email');
+            } else if (option.value === ContactPreference.WORKPHONE) {
+                clearErrors('mobilePhone');
+                clearErrors('homePhone');
                 clearErrors('email');
             }  else if (option.value === ContactPreference.MAIL) {
                 clearErrors('mobilePhone');
+                clearErrors('workPhone');
                 clearErrors('homePhone');
             } else {
                 clearErrors('mobilePhone');
+                clearErrors('workPhone');
                 clearErrors('homePhone');
                 clearErrors('email');
             }
@@ -216,7 +225,7 @@ const PatientContactInfoUpdate = ({onUpdateComplete} : PatientInformationUpdateP
                             control={control}
                             name='mobilePhone'
                             dataTestId='patient-update-mobile_phone'
-                            required={watchContactPreference === 'MOBILEPHONE'}
+                            required={watchContactPreference === ContactPreference.MOBILEPHONE}
                             type='tel'
                             label='patient.summary.mobile_phone'
                             className='w-full'
@@ -227,7 +236,7 @@ const PatientContactInfoUpdate = ({onUpdateComplete} : PatientInformationUpdateP
                             control={control}
                             name='workPhone'
                             dataTestId='patient-update-work_phone'
-                            required={watchContactPreference === 'WORKPHONE'}
+                            required={watchContactPreference === ContactPreference.WORKPHONE}
                             type='tel'
                             label='patient.summary.work_phone'
                             className='w-full'
