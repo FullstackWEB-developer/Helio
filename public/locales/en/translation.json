@@ -462,8 +462,8 @@
       "refresh": "Refresh",
       "warning": "Warning",
       "warning_info_leaving": "Your changes have not been saved.",
-      "save_changes": "Save Changes",
-      "discard_changes": "Discard Changes",
+      "save_changes": "Save",
+      "discard_changes": "Discard",
       "cancel": "Cancel"
     },
     "contact_preference": {
