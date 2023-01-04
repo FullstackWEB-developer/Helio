@@ -250,6 +250,10 @@ const Ccp: React.FC<BoxProps> = ({
             if (contact.getState().type !== ContactStateType.CONNECTED) {
                 return;
             }
+            const contactId = contact.getInitialContactId() || contact.contactId;
+            if (contactId !== botContext?.ticket?.connectContactId) {
+                return;
+            }
             const snapShot = contact.toSnapshot();
             const connections = snapShot.getConnections();
             const initialType = contact.getInitialConnection().getType();
