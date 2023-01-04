@@ -10,6 +10,7 @@ import {selectPatient, selectPatientLoading} from '../store/patients.selectors';
 import PatientAddNote from '@pages/patients/components/patient-add-note';
 import './activity-panel.scss';
 import Spinner from '@components/spinner/Spinner';
+import TooltipWrapper from '@components/tooltip/tooltip-wrapper';
 
 const ActivityPanel = () => {
     const {t} = useTranslation();
@@ -23,13 +24,13 @@ const ActivityPanel = () => {
 
     return <div className='flex flex-col h-full overflow-hidden pt-12'>
         <div className='px-8 flex-grow'>
-            <h5 className='pb-3'>{t('patient.activity.title')}</h5>
-            <Tabs onSelect={(index) => setSelectedTab(index)}>
-                <Tab title={t('patient.notes_tab_label')}>
+            <h5 className='pb-3'>{t('patient.activity.title')}</h5>             
+            <Tabs onSelect={(index) => setSelectedTab(index)}>                
+                <Tab title={t('patient.notes_tab_label')} tooltipContent={t('patient.activity.title_tooltip')}>
                     <div data-test-id='patient-activity-panel'>
                         <PatientNotes notes={patient?.notes} />
                     </div>
-                </Tab>
+                </Tab>                  
                 <Tab title={t('patient.tickets_tab_label')}>
                     <PatientTickets patientId={patient?.patientId} />
                 </Tab>

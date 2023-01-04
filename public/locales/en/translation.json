@@ -532,6 +532,7 @@
     "create_ticket": "Create Ticket",
     "activity": {
       "title": "Activity",
+      "title_tooltip":"Note updates from EMR system to Helio refresh periodically.\nNotes from Helio are transfered to the EMR system real-time.",
       "notes": {
         "enter_your_note": "Enter your EMR note",
         "cannot_send_empty": "Cannot send empty note",

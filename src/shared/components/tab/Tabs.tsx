@@ -50,6 +50,7 @@ const Tabs: React.FC<TabsProps> = ({onSelect, children, title, titleClass='', as
                         index={index}
                         isSelected={selectedTab === index}
                         setSelectedTab={tabSelected}
+                        tooltipContent={item.props.tooltipContent}
                     />
                 ))}
             </div>

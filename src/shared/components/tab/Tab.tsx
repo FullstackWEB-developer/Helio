@@ -3,6 +3,7 @@ import withErrorLogging from '../../HOC/with-error-logging';
 
 type TabProps = {
     title: string | React.ReactNode,
+    tooltipContent?: string,
     children: React.ReactNode
 }
 
