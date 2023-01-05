@@ -231,7 +231,7 @@ const PatientContactInfoUpdate = ({onUpdateComplete} : PatientInformationUpdateP
                             className='w-full'
                         />
                     </div>
-                    <div className='col-span-12 lg:col-span-5 lg:col-start-7 pt-4'>
+                    <div className='col-span-12 lg:col-span-5 pt-4'>
                         <ControlledInput
                             control={control}
                             name='workPhone'
