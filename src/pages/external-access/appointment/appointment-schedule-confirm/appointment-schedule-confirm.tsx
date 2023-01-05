@@ -42,7 +42,7 @@ const AppointmentScheduleConfirm = () => {
     const department = departments?.find(a => a.id === appointmentSlot?.departmentId);
 
     const {isLoading: appointmentTypesLoading, data: appointmentTypes} = useQuery<AppointmentType[], AxiosError>([GetAppointmentTypesForPatient],
-        () => getAppointmentTypesForPatient(verifiedPatient.patientId, verifiedPatient.primaryProviderId || verifiedPatient.defaultProviderId),
+        () => getAppointmentTypesForPatient(verifiedPatient.patientId),
         {
             enabled: !!verifiedPatient
         });
