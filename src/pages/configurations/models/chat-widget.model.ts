@@ -5,5 +5,7 @@ export interface ChatWidgetModel
     displayPosition: DisplayPosition,
     domains: string[],
     autoStartEnabled: boolean,
-    autoStartDelay: number
+    autoStartDelay: number,
+    idleWarningDelay: number,
+    idleDelay: number
 }

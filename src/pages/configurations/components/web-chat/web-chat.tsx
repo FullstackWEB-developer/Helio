@@ -31,7 +31,9 @@ interface WebChatForm {
     domains: DomainControl[];
     autoStart: boolean;
     autoStartDelay: number;
-    displayPosition: DisplayPosition
+    displayPosition: DisplayPosition;
+    idleWarningDelay: number;
+    idleDelay: number;
 }
 const WebChat = () => {
     const { t } = useTranslation();
@@ -157,6 +159,42 @@ const WebChat = () => {
                                         assistiveText={'configuration.web_chat.seconds'}
                                         required={autoStartWatch}
                                         disabled={!autoStartWatch}
+                                        type='number'
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <div className='subtitle2 pt-7 pb-2'>{t('configuration.web_chat.chat_idle')}</div>
+                        <div className='body3-medium'>{t('configuration.web_chat.chat_idle_description')}</div>
+                        <div className="mt-7 flex flex-row items-center">
+                            <div className='flex w-36'>
+                                <div className='items-center body2 w-36'>{t('configuration.web_chat.chat_first_warning')}</div>
+                            </div>
+                            <div className='flex flex-col mr-4'>
+                                <div className='w-48'>
+                                    <ControlledInput
+                                        name='idleWarningDelay'
+                                        control={control}
+                                        defaultValue={data?.idleWarningDelay}
+                                        label={'configuration.web_chat.time_delay'}
+                                        assistiveText={'configuration.web_chat.minutes'}
+                                        required={true}
+                                        type='number'
+                                    />
+                                </div>
+                            </div>
+                            <div className='flex w-52'>
+                                <div className='items-center body2 w-52'>{t('configuration.web_chat.chat_ending_chat')}</div>
+                            </div>
+                            <div className='flex flex-col input-row'>
+                                <div className='w-48'>
+                                    <ControlledInput
+                                        name='idleDelay'
+                                        control={control}
+                                        defaultValue={data?.idleDelay}
+                                        label={'configuration.web_chat.time_delay'}
+                                        assistiveText={'configuration.web_chat.minutes'}
+                                        required={true}
                                         type='number'
                                     />
                                 </div>

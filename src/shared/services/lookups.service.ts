@@ -269,7 +269,9 @@ export const saveChatWidget = async (payload: any) => {
         autoStartDelay: payload.timeDelay,
         autoStartEnabled: payload.autoStart,
         displayPosition: Number(payload.displayPosition),
-        domains: payload.webChat.length > 0 ? payload.webChat.map( x => x.domain ) : []
+        domains: payload.webChat.length > 0 ? payload.webChat.map( x => x.domain ) : [],
+        idleDelay: Number(payload.idleDelay),
+        idleWarningDelay: Number(payload.idleWarningDelay)
     } as ChatWidgetModel);
 }
 
